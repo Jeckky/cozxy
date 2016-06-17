@@ -10,8 +10,6 @@ use Yii;
     * @property string $storeProductGroupId
     * @property string $supplierId
     * @property string $poNo
-    * @property string $title
-    * @property string $description
     * @property string $summary
     * @property string $receiveDate
     * @property integer $receiveBy
@@ -39,12 +37,10 @@ public function rules()
 {
 return [
             [['supplierId', 'receiveBy', 'status'], 'integer'],
-            [['title', 'createDateTime'], 'required'],
-            [['description'], 'string'],
             [['summary'], 'number'],
             [['receiveDate', 'createDateTime', 'updateDateTime'], 'safe'],
+            [['createDateTime'], 'required'],
             [['poNo'], 'string', 'max' => 45],
-            [['title'], 'string', 'max' => 200],
             [['supplierId'], 'exist', 'skipOnError' => true, 'targetClass' => SupplierMaster::className(), 'targetAttribute' => ['supplierId' => 'supplierId']],
         ];
 }
@@ -58,8 +54,6 @@ return [
     'storeProductGroupId' => Yii::t('store_product_group', 'Store Product Group ID'),
     'supplierId' => Yii::t('store_product_group', 'Supplier ID'),
     'poNo' => Yii::t('store_product_group', 'Po No'),
-    'title' => Yii::t('store_product_group', 'Title'),
-    'description' => Yii::t('store_product_group', 'Description'),
     'summary' => Yii::t('store_product_group', 'Summary'),
     'receiveDate' => Yii::t('store_product_group', 'Receive Date'),
     'receiveBy' => Yii::t('store_product_group', 'Receive By'),

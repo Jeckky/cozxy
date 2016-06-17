@@ -9,13 +9,13 @@ use yii\helpers\Html;
 $this->title = 'Create Supplier';
 $this->params['breadcrumbs'][] = ['label' => 'Suppliers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <div class="supplier-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= $this->render('_form', [
         'model' => $model,
+        'title' => Html::encode($this->title)
     ]) ?>
 
 </div>

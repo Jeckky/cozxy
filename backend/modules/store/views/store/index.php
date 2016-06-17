@@ -47,12 +47,21 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     // 'updateDateTime',
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
-                        'template' => '{view} {update} {delete} {location}',
+                        'template' => '{view} {update} {delete} {location} {slot}',
                         'buttons' => [
                             'location' => function($url, $model) {
                                 return Html::a('<br><u>Location</u>', ['/store/store-location', 'storeId' => $model->storeId], [
                                     'title' => Yii::t('app', 'Change today\'s lists'),]);
-                            },]
+                            },
+//                            'product' => function($url, $model) {
+//                                return Html::a('<br><u>Product</u>', ['/store/store-product-group', 'storeId' => $model->storeId], [
+//                                    'title' => Yii::t('app', 'Change today\'s lists'),]);
+//                            },
+                            'slot' => function($url, $model) {
+                                return Html::a('<br><u>Slot</u>', ['/store/store-slot', 'storeId' => $model->storeId], [
+                                    'title' => Yii::t('app', 'Change today\'s lists'),]);
+                            },
+                        ]
                     ],
                 ],
             ]);

@@ -101,4 +101,99 @@ class BackendMasterController extends MasterController
         return $result;
     }
 
+    public static function dateThai($date, $format, $showTime = false)
+    {
+        // Full month array
+        $monthFormat1 = array(
+            "01" => "มกราคม",
+            "02" => "กุมภาพันธ์",
+            "03" => "มีนาคม",
+            "04" => "เมษายน",
+            "05" => "พฤษภาคม",
+            "06" => "มิถุนายน",
+            "07" => "กรกฎาคม",
+            "08" => "สิงหาคม",
+            "09" => "กันยายน",
+            "10" => "ตุลาคม",
+            "11" => "พฤศจิกายน",
+            "12" => "ธันวาคม");
+
+        // Quick month array
+        $monthFormat2 = array(
+            "01" => "ม.ค.",
+            "02" => "ก.พ.",
+            "03" => "มี.ค.",
+            "04" => "เม.ย.",
+            "05" => "พ.ค.",
+            "06" => "มิ.ย.",
+            "07" => "ก.ค.",
+            "08" => "ส.ค.",
+            "09" => "ก.ย.",
+            "10" => "ต.ค.",
+            "11" => "พ.ย.",
+            "12" => "ธ.ค.");
+
+        $monthFormat3 = array(
+            "01" => "01",
+            "02" => "02",
+            "03" => "03",
+            "04" => "04",
+            "05" => "05",
+            "06" => "06",
+            "07" => "07",
+            "08" => "08",
+            "09" => "09",
+            "10" => "10",
+            "11" => "11",
+            "12" => "12");
+
+        $monthFormat4 = array(
+            "01" => "JAN",
+            "02" => "FEB",
+            "03" => "MAR",
+            "04" => "APR",
+            "05" => "MAY",
+            "06" => "JUN",
+            "07" => "JUL",
+            "08" => "AUG",
+            "09" => "SEP",
+            "10" => "OCT",
+            "11" => "NOV",
+            "12" => "DEC");
+
+        if ($date == '0000-00-00' || $date == '0000-00-00 00:00:00') {
+            return "-";
+        }
+        $isDateTime = explode(' ', $date);
+        if (count($isDateTime) == 2) {
+            $timeStr = $isDateTime[1];
+            $d = explode('-', $isDateTime[0]);
+        } else {
+            $d = explode('-', $date);
+        }
+
+        $monthFormat = null;
+        if ($format == 1) {
+            $monthFormat = $monthFormat1[$d[1]];
+            $strReturn = $d[2] . ' ' . $monthFormat . ' ' . ($d[0] + 543);
+        } else if ($format == 2) {
+            $monthFormat = $monthFormat2[$d[1]];
+            $strReturn = $d[2] . ' ' . $monthFormat . ' ' . ($d[0] + 543);
+        } else if ($format == 3) {
+            $monthFormat = $monthFormat3[$d[1]];
+            $strReturn = $d[2] . '/' . $monthFormat . '/' . ($d[0] + 543);
+        } else if ($format == 4) {
+            $monthFormat = $monthFormat4[$d[1]];
+            $strReturn = $monthFormat . '/' . ($d[0] + 543);
+            return $strReturn;
+        }
+
+        //return $d[2].' '.(($format=1) ? $monthFormat1[$d[1]] : $monthFormat2[$d[1]]).' '.($d[0]+543);
+        if (isset($timeStr) && $showTime) {
+            $strReturn = $strReturn . " " . $timeStr;
+        }
+
+        return $strReturn;
+    }
+
 }

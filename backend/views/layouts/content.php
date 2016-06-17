@@ -23,7 +23,10 @@ use yii\widgets\Breadcrumbs;
             [
                 'label' => 'Store',
                 'items' => [
+                    '<li class="divider"></li>',
+                    '<li class="dropdown-header">Store</li>',
                     ['label' => 'Store', 'url' => ['/store/store']],
+                    ['label' => 'Import Product', 'url' => ['/store/store-product-group']],
                     '<li class="divider"></li>',
                     '<li class="dropdown-header">Product</li>',
                     ['label' => 'Brand', 'url' => ['/store/brand']],
@@ -34,6 +37,8 @@ use yii\widgets\Breadcrumbs;
                     '<li class="divider"></li>',
                     '<li class="dropdown-header">Location</li>',
                     ['label' => 'Region', 'url' => ['/store/region']],
+                    '<li class="dropdown-header">Supplier</li>',
+                    ['label' => 'Supplier', 'url' => ['/store/supplier']],
                 ],
             ],
         ],

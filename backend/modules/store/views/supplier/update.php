@@ -9,13 +9,13 @@ $this->title = 'Update Supplier: ' . ' ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Suppliers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->supplierId]];
 $this->params['breadcrumbs'][] = 'Update';
+$this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <div class="supplier-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= $this->render('_form', [
         'model' => $model,
+        'title' => Html::encode($this->title)
     ]) ?>
 
 </div>
