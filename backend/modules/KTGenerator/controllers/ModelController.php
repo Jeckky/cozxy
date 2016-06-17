@@ -4,11 +4,11 @@ namespace backend\modules\KTGenerator\controllers;
 
 use backend\modules\KTGenerator\models\ModelGenerator;
 use Yii;
-use yii\gii\generators\model\Generator;
+//use yii\gii\generators\model\Generator;
+use backend\modules\KTGenerator\gii\templates\model\Generator;
 
 class ModelController extends \yii\web\Controller
 {
-
     public function actionIndex()
     {
         $model = new ModelGenerator();
@@ -57,7 +57,7 @@ class ModelController extends \yii\web\Controller
                     $generator2->modelClass = $modelClass;
                     $generator2->ns = $modelNameSpace;
                     $generator2->baseClass = $generator->ns . '\\' . $generator->modelClass;
-                    $generator2->templates['extends'] = Yii::getAlias('@app/modules/KTGenerator/gii/templates/model/extends');
+                    $generator2->templates['extends'] = Yii::getAlias('@backend/modules/KTGenerator/gii/templates/model/extends');
                     $generator2->template = 'extends';
                     $files2 = $generator2->generate();
                     $answers2 = [];
@@ -69,6 +69,7 @@ class ModelController extends \yii\web\Controller
                     if ($generator->save($files, $answers, $result)) {
 //                        echo '<p>';
 //                        echo 'tableName:' . $generator->tableName . ', modelClass:' . $generator->modelClass . '<br />';
+
                         //check file exist
                         if (!file_exists(Yii::getAlias('@' . str_replace('\\', '/', $generator2->ns)) . '/' . $generator2->modelClass . '.php')) {
                             if ($generator2->save($files2, $answers2, $result2)) {

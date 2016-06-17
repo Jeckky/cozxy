@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\costfit\Address */
+/* @var $model common\models\costfit\Category */
 
-$this->title = $model->addressId;
-$this->params['breadcrumbs'][] = ['label' => 'Addresses', 'url' => ['index']];
+$this->title = $model->title;
+$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="address-view">
+<div class="category-view">
 
     <h1 class="page-header"><?= Html::encode($this->title) ?></h1>
 
@@ -18,8 +18,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-heading">
             <?= Html::encode($this->title) ?>
             <p class="pull-right">
-                <?= Html::a('Update', ['update', 'id' => $model->addressId], ['class' => 'btn btn-primary btn-xs']) ?>
-                <?= Html::a('Delete', ['delete', 'id' => $model->addressId], [
+                <?= Html::a('Update', ['update', 'id' => $model->categoryId], ['class' => 'btn btn-primary btn-xs']) ?>
+                <?= Html::a('Delete', ['delete', 'id' => $model->categoryId], [
                     'class' => 'btn btn-danger btn-xs',
                     'data' => [
                         'confirm' => 'Are you sure you want to delete this item?',
@@ -32,17 +32,10 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
-					'addressId',
-					'userId',
-					'company',
-					'tax',
-					'address:ntext',
-					'countryId',
-					'provinceId',
-					'amphurId',
-					'zipcode',
-					'tel',
-					'type',
+					'categoryId',
+					'title',
+					'description:ntext',
+					'parentId',
 					'status',
 					'createDateTime',
 					'updateDateTime',

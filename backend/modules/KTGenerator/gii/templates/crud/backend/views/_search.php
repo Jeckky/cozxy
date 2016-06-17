@@ -22,21 +22,14 @@ use yii\widgets\ActiveForm;
     <?= "<?php " ?>$form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
+        'options' => ['data-pjax' => true, 'class' => 'well'],
     ]); ?>
 
-<?php
-$count = 0;
-foreach ($generator->getColumnNames() as $attribute) {
-    if (++$count < 6) {
-        echo "    <?= " . $generator->generateActiveSearchField($attribute) . " ?>\n\n";
-    } else {
-        echo "    <?php // echo " . $generator->generateActiveSearchField($attribute) . " ?>\n\n";
-    }
-}
-?>
-    <div class="form-group">
-        <?= "<?= " ?>Html::submitButton(<?= $generator->generateString('Search') ?>, ['class' => 'btn btn-primary']) ?>
-        <?= "<?= " ?>Html::resetButton(<?= $generator->generateString('Reset') ?>, ['class' => 'btn btn-default']) ?>
+    <div class="input-group">
+        <span class="input-group-btn">
+            <?='<?= '?>Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+        </span>
+        <?='<?= '?>Html::activeTextInput($model, 'searchText', ['class'=>'form-control'])?>
     </div>
 
     <?= "<?php " ?>ActiveForm::end(); ?>

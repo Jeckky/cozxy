@@ -4,25 +4,25 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\costfit\search\Address */
+/* @var $searchModel common\models\costfit\search\Category */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Addresses';
+$this->title = 'Categories';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="address-index">
+<div class="category-index">
 
     <h1 class="page-header"><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Address', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Category', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <div class="panel panel-default">
         <div class="panel-heading">
             index
             <p class="pull-right">
-                <?= Html::a('Create Address', ['create'], ['class' => 'btn btn-success btn-xs']) ?>
+                <?= Html::a('Create Category', ['create'], ['class' => 'btn btn-success btn-xs']) ?>
             </p>
         </div>
         <div class="panel-body">
@@ -33,18 +33,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filterModel' => $searchModel,
 				'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-					'addressId',
-					'userId',
-					'company',
-					'tax',
-					'address:ntext',
-					// 'countryId',
-					// 'provinceId',
-					// 'amphurId',
-					// 'zipcode',
-					// 'tel',
-					// 'type',
-					// 'status',
+					'categoryId',
+					'title',
+					'description:ntext',
+					'parentId',
+					'status',
 					// 'createDateTime',
 					// 'updateDateTime',
 

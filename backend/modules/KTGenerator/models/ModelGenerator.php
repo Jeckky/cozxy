@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: npr
@@ -11,9 +10,9 @@ namespace backend\modules\KTGenerator\models;
 
 use yii\base\Model;
 
+
 class ModelGenerator extends Model
 {
-
     public $dbName;
     public $nameSpace;
     public $folderName;
@@ -34,5 +33,4 @@ class ModelGenerator extends Model
             [['dbName', 'nameSpace', 'folderName'], 'required'],
         ];
     }
-
 }

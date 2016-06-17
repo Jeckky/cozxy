@@ -7,10 +7,8 @@ namespace backend\modules\KTGenerator;
  */
 class KTGenerator extends \yii\base\Module
 {
-
     public $newFileMode = 0666;
     public $newDirMode = 0777;
-
     /**
      * @inheritdoc
      */
@@ -25,5 +23,4 @@ class KTGenerator extends \yii\base\Module
 
         // custom initialization code goes here
     }
-
 }

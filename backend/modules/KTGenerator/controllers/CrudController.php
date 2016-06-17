@@ -3,17 +3,23 @@
 namespace backend\modules\KTGenerator\controllers;
 
 use backend\modules\KTGenerator\models\CrudGenerator;
-use yii\gii\generators\crud\Generator;
+//use yii\gii\generators\crud\Generator;
+use backend\modules\KTGenerator\gii\templates\crud\Generator;
+use Yii;
 
 class CrudController extends \yii\web\Controller
 {
-
     public function actionIndex()
     {
         $model = new CrudGenerator();
         $tables = [];
 
         if (isset($_POST['CrudGenerator'])) {
+
+            $handle = fopen('/tmp/crud_costfit', 'w+');
+            fwrite($handle, print_r($_POST['CrudGenerator'], true));
+            fclose($handle);
+
             $modelPath = \Yii::getAlias($_POST['CrudGenerator']['modelPath']);
             $modelNameSpace = $_POST['CrudGenerator']['modelNamespace'];
             $controllerNameSpace = $_POST['CrudGenerator']['controllerNamespace'];
@@ -29,7 +35,7 @@ class CrudController extends \yii\web\Controller
 
                 $modelClass = $modelNameSpace . '\\' . $modelName;
                 $controllerClass = $controllerNameSpace . '\\' . $modelName . 'Controller';
-                $searchModelClass = $modelNameSpace . '\search\\' . $modelName;
+                $searchModelClass = $modelNameSpace.'\search\\'.$modelName;
 //                echo $modelClass . '<br />';
 //                echo $controllerClass . '<br />';
 
@@ -39,6 +45,8 @@ class CrudController extends \yii\web\Controller
                 $generator->baseControllerClass = $_POST['CrudGenerator']['baseControllerClass'];
                 $generator->enablePjax = 1;
                 $generator->searchModelClass = $searchModelClass;
+                $generator->templates['backend'] = Yii::getAlias('@backend/modules/KTGenerator/gii/templates/crud/backend');
+                $generator->template = 'backend';
 
                 $fs = $generator->generate();
                 $answers = [];
@@ -54,6 +62,8 @@ class CrudController extends \yii\web\Controller
                         'searchModelClass' => $searchModelClass,
                     ];
                 }
+
+
             }
         }
 

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: npr
@@ -11,9 +10,9 @@ namespace backend\modules\KTGenerator\models;
 
 use yii\base\Model;
 
+
 class CrudGenerator extends Model
 {
-
     public $modelPath;
     public $modelNamespace;
     public $controllerNamespace;
@@ -24,12 +23,12 @@ class CrudGenerator extends Model
     public function attributeLabels()
     {
         return [
-            'modelPath' => 'Model Path',
-            'modelNamespace' => 'Model Namespace',
-            'controllerNamespace' => 'Controller Namespace',
-            'baseControllerClass' => 'Base Controller Class',
-            'widget' => 'Widget',
-            'templates' => 'Templates',
+            'modelPath'=>'Model Path',
+            'modelNamespace'=>'Model Namespace',
+            'controllerNamespace'=>'Controller Namespace',
+            'baseControllerClass'=>'Base Controller Class',
+            'widget'=>'Widget',
+            'templates'=>'Templates',
         ];
     }
 
@@ -39,5 +38,4 @@ class CrudGenerator extends Model
             [['modelPath', 'modelNamespace', 'controllerNamespace'], 'required'],
         ];
     }
-
 }
