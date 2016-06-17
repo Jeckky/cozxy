@@ -1,4 +1,5 @@
 <?php
+
 namespace backend\controllers;
 
 use Yii;
@@ -10,36 +11,36 @@ use common\models\LoginForm;
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends \backend\controllers\BackendMasterController
 {
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['login', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }
+//    public function behaviors()
+//    {
+//        return [
+//            'access' => [
+//                'class' => AccessControl::className(),
+//                'rules' => [
+//                    [
+//                        'actions' => ['login', 'error'],
+//                        'allow' => true,
+//                    ],
+//                    [
+//                        'actions' => ['logout', 'index'],
+//                        'allow' => true,
+//                        'roles' => ['@'],
+//                    ],
+//                ],
+//            ],
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'logout' => ['post'],
+//                ],
+//            ],
+//        ];
+//    }
 
     /**
      * @inheritdoc
@@ -80,4 +81,21 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
+
+    public function actionProduct($id)
+    {
+        $product = \common\models\costfit\search\Product::find()->where("categoryId =" . $id);
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => $product,
+        ]);
+
+        return $this->render('_index_product', compact('dataProvider'));
+    }
+
+    public function actionProductView($id)
+    {
+        $model = \common\models\costfit\search\Product::find()->where("productId = " . $id)->one();
+        return $this->render('_product_view', compact('model'));
+    }
+
 }

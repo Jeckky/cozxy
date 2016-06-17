@@ -1,0 +1,71 @@
+<?php
+
+namespace common\models\costfit\master;
+
+use Yii;
+
+/**
+* This is the model class for table "product_image".
+*
+    * @property string $productImageId
+    * @property string $productId
+    * @property string $title
+    * @property string $description
+    * @property string $image
+    * @property integer $status
+    * @property string $createDateTime
+    * @property string $updateDateTime
+    *
+            * @property Product $product
+    */
+class ProductImageMaster extends \common\models\ModelMaster
+{
+/**
+* @inheritdoc
+*/
+public static function tableName()
+{
+return 'product_image';
+}
+
+/**
+* @inheritdoc
+*/
+public function rules()
+{
+return [
+            [['productId', 'title', 'createDateTime'], 'required'],
+            [['productId', 'status'], 'integer'],
+            [['description'], 'string'],
+            [['createDateTime', 'updateDateTime'], 'safe'],
+            [['title'], 'string', 'max' => 200],
+            [['image'], 'string', 'max' => 255],
+            [['productId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductMaster::className(), 'targetAttribute' => ['productId' => 'productId']],
+        ];
+}
+
+/**
+* @inheritdoc
+*/
+public function attributeLabels()
+{
+return [
+    'productImageId' => Yii::t('product_image', 'Product Image ID'),
+    'productId' => Yii::t('product_image', 'Product ID'),
+    'title' => Yii::t('product_image', 'Title'),
+    'description' => Yii::t('product_image', 'Description'),
+    'image' => Yii::t('product_image', 'Image'),
+    'status' => Yii::t('product_image', 'Status'),
+    'createDateTime' => Yii::t('product_image', 'Create Date Time'),
+    'updateDateTime' => Yii::t('product_image', 'Update Date Time'),
+];
+}
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getProduct()
+    {
+    return $this->hasOne(ProductMaster::className(), ['productId' => 'productId']);
+    }
+}
