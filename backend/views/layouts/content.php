@@ -47,6 +47,15 @@ use yii\widgets\Breadcrumbs;
                     ['label' => 'Category', 'url' => ['/product/category']],
                     ['label' => 'Product Group', 'url' => ['/product/product-group']],
                     ['label' => 'Product', 'url' => ['/product/product']],
+                    ['label' => 'Unit', 'url' => ['/product/unit']],
+                ],
+            ],
+            [
+                'label' => 'Shipping',
+                'items' => [
+                    '<li class="dropdown-header">Package</li>',
+                    ['label' => 'Package', 'url' => ['/shipping/package']],
+                    ['label' => 'Package Type', 'url' => ['/shipping/package-type']],
                 ],
             ],
         ],

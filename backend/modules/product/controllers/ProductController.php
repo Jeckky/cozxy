@@ -27,14 +27,36 @@ class ProductController extends BackendMasterController
         ];
     }
 
+    public function beforeAction($action)
+    {
+        if ($action->id == 'index') {
+            $this->enableCsrfValidation = false;
+        }
+
+        return parent::beforeAction($action);
+    }
+
     /**
      * Lists all Product models.
      * @return mixed
      */
     public function actionIndex()
     {
+        $model = new Product();
+        $query = Product::find();
+        if (isset($_POST['Product'])) {
+            foreach ($_POST['Product'] as $k => $v) {
+                if (isset($v) & !empty($v)) {
+                    if ($k == 'title') {
+                        $query->andWhere("lower($k) like '%" . strtolower($v) . "%'");
+                    } else {
+                        $query->andWhere("$k =" . $v);
+                    }
+                }
+            }
+        }
         $dataProvider = new ActiveDataProvider([
-            'query' => Product::find(),
+            'query' => $query,
         ]);
 
         return $this->render('index', [

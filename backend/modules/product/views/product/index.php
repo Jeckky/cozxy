@@ -16,6 +16,30 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-default">
+        <div class="well">
+            <form method="post">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3>Search</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <?= Html::dropDownList("Product[brandId]", isset($_POST["Product"]['brandId']) ? $_POST["Product"]['brandId'] : NULL, yii\helpers\ArrayHelper::map(\common\models\costfit\Brand::find()->all(), "brandId", "title"), ['class' => 'form-control', 'prompt' => '-- Select Brand --']) ?>
+                    </div>
+                    <div class="col-lg-3">
+                        <?= Html::dropDownList("Product[categoryId]", isset($_POST["Product"]['categoryId']) ? $_POST["Product"]['categoryId'] : NULL, yii\helpers\ArrayHelper::map(\common\models\costfit\Category::find()->all(), "categoryId", "title"), ['class' => 'form-control', 'prompt' => '-- Select Category --']) ?>
+                    </div>
+                    <div class="col-lg-3">
+                        <?= Html::textInput("Product[title]", isset($_POST["Product"]['title']) ? $_POST["Product"]['title'] : NULL, ['class' => 'form-control', 'placeHolder' => 'Type Product Name..']) ?>
+                    </div>
+                    <div class="col-lg-2">
+                        <?= Html::submitButton("Search", ['class' => 'btn btn-primary']) ?>
+                    </div>
+                </div>
+            </form>
+        </div>
+
         <div class="panel-heading">
             <div class="row">
                 <div class="col-md-6"><?= $this->title ?></div>
@@ -26,7 +50,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 </div>
             </div>
         </div>
+
         <div class="panel-body">
+
             <?=
             GridView::widget([
                 'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",

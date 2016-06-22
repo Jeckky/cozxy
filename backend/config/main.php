@@ -22,6 +22,9 @@ return [
         'product' => [
             'class' => 'backend\modules\product\Product',
         ],
+        'shipping' => [
+            'class' => 'backend\modules\shipping\Shipping',
+        ],
         'redactor' => [
             'class' => 'yii\redactor\RedactorModule',
             'uploadDir' => Yii::$app->basePath . '/web/images',
