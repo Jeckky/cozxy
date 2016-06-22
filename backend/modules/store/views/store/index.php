@@ -47,18 +47,18 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     // 'updateDateTime',
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
-                        'template' => '{view} {update} {delete} {location} {slot}',
+                        'template' => '{view} {update} {delete} {product} {location} {shelf}',
                         'buttons' => [
                             'location' => function($url, $model) {
                                 return Html::a('<br><u>Location</u>', ['/store/store-location', 'storeId' => $model->storeId], [
                                     'title' => Yii::t('app', 'Change today\'s lists'),]);
                             },
-//                            'product' => function($url, $model) {
-//                                return Html::a('<br><u>Product</u>', ['/store/store-product-group', 'storeId' => $model->storeId], [
-//                                    'title' => Yii::t('app', 'Change today\'s lists'),]);
-//                            },
-                            'slot' => function($url, $model) {
-                                return Html::a('<br><u>Slot</u>', ['/store/store-slot', 'storeId' => $model->storeId], [
+                            'product' => function($url, $model) {
+                                return Html::a('<br><u>Product</u>', ['/store/store-product', 'storeId' => $model->storeId], [
+                                    'title' => Yii::t('app', 'Change today\'s lists'),]);
+                            },
+                            'shelf' => function($url, $model) {
+                                return Html::a('<br><u>Shelf</u>', ['/store/store-slot', 'storeId' => $model->storeId], [
                                     'title' => Yii::t('app', 'Change today\'s lists'),]);
                             },
                         ]

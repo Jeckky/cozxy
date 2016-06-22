@@ -34,7 +34,7 @@ class ProductImageController extends BackendMasterController
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => ProductImage::find(),
+            'query' => ProductImage::find()->where("productId =" . $_GET["productId"]),
         ]);
 
         return $this->render('index', [
@@ -62,6 +62,9 @@ class ProductImageController extends BackendMasterController
     public function actionCreate()
     {
         $model = new ProductImage();
+        if (isset($_GET['productId'])) {
+            $model->productId = $_GET["productId"];
+        }
         if (isset($_POST["ProductImage"])) {
             $model->attributes = $_POST["ProductImage"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
@@ -82,7 +85,7 @@ class ProductImageController extends BackendMasterController
                 if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
                     //Do Some Thing
                 }
-                return $this->redirect(['index']);
+                return $this->redirect(['index?productId=' . $model->productId]);
             }
         }
         return $this->render('create', [
@@ -126,7 +129,7 @@ class ProductImageController extends BackendMasterController
                 if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
                     //Do Some Thing
                 }
-                return $this->redirect(['index']);
+                return $this->redirect(['index?productId=' . $model->productId]);
             }
         }
         return $this->render('update', [

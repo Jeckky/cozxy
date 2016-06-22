@@ -34,7 +34,7 @@ class StoreProductController extends BackendMasterController
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => StoreProduct::find(),
+            'query' => StoreProduct::find()->where("storeId=" . $_GET["storeId"]),
         ]);
 
         return $this->render('index', [
@@ -62,6 +62,9 @@ class StoreProductController extends BackendMasterController
     public function actionCreate()
     {
         $model = new StoreProduct();
+        if (isset($_GET["storeId"])) {
+            $model->storeId = $_GET["storeId"];
+        }
         if (isset($_POST["StoreProduct"])) {
             $model->attributes = $_POST["StoreProduct"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
@@ -69,7 +72,7 @@ class StoreProductController extends BackendMasterController
 
             if ($model->save()) {
                 $this->updateStoreProductGroupSummary($model->storeProductGroupId);
-                return $this->redirect(['index']);
+                return $this->redirect(['index?storeId=' . $model->storeId]);
             }
         }
         return $this->render('create', [
@@ -93,7 +96,7 @@ class StoreProductController extends BackendMasterController
 
             if ($model->save()) {
                 $this->updateStoreProductGroupSummary($model->storeProductGroupId);
-                return $this->redirect(['index']);
+                return $this->redirect(['index?storeId=' . $model->storeId]);
             }
         }
         return $this->render('update', [
