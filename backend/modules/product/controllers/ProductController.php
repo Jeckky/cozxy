@@ -1,18 +1,18 @@
 <?php
 
-namespace backend\modules\store\controllers;
+namespace backend\modules\product\controllers;
 
 use Yii;
-use common\models\costfit\StoreProduct;
+use common\models\costfit\Product;
 use yii\data\ActiveDataProvider;
 use backend\controllers\BackendMasterController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * StoreProductController implements the CRUD actions for StoreProduct model.
+ * ProductController implements the CRUD actions for Product model.
  */
-class StoreProductController extends BackendMasterController
+class ProductController extends BackendMasterController
 {
 
     public function behaviors()
@@ -28,22 +28,13 @@ class StoreProductController extends BackendMasterController
     }
 
     /**
-     * Lists all StoreProduct models.
+     * Lists all Product models.
      * @return mixed
      */
     public function actionIndex()
     {
-        if (isset($_GET["storeId"])) {
-            $query = StoreProduct::find()->where("storeId=" . $_GET["storeId"]);
-        } else {
-            if (isset($_GET['storeProductGroupId'])) {
-                $query = StoreProduct::find()->where("storeProductGroupId=" . $_GET["storeProductGroupId"]);
-            } else {
-                $query = StoreProduct::find();
-            }
-        }
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query' => Product::find(),
         ]);
 
         return $this->render('index', [
@@ -52,7 +43,7 @@ class StoreProductController extends BackendMasterController
     }
 
     /**
-     * Displays a single StoreProduct model.
+     * Displays a single Product model.
      * @param string $id
      * @return mixed
      */
@@ -64,24 +55,18 @@ class StoreProductController extends BackendMasterController
     }
 
     /**
-     * Creates a new StoreProduct model.
+     * Creates a new Product model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new StoreProduct();
-        if (isset($_GET["storeId"])) {
-            $model->storeId = $_GET["storeId"];
-        }
-        if (isset($_POST["StoreProduct"])) {
-            $model->attributes = $_POST["StoreProduct"];
+        $model = new Product();
+        if (isset($_POST["Product"])) {
+            $model->attributes = $_POST["Product"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
-            $model->total = $model->quantity * $model->price;
-
             if ($model->save()) {
-                $this->updateStoreProductGroupSummary($model->storeProductGroupId);
-                return $this->redirect(['index?storeId=' . $model->storeId]);
+                return $this->redirect(['index']);
             }
         }
         return $this->render('create', [
@@ -90,7 +75,7 @@ class StoreProductController extends BackendMasterController
     }
 
     /**
-     * Updates an existing StoreProduct model.
+     * Updates an existing Product model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -98,14 +83,14 @@ class StoreProductController extends BackendMasterController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if (isset($_POST["StoreProduct"])) {
-            $model->attributes = $_POST["StoreProduct"];
+        if (isset($_POST["Product"])) {
+            $model->attributes = $_POST["Product"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-            $model->total = $model->quantity * $model->price;
+
+
 
             if ($model->save()) {
-                $this->updateStoreProductGroupSummary($model->storeProductGroupId);
-                return $this->redirect(['index?storeId=' . $model->storeId]);
+                return $this->redirect(['index']);
             }
         }
         return $this->render('update', [
@@ -114,7 +99,7 @@ class StoreProductController extends BackendMasterController
     }
 
     /**
-     * Deletes an existing StoreProduct model.
+     * Deletes an existing Product model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -127,30 +112,19 @@ class StoreProductController extends BackendMasterController
     }
 
     /**
-     * Finds the StoreProduct model based on its primary key value.
+     * Finds the Product model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return StoreProduct the loaded model
+     * @return Product the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = StoreProduct::findOne($id)) !== null) {
+        if (($model = Product::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-
-    public function updateStoreProductGroupSummary($productStoreGroupId)
-    {
-        $summary = 0;
-        $stg = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId =" . $productStoreGroupId)->one();
-        foreach ($stg->storeProducts as $sp) {
-            $summary+= $sp->total;
-        }
-        $stg->summary = $summary;
-        $stg->save();
     }
 
 }

@@ -23,22 +23,30 @@ use yii\widgets\Breadcrumbs;
             [
                 'label' => 'Store',
                 'items' => [
-                    '<li class="divider"></li>',
                     '<li class="dropdown-header">Store</li>',
                     ['label' => 'Store', 'url' => ['/store/store']],
                     ['label' => 'Import Product', 'url' => ['/store/store-product-group']],
-                    '<li class="divider"></li>',
-                    '<li class="dropdown-header">Product</li>',
-                    ['label' => 'Brand', 'url' => ['/store/brand']],
-                    ['label' => 'Category', 'url' => ['/store/category']],
-                    ['label' => 'Product Group', 'url' => ['/store/product-group']],
-                    ['label' => 'Product', 'url' => ['/store/product']],
 //                    ['label' => 'Project Asset', 'url' => ['/project/project-asset']],
                     '<li class="divider"></li>',
                     '<li class="dropdown-header">Location</li>',
                     ['label' => 'Region', 'url' => ['/store/region']],
+                ],
+            ],
+            [
+                'label' => 'Supplier',
+                'items' => [
                     '<li class="dropdown-header">Supplier</li>',
-                    ['label' => 'Supplier', 'url' => ['/store/supplier']],
+                    ['label' => 'Supplier', 'url' => ['/supplier/supplier']],
+                ],
+            ],
+            [
+                'label' => 'Product',
+                'items' => [
+                    '<li class="dropdown-header">Product</li>',
+                    ['label' => 'Brand', 'url' => ['/product/brand']],
+                    ['label' => 'Category', 'url' => ['/product/category']],
+                    ['label' => 'Product Group', 'url' => ['/product/product-group']],
+                    ['label' => 'Product', 'url' => ['/product/product']],
                 ],
             ],
         ],

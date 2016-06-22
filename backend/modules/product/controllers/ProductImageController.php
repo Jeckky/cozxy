@@ -1,18 +1,18 @@
 <?php
 
-namespace backend\modules\store\controllers;
+namespace backend\modules\product\controllers;
 
 use Yii;
-use common\models\costfit\Category;
+use common\models\costfit\ProductImage;
 use yii\data\ActiveDataProvider;
 use backend\controllers\BackendMasterController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CategoryController implements the CRUD actions for Category model.
+ * ProductImageController implements the CRUD actions for ProductImage model.
  */
-class CategoryController extends BackendMasterController
+class ProductImageController extends BackendMasterController
 {
 
     public function behaviors()
@@ -28,13 +28,13 @@ class CategoryController extends BackendMasterController
     }
 
     /**
-     * Lists all Category models.
+     * Lists all ProductImage models.
      * @return mixed
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Category::find(),
+            'query' => ProductImage::find()->where("productId =" . $_GET["productId"]),
         ]);
 
         return $this->render('index', [
@@ -43,7 +43,7 @@ class CategoryController extends BackendMasterController
     }
 
     /**
-     * Displays a single Category model.
+     * Displays a single ProductImage model.
      * @param string $id
      * @return mixed
      */
@@ -55,19 +55,22 @@ class CategoryController extends BackendMasterController
     }
 
     /**
-     * Creates a new Category model.
+     * Creates a new ProductImage model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Category();
-        if (isset($_POST["Category"])) {
-            $model->attributes = $_POST["Category"];
+        $model = new ProductImage();
+        if (isset($_GET['productId'])) {
+            $model->productId = $_GET["productId"];
+        }
+        if (isset($_POST["ProductImage"])) {
+            $model->attributes = $_POST["ProductImage"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
-            $imageObj = \yii\web\UploadedFile::getInstanceByName("Category[image]");
+            $imageObj = \yii\web\UploadedFile::getInstanceByName("ProductImage[image]");
             if (isset($imageObj) && !empty($imageObj)) {
-                $folderName = "Category";
+                $folderName = "ProductImage";
                 $file = $imageObj->name;
                 $filenameArray = explode('.', $file);
                 $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
@@ -82,7 +85,7 @@ class CategoryController extends BackendMasterController
                 if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
                     //Do Some Thing
                 }
-                return $this->redirect(['index']);
+                return $this->redirect(['index?productId=' . $model->productId]);
             }
         }
         return $this->render('create', [
@@ -91,7 +94,7 @@ class CategoryController extends BackendMasterController
     }
 
     /**
-     * Updates an existing Category model.
+     * Updates an existing ProductImage model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -99,12 +102,13 @@ class CategoryController extends BackendMasterController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if (isset($_POST["Category"])) {
-            $model->attributes = $_POST["Category"];
+        if (isset($_POST["ProductImage"])) {
+            $model->attributes = $_POST["ProductImage"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-            $imageObj = \yii\web\UploadedFile::getInstanceByName("Category[image]");
+
+            $imageObj = \yii\web\UploadedFile::getInstanceByName("ProductImage[image]");
             if (isset($imageObj) && !empty($imageObj)) {
-                $folderName = "Category";
+                $folderName = "ProductImage";
                 $file = $imageObj->name;
                 $filenameArray = explode('.', $file);
                 $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
@@ -115,8 +119,8 @@ class CategoryController extends BackendMasterController
                     mkdir($urlFolder, 0777);
                 }
             } else {
-                if (isset($_POST["Category"]["imageOld"])) {
-                    $model->image = $_POST["Category"]["imageOld"];
+                if (isset($_POST["ProductImage"]["imageOld"])) {
+                    $model->image = $_POST["ProductImage"]["imageOld"];
                 }
             }
 
@@ -125,7 +129,7 @@ class CategoryController extends BackendMasterController
                 if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
                     //Do Some Thing
                 }
-                return $this->redirect(['index']);
+                return $this->redirect(['index?productId=' . $model->productId]);
             }
         }
         return $this->render('update', [
@@ -134,7 +138,7 @@ class CategoryController extends BackendMasterController
     }
 
     /**
-     * Deletes an existing Category model.
+     * Deletes an existing ProductImage model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -147,15 +151,15 @@ class CategoryController extends BackendMasterController
     }
 
     /**
-     * Finds the Category model based on its primary key value.
+     * Finds the ProductImage model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return Category the loaded model
+     * @return ProductImage the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Category::findOne($id)) !== null) {
+        if (($model = ProductImage::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

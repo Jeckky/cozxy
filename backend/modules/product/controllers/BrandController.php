@@ -1,18 +1,18 @@
 <?php
 
-namespace backend\modules\store\controllers;
+namespace backend\modules\product\controllers;
 
 use Yii;
-use common\models\costfit\ProductImage;
+use common\models\costfit\Brand;
 use yii\data\ActiveDataProvider;
 use backend\controllers\BackendMasterController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ProductImageController implements the CRUD actions for ProductImage model.
+ * BrandController implements the CRUD actions for Brand model.
  */
-class ProductImageController extends BackendMasterController
+class BrandController extends BackendMasterController
 {
 
     public function behaviors()
@@ -28,13 +28,13 @@ class ProductImageController extends BackendMasterController
     }
 
     /**
-     * Lists all ProductImage models.
+     * Lists all Brand models.
      * @return mixed
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => ProductImage::find()->where("productId =" . $_GET["productId"]),
+            'query' => Brand::find(),
         ]);
 
         return $this->render('index', [
@@ -43,7 +43,7 @@ class ProductImageController extends BackendMasterController
     }
 
     /**
-     * Displays a single ProductImage model.
+     * Displays a single Brand model.
      * @param string $id
      * @return mixed
      */
@@ -55,22 +55,19 @@ class ProductImageController extends BackendMasterController
     }
 
     /**
-     * Creates a new ProductImage model.
+     * Creates a new Brand model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new ProductImage();
-        if (isset($_GET['productId'])) {
-            $model->productId = $_GET["productId"];
-        }
-        if (isset($_POST["ProductImage"])) {
-            $model->attributes = $_POST["ProductImage"];
+        $model = new Brand();
+        if (isset($_POST["Brand"])) {
+            $model->attributes = $_POST["Brand"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
-            $imageObj = \yii\web\UploadedFile::getInstanceByName("ProductImage[image]");
+            $imageObj = \yii\web\UploadedFile::getInstanceByName("Brand[image]");
             if (isset($imageObj) && !empty($imageObj)) {
-                $folderName = "ProductImage";
+                $folderName = "Brand";
                 $file = $imageObj->name;
                 $filenameArray = explode('.', $file);
                 $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
@@ -85,7 +82,7 @@ class ProductImageController extends BackendMasterController
                 if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
                     //Do Some Thing
                 }
-                return $this->redirect(['index?productId=' . $model->productId]);
+                return $this->redirect(['index']);
             }
         }
         return $this->render('create', [
@@ -94,7 +91,7 @@ class ProductImageController extends BackendMasterController
     }
 
     /**
-     * Updates an existing ProductImage model.
+     * Updates an existing Brand model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -102,13 +99,13 @@ class ProductImageController extends BackendMasterController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if (isset($_POST["ProductImage"])) {
-            $model->attributes = $_POST["ProductImage"];
+        if (isset($_POST["Brand"])) {
+            $model->attributes = $_POST["Brand"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
 
-            $imageObj = \yii\web\UploadedFile::getInstanceByName("ProductImage[image]");
+            $imageObj = \yii\web\UploadedFile::getInstanceByName("Brand[image]");
             if (isset($imageObj) && !empty($imageObj)) {
-                $folderName = "ProductImage";
+                $folderName = "Brand";
                 $file = $imageObj->name;
                 $filenameArray = explode('.', $file);
                 $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
@@ -119,8 +116,8 @@ class ProductImageController extends BackendMasterController
                     mkdir($urlFolder, 0777);
                 }
             } else {
-                if (isset($_POST["ProductImage"]["imageOld"])) {
-                    $model->image = $_POST["ProductImage"]["imageOld"];
+                if (isset($_POST["Brand"]["imageOld"])) {
+                    $model->image = $_POST["Brand"]["imageOld"];
                 }
             }
 
@@ -129,7 +126,7 @@ class ProductImageController extends BackendMasterController
                 if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
                     //Do Some Thing
                 }
-                return $this->redirect(['index?productId=' . $model->productId]);
+                return $this->redirect(['index']);
             }
         }
         return $this->render('update', [
@@ -138,7 +135,7 @@ class ProductImageController extends BackendMasterController
     }
 
     /**
-     * Deletes an existing ProductImage model.
+     * Deletes an existing Brand model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -151,15 +148,15 @@ class ProductImageController extends BackendMasterController
     }
 
     /**
-     * Finds the ProductImage model based on its primary key value.
+     * Finds the Brand model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return ProductImage the loaded model
+     * @return Brand the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = ProductImage::findOne($id)) !== null) {
+        if (($model = Brand::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

@@ -87,15 +87,15 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'template' => '{view} {update} {delete} {image} {price} {promotion}',
                         'buttons' => [
                             'image' => function($url, $model) {
-                                return Html::a('<br><u>Image</u>', ['/store/product-image', 'productId' => $model->productId], [
+                                return Html::a('<br><u>Image</u>', ['/product/product-image', 'productId' => $model->productId], [
                                     'title' => Yii::t('app', 'Change today\'s lists'),]);
                             },
                             'price' => function($url, $model) {
-                                return Html::a('<br><u>Price</u>', ['/store/product-price', 'productId' => $model->productId], [
+                                return Html::a('<br><u>Price</u>', ['/product/product-price', 'productId' => $model->productId], [
                                     'title' => Yii::t('app', 'Change today\'s lists'),]);
                             },
                             'promotion' => function($url, $model) {
-                                return Html::a('<br><u>Promotion</u>', ['/store/product-promotion', 'productId' => $model->productId], [
+                                return Html::a('<br><u>Promotion</u>', ['/product/product-promotion', 'productId' => $model->productId], [
                                     'title' => Yii::t('app', 'Change today\'s lists'),]);
                             },]
                     ],

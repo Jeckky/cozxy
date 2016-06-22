@@ -50,7 +50,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     [
                         'attribute' => 'receiveDate',
                         'value' => function($model) {
-                            return $this->context->dateThai($model->receiveDate, 1);
+                            return (isset($model->receiveDate) && $model->receiveDate != '0000-00-00 00:00:00') ? $this->context->dateThai($model->receiveDate, 2) : NULL;
                         }
                     ],
                     [

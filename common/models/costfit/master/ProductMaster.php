@@ -12,6 +12,7 @@ use Yii;
     * @property string $productGroupId
     * @property string $brandId
     * @property string $categoryId
+    * @property string $isbn
     * @property string $code
     * @property string $title
     * @property string $optionName
@@ -52,8 +53,8 @@ public function rules()
 {
 return [
             [['userId', 'productGroupId', 'brandId', 'categoryId', 'status'], 'integer'],
+            [['isbn', 'shortDescription', 'description', 'specification'], 'string'],
             [['title', 'createDateTime'], 'required'],
-            [['shortDescription', 'description', 'specification'], 'string'],
             [['width', 'height', 'depth', 'weight'], 'number'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['code'], 'string', 'max' => 100],
@@ -75,6 +76,7 @@ return [
     'productGroupId' => Yii::t('product', 'Product Group ID'),
     'brandId' => Yii::t('product', 'Brand ID'),
     'categoryId' => Yii::t('product', 'Category ID'),
+    'isbn' => Yii::t('product', 'Isbn'),
     'code' => Yii::t('product', 'Code'),
     'title' => Yii::t('product', 'Title'),
     'optionName' => Yii::t('product', 'Option Name'),

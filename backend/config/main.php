@@ -16,6 +16,12 @@ return [
         'store' => [
             'class' => 'backend\modules\store\Store',
         ],
+        'supplier' => [
+            'class' => 'backend\modules\supplier\Supplier',
+        ],
+        'product' => [
+            'class' => 'backend\modules\product\Product',
+        ],
         'redactor' => [
             'class' => 'yii\redactor\RedactorModule',
             'uploadDir' => Yii::$app->basePath . '/web/images',
