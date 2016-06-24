@@ -13,12 +13,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <div class="product-group-index">
 
-    
+
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
-                <div class="col-md-6"><?=$this->title?></div>
+                <div class="col-md-6"><?= $this->title ?></div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
                         <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Product Group', ['create'], ['class' => 'btn btn-success btn-xs']) ?>
@@ -27,32 +27,33 @@ $this->params['pageHeader'] = Html::encode($this->title);
             </div>
         </div>
         <div class="panel-body">
-                            <?= GridView::widget([
+            <?=
+            GridView::widget([
                 'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
                 'dataProvider' => $dataProvider,
                 'pager' => [
-                'options' => ['class' => 'pagination pagination-xs']
+                    'options' => ['class' => 'pagination pagination-xs']
                 ],
                 'options' => [
-                'class' => 'table-light'
+                    'class' => 'table-light'
                 ],
                 'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
-
-                                            					'productGroupId',
-                                                        					'title',
-                                                        					'description:ntext',
-                                                        					'status',
-                                                        					'createDateTime',
-                            					// 'updateDateTime',
-                ['class' => 'yii\grid\ActionColumn',
-                'header'=>'Actions',
-                                'template' => '{view} {update} {delete}',
-                'buttons'=> []
+                    ['class' => 'yii\grid\SerialColumn'],
+//                    'productGroupId',
+                    'title',
+                    'description:ntext',
+                    'status',
+                    'createDateTime',
+                    // 'updateDateTime',
+                    ['class' => 'yii\grid\ActionColumn',
+                        'header' => 'Actions',
+                        'template' => '{view} {update} {delete}',
+                        'buttons' => []
+                    ],
                 ],
-                ],
-                ]); ?>
-                    </div>
+            ]);
+            ?>
+        </div>
     </div>
     <?php Pjax::end(); ?>
 </div>

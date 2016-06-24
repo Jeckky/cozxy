@@ -39,7 +39,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 ],
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    'supplierId',
                     'name',
                     'address:ntext',
                     'description:ntext',

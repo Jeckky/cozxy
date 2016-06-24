@@ -39,7 +39,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 ],
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    'regionId',
+                    [
+                        'attribute' => 'regionId',
+                        'value' => function($model) {
+                            return $model->region->title;
+                        }
+                    ],
                     'title',
                     'description:ntext',
                     'status',

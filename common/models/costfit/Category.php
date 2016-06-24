@@ -42,4 +42,16 @@ class Category extends \common\models\costfit\master\CategoryMaster
         return $this->hasMany(Category::className(), ['categoryId' => 'parentId']);
     }
 
+    public function getCategoryWithParentArray()
+    {
+        $res = [];
+        foreach ($this->find()->all() as $item) {
+            $title = $item->title;
+            for ($i = 1; $i <= 5; $i++) {
+
+            }
+        }
+        return $res;
+    }
+
 }
