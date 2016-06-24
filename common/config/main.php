@@ -14,20 +14,20 @@ return [
             ],
         // ...
         ],
-        'urlManagerFrontend' => [
-            'class' => 'yii\web\urlManager',
-            'baseUrl' => '/areawow-frontend',
-            'scriptUrl' => '/areawow-frontend/index.php',
-            'enablePrettyUrl' => true,
-            'showScriptName' => FALSE,
-        ],
-        'urlManagerBackend' => [
-            'class' => 'yii\web\urlManager',
-            'baseUrl' => '/areawow-backend',
-            'scriptUrl' => '/areawow-backend/index.php',
-            'enablePrettyUrl' => true,
-            'showScriptName' => FALSE,
-        ],
+//        'urlManagerFrontend' => [
+//            'class' => 'yii\web\urlManager',
+//            'baseUrl' => '/areawow-frontend',
+//            'scriptUrl' => '/areawow-frontend/index.php',
+//            'enablePrettyUrl' => true,
+//            'showScriptName' => FALSE,
+//        ],
+//        'urlManagerBackend' => [
+//            'class' => 'yii\web\urlManager',
+//            'baseUrl' => '/areawow-backend',
+//            'scriptUrl' => '/areawow-backend/index.php',
+//            'enablePrettyUrl' => true,
+//            'showScriptName' => FALSE,
+//        ],
         'i18n' => [
             'translations' => [
                 '*' => [

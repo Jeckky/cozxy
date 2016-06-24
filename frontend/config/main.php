@@ -28,14 +28,44 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
-        */
+        /**
+         * Theme
+         */
+        'view' => [
+            'theme' => [
+                'pathMap' => ['@app/views' => '@app/themes/costfit'],
+                'baseUrl' => '@web'
+            ]
+        ],
+        /**
+         * Assert Manager
+         */
+        'assetManager' => [
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'js' => [],
+                    'depends'=>['\frontend\assets\CostfitAsset']
+                ],
+                'yii\bootstrap\BootstrapPluginAsset' => [
+                    'js' => []
+                ],
+                'yii\bootstrap\BootstrapAsset' => [
+                    'css' => [],
+                    'js' => []
+                ],
+                'yii\web\YiiAsset' => [
+                    'depends' => [
+                        'frontend\assets\CostfitAsset',
+                    ]
+                ]
+            ],
+        ],
     ],
     'params' => $params,
 ];
