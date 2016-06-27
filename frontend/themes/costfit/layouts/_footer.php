@@ -2,6 +2,60 @@
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
+
+<!--Sticky Buttons-->
+<div class="sticky-btns">
+    <form class="quick-contact ajax-form" method="post" name="quick-contact">
+        <h3>Contact us</h3>
+        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do.</p>
+        <div class="form-group">
+            <label for="qc-name">Full name</label>
+            <input class="form-control input-sm" type="text" name="name" id="qc-name" placeholder="Enter full name">
+        </div>
+        <div class="form-group">
+            <label for="qc-email">Email</label>
+            <input class="form-control input-sm" type="email" name="email" id="qc-email" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+            <label for="qc-message">Your message</label>
+            <textarea class="form-control input-sm" name="message" id="qc-message" placeholder="Enter your message"></textarea>
+        </div>
+        <!-- Validation Response -->
+        <div class="response-holder"></div>
+        <!-- Response End -->
+        <input class="btn btn-black btn-sm btn-block" type="submit" value="Send">
+    </form>
+    <span id="qcf-btn"><i class="fa fa-envelope"></i></span>
+    <span id="scrollTop-btn"><i class="fa fa-chevron-up"></i></span>
+</div><!--Sticky Buttons Close-->
+
+<!--Subscription Widget-->
+<section class="subscr-widget gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-md-8 col-sm-8">
+                <h2>Subscribe to our news</h2>
+                <form class="subscr-form" role="form" autocomplete="off">
+                    <div class="form-group">
+                        <label class="sr-only" for="subscr-name">Enter name</label>
+                        <input type="text" class="form-control" name="subscr-name" id="subscr-name" placeholder="Enter name" required>
+                        <button class="subscr-next"><i class="icon-arrow-right"></i></button>
+                    </div>
+                    <div class="form-group fff" style="display: none">
+                        <label class="sr-only" for="subscr-email">Enter email</label>
+                        <input type="email" class="form-control" name="subscr-email" id="subscr-email" placeholder="Enter email" required>
+                        <button type="submit" id="subscr-submit"><i class="icon-check"></i></button>
+                    </div>
+                </form>
+                <p class="p-style2">Please fill the field before continuing</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-1">
+                <p class="p-style3">Get more followers. In case of high quality newsletters the customers return rate can increase up to 20%! Have you already estimated your possible income? We took that into account and created a decent subscription form. </p>
+            </div>
+        </div>
+    </div>
+</section><!--Subscription Widget Close-->
+
 <!--Footer-->
 <footer class="footer">
     <div class="container">
