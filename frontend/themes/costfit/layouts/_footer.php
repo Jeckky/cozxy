@@ -1,10 +1,14 @@
+<?php
+$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
+$baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+?>
 <!--Footer-->
 <footer class="footer">
     <div class="container">
         <div class="row">
             <div class="col-lg-5 col-md-5 col-sm-5">
                 <div class="info">
-                    <a class="logo" href="index.html"><img src="img/logo-footer.png" alt="Limo"/></a>
+                    <a class="logo" href="index.html"><img src="<?php echo $directoryAsset; ?>/img/logo-footer.png" alt="Limo"/></a>
                     <p>Describe the mission of your online store and the advantages a customer can get once he makes a
                         purchase. If you have something to tell let customers know about it.</p>
                     <div class="social">
@@ -45,11 +49,11 @@
                 </div>
                 <div class="col-lg-5 col-md-5 col-sm-5">
                     <div class="payment">
-                        <img src="img/payment/visa.png" alt="Visa"/>
-                        <img src="img/payment/paypal.png" alt="PayPal"/>
-                        <img src="img/payment/master.png" alt="Master Card"/>
-                        <img src="img/payment/discover.png" alt="Discover"/>
-                        <img src="img/payment/amazon.png" alt="Amazon"/>
+                        <img src="<?php echo $directoryAsset; ?>/img/payment/visa.png" alt="Visa"/>
+                        <img src="<?php echo $directoryAsset; ?>/img/payment/paypal.png" alt="PayPal"/>
+                        <img src="<?php echo $directoryAsset; ?>/img/payment/master.png" alt="Master Card"/>
+                        <img src="<?php echo $directoryAsset; ?>/img/payment/discover.png" alt="Discover"/>
+                        <img src="<?php echo $directoryAsset; ?>/img/payment/amazon.png" alt="Amazon"/>
                     </div>
                 </div>
             </div>

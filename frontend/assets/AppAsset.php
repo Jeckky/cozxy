@@ -7,8 +7,8 @@ use yii\web\AssetBundle;
 /**
  * Main frontend application asset bundle.
  */
-class AppAsset extends AssetBundle
-{
+class AppAsset extends AssetBundle {
+
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
@@ -17,9 +17,10 @@ class AppAsset extends AssetBundle
     public $js = [
     ];
     public $depends = [
-        'frontend\assets\CostfitAsset',
-        'frontend\assets\CostfitHeadAsset',
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
+        'frontend\assets\CostfitHeadAsset',
+        'frontend\assets\CostfitAsset',
     ];
+
 }
