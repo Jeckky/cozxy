@@ -49,7 +49,7 @@ class CostfitAsset extends AssetBundle {
     ];
     public $js = [
 
-        'js/plugins/respond.js',
+
         'js/libs/jquery-1.11.1.min.js',
         'js/libs/jquery-ui-1.10.4.custom.min.js',
         'js/libs/jquery.easing.min.js',

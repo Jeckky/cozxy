@@ -16,14 +16,15 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class CostfitHeadAsset extends AssetBundle
-{
+class CostfitHeadAsset extends AssetBundle {
+
     public $jsOptions = ['position' => \yii\web\View::POS_HEAD];
     public $sourcePath = '@app/themes/costfit/assets';
     public $css = [
     ];
     public $js = [
         'js/libs/modernizr.custom.js',
+        'js/plugins/respond.js',
     ];
 
 }
