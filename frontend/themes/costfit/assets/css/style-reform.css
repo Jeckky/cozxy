@@ -29,12 +29,4 @@
     margin-bottom: 0;
 }
 
-.menu .catalog li .submenu .sub-submenu {
-    position: absolute;
-    display: none;
-    padding-left: 20px;
-    margin-top: 5px;
-    z-index: 5;
-    top: 0;
-    right: -195px;
-}
+
