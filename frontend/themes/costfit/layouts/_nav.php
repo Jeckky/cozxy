@@ -10,16 +10,16 @@
                 <li class="has-submenu"><a href="#">Categories<i class="fa fa-chevron-down"></i></a>
                     <ul class="submenu ">
                         <span class="offer">
-                            &nbsp; <p style="color: #fff;"> Test </p>
+                            &nbsp;
                         </span>
                         <li class="has-submenu"><a href="#">Grocery</a>
-                            <ul class="sub-submenu" style="display: inline-table;">
+                            <ul class="sub-submenu">
                                 <div class="form-group">
                                     <a href="#" class="menu-catalog-title-color" style="color: #000;">Beverages</a>
                                     <li><a href="#">coffee</a></li>
                                     <li><a href="#">Tea</a></li>
                                 </div>
-                                <div class="form-group" style="background-color: #000; width: 100%;">
+                                <div class="form-group" style="width: 100%;">
                                     <a href="#" class="menu-catalog-title-color"  style="color: #000;">Snack Foods</a>
                                     <li><a href="#">Chips & Pretzels</a></li>
                                     <li><a href="#">Cookies</a></li>
