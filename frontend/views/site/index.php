@@ -92,196 +92,49 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     </div>
 </section><!--Hero Slider Close-->
 
-<!--Categories-->
+<!--Saved Category-->
 <section class="cat-tiles">
     <div class="container">
-        <h2>Browse categories</h2>
+        <h2 class="dark-color">SAVE ON EVERYDAY ESSENTIALS</h2>
         <div class="row">
-            <!--Category-->
-            <div class="category col-lg-2 col-md-2 col-sm-4 col-xs-6">
-                <a href="#">
-                    <img src="<?php echo $directoryAsset; ?>/img/categories/1.png" alt="1"/>
-                    <p>Leather belt</p>
-                </a>
-            </div>
-            <!--Category-->
-            <div class="category col-lg-2 col-md-2 col-sm-4 col-xs-6">
-                <a href="#">
-                    <img src="<?php echo $directoryAsset; ?>/img/categories/1.png" alt="1"/>
-                    <p>Wallet</p>
-                </a>
-            </div>
-            <!--Category-->
-            <div class="category col-lg-2 col-md-2 col-sm-4 col-xs-6">
-                <a href="#">
-                    <img src="<?php echo $directoryAsset; ?>/img/categories/1.png" alt="1"/>
-                    <p>Gloves</p>
-                </a>
-            </div>
-            <!--Category-->
-            <div class="category col-lg-2 col-md-2 col-sm-4 col-xs-6">
-                <a href="#">
-                    <img src="<?php echo $directoryAsset; ?>/img/categories/1.png" alt="1"/>
-                    <p>City bag</p>
-                </a>
-            </div>
-            <!--Category-->
-            <div class="category col-lg-2 col-md-2 col-sm-4 col-xs-6">
-                <a href="#">
-                    <img src="<?php echo $directoryAsset; ?>/img/categories/1.png" alt="1"/>
-                    <p>Backpack</p>
-                </a>
-            </div>
-            <!--Category-->
-            <div class="category col-lg-2 col-md-2 col-sm-4 col-xs-6">
-                <a href="#">
-                    <img src="<?php echo $directoryAsset; ?>/img/categories/1.png" alt="1"/>
-                    <p>Belts</p>
-                </a>
-            </div>
+            <?php
+            echo \yii\widgets\ListView::widget([
+                'dataProvider' => $saveCat,
+                'itemView' => function ($model, $key, $index, $widget) {
+                    return $this->render('_save_cat', ['model' => $model]);
+                },
+                'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+//            'layout'=>"{summary}{pager}{items}"
+                'layout' => "{items}"
+            ])
+            ?>
         </div>
     </div>
-</section><!--Categories Close-->
+</section>
+<!--Saved Category Close-->
 
-<!--Catalog Grid-->
+<!--Popular Category-->
 <section class="catalog-grid">
     <div class="container">
-        <h2 class="dark-color">Catalog picks</h2>
+        <h2 class="dark-color">SHOP POPULAR CATEGORIES</h2>
         <div class="row">
-            <!--Tile-->
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="tile">
-                    <div class="badges">
-                        <span class="sale">Sale</span>
-                    </div>
-                    <div class="price-label">715,00 $</div>
-                    <a href="#">
-                        <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
-                        <span class="tile-overlay"></span>
-                    </a>
-                    <div class="footer">
-                        <a href="#">Smart Backpack</a>
-                        <span>by David Banks</span>
-                        <button class="btn btn-primary">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-            <!--Tile-->
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="tile">
-                    <div class="badges">
-                        <span class="out">Out</span>
-                    </div>
-                    <div class="price-label">715,00 $</div>
-                    <div class="price-label old-price">920,00 $</div>
-                    <a href="#">
-                        <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
-                        <span class="tile-overlay"></span>
-                    </a>
-                    <div class="footer">
-                        <a href="#">Two-tone leather shopper</a>
-                        <span>by Andy Shooter</span>
-                        <button class="btn btn-primary">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-            <!--Tile-->
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="tile">
-                    <div class="badges">
-                        <span class="best-seller">Best Seller</span>
-                    </div>
-                    <div class="price-label">715,00 $</div>
-                    <a href="#">
-                        <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
-                        <span class="tile-overlay"></span>
-                    </a>
-                    <div class="footer">
-                        <a href="#">Gussetted shopper bag</a>
-                        <span>by Choper Bar</span>
-                        <button class="btn btn-primary">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-            <!--Tile-->
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="tile">
-                    <div class="price-label">715,00 $</div>
-                    <a href="#">
-                        <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
-                        <span class="tile-overlay"></span>
-                    </a>
-                    <div class="footer">
-                        <a href="#">Mini shopper</a>
-                        <span>by David Choper</span>
-                        <button class="btn btn-primary">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-            <!--Tile-->
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="tile">
-                    <div class="price-label">715,00 $</div>
-                    <a href="#">
-                        <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
-                        <span class="tile-overlay"></span>
-                    </a>
-                    <div class="footer">
-                        <a href="#">Shopper with buckle</a>
-                        <span>by Ivan Tookle</span>
-                        <button class="btn btn-primary">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-            <!--Tile-->
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="tile">
-                    <div class="price-label">715,00 $</div>
-                    <div class="price-label old-price">920,00 $</div>
-                    <a href="#">
-                        <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
-                        <span class="tile-overlay"></span>
-                    </a>
-                    <div class="footer">
-                        <a href="#">City bag</a>
-                        <span>by Carol Flag</span>
-                        <button class="btn btn-primary">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-            <!--Tile-->
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="tile">
-                    <div class="price-label">715,00 $</div>
-                    <a href="#">
-                        <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
-                        <span class="tile-overlay"></span>
-                    </a>
-                    <div class="footer">
-                        <a href="#">Cheap Zip Bag</a>
-                        <span>by Aron Tag</span>
-                        <button class="btn btn-primary">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-            <!--Tile-->
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="tile">
-                    <div class="price-label">715,00 $</div>
-                    <a href="#">
-                        <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
-                        <span class="tile-overlay"></span>
-                    </a>
-                    <div class="footer">
-                        <a href="#">Leather bag with side pocket</a>
-                        <span>by Anna Canara</span>
-                        <button class="btn btn-primary">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
+            <?php
+            echo \yii\widgets\ListView::widget([
+                'dataProvider' => $popularCat,
+                'itemView' => function ($model, $key, $index, $widget) {
+                    return $this->render('_popular_cat', ['model' => $model]);
+                },
+                'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+//            'layout'=>"{summary}{pager}{items}"
+                'layout' => "{items}"
+            ])
+            ?>
         </div>
     </div>
 </section><!--Catalog Grid Close-->
+<!--Popular Category Close-->
+
+
 
 <!--Tabs Widget-->
 <section class="tabs-widget">

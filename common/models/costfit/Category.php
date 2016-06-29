@@ -54,4 +54,38 @@ class Category extends \common\models\costfit\master\CategoryMaster
         return $res;
     }
 
+    public static function findAllSaveCategory($returnType = 1, $isRandom = TRUE, $limit = 6)
+    {
+        if ($isRandom) {
+            $query = Category::find()->limit($limit)->orderBy(new \yii\db\Expression('rand()'));
+        } else {
+            $query = Category::find()->limit($limit);
+        }
+
+        if ($returnType == 1) {
+            return new \yii\data\ActiveDataProvider([
+                'query' => $query,
+            ]);
+        } else {
+            return $query->all();
+        }
+    }
+
+    public static function findAllPopularCategory($returnType = 1, $isRandom = TRUE, $limit = 6)
+    {
+        if ($isRandom) {
+            $query = Category::find()->limit($limit)->orderBy(new \yii\db\Expression('rand()'));
+        } else {
+            $query = Category::find()->limit($limit);
+        }
+
+        if ($returnType == 1) {
+            return new \yii\data\ActiveDataProvider([
+                'query' => $query,
+            ]);
+        } else {
+            return $query->all();
+        }
+    }
+
 }
