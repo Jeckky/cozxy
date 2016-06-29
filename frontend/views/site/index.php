@@ -72,7 +72,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <!--Slide 2-->
         <div class="ms-slide" data-delay="7">
             <span class="overlay"></span>
-            <img src="<?php echo $directoryAsset; ?>masterslider/blank.gif" data-src="<?php echo $directoryAsset; ?>/img/hero/slideshow/slide_2.jpg" alt="Necessaire"/>
+            <img src="<?php echo $directoryAsset; ?>/masterslider/blank.gif" data-src="<?php echo $directoryAsset; ?>/img/hero/slideshow/slide_2.jpg" alt="Necessaire"/>
             <h2 style="width: 456px; left: 110px; top: 110px;" class="dark-color ms-layer" data-effect="bottom(50,true)" data-duration="700" data-delay="250" data-ease="easeOutQuad">Necessaire</h2>
             <p style="width: 456px; left: 110px; top: 210px;" class="dark-color ms-layer" data-effect="bottom(50,true)" data-duration="700" data-delay="500" data-ease="easeOutQuad">In this slider (which works both on touch screen and desktop devices) you can change the title, the description and button texts. It's all that you need to demonstrate your top rated products. </p>
             <div style="left: 110px; top: 330px;" class="ms-layer button" data-effect="left(50,true)" data-duration="500" data-delay="750" data-ease="easeOutQuad"><a class="btn btn-black" href="#">Go to catalog</a></div>

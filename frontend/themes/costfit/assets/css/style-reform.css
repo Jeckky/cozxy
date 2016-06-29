@@ -1,0 +1,32 @@
+/*Create By Taninut.b
+
+.menu-catalog-title-color{
+    color: #000;
+}
+
+.menu .catalog li .submenu {
+
+    min-height: 500px;
+    max-height: 500px;
+    overflow-y: scroll;
+}*/
+
+
+.submenu{
+
+}
+.menu .catalog {
+    text-align: left;
+}
+
+.catalog {
+    display: block;
+    list-style: none;
+    text-align: right;
+    width: 100%;
+    max-width: 948px;
+    margin-bottom: 0;
+
+}
+
+
