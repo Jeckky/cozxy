@@ -150,7 +150,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             </div>
                         </div>
                         <div class="tab-pane fade" id="onsale">
-                            <div class="container"> 
+                            <div class="container">
                                 <?php for ($index1 = 0; $index1 <= 1; $index1++) {
                                     ?>
                                     <div class="row">
@@ -180,6 +180,34 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </div>
                 </section><!--Tabs Widget Close-->
 
+                <!--Features Tabs-->
+                <section class="feature-tabs">
+                    <div class="container">
+                        <div class="row">
+                            <div class="tabs-content col-lg-6 col-md-6">
+                                <div class="tabs-pane current" id="tab-1">
+                                    <h2 class="title-head">
+                                        How Cost.Fit Works
+                                    </h2>
+                                    <p class="p-style3">Outline the main advantages a one can get by purchasing a product from your store. Have you got expensive items and at the same time a flexible return policy? Make a customer aware of that! </p>
+                                </div>
+                                <div class="tabs-pane" id="tab-2">
+                                    <h2>High quality leather</h2>
+                                    <p class="p-style3">Outline the main advantages a one can get by purchasing a product from your store. Have you got expensive items and at the same time a flexible return policy? Make a customer aware of that! </p>
+                                </div>
+                                <div class="tabs-pane" id="tab-3">
+                                    <h2>Smart delivery transfer</h2>
+                                    <p class="p-style3">Outline the main advantages a one can get by purchasing a product from your store. Have you got expensive items and at the same time a flexible return policy? Make a customer aware of that! </p>
+                                </div>
+                            </div>
+                            <div class="tabs col-lg-6 col-md-6 group">
+                                <span class="tab active" data-tab="#tab-1"><i class="fa fa-archive"></i></span>
+                                <span class="tab" data-tab="#tab-2"><i class="fa fa-recycle"></i></span>
+                                <span class="tab" data-tab="#tab-3"><i class="fa fa-gift"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
                 <!--Brands Carousel Widget-->
                 <?php echo $this->render('@app/themes/costfit/layouts/_brand_carousel'); ?>
 <!--Brands Carousel Close-->
