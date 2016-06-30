@@ -1,9 +1,7 @@
 <?php
+
 $params = array_merge(
-    require(__DIR__ . '/../../common/config/params.php'),
-    require(__DIR__ . '/../../common/config/params-local.php'),
-    require(__DIR__ . '/params.php'),
-    require(__DIR__ . '/params-local.php')
+        require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
 );
 
 return [
@@ -50,7 +48,7 @@ return [
             'bundles' => [
                 'yii\web\JqueryAsset' => [
                     'js' => [],
-                    'depends'=>['\frontend\assets\CostfitAsset']
+                    'depends' => ['\frontend\assets\CostfitAsset']
                 ],
                 'yii\bootstrap\BootstrapPluginAsset' => [
                     'js' => []
