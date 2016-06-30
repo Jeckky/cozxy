@@ -9,7 +9,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i>
                 </button>
-                <h2><a href="<?php echo $baseUrl; ?>/register/login">Login</a> or <a href="<?php echo $baseUrl; ?>/register">Register</a></h2>
+                <h2><a href="<?php echo $baseUrl; ?>/register/login">Login</a> or <a href="<?php echo $baseUrl; ?>/register/login">Register</a></h2>
                 <p class="large">Use social accounts</p>
                 <div class="social-login">
                     <a class="facebook" href="#"><i class="fa fa-facebook-square"></i></a>
