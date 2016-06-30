@@ -108,7 +108,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         <a class="media-link" href="#">
                                             <div class="overlay">
                                                 <div class="descr"><div>Product Name<span>$14.95</span></div></div>
-                                            </div> 
+                                            </div>
                                             <img src="<?php echo $baseUrl; ?>/images/bestseller-items/1.jpg" alt="1" title="ขนาด 654 x 240"/>
                                         </a>
                                     </div>
@@ -150,43 +150,31 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             </div>
                         </div>
                         <div class="tab-pane fade" id="onsale">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                        <a class="media-link" href="#">
-                                            <div class="overlay">
-                                                <div class="descr"><div>Product Name<span>$14.95</span></div></div>
-                                            </div>
-                                            <img src="<?php echo $directoryAsset; ?>/img/media/6.jpg" alt="1"/>
-                                        </a>
+                            <div class="container"> 
+                                <?php for ($index1 = 0; $index1 <= 1; $index1++) {
+                                    ?>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <a class="media-link" href="#">
+                                                <div class="overlay">
+                                                    <div class="descr"><div>Product Name<span>$14.95</span></div></div>
+                                                </div>
+                                                <img src="<?php echo $baseUrl; ?>/images/bestseller-items/teniqa30_49a2502a5e21c.jpg" alt="1" title="ขนาด 555 x 245"/>
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <a class="media-link" href="#">
+                                                <div class="overlay">
+                                                    <div class="descr"><div>Product Name<span>$19.40</span></div></div>
+                                                </div>
+                                                <img src="<?php echo $baseUrl; ?>/images/bestseller-items/teniqa30_49a2502a5e21c.jpg" alt="1" title="ขนาด 555 x 245"/>
+                                            </a>
+                                        </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                        <a class="media-link" href="#">
-                                            <div class="overlay">
-                                                <div class="descr"><div>Product Name<span>$19.40</span></div></div>
-                                            </div>
-                                            <img src="<?php echo $directoryAsset; ?>/img/media/6.jpg" alt="2"/>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                        <a class="media-link" href="#">
-                                            <div class="overlay">
-                                                <div class="descr"><div>Product Name<span>$24.15</span></div></div>
-                                            </div>
-                                            <img src="<?php echo $directoryAsset; ?>/img/media/6.jpg" alt="3"/>
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                        <a class="media-link" href="#">
-                                            <div class="overlay">
-                                                <div class="descr"><div>Product Name<span>$24.15</span></div></div>
-                                            </div>
-                                            <img src="<?php echo $directoryAsset; ?>/img/media/6.jpg" alt="4"/>
-                                        </a>
-                                    </div>
-                                </div>
+                                    <?php
+                                    $index1 = $index1++;
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
