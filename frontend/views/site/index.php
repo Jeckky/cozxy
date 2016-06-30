@@ -108,9 +108,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         <a class="media-link" href="#">
                                             <div class="overlay">
                                                 <div class="descr"><div>Product Name<span>$14.95</span></div></div>
-                                            </div>
-                                            <!--<img src="<?php //echo $directoryAsset;            ?>/img/media/1.jpg" alt="1"/>-->
-                                            <img src="<?php echo $baseUrl; ?>/images/bestseller-items/1.jpg" alt="1"/>
+                                            </div> 
+                                            <img src="<?php echo $baseUrl; ?>/images/bestseller-items/1.jpg" alt="1" title="ขนาด 654 x 240"/>
                                         </a>
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
@@ -118,8 +117,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             <div class="overlay">
                                                 <div class="descr"><div>Product Name<span>$19.40</span></div></div>
                                             </div>
-                                            <!--<img src="<?php //echo $directoryAsset;            ?>/img/media/2.jpg" alt="2"/>-->
-                                            <img src="<?php echo $baseUrl; ?>/images/bestseller-items/2.jpg" alt="1" class="img-responsive"/>
+                                            <img src="<?php echo $baseUrl; ?>/images/bestseller-items/2.jpg" alt="1" class="img-responsive" title="ขนาด 457 x 240"/>
                                         </a>
                                     </div>
                                 </div>
@@ -129,8 +127,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             <div class="overlay">
                                                 <div class="descr"><div>Product Name<span>$24.15</span></div></div>
                                             </div>
-                                            <!--<img src="<?php //echo $directoryAsset;            ?>/img/media/3.jpg" alt="3"/>-->
-                                            <img src="<?php echo $baseUrl; ?>/images/bestseller-items/3.jpg" alt="1" class="img-responsive"/>
+                                            <img src="<?php echo $baseUrl; ?>/images/bestseller-items/3.jpg" alt="1" class="img-responsive" title="ขนาด 359 x 245"/>
                                         </a>
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
@@ -138,8 +135,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             <div class="overlay">
                                                 <div class="descr"><div>Product Name<span>$24.15</span></div></div>
                                             </div>
-                                            <!--<img src="<?php //echo $directoryAsset;            ?>/img/media/4.jpg" alt="4"/>-->
-                                            <img src="<?php echo $baseUrl; ?>/images/bestseller-items/4.jpg" alt="1" class="img-responsive"/>
+                                            <img src="<?php echo $baseUrl; ?>/images/bestseller-items/4.jpg" alt="1" class="img-responsive" title="ขนาด 457 x 245"/>
                                         </a>
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
@@ -147,8 +143,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             <div class="overlay">
                                                 <div class="descr"><div>Product Name<span>$24.15</span></div></div>
                                             </div>
-                                            <!--<img src="<?php echo $directoryAsset; ?>/img/media/5.jpg" alt="5"/>-->
-                                            <img src="<?php echo $baseUrl; ?>/images/bestseller-items/5.jpg" alt="1" class="img-responsive"/>
+                                            <img src="<?php echo $baseUrl; ?>/images/bestseller-items/5.jpg" alt="1" class="img-responsive" title="ขนาด 265 x 245"/>
                                         </a>
                                     </div>
                                 </div>
