@@ -81,9 +81,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         </div>
                     </div>
                 </section><!--Catalog Grid Close-->
-                <!--Popular Category Close-->
+                <!--Popular Category Close--> 
 
-
+                <section style="background-image: url('<?php echo $directoryAsset; ?>/img/6461f19706a949f3_5095-w787-h376-b0-p0--home-design.jpg'); background-position: 50% 145.5px;" data-stellar-background-ratio="0.5">
+                    <div class="container">
+                        <div class="row">
+                            <div class="latest-posts col-lg-12 col-md-12">
+                                <img src="<?php echo $directoryAsset; ?>/img/6461f19706a949f3_5095-w787-h376-b0-p0--home-design.jpg" alt="1"/>
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
                 <!--Tabs Widget-->
                 <section class="tabs-widget">
