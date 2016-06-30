@@ -9,8 +9,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <!--Breadcrumbs-->
 <ol class="breadcrumb">
-    <li><a href="index.html">Home</a></li>
-    <li>Login/ register</li>
+    <li><a href="<?php echo $baseUrl; ?>">Home</a></li>
+    <li><a href="<?php echo $baseUrl; ?>/register/login">Login</a>/ <a href="<?php echo $baseUrl; ?>/register/login">register</a></li>
 </ol><!--Breadcrumbs Close-->
 
 <!--Login / Register-->
