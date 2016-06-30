@@ -85,9 +85,22 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
                 <section style="background-position: 50% 145.5px; background-color: #f5f5f5; " data-stellar-background-ratio="0.5">
                     <div class="container">
-                        <div class="row">
-                            <div class="latest-posts col-lg-12 col-md-12 text-center">
-                                <img src="<?php echo $directoryAsset; ?>/img/6461f19706a949f3_5095-w787-h376-b0-p0--home-design.jpg" alt="1" class="img-responsive"/>
+                        <div class="row" style="background-image: url('<?php echo $directoryAsset; ?>/img/6461f19706a949f3_5095-w787-h376-b0-p0--home-design.jpg');">
+                            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
+                                <h2 style="color: #fff;">Eco-friendly materials in our shop</h2>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12" style="color: #fff;">
+                                        <p class="p-style3" style="color: #fff;">Let the customer know if there's anything you can be proud of.
+                                            If you have a clear business concept provide a description for it.
+                                            Do you have a flexible return policy or discounts for loyal customers? It's great!
+                                            Tell them about it in this module. For instance,
+                                            put some notes from what fabric clothing is made of in case you run an apparel store.
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 10px;">
+                                        <button class="btn btn-black btn-sm" value="100$-300$">READ MORE</button>
+                                    </div> 
+                                </div>
                             </div>
                         </div>
                     </div>
