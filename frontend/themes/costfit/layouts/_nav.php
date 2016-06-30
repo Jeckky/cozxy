@@ -11,7 +11,7 @@
                 <span class="offer" style="overflow-y: scroll;">
                     &nbsp;
                     <li class="has-submenu"><a href="#">Categories<i class="fa fa-chevron-down"></i></a>
-                        <ul class="submenu" style="background-color: #fff; overflow-y: scroll;">
+                        <ul class="submenu" style="background-color: #fff;">
                             <li class="has-submenu" style="background-color: #03a9f4;"><a href="#">Electronics</a>
                                 <ul class="sub-submenu"><a href="#" style="color: #000000;">The Electronics</a>
                                     <li><a href="#">Electronics</a></li>
@@ -40,30 +40,7 @@
                                         <li><a href="#">Bread & Crackers 1</a></li>
                                         <li><a href="#">Bread & Crackers 2</a></li>
                                     </ul>
-                                    <ul style="/*float: left; width: 45%;*/"><a href="#" class="menu-catalog-title-color" style="color: #000;">Sportd Nutrition & Diet</a>
-                                        <li><a href="#">Bread & Crackers 1</a></li>
-                                        <li><a href="#">Bread & Crackers 2</a></li>
-                                    </ul>
-                                    <ul style="/*float: left; width: 45%;*/"><a href="#" class="menu-catalog-title-color" style="color: #000;">Sportd Nutrition & Diet</a>
-                                        <li><a href="#">Bread & Crackers 1</a></li>
-                                        <li><a href="#">Bread & Crackers 2</a></li>
-                                    </ul>
-                                    <ul style="/*float: left; width: 45%;*/"><a href="#" class="menu-catalog-title-color" style="color: #000;">Sportd Nutrition & Diet</a>
-                                        <li><a href="#">Bread & Crackers 1</a></li>
-                                        <li><a href="#">Bread & Crackers 2</a></li>
-                                    </ul>
-                                    <ul style="/*float: left; width: 45%;*/"><a href="#" class="menu-catalog-title-color" style="color: #000;">Sportd Nutrition & Diet</a>
-                                        <li><a href="#">Bread & Crackers 1</a></li>
-                                        <li><a href="#">Bread & Crackers 2</a></li>
-                                    </ul>
-                                    <ul style="/*float: left; width: 45%;*/"><a href="#" class="menu-catalog-title-color" style="color: #000;">Sportd Nutrition & Diet</a>
-                                        <li><a href="#">Bread & Crackers 1</a></li>
-                                        <li><a href="#">Bread & Crackers 2</a></li>
-                                    </ul>
-                                    <ul style="/*float: left; width: 45%;*/"><a href="#" class="menu-catalog-title-color" style="color: #000;">Sportd Nutrition & Diet</a>
-                                        <li><a href="#">Bread & Crackers 1</a></li>
-                                        <li><a href="#">Bread & Crackers 2</a></li>
-                                    </ul>
+
                                 </ul>
                             </li>
                             <li class="has-submenu"  style="background-color: #03a9f4;"><a href="#">Houslth & Beauty</a>
@@ -86,18 +63,7 @@
 
                                         </li>
                                     </ul>
-                                    <ul><a href="#" class="menu-catalog-title-color" style="color: #000;">Sportd Nutrition & Diet</a>
-                                        <li><a href="#">Bread & Crackers 1</a></li>
-                                        <li><a href="#">Bread & Crackers 2</a></li>
-                                    </ul>
-                                    <ul><a href="#" class="menu-catalog-title-color" style="color: #000;">Sportd Nutrition & Diet</a>
-                                        <li><a href="#">Bread & Crackers 1</a></li>
-                                        <li><a href="#">Bread & Crackers 2</a></li>
-                                    </ul>
-                                    <ul><a href="#" class="menu-catalog-title-color" style="color: #000;">Sportd Nutrition & Diet</a>
-                                        <li><a href="#">Bread & Crackers 1</a></li>
-                                        <li><a href="#">Bread & Crackers 2</a></li>
-                                    </ul>
+
                                     <ul><a href="#" class="menu-catalog-title-color" style="color: #000;">Sportd Nutrition & Diet</a>
                                         <li><a href="#">Bread & Crackers 1</a></li>
                                         <li><a href="#">Bread & Crackers 2</a></li>
