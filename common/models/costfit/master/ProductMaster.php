@@ -29,11 +29,11 @@ use Yii;
     * @property string $createDateTime
     * @property string $updateDateTime
     *
-            * @property Unit $unit0
-            * @property Unit $smallUnit0
             * @property Brand $brand
             * @property Category $category
             * @property ProductGroup $productGroup
+            * @property Unit $smallUnit0
+            * @property Unit $unit0
             * @property ProductImage[] $productImages
             * @property ProductPrice[] $productPrices
             * @property ProductPromotion[] $productPromotions
@@ -63,11 +63,11 @@ return [
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['code'], 'string', 'max' => 100],
             [['title', 'optionName'], 'string', 'max' => 200],
-            [['unit'], 'exist', 'skipOnError' => true, 'targetClass' => UnitMaster::className(), 'targetAttribute' => ['unit' => 'unitId']],
-            [['smallUnit'], 'exist', 'skipOnError' => true, 'targetClass' => UnitMaster::className(), 'targetAttribute' => ['smallUnit' => 'unitId']],
             [['brandId'], 'exist', 'skipOnError' => true, 'targetClass' => BrandMaster::className(), 'targetAttribute' => ['brandId' => 'brandId']],
             [['categoryId'], 'exist', 'skipOnError' => true, 'targetClass' => CategoryMaster::className(), 'targetAttribute' => ['categoryId' => 'categoryId']],
             [['productGroupId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductGroupMaster::className(), 'targetAttribute' => ['productGroupId' => 'productGroupId']],
+            [['smallUnit'], 'exist', 'skipOnError' => true, 'targetClass' => UnitMaster::className(), 'targetAttribute' => ['smallUnit' => 'unitId']],
+            [['unit'], 'exist', 'skipOnError' => true, 'targetClass' => UnitMaster::className(), 'targetAttribute' => ['unit' => 'unitId']],
         ];
 }
 
@@ -104,22 +104,6 @@ return [
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getUnit0()
-    {
-    return $this->hasOne(UnitMaster::className(), ['unitId' => 'unit']);
-    }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getSmallUnit0()
-    {
-    return $this->hasOne(UnitMaster::className(), ['unitId' => 'smallUnit']);
-    }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
     public function getBrand()
     {
     return $this->hasOne(BrandMaster::className(), ['brandId' => 'brandId']);
@@ -139,6 +123,22 @@ return [
     public function getProductGroup()
     {
     return $this->hasOne(ProductGroupMaster::className(), ['productGroupId' => 'productGroupId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getSmallUnit0()
+    {
+    return $this->hasOne(UnitMaster::className(), ['unitId' => 'smallUnit']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getUnit0()
+    {
+    return $this->hasOne(UnitMaster::className(), ['unitId' => 'unit']);
     }
 
     /**

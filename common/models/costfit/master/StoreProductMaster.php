@@ -20,8 +20,8 @@ use Yii;
     * @property string $updateDateTime
     *
             * @property Product $product
-            * @property StoreProductGroup $storeProductGroup
             * @property Store $store
+            * @property StoreProductGroup $storeProductGroup
             * @property StoreProductOrderItem[] $storeProductOrderItems
     */
 class StoreProductMaster extends \common\models\ModelMaster
@@ -46,8 +46,8 @@ return [
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['quantity'], 'string', 'max' => 45],
             [['productId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductMaster::className(), 'targetAttribute' => ['productId' => 'productId']],
-            [['storeProductGroupId'], 'exist', 'skipOnError' => true, 'targetClass' => StoreProductGroupMaster::className(), 'targetAttribute' => ['storeProductGroupId' => 'storeProductGroupId']],
             [['storeId'], 'exist', 'skipOnError' => true, 'targetClass' => StoreMaster::className(), 'targetAttribute' => ['storeId' => 'storeId']],
+            [['storeProductGroupId'], 'exist', 'skipOnError' => true, 'targetClass' => StoreProductGroupMaster::className(), 'targetAttribute' => ['storeProductGroupId' => 'storeProductGroupId']],
         ];
 }
 
@@ -82,17 +82,17 @@ return [
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getStoreProductGroup()
+    public function getStore()
     {
-    return $this->hasOne(StoreProductGroupMaster::className(), ['storeProductGroupId' => 'storeProductGroupId']);
+    return $this->hasOne(StoreMaster::className(), ['storeId' => 'storeId']);
     }
 
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getStore()
+    public function getStoreProductGroup()
     {
-    return $this->hasOne(StoreMaster::className(), ['storeId' => 'storeId']);
+    return $this->hasOne(StoreProductGroupMaster::className(), ['storeProductGroupId' => 'storeProductGroupId']);
     }
 
     /**

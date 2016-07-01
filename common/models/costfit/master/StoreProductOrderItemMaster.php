@@ -19,8 +19,8 @@ use Yii;
     * @property string $updateDateTime
     *
             * @property Product $product
-            * @property Order $order
             * @property StoreProduct $storeProduct
+            * @property Order $order
     */
 class StoreProductOrderItemMaster extends \common\models\ModelMaster
 {
@@ -44,8 +44,8 @@ return [
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['quantity'], 'string', 'max' => 45],
             [['productId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductMaster::className(), 'targetAttribute' => ['productId' => 'productId']],
-            [['orderId'], 'exist', 'skipOnError' => true, 'targetClass' => OrderMaster::className(), 'targetAttribute' => ['orderId' => 'orderId']],
             [['storeProductId'], 'exist', 'skipOnError' => true, 'targetClass' => StoreProductMaster::className(), 'targetAttribute' => ['storeProductId' => 'storeProductId']],
+            [['orderId'], 'exist', 'skipOnError' => true, 'targetClass' => OrderMaster::className(), 'targetAttribute' => ['orderId' => 'orderId']],
         ];
 }
 
@@ -79,16 +79,16 @@ return [
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getOrder()
+    public function getStoreProduct()
     {
-    return $this->hasOne(OrderMaster::className(), ['orderId' => 'orderId']);
+    return $this->hasOne(StoreProductMaster::className(), ['storeProductId' => 'storeProductId']);
     }
 
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getStoreProduct()
+    public function getOrder()
     {
-    return $this->hasOne(StoreProductMaster::className(), ['storeProductId' => 'storeProductId']);
+    return $this->hasOne(OrderMaster::className(), ['orderId' => 'orderId']);
     }
 }

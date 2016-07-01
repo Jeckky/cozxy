@@ -88,6 +88,7 @@ class ProductController extends BackendMasterController
             $model->attributes = $_POST["Product"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
+                \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $model->productId);
                 return $this->redirect(['index']);
             }
         }
@@ -108,10 +109,8 @@ class ProductController extends BackendMasterController
         if (isset($_POST["Product"])) {
             $model->attributes = $_POST["Product"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-
-
-
             if ($model->save()) {
+                \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $model->productId);
                 return $this->redirect(['index']);
             }
         }

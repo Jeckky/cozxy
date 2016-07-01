@@ -61,7 +61,7 @@ return [
     */
     public function getProducts()
     {
-    return $this->hasMany(ProductMaster::className(), ['unit' => 'unitId']);
+    return $this->hasMany(ProductMaster::className(), ['smallUnit' => 'unitId']);
     }
 
     /**
@@ -69,6 +69,6 @@ return [
     */
     public function getProducts0()
     {
-    return $this->hasMany(ProductMaster::className(), ['smallUnit' => 'unitId']);
+    return $this->hasMany(ProductMaster::className(), ['unit' => 'unitId']);
     }
 }
