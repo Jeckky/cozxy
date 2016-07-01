@@ -20,7 +20,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <p class="dark-color col-md-7">It is of high importance to redirect a customer to the product
                             page. Provide a detailed description with a callout action. </p>
                         <p class="dark-color col-md-7">
-                            <a class="btn btn-primary" href="#">1845$ Buy it new</a>
+                            <a class="btn btn-primary" href="<?php echo $baseUrl; ?>/wishlist?productId=88888">1845$ Buy it new</a>
                         </p>
                         <!--<a class="btn btn-black" href="#">Browse all</a>-->
                     </div>
@@ -54,7 +54,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 </div>
             </div>
         </section><!--Categories Close-->
-        <!--Saved Category--> 
+        <!--Saved Category-->
         <!--Popular Category-->
         <section class="catalog-grid">
             <div class="container">

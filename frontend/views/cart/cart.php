@@ -31,7 +31,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </tr>
                     <!--Item-->
                     <tr class="item first">
-                        <td class="thumb"><a href="shop-single-item-v1.html"><img src="img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
+                        <td class="thumb"><a href="shop-single-item-v1.html"><img src="<?php echo $directoryAsset; ?>/img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
                         <td class="name"><a href="shop-single-item-v1.html">Wristlet</a></td>
                         <td class="price">715,00 $</td>
                         <td class="qnt-count">
@@ -44,7 +44,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </tr>
                     <!--Item-->
                     <tr class="item">
-                        <td class="thumb"><a href="shop-single-item-v1.html"><img src="img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
+                        <td class="thumb"><a href="shop-single-item-v1.html"><img src="<?php echo $directoryAsset; ?>/img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
                         <td class="name"><a href="shop-single-item-v1.html">Wristlet</a></td>
                         <td class="price">715,00 $</td>
                         <td class="qnt-count">
@@ -57,7 +57,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </tr>
                     <!--Item-->
                     <tr class="item">
-                        <td class="thumb"><a href="shop-single-item-v1.html"><img src="img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
+                        <td class="thumb"><a href="shop-single-item-v1.html"><img src="<?php echo $directoryAsset; ?>/img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
                         <td class="name"><a href="shop-single-item-v1.html">Wristlet</a></td>
                         <td class="price">715,00 $</td>
                         <td class="qnt-count">
@@ -70,7 +70,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </tr>
                     <!--Item-->
                     <tr class="item">
-                        <td class="thumb"><a href="shop-single-item-v1.html"><img src="img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
+                        <td class="thumb"><a href="shop-single-item-v1.html"><img src="<?php echo $directoryAsset; ?>/img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
                         <td class="name"><a href="shop-single-item-v1.html">Wristlet</a></td>
                         <td class="price">715,00 $</td>
                         <td class="qnt-count">
@@ -157,7 +157,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="tile">
                     <div class="price-label">715,00 $</div>
                     <a href="#">
-                        <img src="img/catalog/1.png" alt="1"/>
+                        <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
                         <span class="tile-overlay"></span>
                     </a>
                     <div class="footer">
@@ -172,7 +172,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="tile">
                     <div class="price-label">715,00 $</div>
                     <a href="#">
-                        <img src="img/catalog/1.png" alt="1"/>
+                        <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
                         <span class="tile-overlay"></span>
                     </a>
                     <div class="footer">
@@ -187,7 +187,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="tile">
                     <div class="price-label">715,00 $</div>
                     <a href="#">
-                        <img src="img/catalog/1.png" alt="1"/>
+                        <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
                         <span class="tile-overlay"></span>
                     </a>
                     <div class="footer">
@@ -202,7 +202,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="tile">
                     <div class="price-label">715,00 $</div>
                     <a href="#">
-                        <img src="img/catalog/1.png" alt="1"/>
+                        <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
                         <span class="tile-overlay"></span>
                     </a>
                     <div class="footer">
