@@ -8,7 +8,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--Hero Slider-->
 <section class="hero-slider">
     <div class="master-slider" id="hero-slider">
-
         <?php for ($index2 = 0; $index2 <= 5; $index2++) {
             ?>
             <!--Slide 1-->
@@ -16,7 +15,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="overlay"></div>
                 <div class="ms-anim-layers" >
                     <div class="ms-layer text-block" style="margin: 50px; padding: 108px 0px 0px 25px; font-size: 16px; line-height: 22px;">
-                        <h2 class="dark-color">COST.FIT<br>Swirl Cool</h2>
+                        <h2 class="dark-color">
+                            <span style="color: #03a9f4;">COST.FIT</span><br>Swirl Cool
+                        </h2>
                         <p class="dark-color col-md-7">It is of high importance to redirect a customer to the product
                             page. Provide a detailed description with a callout action. </p>
                         <p class="dark-color col-md-7">
@@ -31,7 +32,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             $index2 = $index2++;
         }
         ?>
-
     </div>
 </section><!--Hero Slider Close-->
 <!--Hero Slider Close-->
