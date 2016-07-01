@@ -9,35 +9,28 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <section class="hero-slider">
     <div class="master-slider" id="hero-slider">
 
-        <!--Slide 1-->
-        <div class="ms-slide" data-delay="7">
-            <div class="overlay"></div>
-            <img src="masterslider/blank.gif" data-src="<?php echo $directoryAsset; ?>/img/hero/slideshow/slide_1.jpg" alt=""/>
-            <h2 style="width: 456px; left: 110px; top: 110px;" class="dark-color ms-layer" data-effect="top(50,true)" data-duration="700" data-delay="250" data-ease="easeOutQuad">Look for all bags at our shop!</h2>
-            <p style="width: 456px; left: 110px; top: 210px;" class="dark-color ms-layer" data-effect="back(500)" data-duration="700" data-delay="500" data-ease="easeOutQuad">In this slider (which works both on touch screen and desktop devices) you can change the title, the description and button texts. It's all that you need to demonstrate your top rated products. </p>
-            <div style="left: 110px; top: 300px;" class="ms-layer button" data-effect="left(50,true)" data-duration="500" data-delay="750" data-ease="easeOutQuad"><a class="btn btn-black" href="#">Go to catalog</a></div>
-            <div style="left: 350px; top: 300px;" class="ms-layer button" data-effect="bottom(50,true)" data-duration="700" data-delay="950" data-ease="easeOutQuad"><a class="btn btn-primary" href="#">Browse all</a></div>
-        </div>
-
-        <!--Slide 2-->
-        <div class="ms-slide" data-delay="7">
-            <span class="overlay"></span>
-            <img src="masterslider/blank.gif" data-src="<?php echo $directoryAsset; ?>/img/hero/slideshow/slide_2.jpg" alt="Necessaire"/>
-            <h2 style="width: 456px; left: 110px; top: 110px;" class="dark-color ms-layer" data-effect="bottom(50,true)" data-duration="700" data-delay="250" data-ease="easeOutQuad">Necessaire</h2>
-            <p style="width: 456px; left: 110px; top: 210px;" class="dark-color ms-layer" data-effect="bottom(50,true)" data-duration="700" data-delay="500" data-ease="easeOutQuad">In this slider (which works both on touch screen and desktop devices) you can change the title, the description and button texts. It's all that you need to demonstrate your top rated products. </p>
-            <div style="left: 110px; top: 330px;" class="ms-layer button" data-effect="left(50,true)" data-duration="500" data-delay="750" data-ease="easeOutQuad"><a class="btn btn-black" href="#">Go to catalog</a></div>
-            <div style="left: 350px; top: 330px;" class="ms-layer button" data-effect="bottom(50,true)" data-duration="700" data-delay="950" data-ease="easeOutQuad"><a class="btn btn-primary" href="#">Browse all</a></div>
-        </div>
-
-        <!--Slide 3-->
-        <div class="ms-slide" data-delay="7">
-            <div class="overlay"></div>
-            <img src="masterslider/blank.gif" data-src="<?php echo $directoryAsset; ?>/img/hero/slideshow/slide_2.jpg" alt="Crescent"/>
-            <h2 style="width: 456px; left: 110px; top: 110px;" class="dark-color ms-layer" data-effect="left(50,true)" data-duration="700" data-delay="250" data-ease="easeOutQuad">Crescent</h2>
-            <p style="width: 456px; left: 110px; top: 210px;" class="dark-color ms-layer" data-effect="left(50,true)" data-duration="700" data-delay="500" data-ease="easeOutQuad">In this slider (which works both on touch screen and desktop devices) you can change the title, the description and button texts. It's all that you need to demonstrate your top rated products. </p>
-            <div style="left: 110px; top: 330px;" class="ms-layer button" data-effect="left(50,true)" data-duration="500" data-delay="750" data-ease="easeOutQuad"><a class="btn btn-black" href="#">Go to catalog</a></div>
-            <div style="left: 350px; top: 330px;" class="ms-layer button" data-effect="bottom(50,true)" data-duration="700" data-delay="950" data-ease="easeOutQuad"><a class="btn btn-primary" href="#">Browse all</a></div>
-        </div>
+        <?php for ($index2 = 0; $index2 <= 5; $index2++) {
+            ?>
+            <!--Slide 1-->
+            <div class="ms-slide" data-delay="7">
+                <div class="overlay"></div>
+                <div class="ms-anim-layers" >
+                    <div class="ms-layer text-block" style="margin: 50px; padding: 108px 0px 0px 25px; font-size: 16px; line-height: 22px;">
+                        <h2 class="dark-color">COST.FIT<br>Swirl Cool</h2>
+                        <p class="dark-color col-md-7">It is of high importance to redirect a customer to the product
+                            page. Provide a detailed description with a callout action. </p>
+                        <p class="dark-color col-md-7">
+                            <a class="btn btn-primary" href="#">1845$ Buy it new</a>
+                        </p>
+                        <!--<a class="btn btn-black" href="#">Browse all</a>-->
+                    </div>
+                    <img style="right: 50px; margin: 0px; padding: 60px 0px 0px; font-size: 16px; line-height: 22px;" class="ms-layer img-block" src="<?php echo $directoryAsset; ?>/img/categories/slides/slide_1.png" alt="1">
+                </div>
+            </div>
+            <?php
+            $index2 = $index2++;
+        }
+        ?>
 
     </div>
 </section><!--Hero Slider Close-->
