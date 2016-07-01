@@ -35,12 +35,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     </div>
 </section><!--Hero Slider Close-->
 <!--Hero Slider Close-->
-
-<!--Saved Category-->
 <section class="cat-tiles">
     <div class="container">
-        <h2 class="dark-color">SAVE ON EVERYDAY ESSENTIALS</h2>
+        <h2>SAVE ON EVERYDAY ESSENTIALS</h2>
         <div class="row">
+            <!--Category-->
             <?php
             echo \yii\widgets\ListView::widget([
                 'dataProvider' => $saveCat,
@@ -54,9 +53,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     ?>
                 </div>
             </div>
-        </section>
-        <!--Saved Category Close-->
-
+        </section><!--Categories Close-->
+        <!--Saved Category--> 
         <!--Popular Category-->
         <section class="catalog-grid">
             <div class="container">
