@@ -1,4 +1,3 @@
-
 <nav class="menu">
     <div class="container">
         <?= $this->render('_nav_main_menu') ?>
@@ -40,7 +39,6 @@
                                         <li><a href="#">Bread & Crackers 1</a></li>
                                         <li><a href="#">Bread & Crackers 2</a></li>
                                     </ul>
-
                                 </ul>
                             </li>
                             <li class="has-submenu"  style="background-color: #03a9f4;"><a href="#">Houslth & Beauty</a>
