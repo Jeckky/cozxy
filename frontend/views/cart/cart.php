@@ -9,7 +9,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <!--Breadcrumbs-->
 <ol class="breadcrumb">
-    <li><a href="index.html">Home</a></li>
+    <li><a href="<?php echo $baseUrl; ?>">Home</a></li>
     <li>Shopping cart</li>
 </ol><!--Breadcrumbs Close-->
 
@@ -31,8 +31,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </tr>
                     <!--Item-->
                     <tr class="item first">
-                        <td class="thumb"><a href="shop-single-item-v1.html"><img src="<?php echo $directoryAsset; ?>/img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
-                        <td class="name"><a href="shop-single-item-v1.html">Wristlet</a></td>
+                        <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888"><img src="<?php echo $directoryAsset; ?>/img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
+                        <td class="name"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">Wristlet</a></td>
                         <td class="price">715,00 $</td>
                         <td class="qnt-count">
                             <a class="incr-btn" href="#">-</a>
@@ -44,8 +44,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </tr>
                     <!--Item-->
                     <tr class="item">
-                        <td class="thumb"><a href="shop-single-item-v1.html"><img src="<?php echo $directoryAsset; ?>/img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
-                        <td class="name"><a href="shop-single-item-v1.html">Wristlet</a></td>
+                        <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888"><img src="<?php echo $directoryAsset; ?>/img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
+                        <td class="name"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">Wristlet</a></td>
                         <td class="price">715,00 $</td>
                         <td class="qnt-count">
                             <a class="incr-btn" href="#">-</a>
@@ -57,8 +57,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </tr>
                     <!--Item-->
                     <tr class="item">
-                        <td class="thumb"><a href="shop-single-item-v1.html"><img src="<?php echo $directoryAsset; ?>/img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
-                        <td class="name"><a href="shop-single-item-v1.html">Wristlet</a></td>
+                        <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888"><img src="<?php echo $directoryAsset; ?>/img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
+                        <td class="name"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">Wristlet</a></td>
                         <td class="price">715,00 $</td>
                         <td class="qnt-count">
                             <a class="incr-btn" href="#">-</a>
@@ -70,8 +70,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </tr>
                     <!--Item-->
                     <tr class="item">
-                        <td class="thumb"><a href="shop-single-item-v1.html"><img src="<?php echo $directoryAsset; ?>/img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
-                        <td class="name"><a href="shop-single-item-v1.html">Wristlet</a></td>
+                        <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888"><img src="<?php echo $directoryAsset; ?>/img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
+                        <td class="name"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">Wristlet</a></td>
                         <td class="price">715,00 $</td>
                         <td class="qnt-count">
                             <a class="incr-btn" href="#">-</a>
@@ -156,12 +156,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="tile">
                     <div class="price-label">715,00 $</div>
-                    <a href="#">
+                    <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">
                         <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
                         <span class="tile-overlay"></span>
                     </a>
                     <div class="footer">
-                        <a href="#">The Buccaneer</a>
+                        <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">The Buccaneer</a>
                         <span>by Pirate3d</span>
                         <button class="btn btn-primary">Add to Cart</button>
                     </div>
@@ -171,12 +171,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="tile">
                     <div class="price-label">715,00 $</div>
-                    <a href="#">
+                    <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">
                         <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
                         <span class="tile-overlay"></span>
                     </a>
                     <div class="footer">
-                        <a href="#">The Buccaneer</a>
+                        <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">The Buccaneer</a>
                         <span>by Pirate3d</span>
                         <button class="btn btn-primary">Add to Cart</button>
                     </div>
@@ -186,12 +186,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="tile">
                     <div class="price-label">715,00 $</div>
-                    <a href="#">
+                    <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">
                         <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
                         <span class="tile-overlay"></span>
                     </a>
                     <div class="footer">
-                        <a href="#">The Buccaneer</a>
+                        <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">The Buccaneer</a>
                         <span>by Pirate3d</span>
                         <button class="btn btn-primary">Add to Cart</button>
                     </div>
@@ -201,12 +201,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="tile">
                     <div class="price-label">715,00 $</div>
-                    <a href="#">
+                    <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">
                         <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
                         <span class="tile-overlay"></span>
                     </a>
                     <div class="footer">
-                        <a href="#">The Buccaneer</a>
+                        <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">The Buccaneer</a>
                         <span>by Pirate3d</span>
                         <button class="btn btn-primary">Add to Cart</button>
                     </div>
