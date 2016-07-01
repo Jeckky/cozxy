@@ -14,7 +14,7 @@
         <div class="footer">
             <a href="<?php echo Yii::$app->homeUrl; ?>products?category=<?= $model->categoryId; ?>"><?= $model->title; ?></a>
             <!--<span>by David Banks</span>-->
-            <!--<button class="btn btn-primary">Add to Cart</button>-->
+            <a href="<?php echo Yii::$app->homeUrl; ?>products?category=<?= $model->categoryId; ?>"><button class="btn btn-primary  btn-sm">View</button></a>
         </div>
     </div>
 </div>
