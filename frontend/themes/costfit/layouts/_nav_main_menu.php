@@ -1,5 +1,14 @@
+<?php
+/* @var $this yii\web\View */
+
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
+
+$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
+$baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+?>
 <ul class="main">
-    <li class="has-submenu"><a href="index.html"><span>H</span>ome<i class="fa fa-chevron-down"></i></a> 
+    <li class="has-submenu"><a href="<?php echo $baseUrl; ?>"><span>H</span>ome<i class="fa fa-chevron-down"></i></a>
         <!--Class "has-submenu" for proper highlighting and dropdown-->
         <!--<ul class="submenu">
             <li><a href="index.html">Home - Slideshow</a></li>

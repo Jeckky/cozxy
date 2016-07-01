@@ -148,7 +148,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 <div class="footer">
                                     <a href="#">The Buccaneer</a>
                                     <span>by Pirate3d</span>
-                                    <button class="btn btn-primary">Add to Cart</button>
+                                    <a href="<?php echo Yii::$app->homeUrl; ?>cart"><button class="btn btn-primary">Add to Cart</button></a>
                                 </div>
                             </div>
                         </div>
