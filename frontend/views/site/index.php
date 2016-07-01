@@ -25,7 +25,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         </p>
                         <!--<a class="btn btn-black" href="#">Browse all</a>-->
                     </div>
-                    <img style="right: 50px; margin: 0px; padding: 60px 0px 0px; font-size: 16px; line-height: 22px;" class="ms-layer img-block" src="<?php echo $directoryAsset; ?>/img/categories/slides/slide_1.png" alt="1">
+                    <img style="right: 50px; margin: 0px; padding: 60px 0px 0px; font-size: 16px; line-height: 22px;" class="ms-layer img-block img-responsive" src="<?php echo $directoryAsset; ?>/img/categories/slides/slide_1.png" alt="1">
                 </div>
             </div>
             <?php
