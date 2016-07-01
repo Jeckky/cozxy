@@ -72,27 +72,27 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="prod-gal master-slider" id="prod-gal">
                     <!--Slide1-->
                     <div class="ms-slide">
-                        <img src="<?php echo $directoryAsset; ?>/masterslider/blank.gif" data-src="<?php echo $directoryAsset; ?>/img/catalog/product-gallery/1.jpg" alt="Lorem ipsum"/>
-                        <img class="ms-thumb" src="<?php echo $directoryAsset; ?>/img/catalog/product-gallery/th_1.jpg" alt="thumb" />
+                        <img src="<?php echo $directoryAsset; ?>/masterslider/blank.gif" data-src="<?php echo $baseUrl; ?>/images/ProductImage/15.jpg" alt="Lorem ipsum"/>
+                        <img class="ms-thumb" src="<?php echo $baseUrl; ?>/images/ProductImage/15.jpg" alt="thumb" />
                     </div>
                     <!--Slide2-->
                     <div class="ms-slide">
-                        <img src="<?php echo $directoryAsset; ?>/masterslider/blank.gif" data-src="<?php echo $directoryAsset; ?>/img/catalog/product-gallery/1.jpg" alt="Lorem ipsum"/>
-                        <img class="ms-thumb" src="<?php echo $directoryAsset; ?>/img/catalog/product-gallery/th_1.jpg" alt="thumb" />
+                        <img src="<?php echo $directoryAsset; ?>/masterslider/blank.gif" data-src="<?php echo $baseUrl; ?>/images/ProductImage/7.jpg" alt="Lorem ipsum"/>
+                        <img class="ms-thumb" src="<?php echo $baseUrl; ?>/images/ProductImage/15.jpg" alt="thumb" />
                     </div>
                     <!--Slide3-->
                     <div class="ms-slide">
-                        <img src="<?php echo $directoryAsset; ?>/masterslider/blank.gif" data-src="<?php echo $directoryAsset; ?>/img/catalog/product-gallery/1.jpg" alt="Lorem ipsum"/>
+                        <img src="<?php echo $directoryAsset; ?>/masterslider/blank.gif" data-src="<?php echo $baseUrl; ?>/images/ProductImage/8.jpg" alt="Lorem ipsum"/>
                         <img class="ms-thumb" src="<?php echo $directoryAsset; ?>/img/catalog/product-gallery/th_1.jpg" alt="thumb" />
                     </div>
                     <!--Slide4-->
                     <div class="ms-slide">
-                        <img src="<?php echo $directoryAsset; ?>/masterslider/blank.gif" data-src="<?php echo $directoryAsset; ?>/img/catalog/product-gallery/1.jpg" alt="Lorem ipsum"/>
+                        <img src="<?php echo $directoryAsset; ?>/masterslider/blank.gif" data-src="<?php echo $baseUrl; ?>/images/ProductImage/9.jpg" alt="Lorem ipsum"/>
                         <img class="ms-thumb" src="<?php echo $directoryAsset; ?>/img/catalog/product-gallery/th_1.jpg" alt="thumb" />
                     </div>
                     <!--Slide5-->
                     <div class="ms-slide">
-                        <img src="<?php echo $directoryAsset; ?>/masterslider/blank.gif" data-src="<?php echo $directoryAsset; ?>/img/catalog/product-gallery/1.jpg" alt="Lorem ipsum"/>
+                        <img src="<?php echo $directoryAsset; ?>/masterslider/blank.gif" data-src="<?php echo $baseUrl; ?>/images/ProductImage/13.jpg" alt="Lorem ipsum"/>
                         <img class="ms-thumb" src="<?php echo $directoryAsset; ?>/img/catalog/product-gallery/th_1.jpg" alt="thumb" />
                     </div>
                 </div>

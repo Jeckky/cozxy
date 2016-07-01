@@ -142,7 +142,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 </div>
                                 <div class="price-label">715,00 $</div>
                                 <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">
-                                    <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
+                                    <img src="<?php echo $baseUrl; ?>/images/ProductImage/15.jpg" alt="1"/>
                                     <span class="tile-overlay"></span>
                                 </a>
                                 <div class="footer">
