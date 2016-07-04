@@ -1,5 +1,5 @@
-<ul class="catalog ">
-    <li class="has-submenu"><a href="#">Categories<i class="fa fa-chevron-down open"></i></a>
+<ul class="catalog" id="catalog_new" style="width: 100%;">
+    <li class="has-submenu pull-left"><a href="#">Categories<i class="fa fa-chevron-down open"></i></a>
         <ul class="submenu">
             <li class="has-submenu"><a href="#" style="font-size: 14px;">Electricals & Electronics <i class="fa fa-chevron-down"></i></a>
                 <ul class="sub-submenu">
@@ -60,4 +60,5 @@
         </ul>
     </li>
 
+    <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works">How cost.fit Works</a></li>
 </ul>

@@ -152,66 +152,28 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="container">
         <h2>You may also like</h2>
         <div class="row">
-            <!--Tile-->
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="tile">
-                    <div class="price-label">715,00 $</div>
-                    <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">
-                        <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
-                        <span class="tile-overlay"></span>
-                    </a>
-                    <div class="footer">
-                        <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">The Buccaneer</a>
-                        <span>by Pirate3d</span>
-                        <button class="btn btn-primary">Add to Cart</button>
+            <?php for ($index = 0; $index <= 3; $index++) {
+                ?>
+                <!--Tile-->
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="tile">
+                        <div class="price-label">715,00 $</div>
+                        <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">
+                            <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
+                            <span class="tile-overlay"></span>
+                        </a>
+                        <div class="footer">
+                            <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">The Buccaneer</a>
+                            <span>by Pirate3d</span>
+                            <a href="<?php echo Yii::$app->homeUrl; ?>cart"><button class="btn btn-primary">Add to Cart</button></a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!--Tile-->
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="tile">
-                    <div class="price-label">715,00 $</div>
-                    <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">
-                        <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
-                        <span class="tile-overlay"></span>
-                    </a>
-                    <div class="footer">
-                        <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">The Buccaneer</a>
-                        <span>by Pirate3d</span>
-                        <button class="btn btn-primary">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-            <!--Tile-->
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="tile">
-                    <div class="price-label">715,00 $</div>
-                    <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">
-                        <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
-                        <span class="tile-overlay"></span>
-                    </a>
-                    <div class="footer">
-                        <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">The Buccaneer</a>
-                        <span>by Pirate3d</span>
-                        <button class="btn btn-primary">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-            <!--Tile-->
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="tile">
-                    <div class="price-label">715,00 $</div>
-                    <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">
-                        <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
-                        <span class="tile-overlay"></span>
-                    </a>
-                    <div class="footer">
-                        <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">The Buccaneer</a>
-                        <span>by Pirate3d</span>
-                        <button class="btn btn-primary">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
+                <?php
+                $index = $index++;
+            }
+            ?>
+
         </div>
     </div>
 </section><!--Catalog Grid Close-->

@@ -1,4 +1,3 @@
-<!--Subscription Widget-->
 <section class="subscr-widget gray-bg">
     <div class="container">
         <div class="row">

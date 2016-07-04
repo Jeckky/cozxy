@@ -214,6 +214,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         </div>
                     </div>
                 </section>
+                <!--Subscription Widget-->
+                <?php echo $this->render('@app/themes/costfit/layouts/_subscription'); ?>
                 <!--Brands Carousel Widget-->
                 <?php echo $this->render('@app/themes/costfit/layouts/_brand_carousel'); ?>
 

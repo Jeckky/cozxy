@@ -1,6 +1,6 @@
 <nav class="menu">
     <div class="container">
-        <?= $this->render('_nav_main_menu') ?>
+        <?php echo $this->render('_nav_main_menu') ?>
     </div>
 
     <div class="catalog-block ">

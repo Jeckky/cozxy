@@ -24,7 +24,7 @@
     list-style: none;
     text-align: right;
     width: 100%;
-    max-width: 948px;
+    /*max-width: 948px;*/
     margin-bottom: 0;
 }
 
@@ -57,4 +57,13 @@
     border-left: 1px #03a9f4  solid;
     min-height: 220px;
     width: 100%;
+}
+
+#catalog_new{
+    display: block;
+    list-style: none;
+    text-align: right;
+    width: 100%;
+    max-width: 1148px;
+    margin-bottom: 0;
 }
