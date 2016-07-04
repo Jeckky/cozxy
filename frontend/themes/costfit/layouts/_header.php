@@ -8,7 +8,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <!--data-offset-top is when header converts to small variant and data-stuck when it becomes visible. Values in px represent position of scroll from top. Make sure there is at least 100px between those two values for smooth animation-->
 
     <!--Search Form-->
-    <form class="search-form closed" method="get" role="form" autocomplete="off">
+    <form class="search-form closed" method="post" role="form" autocomplete="off" action="<?php echo $baseUrl; ?>/search">
         <div class="container">
             <div class="close-search"><i class="icon-delete"></i></div>
             <div class="form-group">
