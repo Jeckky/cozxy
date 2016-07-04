@@ -26,8 +26,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <section class="catalog-single">
     <div class="container">
         <div class="row">
-            <?php echo $this->render('product_catalog_item'); ?>
-
+            <?php echo $this->render('product_catalog_item'); ?> 
         </div>
     </div>
 </section><!--Catalog Single Item Close-->

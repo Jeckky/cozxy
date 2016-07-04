@@ -19,7 +19,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <a class="incr-btn" href="#">+</a>
         </div>
         <a class="btn btn-primary btn-sm" id="addItemToCart" href="<?php echo Yii::$app->homeUrl; ?>cart"><i class="icon-shopping-cart"></i>Add to cart</a>
-        <a class="btn btn-black btn-sm" href="#"><i class="icon-heart"></i>Add to wishlist</a>
+        <a class="btn btn-black btn-sm" href="<?php echo Yii::$app->homeUrl; ?>wishlist"><i class="icon-heart"></i>Add to wishlist</a>
     </div>
     <p class="p-style2">Product page was developed with the help of consultants with great and successful experience in e-commerce. It's all you need to effectively demonstrate your product. The opportunity to quickly buy a product or save it to a wishlist will definitely increase the conversion rate.</p>
     <div class="row">
