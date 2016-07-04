@@ -10,6 +10,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--Product Description-->
 <div class="col-lg-6 col-md-6">
     <h1><?= $model->title; ?></h1>
+    <div class="form-group">
+        <div class="select-style">
+            <select name="size">
+                <option>Size:28 Inches</option>
+                <option>Size:32 Inches</option>
+                <option>Size:40 Inches</option>
+                <option>Size:48 Inches</option>
+                <option>Size:50 Inches</option> 
+            </select>
+        </div>
+    </div>
     <div class="old-price"><?= (isset($model->price) && !empty($model->price)) ? number_format($model->price) . " ฿" : "815,00 $" ?></div>
     <div class="price"><?= (isset($model->productOnePrice->price) && !empty($model->productOnePrice->price)) ? number_format($model->productOnePrice->price) . " ฿" : "715,00 $" ?></div>
     <div class="buttons group">
