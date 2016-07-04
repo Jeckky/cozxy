@@ -87,7 +87,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <!--Sidebar-->
             <div class="col-lg-3 col-md-3">
                 <h3>Cart totals</h3>
-                <form class="cart-sidebar" method="post">
+                <form class="cart-sidebar">
                     <div class="cart-totals">
                         <table>
                             <tr>
@@ -110,11 +110,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 <label class="sr-only" for="coupon-code">Enter coupon code</label>
                                 <input type="text" class="form-control" id="coupon-code" name="coupon-code" placeholder="Enter coupon code">
                             </div>
-                            <input type="submit" class="btn btn-primary btn-sm btn-block" name="apply-coupon" value="Apply coupon">
+                            <input type="button" class="btn btn-primary btn-sm btn-block" name="apply-coupon" value="Apply coupon" onclick="proceed('apply_coupon')">
                         </div>
 
-                        <input type="submit" class="btn btn-primary btn-sm btn-block" name="update-cart" value="Update shopping cart">
-                        <input type="submit" class="btn btn-black btn-block" name="to-checkout" value="Proceed to checkout">
+                        <input type="button" class="btn btn-primary btn-sm btn-block" name="update-cart" value="Update shopping cart" onclick="proceed('update_cart')">
+                        <input type="button" class="btn btn-black btn-block" name="to-checkout" value="Proceed to checkout" onclick="proceed('to_checkout')">
                     </div>
 
                     <a class="panel-toggle" href="#calc-shipping"><h3>Calculate shipping</h3></a>
@@ -139,7 +139,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             <label class="sr-only" for="postcode">Postcode/ ZIP</label>
                             <input type="text" class="form-control" id="postcode" name="postcode" placeholder="Postcode/ ZIP">
                         </div>
-                        <input type="submit" class="btn btn-primary btn-sm btn-block" name="update-totals" value="Update totals">
+                        <input type="button" class="btn btn-primary btn-sm btn-block" name="update-totals" value="Update totals" onclick="proceed('calculate_shipping')">
                     </div>
                 </form>
             </div>
@@ -179,5 +179,25 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </section><!--Catalog Grid Close-->
 
 <!--Brands Carousel Widget-->
-
 <?php echo $this->render('@app/themes/costfit/layouts/_brand_carousel'); ?>
+
+<script type="text/javascript">
+    //apply-coupon
+    //update-cart
+    //to-checkout
+    function proceed(data) {
+        var shop_data = data;
+        if (shop_data == 'apply_coupon') {
+            window.location = '<?php echo $baseUrl; ?>';
+        } else if (shop_data == 'update_cart') {
+            window.location = '<?php echo $baseUrl; ?>' + '/history';
+        } else if (shop_data == 'to_checkout') {
+            window.location = '<?php echo $baseUrl; ?>' + '/checkout';
+        } else if (shop_data == '') {
+            //window.location = '<?php echo $baseUrl; ?>' ;
+        } else {
+            window.location = '<?php echo $baseUrl; ?>';
+        }
+    }
+
+</script>
