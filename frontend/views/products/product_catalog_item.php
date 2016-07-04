@@ -51,7 +51,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <div class="col-lg-6 col-md-6">
     <div class="prod-gal master-slider" id="prod-gal">
         <?php
-        for ($index = 0; $index <= 5; $index++) {
+        for ($index = 0; $index <= 2; $index++) {
             // รูปภาพ default : /cost.fit/assets/img/catalog/product-gallery/th_1.jpg
             ?>
             <!--Slide1-->
@@ -64,5 +64,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             $index = $index++;
         }
         ?>
+        <div class="ms-slide">
+            <img src="<?php echo $directoryAsset; ?>/masterslider/blank.gif" data-src="<?php echo $baseUrl; ?>/images/ProductImage/15.jpg" alt="Lorem ipsum"/>
+            <img class="ms-thumb" src="<?php echo $directoryAsset; ?>/img/catalog/product-gallery/th_1.jpg" alt="thumb" />
+        </div>
     </div>
 </div>
