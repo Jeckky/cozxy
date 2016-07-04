@@ -7,11 +7,6 @@ use yii\bootstrap\ActiveForm;
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
-<!--Breadcrumbs-->
-<ol class="breadcrumb">
-    <li><a href="<?php echo $baseUrl; ?>">Home</a></li>
-    <li>Wishlist</li>
-</ol><!--Breadcrumbs Close-->
 
 <!--Wishlist-->
 <section class="wishlist">

@@ -21,7 +21,8 @@ class HowCostFitWorksController extends MasterController {
      */
     public function actionIndex() {
         $this->title = 'Cost.fit | How Cost Fit Works';
-        $this->subTitle = 'How Cost Fit Works';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = 'Support';
         return $this->render('@app/views/how/howcostfitworks');
     }
 

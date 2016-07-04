@@ -28,6 +28,7 @@ class TrackingController extends MasterController {
     public function actionIndex() {
         $this->title = 'Cost.fit | tracking';
         $this->subTitle = 'tracking';
+        $this->subSubTitle = 'Delivery';
         return $this->render('tracking');
     }
 

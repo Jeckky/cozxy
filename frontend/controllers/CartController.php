@@ -18,17 +18,16 @@ use frontend\models\ContactForm;
  */
 class CartController extends MasterController {
 
-    public $enableCsrfValidation = false;
-
     /**
      * Displays homepage.
      *
      * @return mixed
      */
     public function actionIndex() {
-        //return Yii::$app->getResponse()->redirect('register/login');
-        $this->title = 'Cost.fit | Products';
-        $this->subTitle = 'ชื่อ Cart';
+        $this->layout = "/content_right";
+        $this->title = 'Cost.fit | cart';
+        $this->subTitle = 'Shopping Cart';
+        $this->subSubTitle = '';
         return $this->render('cart');
     }
 

@@ -8,12 +8,6 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 
-<!--Breadcrumbs-->
-<ol class="breadcrumb">
-    <li><a href="<?php echo $baseUrl; ?>">Home</a></li>
-    <li><a href="shop-filters-left-3cols.html">Shop - filters left 3 cols</a></li>
-    <li>Shop - single item v1</li>
-</ol><!--Breadcrumbs Close-->
 
 <!--Shopping Cart Message-->
 <section class="cart-message">

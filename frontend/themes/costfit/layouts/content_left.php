@@ -3,6 +3,9 @@
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
+
+$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
+$baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <?php $this->beginContent('@app/themes/costfit/layouts/main.php'); ?>
 <?= $this->render('_modal_login') ?>
@@ -10,7 +13,7 @@ use yii\widgets\Breadcrumbs;
 <div class="page-content">
 
     <ol class="breadcrumb">
-        <li><a href="index.html">Home</a></li>
+        <li><a href="<?php echo Yii::$app->homeUrl; ?>">Home</a></li>
         <li>Shop - filters left 3 cols</li>
     </ol><!--Breadcrumbs Close-->
 
