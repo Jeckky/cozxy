@@ -19,9 +19,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <span class="tile-overlay"></span>
         </a>
         <div class="footer">
-            <a href="#" style="word-wrap: break-word;"><?= $model->title; ?></a>
+            <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?= $model->productId ?>" style="word-wrap: break-word;"><?= $model->title; ?></a>
             <span><?//= $model->shortDescription; ?></span>
             <a href="<?php echo Yii::$app->homeUrl; ?>cart"><button class="btn btn-primary">Add to Cart</button></a>
         </div>
-    </div> 
+    </div>
 </div>
