@@ -140,8 +140,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     </div>
 </section><!--Catalog Grid Close-->
 
-<!--Brands Carousel Widget-->
-<?php echo $this->render('@app/themes/costfit/layouts/_brand_carousel'); ?>
 
 <script type="text/javascript">
     //apply-coupon
