@@ -18,18 +18,17 @@ use frontend\models\ContactForm;
  */
 class ProductsController extends MasterController {
 
-    public $enableCsrfValidation = false;
-
     /**
      * Displays homepage.
      *
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex($name = NULL, $id = null) {
         //return Yii::$app->getResponse()->redirect('register/login');
         $this->title = 'Cost.fit | Products';
-        $this->subTitle = 'Products';
-        return $this->render('products');
+        $this->subTitle = 'Shop - filters left 3 cols ';
+        $this->subSubTitle = 'Shop - single item v2';
+        return $this->render('products', ['name' => $name, 'id' => $id]);
     }
 
 }
