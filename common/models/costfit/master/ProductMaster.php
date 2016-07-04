@@ -23,6 +23,7 @@ use Yii;
     * @property string $height
     * @property string $depth
     * @property string $weight
+    * @property string $price
     * @property string $unit
     * @property string $smallUnit
     * @property integer $status
@@ -59,7 +60,7 @@ return [
             [['userId', 'productGroupId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status'], 'integer'],
             [['isbn', 'shortDescription', 'description', 'specification'], 'string'],
             [['title', 'createDateTime'], 'required'],
-            [['width', 'height', 'depth', 'weight'], 'number'],
+            [['width', 'height', 'depth', 'weight', 'price'], 'number'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['code'], 'string', 'max' => 100],
             [['title', 'optionName'], 'string', 'max' => 200],
@@ -93,6 +94,7 @@ return [
     'height' => Yii::t('product', 'Height'),
     'depth' => Yii::t('product', 'Depth'),
     'weight' => Yii::t('product', 'Weight'),
+    'price' => Yii::t('product', 'Price'),
     'unit' => Yii::t('product', 'Unit'),
     'smallUnit' => Yii::t('product', 'Small Unit'),
     'status' => Yii::t('product', 'Status'),

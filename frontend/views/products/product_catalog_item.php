@@ -9,19 +9,19 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <!--Product Description-->
 <div class="col-lg-6 col-md-6">
-    <h1>Minaudière</h1>
-    <div class="old-price">815,00 $</div>
-    <div class="price">715,00 $</div>
+    <h1><?= $model->title; ?></h1>
+    <div class="old-price"><?= (isset($model->price) && !empty($model->price)) ? number_format($model->price) . " ฿" : "815,00 $" ?></div>
+    <div class="price"><?= (isset($model->productOnePrice->price) && !empty($model->productOnePrice->price)) ? number_format($model->productOnePrice->price) . " ฿" : "715,00 $" ?></div>
     <div class="buttons group">
         <div class="qnt-count">
             <a class="incr-btn" href="#">-</a>
-            <input id="quantity" class="form-control" type="text" value="2">
+            <input id="quantity" class="form-control" type="text" value="1">
             <a class="incr-btn" href="#">+</a>
         </div>
         <a class="btn btn-primary btn-sm" id="addItemToCart" href="<?php echo Yii::$app->homeUrl; ?>cart"><i class="icon-shopping-cart"></i>Add to cart</a>
         <a class="btn btn-black btn-sm" href="<?php echo Yii::$app->homeUrl; ?>wishlist"><i class="icon-heart"></i>Add to wishlist</a>
     </div>
-    <p class="p-style2">Product page was developed with the help of consultants with great and successful experience in e-commerce. It's all you need to effectively demonstrate your product. The opportunity to quickly buy a product or save it to a wishlist will definitely increase the conversion rate.</p>
+    <p class="p-style2"><?= strip_tags($model->shortDescription); ?></p>
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-5">
             <h3>Tell friends</h3>
@@ -51,21 +51,20 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <div class="col-lg-6 col-md-6">
     <div class="prod-gal master-slider" id="prod-gal">
         <?php
-        for ($index = 0; $index <= 2; $index++) {
+        foreach ($model->productImages as $image) {
             // รูปภาพ default : /cost.fit/assets/img/catalog/product-gallery/th_1.jpg
             ?>
             <!--Slide1-->
             <div class="ms-slide">
-                <img src="<?php echo $directoryAsset; ?>/masterslider/blank.gif" data-src="<?php echo $baseUrl; ?>/images/ProductImage/15.jpg" alt="Lorem ipsum"/>
-                <img class="ms-thumb" src="<?php echo $baseUrl; ?>/images/ProductImage/15.jpg" alt="thumb" />
+                <img src="<?php echo Yii::$app->homeUrl . $image->image; ?>" data-src="<?php echo Yii::$app->homeUrl . $image->image; ?>" alt="<?= $image->title ?>"/>
+                <img class="ms-thumb" src="<?php echo Yii::$app->homeUrl . $image->image; ?>" alt="thumb" />
             </div>
             <!--Slide2-->
             <?php
-            $index = $index++;
         }
         ?>
         <div class="ms-slide">
-            <img src="<?php echo $directoryAsset; ?>/masterslider/blank.gif" data-src="<?php echo $baseUrl; ?>/images/ProductImage/15.jpg" alt="Lorem ipsum"/>
+            <img src="<?php echo $directoryAsset; ?>/masterslider/blank.gif" data-src="<?php echo $directoryAsset; ?>/img/catalog/product-gallery/1.jpg" alt="Lorem ipsum"/>
             <img class="ms-thumb" src="<?php echo $directoryAsset; ?>/img/catalog/product-gallery/th_1.jpg" alt="thumb" />
         </div>
     </div>

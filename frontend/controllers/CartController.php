@@ -16,19 +16,26 @@ use frontend\models\ContactForm;
 /**
  * Cart controller
  */
-class CartController extends MasterController {
+class CartController extends MasterController
+{
 
     /**
      * Displays homepage.
      *
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $this->layout = "/content_right";
         $this->title = 'Cost.fit | cart';
         $this->subTitle = 'Shopping Cart';
         $this->subSubTitle = '';
         return $this->render('cart');
+    }
+
+    public function actionAddToCart($id)
+    {
+        
     }
 
 }

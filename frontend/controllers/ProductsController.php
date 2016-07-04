@@ -16,19 +16,22 @@ use frontend\models\ContactForm;
 /**
  * Products controller
  */
-class ProductsController extends MasterController {
+class ProductsController extends MasterController
+{
 
     /**
      * Displays homepage.
      *
      * @return mixed
      */
-    public function actionIndex($name = NULL, $id = null) {
+    public function actionIndex()
+    {
         //return Yii::$app->getResponse()->redirect('register/login');
         $this->title = 'Cost.fit | Products';
         $this->subTitle = 'Shop - filters left 3 cols ';
         $this->subSubTitle = 'Shop - single item v2';
-        return $this->render('products', ['name' => $name, 'id' => $id]);
+        $model = \common\models\costfit\Product::find()->where("productId =" . $_GET["productId"])->one();
+        return $this->render('products', ['model' => $model]);
     }
 
 }

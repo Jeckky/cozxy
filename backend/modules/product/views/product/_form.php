@@ -65,6 +65,8 @@ use common\models\costfit\Brand;
 
         <?= $form->field($model, 'weight', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
 
+        <?= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
+
         <?= $form->field($model, 'unit', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(common\models\costfit\Unit::find()->all(), 'unitId', 'title'), ['prompt' => '-- Select Unit --']) ?>
 
         <?= $form->field($model, 'smallUnit', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(common\models\costfit\Unit::find()->all(), 'unitId', 'title'), ['prompt' => '-- Select Small Unit --']) ?>
