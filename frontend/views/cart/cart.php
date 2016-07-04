@@ -25,57 +25,24 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <th>Total</th>
                     </tr>
                     <!--Item-->
-                    <tr class="item first">
-                        <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888"><img src="<?php echo $directoryAsset; ?>/img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
-                        <td class="name"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">Wristlet</a></td>
-                        <td class="price">715,00 $</td>
-                        <td class="qnt-count">
-                            <a class="incr-btn" href="#">-</a>
-                            <input class="quantity form-control" type="text" value="2">
-                            <a class="incr-btn" href="#">+</a>
-                        </td>
-                        <td class="total">2715,00 $</td>
-                        <td class="delete"><i class="icon-delete"></i></td>
-                    </tr>
-                    <!--Item-->
-                    <tr class="item">
-                        <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888"><img src="<?php echo $directoryAsset; ?>/img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
-                        <td class="name"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">Wristlet</a></td>
-                        <td class="price">715,00 $</td>
-                        <td class="qnt-count">
-                            <a class="incr-btn" href="#">-</a>
-                            <input class="quantity form-control" type="text" value="2">
-                            <a class="incr-btn" href="#">+</a>
-                        </td>
-                        <td class="total">2715,00 $</td>
-                        <td class="delete"><i class="icon-delete"></i></td>
-                    </tr>
-                    <!--Item-->
-                    <tr class="item">
-                        <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888"><img src="<?php echo $directoryAsset; ?>/img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
-                        <td class="name"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">Wristlet</a></td>
-                        <td class="price">715,00 $</td>
-                        <td class="qnt-count">
-                            <a class="incr-btn" href="#">-</a>
-                            <input class="quantity form-control" type="text" value="2">
-                            <a class="incr-btn" href="#">+</a>
-                        </td>
-                        <td class="total">2715,00 $</td>
-                        <td class="delete"><i class="icon-delete"></i></td>
-                    </tr>
-                    <!--Item-->
-                    <tr class="item">
-                        <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888"><img src="<?php echo $directoryAsset; ?>/img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
-                        <td class="name"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">Wristlet</a></td>
-                        <td class="price">715,00 $</td>
-                        <td class="qnt-count">
-                            <a class="incr-btn" href="#">-</a>
-                            <input class="quantity form-control" type="text" value="2">
-                            <a class="incr-btn" href="#">+</a>
-                        </td>
-                        <td class="total">2715,00 $</td>
-                        <td class="delete"><i class="icon-delete"></i></td>
-                    </tr>
+                    <?php for ($index1 = 0; $index1 < 4; $index1++) {
+                        ?>
+                        <tr class="item first">
+                            <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?php echo $index1; ?>"><img src="<?php echo $directoryAsset; ?>/img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
+                            <td class="name"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?php echo $index1; ?>">Wristlet</a></td>
+                            <td class="price">715,00 $</td>
+                            <td class="qnt-count">
+                                <a class="incr-btn" href="#">-</a>
+                                <input class="quantity form-control" type="text" value="2">
+                                <a class="incr-btn" href="#">+</a>
+                            </td>
+                            <td class="total">2715,00 $</td>
+                            <td class="delete"><i class="icon-delete"></i></td>
+                        </tr>
+                        <?php
+                        $index1 = $index1++;
+                    }
+                    ?>
                 </table>
             </div>
 
