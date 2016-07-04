@@ -6,7 +6,10 @@
         </div>
         <div class="price-label">715,00 $</div>-->
         <a href="#">
-            <img src="<?php echo Yii::$app->homeUrl . $model->image; ?>" alt="1"/>
+            <img src="<?php
+            echo (isset($model->image) && !empty($model->image)) ? Yii::$app->homeUrl . $model->image : Yii::$app->urlManagerFrontend->baseUrl . "/../themes/costfit/assets/img/catalog/1.png";
+            ;
+            ?>" alt="1"/>
             <span class="tile-overlay"></span>
         </a>
         <div class="footer">

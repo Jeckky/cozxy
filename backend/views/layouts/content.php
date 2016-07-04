@@ -44,6 +44,7 @@ use yii\widgets\Breadcrumbs;
                 'items' => [
                     '<li class="dropdown-header">Product</li>',
                     ['label' => 'Brand', 'url' => ['/product/brand']],
+                    ['label' => 'Show Category', 'url' => ['/product/show-category/show-category']],
                     ['label' => 'Category', 'url' => ['/product/category']],
                     ['label' => 'Product Group', 'url' => ['/product/product-group']],
                     ['label' => 'Product Price Group', 'url' => ['/product/product-group']],
@@ -57,6 +58,13 @@ use yii\widgets\Breadcrumbs;
                     '<li class="dropdown-header">Package</li>',
                     ['label' => 'Package', 'url' => ['/shipping/package']],
                     ['label' => 'Package Type', 'url' => ['/shipping/package-type']],
+                ],
+            ],
+            [
+                'label' => 'Content',
+                'items' => [
+                    '<li class="dropdown-header">Content</li>',
+                    ['label' => 'Package', 'url' => ['/content/content-group']],
                 ],
             ],
         ],

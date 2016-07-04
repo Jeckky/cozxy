@@ -42,7 +42,7 @@ class CategoryToProduct extends \common\models\costfit\master\CategoryToProductM
 
         $category = Category::find()->where("categoryId=" . $categoryId)->one();
         $model->categoryId = $categoryId;
-        $model->productId = $categoryId;
+        $model->productId = $productId;
         $model->createDateTime = new \yii\db\Expression("NOW()");
         $model->save();
         $me = $category;

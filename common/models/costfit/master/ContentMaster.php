@@ -1,0 +1,77 @@
+<?php
+
+namespace common\models\costfit\master;
+
+use Yii;
+
+/**
+* This is the model class for table "content".
+*
+    * @property string $contentId
+    * @property string $contentGroupId
+    * @property string $headTitle
+    * @property string $title
+    * @property string $description
+    * @property string $image
+    * @property string $linkTitle
+    * @property string $link
+    * @property integer $status
+    * @property string $createDateTime
+    * @property string $updateDateTime
+    *
+            * @property ContentGroup $contentGroup
+    */
+class ContentMaster extends \common\models\ModelMaster
+{
+/**
+* @inheritdoc
+*/
+public static function tableName()
+{
+return 'content';
+}
+
+/**
+* @inheritdoc
+*/
+public function rules()
+{
+return [
+            [['contentGroupId', 'headTitle', 'createDateTime'], 'required'],
+            [['contentGroupId', 'status'], 'integer'],
+            [['description'], 'string'],
+            [['createDateTime', 'updateDateTime'], 'safe'],
+            [['headTitle', 'title', 'linkTitle', 'link'], 'string', 'max' => 200],
+            [['image'], 'string', 'max' => 255],
+            [['contentGroupId'], 'exist', 'skipOnError' => true, 'targetClass' => ContentGroupMaster::className(), 'targetAttribute' => ['contentGroupId' => 'contentGroupId']],
+        ];
+}
+
+/**
+* @inheritdoc
+*/
+public function attributeLabels()
+{
+return [
+    'contentId' => Yii::t('content', 'Content ID'),
+    'contentGroupId' => Yii::t('content', 'Content Group ID'),
+    'headTitle' => Yii::t('content', 'Head Title'),
+    'title' => Yii::t('content', 'Title'),
+    'description' => Yii::t('content', 'Description'),
+    'image' => Yii::t('content', 'Image'),
+    'linkTitle' => Yii::t('content', 'Link Title'),
+    'link' => Yii::t('content', 'Link'),
+    'status' => Yii::t('content', 'Status'),
+    'createDateTime' => Yii::t('content', 'Create Date Time'),
+    'updateDateTime' => Yii::t('content', 'Update Date Time'),
+];
+}
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getContentGroup()
+    {
+    return $this->hasOne(ContentGroupMaster::className(), ['contentGroupId' => 'contentGroupId']);
+    }
+}

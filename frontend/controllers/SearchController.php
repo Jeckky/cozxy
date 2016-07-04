@@ -16,7 +16,8 @@ use frontend\models\ContactForm;
 /**
  * Search controller
  */
-class SearchController extends MasterController {
+class SearchController extends MasterController
+{
 
     public $enableCsrfValidation = false;
 
@@ -25,12 +26,27 @@ class SearchController extends MasterController {
      *
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         //return Yii::$app->getResponse()->redirect('register/login');
         $this->layout = "/content_left";
         $this->title = 'Cost.fit | Products';
         $this->subTitle = 'ชื่อ search';
-        return $this->render('search');
+
+        if (isset($_GET["category"])) {
+            $products = \common\models\costfit\Product::find()
+            ->join("INNER JOIN", "category_to_product ctp", 'ctp.productId = product.productId')
+            ->where("ctp.categoryId=" . $_GET["category"]);
+//            ->groupBy("ctp.productId");
+        } else {
+            $products = \common\models\costfit\Product::find();
+        }
+
+        $products = new \yii\data\ActiveDataProvider([
+            'query' => $products,
+        ]);
+
+        return $this->render('search', compact('products'));
     }
 
 }

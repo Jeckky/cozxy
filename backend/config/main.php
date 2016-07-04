@@ -25,6 +25,9 @@ return [
         'shipping' => [
             'class' => 'backend\modules\shipping\Shipping',
         ],
+        'content' => [
+            'class' => 'backend\modules\content\Content',
+        ],
         'redactor' => [
             'class' => 'yii\redactor\RedactorModule',
             'uploadDir' => Yii::$app->basePath . '/web/images',

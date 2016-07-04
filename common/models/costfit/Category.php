@@ -57,9 +57,16 @@ class Category extends \common\models\costfit\master\CategoryMaster
     public static function findAllSaveCategory($returnType = 1, $isRandom = TRUE, $limit = 6)
     {
         if ($isRandom) {
-            $query = Category::find()->limit($limit)->orderBy(new \yii\db\Expression('rand()'));
+            $query = Category::find()
+            ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
+            ->where('sc.type = 1')
+            ->limit($limit)
+            ->orderBy(new \yii\db\Expression('rand()'));
         } else {
-            $query = Category::find()->limit($limit);
+            $query = Category::find()
+            ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
+            ->where('sc.type = 1')
+            ->limit($limit);
         }
 
         if ($returnType == 1) {
@@ -74,9 +81,16 @@ class Category extends \common\models\costfit\master\CategoryMaster
     public static function findAllPopularCategory($returnType = 1, $isRandom = TRUE, $limit = 6)
     {
         if ($isRandom) {
-            $query = Category::find()->limit($limit)->orderBy(new \yii\db\Expression('rand()'));
+            $query = Category::find()
+            ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
+            ->where('sc.type = 2')
+            ->limit($limit)
+            ->orderBy(new \yii\db\Expression('rand()'));
         } else {
-            $query = Category::find()->limit($limit);
+            $query = Category::find()
+            ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
+            ->where('sc.type = 2')
+            ->limit($limit);
         }
 
         if ($returnType == 1) {
