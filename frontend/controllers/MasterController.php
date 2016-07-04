@@ -16,6 +16,7 @@ class MasterController extends MasterCommonController {
     public $layout = '/content';
     public $title = 'Title';
     public $subTitle = 'Sub Title';
+    public $subSubTitle = 'Sub Sub Title';
 
     public function getTitle() {
         return $this->title;
@@ -23,6 +24,10 @@ class MasterController extends MasterCommonController {
 
     public function getSubTitle() {
         return $this->subTitle;
+    }
+
+    public function getSubSubTitle() {
+        return $this->subSubTitle;
     }
 
     public function init() {

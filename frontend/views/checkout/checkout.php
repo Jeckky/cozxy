@@ -7,17 +7,8 @@ use yii\bootstrap\ActiveForm;
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
-<!--Breadcrumbs-->
-<ol class="breadcrumb">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="shop-filters-left-3cols.html">Shop</a></li>
-    <li>Checkout</li>
-</ol><!--Breadcrumbs Close-->
-
-<!--Checkout-->
 <section class="checkout">
     <div class="container">
-
         <!--Expandable Panels-->
         <div class="row">
             <div class="col-lg-12">
@@ -74,11 +65,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 </div>
             </div>
         </div>
-
         <!--Checkout Form-->
         <div class="row">
             <form id="checkout-form" method="post">
-
                 <!--Left Column-->
                 <div class="col-lg-8 col-md-8 col-sm-8">
                     <h3>Billing adress</h3>
@@ -193,8 +182,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </form>
         </div>
     </div>
-</section><!--Checkout Close-->
+</section>
 
-<!--Brands Carousel Widget-->
 
-<?php echo $this->render('@app/themes/costfit/layouts/_brand_carousel'); ?>

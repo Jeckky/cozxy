@@ -1,3 +1,8 @@
+<?php
+// echo Yii::$app->homeUrl . Yii::$app->controller->id;
+//echo 'Test =' . Yii::$app->homeUrl;
+//echo '<br>' . Yii::$app->controller->id;
+?>
 <ul class="catalog" id="catalog_new" style="width: 100%;">
     <li class="has-submenu pull-left"><a href="#">Categories<i class="fa fa-chevron-down open"></i></a>
         <ul class="submenu">
@@ -59,6 +64,9 @@
             </li>-->
         </ul>
     </li>
-
-    <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works">How cost.fit Works</a></li>
+    <?php if (Yii::$app->controller->id == 'site' or Yii::$app->controller->id == 'register') { ?>
+        <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works">How cost.fit Works</a></li>
+    <?php } else { ?>
+        <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>history">Easy Re-Order</a></li>
+        <?php } ?>
 </ul>

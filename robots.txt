@@ -1,3 +1,6 @@
+# Robots.txt file for http://www.costfit.com/
+#
+
+
 User-agent: *
-Disallow:
 Sitemap: http://www.costfit.com/sitemap.xml

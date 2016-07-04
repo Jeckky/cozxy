@@ -26,9 +26,11 @@ class CheckoutController extends MasterController {
      * @return mixed
      */
     public function actionIndex() {
-        //return Yii::$app->getResponse()->redirect('register/login');
+
+        $this->layout = "/content_right";
         $this->title = 'Cost.fit | checkout';
         $this->subTitle = 'Checkout';
+        $this->subSubTitle = "shop";
         return $this->render('checkout');
     }
 
