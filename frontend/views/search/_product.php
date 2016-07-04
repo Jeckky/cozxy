@@ -3,7 +3,6 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <!--Tile-->
-
 <div id="products-category-search" class="col-lg-4 col-md-6 col-sm-12">
     <div class="tile">
         <div class="badges">
