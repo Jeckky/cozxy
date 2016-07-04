@@ -27,6 +27,7 @@ class SearchController extends MasterController {
      */
     public function actionIndex() {
         //return Yii::$app->getResponse()->redirect('register/login');
+        $this->layout = "/content_left";
         $this->title = 'Cost.fit | Products';
         $this->subTitle = 'ชื่อ search';
         return $this->render('search');
