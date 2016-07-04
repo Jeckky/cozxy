@@ -18,3 +18,7 @@
 <label>
     <input type="checkbox" name="sizes" value="red" id="size_4">
     Superman (0)</label>
+<br>
+<div class="sorting" style="margin:0 0 0 0; font-size: 12px;">
+    <a href="#" style="color: #03a9f4;">MORE</a>
+</div><!--sorting-->

@@ -18,3 +18,7 @@
 <label>
     <input type="checkbox" name="colors" value="red" id="color_4">
     Red (12)</label>
+<br>
+<div class="sorting" style="margin:0 0 0 0; font-size: 12px;">
+    <a href="#" style="color: #03a9f4;">MORE</a>
+</div><!--sorting-->
