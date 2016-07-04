@@ -23,5 +23,5 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <span><?//= $model->shortDescription; ?></span>
             <a href="<?php echo Yii::$app->homeUrl; ?>cart"><button class="btn btn-primary">Add to Cart</button></a>
         </div>
-    </div>
+    </div> 
 </div>
