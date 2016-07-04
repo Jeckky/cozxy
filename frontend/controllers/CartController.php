@@ -35,7 +35,40 @@ class CartController extends MasterController
 
     public function actionAddToCart($id)
     {
-        
+        $res = [];
+//        if (\Yii::$app->user->isGuest) {
+        $token = \Yii::$app->session->get("orderToken");
+        $order = \common\models\costfit\Order::find()->where("token ='" . $token . "' AND status = " . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
+//        } else {
+//            $order = \common\models\costfit\Order::find()->where("userId =" . \Yii::$app->user->id . " AND status = " . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
+//        }
+        if (!isset($order)) {
+            $order = new \common\models\costfit\Order();
+            $order->token = $token;
+            $order->status = \common\models\costfit\Order::ORDER_STATUS_DRAFT;
+            $order->createDateTime = new \yii\db\Expression("NOW()");
+            if (!$order->save(FALSE)) {
+                throw new \yii\base\Exception("Can't Save Order");
+            }
+        }
+        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productId =" . $id)->one();
+        if (!isset($orderItem)) {
+            $orderItem = new \common\models\costfit\OrderItem();
+            $orderItem->quantity = $_POST["quantity"];
+        } else {
+            $orderItem->quantity = $orderItem->quantity + $_POST["quantity"];
+        }
+        $orderItem->orderId = $order->orderId;
+        $orderItem->productId = $id;
+        $orderItem->price = $orderItem->product->calProductPrice($id, $_POST["quantity"]);
+        $orderItem->total = $orderItem->quantity * $orderItem->price;
+        $orderItem->createDateTime = new \yii\db\Expression("NOW()");
+        if ($orderItem->save()) {
+            $res["status"] = TRUE;
+        } else {
+            $res["status"] = FALSE;
+        }
+        return \yii\helpers\Json::encode($res);
     }
 
 }

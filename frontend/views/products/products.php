@@ -19,7 +19,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <section class="cart-message">
     <i class="fa fa-check-square"></i>
     <p class="p-style3">"Nikon" was successfully added to your cart.</p>
-    <a class="btn-outlined-invert btn-black btn-sm" href="shop-single-item-v2.html">View cart</a>
+    <a class="btn-outlined-invert btn-black btn-sm" href="<?php echo Yii::$app->homeUrl; ?>cart">View cart</a>
 </section><!--Shopping Cart Message Close-->
 
 <!--Catalog Single Item-->

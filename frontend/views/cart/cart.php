@@ -25,22 +25,22 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <th>Total</th>
                     </tr>
                     <!--Item-->
-                    <?php for ($index1 = 0; $index1 < 4; $index1++) {
+                    <?php
+                    foreach ($this->params['cart']['items'] as $item) {
                         ?>
                         <tr class="item first">
-                            <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?php echo $index1; ?>"><img src="<?php echo $directoryAsset; ?>/img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
-                            <td class="name"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?php echo $index1; ?>">Wristlet</a></td>
-                            <td class="price">715,00 $</td>
+                            <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?php echo $item["productId"]; ?>"><img src="<?php echo $item["image"]; ?>" alt="Lorem ipsum"/></a></td>
+                            <td class="name" style="font-size:16px"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?php echo $item["productId"]; ?>"><?= $item["title"] ?></a></td>
+                            <td class="price"><?= $item["price"] . " ฿" ?></td>
                             <td class="qnt-count">
                                 <a class="incr-btn" href="#">-</a>
-                                <input class="quantity form-control" type="text" value="2">
+                                <input class="quantity form-control" style="font-size: 14px" type="text" value="<?= $item["qty"] ?>">
                                 <a class="incr-btn" href="#">+</a>
                             </td>
-                            <td class="total">2715,00 $</td>
+                            <td class="total"><?= $item["qty"] * $item["price"] . " ฿" ?></td>
                             <td class="delete"><i class="icon-delete"></i></td>
                         </tr>
                         <?php
-                        $index1 = $index1++;
                     }
                     ?>
                 </table>
@@ -54,15 +54,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <table>
                             <tr>
                                 <td>Cart subtotal</td>
-                                <td class="total align-r">2715,00 $</td>
+                                <td class="total align-r"><?= number_format($this->params['cart']['total'], 2) ?></td>
                             </tr>
                             <tr class="devider">
                                 <td>Shipping</td>
-                                <td class="align-r">Free shipping</td>
+                                <td class="align-r"><?= (isset($this->params['cart']['shipping']) && $this->params['cart']['shipping'] == 0) ? "Free Shipping" : number_format($this->params['cart']['shipping'], 2) ?></td>
                             </tr>
                             <tr>
                                 <td>Order total</td>
-                                <td class="total align-r">2715,00 $</td>
+                                <td class="total align-r"><?= number_format($this->params ['cart']['summary'], 2) ?></td>
                             </tr>
                         </table>
 
@@ -80,10 +80,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </div>
 
                     <a class="panel-toggle" href="#calc-shipping"><h3>Calculate shipping</h3></a>
-                    <div class="hidden-panel calc-shipping" id="calc-shipping">
-                        <div class="form-group">
-                            <div class="select-style">
-                                <select name="country">
+                    <div class = "hidden-panel calc-shipping" id = "calc-shipping">
+                        <div class = "form-group">
+                            <div class = "select-style">
+                                <select name = "country">
                                     <option>Australia</option>
                                     <option>Belgium</option>
                                     <option>Germany</option>
@@ -93,15 +93,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="sr-only" for="state">State/ province</label>
-                            <input type="text" class="form-control" id="state" name="state" placeholder="State/ province">
+                        <div class = "form-group">
+                            <label class = "sr-only" for = "state">State/ province</label>
+                            <input type = "text" class = "form-control" id = "state" name = "state" placeholder = "State/ province">
                         </div>
-                        <div class="form-group">
-                            <label class="sr-only" for="postcode">Postcode/ ZIP</label>
-                            <input type="text" class="form-control" id="postcode" name="postcode" placeholder="Postcode/ ZIP">
+                        <div class = "form-group">
+                            <label class = "sr-only" for = "postcode">Postcode/ ZIP</label>
+                            <input type = "text" class = "form-control" id = "postcode" name = "postcode" placeholder = "Postcode/ ZIP">
                         </div>
-                        <input type="button" class="btn btn-primary btn-sm btn-block" name="update-totals" value="Update totals" onclick="proceed('calculate_shipping')">
+                        <input type = "button" class = "btn btn-primary btn-sm btn-block" name = "update-totals" value = "Update totals" onclick = "proceed('calculate_shipping')">
                     </div>
                 </form>
             </div>
@@ -110,10 +110,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </section><!--Shopping Cart Close-->
 
 <!--Catalog Grid-->
-<section class="catalog-grid">
-    <div class="container">
+<section class = "catalog-grid">
+    <div class = "container">
         <h2>You may also like</h2>
-        <div class="row">
+        <div class = "row">
             <?php for ($index = 0; $index <= 3; $index++) {
                 ?>
                 <!--Tile-->

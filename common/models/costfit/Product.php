@@ -55,4 +55,16 @@ class Product extends \common\models\costfit\master\ProductMaster
         return $this->hasOne(ProductPrice::className(), ['productId' => 'productId'])->andWhere('quantity = 1');
     }
 
+    public function calProductPrice($productId, $quantity)
+    {
+        $product = Product::find()->where("productId = $productId")->one();
+        $productPrice = ProductPrice::find()->where("productId = $productId AND quantity = $quantity")->one();
+
+        if (isset($productPrice)) {
+            return $productPrice->price;
+        } else {
+            return $product->price;
+        }
+    }
+
 }

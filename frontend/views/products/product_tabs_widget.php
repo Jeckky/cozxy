@@ -15,94 +15,97 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="container">
                     <div class="row">
                         <!--Column 1-->
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <!--Item-->
-                            <div class="item">
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-dollar"></i><span>Best Price</span></div>
-                                    <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Affordable prices</p></div>
-                                </div>
-                            </div>
-                            <!--Item-->
-                            <div class="item">
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-umbrella"></i><span>Materials</span></div>
-                                    <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Waterproof materials</p></div>
-                                </div>
-                            </div>
-                            <!--Item-->
-                            <div class="item">
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-sort-numeric-asc"></i><span>City bags</span></div>
-                                    <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Any size</p></div>
-                                </div>
-                            </div>
-                            <!--Item-->
-                            <div class="item">
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-smile-o"></i><span>Mentions</span></div>
-                                    <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Give a smile</p></div>
-                                </div>
-                            </div>
-                            <!--Item-->
-                            <div class="item">
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-recycle"></i><span>Eco activity</span></div>
-                                    <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Eco-friendly materials</div>
-                                </div>
-                            </div>
-                            <!--Item-->
-                            <div class="item">
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-4"><i class="fa fa-archive"></i><span>Package</span></div>
-                                    <div class="col-lg-8 col-md-8 col-sm-8"><p class="p-style2">Individual packing</p></div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--Column 2-->
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <!--Item-->
-                            <div class="item">
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-umbrella"></i><span>Materials</span></div>
-                                    <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Waterproof materials</p></div>
-                                </div>
-                            </div>
-                            <!--Item-->
-                            <div class="item">
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-4"><i class="fa fa-archive"></i><span>Package</span></div>
-                                    <div class="col-lg-8 col-md-8 col-sm-8"><p class="p-style2">Individual packing</p></div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-smile-o"></i><span>Mentions</span></div>
-                                    <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Give a smile</p></div>
-                                </div>
-                            </div>
-                            <!--Item-->
-                            <div class="item">
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-dollar"></i><span>Best Price</span></div>
-                                    <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Affordable prices</p></div>
-                                </div>
-                            </div>
-                            <!--Item-->
-                            <div class="item">
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-recycle"></i><span>Eco activity</span></div>
-                                    <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Eco-friendly materials</div>
-                                </div>
-                            </div>
-                            <!--Item-->
-                            <div class="item">
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-sort-numeric-asc"></i><span>City bags</span></div>
-                                    <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Any size</p></div>
-                                </div>
-                            </div>
-                            <!--Item-->
+                        <!--                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                    Item
+                                                    <div class="item">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-dollar"></i><span>Best Price</span></div>
+                                                            <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Affordable prices</p></div>
+                                                        </div>
+                                                    </div>
+                                                    Item
+                                                    <div class="item">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-umbrella"></i><span>Materials</span></div>
+                                                            <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Waterproof materials</p></div>
+                                                        </div>
+                                                    </div>
+                                                    Item
+                                                    <div class="item">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-sort-numeric-asc"></i><span>City bags</span></div>
+                                                            <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Any size</p></div>
+                                                        </div>
+                                                    </div>
+                                                    Item
+                                                    <div class="item">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-smile-o"></i><span>Mentions</span></div>
+                                                            <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Give a smile</p></div>
+                                                        </div>
+                                                    </div>
+                                                    Item
+                                                    <div class="item">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-recycle"></i><span>Eco activity</span></div>
+                                                            <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Eco-friendly materials</div>
+                                                        </div>
+                                                    </div>
+                                                    Item
+                                                    <div class="item">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 col-md-4 col-sm-4"><i class="fa fa-archive"></i><span>Package</span></div>
+                                                            <div class="col-lg-8 col-md-8 col-sm-8"><p class="p-style2">Individual packing</p></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                Column 2
+                                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                                    Item
+                                                    <div class="item">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-umbrella"></i><span>Materials</span></div>
+                                                            <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Waterproof materials</p></div>
+                                                        </div>
+                                                    </div>
+                                                    Item
+                                                    <div class="item">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 col-md-4 col-sm-4"><i class="fa fa-archive"></i><span>Package</span></div>
+                                                            <div class="col-lg-8 col-md-8 col-sm-8"><p class="p-style2">Individual packing</p></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-smile-o"></i><span>Mentions</span></div>
+                                                            <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Give a smile</p></div>
+                                                        </div>
+                                                    </div>
+                                                    Item
+                                                    <div class="item">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-dollar"></i><span>Best Price</span></div>
+                                                            <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Affordable prices</p></div>
+                                                        </div>
+                                                    </div>
+                                                    Item
+                                                    <div class="item">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-recycle"></i><span>Eco activity</span></div>
+                                                            <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Eco-friendly materials</div>
+                                                        </div>
+                                                    </div>
+                                                    Item
+                                                    <div class="item">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-sort-numeric-asc"></i><span>City bags</span></div>
+                                                            <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Any size</p></div>
+                                                        </div>
+                                                    </div>
+                                                    Item
+                                                </div>-->
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <p class="p-style2"><?= strip_tags($model->specification); ?></p>
                         </div>
                     </div>
                 </div>
@@ -116,7 +119,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="container">
         <div class="row">
             <!--<div class="col-lg-4 col-md-5 col-sm-5">
-                <img class="center-block" src="<?php //echo $directoryAsset;        ?>/img/posts-widget/1.jpg" alt="Description"/>
+                <img class="center-block" src="<?php //echo $directoryAsset;           ?>/img/posts-widget/1.jpg" alt="Description"/>
             </div>-->
             <div class="col-lg-12 col-md-12 col-sm-12">
 <!--                <p class="p-style2">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore.</p>

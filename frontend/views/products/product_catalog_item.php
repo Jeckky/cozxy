@@ -10,6 +10,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--Product Description-->
 <div class="col-lg-6 col-md-6">
     <h1><?= $model->title; ?></h1>
+    <?= Html::hiddenInput("productId", $model->productId, ['id' => 'productId']); ?>
     <div class="form-group">
         <div class="select-style">
             <select name="size">
@@ -17,7 +18,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <option>Size:32 Inches</option>
                 <option>Size:40 Inches</option>
                 <option>Size:48 Inches</option>
-                <option>Size:50 Inches</option> 
+                <option>Size:50 Inches</option>
             </select>
         </div>
     </div>
@@ -29,10 +30,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <input id="quantity" class="form-control" type="text" value="1">
             <a class="incr-btn" href="#">+</a>
         </div>
-        <a class="btn btn-primary btn-sm" id="addItemToCart" href="<?php echo Yii::$app->homeUrl; ?>cart"><i class="icon-shopping-cart"></i>Add to cart</a>
+        <a class="btn btn-primary btn-sm" id="addItemToCart" href="#"><i class="icon-shopping-cart"></i>Add to cart</a>
         <a class="btn btn-black btn-sm" href="<?php echo Yii::$app->homeUrl; ?>wishlist"><i class="icon-heart"></i>Add to wishlist</a>
     </div>
-    <p class="p-style2"><?= strip_tags($model->shortDescription); ?></p>
+    <p class="p-style2"><?//= strip_tags($model->shortDescription); ?></p>
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-5">
             <h3>Tell friends</h3>
