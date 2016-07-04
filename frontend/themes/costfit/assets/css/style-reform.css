@@ -58,3 +58,13 @@
     min-height: 220px;
     width: 100%;
 }
+
+.menu .main,
+.menu .catalog {
+    display: block;
+    list-style: none;
+    text-align: right;
+    width: 100%;
+    max-width: 948px;
+    margin-bottom: 0
+}
