@@ -19,15 +19,29 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
     <section class="catalog-grid">
         <div class="container">
-            <h2 class="with-sorting">Filters left 3 columns</h2>
+            <h2 class="with-sorting">Show results for</h2>
             <div class="sorting">
                 <a href="#">Sort by name</a>
                 <a href="#">Sort by price</a>
             </div><!--sorting-->
+
             <div class="row">
                 <!--Filters-->
                 <div class="filters-mobile col-lg-3 col-md-3 col-sm-4">
                     <div class="shop-filters">
+                        <!--Category Section-->
+                        <section class="filter-section">
+                            <h3><a href="#">Electricals & Electronics</a></h3>
+                            <div class="cont-info-widget">
+                                <ul>
+                                    <li>&nbsp;&nbsp;Eletrical Household</li>
+                                    <li>&nbsp;&nbsp;Television & Home Entertainment</li>
+                                    <li>&nbsp;&nbsp;Kitchen Appliance</li>
+                                    <li>&nbsp;&nbsp;Mobile & tablet</li>
+                                    <li>&nbsp;&nbsp;Computer & Office Electronic</li>
+                                </ul>
+                            </div>
+                        </section>
                         <!--Price Section-->
                         <section class="filter-section">
                             <h3>Filter by price</h3>
