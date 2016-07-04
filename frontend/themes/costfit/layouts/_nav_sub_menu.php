@@ -1,4 +1,4 @@
-<ul class="catalog ">
+<ul class="catalog" id="catalog_new" style="width: 100%;">
     <li class="has-submenu pull-left"><a href="#">Categories<i class="fa fa-chevron-down open"></i></a>
         <ul class="submenu">
             <li class="has-submenu"><a href="#" style="font-size: 14px;">Electricals & Electronics <i class="fa fa-chevron-down"></i></a>
