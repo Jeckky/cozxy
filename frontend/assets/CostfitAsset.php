@@ -17,29 +17,6 @@ use yii\web\AssetBundle;
  * @since 2.0
  */
 class CostfitAsset extends AssetBundle {
-    /* public $sourcePath = '@app/themes/costfit/assets';
-      public $css = [
-      'masterslider/style/masterslider.css',
-      'css/styles.css',
-      'css/colors/color-scheme6.css',
-      ];
-      public $js = [
-      'js/libs/jquery-1.11.1.min.js',
-      'js/libs/jquery-ui-1.10.4.custom.min.js',
-      'js/libs/jquery.easing.min.js',
-      'js/plugins/bootstrap.min.js',
-      'js/plugins/smoothscroll.js',
-      'js/plugins/jquery.validate.min.js',
-      'js/plugins/icheck.min.js',
-      'js/plugins/jquery.placeholder.js',
-      'js/plugins/jquery.stellar.min.js',
-      'js/plugins/jquery.touchSwipe.min.js',
-      'js/plugins/jquery.shuffle.min.js',
-      'js/plugins/lightGallery.min.js',
-      'js/plugins/owl.carousel.min.js',
-      'js/plugins/masterslider.min.js',
-      'js/scripts.js',
-      ]; */
 
     public $sourcePath = '@app/themes/costfit/assets';
     public $css = [
@@ -64,6 +41,7 @@ class CostfitAsset extends AssetBundle {
         'js/plugins/lightGallery.min.js',
         'js/plugins/owl.carousel.min.js',
         'js/plugins/masterslider.min.js',
+        'js/plugins/jquery.nouislider.min.js',
         'mailer/mailer.js',
         'js/scripts.js',
     ];

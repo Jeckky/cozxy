@@ -3,7 +3,8 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <!--Tile-->
-<div class="col-lg-4 col-md-6 col-sm-12">
+
+<div id="products-category-search" class="col-lg-4 col-md-6 col-sm-12">
     <div class="tile">
         <div class="badges">
             <span class="sale">Sale</span>
@@ -18,9 +19,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <span class="tile-overlay"></span>
         </a>
         <div class="footer">
-            <a href="#"><?= $model->title; ?></a>
+            <a href="#" style="word-wrap: break-word;"><?= $model->title; ?></a>
             <span><?//= $model->shortDescription; ?></span>
             <a href="<?php echo Yii::$app->homeUrl; ?>cart"><button class="btn btn-primary">Add to Cart</button></a>
         </div>
-    </div>
+    </div> 
 </div>

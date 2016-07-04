@@ -19,3 +19,6 @@
     </li>
     <li><a href="#">Hat bag (23)</a></li>
 </ul>
+<div class="sorting" style="margin:0 0 0 0; font-size: 12px;">
+    <a href="#" style="color: #03a9f4;">MORE</a>
+</div><!--sorting-->

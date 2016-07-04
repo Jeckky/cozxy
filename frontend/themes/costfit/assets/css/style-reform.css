@@ -67,3 +67,8 @@
     max-width: 1148px;
     margin-bottom: 0;
 }
+
+#products-category-search{
+    min-height: 410px;
+    max-height: 450px;
+}

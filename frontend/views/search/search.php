@@ -12,9 +12,9 @@ use yii\bootstrap\ActiveForm;
         'itemView' => function ($model, $key, $index, $widget) {
             return $this->render('_product', ['model' => $model]);
         },
-        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                'summaryOptions' => ['class' => 'sort-by-section clearfix'],
 //            'layout'=>"{summary}{pager}{items}"
-        'layout' => "{items}",
+                'layout' => "{items}",
 //        'pager' => [
 //            'firstPageLabel' => 'first',
 //            'lastPageLabel' => 'last',
@@ -37,8 +37,8 @@ use yii\bootstrap\ActiveForm;
 //            'firstPageCssClass' => 'myfirst',
 //            'lastPageCssClass' => 'mylast',
 //        ],
-    ])
-    ?>
+            ])
+            ?>
 
 </div>
 <!--Pagination-->
@@ -50,4 +50,5 @@ use yii\bootstrap\ActiveForm;
     <li><a href="#">4</a></li>
     <li class="next-page"><a class="icon-arrow-right" href="#"></a></li>
 </ul>
+
 

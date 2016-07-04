@@ -19,19 +19,38 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
     <section class="catalog-grid">
         <div class="container">
-            <h2 class="with-sorting">Filters left 3 columns</h2>
+            <h2 class="with-sorting">Show results for</h2>
             <div class="sorting">
                 <a href="#">Sort by name</a>
                 <a href="#">Sort by price</a>
             </div><!--sorting-->
+
             <div class="row">
                 <!--Filters-->
                 <div class="filters-mobile col-lg-3 col-md-3 col-sm-4">
                     <div class="shop-filters">
+                        <!--Category Section-->
+                        <section class="filter-section" id="cate">
+                            <h3><a href="#">Electricals & Electronics</a></h3>
+                            <div class="cont-info-widget">
+                                <ul>
+                                    <li>&nbsp;&nbsp;Eletrical Household</li>
+                                    <li>&nbsp;&nbsp;Television & Home Entertainment</li>
+                                    <li>&nbsp;&nbsp;Kitchen Appliance</li>
+                                    <li>&nbsp;&nbsp;Mobile & tablet</li>
+                                    <li>&nbsp;&nbsp;Computer & Office Electronic</li>
+                                </ul>
+                            </div>
+                            <div class="sorting" style="margin:0 0 0 0; font-size: 12px;">
+                                <a href="#cate" style="color: #03a9f4;">LESS</a>
+                            </div><!--sorting-->
+                        </section>
+
                         <!--Price Section-->
                         <section class="filter-section">
                             <h3>Filter by price</h3>
                             <?php echo $this->render('@app/views/filter/filterbyprice'); ?>
+
                         </section>
 
                         <!--Colors Section-->
@@ -64,7 +83,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <!--Brands Carousel Widget-->
     <?php echo $this->render('@app/themes/costfit/layouts/_brand_carousel'); ?>
 </div>
-<?php echo $this->render('_footer'); ?>
+<?php echo $this->render('_footer'); ?> 
 <?php $this->registerJs("
 ", \yii\web\View::POS_END); ?>
 <?php $this->endContent(); ?>
