@@ -69,6 +69,7 @@ class CartController extends MasterController
         $orderItem->createDateTime = new \yii\db\Expression("NOW()");
         if ($orderItem->save()) {
             $res["status"] = TRUE;
+            $res["cart"] = \common\models\costfit\Order::findCartArray();
         } else {
             $res["status"] = FALSE;
         }

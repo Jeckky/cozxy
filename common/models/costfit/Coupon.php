@@ -38,20 +38,20 @@ class Coupon extends \common\models\costfit\master\CouponMaster
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public static function generateCouponCode()
+    public static function generateCouponCode($prefix = "")
     {
         $isDupplicate = TRUE;
-        $code = \Yii::$app->security->generateRandomString(7);
+        $code = \Yii::$app->security->generateRandomString(5);
         while ($isDupplicate) {
             $model = Coupon::find()->where("code='" . $code . "'")->one();
             if (isset($model)) {
-                $code = \Yii::$app->security->generateRandomString(7);
+                $code = \Yii::$app->security->generateRandomString(5);
             } else {
                 $isDupplicate = FALSE;
             }
         }
 
-        return $code;
+        return $prefix . $code;
     }
 
 }

@@ -544,6 +544,8 @@ $(document).ready(function (e) {
                             '"></td><td class="price">' + $itemPrice + '</td>'
                             );
                     $('.cart-btn a span').text($cartTotalItems);
+                    $('.cart-btn a').find("#cartTotal").html(data.cart.totalFormatText);
+                    $('.cart-dropdown .footer .total').html(data.cart.totalFormatText);
                 }
             }
         });

@@ -33,8 +33,13 @@ class CouponController extends BackendMasterController
      */
     public function actionIndex()
     {
+        if (isset($_GET["couponOwnerId"])) {
+            $query = Coupon::find()->where("couponOwnerId =" . $_GET["couponOwnerId"]);
+        } else {
+            $query = Coupon::find();
+        }
         $dataProvider = new ActiveDataProvider([
-            'query' => Coupon::find(),
+            'query' => $query,
         ]);
 
         return $this->render('index', [
@@ -62,11 +67,30 @@ class CouponController extends BackendMasterController
     public function actionCreate()
     {
         $model = new Coupon();
-        $model->code = Coupon::generateCouponCode();
+        if (isset($_GET["couponOwnerId"])) {
+            $model->couponOwnerId = $_GET["couponOwnerId"];
+        }
+        $model->code = Coupon::generateCouponCode($model->couponOwner->code);
         if (isset($_POST["Coupon"])) {
             $model->attributes = $_POST["Coupon"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
+            $imageObj = \yii\web\UploadedFile::getInstanceByName("Coupon[image]");
+            if (isset($imageObj) && !empty($imageObj)) {
+                $folderName = "Coupon";
+                $file = $imageObj->name;
+                $filenameArray = explode('.', $file);
+                $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
+                $fileName = \Yii::$app->security->generateRandomString(10) . '.' . $filenameArray[1];
+                $urlFile = $urlFolder . $fileName;
+                $model->image = '/' . 'images/' . $folderName . "/" . $fileName;
+                if (!file_exists($urlFolder)) {
+                    mkdir($urlFolder, 0777);
+                }
+            }
             if ($model->save()) {
+                if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
+                    //Do Some Thing
+                }
                 return $this->redirect(['index']);
             }
         }
@@ -88,9 +112,29 @@ class CouponController extends BackendMasterController
             $model->attributes = $_POST["Coupon"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
 
+            $imageObj = \yii\web\UploadedFile::getInstanceByName("Coupon[image]");
+            if (isset($imageObj) && !empty($imageObj)) {
+                $folderName = "Coupon";
+                $file = $imageObj->name;
+                $filenameArray = explode('.', $file);
+                $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
+                $fileName = \Yii::$app->security->generateRandomString(10) . '.' . $filenameArray[1];
+                $urlFile = $urlFolder . $fileName;
+                $model->image = '/' . 'images/' . $folderName . "/" . $fileName;
+                if (!file_exists($urlFolder)) {
+                    mkdir($urlFolder, 0777);
+                }
+            } else {
+                if (isset($_POST["Coupon"]["imageOld"])) {
+                    $model->image = $_POST["Coupon"]["imageOld"];
+                }
+            }
 
 
             if ($model->save()) {
+                if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
+                    //Do Some Thing
+                }
                 return $this->redirect(['index']);
             }
         }

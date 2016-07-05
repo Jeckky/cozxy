@@ -33,7 +33,11 @@ use yii\jui\DatePicker;
     <div class="panel-body">
         <?= $form->errorSummary($model) ?>
 
-        <?= $form->field($model, 'code', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 50, 'readonly' => true]) ?>
+        <?= $form->field($model, 'code', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 50, 'readOnly' => TRUE]) ?>
+
+        <?= $form->field($model, 'couponOwnerId', ['options' => ['class' => 'row form-group']])->textInput() ?>
+
+        <?= $form->field($model, 'noCoupon', ['options' => ['class' => 'row form-group']])->textInput() ?>
 
         <?= $form->field($model, 'orderSummaryToDiscount', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
 
@@ -45,12 +49,18 @@ use yii\jui\DatePicker;
 
         <?= $form->field($model, 'startDate', ['options' => ['class' => 'row form-group']])->textInput() ?>
 
+        <?= (isset($model->image) && !empty($model->image)) ? Html::img(Yii::$app->homeUrl . $model->image, ['style' => 'width:150px', 'class' => 'col-lg-offset-3']) : ''; ?>
+
+        <?= $form->field($model, 'image', ['options' => ['class' => 'row form-group']])->fileInput() ?>
+
+<?= (isset($model->image) && !empty($model->image)) ? Html::hiddenInput((new ReflectionClass($model))->getShortName() . '[imageOld]', $model->image) : ''; ?>
+
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
-                <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+<?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>
         </div>
     </div>
-    <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
 
 </div>

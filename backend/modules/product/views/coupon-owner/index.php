@@ -7,11 +7,11 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Coupons';
+$this->title = 'Coupon Owners';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
-<div class="coupon-index">
+<div class="coupon-owner-index">
 
 
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
@@ -21,7 +21,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <div class="col-md-6"><?= $this->title ?></div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
-                        <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Coupon', ['create?couponOwnerId=' . $_GET["couponOwnerId"]], ['class' => 'btn btn-success btn-xs']) ?>
+                        <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Coupon Owner', ['create'], ['class' => 'btn btn-success btn-xs']) ?>
                     </div>
                 </div>
             </div>
@@ -39,17 +39,11 @@ $this->params['pageHeader'] = Html::encode($this->title);
             //                ],
             //                'columns' => [
             //                    ['class' => 'yii\grid\SerialColumn'],
-            //                    'couponId',
-            //                    'code',
             //                    'couponOwnerId',
-            //                    'noCoupon',
-            //                    'orderSummaryToDiscount',
-            //                    // 'discountValue',
-            //                    // 'discountPercent',
-            //                    // 'endDate',
-            //                    // 'startDate',
-            //                    // 'image',
-            //                    // 'status',
+            //                    'name',
+            //                    'description:ntext',
+            //                    'image',
+            //                    'status',
             //                    // 'createDateTime',
             //                    // 'updateDateTime',
             //                    ['class' => 'yii\grid\ActionColumn',
@@ -65,7 +59,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
             echo \yii\widgets\ListView::widget([
                 'dataProvider' => $dataProvider,
                 'itemView' => function ($model, $key, $index, $widget) {
-                    return $this->render('_coupon', ['model' => $model]);
+                    return $this->render('_owner', ['model' => $model]);
                 },
                 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
 //            'layout'=>"{summary}{pager}{items}"
