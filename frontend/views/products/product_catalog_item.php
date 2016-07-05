@@ -14,6 +14,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         /*background-color: red;*/
         font-size: 10px;
     }
+    .priceActive  > thead > tr{
+        border-top: 3px #0000cc solid;
+        background-color: rgba(24,227,240,0.7);
+        color: purple;
+    }
+    .priceActive > tbody > tr{
+        background-color: rgba(24,227,240,0.7);
+        color: purple;
+    }
 </style>
 <div class="col-lg-6 col-md-6">
     <h1><?= $model->title; ?></h1>
@@ -54,13 +63,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
     </div>
     <div class="buttons group">
-        <?php for ($index = 0; $index <= 5; $index++) {
+        <?php
+        $i = 0;
+        foreach ($model->productPrices as $pp) {
             ?>
-            <div  class="col-lg-2 col-md-2 col-sm-12" style="float: left; padding-right: 0px; padding-left: 0px;">
-                <table class="col-lg-12 col-md-12 text-center" style="font-size: 14px; border: 1px #f5f5f5 solid;">
+            <div  class="col-lg-2 col-md-2 col-sm-12 " style="float: left; padding-right: 0px; padding-left: 0px;">
+                <table class="col-lg-12 col-md-12 text-center <?= ($i == 0) ? " priceActive" : " " ?>" style="font-size: 14px; border: 1px #f5f5f5 solid;">
                     <thead style="border-bottom: 1px #f5f5f5 solid;">
                         <tr>
-                            <th class="text-center">Buy 1</th>
+                            <th class="text-center">Buy <?= number_format($pp->quantity, 0) ?></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -76,7 +87,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 </table>
             </div>
             <?php
-            $index = $index++;
+            $i++;
         }
         ?>
     </div>
