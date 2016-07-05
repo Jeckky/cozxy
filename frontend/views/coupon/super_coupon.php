@@ -24,7 +24,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <h2 class="title">ข้อเสนอพิเศษจากพาร์ทเนอร์</h2>
                 <div class="row space-top">
                     <?php
-                    $coupons = common\models\costfit\Coupon::find()->where("startDate <= NOW() AND endDate >= NOW()")->all();
+                    $coupons = common\models\costfit\Coupon::find()->where("startDate <= CURDATE() AND endDate >= CURDATE()")->all();
                     foreach ($coupons as $coupon) {
                         ?>
                         <div class="clo-lg-3 col-md-3 col-sm-3 space-bottom">

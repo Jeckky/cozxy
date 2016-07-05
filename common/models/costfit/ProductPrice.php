@@ -37,6 +37,16 @@ class ProductPrice extends \common\models\costfit\master\ProductPriceMaster
     /**
      * @inheritdoc
      */
+    public function attributes()
+    {
+        return array_merge(parent::attributes(), [
+            'maxQuantity'
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), []);

@@ -8,6 +8,13 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <!--Product Description-->
+<style>
+    .popover-content {
+        color: red;
+        /*background-color: red;*/
+        font-size: 10px;
+    }
+</style>
 <div class="col-lg-6 col-md-6">
     <h1><?= $model->title; ?></h1>
     <?= Html::hiddenInput("productId", $model->productId, ['id' => 'productId']); ?>
@@ -22,13 +29,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </select>
         </div>
     </div>
-    <div class="old-price"><?= (isset($model->price) && !empty($model->price)) ? number_format($model->price) . " ฿" : "815,00 $" ?></div>
-    <div class="price"><?= number_format($model->calProductPrice($model->productId, 1)) . " ฿" ?></div>
+    <div class="old-price"><?= (isset($model->price) && !empty($model->price)) ? number_format($model->price, 2) . " ฿" : "815,00 $" ?></div>
+    <div class="price"><?= number_format($model->calProductPrice($model->productId, 1), 2) . " ฿" ?></div>
     <div class="buttons group">
         <div class="qnt-count">
             <a class="incr-btn" href="#">-</a>
             <input id="quantity" class="form-control" type="text" value="1">
-            <a class="incr-btn" href="#">+</a>
+            <a class="incr-btn" href="#" data-toggle="popover" data-content="Max Quantity For this Item" data-placement="bottom">+</a>
         </div>
         <a class="btn btn-primary btn-sm" id="addItemToCart" href="#"><i class="icon-shopping-cart"></i>Add to cart</a>
         <a class="btn btn-black btn-sm" href="<?php echo Yii::$app->homeUrl; ?>wishlist"><i class="icon-heart"></i>Add to wishlist</a>
