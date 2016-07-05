@@ -34,7 +34,6 @@
 
                 </ul>
             </li>
-
             <li class="has-submenu"><a href="#" style="font-size: 14px;">Hardware <i class="fa fa-chevron-down"></i></a>
                 <!--Class "has-submenu" for adding carret and dropdown-->
                 <ul class="sub-submenu">
