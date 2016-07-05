@@ -512,6 +512,19 @@ $(document).ready(function (e) {
                 newVal = 1;
             }
         }
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: "cart/change-quantity-item",
+            data: {productId: $("#productId").val(), quantity: newVal},
+            success: function (data)
+            {
+                if (data.status)
+                {
+                    $('.price').html(data.price);
+                }
+            }
+        });
         $button.parent().find("input").val(newVal);
 
     });
@@ -524,7 +537,7 @@ $(document).ready(function (e) {
         var $itemId = $(this).parent().parent().find('#productId').val();
         var $itemPrice = $(this).parent().parent().find('.price').text();
         var $itemQnty = $(this).parent().find('#quantity').val();
-        var $cartTotalItems = parseInt($('.cart-btn a span').text()) + 1;
+        var $cartTotalItems = parseInt($('.cart-btn a span').text()) + parseInt($itemQnty);
         $addedToCartMessage.find('p').text('"' + $itemName + '"' + '  ' + 'was successfully added to your cart.');
 //        var getUrl = window.location;
 //        var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];

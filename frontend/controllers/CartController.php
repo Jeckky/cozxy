@@ -87,4 +87,21 @@ class CartController extends MasterController {
         return \yii\helpers\Json::encode($res);
     }
 
+    public function actionChangeQuantityItem()
+    {
+        $res = [];
+        $product = new \common\models\costfit\Product();
+        $price = $product->calProductPrice($_POST["productId"], $_POST["quantity"], 1);
+        if (isset($price)) {
+            $res["status"] = TRUE;
+            $res["price"] = $price["price"];
+            $res["discountType"] = $price["discountType"];
+            $res["discountValue"] = $price["discountValue"];
+        } else {
+            $res["status"] = FALSE;
+        }
+
+        return \yii\helpers\Json::encode($res);
+    }
+
 }

@@ -7,11 +7,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="container">
         <h2>Brands in our shop</h2>
         <div class="inner">
-            <?php for ($index = 0; $index <= 10; $index++) {
+            <?php
+            $brands = common\models\costfit\Brand::find()->all();
+            foreach ($brands as $brand) {
                 ?>
-                <a class="item" href="#"><img src="<?php echo $baseUrl; ?>/images/brands-carousel/18.jpg" alt="" title="ขนาด : 164x120" class="img-responsive"/></a>
+                <a class="item" href="#"><img src="<?php echo Yii::$app->homeUrl . $brand->image; ?>" alt="" title="ขนาด : 164x120" class="img-responsive"/></a>
                     <?php
-                    $index = $index++;
                 }
                 ?>
         </div>

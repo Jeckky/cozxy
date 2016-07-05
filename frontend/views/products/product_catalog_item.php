@@ -23,7 +23,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
     </div>
     <div class="old-price"><?= (isset($model->price) && !empty($model->price)) ? number_format($model->price) . " ฿" : "815,00 $" ?></div>
-    <div class="price"><?= (isset($model->productOnePrice->price) && !empty($model->productOnePrice->price)) ? number_format($model->productOnePrice->price) . " ฿" : "715,00 $" ?></div>
+    <div class="price"><?= number_format($model->calProductPrice($model->productId, 1)) . " ฿" ?></div>
     <div class="buttons group">
         <div class="qnt-count">
             <a class="incr-btn" href="#">-</a>

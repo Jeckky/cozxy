@@ -91,7 +91,7 @@ class CouponController extends BackendMasterController
                 if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
                     //Do Some Thing
                 }
-                return $this->redirect(['index']);
+                return $this->redirect(['index', 'couponOwnerId' => $model->couponOwnerId]);
             }
         }
         return $this->render('create', [
@@ -135,7 +135,7 @@ class CouponController extends BackendMasterController
                 if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
                     //Do Some Thing
                 }
-                return $this->redirect(['index']);
+                return $this->redirect(['index', 'couponOwnerId' => $model->couponOwnerId]);
             }
         }
         return $this->render('update', [
