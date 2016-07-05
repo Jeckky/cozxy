@@ -28,7 +28,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <?php
                     foreach ($this->params['cart']['items'] as $item) {
                         ?>
-                        <tr class="item first">
+                        <tr class="item first" id="item<?= $item['orderItemId'] ?>">
                             <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?php echo $item["productId"]; ?>"><img src="<?php echo $item["image"]; ?>" alt="Lorem ipsum"/></a></td>
                             <td class="name">
                                 <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?php echo $item["productId"]; ?>" style="font-size:14px;word-wrap: break-word; "><?= $item["title"] ?></a>
@@ -40,7 +40,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 <a class="incr-btn" href="#">+</a>
                             </td>
                             <td class="total"><?= $item["qty"] * $item["price"] . " ฿" ?></td>
-                            <td class="delete"><i class="icon-delete"></i></td>
+                            <td class="delete"><i class="icon-delete"></i><?= yii\helpers\Html::hiddenInput("orderItemId", $item['orderItemId'], ['id' => 'orderItemId']); ?></td>
                         </tr>
                         <?php
                     }
@@ -60,11 +60,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             </tr>
                             <tr class="devider">
                                 <td>Shipping</td>
-                                <td class="align-r"><?= (isset($this->params['cart']['shipping']) && $this->params['cart']['shipping'] == 0) ? "Free Shipping" : number_format($this->params['cart']['shipping'], 2) ?></td>
+                                <td class="shipping align-r"><?= (isset($this->params['cart']['shipping']) && $this->params['cart']['shipping'] == 0) ? "Free Shipping" : number_format($this->params['cart']['shipping'], 2) ?></td>
                             </tr>
                             <tr>
                                 <td>Order total</td>
-                                <td class="total align-r"><?= number_format($this->params ['cart']['summary'], 2) ?></td>
+                                <td class="summary align-r"><?= number_format($this->params ['cart']['summary'], 2) ?></td>
                             </tr>
                         </table>
 

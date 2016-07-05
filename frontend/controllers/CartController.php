@@ -71,4 +71,18 @@ class CartController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
+    public function actionDeleteCartItem($id)
+    {
+        $res = [];
+
+        if (\common\models\costfit\OrderItem::deleteAll("orderItemId = $id") > 0) {
+            $res["status"] = TRUE;
+            $res["cart"] = \common\models\costfit\Order::findCartArray();
+        } else {
+            $res["status"] = FALSE;
+        }
+
+        return \yii\helpers\Json::encode($res);
+    }
+
 }

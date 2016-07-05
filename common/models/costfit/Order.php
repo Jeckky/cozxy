@@ -80,6 +80,7 @@ class Order extends \common\models\costfit\master\OrderMaster
                 $total+=$item->total;
                 $quantity+=$item->quantity;
                 $items[$item->orderItemId] = [
+                    'orderItemId' => $item->orderItemId,
                     'productId' => $item->productId,
                     'title' => $item->product->title,
                     'qty' => $item->quantity,
@@ -88,15 +89,21 @@ class Order extends \common\models\costfit\master\OrderMaster
                 ];
             }
             $res["total"] = $total;
+            $res["totalFormatText"] = number_format($total, 2);
             $res["shipping"] = $shipping;
+            $res["shippingFormatText"] = number_format($shipping, 2);
             $res["summary"] = $total + $shipping;
+            $res["summaryFormatText"] = number_format($total + $shipping, 2);
             $res["items"] = $items;
             $res["qty"] = $quantity;
         } else {
             $res = [
                 'total' => $total,
+                'totalFormatText' => number_format($total, 2),
                 'shipping' => $shipping,
+                'shippingFormatText' => number_format($shipping, 2),
                 'summary' => $total + $shipping,
+                'summaryFormatText' => number_format($total + $shipping, 2),
                 'qty' => $quantity,
                 'items' => [
 //                    [
