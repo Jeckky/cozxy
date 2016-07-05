@@ -16,16 +16,36 @@ use frontend\models\ContactForm;
 /**
  * Products controller
  */
-class ProductsController extends MasterController
-{
+class ProductsController extends MasterController {
+
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['create', 'update'],
+                'rules' => [
+                    // deny all POST requests
+                    [
+                        'allow' => false,
+                        'verbs' => ['POST']
+                    ],
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                // everything else is denied
+                ],
+            ],
+        ];
+    }
 
     /**
      * Displays homepage.
      *
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         //return Yii::$app->getResponse()->redirect('register/login');
         $this->title = 'Cost.fit | Products';
         $this->subTitle = 'Shop - filters left 3 cols ';
