@@ -57,7 +57,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <label for="shopping-dollar" class="col-sm-1 " style="padding-right: 0px; padding-left: 0px; margin-bottom: 0px;">
                 <img  src="<?php echo Yii::$app->homeUrl; ?>images/icon/2.png" alt="thumb" class="img-responsive"/>
             </label>
-            <div class="col-sm-11 text-left" style="padding: 0px; margin-left: 0px; margin-top: 15px;">
+            <div class="col-sm-11 text-left discountPrice" style="padding: 0px; margin-left: 0px; margin-top: 15px;">
                 &nbsp;Add more than 1 item to your order
             </div>
         </div>
@@ -68,7 +68,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         foreach ($model->productPrices as $pp) {
             ?>
             <div  class="col-lg-2 col-md-2 col-sm-12 " style="float: left; padding-right: 0px; padding-left: 0px;">
-                <table class="col-lg-12 col-md-12 text-center <?= ($i == 0) ? " priceActive" : " " ?>" style="font-size: 14px; border: 1px #f5f5f5 solid;">
+                <table id="pp<?= $pp->quantity ?>" class="col-lg-12 col-md-12 text-center <?= ($i == 0) ? " priceActive" : " " ?>" style="font-size: 14px; border: 1px #f5f5f5 solid;">
                     <thead style="border-bottom: 1px #f5f5f5 solid;">
                         <tr>
                             <th class="text-center">Buy <?= number_format($pp->quantity, 0) ?></th>
