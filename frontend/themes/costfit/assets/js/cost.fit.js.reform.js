@@ -6,9 +6,9 @@ function proceed(data) {
         //window.location = '';
         alert('coupon');
     } else if (shop_data == 'update_cart') {
-        window.location = '/history';
+        window.location = 'history';
     } else if (shop_data == 'to_checkout') {
-        window.location = '/checkout';
+        window.location = 'checkout';
     } else if (shop_data == '') {
         //window.location = '' ;
     } else {
