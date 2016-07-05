@@ -37,7 +37,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <div class="row">
             <div class="col-lg-5 col-md-5 col-sm-5">
                 <div class="info">
-                    <a class="logo" href="index.html"><img src="<?php echo $directoryAsset; ?>/img/logo-footer.png" alt="Limo"/></a>
+                    <a class="logo" href="<?php echo $baseUrl; ?>"><img src="<?php echo Yii::$app->homeUrl; ?>images/logo/costfit.png" alt="cost.fit"></a>
                     <p>Describe the mission of your online store and the advantages a customer can get once he makes a
                         purchase. If you have something to tell let customers know about it.</p>
                     <div class="social">
