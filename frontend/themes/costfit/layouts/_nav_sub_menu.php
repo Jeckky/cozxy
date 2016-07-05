@@ -64,6 +64,7 @@
             </li>-->
         </ul>
     </li>
+    <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>coupon">ข้อเสนอพิเศษจากพาร์ทเนอร์</a></li>
     <?php if (Yii::$app->controller->id == 'site' or Yii::$app->controller->id == 'register') { ?>
         <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works">How cost.fit Works</a></li>
     <?php } else { ?>
