@@ -48,6 +48,9 @@ $(document).ready(function (e) {
     var $panelToggle = $('.panel-toggle');
     var $accordionToggle = $('.accordion .panel-heading a');
 
+    //Modify By Tong
+    var $changeOption = $('#changeOption');
+
     /*Search Form Toggle
      *******************************************/
     $searchBtn.click(function () {
@@ -652,7 +655,22 @@ $(document).ready(function (e) {
         $(hisroryID).addClass('historyImgShow');
     });
 
+//Modify By Tong
 
+    $changeOption.change(function () {
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: "products/change-option",
+            data: {productId: $(this).val()},
+            success: function (data)
+            {
+                $('#productItem').html(data.productItem);
+                $('#productTabs').html(data.productTabs);
+                $('#productImage').html(data.productImage);
+            }
+        });
+    });
 
 });/*Document Ready End*//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -738,3 +756,5 @@ var gallery = (function ($) {
 }(jQuery));
 
 /************************************************************************/
+
+

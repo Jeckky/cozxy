@@ -28,14 +28,22 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <h1><?= $model->title; ?></h1>
     <?= Html::hiddenInput("productId", $model->productId, ['id' => 'productId']); ?>
     <div class="form-group">
+
         <div class="select-style">
-            <select name="size">
-                <option>Size:28 Inches</option>
-                <option>Size:32 Inches</option>
-                <option>Size:40 Inches</option>
-                <option>Size:48 Inches</option>
-                <option>Size:50 Inches</option>
-            </select>
+            <?php if (count($model->productGroup->products) > 1): ?>
+                <select name="size" id="changeOption">
+                    <?php foreach ($model->productGroup->products as $option): ?>
+                        <option <?= (isset($productId) && ($productId == $option->productId)) ? " selected" : " " ?> value="<?= $option->productId ?>"><?= $option->optionName; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            <?php endif; ?>
+<!--            <select name="size" id="changeOption">
+<option>Size:28 Inches</option>
+<option>Size:32 Inches</option>
+<option>Size:40 Inches</option>
+<option>Size:48 Inches</option>
+<option>Size:50 Inches</option>
+</select>-->
         </div>
     </div>
     <div class="buttons group products-buttons-group">
@@ -129,24 +137,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </div>
 
 <!--Product Gallery-->
-<div class="col-lg-6 col-md-6">
-    <div class="prod-gal master-slider" id="prod-gal">
-        <?php
-        foreach ($model->productImages as $image) {
-            // รูปภาพ default : /cost.fit/assets/img/catalog/product-gallery/th_1.jpg
-            ?>
-            <!--Slide1-->
-            <div class="ms-slide">
-                <img src="<?php echo Yii::$app->homeUrl . $image->image; ?>" data-src="<?php echo Yii::$app->homeUrl . $image->image; ?>" alt="<?= $image->title ?>"/>
-                <img class="ms-thumb" src="<?php echo Yii::$app->homeUrl . $image->image; ?>" alt="thumb" />
-            </div>
-            <!--Slide2-->
-            <?php
-        }
-        ?>
-        <div class="ms-slide">
-            <img src="<?php echo $directoryAsset; ?>/masterslider/blank.gif" data-src="<?php echo $directoryAsset; ?>/img/catalog/product-gallery/1.jpg" alt="Lorem ipsum"/>
-            <img class="ms-thumb" src="<?php echo $directoryAsset; ?>/img/catalog/product-gallery/th_1.jpg" alt="thumb" />
-        </div>
-    </div>
+<div class="col-lg-6 col-md-6" id="productImage">
+    <?php echo $this->render('_product_image', ['model' => $model]); ?>
 </div>
+

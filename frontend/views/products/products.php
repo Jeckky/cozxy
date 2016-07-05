@@ -24,8 +24,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <!--Catalog Single Item-->
 <section class="catalog-single">
-    <div class="container">
-        <div class="row">
+    <div class="container" >
+        <div class="row" id="productItem">
             <?php echo $this->render('product_catalog_item', ['model' => $model]); ?>
         </div>
     </div>
@@ -39,7 +39,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <li><a href="#specs" data-toggle="tab">Specs</a></li>
         <li><a href="#review" data-toggle="tab">Term & Condition</a></li>
     </ul>
-    <div class="tab-content">
+    <div class="tab-content" id="productTabs">
         <?php echo $this->render('product_tabs_widget', ['model' => $model]); ?>
     </div>
 </section><!--Tabs Widget Close-->
