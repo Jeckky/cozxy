@@ -23,13 +23,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="col-lg-12 col-md-12">
                 <h2 class="title">ข้อเสนอพิเศษจากพาร์ทเนอร์</h2>
                 <div class="row space-top">
-                    <?php for ($index = 0; $index <= 15; $index++) {
+                    <?php
+                    $coupons = common\models\costfit\Coupon::find()->where("startDate <= NOW() AND endDate >= NOW()")->all();
+                    foreach ($coupons as $coupon) {
                         ?>
                         <div class="clo-lg-3 col-md-3 col-sm-3 space-bottom">
-                            <img src="<?php echo Yii::$app->homeUrl; ?>images/coupon/Partnership-banners-for-Super-Brands-292x292-6.jpg" alt="a" class="img-responsive">
+                            <img src="<?php echo Yii::$app->homeUrl . $coupon->image; ?>" alt="a" class="img-responsive">
                         </div>
                         <?php
-                        $index = $index++;
                     }
                     ?>
                 </div>
