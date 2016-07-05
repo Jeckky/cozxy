@@ -1,5 +1,5 @@
 <!--Categories Close-->
-<div class="col-lg-3 col-md-4 col-sm-6">
+<div id="products-popular" class="col-lg-3 col-md-4 col-sm-6">
     <div class="tile">
         <!--<div class="badges">
             <span class="sale">Sale</span>
@@ -12,7 +12,7 @@
             ?>" alt="1"/>
             <span class="tile-overlay"></span>
         </a>
-        <div class="footer">
+        <div class="footer" id="products-popular-footer">
             <a href="<?php echo Yii::$app->homeUrl; ?>search?category=<?= $model->categoryId; ?>"><?= $model->title; ?></a>
             <span>
                 <small><?= $model->title; ?></small>
