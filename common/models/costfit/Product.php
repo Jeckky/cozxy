@@ -95,10 +95,24 @@ class Product extends \common\models\costfit\master\ProductMaster
     {
         $productPrice = ProductPrice::find()->select("MAX(quantity) as maxQuantity")->where("productId = $id")->one();
         if (isset($productPrice)) {
-            return $productPrice->maxQuantity;
+            return $productPrice->maxQuantity - $this->findQuantityInCart($id);
         } else {
             return 1;
         }
+    }
+
+    public function findQuantityInCart($id)
+    {
+        $order = Order::findCartArray();
+        $quantity = 0;
+        foreach ($order["items"] as $item) {
+            if ($item['productId'] == $id) {
+                $quantity = $item['qty'];
+                break;
+            }
+        }
+
+        return $quantity;
     }
 
 }
