@@ -122,7 +122,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     </div>
     <div class="promo-labels">
         <div data-content="This is a place for the unique commercial offer. Make it known."><i class="fa fa-truck"></i>Free delivery</div>
-        <div data-content="This is a place for the unique commercial offer. Make it known."><i class="fa fa-space-shuttle"></i>Deliver even on Mars</div>
+        <div data-content="This is a place for the unique commercial offer. Make it known."><img src="<?php echo Yii::$app->homeUrl; ?>images/icon/Fast-Deliver-1.png" alt="cost.fit" style="height: 44px;">Fast Deliver</div>
         <div data-content="This is a place for the unique commercial offer. Make it known."><i class="fa fa-shield"></i>Safe Buy</div>
     </div>
 </div>
