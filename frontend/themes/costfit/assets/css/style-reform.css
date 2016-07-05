@@ -79,6 +79,7 @@
 
 #products-popular-footer{
     min-height: 140px;
+    max-height: 140px;
 }
 
 
@@ -88,4 +89,9 @@
 
 .badges-price{
     min-height: 50px;
+}
+
+.search-category-footer{
+    min-height: 150px;
+    max-height: 150px;
 }
