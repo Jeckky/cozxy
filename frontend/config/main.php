@@ -30,6 +30,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'search/<title>/<hash>'=>'search/index',
             ],
         ],
         /**
