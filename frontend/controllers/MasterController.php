@@ -50,6 +50,7 @@ class MasterController extends MasterCommonController
                 'value' => Yii::$app->security->generateRandomString(),
             ]));
         }
+
         $this->view->params['cart'] = \common\models\costfit\Order::findCartArray();
     }
 

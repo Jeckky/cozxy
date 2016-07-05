@@ -502,15 +502,17 @@ $(document).ready(function (e) {
     $(".incr-btn").on("click", function (e) {
         var $button = $(this);
         var oldValue = $button.parent().find("input").val();
+        var newVal = 1
         if ($button.text() == "+") {
-            var newVal = parseFloat(oldValue) + 1;
+            newVal = parseFloat(oldValue) + 1;
         } else {
             // Don't allow decrementing below 1
             if (oldValue > 1) {
-                var newVal = parseFloat(oldValue) - 1;
+                newVal = parseFloat(oldValue) - 1;
             } else {
                 newVal = 1;
             }
+            $('.incr-btn').popover('hide');
         }
         $.ajax({
             type: "POST",
@@ -522,11 +524,19 @@ $(document).ready(function (e) {
                 if (data.status)
                 {
                     $('.price').html(data.price);
+
+                    $button.parent().find("input").val(newVal);
+                } else
+                {
+                    if (data.errorCode === 1)
+                    {
+                        newVal = newVal - 1;
+                        $('.incr-btn').popover('show');
+                    }
+                    $button.parent().find("input").val(newVal);
                 }
             }
         });
-        $button.parent().find("input").val(newVal);
-
     });
 
     /*Added To Cart Message + Action (For Demo Purpose)

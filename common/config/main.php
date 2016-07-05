@@ -14,20 +14,20 @@ return [
             ],
         // ...
         ],
-        'urlManagerFrontend' => [
-            'class' => 'yii\web\urlManager',
-            'baseUrl' => '/cost.fit/frontend/web',
-            'scriptUrl' => '/cost.fit/frontend/web/index.php',
-            'enablePrettyUrl' => true,
-            'showScriptName' => FALSE,
-        ],
-        'urlManagerBackend' => [
-            'class' => 'yii\web\urlManager',
-            'baseUrl' => '/cost.fit/backend/web',
-            'scriptUrl' => '/cost.fit/backend/web/index.php',
-            'enablePrettyUrl' => true,
-            'showScriptName' => FALSE,
-        ],
+//        'urlManagerFrontend' => [
+//            'class' => 'yii\web\urlManager',
+//            'baseUrl' => '/cost.fit/frontend/web',
+//            'scriptUrl' => '/cost.fit/frontend/web/index.php',
+//            'enablePrettyUrl' => true,
+//            'showScriptName' => FALSE,
+//        ],
+//        'urlManagerBackend' => [
+//            'class' => 'yii\web\urlManager',
+//            'baseUrl' => '/cost.fit/backend/web',
+//            'scriptUrl' => '/cost.fit/backend/web/index.php',
+//            'enablePrettyUrl' => true,
+//            'showScriptName' => FALSE,
+//        ],
         'i18n' => [
             'translations' => [
                 '*' => [

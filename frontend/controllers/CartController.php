@@ -1,4 +1,3 @@
-
 <?php
 
 namespace frontend\controllers;
@@ -17,14 +16,16 @@ use frontend\models\ContactForm;
 /**
  * Cart controller
  */
-class CartController extends MasterController {
+class CartController extends MasterController
+{
 
     /**
      * Displays homepage.
      *
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $this->layout = "/content_right";
         $this->title = 'Cost.fit | cart';
         $this->subTitle = 'Shopping Cart';
@@ -32,7 +33,8 @@ class CartController extends MasterController {
         return $this->render('cart');
     }
 
-    public function actionAddToCart($id) {
+    public function actionAddToCart($id)
+    {
         $res = [];
 //        if (\Yii::$app->user->isGuest) {
         //$token = \Yii::$app->session->get("orderToken");
@@ -74,7 +76,8 @@ class CartController extends MasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionDeleteCartItem($id) {
+    public function actionDeleteCartItem($id)
+    {
         $res = [];
 
         if (\common\models\costfit\OrderItem::deleteAll("orderItemId = $id") > 0) {
@@ -89,16 +92,24 @@ class CartController extends MasterController {
 
     public function actionChangeQuantityItem()
     {
+
         $res = [];
         $product = new \common\models\costfit\Product();
         $price = $product->calProductPrice($_POST["productId"], $_POST["quantity"], 1);
-        if (isset($price)) {
-            $res["status"] = TRUE;
-            $res["price"] = $price["price"];
-            $res["discountType"] = $price["discountType"];
-            $res["discountValue"] = $price["discountValue"];
+        $maxQuantity = $product->findMaxQuantity($_POST["productId"]);
+        if ($_POST["quantity"] <= $maxQuantity) {
+            if (isset($price)) {
+                $res["status"] = TRUE;
+                $res["price"] = $price["priceText"];
+                $res["discountType"] = $price["discountType"];
+                $res["discountValue"] = $price["discountValue"];
+            } else {
+                $res["status"] = FALSE;
+                $res['errorCode'] = 2;
+            }
         } else {
             $res["status"] = FALSE;
+            $res['errorCode'] = 1;
         }
 
         return \yii\helpers\Json::encode($res);

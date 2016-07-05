@@ -72,15 +72,32 @@ class Product extends \common\models\costfit\master\ProductMaster
                 $price = $productPrice->price;
                 $res["discountType"] = isset($productPrice->discountType) ? $productPrice->discountType : NULL;
                 $res["discountValue"] = isset($productPrice->discountValue) ? $productPrice->discountValue : NULL;
+                $res["discountValueText"] = isset($productPrice->discountValue) ? number_format($productPrice->discountValue, 2) : NULL;
                 $res["price"] = $price;
+                $res["priceText"] = number_format($price, 2) . " ฿";
             } else {
                 $price = $product->price;
+                $res["discountType"] = isset($productPrice->discountType) ? $productPrice->discountType : NULL;
+                $res["discountValue"] = isset($productPrice->discountValue) ? $productPrice->discountValue : NULL;
+                $res["discountValueText"] = isset($productPrice->discountValue) ? number_format($productPrice->discountValue, 2) : NULL;
+                $res["price"] = $price;
+                $res["priceText"] = number_format($price, 2) . " ฿";
             }
             $res["price"] = $price;
             $res["quantity"] = $quantity;
 
 
             return $res;
+        }
+    }
+
+    public function findMaxQuantity($id)
+    {
+        $productPrice = ProductPrice::find()->select("MAX(quantity) as maxQuantity")->where("productId = $id")->one();
+        if (isset($productPrice)) {
+            return $productPrice->maxQuantity;
+        } else {
+            return 1;
         }
     }
 
