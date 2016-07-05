@@ -96,3 +96,19 @@
     /* max-height: 180px; */
     word-wrap: break-word;
 }
+
+.products-buttons-group{
+    margin: 0 0 0 0;
+}
+
+.products-shopping-dollar{
+    margin-top: -26px;
+}
+
+.products-shopping-dollar-padding-margin-description{
+    padding: 0px; margin-left: 0px; margin-top: 3px;
+}
+
+.products-shopping-dollar-padding-margin-images{
+    padding-right: 0px; padding-left: 0px; margin-bottom: 0px;
+}
