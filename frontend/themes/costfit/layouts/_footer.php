@@ -29,8 +29,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <span id="scrollTop-btn"><i class="fa fa-chevron-up"></i></span>
 </div><!--Sticky Buttons Close-->
 
-
-
 <!--Footer-->
 <footer class="footer">
     <div class="container">
