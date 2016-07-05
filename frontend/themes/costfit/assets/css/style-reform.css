@@ -69,8 +69,8 @@
 }
 
 #products-category-search{
-    min-height: 410px;
-    max-height: 450px;
+    min-height: 430px;
+    max-height: 430px;
 }
 
 #products-popular{
@@ -84,4 +84,8 @@
 
 #products-save-cat{
     min-height: 250px;
+}
+
+.badges-price{
+    min-height: 50px;
 }
