@@ -525,11 +525,14 @@ $(document).ready(function (e) {
                 {
                     $('.price').html(data.price);
                     if (data.discountValue != "null")
+                    {
                         $('.discountPrice').html(data.discountValue + " ฿ extra offyour order");
-                    else
+                    } else
                     {
                         $('.discountPrice').html("&nbsp;Add more than 1 item to your order");
                     }
+                    $('#pp' + oldValue).removeClass("priceActive");
+                    $('#pp' + newVal).addClass("priceActive");
 
                     $button.parent().find("input").val(newVal);
                 } else
