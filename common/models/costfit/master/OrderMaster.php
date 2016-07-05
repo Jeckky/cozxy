@@ -31,6 +31,7 @@ use Yii;
     * @property string $shippingZipcode
     * @property string $shippingTel
     * @property integer $paymentType
+    * @property integer $couponId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -55,7 +56,7 @@ return 'order';
 public function rules()
 {
 return [
-            [['userId', 'billingCountryId', 'billingProvinceId', 'billingAmphurId', 'shippingCountryId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'status'], 'integer'],
+            [['userId', 'billingCountryId', 'billingProvinceId', 'billingAmphurId', 'shippingCountryId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'couponId', 'status'], 'integer'],
             [['token', 'billingAddress', 'shippingAddress'], 'string'],
             [['summary'], 'number'],
             [['sendDate', 'createDateTime', 'updateDateTime'], 'safe'],
@@ -97,6 +98,7 @@ return [
     'shippingZipcode' => Yii::t('order', 'Shipping Zipcode'),
     'shippingTel' => Yii::t('order', 'Shipping Tel'),
     'paymentType' => Yii::t('order', 'Payment Type'),
+    'couponId' => Yii::t('order', 'Coupon ID'),
     'status' => Yii::t('order', 'Status'),
     'createDateTime' => Yii::t('order', 'Create Date Time'),
     'updateDateTime' => Yii::t('order', 'Update Date Time'),

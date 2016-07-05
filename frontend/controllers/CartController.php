@@ -115,4 +115,24 @@ class CartController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
+    public function actionAddCoupon()
+    {
+        $res = [];
+        $cookies = Yii::$app->request->cookies;
+        if (isset($cookies['orderToken'])) {
+            $token = $cookies['orderToken']->value;
+            $order = \common\models\costfit\Order::find()->where("token ='" . $token . "' AND status = " . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
+        }
+
+        $coupon = \common\models\costfit\Coupon::find()->where("code ='" . $_POST['couponCode'] . "' AND startDate <= CURDATE() AND endDate >= CURDATE()");
+        if (isset($coupon)) {
+            $order->couponId = $coupon->couponId;
+            $order->save();
+            $res["status"] = TRUE;
+        } else {
+            $res["status"] = FALSE;
+        }
+        return \yii\helpers\Json::encode($res);
+    }
+
 }
