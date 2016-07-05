@@ -10,17 +10,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--Product Description-->
 <style>
     .popover-content {
-        color: red;
+        color: #000;
         /*background-color: red;*/
         font-size: 10px;
     }
     .priceActive  > thead > tr{
-        border-top: 3px #14db5a solid;
-        background-color: rgba(63,246,127,0.7);
+        border-top: 3px #3cc solid;
+        background-color: rgba(51,204,204,.15);
         color: purple;
     }
     .priceActive > tbody > tr{
-        background-color: rgba(63,246,127,0.7);
+        background-color: rgba(51,204,204,.15);
         color: purple;
     }
 </style>
@@ -67,7 +67,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         $i = 0;
         foreach ($model->productPrices as $pp) {
             ?>
-            <div  class="col-lg-2 col-md-2 col-sm-12 " style="float: left; padding-right: 0px; padding-left: 0px;">
+            <div  class="col-lg-2 col-md-2 col-sm-12 " style="float: left; padding-right: 0px; padding-left: 0px; color: #000;">
                 <table class="col-lg-12 col-md-12 text-center <?= ($i == 0) ? " priceActive" : " " ?>" style="font-size: 14px; border: 1px #f5f5f5 solid;">
                     <thead style="border-bottom: 1px #f5f5f5 solid;">
                         <tr>
