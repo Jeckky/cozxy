@@ -32,9 +32,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="buttons group products-buttons-group">
         <div class="form-group">
             <label for="shopping-cart" class="col-sm-1" style="padding-right: 0px;  padding-left: 0px;  margin-bottom: 0px;">
-                <img  src="<?php echo Yii::$app->homeUrl; ?>images/icon/add-buy-plus-shopping-cart-32.png" alt="thumb" class="img-responsive"/>
+                <img  src="<?php echo Yii::$app->homeUrl; ?>images/icon/1.png" alt="thumb" class="img-responsive"/>
             </label>
-            <div class="col-sm-11 text-left" style="padding: 0px; margin-left: 0px; margin-top: 3px;">
+            <div class="col-sm-11 text-left" style="padding: 0px; margin-left: 0px; margin-top: 15px;">
                 &nbsp;FREE Shipping
             </div>
         </div>
@@ -46,9 +46,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="buttons group products-buttons-group" style="margin-top: -18px;">
         <div class="form-group">
             <label for="shopping-dollar" class="col-sm-1 " style="padding-right: 0px; padding-left: 0px; margin-bottom: 0px;">
-                <img  src="<?php echo Yii::$app->homeUrl; ?>images/icon/dollar.png" alt="thumb" class="img-responsive"/>
+                <img  src="<?php echo Yii::$app->homeUrl; ?>images/icon/2.png" alt="thumb" class="img-responsive"/>
             </label>
-            <div class="col-sm-11 text-left" style="padding: 0px; margin-left: 0px; margin-top: 3px;">
+            <div class="col-sm-11 text-left" style="padding: 0px; margin-left: 0px; margin-top: 15px;">
                 &nbsp;Add more than 1 item to your order
             </div>
         </div>
