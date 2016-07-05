@@ -70,4 +70,15 @@ class ProductPrice extends \common\models\costfit\master\ProductPriceMaster
         }
     }
 
+    public function getSavePrice()
+    {
+        if ($this->discountType == 1) {
+            return $this->discountValue;
+        } else {
+            $productPrice = ProductPrice::find()->where("quantity = 1 AND productId =" . $this->productId)->one();
+            $price = ($productPrice->price * $this->quantity) - $this->price;
+            return $price;
+        }
+    }
+
 }

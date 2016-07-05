@@ -115,4 +115,9 @@ class Product extends \common\models\costfit\master\ProductMaster
         return $quantity;
     }
 
+    public function getProductPrices()
+    {
+        return $this->hasMany(ProductPrice::className(), ['productId' => 'productId']);
+    }
+
 }

@@ -15,12 +15,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         font-size: 10px;
     }
     .priceActive  > thead > tr{
-        border-top: 3px #0000cc solid;
-        background-color: rgba(24,227,240,0.7);
+        border-top: 3px #14db5a solid;
+        background-color: rgba(63,246,127,0.7);
         color: purple;
     }
     .priceActive > tbody > tr{
-        background-color: rgba(24,227,240,0.7);
+        background-color: rgba(63,246,127,0.7);
         color: purple;
     }
 </style>
@@ -49,8 +49,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
     </div>
     <div class="buttons group products-buttons-group">
-        <div class="old-price"><?= (isset($model->price) && !empty($model->price)) ? number_format($model->price) . " ฿" : "815,00 $" ?></div>
-        <div class="price"><?= number_format($model->calProductPrice($model->productId, 1)) . " ฿" ?></div>
+        <div class="old-price"><?= (isset($model->price) && !empty($model->price)) ? number_format($model->price, 2) . " ฿" : "815,00 $" ?></div>
+        <div class="price"><?= number_format($model->calProductPrice($model->productId, 1), 2) . " ฿" ?></div>
     </div>
     <div class="buttons group products-buttons-group" style="margin-top: -18px;">
         <div class="form-group">
@@ -76,7 +76,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </thead>
                     <tbody>
                         <tr class="item first">
-                            <td class="thumb">$0.00</td>
+                            <td class="thumb"><?= number_format($pp->getSavePrice(), 2) . " ฿"; ?></td>
                         </tr>
                         <tr class="item first">
                             <td class="name">
