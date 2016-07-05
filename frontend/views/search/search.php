@@ -42,7 +42,8 @@ use yii\bootstrap\ActiveForm;
 
 </div>
 <!--Pagination-->
-<ul class="pagination">
+<br><br><br>
+<ul class="pagination col-md-12">
     <li class="prev-page"><a class="icon-arrow-left" href="#"></a></li>
     <li class="active"><a href="#">1</a></li>
     <li><a href="#">2</a></li>
