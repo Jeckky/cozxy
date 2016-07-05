@@ -44,7 +44,7 @@ class CostfitAsset extends AssetBundle {
         'js/plugins/jquery.nouislider.min.js',
         'mailer/mailer.js',
         'js/scripts.js',
-            //'js/cost.fit.js.reform.js',
+        'js/cost.fit.js.reform.js',
     ];
 
 }
