@@ -49,6 +49,7 @@ use yii\widgets\Breadcrumbs;
                     ['label' => 'Product Group', 'url' => ['/product/product-group']],
                     ['label' => 'Product Price Group', 'url' => ['/product/product-group']],
                     ['label' => 'Product', 'url' => ['/product/product']],
+                    ['label' => 'Coupon', 'url' => ['/product/coupon']],
                     ['label' => 'Unit', 'url' => ['/product/unit']],
                 ],
             ],

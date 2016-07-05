@@ -65,8 +65,12 @@ class Order extends \common\models\costfit\master\OrderMaster
     {
         $res = [];
 //        if (\Yii::$app->user->isGuest) {
-        $token = \Yii::$app->session->get("orderToken");
-        $order = \common\models\costfit\Order::find()->where("token ='" . $token . "' AND status = " . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
+//        $token = \Yii::$app->session->get("orderToken");
+        $cookies = Yii::$app->request->cookies;
+        if (isset($cookies['orderToken'])) {
+            $token = $cookies['orderToken']->value;
+            $order = \common\models\costfit\Order::find()->where("token ='" . $token . "' AND status = " . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
+        }
 //        } else {
 //            $order = \common\models\costfit\Order::find()->where("userId =" . \Yii::$app->user->id . " AND status = " . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
 //        }
