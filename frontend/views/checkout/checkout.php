@@ -53,13 +53,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="row">
                     <div class="col-lg-5">
                         <div class="hidden-panel" id="coupon">
-                            <form name="coupon-code" method="post">
-                                <div class="form-group">
-                                    <label class="sr-only" for="coupon-code">Enter coupon code</label>
-                                    <input type="text" class="form-control" id="coupon-code" name="coupon-code" placeholder="Enter coupon code">
-                                </div>
-                                <input type="submit" class="btn btn-primary btn-sm btn-block" name="apply-coupon" value="Apply coupon">
-                            </form>
+                            <?php echo $this->render('@app/views/coupon/coupon'); ?>
                         </div>
                     </div>
                 </div>
