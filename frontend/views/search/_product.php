@@ -17,7 +17,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <?php else: ?>
                 <img src="<?php echo $baseUrl; ?>/images/ProductImage/15.jpg" alt="1"/>
             <?php endif; ?>
-            <span class="tile-overlay"></span>
+            <span class="tile-overlay"></span> 
         </a>
         <div class="footer search-category-footer">
             <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?= $model->productId ?>"><?= $model->title; ?></a>
