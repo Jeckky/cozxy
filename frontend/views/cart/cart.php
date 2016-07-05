@@ -30,7 +30,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         ?>
                         <tr class="item first">
                             <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?php echo $item["productId"]; ?>"><img src="<?php echo $item["image"]; ?>" alt="Lorem ipsum"/></a></td>
-                            <td class="name" style="font-size:16px"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?php echo $item["productId"]; ?>"><?= $item["title"] ?></a></td>
+                            <td class="name">
+                                <div class="col-md-10">
+                                    <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?php echo $item["productId"]; ?>" style="font-size:14px;word-wrap: break-word; "><?= $item["title"] ?></a>
+                                </div>
+                            </td>
                             <td class="price"><?= $item["price"] . " ฿" ?></td>
                             <td class="qnt-count">
                                 <a class="incr-btn" href="#">-</a>
