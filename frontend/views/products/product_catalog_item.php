@@ -81,7 +81,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <tr class="item first">
                             <td class="name">
                                 <small>off your order</small>
-                            </td>
+                            </td>   
                         </tr>
                     </tbody>
                 </table>
