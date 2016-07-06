@@ -11,43 +11,114 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="container">
         <!--Expandable Panels-->
         <div class="row">
-            <div class="col-lg-12">
-                <h2>Checkout</h2>
-                <!--Hidden Panels-->
-                <?php if (Yii::$app->user->isGuest): ?>
-                    <a class="panel-toggle" href="#login"><i></i>Returning customer? Click here to login</a>
-                    <div class="row">
-                        <div class="hidden-panel" id="login">
-                            <?php echo $this->render('@app/views/register/form_login'); ?>
-                        </div>
-                    </div>
-                <?php endif; ?>
-                <?php if (!isset($this->params['cart']['discount'])): ?>
-                    <a class="panel-toggle" href="#coupon"><i></i>Have a coupon? Click here to enter your code</a>
-                    <div class="row">
-                        <div class="col-lg-5">
-                            <div class="hidden-panel" id="coupon">
-                                <?php echo $this->render('@app/views/coupon/coupon'); ?>
-                            </div>
-                        </div>
-                    </div>
-                <?php endif; ?>
-                <a class="panel-toggle" href="#address-new"><i></i>New Address</a>
-                <div class="row">
-                    <div class="col-lg-5">
-                        <div class="hidden-panel" id="address-new">
-                            <?php echo $this->render('address_new'); ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--Checkout Form-->
-        <div class="row">
             <form id="checkout-form" method="post" action="<?php echo Yii::$app->homeUrl; ?>tracking">
                 <!--Left Column-->
                 <div class="col-lg-8 col-md-8 col-sm-8">
-                    <?php echo $this->render('form_billing'); ?>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2>Checkout</h2>
+                            <!--Hidden Panels-->
+                            <?php if (Yii::$app->user->isGuest): ?>
+                                <a class="panel-toggle" href="#login"><i></i>Returning customer? Click here to login</a>
+                                <div class="row">
+                                    <div class="hidden-panel" id="login">
+                                        <?php echo $this->render('@app/views/register/form_login'); ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <?php if (!isset($this->params['cart']['discount'])): ?>
+                                <a class="panel-toggle" href="#coupon"><i></i>Have a coupon? Click here to enter your code</a>
+                                <div class="row">
+                                    <div class="col-lg-5">
+                                        <div class="hidden-panel" id="coupon">
+                                            <?php echo $this->render('@app/views/coupon/coupon'); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <a><i></i>Select Address</a>
+                    <div class="catalog-grid">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <div class="tile">
+                                        <div class="badges">
+                                            <span class="sale">Sale</span>
+                                        </div>
+                                        <div class="price-label">715,00 $</div>
+                                        <a href="#" class="text-center">
+                                            <br><br>
+                                            นายกมล พวงเกษม<br>
+                                            เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19<br>
+                                            จอมพล จตุจักร กรุงเทพ<br>
+                                            10900
+                                            <span class="tile-overlay"></span>
+                                        </a>
+                                        <div class="footer">
+                                            <a href="#">The Buccaneer</a>
+                                            <span>by Pirate3d</span>
+                                            <button class="btn btn-primary">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <div class="tile">
+                                        <div class="badges">
+                                            <span class="sale">Sale</span>
+                                        </div>
+                                        <div class="price-label">715,00 $</div>
+                                        <a href="#" class="text-center">
+                                            <br><br>
+                                            นายกมล พวงเกษม<br>
+                                            เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19<br>
+                                            จอมพล จตุจักร กรุงเทพ<br>
+                                            10900
+                                            <span class="tile-overlay"></span>
+                                        </a>
+                                        <div class="footer">
+                                            <a href="#">The Buccaneer</a>
+                                            <span>by Pirate3d</span>
+                                            <button class="btn btn-primary">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <div class="tile">
+                                        <div class="badges">
+                                            <span class="sale">Sale</span>
+                                        </div>
+                                        <div class="price-label">715,00 $</div>
+                                        <a href="#" class="text-center">
+                                            <br><br>
+                                            นายกมล พวงเกษม<br>
+                                            เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19<br>
+                                            จอมพล จตุจักร กรุงเทพ<br>
+                                            10900
+                                            <span class="tile-overlay"></span>
+                                        </a>
+                                        <div class="footer">
+                                            <a href="#">The Buccaneer</a>
+                                            <span>by Pirate3d</span>
+                                            <button class="btn btn-primary">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Checkout Form-->
+                    <a class="panel-toggle" href="#address-new"><i></i>New Address</a>
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <div class="hidden-panel" id="address-new">
+                                <?php echo $this->render('form_billing'); ?>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!--Right Column-->
