@@ -57,9 +57,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             <span class="tile-overlay"></span>
                                         </a>
                                         <div class="footer">
-                                            <a href="#">The Buccaneer</a>
+                                            <a class="panel-toggle" href="#address1">The Buccaneer</a>
                                             <span>by Pirate3d</span>
-                                            <button class="btn btn-primary">Add to Cart</button>
+                                            <button class="btn btn-warning">แก้ไขที่อยู่</button>
                                         </div>
                                     </div>
                                 </div>
@@ -80,7 +80,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         <div class="footer">
                                             <a href="#">The Buccaneer</a>
                                             <span>by Pirate3d</span>
-                                            <button class="btn btn-primary">Add to Cart</button>
+                                            <button class="btn btn-warning">แก้ไขที่อยู่</button>
                                         </div>
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         <div class="footer">
                                             <a href="#">The Buccaneer</a>
                                             <span>by Pirate3d</span>
-                                            <button class="btn btn-primary">Add to Cart</button>
+                                            <button class="btn btn-warning">แก้ไขที่อยู่</button>
                                         </div>
                                     </div>
                                 </div>
@@ -109,10 +109,18 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="hidden-panel" id="address1">
+                                <?php echo $this->render('form_billing'); ?>
+                            </div>
+                        </div>
+                    </div>
+
                     <!--Checkout Form-->
                     <a class="panel-toggle" href="#address-new"><i></i>New Address</a>
                     <div class="row">
-                        <div class="col-lg-5">
+                        <div class="col-lg-12">
                             <div class="hidden-panel" id="address-new">
                                 <?php echo $this->render('form_billing'); ?>
                             </div>
