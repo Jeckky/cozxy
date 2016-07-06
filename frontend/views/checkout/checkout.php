@@ -32,6 +32,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         </div>
                     </div>
                 <?php endif; ?>
+                <a class="panel-toggle" href="#address-new"><i></i>New Address</a>
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="hidden-panel" id="address-new">
+                            <?php echo $this->render('address_new'); ?>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!--Checkout Form-->
