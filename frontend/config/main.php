@@ -1,7 +1,7 @@
 <?php
 
 $params = array_merge(
-        require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
+require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
 );
 
 return [
@@ -63,6 +63,25 @@ return [
                     'depends' => [
                         'frontend\assets\CostfitAsset',
                     ]
+                ]
+            ],
+        ],
+        'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            'clients' => [
+                'facebook' => [
+                    'class' => 'yii\authclient\clients\Facebook',
+                    'authUrl' => 'https://www.facebook.com/dialog/oauth?display=popup',
+                    'clientId' => '1660657237592929',
+                    'clientSecret' => 'd4503ebb0f9b512e58d73fee8134853f',
+                ],
+                'google' => [
+                    'class' => 'yii\authclient\clients\GoogleOAuth',
+                    'clientId' => '500504362756-3n51v4ic4aqak5vnomg8qmmar340no72.apps.googleusercontent.com',
+                    'clientSecret' => 'tBiQFFFNp6DPojoTmd1oN_Ro',
+//                    'scope' => 'https://www.googleapis.com/auth/userinfo.email',
+                    'scope' => 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email',
+                    'returnUrl' => 'http://localhost/areawow-frontend/site/auth?authclient=google',
                 ]
             ],
         ],

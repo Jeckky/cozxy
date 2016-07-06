@@ -92,12 +92,23 @@ class Order extends \common\models\costfit\master\OrderMaster
                     'image' => isset($item->product->productImages[0]) ? \Yii::$app->homeUrl . $item->product->productImages[0]->image : $directoryAsset . "/img/catalog/shopping-cart-thumb.jpg",
                 ];
             }
-            $res["total"] = $total;
-            $res["totalFormatText"] = number_format($total, 2);
-            $res["shipping"] = $shipping;
-            $res["shippingFormatText"] = number_format($shipping, 2);
-            $res["summary"] = $total + $shipping;
-            $res["summaryFormatText"] = number_format($total + $shipping, 2);
+            $res["totalExVat"] = $order->totalExVat;
+            $res["totalExVatFormatText"] = number_format($order->totalExVat, 2);
+            $res["vat"] = $order->vat;
+            $res["vatFormatText"] = number_format($order->vat, 2);
+            $res["total"] = $order->total;
+            $res["totalFormatText"] = number_format($order->total, 2);
+            if (isset($order->coupon)) {
+                $res["couponCode"] = $order->coupon->code;
+            } else {
+                $res["couponCode"] = NULL;
+            }
+            $res["discount"] = $order->discount;
+            $res["discountFormatText"] = number_format($order->discount, 2);
+            $res["shippingRate"] = $order->shippingRate;
+            $res["shippingRateFormatText"] = number_format($order->shippingRate, 2);
+            $res["summary"] = $order->summary;
+            $res["summaryFormatText"] = number_format($order->summary, 2);
             $res["items"] = $items;
             $res["qty"] = $quantity;
         } else {
@@ -135,6 +146,45 @@ class Order extends \common\models\costfit\master\OrderMaster
             ];
         }
         return $res;
+    }
+
+    public function getCoupon()
+    {
+        return $this->hasOne(Coupon::className(), ['couponId' => 'couponId']);
+    }
+
+    public function beforeSave($insert)
+    {
+        parent::beforeSave($insert);
+
+        $total = 0;
+        foreach ($this->orderItems as $item) {
+            $total+=$item->total;
+        }
+        $this->totalExVat = $total * 0.93;
+        $this->vat = ($total) * 0.07;
+        $this->total = $total;
+        $this->discount = 0;
+        if (isset($this->coupon)) {
+            if (isset($this->coupon->orderSummaryTotal) && $total >= $this->coupon->orderSummaryTotal) {
+
+            } else {
+                if (isset($this->coupon->discountValue)) {
+                    $this->discount = $this->coupon->discountValue;
+                } else {
+                    $this->discount = $this->total * ($this->coupon->discountPercent / 100);
+                }
+            }
+        }
+        $this->grandTotal = $this->total - $this->discount;
+        $this->shippingRate = $this->calculateShippingRate();
+        $this->summary = $this->grandTotal + $this->calculateShippingRate();
+        return TRUE;
+    }
+
+    public static function calculateShippingRate()
+    {
+        return 0;
     }
 
 }

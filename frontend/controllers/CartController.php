@@ -19,6 +19,15 @@ use frontend\models\ContactForm;
 class CartController extends MasterController
 {
 
+    public function beforeAction($action)
+    {
+        if ($action->id == 'add-coupon') {
+            $this->enableCsrfValidation = false;
+        }
+
+        return parent::beforeAction($action);
+    }
+
     /**
      * Displays homepage.
      *
@@ -151,12 +160,13 @@ class CartController extends MasterController
             $token = $cookies['orderToken']->value;
             $order = \common\models\costfit\Order::find()->where("token ='" . $token . "' AND status = " . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
         }
-
-        $coupon = \common\models\costfit\Coupon::find()->where("code ='" . $_POST['couponCode'] . "' AND startDate <= CURDATE() AND endDate >= CURDATE()");
+        $coupon = \common\models\costfit\Coupon::getCouponAvailable($_POST['couponCode']);
         if (isset($coupon)) {
             $order->couponId = $coupon->couponId;
             $order->save();
             $res["status"] = TRUE;
+            $cartArray = \common\models\costfit\Order::findCartArray();
+            $res["cart"] = $cartArray;
         } else {
             $res["status"] = FALSE;
         }

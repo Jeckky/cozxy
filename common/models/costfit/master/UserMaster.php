@@ -14,6 +14,7 @@ use Yii;
     * @property string $password
     * @property string $lastname
     * @property string $email
+    * @property string $token
     * @property integer $type
     * @property integer $status
     * @property string $createDateTime
@@ -38,8 +39,8 @@ return 'user';
 public function rules()
 {
 return [
-            [['username', 'firstname', 'lastname', 'createDateTime'], 'required'],
-            [['hash_password'], 'string'],
+            [['username', 'createDateTime'], 'required'],
+            [['hash_password', 'token'], 'string'],
             [['type', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['username', 'firstname', 'password', 'lastname', 'email'], 'string', 'max' => 200],
@@ -59,6 +60,7 @@ return [
     'password' => Yii::t('user', 'Password'),
     'lastname' => Yii::t('user', 'Lastname'),
     'email' => Yii::t('user', 'Email'),
+    'token' => Yii::t('user', 'Token'),
     'type' => Yii::t('user', 'Type'),
     'status' => Yii::t('user', 'Status'),
     'createDateTime' => Yii::t('user', 'Create Date Time'),

@@ -18,9 +18,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <h2>Login/ register</h2>
     <h4>Use social accounts</h4>
     <div class="social-login">
-        <a class="facebook" href="#"><i class="fa fa-facebook-square"></i></a>
+<!--        <a class="facebook" href="#"><i class="fa fa-facebook-square"></i></a>
         <a class="google" href="#"><i class="fa fa-google-plus-square"></i></a>
-        <a class="twitter" href="#"><i class="fa fa-twitter-square"></i></a>
+        <a class="twitter" href="#"><i class="fa fa-twitter-square"></i></a>-->
+        <?= common\yii2\authclient\widgets\AuthChoice::widget(['baseAuthUrl' => ['site/auth']]) ?>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-ms-12 ">
+            <?php if (isset($model)): ?>
+                <?= Html::errorSummary($model); ?>
+            <?php endif; ?>
+        </div>
     </div>
     <div class="row">
         <!--Login-->
@@ -28,12 +36,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <form method="post" class="login-form" action="<?php echo $baseUrl; ?>/register/login">
                 <div class="form-group group">
                     <label for="log-email2">Email</label>
-                    <input type="email" class="form-control" name="log-email2" id="log-email2" placeholder="Enter your email" required>
+                    <input type="email" class="form-control" name="LoginForm[email]" id="log-email2" placeholder="Enter your email" required>
                     <a class="help-link" href="#">Forgot email?</a>
                 </div>
                 <div class="form-group group">
                     <label for="log-password2">Password</label>
-                    <input type="text" class="form-control" name="log-password2" id="log-password2" placeholder="Enter your password" required>
+                    <input type="text" class="form-control" name="LoginForm[password]" id="log-password2" placeholder="Enter your password" required>
                     <a class="help-link" href="#">Forgot password?</a>
                 </div>
                 <div class="checkbox">
@@ -44,21 +52,21 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <!--Registration-->
         <div class="col-lg-7 col-md-7 col-sm-7">
-            <form method="post" class="registr-form" action="<?php echo $baseUrl; ?>/register/login">
+            <form method="post" class="registr-form" action="<?php echo $baseUrl; ?>/register/register">
                 <div class="form-group group">
                     <label for="rf-email">Email</label>
-                    <input type="email" class="form-control" name="rf-email" id="rf-email" placeholder="Enter email" required>
+                    <input type="email" class="form-control" name="User[email]" id="rf-email" placeholder="Enter email" required>
                 </div>
                 <div class="form-group group">
                     <label for="rf-password">Password</label>
-                    <input type="password" class="form-control" name="rf-password" id="rf-password" placeholder="Enter password" required>
+                    <input type="password" class="form-control" name="User[password]" id="rf-password" placeholder="Enter password" required>
                 </div>
                 <div class="form-group group">
                     <label for="rf-password-repeat">Repeat password</label>
-                    <input type="password" class="form-control" name="rf-password-repeat" id="rf-password-repeat" placeholder="Repeat password" required>
+                    <input type="password" class="form-control" name="User[confirmPassword]" id="rf-password-repeat" placeholder="Repeat password" required>
                 </div>
                 <div class="checkbox">
-                    <label><input type="checkbox" name="remember"> I have read and agree with the terms</label>
+                    <label><input type="checkbox" name="User[acceptTerm]"> I have read and agree with the terms</label>
                 </div>
                 <input class="btn btn-black" type="submit" value="Register">
             </form>

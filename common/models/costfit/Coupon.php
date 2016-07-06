@@ -54,4 +54,18 @@ class Coupon extends \common\models\costfit\master\CouponMaster
         return $prefix . $code;
     }
 
+    public static function getCouponAvailable($code)
+    {
+        $coupon = \common\models\costfit\Coupon::find()->where("code ='" . $code . "' AND startDate <= CURDATE() AND endDate >= CURDATE()")->one();
+        if (isset($coupon))
+            return $coupon;
+        else
+            return NULL;
+    }
+
+    public static function findAvailableCouponArray()
+    {
+        return \common\models\costfit\Coupon::find()->where("code ='" . $code . "' AND startDate <= CURDATE() AND endDate >= CURDATE()")->all();
+    }
+
 }

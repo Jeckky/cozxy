@@ -137,7 +137,7 @@ $(document).ready(function (e) {
                             if ($('.shopping-cart .cart-sidebar .cart-totals .total').html() !== undefined)
                             {
                                 $('.shopping-cart .cart-sidebar .cart-totals .total').html(data.cart.totalFormatText);
-                                $('.shopping-cart .cart-sidebar .cart-totals .shipping').html(data.cart.shippingFormatText);
+                                $('.shopping-cart .cart-sidebar .cart-totals .shipping').html(data.cart.shippingRateFormatText);
                                 $('.shopping-cart .cart-sidebar .cart-totals .summary').html(data.cart.summaryFormatText);
                             }
                         });
@@ -182,7 +182,7 @@ $(document).ready(function (e) {
                             if ($('.shopping-cart .cart-sidebar .cart-totals .total').html() !== undefined)
                             {
                                 $('.shopping-cart .cart-sidebar .cart-totals .total').html(data.cart.totalFormatText);
-                                $('.shopping-cart .cart-sidebar .cart-totals .shipping').html(data.cart.shippingFormatText);
+                                $('.shopping-cart .cart-sidebar .cart-totals .shipping').html(data.cart.shippingRateFormatText);
                                 $('.shopping-cart .cart-sidebar .cart-totals .summary').html(data.cart.summaryFormatText);
                             }
                         });

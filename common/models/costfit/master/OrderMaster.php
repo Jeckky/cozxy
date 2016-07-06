@@ -12,6 +12,12 @@ use Yii;
     * @property string $token
     * @property string $orderNo
     * @property string $invoiceNo
+    * @property string $totalExVat
+    * @property string $vat
+    * @property string $total
+    * @property string $grandTotal
+    * @property string $discount
+    * @property string $shippingRate
     * @property string $summary
     * @property string $sendDate
     * @property string $billingCompany
@@ -58,12 +64,13 @@ public function rules()
 return [
             [['userId', 'billingCountryId', 'billingProvinceId', 'billingAmphurId', 'shippingCountryId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'couponId', 'status'], 'integer'],
             [['token', 'billingAddress', 'shippingAddress'], 'string'],
-            [['summary'], 'number'],
+            [['totalExVat', 'vat', 'total', 'grandTotal', 'discount', 'shippingRate', 'summary'], 'number'],
             [['sendDate', 'createDateTime', 'updateDateTime'], 'safe'],
             [['paymentType', 'createDateTime'], 'required'],
             [['orderNo', 'invoiceNo', 'billingTax', 'billingTel', 'shippingTax', 'shippingTel'], 'string', 'max' => 45],
             [['billingCompany', 'shippingCompany'], 'string', 'max' => 200],
             [['billingZipcode', 'shippingZipcode'], 'string', 'max' => 10],
+            [['billingZipcode'], 'unique'],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => UserMaster::className(), 'targetAttribute' => ['userId' => 'userId']],
         ];
 }
@@ -79,6 +86,12 @@ return [
     'token' => Yii::t('order', 'Token'),
     'orderNo' => Yii::t('order', 'Order No'),
     'invoiceNo' => Yii::t('order', 'Invoice No'),
+    'totalExVat' => Yii::t('order', 'Total Ex Vat'),
+    'vat' => Yii::t('order', 'Vat'),
+    'total' => Yii::t('order', 'Total'),
+    'grandTotal' => Yii::t('order', 'Grand Total'),
+    'discount' => Yii::t('order', 'Discount'),
+    'shippingRate' => Yii::t('order', 'Shipping Rate'),
     'summary' => Yii::t('order', 'Summary'),
     'sendDate' => Yii::t('order', 'Send Date'),
     'billingCompany' => Yii::t('order', 'Billing Company'),

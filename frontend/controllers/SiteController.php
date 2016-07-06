@@ -65,6 +65,10 @@ class SiteController extends MasterController
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
+            'auth' => [
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this, 'successCallback'],
+            ],
         ];
     }
 
@@ -221,6 +225,45 @@ class SiteController extends MasterController
     public function actionRegister()
     {
         return $this->render('register');
+    }
+
+    public function successCallback($client)
+    {
+        $attributes = $client->getUserAttributes();
+//        throw new \yii\base\Exception(print_r($attributes, true));
+        if (isset($attributes['email'])) {
+            //facebook
+            $email = $attributes['email'];
+            $name = explode(' ', $attributes['name']);
+            $fName = current($name);
+            $lName = end($name);
+        } else {
+            //google
+            $fName = $attributes['name']['givenName'];
+            $lName = $attributes['name']['familyName'];
+            $email = $attributes['emails'][0]['value'];
+        }
+
+        $user = User::find()->where(['email' => $email])->one();
+        if (!empty($user)) {
+            Yii::$app->user->login($user);
+        } else {
+//            $session = Yii::$app->session;
+//            $session['attributes'] = $attributes;
+//            $this->successUrl = Url::to(['signup']);
+
+            $model = new SignupForm();
+            $model->username = $model->email = $email;
+            $model->password = substr(md5(time()), 0, 8);
+            $model->fName = $fName;
+            $model->lName = $lName;
+            if ($user = $model->signup(2)) {
+                //login
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->goHome();
+                }
+            }
+        }
     }
 
 }
