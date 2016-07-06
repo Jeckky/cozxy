@@ -30,14 +30,15 @@ class ProfileController extends MasterController {
         $this->title = 'Cost.fit | My Profile';
         $this->subTitle = 'Home';
         $this->subSubTitle = "My Profile";
+        //return $this->render('profile_layouts');
         return $this->render('profile');
     }
 
     public function actionPayment() {
         $this->layout = "/content_profile";
-        $this->title = 'Cost.fit | Payment';
+        $this->title = 'Cost.fit | ช่องทางการชำระเงิน';
         $this->subTitle = 'Home';
-        $this->subSubTitle = "Payment Methods";
+        $this->subSubTitle = "ช่องทางการชำระเงิน";
         return $this->render('@app/views/payment/payment');
     }
 

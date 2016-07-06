@@ -69,7 +69,7 @@
     <?php } else if (Yii::$app->controller->id == 'history' or Yii::$app->controller->id == 'profile' or Yii::$app->controller->id == 'payment' or Yii::$app->controller->id == 'coupon') { ?>
         <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
         <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
-        <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/payment">Payment Methosds</a></li>
+        <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/payment">Payment Methods</a></li>
     <?php } else if (Yii::$app->controller->id != 'history') { ?>
         <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>history">Easy Re-Order</a></li>
         <?php } ?>

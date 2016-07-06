@@ -7,7 +7,7 @@ use yii\bootstrap\ActiveForm;
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
-<h3>Billing adress</h3>
+<h3>Billing address</h3>
 <div class="form-group">
     <label for="co-country">Country *</label>
     <div class="select-style">
