@@ -21,7 +21,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
             <!--Left Column-->
             <div class="col-lg-12 col-md-12">
-                <h2 class="title">My Profile</h2>
+                <h2 class="title">Payment Methods | ช่องทางการชำระเงิน</h2>
                 <div class="row space-top">
 
                     <div class="clo-lg-3 col-md-3 col-sm-3 space-bottom">
