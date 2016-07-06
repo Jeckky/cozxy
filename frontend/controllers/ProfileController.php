@@ -14,7 +14,7 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 
 /**
- * Checkout controller
+ * Profile controller
  */
 class ProfileController extends MasterController {
 
@@ -31,6 +31,20 @@ class ProfileController extends MasterController {
         $this->subTitle = 'Home';
         $this->subSubTitle = "My Profile";
         return $this->render('profile');
+    }
+
+    public function actionPayment() {
+        $this->title = 'Cost.fit | Payment';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = "Payment Methods";
+        return $this->render('@app/views/payment/payment');
+    }
+
+    public function actionOrder() {
+        $this->title = 'Cost.fit | Order History';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = "Order History";
+        return $this->render('@app/views/profile/order_history');
     }
 
 }

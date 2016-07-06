@@ -21,17 +21,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
             <!--Left Column-->
             <div class="col-lg-12 col-md-12">
-                <h2 class="title"><?= isset($this->context->subSubTitle) ? $this->context->subSubTitle : "sub Title" ?></h2>
+                <h2 class="title"><?= isset($this->context->subTitle) ? $this->context->subTitle : "sub Title" ?></h2>
                 <div class="row space-top">
-
                     <div class="clo-lg-3 col-md-3 col-sm-3 space-bottom">
-                        test
+                        Test  
                     </div>
-
                 </div>
             </div>
-
-
         </div>
     </div>
 </section><!--Support Close-->

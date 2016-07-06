@@ -31,7 +31,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 'search/<title>/<hash>' => 'search/index',
-            //'products/<title>/<hash>' => 'products/index',
+            //'products/<title>/<hash>' => 'products/index', 
             ],
         ],
         /**

@@ -38,4 +38,18 @@ class RegisterController extends MasterController {
         return $this->render('register');
     }
 
+    public function actionThank() {
+        $this->title = 'Cost.fit | Register Thank';
+        $this->subTitle = 'Register Thank';
+        $this->subSubTitle = '';
+        return $this->render('register_thank');
+    }
+
+    public function actionForgot() {
+        $this->title = 'Cost.fit | Forgot password?';
+        $this->subTitle = 'Forgot password?';
+        $this->subSubTitle = '';
+        return $this->render('register_forgot');
+    }
+
 }
