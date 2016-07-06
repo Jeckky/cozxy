@@ -40,15 +40,15 @@ class RegisterController extends MasterController {
 
     public function actionThank() {
         $this->title = 'Cost.fit | Register Thank';
-        $this->subTitle = 'Register Thank';
-        $this->subSubTitle = '';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = 'Register Thank';
         return $this->render('register_thank');
     }
 
     public function actionForgot() {
         $this->title = 'Cost.fit | Forgot password?';
-        $this->subTitle = 'Forgot password?';
-        $this->subSubTitle = '';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = 'Forgot password?';
         return $this->render('register_forgot');
     }
 
