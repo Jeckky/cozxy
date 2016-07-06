@@ -28,7 +28,7 @@ class RegisterController extends MasterController
      */
     public function actionIndex()
     {
-        //return Yii::$app->getResponse()->redirect('register/login');
+//return Yii::$app->getResponse()->redirect('register/login');
         $this->title = 'Cost.fit | Register Login';
         $this->subTitle = 'Register Login';
         return $this->render('register/Login');
@@ -60,8 +60,23 @@ class RegisterController extends MasterController
                 $model->addError("password", 'Confirm password not match');
             }
         }
-
         return $this->render('register', ['model' => $model]);
+    }
+
+    public function actionThank()
+    {
+        $this->title = 'Cost.fit | Register Thank';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = 'Register Thank';
+        return $this->render('register_thank');
+    }
+
+    public function actionForgot()
+    {
+        $this->title = 'Cost.fit | Forgot password?';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = 'Forgot password?';
+        return $this->render('register_forgot');
     }
 
 }

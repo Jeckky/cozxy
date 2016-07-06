@@ -30,7 +30,7 @@ class SearchCostFitController extends MasterController {
 
         $this->title = 'Cost.fit | Search Cost.fit';
         $this->subTitle = 'search';
-        $search_hd = $_POST['search_hd'];
+        //$search_hd = $_POST['search_hd'];
 
         return $this->render('@app/views/search/searchcostfit');
     }
