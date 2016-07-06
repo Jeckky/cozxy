@@ -8,7 +8,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <!--data-offset-top is when header converts to small variant and data-stuck when it becomes visible. Values in px represent position of scroll from top. Make sure there is at least 100px between those two values for smooth animation-->
 
     <!--Search Form-->
-    <form class="search-form closed" method="post" role="form" autocomplete="off" action="<?php echo $baseUrl; ?>/search">
+    <form class="search-form closed" method="post" role="form" autocomplete="off" action="<?php echo Yii::$app->homeUrl; ?>search-cost-fit">
         <div class="container">
             <div class="close-search"><i class="icon-delete"></i></div>
             <div class="form-group">
@@ -24,7 +24,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="menu-toggle"><i class="fa fa-list"></i></div>
 
     <div class="container">
-        <a class="logo" href="<?= Yii::$app->homeUrl ?>"><img src="<?php echo $baseUrl; ?>/images/logo/costfit.png" alt="Limo"/></a>
+        <a class="logo" href="<?= Yii::$app->homeUrl ?>"><img src="<?php echo Yii::$app->homeUrl; ?>images/logo/costfit.png" alt="Limo"/></a>
     </div>
 
     <?= $this->render('_nav') ?>
