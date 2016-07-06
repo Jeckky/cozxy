@@ -100,7 +100,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         }
         ?>
     </div>
-
     <div class="buttons group">
         <div class="qnt-count">
             <a class="incr-btn" href="#">-</a>
