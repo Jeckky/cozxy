@@ -23,13 +23,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <label for="log-email">Email</label>
                         <input type="email" class="form-control" name="log-email" id="log-email"
                                placeholder="Enter your email" required>
-                        <a class="help-link" href="#">Forgot email?</a>
+                        <!--<a class="help-link" href="#">Forgot email?</a>-->
                     </div>
                     <div class="form-group group">
                         <label for="log-password">Password</label>
                         <input type="text" class="form-control" name="log-password" id="log-password"
                                placeholder="Enter your password" required>
-                        <a class="help-link" href="#">Forgot password?</a>
+                        <a class="help-link" href="<?php echo Yii::$app->homeUrl; ?>register/forgot">Forgot password?</a>
                     </div>
                     <div class="checkbox">
                         <label><input type="checkbox" name="remember"> Remember me</label>
