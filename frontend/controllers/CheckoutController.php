@@ -30,7 +30,7 @@ class CheckoutController extends MasterController {
         $this->layout = "/content_right";
         $this->title = 'Cost.fit | checkout';
         $this->subTitle = 'Checkout';
-        $this->subSubTitle = "shop";
+        $this->subSubTitle = "";
         return $this->render('checkout');
     }
 
