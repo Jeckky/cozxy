@@ -10,6 +10,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <div class="col-md-12">
     <div class="form-group">
-        <textarea class="form-control" name="order-notes" id="order-notes" rows="4" placeholder="New Address"></textarea>
+        <label for="co-company-name">Company name 1</label>
+        <input type="text" class="form-control" id="co-company-name" name="co-company-name" placeholder="Company name">
+    </div>
+    <div class="form-group">
+        <label for="co-company-name">Company name 2</label>
+        <input type="text" class="form-control" id="co-company-name" name="co-company-name" placeholder="Company name">
     </div>
 </div>
