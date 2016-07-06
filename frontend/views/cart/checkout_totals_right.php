@@ -1,22 +1,27 @@
 <table>
     <tr><th>Product</th></tr>
-    <?php for ($index = 0; $index <= 3; $index++) {
+    <?php foreach ($this->params['cart']['items'] as $item) {
         ?>
         <tr>
-            <td class="name border">Bag<span>x1</span></td>
-            <td class="price border">2715,00 $</td>
+            <td class="name border"><?= $item['code'] ?><span>x<?= $item['qty'] ?></span></td>
+            <td class="price border"><?= $item['total'] ?> ฿</td>
         </tr>
         <?php
-        $index = $index++;
     }
     ?>
     <tr>
         <td class="th">Cart subtotal</td>
         <td class="price"><?= number_format($this->params['cart']['total'], 2) ?> $</td>
     </tr>
+    <?php if (isset($this->params['cart']['discount'])): ?>
+        <tr>
+            <td>Discount Code  <?= $this->params['cart']['couponCode'] ?></td>
+            <td class="discount align-r"><?= number_format($this->params['cart']['discount'], 2) ?></td>
+        </tr>
+    <?php endif; ?>
     <tr>
         <td class="th border">Shipping</td>
-        <td class="align-r border"><?= (isset($this->params['cart']['shipping']) && $this->params['cart']['shipping'] == 0) ? "Free Shipping" : number_format($this->params['cart']['shipping'], 2) ?></td>
+        <td class="align-r border"><?= (isset($this->params['cart']['shippingRate']) && $this->params['cart']['shippingRate'] == 0) ? "Free Shipping" : number_format($this->params['cart']['shippingRate'], 2) ?></td>
     </tr>
     <tr>
         <td class="th">Order total</td>

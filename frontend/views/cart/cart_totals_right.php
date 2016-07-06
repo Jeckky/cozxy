@@ -5,8 +5,8 @@
     </tr>
     <?php if (isset($this->params['cart']['discount'])): ?>
         <tr>
-            <td>Discount</td>
-            <td class="total align-r"><?= number_format($this->params['cart']['discount'], 2) ?></td>
+            <td>Discount Code  <?= $this->params['cart']['couponCode'] ?></td>
+            <td class="discount align-r"><?= number_format($this->params['cart']['discount'], 2) ?></td>
         </tr>
     <?php endif; ?>
     <tr class="devider">

@@ -14,20 +14,24 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="col-lg-12">
                 <h2>Checkout</h2>
                 <!--Hidden Panels-->
-                <a class="panel-toggle" href="#login"><i></i>Returning customer? Click here to login</a>
-                <div class="row">
-                    <div class="hidden-panel" id="login">
-                        <?php echo $this->render('@app/views/register/form_login'); ?>
-                    </div>
-                </div>
-                <a class="panel-toggle" href="#coupon"><i></i>Have a coupon? Click here to enter your code</a>
-                <div class="row">
-                    <div class="col-lg-5">
-                        <div class="hidden-panel" id="coupon">
-                            <?php echo $this->render('@app/views/coupon/coupon'); ?>
+                <?php if (Yii::$app->user->isGuest): ?>
+                    <a class="panel-toggle" href="#login"><i></i>Returning customer? Click here to login</a>
+                    <div class="row">
+                        <div class="hidden-panel" id="login">
+                            <?php echo $this->render('@app/views/register/form_login'); ?>
                         </div>
                     </div>
-                </div>
+                <?php endif; ?>
+                <?php if (!isset($this->params['cart']['discount'])): ?>
+                    <a class="panel-toggle" href="#coupon"><i></i>Have a coupon? Click here to enter your code</a>
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <div class="hidden-panel" id="coupon">
+                                <?php echo $this->render('@app/views/coupon/coupon'); ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
         <!--Checkout Form-->

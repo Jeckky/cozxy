@@ -44,6 +44,10 @@ class Order extends \common\models\costfit\master\OrderMaster
 
     const ORDER_STATUS_DRAFT = 0;
     const ORDER_STATUS_REGISTER_USER = 1;
+    const CHECKOUT_STEP_WAIT_CHECKOUT = 0;
+    const CHECKOUT_STEP_ADDRESS = 1;
+    const CHECKOUT_STEP_PAYMENT = 2;
+    const CHECKOUT_STEP_SUCCESS = 3;
 
     /**
      * @inheritdoc
@@ -87,8 +91,10 @@ class Order extends \common\models\costfit\master\OrderMaster
                     'orderItemId' => $item->orderItemId,
                     'productId' => $item->productId,
                     'title' => $item->product->title,
+                    'code' => $item->product->code,
                     'qty' => $item->quantity,
                     'price' => $item->price,
+                    'total' => $item->total,
                     'image' => isset($item->product->productImages[0]) ? \Yii::$app->homeUrl . $item->product->productImages[0]->image : $directoryAsset . "/img/catalog/shopping-cart-thumb.jpg",
                 ];
             }
@@ -185,6 +191,26 @@ class Order extends \common\models\costfit\master\OrderMaster
     public static function calculateShippingRate()
     {
         return 0;
+    }
+
+    public function findCheckoutStepArray()
+    {
+        return [
+            self::CHECKOUT_STEP_WAIT_CHECKOUT => "รอ Checkout",
+            self::CHECKOUT_STEP_ADDRESS => "ระบุที่อยู่",
+            self::CHECKOUT_STEP_PAYMENT => "เลือกช่องทางการชำระเงิน",
+            self::CHECKOUT_STEP_SUCCESS => "Check สำเร็จ",
+        ];
+    }
+
+    public function getCheckoutStepText($step)
+    {
+        $res = $this->findCheckoutStepArray();
+        if (isset($res[$step])) {
+            return $res[$step];
+        } else {
+            return NULL;
+        }
     }
 
 }
