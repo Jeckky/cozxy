@@ -28,7 +28,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="row">
 
-                    <?php for ($index = 0; $index <= 15; $index++) {
+                    <?php for ($index = 0; $index <= 7; $index++) {
                         ?>
                         <!--Tile-->
                         <div id="products-category-search" class="col-lg-3 col-md-3 col-sm-6">
@@ -56,14 +56,19 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     ?>
                 </div>
                 <!--Pagination-->
-                <ul class="pagination">
+                <div class="col-md-12 text-center">
+                    <button type="button" id="see-more-search-cost-fit" data-loading-text="Loading..." class="btn btn-black" autocomplete="off">
+                        See More
+                    </button>
+                </div>
+                <!--<ul class="pagination">
                     <li class="prev-page"><a class="icon-arrow-left" href="#"></a></li>
                     <li class="active"><a href="#">1</a></li>
                     <li><a href="#">2</a></li>
                     <li><a href="#">3</a></li>
                     <li><a href="#">4</a></li>
                     <li class="next-page"><a class="icon-arrow-right" href="#"></a></li>
-                </ul>
+                </ul>-->
             </div>
         </div>
     </div>

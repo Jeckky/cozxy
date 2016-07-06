@@ -33,3 +33,13 @@ function proceed(data) {
         window.location = '';
     }
 }
+
+
+$('#see-more-search-cost-fit').on('click', function () {
+    var $btn = $(this);
+    $btn.button('loading');
+    // simulating a timeout
+    setTimeout(function () {
+        $btn.button('reset');
+    }, 1000);
+})
