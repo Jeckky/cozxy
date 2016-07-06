@@ -26,7 +26,7 @@ class ProfileController extends MasterController {
      * @return mixed
      */
     public function actionIndex() {
-
+        $this->layout = "/content_profile";
         $this->title = 'Cost.fit | My Profile';
         $this->subTitle = 'Home';
         $this->subSubTitle = "My Profile";
@@ -34,6 +34,7 @@ class ProfileController extends MasterController {
     }
 
     public function actionPayment() {
+        $this->layout = "/content_profile";
         $this->title = 'Cost.fit | Payment';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Payment Methods";
@@ -41,6 +42,7 @@ class ProfileController extends MasterController {
     }
 
     public function actionOrder() {
+        $this->layout = "/content_profile";
         $this->title = 'Cost.fit | Order History';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Order History";
