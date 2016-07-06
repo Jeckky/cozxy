@@ -581,6 +581,10 @@ $(document).ready(function (e) {
                     $('.cart-btn a span').text($cartTotalItems);
                     $('.cart-btn a').find("#cartTotal").html(data.cart.totalFormatText);
                     $('.cart-dropdown .footer .total').html(data.cart.totalFormatText);
+                    if (data.isMaxQuantity)
+                    {
+                        $("#addItemToCart").attr('disabled', 'disabled');
+                    }
                 }
             }
         });
@@ -668,7 +672,7 @@ $(document).ready(function (e) {
                 $('#productId').val(data.productId);
                 $('#productName').html(data.productName);
                 $('#productPrice').find(".price").html(data.price);
-                $('#productPrice').find(".oldPrice").html(data.oldPrice);
+                $('#productPrice').find(".old-price").html(data.oldPrice);
                 $('#productPriceTable').html(data.productPriceTable);
                 $('#productTabs').html(data.productTabs);
                 $('#productImage').html(data.productImage);

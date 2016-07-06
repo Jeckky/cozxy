@@ -69,7 +69,21 @@ class CartController extends MasterController
         $orderItem->createDateTime = new \yii\db\Expression("NOW()");
         if ($orderItem->save()) {
             $res["status"] = TRUE;
-            $res["cart"] = \common\models\costfit\Order::findCartArray();
+            $cartArray = \common\models\costfit\Order::findCartArray();
+            $res["cart"] = $cartArray;
+            $pQuan = 0;
+            foreach ($cartArray["items"] as $item) {
+                if ($item["productId"] == $id) {
+                    $pQuan+=$item["qty"];
+                }
+            }
+            $product = new \common\models\costfit\Product();
+            $maxQuantity = $product->findMaxQuantity($id);
+            if ($pQuan >= $maxQuantity) {
+                $res["isMaxQuantity"] = TRUE;
+            } else {
+                $res["isMaxQuantity"] = FALSE;
+            }
         } else {
             $res["status"] = FALSE;
         }
@@ -82,7 +96,21 @@ class CartController extends MasterController
 
         if (\common\models\costfit\OrderItem::deleteAll("orderItemId = $id") > 0) {
             $res["status"] = TRUE;
-            $res["cart"] = \common\models\costfit\Order::findCartArray();
+            $cartArray = \common\models\costfit\Order::findCartArray();
+            $res["cart"] = $cartArray;
+//            $pQuan = 0;
+//            foreach ($cartArray["items"] as $item) {
+//                if ($item["productId"] == $id) {
+//                    $pQuan+=$item["qty"];
+//                }
+//            }
+//            $product = new \common\models\costfit\Product();
+//            $maxQuantity = $product->findMaxQuantity($id);
+//            if ($pQuan >= $maxQuantity) {
+//                $res["isMaxQuantity"] = TRUE;
+//            } else {
+//                $res["isMaxQuantity"] = FALSE;
+//            }
         } else {
             $res["status"] = FALSE;
         }
