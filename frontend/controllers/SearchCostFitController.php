@@ -19,6 +19,8 @@ use frontend\models\ContactForm;
  */
 class SearchCostFitController extends MasterController {
 
+    public $enableCsrfValidation = false;
+
     /**
      * Displays homepage.
      *
@@ -28,6 +30,7 @@ class SearchCostFitController extends MasterController {
 
         $this->title = 'Cost.fit | Search Cost.fit';
         $this->subTitle = 'search';
+        $search_hd = $_POST['search_hd'];
 
         return $this->render('@app/views/search/searchcostfit');
     }
