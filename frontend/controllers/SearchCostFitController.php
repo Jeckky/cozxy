@@ -29,7 +29,8 @@ class SearchCostFitController extends MasterController {
     public function actionIndex() {
 
         $this->title = 'Cost.fit | Search Cost.fit';
-        $this->subTitle = 'search';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = 'search';
         //$search_hd = $_POST['search_hd'];
 
         return $this->render('@app/views/search/searchcostfit');
