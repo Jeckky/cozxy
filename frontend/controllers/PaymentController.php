@@ -29,7 +29,7 @@ class PaymentController extends MasterController {
 
         $this->title = 'Cost.fit | Payment';
         $this->subTitle = 'Home';
-        $this->subSubTitle = "Payment Methosds";
+        $this->subSubTitle = "Payment Methods";
         return $this->render('payment');
     }
 
