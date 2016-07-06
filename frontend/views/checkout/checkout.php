@@ -32,7 +32,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <!--Checkout Form-->
         <div class="row">
-            <form id="checkout-form" method="post">
+            <form id="checkout-form" method="post" action="<?php echo Yii::$app->homeUrl; ?>tracking">
                 <!--Left Column-->
                 <div class="col-lg-8 col-md-8 col-sm-8">
                     <h3>Billing adress</h3>
@@ -111,25 +111,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <!--Right Column-->
                 <div class="col-lg-3 col-lg-offset-1 col-md-4 col-sm-4">
                     <h3>Your order</h3>
-                    <table>
-                        <tr><th>Product</th></tr>
-                        <tr>
-                            <td class="name border">Bag<span>x1</span></td>
-                            <td class="price border">2715,00 $</td>
-                        </tr>
-                        <tr>
-                            <td class="th">Cart subtotal</td>
-                            <td class="price">2715,00 $</td>
-                        </tr>
-                        <tr>
-                            <td class="th border">Shipping</td>
-                            <td class="align-r border">Free shipping</td>
-                        </tr>
-                        <tr>
-                            <td class="th">Order total</td>
-                            <td class="price">2715,00 $</td>
-                        </tr>
-                    </table>
+
+                    <?php echo $this->render('@app/views/cart/checkout_totals_right'); ?>
+
                     <div class="payment-method">
                         <div class="radio light">
                             <label><input type="radio" name="payment" id="payment01" checked> Direct Bank Transfer</label>

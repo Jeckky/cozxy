@@ -53,20 +53,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <h3>Cart totals</h3>
                 <form class="cart-sidebar">
                     <div class="cart-totals">
-                        <table>
-                            <tr>
-                                <td>Cart subtotal</td>
-                                <td class="total align-r"><?= number_format($this->params['cart']['total'], 2) ?></td>
-                            </tr>
-                            <tr class="devider">
-                                <td>Shipping</td>
-                                <td class="shipping align-r"><?= (isset($this->params['cart']['shipping']) && $this->params['cart']['shipping'] == 0) ? "Free Shipping" : number_format($this->params['cart']['shipping'], 2) ?></td>
-                            </tr>
-                            <tr>
-                                <td>Order total</td>
-                                <td class="summary align-r"><?= number_format($this->params ['cart']['summary'], 2) ?></td>
-                            </tr>
-                        </table>
+                        <?php echo $this->render('@app/views/cart/cart_totals_right'); ?>
 
                         <!-- coupon -->
                         <?php echo $this->render('@app/views/coupon/coupon'); ?>
@@ -144,15 +131,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     /*function proceed(data) {
      var shop_data = data;
      if (shop_data == 'apply_coupon') {
-     //window.location = '<?php //echo $baseUrl;  ?>';
+     //window.location = '<?php //echo $baseUrl;     ?>';
      } else if (shop_data == 'update_cart') {
-     window.location = '<?php //echo $baseUrl;  ?>' + '/history';
+     window.location = '<?php //echo $baseUrl;     ?>' + '/history';
      } else if (shop_data == 'to_checkout') {
-     window.location = '<?php //echo $baseUrl;  ?>' + '/checkout';
+     window.location = '<?php //echo $baseUrl;     ?>' + '/checkout';
      } else if (shop_data == '') {
-     //window.location = '<?php //echo $baseUrl;  ?>' ;
+     //window.location = '<?php //echo $baseUrl;     ?>' ;
      } else {
-     window.location = '<?php //echo $baseUrl;  ?>';
+     window.location = '<?php //echo $baseUrl;     ?>';
      }
      }*/
 
