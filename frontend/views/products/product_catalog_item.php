@@ -25,7 +25,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     }
 </style>
 <div class="col-lg-6 col-md-6">
-    <h1><?= $model->title; ?></h1>
+    <h1 id='productName'><?= $model->title; ?></h1>
     <?= Html::hiddenInput("productId", $model->productId, ['id' => 'productId']); ?>
     <div class="form-group">
 
@@ -56,7 +56,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </div>
         </div>
     </div>
-    <div class="buttons group products-buttons-group">
+    <div class="buttons group products-buttons-group" id='productPrice'>
         <div class="old-price"><?= (isset($model->price) && !empty($model->price)) ? number_format($model->price, 2) . " ฿" : "815,00 $" ?></div>
         <div class="price"><?= number_format($model->calProductPrice($model->productId, 1), 2) . " ฿" ?></div>
     </div>
@@ -70,35 +70,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </div>
         </div>
     </div>
-    <div class="buttons group">
-        <?php
-        $i = 0;
-        foreach ($model->productPrices as $pp) {
-            ?>
-            <div  class="col-lg-2 col-md-2 col-sm-12 " style="float: left; padding-right: 0px; padding-left: 0px;">
-                <table id="pp<?= number_format($pp->quantity, 0) ?>" class="col-lg-12 col-md-12 text-center <?= ($i == 0) ? " priceActive" : " " ?>" style="font-size: 14px; border: 1px #f5f5f5 solid;">
-
-                    <thead style="border-bottom: 1px #f5f5f5 solid;">
-                        <tr>
-                            <th class="text-center">Buy <?= number_format($pp->quantity, 0) ?></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="item first">
-                            <td class="thumb"><?= number_format($pp->getSavePrice(), 2) . " ฿"; ?></td>
-                        </tr>
-                        <tr class="item first">
-                            <td class="name">
-                                <small>off your order</small>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <?php
-            $i++;
-        }
-        ?>
+    <div class="buttons group" id="productPriceTable">
+        <?php echo $this->render('_product_price_table', ['model' => $model]); ?>
     </div>
     <div class="buttons group">
         <div class="qnt-count">
@@ -136,7 +109,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </div>
 
 <!--Product Gallery-->
-<div class="col-lg-6 col-md-6" id="productImage">
+<div class="col-lg-6 col-md-6" id='productImage'>
+
     <?php echo $this->render('_product_image', ['model' => $model]); ?>
+
 </div>
 

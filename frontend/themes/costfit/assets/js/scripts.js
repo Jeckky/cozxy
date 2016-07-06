@@ -665,9 +665,26 @@ $(document).ready(function (e) {
             data: {productId: $(this).val()},
             success: function (data)
             {
-                $('#productItem').html(data.productItem);
+                $('#productId').val(data.productId);
+                $('#productName').html(data.productName);
+                $('#productPrice').find(".price").html(data.price);
+                $('#productPrice').find(".oldPrice").html(data.oldPrice);
+                $('#productPriceTable').html(data.productPriceTable);
                 $('#productTabs').html(data.productTabs);
                 $('#productImage').html(data.productImage);
+                $('#quantity').val(1);
+                if ($('#prod-gal').length > 0) {
+                    var categorySlider = new MasterSlider();
+                    categorySlider.control('thumblist', {autohide: false, dir: 'h', align: 'bottom', width: 137, height: 130, margin: 15, space: 0, hideUnder: 400});
+                    categorySlider.setup('prod-gal', {
+                        width: 550,
+                        height: 484,
+                        speed: 25,
+                        preload: 'all',
+                        loop: true,
+                        view: 'fade'
+                    });
+                }
             }
         });
     });
