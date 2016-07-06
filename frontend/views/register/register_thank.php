@@ -14,20 +14,30 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <li><a href="<?php echo Yii::$app->homeUrl . Yii::$app->controller->id; ?>"><?= isset($this->context->subSubTitle) ? $this->context->subSubTitle : "sub sub Title" ?></a></li>
 </ol><!--Breadcrumbs Close-->
 
-<!--Support-->
-<section class="support">
-    <div class="container">
-        <div class="row">
+<!--Content-->
+<div class="coming-soon">
 
-            <!--Left Column-->
-            <div class="col-lg-12 col-md-12">
-                <h2 class="title"><?= isset($this->context->subTitle) ? $this->context->subTitle : "sub Title" ?></h2>
-                <div class="row space-top">
-                    <div class="clo-lg-3 col-md-3 col-sm-3 space-bottom">
-                        Test  
-                    </div>
-                </div>
+    <section class="container">
+        <!--Logo-->
+        <a class="logo" href="<?php echo $baseUrl; ?>"><img src="<?php echo Yii::$app->homeUrl; ?>images/logo/costfit.png" alt="cost.fit"></a>
+
+        <!--Text-->
+        <h1 class="text-center">Thank You</h1>
+        <h3 class="text-center">for your registration</h3>
+        <!--Countdown Widget-->
+        <div class="countdown">
+            <h3>We go live in:</h3>
+            <div class="social-bar-cost-fit text-center">
+                <a href="#" target="_blank"><i class="fa fa-tumblr-square"></i></a>
+                <a href="#" target="_blank"><i class="fa fa-youtube"></i></a>
+                <a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
+                <a href="#" target="_blank"><i class="fa fa-pinterest"></i></a>
+                <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+                <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
             </div>
-        </div>
-    </div>
-</section><!--Support Close-->
+        </div><!--Countdown Widget Close-->
+        <!--Social Bar-->
+
+    </section>
+
+</div><!--Content Close-->
