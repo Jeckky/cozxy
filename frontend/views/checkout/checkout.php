@@ -54,7 +54,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 </div>
                             </div>
                             <!--Checkout Form Select  Address-->
-                            <a class="panel-toggle action" href="#costfit-select-address"><i></i>Select Address</a>
+                            <a class="panel-toggle active action" href="#costfit-select-address"><i></i>Select Address</a>
                             <div class="row" style="background-color: rgba(249, 249, 249, 0.32);">
                                 <div class="col-lg-12">
                                     <div class="hidden-panel expanded" id="costfit-select-address" style="color: #292c2e;">
