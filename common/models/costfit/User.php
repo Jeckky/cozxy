@@ -75,4 +75,14 @@ class User extends \common\models\costfit\master\UserMaster
         ]);
     }
 
+    public static function getIsExistWishlist($productId)
+    {
+        $ws = \common\models\costfit\Wishlist::find()->where("productId =" . $productId . " AND userId = " . \Yii::$app->user->id)->one();
+        if (isset($ws)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
 }

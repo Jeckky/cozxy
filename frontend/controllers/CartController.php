@@ -173,4 +173,28 @@ class CartController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
+    public function actionAddWishlist()
+    {
+        $res = [];
+        $ws = \common\models\costfit\Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
+        if (!isset($ws)) {
+            $ws = new \common\models\costfit\Wishlist();
+            $ws->productId = $_POST['productId'];
+            $ws->userId = \Yii::$app->user->id;
+            $ws->createDateTime = new \yii\db\Expression("NOW()");
+            if ($ws->save()) {
+                $res["status"] = TRUE;
+            } else {
+                $res["status"] = FALSE;
+                $res['errorCode'] = 2;
+                $res["message"] = "Can't save Wishlist";
+            }
+        } else {
+            $res["status"] = FALSE;
+            $res['errorCode'] = 1;
+            $res["message"] = "Exits product in Wishlist";
+        }
+        return \yii\helpers\Json::encode($res);
+    }
+
 }

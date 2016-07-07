@@ -80,7 +80,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <a class="incr-btn" href="#" data-toggle="popover" data-content="Max Quantity For this Item" data-placement="bottom">+</a>
         </div>
         <a class="btn btn-primary btn-sm" id="addItemToCart" href="#" <?= ($model->findMaxQuantity($model->productId) <= 0) ? " disabled" : " " ?>><i class="icon-shopping-cart"></i>Add to cart</a>
-        <a class="btn btn-black btn-sm" href="<?php echo Yii::$app->homeUrl; ?>wishlist"><i class="icon-heart"></i>Add to wishlist</a>
+        <?php if (!Yii::$app->user->isGuest): ?>
+            <a class="btn btn-black btn-sm" href="#" id='addWishlist' <?= (\common\models\costfit\User::getIsExistWishlist($model->productId)) ? " disabled" : " " ?>><i class="icon-heart"></i>Add to wishlist</a>
+        <?php endif; ?>
     </div>
     <p class="p-style2"><?//= strip_tags($model->shortDescription); ?></p>
     <div class="row">

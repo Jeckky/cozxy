@@ -27,7 +27,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888"><img src="<?php echo $directoryAsset; ?>/img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
                         <td class="name"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">Wristlet</a></td>
                         <td class="price">715,00 $</td>
-                        <td class="button"><a class="btn btn-primary btn-sm" href="<?php echo Yii::$app->homeUrl; ?>cart"><i class="icon-shopping-cart"></i>Add to cart</a></td>
+                        <td class="button"><a class="btn btn-primary btn-sm" href="#"><i class="icon-shopping-cart"></i>Add to cart</a></td>
                         <td class="delete"><i class="icon-delete"></i></td>
                     </tr>
                     <!--Item-->
@@ -35,7 +35,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888"><img src="<?php echo $directoryAsset; ?>/img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
                         <td class="name"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">Wristlet</a></td>
                         <td class="price">715,00 $</td>
-                        <td class="button"><a class="btn btn-primary btn-sm" href="<?php echo Yii::$app->homeUrl; ?>cart"><i class="icon-shopping-cart"></i>Add to cart</a></td>
+                        <td class="button"><a class="btn btn-primary btn-sm" href="#"><i class="icon-shopping-cart"></i>Add to cart</a></td>
                         <td class="delete"><i class="icon-delete"></i></td>
                     </tr>
                     <!--Item-->
@@ -51,7 +51,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888"><img src="<?php echo $directoryAsset; ?>/img/catalog/shopping-cart-thumb.jpg" alt="Lorem ipsum"/></a></td>
                         <td class="name"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">Wristlet</a></td>
                         <td class="price">715,00 $</td>
-                        <td class="button"><a class="btn btn-primary btn-sm" href="<?php echo Yii::$app->homeUrl; ?>cart"><i class="icon-shopping-cart"></i>Add to cart</a></td>
+                        <td class="button"><a class="btn btn-primary btn-sm" href="#"><i class="icon-shopping-cart"></i>Add to cart</a></td>
                         <td class="delete"><i class="icon-delete"></i></td>
                     </tr>
                     <!--Item-->

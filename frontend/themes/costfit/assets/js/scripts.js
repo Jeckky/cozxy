@@ -47,6 +47,8 @@ $(document).ready(function (e) {
     var $promoLabels = $('.promo-labels div');
     var $panelToggle = $('.panel-toggle');
     var $accordionToggle = $('.accordion .panel-heading a');
+    var $addWishlist = $('#addWishlist');
+    var $wishlistMessage = $('.wishlist-message');
 
     //Modify By Tong
     var $changeOption = $('#changeOption');
@@ -560,7 +562,6 @@ $(document).ready(function (e) {
         var $itemPrice = $(this).parent().parent().find('.price').text();
         var $itemQnty = $(this).parent().find('#quantity').val();
         var $cartTotalItems = parseInt($('.cart-btn a span').text()) + parseInt($itemQnty);
-        $addedToCartMessage.find('p').text('"' + $itemName + '"' + '  ' + 'was successfully added to your cart.');
 //        var getUrl = window.location;
 //        var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
 //        alert(baseUrl);
@@ -573,6 +574,7 @@ $(document).ready(function (e) {
             {
                 if (data.status)
                 {
+                    $addedToCartMessage.find('p').text('"' + $itemName + '"' + '  ' + 'was successfully added to your cart.');
                     $('.cart-dropdown table').append(
                             '<tr class="item"><td><div class="delete"></div><a href="#">' + $itemName +
                             '<td><input type="text" value="' + $itemQnty +
@@ -691,6 +693,42 @@ $(document).ready(function (e) {
                 }
             }
         });
+    });
+
+    $addWishlist.click(function () {
+        $wishlistMessage.removeClass('visible');
+        var $itemName = $(this).parent().parent().find('h1').text();
+        var $itemId = $(this).parent().parent().find('#productId').val();
+        var $itemPrice = $(this).parent().parent().find('.price').text();
+        var $itemQnty = $(this).parent().find('#quantity').val();
+        var $cartTotalItems = parseInt($('.cart-btn a span').text()) + parseInt($itemQnty);
+
+//        var getUrl = window.location;
+//        var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+//        alert(baseUrl);
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: "cart/add-wishlist",
+            data: {productId: $itemId},
+            success: function (data)
+            {
+                if (data.status)
+                {
+                    $wishlistMessage.find('p').text('"' + $itemName + '"' + '  ' + 'was successfully added to wishlist.');
+                    $("#addWishlist").attr('disabled', 'disabled');
+                } else
+                {
+                    alert(data.message);
+                    if (data.messageCode == 1)
+                    {
+                        $("#addWishlist").attr('disabled', 'disabled');
+                    }
+                }
+            }
+        });
+
+        $wishlistMessage.addClass('visible');
     });
 
 });/*Document Ready End*//////////////////////////////////////////////////////////////////////////////////////////////////////////////
