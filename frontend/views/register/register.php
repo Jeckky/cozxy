@@ -47,7 +47,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <?= $form->field($loginForm, 'email') ?>
             <?= $form->field($loginForm, 'password')->passwordInput() ?>
             <div class="checkbox">
-                <?= $form->field($loginForm, 'rememberMe')->checkbox()->label(""); ?>
+                <?= $form->field($loginForm, 'rememberMe')->checkbox(); ?>
             </div>
             <div class="form-group">
                 <?= Html::submitButton('Login', ['class' => 'btn btn-black', 'name' => 'login-button']) ?>

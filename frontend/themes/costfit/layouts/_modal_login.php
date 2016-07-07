@@ -19,24 +19,18 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 </div>
             </div>
             <div class="modal-body">
-                <form class="login-form">
-                    <div class="form-group group">
-                        <label for="log-email">Email</label>
-                        <input type="email" class="form-control" name="log-email" id="log-email"
-                               placeholder="Enter your email" required>
-                        <!--<a class="help-link" href="#">Forgot email?</a>-->
-                    </div>
-                    <div class="form-group group">
-                        <label for="log-password">Password</label>
-                        <input type="text" class="form-control" name="log-password" id="log-password"
-                               placeholder="Enter your password" required>
-                        <a class="help-link" href="<?php echo Yii::$app->homeUrl; ?>register/forgot">Forgot password?</a>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" name="remember"> Remember me</label>
-                    </div>
-                    <input class="btn btn-black" type="submit" value="Login">
-                </form>
+                <?php $loginForm = new common\models\LoginForm(); ?>
+                <?php $form = yii\bootstrap\ActiveForm::begin(['id' => 'login-form', 'action' => $baseUrl . '/register/login', 'options' => ['class' => 'login-form']]); ?>
+                <?//= $form->errorSummary($model); ?>
+                <?= $form->field($loginForm, 'email') ?>
+                <?= $form->field($loginForm, 'password')->passwordInput() ?>
+                <div class="checkbox">
+                    <?= $form->field($loginForm, 'rememberMe')->checkbox(); ?>
+                </div>
+                <div class="form-group">
+                    <?= yii\helpers\Html::submitButton('Login', ['class' => 'btn btn-black', 'name' => 'login-button']) ?>
+                </div>
+                <?php yii\bootstrap\ActiveForm::end(); ?>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

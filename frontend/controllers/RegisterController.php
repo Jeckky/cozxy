@@ -41,7 +41,7 @@ class RegisterController extends MasterController
         if ($loginForm->load(Yii::$app->request->post()) && $loginForm->login()) {
             return $this->redirect(['site/index']);
         } else {
-            throw new \yii\base\Exception(print_r($loginForm->errors, true));
+//            throw new \yii\base\Exception(print_r($loginForm->errors, true));
         }
         $this->title = 'Cost.fit | Register Login';
         $this->subTitle = 'Register Login';
