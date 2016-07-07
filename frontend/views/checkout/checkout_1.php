@@ -7,12 +7,6 @@ use yii\bootstrap\ActiveForm;
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
-<style type="text/css">
-    .hidden-panel.expanded {
-        max-height: 1200px;
-
-    }
-</style>
 <section class="checkout">
     <div class="container">
         <!--Expandable Panels-->
@@ -25,7 +19,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             <h2>Checkout</h2>
                             <!--Hidden Panels-->
                             <?php if (Yii::$app->user->isGuest): ?>
-                                <!--Checkout Form Click here to login-->
                                 <a class="panel-toggle" href="#login"><i></i>Returning customer? Click here to login</a>
                                 <div class="row">
                                     <div class="hidden-panel" id="login">
@@ -34,7 +27,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 </div>
                             <?php endif; ?>
                             <?php if (!isset($this->params['cart']['discount'])): ?>
-                                <!--Checkout Form coupon-->
                                 <a class="panel-toggle" href="#coupon"><i></i>Have a coupon? Click here to enter your code</a>
                                 <div class="row">
                                     <div class="col-lg-5">
@@ -44,31 +36,24 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     </div>
                                 </div>
                             <?php endif; ?>
-                            <!--Checkout Form New Address-->
-                            <a class="panel-toggle" href="#costfit"><i></i>New Address</a>
-                            <div class="row">
-                                <div class="col-lg-10">
-                                    <div class="hidden-panel" id="costfit">
-                                        <?php echo $this->render('form_billing'); ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Checkout Form Select  Address-->
-                            <a class="panel-toggle action" href="#costfit-select-address"><i></i>Select Address</a>
-                            <div class="row" style="background-color: rgba(249, 249, 249, 0.32);">
-                                <div class="col-lg-12">
-                                    <div class="hidden-panel expanded" id="costfit-select-address" style="color: #292c2e;">
-                                        <?php echo $this->render('address_new'); ?>
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <?php echo $this->render('form_billing'); ?>
-                                            </div>
-                                        </div>
-                                    </div>
+                        </div>
+                    </div>
 
-                                </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="hidden-panel" id="address1">
+                                <?php echo $this->render('form_billing'); ?>
                             </div>
+                        </div>
+                    </div>
 
+                    <!--Checkout Form-->
+                    <a class="panel-toggle" href="#address-new"><i></i>New Address</a>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="hidden-panel" id="address-new">
+                                <?php echo $this->render('form_billing'); ?>
+                            </div>
                         </div>
                     </div>
 
