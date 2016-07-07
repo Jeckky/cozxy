@@ -38,77 +38,51 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             <?php endif; ?>
                         </div>
                     </div>
-                    <a><i></i>Select Address</a>
+                    <a>Select Address</a>
                     <div class="catalog-grid">
                         <div class="container">
                             <div class="row">
                                 <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <div class="tile">
-                                        <div class="badges">
-                                            <span class="sale">Sale</span>
-                                        </div>
-                                        <div class="price-label">715,00 $</div>
-                                        <a href="#" class="text-center">
-                                            <br><br>
-                                            นายกมล พวงเกษม<br>
-                                            เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19<br>
-                                            จอมพล จตุจักร กรุงเทพ<br>
-                                            10900
-                                            <span class="tile-overlay"></span>
-                                        </a>
+                                    <div class="tile text-center" style="padding: 5px;">
+                                        นายกมล พวงเกษม<br>
+                                        เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19<br>
+                                        จอมพล จตุจักร กรุงเทพ<br>
+                                        10900
+                                        <span class="tile-overlay"></span>
                                         <div class="footer">
-                                            <a class="panel-toggle" href="#address1">The Buccaneer</a>
-                                            <span>by Pirate3d</span>
-                                            <button class="btn btn-warning">แก้ไขที่อยู่</button>
+                                            <a class="panel-toggle" href="#address1">
+                                                <button class="btn btn-black">แก้ไขที่อยู่</button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <div class="tile">
-                                        <div class="badges">
-                                            <span class="sale">Sale</span>
-                                        </div>
-                                        <div class="price-label">715,00 $</div>
-                                        <a href="#" class="text-center">
-                                            <br><br>
-                                            นายกมล พวงเกษม<br>
-                                            เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19<br>
-                                            จอมพล จตุจักร กรุงเทพ<br>
-                                            10900
-                                            <span class="tile-overlay"></span>
-                                        </a>
+                                    <div class="tile text-center" style="padding: 5px;">
+                                        นายกมล พวงเกษม<br>
+                                        เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19<br>
+                                        จอมพล จตุจักร กรุงเทพ<br>
+                                        10900
+                                        <span class="tile-overlay"></span>
                                         <div class="footer">
-                                            <a href="#">The Buccaneer</a>
-                                            <span>by Pirate3d</span>
-                                            <button class="btn btn-warning">แก้ไขที่อยู่</button>
+                                            <a class="panel-toggle" href="#address1"><button class="btn btn-black">แก้ไขที่อยู่</button></a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <div class="tile">
-                                        <div class="badges">
-                                            <span class="sale">Sale</span>
-                                        </div>
-                                        <div class="price-label">715,00 $</div>
-                                        <a href="#" class="text-center">
-                                            <br><br>
-                                            นายกมล พวงเกษม<br>
-                                            เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19<br>
-                                            จอมพล จตุจักร กรุงเทพ<br>
-                                            10900
-                                            <span class="tile-overlay"></span>
-                                        </a>
+                                    <div class="tile text-center" style="padding: 5px;">
+                                        นายกมล พวงเกษม<br>
+                                        เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19<br>
+                                        จอมพล จตุจักร กรุงเทพ<br>
+                                        10900
+                                        <span class="tile-overlay"></span>
                                         <div class="footer">
-                                            <a href="#">The Buccaneer</a>
-                                            <span>by Pirate3d</span>
-                                            <button class="btn btn-warning">แก้ไขที่อยู่</button>
+                                            <a class="panel-toggle" href="#address1"><button class="btn btn-black">แก้ไขที่อยู่</button></a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="hidden-panel" id="address1">
