@@ -27,25 +27,32 @@ use \common\models\costfit\master\UserMaster;
 class User extends \common\models\costfit\master\UserMaster
 {
 
+    public $confirmPassword;
+    public $acceptTerm;
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return array_merge(parent::rules(), [
+            ['email', 'unique'],
+//            ['email', 'uniqueEmail'],
             ['email', 'email'],
 //            ['email', 'exist', 'targetAttribute' => 'username', 'targetClass' => '\common\models\cosfit\User'],
-//            [['email'], 'checkEmailExist']
-            ['email', 'exist']
+            [['email', 'password', 'confirmPassword', 'acceptTerm'], 'required', 'on' => 'register'],
+//            ['email', 'unique', 'targetClass' => '\common\models\costfit\User', 'message' => 'this email address has already been taken'],
+            ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"]
+//            ['email', 'exist']
         ]);
     }
 
-    public function checkEmailExist($attribute, $params)
+    public function uniqueEmail($attribute, $email)
     {
-        // no real check at the moment to be sure that the error is triggered
-        $model = $this->find()->where("email=" . $this->email)->one();
-        if (isset($model))
-            $this->addError($attribute, 'อีเมล์นี้ลงทะเบียนไปแล้ว');
+        throw new \yii\base\Exception($email);
+        $user = static::findOne(['email' => Yii::$app->encrypter->encrypt($email)]);
+        if (count($user) > 0)
+            $this->addError($attribute, 'This email is already in use".');
     }
 
     /**
@@ -54,8 +61,8 @@ class User extends \common\models\costfit\master\UserMaster
     public function attributes()
     {
         return array_merge(parent::attributes(), [
-            'acceptTerm',
-            'confirmPassword'
+//            'acceptTerm',
+//            'confirmPassword'
         ]);
     }
 
@@ -64,7 +71,8 @@ class User extends \common\models\costfit\master\UserMaster
      */
     public function attributeLabels()
     {
-        return array_merge(parent::attributeLabels(), []);
+        return array_merge(parent::attributeLabels(), [
+        ]);
     }
 
 }

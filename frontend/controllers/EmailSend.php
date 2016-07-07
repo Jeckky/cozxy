@@ -6,16 +6,16 @@
  * and open the template in the editor.
  */
 
-namespace backend\controllers;
+namespace frontend\controllers;
 
 use Yii;
 
 class EmailSend
 {
 
-    public function mailRegisterConfirm($toMail, $url, $senderName, $recieverName, $status, $projectName)
+    public function mailRegisterConfirm($toMail, $url)
     {//ส่งถึง พนักงานขาย
-        Yii::$app->mail->compose('register_confitm', ['url' => $url])
+        Yii::$app->mail->compose('register_confirm', ['url' => $url])
         ->setTo($toMail)//tomail
         ->setFrom('online@daiigroup.com')
         ->setSubject('Cos.fit Register Confirm')

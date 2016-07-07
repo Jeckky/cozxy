@@ -24,13 +24,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <?= common\yii2\authclient\widgets\AuthChoice::widget(['baseAuthUrl' => ['site/auth']]) ?>
     </div>
     <div class="row">
-        <div class="col-lg-12 col-md-12 col-ms-12 ">
-            <?php if (isset($model)): ?>
-                <?= Html::errorSummary($model); ?>
-            <?php endif; ?>
-        </div>
-    </div>
-    <div class="row">
         <!--Login-->
         <div class="col-lg-5 col-md-5 col-sm-5">
             <form method="post" class="login-form" action="<?php echo $baseUrl; ?>/register/login">
@@ -52,7 +45,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <!--Registration-->
         <div class="col-lg-7 col-md-7 col-sm-7">
-            <?php $form = ActiveForm::begin(['id' => 'login-form', 'options' => ['class' => 'registr-form']]); ?>
+            <?php $form = ActiveForm::begin(['id' => 'login-form', 'action' => $baseUrl . '/register/register', 'options' => ['class' => 'registr-form']]); ?>
             <?//= $form->errorSummary($model); ?>
             <?= $form->field($model, 'email') ?>
             <?= $form->field($model, 'password')->passwordInput() ?>
