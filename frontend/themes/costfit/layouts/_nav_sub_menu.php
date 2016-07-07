@@ -63,7 +63,6 @@
             </li>-->
         </ul>
     </li>
-
     <?php if (!Yii::$app->user->isGuest): ?>
         <li class="has-submenu pill-right"><a href="#">My Account</a>
             <ul class="submenu">
@@ -73,7 +72,6 @@
                 <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>history">Easy Re-Order</a></li>
             </ul>
         </li>
-
     <?php endif; ?>
     <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>coupon">Super special offers</a></li><!--ข้อเสนอพิเศษจากพาร์ทเนอร์-->
     <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works">How Works</a></li>
