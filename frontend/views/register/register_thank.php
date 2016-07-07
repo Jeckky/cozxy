@@ -45,19 +45,19 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <!--Contact Info-->
                 <h3>Contact info</h3>
                 <div class="latest-posts">
-                    <div class="post"> 
+                    <div class="post">
                         <div class="cont-info-widget">
                             <ul>
-                                <li><i class="fa fa-building"></i> บริษัท ไดอิ กรุ๊ป จำกัด (มหาชน)</li>
+                                <li><h3><i class="fa fa-building"></i>บริษัท ไดอิ กรุ๊ป จำกัด (มหาชน)</h3></li>
                                 <li>Daii Group Public Company Limited</li>
                                 <li>เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19 ถนนลาดพร้าว
                                     แขวงจอมพล เขตจตุจักร กรุงเทพมหานคร 10900</li>
                                 <!--<li><a href="#"><i class="fa fa-envelope"></i>mail@Limo.com</a></li>-->
                                 <li><i class="fa fa-phone"></i>02-938-3464</li>
                                 <li><i class="fa fa-mobile"></i>02-938-3463</li>
-                                <li><i class="fa fa-support"></i> www.fenzer.biz</li>
-                                <li><i class="fa fa-support"></i> www.qsaf.biz</li>
-                                <li><i class="fa fa-support"></i> www.atechwindow.com</li>
+                                <li><i class="fa fa-support"></i> <a href="http://www.fenzer.biz">www.qsaf.biz</a></li>
+                                <li><i class="fa fa-support"></i> <a href="http://www.qsaf.biz">www.qsaf.biz</a></li>
+                                <li><i class="fa fa-support"></i> <a href="http://www.atechwindow.com">www.atechwindow.com</a></li>
                             </ul>
                         </div>
                     </div>
