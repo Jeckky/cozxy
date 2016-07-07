@@ -65,13 +65,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
                 </div>
 
                 <!--Right Column-->
