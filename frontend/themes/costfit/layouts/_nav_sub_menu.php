@@ -64,7 +64,7 @@
         </ul>
     </li>
     <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>coupon">Super special offers</a></li><!--ข้อเสนอพิเศษจากพาร์ทเนอร์-->
-    <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works">How cost.fit Works</a></li>
+    <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works">How Works</a></li>
     <?php if (!Yii::$app->user->isGuest): ?>
         <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
         <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
