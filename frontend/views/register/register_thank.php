@@ -45,8 +45,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <!--Contact Info-->
                 <h3>Contact info</h3>
                 <div class="latest-posts">
-                    <div class="post">
-                        <a href="#">บริษัท ไดอิ กรุ๊ป จำกัด (มหาชน)</a>
+                    <div class="post"> 
                         <div class="cont-info-widget">
                             <ul>
                                 <li><i class="fa fa-building"></i> บริษัท ไดอิ กรุ๊ป จำกัด (มหาชน)</li>
