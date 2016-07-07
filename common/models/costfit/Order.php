@@ -121,8 +121,8 @@ class Order extends \common\models\costfit\master\OrderMaster
             $res = [
                 'total' => $total,
                 'totalFormatText' => number_format($total, 2),
-                'shipping' => $shipping,
-                'shippingFormatText' => number_format($shipping, 2),
+                'shippingRate' => $shipping,
+                'shippingRateFormatText' => number_format($shipping, 2),
                 'summary' => $total + $shipping,
                 'summaryFormatText' => number_format($total + $shipping, 2),
                 'qty' => $quantity,
