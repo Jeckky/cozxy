@@ -52,7 +52,19 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <!--Registration-->
         <div class="col-lg-7 col-md-7 col-sm-7">
-            <form method="post" class="registr-form" action="<?php echo $baseUrl; ?>/register/register">
+            <?php $form = ActiveForm::begin(['id' => 'login-form', 'options' => ['class' => 'registr-form']]); ?>
+            <?//= $form->errorSummary($model); ?>
+            <?= $form->field($model, 'email') ?>
+            <?= $form->field($model, 'password')->passwordInput() ?>
+            <?= $form->field($model, 'confirmPassword')->passwordInput() ?>
+            <div class="checkbox">
+                <label><input type="checkbox" name="User[acceptTerm]"> I have read and agree with the terms</label>
+            </div>
+            <div class="form-group">
+                <?= Html::submitButton('Register', ['class' => 'btn btn-black', 'name' => 'login-button']) ?>
+            </div>
+            <?php ActiveForm::end(); ?>
+<!--            <form method="post" class="registr-form" action="<?php echo $baseUrl; ?>/register/register">
                 <div class="form-group group">
                     <label for="rf-email">Email</label>
                     <input type="email" class="form-control" name="User[email]" id="rf-email" placeholder="Enter email" required>
@@ -65,11 +77,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <label for="rf-password-repeat">Repeat password</label>
                     <input type="password" class="form-control" name="User[confirmPassword]" id="rf-password-repeat" placeholder="Repeat password" required>
                 </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" name="User[acceptTerm]"> I have read and agree with the terms</label>
-                </div>
+
                 <input class="btn btn-black" type="submit" value="Register">
-            </form>
+            </form>-->
         </div>
     </div>
 </section><!--Login / Register Close-->

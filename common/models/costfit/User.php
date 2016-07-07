@@ -32,7 +32,20 @@ class User extends \common\models\costfit\master\UserMaster
      */
     public function rules()
     {
-        return array_merge(parent::rules(), []);
+        return array_merge(parent::rules(), [
+            ['email', 'email'],
+//            ['email', 'exist', 'targetAttribute' => 'username', 'targetClass' => '\common\models\cosfit\User'],
+//            [['email'], 'checkEmailExist']
+            ['email', 'exist']
+        ]);
+    }
+
+    public function checkEmailExist($attribute, $params)
+    {
+        // no real check at the moment to be sure that the error is triggered
+        $model = $this->find()->where("email=" . $this->email)->one();
+        if (isset($model))
+            $this->addError($attribute, 'อีเมล์นี้ลงทะเบียนไปแล้ว');
     }
 
     /**
@@ -41,7 +54,8 @@ class User extends \common\models\costfit\master\UserMaster
     public function attributes()
     {
         return array_merge(parent::attributes(), [
-            'acceptTerm'
+            'acceptTerm',
+            'confirmPassword'
         ]);
     }
 

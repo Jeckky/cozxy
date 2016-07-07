@@ -36,9 +36,10 @@ class RegisterController extends MasterController
 
     public function actionLogin()
     {
+        $model = new \common\models\costfit\User();
         $this->title = 'Cost.fit | Register Login';
         $this->subTitle = 'Register Login';
-        return $this->render('register');
+        return $this->render('register', ['model' => $model]);
     }
 
     public function actionRegister()
@@ -54,7 +55,12 @@ class RegisterController extends MasterController
                 if (!isset($_POST["User"]['acceptTerm'])) {
                     $model->addError("acceptTerm", 'Please Accept Term&Condition');
                 } else {
-                    $model->save();
+                    if ($model->save()) {
+                        $emailSend = new EmailSend();
+                        $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "register/confirm?token=" . $model->token;
+                        $toMail = $model->email;
+                        $emailSend->mailRegisterConfirm($toMail, $url);
+                    }
                 }
             } else {
                 $model->addError("password", 'Confirm password not match');
@@ -77,6 +83,11 @@ class RegisterController extends MasterController
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Forgot password?';
         return $this->render('register_forgot');
+    }
+
+    public function actionConfirm()
+    {
+
     }
 
 }
