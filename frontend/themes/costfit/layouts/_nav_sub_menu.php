@@ -64,13 +64,11 @@
         </ul>
     </li>
     <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>coupon">Super special offers</a></li><!--ข้อเสนอพิเศษจากพาร์ทเนอร์-->
-    <?php if (Yii::$app->controller->id == 'site' or Yii::$app->controller->id == 'register') { ?>
-        <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works">How cost.fit Works</a></li>
-    <?php } else if (Yii::$app->controller->id == 'history' or Yii::$app->controller->id == 'profile' or Yii::$app->controller->id == 'payment' or Yii::$app->controller->id == 'coupon') { ?>
+    <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works">How cost.fit Works</a></li>
+    <?php if (!Yii::$app->user->isGuest): ?>
         <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
         <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
         <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/payment">Payment Methods</a></li>
-    <?php } else if (Yii::$app->controller->id != 'history') { ?>
         <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>history">Easy Re-Order</a></li>
-        <?php } ?>
+        <?php endif; ?>
 </ul>
