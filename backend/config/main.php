@@ -30,7 +30,7 @@ return [
         ],
         'redactor' => [
             'class' => 'yii\redactor\RedactorModule',
-            'uploadDir' => Yii::$app->basePath . '/web/images',
+            'uploadDir' => '@web/images',
             'uploadUrl' => '@web/images',
             'imageAllowExtensions' => ['jpg', 'png', 'gif']
         ],
