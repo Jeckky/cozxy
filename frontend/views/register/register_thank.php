@@ -16,28 +16,34 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <!--Content-->
 <div class="coming-soon">
-
     <section class="container">
-        <!--Logo-->
-        <!--<a class="logo" href="<?php echo $baseUrl; ?>"><img src="<?php echo Yii::$app->homeUrl; ?>images/logo/costfit.png" alt="cost.fit"></a>-->
-
-        <!--Text-->
-        <h1 class="text-center">Thank You</h1>
-        <h3 class="text-center">for your registration</h3>
-        <!--Countdown Widget-->
-        <div class="countdown">
-            <h3>We go live in:</h3>
-            <div class="social-bar-cost-fit text-center">
-                <a href="#" target="_blank"><i class="fa fa-tumblr-square"></i></a>
-                <a href="#" target="_blank"><i class="fa fa-youtube"></i></a>
-                <a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
-                <a href="#" target="_blank"><i class="fa fa-pinterest"></i></a>
-                <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-                <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+        <div class="col-md-3">&nbsp;</div>
+        <div class="col-md-6 text-center">
+            <div class="col-md-12">
+                <a class="logo" href="<?php echo $baseUrl; ?>"><img class="col-md-8" src="<?php echo Yii::$app->homeUrl; ?>images/logo/costfit.png" alt="cost.fit"></a>
             </div>
-        </div><!--Countdown Widget Close-->
-        <!--Social Bar-->
+            <div class="post">
+                <p class="p-style3">
+                    ขอบคุณที่ลงทะเบียนกับ COST.FIT
+                    <br>
+                    กรุณากด  <a href="http://localhost/cost.fit-frontend/register/confirm?token=1dqibNCP7K"> ลิงค์ เพื่อดู ยืนยันการสมัคร</a>
+                    <br>
+                    อีเมลฉบับนี้เป็นการแจ้งข้อมูลโดยอัตโนมัติ กรุณาอย่าตอบกลับ
+                    <br><br>
+                    บริษัท ไดอิ กรุ๊ป จำกัด (มหาชน)<br>
+                    Daii Group Public Company Limited<br>
+                    เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19 ถนนลาดพร้าว<br>
+                    แขวงจอมพล เขตจตุจักร กรุงเทพมหานคร 10900<br><br>
+                </p>
+                <p class="p-style3">
+                    <a href="#"><i class="fa fa-envelope"></i> support@Limo.com</a><br>
+                    <i class="fa fa-phone"></i> 02-938-3464<br>
+                    <i class="fa fa-mobile"></i> 02-938-3463<br>
+                    <i class="fa fa-mobile"></i> <a href="#">www.fenzer.biz</a>, <a href="#">www.qsaf.biz</a>, <a href="#">www.atechwindow.com</a>
+                </p>
 
+            </div>
+        </div>
+        <div class="col-md-3">&nbsp;</div>
     </section>
-
 </div><!--Content Close-->
