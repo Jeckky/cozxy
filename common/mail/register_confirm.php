@@ -33,10 +33,11 @@
             .content{
                 background-color: #ffffff;
                 padding: 20px;
-                text-align: left;
-                background-image: url("https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-9/13310617_1276754799019296_4526760882475392005_n.jpg?oh=8f19d7cd558266d1673bdf347ab2d63c&oe=58027A2B") ;
+                text-align: center;
+                background-image: url("https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-9/1939887_801347949893319_910334745_n.jpg?oh=6f55c19545848fdf6709501cf9141f2b&oe=57F2C350") ;
                 background-repeat: repeat;
-                height: 300px;
+                height: 250px;
+                color: #ffffff;
             }
             .foorter{
                 background-color: #03a9f4;
@@ -52,6 +53,7 @@
                     COST.FIT
                 </div>
                 <div class="content">
+                    <br><br>
                     <p>ขอบคุณที่ลงทะเบียนกับ COST.FIT</p>
 
                     <p><b>กรุณากด</b> <a href="<?php echo $url ?>"><?php echo $url ?></a> เพื่อดู ยืนยันการสมัคร </p>
