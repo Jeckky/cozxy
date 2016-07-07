@@ -32,6 +32,5 @@ phpunit.phar
 # vagrant runtime
 /.vagrant
 
-frontend/web/.htaccess
-backend/web/images/ProductImage/Zjrxa78UR0.3INe
+/frontend/web/.htaccess
 /backend/web/images/
