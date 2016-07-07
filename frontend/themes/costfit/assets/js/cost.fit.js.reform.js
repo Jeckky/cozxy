@@ -71,6 +71,7 @@ $('.checkout_select').on('click', function () {
      //$('.form-group').find('#co_postcode').val('10900');
      //$('.form-group').find('#co-email').val('นายกมล');
      //$('.form-group').find('#co_phone').val('0616539889');
+     $('.form-group').find('#order-notes').val('test');
      }
      });
 
