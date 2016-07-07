@@ -26,11 +26,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="row">
         <!--Login-->
         <div class="col-lg-5 col-md-5 col-sm-5">
-            <form method="post" class="login-form" action="<?php echo $baseUrl; ?>/register/login">
+<!--            <form method="post" class="login-form" action="<?php echo $baseUrl; ?>/register/login">
                 <div class="form-group group">
                     <label for="log-email2">Email</label>
                     <input type="email" class="form-control" name="LoginForm[email]" id="log-email2" placeholder="Enter your email" required>
-                    <!--<a class="help-link" href="#">Forgot email?</a>-->
+                    <a class="help-link" href="#">Forgot email?</a>
                 </div>
                 <div class="form-group group">
                     <label for="log-password2">Password</label>
@@ -41,11 +41,22 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <label><input type="checkbox" name="remember"> Remember me</label>
                 </div>
                 <input class="btn btn-black" type="submit" value="Login">
-            </form>
+            </form>-->
+            <?php $form = ActiveForm::begin(['id' => 'login-form', 'action' => $baseUrl . '/register/login', 'options' => ['class' => 'login-form']]); ?>
+            <?//= $form->errorSummary($model); ?>
+            <?= $form->field($loginForm, 'email') ?>
+            <?= $form->field($loginForm, 'password')->passwordInput() ?>
+            <div class="checkbox">
+                <?= $form->field($loginForm, 'rememberMe')->checkbox()->label(""); ?>
+            </div>
+            <div class="form-group">
+                <?= Html::submitButton('Login', ['class' => 'btn btn-black', 'name' => 'login-button']) ?>
+            </div>
+            <?php ActiveForm::end(); ?>
         </div>
         <!--Registration-->
         <div class="col-lg-7 col-md-7 col-sm-7">
-            <?php $form = ActiveForm::begin(['id' => 'login-form', 'action' => $baseUrl . '/register/register', 'options' => ['class' => 'registr-form']]); ?>
+            <?php $form = ActiveForm::begin(['id' => 'register-form', 'action' => $baseUrl . '/register/register', 'options' => ['class' => 'registr-form']]); ?>
             <?//= $form->errorSummary($model); ?>
             <?= $form->field($model, 'email') ?>
             <?= $form->field($model, 'password')->passwordInput() ?>

@@ -79,6 +79,7 @@ class SiteController extends MasterController
      */
     public function actionIndex()
     {
+//        throw new \yii\base\Exception(print_r(\Yii::$app->user->identity, true));
         $this->title = 'My Cost.fit';
         $bannerGroup = \common\models\costfit\ContentGroup::find()->where("lower(title) = 'banner'")->one();
         $saveCat = Category::findAllSaveCategory();

@@ -37,17 +37,26 @@ class RegisterController extends MasterController
     public function actionLogin()
     {
         $model = new \common\models\costfit\User(['scenario' => 'register']);
+        $loginForm = new \common\models\LoginForm();
+        if ($loginForm->load(Yii::$app->request->post()) && $loginForm->login()) {
+            return $this->redirect(['site/index']);
+        } else {
+            throw new \yii\base\Exception(print_r($loginForm->errors, true));
+        }
         $this->title = 'Cost.fit | Register Login';
         $this->subTitle = 'Register Login';
-        return $this->render('register', ['model' => $model]);
+        return $this->render('register', ['model' => $model, 'loginForm' => $loginForm]);
     }
 
     public function actionRegister()
     {
-        $model = new \common\models\costfit\User();
+        $model = new \common\models\costfit\User(['scenario' => 'register']);
+        $loginForm = new \common\models\LoginForm();
         if (isset($_POST["User"])) {
             $model->attributes = $_POST["User"];
             $model->username = $_POST["User"]['email'];
+            $user = new \common\models\User();
+            $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
             $model->status = 0;
             $model->token = Yii::$app->security->generateRandomString(10);
             $model->createDateTime = new \yii\db\Expression("NOW()");
@@ -60,6 +69,7 @@ class RegisterController extends MasterController
                         $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "register/confirm?token=" . $model->token;
                         $toMail = $model->email;
                         $emailSend->mailRegisterConfirm($toMail, $url);
+                        return $this->redirect(['thank']);
                     } else {
 //                        throw new \yii\base\Exception(print_r($model->errors, true));
                     }
@@ -68,7 +78,7 @@ class RegisterController extends MasterController
                 $model->addError("password", 'Confirm password not match');
             }
         }
-        return $this->render('register', ['model' => $model]);
+        return $this->render('register', ['model' => $model, 'loginForm' => $loginForm]);
     }
 
     public function actionThank()
@@ -89,7 +99,18 @@ class RegisterController extends MasterController
 
     public function actionConfirm()
     {
+        $this->title = 'Cost.fit | Register Thank';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = 'Register Thank';
 
+        $user = \common\models\costfit\User::find()->where("token = '" . $_GET["token"] . "'")->one();
+        if (isset($user)) {
+            $user->status = 1;
+            $user->save();
+            return $this->redirect(['login']);
+        } else {
+
+        }
     }
 
 }

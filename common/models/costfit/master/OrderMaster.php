@@ -15,8 +15,8 @@ use Yii;
     * @property string $totalExVat
     * @property string $vat
     * @property string $total
-    * @property string $grandTotal
     * @property string $discount
+    * @property string $grandTotal
     * @property string $shippingRate
     * @property string $summary
     * @property string $sendDate
@@ -38,6 +38,7 @@ use Yii;
     * @property string $shippingTel
     * @property integer $paymentType
     * @property integer $couponId
+    * @property integer $checkStep
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -62,9 +63,9 @@ return 'order';
 public function rules()
 {
 return [
-            [['userId', 'billingCountryId', 'billingProvinceId', 'billingAmphurId', 'shippingCountryId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'couponId', 'status'], 'integer'],
+            [['userId', 'billingCountryId', 'billingProvinceId', 'billingAmphurId', 'shippingCountryId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'couponId', 'checkStep', 'status'], 'integer'],
             [['token', 'billingAddress', 'shippingAddress'], 'string'],
-            [['totalExVat', 'vat', 'total', 'grandTotal', 'discount', 'shippingRate', 'summary'], 'number'],
+            [['totalExVat', 'vat', 'total', 'discount', 'grandTotal', 'shippingRate', 'summary'], 'number'],
             [['sendDate', 'createDateTime', 'updateDateTime'], 'safe'],
             [['paymentType', 'createDateTime'], 'required'],
             [['orderNo', 'invoiceNo', 'billingTax', 'billingTel', 'shippingTax', 'shippingTel'], 'string', 'max' => 45],
@@ -89,8 +90,8 @@ return [
     'totalExVat' => Yii::t('order', 'Total Ex Vat'),
     'vat' => Yii::t('order', 'Vat'),
     'total' => Yii::t('order', 'Total'),
-    'grandTotal' => Yii::t('order', 'Grand Total'),
     'discount' => Yii::t('order', 'Discount'),
+    'grandTotal' => Yii::t('order', 'Grand Total'),
     'shippingRate' => Yii::t('order', 'Shipping Rate'),
     'summary' => Yii::t('order', 'Summary'),
     'sendDate' => Yii::t('order', 'Send Date'),
@@ -112,6 +113,7 @@ return [
     'shippingTel' => Yii::t('order', 'Shipping Tel'),
     'paymentType' => Yii::t('order', 'Payment Type'),
     'couponId' => Yii::t('order', 'Coupon ID'),
+    'checkStep' => Yii::t('order', 'Check Step'),
     'status' => Yii::t('order', 'Status'),
     'createDateTime' => Yii::t('order', 'Create Date Time'),
     'updateDateTime' => Yii::t('order', 'Update Date Time'),
