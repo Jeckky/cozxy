@@ -28,6 +28,19 @@ return [
 //            'enablePrettyUrl' => true,
 //            'showScriptName' => FALSE,
 //        ],
+        'mail' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'useFileTransport' => false,
+            'viewPath' => '@common/mail',
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'online@daiigroup.com',
+                'password' => 'jmjoitnalfkzqfhg',
+                'port' => '465',
+                'encryption' => 'ssl',
+            ],
+        ],
         'i18n' => [
             'translations' => [
                 '*' => [
