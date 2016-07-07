@@ -19,14 +19,16 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <section class="container">
         <div class="col-md-3">&nbsp;</div>
         <div class="col-md-6 text-center">
-            <div class="col-md-12">
+            <div class="col-md-12" style="padding: 5px;">
+                <br>
                 <a class="logo" href="<?php echo $baseUrl; ?>"><img class="col-md-8" src="<?php echo Yii::$app->homeUrl; ?>images/logo/costfit.png" alt="cost.fit"></a>
+                <br>
             </div>
             <div class="post">
                 <p class="p-style3">
                     ขอบคุณที่ลงทะเบียนกับ COST.FIT
                     <br>
-                    กรุณากด  <a href="http://localhost/cost.fit-frontend/register/confirm?token=1dqibNCP7K"> ลิงค์ เพื่อดู ยืนยันการสมัคร</a>
+                    กรุณากด  <a href="<?php echo Yii::$app->homeUrl; ?>register/confirm?token=1dqibNCP7K"> ลิงค์ เพื่อดู ยืนยันการสมัคร</a>
                     <br>
                     อีเมลฉบับนี้เป็นการแจ้งข้อมูลโดยอัตโนมัติ กรุณาอย่าตอบกลับ
                     <br><br>
