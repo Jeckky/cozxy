@@ -9,7 +9,7 @@ use backend\widgets\Alert;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
-$this->title = 'BackEnd Cost.Fit';
+$this->title = 'Cost.Fit Admin';
 AppAsset::register($this);
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
