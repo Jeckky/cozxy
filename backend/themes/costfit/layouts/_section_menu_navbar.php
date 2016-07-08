@@ -107,7 +107,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                                     </div> <!-- / .notification -->
 
                                 </div> <!-- / .notifications-list -->
-                                <a href="#" class="notifications-link">MORE NOTIFICATIONS</a>
+                                <a href="<?php echo $baseUrl; ?>/notification" class="notifications-link">MORE NOTIFICATIONS</a>
                             </div> <!-- / .dropdown-menu -->
                         </li>
                         <li class="nav-icon-btn nav-icon-btn-success dropdown">
