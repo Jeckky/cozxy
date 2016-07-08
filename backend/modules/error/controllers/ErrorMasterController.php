@@ -11,7 +11,7 @@ use common\models\costfit\master;
 use common\models\costfit;
 
 /**
- * Site controller
+ * Error controller
  */
 class ErrorMasterController extends \backend\controllers\BackendMasterController {
 

@@ -8,7 +8,7 @@ $this->title = 'error/index';
 $this->params['breadcrumbs'][] = $this->title; // Profiel/index
 
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/daiibuy/assets');
+$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 ?>
 <div class="page-404" style="background: #dedddc!important;">
 
@@ -37,7 +37,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/daiibuy/
 
     <!--<p>
         You may change the content of this page by modifying
-        the file <code><?php //= __FILE__;                 ?></code>.
+        the file <code><?php //= __FILE__;                  ?></code>.
     </p>-->
 
 </div>
