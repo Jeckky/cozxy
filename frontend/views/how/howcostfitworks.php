@@ -73,15 +73,21 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
             <!--Sidebar-->
             <div class="col-lg-3 col-lg-offset-1 col-md-4">
-                <!--Contact Info-->
+                <!--Contact Info--> 
                 <h3>Contact info</h3>
                 <div class="cont-info-widget">
                     <ul>
-                        <li><i class="fa fa-building"></i>4120 Lenox Avenue, New York, 10035 76 Saint Nicholas Avenue</li>
+                        <li><i class="fa fa-building"></i>บริษัท ไดอิ กรุ๊ป จำกัด (มหาชน)</li>
+                        <li>Daii Group Public Company Limited</li>
+                        <li><i class="fa fa-building"></i>เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19 ถนนลาดพร้าว
+                            แขวงจอมพล เขตจตุจักร กรุงเทพมหานคร 10900</li>
                         <li><a href="#"><i class="fa fa-envelope"></i>mail@Limo.com</a></li>
-                        <li><a href="#"><i class="fa fa-support"></i>support@Limo.com</a></li>
-                        <li><i class="fa fa-phone"></i>+48 543765234</li>
-                        <li><i class="fa fa-mobile"></i>+48 555 234 54 34</li>
+
+                        <li><i class="fa fa-phone"></i>02-938-3464</li>
+                        <li><i class="fa fa-mobile"></i>02-938-3463</li>
+                        <li><a href="http://www.fenzer.biz"><i class="fa fa-support"></i>www.fenzer.biz</a></li>
+                        <li><a href="http://www.qsaf.biz"><i class="fa fa-support"></i>www.qsaf.biz</a></li>
+                        <li><a href="http://www.atechwindow.com"><i class="fa fa-support"></i>www.atechwindow.com</a></li>
                     </ul>
                 </div>
                 <!--Latest posts-->
