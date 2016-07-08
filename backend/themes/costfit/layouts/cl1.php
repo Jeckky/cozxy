@@ -4,9 +4,9 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/daiibuy/assets');
+$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 ?>
-<?php $this->beginContent('@app/themes/daiibuy/layouts/main.php'); ?>
+<?php $this->beginContent('@app/themes/costfit/layouts/main.php'); ?>
 
 <?php echo $this->render('_section_menu_navbar'); ?>
 

@@ -11,42 +11,40 @@ use common\models\LoginForm;
 /**
  * Site controller
  */
-class SiteController extends \backend\controllers\BackendMasterController
-{
-    /**
-     * @inheritdoc
-     */
-//    public function behaviors()
-//    {
-//        return [
-//            'access' => [
-//                'class' => AccessControl::className(),
-//                'rules' => [
-//                    [
-//                        'actions' => ['login', 'error'],
-//                        'allow' => true,
-//                    ],
-//                    [
-//                        'actions' => ['logout', 'index'],
-//                        'allow' => true,
-//                        'roles' => ['@'],
-//                    ],
-//                ],
-//            ],
-//            'verbs' => [
-//                'class' => VerbFilter::className(),
-//                'actions' => [
-//                    'logout' => ['post'],
-//                ],
-//            ],
-//        ];
-//    }
+class SiteController extends \backend\controllers\BackendMasterController {
 
     /**
      * @inheritdoc
      */
-    public function actions()
-    {
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'logout' => ['post'],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function actions() {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -54,13 +52,11 @@ class SiteController extends \backend\controllers\BackendMasterController
         ];
     }
 
-    public function actionIndex()
-    {
+    public function actionIndex() {
         return $this->render('index');
     }
 
-    public function actionLogin()
-    {
+    public function actionLogin() {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -70,20 +66,18 @@ class SiteController extends \backend\controllers\BackendMasterController
             return $this->goBack();
         } else {
             return $this->render('login', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
 
-    public function actionLogout()
-    {
+    public function actionLogout() {
         Yii::$app->user->logout();
 
         return $this->goHome();
     }
 
-    public function actionProduct($id)
-    {
+    public function actionProduct($id) {
         $product = \common\models\costfit\search\Product::find()->where("categoryId =" . $id);
         $dataProvider = new \yii\data\ActiveDataProvider([
             'query' => $product,
@@ -92,8 +86,7 @@ class SiteController extends \backend\controllers\BackendMasterController
         return $this->render('_index_product', compact('dataProvider'));
     }
 
-    public function actionProductView($id)
-    {
+    public function actionProductView($id) {
         $model = \common\models\costfit\search\Product::find()->where("productId = " . $id)->one();
         return $this->render('_product_view', compact('model'));
     }

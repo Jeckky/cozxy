@@ -12,11 +12,9 @@ use yii\filters\VerbFilter;
 /**
  * StoreProductGroupController implements the CRUD actions for StoreProductGroup model.
  */
-class StoreProductGroupController extends BackendMasterController
-{
+class StoreProductGroupController extends StoreMasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -31,14 +29,13 @@ class StoreProductGroupController extends BackendMasterController
      * Lists all StoreProductGroup models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $dataProvider = new ActiveDataProvider([
             'query' => StoreProductGroup::find(),
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -47,10 +44,9 @@ class StoreProductGroupController extends BackendMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -59,8 +55,7 @@ class StoreProductGroupController extends BackendMasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new StoreProductGroup();
         if (isset($_POST["StoreProductGroup"])) {
             $model->attributes = $_POST["StoreProductGroup"];
@@ -70,7 +65,7 @@ class StoreProductGroupController extends BackendMasterController
             }
         }
         return $this->render('create', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -80,8 +75,7 @@ class StoreProductGroupController extends BackendMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
         if (isset($_POST["StoreProductGroup"])) {
             $model->attributes = $_POST["StoreProductGroup"];
@@ -94,7 +88,7 @@ class StoreProductGroupController extends BackendMasterController
             }
         }
         return $this->render('update', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -104,8 +98,7 @@ class StoreProductGroupController extends BackendMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -118,8 +111,7 @@ class StoreProductGroupController extends BackendMasterController
      * @return StoreProductGroup the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = StoreProductGroup::findOne($id)) !== null) {
             return $model;
         } else {

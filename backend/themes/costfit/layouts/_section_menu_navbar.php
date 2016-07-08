@@ -1,6 +1,6 @@
 <?php
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/daiibuy/assets');
+$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 ?>
 
 <!-- 2. $MAIN_NAVIGATION ======= Main navigation ========= -->
@@ -15,7 +15,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/daiibuy/
             <!-- Logo -->
             <a href="<?php echo $baseUrl; ?>/dashboard" class="navbar-brand">
                 <div><img alt="Pixel Admin" src="<?php echo $directoryAsset; ?>/images/pixel-admin/main-navbar-logo.png"></div>
-                DaiiBuy Admin
+                Cost.Fit Admin
             </a>
 
             <!-- Main navbar toggle -->

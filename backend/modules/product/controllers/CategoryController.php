@@ -12,11 +12,9 @@ use yii\filters\VerbFilter;
 /**
  * CategoryController implements the CRUD actions for Category model.
  */
-class CategoryController extends BackendMasterController
-{
+class CategoryController extends ProductMasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -31,14 +29,13 @@ class CategoryController extends BackendMasterController
      * Lists all Category models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $dataProvider = new ActiveDataProvider([
             'query' => Category::find(),
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -47,10 +44,9 @@ class CategoryController extends BackendMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -59,8 +55,7 @@ class CategoryController extends BackendMasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new Category();
         if (isset($_POST["Category"])) {
             $model->attributes = $_POST["Category"];
@@ -86,7 +81,7 @@ class CategoryController extends BackendMasterController
             }
         }
         return $this->render('create', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -96,8 +91,7 @@ class CategoryController extends BackendMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
         if (isset($_POST["Category"])) {
             $model->attributes = $_POST["Category"];
@@ -129,7 +123,7 @@ class CategoryController extends BackendMasterController
             }
         }
         return $this->render('update', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -139,8 +133,7 @@ class CategoryController extends BackendMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -153,8 +146,7 @@ class CategoryController extends BackendMasterController
      * @return Category the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = Category::findOne($id)) !== null) {
             return $model;
         } else {

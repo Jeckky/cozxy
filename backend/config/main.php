@@ -10,6 +10,26 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [
+        'dashboard' => [
+            'class' => 'backend\modules\dashboard\Dashboard',
+            'defaultRoute' => 'dashboard'
+        ],
+        'notification' => [
+            'class' => 'backend\modules\notification\Notification',
+            'defaultRoute' => 'notification'
+        ],
+        'profile' => [
+            'class' => 'backend\modules\profile\profile',
+            'defaultRoute' => 'profile',
+        ],
+        'management' => [
+            'class' => 'backend\modules\management\management',
+            'defaultRoute' => 'management',
+        ],
+        'auth' => [
+            'class' => 'backend\modules\auth\auth',
+            'defaultRoute' => 'auth',
+        ],
         'kt-generator' => [
             'class' => 'backend\modules\KTGenerator\KTGenerator',
         ],
@@ -39,6 +59,9 @@ return [
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
+            'enableSession' => true,
+            //'loginUrl' => [ 'yourcontroller/youraction'],
+            'loginUrl' => ['auth/'],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -50,13 +73,20 @@ return [
             ],
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            //'errorAction' => 'site/error',
+            'errorAction' => 'error/error',
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
+        ],
+        'view' => [
+            'theme' => [
+                'pathMap' => ['@app/views' => '@app/themes/costfit'],
+                'baseUrl' => '@web'
+            ]
         ],
     ],
     'params' => $params,

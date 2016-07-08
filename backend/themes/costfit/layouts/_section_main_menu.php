@@ -1,6 +1,6 @@
 <?php
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/daiibuy/assets');
+$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 ?>
 <div id="main-menu" role="navigation">
     <div id="main-menu-inner">
@@ -27,17 +27,9 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/daiibuy/
                 <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูลหลัก</span><span class="label label-warning">Updated</span></a>
                 <ul>
                     <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/management/bank"><i class="fa fa-square"></i> <span class="mm-text">Bank</span></a>
+                        <a tabindex="-1" href="#"><i class="fa fa-square"></i> <span class="mm-text">ตั้งค่า</span></a>
                     </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/management/bank-name"><i class="fa fa-square"></i> <span class="mm-text">Bank Name</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/management/content"><i class="fa fa-square"></i> <span class="mm-text">Content</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/management/promotion"><i class="fa fa-square"></i> <span class="mm-text">Promotion</span></a>
-                    </li>
+
                 </ul>
             </li>
 
@@ -45,124 +37,105 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/daiibuy/
                 <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูล User</span><span class="label label-warning">Updated</span></a>
                 <ul>
                     <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/people/user"><i class="fa fa-square"></i> <span class="mm-text">User</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/people/user-file"><i class="fa fa-square"></i> <span class="mm-text">User File</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/people/supplier"><i class="fa fa-square"></i> <span class="mm-text">Supplier</span></a>
+                        <a tabindex="-1" href="#"><i class="fa fa-square"></i> <span class="mm-text">สมาชิก</span></a>
                     </li>
                 </ul>
             </li>
 
-            <li>
-                <a href="<?php echo $baseUrl; ?>/order"><i class="menu-icon fa fa-tasks"></i><span class="mm-text">Order</span></a>
-            </li>
-
-            <li>
-                <a href="<?php echo $baseUrl; ?>/myfile"><i class="menu-icon fa fa-th"></i><span class="mm-text">My File</span></a>
-            </li>
 
             <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Spacial Project</span> <span class="label label-warning">Updated</span></a>
+                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Store</span><span class="label label-warning">Store</span></a>
                 <ul>
                     <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/project/user-spacial-project"><i class="fa fa-square"></i> <span class="mm-text">User Request</span></a>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/store"><span class="mm-text">Store</span></a>
                     </li>
                     <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/project/supplier-spacial-project"><i class="fa fa-square"></i> <span class="mm-text">Spacial Code</span></a>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/store-product-group"><span class="mm-text">Import Product</span></a>
                     </li>
-
-                </ul>
-            </li>
-
-
-            <li>
-                <a tabindex="-1" href="<?php echo $baseUrl; ?>/configuration"><i class="menu-icon fa fa-th"></i><span class="mm-text">Configuration</span></a>
-            </li>
-
-            <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Product Atech</span></a>
-                <ul>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/brand?id=2"><i class="fa fa-square"></i> <span class="mm-text">Brand</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product?id=2" ><i class="fa fa-square"></i> <span>Product</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/pricegroup?id=2"><i class="fa fa-square"></i> <span class="mm-text">Price Group</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/category?id=2"><i class="fa fa-square"></i> <span class="mm-text">Category</span></a>
-                    </li>
-
-                </ul>
-            </li>
-
-            <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Product Fenzer</span></a>
-                <ul>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/brand?id=1"><i class="fa fa-square"></i> <span class="mm-text">Brand</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product?id=1" ><i class="fa fa-square"></i> <span>Product</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/pricegroup?id=1"><i class="fa fa-square"></i> <span class="mm-text">Price Group</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/category?id=1"><i class="fa fa-square"></i> <span class="mm-text">Category</span></a>
+                    <li class="mm-dropdown">
+                        <a tabindex="-1" href="#"><span class="mm-text">Location</span><span class="label label-warning">1</span></a>
+                        <ul>
+                            <li>
+                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/region"><span class="mm-text">Region</span></a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </li>
 
             <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Product Ginza Town</span></a>
+                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Supplier </span><span class="label label-danger">new</span></a>
                 <ul>
                     <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/brand?id=5"><i class="fa fa-square"></i> <span class="mm-text">Brand</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product?id=5" ><i class="fa fa-square"></i> <span>Product</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/pricegroup?id=5"><i class="fa fa-square"></i> <span class="mm-text">Price Group</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/category?id=5"><i class="fa fa-square"></i> <span class="mm-text">Category</span></a>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/supplier/supplier"><span class="mm-text">Supplier</span></a>
                     </li>
                 </ul>
             </li>
 
             <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Product Ginza Home</span></a>
+                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Product  </span><span class="label label-danger">new</span></a>
                 <ul>
                     <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/brand?id=4"><i class="fa fa-square"></i> <span class="mm-text">Brand</span></a>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/brand"><span class="mm-text">Brand</span></a>
                     </li>
                     <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product?id=4"><i class="fa fa-square"></i> <span>Product</span></a>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/show-category/show-category"><span class="mm-text">Show Category</span></a>
                     </li>
                     <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/pricegroup?id=4"><i class="fa fa-square"></i> <span class="mm-text">Price Group</span></a>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/category"><span class="mm-text">Category</span></a>
                     </li>
                     <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/category?id=4"><i class="fa fa-square"></i> <span class="mm-text">Category</span></a>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product-group"><span class="mm-text">Product Group</span></a>
+                    </li>
+                    <li>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product-group"><span class="mm-text">Product Price Group</span></a>
+                    </li>
+                    <li>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product"><span class="mm-text">Product</span></a>
+                    </li>
+                    <li>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/coupon-owner"><span class="mm-text">Coupon</span></a>
+                    </li>
+                    <li>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/unit"><span class="mm-text">Unit</span></a>
                     </li>
                 </ul>
             </li>
 
             <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">รายงาน</span><span class="label label-warning">Updated</span></a>
+                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Shipping </span><span class="label label-danger">new</span><span class="badge badge-primary">1</span></a>
                 <ul>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/viewSummaryReport"><i class="fa fa-square"></i> <span class="mm-text">รายงานสรุปยอดขาย</span></a>
-                    </li> 
+                    <li class="mm-dropdown">
+                        <a tabindex="-1" href="#"><span class="mm-text">Package</span><span class="label label-warning">2</span></a>
+                        <ul>
+                            <li>
+                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/shipping/package"><span class="mm-text">Package</span></a>
+                            </li>
+                            <li>
+                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/shipping/package-type"><span class="mm-text">Package Type</span></a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
+
+            <li class="mm-dropdown">
+                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Content  </span><span class="label label-danger">new</span><span class="badge badge-primary">1</span></a>
+                <ul>
+                    <li class="mm-dropdown">
+                        <a tabindex="-1" href="#"><span class="mm-text">Content</span><span class="label label-warning">2</span></a>
+                        <ul>
+                            <li>
+                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/content/content-group"><span class="mm-text">Package</span></a>
+                            </li>
+                            <li>
+                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/shipping/package-type"><span class="mm-text">Package Type</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
 
             <li class="mm-dropdown">
                 <a href="#"><i class="menu-icon fa fa-sitemap"></i><span class="mm-text">Menu levels</span><span class="badge badge-primary">6</span></a>

@@ -12,11 +12,9 @@ use yii\filters\VerbFilter;
 /**
  * ProductImageController implements the CRUD actions for ProductImage model.
  */
-class ProductImageController extends BackendMasterController
-{
+class ProductImageController extends ProductMasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -31,14 +29,13 @@ class ProductImageController extends BackendMasterController
      * Lists all ProductImage models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $dataProvider = new ActiveDataProvider([
             'query' => ProductImage::find()->where("productId =" . $_GET["productId"]),
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -47,10 +44,9 @@ class ProductImageController extends BackendMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -59,8 +55,7 @@ class ProductImageController extends BackendMasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new ProductImage();
         if (isset($_GET['productId'])) {
             $model->productId = $_GET["productId"];
@@ -89,7 +84,7 @@ class ProductImageController extends BackendMasterController
             }
         }
         return $this->render('create', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -99,8 +94,7 @@ class ProductImageController extends BackendMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
         if (isset($_POST["ProductImage"])) {
             $model->attributes = $_POST["ProductImage"];
@@ -133,7 +127,7 @@ class ProductImageController extends BackendMasterController
             }
         }
         return $this->render('update', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -143,8 +137,7 @@ class ProductImageController extends BackendMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -157,8 +150,7 @@ class ProductImageController extends BackendMasterController
      * @return ProductImage the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = ProductImage::findOne($id)) !== null) {
             return $model;
         } else {

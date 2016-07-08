@@ -9,10 +9,10 @@ use backend\widgets\Alert;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
-$this->title = 'BackEnd DaiiBuy3';
+$this->title = 'BackEnd Cost.Fit';
 AppAsset::register($this);
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/daiibuy/assets');
+$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
