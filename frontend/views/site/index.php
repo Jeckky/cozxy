@@ -97,6 +97,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </div>
                 </section>
 
+                <!--Tabs Widget-->
+
+
                 <style type="text/css">
                     @media screen and (max-width: 480px){
                         #grid[data-columns]::before {
@@ -150,10 +153,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         }
                                         ?>
                                     </div>
-
                                 </div><!-- row zone 1 -->
                             </div>
                         </div>
+
                         <div class="tab-pane fade" id="onsale">
                             <div class="container">
                                 <?php for ($index1 = 0; $index1 <= 1; $index1++) {

@@ -197,4 +197,19 @@ class CartController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
+    public function actionDeleteWishlist()
+    {
+        $res = [];
+        $ws = \common\models\costfit\Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
+        if (isset($ws)) {
+            \common\models\costfit\Wishlist::deleteAll("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id);
+            $res["status"] = TRUE;
+        } else {
+            $res["status"] = FALSE;
+            $res['errorCode'] = 1;
+            $res["message"] = "Exits product in Wishlist";
+        }
+        return \yii\helpers\Json::encode($res);
+    }
+
 }

@@ -49,6 +49,7 @@ $(document).ready(function (e) {
     var $accordionToggle = $('.accordion .panel-heading a');
     var $addWishlist = $('#addWishlist');
     var $wishlistMessage = $('.wishlist-message');
+    var $deleteWishlist = $('#deleteWishlist');
 
     //Modify By Tong
     var $changeOption = $('#changeOption');
@@ -198,13 +199,22 @@ $(document).ready(function (e) {
      *******************************************/
     $(document).on('click', '.wishlist .delete i', function () {
         var $target = $(this).parent().parent();
-        $target.hide(300, function () {
-            $.when($target.remove()).then(function () {
-                if ($positions.length === 1) {
-                    $('.wishlist .items-list').remove();
-                    $('.wishlist .title').text('Wishlist is empty!');
+        var itemId = $(this).parent().parent().find("#productId").val();
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: "cart/delete-wishlist?id=" + orderItemId,
+            data: {productId: itemId},
+            success: function (data)
+            {
+                if (data.status)
+                {
+                    $target.hide(300, function () {
+                        $.when($target.remove()).then(function () {
+                        });
+                    });
                 }
-            });
+            }
         });
     });
 
@@ -557,7 +567,12 @@ $(document).ready(function (e) {
      **************************************************/
     $addToCartBtn.click(function () {
         $addedToCartMessage.removeClass('visible');
+
         var $itemName = $(this).parent().parent().find('h1').text();
+        if (!$itemName)
+        {
+            var $itemName = $(this).parent().parent().find('.title').text();
+        }
         var $itemId = $(this).parent().parent().find('#productId').val();
         var $itemPrice = $(this).parent().parent().find('.price').text();
         var $itemQnty = $(this).parent().find('#quantity').val();
@@ -730,6 +745,7 @@ $(document).ready(function (e) {
 
         $wishlistMessage.addClass('visible');
     });
+
 
 });/*Document Ready End*//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
