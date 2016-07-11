@@ -92,3 +92,15 @@ $('.checkout_select').on('click', function () {
     $('.form-group').find('#co_phone').val('0616539889');
     $('.form-group').find('#order-notes').val('test');
 });
+
+
+$(document).ready(function () {
+    function getRandomSize(min, max) {
+        return Math.round(Math.random() * (max - min) + min);
+    }
+    //for (var i = 0; i < 25; i++) {
+    //var width = getRandomSize(200, 245);
+    //var height = getRandomSize(200, 245);
+    //$('#photos-bestseller-items').append('<img src="/images/bestseller-items/' + width + '/' + height + '/cats" alt="pretty kitty">');
+    //}
+});

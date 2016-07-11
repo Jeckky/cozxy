@@ -122,7 +122,42 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     .size-1of3 { width: 33.333%; }
                 </style>
 
-
+                <section class="test-grid clear" data-columns="3">
+                    <div class="column size-1of3">
+                        <article class="item">
+                            <h1 class="">1</h1>
+                            <p>Nel mezzo del cammin di nostra vita mi ritrovai per una selva oscura ché la diritta via era smarrita.</p>
+                        </article>
+                        <article class="item">
+                            <h1 class="">4</h1>
+                            <p>Io non so ben ridir com'i' v'intrai, tant'era pien di sonno a quel punto che la verace via abbandonai.</p>
+                        </article>
+                        <article class="item">
+                            <h1 class="">7</h1>
+                            <p>E come quei che con lena affannata uscito fuor del pelago a la riva si volge a l'acqua perigliosa e guata, così l'animo mio, ch'ancor fuggiva, si volse a retro a rimirar lo passo che non lasciò già mai persona viva.</p>
+                        </article>
+                    </div>
+                    <div class="column size-1of3">
+                        <article class="item">
+                            <h1 class="">2</h1>
+                            <p>Ahi quanto a dir qual era è cosa dura esta selva selvaggia e aspra e forte che nel pensier rinova la paura!</p>
+                        </article>
+                        <article class="item">
+                            <h1 class="">5</h1>
+                            <p>Ma poi ch'i' fui al piè d'un colle giunto, là dove terminava quella valle che m'avea di paura il cor compunto, guardai in alto, e vidi le sue spalle vestite già de' raggi del pianeta che mena dritto altrui per ogne calle.</p>
+                        </article>
+                    </div>
+                    <div class="column size-1of3">
+                        <article class="item">
+                            <h1 class="">3</h1>
+                            <p>Tant'è amara che poco è più morte; ma per trattar del ben ch'i' vi trovai, dirò de l'altre cose ch'i' v'ho scorte.</p>
+                        </article>
+                        <article class="item">
+                            <h1 class="">6</h1>
+                            <p>Allor fu la paura un poco queta che nel lago del cor m'era durata la notte ch'i' passai con tanta pieta.</p>
+                        </article>
+                    </div>
+                </section>
 
                 <!--Tabs Widget-->
                 <section class="tabs-widget">
@@ -134,24 +169,56 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <div class="tab-content">
 
                         <div class="tab-pane fade in active" id="bestsel">
-                            <div class="container" >
+                            <div class="container">
                                 <div class="row">
-                                    <div  class="col-lg-12 col-md-12 col-sm-12" id="photos-bestseller-items">
-                                        <?php for ($index2 = 1; $index2 <= 11; $index2++) {
-                                            ?>
-                                            <a class="media-link" href="#" style="padding-left: 5px; padding-right: 5px;">
-                                                <div class="overlay">
-                                                    <div class="descr"><div>Product Name<span>$19.40</span></div></div>
-                                                </div>
-                                                <img src="<?php echo $baseUrl; ?>/images/bestseller-items/<?php echo $index2; ?>" alt="1" title="ขนาด 654 x 240"/>
-                                            </a>
-                                            <?php
-                                            $index2 = $index2++;
-                                        }
-                                        ?>
+                                    <div  class="col-lg-7 col-md-7 col-sm-7">
+                                        <a class="media-link" href="#">
+                                            <div class="overlay">
+                                                <div class="descr"><div>Product Name<span>$14.95</span></div></div>
+                                            </div>
+                                            <section id="photos-bestseller-items">
+                                                <img src="<?php echo $baseUrl; ?>/images/bestseller-items/1.jpg" alt="1" title="ขนาด 654 x 240"/>
+                                            </section>
+                                        </a>
                                     </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <a class="media-link" href="#" >
+                                            <div class="overlay">
+                                                <div class="descr"><div>Product Name<span>$19.40</span></div></div>
+                                            </div>
+                                            <section id="photos-bestseller-items">
+                                                <img src="<?php echo $baseUrl; ?>/images/bestseller-items/2.jpg" alt="1" class="img-responsive" title="ขนาด 457 x 240"/>
 
-                                </div><!-- row zone 1 -->
+                                            </section>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <a class="media-link" href="#">
+                                            <div class="overlay">
+                                                <div class="descr"><div>Product Name<span>$24.15</span></div></div>
+                                            </div>
+                                            <img src="<?php echo $baseUrl; ?>/images/bestseller-items/3.jpg" alt="1" class="img-responsive" title="ขนาด 359 x 245"/>
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <a class="media-link" href="#">
+                                            <div class="overlay">
+                                                <div class="descr"><div>Product Name<span>$24.15</span></div></div>
+                                            </div>
+                                            <img src="<?php echo $baseUrl; ?>/images/bestseller-items/4.jpg" alt="1" class="img-responsive" title="ขนาด 457 x 245"/>
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <a class="media-link" href="#">
+                                            <div class="overlay">
+                                                <div class="descr"><div>Product Name<span>$24.15</span></div></div>
+                                            </div>
+                                            <img src="<?php echo $baseUrl; ?>/images/bestseller-items/5.jpg" alt="1" class="img-responsive" title="ขนาด 265 x 245"/>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="onsale">
