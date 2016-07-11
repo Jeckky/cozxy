@@ -99,34 +99,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
                 <!--Tabs Widget-->
 
-
-                <style type="text/css">
-                    @media screen and (max-width: 480px){
-                        #grid[data-columns]::before {
-                            content: '1 .column.size-1of1';
-                        }
-                    }
-
-                    @media screen and (min-width: 481px) and (max-width: 768px) {
-                        #grid[data-columns]::before {
-                            content: '2 .column.size-1of2';
-                        }
-                    }
-                    @media screen and (min-width: 769px) {
-                        #grid[data-columns]::before {
-                            content: '3 .column.size-1of3';
-                        }
-                    }
-
-                    /* Again, you’re free to use and define the classes: */
-                    .column { float: left; }
-                    .size-1of1 { width: 100%; }
-                    .size-1of2 { width: 50%; }
-                    .size-1of3 { width: 33.333%; }
-                </style>
-
-
-
                 <!--Tabs Widget-->
                 <section class="tabs-widget">
                     <!-- Nav tabs -->
@@ -142,13 +114,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     <div  id="photos-bestseller-items">
                                         <?php for ($index2 = 1; $index2 <= 11; $index2++) {
                                             ?>
-                                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                                <a id="photos-bestseller-items-padding" class="media-link" href="#" >
-                                                    <div class="overlay">
-                                                        <div class="descr">
-                                                            <div  class="col-md-12">
-                                                                <div class="col-md-12">Product Name</div>
-                                                                <div class="col-md-12" style="margin-top: 30px;">$19.40</div>
+                                            <div id="photos-bestseller-items-padding">
+                                                <a class="media-link" href="#" id="media-link-bestseller" >
+                                                    <div class="overlay" >
+                                                        <div class="descrx desc-bestseller">
+                                                            <div class="product-name">VIZIO 40 Inch 4K Ultra HD LED Smart TV D40u-D1 (2016 Model)
+                                                                <div class="bestseller-name-price">174.71 ฿</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -167,9 +138,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
                         <div class="tab-pane fade" id="onsale">
                             <div class="container">
-                                <?php for ($index1 = 0; $index1 <= 1; $index1++) {
-                                    ?>
-                                    <div class="row">
+                                <div class="row">
+                                    <?php for ($index1 = 0; $index1 <= 3; $index1++) {
+                                        ?>
+
                                         <div class="col-lg-6 col-md-6 col-sm-6">
                                             <a class="media-link" href="#">
                                                 <div class="overlay">
@@ -178,19 +150,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                 <img src="<?php echo $baseUrl; ?>/images/bestseller-items/teniqa30_49a2502a5e21c.jpg" alt="1" title="ขนาด 555 x 245"/>
                                             </a>
                                         </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <a class="media-link" href="#">
-                                                <div class="overlay">
-                                                    <div class="descr"><div>Product Name<span>$19.40</span></div></div>
-                                                </div>
-                                                <img src="<?php echo $baseUrl; ?>/images/bestseller-items/teniqa30_49a2502a5e21c.jpg" alt="1" title="ขนาด 555 x 245"/>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <?php
-                                    $index1 = $index1++;
-                                }
-                                ?>
+
+                                        <?php
+                                        $index1 = $index1++;
+                                    }
+                                    ?>
+                                </div>
                             </div>
                         </div>
                     </div>
