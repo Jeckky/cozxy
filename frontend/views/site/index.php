@@ -142,9 +142,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     <div  class="col-lg-12 col-md-12 col-sm-12" id="photos-bestseller-items">
                                         <?php for ($index2 = 1; $index2 <= 11; $index2++) {
                                             ?>
-                                            <a class="media-link" href="#" style="padding-left: 5px; padding-right: 5px;">
+                                            <a class="media-link" href="#">
                                                 <div class="overlay">
-                                                    <div class="descr"><div>Product Name<span>$19.40</span></div></div>
+                                                    <div class="descr items-bestsel">
+                                                        <div>Product Name<br>
+                                                            <span>$19.40</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <img src="<?php echo $baseUrl; ?>/images/bestseller-items/<?php echo $index2; ?>" alt="1" title="ขนาด 654 x 240"/>
                                             </a>
