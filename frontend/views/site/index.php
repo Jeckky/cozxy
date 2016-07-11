@@ -139,19 +139,23 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <div class="tab-pane fade in active" id="bestsel">
                             <div class="container" >
                                 <div class="row">
-                                    <div  class="col-lg-12 col-md-12 col-sm-12" id="photos-bestseller-items">
+                                    <div  id="photos-bestseller-items">
                                         <?php for ($index2 = 1; $index2 <= 11; $index2++) {
                                             ?>
-                                            <a class="media-link" href="#">
-                                                <div class="overlay">
-                                                    <div class="descr items-bestsel">
-                                                        <div>Product Name<br>
-                                                            <span>$19.40</span>
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <a id="photos-bestseller-items-padding" class="media-link" href="#" >
+                                                    <div class="overlay">
+                                                        <div class="descr">
+                                                            <div  class="col-md-12">
+                                                                <div class="col-md-12">Product Name</div>
+                                                                <div class="col-md-12" style="margin-top: 30px;">$19.40</div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <img src="<?php echo $baseUrl; ?>/images/bestseller-items/<?php echo $index2; ?>" alt="1" title="ขนาด 654 x 240"/>
-                                            </a>
+                                                    <img src="<?php echo $baseUrl; ?>/images/bestseller-items/<?php echo $index2; ?>" alt="1" title="ขนาด 654 x 240"/>
+                                                </a>
+                                            </div>
+
                                             <?php
                                             $index2 = $index2++;
                                         }

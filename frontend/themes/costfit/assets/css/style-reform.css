@@ -140,13 +140,6 @@
 }
 
 
-.items-bestsel span {
-    display: block;
-    margin-top: 20px;
-    font-weight: 900;
-}
-
-
 @media (max-width: 1200px) {
     #photos-bestseller-items {
         -moz-column-count:    4;
