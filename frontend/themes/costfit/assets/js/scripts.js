@@ -203,7 +203,7 @@ $(document).ready(function (e) {
         $.ajax({
             type: "POST",
             dataType: "JSON",
-            url: "cart/delete-wishlist?id=" + orderItemId,
+            url: "cart/delete-wishlist?id=" + itemId,
             data: {productId: itemId},
             success: function (data)
             {
