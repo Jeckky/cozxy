@@ -1,6 +1,28 @@
 <?php
+
+use yii\bootstrap\Nav;
+use yii\bootstrap\NavBar;
+use yii\widgets\Breadcrumbs;
+
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
+?>
+<?php
+//menu test nav widget
+/* echo Nav::widget([
+  'options' => ['class' => 'sidebar-menu treeview'],
+  'items' => [
+
+  ['label' => 'Menu 1', 'url' => ['/a/index']],
+  ['label' => 'Menu 2', 'url' => ['/custom-perks/index']],
+  ['label' => 'Submenu', 'items' => [
+  ['label' => 'Action', 'url' => '#'],
+  ['label' => 'Another action', 'url' => '#'],
+  ['label' => 'Something else here', 'url' => '#'],
+  ],
+  ],
+  ],
+  ]); */
 ?>
 <div id="main-menu" role="navigation">
     <div id="main-menu-inner">
