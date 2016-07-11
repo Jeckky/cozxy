@@ -41,8 +41,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </div>
                 </div>
                 <!--Left Column-->
-                <div class="col-lg-9 col-md-9">
-                    <h2 class="title">My Profile</h2>
+                <div class="col-lg-9 col-md-9"> 
                     <!--Post-->
                     <div class="post">
 
