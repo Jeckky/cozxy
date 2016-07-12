@@ -7,47 +7,6 @@ use yii\bootstrap\ActiveForm;
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
-<style>
-    .bs-callout-warning {
-        border-left-color: #aa6708;
-    }
-    .bs-callout {
-        padding: 20px;
-        margin: 20px 0;
-        border: 1px solid #eee;
-        /* border-left-width: 5px; */
-        border-radius: 3px;
-    }
-    .profile-title-head{
-        color: #000;
-    }
-    .profile-title{
-        color: #3cc;
-    }
-    .profile-title-taglines{
-        color: #000000;
-    }
-    .profile-title-button{
-        color: #fff;
-    }
-
-    .input-group-addon , .reveal_current , .reveal_new , .reveal_re  {
-        padding: 6px 12px;
-        font-size: 1em;
-        font-weight: normal;
-        line-height: 1;
-        color: #ffffff;
-        text-align: center;
-        background-color: #3cc;
-        border: 0px solid #fff;
-        border-radius: 0;
-    }
-
-    .highlight_bg {
-        background-color: #fff; /*  #3cc; */
-    }
-
-</style>
 
 <div class="row cs-page">
     <div class="col-lg-12 col-md-12 col-sm-12 text-left">
@@ -128,7 +87,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
         </div>
 
-    </div><!-- Zone left --> 
+    </div><!-- Zone left -->
 
     <div class="col-lg-4 col-md-4 col-sm-4">
         <div class="bs-example" data-example-id="btn-tags" style="background-color:#3cc; height:45px;  padding: 10px 12px; margin-top: 20px; color: #fff; border-width: 1px;  border-radius: 4px 4px 0 0; -webkit-box-shadow: none; box-shadow: none;">
