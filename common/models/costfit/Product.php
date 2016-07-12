@@ -91,11 +91,15 @@ class Product extends \common\models\costfit\master\ProductMaster
         }
     }
 
-    public function findMaxQuantity($id)
+    public static function findMaxQuantity($id, $checkInCart = 1)
     {
         $productPrice = ProductPrice::find()->select("MAX(quantity) as maxQuantity")->where("productId = $id")->one();
         if (isset($productPrice)) {
-            return $productPrice->maxQuantity - $this->findQuantityInCart($id);
+            if ($checkInCart) {
+                return $productPrice->maxQuantity - $this->findQuantityInCart($id);
+            } else {
+                return $productPrice->maxQuantity;
+            }
         } else {
             return 1;
         }

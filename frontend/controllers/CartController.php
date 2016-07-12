@@ -45,16 +45,7 @@ class CartController extends MasterController
     public function actionAddToCart($id)
     {
         $res = [];
-//        if (\Yii::$app->user->isGuest) {
-        //$token = \Yii::$app->session->get("orderToken");
-        $cookies = Yii::$app->request->cookies;
-        if (isset($cookies['orderToken'])) {
-            $token = $cookies['orderToken']->value;
-            $order = \common\models\costfit\Order::find()->where("token ='" . $token . "' AND status = " . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
-        }
-//        } else {
-//            $order = \common\models\costfit\Order::find()->where("userId =" . \Yii::$app->user->id . " AND status = " . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
-//        }
+        $order = \common\models\costfit\Order::getOrder();
         if (!isset($order)) {
             $order = new \common\models\costfit\Order();
             $order->token = $token;
@@ -155,11 +146,7 @@ class CartController extends MasterController
     public function actionAddCoupon()
     {
         $res = [];
-        $cookies = Yii::$app->request->cookies;
-        if (isset($cookies['orderToken'])) {
-            $token = $cookies['orderToken']->value;
-            $order = \common\models\costfit\Order::find()->where("token ='" . $token . "' AND status = " . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
-        }
+        $order = \common\models\costfit\Order::getOrder();
         $coupon = \common\models\costfit\Coupon::getCouponAvailable($_POST['couponCode']);
         if (isset($coupon)) {
             if (!$coupon->isExpired) {
@@ -215,6 +202,14 @@ class CartController extends MasterController
             $res['errorCode'] = 1;
             $res["message"] = "Exits product in Wishlist";
         }
+        return \yii\helpers\Json::encode($res);
+    }
+
+    public function actionGenerateNewToken()
+    {
+        $res = [];
+        $this->generateNewToken();
+        $res["status"] = TRUE;
         return \yii\helpers\Json::encode($res);
     }
 
