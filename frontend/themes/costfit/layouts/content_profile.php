@@ -20,35 +20,58 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <section class="blog">
         <div class="container">
             <div class="row">
-                <!--Sidebar
-                <div class="col-lg-3 col-md-3">
-                    <div class="latest-posts">
-                        <div class="post" style="border-bottom: 1px #f5f5f5 solid;">
-                            <a href="#">My Profile</a>
-                        </div>
-                        <div class="post" style="border-bottom: 1px #f5f5f5 solid;">
-                            <a href="#">Order History</a>
-                        </div>
-                        <div class="post" style="border-bottom: 1px #f5f5f5 solid;">
-                            <a href="#">Address Book</a>
-                        </div>
-                        <div class="post" style="border-bottom: 1px #f5f5f5 solid;">
-                            <a href="#">Payment Methods</a>
-                        </div>
-                        <div class="post" style="border-bottom: 1px #f5f5f5 solid;">
-                            <a href="#">Log Out</a>
-                        </div>
-                    </div>
-                </div>-->
                 <!--Left Column-->
-                <div class="col-lg-12 col-md-12">
-                    <!--Post-->
-                    <div class="post">
-
-                        <?php echo $content; ?>
-
-                    </div> <!--Post-->
+                <div class="col-lg-12 col-md-12 col-sm-12 text-left">
+                    <h2 class="title">Hello , Sukanyaa Nithi</h2>
                 </div>
+
+                <div class="col-lg-8 col-md-8">
+                    <?php echo $content; ?>
+                </div>
+                <!--Default Add New-->
+                <div class="col-lg-4 col-md-4 post">
+
+                    <div class="bs-example" data-example-id="btn-tags" style="background-color:#3cc; height:45px; margin-top: 20px;  padding: 10px 12px; color: #fff; border-width: 1px;  border-radius: 4px 4px 0 0; -webkit-box-shadow: none; box-shadow: none;">
+                        <span style="float: left; width: 70%; text-align: left;">Default shipping address</span>
+                        <span style="float: left; width: 30%; text-align: right;">
+                            <a href="<?php echo Yii::$app->homeUrl; ?>profile/add-address" style="color: #fff;"> + Add New </a>
+                        </span>
+                    </div>
+                    <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="margin: 0 0 ">
+                        <p>
+                            1. 7th floor Ladproa 19,
+                            Ladproa Road , Chatuchak , Bangkok , THA Zipcode 10900
+                        </p>
+                        <p>
+                            2. 7th floor Ladproa 19,
+                            Ladproa Road , Chatuchak , Bangkok , THA Zipcode 10900
+                        </p>
+                        <p>
+                            3. 7th floor Ladproa 19,
+                            Ladproa Road , Chatuchak , Bangkok , THA Zipcode 10900
+                        </p>
+                    </div>
+
+                    <div class="bs-example" data-example-id="btn-tags" style="background-color:#3cc; height:45px;  padding: 10px 12px; margin-top: 20px; color: #fff; border-width: 1px;  border-radius: 4px 4px 0 0; -webkit-box-shadow: none; box-shadow: none;">
+                        <span style="float: left; width: 70%; text-align: left;">Default Payment Method</span>
+                        <span style="float: left; width: 30%; text-align: right;">
+                            <a href="<?php echo Yii::$app->homeUrl; ?>profile/add-payment-method" style="color: #fff;">+ Add New</a>
+                        </span>
+                    </div>
+                    <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="margin: 0 0; ">
+                        <p class="col-lg-6 col-md-6 col-sm-6 text-left" style="padding: 6px 12px;">
+                            <img src="<?php echo Yii::$app->homeUrl; ?>images/payment-method/payment_method_master_card-48.png" class="img-responsive">
+                        </p>
+                        <p class="col-lg-6 col-md-6 col-sm-6 text-right">
+                            <span class="profile-title">Change</span>
+                        </p>
+                        <p>
+                            &nbsp;
+                        </p>
+
+                    </div>
+                </div>
+
             </div>
         </div>
     </section><!--Blog Sidebar Left Close-->

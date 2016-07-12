@@ -50,4 +50,20 @@ class ProfileController extends MasterController {
         return $this->render('@app/views/profile/order_history');
     }
 
+    public function actionAddAddress() {
+        $this->layout = "/content_profile";
+        $this->title = 'Cost.fit | Default Shipping Assdress';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = "Default Shipping Assdress";
+        return $this->render('@app/views/profile/add_address');
+    }
+
+    public function actionAddPaymentMethod() {
+        $this->layout = "/content_profile";
+        $this->title = 'Cost.fit | Default Payment Method';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = "Default Payment Method";
+        return $this->render('@app/views/profile/add_payment_method');
+    }
+
 }

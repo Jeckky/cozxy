@@ -37,7 +37,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </div><!-- /.modal -->
 
 <!--Login confirmCart-->
-<div class="modal fade" id="confirmCart" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="confirmCart" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" align="center">

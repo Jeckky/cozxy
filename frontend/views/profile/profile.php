@@ -9,11 +9,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 
 <div class="row cs-page">
-    <div class="col-lg-12 col-md-12 col-sm-12 text-left">
-        <h2 class="title">Hello , Sukanyaa Nithi</h2>
-    </div>
-
-    <div class="col-lg-8 col-md-8 col-sm-8">
+    <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup">
             <h4 class="profile-title-head">
                 <span class="profile-title-head">FREE MEMBERSHIP</span>
@@ -84,52 +80,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 </div>
                 </p>
             </form>
-
         </div>
-
     </div><!-- Zone left -->
-
-    <div class="col-lg-4 col-md-4 col-sm-4">
-        <div class="bs-example" data-example-id="btn-tags" style="background-color:#3cc; height:45px;  padding: 10px 12px; margin-top: 20px; color: #fff; border-width: 1px;  border-radius: 4px 4px 0 0; -webkit-box-shadow: none; box-shadow: none;">
-            <span style="float: left; width: 70%; text-align: left;">Default Shopping Assress</span>
-            <span style="float: left; width: 30%; text-align: right;">
-                + Add New
-            </span>
-        </div>
-        <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="margin: 0 0 ">
-            <p>
-                1. 7th floor Ladproa 19,
-                Ladproa Road , Chatuchak , Bangkok , THA Zipcode 10900
-            </p>
-            <p>
-                2. 7th floor Ladproa 19,
-                Ladproa Road , Chatuchak , Bangkok , THA Zipcode 10900
-            </p>
-            <p>
-                3. 7th floor Ladproa 19,
-                Ladproa Road , Chatuchak , Bangkok , THA Zipcode 10900
-            </p>
-        </div>
-
-        <div class="bs-example" data-example-id="btn-tags" style="background-color:#3cc; height:45px;  padding: 10px 12px; margin-top: 20px; color: #fff; border-width: 1px;  border-radius: 4px 4px 0 0; -webkit-box-shadow: none; box-shadow: none;">
-            <span style="float: left; width: 70%; text-align: left;">Default Payment Method</span>
-            <span style="float: left; width: 30%; text-align: right;">
-                + Add New
-            </span>
-        </div>
-        <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="margin: 0 0; ">
-            <p class="col-lg-6 col-md-6 col-sm-6 text-left" style="padding: 6px 12px;">
-                <img src="<?php echo Yii::$app->homeUrl; ?>images/payment-method/payment_method_master_card-48.png" class="img-responsive">
-            </p>
-            <p class="col-lg-6 col-md-6 col-sm-6 text-right">
-                <span class="profile-title">Change</span>
-            </p>
-            <p>
-                &nbsp;
-            </p>
-
-        </div>
-    </div><!-- Zone Right -->
-
 </div>
 
