@@ -55,7 +55,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </div>
             <div class="modal-footer" style="border-top: 1px solid #03a9f4;">
                 <div id="div-login-msg ">
-                    <h4 class="text-center">คุณใช่ <span class="email">test@gmail.com</span> หรือไม่ </h4>
+                    <?php $order = common\models\costfit\Order::getOrder(); ?>
+                    <h4 class="text-center">คุณใช่ <span class="email"><?= isset($order) ? $order->user->email : "-" ?></span> หรือไม่ </h4>
                 </div>
                 <div class="text-center">
                     <button id="login_lost_btn" type="button" class="yes btn btn-primary">Yes</button>
