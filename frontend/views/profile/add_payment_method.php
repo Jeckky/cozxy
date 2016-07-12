@@ -33,7 +33,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="form-inline">
         <div class="form-group">
             <img src="<?php echo Yii::$app->homeUrl; ?>images/payment-method/direct_debit-48.png" class="img-responsive" style="display: inline-block;">
-            <label>&nbsp; 1.5% OFF</label>
+            <label>&nbsp; 1.5% OFF</label><br>
+            <small>Some rules and restrictions apply.  <a href="#">See details</a></small>
         </div>
 
     </div>
@@ -44,29 +45,23 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
     <form class="space-bottom" role="form" method="post">
         <div class="form-group">
-            <label for="cs-email">First Name</label>
-            <input type="email" class="form-control" id="cs-email" placeholder="First Name">
+            <label for="cs-email">Credit card number</label>
+            <input type="email" class="form-control" id="cs-email" placeholder="Credit card number">
         </div>
         <div class="form-group">
-            <label for="cs-password">Last Name</label>
-            <input type="password" class="form-control" id="cs-password" placeholder="Last Name">
+            <label for="cs-password">Name on card</label>
+            <input type="password" class="form-control" id="cs-password" placeholder="Name on card">
         </div>
         <div class="form-group">
-            <label for="cs-password">Street Address</label>
-            <input type="password" class="form-control" id="cs-password" placeholder="Street Address">
-        </div>
-        <div class="form-group">
-            <label for="cs-password">Apt., Floor, Unit (Optional) </label>
-            <input type="password" class="form-control" id="cs-password" placeholder="Apt., Floor, Unit (Optional) ">
-        </div>
-        <div class="form-group">
-            <label for="cs-password">Shipping Zip Code</label>
-            <input type="password" class="form-control" id="cs-password" placeholder="Shipping Zip Code">
-        </div>
-        <div class="form-group">
-            <label for="cs-password">Phone Number</label>
-            <input type="password" class="form-control" id="cs-password" placeholder="Phone Number">
-        </div>
+            <div class="form-group">
+                <label for="cs-password">Expiration date</label>
+                <input type="password" class="form-control" id="cs-password" placeholder="Expiration date">
+            </div>
+            <div class="form-group">
+                <label for="cs-password">Security Code</label>
+                <input type="password" class="form-control" id="cs-password" placeholder="Security Code">
+            </div>
+        </div> 
         <button type="submit" class="btn btn-primary">Save Payment Method</button>
     </form>
 
