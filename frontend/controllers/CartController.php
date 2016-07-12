@@ -48,7 +48,7 @@ class CartController extends MasterController
         $order = \common\models\costfit\Order::getOrder();
         if (!isset($order)) {
             $order = new \common\models\costfit\Order();
-            $order->token = $token;
+            $order->token = $this->getToken();
             $order->status = \common\models\costfit\Order::ORDER_STATUS_DRAFT;
             $order->createDateTime = new \yii\db\Expression("NOW()");
             if (!$order->save(FALSE)) {
@@ -68,6 +68,7 @@ class CartController extends MasterController
         $orderItem->total = $orderItem->quantity * $orderItem->price;
         $orderItem->createDateTime = new \yii\db\Expression("NOW()");
         if ($orderItem->save()) {
+            $order->save();
             $res["status"] = TRUE;
             $cartArray = \common\models\costfit\Order::findCartArray();
             $res["cart"] = $cartArray;

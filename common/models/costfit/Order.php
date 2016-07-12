@@ -78,6 +78,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         $items = [];
         if (isset($order)) {
             foreach ($order->orderItems as $item) {
+
                 $total+=$item->total;
                 $quantity+=$item->quantity;
                 $items[$item->orderItemId] = [
