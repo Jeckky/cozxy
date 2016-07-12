@@ -41,7 +41,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </div>
 
 <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup">
-    <p class="col-lg-12 col-md-12 col-sm-12 text-left" style="padding-left: 0px;">Default Payment Method</p>
+    <h4>Default Payment Method</h4>
 
     <form class="space-bottom" role="form" method="post">
         <div class="form-group">
@@ -53,15 +53,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <input type="password" class="form-control" id="cs-password" placeholder="Name on card">
         </div>
         <div class="form-group">
-            <div class="form-group">
+            <div class="form-group col-md-6" style="padding-left: 0px;">
                 <label for="cs-password">Expiration date</label>
                 <input type="password" class="form-control" id="cs-password" placeholder="Expiration date">
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="cs-password">Security Code</label>
                 <input type="password" class="form-control" id="cs-password" placeholder="Security Code">
             </div>
-        </div> 
+        </div>
         <button type="submit" class="btn btn-primary">Save Payment Method</button>
     </form>
 
