@@ -205,4 +205,12 @@ class CartController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
+    public function actionGenerateNewToken()
+    {
+        $res = [];
+        $this->generateNewToken();
+        $res["status"] = TRUE;
+        return \yii\helpers\Json::encode($res);
+    }
+
 }

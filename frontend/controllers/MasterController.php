@@ -51,7 +51,7 @@ class MasterController extends MasterCommonController
             if (isset($cookies['orderToken'])) {
                 $order = \common\models\costfit\Order::find()->where("token ='" . $token . "' AND status=" . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
                 if (isset($order) && isset($order->userId)) {
-                    $this->getView()->registerJs("//$('#confirmCartModal').modal('show');", \yii\web\View::POS_READY);
+                    $this->getView()->registerJs("$('#confirmCartModal').modal('show');", \yii\web\View::POS_READY);
                 }
             }
         }

@@ -746,6 +746,57 @@ $(document).ready(function (e) {
         $wishlistMessage.addClass('visible');
     });
 
+    $('#confirmCartModal .yes ').click(function () {
+        $("#confirmCartModal").modal('hide');
+        $("#loginModal").attr("data-backdrop", 'static');
+        $("#loginModal").attr("data-keyboard", 'false');
+        $("#loginModal").find(".close").addClass('hide');
+        $("#loginModal").find(".regis").addClass('hide');
+        $("#loginModal").find(".no").removeClass('hide');
+        $("#loginModal").find(".loginEmail").val($("#confirmCartModal").find('.email').text());
+        $("#loginModal").modal('show');
+    });
+
+    $('#confirmCartModal .no ').click(function () {
+        //ajax
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: "cart/generate-new-token",
+//            data: {productId: $itemId},
+            success: function (data)
+            {
+                if (data.status)
+                {
+                    $("#confirmCartModal").modal('hide');
+                }
+            }
+        });
+
+
+    });
+
+    $('#loginModal .no ').click(function () {
+        //ajax
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: "cart/generate-new-token",
+//            data: {productId: $itemId},
+            success: function (data)
+            {
+                if (data.status)
+                {
+                    $("#loginModal").modal('hide');
+                }
+            }
+        });
+
+    });
+
+
+
+//Modify By Tong
 
 });/*Document Ready End*//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
