@@ -20,7 +20,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <section class="blog">
         <div class="container">
             <div class="row">
-                <!--Sidebar-->
+                <!--Sidebar
                 <div class="col-lg-3 col-md-3">
                     <div class="latest-posts">
                         <div class="post" style="border-bottom: 1px #f5f5f5 solid;">
@@ -39,9 +39,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             <a href="#">Log Out</a>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <!--Left Column-->
-                <div class="col-lg-9 col-md-9"> 
+                <div class="col-lg-12 col-md-12">
                     <!--Post-->
                     <div class="post">
 

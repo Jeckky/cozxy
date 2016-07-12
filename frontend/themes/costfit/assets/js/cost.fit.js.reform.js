@@ -96,14 +96,43 @@ $('.checkout_select').on('click', function () {
     $('.form-group').find('#order-notes').val('test');
 });
 
+// 12/7/2016 Create By Taninut.B ,
 
-$(document).ready(function () {
-    function getRandomSize(min, max) {
-        return Math.round(Math.random() * (max - min) + min);
+$(".reveal_current").on('click', function () {
+    var $pwd1 = $(".pwd1");
+    var $btn_title_current = $('.reveal-title-current');
+    $btn_title_current.html('Show');
+    if ($pwd1.attr('type') === 'password') {
+        $pwd1.attr('type', 'text');
+        $btn_title_current.html('Show');
+    } else {
+        $pwd1.attr('type', 'password');
+        $btn_title_current.html('Hidden');
     }
-    //for (var i = 0; i < 25; i++) {
-    //var width = getRandomSize(200, 245);
-    //var height = getRandomSize(200, 245);
-    //$('#photos-bestseller-items').append('<img src="/images/bestseller-items/' + width + '/' + height + '/cats" alt="pretty kitty">');
-    //}
+});
+
+$(".reveal_new").on('click', function () {
+    var $pwd2 = $(".pwd2");
+    var $btn_title_new = $('.reveal-title-new');
+    $btn_title_new.html('Show');
+    if ($pwd2.attr('type') === 'password') {
+        $pwd2.attr('type', 'text');
+        $btn_title_new.html('Show');
+    } else {
+        $pwd2.attr('type', 'password');
+        $btn_title_new.html('Hidden');
+    }
+});
+
+$(".reveal_re").on('click', function () {
+    var $pwd3 = $(".pwd3");
+    var $btn_title_re = $('.reveal-title-re');
+    $btn_title_re.html('Show');
+    if ($pwd3.attr('type') === 'password') {
+        $pwd3.attr('type', 'text');
+        $btn_title_re.html('Show');
+    } else {
+        $pwd3.attr('type', 'password');
+        $btn_title_re.html('Hidden');
+    }
 });
