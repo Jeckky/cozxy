@@ -35,3 +35,37 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<!--Login confirmCart-->
+<div class="modal fade" id="confirmCart" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" align="center">
+                <img class="img-responsive img-circle-thumbnail" id="img_logo" src="<?php echo $baseUrl; ?>/images/modal/cost.fit.png" style="zoom:.8;">
+            </div>
+
+            <!-- Begin # DIV Form -->
+            <div id="div-forms">
+                <!-- Begin # Login Form -->
+                <form id="login-form">
+                    <div class="modal-body">
+                        <div id="div-login-msg">
+                            <i class="icon-shopping-cart-content" style="zoom: 1"></i>
+                            <span id="text-login-msg">&nbsp; มีสินค้าในตะกร้าอยู่</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="border-top: 1px solid #03a9f4;">
+                        <div id="div-login-msg ">
+                            <h4 class="text-left">คุณใช่ test@gmail.com หรือไม่ </h4>
+                        </div>
+                        <div class="text-center">
+                            <button id="login_lost_btn" type="button" class="btn btn-primary">Yes</button>
+                            <button id="login_register_btn" type="button" class="btn btn-primary">No</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- End # Login Form -->
+            </div>
+        </div>
+    </div>
+</div><!-- /.modal -->
