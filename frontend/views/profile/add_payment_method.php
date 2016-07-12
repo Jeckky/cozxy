@@ -57,7 +57,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <label for="cs-password">Expiration date</label>
                 <input type="password" class="form-control" id="cs-password" placeholder="Expiration date">
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6" style="padding-left: 0px;">
                 <label for="cs-password">Security Code</label>
                 <input type="password" class="form-control" id="cs-password" placeholder="Security Code">
             </div>
