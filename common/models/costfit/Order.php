@@ -70,16 +70,7 @@ class Order extends \common\models\costfit\master\OrderMaster
     public static function findCartArray()
     {
         $res = [];
-//        if (\Yii::$app->user->isGuest) {
-//        $token = \Yii::$app->session->get("orderToken");
-        $cookies = Yii::$app->request->cookies;
-        if (isset($cookies['orderToken'])) {
-            $token = $cookies['orderToken']->value;
-            $order = \common\models\costfit\Order::find()->where("token ='" . $token . "' AND status = " . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
-        }
-//        } else {
-//            $order = \common\models\costfit\Order::find()->where("userId =" . \Yii::$app->user->id . " AND status = " . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
-//        }
+        $order = Order::getOrder();
         $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
         $total = 0;
         $quantity = 0;
@@ -223,6 +214,79 @@ class Order extends \common\models\costfit\master\OrderMaster
             return $res[$step];
         } else {
             return NULL;
+        }
+    }
+
+    public static function mergeDraftOrder()
+    {
+        $cookies = Yii::$app->request->cookies;
+        if (isset($cookies['orderToken'])) {
+            $token = $cookies['orderToken']->value;
+            $orderToken = \common\models\costfit\Order::find()->where("token ='" . $token . "' AND userId is null  AND status = " . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
+        }
+        $orderUser = \common\models\costfit\Order::find()->where("userId =" . \Yii::$app->user->id . " AND status = " . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
+        $flag = true;
+        try {
+            $transaction = \Yii::$app->db->beginTransaction();
+            if (isset($orderToken)) {
+                if (isset($orderUser)) {
+                    foreach ($orderToken->orderItems as $item) {
+                        $haveItem = FALSE;
+                        foreach ($orderUser->orderItems as $itemUser) {
+                            if ($item->productId == $itemUser->productId)
+                                if ($item->updateDateTime > $itemUser->updateDateTime) {
+                                    $orderUser->quantity = $item->quantity;
+                                } else {
+                                    $orderUser->quantity = $itemUser->quantity;
+                                }
+                            $haveItem = TRUE;
+                        }
+
+                        if (!$haveItem) {
+                            $orderItem = new OrderItem();
+                            $orderItem->attributes = $item->attributes;
+                            $orderItem->orderId = $itemUser->orderId;
+                            if (!$orderItem->save()) {
+                                $flag = FALSE;
+                                break;
+                            }
+                        }
+                    }
+                    if ($flag) {
+                        if (OrderItem::deleteAll("orderId=" . $orderToken->orderId) > 0) {
+                            if (Order::deleteAll("orderId=" . $orderToken->orderId) == 0) {
+                                $flag = FALSE;
+                            }
+                        } else {
+                            $flag = FALSE;
+                        }
+                    }
+                } else {
+                    $orderToken->userId = \Yii::$app->user->id;
+                    if (!$orderToken->save()) {
+                        $flag = FALSE;
+                    }
+                }
+            }
+            if ($flag) {
+                $transaction->commit();
+            }
+        } catch (Exception $exc) {
+            $transaction->rollBack();
+            echo $exc->getTraceAsString();
+        }
+    }
+
+    public static function getOrder()
+    {
+        if (\Yii::$app->user->isGuest) {
+            $cookies = Yii::$app->request->cookies;
+            if (isset($cookies['orderToken'])) {
+                $token = $cookies['orderToken']->value;
+                return \common\models\costfit\Order::find()->where("token ='" . $token . "' AND userId is null  AND status = " . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
+            }
+        } else {
+            return \common\models\costfit\Order::find()->where("userId =" . \Yii::$app->user->id . " AND status = " . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
         }
     }
 
