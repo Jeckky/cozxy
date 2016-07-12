@@ -9,7 +9,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 
 <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup">
-    <p class="col-lg-12 col-md-12 col-sm-12 text-left" style="padding-left: 0px;">Default shipping address</p>
+    <h4>Default shipping address</h4>
 
     <form class="space-bottom" role="form" method="post">
         <div class="form-group">
