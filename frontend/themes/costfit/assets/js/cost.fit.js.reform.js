@@ -20,6 +20,9 @@ function proceed(data) {
                             '<td class="">' + data.cart.discount + '</td>' +
                             '</tr>'
                             );
+                } else
+                {
+                    alert(data.message);
                 }
             }
         });

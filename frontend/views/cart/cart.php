@@ -7,10 +7,76 @@ use yii\bootstrap\ActiveForm;
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
+<style>
+    .order-message {
+        width: 100%;
+        max-width: 1140px;
+        max-height: 0;
+        overflow: hidden;
+        margin: 12px auto 0 auto;
+        padding: 0 25px;
+        background: #c7b07b;
+        color: #fff;
+        border-radius: 0;
+        opacity: 0;
+        transition: all .3s;
+    }
+
+    .order-message.visible {
+        max-height: 800px;
+        padding: 12px 25px;
+        opacity: 1
+    }
+
+    .order-message p,
+    .order-message i {
+        display: block;
+        float: left;
+        line-height: 1.3;
+        margin-top: 9px;
+        margin-bottom: 10px;
+        color: #fff
+    }
+
+    .order-message i {
+        margin-right: 20px
+    }
+
+    .order-message a {
+        display: block;
+        float: right
+    }
+
+    .order-message:after {
+        visibility: hidden;
+        display: block;
+        content: "";
+        clear: both;
+        height: 0
+    }
+</style>
 
 <!--Shopping Cart-->
 <section class="shopping-cart">
+    <!--Shopping Cart Message-->
+
+
+
     <div class="container">
+        <?php
+        if (isset($this->params['cart']['orderMessage'])):
+            $this->registerJs("$('.order-message').addClass('visible');", yii\web\View::POS_READY);
+            ?>
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <section class="order-message">
+                        <i class="fa fa-check-square"></i>
+                        <p class="p-style3"><?= $this->params['cart']['orderMessage'] ?></p>
+                        <!--<a class="btn-outlined-invert btn-black btn-sm" href="<?php echo Yii::$app->homeUrl; ?>cart">View cart</a>-->
+                    </section><!--Shopping Cart Message Close-->
+                </div>
+            </div>
+        <?php endif; ?>
         <div class="row">
 
             <!--Items List-->
@@ -131,15 +197,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     /*function proceed(data) {
      var shop_data = data;
      if (shop_data == 'apply_coupon') {
-     //window.location = '<?php //echo $baseUrl;       ?>';
+     //window.location = '<?php //echo $baseUrl;                                                     ?>';
      } else if (shop_data == 'update_cart') {
-     window.location = '<?php //echo $baseUrl;       ?>' + '/history';
+     window.location = '<?php //echo $baseUrl;                                                     ?>' + '/history';
      } else if (shop_data == 'to_checkout') {
-     window.location = '<?php //echo $baseUrl;       ?>' + '/checkout';
+     window.location = '<?php //echo $baseUrl;                                                     ?>' + '/checkout';
      } else if (shop_data == '') {
-     //window.location = '<?php //echo $baseUrl;       ?>' ;
+     //window.location = '<?php //echo $baseUrl;                                                     ?>' ;
      } else {
-     window.location = '<?php //echo $baseUrl;       ?>';
+     window.location = '<?php //echo $baseUrl;                                                     ?>';
      }
      }*/
 

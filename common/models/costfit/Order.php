@@ -49,6 +49,8 @@ class Order extends \common\models\costfit\master\OrderMaster
     const CHECKOUT_STEP_PAYMENT = 2;
     const CHECKOUT_STEP_SUCCESS = 3;
 
+    public $orderMessage = null;
+
     /**
      * @inheritdoc
      */
@@ -104,8 +106,16 @@ class Order extends \common\models\costfit\master\OrderMaster
             $res["vatFormatText"] = number_format($order->vat, 2);
             $res["total"] = $order->total;
             $res["totalFormatText"] = number_format($order->total, 2);
+
             if (isset($order->coupon)) {
-                $res["couponCode"] = $order->coupon->code;
+                if (Coupon::getCouponIsExpired($order->couponId)) {
+                    $order->orderMessage = "Coupon " . $order->coupon->code . " is expired.";
+                    $order->couponId = NULL;
+                    $order->save();
+                    $res["couponCode"] = NULL;
+                } else {
+                    $res["couponCode"] = $order->coupon->code;
+                }
             } else {
                 $res["couponCode"] = NULL;
             }
@@ -117,6 +127,9 @@ class Order extends \common\models\costfit\master\OrderMaster
             $res["summaryFormatText"] = number_format($order->summary, 2);
             $res["items"] = $items;
             $res["qty"] = $quantity;
+            if (isset($order->orderMessage)) {
+                $res["orderMessage"] = $order->orderMessage;
+            }
         } else {
             $res = [
                 'total' => $total,
@@ -170,8 +183,8 @@ class Order extends \common\models\costfit\master\OrderMaster
         $this->totalExVat = $total * 0.93;
         $this->vat = ($total) * 0.07;
         $this->total = $total;
-        $this->discount = 0;
-        if (isset($this->coupon)) {
+        $this->discount = null;
+        if (isset($this->coupon) && isset($this->couponId)) {
             if (isset($this->coupon->orderSummaryTotal) && $total >= $this->coupon->orderSummaryTotal) {
 
             } else {

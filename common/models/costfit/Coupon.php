@@ -22,6 +22,8 @@ use \common\models\costfit\master\CouponMaster;
 class Coupon extends \common\models\costfit\master\CouponMaster
 {
 
+    public $isExpired;
+
     /**
      * @inheritdoc
      */
@@ -56,16 +58,31 @@ class Coupon extends \common\models\costfit\master\CouponMaster
 
     public static function getCouponAvailable($code)
     {
-        $coupon = \common\models\costfit\Coupon::find()->where("code ='" . $code . "' AND startDate <= CURDATE() AND endDate >= CURDATE()")->one();
-        if (isset($coupon))
+        $coupon = \common\models\costfit\Coupon::find()->where("code ='" . $code . "'")->one();
+        if (isset($coupon)) {
+            $couponNoExpired = \common\models\costfit\Coupon::find()->where("code ='" . $code . "' AND startDate <= CURDATE() AND endDate >= CURDATE()")->one();
+            if (!isset($couponNoExpired)) {
+                $coupon->isExpired = TRUE;
+            }
             return $coupon;
-        else
+        } else {
             return NULL;
+        }
     }
 
     public static function findAvailableCouponArray()
     {
         return \common\models\costfit\Coupon::find()->where("startDate <= CURDATE() AND endDate >= CURDATE()")->all();
+    }
+
+    public static function getCouponIsExpired($couponId)
+    {
+        $coupon = \common\models\costfit\Coupon::find()->where("startDate <= CURDATE() AND endDate >= CURDATE() AND couponId = " . $couponId)->one();
+        if (isset($coupon)) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
     }
 
 }

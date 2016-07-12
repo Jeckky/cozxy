@@ -162,13 +162,19 @@ class CartController extends MasterController
         }
         $coupon = \common\models\costfit\Coupon::getCouponAvailable($_POST['couponCode']);
         if (isset($coupon)) {
-            $order->couponId = $coupon->couponId;
-            $order->save();
-            $res["status"] = TRUE;
-            $cartArray = \common\models\costfit\Order::findCartArray();
-            $res["cart"] = $cartArray;
+            if (!$coupon->isExpired) {
+                $order->couponId = $coupon->couponId;
+                $order->save();
+                $res["status"] = TRUE;
+                $cartArray = \common\models\costfit\Order::findCartArray();
+                $res["cart"] = $cartArray;
+            } else {
+                $res["status"] = FALSE;
+                $res["message"] = "This Coupon Expired.";
+            }
         } else {
             $res["status"] = FALSE;
+            $res["message"] = "No Found this Coupon Code.";
         }
         return \yii\helpers\Json::encode($res);
     }
