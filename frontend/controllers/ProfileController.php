@@ -93,10 +93,15 @@ class ProfileController extends MasterController {
         $this->subTitle = 'Home';
         $this->subSubTitle = "Contact Information";
 
-        $model = new \common\models\costfit\User(['scenario' => 'register']);
+        $model = new \common\models\costfit\User(['scenario' => 'editinfo']);
         $loginForm = new \common\models\LoginForm();
         if (isset($_POST["User"])) {
+            $model->attributes = $_POST['User'];
+            $model->firstname = $_POST['User']['firstname'];
+            $model->lastname = $_POST['User']['lastname'];
 
+            echo 'firstname :' . $model->firstname . '<br>';
+            echo 'lastname : ' . $model->lastname;
         }
 
         return $this->render('@app/views/profile/edit_info', ['model' => $model, 'loginForm' => $loginForm]);

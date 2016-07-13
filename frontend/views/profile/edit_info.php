@@ -22,18 +22,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <button type="submit" class="btn btn-primary">Update Contact Information</button>
     </form>-->
-    <?php $form = ActiveForm::begin(['id' => 'register-form', 'action' => $baseUrl . '/register/register', 'options' => ['class' => 'registr-form']]); ?>
-    <?//= $form->errorSummary($model); ?>
-    <?= $form->field($model, 'email') ?>
-    <?= $form->field($model, 'password')->passwordInput() ?>
-    <?= $form->field($model, 'confirmPassword')->passwordInput() ?>
-    <div class="checkbox">
-        <label><input type="checkbox" name="User[acceptTerm]"> I have read and agree with the terms</label>
-    </div>
-    <div class="form-group">
-        <?= Html::submitButton('Register', ['class' => 'btn btn-black', 'name' => 'login-button']) ?>
-    </div>
-    <?php ActiveForm::end(); ?>
+
     <?php $form = ActiveForm::begin(['id' => 'register-form', 'action' => $baseUrl . '/profile/edit-info', 'options' => ['class' => 'registr-form']]); ?>
 
     <?= $form->field($model, 'firstname') ?>

@@ -24,8 +24,7 @@ use \common\models\costfit\master\UserMaster;
  * @property Order[] $orders
  * @property Product[] $products
  */
-class User extends \common\models\costfit\master\UserMaster
-{
+class User extends \common\models\costfit\master\UserMaster {
 
     public $confirmPassword;
     public $acceptTerm;
@@ -33,8 +32,7 @@ class User extends \common\models\costfit\master\UserMaster
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), [
             ['email', 'unique'],
 //            ['email', 'uniqueEmail'],
@@ -42,13 +40,13 @@ class User extends \common\models\costfit\master\UserMaster
 //            ['email', 'exist', 'targetAttribute' => 'username', 'targetClass' => '\common\models\cosfit\User'],
             [['email', 'password', 'confirmPassword', 'acceptTerm'], 'required', 'on' => 'register'],
 //            ['email', 'unique', 'targetClass' => '\common\models\costfit\User', 'message' => 'this email address has already been taken'],
-            ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"]
+            ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"],
 //            ['email', 'exist']
+            [['firstname', 'lastname', 'acceptTerm'], 'required', 'on' => 'editinfo'],
         ]);
     }
 
-    public function uniqueEmail($attribute, $email)
-    {
+    public function uniqueEmail($attribute, $email) {
         throw new \yii\base\Exception($email);
         $user = static::findOne(['email' => Yii::$app->encrypter->encrypt($email)]);
         if (count($user) > 0)
@@ -58,8 +56,7 @@ class User extends \common\models\costfit\master\UserMaster
     /**
      * @inheritdoc
      */
-    public function attributes()
-    {
+    public function attributes() {
         return array_merge(parent::attributes(), [
 //            'acceptTerm',
 //            'confirmPassword'
@@ -69,14 +66,12 @@ class User extends \common\models\costfit\master\UserMaster
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
         ]);
     }
 
-    public static function getIsExistWishlist($productId)
-    {
+    public static function getIsExistWishlist($productId) {
         $ws = \common\models\costfit\Wishlist::find()->where("productId =" . $productId . " AND userId = " . \Yii::$app->user->id)->one();
         if (isset($ws)) {
             return TRUE;
