@@ -122,15 +122,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
                     <div class="payment-method">
                         <div class="radio light">
-                            <label><input type="radio" name="payment" id="payment01" checked> Direct Bank Transfer</label>
+                            <label><input type="radio" name="payment" id="payment01" checked> โอนเงินผ่านธนาคาร</label>
                         </div>
                         <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
                         <div class="radio light">
-                            <label><input type="radio" name="payment" id="payment02"> Cheque Payment</label>
+                            <label><input type="radio" name="payment" id="payment02"> บัตรเครดิต</label>
                         </div>
-                        <div class="radio light">
-                            <label><input type="radio" name="payment" id="payment03"> PayPal <span class="pp-label"></span></label>
-                        </div>
+                        <!--                        <div class="radio light">
+                                                    <label><input type="radio" name="payment" id="payment03"> PayPal <span class="pp-label"></span></label>
+                                                </div>-->
                     </div>
                     <input class="btn btn-black btn-block" type="submit" name="place-order" value="Place order">
                 </div>
