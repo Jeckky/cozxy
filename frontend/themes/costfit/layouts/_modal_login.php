@@ -2,16 +2,18 @@
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
-$firstname = Yii::$app->user->identity->firstname;
-$lastname = Yii::$app->user->identity->lastname;
+if (!Yii::$app->user->isGuest):
+    $firstname = Yii::$app->user->identity->firstname;
+    $lastname = Yii::$app->user->identity->lastname;
 
-if (empty($firstname)) {
-    //echo 'firstname';
-}
+    if (empty($firstname)) {
+        //echo 'firstname';
+    }
 
-if (empty($lastname)) {
-    //echo 'lastname';
-}
+    if (empty($lastname)) {
+        //echo 'lastname';
+    }
+endif;
 ?>
 <!--Login Modal-->
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
