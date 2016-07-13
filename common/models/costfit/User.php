@@ -83,17 +83,36 @@ class User extends \common\models\costfit\master\UserMaster {
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getBillingAddresses()
-    {
+    public function getBillingAddresses() {
         return $this->hasMany(AddressMaster::className(), ['userId' => 'userId'])->where('address.type=1');
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getShippingAddresses()
-    {
+    public function getShippingAddresses() {
         return $this->hasMany(AddressMaster::className(), ['userId' => 'userId'])->where('address.type=2');
+    }
+
+    public static function updateProfile($categoryId, $productId) {
+        $model = new User();
+        CategoryToProduct::deleteAll("productId = " . $productId);
+
+        $category = Category::find()->where("categoryId=" . $categoryId)->one();
+        $model->categoryId = $categoryId;
+        $model->productId = $productId;
+        $model->createDateTime = new \yii\db\Expression("NOW()");
+        $model->save();
+        $me = $category;
+        while (isset($me->parent)) {
+            $parent = $me->parent;
+            $catToProduct = new CategoryToProduct();
+            $catToProduct->productId = $productId;
+            $catToProduct->categoryId = $parent->categoryId;
+            $catToProduct->createDateTime = new \yii\db\Expression("NOW()");
+            $catToProduct->save();
+            $me = $parent;
+        }
     }
 
 }
