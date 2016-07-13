@@ -9,14 +9,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <!--Confirm reFormMember-->
 
-<div class="modal fade" id="reFormMember" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="reFormMember"  tabindex="-1" role="dialog" aria-hidden="true">
 
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="border-bottom-color:#fff;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
                 <span class="text-left">
-                    <!--<a class="logo col-md-3" href="<?php //echo Yii::$app->homeUrl;  ?>"><img src="<?php //echo Yii::$app->homeUrl;  ?>images/logo/costfit.png" alt="cost.fit" style="zoom:.2;" class="img-responsive"></a>-->
+                    <!--<a class="logo col-md-3" href="<?php //echo Yii::$app->homeUrl;          ?>"><img src="<?php //echo Yii::$app->homeUrl;          ?>images/logo/costfit.png" alt="cost.fit" style="zoom:.2;" class="img-responsive"></a>-->
                 </span>
             </div>
             <br>
@@ -38,13 +38,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="modal-footer" style="border-top: 1px solid #03a9f4;">
                 <div class="text-center">
                     <a href="<?php echo Yii::$app->homeUrl; ?>profile" class="yes btn btn-primary">Update Info</a>
-                    <a href="<?php echo Yii::$app->homeUrl; ?>" class="no btn btn-danger">No Thank</a>
+                    <a href="#" class="no btn btn-danger" data-dismiss="modal" id="no-thank">No Thank</a>
                 </div>
             </div>
         </div>
     </div>
 </div><!-- /.modal -->
 <script language="JavaScript" type="text/javascript">
+    $('#no-thank').on
 <?php
 if (!Yii::$app->user->isGuest):
     $firstname = Yii::$app->user->identity->firstname;
