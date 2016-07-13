@@ -17,14 +17,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <p>Member since <?php echo Yii::$app->user->identity->createDateTime ?><!--Apr 9,2016 --></p>
             <hr>
             <p class="col-lg-6 col-md-6 col-sm-6 text-left" style="padding-left: 0px;">You've Saved</p>
-            <p class="col-lg-6 col-md-6 col-sm-6 text-right">THB 2,000.00</p>
+            <p class="col-lg-6 col-md-6 col-sm-6 text-right">THB 0.00</p>
             <br>
         </div>
 
         <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup">
             <p class="col-lg-6 col-md-6 col-sm-6 text-left" style="padding-left: 0px;">Contact Information</p>
             <p class="col-lg-6 col-md-6 col-sm-6 text-right">
-                <span class="profile-title">Edit</span>
+                <span class="profile-title"><a href="<?php echo Yii::$app->homeUrl ?>profile/edit-info">Edit</a></span>
             </p>
             <p>Name : <?php echo Yii::$app->user->identity->firstname . '&nbsp;' . Yii::$app->user->identity->lastname ?></p>
             <p>Email : <?php echo Yii::$app->user->identity->email; ?></p>

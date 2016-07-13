@@ -76,4 +76,12 @@ class ProfileController extends MasterController {
         return $this->render('@app/views/profile/add_payment_method');
     }
 
+    public function actionEditInfo() {
+        $this->layout = "/content_profile";
+        $this->title = 'Cost.fit | Contact Information';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = "Contact Information";
+        return $this->render('@app/views/profile/edit_info');
+    }
+
 }
