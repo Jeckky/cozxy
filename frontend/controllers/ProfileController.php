@@ -21,6 +21,16 @@ class ProfileController extends MasterController {
     public $enableCsrfValidation = false;
 
     /**
+     * @inheritdoc
+     */
+    public function actions() {
+
+        if (Yii::$app->user->isGuest) {
+            $this->redirect(Yii::$app->homeUrl);
+        }
+    }
+
+    /**
      * Displays homepage.
      *
      * @return mixed
@@ -30,7 +40,7 @@ class ProfileController extends MasterController {
         $this->title = 'Cost.fit | My Profile';
         $this->subTitle = 'Home';
         $this->subSubTitle = "My Profile";
-        //return $this->render('profile_layouts');
+//return $this->render('profile_layouts');
         return $this->render('profile');
     }
 

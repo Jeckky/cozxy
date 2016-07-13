@@ -17,13 +17,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <li><a href="<?php echo Yii::$app->homeUrl . Yii::$app->controller->id; ?>"><?= isset($this->context->subSubTitle) ? $this->context->subSubTitle : "sub sub Title" ?></a></li>
     </ol><!--Breadcrumbs Close-->
 
-    <!--Profile Left--> 
+    <!--Profile Left-->
     <section class="blog">
         <div class="container">
             <div class="row">
                 <!--Left Column-->
                 <div class="col-lg-12 col-md-12 col-sm-12 text-left">
-                    <h2 class="title">Hello , Sukanyaa Nithi</h2>
+                    <h2 class="title">Hello , <?php echo Yii::$app->user->identity->firstname . '&nbsp;' . Yii::$app->user->identity->lastname ?></h2>
                 </div>
 
                 <div class="col-lg-8 col-md-8">

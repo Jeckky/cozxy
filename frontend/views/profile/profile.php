@@ -14,7 +14,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <h4 class="profile-title-head">
                 <span class="profile-title-head">FREE MEMBERSHIP</span>
             </h4>
-            <p>Member since Apr 9,2016</p>
+            <p>Member since <?php echo Yii::$app->user->identity->createDateTime ?><!--Apr 9,2016 --></p>
             <hr>
             <p class="col-lg-6 col-md-6 col-sm-6 text-left" style="padding-left: 0px;">You've Saved</p>
             <p class="col-lg-6 col-md-6 col-sm-6 text-right">THB 2,000.00</p>
@@ -26,8 +26,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <p class="col-lg-6 col-md-6 col-sm-6 text-right">
                 <span class="profile-title">Edit</span>
             </p>
-            <p>Name : xxxxxx</p>
-            <p>Email : xxxxxx</p>
+            <p>Name : <?php echo Yii::$app->user->identity->firstname . '&nbsp;' . Yii::$app->user->identity->lastname ?></p>
+            <p>Email : <?php echo Yii::$app->user->identity->email; ?></p>
             <hr>
             <h5>
                 <span class="profile-title-head">Password</span>
