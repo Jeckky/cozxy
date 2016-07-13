@@ -62,7 +62,7 @@
                 </div>
             </li>-->
         </ul>
-    </li>
+    </li> 
     <?php if (!Yii::$app->user->isGuest): ?>
         <li class="has-submenu pill-right"><a href="#"><?= (Yii::$app->user->identity->email); ?></a>
             <ul class="submenu">

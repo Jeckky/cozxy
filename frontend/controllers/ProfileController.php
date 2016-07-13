@@ -8,6 +8,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\User;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
@@ -21,30 +22,26 @@ class ProfileController extends MasterController {
     public $enableCsrfValidation = false;
 
     /**
-     * @inheritdoc
-     */
-    public function actions() {
-
-        if (Yii::$app->user->isGuest) {
-            $this->redirect(Yii::$app->homeUrl);
-        }
-    }
-
-    /**
      * Displays homepage.
      *
      * @return mixed
      */
     public function actionIndex() {
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
         $this->layout = "/content_profile";
         $this->title = 'Cost.fit | My Profile';
         $this->subTitle = 'Home';
         $this->subSubTitle = "My Profile";
-//return $this->render('profile_layouts');
+        //return $this->render('profile_layouts');
         return $this->render('profile');
     }
 
     public function actionPayment() {
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
         $this->layout = "/content_profile";
         $this->title = 'Cost.fit | ช่องทางการชำระเงิน';
         $this->subTitle = 'Home';
@@ -53,6 +50,9 @@ class ProfileController extends MasterController {
     }
 
     public function actionOrder() {
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
         $this->layout = "/content_profile";
         $this->title = 'Cost.fit | Order History';
         $this->subTitle = 'Home';
@@ -61,6 +61,9 @@ class ProfileController extends MasterController {
     }
 
     public function actionAddAddress() {
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
         $this->layout = "/content_profile";
         $this->title = 'Cost.fit | Default Shipping Assdress';
         $this->subTitle = 'Home';
@@ -69,6 +72,9 @@ class ProfileController extends MasterController {
     }
 
     public function actionAddPaymentMethod() {
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
         $this->layout = "/content_profile";
         $this->title = 'Cost.fit | Default Payment Method';
         $this->subTitle = 'Home';
@@ -77,11 +83,23 @@ class ProfileController extends MasterController {
     }
 
     public function actionEditInfo() {
+
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
+
         $this->layout = "/content_profile";
         $this->title = 'Cost.fit | Contact Information';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Contact Information";
-        return $this->render('@app/views/profile/edit_info');
+
+        $model = new \common\models\costfit\User(['scenario' => 'register']);
+        $loginForm = new \common\models\LoginForm();
+        if (isset($_POST["User"])) {
+
+        }
+
+        return $this->render('@app/views/profile/edit_info', ['model' => $model, 'loginForm' => $loginForm]);
     }
 
 }
