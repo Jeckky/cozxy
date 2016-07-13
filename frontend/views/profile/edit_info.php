@@ -13,7 +13,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <?php
     $form = ActiveForm::begin([
                 'id' => 'register-form',
-                'action' => $baseUrl . '/profile/edit-info',
                 'options' => ['class' => 'registr-form']
     ]);
     ?>
