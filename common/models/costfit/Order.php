@@ -220,40 +220,51 @@ class Order extends \common\models\costfit\master\OrderMaster
 
     public static function mergeDraftOrder()
     {
+
         $cookies = Yii::$app->request->cookies;
         if (isset($cookies['orderToken'])) {
             $token = $cookies['orderToken']->value;
             $orderToken = \common\models\costfit\Order::find()->where("token ='" . $token . "' AND userId is null  AND status = " . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
         }
         $orderUser = \common\models\costfit\Order::find()->where("userId =" . \Yii::$app->user->id . " AND status = " . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
+//        throw new \yii\base\Exception(print_r($orderUser->attributes, true));
         $flag = true;
         try {
+//            throw new \yii\base\Exception(count($orderToken->orderItems) . " " . count($orderUser->orderItems));
             $transaction = \Yii::$app->db->beginTransaction();
             if (isset($orderToken)) {
                 if (isset($orderUser)) {
                     foreach ($orderToken->orderItems as $item) {
                         $haveItem = FALSE;
                         foreach ($orderUser->orderItems as $itemUser) {
-                            if ($item->productId == $itemUser->productId)
+                            if ($item->productId == $itemUser->productId) {
                                 if ($item->updateDateTime > $itemUser->updateDateTime) {
-                                    $orderUser->quantity = $item->quantity;
+                                    $itemUser->quantity = $item->quantity;
                                 } else {
-                                    $orderUser->quantity = $itemUser->quantity;
+                                    $itemUser->quantity = $itemUser->quantity;
                                 }
-                            $haveItem = TRUE;
+                                $itemUser->save();
+                                $haveItem = TRUE;
+                            }
                         }
+
+//                        throw new \yii\base\Exception($haveItem);
+
 
                         if (!$haveItem) {
                             $orderItem = new OrderItem();
                             $orderItem->attributes = $item->attributes;
-                            $orderItem->orderId = $itemUser->orderId;
+                            $orderItem->orderId = $orderUser->orderId;
                             if (!$orderItem->save()) {
                                 $flag = FALSE;
+                                throw new Exception("Can't Save Order User Item");
                                 break;
                             }
                         }
                     }
                     if ($flag) {
+                        $orderUser->token = $cookies['orderToken']->value;
+                        $orderUser->save();
                         if (OrderItem::deleteAll("orderId=" . $orderToken->orderId) > 0) {
                             if (Order::deleteAll("orderId=" . $orderToken->orderId) == 0) {
                                 $flag = FALSE;

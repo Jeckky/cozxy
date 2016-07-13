@@ -94,9 +94,12 @@ class CartController extends MasterController
     public function actionDeleteCartItem($id)
     {
         $res = [];
-
+        $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId = " . $id)->one();
+        $orderId = $orderItem->orderId;
         if (\common\models\costfit\OrderItem::deleteAll("orderItemId = $id") > 0) {
             $res["status"] = TRUE;
+            $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
+            $order->save(); // Save For Cal new total
             $cartArray = \common\models\costfit\Order::findCartArray();
             $res["cart"] = $cartArray;
 //            $pQuan = 0;
