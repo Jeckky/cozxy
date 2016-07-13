@@ -1,6 +1,17 @@
 <?php
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+
+$firstname = Yii::$app->user->identity->firstname;
+$lastname = Yii::$app->user->identity->lastname;
+
+if (empty($firstname)) {
+    //echo 'firstname';
+}
+
+if (empty($lastname)) {
+    //echo 'lastname';
+}
 ?>
 <!--Login Modal-->
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -59,6 +70,36 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div id="div-login-msg ">
                     <?php $order = common\models\costfit\Order::getOrder(); ?>
                     <h4 class="text-center">คุณใช่ <span class="email"><?= isset($order->user) ? $order->user->email : "-" ?></span> หรือไม่ </h4>
+                </div>
+                <div class="text-center">
+                    <button id="login_lost_btn" type="button" class="yes btn btn-primary">Yes</button>
+                    <button id="login_register_btn" type="button" class="no btn btn-danger">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- /.modal -->
+
+
+<!--Confirm reFormMember-->
+
+<div class="modal show fade" id="reFormMember" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" align="center">
+                <img class="img-responsive img-circle-thumbnail" id="img_logo" src="<?php echo $baseUrl; ?>/images/modal/cost.fit.png" style="zoom:.8;">
+            </div> 
+            <!-- Begin # DIV Form -->
+            <!-- Begin # Login Form -->
+            <div class="modal-body">
+                <div id="div-login-msg">
+                    test
+                </div>
+            </div>
+            <div class="modal-footer" style="border-top: 1px solid #03a9f4;">
+                <div id="div-login-msg ">
+                    test
                 </div>
                 <div class="text-center">
                     <button id="login_lost_btn" type="button" class="yes btn btn-primary">Yes</button>

@@ -35,8 +35,10 @@ class RegisterController extends MasterController {
     public function actionLogin() {
         $model = new \common\models\costfit\User(['scenario' => 'register']);
         $loginForm = new \common\models\LoginForm();
+
+
         if ($loginForm->load(Yii::$app->request->post()) && $loginForm->login()) {
-            //return $this->redirect(['site/index']);
+            //return $this->redirect(['site/index']); 
             return $this->redirect(Yii::$app->homeUrl);
         } else {
 //            throw new \yii\base\Exception(print_r($loginForm->errors, true));
