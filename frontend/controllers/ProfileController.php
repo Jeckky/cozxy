@@ -96,20 +96,22 @@ class ProfileController extends MasterController {
         $model = new \common\models\costfit\User(['scenario' => 'editinfo']);
         $loginForm = new \common\models\LoginForm();
         $model->email = Yii::$app->user->identity->email;
+        $model->userId = Yii::$app->user->identity->userId;
+
         if (isset($_POST["User"])) {
+            $model = \common\models\costfit\User::find()->where("email='" . $model->email . "'and userId ='" . $model->userId . "'")->one();
             $model->attributes = $_POST['User'];
             $model->firstname = $_POST['User']['firstname'];
             $model->lastname = $_POST['User']['lastname'];
             $model->updateDateTime = new yii\db\Expression('NOW()');
-            if ($model->save()) {
-                \common\models\costfit\User::saveCategoryToProduct($model->categoryId, $model->productId);
-                //return $this->redirect(['index']);
+
+            if ($model->save(FALSE)) {
+                $this->redirect(Yii::$app->homeUrl . 'profile');
             }
         } else {
             $model->firstname = Yii::$app->user->identity->firstname;
             $model->lastname = Yii::$app->user->identity->lastname;
         }
-
         return $this->render('@app/views/profile/edit_info', ['model' => $model, 'loginForm' => $loginForm]);
     }
 

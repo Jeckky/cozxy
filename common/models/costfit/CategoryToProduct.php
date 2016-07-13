@@ -16,27 +16,23 @@ use \common\models\costfit\master\CategoryToProductMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class CategoryToProduct extends \common\models\costfit\master\CategoryToProductMaster
-{
+class CategoryToProduct extends \common\models\costfit\master\CategoryToProductMaster {
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public static function saveCategoryToProduct($categoryId, $productId)
-    {
+    public static function saveCategoryToProduct($categoryId, $productId) {
         $model = new CategoryToProduct();
         CategoryToProduct::deleteAll("productId = " . $productId);
 
