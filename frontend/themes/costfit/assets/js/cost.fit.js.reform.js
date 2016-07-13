@@ -136,3 +136,9 @@ $(".reveal_re").on('click', function () {
         $btn_title_re.html('Hidden');
     }
 });
+
+
+/* $('#reFormMember').modal({
+ show: 'false'
+ });
+ */

@@ -27,6 +27,12 @@ AppAsset::register($this);
         <!--Page Content-->
         <?php echo $content; ?>
         <?php $this->endBody() ?>
+        <?php
+        if (Yii::$app->controller->id == 'site') {
+            echo $this->render('@app/views/modal/re_form_member');
+        }
+        ?>
+
     </body>
 </html>
 <?php $this->endPage() ?>
