@@ -18,6 +18,7 @@ use Yii;
     * @property string $zipcode
     * @property string $tel
     * @property integer $type
+    * @property integer $isDefault
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -41,7 +42,7 @@ public function rules()
 {
 return [
             [['userId', 'createDateTime'], 'required'],
-            [['userId', 'countryId', 'provinceId', 'amphurId', 'type', 'status'], 'integer'],
+            [['userId', 'countryId', 'provinceId', 'amphurId', 'type', 'isDefault', 'status'], 'integer'],
             [['address'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['company'], 'string', 'max' => 200],
@@ -68,6 +69,7 @@ return [
     'zipcode' => Yii::t('address', 'Zipcode'),
     'tel' => Yii::t('address', 'Tel'),
     'type' => Yii::t('address', 'Type'),
+    'isDefault' => Yii::t('address', 'Is Default'),
     'status' => Yii::t('address', 'Status'),
     'createDateTime' => Yii::t('address', 'Create Date Time'),
     'updateDateTime' => Yii::t('address', 'Update Date Time'),

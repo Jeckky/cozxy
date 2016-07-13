@@ -16,7 +16,8 @@ use frontend\models\ContactForm;
 /**
  * Checkout controller
  */
-class CheckoutController extends MasterController {
+class CheckoutController extends MasterController
+{
 
     public $enableCsrfValidation = false;
 
@@ -25,13 +26,21 @@ class CheckoutController extends MasterController {
      *
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
 
         $this->layout = "/content_right";
         $this->title = 'Cost.fit | checkout';
         $this->subTitle = 'Checkout';
         $this->subSubTitle = "";
-        return $this->render('checkout');
+
+        $address = new \common\models\costfit\Address();
+        if (\Yii::$app->user->isGuest) {
+            $user = new \common\models\costfit\User();
+        } else {
+            $user = \common\models\costfit\User::find()->where('userId=' . \Yii::$app->user->id)->one();
+        }
+        return $this->render('checkout', compact('address', 'user'));
     }
 
 }

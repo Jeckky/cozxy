@@ -68,8 +68,14 @@ class CartController extends MasterController
         $orderItem->total = $orderItem->quantity * $orderItem->price;
         $orderItem->createDateTime = new \yii\db\Expression("NOW()");
         if ($orderItem->save()) {
+            if (Yii::$app->db->lastInsertID > 0) {
+                $orderItemId = Yii::$app->db->lastInsertID;
+            } else {
+                $orderItemId = $orderItem->orderItemId;
+            }
             $order->save();
             $res["status"] = TRUE;
+            $res["orderItemId"] = $orderItemId;
             $cartArray = \common\models\costfit\Order::findCartArray();
             $res["cart"] = $cartArray;
             $pQuan = 0;

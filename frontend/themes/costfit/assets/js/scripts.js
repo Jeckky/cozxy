@@ -591,7 +591,7 @@ $(document).ready(function (e) {
                 {
                     $addedToCartMessage.find('p').text('"' + $itemName + '"' + '  ' + 'was successfully added to your cart.');
                     $('.cart-dropdown table').append(
-                            '<tr class="item"><td><div class="delete"></div><a href="#">' + $itemName +
+                            '<tr class="item" id="item' + data.orderItemId + '"><td><div class="delete"><input type="hidden" id="orderItemId" name="orderItemId" value="' + data.orderItemId + '"></div><a href="#">' + $itemName +
                             '<td><input type="text" value="' + $itemQnty +
                             '"></td><td class="price">' + $itemPrice + '</td>'
                             );

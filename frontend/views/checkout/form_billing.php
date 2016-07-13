@@ -3,22 +3,37 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
-$baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+use yii\helpers\ArrayHelper;
 ?>
-<h3>Billing address</h3>
+
+<?php
+$formName = (isset($type) && $type == 1) ? "formBilling" : "formShipping";
+if (isset($isUpdate)) {
+    $formName.="Update";
+}
+$form = ActiveForm::begin([
+    'options' => ['enctype' => 'multipart/form-data', 'id' => $formName],
+    'fieldConfig' => [
+//        'template' => '{label}<div class="col-sm-9">{input}</div>',
+        'labelOptions' => [
+//            'class' => 'col-sm-3 control-label'
+        ]
+    ]
+]);
+?>
+<h3><?= (isset($type) && $type == 1) ? "Billing" : "Shipping" ?> address</h3>
 <div class="form-group">
-    <label for="co-country">Country *</label>
+    <label for="address_countryId">Country *</label>
     <div class="select-style">
-        <select name="co-country input-sm" id="co-country">
+<!--        <select name="co-country input-sm" id="co-country">
             <option>Australia</option>
             <option>Belgium</option>
             <option>Germany</option>
             <option>United Kingdom</option>
             <option>Switzerland</option>
             <option>USA</option>
-        </select>
+        </select>-->
+        <?= Html::dropDownList("Address[countryId]", isset($address->countryId) ? $address->countryId : "THA", ArrayHelper::map(common\models\dbworld\Countries::find()->all(), 'countryId', 'countryName')); ?>
     </div>
 </div>
 <div class="row">
@@ -67,14 +82,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <input type="text" class="form-control input-sm" id="co_phone" name="co_phone" placeholder="Phone number" required>
     </div>
 </div>
-<div class="checkbox form-group">
-    <label><input type="checkbox" name="create-account"> Create an account?</label>
-</div>
-<div class="checkbox form-group">
-    <label><span>Ship to a different adress?</span> <input type="checkbox" name="ship-to-dif-adress"></label>
-</div>
-<h3>Order notes</h3>
-<div class="form-group">
-    <label class="sr-only" for="order-notes">Order notes</label>
-    <textarea class="form-control input-sm" name="order-notes" id="order-notes" rows="4" placeholder="Order notes"></textarea>
-</div>
+
+<?php
+if (isset($isUpdate)) {
+    echo Html::submitButton("Save", ['class' => (isset($type) && $type == 1) ? "btn btn-success updateBillingSave" : "btn btn-success updateShippingSave"]);
+    echo Html::a("Cancel", "", ['class' => (isset($type) && $type == 1) ? "btn btn-danger updateBillingCancel" : "btn btn-danger updateShippingCancel"]);
+}
+?>
+
+<?php ActiveForm::end(); ?>
+

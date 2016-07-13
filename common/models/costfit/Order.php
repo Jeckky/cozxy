@@ -167,7 +167,6 @@ class Order extends \common\models\costfit\master\OrderMaster
     public function beforeSave($insert)
     {
         parent::beforeSave($insert);
-
         $total = 0;
         foreach ($this->orderItems as $item) {
             $total+=$item->total;

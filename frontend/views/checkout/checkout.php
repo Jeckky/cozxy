@@ -26,10 +26,61 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             <!--Hidden Panels-->
                             <?php if (Yii::$app->user->isGuest): ?>
                                 <!--Checkout Form Click here to login-->
-                                <a class="panel-toggle" href="#login"><i></i>Returning customer? Click here to login</a>
+                                <a class="panel-toggle active action" href="#login"><i></i>Returning customer? Click here to login</a>
                                 <div class="row">
-                                    <div class="hidden-panel" id="login">
-                                        <?php echo $this->render('@app/views/register/form_login'); ?>
+                                    <div class="hidden-panel expanded" id="login">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-xs-12">
+                                                <h4>Login</h4>
+                                                <!--<form class="login-form" method="post">-->
+                                                <label>Use social accounts</label>
+                                                <div class="social-login">
+                                                    <a class="facebook" href="#"><i class="fa fa-facebook-square"></i></a>
+                                                    <a class="google" href="#"><i class="fa fa-google-plus-square"></i></a>
+                                                    <a class="twitter" href="#"><i class="fa fa-twitter-square"></i></a>
+                                                </div>
+                                                <div class="form-group group">
+                                                    <label for="log-email2">Email</label>
+                                                    <input type="email" class="form-control" name="log-email2" id="log-email2" placeholder="Enter your email" required>
+                                                    <!--<a class="help-link" href="#">Forgot email?</a>-->
+                                                </div>
+                                                <div class="form-group group">
+                                                    <label for="log-password2">Password</label>
+                                                    <input type="text" class="form-control" name="log-password2" id="log-password2" placeholder="Enter your password" required>
+                                                    <a class="help-link" href="#">Forgot password?</a>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <!--<label><input type="checkbox" name="remember"> Remember me</label>-->
+                                                </div>
+                                                <input class="btn btn-primary" type="submit" value="Login">
+                                                <!--</form>-->
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-xs-12" style="border-left:1px solid black">
+                                                <h4>Register</h4>
+                                                <?php $form = ActiveForm::begin(['id' => 'register-form', 'action' => $baseUrl . '/register/register', 'options' => ['class' => 'registr-form']]); ?>
+                                                <?//= $form->errorSummary($model); ?>
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-md-6 col-xs-12">
+                                                        <?= $form->field($user, 'firstname')->textInput() ?>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-xs-12">
+                                                        <?= $form->field($user, 'lastname') ?>
+                                                    </div>
+                                                </div>
+                                                <?= $form->field($user, 'email') ?>
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-md-6 col-xs-12">
+                                                        <?= $form->field($user, 'password')->passwordInput() ?>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-xs-12">
+                                                        <?= $form->field($user, 'confirmPassword')->passwordInput() ?>
+                                                    </div>
+                                                </div>
+                                                <input class="btn btn-primary" type="submit" value="Register">
+                                                <?php ActiveForm::end(); ?>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             <?php endif; ?>
@@ -44,28 +95,20 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     </div>
                                 </div>
                             <?php endif; ?>
-                            <!--Checkout Form New Address-->
-                            <a class="panel-toggle" href="#costfit"><i></i>New Address</a>
-                            <div class="row">
-                                <div class="col-lg-10">
-                                    <div class="hidden-panel" id="costfit">
-                                        <?php echo $this->render('form_billing'); ?>
-                                    </div>
-                                </div>
+                            <?php echo $this->render('_address', ['type' => 2, 'address' => $address, 'user' => $user]); ?>
+                            <!--                            <div class="checkbox form-group">
+                                                            <label><input type="checkbox" name="create-account"> Create an account?</label>
+                                                        </div>-->
+                            <div class=" form-group" >
+                                <label class="ship-to-dif-adress btn btn-primary"><span>Click for Billing to a different adress?</span></label>
                             </div>
-                            <!--Checkout Form Select  Address-->
-                            <a class="panel-toggle active action" href="#costfit-select-address"><i></i>Select Address</a>
-                            <div class="row" style="background-color: rgba(249, 249, 249, 0.32);">
-                                <div class="col-lg-12">
-                                    <div class="hidden-panel expanded" id="costfit-select-address" style="color: #292c2e;">
-                                        <?php echo $this->render('address_new'); ?>
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <?php echo $this->render('form_billing'); ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="shippingArea hide">
+                                <?php echo $this->render('_address', ['type' => 1, 'address' => $address, 'user' => $user]); ?>
+                            </div>
+                            <h3>Order notes</h3>
+                            <div class="form-group">
+                                <label class="sr-only" for="order-notes">Order notes</label>
+                                <textarea class="form-control input-sm" name="order-notes" id="order-notes" rows="4" placeholder="Order notes"></textarea>
                             </div>
                         </div>
                     </div>
