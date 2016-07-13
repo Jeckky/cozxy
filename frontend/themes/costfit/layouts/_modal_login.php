@@ -86,13 +86,13 @@ if (empty($lastname)) {
 
 <!--Confirm reFormMember-->
 
-<div class="modal show fade" id="reFormMember" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal hide fade" id="reFormMember" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
 
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" align="center">
                 <img class="img-responsive img-circle-thumbnail" id="img_logo" src="<?php echo $baseUrl; ?>/images/modal/cost.fit.png" style="zoom:.8;">
-            </div> 
+            </div>
             <!-- Begin # DIV Form -->
             <!-- Begin # Login Form -->
             <div class="modal-body">
