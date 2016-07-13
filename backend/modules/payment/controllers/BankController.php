@@ -1,18 +1,18 @@
 <?php
 
-namespace backend\modules\shipping\controllers;
+namespace backend\modules\payment\controllers;
 
 use Yii;
-use common\models\costfit\Package;
+use common\models\costfit\Bank;
 use yii\data\ActiveDataProvider;
 use backend\controllers\BackendMasterController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PackageController implements the CRUD actions for Package model.
+ * BankController implements the CRUD actions for Bank model.
  */
-class PackageController extends ShippingMasterController
+class BankController extends PaymentMasterController
 {
 
     public function behaviors()
@@ -28,13 +28,13 @@ class PackageController extends ShippingMasterController
     }
 
     /**
-     * Lists all Package models.
+     * Lists all Bank models.
      * @return mixed
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Package::find(),
+            'query' => Bank::find(),
         ]);
 
         return $this->render('index', [
@@ -43,7 +43,7 @@ class PackageController extends ShippingMasterController
     }
 
     /**
-     * Displays a single Package model.
+     * Displays a single Bank model.
      * @param string $id
      * @return mixed
      */
@@ -55,19 +55,19 @@ class PackageController extends ShippingMasterController
     }
 
     /**
-     * Creates a new Package model.
+     * Creates a new Bank model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Package();
-        if (isset($_POST["Package"])) {
-            $model->attributes = $_POST["Package"];
+        $model = new Bank();
+        if (isset($_POST["Bank"])) {
+            $model->attributes = $_POST["Bank"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
-            $imageObj = \yii\web\UploadedFile::getInstanceByName("Package[image]");
+            $imageObj = \yii\web\UploadedFile::getInstanceByName("Bank[image]");
             if (isset($imageObj) && !empty($imageObj)) {
-                $folderName = "Package";
+                $folderName = "Bank";
                 $file = $imageObj->name;
                 $filenameArray = explode('.', $file);
                 $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
@@ -91,7 +91,7 @@ class PackageController extends ShippingMasterController
     }
 
     /**
-     * Updates an existing Package model.
+     * Updates an existing Bank model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -99,13 +99,13 @@ class PackageController extends ShippingMasterController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if (isset($_POST["Package"])) {
-            $model->attributes = $_POST["Package"];
+        if (isset($_POST["Bank"])) {
+            $model->attributes = $_POST["Bank"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
 
-            $imageObj = \yii\web\UploadedFile::getInstanceByName("Package[image]");
+            $imageObj = \yii\web\UploadedFile::getInstanceByName("Bank[image]");
             if (isset($imageObj) && !empty($imageObj)) {
-                $folderName = "Package";
+                $folderName = "Bank";
                 $file = $imageObj->name;
                 $filenameArray = explode('.', $file);
                 $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
@@ -116,8 +116,8 @@ class PackageController extends ShippingMasterController
                     mkdir($urlFolder, 0777);
                 }
             } else {
-                if (isset($_POST["Package"]["imageOld"])) {
-                    $model->image = $_POST["Package"]["imageOld"];
+                if (isset($_POST["Bank"]["imageOld"])) {
+                    $model->image = $_POST["Bank"]["imageOld"];
                 }
             }
 
@@ -135,7 +135,7 @@ class PackageController extends ShippingMasterController
     }
 
     /**
-     * Deletes an existing Package model.
+     * Deletes an existing Bank model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -148,15 +148,15 @@ class PackageController extends ShippingMasterController
     }
 
     /**
-     * Finds the Package model based on its primary key value.
+     * Finds the Bank model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return Package the loaded model
+     * @return Bank the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Package::findOne($id)) !== null) {
+        if (($model = Bank::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

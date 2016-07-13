@@ -159,6 +159,29 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             </li>
 
             <li class="mm-dropdown">
+                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Payment  </span><span class="label label-danger">new</span><span class="badge badge-primary">1</span></a>
+                <ul>
+                    <li>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/payment/payment-method"><span class="mm-text">Payment Method</span></a>
+                    </li>
+                    <li>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/payment/bank"><span class="mm-text">Bank</span></a>
+                    </li>
+                    <!--                    <li class="mm-dropdown">
+                                            <a tabindex="-1" href="#"><span class="mm-text">Content</span><span class="label label-warning">2</span></a>
+                                            <ul>
+                                                <li>
+                                                    <a tabindex="-1" href="<?php echo $baseUrl; ?>/content/content-group"><span class="mm-text">Package</span></a>
+                                                </li>
+                                                <li>
+                                                    <a tabindex="-1" href="<?php echo $baseUrl; ?>/shipping/package-type"><span class="mm-text">Package Type</span></a>
+                                                </li>
+                                            </ul>
+                                        </li>-->
+                </ul>
+            </li>
+
+            <li class="mm-dropdown">
                 <a href="#"><i class="menu-icon fa fa-sitemap"></i><span class="mm-text">Menu levels</span><span class="badge badge-primary">6</span></a>
                 <ul>
                     <li>
