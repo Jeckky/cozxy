@@ -17,7 +17,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     ]);
     ?>
     <?php echo $form->field($model, 'company'); ?>
-    <?php echo $form->field($model, 'tax'); ?>
     <?php echo $form->field($model, 'address')->textarea(); ?>
     <?=
             $form->field($model, 'countryId')
@@ -37,6 +36,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     yii\helpers\ArrayHelper::map(\common\models\dbworld\Cities::find()->all(), 'cityId', 'cityName'), ['prompt' => 'Select amphur']
             )->label('Amphur')
     ?>
+    <?php echo $form->field($model, 'tax'); ?>
     <?php echo $form->field($model, 'zipcode'); ?>
     <?php echo $form->field($model, 'tel'); ?>
     <?php echo $form->field($model, 'isDefault')->radioList([0 => 'Yes', 1 => 'No'], ['itemOptions' => ['class' => 'radio']])->label('isDefault address') ?>
