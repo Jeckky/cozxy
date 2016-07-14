@@ -4,8 +4,11 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
+//use kartik\depdrop\DepDrop;
+
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+// https://github.com/kartik-v/yii2-widget-depdrop //
 ?>
 
 <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup">
@@ -25,9 +28,20 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             )->label('Country')
     ?>
     <?=
+    // Dependent Dropdown
+    /* $form->field($model, 'provinceId')->widget(DepDrop::classname(), [
+      'options' => ['id' => 'subcat-id'],
+      'pluginOptions' => [
+      'depends' => ['cat-id'],
+      'placeholder' => 'Select...',
+      'url' => Url::to(['/site/subcat'])
+      ]
+      ]); */
+    ?>
+    <?=
             $form->field($model, 'provinceId')
             ->dropDownList(
-                    yii\helpers\ArrayHelper::map(\common\models\dbworld\States::find()->all(), 'stateId', 'stateName'), ['prompt' => 'Select province']
+                    yii\helpers\ArrayHelper::map(\common\models\dbworld\States::find(), 'stateId', 'stateName'), ['prompt' => 'Select province']
             )->label('Province')
     ?>
     <?=
