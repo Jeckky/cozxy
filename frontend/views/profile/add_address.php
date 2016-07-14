@@ -27,16 +27,16 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     yii\helpers\ArrayHelper::map(\common\models\dbworld\Countries::find()->all(), 'countryId', 'countryName'), ['prompt' => 'Select country']
             )->label('Country')
     ?>
-    <?=
+    <? //
     // Dependent Dropdown
     /* $form->field($model, 'provinceId')->widget(DepDrop::classname(), [
-      'options' => ['id' => 'subcat-id'],
-      'pluginOptions' => [
-      'depends' => ['cat-id'],
-      'placeholder' => 'Select...',
-      'url' => Url::to(['/site/subcat'])
-      ]
-      ]); */
+    'options' => ['id' => 'subcat-id'],
+    'pluginOptions' => [
+    'depends' => ['cat-id'],
+    'placeholder' => 'Select...',
+    'url' => Url::to(['/site/subcat'])
+    ]
+    ]); */
     ?>
     <?=
             $form->field($model, 'provinceId')
