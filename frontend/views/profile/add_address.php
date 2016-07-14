@@ -20,35 +20,31 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     ?>
     <?php echo $form->field($model, 'company'); ?>
     <?php echo $form->field($model, 'address')->textarea(); ?>
-    <?=
-            $form->field($model, 'countryId')
-            ->dropDownList(
-                    yii\helpers\ArrayHelper::map(\common\models\dbworld\Countries::find()->all(), 'countryId', 'countryName'), ['prompt' => 'Select country']
-                    , ['id' => 'address-countryid'])->label('Country')
+
+    <?php
+    echo $form->field($model, 'countryId')->dropDownList(
+            yii\helpers\ArrayHelper::map(\common\models\dbworld\Countries::find()->all(), 'countryId', 'countryName'), ['prompt' => 'Select country']
+            , ['id' => 'address-countryid'])->label('Country');
+// Child # 1
+    echo $form->field($model, 'provinceId')->widget(DepDrop::classname(), [
+        'type' => DepDrop::TYPE_SELECT2,
+        'options' => ['id' => 'province-id', 'class' => 'form-control'],
+        'pluginOptions' => [
+            'depends' => ['address-countryid'],
+            'placeholder' => 'Select...',
+            'url' => yii\helpers\Url::to(['child-states']),
+        ]
+    ]);
+    // Child # 2
+    echo $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
+        'type' => DepDrop::TYPE_SELECT2,
+        'pluginOptions' => [
+            'depends' => ['amphur-id', 'province-id'],
+            'placeholder' => 'Select...',
+            'url' => yii\helpers\Url::to(['child-amphur'])
+        ]
+    ]);
     ?>
-
-
-    <div class="form-group col-md-12">
-        <label>จังหวัด</label>
-        <?= Html::dropDownList("Search[stateId]", $model->provinceId, yii\helpers\ArrayHelper::map(\common\models\dbworld\States::find()->all(), 'stateId', 'stateName'), ['prompt' => '-- Select State --', 'class' => 'select2', 'onchange' => 'dynamicCity(this)', 'style' => 'width:90%']) ?>
-        <div id="stateDdl">
-            <?//= Html::dropDownList("Search[stateId]", NULL, [], ['prompt' => '-- Select State --', 'style' => 'width:90%', 'onmouseover' => 'dynamicState()']) ?>
-        </div>
-
-    </div>
-    <?// =
-    $form->field($model, 'provinceId')
-    ->dropDownList(
-    yii\helpers\ArrayHelper::map(\common\models\dbworld\States::find(), 'stateId', 'stateName'), ['prompt' => 'Select province']
-    )->label('Province')
-    ?>
-    <div id="cityDdl">
-        <?=
-                $form->field($model, 'amphurId')
-                ->dropDownList(
-                        yii\helpers\ArrayHelper::map(\common\models\dbworld\Cities::find()->all(), 'cityId', 'cityName'), ['prompt' => 'Select amphur']
-                )->label('Amphur')
-        ?></div>
     <?php echo $form->field($model, 'tax'); ?>
     <?php echo $form->field($model, 'zipcode'); ?>
     <?php echo $form->field($model, 'tel'); ?>

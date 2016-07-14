@@ -119,4 +119,50 @@ class ProfileController extends MasterController {
         return $this->render('@app/views/profile/edit_info', ['model' => $model]);
     }
 
+    // CONTROLLER
+    public function actionChildStates() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $id = end($_POST['depdrop_parents']);
+            $list = \common\models\dbworld\States::find()->andWhere(['countryId' => $id])->asArray()->all();
+            $selected = null;
+            if ($id != null && count($list) > 0) {
+                $selected = '';
+                foreach ($list as $i => $account) {
+                    $out[] = ['id' => $account['stateId'], 'name' => $account['stateName']];
+                    if ($i == 0) {
+                        $selected = $account['stateId'];
+                    }
+                }
+                // Shows how you can preselect a value
+                echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
+    }
+
+    // CONTROLLER
+    public function actionChildAmphur() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $id = end($_POST['depdrop_parents']);
+            $list = \common\models\dbworld\Cities::find()->andWhere(['stateId' => $id])->asArray()->all();
+            $selected = null;
+            if ($id != null && count($list) > 0) {
+                $selected = '';
+                foreach ($list as $i => $account) {
+                    $out[] = ['id' => $account['cityId'], 'name' => $account['cityName']];
+                    if ($i == 0) {
+                        $selected = $account['cityId'];
+                    }
+                }
+                // Shows how you can preselect a value
+                echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
+    }
+
 }
