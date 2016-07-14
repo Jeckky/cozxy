@@ -42,11 +42,12 @@ public function rules()
 {
 return [
             [['userId', 'createDateTime'], 'required'],
-            [['userId', 'countryId', 'provinceId', 'amphurId', 'type', 'isDefault', 'status'], 'integer'],
+            [['userId', 'provinceId', 'amphurId', 'type', 'isDefault', 'status'], 'integer'],
             [['address'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['company'], 'string', 'max' => 200],
             [['tax', 'tel'], 'string', 'max' => 45],
+            [['countryId'], 'string', 'max' => 3],
             [['zipcode'], 'string', 'max' => 10],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => UserMaster::className(), 'targetAttribute' => ['userId' => 'userId']],
         ];
