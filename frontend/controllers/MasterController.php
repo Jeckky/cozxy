@@ -72,14 +72,46 @@ class MasterController extends MasterCommonController
 
     public function generateNewToken()
     {
-        $cookies = Yii::$app->request->cookies;
-        if (!isset($cookies['orderToken'])) {
-            $cookies = Yii::$app->response->cookies;
-            $cookies->add(new \yii\web\Cookie([
-                'name' => 'orderToken',
-                'value' => Yii::$app->security->generateRandomString(),
-            ]));
-        }
+//        $cookies = Yii::$app->request->cookies;
+//        if (!isset($cookies['orderToken'])) {
+        $cookies = Yii::$app->response->cookies;
+        $cookies->add(new \yii\web\Cookie([
+            'name' => 'orderToken',
+            'value' => Yii::$app->security->generateRandomString(),
+        ]));
+//        }
+    }
+
+    public function actionDynamicState()
+    {
+        $dataArray = ArrayHelper::map(\common\models\dbWorld\States::find()->all(), 'stateId', 'stateName');
+        echo $this->renderPartial('ddl', [
+            'dataArray' => $dataArray,
+            'prompt' => '-- Select State --',
+            'name' => 'Search[stateId]',
+            'onChange' => 'dynamicCity(this)'
+        ]);
+    }
+
+    public function actionDynamicCity()
+    {
+        $dataArray = ArrayHelper::map(\common\models\dbWorld\Cities::find()->where("stateId=" . $_GET["stateId"])->all(), 'cityId', 'cityName');
+        echo $this->renderPartial('ddl', [
+            'dataArray' => $dataArray,
+            'prompt' => '-- Select City --',
+            'name' => 'Search[cityId]',
+            'onChange' => 'dynamicDistrict(this)'
+        ]);
+    }
+
+    public function actionDynamicDistrict()
+    {
+        $dataArray = ArrayHelper::map(\common\models\dbWorld\District::find()->where("cityId=" . $_GET["cityId"])->all(), 'districtId', 'localName');
+        echo $this->renderPartial('ddl', [
+            'dataArray' => $dataArray,
+            'prompt' => '-- Select District --',
+            'name' => 'Search[disctictId]'
+        ]);
     }
 
 }
