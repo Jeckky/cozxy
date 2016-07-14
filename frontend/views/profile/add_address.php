@@ -44,6 +44,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             'url' => yii\helpers\Url::to(['child-amphur'])
         ]
     ]);
+    // Child # 3
+    echo $form->field($model, 'districtId')->widget(DepDrop::classname(), [
+        'type' => DepDrop::TYPE_SELECT2,
+        'pluginOptions' => [
+            'depends' => ['district-id', 'amphur-id'],
+            'placeholder' => 'Select...',
+            'url' => yii\helpers\Url::to(['child-district'])
+        ]
+    ]);
     ?>
     <?php echo $form->field($model, 'tax'); ?>
     <?php echo $form->field($model, 'zipcode'); ?>
@@ -54,16 +63,16 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </div>
 
 <script>
-    function dynamicCity(state)
-    {
-        $.ajax({
-            type: 'GET',
-            //datatype:'ajax',
-            data: {stateId: state.value},
-            url: '<?= yii\helpers\Url::to(Yii::$app->homeUrl . 'site/dynamic-city') ?>',
-            success: function (data) {
-                $("#cityDdl").html(data);
-            }
-        });
-    }
+    /* function dynamicCity(state)
+     {
+     $.ajax({
+     type: 'GET',
+     //datatype:'ajax',
+     data: {stateId: state.value},
+     url: '<? //= yii\helpers\Url::to(Yii::$app->homeUrl . 'site/dynamic-city') ?>',
+     success: function (data) {
+     $("#cityDdl").html(data);
+     }
+     });
+     }*/
 </script>

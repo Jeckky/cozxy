@@ -106,7 +106,7 @@ class ProfileController extends MasterController {
         $this->subTitle = 'Home';
         $this->subSubTitle = "Contact Information";
 
-        $model = \common\models\costfit\Address::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
+        $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
 
         if (isset($_POST["User"])) {
             $model->attributes = $_POST['User'];
@@ -155,6 +155,29 @@ class ProfileController extends MasterController {
                     $out[] = ['id' => $account['cityId'], 'name' => $account['cityName']];
                     if ($i == 0) {
                         $selected = $account['cityId'];
+                    }
+                }
+                // Shows how you can preselect a value
+                echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
+    }
+
+    // CONTROLLER
+    public function actionChildDistrict() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $id = end($_POST['depdrop_parents']);
+            $list = \common\models\dbworld\District::find()->andWhere(['cityId' => $id])->asArray()->all();
+            $selected = null;
+            if ($id != null && count($list) > 0) {
+                $selected = '';
+                foreach ($list as $i => $account) {
+                    $out[] = ['id' => $account['districtId'], 'name' => $account['districtName']];
+                    if ($i == 0) {
+                        $selected = $account['districtId'];
                     }
                 }
                 // Shows how you can preselect a value
