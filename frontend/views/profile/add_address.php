@@ -3,8 +3,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-
-//use kartik\depdrop\DepDrop;
+use kartik\depdrop\DepDrop;
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
@@ -25,31 +24,31 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             $form->field($model, 'countryId')
             ->dropDownList(
                     yii\helpers\ArrayHelper::map(\common\models\dbworld\Countries::find()->all(), 'countryId', 'countryName'), ['prompt' => 'Select country']
-            )->label('Country')
+                    , ['id' => 'address-countryid'])->label('Country')
     ?>
-    <? //
-    // Dependent Dropdown
-    /* $form->field($model, 'provinceId')->widget(DepDrop::classname(), [
-    'options' => ['id' => 'subcat-id'],
-    'pluginOptions' => [
-    'depends' => ['cat-id'],
-    'placeholder' => 'Select...',
-    'url' => Url::to(['/site/subcat'])
-    ]
-    ]); */
+
+
+    <div class="form-group col-md-12">
+        <label>จังหวัด</label>
+        <?= Html::dropDownList("Search[stateId]", $model->provinceId, yii\helpers\ArrayHelper::map(\common\models\dbworld\States::find()->all(), 'stateId', 'stateName'), ['prompt' => '-- Select State --', 'class' => 'select2', 'onchange' => 'dynamicCity(this)', 'style' => 'width:90%']) ?>
+        <div id="stateDdl">
+            <?//= Html::dropDownList("Search[stateId]", NULL, [], ['prompt' => '-- Select State --', 'style' => 'width:90%', 'onmouseover' => 'dynamicState()']) ?>
+        </div>
+
+    </div>
+    <?// =
+    $form->field($model, 'provinceId')
+    ->dropDownList(
+    yii\helpers\ArrayHelper::map(\common\models\dbworld\States::find(), 'stateId', 'stateName'), ['prompt' => 'Select province']
+    )->label('Province')
     ?>
-    <?=
-            $form->field($model, 'provinceId')
-            ->dropDownList(
-                    yii\helpers\ArrayHelper::map(\common\models\dbworld\States::find(), 'stateId', 'stateName'), ['prompt' => 'Select province']
-            )->label('Province')
-    ?>
-    <?=
-            $form->field($model, 'amphurId')
-            ->dropDownList(
-                    yii\helpers\ArrayHelper::map(\common\models\dbworld\Cities::find()->all(), 'cityId', 'cityName'), ['prompt' => 'Select amphur']
-            )->label('Amphur')
-    ?>
+    <div id="cityDdl">
+        <?=
+                $form->field($model, 'amphurId')
+                ->dropDownList(
+                        yii\helpers\ArrayHelper::map(\common\models\dbworld\Cities::find()->all(), 'cityId', 'cityName'), ['prompt' => 'Select amphur']
+                )->label('Amphur')
+        ?></div>
     <?php echo $form->field($model, 'tax'); ?>
     <?php echo $form->field($model, 'zipcode'); ?>
     <?php echo $form->field($model, 'tel'); ?>
@@ -57,3 +56,18 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <?php echo Html::submitButton('Save shipping address', ['class' => 'btn btn-primary', 'name' => 'btn-shipping-address']) ?>
     <?php ActiveForm::end(); ?>
 </div>
+
+<script>
+    function dynamicCity(state)
+    {
+        $.ajax({
+            type: 'GET',
+            //datatype:'ajax',
+            data: {stateId: state.value},
+            url: '<?= yii\helpers\Url::to(Yii::$app->homeUrl . 'site/dynamic-city') ?>',
+            success: function (data) {
+                $("#cityDdl").html(data);
+            }
+        });
+    }
+</script>
