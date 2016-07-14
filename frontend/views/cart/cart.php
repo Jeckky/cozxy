@@ -78,7 +78,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </div>
         <?php endif; ?>
         <div class="row">
-
+            <?php
+            //echo '<pre>';
+            //print_r($this->params['cart']['items']);
+            ?>
             <!--Items List-->
             <div class="col-lg-9 col-md-9">
                 <h2 class="title">Shopping cart</h2>
@@ -197,15 +200,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     /*function proceed(data) {
      var shop_data = data;
      if (shop_data == 'apply_coupon') {
-     //window.location = '<?php //echo $baseUrl;                                                     ?>';
+     //window.location = '<?php //echo $baseUrl;                                                           ?>';
      } else if (shop_data == 'update_cart') {
-     window.location = '<?php //echo $baseUrl;                                                     ?>' + '/history';
+     window.location = '<?php //echo $baseUrl;                                                           ?>' + '/history';
      } else if (shop_data == 'to_checkout') {
-     window.location = '<?php //echo $baseUrl;                                                     ?>' + '/checkout';
+     window.location = '<?php //echo $baseUrl;                                                           ?>' + '/checkout';
      } else if (shop_data == '') {
-     //window.location = '<?php //echo $baseUrl;                                                     ?>' ;
+     //window.location = '<?php //echo $baseUrl;                                                           ?>' ;
      } else {
-     window.location = '<?php //echo $baseUrl;                                                     ?>';
+     window.location = '<?php //echo $baseUrl;                                                           ?>';
      }
      }*/
 

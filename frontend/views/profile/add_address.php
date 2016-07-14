@@ -10,33 +10,36 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup">
     <h4>Default shipping address</h4>
-
-    <form class="space-bottom" role="form" method="post">
-        <div class="form-group">
-            <label for="cs-email">First Name</label>
-            <input type="email" class="form-control" id="cs-email" placeholder="First Name">
-        </div>
-        <div class="form-group">
-            <label for="cs-password">Last Name</label>
-            <input type="password" class="form-control" id="cs-password" placeholder="Last Name">
-        </div>
-        <div class="form-group">
-            <label for="cs-password">Street Address</label>
-            <input type="password" class="form-control" id="cs-password" placeholder="Street Address">
-        </div>
-        <div class="form-group">
-            <label for="cs-password">Apt., Floor, Unit (Optional) </label>
-            <input type="password" class="form-control" id="cs-password" placeholder="Apt., Floor, Unit (Optional) ">
-        </div>
-        <div class="form-group">
-            <label for="cs-password">Shipping Zip Code</label>
-            <input type="password" class="form-control" id="cs-password" placeholder="Shipping Zip Code">
-        </div>
-        <div class="form-group">
-            <label for="cs-password">Phone Number</label>
-            <input type="password" class="form-control" id="cs-password" placeholder="Phone Number">
-        </div>
-        <button type="submit" class="btn btn-primary">Add Address</button>
-    </form>
-
+    <?php
+    $form = ActiveForm::begin([
+                'id' => 'default-shipping-address',
+                'options' => ['class' => 'space-bottom']
+    ]);
+    ?>
+    <?php echo $form->field($model, 'company'); ?>
+    <?php echo $form->field($model, 'tax'); ?>
+    <?php echo $form->field($model, 'address')->textarea(); ?>
+    <?=
+            $form->field($model, 'countryId')
+            ->dropDownList(
+                    yii\helpers\ArrayHelper::map(\common\models\dbworld\Countries::find()->all(), 'countryId', 'countryName'), ['prompt' => 'Select country']
+            )->label('Country')
+    ?>
+    <?=
+            $form->field($model, 'provinceId')
+            ->dropDownList(
+                    yii\helpers\ArrayHelper::map(\common\models\dbworld\States::find()->all(), 'stateId', 'stateName'), ['prompt' => 'Select province']
+            )->label('Province')
+    ?>
+    <?=
+            $form->field($model, 'amphurId')
+            ->dropDownList(
+                    yii\helpers\ArrayHelper::map(\common\models\dbworld\Cities::find()->all(), 'cityId', 'cityName'), ['prompt' => 'Select amphur']
+            )->label('Amphur')
+    ?>
+    <?php echo $form->field($model, 'zipcode'); ?>
+    <?php echo $form->field($model, 'tel'); ?>
+    <?php echo $form->field($model, 'isDefault')->radioList([0 => 'Yes', 1 => 'No'], ['itemOptions' => ['class' => 'radio']])->label('isDefault address') ?>
+    <?php echo Html::submitButton('Save shipping address', ['class' => 'btn btn-primary', 'name' => 'btn-shipping-address']) ?>
+    <?php ActiveForm::end(); ?>
 </div>

@@ -34,7 +34,7 @@ class ProfileController extends MasterController {
         $this->title = 'Cost.fit | My Profile';
         $this->subTitle = 'Home';
         $this->subSubTitle = "My Profile";
-        //return $this->render('profile_layouts');
+//return $this->render('profile_layouts');
         return $this->render('profile');
     }
 
@@ -61,14 +61,27 @@ class ProfileController extends MasterController {
     }
 
     public function actionAddAddress() {
+
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
+
         $this->layout = "/content_profile";
         $this->title = 'Cost.fit | Default Shipping Assdress';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Default Shipping Assdress";
-        return $this->render('@app/views/profile/add_address');
+
+        $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
+        //$loginForm = new \common\models\LoginForm();
+
+        if (isset($_POST['Address'])) {
+            $model->attributes = $_POST['Address'];
+            if ($model->save(FALSE)) {
+                $this->redirect(Yii::$app->homeUrl . 'profile');
+            }
+        }
+        $model->isDefault = 0;
+        return $this->render('@app/views/profile/add_address', ['model' => $model]);
     }
 
     public function actionAddPaymentMethod() {
@@ -93,7 +106,8 @@ class ProfileController extends MasterController {
         $this->subTitle = 'Home';
         $this->subSubTitle = "Contact Information";
 
-        $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
+        $model = \common\models\costfit\Address::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
+
         if (isset($_POST["User"])) {
             $model->attributes = $_POST['User'];
 

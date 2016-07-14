@@ -25,38 +25,39 @@ use \common\models\costfit\master\AddressMaster;
  *
  * @property User $user
  */
-class Address extends \common\models\costfit\master\AddressMaster
-{
+class Address extends \common\models\costfit\master\AddressMaster {
 
-    const TYPE_BILLING = 1;
-    const TYPE_SHIPPING = 2;
+    const TYPE_BILLING = 1; // ที่อยู่จัดส่งเอกสาร
+    const TYPE_SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
-        return array_merge(parent::rules(), []);
+
+    public function rules() {
+        return array_merge(parent::rules(), [
+            [
+                ['company', 'address', 'countryId', 'provinceId', 'amphurId', 'zipcode', 'type', 'isDefault', 'status']
+                , 'required', 'on' => 'shipping_address'
+            ],
+        ]);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function getTypeArray()
-    {
+    public function getTypeArray() {
         return [
             self::TYPE_BILLING => 'ที่อยู่ออกใบกำกับภาษี',
             self::TYPE_SHIPPING => 'ที่อยู่จัดส่งสินค้า',
         ];
     }
 
-    public function getTypeText($type)
-    {
+    public function getTypeText($type) {
         $res = $this->getTypeArray();
         if (isset($res[$type])) {
             return $res[$type];

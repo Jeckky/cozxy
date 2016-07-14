@@ -11,11 +11,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <div class="row cs-page">
     <div class="col-lg-12 col-md-12 col-sm-12">
+
         <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup">
             <h4 class="profile-title-head">
                 <span class="profile-title-head">FREE MEMBERSHIP</span>
             </h4>
-            <p>Member since <?php echo Yii::$app->user->identity->createDateTime; ?><!--Apr 9,2016 --></p>
+            <p>Member since <span style="color: #03a9f4;"><?php echo Yii::$app->user->identity->createDateTime; ?></span><!--Apr 9,2016 --></p>
             <hr>
             <p class="col-lg-6 col-md-6 col-sm-6 text-left" style="padding-left: 0px;">You've Saved</p>
             <p class="col-lg-6 col-md-6 col-sm-6 text-right">THB 0.00</p>

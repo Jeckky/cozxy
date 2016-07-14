@@ -18,9 +18,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     ?>
     <?= $form->field($model, 'firstname') ?>
     <?= $form->field($model, 'lastname') ?>
-
     <?= Html::submitButton('Update Contact Information', ['class' => 'btn btn-primary', 'name' => 'contact-info']) ?>
-
-    <?php ActiveForm::end(); ?>
-
+    <?php ActiveForm::end(); ?> 
 </div>
