@@ -15,6 +15,7 @@ use Yii;
     * @property string $countryId
     * @property string $provinceId
     * @property string $amphurId
+    * @property string $districtId
     * @property string $zipcode
     * @property string $tel
     * @property integer $type
@@ -42,7 +43,7 @@ public function rules()
 {
 return [
             [['userId', 'createDateTime'], 'required'],
-            [['userId', 'provinceId', 'amphurId', 'type', 'isDefault', 'status'], 'integer'],
+            [['userId', 'provinceId', 'amphurId', 'districtId', 'type', 'isDefault', 'status'], 'integer'],
             [['address'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['company'], 'string', 'max' => 200],
@@ -67,6 +68,7 @@ return [
     'countryId' => Yii::t('address', 'Country ID'),
     'provinceId' => Yii::t('address', 'Province ID'),
     'amphurId' => Yii::t('address', 'Amphur ID'),
+    'districtId' => Yii::t('address', 'District ID'),
     'zipcode' => Yii::t('address', 'Zipcode'),
     'tel' => Yii::t('address', 'Tel'),
     'type' => Yii::t('address', 'Type'),

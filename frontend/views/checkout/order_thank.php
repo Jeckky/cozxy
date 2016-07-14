@@ -29,13 +29,20 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 &nbsp;
             </div>
             <div class="col-lg-5 col-md-5">
-                <h2 class="title">ขอบคุณที่ลงทะเบียนกับ COST.FIT</h2>
+                <h2 class="title">ขอบคุณที่สั่งซื้อสินค้ากับ COST.FIT</h2>
                 <div class="row space-top">
                     <div class="clo-lg-12 col-md-12 col-sm-12 space-bottom">
                         <h4 class="light-weight uppercase">
-                            กรุณากด  <a href="<?php echo Yii::$app->homeUrl; ?>register/confirm?token=1dqibNCP7K"> ลิงค์ เพื่อดู ยืนยันการสมัคร</a>
+                            หมายเลขสั่งซื้อสินค้าของท่านคือ  <a href="<?php echo Yii::$app->homeUrl; ?>register/confirm?token=1dqibNCP7K">OD20160700001</a>
                         </h4>
-                        <p>อีเมลฉบับนี้เป็นการแจ้งข้อมูลโดยอัตโนมัติ กรุณาอย่าตอบกลับ</p>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 ">
+                                <a href="<?= Yii::$app->homeUrl ?>" class="btn btn-primary">ไปเลือกซื้อสินค้าต่อ</a>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 ">
+                                <a href="<?= Yii::$app->homeUrl . "profile/order" ?>" class="btn btn-warning">ดูรายการสั่งซื้อสินค้า</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
