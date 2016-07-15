@@ -53,7 +53,8 @@ class SiteController extends \backend\controllers\BackendMasterController {
     }
 
     public function actionIndex() {
-        return $this->render('index');
+        // return $this->render('index');
+        $this->redirect(Yii::$app->homeUrl . 'auth');
     }
 
     public function actionLogin() {
