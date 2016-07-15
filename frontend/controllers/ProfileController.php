@@ -61,6 +61,27 @@ class ProfileController extends MasterController {
         return $this->render('@app/views/profile/order_history');
     }
 
+    public function actionDataAddress() {
+        $this->layout = "/content_profile";
+        $this->title = 'Cost.fit | Default Shipping Assdress';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = "Default Shipping Assdress";
+        $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
+        //$loginForm = new \common\models\LoginForm();
+        $model->type = 1; // default Address First
+        $status_address = Yii::$app->controller->action->id;
+        if ($status_address == 'billings-address') {
+            $label = 'Default billings address';
+            $model->isDefault = 1;  // TYPE_BILLING = 1; // ที่อยู่จัดส่งเอกสาร
+        } elseif ($status_address == 'shipping-address') {
+            $label = 'Default shipping  address';
+            $model->isDefault = 2; // TYPE_SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
+        } else {
+            $label = "";
+            $model->isDefault = "";
+        }
+    }
+
     public function actionShippingAddress() {
 
         if (Yii::$app->user->isGuest == 1) {
@@ -73,21 +94,16 @@ class ProfileController extends MasterController {
         $this->subSubTitle = "Default Shipping Assdress";
         $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
         //$loginForm = new \common\models\LoginForm();
-        $model->type = 0;
+        $model->type = 1; // default Address First
         $status_address = Yii::$app->controller->action->id;
-        if ($status_address == 'billings-address') {
-            $label = 'Default billings address';
-            $model->isDefault = 1;  // TYPE_BILLING = 1; // ที่อยู่จัดส่งเอกสาร
-        } elseif ($status_address == 'shipping-address') {
-            $label = 'Default shipping  address';
-            $model->isDefault = 2; // TYPE_SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
-        } else {
-            $label = "";
-            $model->isDefault = "";
-        }
+
+        $label = 'Default shipping  address';
+        $model->isDefault = 2; // TYPE_SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
 
         if (isset($_POST['Address'])) {
             $model->attributes = $_POST['Address'];
+            $model->userId = Yii::$app->user->id;
+            $model->createDateTime = new \yii\db\Expression("NOW()");
             if ($model->save(FALSE)) {
                 $this->redirect(Yii::$app->homeUrl . 'profile');
             }
@@ -97,7 +113,30 @@ class ProfileController extends MasterController {
 
     public function actionBillingsAddress() {
 
-        echo $this->actionShippingAddress();
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
+        $this->layout = "/content_profile";
+        $this->title = 'Cost.fit | Default Shipping Assdress';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = "Default Shipping Assdress";
+        $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
+        //$loginForm = new \common\models\LoginForm();
+        $model->type = 1; // default Address First
+        $status_address = Yii::$app->controller->action->id;
+
+        $label = 'Default billings address';
+        $model->isDefault = 1;  // TYPE_BILLING = 1; // ที่อยู่จัดส่งเอกสาร
+
+        if (isset($_POST['Address'])) {
+            $model->attributes = $_POST['Address'];
+            $model->userId = Yii::$app->user->id;
+            $model->createDateTime = new \yii\db\Expression("NOW()");
+            if ($model->save(FALSE)) {
+                $this->redirect(Yii::$app->homeUrl . 'profile');
+            }
+        }
+        return $this->render('@app/views/profile/add_address', ['model' => $model, 'label' => $label]);
     }
 
     public function actionAddPaymentMethod() {
@@ -123,7 +162,6 @@ class ProfileController extends MasterController {
         $this->subSubTitle = "Contact Information";
 
         $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
-
         if (isset($_POST["User"])) {
             $model->attributes = $_POST['User'];
 
