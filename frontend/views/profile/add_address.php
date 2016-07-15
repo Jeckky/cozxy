@@ -22,10 +22,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <?php echo $form->field($model, 'address')->textarea(); ?>
 
     <?php
+    // Parent
     echo $form->field($model, 'countryId')->dropDownList(
             yii\helpers\ArrayHelper::map(\common\models\dbworld\Countries::find()->all(), 'countryId', 'countryName'), ['prompt' => 'Select country']
             , ['id' => 'address-countryid'])->label('Country');
-// Child # 1
+    // Child # 1
     echo $form->field($model, 'provinceId')->widget(DepDrop::classname(), [
         'type' => DepDrop::TYPE_SELECT2,
         'options' => ['id' => 'province-id', 'class' => 'form-control'],
@@ -62,17 +63,3 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <?php ActiveForm::end(); ?>
 </div>
 
-<script>
-    /* function dynamicCity(state)
-     {
-     $.ajax({
-     type: 'GET',
-     //datatype:'ajax',
-     data: {stateId: state.value},
-     url: '<? //= yii\helpers\Url::to(Yii::$app->homeUrl . 'site/dynamic-city') ?>',
-     success: function (data) {
-     $("#cityDdl").html(data);
-     }
-     });
-     }*/
-</script>
