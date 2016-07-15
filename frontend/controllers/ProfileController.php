@@ -34,7 +34,9 @@ class ProfileController extends MasterController {
         $this->title = 'Cost.fit | My Profile';
         $this->subTitle = 'Home';
         $this->subSubTitle = "My Profile";
-//return $this->render('profile_layouts');
+        //return $this->render('profile_layouts');
+        // $model = \common\models\costfit\Address::find()->where("userId ='" . Yii::$app->user->id . "'");
+
         return $this->render('profile');
     }
 
@@ -169,8 +171,18 @@ class ProfileController extends MasterController {
                 $this->redirect(Yii::$app->homeUrl . 'profile');
             }
         }
-
         return $this->render('@app/views/profile/edit_info', ['model' => $model]);
+    }
+
+    public function actionGetAddress() {
+
+        $model = \common\models\costfit\Address::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
+        if (isset($_POST["User"])) {
+            $model->attributes = $_POST['User'];
+        }
+        echo '<pre>';
+        print_r($model);
+        return $this->render('@app/views/profile/add_shipping-address', ['model' => $model]);
     }
 
 }

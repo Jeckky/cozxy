@@ -38,7 +38,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         </span>
                     </div>
                     <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="margin: 0 0 ">
-                        <p>
+                        <!--<p>
                             1. 7th floor Ladproa 19,
                             Ladproa Road , Chatuchak , Bangkok , THA Zipcode 10900
                         </p>
@@ -49,7 +49,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <p>
                             3. 7th floor Ladproa 19,
                             Ladproa Road , Chatuchak , Bangkok , THA Zipcode 10900
-                        </p>
+                        </p>-->
+                        <?php echo $this->render('@app/views/profile/add_shipping_address'); ?>
                     </div>
                     <!--Default Add New-->
                     <div class="bs-example" data-example-id="btn-tags" style="background-color:#3cc; height:45px; margin-top: 20px;  padding: 10px 12px; color: #fff; border-width: 1px;  border-radius: 4px 4px 0 0; -webkit-box-shadow: none; box-shadow: none;">
