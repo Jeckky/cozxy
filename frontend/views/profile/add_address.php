@@ -9,6 +9,14 @@ use kartik\depdrop\DepDrop;
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 // https://github.com/kartik-v/yii2-widget-depdrop //
+$status_address = Yii::$app->controller->action->id;
+if ($status_address == 'billings-address') {
+    $label = 'Default billings address';
+} elseif ($status_address == 'shipping -address') {
+    $label = 'Default shipping  address';
+} else {
+    $label = '';
+}
 ?>
 <style type="text/css">
     .selection{
@@ -154,8 +162,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <?php echo $form->field($model, 'tax'); ?>
     <?php echo $form->field($model, 'zipcode'); ?>
     <?php echo $form->field($model, 'tel'); ?>
-    <?php echo $form->field($model, 'isDefault')->radioList([0 => 'Yes', 1 => 'No'], ['itemOptions' => ['class' => 'radio']])->label('isDefault address') ?>
-    <?php echo Html::submitButton('Save shipping address', ['class' => 'btn btn-primary', 'name' => 'btn-shipping-address']) ?>
+    <?php echo $form->field($model, 'type')->radioList([0 => 'Yes', 1 => 'No'], ['itemOptions' => ['class' => 'radio']])->label('Default address') ?>
+    <?php echo Html::submitButton("$label", ['class' => 'btn btn-primary', 'name' => 'btn-shipping-address']) ?>
     <?php ActiveForm::end(); ?>
 </div>
 

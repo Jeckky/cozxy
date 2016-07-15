@@ -60,7 +60,7 @@ class ProfileController extends MasterController {
         return $this->render('@app/views/profile/order_history');
     }
 
-    public function actionAddAddress() {
+    public function actionShippingAddress() {
 
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
@@ -81,6 +81,31 @@ class ProfileController extends MasterController {
             }
         }
         $model->isDefault = 0;
+        return $this->render('@app/views/profile/add_address', ['model' => $model]);
+    }
+
+    public function actionBillingsAddress() {
+
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
+
+        $this->layout = "/content_profile";
+        $this->title = 'Cost.fit | Default Shipping Assdress';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = "Default Shipping Assdress";
+
+        $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
+        //$loginForm = new \common\models\LoginForm();
+
+        if (isset($_POST['Address'])) {
+            $model->attributes = $_POST['Address'];
+            if ($model->save(FALSE)) {
+                $this->redirect(Yii::$app->homeUrl . 'profile');
+            }
+        }
+        $model->type = 0;
+
         return $this->render('@app/views/profile/add_address', ['model' => $model]);
     }
 
