@@ -214,7 +214,7 @@ $(".reveal_re").on('click', function () {
     }
 });
 
-
+$('.select2').find('.selection').val('Australia');
 
 /* $('#reFormMember').modal({
  show: 'false'

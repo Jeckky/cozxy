@@ -122,6 +122,8 @@ class ProfileController extends MasterController {
     // CONTROLLER
     public function actionChildStates() {
         $out = [];
+        //echo $_POST['depdrop_parents'];
+        //exit();
         if (isset($_POST['depdrop_parents'])) {
             $id = end($_POST['depdrop_parents']);
             $list = \common\models\dbworld\States::find()->andWhere(['countryId' => $id])->asArray()->all();
@@ -148,6 +150,7 @@ class ProfileController extends MasterController {
         if (isset($_POST['depdrop_parents'])) {
             $id = end($_POST['depdrop_parents']);
             $list = \common\models\dbworld\Cities::find()->andWhere(['stateId' => $id])->asArray()->all();
+
             $selected = null;
             if ($id != null && count($list) > 0) {
                 $selected = '';
@@ -175,15 +178,17 @@ class ProfileController extends MasterController {
             if ($id != null && count($list) > 0) {
                 $selected = '';
                 foreach ($list as $i => $account) {
-                    $out[] = ['id' => $account['districtId'], 'name' => $account['districtName']];
+                    $out[] = ['id' => $account['districtId'], 'name' => $account['localName']];
                     if ($i == 0) {
                         $selected = $account['districtId'];
                     }
                 }
+
                 // Shows how you can preselect a value
                 echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
                 return;
             }
+            //echo 'no';
         }
         echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
     }
