@@ -12,3 +12,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 // https://github.com/kartik-v/yii2-widget-depdrop //
 ?>
 
+
+<?php
+
+echo $model->address;
+?>

@@ -2,12 +2,12 @@
 /* @var $this yii\web\View HowCostFitWorks */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
-$baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
-// https://github.com/kartik-v/yii2-widget-depdrop //
+//$model = \common\models\costfit\Address::find()->where("userId ='" . Yii::$app->user->id . "'");
 ?>
+<!--
 
 <p>
     1. 7th floor Ladproa 19,
@@ -21,3 +21,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     3. 7th floor Ladproa 19,
     Ladproa Road , Chatuchak , Bangkok , THA Zipcode 10900
 </p>
+
+-->
+
+<?php
+echo $model->address;
+?>

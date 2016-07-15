@@ -4,6 +4,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yi\web\view;
+use yii\widgets\ListView;
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
@@ -84,5 +85,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </form>
         </div>
     </div><!-- Zone left -->
+
+
+    <?//= $this->render('test_file', ['xxxx' => "ttt"]); ?>
+
+
 </div>
 

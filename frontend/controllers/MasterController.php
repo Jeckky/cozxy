@@ -53,6 +53,19 @@ class MasterController extends MasterCommonController {
         }
 
         $this->view->params['cart'] = \common\models\costfit\Order::findCartArray();
+
+
+        if ((!Yii::$app->user->isGuest) && $this->id == "profile") {
+            $dataProvider = new \yii\data\ActiveDataProvider([
+                'query' => \common\models\costfit\Address::find()->where("userId ='" . Yii::$app->user->id . "'")->orderBy('addressId DESC'),
+                'pagination' => [
+                    'pageSize' => 10,
+                ],
+            ]);
+            // $this->view->params['cart']
+            $this->view->params['listDataProvider']['shipping'] = $dataProvider;
+            $this->view->params['listDataProvider']['billing'] = $dataProvider;
+        }
     }
 
     public function getToken() {
