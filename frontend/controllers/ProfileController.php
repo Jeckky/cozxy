@@ -42,6 +42,7 @@ class ProfileController extends MasterController {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
+        echo $this->iSLogin();
         $this->layout = "/content_profile";
         $this->title = 'Cost.fit | ช่องทางการชำระเงิน';
         $this->subTitle = 'Home';
@@ -132,80 +133,6 @@ class ProfileController extends MasterController {
         }
 
         return $this->render('@app/views/profile/edit_info', ['model' => $model]);
-    }
-
-    // CONTROLLER
-    public function actionChildStates() {
-        $out = [];
-        //echo $_POST['depdrop_parents'];
-        //exit();
-        if (isset($_POST['depdrop_parents'])) {
-            $id = end($_POST['depdrop_parents']);
-            $list = \common\models\dbworld\States::find()->andWhere(['countryId' => $id])->asArray()->all();
-            $selected = null;
-            if ($id != null && count($list) > 0) {
-                $selected = '';
-                foreach ($list as $i => $account) {
-                    $out[] = ['id' => $account['stateId'], 'name' => $account['stateName']];
-                    if ($i == 0) {
-                        $selected = $account['stateId'];
-                    }
-                }
-                // Shows how you can preselect a value
-                echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
-                return;
-            }
-        }
-        echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
-    }
-
-    // CONTROLLER
-    public function actionChildAmphur() {
-        $out = [];
-        if (isset($_POST['depdrop_parents'])) {
-            $id = end($_POST['depdrop_parents']);
-            $list = \common\models\dbworld\Cities::find()->andWhere(['stateId' => $id])->asArray()->all();
-
-            $selected = null;
-            if ($id != null && count($list) > 0) {
-                $selected = '';
-                foreach ($list as $i => $account) {
-                    $out[] = ['id' => $account['cityId'], 'name' => $account['cityName']];
-                    if ($i == 0) {
-                        $selected = $account['cityId'];
-                    }
-                }
-                // Shows how you can preselect a value
-                echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
-                return;
-            }
-        }
-        echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
-    }
-
-    // CONTROLLER
-    public function actionChildDistrict() {
-        $out = [];
-        if (isset($_POST['depdrop_parents'])) {
-            $id = end($_POST['depdrop_parents']);
-            $list = \common\models\dbworld\District::find()->andWhere(['cityId' => $id])->asArray()->all();
-            $selected = null;
-            if ($id != null && count($list) > 0) {
-                $selected = '';
-                foreach ($list as $i => $account) {
-                    $out[] = ['id' => $account['districtId'], 'name' => $account['localName']];
-                    if ($i == 0) {
-                        $selected = $account['districtId'];
-                    }
-                }
-
-                // Shows how you can preselect a value
-                echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
-                return;
-            }
-            //echo 'no';
-        }
-        echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
     }
 
 }
