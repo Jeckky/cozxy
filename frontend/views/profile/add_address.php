@@ -9,14 +9,6 @@ use kartik\depdrop\DepDrop;
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 // https://github.com/kartik-v/yii2-widget-depdrop //
-$status_address = Yii::$app->controller->action->id;
-if ($status_address == 'billings-address') {
-    $label = 'Default billings address';
-} elseif ($status_address == 'shipping -address') {
-    $label = 'Default shipping  address';
-} else {
-    $label = '';
-}
 ?>
 <style type="text/css">
     .selection{
@@ -95,17 +87,16 @@ if ($status_address == 'billings-address') {
     }
 </style>
 <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup">
-    <h4>Default shipping address</h4>
+    <h4> <?php echo ($label != '') ? $label : ''; ?> </h4>
+    <br>
     <?php
     $form = ActiveForm::begin([
                 'id' => 'default-shipping-address',
                 'options' => ['class' => 'space-bottom'],
     ]);
     ?>
-
     <?php echo $form->field($model, 'company'); ?>
     <?php echo $form->field($model, 'address')->textarea(); ?>
-
     <?php
     // Top most parent
     echo $form->field($model, 'countryId')->widget(kartik\select2\Select2::classname(), [
@@ -163,7 +154,8 @@ if ($status_address == 'billings-address') {
     <?php echo $form->field($model, 'zipcode'); ?>
     <?php echo $form->field($model, 'tel'); ?>
     <?php echo $form->field($model, 'type')->radioList([0 => 'Yes', 1 => 'No'], ['itemOptions' => ['class' => 'radio']])->label('Default address') ?>
-    <?php echo Html::submitButton("$label", ['class' => 'btn btn-primary', 'name' => 'btn-shipping-address']) ?>
+
+    <?php echo Html::submitButton(($label != '') ? $label : '', ['class' => 'btn btn-primary', 'name' => 'btn-shipping-address']) ?>
     <?php ActiveForm::end(); ?>
 </div>
 

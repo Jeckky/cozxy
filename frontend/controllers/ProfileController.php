@@ -70,9 +70,20 @@ class ProfileController extends MasterController {
         $this->title = 'Cost.fit | Default Shipping Assdress';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Default Shipping Assdress";
-
         $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
         //$loginForm = new \common\models\LoginForm();
+        $model->type = 0;
+        $status_address = Yii::$app->controller->action->id;
+        if ($status_address == 'billings-address') {
+            $label = 'Default billings address';
+            $model->isDefault = 1;  // TYPE_BILLING = 1; // ที่อยู่จัดส่งเอกสาร
+        } elseif ($status_address == 'shipping-address') {
+            $label = 'Default shipping  address';
+            $model->isDefault = 2; // TYPE_SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
+        } else {
+            $label = "";
+            $model->isDefault = "";
+        }
 
         if (isset($_POST['Address'])) {
             $model->attributes = $_POST['Address'];
@@ -80,33 +91,12 @@ class ProfileController extends MasterController {
                 $this->redirect(Yii::$app->homeUrl . 'profile');
             }
         }
-        $model->isDefault = 0;
-        return $this->render('@app/views/profile/add_address', ['model' => $model]);
+        return $this->render('@app/views/profile/add_address', ['model' => $model, 'label' => $label]);
     }
 
     public function actionBillingsAddress() {
 
-        if (Yii::$app->user->isGuest == 1) {
-            return Yii::$app->response->redirect(Yii::$app->homeUrl);
-        }
-
-        $this->layout = "/content_profile";
-        $this->title = 'Cost.fit | Default Shipping Assdress';
-        $this->subTitle = 'Home';
-        $this->subSubTitle = "Default Shipping Assdress";
-
-        $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
-        //$loginForm = new \common\models\LoginForm();
-
-        if (isset($_POST['Address'])) {
-            $model->attributes = $_POST['Address'];
-            if ($model->save(FALSE)) {
-                $this->redirect(Yii::$app->homeUrl . 'profile');
-            }
-        }
-        $model->type = 0;
-
-        return $this->render('@app/views/profile/add_address', ['model' => $model]);
+        echo $this->actionShippingAddress();
     }
 
     public function actionAddPaymentMethod() {
