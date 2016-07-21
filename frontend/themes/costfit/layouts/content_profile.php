@@ -97,7 +97,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         endif;
                         ?>
                     </div>
-                    <!-- Default Payment Method -->
+                    <!-- Default Payment Method
                     <div class="bs-example" data-example-id="btn-tags" style="background-color:#3cc; height:45px;  padding: 10px 12px; margin-top: 20px; color: #fff; border-width: 1px;  border-radius: 4px 4px 0 0; -webkit-box-shadow: none; box-shadow: none;">
                         <span style="float: left; width: 70%; text-align: left;">Default Payment Method</span>
                         <span style="float: left; width: 30%; text-align: right;">
@@ -114,7 +114,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <p>
                             &nbsp;
                         </p>
-                    </div>
+                    </div>-->
 
                 </div><!-- col-lg-4 col-md-4 post -->
 

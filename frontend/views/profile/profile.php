@@ -8,6 +8,8 @@ use yii\widgets\ListView;
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+
+$createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDateTime, '');
 ?>
 
 <div class="row cs-page">
@@ -17,7 +19,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <h4 class="profile-title-head">
                 <span class="profile-title-head">FREE MEMBERSHIP</span>
             </h4>
-            <p>Member since <span style="color: #03a9f4;"><?php echo Yii::$app->user->identity->createDateTime; ?></span><!--Apr 9,2016 --></p>
+            <p>Member since
+                <span style="color: #03a9f4;"><?php echo $createDateTime; ?></span><!--Apr 9,2016 -->
+            </p>
             <hr>
             <p class="col-lg-6 col-md-6 col-sm-6 text-left" style="padding-left: 0px;">You've Saved</p>
             <p class="col-lg-6 col-md-6 col-sm-6 text-right">THB 0.00</p>
