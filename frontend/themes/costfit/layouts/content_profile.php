@@ -60,9 +60,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     'class' => 'list-wrapper',
                                     'id' => 'list-wrapper',
                                 ],
-                                'layout' => "{pager}\n{items}\n{summary}",
+                                'layout' => "{pager}\n{items}\n", //{summary}
                                 'itemView' => function ($model, $key, $index, $widget) {
-                            return $this->render('@frontend/views/profile/add_shipping_address', ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]);
+                            return $this->render('@frontend/views/profile/add_shipping_address', ['model' => $model, 'index' => $index]);
                         },
                             ]);
                         endif;
@@ -86,9 +86,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     'class' => 'list-wrapper',
                                     'id' => 'list-wrapper',
                                 ],
-                                'layout' => "{pager}\n{items}\n{summary}",
+                                'layout' => "{pager}\n{items}\n", //{summary}
                                 'itemView' => function ($model, $key, $index, $widget) {
-                            return $this->render('@frontend/views/profile/add_billings_address', ['model' => $model]);
+                            return $this->render('@frontend/views/profile/add_billings_address', ['model' => $model, 'index' => $index]);
                         },
                             ]);
                         endif;

@@ -32,8 +32,4 @@ class Cities extends \common\models\dbworld\master\CitiesMaster {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function getCities() {
-        return $this->hasOne(\common\models\dbworld\Cities::className(), ['cityId' => 'cityId']);
-    }
-
 }

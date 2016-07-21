@@ -67,4 +67,20 @@ class Address extends \common\models\costfit\master\AddressMaster {
         }
     }
 
+    public function getCities() {
+        return $this->hasOne(\common\models\dbworld\Cities::className(), ['cityId' => 'amphurId']);
+    }
+
+    public function getCountries() {
+        return $this->hasOne(\common\models\dbworld\Countries::className(), ['countryId' => 'countryId']);
+    }
+
+    public function getDistrict() {
+        return $this->hasOne(\common\models\dbworld\District::className(), ['districtId' => 'districtId']);
+    }
+
+    public function getStates() {
+        return $this->hasOne(\common\models\dbworld\States::className(), ['stateId' => 'provinceId']);
+    }
+
 }

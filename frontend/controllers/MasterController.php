@@ -58,9 +58,7 @@ class MasterController extends MasterCommonController {
         if ((!Yii::$app->user->isGuest) && $this->id == "profile") {
             $dataProvider_shipping = new \yii\data\ActiveDataProvider([
                 'query' => \common\models\costfit\Address::find()->where("userId ='" . Yii::$app->user->id . "' and isDefault = 2 ")->orderBy('addressId DESC'),
-                'pagination' => [
-                    'pageSize' => 10,
-                ],
+                'pagination' => false,
             ]);
             // $this->view->params['cart']
             // - BILLING = 1; // ที่อยู่จัดส่งเอกสาร
@@ -123,7 +121,7 @@ class MasterController extends MasterCommonController {
         ]);
     }
 
-    // CONTROLLER
+    // CONTROLLER 15/07/2016 Create By Taninut
     public function actionChildStates() {
         $out = [];
         //echo $_POST['depdrop_parents'];
@@ -148,7 +146,7 @@ class MasterController extends MasterCommonController {
         echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
     }
 
-    // CONTROLLER
+    // CONTROLLER 15/07/2016 Create By Taninut
     public function actionChildAmphur() {
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
@@ -172,7 +170,7 @@ class MasterController extends MasterCommonController {
         echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
     }
 
-    // CONTROLLER
+    // CONTROLLER 15/07/2016 Create By Taninut
     public function actionChildDistrict() {
         $out = [];
         if (isset($_POST['depdrop_parents'])) {

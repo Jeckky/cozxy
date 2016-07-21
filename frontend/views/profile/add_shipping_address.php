@@ -4,12 +4,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
-?>
-
-<!-- <p>
-    1. 7th floor Ladproa 19,
-    Ladproa Road , Chatuchak , Bangkok , THA Zipcode 10900
-</p> -->
+?> 
 <p>
     <?php
     echo ++$index . '. ';
