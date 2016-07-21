@@ -17,6 +17,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         line-height: 1.7;
         margin-bottom: 4px;
         color: #575c5f; */
+        overflow-y: auto;
+        min-height: 400px;
+        max-height: 500px;
     }
     .list-wrapper p{
         margin-bottom: 10px;

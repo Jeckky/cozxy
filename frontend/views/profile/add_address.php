@@ -158,7 +158,3 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <?php echo Html::submitButton(($label != '') ? $label : '', ['class' => 'btn btn-primary', 'name' => 'btn-shipping-address']) ?>
     <?php ActiveForm::end(); ?>
 </div>
-
-<?php
-//selection
-?>
