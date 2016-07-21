@@ -42,7 +42,7 @@ class ProfileController extends MasterController {
         exit();
         if (isset($_POST["User"])) {
             $model->attributes = $_POST['User'];
-
+            $model->passwod = $_POST["User"]['newPassword'];
             if ($model->save(FALSE)) {
                 $this->redirect(Yii::$app->homeUrl . 'profile');
             }
@@ -201,9 +201,7 @@ class ProfileController extends MasterController {
         // $loginForm = new common\models\User();
         //$loginForm->login();
 
-        echo $currentPasswordHash = Yii::$app->security->generatePasswordHash($token);
-        Yii::$app->security->validatePassword($currentPasswordHash, \Yii::$app->user->identity->password_hash);
-        if (Yii::$app->security->validatePassword($currentPasswordHash, \Yii::$app->user->identity->password_hash)) {
+        if (Yii::$app->security->validatePassword($token, \Yii::$app->user->identity->password_hash)) {
             // Password Match
             echo TRUE;
         } else {
