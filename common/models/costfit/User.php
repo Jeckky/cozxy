@@ -28,6 +28,9 @@ class User extends \common\models\costfit\master\UserMaster {
 
     public $confirmPassword;
     public $acceptTerm;
+    public $currentPassword;
+    public $newPassword;
+    public $rePassword;
 
     /**
      * @inheritdoc
@@ -43,6 +46,10 @@ class User extends \common\models\costfit\master\UserMaster {
             ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"],
 //            ['email', 'exist']
             [['firstname', 'lastname', 'acceptTerm'], 'required', 'on' => 'editinfo'],
+            // [['currentPassword', 'newPassword', 'rePassword'], 'required'],
+            [['currentPassword', 'newPassword', 'rePassword'], 'required'],
+            // ['currentPassword', 'findPasswords'],
+            ['rePassword', 'compare', 'compareAttribute' => 'newPassword'],
         ]);
     }
 
@@ -60,6 +67,9 @@ class User extends \common\models\costfit\master\UserMaster {
         return array_merge(parent::attributes(), [
 //            'acceptTerm',
 //            'confirmPassword'
+            'currentPassword',
+            'newPassword',
+            'rePassword'
         ]);
     }
 

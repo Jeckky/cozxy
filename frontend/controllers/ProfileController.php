@@ -34,10 +34,20 @@ class ProfileController extends MasterController {
         $this->title = 'Cost.fit | My Profile';
         $this->subTitle = 'Home';
         $this->subSubTitle = "My Profile";
+        //$model = new \common\models\costfit\User(['scenario' => 'profile']);
         //return $this->render('profile_layouts');
-        // $model = \common\models\costfit\Address::find()->where("userId ='" . Yii::$app->user->id . "'");
+        //$model = \common\models\costfit\user::find()->where("userId ='" . Yii::$app->user->id . "'");
+        $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
+        return $this->render('profile', ['model' => $model]);
+        exit();
+        if (isset($_POST["User"])) {
+            $model->attributes = $_POST['User'];
 
-        return $this->render('profile');
+            if ($model->save(FALSE)) {
+                $this->redirect(Yii::$app->homeUrl . 'profile');
+            }
+        }
+        return $this->render('profile', ['model' => $model]);
     }
 
     public function actionPayment() {
@@ -183,6 +193,31 @@ class ProfileController extends MasterController {
         echo '<pre>';
         print_r($model);
         return $this->render('@app/views/profile/add_shipping-address', ['model' => $model]);
+    }
+
+    public function actionReset() {
+        $request = Yii::$app->request;
+        $token = $request->post('token');
+        // $loginForm = new common\models\User();
+        //$loginForm->login();
+
+        echo $currentPasswordHash = Yii::$app->security->generatePasswordHash($token);
+        Yii::$app->security->validatePassword($currentPasswordHash, \Yii::$app->user->identity->password_hash);
+        if (Yii::$app->security->validatePassword($currentPasswordHash, \Yii::$app->user->identity->password_hash)) {
+            // Password Match
+            echo TRUE;
+        } else {
+            //No Match
+            echo FALSE;
+        }
+
+
+        // $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "' and password_hash ='" . $token . "'   ")->one();
+        //if (count($model) == 1) {
+        //echo TRUE;
+        //} else {
+        //echo FALSE;
+        //}
     }
 
 }

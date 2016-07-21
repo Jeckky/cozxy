@@ -6,6 +6,8 @@ use yii\bootstrap\ActiveForm;
 use yi\web\view;
 use yii\widgets\ListView;
 
+//use kartik\;
+
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
@@ -39,54 +41,51 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
             <h5>
                 <span class="profile-title-head">Password</span>
             </h5>
-            <p>
-                <small>Current Password</small>
+            <?php
+            $form = ActiveForm::begin([
+                        'id' => 'password-form',
+                        'options' => ['class' => 'password-form']
+            ]);
+            ?>
+            <?=
+            $form->field($model, 'currentPassword', [
+                'inputTemplate' => '<div class="input-group">{input}<span class="input-group-addon"><button class="reveal_current" type="button">
+                            <span class="reveal-title-current">Show</span>
+                        </button></span></div>',
+            ])->passwordInput()->textInput(['class' => 'form-control pwd1', 'onchange' => '
+                $.post( "' . $baseUrl . '/profile/reset", {token: $(this).val()}, function( data ) {
+                  //$( "#suborders-product_price" ).val( data );
+                    if(data == 1){
+                        $("#user-newpassword").prop("disabled", false);
+                        $("#user-repassword").prop("disabled", false);
+                        $("#suborders-product_price").html("").css("color", "#a94442");
+                    }else{
+                        $("#user-newpassword").prop("disabled", true);
+                        $("#user-repassword").prop("disabled", true);
+                        $("#suborders-product_price").html("Please try again in a few minutes.").css("color", "#a94442");
+                    }
+                });
+            ']);
+            ?>
+            <p id="suborders-product_price">
             </p>
-            <p>
-            <div class="input-group">
-                <input type="password" class="form-control pwd1" name="current-password" id="current-password" placeholder="Current Password" required="">
-                <span class="input-group-addon">
-                    <button class="reveal_current" type="button">
-                        <span class="reveal-title-current">Show</span>
-                    </button>
-                </span>
-            </div>
-            </p>
-            <p>
-                <small>New Password</small>
-            </p>
-            <form>
-                <p>
-                <div class="input-group">
-                    <input type="password" class="form-control pwd2" name="new-password" id="new-password" placeholder="New Password" required="">
-                    <span class="input-group-addon">
-                        <button class="reveal_new" type="button">
+            <?=
+            $form->field($model, 'newPassword', [
+                'inputTemplate' => '<div class="input-group">{input}<span class="input-group-addon"><button class="reveal_new" type="button">
                             <span class="reveal-title-new">Show</span>
-                        </button>
-                    </span>
-                </div>
-                </p>
-                <p>
-                    <small>Re Enter New Password</small>
-                </p>
-                <p>
-                <div class="input-group">
-                    <input type="password" class="form-control pwd3" name="re-password" id="re-password" placeholder="Re Enter New Password" required="">
-                    <span class="input-group-addon">
-                        <button class="reveal_re" type="button">
+                        </button></span></div>',
+            ])->passwordInput()->textInput(['class' => 'form-control pwd2', 'disabled' => true]);
+            ?>
+            <?=
+            $form->field($model, 'rePassword', [
+                'inputTemplate' => '<div class="input-group">{input}<span class="input-group-addon"><button class="reveal_re" type="button">
                             <span class="reveal-title-re">Show</span>
-                        </button>
-                    </span>
-                </div>
-                </p>
-                <p>
-                <div class="input-group">
-                    <button class="btn btn-primary" type="submit" style="background-color: #3cc; color: #fff;">
-                        Update Password
-                    </button>
-                </div>
-                </p>
-            </form>
+                        </button></span></div>',
+            ])->passwordInput()->textInput(['class' => 'form-control pwd3', 'disabled' => true]);
+            ?>
+            <?= Html::submitButton('Update Password', ['class' => 'btn btn-primary', 'name' => 'contact-info', 'style' => 'background-color: #3cc; color: #fff;']) ?>
+            <?php ActiveForm::end(); ?>
+
         </div>
     </div><!-- Zone left -->
 
