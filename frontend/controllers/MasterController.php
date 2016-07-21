@@ -54,17 +54,22 @@ class MasterController extends MasterCommonController {
 
         $this->view->params['cart'] = \common\models\costfit\Order::findCartArray();
 
-
+        // - SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
         if ((!Yii::$app->user->isGuest) && $this->id == "profile") {
-            $dataProvider = new \yii\data\ActiveDataProvider([
-                'query' => \common\models\costfit\Address::find()->where("userId ='" . Yii::$app->user->id . "'")->orderBy('addressId DESC'),
+            $dataProvider_shipping = new \yii\data\ActiveDataProvider([
+                'query' => \common\models\costfit\Address::find()->where("userId ='" . Yii::$app->user->id . "' and isDefault = 2 ")->orderBy('addressId DESC'),
                 'pagination' => [
                     'pageSize' => 10,
                 ],
             ]);
             // $this->view->params['cart']
-            $this->view->params['listDataProvider']['shipping'] = $dataProvider;
-            $this->view->params['listDataProvider']['billing'] = $dataProvider;
+            // - BILLING = 1; // ที่อยู่จัดส่งเอกสาร
+            $dataProvider_billing = new \yii\data\ActiveDataProvider([
+                'query' => \common\models\costfit\Address::find()->where("userId ='" . Yii::$app->user->id . "' and isDefault = 1 ")->orderBy('addressId DESC'),
+                'pagination' => false,
+            ]);
+            $this->view->params['listDataProvider']['shipping'] = $dataProvider_shipping;
+            $this->view->params['listDataProvider']['billing'] = $dataProvider_billing;
         }
     }
 
@@ -100,7 +105,7 @@ class MasterController extends MasterCommonController {
     }
 
     public function actionDynamicCity() {
-        $dataArray = ArrayHelper::map(\common\models\dbWorld\Cities::find()->where("stateId=" . $_GET["stateId"])->all(), 'cityId', 'cityName');
+        $dataArray = ArrayHelper::map(\common\models\dbWorld\Cities::find()->where("stateId = " . $_GET["stateId"])->all(), 'cityId', 'cityName');
         echo $this->renderPartial('ddl', [
             'dataArray' => $dataArray,
             'prompt' => '-- Select City --',
@@ -110,7 +115,7 @@ class MasterController extends MasterCommonController {
     }
 
     public function actionDynamicDistrict() {
-        $dataArray = ArrayHelper::map(\common\models\dbWorld\District::find()->where("cityId=" . $_GET["cityId"])->all(), 'districtId', 'localName');
+        $dataArray = ArrayHelper::map(\common\models\dbWorld\District::find()->where("cityId = " . $_GET["cityId"])->all(), 'districtId', 'localName');
         echo $this->renderPartial('ddl', [
             'dataArray' => $dataArray,
             'prompt' => '-- Select District --',

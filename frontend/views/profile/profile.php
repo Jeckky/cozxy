@@ -86,9 +86,5 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
     </div><!-- Zone left -->
 
-
-    <?//= $this->render('test_file', ['xxxx' => "ttt"]); ?>
-
-
 </div>
 

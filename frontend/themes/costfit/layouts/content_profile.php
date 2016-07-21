@@ -10,6 +10,18 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <?php $this->beginContent('@app/themes/costfit/layouts/main.php'); ?>
 <?= $this->render('_modal_login') ?>
 <?= $this->render('_header') ?>
+<style type="text/css">
+    .list-wrapper{
+        /* font-size: .875em;
+        font-weight: 400;
+        line-height: 1.7;
+        margin-bottom: 4px;
+        color: #575c5f; */
+    }
+    .list-wrapper p{
+        margin-bottom: 10px;
+    }
+</style>
 <div class="page-content">
     <!--Breadcrumbs-->
     <ol class="breadcrumb">
@@ -39,18 +51,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </div>
                     <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="margin: 0 0 ">
 
-<!--<p>
-    1. 7th floor Ladproa 19,
-    Ladproa Road , Chatuchak , Bangkok , THA Zipcode 10900
-</p>
-<p>
-    2. 7th floor Ladproa 19,
-    Ladproa Road , Chatuchak , Bangkok , THA Zipcode 10900
-</p>
-<p>
-    3. 7th floor Ladproa 19,
-    Ladproa Road , Chatuchak , Bangkok , THA Zipcode 10900
-</p>-->
                         <?php
                         if (isset($this->params['listDataProvider']['shipping'])):
                             echo \yii\widgets\ListView::widget([
@@ -62,7 +62,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 ],
                                 'layout' => "{pager}\n{items}\n{summary}",
                                 'itemView' => function ($model, $key, $index, $widget) {
-                            return $this->render('@frontend/views/profile/add_shipping_address', ['model' => $model]);
+                            return $this->render('@frontend/views/profile/add_shipping_address', ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]);
                         },
                             ]);
                         endif;
