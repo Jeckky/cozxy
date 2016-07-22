@@ -3,7 +3,15 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 ?>
-
+<style type="text/css">
+    .address{
+        padding: 5px; font-size: 12px; border: 1px #003147 solid; word-wrap: break-word; margin-bottom: 2px;
+    }
+    .heard-title{
+        height: 120px;
+        overflow-y: auto;
+    }
+</style>
 <?php if (!Yii::$app->user->isGuest): ?>
     <?php
     if (count($user->addresses) > 0):
@@ -13,23 +21,20 @@ use yii\bootstrap\ActiveForm;
             <div class="col-lg-12">
                 <div class="hidden-panel expanded" id="costfit-select-<?= ($type == 1) ? "Billing" : "Shipping" ?>-address" style="color: #292c2e;">
                     <?php
-                    //echo '<pre>';
-                    // print_r($address);
-                    //echo count($address);
-                    $index = 0;
-                    //for ($index = 0; $index <= 2; $index++) {
                     foreach ($address as $value) {
                         ?>
                         <div class="col-lg-4 col-md-4 col-sm-4" >
-                            <div class="tile text-center" style="padding: 5px; font-size: 12px; border: 1px #003147 solid; word-wrap: break-word; margin-bottom: 2px; <?= ($value->type == 1) ? "background-color: #f5f5f5" : '' ?>">
-                                <?php echo ($user->firstname) ? $user->firstname : $user->firstname . ' ,'; ?>&nbsp;<?php echo ($user->lastname) ? $user->lastname : $user->lastname . ' ,'; ?><br>
-                                <?php echo ($value->company) ? $value->company : $model->company . ' ,'; ?><br>
-                                <?php echo ($value->address) ? $value->address : '' . ' ,'; ?><br>
-                                <?php echo ($value->district['localName']) ? $value->district['localName'] : '' . ' ,'; ?>
-                                <?php echo ($value->cities['cityName']) ? $value->cities['cityName'] : '' . ' ,'; ?>
-                                <?php echo ($value->states['stateName']) ? $value->states['stateName'] : '' . ' ,'; ?>
-                                <?php echo '<br>' . ($value->countries['localName']) ? $value->countries['localName'] : '' . ' ,'; ?>
-                                <?php echo '<br>Zipcode ' . $value->zipcode; ?>
+                            <div class="tile address text-center" style=" <?= ($value->isDefault == 1) ? "background-color: rgba(31, 30, 30, 0.03)" : '' ?>">
+                                <div class="heard-title">
+                                    <?php echo ($user->firstname) ? $user->firstname : $user->firstname . ' ,'; ?>&nbsp;<?php echo ($user->lastname) ? $user->lastname : $user->lastname . ' ,'; ?><br>
+                                    <?php echo ($value->company) ? $value->company : $model->company . ' ,'; ?><br>
+                                    <?php echo ($value->address) ? $value->address : '' . ' ,'; ?><br>
+                                    <?php echo ($value->district['localName']) ? $value->district['localName'] : '' . ' ,'; ?>
+                                    <?php echo ($value->cities['cityName']) ? $value->cities['cityName'] : '' . ' ,'; ?>
+                                    <?php echo ($value->states['stateName']) ? $value->states['stateName'] : '' . ' ,'; ?>
+                                    <?php echo '<br>' . ($value->countries['localName']) ? $value->countries['localName'] : '' . ' ,'; ?>
+                                    <?php echo '<br>Zipcode ' . $value->zipcode; ?>
+                                </div>
                                 <div class="footer-cost-fit">
                                     <a class="panel-toggle" href="#address1">
                                         <div class="radio light">
@@ -37,8 +42,8 @@ use yii\bootstrap\ActiveForm;
                                                 <label class="btn btn-sm btn-info checkout_select_address<?= ($type == 1) ? "_billing" : "_shipping" ?>">
                                                     <input type="radio" name="checkout_select_address<?= ($type == 1) ? "_billing" : "_shipping" ?>" id="checkout_select_address<?= ($type == 1) ? "_billing" : "_shipping" ?>"
                                                     <?php
-                                                    if ($index == 0) {
-                                                        echo "checked";
+                                                    if ($type == 2) {
+                                                        echo ($value->isDefault == 1) ? 'checked' : '';
                                                     }
                                                     ?> value="<?php echo $value->addressId; ?>"> เลือก
                                                 </label>
@@ -52,7 +57,6 @@ use yii\bootstrap\ActiveForm;
                             </div>
                         </div>
                         <?php
-                        $index = $index++;
                     }
                     ?>
                     <div class="row hide" id="<?= ($type == 1) ? "billing" : "shipping" ?>Update">

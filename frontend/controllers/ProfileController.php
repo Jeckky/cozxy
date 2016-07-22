@@ -104,11 +104,11 @@ class ProfileController extends MasterController {
         $this->subSubTitle = "Default Shipping Assdress";
         $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
         //$loginForm = new \common\models\LoginForm();
-        $model->type = 0; // default Address First
+        $model->type = \common\models\costfit\Address::TYPE_SHIPPING; // default Address First
         $status_address = Yii::$app->controller->action->id;
 
         $label = 'Default shipping  address';
-        $model->isDefault = 2; // TYPE_SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
+        $model->isDefault = 0;
 
         if (isset($_POST['Address'])) {
             $model->attributes = $_POST['Address'];
@@ -132,11 +132,11 @@ class ProfileController extends MasterController {
         $this->subSubTitle = "Default Shipping Assdress";
         $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
         //$loginForm = new \common\models\LoginForm();
-        $model->type = 1; // default Address First
+        $model->type = \common\models\costfit\Address::TYPE_BILLING; // default Address First
         $status_address = Yii::$app->controller->action->id;
 
         $label = 'Default billings address';
-        $model->isDefault = 1;  // TYPE_BILLING = 1; // ที่อยู่จัดส่งเอกสาร
+        $model->isDefault = 0;
 
         if (isset($_POST['Address'])) {
             $model->attributes = $_POST['Address'];

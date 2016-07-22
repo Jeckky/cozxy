@@ -39,12 +39,12 @@ class CheckoutController extends MasterController {
             $user = \common\models\costfit\User::find()->where('userId=' . \Yii::$app->user->id)->one();
         }
 
-        $address_shipping = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and isDefault = 2  ')
-                ->orderBy('updateDateTime desc')//->limit(3)
+        $address_shipping = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 2  ')
+                ->orderBy('isDefault desc, updateDateTime desc')
                 ->all();
 
-        $address_billing = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and isDefault = 1  ')
-                ->orderBy('updateDateTime desc')//->limit(3)
+        $address_billing = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 1  ')
+                ->orderBy('isDefault , updateDateTime desc')
                 ->all();
 
         $paymentMethods = \common\models\costfit\PaymentMethod::find()->all();
