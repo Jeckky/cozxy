@@ -50,7 +50,7 @@ $('#see-more-search-cost-fit').on('click', function () {
 
 // Create date 7/7/2016 By Pew , ReFrom By :
 
-$('.checkout_select_address_shipping').on('click', function () {
+$('.checkout_update_address_shipping').on('click', function () {
     alert('Id Name : ' + $(this).find('input').attr('id'));
     alert('Value : ' + $(this).find('input').val());
 
