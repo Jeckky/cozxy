@@ -1,5 +1,7 @@
 <!--Checkout Form Select  Address-->
-<?php echo $this->render('_select_address', ['type' => $type, 'address' => $address, 'user' => $user]); ?>
+<?php
+echo $this->render('_select_address', ['type' => $type, 'address' => $address, 'user' => $user]);
+?>
 
 <!--Checkout Form New Address-->
 <a class="panel-toggle <?= (Yii::$app->user->isGuest || count($user->addresses) == 0) ? " active action" : "" ?>" href="#New<?= ($type == 1) ? "Billing" : "Shipping" ?>"><i></i>New <?= ($type == 1) ? "Billing" : "Shipping" ?> Address</a>

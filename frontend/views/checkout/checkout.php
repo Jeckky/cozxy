@@ -16,7 +16,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <section class="checkout">
     <div class="container">
         <!--Expandable Panels-->
-        <div class="row"> 
+        <div class="row">
             <?php
             $form = ActiveForm::begin([
                         'options' => ['enctype' => 'multipart/form-data', 'id' => 'checkout-form'],
@@ -105,13 +105,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 </div>
                             </div>
                         <?php endif; ?>
-                        <?php echo $this->render('_address', ['type' => 2, 'address' => $address, 'user' => $user]); ?>
+                        <?php echo $this->render('_address', ['type' => 2, 'address' => $address_shipping, 'user' => $user]); ?>
 
                         <div class=" form-group" >
                             <label class="ship-to-dif-adress btn btn-primary"><span>Click for Billing to a different adress?</span></label>
                         </div>
                         <div class="shippingArea hide">
-                            <?php echo $this->render('_address', ['type' => 1, 'address' => $address, 'user' => $user]); ?>
+                            <?php echo $this->render('_address', ['type' => 1, 'address' => $address_billing, 'user' => $user]); ?>
                         </div>
                         <h3>Order notes</h3>
                         <div class="form-group">
@@ -140,7 +140,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             </label>
                         </div>
 
-                                                                <!--<p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>-->
+                                                                                <!--<p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>-->
                         <!--                            <div class="radio light">
                                                         <label><input type="radio" name="payment" id="payment02"> บัตรเครดิต</label>
                                                     </div>-->
