@@ -76,16 +76,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
                 <section style="background-position: 50% 145.5px; background-color: #f5f5f5; " data-stellar-background-ratio="0.5">
                     <div class="container">
-                        <div class="row" style="background-image: url('<?php echo $directoryAsset; ?>/img/6461f19706a949f3_5095-w787-h376-b0-p0--home-design.jpg');">
+                        <div class="row" style="background-image: url('<?php echo $baseUrl . $topOneContent->image; ?>');background-size: 100% 100%;">
                             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-                                <h2 style="color: #fff;">Eco-friendly materials in our shop</h2>
+                                <h2 style="color: #fff;"><?php echo $topOneContent->title; ?></h2>
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12" style="color: #fff;">
-                                        <p class="p-style3" style="color: #fff;">Let the customer know if there's anything you can be proud of.
-                                            If you have a clear business concept provide a description for it.
-                                            Do you have a flexible return policy or discounts for loyal customers? It's great!
-                                            Tell them about it in this module. For instance,
-                                            put some notes from what fabric clothing is made of in case you run an apparel store.
+                                        <p class="p-style3" style="color: #fff;">
+                                            <?php echo $topOneContent->description; ?>
                                         </p>
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 10px;">
@@ -112,23 +109,34 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             <div class="container" >
                                 <div class="row">
                                     <div  id="photos-bestseller-items">
-                                        <?php for ($index2 = 1; $index2 <= 11; $index2++) {
-                                            ?>
-                                            <div id="photos-bestseller-items-padding">
-                                                <a class="media-link" href="#" id="media-link-bestseller" >
-                                                    <div class="overlay" >
-                                                        <div class="descrx desc-bestseller">
-                                                            <div class="product-name">VIZIO 40 Inch 4K Ultra HD LED Smart TV D40u-D1 (2016 Model)
-                                                                <div class="bestseller-name-price">174.71 ฿</div>
+                                        <?php
+                                        $i = 1;
+                                        foreach ($product as $products) {
+                                            $image = \common\models\costfit\ProductImage::find()->where("productId='" . $products->productId . "'")->all();
+                                            foreach ($image as $images) {
+                                                ?>
+                                                <div id="photos-bestseller-items-padding">
+                                                    <a class="media-link" href="#" id="media-link-bestseller" >
+                                                        <div class="overlay" >
+                                                            <div class="descrx desc-bestseller">
+                                                                <div class="product-name"><?php echo $products->title; ?>
+                                                                    <div class="bestseller-name-price"><?php echo $products->price; ?></div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <img src="<?php echo $baseUrl; ?>/images/bestseller-items/<?php echo $index2; ?>" alt="1" title="ขนาด 654 x 240"/>
-                                                </a>
-                                            </div>
+                                                        <img src="<?php echo $baseUrl . $images->image; ?>"/>
+                                                    </a>
+                                                </div>
 
-                                            <?php
-                                            $index2 = $index2++;
+                                                <?php
+                                                $i++;
+                                                if ($i > 9) {
+                                                    break;
+                                                }
+                                            }
+                                            if ($i > 9) {
+                                                break;
+                                            }
                                         }
                                         ?>
                                     </div>
@@ -166,31 +174,35 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <div class="container">
                         <div class="row">
                             <div class="tabs-content col-lg-6 col-md-6">
-                                <div class="tabs-pane current" id="tab-1">
-                                    <h2 class="title-head">
-                                        How Cost.Fit Works
-                                    </h2>
-                                    <p class="p-style3">Outline the main advantages a one can get by purchasing a product from your store. Have you got expensive items and at the same time a flexible return policy? Make a customer aware of that! </p>
-                                </div>
-                                <div class="tabs-pane" id="tab-2">
-                                    <h2>High quality leather</h2>
-                                    <p class="p-style3">Outline the main advantages a one can get by purchasing a product from your store. Have you got expensive items and at the same time a flexible return policy? Make a customer aware of that! </p>
-                                </div>
-                                <div class="tabs-pane" id="tab-3">
-                                    <h2>Smart delivery transfer</h2>
-                                    <p class="p-style3">Outline the main advantages a one can get by purchasing a product from your store. Have you got expensive items and at the same time a flexible return policy? Make a customer aware of that! </p>
-                                </div>
+                                <?php
+                                $i = 1;
+                                foreach ($bottomContent as $content) {
+                                    if ($i > 3) {
+                                        break;
+                                    }
+                                    ?>
+                                    <div class="tabs-pane <?= ($i == 1) ? 'current' : '' ?>" id="tab<?= $i ?>">
+                                        <!--<div class="tabs-pane current" id="tab-1">-->
+                                        <h2 class="<?= ($i == 1) ? 'title-head' : '' ?>">
+                                            <?php echo $content->title; ?>
+                                        </h2>
+                                        <p class="p-style3"><?php echo $content->description; ?></p>
+                                    </div>
+                                    <?php
+                                    $i++;
+                                }
+                                ?>
                             </div>
                             <div class="tabs col-lg-6 col-md-6 group">
-                                <span class="tab active" data-tab="#tab-1"><i class="fa fa-archive"></i></span>
-                                <span class="tab" data-tab="#tab-2"><i class="fa fa-recycle"></i></span>
-                                <span class="tab" data-tab="#tab-3"><i class="fa fa-gift"></i></span>
+                                <span class="tab active" data-tab="#tab1"><i class="fa fa-archive"></i></span>
+                                <span class="tab" data-tab="#tab2"><i class="fa fa-recycle"></i></span>
+                                <span class="tab" data-tab="#tab3"><i class="fa fa-gift"></i></span>
                             </div>
                         </div>
                     </div>
                 </section>
                 <!--Subscription Widget-->
-                <?php echo $this->render('@app/themes/costfit/layouts/_subscription'); ?>
+                <?php echo $this->render('@app/themes/costfit/layouts/_subscription', compact('lastIndexContent')); ?>
                 <!--Brands Carousel Widget-->
                 <?php echo $this->render('@app/themes/costfit/layouts/_brand_carousel'); ?>
 
