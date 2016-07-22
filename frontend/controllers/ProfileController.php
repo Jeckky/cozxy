@@ -34,15 +34,11 @@ class ProfileController extends MasterController {
         $this->title = 'Cost.fit | My Profile';
         $this->subTitle = 'Home';
         $this->subSubTitle = "My Profile";
-        //$model = new \common\models\costfit\User(['scenario' => 'profile']);
-        //return $this->render('profile_layouts');
-        //$model = \common\models\costfit\user::find()->where("userId ='" . Yii::$app->user->id . "'");
         $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
-        return $this->render('profile', ['model' => $model]);
-        exit();
         if (isset($_POST["User"])) {
             $model->attributes = $_POST['User'];
-            $model->passwod = $_POST["User"]['newPassword'];
+            $model->password = $_POST["User"]['newPassword'];  // Normal Password
+            $model->password_hash = Yii::$app->security->generatePasswordHash($model->password); // Convert Password
             if ($model->save(FALSE)) {
                 $this->redirect(Yii::$app->homeUrl . 'profile');
             }
