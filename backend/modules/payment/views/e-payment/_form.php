@@ -44,17 +44,21 @@ use common\models\costfit\EPaymentProfile;
 
         <?= $form->field($model, 'ePaymentTel', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 30]) ?>
 
-        <?= $form->field($model, 'ePaymentMerchantId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(EPaymentMerchant::find()->all(), 'ePaymentMerchantId', 'title'), ['prompt' => '-- Select EPaymentMerchant --']) ?>
+        <?= $form->field($model, 'ePaymentMerchantId', ['options' => ['class' => 'row form-group']])->textInput() ?>
+        <?//= $form->field($model, 'ePaymentMerchantId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(EPaymentMerchant::find()->all(), 'ePaymentMerchantId', 'title'), ['prompt' => '-- Select EPaymentMerchant --']) ?>
 
-        <?= $form->field($model, 'ePaymentOrgId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(EPaymentOrg::find()->all(), 'ePaymentOrgId', 'title'), ['prompt' => '-- Select EPaymentOrg --']) ?>
+        <?= $form->field($model, 'ePaymentOrgId', ['options' => ['class' => 'row form-group']])->textInput() ?>
+        <?//= $form->field($model, 'ePaymentOrgId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(EPaymentOrg::find()->all(), 'ePaymentOrgId', 'title'), ['prompt' => '-- Select EPaymentOrg --']) ?>
 
-        <?= $form->field($model, 'ePaymentUrl', ['options' => ['class' => 'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
+        <?= $form->field($model, 'ePaymentUrl', ['options' => ['class' => 'row form-group']])->textInput() ?>
+        <?//= $form->field($model, 'ePaymentUrl', ['options' => ['class' => 'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
 
         <?= $form->field($model, 'ePaymentAccessKey', ['options' => ['class' => 'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
 
         <?= $form->field($model, 'ePaymentSecretKey', ['options' => ['class' => 'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
 
-        <?= $form->field($model, 'ePaymentProfileId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(EPaymentProfile::find()->all(), 'ePaymentProfileId', 'title'), ['prompt' => '-- Select EPaymentProfile --']) ?>
+        <?= $form->field($model, 'ePaymentProfileId', ['options' => ['class' => 'row form-group']])->textInput() ?>
+        <?//= $form->field($model, 'ePaymentProfileId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(EPaymentProfile::find()->all(), 'ePaymentProfileId', 'title'), ['prompt' => '-- Select EPaymentProfile --']) ?>
 
         <?= $form->field($model, 'type', ['options' => ['class' => 'row form-group']])->textInput() ?>
 

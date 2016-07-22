@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * StoreSlotController implements the CRUD actions for StoreSlot model.
  */
-class StoreSlotController extends BackendMasterController
+class StoreSlotController extends StoreMasterController
 {
 
     public function behaviors()

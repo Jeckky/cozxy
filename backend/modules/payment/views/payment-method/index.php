@@ -39,10 +39,15 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 ],
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    'paymentMethodId',
+                    [
+                        'attribute' => 'image',
+                        'format' => 'html',
+                        'value' => function($model) {
+                            return Html::img(Yii::$app->homeUrl . $model->image, ['style' => 'width:150px']);
+                        }
+                    ],
                     'title',
                     'description:ntext',
-                    'image',
                     'type',
                     // 'status',
                     // 'createDateTime',
