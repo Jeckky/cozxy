@@ -7,8 +7,12 @@ use yii\bootstrap\ActiveForm;
     .address{
         padding: 5px; font-size: 12px; border: 1px #003147 solid; word-wrap: break-word; margin-bottom: 2px;
     }
-    .heard-title{
+    .main-title{
         height: 120px;
+        overflow-y: auto;
+    }
+    .main-shipping-address{
+        height: 203px;
         overflow-y: auto;
     }
 </style>
@@ -19,13 +23,13 @@ use yii\bootstrap\ActiveForm;
         <a class="panel-toggle active action" href="#costfit-select-<?= ($type == 1) ? "Billing" : "Shipping" ?>-address"><i></i>Select <?= ($type == 1) ? "Billing" : "Shipping" ?> Address</a>
         <div class="row" style="background-color: rgba(249, 249, 249, 0.32);">
             <div class="col-lg-12">
-                <div class="hidden-panel expanded" id="costfit-select-<?= ($type == 1) ? "Billing" : "Shipping" ?>-address" style="color: #292c2e;">
+                <div class="hidden-panel expanded main-shipping-address" id="costfit-select-<?= ($type == 1) ? "Billing" : "Shipping" ?>-address" style="color: #292c2e;">
                     <?php
                     foreach ($address as $value) {
                         ?>
                         <div class="col-lg-4 col-md-4 col-sm-4" >
                             <div class="tile address text-center" style=" <?= ($value->isDefault == 1) ? "background-color: rgba(31, 30, 30, 0.03)" : '' ?>">
-                                <div class="heard-title">
+                                <div class="main-title">
                                     <?php echo ($user->firstname) ? $user->firstname : $user->firstname . ' ,'; ?>&nbsp;<?php echo ($user->lastname) ? $user->lastname : $user->lastname . ' ,'; ?><br>
                                     <?php echo ($value->company) ? $value->company : $model->company . ' ,'; ?><br>
                                     <?php echo ($value->address) ? $value->address : '' . ' ,'; ?><br>
