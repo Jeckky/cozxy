@@ -51,7 +51,7 @@ class CheckoutController extends MasterController {
         if (isset($_POST["Order"])) {
             $this->redirect(['order-thank']);
         }
-        return $this->render('checkout', compact('address', 'user', 'paymentMethods', 'address_shipping', 'address_billing'));
+        return $this->render('checkout', compact('address', 'user', 'paymentMethods', 'address_shipping', 'address_billing', 'model'));
     }
 
     public function actionOrderThank() {

@@ -93,15 +93,11 @@ $form = ActiveForm::begin([
             'id' => 'default-shipping-address',
             'options' => ['class' => 'space-bottom'],
         ]);
-$countryId = rand(0, 9999);
-$stateId = rand(0, 9999);
-$cityId = rand(0, 9999);
-$districtId = rand(0, 9999);
 ?>
 <div id="<?= $formName; ?>">
     <h3><?= (isset($type) && $type == 1) ? "Billing" : "Shipping" ?> address</h3>
-
     <div class="form-group">
+
         <?php
         // Top most parent
         echo $form->field($address, 'countryId')->widget(kartik\select2\Select2::classname(), [
@@ -111,7 +107,7 @@ $districtId = rand(0, 9999);
                 'placeholder' => 'Select...',
                 'loadingText' => 'Loading country ...',
             ],
-            'options' => ['placeholder' => 'Select country ...', 'id' => $countryId],
+            'options' => ['placeholder' => 'Select country ...'],
         ])->label('ประเทศ');
         ?>
     </div>
@@ -120,32 +116,40 @@ $districtId = rand(0, 9999);
     <div class="row">
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
             <label for="co-first-name">ชื่อ *</label>
+            <!--<input type="text" class="form-control input-sm" id="co-first-name" name="co-first-name" placeholder="First name" required>-->
             <?= Html::textInput("Address[firstname]", NULL, ["class" => "form-control input-sm", 'placeHolder' => 'First name']) ?>
         </div>
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
             <label for="co-last-name">นามสกุล *</label>
+            <!--<input type="text" class="form-control input-sm" id="co-last-name" name="co-last-name" placeholder="Last name" required>-->
             <?= Html::textInput("Address[lastname]", NULL, ["class" => "form-control input-sm", 'placeHolder' => 'Last name']) ?>
         </div>
     </div>
     <div class="form-group">
         <label for="co-company-name">บริษัท</label>
+        <!--<input type="text" class="form-control input-sm" id="co-company-name" name="co-company-name" placeholder="Company name">-->
         <?= Html::textInput("Address[company]", NULL, ["class" => "form-control input-sm", 'placeHolder' => 'Company name']) ?>
     </div>
     <div class="form-group">
         <label for="co-str-adress">ที่อยู่ *</label>
+        <!--<input type="text" class="form-control input-sm" id="co-str-adress" name="co-str-adress" placeholder="Street adress" required>-->
         <?= Html::textarea("Address[address]", NULL, ["class" => "form-control input-sm", 'rows' => 3, 'placeHolder' => 'Address']) ?>
-    </div> 
+    </div>
+    <!--<div class="form-group">
+        <label class="sr-only" for="co-appartment">Appartment</label>
+        <input type="text" class="form-control input-sm" id="co-appartment" name="co-appartment" placeholder="Appartment" required>
+    </div>-->
     <div class="row">
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
             <?php
             // Child level 1
             echo $form->field($address, 'provinceId')->widget(DepDrop::classname(), [
                 //'data' => [6 => 'Bank'],
-                'options' => ['placeholder' => 'Select ...', 'id' => $stateId],
+                'options' => ['placeholder' => 'Select ...'],
                 'type' => DepDrop::TYPE_SELECT2,
                 'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                 'pluginOptions' => [
-                    'depends' => [$countryId],
+                    'depends' => ['address-countryid'],
                     'url' => Url::to(['child-states']),
                     'loadingText' => 'Loading province ...',
                 ]
@@ -158,11 +162,11 @@ $districtId = rand(0, 9999);
             // Child level 2
             echo $form->field($address, 'amphurId')->widget(DepDrop::classname(), [
                 //'data' => [9 => 'Savings'],
-                'options' => ['placeholder' => 'Select ...', 'id' => $cityId],
+                'options' => ['placeholder' => 'Select ...'],
                 'type' => DepDrop::TYPE_SELECT2,
                 'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                 'pluginOptions' => [
-                    'depends' => [$stateId],
+                    'depends' => ['address-provinceid'],
                     'url' => Url::to(['child-amphur']),
                     'loadingText' => 'Loading amphur ...',
                 ]
@@ -177,11 +181,11 @@ $districtId = rand(0, 9999);
             // Child level 3
             echo $form->field($address, 'districtId')->widget(DepDrop::classname(), [
                 //'data' => [12 => 'Savings A/C 2'],
-                'options' => ['placeholder' => 'Select ...', 'id' => $districtId],
+                'options' => ['placeholder' => 'Select ...'],
                 'type' => DepDrop::TYPE_SELECT2,
                 'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                 'pluginOptions' => [
-                    'depends' => [$cityId],
+                    'depends' => ['address-amphurid'],
                     //'initialize' => true,
                     //'initDepends' => ['address-countryid'],
                     'url' => Url::to(['child-district']),

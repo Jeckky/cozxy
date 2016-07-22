@@ -3,6 +3,8 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Url;
+use kartik\depdrop\DepDrop;
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
@@ -18,15 +20,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <!--Expandable Panels-->
         <div class="row">
             <?php
-            $form = ActiveForm::begin([
-                        'options' => ['enctype' => 'multipart/form-data', 'id' => 'checkout-form'],
-                        'fieldConfig' => [
-//        'template' => '{label}<div class="col-sm-9">{input}</div>',
-                            'labelOptions' => [
-//            'class' => 'col-sm-3 control-label'
-                            ]
-                        ]
-            ]);
+            /* $form = ActiveForm::begin([
+              'options' => ['enctype' => 'multipart/form-data', 'id' => 'checkout-form'],
+              'fieldConfig' => [
+              //        'template' => '{label}<div class="col-sm-9">{input}</div>',
+              'labelOptions' => [
+              //            'class' => 'col-sm-3 control-label'
+              ]
+              ]
+              ]); */
             ?>
             <!--Left Column-->
             <div class="col-lg-8 col-md-8 col-sm-8">
@@ -90,7 +92,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             <?php ActiveForm::end(); ?>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         <?php endif; ?>
@@ -105,13 +106,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 </div>
                             </div>
                         <?php endif; ?>
-                        <?php echo $this->render('_address', ['type' => 2, 'address' => $address_shipping, 'user' => $user]); ?>
-
+                        <?php echo $this->render('_address', ['type' => 2, 'address' => $address, 'addresses' => $address_shipping, 'user' => $user]); ?>
                         <div class=" form-group" >
                             <label class="ship-to-dif-adress btn btn-primary"><span>Click for Billing to a different adress?</span></label>
                         </div>
                         <div class="shippingArea hide">
-                            <?php echo $this->render('_address', ['type' => 1, 'address' => $address_billing, 'user' => $user]); ?>
+                            <?php echo $this->render('_address', ['type' => 1, 'address' => $address, 'addresses' => $address_billing, 'user' => $user]); ?>
                         </div>
                         <h3>Order notes</h3>
                         <div class="form-group">
@@ -139,14 +139,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 <p><?= $paymentMethod->description; ?></p>
                             </label>
                         </div>
-
-                                                                                <!--<p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>-->
-                        <!--                            <div class="radio light">
-                                                        <label><input type="radio" name="payment" id="payment02"> บัตรเครดิต</label>
-                                                    </div>-->
-                        <!--                        <div class="radio light">
-                                                    <label><input type="radio" name="payment" id="payment03"> PayPal <span class="pp-label"></span></label>
-                                                </div>-->
                         <?php
                         $i++;
                     endforeach;
@@ -155,7 +147,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <input class="btn btn-black btn-block" type="submit" onclick="$('#checkout-form').submit();" name="place-order" value="Place order">
             </div>
             <!--</form>-->
-            <?php ActiveForm::end(); ?>
+            <?php //ActiveForm::end(); ?>
         </div>
     </div>
 </section>

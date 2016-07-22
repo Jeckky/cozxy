@@ -57,47 +57,47 @@ $('.checkout_update_address_shipping').on('click', function () {
     var address = $(this).find('input').attr('id');
     var addressIdValue = $(this).find('input').val();
 
-    // var url = "path/to/your/file"; // the script where you handle the form input.
 
-    /*$.ajax({
-     type: "POST",
-     url: url,
-     data: $("#idForm").serialize(), // serializes the form's elements.
-     success: function (data)
-     {
-     alert(data); // show response from the php script.
-     //$('.form-group').find('#co-country').val('Australia');
-     //$('.form-group').find('#co-first-name').val('นายกมล');
-     //$('.form-group').find('#co-last-name').val('พวงเกษม');
-     //$('.form-group').find('#co-str-adress').val('เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19 จอมพล จตุจักร กรุงเทพ 10900');
-     //$('.form-group').find('#co-appartment').val('test');
-     //$('.form-group').find('#co-company-name').val('test');
-     //$('.form-group').find('#co-city').val('test');
-     //$('.form-group').find('#co-state').val('test');
-     //$('.form-group').find('#co_postcode').val('10900');
-     //$('.form-group').find('#co-email').val('นายกมล');
-     //$('.form-group').find('#co_phone').val('0616539889');
-     $('.form-group').find('#order-notes').val('test');
-     }
-     });
 
-     e.preventDefault(); // avoid to execute the actual submit of the form.
-     */
+    $.ajax({
+        type: "POST",
+        url: '',
+        data: $("#idForm").serialize(), // serializes the form's elements.
+        success: function (data)
+        {
+            alert(data); // show response from the php script.
+            //$('.form-group').find('#co-country').val('Australia');
+            //$('.form-group').find('#co-first-name').val('นายกมล');
+            //$('.form-group').find('#co-last-name').val('พวงเกษม');
+            //$('.form-group').find('#co-str-adress').val('เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19 จอมพล จตุจักร กรุงเทพ 10900');
+            //$('.form-group').find('#co-appartment').val('test');
+            //$('.form-group').find('#co-company-name').val('test');
+            //$('.form-group').find('#co-city').val('test');
+            //$('.form-group').find('#co-state').val('test');
+            //$('.form-group').find('#co_postcode').val('10900');
+            //$('.form-group').find('#co-email').val('นายกมล');
+            //$('.form-group').find('#co_phone').val('0616539889');
+            $('.form-group').find('#order-notes').val('test');
+        }
+    });
 
-    // Test
-    $("#billingUpdate").removeClass("hide");
-    $('.form-group').find('#co-country').val('Australia');
-    $('.form-group').find('#co-first-name').val('นายกมล');
-    $('.form-group').find('#co-last-name').val('พวงเกษม');
-    $('.form-group').find('#co-str-adress').val('เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19 จอมพล จตุจักร กรุงเทพ 10900');
-    $('.form-group').find('#co-appartment').val('test');
-    $('.form-group').find('#co-company-name').val('test');
-    $('.form-group').find('#co-city').val('test');
-    $('.form-group').find('#co-state').val('test');
-    $('.form-group').find('#co_postcode').val('10900');
-    $('.form-group').find('#co-email').val('นายกมล');
-    $('.form-group').find('#co_phone').val('0616539889');
-    $('.form-group').find('#order-notes').val('test');
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+
+    /*
+     // Test
+     $("#billingUpdate").removeClass("hide");
+     $('.form-group').find('#co-country').val('Australia');
+     $('.form-group').find('#co-first-name').val('นายกมล');
+     $('.form-group').find('#co-last-name').val('พวงเกษม');
+     $('.form-group').find('#co-str-adress').val('เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19 จอมพล จตุจักร กรุงเทพ 10900');
+     $('.form-group').find('#co-appartment').val('test');
+     $('.form-group').find('#co-company-name').val('test');
+     $('.form-group').find('#co-city').val('test');
+     $('.form-group').find('#co-state').val('test');
+     $('.form-group').find('#co_postcode').val('10900');
+     $('.form-group').find('#co-email').val('นายกมล');
+     $('.form-group').find('#co_phone').val('0616539889');
+     $('.form-group').find('#order-notes').val('test');*/
 });
 
 $('.checkout_select_address_billing').on('click', function () {
@@ -202,7 +202,12 @@ $('.checkout_update_address_shipping').on('click', function () {
 $('.checkout_select_address_shipping').on('click', function () {
 });
 
-
+/*
+ $('#address-countryid').prop("disabled", false);
+ $('#address-provinceid').prop("disabled", false);
+ $('#address-amphurid').prop("disabled", false);
+ $('#address-districtid').prop("disabled", false);
+ */
 
 $('.updateShippingCancel').on('click', function () {
     $("#shippingUpdate").addClass("hide");

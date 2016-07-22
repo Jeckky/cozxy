@@ -1,6 +1,12 @@
-<!--Checkout Form Select  Address-->
 <?php
-echo $this->render('_select_address', ['type' => $type, 'address' => $address, 'user' => $user]);
+/* @var $this yii\web\View */
+
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
+use yii\helpers\ArrayHelper;
+?>
+<?php
+echo $this->render('_select_address', ['type' => $type, 'addresses' => $addresses, 'address' => $address, 'user' => $user]);
 ?>
 
 <!--Checkout Form New Address-->

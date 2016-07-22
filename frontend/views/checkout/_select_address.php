@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Url;
+use kartik\depdrop\DepDrop;
 ?>
 <style type="text/css">
     .address{
@@ -16,6 +18,7 @@ use yii\bootstrap\ActiveForm;
         overflow-y: auto;
     }
 </style>
+
 <?php if (!Yii::$app->user->isGuest): ?>
     <?php
     if (count($user->addresses) > 0):
@@ -25,7 +28,7 @@ use yii\bootstrap\ActiveForm;
             <div class="col-lg-12">
                 <div class="hidden-panel expanded main-shipping-address" id="costfit-select-<?= ($type == 1) ? "Billing" : "Shipping" ?>-address" style="color: #292c2e;">
                     <?php
-                    foreach ($address as $value) {
+                    foreach ($addresses as $value) {
                         ?>
                         <div class="col-lg-4 col-md-4 col-sm-4" >
                             <div class="tile address text-center" style=" <?= ($value->isDefault == 1) ? "background-color: rgba(31, 30, 30, 0.03)" : '' ?>">
@@ -66,9 +69,11 @@ use yii\bootstrap\ActiveForm;
 
                 </div>
                 <div class="row hide" id="<?= ($type == 1) ? "billing" : "shipping" ?>Update">
-                    <div class="col-lg-12">
+
+                    <div class="col-lg-12"> 
                         <?php echo $this->render('form_billing', ['address' => $address, 'type' => $type, 'isUpdate' => true]); ?>
                     </div>
+
                 </div>
             </div>
         </div>
