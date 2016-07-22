@@ -34,7 +34,9 @@ class ProfileController extends MasterController {
         $this->title = 'Cost.fit | My Profile';
         $this->subTitle = 'Home';
         $this->subSubTitle = "My Profile";
+
         $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
+        $model->scenario = 'profile';
         if (isset($_POST["User"])) {
             $model->attributes = $_POST['User'];
             $model->password = $_POST["User"]['newPassword'];  // Normal Password
@@ -102,7 +104,7 @@ class ProfileController extends MasterController {
         $this->subSubTitle = "Default Shipping Assdress";
         $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
         //$loginForm = new \common\models\LoginForm();
-        $model->type = 1; // default Address First
+        $model->type = 0; // default Address First
         $status_address = Yii::$app->controller->action->id;
 
         $label = 'Default shipping  address';

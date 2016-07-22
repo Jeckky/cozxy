@@ -47,9 +47,9 @@ class User extends \common\models\costfit\master\UserMaster {
 //            ['email', 'exist']
             [['firstname', 'lastname', 'acceptTerm'], 'required', 'on' => 'editinfo'],
             // [['currentPassword', 'newPassword', 'rePassword'], 'required'],
-            [['currentPassword', 'newPassword', 'rePassword'], 'required'],
+            [['currentPassword', 'newPassword', 'rePassword'], 'required', 'on' => 'profile'],
             // ['currentPassword', 'findPasswords'],
-            ['rePassword', 'compare', 'compareAttribute' => 'newPassword'],
+            ['rePassword', 'compare', 'compareAttribute' => 'newPassword', 'on' => 'profile'],
         ]);
     }
 

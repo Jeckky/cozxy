@@ -39,11 +39,11 @@ class CheckoutController extends MasterController {
             $user = \common\models\costfit\User::find()->where('userId=' . \Yii::$app->user->id)->one();
         }
 
-        $address_shipping = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and isDefault = 2 and type = 1')
+        $address_shipping = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and isDefault = 2  ')
                 ->orderBy('updateDateTime desc')//->limit(3)
                 ->all();
 
-        $address_billing = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and isDefault = 1 and type = 1')
+        $address_billing = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and isDefault = 1  ')
                 ->orderBy('updateDateTime desc')//->limit(3)
                 ->all();
 

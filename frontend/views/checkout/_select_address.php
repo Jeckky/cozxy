@@ -20,9 +20,9 @@ use yii\bootstrap\ActiveForm;
                     //for ($index = 0; $index <= 2; $index++) {
                     foreach ($address as $value) {
                         ?>
-                        <div class="col-lg-4 col-md-4 col-sm-4">
-                            <div class="tile text-center" style="padding: 5px; font-size: 12px; border: 1px #003147 solid; word-wrap: break-word; margin-bottom: 2px;">
-                                <?php echo ($user->firstname) ? $user->firstname : $user->firstname . ' ,'; ?>&nbsp;<?php echo ($user->lastname) ? $user->lastname : $user->lastname . ' ,'; ?><br> 
+                        <div class="col-lg-4 col-md-4 col-sm-4" >
+                            <div class="tile text-center" style="padding: 5px; font-size: 12px; border: 1px #003147 solid; word-wrap: break-word; margin-bottom: 2px; <?= ($value->type == 1) ? "background-color: #f5f5f5" : '' ?>">
+                                <?php echo ($user->firstname) ? $user->firstname : $user->firstname . ' ,'; ?>&nbsp;<?php echo ($user->lastname) ? $user->lastname : $user->lastname . ' ,'; ?><br>
                                 <?php echo ($value->company) ? $value->company : $model->company . ' ,'; ?><br>
                                 <?php echo ($value->address) ? $value->address : '' . ' ,'; ?><br>
                                 <?php echo ($value->district['localName']) ? $value->district['localName'] : '' . ' ,'; ?>
@@ -35,7 +35,7 @@ use yii\bootstrap\ActiveForm;
                                         <div class="radio light">
                                             <div class="btn-group" data-toggle="buttons">
                                                 <label class="btn btn-sm btn-info checkout_select_address<?= ($type == 1) ? "_billing" : "_shipping" ?>">
-                                                    <input type="radio" name="checkout_select_address" id="checkout_select_address<?= ($type == 1) ? "_billing" : "_shipping" ?>"
+                                                    <input type="radio" name="checkout_select_address<?= ($type == 1) ? "_billing" : "_shipping" ?>" id="checkout_select_address<?= ($type == 1) ? "_billing" : "_shipping" ?>"
                                                     <?php
                                                     if ($index == 0) {
                                                         echo "checked";
