@@ -16,8 +16,7 @@ use frontend\models\ContactForm;
 /**
  * Checkout controller
  */
-class CheckoutController extends MasterController
-{
+class CheckoutController extends MasterController {
 
     public $enableCsrfValidation = false;
 
@@ -26,8 +25,7 @@ class CheckoutController extends MasterController
      *
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
 
         $this->layout = "/content_right";
         $this->title = 'Cost.fit | checkout';
@@ -40,15 +38,19 @@ class CheckoutController extends MasterController
         } else {
             $user = \common\models\costfit\User::find()->where('userId=' . \Yii::$app->user->id)->one();
         }
+
+        $address = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and isDefault = 2 and type = 1')
+                ->orderBy('updateDateTime desc')->limit(3)
+                ->one();
+
         $paymentMethods = \common\models\costfit\PaymentMethod::find()->all();
         if (isset($_POST["Order"])) {
             $this->redirect(['order-thank']);
         }
-        return $this->render('checkout', compact('address', 'user', 'paymentMethods'));
+        return $this->render('checkout', compact('address', 'user', 'paymentMethods', 'address_shipping'));
     }
 
-    public function actionOrderThank()
-    {
+    public function actionOrderThank() {
         $this->title = 'Cost.fit | Order Thank';
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Order Thank';

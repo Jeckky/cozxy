@@ -13,7 +13,11 @@ use yii\bootstrap\ActiveForm;
             <div class="col-lg-12">
                 <div class="hidden-panel expanded" id="costfit-select-<?= ($type == 1) ? "Billing" : "Shipping" ?>-address" style="color: #292c2e;">
                     <?php
+                    //echo '<pre>';
+                    // print_r($address);
+                    //echo count($address);
                     for ($index = 0; $index <= 2; $index++) {
+                        //foreach ($address as $value) {
                         ?>
                         <div class="col-lg-4 col-md-4 col-sm-4">
                             <div class="tile text-center" style="padding: 5px; font-size: 12px; border: 1px #003147 solid; word-wrap: break-word;">

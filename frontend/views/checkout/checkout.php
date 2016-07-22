@@ -16,18 +16,16 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <section class="checkout">
     <div class="container">
         <!--Expandable Panels-->
-        <div class="row">
-<!--            <form id="checkout-form" method="post" action="<?php // echo Yii::$app->homeUrl;          ?>tracking">-->
-            <!--<form id="checkout-form" method="post">-->
+        <div class="row"> 
             <?php
             $form = ActiveForm::begin([
-                'options' => ['enctype' => 'multipart/form-data', 'id' => 'checkout-form'],
-                'fieldConfig' => [
+                        'options' => ['enctype' => 'multipart/form-data', 'id' => 'checkout-form'],
+                        'fieldConfig' => [
 //        'template' => '{label}<div class="col-sm-9">{input}</div>',
-                    'labelOptions' => [
+                            'labelOptions' => [
 //            'class' => 'col-sm-3 control-label'
-                    ]
-                ]
+                            ]
+                        ]
             ]);
             ?>
             <!--Left Column-->
@@ -108,9 +106,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             </div>
                         <?php endif; ?>
                         <?php echo $this->render('_address', ['type' => 2, 'address' => $address, 'user' => $user]); ?>
-                        <!--                            <div class="checkbox form-group">
-                                                        <label><input type="checkbox" name="create-account"> Create an account?</label>
-                                                    </div>-->
+
                         <div class=" form-group" >
                             <label class="ship-to-dif-adress btn btn-primary"><span>Click for Billing to a different adress?</span></label>
                         </div>
@@ -144,7 +140,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             </label>
                         </div>
 
-                                                        <!--<p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>-->
+                                                                <!--<p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>-->
                         <!--                            <div class="radio light">
                                                         <label><input type="radio" name="payment" id="payment02"> บัตรเครดิต</label>
                                                     </div>-->
