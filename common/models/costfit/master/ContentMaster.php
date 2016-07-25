@@ -15,6 +15,8 @@ use Yii;
     * @property string $image
     * @property string $linkTitle
     * @property string $link
+    * @property string $startDate
+    * @property string $endDate
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -40,7 +42,7 @@ return [
             [['contentGroupId', 'headTitle', 'createDateTime'], 'required'],
             [['contentGroupId', 'status'], 'integer'],
             [['description'], 'string'],
-            [['createDateTime', 'updateDateTime'], 'safe'],
+            [['startDate', 'endDate', 'createDateTime', 'updateDateTime'], 'safe'],
             [['headTitle', 'title', 'linkTitle', 'link'], 'string', 'max' => 200],
             [['image'], 'string', 'max' => 255],
             [['contentGroupId'], 'exist', 'skipOnError' => true, 'targetClass' => ContentGroupMaster::className(), 'targetAttribute' => ['contentGroupId' => 'contentGroupId']],
@@ -61,6 +63,8 @@ return [
     'image' => Yii::t('content', 'Image'),
     'linkTitle' => Yii::t('content', 'Link Title'),
     'link' => Yii::t('content', 'Link'),
+    'startDate' => Yii::t('content', 'Start Date'),
+    'endDate' => Yii::t('content', 'End Date'),
     'status' => Yii::t('content', 'Status'),
     'createDateTime' => Yii::t('content', 'Create Date Time'),
     'updateDateTime' => Yii::t('content', 'Update Date Time'),

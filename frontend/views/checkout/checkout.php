@@ -20,15 +20,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <!--Expandable Panels-->
         <div class="row">
             <?php
-            $form = ActiveForm::begin([
-                        'options' => ['enctype' => 'multipart/form-data', 'id' => 'checkout-form'],
-                        'fieldConfig' => [
-                            //        'template' => '{label}<div class="col-sm-9">{input}</div>',
-                            'labelOptions' => [
-                            //            'class' => 'col-sm-3 control-label'
-                            ]
-                        ]
-            ]);
+            /* $form = ActiveForm::begin([
+              'options' => ['enctype' => 'multipart/form-data', 'id' => 'checkout-form'],
+              'fieldConfig' => [
+              //        'template' => '{label}<div class="col-sm-9">{input}</div>',
+              'labelOptions' => [
+              //            'class' => 'col-sm-3 control-label'
+              ]
+              ]
+              ]); */
             ?>
             <!--Left Column-->
             <div class="col-lg-8 col-md-8 col-sm-8">
@@ -133,7 +133,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         ?>
                         <div class="radio light ">
                             <label>
-                                <input type="radio" name="Order[payment]" id="payment01" <?= ($i == 1) ? "checked" : "" ?>> <?= $paymentMethod->title; ?>
+                                <input type="radio" name="Order[payment]" id="payment01" <?= ($i == 1) ? "checked" : "" ?> value="<?php echo $paymentMethod->paymentMethodId; ?>"> <?= $paymentMethod->title; ?>
                                 <p><?= Html::img(Yii::$app->homeUrl . $paymentMethod->image, ['style' => 'width:100%']); ?></p>
                                 <p><?= $paymentMethod->description; ?></p>
                             </label>
@@ -146,10 +146,19 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <!--
                 <input class="btn btn-black btn-block" type="submit"onclick="$('#checkout-form').submit();" name="place-order" value="Place order">
                 -->
+                <?php
+                //echo '<pre>';
+                //print_r($address_shipping);
+                //echo '<hr>';
+                //echo '<pre>';
+                /// print_r($address_billing);
+                echo Html::hiddenInput("placeUserId", (!Yii::$app->user->isGuest) ? Yii::$app->user->id : 0, ['id' => 'placeUserId']);
+                echo Html::hiddenInput("placeOrderId", $this->params['cart']['orderId'], ['id' => 'addressId']);
+                ?>
                 <input class="btn btn-black btn-block" type="submit" name="place-order" id="place-order" value="Place order">
             </div>
             <!--</form>-->
-            <?php ActiveForm::end(); ?>
+            <?php //ActiveForm::end();  ?>
         </div>
     </div>
 </section>

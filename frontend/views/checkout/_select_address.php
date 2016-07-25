@@ -33,8 +33,12 @@ use kartik\depdrop\DepDrop;
                         <div class="col-lg-4 col-md-4 col-sm-4" >
                             <div class="tile address text-center" style=" <?= ($value->isDefault == 1) ? "background-color: rgba(31, 30, 30, 0.03)" : '' ?>">
                                 <div class="main-title">
-                                    <?php echo ($user->firstname) ? $user->firstname : $user->firstname . ' ,'; ?>&nbsp;<?php echo ($user->lastname) ? $user->lastname : $user->lastname . ' ,'; ?><br>
-                                    <?php echo ($value->company) ? $value->company : $model->company . ' ,'; ?><br>
+                                    <?php
+                                    echo ($value->firstname != null) ? $value->firstname : $user->firstname;
+                                    echo '&nbsp;&nbsp;';
+                                    echo ($value->lastname != '') ? $value->firstname : $user->lastname;
+                                    ?><br>
+                                    <?php echo ($value->company) ? $value->company : $value->company . ' ,'; ?><br>
                                     <?php echo ($value->address) ? $value->address : '' . ' ,'; ?><br>
                                     <?php echo ($value->district['localName']) ? $value->district['localName'] : '' . ' ,'; ?>
                                     <?php echo ($value->cities['cityName']) ? $value->cities['cityName'] : '' . ' ,'; ?>
@@ -65,7 +69,7 @@ use kartik\depdrop\DepDrop;
                         </div>
                         <?php
                     }
-                    ?> 
+                    ?>
                 </div>
                 <div class="row hide" id="<?= ($type == 1) ? "billing" : "shipping" ?>Update">
 
