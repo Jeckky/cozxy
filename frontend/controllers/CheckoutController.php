@@ -51,6 +51,19 @@ class CheckoutController extends MasterController {
         if (isset($_POST["Order"])) {
             $this->redirect(['order-thank']);
         }
+
+        if (isset($_POST['Address'])) {
+            if ($_POST['Address']['typeForm'] == 'formShipping') {
+                echo 'formShipping';
+                exit();
+            }
+            if ($_POST['Address']['typeForm'] == 'formBilling') {
+                echo 'formBilling';
+                exit();
+            }
+        }
+
+
         return $this->render('checkout', compact('address', 'user', 'paymentMethods', 'address_shipping', 'address_billing', 'model'));
     }
 
