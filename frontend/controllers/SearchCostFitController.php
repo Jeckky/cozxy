@@ -33,14 +33,26 @@ class SearchCostFitController extends MasterController
         $this->title = 'Cost.fit | Search Cost.fit';
         $this->subTitle = 'Home';
         $this->subSubTitle = 'search';
+
+        $sortName = "ASC";
+        $sortPrice = "ASC";
+        if (isset($_POST['sortName'])) {
+            $sortName = $_POST['sortName'];
+        }
+        if (isset($_POST['sortPrice'])) {
+            $sortPrice = $_POST['sortPrice'];
+        }
         //$search_hd = $_POST['search_hd'];
-        $sub1 = \common\models\costfit\Product::find()->orFilterWhere(['LIKE', 'product.title', $_POST['search_hd']]);
-        $sub2 = \common\models\costfit\Product::find()->orFilterWhere(['LIKE', 'product.description', $_POST['search_hd']]);
-        $sub3 = \common\models\costfit\Product::find()->orFilterWhere(['LIKE', 'product.specification', $_POST['search_hd']]);
+        $products = \common\models\costfit\Product::find()
+        ->andFilterWhere(['OR',
+            ['LIKE', 'product.title', $_POST['search_hd']],
+            ['LIKE', 'product.description', $_POST['search_hd']],
+            ['LIKE', 'product.specification', $_POST['search_hd']]
+        ])
+        ->orderBy("title $sortName , price $sortPrice")
+        ->all();
 
-        $products = \common\models\costfit\Product::find()->andFilterWhere(['OR', ['LIKE', 'product.title', $_POST['search_hd']], ['LIKE', 'product.description', $_POST['search_hd']]], ['LIKE', 'product.specification', $_POST['search_hd']])->all();
-
-        return $this->render('@app/views/search/searchcostfit', compact('products'));
+        return $this->render('@app/views/search/searchcostfit', compact('products', 'sortName', 'sortPrice'));
     }
 
 }

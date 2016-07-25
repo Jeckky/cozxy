@@ -32,20 +32,25 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <form class="subscr-form" role="form" autocomplete="off" novalidate="novalidate" method="post" action="<?php echo Yii::$app->homeUrl; ?>search-cost-fit">
             <div class="form-group">
                 <label class="sr-only" for="subscr-name">Search for produc</label>
-                <input type="text" class="form-control" name="search_hd" id="search_hd" placeholder="Search for product" required=""><label for="subscr-name" class="error" style="display: inline-block;">This field is required.</label>
+                <input type="text" class="form-control" name="search_hd" id="search_hd" value="<?= isset($_POST['search_hd']) ? $_POST['search_hd'] : "" ?>" placeholder="Search for product" required=""><label for="subscr-name" class="error" style="display: inline-block;">This field is required.</label>
                 <button class="subscr-next"><i class="icon-magnifier"></i></button>
             </div>
         </form>
 
         <h2 class="with-sorting">Showing results for "test test's"</h2>
-        <div class="sorting">
-            <a href="#">Sort by name</a>
-            <a href="#">Sort by price</a>
-        </div>
+        <form class="sort-form sorting" role="form" autocomplete="off" novalidate="novalidate" method="post" action="<?php echo Yii::$app->homeUrl; ?>search-cost-fit">
+            <?php if (isset($_POST['search_hd'])): ?>
+                <input type="hidden" value="<?= $_POST['search_hd'] ?>" name="search_hd">
+            <?php endif; ?>
+            <input type="hidden" value="ASC" name="sortName" id="sortName">
+            <input type="hidden" value="ASC" name="sortPrice" id="sortPrice">
+            <a href="#" onclick="<?= ($sortName == "ASC") ? "$('#sortName').val('DESC');" : "$('#sortName').val('ASC');" ?>$('.sort-form').submit()" <?= ($sortName == "ASC") ? " " : " class='sorted'" ?>>Sort by name</a>
+            <a href="#" onclick="<?= ($sortPrice == "ASC") ? "$('#sortPrice').val('DESC');" : "$('#sortPrice').val('ASC');" ?>$('.sort-form').submit()" <?= ($sortPrice == "ASC") ? " " : " class='sorted'" ?>>Sort by price</a>
+        </form>
         <div class="row">
             <!--Tiles-->
             <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="row"> 
+                <div class="row">
                     <?php foreach ($products as $item) {
                         ?>
                         <!--Tile-->
@@ -55,14 +60,16 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     <div class="badges">
                                         <span class="sale">Sale</span>
                                     </div>
-                                    <div class="price-label">715,00 $</div>
+                                    <div class="price-label"><?= $item->price ?> ฿</div>
                                 </div>
-                                <a href="<?php echo Yii::$app->homeUrl; ?>" style="min-height: 210px; max-height: 210px;">
-                                    <img src="<?php echo Yii::$app->homeUrl . $item->productImages[0]->image; ?>" alt="1"/>
+                                <a href="<?php echo Yii::$app->homeUrl . "products?productId=" . $item->productId; ?>" style="min-height: 210px; max-height: 210px;">
+                                    <?php if (isset($item->productImages[0])): ?>
+                                        <img src="<?php echo Yii::$app->homeUrl . $item->productImages[0]->image; ?>" alt="1"/>
+                                    <?php endif; ?>
                                     <span class="tile-overlay"></span>
                                 </a>
                                 <div class="footer search-category-footer">
-                                    <a href="<?php echo Yii::$app->homeUrl; ?>"><?= $item->title; ?></a>
+                                    <a href="<?php echo Yii::$app->homeUrl . "products?productId=" . $item->productId; ?>"><?= $item->title; ?></a>
                                     <!--<span>by Pirate3d</span>-->
                                     <button class="btn btn-success">View</button>
                                     <button class="btn btn-primary">Add to Cart</button>

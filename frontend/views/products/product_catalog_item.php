@@ -27,25 +27,27 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <div class="col-lg-6 col-md-6">
     <h1 id='productName'><?= $model->title; ?></h1>
     <?= Html::hiddenInput("productId", $model->productId, ['id' => 'productId']); ?>
-    <div class="form-group">
+    <?php if (isset($model->productGroup)): ?>
+        <div class="form-group">
 
-        <div class="select-style">
-            <?php if (count($model->productGroup->products) > 1): ?>
-                <select name="size" id="changeOption">
-                    <?php foreach ($model->productGroup->products as $option): ?>
-                        <option <?= (isset($productId) && ($productId == $option->productId)) ? " selected" : " " ?> value="<?= $option->productId ?>"><?= $option->optionName; ?></option>
-                    <?php endforeach; ?>
-                </select>
-            <?php endif; ?>
-<!--            <select name="size" id="changeOption">
-<option>Size:28 Inches</option>
-<option>Size:32 Inches</option>
-<option>Size:40 Inches</option>
-<option>Size:48 Inches</option>
-<option>Size:50 Inches</option>
-</select>-->
+            <div class="select-style">
+                <?php if (count($model->productGroup->products) > 1): ?>
+                    <select name="size" id="changeOption">
+                        <?php foreach ($model->productGroup->products as $option): ?>
+                            <option <?= (isset($productId) && ($productId == $option->productId)) ? " selected" : " " ?> value="<?= $option->productId ?>"><?= $option->optionName; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php endif; ?>
+    <!--            <select name="size" id="changeOption">
+    <option>Size:28 Inches</option>
+    <option>Size:32 Inches</option>
+    <option>Size:40 Inches</option>
+    <option>Size:48 Inches</option>
+    <option>Size:50 Inches</option>
+    </select>-->
+            </div>
         </div>
-    </div>
+    <?php endif; ?>
     <div class="buttons group products-buttons-group">
         <div class="form-group">
             <label for="shopping-cart" class="col-sm-1" style="padding-right: 0px;  padding-left: 0px;  margin-bottom: 0px;">
