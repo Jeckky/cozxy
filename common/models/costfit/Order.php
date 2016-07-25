@@ -39,11 +39,11 @@ use \common\models\costfit\master\OrderMaster;
  * @property User $user
  * @property StoreProductOrderItem[] $storeProductOrderItems
  */
-class Order extends \common\models\costfit\master\OrderMaster
-{
+class Order extends \common\models\costfit\master\OrderMaster {
 
     const ORDER_STATUS_DRAFT = 0;
     const ORDER_STATUS_REGISTER_USER = 1;
+    const ORDER_STATUS_CHECKOUTS = 2;
     const CHECKOUT_STEP_WAIT_CHECKOUT = 0;
     const CHECKOUT_STEP_ADDRESS = 1;
     const CHECKOUT_STEP_PAYMENT = 2;
@@ -54,21 +54,18 @@ class Order extends \common\models\costfit\master\OrderMaster
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public static function findCartArray()
-    {
+    public static function findCartArray() {
         $res = [];
         $order = Order::getOrder();
         $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
@@ -159,13 +156,11 @@ class Order extends \common\models\costfit\master\OrderMaster
         return $res;
     }
 
-    public function getCoupon()
-    {
+    public function getCoupon() {
         return $this->hasOne(Coupon::className(), ['couponId' => 'couponId']);
     }
 
-    public function beforeSave($insert)
-    {
+    public function beforeSave($insert) {
         parent::beforeSave($insert);
         $total = 0;
         foreach ($this->orderItems as $item) {
@@ -192,13 +187,11 @@ class Order extends \common\models\costfit\master\OrderMaster
         return TRUE;
     }
 
-    public static function calculateShippingRate()
-    {
+    public static function calculateShippingRate() {
         return 0;
     }
 
-    public function findCheckoutStepArray()
-    {
+    public function findCheckoutStepArray() {
         return [
             self::CHECKOUT_STEP_WAIT_CHECKOUT => "รอ Checkout",
             self::CHECKOUT_STEP_ADDRESS => "ระบุที่อยู่",
@@ -207,8 +200,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         ];
     }
 
-    public function getCheckoutStepText($step)
-    {
+    public function getCheckoutStepText($step) {
         $res = $this->findCheckoutStepArray();
         if (isset($res[$step])) {
             return $res[$step];
@@ -217,8 +209,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         }
     }
 
-    public static function mergeDraftOrder()
-    {
+    public static function mergeDraftOrder() {
 
         $cookies = Yii::$app->request->cookies;
         if (isset($cookies['orderToken'])) {
@@ -288,8 +279,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         }
     }
 
-    public static function getOrder()
-    {
+    public static function getOrder() {
         if (\Yii::$app->user->isGuest) {
             $cookies = Yii::$app->request->cookies;
             if (isset($cookies['orderToken'])) {

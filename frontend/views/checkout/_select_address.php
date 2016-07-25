@@ -65,12 +65,11 @@ use kartik\depdrop\DepDrop;
                         </div>
                         <?php
                     }
-                    ?>
-
+                    ?> 
                 </div>
                 <div class="row hide" id="<?= ($type == 1) ? "billing" : "shipping" ?>Update">
 
-                    <div class="col-lg-12"> 
+                    <div class="col-lg-12">
                         <?php echo $this->render('form_billing', ['address' => $address, 'type' => $type, 'isUpdate' => true]); ?>
                     </div>
 

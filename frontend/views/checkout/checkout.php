@@ -125,16 +125,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <!--Right Column-->
             <div class="col-lg-3 col-lg-offset-1 col-md-4 col-sm-4">
                 <h3>Your order</h3>
-
                 <?php echo $this->render('@app/views/cart/checkout_totals_right'); ?>
-
                 <div class="payment-method">
                     <?php
                     $i = 1;
                     foreach ($paymentMethods as $paymentMethod):
                         ?>
-                        <div class="radio light">
-                            <label><input type="radio" name="Order[payment]" id="payment01" <?= ($i == 1) ? "checked" : "" ?>> <?= $paymentMethod->title; ?>
+                        <div class="radio light ">
+                            <label>
+                                <input type="radio" name="Order[payment]" id="payment01" <?= ($i == 1) ? "checked" : "" ?>> <?= $paymentMethod->title; ?>
                                 <p><?= Html::img(Yii::$app->homeUrl . $paymentMethod->image, ['style' => 'width:100%']); ?></p>
                                 <p><?= $paymentMethod->description; ?></p>
                             </label>
@@ -144,7 +143,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     endforeach;
                     ?>
                 </div>
-                <input class="btn btn-black btn-block" type="submit" onclick="$('#checkout-form').submit();" name="place-order" value="Place order">
+                <!--
+                <input class="btn btn-black btn-block" type="submit"onclick="$('#checkout-form').submit();" name="place-order" value="Place order">
+                -->
+                <input class="btn btn-black btn-block" type="submit" name="place-order" id="place-order" value="Place order">
             </div>
             <!--</form>-->
             <?php ActiveForm::end(); ?>

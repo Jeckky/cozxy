@@ -1,5 +1,7 @@
-<table>
-    <tr><th>Product</th></tr>
+<table style="font-size: 16px;">
+    <tr>
+        <th>Product</th>
+    </tr>
     <?php foreach ($this->params['cart']['items'] as $item) {
         ?>
         <tr>
