@@ -89,7 +89,8 @@ class SiteController extends MasterController {
         $product = \common\models\costfit\search\Product::find()->where("categoryId='3'")->all();
         $saveCat = Category::findAllSaveCategory();
         $popularCat = Category::findAllPopularCategory();
-        return $this->render('index', compact('saveCat', 'popularCat', 'bannerGroup', 'topOneContent', 'bottomContent', 'lastIndexContent', 'product'));
+        $footer = "adfadf";
+        return $this->render('index', compact('saveCat', 'popularCat', 'bannerGroup', 'topOneContent', 'bottomContent', 'lastIndexContent', 'product', 'footer'));
     }
 
     /**

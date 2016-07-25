@@ -18,7 +18,12 @@ use yii\widgets\Breadcrumbs;
             </div>
         </div>
     </section>
-    <?php echo $this->render('_footer'); ?>
+    <?php
+    $logoImage = common\models\costfit\ContentGroup::find()->where("lower(title)='logoImage'")->one();
+    $news = common\models\costfit\ContentGroup::find()->where("lower(title)='NEWS'")->one();
+    $footerContact = common\models\costfit\ContentGroup::find()->where("lower(title)='contactFooter'")->one();
+    echo $this->render('_footer', compact('logoImage', 'news', 'footerContact'));
+    ?>
 </div>
 
 <?php $this->registerJs("

@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use yii\widgets\MaskedInput;
 use common\models\areawow;
 use yii\jui\DatePicker;
+//use yii\widgets\Pjax;
 use common\models\costfit\ContentGroup;
 
 /* @var $this yii\web\View */
@@ -17,13 +18,13 @@ use common\models\costfit\ContentGroup;
 
     <?php
     $form = ActiveForm::begin([
-        'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
-        'fieldConfig' => [
-            'template' => '{label}<div class="col-sm-9">{input}</div>',
-            'labelOptions' => [
-                'class' => 'col-sm-3 control-label'
-            ]
-        ]
+                'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+                'fieldConfig' => [
+                    'template' => '{label}<div class="col-sm-9">{input}</div>',
+                    'labelOptions' => [
+                        'class' => 'col-sm-3 control-label'
+                    ]
+                ]
     ]);
     ?>
 
@@ -41,6 +42,22 @@ use common\models\costfit\ContentGroup;
         <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
 
         <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
+
+        <?=
+        $form->field($model, 'startDate')->textInput()->widget(DatePicker::classname(), ['options' => [
+                'class' => 'form-control'],
+            'language' => 'en',
+            'dateFormat' => 'yyyy-MM-dd']);
+        ?>
+
+        <?=
+        $form->field($model, 'endDate')->textInput()->widget(DatePicker::classname(), ['options' => [
+                'class' => 'form-control'],
+            'language' => 'en',
+            'dateFormat' => 'yyyy-MM-dd']);
+        ?>
+
+
 
         <?= (isset($model->image) && !empty($model->image)) ? Html::img(Yii::$app->homeUrl . $model->image, ['style' => 'width:150px', 'class' => 'col-lg-offset-3']) : ''; ?>
 

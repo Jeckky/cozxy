@@ -36,9 +36,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <div class="row">
             <div class="col-lg-5 col-md-5 col-sm-5">
                 <div class="info">
-                    <a class="logo" href="<?php echo $baseUrl; ?>"><img src="<?php echo Yii::$app->homeUrl; ?>images/logo/costfit.png" alt="cost.fit"></a>
-                    <p>Describe the mission of your online store and the advantages a customer can get once he makes a
-                        purchase. If you have something to tell let customers know about it.</p>
+                    <a class="logo" href="<?php echo $baseUrl; ?>"><img src="<?php echo Yii::$app->homeUrl . $logoImage->image; ?>" alt="cost.fit"></a>
+                    <p><?php echo $logoImage->contents[0]->description; ?></p>
                     <div class="social">
                         <a href="#" target="_blank"><i class="fa fa-instagram"></i></a>
                         <a href="#" target="_blank"><i class="fa fa-youtube-square"></i></a>
@@ -52,27 +51,33 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="col-lg-4 col-md-4 col-sm-4">
                 <h2>Latest news</h2>
                 <ul class="list-unstyled">
-                    <li>25 of May <a href="#">new arrivals in Spring</a></li>
-                    <li>24 of April <a href="#">5 facts about clutches</a></li>
-                    <li>25 of May <a href="#">new arrivals in Spring</a></li>
-                    <li>24 of April <a href="#">5 facts about clutches</a></li>
+                    <?php
+                    foreach ($news->contents as $allNew):
+
+                        if (isset($allNew) && !empty($allNew)) {
+                            if (date('Y-m-d H:i:s') <= $allNew->endDate):
+                                ?>
+
+                                <li><?php echo $allNew->headTitle . " "; ?><a href="#"><?php echo $allNew->title; ?></a></li>
+                                <?php
+                            endif;
+                        }endforeach;
+                    ?>
                 </ul>
             </div>
             <div class="contacts col-lg-3 col-md-3 col-sm-3">
                 <h2>Contacts</h2>
                 <p class="p-style3">
-                    4120 Lenox Avenue, New York, NY,<br/>
-                    10035 76 Saint Nicholas Avenue<br/>
-                    <a href="mailto:mail@Limo.com">mail@Limo.com</a><br/>
-                    +48 543765234<br/>
-                    +48 555 234 54 34<br/>
+                    <?php
+                    echo $footerContact->contents[0]->description;
+                    ?>
                 </p>
             </div>
         </div>
         <div class="copyright">
             <div class="row">
                 <div class="col-lg-7 col-md-7 col-sm-7">
-                    <p>&copy; 2016 www.costfit.com. All Rights Reserved. <!--Designed by <a href="http://8guild.com/" target="_blank">8Guild</a>-->
+                    <p>&copy; 2016 www.cost.fit All Rights Reserved. <!--Designed by <a href="http://8guild.com/" target="_blank">8Guild</a>-->
                     </p>
                 </div>
                 <div class="col-lg-5 col-md-5 col-sm-5">

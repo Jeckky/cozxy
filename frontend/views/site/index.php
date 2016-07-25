@@ -110,33 +110,27 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 <div class="row">
                                     <div  id="photos-bestseller-items">
                                         <?php
-                                        $i = 1;
+                                        // $i = 1;
                                         foreach ($product as $products) {
-                                            $image = \common\models\costfit\ProductImage::find()->where("productId='" . $products->productId . "'")->all();
-                                            foreach ($image as $images) {
-                                                ?>
-                                                <div id="photos-bestseller-items-padding">
-                                                    <a class="media-link" href="#" id="media-link-bestseller" >
-                                                        <div class="overlay" >
-                                                            <div class="descrx desc-bestseller">
-                                                                <div class="product-name"><?php echo $products->title; ?>
-                                                                    <div class="bestseller-name-price"><?php echo $products->price; ?></div>
-                                                                </div>
+                                            ?>
+                                            <div id="photos-bestseller-items-padding">
+                                                <a class="media-link" href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?= $products->productId ?>" id="media-link-bestseller" >
+                                                    <div class="overlay" >
+                                                        <div class="descrx desc-bestseller">
+                                                            <div class="product-name"><?php echo $products->title; ?>
+                                                                <div class="bestseller-name-price"><?php echo $products->price; ?></div>
                                                             </div>
                                                         </div>
-                                                        <img src="<?php echo $baseUrl . $images->image; ?>"/>
-                                                    </a>
-                                                </div>
+                                                    </div>
+                                                    <?php if (isset($products->productImages[0]->image) && !empty($products->productImages[0]->image)): ?>
+                                                        <img src="<?php echo Yii::$app->homeUrl . $products->productImages[0]->image; ?>" alt="1"/>
+                                                    <?php else: ?>
+                                                        <img src="<?php echo $baseUrl; ?>/images/ProductImage/15.jpg" alt="1"/>
+                                                    <?php endif; ?>
+                                                </a>
+                                            </div>
 
-                                                <?php
-                                                $i++;
-                                                if ($i > 9) {
-                                                    break;
-                                                }
-                                            }
-                                            if ($i > 9) {
-                                                break;
-                                            }
+                                            <?php
                                         }
                                         ?>
                                     </div>

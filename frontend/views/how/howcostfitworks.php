@@ -73,34 +73,34 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         foreach ($webSite as $web) {
                             ?>
                             <li><a href="http://<?= $web->description ?>"><i class="fa fa-support"></i><?php echo $web->description; ?></a></li>
-                        <?php } ?>
+                                <?php } ?>
                     </ul>
                 </div>
                 <!--Latest posts-->
-                <h3>Latest posts</h3>
-                <div class="latest-posts">
-                    <div class="post">
-                        <a href="#">New awesome theme out there...</a>
-                        <div class="meta">
-                            <a href="#">Comments <span>(34)</span></a>
-                            <span class="date">12.02.2014</span>
-                        </div>
-                    </div>
-                    <div class="post">
-                        <a href="#">Lorem ipsum dolor sit amet...</a>
-                        <div class="meta">
-                            <a href="#">Comments <span>(22)</span></a>
-                            <span class="date">12.02.2014</span>
-                        </div>
-                    </div>
-                    <div class="post">
-                        <a href="#">Anim pariatur cliche reprehenderit...</a>
-                        <div class="meta">
-                            <a href="#">Comments <span>(81)</span></a>
-                            <span class="date">12.02.2014</span>
-                        </div>
-                    </div>
-                </div>
+                <!--  <h3>Latest posts</h3>
+                  <div class="latest-posts">
+                      <div class="post">
+                          <a href="#">New awesome theme out there...</a>
+                          <div class="meta">
+                              <a href="#">Comments <span>(34)</span></a>
+                              <span class="date">12.02.2014</span>
+                          </div>
+                      </div>
+                      <div class="post">
+                          <a href="#">Lorem ipsum dolor sit amet...</a>
+                          <div class="meta">
+                              <a href="#">Comments <span>(22)</span></a>
+                              <span class="date">12.02.2014</span>
+                          </div>
+                      </div>
+                      <div class="post">
+                          <a href="#">Anim pariatur cliche reprehenderit...</a>
+                          <div class="meta">
+                              <a href="#">Comments <span>(81)</span></a>
+                              <span class="date">12.02.2014</span>
+                          </div>
+                      </div>
+                  </div>-->
             </div>
         </div>
     </div>

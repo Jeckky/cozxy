@@ -34,6 +34,7 @@ class RegisterController extends MasterController {
 
     public function actionLogin() {
         $model = new \common\models\costfit\User(['scenario' => 'register']);
+        $term = \common\models\costfit\ContentGroup::find()->where("lower(title)='term'")->one();
         $loginForm = new \common\models\LoginForm();
         if ($loginForm->load(Yii::$app->request->post()) && $loginForm->login()) {
             //return $this->redirect(['site/index']);
@@ -43,7 +44,7 @@ class RegisterController extends MasterController {
         }
         $this->title = 'Cost.fit | Register Login';
         $this->subTitle = 'Register Login';
-        return $this->render('register', ['model' => $model, 'loginForm' => $loginForm]);
+        return $this->render('register', ['model' => $model, 'loginForm' => $loginForm, 'term' => $term]);
     }
 
     public function actionRegister() {

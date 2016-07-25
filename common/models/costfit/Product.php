@@ -31,32 +31,27 @@ use \common\models\costfit\master\ProductMaster;
  * @property StoreProduct[] $storeProducts
  * @property StoreProductOrderItem[] $storeProductOrderItems
  */
-class Product extends \common\models\costfit\master\ProductMaster
-{
+class Product extends \common\models\costfit\master\ProductMaster {
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function getProductOnePrice()
-    {
+    public function getProductOnePrice() {
         return $this->hasOne(ProductPrice::className(), ['productId' => 'productId'])->andWhere('quantity = 1');
     }
 
-    public function calProductPrice($productId, $quantity, $returnArray = 0)
-    {
+    public function calProductPrice($productId, $quantity, $returnArray = 0) {
         $product = Product::find()->where("productId = $productId")->one();
         $productPrice = ProductPrice::find()->where("productId = $productId AND quantity = $quantity")->one();
 
@@ -91,8 +86,7 @@ class Product extends \common\models\costfit\master\ProductMaster
         }
     }
 
-    public static function findMaxQuantity($id, $checkInCart = 1)
-    {
+    public static function findMaxQuantity($id, $checkInCart = 1) {
         $productPrice = ProductPrice::find()->select("MAX(quantity) as maxQuantity")->where("productId = $id")->one();
         if (isset($productPrice)) {
             if ($checkInCart) {
@@ -106,8 +100,7 @@ class Product extends \common\models\costfit\master\ProductMaster
         }
     }
 
-    public static function findQuantityInCart($id)
-    {
+    public static function findQuantityInCart($id) {
         $order = Order::findCartArray();
         $quantity = 0;
         foreach ($order["items"] as $item) {
@@ -120,9 +113,20 @@ class Product extends \common\models\costfit\master\ProductMaster
         return $quantity;
     }
 
-    public function getProductPrices()
-    {
+    public function getProductPrices() {
         return $this->hasMany(ProductPrice::className(), ['productId' => 'productId']);
+    }
+
+    public function getBestSellProduct() {
+        //return $this->hasMany(ProductPrice::className(), ['productId' => 'productId']);
+    }
+
+    public function findOutProducts() {
+        //return $this->hasMany(ProductPrice::className(), ['productId' => 'productId']);
+    }
+
+    public function findOnSellProducts() {
+        //return $this->hasMany(ProductPrice::className(), ['productId' => 'productId']);
     }
 
 }
