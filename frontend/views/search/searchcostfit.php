@@ -7,7 +7,17 @@ use yii\bootstrap\ActiveForm;
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
+<style>
+    .subscr-form {
+        width: 80%;
+    }
+    .subscr-form .form-control {
+        color: #000;
+        border: 1px solid #03a9f4;
+        padding-right: 50px;
 
+    }
+</style>
 <!--Breadcrumbs-->
 <ol class="breadcrumb">
     <li><a href="<?php echo Yii::$app->homeUrl; ?>"><?= isset($this->context->subTitle) ? $this->context->subTitle : "sub Title" ?></a></li>
@@ -15,18 +25,18 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </ol><!--Breadcrumbs Close-->
 
 <!--Support-->
-<!--Catalog Grid-->
-<form class="search-form" method="post" action="<?php echo Yii::$app->homeUrl; ?>search-cost-fit" >
-    <div class="container">
-        <div class="form-group">
-            <label class="sr-only" for="search-hd">Search for product</label>
-            <input type="text" class="form-control" style="width:80%" name="search_hd" id="search_hd" value="<?= isset($_POST['search_hd']) ? $_POST['search_hd'] : "" ?>" placeholder="Search for product">
-            <button type="submit"><i class="icon-magnifier"></i></button>
-        </div>
-    </div>
-</form>
+<!--Catalog Grid -->
+
 <section class="catalog-grid">
     <div class="container">
+        <form class="subscr-form" role="form" autocomplete="off" novalidate="novalidate" method="post" action="<?php echo Yii::$app->homeUrl; ?>search-cost-fit">
+            <div class="form-group">
+                <label class="sr-only" for="subscr-name">Search for produc</label>
+                <input type="text" class="form-control" name="search_hd" id="search_hd" placeholder="Search for product" required=""><label for="subscr-name" class="error" style="display: inline-block;">This field is required.</label>
+                <button class="subscr-next"><i class="icon-magnifier"></i></button>
+            </div>
+        </form>
+
         <h2 class="with-sorting">Showing results for "test test's"</h2>
         <div class="sorting">
             <a href="#">Sort by name</a>
@@ -35,8 +45,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <div class="row">
             <!--Tiles-->
             <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="row">
-
+                <div class="row"> 
                     <?php foreach ($products as $item) {
                         ?>
                         <!--Tile-->
