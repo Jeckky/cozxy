@@ -37,9 +37,10 @@ use Yii;
     * @property string $shippingZipcode
     * @property string $shippingTel
     * @property integer $paymentType
-    * @property integer $couponId
+    * @property string $couponId
     * @property integer $checkStep
     * @property string $note
+    * @property string $paymentDateTime
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -64,13 +65,14 @@ return 'order';
 public function rules()
 {
 return [
-            [['userId', 'billingCountryId', 'billingProvinceId', 'billingAmphurId', 'shippingCountryId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'couponId', 'checkStep', 'status'], 'integer'],
+            [['userId', 'billingProvinceId', 'billingAmphurId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'couponId', 'checkStep', 'status'], 'integer'],
             [['token', 'billingAddress', 'shippingAddress', 'note'], 'string'],
             [['totalExVat', 'vat', 'total', 'discount', 'grandTotal', 'shippingRate', 'summary'], 'number'],
-            [['sendDate', 'createDateTime', 'updateDateTime'], 'safe'],
+            [['sendDate', 'paymentDateTime', 'createDateTime', 'updateDateTime'], 'safe'],
             [['paymentType', 'createDateTime'], 'required'],
             [['orderNo', 'invoiceNo', 'billingTax', 'billingTel', 'shippingTax', 'shippingTel'], 'string', 'max' => 45],
             [['billingCompany', 'shippingCompany'], 'string', 'max' => 200],
+            [['billingCountryId', 'shippingCountryId'], 'string', 'max' => 3],
             [['billingZipcode', 'shippingZipcode'], 'string', 'max' => 10],
             [['billingZipcode'], 'unique'],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => UserMaster::className(), 'targetAttribute' => ['userId' => 'userId']],
@@ -116,6 +118,7 @@ return [
     'couponId' => Yii::t('order', 'Coupon ID'),
     'checkStep' => Yii::t('order', 'Check Step'),
     'note' => Yii::t('order', 'Note'),
+    'paymentDateTime' => Yii::t('order', 'Payment Date Time'),
     'status' => Yii::t('order', 'Status'),
     'createDateTime' => Yii::t('order', 'Create Date Time'),
     'updateDateTime' => Yii::t('order', 'Update Date Time'),

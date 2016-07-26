@@ -10,9 +10,10 @@ echo $this->render('_select_address', ['type' => $type, 'addresses' => $addresse
 ?>
 
 <!--Checkout Form New Address-->
-<a class="panel-toggle <?= (Yii::$app->user->isGuest || count($user->addresses) == 0) ? " active action" : "" ?>" href="#New<?= ($type == 1) ? "Billing" : "Shipping" ?>"><i></i>New <?= ($type == 1) ? "Billing" : "Shipping" ?> Address</a>
+<a class="new-address-form panel-toggle <?= (Yii::$app->user->isGuest || count($user->addresses) == 0) ? " active action" : "" ?>" href="#New<?= ($type == 1) ? "Billing" : "Shipping" ?>">
+    <i></i>New <?= ($type == 1) ? "Billing" : "Shipping" ?> Address</a>
 <div class="row">
-    <div class="col-lg-10">
+    <div class="col-lg-10 actionFormBillingNew">
         <div class="hidden-panel <?= (Yii::$app->user->isGuest || count($user->addresses) == 0) ? " expanded" : "" ?>" id="New<?= ($type == 1) ? "Billing" : "Shipping" ?>">
             <?php echo $this->render('form_billing', ['type' => $type, 'address' => $address]); ?>
         </div>

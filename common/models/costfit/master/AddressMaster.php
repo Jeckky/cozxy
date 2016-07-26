@@ -9,6 +9,8 @@ use Yii;
 *
     * @property string $addressId
     * @property string $userId
+    * @property string $firstname
+    * @property string $lastname
     * @property string $company
     * @property string $tax
     * @property string $address
@@ -23,8 +25,6 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-    * @property string $firstname
-    * @property string $lastname
     *
             * @property User $user
     */
@@ -48,7 +48,7 @@ return [
             [['userId', 'provinceId', 'amphurId', 'districtId', 'type', 'isDefault', 'status'], 'integer'],
             [['address'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['company', 'firstname', 'lastname'], 'string', 'max' => 200],
+            [['firstname', 'lastname', 'company'], 'string', 'max' => 200],
             [['tax', 'tel'], 'string', 'max' => 45],
             [['countryId'], 'string', 'max' => 3],
             [['zipcode'], 'string', 'max' => 10],
@@ -64,6 +64,8 @@ public function attributeLabels()
 return [
     'addressId' => Yii::t('address', 'Address ID'),
     'userId' => Yii::t('address', 'User ID'),
+    'firstname' => Yii::t('address', 'Firstname'),
+    'lastname' => Yii::t('address', 'Lastname'),
     'company' => Yii::t('address', 'Company'),
     'tax' => Yii::t('address', 'Tax'),
     'address' => Yii::t('address', 'Address'),
@@ -78,8 +80,6 @@ return [
     'status' => Yii::t('address', 'Status'),
     'createDateTime' => Yii::t('address', 'Create Date Time'),
     'updateDateTime' => Yii::t('address', 'Update Date Time'),
-    'firstname' => Yii::t('address', 'Firstname'),
-    'lastname' => Yii::t('address', 'Lastname'),
 ];
 }
 

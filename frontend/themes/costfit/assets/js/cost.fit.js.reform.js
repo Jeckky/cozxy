@@ -50,36 +50,6 @@ $('#see-more-search-cost-fit').on('click', function () {
 
 // Create date 7/7/2016 By Pew , ReFrom By :
 
-$('.checkout_update_address_shipping').on('click', function () {
-    //alert('Id Name : ' + $(this).find('input').attr('id'));
-    //alert('Value : ' + $(this).find('input').val());
-
-    var address = $(this).find('input').attr('id');
-    var addressIdValue = $(this).find('input').val();
-
-    $.ajax({
-        type: "POST",
-        url: '',
-        data: $("#idForm").serialize(), // serializes the form's elements.
-        success: function (data)
-        {
-            //alert(data); // show response from the php script.
-            //$('.form-group').find('#co-country').val('Australia');
-            //$('.form-group').find('#co-first-name').val('นายกมล');
-            //$('.form-group').find('#co-last-name').val('พวงเกษม');
-            //$('.form-group').find('#co-str-adress').val('เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19 จอมพล จตุจักร กรุงเทพ 10900');
-            //$('.form-group').find('#co-appartment').val('test');
-            //$('.form-group').find('#co-company-name').val('test');
-            //$('.form-group').find('#co-city').val('test');
-            //$('.form-group').find('#co-state').val('test');
-            //$('.form-group').find('#co_postcode').val('10900');
-            //$('.form-group').find('#co-email').val('นายกมล');
-            //$('.form-group').find('#co_phone').val('0616539889');
-            $('.form-group').find('#order-notes').val('test');
-        }
-    });
-
-});
 
 $('.checkout_select_address_billing').on('click', function () {
     //alert('Id Name : ' + $(this).find('input').attr('id'));
@@ -88,71 +58,98 @@ $('.checkout_select_address_billing').on('click', function () {
     var addressIdValue = $(this).find('input').val();
     // var url = "path/to/your/file"; // the script where you handle the form input.
 
-    /*$.ajax({
-     type: "POST",
-     url: url,
-     data: $("#idForm").serialize(), // serializes the form's elements.
-     success: function (data)
-     {
-     alert(data); // show response from the php script.
-     //$('.form-group').find('#co-country').val('Australia');
-     //$('.form-group').find('#co-first-name').val('นายกมล');
-     //$('.form-group').find('#co-last-name').val('พวงเกษม');
-     //$('.form-group').find('#co-str-adress').val('เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19 จอมพล จตุจักร กรุงเทพ 10900');
-     //$('.form-group').find('#co-appartment').val('test');
-     //$('.form-group').find('#co-company-name').val('test');
-     //$('.form-group').find('#co-city').val('test');
-     //$('.form-group').find('#co-state').val('test');
-     //$('.form-group').find('#co_postcode').val('10900');
-     //$('.form-group').find('#co-email').val('นายกมล');
-     //$('.form-group').find('#co_phone').val('0616539889');
-     $('.form-group').find('#order-notes').val('test');
-     }
-     });
-
-
-     */
-
 });
 
 $('.updateBillingCancel').on('click', function () {
     $("#billingUpdate").addClass("hide");
 });
 
-$('.checkout_update_address_billing').on('click', function () {
-//    alert('Id Name : ' + $(this).find('input').attr('id'));
-//    alert('Value : ' + $(this).find('input').val());
 
-    // var url = "path/to/your/file"; // the script where you handle the form input.
+$('.checkout_update_address_shipping').on('click', function () {
+    //alert('Id Name : ' + $(this).find('input').attr('id'));
+    // alert('Value : ' + $(this).find('input').val());
+    var edit_shipping = $(this).find('input').val();
+    $('.actionFormEditShipping').show();
+    $('.actionFormBillingNew').hide();
+    $('.actionFormEditBilling').hide();
+    $.post("checkout/get-address", {
+        address: edit_shipping
+    }, function (data, status) {
+        if (status == "success") {
+            var JSONObject = JSON.parse(data);
+            console.log(JSONObject);
+            //alert("Data: " + JSONObject.addressId);
+            $('.field-address-provinceid').find('input').val(JSONObject.countryId);
+            $('.form-group').find('#firstname').val(JSONObject.firstname);
+            $('.form-group').find('#lastname').val(JSONObject.lastname);
+            $('.form-group').find('#company').val(JSONObject.company);
+            $('.form-group').find('#address').val(JSONObject.address);
+            $('.form-group').find('#districtId').val(JSONObject.districtId);
+            $('.form-group').find('#amphurId').val(JSONObject.amphurId);
+            $('.form-group').find('#provinceId').val(JSONObject.provinceId);
+            $('.form-group').find('#zipcode').val(JSONObject.zipcode);
+            $('.form-group').find('#email').val(JSONObject.email);
+            $('.form-group').find('#tel').val(JSONObject.tel);
+            $('.form-group').find('#address-hidden').html('<input type="hidden" name="addressId" id="addressId" value="' + JSONObject.addressId + '">'); //val(JSONObject.tel);
+            //$('.form-group').find('#order-notes').val('test');
+        }
 
-    /*$.ajax({
-     type: "POST",
-     url: url,
-     data: $("#idForm").serialize(), // serializes the form's elements.
-     success: function (data)
-     {
-     alert(data); // show response from the php script.
-     //$('.form-group').find('#co-country').val('Australia');
-     //$('.form-group').find('#co-first-name').val('นายกมล');
-     //$('.form-group').find('#co-last-name').val('พวงเกษม');
-     //$('.form-group').find('#co-str-adress').val('เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19 จอมพล จตุจักร กรุงเทพ 10900');
-     //$('.form-group').find('#co-appartment').val('test');
-     //$('.form-group').find('#co-company-name').val('test');
-     //$('.form-group').find('#co-city').val('test');
-     //$('.form-group').find('#co-state').val('test');
-     //$('.form-group').find('#co_postcode').val('10900');
-     //$('.form-group').find('#co-email').val('นายกมล');
-     //$('.form-group').find('#co_phone').val('0616539889');
-     $('.form-group').find('#order-notes').val('test');
-     }
-     });
+        // window.location = 'checkout/order-thank';
+    });
+
+});
+$('.new-address-form ').on('click', function () {
+    $('.form-group').find('#address-hidden').html('');
+    $('.actionFormEditShipping').hide();
+    $('.actionFormBillingNew').show();
+    $('.actionFormEditBilling').hide();
+    $('.form-group').find('#firstname').val('');
+    $('.form-group').find('#lastname').val('');
+    $('.form-group').find('#company').val('');
+    $('.form-group').find('#address').val('');
+    $('.form-group').find('#districtId').val('');
+    $('.form-group').find('#amphurId').val('');
+    $('.form-group').find('#provinceId').val('');
+    $('.form-group').find('#zipcode').val('');
+    $('.form-group').find('#email').val('');
+    $('.form-group').find('#tel').val('');
+});
 
 
-     */
+$('.checkout_update_address_billing').on('click', function () { // checkout_update_address_shipping
+    var edit_shipping = $(this).find('input').val();
+    $('.actionFormEditShipping').hide();
+    $('.actionFormEditBilling').show();
+    //$('.actionFormBilling').hide();
+    $.post("checkout/get-address", {
+        address: edit_shipping
+    }, function (data, status) {
+        if (status == "success") {
+            var JSONObject = JSON.parse(data);
+            console.log(JSONObject);
+            //alert("Data: " + JSONObject.addressId);
+            $('.field-address-provinceid').find('input').val(JSONObject.countryId);
+            $('.form-group').find('#firstname').val(JSONObject.firstname);
+            $('.form-group').find('#lastname').val(JSONObject.lastname);
+            $('.form-group').find('#company').val(JSONObject.company);
+            $('.form-group').find('#address').val(JSONObject.address);
+            $('.form-group').find('#districtId').val(JSONObject.districtId);
+            $('.form-group').find('#amphurId').val(JSONObject.amphurId);
+            $('.form-group').find('#provinceId').val(JSONObject.provinceId);
+            $('.form-group').find('#zipcode').val(JSONObject.zipcode);
+            $('.form-group').find('#email').val(JSONObject.email);
+            $('.form-group').find('#tel').val(JSONObject.tel);
+            $('.form-group').find('#address-hidden').html('<input type="hidden" name="addressId" id="addressId" value="' + JSONObject.addressId + '">'); //val(JSONObject.tel);
+            //$('.form-group').find('#order-notes').val('test');
+        }
+
+        // window.location = 'checkout/order-thank';
+    });
 
 });
 
 $('.checkout_select_address_shipping').on('click', function () {
+
 });
 
 /*
