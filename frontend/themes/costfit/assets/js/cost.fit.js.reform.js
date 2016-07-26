@@ -236,22 +236,34 @@ $("#place-order").on('click', function () {
     var _placeOrderId = $('input[id=placeOrderId]').val();
     var _notes = $("#order-notes").val();
 
-    if (_billing === undefined) {
+    if (_shipping === undefined) {
+        alert('Please Select Shipping Address');
+    } else {
+        if (_billing === undefined) {
+            $.post("checkout/burn-checkouts", {
+                shipping: _shipping,
+                payment01: _payment01,
+                placeUserId: _placeUserId,
+                notes: _notes,
+                placeOrderId: _placeOrderId
+            }, function (data, status) {
+                //alert("Data: " + data + "\nStatus: " + status);
+                // window.location = 'checkout/order-thank';
+            });
+        } else if (_billing != undefined) {
+            $.post("checkout/burn-checkouts", {
+                shipping: _shipping,
+                billing: _billing,
+                payment01: _payment01,
+                placeUserId: _placeUserId,
+                notes: _notes,
+                placeOrderId: _placeOrderId
+            }, function (data, status) {
+                //alert("Data: " + data + "\nStatus: " + status);
+                // window.location = 'checkout/order-thank';
+            });
 
-        $.post("checkout/burn-checkouts", {
-            shipping: _shipping,
-            billing: _billing,
-            payment01: _payment01,
-            placeUserId: _placeUserId,
-            notes: _notes,
-            placeOrderId: _placeOrderId
-        }, function (data, status) {
-            alert("Data: " + data + "\nStatus: " + status);
-            // window.location = 'checkout/order-thank';
-        });
-
-    } else if (_billing != undefined) {
-
+        }
     }
     // $this->redirect(['order-thank']);
 });

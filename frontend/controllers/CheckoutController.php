@@ -104,31 +104,40 @@ class CheckoutController extends MasterController {
             $shipping = Yii::$app->request->post('shipping');
             $billing = Yii::$app->request->post('billing');
             $payment01 = Yii::$app->request->post('payment01');
-            echo $placeUserId = Yii::$app->request->post('placeUserId');
+            $placeUserId = Yii::$app->request->post('placeUserId');
             $notes = Yii::$app->request->post('notes');
-            echo $placeOrderId = Yii::$app->request->post('placeOrderId');
+            $placeOrderId = Yii::$app->request->post('placeOrderId');
 
-            $order = \common\models\costfit\Order::find()->where('userId = ' . $placeUserId . ' and orderId = ' . $placeOrderId)->one();
-            //$order = \common\models\costfit\Order::find()->where(" userId =  $placeUserId   ")->one();
-            $order->paymentType = $payment01;
-            $order->status = 2;
-            echo 'xxxx';
-            echo '<pre>';
-            print_r($order);
+            if (isset($billing)) {
+                $address_billing = \common\models\costfit\Address::find()->where('userId=' . $placeUserId . ' and addressId =' . $billing)
+                        ->orderBy('addressId desc')
+                        ->one();
+                $address_shipping = \common\models\costfit\Address::find()->where('userId=' . $placeUserId . ' and addressId = ' . $shipping)
+                        ->orderBy('addressId desc')
+                        ->one();
+            } else {
+                $address_shipping = \common\models\costfit\Address::find()->where('userId=' . $placeUserId . ' and addressId = ' . $shipping)
+                        ->orderBy('addressId desc')
+                        ->one();
+                $address_billing = '';
+            }
+
+            echo '<pre>billing';
+            print_r($address_billing);
+            echo '<br>';
+            echo '<pre>shipping ';
+            print_r($address_shipping);
+
+
+            $order = \common\models\costfit\Order::find()->where('userId= ' . $placeUserId . ' and orderId = ' . $placeOrderId)->one();
+            // $order->paymentType = $payment01;
+            //$order->status = 2;
+            //$model->updateDateTime = new \yii\db\Expression("NOW()");
         }
-        // echo '<pre>';
-        //print_r($user);
-        echo $order->orderId . '<br>';
-        echo $order->userId . '<br>';
-        echo 'shipping :' . $shipping . '<br>';
-        echo 'billing : ' . $billing . '<br>';
-        echo 'payment01 : ' . $payment01 . '<br>';
-        echo 'placeUserId : ' . $placeUserId . '<br>';
-        echo 'notes :' . $notes . '<br>';
-        echo 'notes :' . $placeOrderId . '<br>';
-        if ($user->save(FALSE)) {
-            $this->redirect(Yii::$app->homeUrl . 'checkout/order-thank');
-        }
+
+        //if ($order->save(FALSE)) {
+        //$this->redirect(Yii::$app->homeUrl . 'checkout/order-thank');
+        //}
     }
 
 }

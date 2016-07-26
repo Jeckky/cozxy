@@ -152,8 +152,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 //echo '<hr>';
                 //echo '<pre>';
                 /// print_r($address_billing);
+                if (isset($this->params['cart']['orderId'])) {
+                    $orderId = $this->params['cart']['orderId'];
+                } else {
+                    $orderId = NULL;
+                }
                 echo Html::hiddenInput("placeUserId", (!Yii::$app->user->isGuest) ? Yii::$app->user->id : 0, ['id' => 'placeUserId']);
-                echo Html::hiddenInput("placeOrderId", $this->params['cart']['orderId'], ['id' => 'addressId']);
+                echo Html::hiddenInput("placeOrderId", $orderId, ['id' => 'placeOrderId']);
                 ?>
                 <input class="btn btn-black btn-block" type="submit" name="place-order" id="place-order" value="Place order">
             </div>
