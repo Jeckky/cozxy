@@ -22,6 +22,8 @@ use \common\models\costfit\master\AddressMaster;
  * @property integer $status
  * @property string $createDateTime
  * @property string $updateDateTime
+ * @property string $firstname
+ * @property string $lastname
  *
  * @property User $user
  */

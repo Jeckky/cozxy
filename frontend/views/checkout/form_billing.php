@@ -123,7 +123,8 @@ $districtId = rand(0, 9999);
         //print_r(yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'countryName'));
         // Top most parent
         echo $form->field($address, 'countryId')->widget(kartik\select2\Select2::classname(), [
-            //'options' => ['id' => 'address-countryid'], 
+            //'options' => ['id' => 'address-countryid'],
+            //'value' => 'THA', // initial value
             'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'countryName'),
             'pluginOptions' => [
                 'placeholder' => 'Select...',

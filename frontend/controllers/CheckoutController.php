@@ -32,7 +32,6 @@ class CheckoutController extends MasterController {
         $this->subTitle = 'Checkout';
         $this->subSubTitle = "";
 
-        $address = new \common\models\costfit\Address();
         if (\Yii::$app->user->isGuest) {
             $user = new \common\models\costfit\User();
         } else {
@@ -40,6 +39,8 @@ class CheckoutController extends MasterController {
         }
 
         $addressId = Yii::$app->request->post('addressId');
+        $address = new \common\models\costfit\Address();
+
         if (isset($addressId)) { // ตรวจสอบว่า มี hidden addressId ให้ update ในเทเบิล address
             if (isset($_POST['Address'])) {
                 $address = \common\models\costfit\Address::find()
@@ -67,8 +68,8 @@ class CheckoutController extends MasterController {
             }
 
             if (isset($_POST['Address'])) {
-
                 if ($_POST['Address']['typeForm'] == 'formShipping') {
+                    //$address->scenario = 'shipping_address';
                     //$model_ = new \common\models\costfit\Address();
                     $address->type = \common\models\costfit\Address::TYPE_SHIPPING; // default Address First
                     $address->attributes = $_POST['Address'];
@@ -79,8 +80,8 @@ class CheckoutController extends MasterController {
                     $address->type = \common\models\costfit\Address::TYPE_BILLING; // default Address First
                     $address->attributes = $_POST['Address'];
                 }
-
                 if ($address->save(FALSE)) {
+
                     $this->redirect(Yii::$app->homeUrl . 'checkout');
                 }
             }
