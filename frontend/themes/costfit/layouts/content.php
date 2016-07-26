@@ -4,11 +4,14 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 ?>
-<?php $this->beginContent('@app/themes/costfit/layouts/main.php'); ?>
+<?php
+$this->beginContent('@app/themes/costfit/layouts/main.php');
+$logo = common\models\costfit\ContentGroup::find()->where("lower(title)='logoimage'")->one();
+?>
 <?= $this->render('_modal_login') ?>
-<?= $this->render('_header') ?>
+    <?= $this->render('_header', compact('logo')) ?>
 <div class="page-content">
-    <?php echo $content; ?>
+<?php echo $content; ?>
 </div>
 <?php
 $logoImage = common\models\costfit\ContentGroup::find()->where("lower(title)='logoImage'")->one();

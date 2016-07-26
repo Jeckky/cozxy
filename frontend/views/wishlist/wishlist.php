@@ -40,7 +40,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 <a class="btn btn-primary btn-sm" id="addItemToCart" href="#" <?= ($wishlist->product->findMaxQuantity($wishlist->productId) <= 0) ? " disabled" : " " ?>><i class="icon-shopping-cart"></i>Add to cart</a>
                             </td>
 
-                                                                                                                                                                                                    <!--                        <td class="button"><a class="btn btn-primary btn-sm disabled" href="#">Out of stock</a></td>-->
+                                                                                                                                                                                                        <!--                        <td class="button"><a class="btn btn-primary btn-sm disabled" href="#">Out of stock</a></td>-->
                             <td class="delete" id='deleteWishlist'><i class="icon-delete"></i></td>
                         </tr>
                     <?php endforeach; ?>
@@ -85,7 +85,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </a>
                     <div class="footer">
                         <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?= $product[0]->productId ?>"><?= $product[0]->title ?></a>
-                        <span>by</span>
+                        <span></span>
                         <a href="<?php echo Yii::$app->homeUrl; ?>cart"><button class="btn btn-primary">View</button></a>
                     </div>
                 </div>
@@ -104,7 +104,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </a>
                     <div class="footer">
                         <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?= $product[1]->productId ?>"><?= $product[1]->title ?></a>
-                        <span>by</span>
+                        <span></span>
                         <a href="<?php echo Yii::$app->homeUrl; ?>cart"><button class="btn btn-primary">View</button></a>
                     </div>
                 </div>
@@ -122,7 +122,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </a>
                     <div class="footer">
                         <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?= $product[2]->productId ?>"><?= $product[2]->title ?></a>
-                        <span>by</span>
+                        <span></span>
                         <a href="<?php echo Yii::$app->homeUrl; ?>cart"><button class="btn btn-primary">View</button></a>
                     </div>
                 </div>
@@ -138,7 +138,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </a>
                     <div class="footer">
                         <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?= $product[3]->productId ?>"><?= $product[3]->title ?></a>
-                        <span>by</span>
+                        <span></span>
                         <a href="<?php echo Yii::$app->homeUrl; ?>cart"><button class="btn btn-primary">View</button></a>
                     </div>
                 </div>

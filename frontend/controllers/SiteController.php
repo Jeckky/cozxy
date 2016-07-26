@@ -79,7 +79,7 @@ class SiteController extends MasterController {
     public function actionIndex() {
 //        throw new \yii\base\Exception(print_r(\Yii::$app->user->identity, true));
         $this->title = 'My Cost.fit';
-        $bannerGroup = ContentGroup::find()->where("lower(title) = 'banner'")->one();
+        $bannerGroup = ContentGroup::find()->where("lower(title) = 'banner' and status=1")->one();
         $topOne = ContentGroup::find()->where("lower(title)='topOne'")->one();
         $topOneContent = Content::find()->where("contentGroupId='" . $topOne->contentGroupId . "' order by contentId DESC limit 0,1")->one();
         $bottomIndexGroup = ContentGroup::find()->where("lower(title)='bottomIndex'")->one();
@@ -89,7 +89,7 @@ class SiteController extends MasterController {
         $product = \common\models\costfit\search\Product::find()->where("categoryId='3'")->all();
         $saveCat = Category::findAllSaveCategory();
         $popularCat = Category::findAllPopularCategory();
-        $footer = "adfadf";
+        //$footer = "adfadf";
         return $this->render('index', compact('saveCat', 'popularCat', 'bannerGroup', 'topOneContent', 'bottomContent', 'lastIndexContent', 'product', 'footer'));
     }
 

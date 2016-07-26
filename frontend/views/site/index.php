@@ -8,7 +8,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--Hero Slider-->
 <section class="hero-slider">
     <div class="master-slider" id="hero-slider">
-        <?php foreach ($bannerGroup->contents as $banner) {
+        <?php
+        foreach ($bannerGroup->contents as $banner) {
+            //throw new Exception($banner->linkTitle);
             ?>
             <!--Slide 1-->
             <div class="ms-slide" data-delay="7">
@@ -20,7 +22,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         </h2>
                         <p class="dark-color col-md-7"><?= strip_tags($banner->description); ?></p>
                         <p class="dark-color col-md-7">
-                            <a class="btn btn-primary" href="<?php echo $banner->link; ?>"><?= $banner->linkTitle ?></a>
+                            <a class="btn btn-primary" href="<?= $banner->link; ?>"><?= $banner->linkTitle ?></a>
                         </p>
                         <!--<a class="btn btn-black" href="#">Browse all</a>-->
                     </div>

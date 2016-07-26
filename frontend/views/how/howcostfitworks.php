@@ -26,8 +26,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <?php foreach ($topContent as $content) { ?>
                         <div class="clo-lg-6 col-md-6 col-sm-6 space-bottom">
                             <h4 class="light-weight uppercase"><?php echo $content->title; ?></h4>
-                            <p><?php echo $content->description; ?></p>
-                            <a class="btn btn-primary btn-sm" href="#">Read more</a>
+                            <p><?php echo substr($content->description, 0, 255) . " ..."; ?></p>
+                            <a class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target="#policy<?= $content->contentId ?>">Read more</a>
                         </div>
                     <?php } ?>
                 </div>
@@ -73,7 +73,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         foreach ($webSite as $web) {
                             ?>
                             <li><a href="http://<?= $web->description ?>"><i class="fa fa-support"></i><?php echo $web->description; ?></a></li>
-                                <?php } ?>
+                        <?php } ?>
                     </ul>
                 </div>
                 <!--Latest posts-->
@@ -105,3 +105,25 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
     </div>
 </section><!--Support Close-->
+<?php foreach ($topContent as $content) : ?>
+    <div class="modal fade" id="policy<?= $content->contentId ?>"  tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><?php echo $content->title; ?></h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <?php echo $content->description; ?>
+                    </p>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+<?php endforeach; ?>
