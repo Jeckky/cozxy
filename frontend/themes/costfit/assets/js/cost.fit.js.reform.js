@@ -126,7 +126,7 @@ $('.checkout_update_address_billing').on('click', function () { // checkout_upda
     }, function (data, status) {
         if (status == "success") {
             var JSONObject = JSON.parse(data);
-            console.log(JSONObject);
+            //console.log(JSONObject);
             //alert("Data: " + JSONObject.addressId);
             $('.field-address-provinceid').find('input').val(JSONObject.countryId);
             $('.form-group').find('#firstname').val(JSONObject.firstname);
