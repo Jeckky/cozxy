@@ -91,9 +91,10 @@ if (isset($isUpdate)) {
 }
 
 $form = ActiveForm::begin([
-            'id' => 'default-shipping-address',
-            'options' => ['class' => 'space-bottom'],
-        ]);
+    'id' => 'default-shipping-address',
+//    'validateOnSubmit' => true,
+    'options' => ['class' => "space-bottom $formName"],
+]);
 
 $countryId = rand(0, 9999);
 $stateId = rand(0, 9999);
@@ -139,6 +140,7 @@ $districtId = rand(0, 9999);
         ?>
     </div>
     <?php
+    echo Html::hiddenInput("countryDDId", $countryId);
     echo Html::hiddenInput("Address[userId]", (!Yii::$app->user->isGuest) ? Yii::$app->user->id : 0);
     echo html::hiddenInput("Address[typeForm]", $formName);
     ?>
@@ -146,9 +148,9 @@ $districtId = rand(0, 9999);
     <div class="row">
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
             <label for="co-first-name">ชื่อ *</label>
-            <?= Html::textInput("Address[firstname]", NULL, ["class" => "form-control input-sm", 'placeHolder' => 'First name', 'id' => 'firstname']) ?>
+            <?= Html::textInput("Address[firstname]", NULL, ["class" => "form-control input-sm required", 'placeHolder' => 'First name', 'id' => 'firstname']) ?>
             <?php
-            //echo $form->field($address, 'firstname')->textInput();
+//            echo $form->field($address, 'firstname')->textInput();
             ?>
         </div>
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
@@ -239,7 +241,7 @@ $districtId = rand(0, 9999);
     <?php
     if (isset($isUpdate)) {
         echo Html::submitButton('Save', ['class' => (isset($type) && $type == 1) ? "btn btn-success updateBillingSave" : "btn btn-success updateShippingSave", 'name' => 'btn-checkout-' . $formName]);
-        //echo Html::a("Save", "#", ['id' => 'btn-checkout-' . $formName, 'name' => 'btn-checkout-' . $formName, 'class' => (isset($type) && $type == 1) ? "btn btn-success updateBillingSave" : "btn btn-success updateShippingSave"]);
+//        echo Html::a("Save", "#", ['name' => 'btn-checkout-' . $formName, 'class' => (isset($type) && $type == 1) ? "btn btn-success updateBillingSave" : "btn btn-success updateShippingSave", 'onClick' => "$('#$formName').submit()"]);
         echo Html::a("Cancel", "#", ['class' => (isset($type) && $type == 1) ? "btn btn-danger updateBillingCancel" : "btn btn-danger updateShippingCancel"]);
     } else {
         echo Html::submitButton('Save', ['class' => (isset($type) && $type == 1) ? "btn btn-success createBillingSave" : "btn btn-success createShippingSave", 'name' => 'btn-checkout-' . $formName]);
