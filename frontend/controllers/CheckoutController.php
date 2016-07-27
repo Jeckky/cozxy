@@ -55,13 +55,25 @@ class CheckoutController extends MasterController {
                 }
             }
         } else {
-            $address_shipping = \common\models\costfit\Address::find()->where('userId=' . (\Yii::$app->user->id != '') ? \Yii::$app->user->id : 0 . ' and type = 2  ')
-                    ->orderBy('isDefault desc ')
-                    ->all();
 
-            $address_billing = \common\models\costfit\Address::find()->where('userId=' . (\Yii::$app->user->id != '') ? \Yii::$app->user->id : 0 . ' and type = 1  ')
-                    ->orderBy('isDefault desc  ')
-                    ->all();
+            if (\Yii::$app->user->isGuest) {
+                $address_shipping = \common\models\costfit\Address::find()->where('userId=' . 0 . ' and type = 2  ')
+                        ->orderBy('isDefault desc ')
+                        ->all();
+
+                $address_billing = \common\models\costfit\Address::find()->where('userId=' . 0 . ' and type = 1  ')
+                        ->orderBy('isDefault desc  ')
+                        ->all();
+            } else {
+                $address_shipping = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 2  ')
+                        ->orderBy('isDefault desc ')
+                        ->all();
+
+                $address_billing = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 1  ')
+                        ->orderBy('isDefault desc  ')
+                        ->all();
+            }
+
 
 
             $paymentMethods = \common\models\costfit\PaymentMethod::find()->all();
@@ -146,7 +158,7 @@ class CheckoutController extends MasterController {
             $order->billingCountryId = ($address_billing['countryId'] != '') ? $address_billing['countryId'] : '';
             $order->billingProvinceId = ($address_billing['provinceId'] != '') ? $address_billing['provinceId'] : '';
             $order->billingAmphurId = ($address_billing['amphurId'] != '') ? $address_billing['amphurId'] : '';
-            $order->billingZipcode = ($address_billing['zipcode'] != '') ? $address_billing['zipcode'] : '0';
+            $order->billingZipcode = ($address_billing['zipcode'] != '') ? $address_billing['zipcode'] : '123';
             $order->billingTel = ($address_billing['tel'] != '') ? $address_billing['tel'] : '';
             $order->shippingCompany = ($address_shipping['company'] != '') ? $address_shipping['company'] : '';
             $order->shippingTax = ($address_shipping['tax'] != '') ? $address_shipping['tax'] : '';
