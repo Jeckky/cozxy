@@ -91,10 +91,10 @@ if (isset($isUpdate)) {
 }
 
 $form = ActiveForm::begin([
-            'id' => 'default-shipping-address',
+    'id' => 'default-shipping-address',
 //    'validateOnSubmit' => true,
-            'options' => ['class' => "space-bottom $formName"],
-        ]);
+    'options' => ['class' => "space-bottom $formName"],
+]);
 
 $countryId = rand(0, 9999);
 $stateId = rand(0, 9999);
@@ -211,6 +211,9 @@ $districtId = rand(0, 9999);
                 ]
             ])->label('เขต/อำเภอ');
             ?>
+            <?php
+            echo Html::hiddenInput("amphurDDId", $cityId, ['id' => "amphurDDId"]);
+            ?>
         </div>
 
     </div>
@@ -233,6 +236,9 @@ $districtId = rand(0, 9999);
                     'initialize' => true,
                 ]
             ])->label('แขวง/ตำบล');
+            ?>
+            <?php
+            echo Html::hiddenInput("districtDDId", $districtId, ['id' => "districtDDId"]);
             ?>
         </div>
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
