@@ -150,7 +150,7 @@ class CheckoutController extends MasterController {
             $order->billingCountryId = ($address_billing['countryId'] != '') ? $address_billing['countryId'] : '';
             $order->billingProvinceId = ($address_billing['provinceId'] != '') ? $address_billing['provinceId'] : '';
             $order->billingAmphurId = ($address_billing['amphurId'] != '') ? $address_billing['amphurId'] : '';
-            $order->billingZipcode = ($address_billing['zipcode'] != '') ? $address_billing['zipcode'] : '';
+            $order->billingZipcode = ($address_billing['zipcode'] != '') ? $address_billing['zipcode'] : '0';
             $order->billingTel = ($address_billing['tel'] != '') ? $address_billing['tel'] : '';
             $order->shippingCompany = ($address_shipping['company'] != '') ? $address_shipping['company'] : '';
             $order->shippingTax = ($address_shipping['tax'] != '') ? $address_shipping['tax'] : '';
