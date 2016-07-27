@@ -91,10 +91,10 @@ if (isset($isUpdate)) {
 }
 
 $form = ActiveForm::begin([
-    'id' => 'default-shipping-address',
+            'id' => 'default-shipping-address',
 //    'validateOnSubmit' => true,
-    'options' => ['class' => "space-bottom $formName"],
-]);
+            'options' => ['class' => "space-bottom $formName"],
+        ]);
 
 $countryId = rand(0, 9999);
 $stateId = rand(0, 9999);
@@ -108,40 +108,42 @@ $districtId = rand(0, 9999);
     </div>
     <div class="form-group">
         <?php
-        echo '<label class="control-label">ประเทศ</label>';
-        echo kartik\select2\Select2::widget([
-            'name' => 'Address[countryId]',
-            // 'value' => ['THA'], // initial value
-            'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'countryName'),
-            'options' => ['placeholder' => 'Select country ...', 'id' => $countryId],
-            'pluginOptions' => [
-                'tags' => true,
-                'placeholder' => 'Select...',
-                'loadingText' => 'Loading country ...',
-            ],
-        ]);
-        /*
-          // echo '<pre>';
-          //print_r(yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'countryName'));
-          // Top most parent
-          echo $form->field($address, 'countryId')->widget(kartik\select2\Select2::classname(), [
-          //'options' => ['id' => 'address-countryid'],
+        /* echo '<label class="control-label">ประเทศ</label>';
+          echo kartik\select2\Select2::widget([
+          'name' => 'Address[countryId]',
+          // 'value' => ['THA'], // initial value
           'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'countryName'),
+          'options' => ['placeholder' => 'Select country ...', 'id' => $countryId],
           'pluginOptions' => [
+          'tags' => true,
           'placeholder' => 'Select...',
           'loadingText' => 'Loading country ...',
-          'tags' => true,
-          'params' => ['THA']
+          'initialize' => true,
           ],
-          'options' => [
-          'placeholder' => 'Select country ...',
-          'id' => $countryId,
-          ],
-          ])->label('ประเทศ'); */
+          ]); */
+
+        // echo '<pre>';
+        //print_r(yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'countryName'));
+        // Top most parent
+        echo $form->field($address, 'countryId')->widget(kartik\select2\Select2::classname(), [
+            //'options' => ['id' => 'address-countryid'],
+            'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'countryName'),
+            'pluginOptions' => [
+                'placeholder' => 'Select...',
+                'loadingText' => 'Loading country ...',
+                'initialize' => true,
+            ],
+            'options' => [
+                'placeholder' => 'Select country ...',
+                'id' => $countryId,
+            ],
+        ])->label('ประเทศ');
+        ?>
+        <?php
+        echo Html::hiddenInput("countryDDId", $countryId, ['id' => "countryDDId"]);
         ?>
     </div>
     <?php
-    echo Html::hiddenInput("countryDDId", $countryId);
     echo Html::hiddenInput("Address[userId]", (!Yii::$app->user->isGuest) ? Yii::$app->user->id : 0);
     echo html::hiddenInput("Address[typeForm]", $formName);
     ?>
@@ -160,6 +162,7 @@ $districtId = rand(0, 9999);
         </div>
     </div>
     <div class="form-group">
+
         <label for="co-company-name">บริษัท</label>
         <?= Html::textInput("Address[company]", NULL, ["class" => "form-control input-sm", 'placeHolder' => 'Company name', 'id' => 'company']) ?>
     </div>
@@ -174,7 +177,7 @@ $districtId = rand(0, 9999);
             // Child level 1
             //echo Html::hiddenInput('model_id1', '2526', ['id' => 'model_id1']);
             echo $form->field($address, 'provinceId')->widget(DepDrop::classname(), [
-                'data' => [2526 => 'จังหวัดปทุมธานี'], // ensure at least the preselected value is available
+                // 'data' => [2526 => 'จังหวัดปทุมธานี'], // ensure at least the preselected value is available
                 'options' => ['placeholder' => 'Select ...', 'id' => $stateId],
                 'type' => DepDrop::TYPE_SELECT2,
                 'select2Options' => ['pluginOptions' => ['allowClear' => true]],
@@ -187,7 +190,9 @@ $districtId = rand(0, 9999);
                 ]
             ])->label('จังหวัด');
             ?>
-
+            <?php
+            echo Html::hiddenInput("statesDDId", $stateId, ['id' => "statesDDId"]);
+            ?>
         </div>
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
             <?php
@@ -202,7 +207,7 @@ $districtId = rand(0, 9999);
                     'depends' => [$stateId],
                     'url' => Url::to(['child-amphur']),
                     'loadingText' => 'Loading amphur ...',
-                    'params' => ['model_id2']
+                    'initialize' => true,
                 ]
             ])->label('เขต/อำเภอ');
             ?>
@@ -225,7 +230,7 @@ $districtId = rand(0, 9999);
                     //'initDepends' => ['address-countryid'],
                     'url' => Url::to(['child-district']),
                     'loadingText' => 'Loading district ...',
-                    'params' => ['model_id3']
+                    'initialize' => true,
                 ]
             ])->label('แขวง/ตำบล');
             ?>

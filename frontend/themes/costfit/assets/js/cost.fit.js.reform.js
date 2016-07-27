@@ -66,7 +66,6 @@ $('.updateBillingCancel').on('click', function () {
 
 
 $('.checkout_update_address_shipping').on('click', function () {
-    alert(111);
     //alert('Id Name : ' + $(this).find('input').attr('id'));
     // alert('Value : ' + $(this).find('input').val());
     var edit_shipping = $(this).find('input').val();
@@ -82,13 +81,16 @@ $('.checkout_update_address_shipping').on('click', function () {
             //console.log(JSONObject);
             //alert("Data: " + JSONObject.addressId);
             alert(JSONObject.provinceId);
-            alert($('#countryDDId').val());
-            $('.form-group').find('#' + $('#countryDDId').val()).val(JSONObject.countryId);
+            alert($('.form-group').find('#statesDDId').val());
+//            $('.form-group').find('#' + $('.form-group').find('#countryDDId').val()).select2("data", {id: JSONObject.countryId, text: "xxx"});
+            $('.form-group').find('#' + $('.form-group').find('#countryDDId').val()).val(JSONObject.countryId).trigger('change');
+            //$('.form-group').find('#' + $('.form-group').find('#countryDDId').val()).select2({'val': JSONObject.countryId});
             $('.form-group').find('#firstname').val(JSONObject.firstname);
             $('.form-group').find('#lastname').val(JSONObject.lastname);
             $('.form-group').find('#company').val(JSONObject.company);
             $('.form-group').find('#address').val(JSONObject.address);
-            $('.form-group').find('#districtId').val(JSONObject.districtId);
+            //$('.form-group').find('#districtId').val(JSONObject.districtId);
+            //$('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).select2({'val': JSONObject.countryId});
             $('.form-group').find('#amphurId').val(JSONObject.amphurId);
             $('.form-group').find('#province').val(JSONObject.provinceId);
             $('.form-group').find('#zipcode').val(JSONObject.zipcode);
