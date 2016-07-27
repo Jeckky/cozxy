@@ -16,8 +16,7 @@ use frontend\models\ContactForm;
 /**
  * Wishlist controller
  */
-class WishlistController extends MasterController
-{
+class WishlistController extends MasterController {
 
     public $enableCsrfValidation = false;
 
@@ -26,15 +25,15 @@ class WishlistController extends MasterController
      *
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         //return Yii::$app->getResponse()->redirect('register/login');
         $this->layout = 'content_right';
         $this->title = 'Cost.fit | wishlist';
         $this->subTitle = 'Wishlist';
         $this->subSubTitle = '';
         $wishlists = \common\models\costfit\Wishlist::find()->where("userId=" . \Yii::$app->user->id)->all();
-        return $this->render('wishlist', compact('wishlists'));
+        $product = \common\models\costfit\search\Product::find()->where("categoryId='3'")->all();
+        return $this->render('wishlist', compact('wishlists', 'product'));
     }
 
 }

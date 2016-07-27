@@ -65,13 +65,14 @@ return 'order';
 public function rules()
 {
 return [
-            [['userId', 'billingCountryId', 'billingProvinceId', 'billingAmphurId', 'shippingCountryId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'couponId', 'checkStep', 'status'], 'integer'],
+            [['userId', 'billingProvinceId', 'billingAmphurId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'couponId', 'checkStep', 'status'], 'integer'],
             [['token', 'billingAddress', 'shippingAddress', 'note'], 'string'],
             [['totalExVat', 'vat', 'total', 'discount', 'grandTotal', 'shippingRate', 'summary'], 'number'],
             [['sendDate', 'paymentDateTime', 'createDateTime', 'updateDateTime'], 'safe'],
             [['paymentType', 'createDateTime'], 'required'],
             [['orderNo', 'invoiceNo', 'billingTax', 'billingTel', 'shippingTax', 'shippingTel'], 'string', 'max' => 45],
             [['billingCompany', 'shippingCompany'], 'string', 'max' => 200],
+            [['billingCountryId', 'shippingCountryId'], 'string', 'max' => 3],
             [['billingZipcode', 'shippingZipcode'], 'string', 'max' => 10],
             [['billingZipcode'], 'unique'],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => UserMaster::className(), 'targetAttribute' => ['userId' => 'userId']],

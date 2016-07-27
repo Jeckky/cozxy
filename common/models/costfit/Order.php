@@ -103,6 +103,7 @@ class Order extends \common\models\costfit\master\OrderMaster
                     'image' => isset($item->product->productImages[0]) ? \Yii::$app->homeUrl . $item->product->productImages[0]->image : $directoryAsset . "/img/catalog/shopping-cart-thumb.jpg",
                 ];
             }
+            $res['orderId'] = $order->orderId;
             $res["totalExVat"] = $order->totalExVat;
             $res["totalExVatFormatText"] = number_format($order->totalExVat, 2);
             $res["vat"] = $order->vat;

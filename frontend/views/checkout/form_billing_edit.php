@@ -105,37 +105,34 @@ $districtId = rand(0, 9999);
 
     <div class="form-group">
         <?php
-        /*
-          echo '<label class="control-label">ประเทศ</label>';
-          echo kartik\select2\Select2::widget([
-          'name' => 'countryId',
-          'value' => ['THA'], // initial value
-          'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'countryName'),
-          'options' => ['placeholder' => 'Select country ...', 'id' => $countryId],
-          'pluginOptions' => [
-          'tags' => true,
-          'placeholder' => 'Select...',
-          'loadingText' => 'Loading country ...',
-          ],
-          ]);
-         */
-        // echo '<pre>';
-        //print_r(yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'countryName'));
-        // Top most parent
-        echo $form->field($address, 'countryId')->widget(kartik\select2\Select2::classname(), [
-            //'options' => ['id' => 'address-countryid'],
-            //'value' => 'THA', // initial value
+        echo '<label class="control-label">ประเทศ</label>';
+        echo kartik\select2\Select2::widget([
+            'name' => $countryId,
+            'value' => ['THA'], // initial value
             'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'countryName'),
+            'options' => ['placeholder' => 'Select country ...', 'id' => $countryId],
             'pluginOptions' => [
+                'tags' => true,
                 'placeholder' => 'Select...',
                 'loadingText' => 'Loading country ...',
-                'tags' => true,
             ],
-            'options' => [
-                'placeholder' => 'Select country ...',
-                'id' => $countryId
-            ],
-        ])->label('ประเทศ');
+        ]);
+        /*
+          // echo '<pre>';
+          //print_r(yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'countryName'));
+          // Top most parent
+          echo $form->field($address, 'countryId')->widget(kartik\select2\Select2::classname(), [
+          //'options' => ['id' => 'address-countryid'],
+          //'value' => 'THA', // initial value
+          'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'countryName'),
+          'pluginOptions' => [
+          'placeholder' => 'Select...',
+          'loadingText' => 'Loading country ...',
+          'tags' => true,
+          //'value' => 'Thailand',
+          ],
+          'options' => ['placeholder' => 'Select country ...', 'id' => $countryId],
+          ])->label('ประเทศ'); */
         ?>
     </div>
     <?php
@@ -146,10 +143,7 @@ $districtId = rand(0, 9999);
     <div class="row">
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
             <label for="co-first-name">ชื่อ *</label>
-            <? //= Html::textInput("Address[firstname]", NULL, ["class" => "form-control input-sm", 'placeHolder' => 'First name', 'id' => 'firstname']) ?>
-            <?php
-            echo $form->field($address, 'firstname')->textInput();
-            ?>
+            <?= Html::textInput("Address[firstname]", NULL, ["class" => "form-control input-sm", 'placeHolder' => 'First name', 'id' => 'firstname']) ?>
         </div>
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
             <label for="co-last-name">นามสกุล *</label>
@@ -169,7 +163,7 @@ $districtId = rand(0, 9999);
             <?php
             // Child level 1
             echo $form->field($address, 'provinceId')->widget(DepDrop::classname(), [
-                //'data' => [6 => 'Bank'],
+                'data' => ['2524' => 'จังหวัดสมุทรปราการ   '],
                 'options' => ['placeholder' => 'Select ...', 'id' => $stateId],
                 'type' => DepDrop::TYPE_SELECT2,
                 'select2Options' => ['pluginOptions' => ['allowClear' => true]],
@@ -177,6 +171,7 @@ $districtId = rand(0, 9999);
                     'depends' => [$countryId],
                     'url' => Url::to(['child-states']),
                     'loadingText' => 'Loading province ...',
+                    'params' => ['2524' => 'จังหวัดสมุทรปราการ']
                 ]
             ])->label('จังหวัด');
             ?>
@@ -211,10 +206,10 @@ $districtId = rand(0, 9999);
                 'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                 'pluginOptions' => [
                     'depends' => [$cityId],
-                    //'initialize' => true,
-                    //'initDepends' => ['address-countryid'],
+                    'initialize' => true,
+                    'initDepends' => [$countryId],
                     'url' => Url::to(['child-district']),
-                    'loadingText' => 'Loading district ...'
+                    'loadingText' => 'Loading district ...',
                 ]
             ])->label('แขวง/ตำบล');
             ?>
@@ -231,11 +226,7 @@ $districtId = rand(0, 9999);
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
             <?php echo $form->field($address, 'tel')->textInput(['class' => 'form-control input-sm', 'id' => 'tel'])->label('โทร'); ?>
         </div>
-        <div class="form-group col-lg-6 col-md-6 col-sm-6">
-            <div id="address-hidden" class="address-hidden"></div>
-        </div>
     </div>
-
     <?php
     if (isset($isUpdate)) {
         echo Html::submitButton('Save', ['class' => (isset($type) && $type == 1) ? "btn btn-success updateBillingSave" : "btn btn-success updateShippingSave", 'name' => 'btn-checkout-' . $formName]);

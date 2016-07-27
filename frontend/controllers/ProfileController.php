@@ -188,8 +188,8 @@ class ProfileController extends MasterController {
         if (isset($_POST["User"])) {
             $model->attributes = $_POST['User'];
         }
-        echo '<pre>';
-        print_r($model);
+        //echo '<pre>';
+        //print_r($model);
         return $this->render('@app/views/profile/add_shipping-address', ['model' => $model]);
     }
 

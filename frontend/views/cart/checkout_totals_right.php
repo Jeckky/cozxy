@@ -29,4 +29,4 @@
         <td class="th">Order total</td>
         <td class="price"><?= number_format($this->params ['cart']['summary'], 2) ?> $</td>
     </tr>
-</table>
+</table> 

@@ -54,6 +54,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </div>
             <?php ActiveForm::end(); ?>
         </div>
+        <?php
+        //throw new yii\base\Exception($term->title);
+        ?>
         <!--Registration-->
         <div class="col-lg-7 col-md-7 col-sm-7">
             <?php $form = ActiveForm::begin(['id' => 'register-form', 'action' => $baseUrl . '/register/register', 'options' => ['class' => 'registr-form']]); ?>
@@ -62,7 +65,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <?= $form->field($model, 'password')->passwordInput() ?>
             <?= $form->field($model, 'confirmPassword')->passwordInput() ?>
             <div class="checkbox">
-                <label><input type="checkbox" name="User[acceptTerm]"> I have read and agree with the terms</label>
+                <label><input type="checkbox" name="User[acceptTerm]"> I have read and agree with the <a href="#" data-toggle="modal" data-target="#terms"> terms</a></label>
             </div>
             <div class="form-group">
                 <?= Html::submitButton('Register', ['class' => 'btn btn-black', 'name' => 'login-button']) ?>
@@ -91,3 +94,23 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--Brands Carousel Widget-->
 
 <?php echo $this->render('@app/themes/costfit/layouts/_brand_carousel'); ?>
+<div class="modal fade" id="terms"  tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"><?php echo $term->contents[0]->title; ?></h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <?php echo $term->contents[0]->description; ?>
+                </p>
+
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

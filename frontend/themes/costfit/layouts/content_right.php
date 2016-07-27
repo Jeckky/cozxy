@@ -27,7 +27,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <?php echo $this->render('@app/themes/costfit/layouts/_brand_carousel'); ?>
 
 </div><!--page-content-->
-<?php echo $this->render('_footer'); ?>
+<?php
+$logoImage = common\models\costfit\ContentGroup::find()->where("lower(title)='logoImage'")->one();
+$news = common\models\costfit\ContentGroup::find()->where("lower(title)='NEWS'")->one();
+$footerContact = common\models\costfit\ContentGroup::find()->where("lower(title)='contactFooter'")->one();
+echo $this->render('_footer', compact('logoImage', 'news', 'footerContact'));
+?>
 <?php $this->registerJs("
 ", \yii\web\View::POS_END); ?>
 <?php $this->endContent(); ?>

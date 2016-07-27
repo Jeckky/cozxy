@@ -18,32 +18,27 @@ use \common\models\costfit\master\CategoryMaster;
  *
  * @property Product[] $products
  */
-class Category extends \common\models\costfit\master\CategoryMaster
-{
+class Category extends \common\models\costfit\master\CategoryMaster {
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function getChilds()
-    {
+    public function getChilds() {
         return $this->hasMany(Category::className(), ['categoryId' => 'parentId']);
     }
 
-    public function getCategoryWithParentArray()
-    {
+    public function getCategoryWithParentArray() {
         $res = [];
         foreach ($this->find()->all() as $item) {
             $title = $item->title;
@@ -54,19 +49,18 @@ class Category extends \common\models\costfit\master\CategoryMaster
         return $res;
     }
 
-    public static function findAllSaveCategory($returnType = 1, $isRandom = TRUE, $limit = 6)
-    {
+    public static function findAllSaveCategory($returnType = 1, $isRandom = TRUE, $limit = 6) {
         if ($isRandom) {
             $query = Category::find()
-            ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
-            ->where('sc.type = 1')
-            ->limit($limit)
-            ->orderBy(new \yii\db\Expression('rand()'));
+                    ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
+                    ->where('sc.type = 1')
+                    ->limit($limit)
+                    ->orderBy(new \yii\db\Expression('rand()'));
         } else {
             $query = Category::find()
-            ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
-            ->where('sc.type = 1')
-            ->limit($limit);
+                    ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
+                    ->where('sc.type = 1')
+                    ->limit($limit);
         }
 
         if ($returnType == 1) {
@@ -78,19 +72,18 @@ class Category extends \common\models\costfit\master\CategoryMaster
         }
     }
 
-    public static function findAllPopularCategory($returnType = 1, $isRandom = TRUE, $limit = 6)
-    {
+    public static function findAllPopularCategory($returnType = 1, $isRandom = TRUE, $limit = 6) {
         if ($isRandom) {
             $query = Category::find()
-            ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
-            ->where('sc.type = 2')
-            ->limit($limit)
-            ->orderBy(new \yii\db\Expression('rand()'));
+                    ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
+                    ->where('sc.type = 2')
+                    ->limit($limit)
+                    ->orderBy(new \yii\db\Expression('rand()'));
         } else {
             $query = Category::find()
-            ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
-            ->where('sc.type = 2')
-            ->limit($limit);
+                    ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
+                    ->where('sc.type = 2')
+                    ->limit($limit);
         }
 
         if ($returnType == 1) {

@@ -50,55 +50,6 @@ $('#see-more-search-cost-fit').on('click', function () {
 
 // Create date 7/7/2016 By Pew , ReFrom By :
 
-$('.checkout_update_address_shipping').on('click', function () {
-    alert('Id Name : ' + $(this).find('input').attr('id'));
-    alert('Value : ' + $(this).find('input').val());
-
-    var address = $(this).find('input').attr('id');
-    var addressIdValue = $(this).find('input').val();
-
-
-
-    $.ajax({
-        type: "POST",
-        url: '',
-        data: $("#idForm").serialize(), // serializes the form's elements.
-        success: function (data)
-        {
-            alert(data); // show response from the php script.
-            //$('.form-group').find('#co-country').val('Australia');
-            //$('.form-group').find('#co-first-name').val('นายกมล');
-            //$('.form-group').find('#co-last-name').val('พวงเกษม');
-            //$('.form-group').find('#co-str-adress').val('เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19 จอมพล จตุจักร กรุงเทพ 10900');
-            //$('.form-group').find('#co-appartment').val('test');
-            //$('.form-group').find('#co-company-name').val('test');
-            //$('.form-group').find('#co-city').val('test');
-            //$('.form-group').find('#co-state').val('test');
-            //$('.form-group').find('#co_postcode').val('10900');
-            //$('.form-group').find('#co-email').val('นายกมล');
-            //$('.form-group').find('#co_phone').val('0616539889');
-            $('.form-group').find('#order-notes').val('test');
-        }
-    });
-
-    e.preventDefault(); // avoid to execute the actual submit of the form.
-
-    /*
-     // Test
-     $("#billingUpdate").removeClass("hide");
-     $('.form-group').find('#co-country').val('Australia');
-     $('.form-group').find('#co-first-name').val('นายกมล');
-     $('.form-group').find('#co-last-name').val('พวงเกษม');
-     $('.form-group').find('#co-str-adress').val('เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19 จอมพล จตุจักร กรุงเทพ 10900');
-     $('.form-group').find('#co-appartment').val('test');
-     $('.form-group').find('#co-company-name').val('test');
-     $('.form-group').find('#co-city').val('test');
-     $('.form-group').find('#co-state').val('test');
-     $('.form-group').find('#co_postcode').val('10900');
-     $('.form-group').find('#co-email').val('นายกมล');
-     $('.form-group').find('#co_phone').val('0616539889');
-     $('.form-group').find('#order-notes').val('test');*/
-});
 
 $('.checkout_select_address_billing').on('click', function () {
     //alert('Id Name : ' + $(this).find('input').attr('id'));
@@ -107,99 +58,98 @@ $('.checkout_select_address_billing').on('click', function () {
     var addressIdValue = $(this).find('input').val();
     // var url = "path/to/your/file"; // the script where you handle the form input.
 
-    /*$.ajax({
-     type: "POST",
-     url: url,
-     data: $("#idForm").serialize(), // serializes the form's elements.
-     success: function (data)
-     {
-     alert(data); // show response from the php script.
-     //$('.form-group').find('#co-country').val('Australia');
-     //$('.form-group').find('#co-first-name').val('นายกมล');
-     //$('.form-group').find('#co-last-name').val('พวงเกษม');
-     //$('.form-group').find('#co-str-adress').val('เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19 จอมพล จตุจักร กรุงเทพ 10900');
-     //$('.form-group').find('#co-appartment').val('test');
-     //$('.form-group').find('#co-company-name').val('test');
-     //$('.form-group').find('#co-city').val('test');
-     //$('.form-group').find('#co-state').val('test');
-     //$('.form-group').find('#co_postcode').val('10900');
-     //$('.form-group').find('#co-email').val('นายกมล');
-     //$('.form-group').find('#co_phone').val('0616539889');
-     $('.form-group').find('#order-notes').val('test');
-     }
-     });
-
-     e.preventDefault(); // avoid to execute the actual submit of the form.
-     */
-
-    // Test
-    $("#billingUpdate").removeClass("hide");
-    $('.form-group').find('#co-country').val('Australia');
-    $('.form-group').find('#co-first-name').val('นายกมล');
-    $('.form-group').find('#co-last-name').val('พวงเกษม');
-    $('.form-group').find('#co-str-adress').val('เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19 จอมพล จตุจักร กรุงเทพ 10900');
-    $('.form-group').find('#co-appartment').val('test');
-    $('.form-group').find('#co-company-name').val('test');
-    $('.form-group').find('#co-city').val('test');
-    $('.form-group').find('#co-state').val('test');
-    $('.form-group').find('#co_postcode').val('10900');
-    $('.form-group').find('#co-email').val('นายกมล');
-    $('.form-group').find('#co_phone').val('0616539889');
-    $('.form-group').find('#order-notes').val('test');
 });
 
 $('.updateBillingCancel').on('click', function () {
     $("#billingUpdate").addClass("hide");
 });
 
-$('.checkout_update_address_billing').on('click', function () {
-//    alert('Id Name : ' + $(this).find('input').attr('id'));
-//    alert('Value : ' + $(this).find('input').val());
 
-    // var url = "path/to/your/file"; // the script where you handle the form input.
+$('.checkout_update_address_shipping').on('click', function () {
+    //alert('Id Name : ' + $(this).find('input').attr('id'));
+    // alert('Value : ' + $(this).find('input').val());
+    var edit_shipping = $(this).find('input').val();
+    $('.actionFormEditShipping').show();
+    $('.actionFormBillingNew').hide();
+    $('.actionFormEditBilling').hide();
+    $.post("checkout/get-address", {
+        address: edit_shipping
+    }, function (data, status) {
+        if (status == "success") {
+            var JSONObject = JSON.parse(data);
+            console.log(JSONObject);
+            //alert("Data: " + JSONObject.addressId);
+            $('.field-address-provinceid').find('input').val(JSONObject.countryId);
+            $('.form-group').find('#firstname').val(JSONObject.firstname);
+            $('.form-group').find('#lastname').val(JSONObject.lastname);
+            $('.form-group').find('#company').val(JSONObject.company);
+            $('.form-group').find('#address').val(JSONObject.address);
+            $('.form-group').find('#districtId').val(JSONObject.districtId);
+            $('.form-group').find('#amphurId').val(JSONObject.amphurId);
+            $('.form-group').find('#provinceId').val(JSONObject.provinceId);
+            $('.form-group').find('#zipcode').val(JSONObject.zipcode);
+            $('.form-group').find('#email').val(JSONObject.email);
+            $('.form-group').find('#tel').val(JSONObject.tel);
+            $('.form-group').find('#address-hidden').html('<input type="hidden" name="addressId" id="addressId" value="' + JSONObject.addressId + '">'); //val(JSONObject.tel);
+            //$('.form-group').find('#order-notes').val('test');
+        }
 
-    /*$.ajax({
-     type: "POST",
-     url: url,
-     data: $("#idForm").serialize(), // serializes the form's elements.
-     success: function (data)
-     {
-     alert(data); // show response from the php script.
-     //$('.form-group').find('#co-country').val('Australia');
-     //$('.form-group').find('#co-first-name').val('นายกมล');
-     //$('.form-group').find('#co-last-name').val('พวงเกษม');
-     //$('.form-group').find('#co-str-adress').val('เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19 จอมพล จตุจักร กรุงเทพ 10900');
-     //$('.form-group').find('#co-appartment').val('test');
-     //$('.form-group').find('#co-company-name').val('test');
-     //$('.form-group').find('#co-city').val('test');
-     //$('.form-group').find('#co-state').val('test');
-     //$('.form-group').find('#co_postcode').val('10900');
-     //$('.form-group').find('#co-email').val('นายกมล');
-     //$('.form-group').find('#co_phone').val('0616539889');
-     $('.form-group').find('#order-notes').val('test');
-     }
-     });
+        // window.location = 'checkout/order-thank';
+    });
 
-     e.preventDefault(); // avoid to execute the actual submit of the form.
-     */
+});
+$('.new-address-form ').on('click', function () {
+    $('.form-group').find('#address-hidden').html('');
+    $('.actionFormEditShipping').hide();
+    $('.actionFormBillingNew').show();
+    $('.actionFormEditBilling').hide();
+    $('.form-group').find('#firstname').val('');
+    $('.form-group').find('#lastname').val('');
+    $('.form-group').find('#company').val('');
+    $('.form-group').find('#address').val('');
+    $('.form-group').find('#districtId').val('');
+    $('.form-group').find('#amphurId').val('');
+    $('.form-group').find('#provinceId').val('');
+    $('.form-group').find('#zipcode').val('');
+    $('.form-group').find('#email').val('');
+    $('.form-group').find('#tel').val('');
+});
 
-    // Test
-    $("#shippingUpdate").removeClass("hide");
-    $('.form-group').find('#co-country').val('Australia');
-    $('.form-group').find('#co-first-name').val('นายกมล');
-    $('.form-group').find('#co-last-name').val('พวงเกษม');
-    $('.form-group').find('#co-str-adress').val('เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19 จอมพล จตุจักร กรุงเทพ 10900');
-    $('.form-group').find('#co-appartment').val('test');
-    $('.form-group').find('#co-company-name').val('test');
-    $('.form-group').find('#co-city').val('test');
-    $('.form-group').find('#co-state').val('test');
-    $('.form-group').find('#co_postcode').val('10900');
-    $('.form-group').find('#co-email').val('นายกมล');
-    $('.form-group').find('#co_phone').val('0616539889');
-    $('.form-group').find('#order-notes').val('test');
+
+$('.checkout_update_address_billing').on('click', function () { // checkout_update_address_shipping
+    var edit_shipping = $(this).find('input').val();
+    $('.actionFormEditShipping').hide();
+    $('.actionFormEditBilling').show();
+    //$('.actionFormBilling').hide();
+    $.post("checkout/get-address", {
+        address: edit_shipping
+    }, function (data, status) {
+        if (status == "success") {
+            var JSONObject = JSON.parse(data);
+            //console.log(JSONObject);
+            //alert("Data: " + JSONObject.addressId);
+            $('.field-address-provinceid').find('input').val(JSONObject.countryId);
+            $('.form-group').find('#firstname').val(JSONObject.firstname);
+            $('.form-group').find('#lastname').val(JSONObject.lastname);
+            $('.form-group').find('#company').val(JSONObject.company);
+            $('.form-group').find('#address').val(JSONObject.address);
+            $('.form-group').find('#districtId').val(JSONObject.districtId);
+            $('.form-group').find('#amphurId').val(JSONObject.amphurId);
+            $('.form-group').find('#provinceId').val(JSONObject.provinceId);
+            $('.form-group').find('#zipcode').val(JSONObject.zipcode);
+            $('.form-group').find('#email').val(JSONObject.email);
+            $('.form-group').find('#tel').val(JSONObject.tel);
+            $('.form-group').find('#address-hidden').html('<input type="hidden" name="addressId" id="addressId" value="' + JSONObject.addressId + '">'); //val(JSONObject.tel);
+            //$('.form-group').find('#order-notes').val('test');
+        }
+
+        // window.location = 'checkout/order-thank';
+    });
+
 });
 
 $('.checkout_select_address_shipping').on('click', function () {
+
 });
 
 /*
@@ -272,7 +222,67 @@ $(".reveal_re").on('click', function () {
  });
  */
 
+// 25/7/2016 Create By Taninut.B
+
 $("#place-order").on('click', function () {
-    alert('test : place order');
+
+    var _shipping = $('input[id=checkout_select_address_shipping]:checked').val();
+    var _billing = $('input[id=checkout_select_address_billing]:checked').val();
+    var _payment01 = $('input[id=payment01]:checked').val();
+    var _placeUserId = $('input[id=placeUserId]').val();
+    var _placeOrderId = $('input[id=placeOrderId]').val();
+    var _notes = $("#order-notes").val();
+    if (_placeOrderId == '') {
+        alert('สินค้าในตะกร้า 0 รายการ');
+        window.location = 'site';
+    } else {
+        if (_shipping === undefined) {
+            alert('Please Select Shipping Address');
+        } else {
+            if (_billing === undefined) {
+                $.post("checkout/burn-checkouts", {
+                    shipping: _shipping,
+                    payment01: _payment01,
+                    placeUserId: _placeUserId,
+                    notes: _notes,
+                    placeOrderId: _placeOrderId
+                }, function (data, status) {
+                    //alert("Data: " + data + "\nStatus: " + status);
+                    // window.location = 'checkout/order-thank';
+                });
+            } else if (_billing != undefined) {
+                $.post("checkout/burn-checkouts", {
+                    shipping: _shipping,
+                    billing: _billing,
+                    payment01: _payment01,
+                    placeUserId: _placeUserId,
+                    notes: _notes,
+                    placeOrderId: _placeOrderId
+                }, function (data, status) {
+                    //alert("Data: " + data + "\nStatus: " + status);
+                    // window.location = 'checkout/order-thank';
+                });
+
+            }
+        }
+    }
+
+    // $this->redirect(['order-thank']);
+});
+
+$("#btn-checkout-formShipping").on('click', function () {
+    //alert('Id Name : ' + $(this).find('input').attr('id'));
+    //alert('Value : ' + $(this).find('input').val()); Address[countryId]
+    var x = document.getElementsByName("countryId");
+    var inputs = $('#default-shipping-address').getElementsByTagName('input');
+    //alert(inputs);
+    //alert('test : formShipping');
+    // $this->redirect(['order-thank']);
+});
+
+$("#btn-checkout-formBilling").on('click', function () {
+    //alert('Id Name : ' + $(this).find('input').attr('id'));
+    //alert('Value : ' + $(this).find('input').val());
+    //alert('test : formBilling');
     // $this->redirect(['order-thank']);
 });
