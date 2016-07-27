@@ -56,12 +56,13 @@ class CheckoutController extends MasterController {
             }
         } else {
             $address_shipping = \common\models\costfit\Address::find()->where('userId=' . (\Yii::$app->user->id != '') ? \Yii::$app->user->id : 0 . ' and type = 2  ')
-                    ->orderBy('isDefault desc, updateDateTime desc')
+                    ->orderBy('isDefault desc ')
                     ->all();
 
             $address_billing = \common\models\costfit\Address::find()->where('userId=' . (\Yii::$app->user->id != '') ? \Yii::$app->user->id : 0 . ' and type = 1  ')
-                    ->orderBy('isDefault , updateDateTime desc')
+                    ->orderBy('isDefault desc  ')
                     ->all();
+
 
             $paymentMethods = \common\models\costfit\PaymentMethod::find()->all();
 
@@ -109,11 +110,6 @@ class CheckoutController extends MasterController {
           Order
           - paymentType
           - status  = 2
-         * shipping: _shipping,
-          billing: _billing,
-          payment01: _payment01,
-          placeUserId: _placeUserId,
-          notes: _notes
          */
         $request = Yii::$app->request;
 
