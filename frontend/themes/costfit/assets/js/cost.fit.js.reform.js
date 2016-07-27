@@ -232,36 +232,41 @@ $("#place-order").on('click', function () {
     var _placeUserId = $('input[id=placeUserId]').val();
     var _placeOrderId = $('input[id=placeOrderId]').val();
     var _notes = $("#order-notes").val();
-
-    if (_shipping === undefined) {
-        alert('Please Select Shipping Address');
+    if (_placeOrderId == '') {
+        alert('สินค้าในตะกร้า 0 รายการ');
+        window.location = 'site';
     } else {
-        if (_billing === undefined) {
-            $.post("checkout/burn-checkouts", {
-                shipping: _shipping,
-                payment01: _payment01,
-                placeUserId: _placeUserId,
-                notes: _notes,
-                placeOrderId: _placeOrderId
-            }, function (data, status) {
-                //alert("Data: " + data + "\nStatus: " + status);
-                // window.location = 'checkout/order-thank';
-            });
-        } else if (_billing != undefined) {
-            $.post("checkout/burn-checkouts", {
-                shipping: _shipping,
-                billing: _billing,
-                payment01: _payment01,
-                placeUserId: _placeUserId,
-                notes: _notes,
-                placeOrderId: _placeOrderId
-            }, function (data, status) {
-                //alert("Data: " + data + "\nStatus: " + status);
-                // window.location = 'checkout/order-thank';
-            });
+        if (_shipping === undefined) {
+            alert('Please Select Shipping Address');
+        } else {
+            if (_billing === undefined) {
+                $.post("checkout/burn-checkouts", {
+                    shipping: _shipping,
+                    payment01: _payment01,
+                    placeUserId: _placeUserId,
+                    notes: _notes,
+                    placeOrderId: _placeOrderId
+                }, function (data, status) {
+                    //alert("Data: " + data + "\nStatus: " + status);
+                    // window.location = 'checkout/order-thank';
+                });
+            } else if (_billing != undefined) {
+                $.post("checkout/burn-checkouts", {
+                    shipping: _shipping,
+                    billing: _billing,
+                    payment01: _payment01,
+                    placeUserId: _placeUserId,
+                    notes: _notes,
+                    placeOrderId: _placeOrderId
+                }, function (data, status) {
+                    //alert("Data: " + data + "\nStatus: " + status);
+                    // window.location = 'checkout/order-thank';
+                });
 
+            }
         }
     }
+
     // $this->redirect(['order-thank']);
 });
 

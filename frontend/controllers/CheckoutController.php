@@ -27,7 +27,7 @@ class CheckoutController extends MasterController {
      */
     public function actionIndex() {
         if (Yii::$app->user->isGuest == 1) {
-            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+            return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         }
         $this->layout = "/content_right";
         $this->title = 'Cost.fit | checkout';
@@ -42,7 +42,7 @@ class CheckoutController extends MasterController {
 
         $addressId = Yii::$app->request->post('addressId');
         $address = new \common\models\costfit\Address();
-
+        $address->scenario = 'shipping_address';
         if (isset($addressId)) { // ตรวจสอบว่า มี hidden addressId ให้ update ในเทเบิล address
             if (isset($_POST['Address'])) {
                 $address = \common\models\costfit\Address::find()
@@ -71,7 +71,7 @@ class CheckoutController extends MasterController {
 
             if (isset($_POST['Address'])) {
                 if ($_POST['Address']['typeForm'] == 'formShipping') {
-                    //$address->scenario = 'shipping_address';
+
                     //$model_ = new \common\models\costfit\Address();
                     $address->type = \common\models\costfit\Address::TYPE_SHIPPING; // default Address First
                     $address->attributes = $_POST['Address'];
@@ -93,7 +93,7 @@ class CheckoutController extends MasterController {
 
     public function actionOrderThank() {
         if (Yii::$app->user->isGuest == 1) {
-            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+            return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         }
         $this->title = 'Cost.fit | Order Thank';
         $this->subTitle = 'Home';
@@ -103,7 +103,7 @@ class CheckoutController extends MasterController {
 
     public function actionBurnCheckouts() {
         if (Yii::$app->user->isGuest == 1) {
-            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+            return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         }
         /*
           Order
@@ -173,7 +173,7 @@ class CheckoutController extends MasterController {
 
     public function actionGetAddress() {
         if (Yii::$app->user->isGuest == 1) {
-            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+            return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         }
         $addressId = Yii::$app->request->post('address');
         $address = \common\models\costfit\Address::find()->where('addressId = ' . $addressId)
