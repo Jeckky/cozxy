@@ -299,4 +299,102 @@ class MasterController extends MasterCommonController {
         return $strReturn;
     }
 
+    public function actionChildStatesCheckOuts() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $id = end($_POST['depdrop_parents']);
+            $list = \common\models\dbworld\States::find()->andWhere(['countryId' => $id])->asArray()->all();
+            $selected = null;
+            if ($id != null && count($list) > 0) {
+                //EXACTLY THIS IS THE PART YOU NEED TO IMPLEMENT:
+                $selected = '';
+                if (!empty($_POST['depdrop_params'])) {
+                    $params = $_POST['depdrop_params'];
+
+                    $id1 = $params[0]; // get the value of model_id1
+
+                    foreach ($list as $i => $account) {
+                        $out[] = ['id' => $account['stateId'], 'name' => $account['stateName']];
+                        if ($i == 0) {
+                            $aux = $account['stateId'];
+                        }
+                        ($account['stateId'] == $id1) ? $selected = $aux : $selected = $id1;
+                    }
+                }
+
+                // Shows how you can preselect a value
+                echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo \yii\helpers\Json::encode(['output' => '', 'selected' => '']);
+    }
+
+    // CONTROLLER 15/07/2016 Create By Taninut
+    public function actionChildAmphurCheckOuts() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $id = end($_POST['depdrop_parents']);
+            $list = \common\models\dbworld\Cities::find()->andWhere(['stateId' => $id])->asArray()->all();
+
+            $selected = null;
+            if ($id != null && count($list) > 0) {
+                //EXACTLY THIS IS THE PART YOU NEED TO IMPLEMENT:
+                $selected = '';
+                if (!empty($_POST['depdrop_params'])) {
+                    $params = $_POST['depdrop_params'];
+
+                    $id1 = $params[0]; // get the value of model_id1
+
+                    foreach ($list as $i => $account) {
+                        $out[] = ['id' => $account['cityId'], 'name' => $account['cityName']];
+                        if ($i == 0) {
+                            $aux = $account['cityId'];
+                        }
+                        ($account['cityId'] == $id1) ? $selected = $aux : $selected = $id1;
+                    }
+                }
+
+                // Shows how you can preselect a value
+                echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
+    }
+
+    // CONTROLLER 15/07/2016 Create By Taninut
+    public function actionChildDistrictCheckOuts() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $id = end($_POST['depdrop_parents']);
+            $list = \common\models\dbworld\District::find()->andWhere(['cityId' => $id])->asArray()->all();
+            $selected = null;
+            if ($id != null && count($list) > 0) {
+
+                //EXACTLY THIS IS THE PART YOU NEED TO IMPLEMENT:
+                $selected = '';
+                if (!empty($_POST['depdrop_params'])) {
+                    $params = $_POST['depdrop_params'];
+
+                    $id1 = $params[0]; // get the value of model_id1
+
+                    foreach ($list as $i => $account) {
+                        $out[] = ['id' => $account['districtId'], 'name' => $account['localName']];
+                        if ($i == 0) {
+                            $aux = $account['districtId'];
+                        }
+                        ($account['districtId'] == $id1) ? $selected = $id1 : $selected = $aux;
+                    }
+                }
+
+                // Shows how you can preselect a value
+                echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
+                return;
+            }
+            //echo 'no';
+        }
+        echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
+    }
+
 }

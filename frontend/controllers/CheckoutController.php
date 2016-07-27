@@ -74,8 +74,6 @@ class CheckoutController extends MasterController {
                         ->all();
             }
 
-
-
             $paymentMethods = \common\models\costfit\PaymentMethod::find()->all();
 
             if (isset($_POST["Order"])) {
@@ -84,7 +82,6 @@ class CheckoutController extends MasterController {
 
             if (isset($_POST['Address'])) {
                 if ($_POST['Address']['typeForm'] == 'formShipping') {
-
                     //$model_ = new \common\models\costfit\Address();
                     $address->type = \common\models\costfit\Address::TYPE_SHIPPING; // default Address First
                     $address->attributes = $_POST['Address'];

@@ -76,9 +76,10 @@ $('.checkout_update_address_shipping').on('click', function () {
     $.post("checkout/get-address", {
         address: edit_shipping
     }, function (data, status) {
+
         if (status == "success") {
             var JSONObject = JSON.parse(data);
-            console.log(JSONObject);
+            //console.log(JSONObject);
             //alert("Data: " + JSONObject.addressId);
             alert(JSONObject.provinceId);
             alert($('#countryDDId').val());
@@ -93,8 +94,9 @@ $('.checkout_update_address_shipping').on('click', function () {
             $('.form-group').find('#zipcode').val(JSONObject.zipcode);
             $('.form-group').find('#email').val(JSONObject.email);
             $('.form-group').find('#tel').val(JSONObject.tel);
-            $('.form-group').find('#address-hidden').html('<input type="hidden" name="addressId" id="addressId" value="' + JSONObject.addressId + '">'); //val(JSONObject.tel);
+            //$('.form-group').find('#address-hidden').html('<input type="hidden" name="addressId" id="addressId" value="' + JSONObject.addressId + '">'); //val(JSONObject.tel);
             //$('.form-group').find('#order-notes').val('test');
+            $('.form-group').find('#address-hidden').html('<input type="hidden" name="addressId" id="addressId" value="' + JSONObject.addressId + '"> <input type="hidden" name="model_id3" id="model_id3" value="' + JSONObject.provinceId + '"> <input type="hidden" name="model_id2" id="model_id2" value="' + JSONObject.amphurId + '"> <input type="hidden" name="model_id1" id="model_id1" value="' + JSONObject.districtId + '"> <input type="hidden" name="model_id" id="model_id" value="' + JSONObject.countryId + '">');
         }
 
         // window.location = 'checkout/order-thank';
@@ -131,19 +133,24 @@ $('.checkout_update_address_billing').on('click', function () { // checkout_upda
             var JSONObject = JSON.parse(data);
             //console.log(JSONObject);
             //alert("Data: " + JSONObject.addressId);
-            $('.field-address-provinceid').find('input').val(JSONObject.countryId);
+            //$('.field-address-provinceid').find('input').val(JSONObject.countryId); // DepDrop
             $('.form-group').find('#firstname').val(JSONObject.firstname);
             $('.form-group').find('#lastname').val(JSONObject.lastname);
             $('.form-group').find('#company').val(JSONObject.company);
             $('.form-group').find('#address').val(JSONObject.address);
-            $('.form-group').find('#districtId').val(JSONObject.districtId);
-            $('.form-group').find('#amphurId').val(JSONObject.amphurId);
-            $('.form-group').find('#provinceId').val(JSONObject.provinceId);
+            //$('.form-group').find('#districtId').val(JSONObject.districtId); // DepDrop
+            //$('.form-group').find('#amphurId').val(JSONObject.amphurId); // DepDrop
+            //$('.form-group').find('#provinceId').val(JSONObject.provinceId); // DepDrop
             $('.form-group').find('#zipcode').val(JSONObject.zipcode);
             $('.form-group').find('#email').val(JSONObject.email);
             $('.form-group').find('#tel').val(JSONObject.tel);
-            $('.form-group').find('#address-hidden').html('<input type="hidden" name="addressId" id="addressId" value="' + JSONObject.addressId + '">'); //val(JSONObject.tel);
-            //$('.form-group').find('#order-notes').val('test');
+            //$('.form-group').find('#address-hidden').html('<input type="hidden" name="addressId" id="addressId" value="' + JSONObject.addressId + '"> <input type="hidden" name="model_id3" id="model_id3" value="' + JSONObject.provinceId + '"> <input type="hidden" name="model_id2" id="model_id2" value="' + JSONObject.amphurId + '"> <input type="hidden" name="model_id1" id="model_id1" value="' + JSONObject.districtId + '"> <input type="hidden" name="model_id" id="model_id" value="' + JSONObject.countryId + '">'); //val(JSONObject.tel);
+            //$('.form-group').find('#order-notes').val('test');<input type="hidden" id="model_id1" name="model_id1" value="2526">
+            //$('.form-group').find('#address-hidden').html('<input type="hidden" name="model_id" id="model_id" value="' + JSONObject.countryId + '">');
+            //$('.form-group').find('#address-hidden').html('<input type="hidden" name="model_id1" id="model_id1" value="' + JSONObject.districtId + '">');
+            //$('.form-group').find('#address-hidden').html('<input type="hidden" name="model_id2" id="model_id2" value="' + JSONObject.amphurId + '">');
+            //$('.form-group').find('#address-hidden').html('<input type="hidden" name="model_id3" id="model_id3" value="' + JSONObject.provinceId + '">');
+            $('.form-group').find('#address-hidden').html('<input type="hidden" name="addressId" id="addressId" value="' + JSONObject.addressId + '">');
         }
 
         // window.location = 'checkout/order-thank';

@@ -7,10 +7,10 @@ use Yii;
 /**
 * This is the model class for table "product_price_match".
 *
-    * @property integer $productPriceMatchId
-    * @property integer $productId
-    * @property integer $discountPercent
-    * @property integer $discountValue
+    * @property string $productPriceMatchId
+    * @property string $productId
+    * @property string $discountPercent
+    * @property string $discountValue
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
