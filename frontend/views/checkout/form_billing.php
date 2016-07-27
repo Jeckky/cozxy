@@ -146,9 +146,9 @@ $districtId = rand(0, 9999);
     <div class="row">
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
             <label for="co-first-name">ชื่อ *</label>
-            <? //= Html::textInput("Address[firstname]", NULL, ["class" => "form-control input-sm", 'placeHolder' => 'First name', 'id' => 'firstname']) ?>
+            <?= Html::textInput("Address[firstname]", NULL, ["class" => "form-control input-sm", 'placeHolder' => 'First name', 'id' => 'firstname']) ?>
             <?php
-            echo $form->field($address, 'firstname')->textInput();
+            //echo $form->field($address, 'firstname')->textInput();
             ?>
         </div>
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
