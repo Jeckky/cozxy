@@ -26,7 +26,9 @@ class CheckoutController extends MasterController {
      * @return mixed
      */
     public function actionIndex() {
-
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
         $this->layout = "/content_right";
         $this->title = 'Cost.fit | checkout';
         $this->subTitle = 'Checkout';
@@ -90,6 +92,9 @@ class CheckoutController extends MasterController {
     }
 
     public function actionOrderThank() {
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
         $this->title = 'Cost.fit | Order Thank';
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Order Thank';
@@ -97,6 +102,9 @@ class CheckoutController extends MasterController {
     }
 
     public function actionBurnCheckouts() {
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
         /*
           Order
           - paymentType
@@ -164,7 +172,9 @@ class CheckoutController extends MasterController {
     }
 
     public function actionGetAddress() {
-
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
         $addressId = Yii::$app->request->post('address');
         $address = \common\models\costfit\Address::find()->where('addressId = ' . $addressId)
                 ->orderBy('isDefault desc, updateDateTime desc')
