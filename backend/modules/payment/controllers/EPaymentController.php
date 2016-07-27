@@ -90,7 +90,7 @@ class EPaymentController extends PaymentMasterController
                 if (isset($ePaymentProfileIdObj) && $ePaymentProfileIdObj->saveAs($urlFile)) {
                     //Do Some Thing
                 }
-                return $this->redirect(['index']);
+                return $this->redirect(['index', 'paymentMethodId' => $model->paymentMethodId]);
             }
         }
         return $this->render('create', [
@@ -134,7 +134,7 @@ class EPaymentController extends PaymentMasterController
                 if (isset($ePaymentProfileIdObj) && $ePaymentProfileIdObj->saveAs($urlFile)) {
                     //Do Some Thing
                 }
-                return $this->redirect(['index']);
+                return $this->redirect(['index', 'paymentMethodId' => $model->paymentMethodId]);
             }
         }
         return $this->render('update', [

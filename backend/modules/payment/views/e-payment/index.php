@@ -39,17 +39,32 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 ],
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    'ePaymentId',
-                    'paymentMethodId',
-                    'bankId',
+//                    'ePaymentId',
+                    [
+                        'attribute' => 'paymentMethodId',
+                        'value' => function($model) {
+                            return isset($model->paymentMethod) ? $model->paymentMethod->title : NULL;
+                        }
+                    ],
+                    [
+                        'attribute' => 'bankId',
+                        'value' => function($model) {
+                            return isset($model->bank) ? $model->bank->title : NULL;
+                        }
+                    ],
                     'ePaymentTel',
                     'ePaymentMerchantId',
-                    // 'ePaymentOrgId',
+                    'ePaymentOrgId',
                     // 'ePaymentUrl:ntext',
                     // 'ePaymentAccessKey:ntext',
                     // 'ePaymentSecretKey:ntext',
                     // 'ePaymentProfileId',
-                    // 'type',
+                    [
+                        'attribute' => 'type',
+                        'value' => function($model) {
+                            return $model->getTypeText($model->type);
+                        }
+                    ],
                     // 'status',
                     // 'createDateTime',
                     // 'updateDateTime',

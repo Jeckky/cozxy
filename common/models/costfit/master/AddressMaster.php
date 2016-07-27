@@ -23,6 +23,8 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
+    * @property string $firstname
+    * @property string $lastname
     *
             * @property User $user
     */
@@ -46,7 +48,7 @@ return [
             [['userId', 'provinceId', 'amphurId', 'districtId', 'type', 'isDefault', 'status'], 'integer'],
             [['address'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['company'], 'string', 'max' => 200],
+            [['company', 'firstname', 'lastname'], 'string', 'max' => 200],
             [['tax', 'tel'], 'string', 'max' => 45],
             [['countryId'], 'string', 'max' => 3],
             [['zipcode'], 'string', 'max' => 10],
@@ -76,6 +78,8 @@ return [
     'status' => Yii::t('address', 'Status'),
     'createDateTime' => Yii::t('address', 'Create Date Time'),
     'updateDateTime' => Yii::t('address', 'Update Date Time'),
+    'firstname' => Yii::t('address', 'Firstname'),
+    'lastname' => Yii::t('address', 'Lastname'),
 ];
 }
 

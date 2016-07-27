@@ -39,31 +39,34 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
         <script>
             init.push(function () {
                 var uploads_data = [
-                    {day: '2014-03-10', v: 20},
-                    {day: '2014-03-11', v: 10},
-                    {day: '2014-03-12', v: 15},
-                    {day: '2014-03-13', v: 12},
-                    {day: '2014-03-14', v: 5},
-                    {day: '2014-03-15', v: 5},
-                    {day: '2014-03-16', v: 20}
+<?php foreach ($circulations as $month => $value): ?>
+    <?= "{day: $month, v: $value}," ?>
+<?php endforeach; ?>
+//                {day: '2014-03-10', v: 20},
+//                {day: '2014-03-11', v: 10},
+//                {day: '2014-03-12', v: 15},
+//                {day: '2014-03-13', v: 12},
+//                {day: '2014-03-14', v: 5},
+//                {day: '2014-03-15', v: 5},
+//                {day: '2014-03-16', v: 20}
                 ];
-                Morris.Line({
-                    element: 'hero-graph',
-                    data: uploads_data,
-                    xkey: 'day',
-                    ykeys: ['v'],
-                    labels: ['Value'],
-                    lineColors: ['#fff'],
-                    lineWidth: 2,
-                    pointSize: 4,
-                    gridLineColor: 'rgba(255,255,255,.5)',
-                    resize: true,
-                    gridTextColor: '#fff',
-                    xLabels: "day",
-                    xLabelFormat: function (d) {
-                        return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][d.getMonth()] + ' ' + d.getDate();
-                    },
-                });
+                        Morris.Line({
+                            element: 'hero-graph',
+                            data: uploads_data,
+                            xkey: 'day',
+                            ykeys: ['v'],
+                            labels: ['Value'],
+                            lineColors: ['#fff'],
+                            lineWidth: 2,
+                            pointSize: 4,
+                            gridLineColor: 'rgba(255,255,255,.5)',
+                            resize: true,
+                            gridTextColor: '#fff',
+                            xLabels: "day",
+                            xLabelFormat: function (d) {
+                                return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][d.getMonth()] + ' ' + d.getDate();
+                            },
+                        });
             });
         </script>
         <!-- / Javascript -->
@@ -176,7 +179,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <!-- Bordered, without top border, without horizontal padding -->
                         <div class="stat-cell bordered no-border-t no-padding-hr">
                             <div class="pie-chart" data-percent="75" id="easy-pie-chart-3">
-                                <div class="pie-chart-label">12GB</div>
+                                <div class="pie-chart-label">12GB <?//= memory_get_peak_usage() / 1000000000; ?></div>
                             </div>
                         </div>
                     </div> <!-- /.stat-row -->
