@@ -168,4 +168,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     </div>
 </section>
 
+<?php echo $this->render('@app/views/modal/modal_cart_not_item'); ?>
+
 

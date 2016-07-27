@@ -27,7 +27,7 @@ class CheckoutController extends MasterController {
      */
     public function actionIndex() {
         if (Yii::$app->user->isGuest == 1) {
-            return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
+            //return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         }
         $this->layout = "/content_right";
         $this->title = 'Cost.fit | checkout';
@@ -55,13 +55,14 @@ class CheckoutController extends MasterController {
                 }
             }
         } else {
-            $address_shipping = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 2  ')
-                    ->orderBy('isDefault desc, updateDateTime desc')
+            $address_shipping = \common\models\costfit\Address::find()->where('userId=' . (\Yii::$app->user->id != '') ? \Yii::$app->user->id : 0 . ' and type = 2  ')
+                    ->orderBy('isDefault desc ')
                     ->all();
 
-            $address_billing = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 1  ')
-                    ->orderBy('isDefault , updateDateTime desc')
+            $address_billing = \common\models\costfit\Address::find()->where('userId=' . (\Yii::$app->user->id != '') ? \Yii::$app->user->id : 0 . ' and type = 1  ')
+                    ->orderBy('isDefault desc  ')
                     ->all();
+
 
             $paymentMethods = \common\models\costfit\PaymentMethod::find()->all();
 
@@ -109,11 +110,6 @@ class CheckoutController extends MasterController {
           Order
           - paymentType
           - status  = 2
-         * shipping: _shipping,
-          billing: _billing,
-          payment01: _payment01,
-          placeUserId: _placeUserId,
-          notes: _notes
          */
         $request = Yii::$app->request;
 
@@ -150,7 +146,7 @@ class CheckoutController extends MasterController {
             $order->billingCountryId = ($address_billing['countryId'] != '') ? $address_billing['countryId'] : '';
             $order->billingProvinceId = ($address_billing['provinceId'] != '') ? $address_billing['provinceId'] : '';
             $order->billingAmphurId = ($address_billing['amphurId'] != '') ? $address_billing['amphurId'] : '';
-            $order->billingZipcode = ($address_billing['zipcode'] != '') ? $address_billing['zipcode'] : '';
+            $order->billingZipcode = ($address_billing['zipcode'] != '') ? $address_billing['zipcode'] : '0';
             $order->billingTel = ($address_billing['tel'] != '') ? $address_billing['tel'] : '';
             $order->shippingCompany = ($address_shipping['company'] != '') ? $address_shipping['company'] : '';
             $order->shippingTax = ($address_shipping['tax'] != '') ? $address_shipping['tax'] : '';
