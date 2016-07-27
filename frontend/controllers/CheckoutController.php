@@ -27,7 +27,7 @@ class CheckoutController extends MasterController {
      */
     public function actionIndex() {
         if (Yii::$app->user->isGuest == 1) {
-            return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
+            //return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         }
         $this->layout = "/content_right";
         $this->title = 'Cost.fit | checkout';
@@ -55,11 +55,11 @@ class CheckoutController extends MasterController {
                 }
             }
         } else {
-            $address_shipping = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 2  ')
+            $address_shipping = \common\models\costfit\Address::find()->where('userId=' . (\Yii::$app->user->id != '') ? \Yii::$app->user->id : 0 . ' and type = 2  ')
                     ->orderBy('isDefault desc, updateDateTime desc')
                     ->all();
 
-            $address_billing = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 1  ')
+            $address_billing = \common\models\costfit\Address::find()->where('userId=' . (\Yii::$app->user->id != '') ? \Yii::$app->user->id : 0 . ' and type = 1  ')
                     ->orderBy('isDefault , updateDateTime desc')
                     ->all();
 
