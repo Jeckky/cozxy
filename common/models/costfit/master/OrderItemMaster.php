@@ -39,8 +39,8 @@ return 'order_item';
 public function rules()
 {
 return [
-            [['orderItemId', 'orderId', 'productId', 'quantity', 'price', 'createDateTime'], 'required'],
-            [['orderItemId', 'orderId', 'productId', 'productGroupId', 'brandId', 'categoryId', 'status'], 'integer'],
+            [['orderId', 'productId', 'quantity', 'price', 'createDateTime'], 'required'],
+            [['orderId', 'productId', 'productGroupId', 'brandId', 'categoryId', 'status'], 'integer'],
             [['quantity', 'price', 'total'], 'number'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['orderId'], 'exist', 'skipOnError' => true, 'targetClass' => OrderMaster::className(), 'targetAttribute' => ['orderId' => 'orderId']],

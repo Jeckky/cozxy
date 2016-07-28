@@ -306,6 +306,7 @@ class Order extends \common\models\costfit\master\OrderMaster
             $cookies = Yii::$app->request->cookies;
             if (isset($cookies['orderToken'])) {
                 $token = $cookies['orderToken']->value;
+//                throw new \yii\base\Exception($token);
                 return \common\models\costfit\Order::find()->where("token ='" . $token . "' AND userId is null  AND status = " . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
             }
         } else {

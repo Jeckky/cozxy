@@ -92,6 +92,7 @@ class CartController extends MasterController
                 $res["isMaxQuantity"] = FALSE;
             }
         } else {
+//            throw new \yii\base\Exception(print_r($orderItem->errors, true));
             $res["status"] = FALSE;
         }
         return \yii\helpers\Json::encode($res);
