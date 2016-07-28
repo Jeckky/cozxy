@@ -316,7 +316,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
         return $res;
     }
 
-    public function genInvNo($model) {
+    public static function genInvNo($model) {
 //		$prefix = "IV" . UserCompany::model()->getPrefixBySupplierId($model->supplierId);
         $prefix = $model->paymentMethod == 1 ? "IVC" : "IVO";
         $max_code = 'IV'; //$this->findMaxInvoiceNo($model);
@@ -324,7 +324,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
         return $prefix . date("Ym") . str_pad($max_code, 7, "0", STR_PAD_LEFT);
     }
 
-    public function genOrderNo($supplierId = null) {
+    public static function genOrderNo($supplierId = null) {
         $supplierModel = Supplier::model()->findByPk($supplierId);
         $prefix = 'OD'; //$supplierModel->prefix;
         $max_code = intval($this->findMaxOrderNo($prefix));
@@ -333,19 +333,6 @@ class Order extends \common\models\costfit\master\OrderMaster {
     }
 
     public function findMaxOrderNo($prefix = NULL) {
-// Warning: Please modify the following code to remove attributes that
-// should not be searched.
-//		$criteria = new CDbCriteria;
-//
-//		$criteria->select = 'max(RIGHT(orderNo,6)) as maxCode';
-//		$criteria->condition = 'YEAR(updateDateTime) = YEAR(NOW())';
-//        if(isset($supplierId)) {
-//            $criteria->condition .= ' AND ';
-//        }
-//
-//		$result = new CActiveDataProvider($this, array(
-//			'criteria'=>$criteria,
-//		));
 
         $orderGroupModel = OrderGroup::model()->find(array(
             'select' => 'max(RIGHT(orderNo,6)) as maxCode',

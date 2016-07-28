@@ -146,6 +146,7 @@ class CheckoutController extends MasterController {
             }
 
             $order = \common\models\costfit\Order::find()->where('userId= ' . $placeUserId . ' and orderId = ' . $placeOrderId)->one();
+            $order->orderNo = \common\models\costfit\Order::genOrderNo();
             $order->paymentType = $payment01;
             $order->status = 2;
             $order->updateDateTime = new \yii\db\Expression("NOW()");
