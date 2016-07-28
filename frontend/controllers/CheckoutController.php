@@ -48,7 +48,12 @@ class CheckoutController extends MasterController {
                 $address = \common\models\costfit\Address::find()
                         ->where('userId =' . \Yii::$app->user->id . ' and addressId=' . $addressId)
                         ->one();
-                $address->attributes = $_POST['Address'];
+
+                //$address->attributes = $_POST['Address'];
+                $address->countryId = (isset($_POST['Address']['countryId']) ? $_POST['Address']['countryId'] : '');
+                $address->provinceId = (isset($_POST['Address']['provinceId']) ? $_POST['Address']['provinceId'] : '');
+                $address->amphurId = (isset($_POST['Address']['amphurId']) ? $_POST['Address']['amphurId'] : '');
+                $address->districtId = (isset($_POST['Address']['districtId']) ? $_POST['Address']['districtId'] : '');
 
                 if ($address->save(FALSE)) {
                     $this->redirect(Yii::$app->homeUrl . 'checkout');
