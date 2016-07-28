@@ -39,8 +39,7 @@ use \common\models\costfit\master\OrderMaster;
  * @property User $user
  * @property StoreProductOrderItem[] $storeProductOrderItems
  */
-class Order extends \common\models\costfit\master\OrderMaster
-{
+class Order extends \common\models\costfit\master\OrderMaster {
 
     const ORDER_STATUS_DRAFT = 0;
     const ORDER_STATUS_REGISTER_USER = 1;
@@ -55,16 +54,14 @@ class Order extends \common\models\costfit\master\OrderMaster
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributes()
-    {
+    public function attributes() {
         return array_merge(parent::attributes(), [
             'month'
         ]);
@@ -73,13 +70,11 @@ class Order extends \common\models\costfit\master\OrderMaster
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public static function findCartArray()
-    {
+    public static function findCartArray() {
         $res = [];
         $order = Order::getOrder();
         $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
@@ -171,13 +166,11 @@ class Order extends \common\models\costfit\master\OrderMaster
         return $res;
     }
 
-    public function getCoupon()
-    {
+    public function getCoupon() {
         return $this->hasOne(Coupon::className(), ['couponId' => 'couponId']);
     }
 
-    public function beforeSave($insert)
-    {
+    public function beforeSave($insert) {
         parent::beforeSave($insert);
         $total = 0;
         foreach ($this->orderItems as $item) {
@@ -204,13 +197,11 @@ class Order extends \common\models\costfit\master\OrderMaster
         return TRUE;
     }
 
-    public static function calculateShippingRate()
-    {
+    public static function calculateShippingRate() {
         return 0;
     }
 
-    public function findCheckoutStepArray()
-    {
+    public function findCheckoutStepArray() {
         return [
             self::CHECKOUT_STEP_WAIT_CHECKOUT => "รอ Checkout",
             self::CHECKOUT_STEP_ADDRESS => "ระบุที่อยู่",
@@ -219,8 +210,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         ];
     }
 
-    public function getCheckoutStepText($step)
-    {
+    public function getCheckoutStepText($step) {
         $res = $this->findCheckoutStepArray();
         if (isset($res[$step])) {
             return $res[$step];
@@ -229,8 +219,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         }
     }
 
-    public static function mergeDraftOrder()
-    {
+    public static function mergeDraftOrder() {
 
         $cookies = Yii::$app->request->cookies;
         if (isset($cookies['orderToken'])) {
@@ -300,8 +289,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         }
     }
 
-    public static function getOrder()
-    {
+    public static function getOrder() {
         if (\Yii::$app->user->isGuest) {
             $cookies = Yii::$app->request->cookies;
             if (isset($cookies['orderToken'])) {
@@ -314,8 +302,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         }
     }
 
-    public static function findAllYearCirculationWithYear($year)
-    {
+    public static function findAllYearCirculationWithYear($year) {
         $res = [];
         $orders = Order::find()->select('sum(summary) as summary , month(paymentDateTime) as month')->where('year(paymentDateTime) =' . $year . " AND status >2")->groupBy('month(paymentDateTime)')->all();
 
@@ -327,6 +314,81 @@ class Order extends \common\models\costfit\master\OrderMaster
             }
         }
         return $res;
+    }
+
+    public function genInvNo($model) {
+//		$prefix = "IV" . UserCompany::model()->getPrefixBySupplierId($model->supplierId);
+        $prefix = $model->paymentMethod == 1 ? "IVC" : "IVO";
+        $max_code = 'IV'; //$this->findMaxInvoiceNo($model);
+        $max_code += 1;
+        return $prefix . date("Ym") . str_pad($max_code, 7, "0", STR_PAD_LEFT);
+    }
+
+    public function genOrderNo($supplierId = null) {
+        $supplierModel = Supplier::model()->findByPk($supplierId);
+        $prefix = 'OD'; //$supplierModel->prefix;
+        $max_code = intval($this->findMaxOrderNo($prefix));
+        $max_code += 1;
+        return $prefix . date("Ym") . "-" . str_pad($max_code, 7, "0", STR_PAD_LEFT);
+    }
+
+    public function findMaxOrderNo($prefix = NULL) {
+// Warning: Please modify the following code to remove attributes that
+// should not be searched.
+//		$criteria = new CDbCriteria;
+//
+//		$criteria->select = 'max(RIGHT(orderNo,6)) as maxCode';
+//		$criteria->condition = 'YEAR(updateDateTime) = YEAR(NOW())';
+//        if(isset($supplierId)) {
+//            $criteria->condition .= ' AND ';
+//        }
+//
+//		$result = new CActiveDataProvider($this, array(
+//			'criteria'=>$criteria,
+//		));
+
+        $orderGroupModel = OrderGroup::model()->find(array(
+            'select' => 'max(RIGHT(orderNo,6)) as maxCode',
+            'condition' => 'substr(orderNo,1,2)=:prefix',
+            'params' => array(
+                ':prefix' => $prefix,
+            ),
+            'order' => 'orderNo desc',
+            'limit' => '1'
+        ));
+
+        return isset($orderGroupModel) ? $orderGroupModel->maxCode : 0;
+    }
+
+    public function findMaxInvoiceNo($model) {
+// Warning: Please modify the following code to remove attributes that
+// should not be searched.
+        $supplierUser = Supplier::model()->findByPk($model->supplierId);
+
+        $criteria = new CDbCriteria;
+
+        $criteria->select = 'max(RIGHT(invoiceNo,6)) as maxCode';
+//		if(isset($supplierUser->redirectURL))
+//		{
+        if ($supplierUser->supplierId == 1 || $supplierUser->supplierId == 3) {
+            $criteria->condition = 'YEAR(updateDateTime) = YEAR(NOW()) AND (supplierId = 1 OR supplierId = 3) AND paymentMethod = ' . $model->paymentMethod;
+        } else if ($supplierUser->supplierId == 4 || $supplierUser->supplierId == 5) {
+            $criteria->condition = 'YEAR(updateDateTime) = YEAR(NOW()) AND (supplierId = 4 OR supplierId = 5) AND paymentMethod = ' . $model->paymentMethod;
+        } else {
+            $criteria->condition = 'YEAR(updateDateTime) = YEAR(NOW()) AND supplierId = ' . $supplierUser->supplierId . ' AND paymentMethod = ' . $model->paymentMethod;
+        }
+//		}
+//		else
+//		{
+//			$supplierArray = array();
+//			$supplierArray = User::model()->findAllSupplierHasRedirectURL();
+//			$criteria->condition = 'MONTH(updateDateTime) = MONTH(NOW())';
+//		$criteria->addNotInCondition('supplierId', $supplierArray);
+//		}
+        $result = new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+        return isset($result->data[0]) ? $result->data[0]->maxCode : 0;
     }
 
 }
