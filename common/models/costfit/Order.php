@@ -39,7 +39,8 @@ use \common\models\costfit\master\OrderMaster;
  * @property User $user
  * @property StoreProductOrderItem[] $storeProductOrderItems
  */
-class Order extends \common\models\costfit\master\OrderMaster {
+class Order extends \common\models\costfit\master\OrderMaster
+{
 
     const ORDER_STATUS_DRAFT = 0;
     const ORDER_STATUS_REGISTER_USER = 1;
@@ -54,14 +55,16 @@ class Order extends \common\models\costfit\master\OrderMaster {
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributes() {
+    public function attributes()
+    {
         return array_merge(parent::attributes(), [
             'month',
             'maxCode'
@@ -71,11 +74,13 @@ class Order extends \common\models\costfit\master\OrderMaster {
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public static function findCartArray() {
+    public static function findCartArray()
+    {
         $res = [];
         $order = Order::getOrder();
         $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
@@ -167,11 +172,13 @@ class Order extends \common\models\costfit\master\OrderMaster {
         return $res;
     }
 
-    public function getCoupon() {
+    public function getCoupon()
+    {
         return $this->hasOne(Coupon::className(), ['couponId' => 'couponId']);
     }
 
-    public function beforeSave($insert) {
+    public function beforeSave($insert)
+    {
         parent::beforeSave($insert);
         $total = 0;
         foreach ($this->orderItems as $item) {
@@ -198,11 +205,13 @@ class Order extends \common\models\costfit\master\OrderMaster {
         return TRUE;
     }
 
-    public static function calculateShippingRate() {
+    public static function calculateShippingRate()
+    {
         return 0;
     }
 
-    public function findCheckoutStepArray() {
+    public function findCheckoutStepArray()
+    {
         return [
             self::CHECKOUT_STEP_WAIT_CHECKOUT => "รอ Checkout",
             self::CHECKOUT_STEP_ADDRESS => "ระบุที่อยู่",
@@ -211,7 +220,8 @@ class Order extends \common\models\costfit\master\OrderMaster {
         ];
     }
 
-    public function getCheckoutStepText($step) {
+    public function getCheckoutStepText($step)
+    {
         $res = $this->findCheckoutStepArray();
         if (isset($res[$step])) {
             return $res[$step];
@@ -220,7 +230,8 @@ class Order extends \common\models\costfit\master\OrderMaster {
         }
     }
 
-    public static function mergeDraftOrder() {
+    public static function mergeDraftOrder()
+    {
 
         $cookies = Yii::$app->request->cookies;
         if (isset($cookies['orderToken'])) {
@@ -290,7 +301,8 @@ class Order extends \common\models\costfit\master\OrderMaster {
         }
     }
 
-    public static function getOrder() {
+    public static function getOrder()
+    {
         if (\Yii::$app->user->isGuest) {
             $cookies = Yii::$app->request->cookies;
             if (isset($cookies['orderToken'])) {
@@ -303,7 +315,8 @@ class Order extends \common\models\costfit\master\OrderMaster {
         }
     }
 
-    public static function findAllYearCirculationWithYear($year) {
+    public static function findAllYearCirculationWithYear($year)
+    {
         $res = [];
         $orders = Order::find()->select('sum(summary) as summary , month(paymentDateTime) as month')->where('year(paymentDateTime) =' . $year . " AND status >2")->groupBy('month(paymentDateTime)')->all();
 
@@ -317,7 +330,8 @@ class Order extends \common\models\costfit\master\OrderMaster {
         return $res;
     }
 
-    public static function genInvNo($model) {
+    public static function genInvNo($model)
+    {
 //      $prefix = "IV" . UserCompany::model()->getPrefixBySupplierId($model->supplierId);
         $prefix = "IV";
         $max_code = $this->findMaxInvoiceNo($model);
@@ -325,25 +339,28 @@ class Order extends \common\models\costfit\master\OrderMaster {
         return $prefix . date("Ym") . str_pad($max_code, 7, "0", STR_PAD_LEFT);
     }
 
-    public static function genOrderNo($supplierId = null) {
+    public static function genOrderNo($supplierId = null)
+    {
         $prefix = 'OD'; //$supplierModel->prefix;
         $max_code = intval(\common\models\costfit\Order::findMaxOrderNo($prefix));
         $max_code += 1;
         return $prefix . date("Ym") . "-" . str_pad($max_code, 7, "0", STR_PAD_LEFT);
     }
 
-    public static function findMaxOrderNo($prefix = NULL) {
+    public static function findMaxOrderNo($prefix = NULL)
+    {
+        $order = Order::findBySql("SELECT MAX(RIGHT(orderNo,7)) as maxCode from `order` WHERE substr(orderNo,1,2)='$prefix' order by orderNo DESC ")->one();
+//        $order = Order::find()->select("MAX(RIGHT(orderNo,7)) as maxCode")
+//        ->where("substr(orderNo,1,2)='$prefix' ")
+//        ->orderBy('orderNo DESC ')
+//        ->max("maxCode");
+//        ->one();
 
-        $orderGroupModel = \common\models\costfit\Order::find()
-                ->where("substr(orderNo,1,2)='$prefix'")
-                ->orderBy("orderNo DESC, orderId DESC")
-                ->max("RIGHT(orderNo,7) as maxCode")
-                ->one();
-
-        return isset($orderGroupModel) ? $orderGroupModel->maxCode : 0;
+        return isset($order) ? $order->maxCode : 0;
     }
 
-    public static function findMaxInvoiceNo($model) {
+    public static function findMaxInvoiceNo($model)
+    {
 // Warning: Please modify the following code to remove attributes that
 // should not be searched.
         $supplierUser = Supplier::model()->findByPk($model->supplierId);
