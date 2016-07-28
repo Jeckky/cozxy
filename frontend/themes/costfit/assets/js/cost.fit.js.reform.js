@@ -380,6 +380,13 @@ $("#place-order").on('click', function () {
     var _placeOrderId = $('input[id=placeOrderId]').val();
     var _notes = $("#order-notes").val();
 
+    if (_placeUserId == '') {
+        $("#modal-cart-not-item").modal('show');
+    }
+
+    if (_placeOrderId == '') {
+        $("#modal-cart-not-item").modal('show');
+    }
 
     if (_placeOrderId == '') {
         //alert('สินค้าในตะกร้า 0 รายการ');

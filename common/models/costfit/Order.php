@@ -357,6 +357,7 @@ class Order extends \common\models\costfit\master\OrderMaster
     public static function genOrderNo($supplierId = null)
     {
         $prefix = 'OD'; //$supplierModel->prefix;
+
         $max_code = intval(\common\models\costfit\Order::findMaxOrderNo($prefix));
         $max_code += 1;
         return $prefix . date("Ym") . "-" . str_pad($max_code, 7, "0", STR_PAD_LEFT);

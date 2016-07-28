@@ -37,7 +37,7 @@ use Yii;
     * @property string $shippingZipcode
     * @property string $shippingTel
     * @property integer $paymentType
-    * @property integer $couponId
+    * @property string $couponId
     * @property integer $checkStep
     * @property string $note
     * @property string $paymentDateTime
@@ -74,7 +74,6 @@ return [
             [['billingCompany', 'shippingCompany'], 'string', 'max' => 200],
             [['billingCountryId', 'shippingCountryId'], 'string', 'max' => 3],
             [['billingZipcode', 'shippingZipcode'], 'string', 'max' => 10],
-            [['billingZipcode'], 'unique'],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => UserMaster::className(), 'targetAttribute' => ['userId' => 'userId']],
         ];
 }
