@@ -326,7 +326,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
     }
 
     public static function genOrderNo($supplierId = null) {
-        $prefix = 'OD'; //$supplierModel->prefix;
+        $prefix = "OD"; //$supplierModel->prefix;
         $max_code = intval(\common\models\costfit\Order::findMaxOrderNo($prefix));
         $max_code += 1;
         return $prefix . date("Ym") . "-" . str_pad($max_code, 7, "0", STR_PAD_LEFT);
@@ -337,7 +337,8 @@ class Order extends \common\models\costfit\master\OrderMaster {
         $orderGroupModel = \common\models\costfit\Order::find()
                 ->where("substr(orderNo,1,2)='$prefix'")
                 ->orderBy("orderNo DESC, orderId DESC")
-                ->max("RIGHT(orderNo,7) as maxCode")
+                //->select('max("RIGHT(orderNo,7) as maxCode")')
+                //->max("RIGHT(orderNo,7) as maxCode")
                 ->one();
 
         return isset($orderGroupModel) ? $orderGroupModel->maxCode : 0;
