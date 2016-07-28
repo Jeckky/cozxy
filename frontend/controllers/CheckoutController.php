@@ -167,8 +167,9 @@ class CheckoutController extends MasterController {
             $order->shippingZipcode = ($address_shipping['zipcode'] != '') ? $address_shipping['zipcode'] : '';
             $order->shippingTel = ($address_shipping['tel'] != '') ? $address_shipping['tel'] : '';
 
-            // echo '<pre>';
-            //print_r($order);
+
+            echo '<pre>';
+            print_r($order);
             if ($order->save(FALSE)) {
                 $this->redirect(Yii::$app->homeUrl . 'checkout/order-thank');
             }

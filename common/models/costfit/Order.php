@@ -63,7 +63,8 @@ class Order extends \common\models\costfit\master\OrderMaster {
      */
     public function attributes() {
         return array_merge(parent::attributes(), [
-            'month'
+            'month',
+            'maxCode'
         ]);
     }
 
@@ -317,37 +318,32 @@ class Order extends \common\models\costfit\master\OrderMaster {
     }
 
     public static function genInvNo($model) {
-//		$prefix = "IV" . UserCompany::model()->getPrefixBySupplierId($model->supplierId);
-        $prefix = $model->paymentMethod == 1 ? "IVC" : "IVO";
-        $max_code = 'IV'; //$this->findMaxInvoiceNo($model);
+//      $prefix = "IV" . UserCompany::model()->getPrefixBySupplierId($model->supplierId);
+        $prefix = "IV";
+        $max_code = $this->findMaxInvoiceNo($model);
         $max_code += 1;
         return $prefix . date("Ym") . str_pad($max_code, 7, "0", STR_PAD_LEFT);
     }
 
     public static function genOrderNo($supplierId = null) {
-        $supplierModel = Supplier::model()->findByPk($supplierId);
         $prefix = 'OD'; //$supplierModel->prefix;
-        $max_code = intval($this->findMaxOrderNo($prefix));
+        $max_code = intval(\common\models\costfit\Order::findMaxOrderNo($prefix));
         $max_code += 1;
         return $prefix . date("Ym") . "-" . str_pad($max_code, 7, "0", STR_PAD_LEFT);
     }
 
-    public function findMaxOrderNo($prefix = NULL) {
+    public static function findMaxOrderNo($prefix = NULL) {
 
-        $orderGroupModel = OrderGroup::model()->find(array(
-            'select' => 'max(RIGHT(orderNo,6)) as maxCode',
-            'condition' => 'substr(orderNo,1,2)=:prefix',
-            'params' => array(
-                ':prefix' => $prefix,
-            ),
-            'order' => 'orderNo desc',
-            'limit' => '1'
-        ));
+        $orderGroupModel = \common\models\costfit\Order::find()
+                ->where("substr(orderNo,1,2)='$prefix'")
+                ->orderBy("orderNo DESC, orderId DESC")
+                ->max("RIGHT(orderNo,7) as maxCode")
+                ->one();
 
         return isset($orderGroupModel) ? $orderGroupModel->maxCode : 0;
     }
 
-    public function findMaxInvoiceNo($model) {
+    public static function findMaxInvoiceNo($model) {
 // Warning: Please modify the following code to remove attributes that
 // should not be searched.
         $supplierUser = Supplier::model()->findByPk($model->supplierId);

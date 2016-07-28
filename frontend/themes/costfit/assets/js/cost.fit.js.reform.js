@@ -379,6 +379,8 @@ $("#place-order").on('click', function () {
     var _placeUserId = $('input[id=placeUserId]').val();
     var _placeOrderId = $('input[id=placeOrderId]').val();
     var _notes = $("#order-notes").val();
+
+
     if (_placeOrderId == '') {
         //alert('สินค้าในตะกร้า 0 รายการ');
         $("#modal-cart-not-item").modal('show');
