@@ -12,9 +12,11 @@ use yii\filters\VerbFilter;
 /**
  * ProductPriceController implements the CRUD actions for ProductPrice model.
  */
-class ProductPriceController extends ProductMasterController {
+class ProductPriceController extends ProductMasterController
+{
 
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -29,13 +31,20 @@ class ProductPriceController extends ProductMasterController {
      * Lists all ProductPrice models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
+
+        if (isset($_GET['productId'])) {
+            $query = ProductPrice::find()->where("productId=" . $_GET["productId"]);
+        } else {
+            $query = ProductPrice::find();
+        }
         $dataProvider = new ActiveDataProvider([
-            'query' => ProductPrice::find(),
+            'query' => $query,
         ]);
 
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -44,9 +53,10 @@ class ProductPriceController extends ProductMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -55,8 +65,12 @@ class ProductPriceController extends ProductMasterController {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $model = new ProductPrice();
+        if (isset($_GET['productId'])) {
+            $model->productId = $_GET['productId'];
+        }
         if (isset($_POST["ProductPrice"])) {
             $model->attributes = $_POST["ProductPrice"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
@@ -65,7 +79,7 @@ class ProductPriceController extends ProductMasterController {
             }
         }
         return $this->render('create', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -75,7 +89,8 @@ class ProductPriceController extends ProductMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $model = $this->findModel($id);
         if (isset($_POST["ProductPrice"])) {
             $model->attributes = $_POST["ProductPrice"];
@@ -88,7 +103,7 @@ class ProductPriceController extends ProductMasterController {
             }
         }
         return $this->render('update', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -98,7 +113,8 @@ class ProductPriceController extends ProductMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -111,7 +127,8 @@ class ProductPriceController extends ProductMasterController {
      * @return ProductPrice the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id) {
+    protected function findModel($id)
+    {
         if (($model = ProductPrice::findOne($id)) !== null) {
             return $model;
         } else {
