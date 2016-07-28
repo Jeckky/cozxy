@@ -433,4 +433,36 @@ class Order extends \common\models\costfit\master\OrderMaster
         }
     }
 
+    public static function findAllTodayOrder()
+    {
+        $res = [];
+        $res["all"] = 0;
+        $res["checkout"] = 0;
+        $res["shipping"] = 0;
+        $res["shipped"] = 0;
+        $orders = Order::find()->where('date(updateDateTime) = curdate() ')->all();
+        foreach ($orders as $order) {
+            $res["all"] ++;
+            switch ($order->status) {
+                case Order::ORDER_STATUS_CHECKOUTS:
+                    $res["checkout"] ++;
+                    break;
+                case Order::ORDER_STATUS_COMFIRM_PAYMENT:
+                    $res["checkout"] ++;
+                    break;
+                case Order::ORDER_STATUS_E_PAYMENT_SUCCESS:
+                    $res["checkout"] ++;
+                    break;
+                case Order::ORDER_STATUS_SHIPPING:
+                    $res["shipping"] ++;
+                    break;
+                case Order::ORDER_STATUS_SHIPPED:
+                    $res["shipped"] ++;
+                    break;
+            }
+        }
+
+        return $res;
+    }
+
 }

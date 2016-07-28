@@ -9,7 +9,9 @@ class DashboardController extends DashboardMasterController
     {
 
         $circulations = \common\models\costfit\Order::findAllYearCirculationWithYear(date("Y"));
-        return $this->render('index', compact('circulations'));
+        $orderToday = \common\models\costfit\Order::findAllTodayOrder();
+        $todaySummary = \common\models\costfit\Order::find()->where("status = " . \common\models\costfit\Order::ORDER_STATUS_FINANCE_APPROVE)->sum("summary");
+        return $this->render('index', compact('circulations', 'orderToday', 'todaySummary'));
     }
 
 }
