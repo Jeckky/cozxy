@@ -90,7 +90,7 @@ $('.checkout_update_address_shipping').on('click', function () {
 
             });
 
-            alert($('.form-group').find('#amphurDDId').val());
+            //alert($('.form-group').find('#amphurDDId').val());
 
             $('.form-group').find('#' + $('.form-group').find('#amphurDDId').val()).depdrop('init');
             $('.form-group').find('#' + $('.form-group').find('#amphurDDId').val()).on('depdrop.change', function (event, id, value, count) {
