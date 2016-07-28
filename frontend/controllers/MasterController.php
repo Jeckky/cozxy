@@ -128,6 +128,9 @@ class MasterController extends MasterCommonController {
         //exit();
         if (isset($_POST['depdrop_parents'])) {
             $id = end($_POST['depdrop_parents']);
+            echo '<pre>';
+            print_r($id);
+            exit();
             $list = \common\models\dbworld\States::find()->andWhere(['countryId' => $id])->asArray()->all();
             $selected = null;
             if ($id != null && count($list) > 0) {

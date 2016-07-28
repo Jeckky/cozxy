@@ -181,10 +181,14 @@ $districtId = rand(0, 9999);
                 'options' => ['placeholder' => 'Select ...', 'id' => $stateId],
                 'type' => DepDrop::TYPE_SELECT2,
                 'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                //'pluginEvents' => [
+                //  'change' => 'function() { $("#' . $stateId . '").trigger("change"); }',
+                //],
                 'pluginOptions' => [
                     'depends' => [$countryId],
                     'url' => Url::to(['child-states']),
                     'loadingText' => 'Loading province ...',
+                // 'tags' => '2526',
                 //'initialize' => true,
                 //'params' => ['model_id1']
                 ]

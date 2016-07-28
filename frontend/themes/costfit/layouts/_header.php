@@ -22,10 +22,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <!--Mobile Menu Toggle-->
     <div class="menu-toggle"><i class="fa fa-list"></i></div>
 
-    <div class="container"> 
-         <?php $logo = common\models\costfit\ContentGroup::find()->where("lower(title)='logoimage'")->one(); ?>
-        <a class="logo" href="<?= Yii::$app->homeUrl ?>"><img src="<?php echo Yii::$app->homeUrl . $logo->image; ?>" alt="Cost Fit"/></a>
-
+    <div class="container">
+         <a class="logo" href="<?= Yii::$app->homeUrl ?>"><img src="<?php echo Yii::$app->homeUrl; ?>images/logo/costfit.png" alt="Cost Fit"/></a> 
     </div>
 
     <?= $this->render('_nav') ?>
