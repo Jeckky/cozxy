@@ -79,20 +79,7 @@ $('.checkout_update_address_shipping').on('click', function () {
             //alert("Data: " + JSONObject.addressId);
 //            $('.form-group').find('#' + $('.form-group').find('#countryDDId').val()).select2("data", {id: JSONObject.countryId, text: "xxx"});
             $('.form-group').find('#' + $('.form-group').find('#countryDDId').val()).val(JSONObject.countryId).trigger('change');
-            //var depdrop_parents = array();
-            //var depdrop_all_params = array();
-            /*$.post("checkout/child-states", {
-             depdrop_parents: JSONObject.countryId,
-             depdrop_all_params: JSONObject.countryId
-             }, function (data, status) {
-             if (status == "success") {
-             var JSONObject = JSON.parse(data);
-             alert(data);
-             } else {
-             alert(status);
-             }
-             // window.location = 'checkout/order-thank';
-             });*/
+
             alert("Data: " + JSONObject.provinceId);
             $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).depdrop('init');
             $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).on('depdrop.change', function (event, id, value, count) {
