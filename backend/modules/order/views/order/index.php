@@ -83,10 +83,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     'updateDateTime',
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
-                        'template' => '{view} {update} {delete} {user}',
+                        'template' => '{view} {update} {delete} {items}',
                         'buttons' => [
-                            'user' => function($url, $model) {
-                                return Html::a('<br><u>User</u>', ['/user/manage', 'orderId' => $model->orderId], [
+                            'items' => function($url, $model) {
+                                return Html::a('<br><u>Items</u>', ['/order/order-item', 'orderId' => $model->orderId], [
                                     'title' => Yii::t('app', 'Change today\'s lists'),]);
                             },]
                     ],

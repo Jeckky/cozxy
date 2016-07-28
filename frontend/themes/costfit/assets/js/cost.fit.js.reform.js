@@ -380,6 +380,9 @@ $("#place-order").on('click', function () {
     var _placeOrderId = $('input[id=placeOrderId]').val();
     var _notes = $("#order-notes").val();
 
+    if (_placeUserId == '') {
+
+    }
 
     if (_placeOrderId == '') {
         //alert('สินค้าในตะกร้า 0 รายการ');

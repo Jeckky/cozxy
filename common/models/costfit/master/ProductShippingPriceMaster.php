@@ -7,9 +7,9 @@ use Yii;
 /**
 * This is the model class for table "product_shipping_price".
 *
-    * @property integer $producetShippingPriceId
-    * @property integer $productId
-    * @property integer $shippingTypeId
+    * @property string $producetShippingPriceId
+    * @property string $productId
+    * @property string $shippingTypeId
     * @property string $discount
     * @property string $type
     * @property integer $status

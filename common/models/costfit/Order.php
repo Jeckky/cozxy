@@ -326,22 +326,22 @@ class Order extends \common\models\costfit\master\OrderMaster {
     }
 
     public static function genOrderNo($supplierId = null) {
-        $prefix = "OD"; //$supplierModel->prefix;
+        $prefix = 'OD'; //$supplierModel->prefix;
+
         $max_code = intval(\common\models\costfit\Order::findMaxOrderNo($prefix));
         $max_code += 1;
         return $prefix . date("Ym") . "-" . str_pad($max_code, 7, "0", STR_PAD_LEFT);
     }
 
     public static function findMaxOrderNo($prefix = NULL) {
+        $order = Order::findBySql("SELECT MAX(RIGHT(orderNo,7)) as maxCode from `order` WHERE substr(orderNo,1,2)='$prefix' order by orderNo DESC ")->one();
+//        $order = Order::find()->select("MAX(RIGHT(orderNo,7)) as maxCode")
+//        ->where("substr(orderNo,1,2)='$prefix' ")
+//        ->orderBy('orderNo DESC ')
+//        ->max("maxCode");
+//        ->one();
 
-        $orderGroupModel = \common\models\costfit\Order::find()
-                ->where("substr(orderNo,1,2)='$prefix'")
-                ->orderBy("orderNo DESC, orderId DESC")
-                //->select('max("RIGHT(orderNo,7) as maxCode")')
-                //->max("RIGHT(orderNo,7) as maxCode")
-                ->one();
-
-        return isset($orderGroupModel) ? $orderGroupModel->maxCode : 0;
+        return isset($order) ? $order->maxCode : 0;
     }
 
     public static function findMaxInvoiceNo($model) {
