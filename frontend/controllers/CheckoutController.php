@@ -26,13 +26,14 @@ class CheckoutController extends MasterController {
      * @return mixed
      */
     public function actionIndex() {
-
+        if (Yii::$app->user->isGuest == 1) {
+            //return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
+        }
         $this->layout = "/content_right";
         $this->title = 'Cost.fit | checkout';
         $this->subTitle = 'Checkout';
         $this->subSubTitle = "";
 
-        $address = new \common\models\costfit\Address();
         if (\Yii::$app->user->isGuest) {
             $user = new \common\models\costfit\User();
         } else {
@@ -40,6 +41,8 @@ class CheckoutController extends MasterController {
         }
 
         $addressId = Yii::$app->request->post('addressId');
+        $address = new \common\models\costfit\Address();
+        $address->scenario = 'shipping_address';
         if (isset($addressId)) { // ตรวจสอบว่า มี hidden addressId ให้ update ในเทเบิล address
             if (isset($_POST['Address'])) {
                 $address = \common\models\costfit\Address::find()
@@ -52,13 +55,24 @@ class CheckoutController extends MasterController {
                 }
             }
         } else {
-            $address_shipping = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 2  ')
-                    ->orderBy('isDefault desc, updateDateTime desc')
-                    ->all();
 
-            $address_billing = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 1  ')
-                    ->orderBy('isDefault , updateDateTime desc')
-                    ->all();
+            if (\Yii::$app->user->isGuest) {
+                $address_shipping = \common\models\costfit\Address::find()->where('userId=' . 0 . ' and type = 2  ')
+                        ->orderBy('isDefault desc ')
+                        ->all();
+
+                $address_billing = \common\models\costfit\Address::find()->where('userId=' . 0 . ' and type = 1  ')
+                        ->orderBy('isDefault desc  ')
+                        ->all();
+            } else {
+                $address_shipping = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 2  ')
+                        ->orderBy('isDefault desc ')
+                        ->all();
+
+                $address_billing = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 1  ')
+                        ->orderBy('isDefault desc  ')
+                        ->all();
+            }
 
             $paymentMethods = \common\models\costfit\PaymentMethod::find()->all();
 
@@ -67,7 +81,6 @@ class CheckoutController extends MasterController {
             }
 
             if (isset($_POST['Address'])) {
-
                 if ($_POST['Address']['typeForm'] == 'formShipping') {
                     //$model_ = new \common\models\costfit\Address();
                     $address->type = \common\models\costfit\Address::TYPE_SHIPPING; // default Address First
@@ -79,8 +92,8 @@ class CheckoutController extends MasterController {
                     $address->type = \common\models\costfit\Address::TYPE_BILLING; // default Address First
                     $address->attributes = $_POST['Address'];
                 }
-
                 if ($address->save(FALSE)) {
+
                     $this->redirect(Yii::$app->homeUrl . 'checkout');
                 }
             }
@@ -89,6 +102,9 @@ class CheckoutController extends MasterController {
     }
 
     public function actionOrderThank() {
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
+        }
         $this->title = 'Cost.fit | Order Thank';
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Order Thank';
@@ -96,15 +112,13 @@ class CheckoutController extends MasterController {
     }
 
     public function actionBurnCheckouts() {
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
+        }
         /*
           Order
           - paymentType
           - status  = 2
-         * shipping: _shipping,
-          billing: _billing,
-          payment01: _payment01,
-          placeUserId: _placeUserId,
-          notes: _notes
          */
         $request = Yii::$app->request;
 
@@ -141,7 +155,7 @@ class CheckoutController extends MasterController {
             $order->billingCountryId = ($address_billing['countryId'] != '') ? $address_billing['countryId'] : '';
             $order->billingProvinceId = ($address_billing['provinceId'] != '') ? $address_billing['provinceId'] : '';
             $order->billingAmphurId = ($address_billing['amphurId'] != '') ? $address_billing['amphurId'] : '';
-            $order->billingZipcode = ($address_billing['zipcode'] != '') ? $address_billing['zipcode'] : '';
+            $order->billingZipcode = ($address_billing['zipcode'] != '') ? $address_billing['zipcode'] : '123';
             $order->billingTel = ($address_billing['tel'] != '') ? $address_billing['tel'] : '';
             $order->shippingCompany = ($address_shipping['company'] != '') ? $address_shipping['company'] : '';
             $order->shippingTax = ($address_shipping['tax'] != '') ? $address_shipping['tax'] : '';
@@ -163,7 +177,9 @@ class CheckoutController extends MasterController {
     }
 
     public function actionGetAddress() {
-
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
+        }
         $addressId = Yii::$app->request->post('address');
         $address = \common\models\costfit\Address::find()->where('addressId = ' . $addressId)
                 ->orderBy('isDefault desc, updateDateTime desc')

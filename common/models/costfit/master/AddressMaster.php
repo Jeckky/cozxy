@@ -25,6 +25,8 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
+    * @property string $longitude
+    * @property string $latitude
     *
             * @property User $user
     */
@@ -52,6 +54,7 @@ return [
             [['tax', 'tel'], 'string', 'max' => 45],
             [['countryId'], 'string', 'max' => 3],
             [['zipcode'], 'string', 'max' => 10],
+            [['longitude', 'latitude'], 'string', 'max' => 150],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => UserMaster::className(), 'targetAttribute' => ['userId' => 'userId']],
         ];
 }
@@ -80,6 +83,8 @@ return [
     'status' => Yii::t('address', 'Status'),
     'createDateTime' => Yii::t('address', 'Create Date Time'),
     'updateDateTime' => Yii::t('address', 'Update Date Time'),
+    'longitude' => Yii::t('address', 'Longitude'),
+    'latitude' => Yii::t('address', 'Latitude'),
 ];
 }
 

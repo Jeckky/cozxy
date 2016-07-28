@@ -60,7 +60,9 @@ use common\models\costfit\EPaymentProfile;
         <?= $form->field($model, 'ePaymentProfileId', ['options' => ['class' => 'row form-group']])->textInput() ?>
         <?//= $form->field($model, 'ePaymentProfileId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(EPaymentProfile::find()->all(), 'ePaymentProfileId', 'title'), ['prompt' => '-- Select EPaymentProfile --']) ?>
 
-        <?= $form->field($model, 'type', ['options' => ['class' => 'row form-group']])->textInput() ?>
+        <?//= $form->field($model, 'type', ['options' => ['class' => 'row form-group']])->textInput() ?>
+
+        <?= $form->field($model, 'type', ['options' => ['class' => 'row form-group']])->dropDownList($model->getTypeArray($model->type), ['prompt' => '-- Select Type --']) ?>
 
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">

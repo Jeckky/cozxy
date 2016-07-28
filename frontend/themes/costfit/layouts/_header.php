@@ -24,7 +24,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
     <div class="container">
 
+         <?php $logo = common\models\costfit\ContentGroup::find()->where("lower(title)='logoimage'")->one(); ?>
         <a class="logo" href="<?= Yii::$app->homeUrl ?>"><img src="<?php echo Yii::$app->homeUrl . $logo->image; ?>" alt="Cost Fit"/></a>
+
+        <!--<a class="logo" href="<?= Yii::$app->homeUrl ?>"><img src="<?php //echo Yii::$app->homeUrl . $logo->image;       ?>" alt="Cost Fit"/></a>
+        <a class="logo" href="<?= Yii::$app->homeUrl ?>"><img src="<?php //echo Yii::$app->homeUrl;  ?>images/ContentGroup/DUHWYsdXVc.png" alt="Cost Fit"></a>-->
+
     </div>
 
     <?= $this->render('_nav') ?>

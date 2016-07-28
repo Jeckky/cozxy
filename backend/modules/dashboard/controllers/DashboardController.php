@@ -2,11 +2,14 @@
 
 namespace backend\modules\dashboard\controllers;
 
-class DashboardController extends DashboardMasterController {
+class DashboardController extends DashboardMasterController
+{
 
-    public function actionIndex() {
+    public function actionIndex()
+    {
 
-        return $this->render('index');
+        $circulations = \common\models\costfit\Order::findAllYearCirculationWithYear(date("Y"));
+        return $this->render('index', compact('circulations'));
     }
 
 }

@@ -91,9 +91,10 @@ if (isset($isUpdate)) {
 }
 
 $form = ActiveForm::begin([
-            'id' => 'default-shipping-address',
-            'options' => ['class' => 'space-bottom'],
-        ]);
+    'id' => 'default-shipping-address',
+//    'validateOnSubmit' => true,
+    'options' => ['class' => "space-bottom $formName"],
+]);
 
 $countryId = rand(0, 9999);
 $stateId = rand(0, 9999);
@@ -102,39 +103,44 @@ $districtId = rand(0, 9999);
 ?>
 <div id="<?= $formName; ?>">
     <h3><?= (isset($type) && $type == 1) ? "Billing" : "Shipping" ?> address</h3>
-
+    <div class="form-group">
+        <div id="address-hidden" class="address-hidden"></div>
+    </div>
     <div class="form-group">
         <?php
-        /*
-          echo '<label class="control-label">ประเทศ</label>';
+        /* echo '<label class="control-label">ประเทศ</label>';
           echo kartik\select2\Select2::widget([
-          'name' => 'countryId',
-          'value' => ['THA'], // initial value
+          'name' => 'Address[countryId]',
+          // 'value' => ['THA'], // initial value
           'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'countryName'),
           'options' => ['placeholder' => 'Select country ...', 'id' => $countryId],
           'pluginOptions' => [
           'tags' => true,
           'placeholder' => 'Select...',
           'loadingText' => 'Loading country ...',
+          'initialize' => true,
           ],
-          ]);
-         */
+          ]); */
+
         // echo '<pre>';
         //print_r(yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'countryName'));
         // Top most parent
         echo $form->field($address, 'countryId')->widget(kartik\select2\Select2::classname(), [
-            //'options' => ['id' => 'address-countryid'], 
+            //'options' => ['id' => 'address-countryid'],
             'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'countryName'),
             'pluginOptions' => [
                 'placeholder' => 'Select...',
                 'loadingText' => 'Loading country ...',
-                'tags' => true,
+                'initialize' => true,
             ],
             'options' => [
                 'placeholder' => 'Select country ...',
-                'id' => $countryId
+                'id' => $countryId,
             ],
         ])->label('ประเทศ');
+        ?>
+        <?php
+        echo Html::hiddenInput("countryDDId", $countryId, ['id' => "countryDDId"]);
         ?>
     </div>
     <?php
@@ -145,7 +151,10 @@ $districtId = rand(0, 9999);
     <div class="row">
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
             <label for="co-first-name">ชื่อ *</label>
-            <?= Html::textInput("Address[firstname]", NULL, ["class" => "form-control input-sm", 'placeHolder' => 'First name', 'id' => 'firstname']) ?>
+            <?= Html::textInput("Address[firstname]", NULL, ["class" => "form-control input-sm required", 'placeHolder' => 'First name', 'id' => 'firstname']) ?>
+            <?php
+//            echo $form->field($address, 'firstname')->textInput();
+            ?>
         </div>
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
             <label for="co-last-name">นามสกุล *</label>
@@ -153,6 +162,7 @@ $districtId = rand(0, 9999);
         </div>
     </div>
     <div class="form-group">
+
         <label for="co-company-name">บริษัท</label>
         <?= Html::textInput("Address[company]", NULL, ["class" => "form-control input-sm", 'placeHolder' => 'Company name', 'id' => 'company']) ?>
     </div>
@@ -160,12 +170,14 @@ $districtId = rand(0, 9999);
         <label for="co-str-adress">ที่อยู่ *</label>
         <?= Html::textarea("Address[address]", NULL, ["class" => "form-control input-sm", 'rows' => 3, 'placeHolder' => 'Address', 'id' => 'address']) ?>
     </div>
+
     <div class="row">
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
             <?php
             // Child level 1
+            //echo Html::hiddenInput('model_id1', '2526', ['id' => 'model_id1']);
             echo $form->field($address, 'provinceId')->widget(DepDrop::classname(), [
-                //'data' => [6 => 'Bank'],
+                // 'data' => [2526 => 'จังหวัดปทุมธานี'], // ensure at least the preselected value is available
                 'options' => ['placeholder' => 'Select ...', 'id' => $stateId],
                 'type' => DepDrop::TYPE_SELECT2,
                 'select2Options' => ['pluginOptions' => ['allowClear' => true]],
@@ -173,16 +185,21 @@ $districtId = rand(0, 9999);
                     'depends' => [$countryId],
                     'url' => Url::to(['child-states']),
                     'loadingText' => 'Loading province ...',
+                    'initialize' => true,
+                //'params' => ['model_id1']
                 ]
             ])->label('จังหวัด');
             ?>
-
+            <?php
+            echo Html::hiddenInput("statesDDId", $stateId, ['id' => "statesDDId"]);
+            ?>
         </div>
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
             <?php
             // Child level 2
+            //echo Html::hiddenInput('model_id2', '79745', ['id' => 'model_id2']);
             echo $form->field($address, 'amphurId')->widget(DepDrop::classname(), [
-                //'data' => [9 => 'Savings'],
+                //'data' => [79683 => 'เขตพระโขนง'], // ensure at least the preselected value is available
                 'options' => ['placeholder' => 'Select ...', 'id' => $cityId],
                 'type' => DepDrop::TYPE_SELECT2,
                 'select2Options' => ['pluginOptions' => ['allowClear' => true]],
@@ -190,8 +207,12 @@ $districtId = rand(0, 9999);
                     'depends' => [$stateId],
                     'url' => Url::to(['child-amphur']),
                     'loadingText' => 'Loading amphur ...',
+                    'initialize' => true,
                 ]
             ])->label('เขต/อำเภอ');
+            ?>
+            <?php
+            echo Html::hiddenInput("amphurDDId", $cityId, ['id' => "amphurDDId"]);
             ?>
         </div>
 
@@ -200,6 +221,7 @@ $districtId = rand(0, 9999);
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
             <?php
             // Child level 3
+            //echo Html::hiddenInput('model_id3', '395', ['id' => 'model_id3']);
             echo $form->field($address, 'districtId')->widget(DepDrop::classname(), [
                 //'data' => [12 => 'Savings A/C 2'],
                 'options' => ['placeholder' => 'Select ...', 'id' => $districtId],
@@ -210,9 +232,13 @@ $districtId = rand(0, 9999);
                     //'initialize' => true,
                     //'initDepends' => ['address-countryid'],
                     'url' => Url::to(['child-district']),
-                    'loadingText' => 'Loading district ...'
+                    'loadingText' => 'Loading district ...',
+                    'initialize' => true,
                 ]
             ])->label('แขวง/ตำบล');
+            ?>
+            <?php
+            echo Html::hiddenInput("districtDDId", $districtId, ['id' => "districtDDId"]);
             ?>
         </div>
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
@@ -227,15 +253,13 @@ $districtId = rand(0, 9999);
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
             <?php echo $form->field($address, 'tel')->textInput(['class' => 'form-control input-sm', 'id' => 'tel'])->label('โทร'); ?>
         </div>
-        <div class="form-group col-lg-6 col-md-6 col-sm-6">
-            <div id="address-hidden" class="address-hidden"></div>
-        </div>
+
     </div>
 
     <?php
     if (isset($isUpdate)) {
         echo Html::submitButton('Save', ['class' => (isset($type) && $type == 1) ? "btn btn-success updateBillingSave" : "btn btn-success updateShippingSave", 'name' => 'btn-checkout-' . $formName]);
-        //echo Html::a("Save", "#", ['id' => 'btn-checkout-' . $formName, 'name' => 'btn-checkout-' . $formName, 'class' => (isset($type) && $type == 1) ? "btn btn-success updateBillingSave" : "btn btn-success updateShippingSave"]);
+//        echo Html::a("Save", "#", ['name' => 'btn-checkout-' . $formName, 'class' => (isset($type) && $type == 1) ? "btn btn-success updateBillingSave" : "btn btn-success updateShippingSave", 'onClick' => "$('#$formName').submit()"]);
         echo Html::a("Cancel", "#", ['class' => (isset($type) && $type == 1) ? "btn btn-danger updateBillingCancel" : "btn btn-danger updateShippingCancel"]);
     } else {
         echo Html::submitButton('Save', ['class' => (isset($type) && $type == 1) ? "btn btn-success createBillingSave" : "btn btn-success createShippingSave", 'name' => 'btn-checkout-' . $formName]);
