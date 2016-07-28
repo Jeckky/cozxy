@@ -40,6 +40,8 @@ class CheckoutController extends MasterController {
             $user = \common\models\costfit\User::find()->where('userId=' . \Yii::$app->user->id)->one();
         }
 
+
+
         $addressId = Yii::$app->request->post('addressId');
         $address = new \common\models\costfit\Address();
         $address->scenario = 'shipping_address';
@@ -86,6 +88,8 @@ class CheckoutController extends MasterController {
             }
 
             if (isset($_POST['Address'])) {
+                // print_r($_POST['Address']);
+                //exit();
                 if ($_POST['Address']['typeForm'] == 'formShipping') {
                     //$model_ = new \common\models\costfit\Address();
                     $address->type = \common\models\costfit\Address::TYPE_SHIPPING; // default Address First
