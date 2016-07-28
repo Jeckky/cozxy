@@ -84,23 +84,24 @@ $('.checkout_update_address_shipping').on('click', function () {
 //            $('.form-group').find('#' + $('.form-group').find('#countryDDId').val()).select2("data", {id: JSONObject.countryId, text: "xxx"});
             $('.form-group').find('#' + $('.form-group').find('#countryDDId').val()).val(JSONObject.countryId).trigger('change');
             $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).depdrop('init');
-//            $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).val(JSONObject.provinceId);
+//            $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).on('depdrop.change', function (event, id, value, count) {
+//                $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).val(JSONObject.provinceId);
+//
+//            });
             $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).on('depdrop.change', function (event, id, value, count) {
-                $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).val(JSONObject.provinceId).trigger('change');
+                $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).val(JSONObject.provinceId);
 
             });
 
-            //alert($('.form-group').find('#amphurDDId').val());
-
             $('.form-group').find('#' + $('.form-group').find('#amphurDDId').val()).depdrop('init');
             $('.form-group').find('#' + $('.form-group').find('#amphurDDId').val()).on('depdrop.change', function (event, id, value, count) {
-                $('.form-group').find('#' + $('.form-group').find('#amphurDDId').val()).val(JSONObject.amphurId).trigger('change');
+                $('.form-group').find('#' + $('.form-group').find('#amphurDDId').val()).val(JSONObject.amphurId);
 
             });
             alert($('.form-group').find('#districtDDId').val());
             $('.form-group').find('#' + $('.form-group').find('#districtDDId').val()).depdrop('init');
             $('.form-group').find('#' + $('.form-group').find('#districtDDId').val()).on('depdrop.change', function (event, id, value, count) {
-                $('.form-group').find('#' + $('.form-group').find('#districtDDId').val()).val(JSONObject.districtId).trigger('change');
+                $('.form-group').find('#' + $('.form-group').find('#districtDDId').val()).val(JSONObject.districtId);
 
             });
 //            $('.form-group').find('#' + $('.form-group').find('#amphurDDId').val()).on('depdrop.change', function (event, id, value, count) {
