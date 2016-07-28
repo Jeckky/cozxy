@@ -131,7 +131,7 @@ class CheckoutController extends MasterController {
             $notes = Yii::$app->request->post('notes');
             $placeOrderId = Yii::$app->request->post('placeOrderId');
 
-            echo 'billing : ' . $billing;
+            // echo 'billing : ' . $billing;
 
             if (isset($billing)) {
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . $placeUserId . ' and addressId =' . $billing)
