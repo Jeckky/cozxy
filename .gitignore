@@ -32,5 +32,4 @@ phpunit.phar
 # vagrant runtime
 /.vagrant
 
-/frontend/web/.htaccess
-/backend/web/images/
+frontend/web/.htaccess

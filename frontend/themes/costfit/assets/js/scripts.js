@@ -47,9 +47,6 @@ $(document).ready(function (e) {
     var $promoLabels = $('.promo-labels div');
     var $panelToggle = $('.panel-toggle');
     var $accordionToggle = $('.accordion .panel-heading a');
-    var $addWishlist = $('#addWishlist');
-    var $wishlistMessage = $('.wishlist-message');
-    var $deleteWishlist = $('#deleteWishlist');
 
     //Modify By Tong
     var $changeOption = $('#changeOption');
@@ -140,7 +137,7 @@ $(document).ready(function (e) {
                             if ($('.shopping-cart .cart-sidebar .cart-totals .total').html() !== undefined)
                             {
                                 $('.shopping-cart .cart-sidebar .cart-totals .total').html(data.cart.totalFormatText);
-                                $('.shopping-cart .cart-sidebar .cart-totals .shipping').html(data.cart.shippingRateFormatText);
+                                $('.shopping-cart .cart-sidebar .cart-totals .shipping').html(data.cart.shippingFormatText);
                                 $('.shopping-cart .cart-sidebar .cart-totals .summary').html(data.cart.summaryFormatText);
                             }
                         });
@@ -185,7 +182,7 @@ $(document).ready(function (e) {
                             if ($('.shopping-cart .cart-sidebar .cart-totals .total').html() !== undefined)
                             {
                                 $('.shopping-cart .cart-sidebar .cart-totals .total').html(data.cart.totalFormatText);
-                                $('.shopping-cart .cart-sidebar .cart-totals .shipping').html(data.cart.shippingRateFormatText);
+                                $('.shopping-cart .cart-sidebar .cart-totals .shipping').html(data.cart.shippingFormatText);
                                 $('.shopping-cart .cart-sidebar .cart-totals .summary').html(data.cart.summaryFormatText);
                             }
                         });
@@ -199,22 +196,13 @@ $(document).ready(function (e) {
      *******************************************/
     $(document).on('click', '.wishlist .delete i', function () {
         var $target = $(this).parent().parent();
-        var itemId = $(this).parent().parent().find("#productId").val();
-        $.ajax({
-            type: "POST",
-            dataType: "JSON",
-            url: "cart/delete-wishlist?id=" + itemId,
-            data: {productId: itemId},
-            success: function (data)
-            {
-                if (data.status)
-                {
-                    $target.hide(300, function () {
-                        $.when($target.remove()).then(function () {
-                        });
-                    });
+        $target.hide(300, function () {
+            $.when($target.remove()).then(function () {
+                if ($positions.length === 1) {
+                    $('.wishlist .items-list').remove();
+                    $('.wishlist .title').text('Wishlist is empty!');
                 }
-            }
+            });
         });
     });
 
@@ -567,16 +555,12 @@ $(document).ready(function (e) {
      **************************************************/
     $addToCartBtn.click(function () {
         $addedToCartMessage.removeClass('visible');
-
         var $itemName = $(this).parent().parent().find('h1').text();
-        if (!$itemName)
-        {
-            var $itemName = $(this).parent().parent().find('.title').text();
-        }
         var $itemId = $(this).parent().parent().find('#productId').val();
         var $itemPrice = $(this).parent().parent().find('.price').text();
         var $itemQnty = $(this).parent().find('#quantity').val();
         var $cartTotalItems = parseInt($('.cart-btn a span').text()) + parseInt($itemQnty);
+        $addedToCartMessage.find('p').text('"' + $itemName + '"' + '  ' + 'was successfully added to your cart.');
 //        var getUrl = window.location;
 //        var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
 //        alert(baseUrl);
@@ -589,19 +573,14 @@ $(document).ready(function (e) {
             {
                 if (data.status)
                 {
-                    $addedToCartMessage.find('p').text('"' + $itemName + '"' + '  ' + 'was successfully added to your cart.');
                     $('.cart-dropdown table').append(
-                            '<tr class="item" id="item' + data.orderItemId + '"><td><div class="delete"><input type="hidden" id="orderItemId" name="orderItemId" value="' + data.orderItemId + '"></div><a href="#">' + $itemName +
+                            '<tr class="item"><td><div class="delete"></div><a href="#">' + $itemName +
                             '<td><input type="text" value="' + $itemQnty +
                             '"></td><td class="price">' + $itemPrice + '</td>'
                             );
                     $('.cart-btn a span').text($cartTotalItems);
                     $('.cart-btn a').find("#cartTotal").html(data.cart.totalFormatText);
                     $('.cart-dropdown .footer .total').html(data.cart.totalFormatText);
-                    if (data.isMaxQuantity)
-                    {
-                        $("#addItemToCart").attr('disabled', 'disabled');
-                    }
                 }
             }
         });
@@ -678,125 +657,20 @@ $(document).ready(function (e) {
 
 //Modify By Tong
 
-    $changeOption.change(function () {
-        $.ajax({
-            type: "POST",
-            dataType: "JSON",
-            url: "products/change-option",
-            data: {productId: $(this).val()},
-            success: function (data)
-            {
-                $('#productId').val(data.productId);
-                $('#productName').html(data.productName);
-                $('#productPrice').find(".price").html(data.price);
-                $('#productPrice').find(".old-price").html(data.oldPrice);
-                $('#productPriceTable').html(data.productPriceTable);
-                $('#productTabs').html(data.productTabs);
-                $('#productImage').html(data.productImage);
-                $('#quantity').val(1);
-                if ($('#prod-gal').length > 0) {
-                    var categorySlider = new MasterSlider();
-                    categorySlider.control('thumblist', {autohide: false, dir: 'h', align: 'bottom', width: 137, height: 130, margin: 15, space: 0, hideUnder: 400});
-                    categorySlider.setup('prod-gal', {
-                        width: 550,
-                        height: 484,
-                        speed: 25,
-                        preload: 'all',
-                        loop: true,
-                        view: 'fade'
-                    });
-                }
-            }
-        });
-    });
-
-    $addWishlist.click(function () {
-        $wishlistMessage.removeClass('visible');
-        var $itemName = $(this).parent().parent().find('h1').text();
-        var $itemId = $(this).parent().parent().find('#productId').val();
-        var $itemPrice = $(this).parent().parent().find('.price').text();
-        var $itemQnty = $(this).parent().find('#quantity').val();
-        var $cartTotalItems = parseInt($('.cart-btn a span').text()) + parseInt($itemQnty);
-
-//        var getUrl = window.location;
-//        var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-//        alert(baseUrl);
-        $.ajax({
-            type: "POST",
-            dataType: "JSON",
-            url: "cart/add-wishlist",
-            data: {productId: $itemId},
-            success: function (data)
-            {
-                if (data.status)
-                {
-                    $wishlistMessage.find('p').text('"' + $itemName + '"' + '  ' + 'was successfully added to wishlist.');
-                    $("#addWishlist").attr('disabled', 'disabled');
-                } else
-                {
-                    alert(data.message);
-                    if (data.messageCode == 1)
-                    {
-                        $("#addWishlist").attr('disabled', 'disabled');
-                    }
-                }
-            }
-        });
-
-        $wishlistMessage.addClass('visible');
-    });
-
-    $('#confirmCartModal .yes ').click(function () {
-        $("#confirmCartModal").modal('hide');
-        $("#loginModal").attr("data-backdrop", 'static');
-        $("#loginModal").attr("data-keyboard", 'false');
-        $("#loginModal").find(".close").addClass('hide');
-        $("#loginModal").find(".regis").addClass('hide');
-        $("#loginModal").find(".no").removeClass('hide');
-        $("#loginModal").find(".loginEmail").val($("#confirmCartModal").find('.email').text());
-        $("#loginModal").modal('show');
-    });
-
-    $('#confirmCartModal .no ').click(function () {
-        //ajax
-        $.ajax({
-            type: "POST",
-            dataType: "JSON",
-            url: "cart/generate-new-token",
-//            data: {productId: $itemId},
-            success: function (data)
-            {
-                if (data.status)
-                {
-                    $("#confirmCartModal").modal('hide');
-                }
-            }
-        });
-
-
-    });
-
-    $('#loginModal .no ').click(function () {
-        //ajax
-        $.ajax({
-            type: "POST",
-            dataType: "JSON",
-            url: "cart/generate-new-token",
-//            data: {productId: $itemId},
-            success: function (data)
-            {
-                if (data.status)
-                {
-                    $("#loginModal").modal('hide');
-                }
-            }
-        });
-
-    });
-
-
-
-//Modify By Tong
+    // $changeOption.change(function () {
+    //     $.ajax({
+    //         type: "POST",
+    //         dataType: "JSON",
+    //         url: "products/change-option",
+    //         data: {productId: $(this).val()},
+    //         success: function (data)
+    //         {
+    //             $('#productItem').html(data.productItem);
+    //             $('#productTabs').html(data.productTabs);
+    //             $('#productImage').html(data.productImage);
+    //         }
+    //     });
+    // });
 
 });/*Document Ready End*//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

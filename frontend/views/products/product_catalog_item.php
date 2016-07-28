@@ -25,29 +25,46 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     }
 </style>
 <div class="col-lg-6 col-md-6">
-    <h1 id='productName'><?= $model->title; ?></h1>
+    <h1><?= $model->title; ?></h1>
     <?= Html::hiddenInput("productId", $model->productId, ['id' => 'productId']); ?>
-    <?php if (isset($model->productGroup)): ?>
-        <div class="form-group">
+    <div class="form-group">
 
-            <div class="select-style">
-                <?php if (count($model->productGroup->products) > 1): ?>
-                    <select name="size" id="changeOption">
-                        <?php foreach ($model->productGroup->products as $option): ?>
-                            <option <?= (isset($productId) && ($productId == $option->productId)) ? " selected" : " " ?> value="<?= $option->productId ?>"><?= $option->optionName; ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                <?php endif; ?>
-    <!--            <select name="size" id="changeOption">
-    <option>Size:28 Inches</option>
-    <option>Size:32 Inches</option>
-    <option>Size:40 Inches</option>
-    <option>Size:48 Inches</option>
-    <option>Size:50 Inches</option>
-    </select>-->
-            </div>
+        <div class="select-style">
+            <?php if (count($model->productGroup->products) > 1): ?>
+                <select name="size" id="changeOption">
+                    <?php foreach ($model->productGroup->products as $option): ?>
+                        <option <?= (isset($productId) && ($productId == $option->productId)) ? " selected" : " " ?> value="<?= $option->productId ?>"><?= $option->optionName; ?></option>
+                    <?php endforeach; ?>
+                </select>
+
+                <?php
+                $this->registerJs("
+                    $('#changeOption').change(function () {
+        $.ajax({
+            type: \"POST\",
+            dataType: \"JSON\",
+            url: \"products/change-option\",
+            data: {productId: $(this).val()},
+            success: function (data)
+            {
+                $('#productItem').html(data.productItem);
+                $('#productTabs').html(data.productTabs);
+                $('#productImage').html(data.productImage);
+            }
+        });
+    });
+                ");
+                ?>
+            <?php endif; ?>
+<!--            <select name="size" id="changeOption">
+<option>Size:28 Inches</option>
+<option>Size:32 Inches</option>
+<option>Size:40 Inches</option>
+<option>Size:48 Inches</option>
+<option>Size:50 Inches</option>
+</select>-->
         </div>
-    <?php endif; ?>
+    </div>
     <div class="buttons group products-buttons-group">
         <div class="form-group">
             <label for="shopping-cart" class="col-sm-1" style="padding-right: 0px;  padding-left: 0px;  margin-bottom: 0px;">
@@ -58,7 +75,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </div>
         </div>
     </div>
-    <div class="buttons group products-buttons-group" id='productPrice'>
+    <div class="buttons group products-buttons-group">
         <div class="old-price"><?= (isset($model->price) && !empty($model->price)) ? number_format($model->price, 2) . " ฿" : "815,00 $" ?></div>
         <div class="price"><?= number_format($model->calProductPrice($model->productId, 1), 2) . " ฿" ?></div>
     </div>
@@ -72,9 +89,37 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </div>
         </div>
     </div>
-    <div class="buttons group" id="productPriceTable">
-        <?php echo $this->render('_product_price_table', ['model' => $model]); ?>
+    <div class="buttons group">
+        <?php
+        $i = 0;
+        foreach ($model->productPrices as $pp) {
+            ?>
+            <div  class="col-lg-2 col-md-2 col-sm-12 " style="float: left; padding-right: 0px; padding-left: 0px;">
+                <table id="pp<?= number_format($pp->quantity, 0) ?>" class="col-lg-12 col-md-12 text-center <?= ($i == 0) ? " priceActive" : " " ?>" style="font-size: 14px; border: 1px #f5f5f5 solid;">
+
+                    <thead style="border-bottom: 1px #f5f5f5 solid;">
+                        <tr>
+                            <th class="text-center">Buy <?= number_format($pp->quantity, 0) ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="item first">
+                            <td class="thumb"><?= number_format($pp->getSavePrice(), 2) . " ฿"; ?></td>
+                        </tr>
+                        <tr class="item first">
+                            <td class="name">
+                                <small>off your order</small>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <?php
+            $i++;
+        }
+        ?>
     </div>
+
     <div class="buttons group">
         <div class="qnt-count">
             <a class="incr-btn" href="#">-</a>
@@ -82,9 +127,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <a class="incr-btn" href="#" data-toggle="popover" data-content="Max Quantity For this Item" data-placement="bottom">+</a>
         </div>
         <a class="btn btn-primary btn-sm" id="addItemToCart" href="#" <?= ($model->findMaxQuantity($model->productId) <= 0) ? " disabled" : " " ?>><i class="icon-shopping-cart"></i>Add to cart</a>
-        <?php if (!Yii::$app->user->isGuest): ?>
-            <a class="btn btn-black btn-sm" href="#" id='addWishlist' <?= (\common\models\costfit\User::getIsExistWishlist($model->productId)) ? " disabled" : " " ?>><i class="icon-heart"></i>Add to wishlist</a>
-        <?php endif; ?>
+        <a class="btn btn-black btn-sm" href="<?php echo Yii::$app->homeUrl; ?>wishlist"><i class="icon-heart"></i>Add to wishlist</a>
     </div>
     <p class="p-style2"><?//= strip_tags($model->shortDescription); ?></p>
     <div class="row">
@@ -113,9 +156,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </div>
 
 <!--Product Gallery-->
-<div class="col-lg-6 col-md-6" id='productImage'>
-
+<div class="col-lg-6 col-md-6" id="productImage">
     <?php echo $this->render('_product_image', ['model' => $model]); ?>
-
 </div>
 
