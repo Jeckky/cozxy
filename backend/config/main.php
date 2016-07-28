@@ -51,6 +51,9 @@ return [
         'payment' => [
             'class' => 'backend\modules\payment\Payment',
         ],
+        'order' => [
+            'class' => 'backend\modules\order\Order',
+        ],
         'redactor' => [
             'class' => 'yii\redactor\RedactorModule',
             'uploadDir' => '@web/images',

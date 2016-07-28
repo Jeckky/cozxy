@@ -45,15 +45,15 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                 <a href="<?php echo $baseUrl; ?>/dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
             </li>
 
-            <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูลหลัก</span><span class="label label-warning">Updated</span></a>
-                <ul>
-                    <li>
-                        <a tabindex="-1" href="#"><i class="fa fa-square"></i> <span class="mm-text">ตั้งค่า</span></a>
-                    </li>
+            <!--            <li class="mm-dropdown">
+                            <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูลหลัก</span><span class="label label-warning">Updated</span></a>
+                            <ul>
+                                <li>
+                                    <a tabindex="-1" href="#"><i class="fa fa-square"></i> <span class="mm-text">ตั้งค่า</span></a>
+                                </li>
 
-                </ul>
-            </li>
+                            </ul>
+                        </li>-->
 
             <li class="mm-dropdown">
                 <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูล User</span><span class="label label-warning">Updated</span></a>
@@ -64,6 +64,25 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                 </ul>
             </li>
 
+            <li class="mm-dropdown">
+                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการรายการสั่งซื้อสินค้า  </span><span class="label label-danger">new</span><span class="badge badge-primary">1</span></a>
+                <ul>
+                    <li>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/order/order"><span class="mm-text">Order</span></a>
+                    </li>
+                    <!--                    <li class="mm-dropdown">
+                                            <a tabindex="-1" href="#"><span class="mm-text">Content</span><span class="label label-warning">2</span></a>
+                                            <ul>
+                                                <li>
+                                                    <a tabindex="-1" href="<?php echo $baseUrl; ?>/content/content-group"><span class="mm-text">Package</span></a>
+                                                </li>
+                                                <li>
+                                                    <a tabindex="-1" href="<?php echo $baseUrl; ?>/shipping/package-type"><span class="mm-text">Package Type</span></a>
+                                                </li>
+                                            </ul>
+                                        </li>-->
+                </ul>
+            </li>
 
             <li class="mm-dropdown">
                 <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Store</span><span class="label label-warning">Store</span></a>
@@ -142,16 +161,13 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             </li>
 
             <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Content  </span><span class="label label-danger">new</span><span class="badge badge-primary">1</span></a>
+                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูลหลัก  </span><span class="label label-danger">new</span><span class="badge badge-primary">1</span></a>
                 <ul>
                     <li class="mm-dropdown">
-                        <a tabindex="-1" href="#"><span class="mm-text">Content</span><span class="label label-warning">2</span></a>
+                        <a tabindex="-1" href="#"><span class="mm-text">จัดการข้อมูลหลัก</span><span class="label label-warning">2</span></a>
                         <ul>
                             <li>
-                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/content/content-group"><span class="mm-text">Package</span></a>
-                            </li>
-                            <li>
-                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/shipping/package-type"><span class="mm-text">Package Type</span></a>
+                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/content/content-group"><span class="mm-text">Content</span></a>
                             </li>
                         </ul>
                     </li>
