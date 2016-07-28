@@ -91,10 +91,10 @@ if (isset($isUpdate)) {
 }
 
 $form = ActiveForm::begin([
-    'id' => 'default-shipping-address',
+            'id' => 'default-shipping-address',
 //    'validateOnSubmit' => true,
-    'options' => ['class' => "space-bottom $formName"],
-]);
+            'options' => ['class' => "space-bottom $formName"],
+        ]);
 
 $countryId = rand(0, 9999);
 $stateId = rand(0, 9999);
@@ -131,7 +131,7 @@ $districtId = rand(0, 9999);
             'pluginOptions' => [
                 'placeholder' => 'Select...',
                 'loadingText' => 'Loading country ...',
-                'initialize' => true,
+            //'initialize' => true,
             ],
             'options' => [
                 'placeholder' => 'Select country ...',
@@ -185,7 +185,7 @@ $districtId = rand(0, 9999);
                     'depends' => [$countryId],
                     'url' => Url::to(['child-states']),
                     'loadingText' => 'Loading province ...',
-                    'initialize' => true,
+                //'initialize' => true,
                 //'params' => ['model_id1']
                 ]
             ])->label('จังหวัด');
@@ -207,7 +207,7 @@ $districtId = rand(0, 9999);
                     'depends' => [$stateId],
                     'url' => Url::to(['child-amphur']),
                     'loadingText' => 'Loading amphur ...',
-                    'initialize' => true,
+                //'initialize' => true,
                 ]
             ])->label('เขต/อำเภอ');
             ?>
@@ -233,7 +233,7 @@ $districtId = rand(0, 9999);
                     //'initDepends' => ['address-countryid'],
                     'url' => Url::to(['child-district']),
                     'loadingText' => 'Loading district ...',
-                    'initialize' => true,
+                //'initialize' => true,
                 ]
             ])->label('แขวง/ตำบล');
             ?>
