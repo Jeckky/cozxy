@@ -78,35 +78,43 @@ class MasterController extends MasterCommonController
 
     public function getToken()
     {
-
-        if (isset($cookies['orderToken'])) {
-            $cookies = Yii::$app->request->cookies;
-            return $cookies['orderToken']->value;
+        $cookies = Yii::$app->request->cookies;
+        if ($cookies->has('orderToken')) {
+            return $cookies->getValue('orderToken');
         } else {
-
             $this->generateNewToken();
-            $cookies = Yii::$app->response->cookies;
-            if (!isset($cookies['orderToken'])) {
-                $cookies = Yii::$app->request->cookies;
-            }
-
-            return $cookies['orderToken']->value;
+            $cookies = Yii::$app->request->cookies;
+//            echo print_r($cookies, true);
+//            throw new \yii\base\Exception(111);
+//            if (!isset($cookies['orderToken'])) {
+//                $cookies = Yii::$app->request->cookies;
+//        }
+            return $cookies->getValue('orderToken');
         }
     }
 
     public function generateNewToken()
     {
-        $cookies = Yii::$app->request->cookies;
-        if (!isset($cookies['orderToken'])) {
-            $cookiesNew = Yii::$app->response->cookies;
-            $cookiesNew->add(new \yii\web\Cookie([
-                'name' => 'orderToken',
-                'value' => Yii::$app->security->generateRandomString(),
-            ]));
+//        $cookies = Yii::$app->request->cookies;
+//        if (!$cookies->has('orderToken')) {
+        $cookiesNew = Yii::$app->response->cookies;
+//        $cookiesNew->add(new \yii\web\Cookie([
+//            'name' => 'orderToken',
+//            'value' => Yii::$app->security->generateRandomString(),
+////                'expire' => time() + 86400 * 365,
+//        ]));
+
+        $cookie = new \yii\web\Cookie();
+        $cookie->name = "orderToken";
+        $cookie->value = Yii::$app->security->generateRandomString();
+//        $cookie->expire = time() + 86400 * 365;
+        Yii::$app->response->cookies->add($cookie);
+
 //            throw new \yii\base\Exception(print_r($cookiesNew, true));
-        } else {
-//            throw new \yii\base\Exception(1111);
-        }
+//        } else {
+//
+//            throw new \yii\base\Exception(1234);
+//        }
     }
 
     public function actionDynamicState()
@@ -141,12 +149,12 @@ class MasterController extends MasterCommonController
         ]);
     }
 
-    // CONTROLLER 15/07/2016 Create By Taninut
+// CONTROLLER 15/07/2016 Create By Taninut
     public function actionChildStates()
     {
         $out = [];
-        //echo $_POST['depdrop_parents'];
-        //exit();
+//echo $_POST['depdrop_parents'];
+//exit();
         if (isset($_POST['depdrop_parents'])) {
             $id = end($_POST['depdrop_parents']);
             //echo '<pre>';
@@ -170,7 +178,7 @@ class MasterController extends MasterCommonController
         echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
     }
 
-    // CONTROLLER 15/07/2016 Create By Taninut
+// CONTROLLER 15/07/2016 Create By Taninut
     public function actionChildAmphur()
     {
         $out = [];
@@ -195,7 +203,7 @@ class MasterController extends MasterCommonController
         echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
     }
 
-    // CONTROLLER 15/07/2016 Create By Taninut
+// CONTROLLER 15/07/2016 Create By Taninut
     public function actionChildDistrict()
     {
         $out = [];
@@ -216,7 +224,7 @@ class MasterController extends MasterCommonController
                 echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
                 return;
             }
-            //echo 'no';
+//echo 'no';
         }
         echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
     }
@@ -230,7 +238,7 @@ class MasterController extends MasterCommonController
 
     public function dateThai($date, $format, $showTime = false)
     {
-        // Full month array
+// Full month array
         $monthFormat1 = array(
             "01" => "มกราคม",
             "02" => "กุมภาพันธ์",
@@ -245,7 +253,7 @@ class MasterController extends MasterCommonController
             "11" => "พฤศจิกายน",
             "12" => "ธันวาคม");
 
-        // Quick month array
+// Quick month array
         $monthFormat2 = array(
             "01" => "ม.ค.",
             "02" => "ก.พ.",
@@ -319,7 +327,7 @@ class MasterController extends MasterCommonController
             return $strReturn;
         }
 
-        //return $d[2].' '.(($format=1) ? $monthFormat1[$d[1]] : $monthFormat2[$d[1]]).' '.($d[0]+543);
+//return $d[2].' '.(($format=1) ? $monthFormat1[$d[1]] : $monthFormat2[$d[1]]).' '.($d[0]+543);
         if (isset($timeStr) && $showTime) {
             $strReturn = $strReturn . " " . $timeStr;
         }
@@ -359,7 +367,7 @@ class MasterController extends MasterCommonController
         echo \yii\helpers\Json::encode(['output' => '', 'selected' => '']);
     }
 
-    // CONTROLLER 15/07/2016 Create By Taninut
+// CONTROLLER 15/07/2016 Create By Taninut
     public function actionChildAmphurCheckOuts()
     {
         $out = [];
@@ -393,7 +401,7 @@ class MasterController extends MasterCommonController
         echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
     }
 
-    // CONTROLLER 15/07/2016 Create By Taninut
+// CONTROLLER 15/07/2016 Create By Taninut
     public function actionChildDistrictCheckOuts()
     {
         $out = [];
@@ -423,7 +431,7 @@ class MasterController extends MasterCommonController
                 echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
                 return;
             }
-            //echo 'no';
+//echo 'no';
         }
         echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
     }

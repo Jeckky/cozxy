@@ -40,13 +40,44 @@ use common\models\costfit\Product;
 
         <?= $form->field($model, 'storeId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(Store::find()->all(), 'storeId', 'title'), ['prompt' => '-- Select Store --']) ?>
 
-        <?= $form->field($model, 'productId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(Product::find()->all(), 'productId', 'title'), ['prompt' => '-- Select Product --']) ?>
+        <?=
+        $form->field($model, 'productId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(Product::find()->all(), 'productId', 'title', function($model) {
+            return isset($model->productGroup) ? $model->productGroup->title : "--No Group--";
+        }), ['prompt' => '-- Select Product --'])
+        ?>
+
+        <?php
+//        echo $form->field($model, 'productId')->widget(kartik\select2\Select2::classname(), [
+//            'data' => ArrayHelper::map(Product::find()->all(), 'productId', 'title'),
+//            'language' => 'en',
+//            'options' => ['placeholder' => 'Select Product ...', 'theme' => kartik\select2\Select2::THEME_KRAJEE],
+//            'pluginOptions' => [
+//                'allowClear' => true
+//            ],
+//        ]);
+        ?>
+        <?php
+//        echo $form->field($model, 'productId')->widget(kartik\select2\Select2::classname(), [
+////            'options' => ['id' => 'address-countryid'],
+//            'data' => ArrayHelper::map(Product::find()->all(), 'productId', 'title'),
+//            'pluginOptions' => [
+//                'placeholder' => 'Select...',
+//                'loadingText' => 'Loading Product ...',
+//            //'initialize' => true,
+//            ],
+//            'options' => [
+//                'placeholder' => 'Select Product ...',
+//            ],
+//        ]);
+        ?>
 
         <?= $form->field($model, 'paletNo', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
 
         <?= $form->field($model, 'quantity', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 45]) ?>
 
         <?= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
+
+        <?= $form->field($model, 'shippingFromType', ['options' => ['class' => 'row form-group']])->dropDownList($model->findAllShippingFromTypeArray(), ['prompt' => '-- Shipping From Type --']) ?>
 
         <?//= $form->field($model, 'total', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
 

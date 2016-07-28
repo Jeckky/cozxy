@@ -12,9 +12,11 @@ use yii\filters\VerbFilter;
 /**
  * StoreProductController implements the CRUD actions for StoreProduct model.
  */
-class StoreProductController extends StoreMasterController {
+class StoreProductController extends StoreMasterController
+{
 
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -29,7 +31,8 @@ class StoreProductController extends StoreMasterController {
      * Lists all StoreProduct models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         if (isset($_GET["storeId"])) {
             $query = StoreProduct::find()->where("storeId=" . $_GET["storeId"]);
         } else {
@@ -44,7 +47,7 @@ class StoreProductController extends StoreMasterController {
         ]);
 
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -53,9 +56,10 @@ class StoreProductController extends StoreMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -64,10 +68,14 @@ class StoreProductController extends StoreMasterController {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $model = new StoreProduct();
         if (isset($_GET["storeId"])) {
             $model->storeId = $_GET["storeId"];
+        }
+        if (isset($_GET['storeProductGroupId'])) {
+            $model->storeProductGroupId = $_GET['storeProductGroupId'];
         }
         if (isset($_POST["StoreProduct"])) {
             $model->attributes = $_POST["StoreProduct"];
@@ -80,7 +88,7 @@ class StoreProductController extends StoreMasterController {
             }
         }
         return $this->render('create', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -90,7 +98,8 @@ class StoreProductController extends StoreMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $model = $this->findModel($id);
         if (isset($_POST["StoreProduct"])) {
             $model->attributes = $_POST["StoreProduct"];
@@ -103,7 +112,7 @@ class StoreProductController extends StoreMasterController {
             }
         }
         return $this->render('update', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -113,7 +122,8 @@ class StoreProductController extends StoreMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -126,7 +136,8 @@ class StoreProductController extends StoreMasterController {
      * @return StoreProduct the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id) {
+    protected function findModel($id)
+    {
         if (($model = StoreProduct::findOne($id)) !== null) {
             return $model;
         } else {
@@ -134,7 +145,8 @@ class StoreProductController extends StoreMasterController {
         }
     }
 
-    public function updateStoreProductGroupSummary($productStoreGroupId) {
+    public function updateStoreProductGroupSummary($productStoreGroupId)
+    {
         $summary = 0;
         $stg = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId =" . $productStoreGroupId)->one();
         foreach ($stg->storeProducts as $sp) {
