@@ -34,7 +34,7 @@ class OrderController extends OrderMasterController
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Order::find()->orderBy("updateDateTime DESC"),
+            'query' => Order::find()->where("status = 2")->orderBy("updateDateTime DESC"),
         ]);
 
         return $this->render('index', [

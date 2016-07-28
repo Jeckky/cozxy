@@ -21,7 +21,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <div class="col-md-6"><?= $this->title ?></div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
-                        <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Order', ['create'], ['class' => 'btn btn-success btn-xs']) ?>
+                        <?//= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Order', ['create'], ['class' => 'btn btn-success btn-xs']) ?>
                     </div>
                 </div>
             </div>
@@ -39,9 +39,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 ],
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-//                  'orderNo',
+                    'orderNo',
                     'invoiceNo',
-                    'orderId',
                     [
                         'attribute' => 'userId',
                         'value' => function($model) {
@@ -56,6 +55,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     // 'grandTotal',
                     // 'shippingRate',
                     'summary',
+                    [
+                        'attribute' => 'countItem',
+                        'value' => function($model) {
+                            return count($model->orderItems) . " รายการ";
+                        }
+                    ],
                     // 'sendDate',
                     // 'billingCompany',
                     // 'billingTax',
@@ -77,13 +82,30 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     // 'couponId',
                     // 'checkStep',
                     // 'note:ntext',
-                    // 'paymentDateTime',
-                    // 'status',
+//                    'paymentDateTime',
+                    [
+                        'attribute' => 'paymentDateTime',
+                        'value' => function($model) {
+                            return (isset($model->paymentDateTime) && !empty($model->paymentDateTime)) ? $this->context->dateThai($model->paymentDateTime, 2, true) : NULL;
+                        }
+                    ],
+//                    'status',
+                    [
+                        'attribute' => 'status',
+                        'value' => function($model) {
+                            return $model->getStatusText($model->status);
+                        }
+                    ],
                     // 'createDateTime',
-                    'updateDateTime',
+                    [
+                        'attribute' => 'updateDateTime',
+                        'value' => function($model) {
+                            return (isset($model->updateDateTime) && !empty($model->updateDateTime)) ? $this->context->dateThai($model->updateDateTime, 2, true) : NULL;
+                        }
+                    ],
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
-                        'template' => '{view} {update} {delete} {items}',
+                        'template' => '{view} {update} {items}',
                         'buttons' => [
                             'items' => function($url, $model) {
                                 return Html::a('<br><u>Items</u>', ['/order/order-item', 'orderId' => $model->orderId], [

@@ -45,6 +45,14 @@ class Order extends \common\models\costfit\master\OrderMaster
     const ORDER_STATUS_DRAFT = 0;
     const ORDER_STATUS_REGISTER_USER = 1;
     const ORDER_STATUS_CHECKOUTS = 2;
+    const ORDER_STATUS_E_PAYMENT_DRAFT = 3;
+    const ORDER_STATUS_COMFIRM_PAYMENT = 4;
+    const ORDER_STATUS_E_PAYMENT_SUCCESS = 5;
+    const ORDER_STATUS_FINANCE_APPROVE = 6;
+    const ORDER_STATUS_FINANCE_REJECT = 7;
+    const ORDER_STATUS_SHIPPING = 8;
+    const ORDER_STATUS_SHIPPED = 9;
+    //
     const CHECKOUT_STEP_WAIT_CHECKOUT = 0;
     const CHECKOUT_STEP_ADDRESS = 1;
     const CHECKOUT_STEP_PAYMENT = 2;
@@ -76,7 +84,14 @@ class Order extends \common\models\costfit\master\OrderMaster
      */
     public function attributeLabels()
     {
-        return array_merge(parent::attributeLabels(), []);
+        return array_merge(parent::attributeLabels(), [
+            'paymentDateTime' => 'วันที่ชำระเงิน',
+            'status' => 'สถานะ',
+            'updateDateTime' => 'วันที่แก้ไข',
+            'summary' => 'ยอดรวม',
+            'userId' => 'ผู้ใช้งาน',
+            'countItem' => 'จำนวนสินค้า'
+        ]);
     }
 
     public static function findCartArray()
@@ -389,6 +404,32 @@ class Order extends \common\models\costfit\master\OrderMaster
             'criteria' => $criteria,
         ));
         return isset($result->data[0]) ? $result->data[0]->maxCode : 0;
+    }
+
+    public function findAllStatusArray()
+    {
+        return [
+            self::ORDER_STATUS_DRAFT => "ตระกร้าสินค้า",
+            self::ORDER_STATUS_REGISTER_USER => "ลงทะเบียนผู้ใช้แล้ว",
+            self::ORDER_STATUS_CHECKOUTS => 'Checkout แล้ว',
+            self::ORDER_STATUS_E_PAYMENT_DRAFT => 'ชำระบัตรเครดิตไม่สำเร็จ',
+            self::ORDER_STATUS_COMFIRM_PAYMENT => 'ยืนยันชำระเงิน',
+            self::ORDER_STATUS_E_PAYMENT_SUCCESS => 'ชำระบัตรเครดิตสำเร็จ',
+            self::ORDER_STATUS_FINANCE_APPROVE => 'การเงินตรวจสอบแล้ว',
+            self::ORDER_STATUS_FINANCE_REJECT => 'การเงินส่งกลับ',
+            self::ORDER_STATUS_SHIPPING => 'กำลังจัดส่ง',
+            self::ORDER_STATUS_SHIPPED => 'จัดส่งแล้ว',
+        ];
+    }
+
+    public function getStatusText($status)
+    {
+        $res = $this->findAllStatusArray($status);
+        if (isset($res[$status])) {
+            return $res[$status];
+        } else {
+            return NULL;
+        }
     }
 
 }

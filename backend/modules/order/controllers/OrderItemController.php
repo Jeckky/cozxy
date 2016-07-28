@@ -33,8 +33,13 @@ class OrderItemController extends OrderMasterController
      */
     public function actionIndex()
     {
+        if (isset($_GET["orderId"])) {
+            $query = OrderItem::find()->where("orderId =" . $_GET["orderId"]);
+        } else {
+            $query = OrderItem::find();
+        }
         $dataProvider = new ActiveDataProvider([
-            'query' => OrderItem::find(),
+            'query' => $query,
         ]);
 
         return $this->render('index', [
