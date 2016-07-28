@@ -135,6 +135,8 @@ $('.new-address-form ').on('click', function () {
     $('.form-group').find('#zipcode').val('');
     $('.form-group').find('#email').val('');
     $('.form-group').find('#tel').val('');
+    $('#formShipping').show();
+    $('#formBilling').show();
 });
 $('.checkout_update_address_billing').on('click', function () { // checkout_update_address_shipping
     var edit_shipping = $(this).find('input').val();
@@ -172,7 +174,13 @@ $('.checkout_update_address_billing').on('click', function () { // checkout_upda
     });
 });
 $('.checkout_select_address_shipping').on('click', function () {
+    $('#formShippingUpdate').hide();
+    $('#formShipping').hide();
+});
 
+$('.checkout_select_address_billing').on('click', function () {
+    $('#formBillingUpdate').hide();
+    $('#formBilling').hide();
 });
 /*
  $('#address-countryid').prop("disabled", false);
@@ -186,6 +194,7 @@ $('.updateShippingCancel').on('click', function () {
 });
 var showBillingAddress = false;
 $('.ship-to-dif-adress').on("click", function () {
+    $('#formShipping').hide();
     if (!showBillingAddress)
     {
         $(".shippingArea").removeClass("hide");
