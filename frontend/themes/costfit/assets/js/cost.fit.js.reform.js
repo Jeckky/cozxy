@@ -191,7 +191,7 @@ $('.checkout_update_address_billing').on('click', function () {
     //$('.actionFormEditBilling').hide();
     $('.actionFormEditShipping').hide();
     $('.actionFormEditBilling').show();
-    alert(edit_shipping);
+
     $.post("checkout/get-address", {
         address: edit_shipping
     }, function (data, status) {
@@ -200,8 +200,6 @@ $('.checkout_update_address_billing').on('click', function () {
 
             var JSONObject = JSON.parse(data);
 
-            alert('db : ' + JSONObject.countryId);
-            alert('hidden: ' + $('.form-group').find('#countryDDId').val());
             $('.form-group').find('#' + $('.form-group-billing').find('#countryDDId').val()).val(JSONObject.countryId).trigger('change');
 
             $.post("checkout/child-states", {// child-states //
