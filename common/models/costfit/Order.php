@@ -412,7 +412,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         return [
             self::ORDER_STATUS_DRAFT => "ตระกร้าสินค้า",
             self::ORDER_STATUS_REGISTER_USER => "ลงทะเบียนผู้ใช้แล้ว",
-            self::ORDER_STATUS_CHECKOUTS => 'Checkout แล้ว',
+            self::ORDER_STATUS_CHECKOUTS => 'รอการชำระเงิน',
             self::ORDER_STATUS_E_PAYMENT_DRAFT => 'ชำระบัตรเครดิตไม่สำเร็จ',
             self::ORDER_STATUS_COMFIRM_PAYMENT => 'ยืนยันชำระเงิน',
             self::ORDER_STATUS_E_PAYMENT_SUCCESS => 'ชำระบัตรเครดิตสำเร็จ',
