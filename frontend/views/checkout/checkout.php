@@ -12,7 +12,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <style type="text/css">
     .hidden-panel.expanded {
         max-height: 1200px;
-
+    }
+    .checkbox .iradio, .radio .iradio {
+        background: url(../img/forms/radio.png) no-repeat 0 0;
+        border: 10px;
     }
 </style>
 <section class="checkout">

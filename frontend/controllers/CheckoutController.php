@@ -40,6 +40,8 @@ class CheckoutController extends MasterController {
             $user = \common\models\costfit\User::find()->where('userId=' . \Yii::$app->user->id)->one();
         }
 
+
+
         $addressId = Yii::$app->request->post('addressId');
         $address = new \common\models\costfit\Address();
         $address->scenario = 'shipping_address';
@@ -48,7 +50,12 @@ class CheckoutController extends MasterController {
                 $address = \common\models\costfit\Address::find()
                         ->where('userId =' . \Yii::$app->user->id . ' and addressId=' . $addressId)
                         ->one();
-                $address->attributes = $_POST['Address'];
+
+                //$address->attributes = $_POST['Address'];
+                $address->countryId = (isset($_POST['Address']['countryId']) ? $_POST['Address']['countryId'] : '');
+                $address->provinceId = (isset($_POST['Address']['provinceId']) ? $_POST['Address']['provinceId'] : '');
+                $address->amphurId = (isset($_POST['Address']['amphurId']) ? $_POST['Address']['amphurId'] : '');
+                $address->districtId = (isset($_POST['Address']['districtId']) ? $_POST['Address']['districtId'] : '');
 
                 if ($address->save(FALSE)) {
                     $this->redirect(Yii::$app->homeUrl . 'checkout');
@@ -81,6 +88,8 @@ class CheckoutController extends MasterController {
             }
 
             if (isset($_POST['Address'])) {
+                // print_r($_POST['Address']);
+                //exit();
                 if ($_POST['Address']['typeForm'] == 'formShipping') {
                     //$model_ = new \common\models\costfit\Address();
                     $address->type = \common\models\costfit\Address::TYPE_SHIPPING; // default Address First
@@ -127,9 +136,11 @@ class CheckoutController extends MasterController {
             $shipping = Yii::$app->request->post('shipping');
             $billing = Yii::$app->request->post('billing');
             $payment01 = Yii::$app->request->post('payment01');
-            $placeUserId = Yii::$app->request->post('placeUserId');
+            $placeUserId = (Yii::$app->request->post('placeUserId') != '') ? Yii::$app->request->post('placeUserId') : \Yii::$app->user->id;
             $notes = Yii::$app->request->post('notes');
             $placeOrderId = Yii::$app->request->post('placeOrderId');
+
+            // echo 'billing : ' . $billing;
 
             if (isset($billing)) {
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . $placeUserId . ' and addressId =' . $billing)
@@ -142,12 +153,20 @@ class CheckoutController extends MasterController {
                 $address_shipping = \common\models\costfit\Address::find()->where('userId=' . $placeUserId . ' and addressId = ' . $shipping)
                         ->orderBy('addressId desc')
                         ->one();
-                $address_billing = NULL;
+                $address_billing = \common\models\costfit\Address::find()->where('userId=' . $placeUserId . ' and addressId = ' . $shipping)
+                        ->orderBy('addressId desc')
+                        ->one();
             }
 
             $order = \common\models\costfit\Order::find()->where('userId= ' . $placeUserId . ' and orderId = ' . $placeOrderId)->one();
+            $order->orderNo = \common\models\costfit\Order::genOrderNo();
+
+            //echo "<pre>";
+            //print_r($order->orderNo);
+            // exit();
             $order->paymentType = $payment01;
             $order->status = 2;
+            $order->userId = $placeUserId;
             $order->updateDateTime = new \yii\db\Expression("NOW()");
             $order->billingCompany = ($address_billing['company'] != '') ? $address_billing['company'] : '';
             $order->shippingTax = ($address_billing['tax'] != '') ? $address_billing['tax'] : '';
@@ -155,7 +174,7 @@ class CheckoutController extends MasterController {
             $order->billingCountryId = ($address_billing['countryId'] != '') ? $address_billing['countryId'] : '';
             $order->billingProvinceId = ($address_billing['provinceId'] != '') ? $address_billing['provinceId'] : '';
             $order->billingAmphurId = ($address_billing['amphurId'] != '') ? $address_billing['amphurId'] : '';
-            $order->billingZipcode = ($address_billing['zipcode'] != '') ? $address_billing['zipcode'] : '123';
+            $order->billingZipcode = ($address_billing['zipcode'] != '') ? $address_billing['zipcode'] : '';
             $order->billingTel = ($address_billing['tel'] != '') ? $address_billing['tel'] : '';
             $order->shippingCompany = ($address_shipping['company'] != '') ? $address_shipping['company'] : '';
             $order->shippingTax = ($address_shipping['tax'] != '') ? $address_shipping['tax'] : '';
@@ -166,8 +185,9 @@ class CheckoutController extends MasterController {
             $order->shippingZipcode = ($address_shipping['zipcode'] != '') ? $address_shipping['zipcode'] : '';
             $order->shippingTel = ($address_shipping['tel'] != '') ? $address_shipping['tel'] : '';
 
-            // echo '<pre>';
-            //print_r($order);
+
+//            echo '<pre>';
+//            print_r($order);
             if ($order->save(FALSE)) {
                 $this->redirect(Yii::$app->homeUrl . 'checkout/order-thank');
             }

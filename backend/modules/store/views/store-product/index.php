@@ -21,7 +21,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <div class="col-md-6"><?= $this->title ?></div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
-                        <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Store Product', ['create'], ['class' => 'btn btn-success btn-xs']) ?>
+                        <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Store Product', ['create?storeProductGroupId=' . $_GET["storeProductGroupId"]], ['class' => 'btn btn-success btn-xs']) ?>
                     </div>
                 </div>
             </div>

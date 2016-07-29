@@ -45,6 +45,14 @@ class Order extends \common\models\costfit\master\OrderMaster
     const ORDER_STATUS_DRAFT = 0;
     const ORDER_STATUS_REGISTER_USER = 1;
     const ORDER_STATUS_CHECKOUTS = 2;
+    const ORDER_STATUS_E_PAYMENT_DRAFT = 3;
+    const ORDER_STATUS_COMFIRM_PAYMENT = 4;
+    const ORDER_STATUS_E_PAYMENT_SUCCESS = 5;
+    const ORDER_STATUS_FINANCE_APPROVE = 6;
+    const ORDER_STATUS_FINANCE_REJECT = 7;
+    const ORDER_STATUS_SHIPPING = 8;
+    const ORDER_STATUS_SHIPPED = 9;
+    //
     const CHECKOUT_STEP_WAIT_CHECKOUT = 0;
     const CHECKOUT_STEP_ADDRESS = 1;
     const CHECKOUT_STEP_PAYMENT = 2;
@@ -66,7 +74,8 @@ class Order extends \common\models\costfit\master\OrderMaster
     public function attributes()
     {
         return array_merge(parent::attributes(), [
-            'month'
+            'month',
+            'maxCode'
         ]);
     }
 
@@ -75,7 +84,14 @@ class Order extends \common\models\costfit\master\OrderMaster
      */
     public function attributeLabels()
     {
-        return array_merge(parent::attributeLabels(), []);
+        return array_merge(parent::attributeLabels(), [
+            'paymentDateTime' => 'วันที่ชำระเงิน',
+            'status' => 'สถานะ',
+            'updateDateTime' => 'วันที่แก้ไข',
+            'summary' => 'ยอดรวม',
+            'userId' => 'ผู้ใช้งาน',
+            'countItem' => 'จำนวนสินค้า'
+        ]);
     }
 
     public static function findCartArray()
@@ -326,6 +342,126 @@ class Order extends \common\models\costfit\master\OrderMaster
                 $res[$i] = 0;
             }
         }
+        return $res;
+    }
+
+    public static function genInvNo($model)
+    {
+//      $prefix = "IV" . UserCompany::model()->getPrefixBySupplierId($model->supplierId);
+        $prefix = "IV";
+        $max_code = $this->findMaxInvoiceNo($model);
+        $max_code += 1;
+        return $prefix . date("Ym") . str_pad($max_code, 7, "0", STR_PAD_LEFT);
+    }
+
+    public static function genOrderNo($supplierId = null)
+    {
+        $prefix = 'OD'; //$supplierModel->prefix;
+
+        $max_code = intval(\common\models\costfit\Order::findMaxOrderNo($prefix));
+        $max_code += 1;
+        return $prefix . date("Ym") . "-" . str_pad($max_code, 7, "0", STR_PAD_LEFT);
+    }
+
+    public static function findMaxOrderNo($prefix = NULL)
+    {
+        $order = Order::findBySql("SELECT MAX(RIGHT(orderNo,7)) as maxCode from `order` WHERE substr(orderNo,1,2)='$prefix' order by orderNo DESC ")->one();
+//        $order = Order::find()->select("MAX(RIGHT(orderNo,7)) as maxCode")
+//        ->where("substr(orderNo,1,2)='$prefix' ")
+//        ->orderBy('orderNo DESC ')
+//        ->max("maxCode");
+//        ->one();
+
+        return isset($order) ? $order->maxCode : 0;
+    }
+
+    public static function findMaxInvoiceNo($model)
+    {
+// Warning: Please modify the following code to remove attributes that
+// should not be searched.
+        $supplierUser = Supplier::model()->findByPk($model->supplierId);
+
+        $criteria = new CDbCriteria;
+
+        $criteria->select = 'max(RIGHT(invoiceNo,6)) as maxCode';
+//		if(isset($supplierUser->redirectURL))
+//		{
+        if ($supplierUser->supplierId == 1 || $supplierUser->supplierId == 3) {
+            $criteria->condition = 'YEAR(updateDateTime) = YEAR(NOW()) AND (supplierId = 1 OR supplierId = 3) AND paymentMethod = ' . $model->paymentMethod;
+        } else if ($supplierUser->supplierId == 4 || $supplierUser->supplierId == 5) {
+            $criteria->condition = 'YEAR(updateDateTime) = YEAR(NOW()) AND (supplierId = 4 OR supplierId = 5) AND paymentMethod = ' . $model->paymentMethod;
+        } else {
+            $criteria->condition = 'YEAR(updateDateTime) = YEAR(NOW()) AND supplierId = ' . $supplierUser->supplierId . ' AND paymentMethod = ' . $model->paymentMethod;
+        }
+//		}
+//		else
+//		{
+//			$supplierArray = array();
+//			$supplierArray = User::model()->findAllSupplierHasRedirectURL();
+//			$criteria->condition = 'MONTH(updateDateTime) = MONTH(NOW())';
+//		$criteria->addNotInCondition('supplierId', $supplierArray);
+//		}
+        $result = new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+        return isset($result->data[0]) ? $result->data[0]->maxCode : 0;
+    }
+
+    public function findAllStatusArray()
+    {
+        return [
+            self::ORDER_STATUS_DRAFT => "ตระกร้าสินค้า",
+            self::ORDER_STATUS_REGISTER_USER => "ลงทะเบียนผู้ใช้แล้ว",
+            self::ORDER_STATUS_CHECKOUTS => 'Checkout แล้ว',
+            self::ORDER_STATUS_E_PAYMENT_DRAFT => 'ชำระบัตรเครดิตไม่สำเร็จ',
+            self::ORDER_STATUS_COMFIRM_PAYMENT => 'ยืนยันชำระเงิน',
+            self::ORDER_STATUS_E_PAYMENT_SUCCESS => 'ชำระบัตรเครดิตสำเร็จ',
+            self::ORDER_STATUS_FINANCE_APPROVE => 'การเงินตรวจสอบแล้ว',
+            self::ORDER_STATUS_FINANCE_REJECT => 'การเงินส่งกลับ',
+            self::ORDER_STATUS_SHIPPING => 'กำลังจัดส่ง',
+            self::ORDER_STATUS_SHIPPED => 'จัดส่งแล้ว',
+        ];
+    }
+
+    public function getStatusText($status)
+    {
+        $res = $this->findAllStatusArray($status);
+        if (isset($res[$status])) {
+            return $res[$status];
+        } else {
+            return NULL;
+        }
+    }
+
+    public static function findAllTodayOrder()
+    {
+        $res = [];
+        $res["all"] = 0;
+        $res["checkout"] = 0;
+        $res["shipping"] = 0;
+        $res["shipped"] = 0;
+        $orders = Order::find()->where('date(updateDateTime) = curdate() ')->all();
+        foreach ($orders as $order) {
+            $res["all"] ++;
+            switch ($order->status) {
+                case Order::ORDER_STATUS_CHECKOUTS:
+                    $res["checkout"] ++;
+                    break;
+                case Order::ORDER_STATUS_COMFIRM_PAYMENT:
+                    $res["checkout"] ++;
+                    break;
+                case Order::ORDER_STATUS_E_PAYMENT_SUCCESS:
+                    $res["checkout"] ++;
+                    break;
+                case Order::ORDER_STATUS_SHIPPING:
+                    $res["shipping"] ++;
+                    break;
+                case Order::ORDER_STATUS_SHIPPED:
+                    $res["shipped"] ++;
+                    break;
+            }
+        }
+
         return $res;
     }
 

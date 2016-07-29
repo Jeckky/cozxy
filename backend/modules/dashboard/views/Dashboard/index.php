@@ -76,20 +76,23 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                 <!-- Small horizontal padding, bordered, without right border, top aligned text -->
                 <div class="stat-cell col-sm-4 padding-sm-hr bordered no-border-r valign-top">
                     <!-- Small padding, without top padding, extra small horizontal padding -->
-                    <h4 class="padding-sm no-padding-t padding-xs-hr"><i class="fa fa-cloud-upload text-primary"></i>&nbsp;&nbsp;Uploads</h4>
+                    <h4 class="padding-sm no-padding-t padding-xs-hr"><i class="fa fa-list text-primary"></i>&nbsp;&nbsp;รายการสั่งซื้อสินค้าวันนี้</h4>
                     <!-- Without margin -->
                     <ul class="list-group no-margin">
                         <!-- Without left and right borders, extra small horizontal padding, without background, no border radius -->
                         <li class="list-group-item no-border-hr padding-xs-hr no-bg no-border-radius">
-                            Documents <span class="label label-pa-purple pull-right">34</span>
+                            สั่งซื้อ <span class="label label-pa-purple pull-right"><?= $orderToday['all'] ?></span>
                         </li> <!-- / .list-group-item -->
                         <!-- Without left and right borders, extra small horizontal padding, without background -->
                         <li class="list-group-item no-border-hr padding-xs-hr no-bg">
-                            Audio <span class="label label-danger pull-right">128</span>
+                            รอชำระเงิน <span class="label label-danger pull-right"><?= $orderToday['checkout'] ?></span>
                         </li> <!-- / .list-group-item -->
                         <!-- Without left and right borders, without bottom border, extra small horizontal padding, without background -->
                         <li class="list-group-item no-border-hr no-border-b padding-xs-hr no-bg">
-                            Videos <span class="label label-success pull-right">12</span>
+                            กำลังจัดส่ง <span class="label label-inverse pull-right"><?= $orderToday['shipping'] ?></span>
+                        </li> <!-- / .list-group-item -->
+                        <li class="list-group-item no-border-hr no-border-b padding-xs-hr no-bg">
+                            จัดส่งแล้ว <span class="label label-success pull-right"><?= $orderToday['shipped'] ?></span>
                         </li> <!-- / .list-group-item -->
                     </ul>
                 </div> <!-- /.stat-cell -->
@@ -201,7 +204,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <!-- Stat panel bg icon -->
                         <i class="fa fa-trophy bg-icon"></i>
                         <!-- Extra large text -->
-                        <span class="text-xlg"><span class="text-lg text-slim">$</span><strong>147</strong></span><br>
+                        <span class="text-xlg"><span class="text-lg text-slim">฿</span> <strong><?= ($todaySummary > 0) ? $todaySummary : 0 ?></strong></span><br>
                         <!-- Big text -->
                         <span class="text-bg">Earned today</span><br>
                         <!-- Small text -->

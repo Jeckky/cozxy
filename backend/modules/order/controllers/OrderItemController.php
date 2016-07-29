@@ -1,18 +1,18 @@
 <?php
 
-namespace backend\modules\store\controllers;
+namespace backend\modules\order\controllers;
 
 use Yii;
-use common\models\costfit\StoreProduct;
+use common\models\costfit\OrderItem;
 use yii\data\ActiveDataProvider;
 use backend\controllers\BackendMasterController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * StoreProductController implements the CRUD actions for StoreProduct model.
+ * OrderItemController implements the CRUD actions for OrderItem model.
  */
-class StoreProductController extends StoreMasterController
+class OrderItemController extends OrderMasterController
 {
 
     public function behaviors()
@@ -28,19 +28,15 @@ class StoreProductController extends StoreMasterController
     }
 
     /**
-     * Lists all StoreProduct models.
+     * Lists all OrderItem models.
      * @return mixed
      */
     public function actionIndex()
     {
-        if (isset($_GET["storeId"])) {
-            $query = StoreProduct::find()->where("storeId=" . $_GET["storeId"]);
+        if (isset($_GET["orderId"])) {
+            $query = OrderItem::find()->where("orderId =" . $_GET["orderId"]);
         } else {
-            if (isset($_GET['storeProductGroupId'])) {
-                $query = StoreProduct::find()->where("storeProductGroupId=" . $_GET["storeProductGroupId"]);
-            } else {
-                $query = StoreProduct::find();
-            }
+            $query = OrderItem::find();
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -52,7 +48,7 @@ class StoreProductController extends StoreMasterController
     }
 
     /**
-     * Displays a single StoreProduct model.
+     * Displays a single OrderItem model.
      * @param string $id
      * @return mixed
      */
@@ -64,27 +60,18 @@ class StoreProductController extends StoreMasterController
     }
 
     /**
-     * Creates a new StoreProduct model.
+     * Creates a new OrderItem model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new StoreProduct();
-        if (isset($_GET["storeId"])) {
-            $model->storeId = $_GET["storeId"];
-        }
-        if (isset($_GET['storeProductGroupId'])) {
-            $model->storeProductGroupId = $_GET['storeProductGroupId'];
-        }
-        if (isset($_POST["StoreProduct"])) {
-            $model->attributes = $_POST["StoreProduct"];
+        $model = new OrderItem();
+        if (isset($_POST["OrderItem"])) {
+            $model->attributes = $_POST["OrderItem"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
-            $model->total = $model->quantity * $model->price;
-
             if ($model->save()) {
-                $this->updateStoreProductGroupSummary($model->storeProductGroupId);
-                return $this->redirect(['index?storeId=' . $model->storeId]);
+                return $this->redirect(['index']);
             }
         }
         return $this->render('create', [
@@ -93,7 +80,7 @@ class StoreProductController extends StoreMasterController
     }
 
     /**
-     * Updates an existing StoreProduct model.
+     * Updates an existing OrderItem model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -101,14 +88,14 @@ class StoreProductController extends StoreMasterController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if (isset($_POST["StoreProduct"])) {
-            $model->attributes = $_POST["StoreProduct"];
+        if (isset($_POST["OrderItem"])) {
+            $model->attributes = $_POST["OrderItem"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-            $model->total = $model->quantity * $model->price;
+
+
 
             if ($model->save()) {
-                $this->updateStoreProductGroupSummary($model->storeProductGroupId);
-                return $this->redirect(['index?storeId=' . $model->storeId]);
+                return $this->redirect(['index']);
             }
         }
         return $this->render('update', [
@@ -117,7 +104,7 @@ class StoreProductController extends StoreMasterController
     }
 
     /**
-     * Deletes an existing StoreProduct model.
+     * Deletes an existing OrderItem model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -130,30 +117,19 @@ class StoreProductController extends StoreMasterController
     }
 
     /**
-     * Finds the StoreProduct model based on its primary key value.
+     * Finds the OrderItem model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return StoreProduct the loaded model
+     * @return OrderItem the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = StoreProduct::findOne($id)) !== null) {
+        if (($model = OrderItem::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-
-    public function updateStoreProductGroupSummary($productStoreGroupId)
-    {
-        $summary = 0;
-        $stg = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId =" . $productStoreGroupId)->one();
-        foreach ($stg->storeProducts as $sp) {
-            $summary+= $sp->total;
-        }
-        $stg->summary = $summary;
-        $stg->save();
     }
 
 }

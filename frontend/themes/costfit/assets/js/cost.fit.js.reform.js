@@ -62,6 +62,7 @@ $('.checkout_select_address_billing').on('click', function () {
 $('.updateBillingCancel').on('click', function () {
     $("#billingUpdate").addClass("hide");
 });
+
 $('.checkout_update_address_shipping').on('click', function () {
 //alert('Id Name : ' + $(this).find('input').attr('id'));
 //alert('Value : ' + $(this).find('input').val());
@@ -75,51 +76,93 @@ $('.checkout_update_address_shipping').on('click', function () {
 
         if (status == "success") {
             var JSONObject = JSON.parse(data);
-            //console.log(JSONObject);
-            //alert("Data: " + JSONObject.addressId);
-//            $('.form-group').find('#' + $('.form-group').find('#countryDDId').val()).select2("data", {id: JSONObject.countryId, text: "xxx"});
             $('.form-group').find('#' + $('.form-group').find('#countryDDId').val()).val(JSONObject.countryId).trigger('change');
 
-            alert("Data: " + JSONObject.provinceId);
-            $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).depdrop('init');
-            $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).on('depdrop.change', function (event, id, value, count) {
-                $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).val(JSONObject.provinceId);
-            });
-            $('.form-group').find('#' + $('.form-group').find('#amphurDDId').val()).depdrop('init');
-            $('.form-group').find('#' + $('.form-group').find('#amphurDDId').val()).on('depdrop.change', function (event, id, value, count) {
-                $('.form-group').find('#' + $('.form-group').find('#amphurDDId').val()).val(JSONObject.amphurId);
-            });
-            $('.form-group').find('#' + $('.form-group').find('#districtDDId').val()).depdrop('init');
-            $('.form-group').find('#' + $('.form-group').find('#districtDDId').val()).on('depdrop.change', function (event, id, value, count) {
-                $('.form-group').find('#' + $('.form-group').find('#districtDDId').val()).val(JSONObject.districtId);
-            });
-//            $('.form-group').find('#' + $('.form-group').find('#amphurDDId').val()).on('depdrop.change', function (event, id, value, count) {
-//                $('.form-group').find('#' + $('.form-group').find('#amphurDDId').val()).val(JSONObject.amphurId).trigger('change');
-//            });
-//            $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).val(JSONObject.provinceId);
+            $.post("checkout/child-states", {// child-states //
+                'depdrop_parents[]': JSONObject.countryId,
+                'depdrop_all_params[]': JSONObject.countryId
+            }, function (data, status) {
+                if (status == "success") {
+                    var JSONObject2 = JSON.parse(data);
+                    $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).removeAttr('disabled');
+                    for (i in JSONObject2.output)
+                    {
+                        if (JSONObject2.output[i].id === JSONObject.provinceId) {
+                            //alert(JSONObject2.output[i].id);
+                            $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).append('<option selected value=' + JSONObject2.output[i].id + '>' + JSONObject2.output[i].name + '</option>');
+                        } else {
+                            $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).append('<option value=' + JSONObject2.output[i].id + '>' + JSONObject2.output[i].name + '</option>');
+                        }
+                    }
+//                    $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).depdrop('init');
+                    $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).val(JSONObject.provinceId).trigger('change');
+                } else {
+                    //alert(status);
+                }
+                // window.location = 'checkout/order-thank';
+            }); // child-states //
 
-            //$('.form-group').find('#' + $('.form-group').find('#countryDDId').val()).select2({'val': JSONObject.countryId});
+            $.post("checkout/child-amphur", {// child-amphur //
+                'depdrop_parents[]': JSONObject.provinceId,
+                'depdrop_all_params[]': JSONObject.provinceId
+            }, function (data, status) {
+                if (status == "success") {
+                    var JSONObject2 = JSON.parse(data);
+                    $('.form-group').find('#' + $('.form-group').find('#amphurDDId').val()).removeAttr('disabled');
+                    for (i in JSONObject2.output)
+                    {
+                        if (JSONObject2.output[i].id === JSONObject.amphurId) {
+                            //alert(JSONObject2.output[i].id);
+                            $('.form-group').find('#' + $('.form-group').find('#amphurDDId').val()).append('<option selected value=' + JSONObject2.output[i].id + '>' + JSONObject2.output[i].name + '</option>');
+                        } else
+                        {
+                            $('.form-group').find('#' + $('.form-group').find('#amphurDDId').val()).append('<option value=' + JSONObject2.output[i].id + '>' + JSONObject2.output[i].name + '</option>');
+                        }
+                    }
+                    $('.form-group').find('#' + $('.form-group').find('#amphurDDId').val()).val(JSONObject.amphurId).trigger('change');
+                } else {
+                    //alert(status);
+                }
+            }); // child-amphur //
+
+            $.post("checkout/child-district", {// child-district //
+                'depdrop_parents[]': JSONObject.amphurId,
+                'depdrop_all_params[]': JSONObject.amphurId
+            }, function (data, status) {
+                if (status == "success") {
+                    var JSONObject3 = JSON.parse(data);
+                    $('.form-group').find('#' + $('.form-group').find('#districtDDId').val()).removeAttr('disabled');
+                    for (i in JSONObject3.output)
+                    {
+                        if (JSONObject3.output[i].id === JSONObject.amphurId) {
+                            //alert(JSONObject2.output[i].id);
+                            $('.form-group').find('#' + $('.form-group').find('#districtDDId').val()).append('<option selected value=' + JSONObject3.output[i].id + '>' + JSONObject3.output[i].name + '</option>');
+                        } else
+                        {
+                            $('.form-group').find('#' + $('.form-group').find('#districtDDId').val()).append('<option value=' + JSONObject3.output[i].id + '>' + JSONObject3.output[i].name + '</option>');
+                        }
+                    }
+                    $('.form-group').find('#' + $('.form-group').find('#districtDDId').val()).val(JSONObject.districtId).trigger('change');
+                } else {
+                    //alert(status);
+                }
+            }); // child-district //
             $('.form-group').find('#firstname').val(JSONObject.firstname);
             $('.form-group').find('#lastname').val(JSONObject.lastname);
             $('.form-group').find('#company').val(JSONObject.company);
             $('.form-group').find('#address').val(JSONObject.address);
-            //$('.form-group').find('#districtId').val(JSONObject.districtId);
-            //alert(JSONObject.provinceId);
-            $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).depdrop('init');
-            $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).val(JSONObject.provinceId).change();
-            //$('.form-group').find('#amphurId').val(JSONObject.amphurId);
-            //$('.form-group').find('#province').val(JSONObject.provinceId);
+
             $('.form-group').find('#zipcode').val(JSONObject.zipcode);
             $('.form-group').find('#email').val(JSONObject.email);
             $('.form-group').find('#tel').val(JSONObject.tel);
-            //$('.form-group').find('#address-hidden').html('<input type="hidden" name="addressId" id="addressId" value="' + JSONObject.addressId + '">'); //val(JSONObject.tel);
+            $('.form-group').find('#address-hidden').html('<input type="hidden" name="addressId" id="addressId" value="' + JSONObject.addressId + '">'); //val(JSONObject.tel);
             //$('.form-group').find('#order-notes').val('test');
-            $('.form-group').find('#address-hidden').html('<input type="hidden" name="addressId" id="addressId" value="' + JSONObject.addressId + '"> <input type="hidden" name="model_id3" id="model_id3" value="' + JSONObject.provinceId + '"> <input type="hidden" name="model_id2" id="model_id2" value="' + JSONObject.amphurId + '"> <input type="hidden" name="model_id1" id="model_id1" value="' + JSONObject.districtId + '"> <input type="hidden" name="model_id" id="model_id" value="' + JSONObject.countryId + '">');
+            //$('.form-group').find('#address-hidden').html('<input type="hidden" name="addressId" id="addressId" value="' + JSONObject.addressId + '"> <input type="hidden" name="model_id3" id="model_id3" value="' + JSONObject.provinceId + '"> <input type="hidden" name="model_id2" id="model_id2" value="' + JSONObject.amphurId + '"> <input type="hidden" name="model_id1" id="model_id1" value="' + JSONObject.districtId + '"> <input type="hidden" name="model_id" id="model_id" value="' + JSONObject.countryId + '">');
         }
 
-        // window.location = 'checkout/order-thank';
     });
 });
+
 $('.new-address-form ').on('click', function () {
     $('.form-group').find('#address-hidden').html('');
     $('.actionFormEditShipping').hide();
@@ -138,41 +181,119 @@ $('.new-address-form ').on('click', function () {
     $('#formShipping').show();
     $('#formBilling').show();
 });
-$('.checkout_update_address_billing').on('click', function () { // checkout_update_address_shipping
+
+$('.checkout_update_address_billing').on('click', function () {
+    //alert('Id Name : ' + $(this).find('input').attr('id'));
+    //alert('Value : ' + $(this).find('input').val());
     var edit_shipping = $(this).find('input').val();
+    //$('.actionFormEditShipping').show();
+    $('.actionFormBillingNew').hide();
+    //$('.actionFormEditBilling').hide();
     $('.actionFormEditShipping').hide();
     $('.actionFormEditBilling').show();
-    //$('.actionFormBilling').hide();
+
     $.post("checkout/get-address", {
         address: edit_shipping
     }, function (data, status) {
+
         if (status == "success") {
+
             var JSONObject = JSON.parse(data);
-            //console.log(JSONObject);
-            //alert("Data: " + JSONObject.addressId);
-            //$('.field-address-provinceid').find('input').val(JSONObject.countryId); // DepDrop
+
+            $('.form-group').find('#' + $('.form-group-billing').find('#countryDDId').val()).val(JSONObject.countryId).trigger('change');
+
+            $.post("checkout/child-states", {// child-states //
+                'depdrop_parents[]': JSONObject.countryId,
+                'depdrop_all_params[]': JSONObject.countryId
+            }, function (data, status) {
+                if (status == "success") {
+                    var JSONObjectB1 = JSON.parse(data);
+                    $('.form-group').find('#' + $('.form-group-billing').find('#statesDDId').val()).removeAttr('disabled');
+                    for (i in JSONObjectB1.output)
+                    {
+                        if (JSONObjectB1.output[i].id === JSONObject.provinceId) {
+                            //alert(JSONObject2.output[i].id);
+                            $('.form-group').find('#' + $('.form-group-billing').find('#statesDDId').val()).append('<option selected value=' + JSONObjectB1.output[i].id + '>' + JSONObjectB1.output[i].name + '</option>');
+                        } else {
+                            $('.form-group').find('#' + $('.form-group-billing').find('#statesDDId').val()).append('<option value=' + JSONObjectB1.output[i].id + '>' + JSONObjectB1.output[i].name + '</option>');
+                        }
+                    }
+//                    $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).depdrop('init');
+                    $('.form-group').find('#' + $('.form-group-billing').find('#statesDDId').val()).val(JSONObject.provinceId).trigger('change');
+                } else {
+                    //alert(status);
+                }
+                // window.location = 'checkout/order-thank';
+            }); // child-states //
+
+            $.post("checkout/child-amphur", {// child-amphur //
+                'depdrop_parents[]': JSONObject.provinceId,
+                'depdrop_all_params[]': JSONObject.provinceId
+            }, function (data, status) {
+                if (status == "success") {
+                    var JSONObject2 = JSON.parse(data);
+                    $('.form-group').find('#' + $('.form-group-billing').find('#amphurDDId').val()).removeAttr('disabled');
+                    for (i in JSONObject2.output)
+                    {
+                        if (JSONObject2.output[i].id === JSONObject.amphurId) {
+                            //alert(JSONObject2.output[i].id);
+                            $('.form-group').find('#' + $('.form-group-billing').find('#amphurDDId').val()).append('<option selected value=' + JSONObject2.output[i].id + '>' + JSONObject2.output[i].name + '</option>');
+                        } else
+                        {
+                            $('.form-group').find('#' + $('.form-group-billing').find('#amphurDDId').val()).append('<option value=' + JSONObject2.output[i].id + '>' + JSONObject2.output[i].name + '</option>');
+                        }
+                    }
+                    $('.form-group').find('#' + $('.form-group-billing').find('#amphurDDId').val()).val(JSONObject.amphurId).trigger('change');
+                } else {
+                    //alert(status);
+                }
+            }); // child-amphur //
+
+            $.post("checkout/child-district", {// child-district //
+                'depdrop_parents[]': JSONObject.amphurId,
+                'depdrop_all_params[]': JSONObject.amphurId
+            }, function (data, status) {
+                if (status == "success") {
+                    var JSONObject3 = JSON.parse(data);
+                    $('.form-group').find('#' + $('.form-group-billing').find('#districtDDId').val()).removeAttr('disabled');
+                    for (i in JSONObject3.output)
+                    {
+                        if (JSONObject3.output[i].id === JSONObject.amphurId) {
+                            //alert(JSONObject2.output[i].id);
+                            $('.form-group').find('#' + $('.form-group-billing').find('#districtDDId').val()).append('<option selected value=' + JSONObject3.output[i].id + '>' + JSONObject3.output[i].name + '</option>');
+                        } else
+                        {
+                            $('.form-group').find('#' + $('.form-group-billing').find('#districtDDId').val()).append('<option value=' + JSONObject3.output[i].id + '>' + JSONObject3.output[i].name + '</option>');
+                        }
+                    }
+                    $('.form-group').find('#' + $('.form-group-billing').find('#districtDDId').val()).val(JSONObject.districtId).trigger('change');
+                } else {
+                    //alert(status);
+                }
+            }); // child-district //
             $('.form-group').find('#firstname').val(JSONObject.firstname);
             $('.form-group').find('#lastname').val(JSONObject.lastname);
             $('.form-group').find('#company').val(JSONObject.company);
             $('.form-group').find('#address').val(JSONObject.address);
-            //$('.form-group').find('#districtId').val(JSONObject.districtId); // DepDrop
-            //$('.form-group').find('#amphurId').val(JSONObject.amphurId); // DepDrop
-            //$('.form-group').find('#provinceId').val(JSONObject.provinceId); // DepDrop
+            //$('.form-group').find('#districtId').val(JSONObject.districtId);
+            //alert(JSONObject.provinceId);
+            //$('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).depdrop('init');
+            // $('.form-group').find('#' + $('.form-group').find('#statesDDId').val()).val(JSONObject.provinceId).change();
+            //$('.form-group').find('#amphurId').val(JSONObject.amphurId);
+            //$('.form-group').find('#province').val(JSONObject.provinceId);
             $('.form-group').find('#zipcode').val(JSONObject.zipcode);
             $('.form-group').find('#email').val(JSONObject.email);
             $('.form-group').find('#tel').val(JSONObject.tel);
-            //$('.form-group').find('#address-hidden').html('<input type="hidden" name="addressId" id="addressId" value="' + JSONObject.addressId + '"> <input type="hidden" name="model_id3" id="model_id3" value="' + JSONObject.provinceId + '"> <input type="hidden" name="model_id2" id="model_id2" value="' + JSONObject.amphurId + '"> <input type="hidden" name="model_id1" id="model_id1" value="' + JSONObject.districtId + '"> <input type="hidden" name="model_id" id="model_id" value="' + JSONObject.countryId + '">'); //val(JSONObject.tel);
-            //$('.form-group').find('#order-notes').val('test');<input type="hidden" id="model_id1" name="model_id1" value="2526">
-            //$('.form-group').find('#address-hidden').html('<input type="hidden" name="model_id" id="model_id" value="' + JSONObject.countryId + '">');
-            //$('.form-group').find('#address-hidden').html('<input type="hidden" name="model_id1" id="model_id1" value="' + JSONObject.districtId + '">');
-            //$('.form-group').find('#address-hidden').html('<input type="hidden" name="model_id2" id="model_id2" value="' + JSONObject.amphurId + '">');
-            //$('.form-group').find('#address-hidden').html('<input type="hidden" name="model_id3" id="model_id3" value="' + JSONObject.provinceId + '">');
-            $('.form-group').find('#address-hidden').html('<input type="hidden" name="addressId" id="addressId" value="' + JSONObject.addressId + '">');
+            $('.form-group').find('#address-hidden').html('<input type="hidden" name="addressId" id="addressId" value="' + JSONObject.addressId + '">'); //val(JSONObject.tel);
+            //$('.form-group').find('#order-notes').val('test');
+            //$('.form-group').find('#address-hidden').html('<input type="hidden" name="addressId" id="addressId" value="' + JSONObject.addressId + '"> <input type="hidden" name="model_id3" id="model_id3" value="' + JSONObject.provinceId + '"> <input type="hidden" name="model_id2" id="model_id2" value="' + JSONObject.amphurId + '"> <input type="hidden" name="model_id1" id="model_id1" value="' + JSONObject.districtId + '"> <input type="hidden" name="model_id" id="model_id" value="' + JSONObject.countryId + '">');
         }
 
         // window.location = 'checkout/order-thank';
     });
 });
+
+
 $('.checkout_select_address_shipping').on('click', function () {
     $('#formShippingUpdate').hide();
     $('#formShipping').hide();
@@ -258,14 +379,23 @@ $("#place-order").on('click', function () {
     var _placeUserId = $('input[id=placeUserId]').val();
     var _placeOrderId = $('input[id=placeOrderId]').val();
     var _notes = $("#order-notes").val();
+
+    if (_placeUserId == '') {
+        $("#modal-cart-not-item").modal('show');
+    }
+
     if (_placeOrderId == '') {
-//alert('สินค้าในตะกร้า 0 รายการ');
+        $("#modal-cart-not-item").modal('show');
+    }
+
+    if (_placeOrderId == '') {
+        //alert('สินค้าในตะกร้า 0 รายการ');
         $("#modal-cart-not-item").modal('show');
         //window.location = 'site';
 
     } else {
         if (_shipping === undefined) {
-//alert('Please Select Shipping Address');
+            //alert('Please Select Shipping Address');
             $("#modal-cart-not-shipping").modal('show');
         } else {
             if (_billing === undefined) {
@@ -276,8 +406,8 @@ $("#place-order").on('click', function () {
                     notes: _notes,
                     placeOrderId: _placeOrderId
                 }, function (data, status) {
-//alert("Data: " + data + "\nStatus: " + status);
-// window.location = 'checkout/order-thank';
+                    //alert("Data: " + data + "\nStatus: " + status);
+                    // window.location = 'checkout/order-thank';
                 });
             } else if (_billing != undefined) {
                 $.post("checkout/burn-checkouts", {
@@ -288,8 +418,8 @@ $("#place-order").on('click', function () {
                     notes: _notes,
                     placeOrderId: _placeOrderId
                 }, function (data, status) {
-//alert("Data: " + data + "\nStatus: " + status);
-// window.location = 'checkout/order-thank';
+                    //alert("Data: " + data + "\nStatus: " + status);
+                    // window.location = 'checkout/order-thank';
                 });
             }
         }

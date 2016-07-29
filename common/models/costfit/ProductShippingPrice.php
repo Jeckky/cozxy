@@ -6,6 +6,7 @@ use Yii;
 use \common\models\costfit\master\ProductShippingPriceMaster;
 
 /**
+
  * This is the model class for table "product_shipping_price".
  *
  * @property integer $producetShippingPriceId

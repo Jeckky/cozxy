@@ -13,6 +13,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\data\ActiveDataProvider;
 
 /**
  * Profile controller
@@ -68,7 +69,15 @@ class ProfileController extends MasterController {
         $this->title = 'Cost.fit | Order History';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Order History";
-        return $this->render('@app/views/profile/order_history');
+
+        $query = \common\models\costfit\Order::find()->where("userId ='" . Yii::$app->user->id . "'");
+
+        //$query->orderBy('createDateTime desc');
+        $model_list = new ActiveDataProvider([
+            'query' => $query
+        ]);
+
+        return $this->render('@app/views/profile/order_history', compact('model_list'));
     }
 
     public function actionDataAddress() {

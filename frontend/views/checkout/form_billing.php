@@ -106,7 +106,7 @@ $districtId = rand(0, 9999);
     <div class="form-group">
         <div id="address-hidden" class="address-hidden"></div>
     </div>
-    <div class="form-group">
+    <div class="form-group form-group<?= (isset($type) && $type == 1) ? "-billing" : "-shipping" ?>">
         <?php
         /* echo '<label class="control-label">ประเทศ</label>';
           echo kartik\select2\Select2::widget([
@@ -172,7 +172,7 @@ $districtId = rand(0, 9999);
     </div>
 
     <div class="row">
-        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+        <div class="form-group col-lg-6 col-md-6 col-sm-6 form-group<?= (isset($type) && $type == 1) ? "-billing" : "-shipping" ?>">
             <?php
             // Child level 1
             //echo Html::hiddenInput('model_id1', '2526', ['id' => 'model_id1']);
@@ -198,7 +198,7 @@ $districtId = rand(0, 9999);
             echo Html::hiddenInput("statesDDId", $stateId, ['id' => "statesDDId"]);
             ?>
         </div>
-        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+        <div class="form-group col-lg-6 col-md-6 col-sm-6 form-group<?= (isset($type) && $type == 1) ? "-billing" : "-shipping" ?>">
             <?php
             // Child level 2
             //echo Html::hiddenInput('model_id2', '79745', ['id' => 'model_id2']);
@@ -222,10 +222,10 @@ $districtId = rand(0, 9999);
 
     </div>
     <div class="row">
-        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+        <div class="form-group col-lg-6 col-md-6 col-sm-6 form-group<?= (isset($type) && $type == 1) ? "-billing" : "-shipping" ?>">
             <?php
-            // Child level 3
-            //echo Html::hiddenInput('model_id3', '395', ['id' => 'model_id3']);
+// Child level 3
+//echo Html::hiddenInput('model_id3', '395', ['id' => 'model_id3']);
             echo $form->field($address, 'districtId')->widget(DepDrop::classname(), [
                 //'data' => [12 => 'Savings A/C 2'],
                 'options' => ['placeholder' => 'Select ...', 'id' => $districtId],
