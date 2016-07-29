@@ -70,14 +70,33 @@ class ProfileController extends MasterController {
         $this->subTitle = 'Home';
         $this->subSubTitle = "Order History";
 
-        $query = \common\models\costfit\Order::find()->where("userId ='" . Yii::$app->user->id . "'");
 
-        //$query->orderBy('createDateTime desc');
-        $model_list = new ActiveDataProvider([
-            'query' => $query
-        ]);
+        /* $query = \common\models\costfit\Order::find()->where("userId ='" . Yii::$app->user->id . "' and status = 2 and orderNo  is not null");
 
-        return $this->render('@app/views/profile/order_history', compact('model_list'));
+          $model_list = new ActiveDataProvider([
+          'query' => $query,
+          'pagination' => [
+          'pageSize' => 10,
+          ],
+          'sort' => [
+          'defaultOrder' => [
+          'createDateTime' => SORT_DESC,
+          ],
+          'attributes' => ['orderNo', 'total', 'vat', 'totalExVat', 'createDateTime']
+          ],
+          // what column is used as KEY for action buttons
+          'key' => 'orderId'
+          ]); */
+
+        //echo '<pre>';
+        //print_r(Yii::$app->request->get());
+
+        $searchModel = new \common\models\costfit\Order();
+        $dataProvider = $searchModel->search(Yii::$app->request->get());
+
+        // http://dixonsatit.github.io/2014/11/30/install-krajee-yii2-grid.html
+
+        return $this->render('@app/views/profile/order_history', compact('dataProvider', 'searchModel'));
     }
 
     public function actionDataAddress() {
@@ -205,8 +224,6 @@ class ProfileController extends MasterController {
     public function actionReset() {
         $request = Yii::$app->request;
         $token = $request->post('token');
-        // $loginForm = new common\models\User();
-        //$loginForm->login();
 
         if (Yii::$app->security->validatePassword($token, \Yii::$app->user->identity->password_hash)) {
             // Password Match
@@ -215,14 +232,37 @@ class ProfileController extends MasterController {
             //No Match
             echo FALSE;
         }
+    }
 
+    public function actionPurchaseOrder() {
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
+        //$this->layout = "";
+        $this->title = 'Cost.fit | Order Purchase ';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = "Order Purchase";
 
-        // $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "' and password_hash ='" . $token . "'   ")->one();
-        //if (count($model) == 1) {
-        //echo TRUE;
-        //} else {
-        //echo FALSE;
-        //}
+        $query = \common\models\costfit\Order::find()->where("userId ='" . Yii::$app->user->id . "' and status = 2 and orderNo  is not null");
+
+        $model_list = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'createDateTime' => SORT_DESC,
+                ],
+                'attributes' => ['orderNo', 'total', 'vat', 'totalExVat', 'createDateTime']
+            ],
+            // what column is used as KEY for action buttons
+            'key' => 'orderId'
+        ]);
+
+        //$dataProvider = $searchModel->search(Yii::$app->request->get());
+
+        return $this->render('@app/views/profile/purchase_order', compact('model_list'));
     }
 
 }

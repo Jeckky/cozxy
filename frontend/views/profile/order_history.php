@@ -4,34 +4,35 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use yii\grid\GridView;
+//use yii\grid\GridView;
+use kartik\grid\GridView;
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <?php
 
-//foreach ($model_list as $key => $value) {
-//  echo $value->orderId . '<br>';
-//}
+use kartik\export\ExportMenu;
+
+echo ExportMenu::widget([
+    'dataProvider' => $dataProvider
+]);
+
 
 echo GridView::widget([
-    'dataProvider' => $model_list,
+    'dataProvider' => $dataProvider,
+    'filterModel' => $searchModel,
+//........
+    'panel' => [
+        'before' => ' '
+    ],
+//.........
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
-        // Simple columns defined by the data contained in $dataProvider.
-        // Data from the model's column will be used.
-        'orderId',
         'orderNo',
-        // More complex one.
-        [
-            'class' => 'yii\grid\DataColumn', // can be omitted, as it is the default
-        // 'value' => function ($data) {
-        // return $data->orderNo; // $data['name'] for array data, e.g. using SqlDataProvider.
-        //  },
-        ],
+        'total',
+        'createDateTime',
+//['class' => 'yii\grid\ActionColumn'],
     ],
 ]);
 ?>
-
-
