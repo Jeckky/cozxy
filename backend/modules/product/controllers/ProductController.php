@@ -82,7 +82,13 @@ class ProductController extends ProductMasterController {
             $model->attributes = $_POST["Product"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
+                $lastId = Yii::$app->db->getLastInsertID();
                 \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $model->productId);
+
+                $productShipping = \common\models\costfit\ProductShippingPrice::find()->where("productId='" . $lastId . "'")->all();
+                if (count($productShipping) <= 0) {
+                    $model->addProductShipping($lastId);
+                }
                 return $this->redirect(['index']);
             }
         }
@@ -104,6 +110,10 @@ class ProductController extends ProductMasterController {
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
                 \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $model->productId);
+                $productShipping = \common\models\costfit\ProductShippingPrice::find()->where("productId='" . $id . "'")->all();
+                if (count($productShipping) <= 0) {
+                    $model->addProductShipping($id);
+                }
                 return $this->redirect(['index']);
             }
         }

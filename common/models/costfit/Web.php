@@ -6,30 +6,31 @@ use Yii;
 use \common\models\costfit\master\WebMaster;
 
 /**
-* This is the model class for table "web".
-*
-    * @property string $webId
-    * @property string $title
-    * @property string $company
-    * @property integer $status
-    * @property string $createDateTime
-    * @property string $updateDateTime
-*/
+ * This is the model class for table "web".
+ *
 
-class Web extends \common\models\costfit\master\WebMaster{
-/**
-* @inheritdoc
-*/
-public function rules()
-{
-return array_merge(parent::rules(), []);
-}
+ * @property integer $webId
 
-/**
-* @inheritdoc
-*/
-public function attributeLabels()
-{
-return array_merge(parent::attributeLabels(), []);
-}
+ * @property string $title
+ * @property string $company
+ * @property integer $status
+ * @property string $createDateTime
+ * @property string $updateDateTime
+ */
+class Web extends \common\models\costfit\master\WebMaster {
+
+    /**
+     * @inheritdoc
+     */
+    public function rules() {
+        return array_merge(parent::rules(), []);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels() {
+        return array_merge(parent::attributeLabels(), []);
+    }
+
 }

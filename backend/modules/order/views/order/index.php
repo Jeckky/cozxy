@@ -84,6 +84,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     // 'note:ntext',
 //                    'paymentDateTime',
                     [
+                        'attribute' => 'paymentType',
+                        'value' => function($model) {
+                            return ($model->paymentType == 1) ? 'โอนผ่านธนาคาร' : 'จ่ายผ่านบัตรเครดิต';
+                        }
+                    ],
+                    [
                         'attribute' => 'paymentDateTime',
                         'value' => function($model) {
                             return (isset($model->paymentDateTime) && !empty($model->paymentDateTime)) ? $this->context->dateThai($model->paymentDateTime, 2, true) : NULL;
