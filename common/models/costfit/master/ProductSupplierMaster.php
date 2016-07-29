@@ -10,6 +10,8 @@ use Yii;
     * @property integer $productSupplierId
     * @property integer $productId
     * @property integer $supplierId
+    * @property integer $leaseTime
+    * @property string $maxQuantity
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDatetime
@@ -30,8 +32,9 @@ return 'product_supplier';
 public function rules()
 {
 return [
-            [['productSupplierId', 'productId', 'supplierId'], 'required'],
-            [['productSupplierId', 'productId', 'supplierId', 'status'], 'integer'],
+            [['productId', 'supplierId'], 'required'],
+            [['productId', 'supplierId', 'leaseTime', 'status'], 'integer'],
+            [['maxQuantity'], 'number'],
             [['createDateTime', 'updateDatetime'], 'safe'],
         ];
 }
@@ -45,6 +48,8 @@ return [
     'productSupplierId' => Yii::t('product_supplier', 'Product Supplier ID'),
     'productId' => Yii::t('product_supplier', 'Product ID'),
     'supplierId' => Yii::t('product_supplier', 'Supplier ID'),
+    'leaseTime' => Yii::t('product_supplier', 'Lease Time'),
+    'maxQuantity' => Yii::t('product_supplier', 'Max Quantity'),
     'status' => Yii::t('product_supplier', 'Status'),
     'createDateTime' => Yii::t('product_supplier', 'Create Date Time'),
     'updateDatetime' => Yii::t('product_supplier', 'Update Datetime'),

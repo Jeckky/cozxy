@@ -12,7 +12,7 @@ use Yii;
     * @property string $poNo
     * @property string $summary
     * @property string $receiveDate
-    * @property string $receiveBy
+    * @property integer $receiveBy
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime

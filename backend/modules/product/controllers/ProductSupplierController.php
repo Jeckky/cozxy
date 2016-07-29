@@ -3,7 +3,7 @@
 namespace backend\modules\product\controllers;
 
 use Yii;
-use common\models\costfit\productShippingPrice;
+use common\models\costfit\productSupplier;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -11,9 +11,9 @@ use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 
 /**
- * ProductShippingPriceController implements the CRUD actions for productShippingPrice model.
+ * ProductSupplierController implements the CRUD actions for productSupplier model.
  */
-class ProductShippingPriceController extends ProductMasterController {
+class ProductSupplierController extends ProductMasterController {
 
     /**
      * @inheritdoc
@@ -30,12 +30,13 @@ class ProductShippingPriceController extends ProductMasterController {
     }
 
     /**
-     * Lists all productShippingPrice models.
+     * Lists all productSupplier models.
      * @return mixed
      */
     public function actionIndex() {
+
         $dataProvider = new ActiveDataProvider([
-            'query' => productShippingPrice::find(),
+            'query' => productSupplier::find()->where("productId='" . $_GET['productId'] . "'"),
         ]);
 
         return $this->render('index', [
@@ -44,7 +45,7 @@ class ProductShippingPriceController extends ProductMasterController {
     }
 
     /**
-     * Displays a single productShippingPrice model.
+     * Displays a single productSupplier model.
      * @param integer $id
      * @return mixed
      */
@@ -55,58 +56,58 @@ class ProductShippingPriceController extends ProductMasterController {
     }
 
     /**
-     * Creates a new productShippingPrice model.
+     * Creates a new productSupplier model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate() {
-        $model = new productShippingPrice();
-        $shippingType = ArrayHelper::map(\common\models\costfit\ShippingType::find()->all(), 'shippingTypeId', 'title');
-        $discountType = ["1" => "cash", "2" => "percent"];
-        $productName = '';
-        if (isset($_GET['id'])) {
-            $productName = \common\models\costfit\Product::find()->where("productId='" . $_GET['id'] . "'")->one();
-            $model->productId = $_GET['id'];
+        $model = new productSupplier();
+        $supplier = ArrayHelper::map(\common\models\costfit\search\Supplier::find()->all(), 'supplierId', 'name');
+        if (isset($_GET["productId"])) {
+            $productName = \common\models\costfit\Product::find()->where("productId='" . $_GET['productId'] . "'")->one();
+            $model->productId = $_GET["productId"];
+        }
+        if (isset($_POST["ProductSupplier"])) {
+            $model->attributes = $_POST["ProductSupplier"];
+            $model->createDateTime = new \yii\db\Expression('NOW()');
         }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['product-price/index', 'productId' => $productName->productId]);
+            return $this->redirect(['index', 'productId' => $_GET["productId"]]);
         } else {
             return $this->render('create', [
                         'model' => $model,
-                        'shippingType' => $shippingType,
-                        'discountType' => $discountType,
+                        'supplier' => $supplier,
                         'productName' => $productName->title
             ]);
         }
     }
 
     /**
-     * Updates an existing productShippingPrice model.
+     * Updates an existing productSupplier model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
-        $shippingType = ArrayHelper::map(\common\models\costfit\ShippingType::find()->all(), 'shippingTypeId', 'title');
-        $discountType = ["1" => "cash", "2" => "percent"];
+        $supplier = ArrayHelper::map(\common\models\costfit\search\Supplier::find()->all(), 'supplierId', 'name');
         $productName = \common\models\costfit\Product::find()->where("productId='" . $model->productId . "'")->one();
-
-
+        if (isset($_POST["ProductSupplier"])) {
+            $model->attributes = $_POST["ProductSupplier"];
+        }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['product-price/index', 'productId' => $model->productId]);
+            return $this->redirect(['index', 'productId' => $model->productId]);
         } else {
             return $this->render('update', [
                         'model' => $model,
-                        'shippingType' => $shippingType,
-                        'discountType' => $discountType,
+                        'supplier' => $supplier,
                         'productName' => $productName->title
             ]);
         }
     }
 
     /**
-     * Deletes an existing productShippingPrice model.
+     * Deletes an existing productSupplier model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -118,14 +119,14 @@ class ProductShippingPriceController extends ProductMasterController {
     }
 
     /**
-     * Finds the productShippingPrice model based on its primary key value.
+     * Finds the productSupplier model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return productShippingPrice the loaded model
+     * @return productSupplier the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id) {
-        if (($model = productShippingPrice::findOne($id)) !== null) {
+        if (($model = productSupplier::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
