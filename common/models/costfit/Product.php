@@ -129,4 +129,24 @@ class Product extends \common\models\costfit\master\ProductMaster {
         //return $this->hasMany(ProductPrice::className(), ['productId' => 'productId']);
     }
 
+    public function addProductShipping($id) {
+        $productShippingPrice = new ProductShippingPrice();
+        $productShippingPrice->productId = $id;
+        $productShippingPrice->shippingTypeId = 1;
+        $productShippingPrice->discount = 0;
+        $productShippingPrice->type = 1;
+        $productShippingPrice->createDateTime = new \yii\db\Expression('NOW()');
+        $productShippingPrice->updateDateTime = new \yii\db\Expression('NOW()');
+        $productShippingPrice->save(false);
+        $productShippingPrice = new ProductShippingPrice();
+        $productShippingPrice->productId = $id;
+        $productShippingPrice->shippingTypeId = 2;
+        $productShippingPrice->discount = 0;
+        $productShippingPrice->type = 1;
+        $productShippingPrice->createDateTime = new \yii\db\Expression('NOW()');
+        $productShippingPrice->updateDateTime = new \yii\db\Expression('NOW()');
+        $productShippingPrice->save(false);
+        //throw new \yii\base\Exception('adfasdf');
+    }
+
 }

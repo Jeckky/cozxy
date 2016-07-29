@@ -74,7 +74,6 @@ return [
             [['billingCompany', 'shippingCompany'], 'string', 'max' => 200],
             [['billingCountryId', 'shippingCountryId'], 'string', 'max' => 3],
             [['billingZipcode', 'shippingZipcode'], 'string', 'max' => 10],
-            [['billingZipcode'], 'unique'],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => UserMaster::className(), 'targetAttribute' => ['userId' => 'userId']],
         ];
 }

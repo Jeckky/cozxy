@@ -17,7 +17,6 @@ use Yii;
     *
             * @property Region $region
             * @property StoreLocation[] $storeLocations
-            * @property StoreProduct[] $storeProducts
             * @property StoreSlot[] $storeSlots
     */
 class StoreMaster extends \common\models\ModelMaster
@@ -75,14 +74,6 @@ return [
     public function getStoreLocations()
     {
     return $this->hasMany(StoreLocationMaster::className(), ['storeId' => 'storeId']);
-    }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getStoreProducts()
-    {
-    return $this->hasMany(StoreProductMaster::className(), ['storeId' => 'storeId']);
     }
 
     /**
