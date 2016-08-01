@@ -70,27 +70,6 @@ class ProfileController extends MasterController {
         $this->subTitle = 'Home';
         $this->subSubTitle = "Order History";
 
-
-        /* $query = \common\models\costfit\Order::find()->where("userId ='" . Yii::$app->user->id . "' and status = 2 and orderNo  is not null");
-
-          $model_list = new ActiveDataProvider([
-          'query' => $query,
-          'pagination' => [
-          'pageSize' => 10,
-          ],
-          'sort' => [
-          'defaultOrder' => [
-          'createDateTime' => SORT_DESC,
-          ],
-          'attributes' => ['orderNo', 'total', 'vat', 'totalExVat', 'createDateTime']
-          ],
-          // what column is used as KEY for action buttons
-          'key' => 'orderId'
-          ]); */
-
-        //echo '<pre>';
-        //print_r(Yii::$app->request->get());
-
         $searchModel = new \common\models\costfit\Order();
         // $dataProvider = $searchModel->search(Yii::$app->request->get());
         $dataProvider = $searchModel->search(Yii::$app->request->get());
@@ -236,31 +215,34 @@ class ProfileController extends MasterController {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
-        //$this->layout = "";
+
+        $orderId = Yii::$app->request->get('OrderNo');
+        $this->layout = "/content_profile";
         $this->title = 'Cost.fit | Order Purchase ';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Order Purchase";
 
-        $query = \common\models\costfit\Order::find()->where("userId ='" . Yii::$app->user->id . "' and status = 2 and orderNo  is not null");
+        $Order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId =' . $orderId)
+                ->all();
 
-        $model_list = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'createDateTime' => SORT_DESC,
-                ],
-                'attributes' => ['orderNo', 'total', 'vat', 'totalExVat', 'createDateTime']
-            ],
-            // what column is used as KEY for action buttons
-            'key' => 'orderId'
-        ]);
+        $OrderItem = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderId)
+                ->all();
+        foreach ($OrderItem as $key => $value) {
+            $OrderItemList['quantity'] = $value['quantity'];
+            $OrderItemList['price'] = $value['price'];
+            $OrderItemList['total'] = $value['total'];
 
-        //$dataProvider = $searchModel->search(Yii::$app->request->get());
+            $product = \common\models\costfit\product::find()->where('productId = ' . $value['productId'])
+                    ->all();
+            foreach ($product as $key => $item1) {
+                $product_itme[] = $product;
+                //$product_itme[] = $value['quantity'];
+            }
+        }
 
-        return $this->render('@app/views/profile/purchase_order', compact('model_list'));
+
+
+        return $this->render('@app/views/profile/purchase_order', compact('Order', 'OrderItemList', 'product_itme'));
     }
 
 }
