@@ -9,8 +9,17 @@ use kartik\date\DatePicker;
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
-
-$Order = $Order[0]->attributes
+if (is_array($Order)) {
+    $orderNo = $Order['orderNo'];
+    $vat = $Order['vat'];
+    $totalExVat = $Order['totalExVat'];
+    $total = $Order['total'];
+} else {
+    $orderNo = '-';
+    $vat = '-';
+    $totalExVat = '-';
+    $total = '-';
+}
 ?>
 <style>
     .table{
@@ -25,7 +34,7 @@ $Order = $Order[0]->attributes
         font-weight: 700;
     }
 </style>
-<h3>รายการใบสั่งซื้อเลขที่ <?php echo $Order['orderNo']; ?></h3>
+<h3>รายการใบสั่งซื้อเลขที่ <?php echo $orderNo; ?></h3>
 
 <!--Support-->
 <section class="support">
@@ -47,41 +56,48 @@ $Order = $Order[0]->attributes
                 <tbody>
                     <?php
                     $i = 0;
-                    foreach ($product_itme as $key => $value) {
+                    if (is_array($product_itme)) {
+                        foreach ($product_itme as $key => $value) {
+                            ?>
+                            <tr>
+                                <td><?php echo ++$key; ?></td>
+                                <td><?php echo $value[$i]->code; ?></td>
+                                <td><?php echo $value[$i]->title; ?></td>
+                                <td><?php echo ''; ?></td>
+                                <td><?php echo $value[$i]->price; ?></td>
+                                <td><?php echo $OrderItemList['quantity'] ?></td>
+                                <td><?php echo ($value[$i]->price * $OrderItemList['quantity']); ?></td>
+                            </tr>
+                            <?php
+                            $i = $i++;
+                        }
+                    } else {
                         ?>
                         <tr>
-                            <td><?php echo ++$key; ?></td>
-                            <td><?php echo $value[$i]->code; ?></td>
-                            <td><?php echo $value[$i]->title; ?></td>
-
-                            <td><?php echo ''; ?></td>
-                            <td><?php echo $value[$i]->price; //echo $OrderItemList['price'];   ?></td>
-                            <td><?php echo $OrderItemList['quantity'] ?></td>
-                            <td><?php echo ($value[$i]->price * $OrderItemList['quantity']); ?></td>
+                            <td colspan="7" class="text-center">ไม่พบข้อมูล</td>
                         </tr>
                         <?php
-                        $i = $i++;
                     }
                     ?>
                     <tr>
                         <td colspan="6" class="text-right">ราคาสินค้ารวมภาษีมูลค่าเพิ่ม / sub Total Included VAT :</td>
-                        <td><?php echo $Order['vat']; ?></td>
+                        <td><?php echo $vat; ?></td>
                     </tr>
                     <tr>
                         <td colspan="6" class="text-right">ส่วนลด/Discount(3.00%) :</td>
-                        <td><?php //echo $Order['orderNo'];             ?></td>
+                        <td> - </td>
                     </tr>
                     <tr>
                         <td colspan="6" class="text-right">ภาษีมูลค่าเพิ่ม/VAT 7 % :</td>
-                        <td><?php echo $Order['vat']; ?></td>
+                        <td><?php echo $vat; ?></td>
                     </tr>
                     <tr>
                         <td colspan="6" class="text-right">ราคาสินค้าไม่รวมภาษี/Sub Total excluded VAT :</td>
-                        <td><?php echo $Order['totalExVat']; ?></td>
+                        <td><?php echo $totalExVat; ?></td>
                     </tr>
                     <tr >
                         <td colspan="6" class="text-right">ราคาสินค้าที่ต้องชำระเงินรวมภาษีมูลค่าเพิ่ม/Total excluded VAT :</td>
-                        <td><?php echo $Order['total']; ?></td>
+                        <td><?php echo $total; ?></td>
                     </tr>
 
                 </tbody>

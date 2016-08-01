@@ -222,27 +222,38 @@ class ProfileController extends MasterController {
         $this->subTitle = 'Home';
         $this->subSubTitle = "Order Purchase";
 
-        $Order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId =' . $orderId)
-                ->all();
-
-        $OrderItem = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderId)
-                ->all();
-        foreach ($OrderItem as $key => $value) {
-            $OrderItemList['quantity'] = $value['quantity'];
-            $OrderItemList['price'] = $value['price'];
-            $OrderItemList['total'] = $value['total'];
-
-            $product = \common\models\costfit\product::find()->where('productId = ' . $value['productId'])
+        //echo htmlspecialchars($orderId);
+        if (isset($orderId)) {
+            $Order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . htmlspecialchars($orderId) . '" ')
                     ->all();
-            foreach ($product as $key => $item1) {
-                $product_itme[] = $product;
-                //$product_itme[] = $value['quantity'];
+            // echo '<pre>';
+            // print_r($Order);
+            if (count($Order) == 1) {
+                $Order = $Order[0]->attributes;
+                $OrderItem = \common\models\costfit\OrderItem::find()->where('orderId = ' . $orderId)
+                        ->all();
+                foreach ($OrderItem as $key => $value) {
+                    $OrderItemList['quantity'] = $value['quantity'];
+                    $OrderItemList['price'] = $value['price'];
+                    $OrderItemList['total'] = $value['total'];
+
+                    $product = \common\models\costfit\product::find()->where('productId = ' . $value['productId'])
+                            ->all();
+                    foreach ($product as $key => $item1) {
+                        $product_itme[] = $product;
+                    }
+                }
+            } else {
+                $Order = NULL;
+                $OrderItemList = NUll;
+                $product_itme = NUll;
             }
+
+
+            return $this->render('@app/views/profile/purchase_order', compact('Order', 'OrderItemList', 'product_itme'));
+        } else {
+            return $this->redirect(['profile/order']);
         }
-
-
-
-        return $this->render('@app/views/profile/purchase_order', compact('Order', 'OrderItemList', 'product_itme'));
     }
 
 }
