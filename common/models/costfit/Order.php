@@ -460,7 +460,8 @@ class Order extends \common\models\costfit\master\OrderMaster {
         }
 
         // adjust the query by adding the filters
-        $query->andFilterWhere(['like', 'orderNo', $this->orderNo]);
+        $query->andFilterWhere(['like', 'orderNo', $this->orderNo])
+                ->orFilterWhere(['like', 'createDateTime', $this->createDateTime]);
 
         return $dataProvider;
     }

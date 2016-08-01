@@ -92,10 +92,8 @@ class ProfileController extends MasterController {
         //print_r(Yii::$app->request->get());
 
         $searchModel = new \common\models\costfit\Order();
+        // $dataProvider = $searchModel->search(Yii::$app->request->get());
         $dataProvider = $searchModel->search(Yii::$app->request->get());
-
-        // http://dixonsatit.github.io/2014/11/30/install-krajee-yii2-grid.html
-
         return $this->render('@app/views/profile/order_history', compact('dataProvider', 'searchModel'));
     }
 
