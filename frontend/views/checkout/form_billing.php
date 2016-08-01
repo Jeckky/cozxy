@@ -92,7 +92,7 @@ if (isset($isUpdate)) {
 
 $form = ActiveForm::begin([
             'id' => 'default-shipping-address',
-//    'validateOnSubmit' => true,
+            'validateOnSubmit' => true,
             'options' => ['class' => "space-bottom $formName"],
         ]);
 

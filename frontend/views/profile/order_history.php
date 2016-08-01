@@ -21,7 +21,7 @@ $dataProvider = $searchModel->search(Yii::$app->request->get());
         color: #292c2e;
     }
 </style>
-
+<h3>รายการใบสั่งซื้อสินค้าทั้งหมด</h3>
 <?php
 
 echo GridView::widget([
@@ -33,11 +33,24 @@ echo GridView::widget([
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
         // Simple columns defined by the data contained in $dataProvider.
-// Data from the model's column will be used.
+        // Data from the model's column will be used.
         [
             'attribute' => 'orderNo',
             'format' => 'raw',
-            'filterInputOptions' => ['class' => 'form-control input-sm', 'placeholder' => 'Select Order No ...'],
+            'filterInputOptions' => ['class' => 'form-control input-sm', 'placeholder' => 'Search Order No ...'],
+        ],
+        [
+            'attribute' => 'total',
+            'value' => function ($model) {
+                if ($model->total != null) {
+                    return $model->total . ' บาท';
+                    //or: return Html::encode($model->some_attribute)
+                } else {
+                    return '';
+                }
+            },
+            'format' => 'html',
+            'filter' => FALSE
         ],
         [
             'attribute' => 'Create Date',
@@ -48,7 +61,7 @@ echo GridView::widget([
                 'size' => 'sm',
                 'type' => DatePicker::TYPE_INPUT,
                 'options' => [
-                    'placeholder' => 'Select date ...',
+                    'placeholder' => 'Search date ...',
                     'class' => 'input-sm',
                 ],
                 'pluginOptions' => [
