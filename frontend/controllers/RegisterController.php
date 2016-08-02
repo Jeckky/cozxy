@@ -76,7 +76,8 @@ class RegisterController extends MasterController {
                 $model->addError("password", 'Confirm password not match');
             }
         }
-        return $this->render('register', ['model' => $model, 'loginForm' => $loginForm]);
+        $term = \common\models\costfit\ContentGroup::find()->where("lower(title)='term'")->one();
+        return $this->render('register', ['model' => $model, 'loginForm' => $loginForm, 'term' => $term]);
     }
 
     public function actionThank() {

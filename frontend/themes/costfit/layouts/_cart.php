@@ -26,7 +26,18 @@
         </div>
         <div class="footer group">
             <div class="buttons">
-                <a class="btn btn-outlined-invert" href="<?= Yii::$app->homeUrl ?>checkout"><i class="icon-download"></i>Checkout</a>
+                <?php
+                if (\Yii::$app->user->isGuest == 1) {
+                    ?>
+                    <a class="btn btn-outlined-invert" href="<?= Yii::$app->homeUrl ?>register/login"><i class="icon-download"></i>Checkout</a>
+                    <?php
+                } else {
+                    ?>
+                    <a class="btn btn-outlined-invert" href="<?= Yii::$app->homeUrl ?>checkout"><i class="icon-download"></i>Checkout</a>
+                    <?php
+                }
+                ?>
+
                 <a class="btn btn-outlined-invert" href="<?= Yii::$app->homeUrl ?>cart">
                     <i class="icon-shopping-cart-content"></i>To cart
                 </a>
