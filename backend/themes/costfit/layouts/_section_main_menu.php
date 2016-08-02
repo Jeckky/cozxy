@@ -198,6 +198,34 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             </li>
 
             <li class="mm-dropdown">
+                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Flow Chart  </span><span class="label label-danger">new</span><span class="badge badge-primary">1</span></a>
+                <ul>
+                    <li class="mm-dropdown">
+                        <a tabindex="-1" href="#"><span class="mm-text">Frontend</span><span class="label label-warning">2</span></a>
+                        <ul>
+                            <li>
+                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=frontOrder"><span class="mm-text">Order</span></a>
+                            </li>
+                            <!--                            <li>
+                                                            <a tabindex="-1" href="<?php // echo $baseUrl;          ?>/shipping/package-type"><span class="mm-text">Package Type</span></a>
+                                                        </li>-->
+                        </ul>
+                    </li>
+                    <li class="mm-dropdown">
+                        <a tabindex="-1" href="#"><span class="mm-text">Backend</span><span class="label label-warning">2</span></a>
+                        <ul>
+                            <li>
+                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=order"><span class="mm-text">Order</span></a>
+                            </li>
+                            <!--                            <li>
+                                                            <a tabindex="-1" href="<?php // echo $baseUrl;          ?>/shipping/package-type"><span class="mm-text">Package Type</span></a>
+                                                        </li>-->
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="mm-dropdown">
                 <a href="#"><i class="menu-icon fa fa-sitemap"></i><span class="mm-text">Menu levels</span><span class="badge badge-primary">6</span></a>
                 <ul>
                     <li>

@@ -14,4 +14,9 @@ class DashboardController extends DashboardMasterController
         return $this->render('index', compact('circulations', 'orderToday', 'todaySummary'));
     }
 
+    public function actionFlowchart($id)
+    {
+        return $this->render('flowchart', compact('id'));
+    }
+
 }
