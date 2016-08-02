@@ -25,6 +25,8 @@ if (is_array($Order)) {
     .table{
         font-size: 13px;
         white-space:pre-line;
+        color:#292c2e;
+
     }
     .table>thead>tr>th {
         vertical-align: bottom;
@@ -65,7 +67,7 @@ if (is_array($Order)) {
                             ?>
                             <tr>
                                 <td><?php echo ++$key; ?></td>
-                                <td><?php echo $value[$i]->code; ?></td>
+                                <td><?php echo ($value[$i]->code != '') ? $value[$i]->code : '-'; ?></td>
                                 <td style="width: 35%;"><?php echo $value[$i]->title; ?></td>
                                 <td><?php echo ''; ?></td>
                                 <td><?php echo $value[$i]->price; ?></td>

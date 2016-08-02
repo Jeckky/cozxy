@@ -76,7 +76,7 @@ echo GridView::widget([
             'buttons' => [
                 'Order' => function($url, $model, $baseUrl) {
                     return Html::a('<i class="fa fa-eye" aria-hidden="true"></i>', Yii::$app->homeUrl . "profile/purchase-order/" . $model->encodeParams(['orderId' => $model->orderId]), [
-                                'title' => Yii::t('app', ' View Order No'),]);
+                                'title' => Yii::t('app', ' View Order No :' . $model->orderId),]);
                 },
                     ]
                 ],
