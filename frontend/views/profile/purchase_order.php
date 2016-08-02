@@ -31,7 +31,7 @@ if (is_array($Order)) {
         border-bottom: 1px solid #ddd;
     }
     th {
-        font-weight: 700;
+        font-weight: 500;
     }
 </style>
 <h3>รายการใบสั่งซื้อเลขที่ <?php echo $orderNo; ?></h3>
