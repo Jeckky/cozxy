@@ -211,10 +211,12 @@ class ProfileController extends MasterController {
         }
     }
 
-    public function actionPurchaseOrder() {
+    public function actionPurchaseOrder($hash) {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
+        $k = base64_decode(base64_decode($hash));
+        $params = \common\models\ModelMaster::decodeParams($hash);
 
         $orderId = Yii::$app->request->get('OrderNo');
         $this->layout = "/content_profile";
@@ -223,14 +225,14 @@ class ProfileController extends MasterController {
         $this->subSubTitle = "Order Purchase";
 
         //echo htmlspecialchars($orderId);
-        if (isset($orderId)) {
-            $Order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . htmlspecialchars($orderId) . '" ')
+        if (isset($params['orderId'])) {
+            $Order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . $params['orderId'] . '" ')
                     ->all();
             // echo '<pre>';
             // print_r($Order);
             if (count($Order) == 1) {
                 $Order = $Order[0]->attributes;
-                $OrderItem = \common\models\costfit\OrderItem::find()->where('orderId = ' . $orderId)
+                $OrderItem = \common\models\costfit\OrderItem::find()->where('orderId = ' . $params['orderId'])
                         ->all();
                 foreach ($OrderItem as $key => $value) {
                     $OrderItemList['quantity'] = $value['quantity'];

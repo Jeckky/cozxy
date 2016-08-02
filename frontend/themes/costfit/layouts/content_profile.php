@@ -50,6 +50,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <?php
                     if (Yii::$app->controller->action->id == 'purchase-order') {
                         ?>
+
                         <div class="bs-example" data-example-id="btn-tags" style="background-color:#3cc; height:45px; margin-top: 20px;  padding: 10px 12px; color: #fff; border-width: 1px;  border-radius: 4px 4px 0 0; -webkit-box-shadow: none; box-shadow: none;">
                             <span style="float: left; width: 70%; text-align: left;">Default ...</span>
                             <span style="float: left; width: 30%; text-align: right;">

@@ -39,7 +39,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 'search/<title>/<hash>' => 'search/index',
-            //'products/<title>/<hash>' => 'products/index',
+                'profile/purchase-order/<hash>' => 'profile/purchase-order',
             ],
         ],
         /**
