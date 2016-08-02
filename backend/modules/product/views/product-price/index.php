@@ -104,7 +104,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             return isset($model->webId) ? $model->webName->title : NULL;
                         }
                     ],
-                    'url',
+                    ['attribute' => 'url',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            return isset($model->linkName) ? $model->linkName : NULL;
+                        }
+                    ],
                     ['attribute' => 'price',
                         'value' => function($model) {
                             //throw new \yii\base\Exception(print_r($model, true));

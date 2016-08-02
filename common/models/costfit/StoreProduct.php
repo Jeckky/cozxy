@@ -25,8 +25,7 @@ use \common\models\costfit\master\StoreProductMaster;
  * @property Store $store
  * @property StoreProductOrderItem[] $storeProductOrderItems
  */
-class StoreProduct extends \common\models\costfit\master\StoreProductMaster
-{
+class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
 
     const SHIPPING_FROM_TYPE_COSTFIT = 1;
     const SHIPPING_FROM_TYPE_SUPPLIER_TO_COSTFIT = 2;
@@ -35,16 +34,14 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
             'quantity' => 'จำนวน',
             'price' => 'ราคา',
@@ -55,8 +52,7 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster
         ]);
     }
 
-    public function findAllShippingFromTypeArray()
-    {
+    public function findAllShippingFromTypeArray() {
         return [
             self::SHIPPING_FROM_TYPE_COSTFIT => "ส่งจาก costfit",
             self::SHIPPING_FROM_TYPE_SUPPLIER_TO_COSTFIT => "รับจาก Supplier ส่งจาก costfit",
@@ -64,14 +60,18 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster
         ];
     }
 
-    public function getShippingFromTypeText($type)
-    {
+    public function getShippingFromTypeText($type) {
         $res = $this->findAllShippingTypeFromArray();
         if (isset($res[$type])) {
             return $res[$type];
         } else {
             return NULL;
         }
+    }
+
+    public function getStores() {
+
+        return $this->hasOne(Store::className(), ['storeId' => 'storeId']);
     }
 
 }

@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 
-
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\StoreProduct */
 
@@ -13,9 +12,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <div class="store-product-create">
 
-    <?= $this->render('_form', [
+    <?=
+    $this->render('_form', [
         'model' => $model,
+        'storeProductGroupId' => $storeProductGroupId,
         'title' => Html::encode($this->title)
-    ]) ?>
+    ])
+    ?>
 
 </div>

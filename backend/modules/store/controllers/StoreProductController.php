@@ -12,16 +12,14 @@ use yii\filters\VerbFilter;
 /**
  * StoreProductController implements the CRUD actions for StoreProduct model.
  */
-class StoreProductController extends StoreMasterController
-{
+class StoreProductController extends StoreMasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post'],
+                    'delete' => ['GET'],
                 ],
             ],
         ];
@@ -31,13 +29,14 @@ class StoreProductController extends StoreMasterController
      * Lists all StoreProduct models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
+        $storeProductGroupId = '';
         if (isset($_GET["storeId"])) {
             $query = StoreProduct::find()->where("storeId=" . $_GET["storeId"]);
         } else {
             if (isset($_GET['storeProductGroupId'])) {
                 $query = StoreProduct::find()->where("storeProductGroupId=" . $_GET["storeProductGroupId"]);
+                $storeProductGroupId = $_GET['storeProductGroupId'];
             } else {
                 $query = StoreProduct::find();
             }
@@ -47,7 +46,8 @@ class StoreProductController extends StoreMasterController
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+                    'dataProvider' => $dataProvider,
+                    'storeProductGroupId' => $storeProductGroupId
         ]);
     }
 
@@ -56,10 +56,9 @@ class StoreProductController extends StoreMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -68,14 +67,15 @@ class StoreProductController extends StoreMasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
+        $storeProductGroupId = '';
         $model = new StoreProduct();
         if (isset($_GET["storeId"])) {
             $model->storeId = $_GET["storeId"];
         }
         if (isset($_GET['storeProductGroupId'])) {
             $model->storeProductGroupId = $_GET['storeProductGroupId'];
+            $storeProductGroupId = $_GET['storeProductGroupId'];
         }
         if (isset($_POST["StoreProduct"])) {
             $model->attributes = $_POST["StoreProduct"];
@@ -84,11 +84,16 @@ class StoreProductController extends StoreMasterController
 
             if ($model->save()) {
                 $this->updateStoreProductGroupSummary($model->storeProductGroupId);
-                return $this->redirect(['index?storeId=' . $model->storeId]);
+
+                return $this->redirect(['index',
+                            'storeId' => $model->storeId,
+                            'storeProductGroupId' => $storeProductGroupId
+                ]);
             }
         }
         return $this->render('create', [
-            'model' => $model,
+                    'model' => $model,
+                    'storeProductGroupId' => $storeProductGroupId
         ]);
     }
 
@@ -98,9 +103,12 @@ class StoreProductController extends StoreMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
+        $storeProductGroupId = '';
         $model = $this->findModel($id);
+        if (isset($_GET['storeProductGroupId'])) {
+            $storeProductGroupId = $_GET['storeProductGroupId'];
+        }
         if (isset($_POST["StoreProduct"])) {
             $model->attributes = $_POST["StoreProduct"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
@@ -108,11 +116,12 @@ class StoreProductController extends StoreMasterController
 
             if ($model->save()) {
                 $this->updateStoreProductGroupSummary($model->storeProductGroupId);
-                return $this->redirect(['index?storeId=' . $model->storeId]);
+                return $this->redirect(['index', 'storeId' => $model->storeId, 'storeProductGroupId' => $_GET['storeProductGroupId']]);
             }
         }
         return $this->render('update', [
-            'model' => $model,
+                    'model' => $model,
+                    'storeProductGroupId' => $storeProductGroupId
         ]);
     }
 
@@ -122,11 +131,12 @@ class StoreProductController extends StoreMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+    public function actionDelete($id) {
+        $model = StoreProduct::find()->where("storeProductId='" . $id . "'")->one();
+        $store = $model->storeId;
+        $storeProductGroupId = $model->storeProductGroupId;
+        $model->delete();
+        return $this->redirect(['index', 'storeId' => $store, 'storeProductGroupId' => $storeProductGroupId]);
     }
 
     /**
@@ -136,8 +146,7 @@ class StoreProductController extends StoreMasterController
      * @return StoreProduct the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = StoreProduct::findOne($id)) !== null) {
             return $model;
         } else {
@@ -145,8 +154,15 @@ class StoreProductController extends StoreMasterController
         }
     }
 
-    public function updateStoreProductGroupSummary($productStoreGroupId)
-    {
+    public function actionCheck() {
+        if (isset($_GET['storeProductGroupId'])) {
+            $model = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId='" . $_GET['storeProductGroupId'] . "'")->one();
+        }
+        return $this->render('check', ['model' => $model
+        ]);
+    }
+
+    public function updateStoreProductGroupSummary($productStoreGroupId) {
         $summary = 0;
         $stg = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId =" . $productStoreGroupId)->one();
         foreach ($stg->storeProducts as $sp) {

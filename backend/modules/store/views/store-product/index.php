@@ -42,7 +42,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     [
                         'attribute' => 'storeId',
                         'value' => function($model) {
-                            return isset($model->store) ? $model->store->title : NULL;
+                            return isset($model->stores) ? $model->stores->title : NULL;
                         }
                     ],
                     [
@@ -72,24 +72,19 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'header' => 'Actions',
                         'template' => '{view} {update} {delete}',
                         'buttons' => [
-//                            'product' => function($url, $model) {
-//                                return Html::a('<br><u>Product</u>', ['/product/manage', 'storeProductId' => $model->storeProductId], [
-//                                    'title' => Yii::t('app', 'Change today\'s lists'),]);
-//                            },
-//                            'storeProductGroup' => function($url, $model) {
-//                                return Html::a('<br><u>StoreProductGroup</u>', ['/storeProductGroup/manage', 'storeProductId' => $model->storeProductId], [
-//                                    'title' => Yii::t('app', 'Change today\'s lists'),]);
-//                            },
-//                            'store' => function($url, $model) {
-//                                return Html::a('<br><u>Store</u>', ['/store/manage', 'storeProductId' => $model->storeProductId], [
-//                                    'title' => Yii::t('app', 'Change today\'s lists'),]);
-//                            },
-                        ]
-                    ],
-                ],
-            ]);
-            ?>
-        </div>
-    </div>
-    <?php Pjax::end(); ?>
+                            'update' => function($url, $model, $id) {
+                                return Html::a("<span class='glyphicon glyphicon-pencil'></span>", ['update', 'id' => $id, 'storeProductGroupId' => $model->storeProductGroupId], [
+                                            'title' => Yii::t('app', 'Edit'),]);
+                            },
+                                    'delete' => function($url, $model, $id) {
+                                return Html::a("<span class='glyphicon glyphicon-trash'></span>", ['delete', 'id' => $id, 'storeProductGroupId' => $model->storeProductGroupId], [
+                                            'title' => Yii::t('app', 'Delete'), 'data-confirm' => 'Are you sure to delete']);
+                            },]
+                            ],
+                        ],
+                    ]);
+                    ?>
+                </div>
+            </div>
+            <?php Pjax::end(); ?>
 </div>

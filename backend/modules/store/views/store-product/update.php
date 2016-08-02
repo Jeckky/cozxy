@@ -13,9 +13,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <div class="store-product-update">
 
-    <?= $this->render('_form', [
+    <?=
+    $this->render('_form', [
         'model' => $model,
+        'storeProductGroupId' => $storeProductGroupId,
         'title' => Html::encode($this->title)
-    ]) ?>
+    ])
+    ?>
 
 </div>

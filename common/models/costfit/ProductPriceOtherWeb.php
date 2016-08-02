@@ -52,4 +52,12 @@ class ProductPriceOtherWeb extends \common\models\costfit\master\ProductPriceOth
         return $this->hasOne(UpdatePrice::className(), ['productPriceOtherWebId' => 'productPriceOtherWebId'])->orderBy("updatePriceId DESC");
     }
 
+    public function getLinkName() {
+        $text = '';
+        if (isset($this->url)) {
+            $text = "<a href='" . $this->url . "' target='_blank'>" . $this->url . "</a>";
+        }
+        return $text;
+    }
+
 }

@@ -72,17 +72,21 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     // 'updateDateTime',
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
-                        'template' => '{view} {update} {delete} {product}',
+                        'template' => '{view} {update} {delete} {product} {check}',
                         'buttons' => [
                             'product' => function($url, $model) {
                                 return Html::a('<br><u>Product</u>', ['/store/store-product', 'storeProductGroupId' => $model->storeProductGroupId], [
-                                    'title' => Yii::t('app', 'Change today\'s lists'),]);
+                                            'title' => Yii::t('app', 'Change today\'s lists'),]);
+                            },
+                                    'check' => function($url, $model) {
+                                return Html::a('<br><u>ตรวจรับ</u>', ['/store/store-product/check', 'storeProductGroupId' => $model->storeProductGroupId], [
+                                            'title' => Yii::t('app', 'check\'s lists'),]);
                             },]
-                    ],
-                ],
-            ]);
-            ?>
-        </div>
-    </div>
-    <?php Pjax::end(); ?>
+                            ],
+                        ],
+                    ]);
+                    ?>
+                </div>
+            </div>
+            <?php Pjax::end(); ?>
 </div>
