@@ -33,6 +33,9 @@ if (is_array($Order)) {
     th {
         font-weight: 600;
     }
+    .bg-purchase-order{
+        background-color: #f5f5f5;
+    }
 
 </style>
 <h3>รายการใบสั่งซื้อเลขที่ <?php echo $orderNo; ?></h3>
@@ -82,23 +85,23 @@ if (is_array($Order)) {
                     ?>
                     <tr>
                         <td colspan="6" class="text-right">ราคาสินค้ารวมภาษีมูลค่าเพิ่ม / sub Total Included VAT :</td>
-                        <td><?php echo $vat; ?></td>
+                        <td class="bg-purchase-order"><?php echo $vat; ?></td>
                     </tr>
                     <tr>
                         <td colspan="6" class="text-right">ส่วนลด/Discount(3.00%) :</td>
-                        <td> - </td>
+                        <td class="bg-purchase-order"> - </td>
                     </tr>
                     <tr>
                         <td colspan="6" class="text-right">ภาษีมูลค่าเพิ่ม/VAT 7 % :</td>
-                        <td><?php echo $vat; ?></td>
+                        <td class="bg-purchase-order"><?php echo $vat; ?></td>
                     </tr>
                     <tr>
                         <td colspan="6" class="text-right">ราคาสินค้าไม่รวมภาษี/Sub Total excluded VAT :</td>
-                        <td><?php echo $totalExVat; ?></td>
+                        <td class="bg-purchase-order"><?php echo $totalExVat; ?></td>
                     </tr>
                     <tr >
                         <td colspan="6" class="text-right">ราคาสินค้าที่ต้องชำระเงินรวมภาษีมูลค่าเพิ่ม/Total excluded VAT :</td>
-                        <td><?php echo $total; ?></td>
+                        <td class="bg-purchase-order"><?php echo $total; ?></td>
                     </tr>
 
                 </tbody>
