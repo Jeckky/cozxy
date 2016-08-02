@@ -84,7 +84,6 @@ class ProductController extends ProductMasterController {
             if ($model->save()) {
                 $lastId = Yii::$app->db->getLastInsertID();
                 \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $model->productId);
-
                 $productShipping = \common\models\costfit\ProductShippingPrice::find()->where("productId='" . $lastId . "'")->all();
                 if (count($productShipping) <= 0) {
                     $model->addProductShipping($lastId);

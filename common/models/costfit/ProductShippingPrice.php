@@ -44,4 +44,16 @@ class ProductShippingPrice extends \common\models\costfit\master\ProductShipping
         return $this->hasOne(ShippingType::className(), ['shippingTypeId' => 'shippingTypeId']);
     }
 
+    public function getTypes() {
+        $type = '';
+        if (isset($this->type)) {
+            if ($this->type == 1) {
+                $type = 'CASH';
+            } else {
+                $type = '%';
+            }
+        }
+        return $type;
+    }
+
 }

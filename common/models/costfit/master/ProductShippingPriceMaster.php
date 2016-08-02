@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "product_shipping_price".
 *
-    * @property integer $producetShippingPriceId
+    * @property integer $productShippingPriceId
     * @property integer $productId
     * @property integer $shippingTypeId
     * @property string $discount
@@ -45,7 +45,7 @@ return [
 public function attributeLabels()
 {
 return [
-    'producetShippingPriceId' => Yii::t('product_shipping_price', 'Producet Shipping Price ID'),
+    'productShippingPriceId' => Yii::t('product_shipping_price', 'Product Shipping Price ID'),
     'productId' => Yii::t('product_shipping_price', 'Product ID'),
     'shippingTypeId' => Yii::t('product_shipping_price', 'Shipping Type ID'),
     'discount' => Yii::t('product_shipping_price', 'Discount'),

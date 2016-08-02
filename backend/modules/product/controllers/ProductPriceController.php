@@ -9,6 +9,7 @@ use backend\controllers\BackendMasterController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\costfit\ProductShippingPrice;
+use common\models\costfit\ProductPriceOtherWeb;
 
 /**
  * ProductPriceController implements the CRUD actions for ProductPrice model.
@@ -36,9 +37,11 @@ class ProductPriceController extends ProductMasterController {
             $id = $_GET['productId'];
             $query = ProductPrice::find()->where("productId=" . $_GET["productId"]);
             $queryPrice = ProductShippingPrice::find()->where("productId=" . $_GET["productId"]);
+            $queryWeb = ProductPriceOtherWeb::find()->where("productId=" . $_GET["productId"]);
         } else {
             $query = ProductPrice::find();
             $queryPrice = ProductShippingPrice::find();
+            $queryWeb = ProductPriceOtherWeb::find();
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -46,9 +49,13 @@ class ProductPriceController extends ProductMasterController {
         $dataProviderPrice = new ActiveDataProvider([
             'query' => $queryPrice,
         ]);
+        $dataProviderWeb = new ActiveDataProvider([
+            'query' => $queryWeb,
+        ]);
         return $this->render('index', [
                     'dataProvider' => $dataProvider,
                     'dataProviderPrice' => $dataProviderPrice,
+                    'dataProviderWeb' => $dataProviderWeb,
                     'id' => $id
         ]);
     }
@@ -78,7 +85,7 @@ class ProductPriceController extends ProductMasterController {
             $model->attributes = $_POST["ProductPrice"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
-                return $this->redirect(['index']);
+                return $this->redirect(['index', 'productId' => $_GET['productId']]);
             }
         }
         return $this->render('create', [
@@ -97,11 +104,8 @@ class ProductPriceController extends ProductMasterController {
         if (isset($_POST["ProductPrice"])) {
             $model->attributes = $_POST["ProductPrice"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-
-
-
             if ($model->save()) {
-                return $this->redirect(['index']);
+                return $this->redirect(['index', 'productId' => $model->productId]);
             }
         }
         return $this->render('update', [
@@ -117,8 +121,8 @@ class ProductPriceController extends ProductMasterController {
      */
     public function actionDelete($id) {
         $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $product = ProductPrice::find()->where("productPriceId='" . $id . "'")->one();
+        return $this->redirect(['index', 'productId' => $product->productId]);
     }
 
     /**

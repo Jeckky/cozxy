@@ -20,8 +20,7 @@ use \common\models\costfit\master\ProductPriceMaster;
  *
  * @property Product $product
  */
-class ProductPrice extends \common\models\costfit\master\ProductPriceMaster
-{
+class ProductPrice extends \common\models\costfit\master\ProductPriceMaster {
 
     const DISCOUNT_TYPE_CASH = 1;
     const DISCOUNT_TYPE_PERCENT = 2;
@@ -29,16 +28,14 @@ class ProductPrice extends \common\models\costfit\master\ProductPriceMaster
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributes()
-    {
+    public function attributes() {
         return array_merge(parent::attributes(), [
             'maxQuantity'
         ]);
@@ -47,21 +44,18 @@ class ProductPrice extends \common\models\costfit\master\ProductPriceMaster
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function getDiscountTypeArray()
-    {
+    public function getDiscountTypeArray() {
         return [
             self::DISCOUNT_TYPE_CASH => "CASH",
             self::DISCOUNT_TYPE_PERCENT => "PERCENT",
         ];
     }
 
-    public function getDiscountTypeText($type)
-    {
+    public function getDiscountTypeText($type) {
         $res = $this->getDiscountTypeArray();
         if (isset($res[$type])) {
             return $res[$type];
@@ -70,8 +64,7 @@ class ProductPrice extends \common\models\costfit\master\ProductPriceMaster
         }
     }
 
-    public function getSavePrice()
-    {
+    public function getSavePrice() {
         if ($this->discountType == 1) {
             return $this->discountValue;
         } else {

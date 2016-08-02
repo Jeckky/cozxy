@@ -23,7 +23,7 @@ class ProductShippingPriceController extends ProductMasterController {
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['GET'],
                 ],
             ],
         ];
@@ -112,9 +112,10 @@ class ProductShippingPriceController extends ProductMasterController {
      * @return mixed
      */
     public function actionDelete($id) {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        //$this->findModel($id)->delete();
+        $model = ProductShippingPrice::find()->where("productShippingPriceId='" . $id . "'")->one();
+        $model->delete();
+        return $this->redirect(['product-price/index', 'productId' => $model->productId]);
     }
 
     /**
