@@ -39,7 +39,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <!--Login confirmCart-->
 
-<div class="modal fade" id="confirmCartModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="confirmCartModal-Rename-Fixed-Bug-Error" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
 
     <div class="modal-dialog">
         <div class="modal-content">
