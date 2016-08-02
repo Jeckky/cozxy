@@ -6,6 +6,7 @@ use Yii;
 use \common\models\costfit\master\ProductSupplierMaster;
 
 /**
+
  * This is the model class for table "product_supplier".
  *
  * @property integer $productSupplierId

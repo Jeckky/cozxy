@@ -28,8 +28,12 @@ class TestController extends MasterController {
         $this->title = 'Cost.fit | test case';
         $this->subTitle = 'test case ';
         $this->subSubTitle = 'test case';
+        $searchModel = new \common\models\costfit\Order();
+        $dataProvider = $searchModel->search(Yii::$app->request->get());
 
-        return $this->render('test');
+        // http://dixonsatit.github.io/2014/11/30/install-krajee-yii2-grid.html
+
+        return $this->render('test', compact('dataProvider', 'searchModel'));
     }
 
 }

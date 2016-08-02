@@ -70,14 +70,10 @@ class ProfileController extends MasterController {
         $this->subTitle = 'Home';
         $this->subSubTitle = "Order History";
 
-        $query = \common\models\costfit\Order::find()->where("userId ='" . Yii::$app->user->id . "'");
-
-        //$query->orderBy('createDateTime desc');
-        $model_list = new ActiveDataProvider([
-            'query' => $query
-        ]);
-
-        return $this->render('@app/views/profile/order_history', compact('model_list'));
+        $searchModel = new \common\models\costfit\Order();
+        // $dataProvider = $searchModel->search(Yii::$app->request->get());
+        $dataProvider = $searchModel->search(Yii::$app->request->get());
+        return $this->render('@app/views/profile/order_history', compact('dataProvider', 'searchModel'));
     }
 
     public function actionDataAddress() {
@@ -205,8 +201,6 @@ class ProfileController extends MasterController {
     public function actionReset() {
         $request = Yii::$app->request;
         $token = $request->post('token');
-        // $loginForm = new common\models\User();
-        //$loginForm->login();
 
         if (Yii::$app->security->validatePassword($token, \Yii::$app->user->identity->password_hash)) {
             // Password Match
@@ -215,14 +209,51 @@ class ProfileController extends MasterController {
             //No Match
             echo FALSE;
         }
+    }
+
+    public function actionPurchaseOrder() {
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
+
+        $orderId = Yii::$app->request->get('OrderNo');
+        $this->layout = "/content_profile";
+        $this->title = 'Cost.fit | Order Purchase ';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = "Order Purchase";
+
+        //echo htmlspecialchars($orderId);
+        if (isset($orderId)) {
+            $Order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . htmlspecialchars($orderId) . '" ')
+                    ->all();
+            // echo '<pre>';
+            // print_r($Order);
+            if (count($Order) == 1) {
+                $Order = $Order[0]->attributes;
+                $OrderItem = \common\models\costfit\OrderItem::find()->where('orderId = ' . $orderId)
+                        ->all();
+                foreach ($OrderItem as $key => $value) {
+                    $OrderItemList['quantity'] = $value['quantity'];
+                    $OrderItemList['price'] = $value['price'];
+                    $OrderItemList['total'] = $value['total'];
+
+                    $product = \common\models\costfit\product::find()->where('productId = ' . $value['productId'])
+                            ->all();
+                    foreach ($product as $key => $item1) {
+                        $product_itme[] = $product;
+                    }
+                }
+            } else {
+                $Order = NULL;
+                $OrderItemList = NUll;
+                $product_itme = NUll;
+            }
 
 
-        // $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "' and password_hash ='" . $token . "'   ")->one();
-        //if (count($model) == 1) {
-        //echo TRUE;
-        //} else {
-        //echo FALSE;
-        //}
+            return $this->render('@app/views/profile/purchase_order', compact('Order', 'OrderItemList', 'product_itme'));
+        } else {
+            return $this->redirect(['profile/order']);
+        }
     }
 
 }

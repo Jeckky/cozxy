@@ -1,7 +1,7 @@
 <?php
 
 $params = array_merge(
-require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
+        require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
 );
 
 return [
@@ -9,6 +9,14 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+    'modules' => [
+        'gridview' => [
+            'class' => '\kartik\grid\Module'
+        ],
+        'datecontrol' => [
+            'class' => '\kartik\datecontrol\Module'
+        ]
+    ],
     'components' => [
         'user' => [
             'identityClass' => 'common\models\User',
@@ -31,7 +39,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 'search/<title>/<hash>' => 'search/index',
-            //'products/<title>/<hash>' => 'products/index', 
+            //'products/<title>/<hash>' => 'products/index',
             ],
         ],
         /**
