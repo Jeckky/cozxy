@@ -31,8 +31,9 @@ if (is_array($Order)) {
         border-bottom: 1px solid #ddd;
     }
     th {
-        font-weight: 500;
+        font-weight: 600;
     }
+
 </style>
 <h3>รายการใบสั่งซื้อเลขที่ <?php echo $orderNo; ?></h3>
 
@@ -62,7 +63,7 @@ if (is_array($Order)) {
                             <tr>
                                 <td><?php echo ++$key; ?></td>
                                 <td><?php echo $value[$i]->code; ?></td>
-                                <td><?php echo $value[$i]->title; ?></td>
+                                <td style="width: 35%;"><?php echo $value[$i]->title; ?></td>
                                 <td><?php echo ''; ?></td>
                                 <td><?php echo $value[$i]->price; ?></td>
                                 <td><?php echo $OrderItemList['quantity'] ?></td>
