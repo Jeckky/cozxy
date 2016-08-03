@@ -52,7 +52,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
     const ORDER_STATUS_FINANCE_REJECT = 7;
     const ORDER_STATUS_SHIPPING = 8;
     const ORDER_STATUS_SHIPPED = 9;
-    //
+//
     const CHECKOUT_STEP_WAIT_CHECKOUT = 0;
     const CHECKOUT_STEP_ADDRESS = 1;
     const CHECKOUT_STEP_PAYMENT = 2;
@@ -454,15 +454,33 @@ class Order extends \common\models\costfit\master\OrderMaster {
             'query' => $query,
         ]);
 
-        // load the search form data and validate
+// load the search form data and validate
         if (!($this->load($params) )) {
             return $dataProvider;
         }
+        //throw new \yii\base\Exception(print_r($_REQUEST, true));
+        /*
+          Array
+          (
+          [Order] => Array
+          (
+          [orderNo] =>
+          [createDateTime] => 2016-07-27
+          )
+         */
 
-        // adjust the query by adding the filters
+// adjust the query by adding the filters
+//        $query->andWhere("orderNo like '%" . $this->orderNo . "'% OR date(createDateTimes) like '%$this->createDateTime%'");
+//                ->orWhere(['like', 'date(createDateTimes)', $this->createDateTime]);
+        // if ($this->orderNo = !'') {
         $query->andFilterWhere(['like', 'orderNo', $this->orderNo])
-                ->orFilterWhere(['like', 'createDateTime', $this->createDateTime]);
+                //} else if ($this->createDateTime != '') {
+                ->andFilterWhere(['createDateTime' => $this->createDateTime]);
+        // }
 
+        echo '<pre>';
+        print_r($query);
+        exit();
         return $dataProvider;
     }
 
