@@ -23,7 +23,7 @@
             <?php
         } else if ($id == 'productPrice') { //Place Frontend Order Embed Iframe
             ?>
-            <iframe frameborder="0" style="width:100%;height:-821px" src="https://www.draw.io/?chrome=0&lightbox=1&edit=https%3A%2F%2Fwww.draw.io%2F%23G0B9JTDqsqskF6R01qaC02N3ZYNE0&nav=1#G0B9JTDqsqskF6R01qaC02N3ZYNE0"></iframe>
+            <iframe frameborder="0" style="width:100%;height:1318px" src="https://www.draw.io/?chrome=0&lightbox=1&edit=https%3A%2F%2Fwww.draw.io%2F%23G0B9JTDqsqskF6R01qaC02N3ZYNE0&nav=1#G0B9JTDqsqskF6R01qaC02N3ZYNE0"></iframe>
                 <?php
             }
             ?>
