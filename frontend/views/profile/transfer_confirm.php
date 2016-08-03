@@ -29,7 +29,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     }
 
 </style>
-<h3><i class="fa fa-file-text" aria-hidden="true"></i> <?php echo $subSubTitle; ?></h3>
+<h3><i class="fa fa-file-text" aria-hidden="true"></i> <?= isset($this->context->subSubTitle) ? $this->context->subSubTitle : "sub sub Title" ?></h3>
 
 <!--Support-->
 <section class="support">

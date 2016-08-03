@@ -7,12 +7,11 @@ use yii\grid\GridView;
 //use \yii\jui\DatePicker;
 use kartik\date\DatePicker;
 
-//use common\models\ModelMaster;
-
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 if (is_array($Order)) {
     $orderNo = $Order['orderNo'];
+    $orderId = $Order['orderId'];
     $vat = $Order['vat'];
     $totalExVat = $Order['totalExVat'];
     $total = $Order['total'];
@@ -22,6 +21,8 @@ if (is_array($Order)) {
     $totalExVat = '-';
     $total = '-';
 }
+
+$orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $orderId]);
 ?>
 <style>
     .table{
@@ -60,7 +61,7 @@ if (is_array($Order)) {
                             <i class="fa fa-print" aria-hidden="true"></i> พิมพ์ใบ Pay-in</a>
                     </div>
                     <div class="col-sm-3 text-right" style="padding-left: 0px; padding-right: 0px;">
-                        <a href="<?php echo Yii::$app->homeUrl; ?>profile/transfer-confirm/<?php echo ''; ?>" class="btn btn-black btn-xs">
+                        <a href="<?php echo Yii::$app->homeUrl; ?>profile/transfer-confirm/<?php echo $orderIdParams; ?>" class="btn btn-black btn-xs">
                             <i class="fa fa-check" aria-hidden="true"></i> แจ้งชำระเงิน</a>
                     </div>
                 </div>

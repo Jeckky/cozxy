@@ -271,8 +271,7 @@ class ProfileController extends MasterController {
         $this->title = 'Cost.fit | Order transfer confirm';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Order transfer confirm";
-
-        return $this->redirect(['profile/transfer_confirm']);
+        return $this->render('@app/views/profile/transfer_confirm');
     }
 
 }

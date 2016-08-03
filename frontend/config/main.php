@@ -40,6 +40,7 @@ return [
             'rules' => [
                 'search/<title>/<hash>' => 'search/index',
                 'profile/purchase-order/<hash>' => 'profile/purchase-order',
+                'profile/transfer-confirm/<hash>' => 'profile/transfer-confirm',
             ],
         ],
         /**
