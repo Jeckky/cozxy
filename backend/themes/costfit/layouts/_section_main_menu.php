@@ -207,7 +207,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                                 <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=frontOrder"><span class="mm-text">Order</span></a>
                             </li>
                             <!--                            <li>
-                                                            <a tabindex="-1" href="<?php // echo $baseUrl;          ?>/shipping/package-type"><span class="mm-text">Package Type</span></a>
+                                                            <a tabindex="-1" href="<?php // echo $baseUrl;                    ?>/shipping/package-type"><span class="mm-text">Package Type</span></a>
                                                         </li>-->
                         </ul>
                     </li>
@@ -217,9 +217,17 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                             <li>
                                 <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=order"><span class="mm-text">Order</span></a>
                             </li>
-                            <!--                            <li>
-                                                            <a tabindex="-1" href="<?php // echo $baseUrl;          ?>/shipping/package-type"><span class="mm-text">Package Type</span></a>
-                                                        </li>-->
+                            <li class="mm-dropdown">
+                                <a tabindex="-1" href="#"><span class="mm-text">Store</span></a>
+                                <ul>
+                                    <li>
+                                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=importProduct"><span class="mm-text">Import Product</span></a>
+                                    </li>
+                                    <li>
+                                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=qc"><span class="mm-text">QC</span></a>
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                 </ul>
