@@ -74,4 +74,8 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
         return $this->hasOne(Store::className(), ['storeId' => 'storeId']);
     }
 
+    public function getProducts() {
+        return $this->hasOne(Product::className(), ['productId' => 'productId']);
+    }
+
 }
