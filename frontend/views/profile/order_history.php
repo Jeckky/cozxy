@@ -13,20 +13,23 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <style>
     .table-light{
         font-size: 14px;
-        color: #292c2e;
+        color: #434b50;
     }
     .asc{
         color: #292c2e;
+    }
+    th {
+        font-weight: 700;
     }
 </style>
 <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup">
     <h3>รายการใบสั่งซื้อสินค้าทั้งหมด</h3>
     <?php
-    echo GridView::widget([
+    echo GridView::widget([//   table-striped table-bordered  //
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'tableOptions' => [
-            'class' => 'table table-striped table-bordered table-light',
+            'class' => 'table table-light',
         ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
@@ -34,25 +37,22 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             // Data from the model's column will be used.
             [
                 'attribute' => 'orderNo',
-                'format' => 'raw',
-                'filterInputOptions' => ['class' => 'form-control input-sm', 'placeholder' => 'Search Order No ...'],
-            ],
-            [
-                'attribute' => 'summary',
                 'value' => function ($model) {
                     if ($model->total != null) {
-                        return $model->total . ' บาท';
+                        return 'Order No : ' . $model->orderNo . '<br><span style ="font-size: 12px;"> ยอดรวม : ' . $model->summary . ' THB</span>';
                         //or: return Html::encode($model->some_attribute)
                     } else {
                         return '';
                     }
                 },
                 'format' => 'html',
-                'filter' => FALSE
+                'filterInputOptions' => ['class' => 'form-control input-sm  col-sm-4', 'placeholder' => 'Search Order No ...'],
             ],
             [
                 'attribute' => 'วันที่สั่งซื้อ',
-                'value' => 'createDateTime',
+                'value' => function($model) {
+                    return date("d M Y h:i:s", strtotime($model->createDateTime));
+                },
                 'format' => 'raw',
                 'filter' => DatePicker::widget([
                     'name' => 'Order[createDateTime]',
@@ -61,7 +61,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     'type' => DatePicker::TYPE_INPUT,
                     'options' => [
                         'placeholder' => 'Search date ...',
-                        'class' => 'input-sm',
+                        'class' => 'input-sm col-sm-6',
                     ],
                     'pluginOptions' => [
                         'autoclose' => true,
