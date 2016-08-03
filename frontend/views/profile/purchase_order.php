@@ -86,7 +86,7 @@ if (is_array($Order)) {
                                 <tr>
                                     <td><?php echo ++$num; ?></td>
                                     <td><?php echo ($value[$i]->code != '') ? $value[$i]->code : '-'; ?></td>
-                                    <td style="width: 35%;"><?php echo $value[$i]->title; ?></td>
+                                    <td style="width: 30%;"><?php echo $value[$i]->title; ?></td>
                                     <td><?php echo ''; ?></td>
                                     <td><?php echo $OrderItemList[$key]['price']; ?></td>
                                     <td><?php echo $OrderItemList[$key]['quantity'] ?></td>

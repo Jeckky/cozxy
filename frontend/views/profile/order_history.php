@@ -19,7 +19,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         color: #292c2e;
     }
     th {
-        font-weight: 700;
+        font-weight: 500;
     }
 </style>
 <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup">
