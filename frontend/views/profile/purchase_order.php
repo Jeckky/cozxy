@@ -66,13 +66,13 @@ if (is_array($Order)) {
                         foreach ($product_itme as $key => $value) {
                             ?>
                             <tr>
-                                <td><?php echo ++$key; ?></td>
+                                <td><?php echo $key; ?></td>
                                 <td><?php echo ($value[$i]->code != '') ? $value[$i]->code : '-'; ?></td>
                                 <td style="width: 35%;"><?php echo $value[$i]->title; ?></td>
                                 <td><?php echo ''; ?></td>
-                                <td><?php echo $value[$i]->price; ?></td>
-                                <td><?php echo $OrderItemList['quantity'] ?></td>
-                                <td><?php echo ($value[$i]->price * $OrderItemList['quantity']); ?></td>
+                                <td><?php echo $OrderItemList[$key]['price']; ?></td>
+                                <td><?php echo $OrderItemList[$key]['quantity'] ?></td>
+                                <td><?php echo ($OrderItemList[$key]['price'] * $OrderItemList[$key]['quantity']); ?></td>
                             </tr>
                             <?php
                             $i = $i++;

@@ -235,9 +235,9 @@ class ProfileController extends MasterController {
                 $OrderItem = \common\models\costfit\OrderItem::find()->where('orderId = ' . $params['orderId'])
                         ->all();
                 foreach ($OrderItem as $key => $value) {
-                    $OrderItemList['quantity'] = $value['quantity'];
-                    $OrderItemList['price'] = $value['price'];
-                    $OrderItemList['total'] = $value['total'];
+                    $OrderItemList[$key]['quantity'] = $value['quantity'];
+                    $OrderItemList[$key]['price'] = $value['price'];
+                    $OrderItemList[$key]['total'] = $value['total'];
 
                     $product = \common\models\costfit\product::find()->where('productId = ' . $value['productId'])
                             ->all();
@@ -250,6 +250,7 @@ class ProfileController extends MasterController {
                 $OrderItemList = NUll;
                 $product_itme = NUll;
             }
+
 
 
             return $this->render('@app/views/profile/purchase_order', compact('Order', 'OrderItemList', 'product_itme'));
