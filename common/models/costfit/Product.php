@@ -149,4 +149,8 @@ class Product extends \common\models\costfit\master\ProductMaster {
         //throw new \yii\base\Exception('adfasdf');
     }
 
+    public function getUnits() {
+        return $this->hasOne(Unit::className(), ['unitId' => 'unit']);
+    }
+
 }
