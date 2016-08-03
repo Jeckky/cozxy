@@ -454,33 +454,14 @@ class Order extends \common\models\costfit\master\OrderMaster {
             'query' => $query,
         ]);
 
-// load the search form data and validate
+        // load the search form data and validate
         if (!($this->load($params) )) {
             return $dataProvider;
         }
-        //throw new \yii\base\Exception(print_r($_REQUEST, true));
-        /*
-          Array
-          (
-          [Order] => Array
-          (
-          [orderNo] =>
-          [createDateTime] => 2016-07-27
-          )
-         */
 
-// adjust the query by adding the filters
-//        $query->andWhere("orderNo like '%" . $this->orderNo . "'% OR date(createDateTimes) like '%$this->createDateTime%'");
-//                ->orWhere(['like', 'date(createDateTimes)', $this->createDateTime]);
-        // if ($this->orderNo = !'') {
-        $query->andFilterWhere(['like', 'orderNo', $this->orderNo])
-                //} else if ($this->createDateTime != '') {
-                ->andFilterWhere(['createDateTime' => $this->createDateTime]);
-        // }
+        $query->andFilterWhere(['like', 'createDateTime', $this->createDateTime])
+                ->andFilterWhere(['like', 'orderNo', $this->orderNo]);
 
-        echo '<pre>';
-        print_r($query);
-        exit();
         return $dataProvider;
     }
 

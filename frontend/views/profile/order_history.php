@@ -38,7 +38,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 'filterInputOptions' => ['class' => 'form-control input-sm', 'placeholder' => 'Search Order No ...'],
             ],
             [
-                'attribute' => 'total',
+                'attribute' => 'summary',
                 'value' => function ($model) {
                     if ($model->total != null) {
                         return $model->total . ' บาท';
@@ -51,11 +51,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 'filter' => FALSE
             ],
             [
-                'attribute' => 'Create Date',
+                'attribute' => 'วันที่สั่งซื้อ',
                 'value' => 'createDateTime',
                 'format' => 'raw',
                 'filter' => DatePicker::widget([
-                    'name' => 'createDateTime',
+                    'name' => 'Order[createDateTime]',
                     'size' => 'sm',
                     'language' => 'th',
                     'type' => DatePicker::TYPE_INPUT,
@@ -71,7 +71,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             ],
             // More complex one.
             ['class' => 'yii\grid\ActionColumn', 'options' => ['style' => ' width:20px; text-align: center;'],
-                'header' => 'Actions',
+                'header' => 'จัดการ',
                 'template' => ' {Order} ',
                 'buttons' => [
                     'Order' => function($url, $model, $baseUrl) {
