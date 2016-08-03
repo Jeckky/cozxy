@@ -24,6 +24,10 @@
         } else if ($id == 'productPrice') { //Place Frontend Order Embed Iframe
             ?>
             <iframe frameborder="0" style="width:100%;height:1318px" src="https://www.draw.io/?chrome=0&lightbox=1&edit=https%3A%2F%2Fwww.draw.io%2F%23G0B9JTDqsqskF6R01qaC02N3ZYNE0&nav=1#G0B9JTDqsqskF6R01qaC02N3ZYNE0"></iframe>
+            <?php
+        } else if ($id == 'productPick') { //Place Frontend Order Embed Iframe
+            ?>
+            <iframe frameborder="0" style="width:100%;height:1304px" src="https://www.draw.io/?chrome=0&lightbox=1&edit=https%3A%2F%2Fwww.draw.io%2F%23G0B9JTDqsqskF6ZWVaei1UTnFzeVE&nav=1#G0B9JTDqsqskF6ZWVaei1UTnFzeVE"></iframe>
                 <?php
             }
             ?>
