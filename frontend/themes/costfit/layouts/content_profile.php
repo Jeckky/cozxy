@@ -58,9 +58,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             </span>
                         </div>
                         <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="margin: 0 0 ">
-                            <a href="#" class="btn btn-black btn-sm"><i class="fa fa-print" aria-hidden="true"></i> พิมพ์</a><br><br>
-                            <a href="#" class="btn btn-black btn-sm"><i class="fa fa-print" aria-hidden="true"></i> พิมพ์ใย Pay-in</a><br><br>
-                            <a href="#" class="btn btn-black btn-sm"><i class="fa fa-check" aria-hidden="true"></i> ยินยันชำระเงิน</a>
+
                         </div>
 
                     <?php } else { ?>

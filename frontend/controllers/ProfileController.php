@@ -31,6 +31,7 @@ class ProfileController extends MasterController {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
+
         $this->layout = "/content_profile";
         $this->title = 'Cost.fit | My Profile';
         $this->subTitle = 'Home';
@@ -232,6 +233,7 @@ class ProfileController extends MasterController {
             // print_r($Order);
             if (count($Order) == 1) {
                 $Order = $Order[0]->attributes;
+
                 $OrderItem = \common\models\costfit\OrderItem::find()->where('orderId = ' . $params['orderId'])
                         ->all();
                 foreach ($OrderItem as $key => $value) {
@@ -251,12 +253,26 @@ class ProfileController extends MasterController {
                 $product_itme = NUll;
             }
 
-
-
             return $this->render('@app/views/profile/purchase_order', compact('Order', 'OrderItemList', 'product_itme'));
         } else {
             return $this->redirect(['profile/order']);
         }
+    }
+
+    public function actionTransferConfirm($hash) {
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
+        $k = base64_decode(base64_decode($hash));
+        $params = \common\models\ModelMaster::decodeParams($hash);
+        $orderId = $params['orderId'];
+
+        $this->layout = "/content_profile";
+        $this->title = 'Cost.fit | Order transfer confirm';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = "Order transfer confirm";
+
+        return $this->redirect(['profile/transfer_confirm']);
     }
 
 }

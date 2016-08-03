@@ -24,6 +24,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </style>
 <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup">
     <h3>รายการใบสั่งซื้อสินค้าทั้งหมด</h3>
+
     <?php
     echo GridView::widget([//   table-striped table-bordered  //
         'dataProvider' => $dataProvider,
