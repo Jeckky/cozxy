@@ -44,7 +44,7 @@ class StoreProductGroup extends \common\models\costfit\master\StoreProductGroupM
     }
 
     public function getStoreProducts() {
-        return $this->hasMany(StoreProduct::className(), ['storeProductGroupId' => 'storeProductGroupId']);
+        return $this->hasMany(StoreProduct::className(), ['storeProductGroupId' => 'storeProductGroupId'])->orderBy("status");
     }
 
 }

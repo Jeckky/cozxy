@@ -68,9 +68,9 @@ Pjax::begin(['id' => 'employee-grid-view']);
 
                         <?= Html::submitButton('<i class=\'glyphicon glyphicon-plus\'></i> ยืนยัน', ['class' => 'btn btn-warning btn-md']) ?>
                         <?php
-                    } else if ($product->status == 2) {//รับครบ
+                    } else if ($product->status == 3) {//รับครบ
                         ?><b>Received</b><?php
-                    } else if ($product->status == 3) {//รับแล้วแต่ยังไม่ครบ
+                    } else if ($product->status == 2) {//รับแล้วแต่ยังไม่ครบ
                         echo "<b>Received " . $product->importQuantity . " " . $product->products->units->title . "</b><br><br>";
                         ?>
                         <input type="radio" name="check[<?= $product->storeProductId ?>]" value="1" onclick="hide(<?= $product->storeProductId ?>)">&nbsp; ครบ &nbsp;&nbsp;&nbsp;

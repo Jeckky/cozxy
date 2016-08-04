@@ -164,7 +164,7 @@ class StoreProductController extends StoreMasterController {
             $inPo = StoreProduct::find()->where("storeProductId='" . $_POST['storeProductId'] . "'")->one();
             if ($_POST["check"][$inPo->storeProductId] == 1) {
                 $inPo->importQuantity = $inPo->quantity;
-                $inPo->status = 2;
+                $inPo->status = 3;
                 $inPo->save(FALSE);
                 $model = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId='" . $inPo->storeProductGroupId . "' and status=1")->one();
             } else {
@@ -178,7 +178,7 @@ class StoreProductController extends StoreMasterController {
                     } else if ($_POST["quantity"][$inPo->storeProductId] + $inPo->importQuantity == $inPo->quantity) {
                         $inPo->importQuantity = $inPo->quantity;
                         $inPo->remark = $_POST["remark"][$inPo->storeProductId];
-                        $inPo->status = 2;
+                        $inPo->status = 3;
                         $inPo->save(FALSE);
                         $model = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId='" . $inPo->storeProductGroupId . "' and status=1")->one();
                     } else if ($_POST["quantity"][$inPo->storeProductId] + $inPo->importQuantity > $inPo->quantity) {
