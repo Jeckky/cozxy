@@ -36,6 +36,19 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="row">
         <!--Left Column-->
         <div class="col-lg-12 col-md-12">
+            <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup">
+
+                XXXX    
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="support">
+    <div class="row">
+        <!--Left Column-->
+        <div class="col-lg-12 col-md-12">
 
 
         </div>

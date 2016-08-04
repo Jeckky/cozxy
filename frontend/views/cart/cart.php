@@ -128,7 +128,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <?php echo $this->render('@app/views/coupon/coupon'); ?>
 
                         <!--<input type="button" class="btn btn-primary btn-sm btn-block" name="update-cart" value="Update shopping cart" onclick="proceed('update_cart')">-->
-                        <input type="button" class="btn btn-black btn-block" name="to-checkout" value="Proceed to checkout" onclick="proceed('to_checkout')">
+                        <?php if (!Yii::$app->user->isGuest) { ?>
+                            <input type="button" class="btn btn-black btn-block" name="to-checkout" value="Proceed to checkout" onclick="proceed('to_checkout')">
+                        <?php } else { ?>
+                            <input type="button" class="btn btn-black btn-block" name="to-checkout" value="Proceed to checkout" onclick="proceed('to_guest')">
+                        <?php } ?>
+
                     </div>
 
                     <a class="panel-toggle hide" href="#calc-shipping"><h3>Calculate shipping</h3></a>
@@ -200,15 +205,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     /*function proceed(data) {
      var shop_data = data;
      if (shop_data == 'apply_coupon') {
-     //window.location = '<?php //echo $baseUrl;                                                           ?>';
+     //window.location = '<?php //echo $baseUrl;                                                                   ?>';
      } else if (shop_data == 'update_cart') {
-     window.location = '<?php //echo $baseUrl;                                                           ?>' + '/history';
+     window.location = '<?php //echo $baseUrl;                                                                   ?>' + '/history';
      } else if (shop_data == 'to_checkout') {
-     window.location = '<?php //echo $baseUrl;                                                           ?>' + '/checkout';
+     window.location = '<?php //echo $baseUrl;                                                                   ?>' + '/checkout';
      } else if (shop_data == '') {
-     //window.location = '<?php //echo $baseUrl;                                                           ?>' ;
+     //window.location = '<?php //echo $baseUrl;                                                                   ?>' ;
      } else {
-     window.location = '<?php //echo $baseUrl;                                                           ?>';
+     window.location = '<?php //echo $baseUrl;                                                                   ?>';
      }
      }*/
 
