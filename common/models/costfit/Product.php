@@ -153,4 +153,8 @@ class Product extends \common\models\costfit\master\ProductMaster {
         return $this->hasOne(Unit::className(), ['unitId' => 'unit']);
     }
 
+    public function getImages() {
+        return $this->hasOne(ProductImage::className(), ['productId' => 'productId']);
+    }
+
 }

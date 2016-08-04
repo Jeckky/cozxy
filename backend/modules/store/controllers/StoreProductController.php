@@ -158,7 +158,49 @@ class StoreProductController extends StoreMasterController {
         if (isset($_GET['storeProductGroupId'])) {
             $model = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId='" . $_GET['storeProductGroupId'] . "'")->one();
         }
-        return $this->render('check', ['model' => $model
+        $msError = '';
+        $errorId = '';
+        if (isset($_POST["check"])) {
+            $inPo = StoreProduct::find()->where("storeProductId='" . $_POST['storeProductId'] . "'")->one();
+            if ($_POST["check"][$inPo->storeProductId] == 1) {
+                $inPo->importQuantity = $inPo->quantity;
+                $inPo->status = 2;
+                $inPo->save(FALSE);
+                $model = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId='" . $inPo->storeProductGroupId . "' and status=1")->one();
+            } else {
+                if (!empty($_POST["remark"][$inPo->storeProductId]) && !empty($_POST["quantity"][$inPo->storeProductId])) {
+                    if ($_POST["quantity"][$inPo->storeProductId] + $inPo->importQuantity < $inPo->quantity) {
+                        $inPo->importQuantity = $_POST["quantity"][$inPo->storeProductId] + $inPo->importQuantity;
+                        $inPo->remark = $_POST["remark"][$inPo->storeProductId];
+                        $inPo->status = 3;
+                        $inPo->save(FALSE);
+                        $model = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId='" . $inPo->storeProductGroupId . "' and status=1")->one();
+                    } else if ($_POST["quantity"][$inPo->storeProductId] + $inPo->importQuantity == $inPo->quantity) {
+                        $inPo->importQuantity = $inPo->quantity;
+                        $inPo->remark = $_POST["remark"][$inPo->storeProductId];
+                        $inPo->status = 2;
+                        $inPo->save(FALSE);
+                        $model = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId='" . $inPo->storeProductGroupId . "' and status=1")->one();
+                    } else if ($_POST["quantity"][$inPo->storeProductId] + $inPo->importQuantity > $inPo->quantity) {
+                        $msError = 'input wrong quantity';
+                        $errorId = $inPo->storeProductId;
+                        $model = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId='" . $inPo->storeProductGroupId . "' and status=1")->one();
+                    }
+                } else {
+                    $msError = 'Empty import quantity or remark ';
+                    $errorId = $inPo->storeProductId;
+                    $model = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId='" . $inPo->storeProductGroupId . "' and status=1")->one();
+                }
+            }
+        } else if (isset($_POST["storeProductGroupId"])) {//if click submit but not choose
+            $msError = 'Not selected';
+            $errorId = $_POST["storeProductId"];
+            $model = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId='" . $_POST["storeProductGroupId"] . "' and status=1")->one();
+        }
+
+        return $this->render('check', ['model' => $model,
+                    'msError' => $msError,
+                    'errorId' => $errorId
         ]);
     }
 
