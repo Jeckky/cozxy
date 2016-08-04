@@ -30,7 +30,7 @@ function proceed(data) {
     } else if (shop_data == 'update_cart') {
         window.location = 'history';
     } else if (shop_data == 'to_checkout') {
-        window.location = 'checkouts';
+        window.location = 'checkout';
     } else if (shop_data == 'to_guest') {
         window.location = 'register/login';
     } else if (shop_data == '') {
