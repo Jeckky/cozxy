@@ -47,4 +47,11 @@ class StoreProductGroup extends \common\models\costfit\master\StoreProductGroupM
         return $this->hasMany(StoreProduct::className(), ['storeProductGroupId' => 'storeProductGroupId'])->orderBy("status");
     }
 
+    public function checkPo($id) {
+        $checkPo = StoreProductGroup::find()->where("storeProductGroupId='" . $id . "' and status!=3")->all();
+        if (count($checkPo) == 0) {
+            $this->redirect(['store-product-group/index']);
+        }
+    }
+
 }

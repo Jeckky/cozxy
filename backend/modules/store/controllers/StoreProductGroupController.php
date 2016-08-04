@@ -31,7 +31,7 @@ class StoreProductGroupController extends StoreMasterController {
      */
     public function actionIndex() {
         $dataProvider = new ActiveDataProvider([
-            'query' => StoreProductGroup::find(),
+            'query' => StoreProductGroup::find()->where("status=1"),
         ]);
 
         return $this->render('index', [
