@@ -18,6 +18,7 @@ return [
         ]
     ],
     'components' => [
+
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
@@ -41,6 +42,7 @@ return [
                 'search/<title>/<hash>' => 'search/index',
                 'profile/purchase-order/<hash>' => 'profile/purchase-order',
                 'profile/transfer-confirm/<hash>' => 'profile/transfer-confirm',
+                'payment/print-purchase-order/<hash>' => 'payment/print-purchase-order',
             ],
         ],
         /**

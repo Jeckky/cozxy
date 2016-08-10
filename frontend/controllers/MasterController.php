@@ -19,9 +19,6 @@ class MasterController extends MasterCommonController {
     public $subTitle = 'Sub Title';
     public $subSubTitle = 'Sub Sub Title';
 
-    /* Payment Controller */
-    public $layout_payment = 'payment/content';
-
     public function getTitle() {
         return $this->title;
     }
