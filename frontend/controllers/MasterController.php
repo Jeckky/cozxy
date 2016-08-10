@@ -7,6 +7,7 @@ use yii\helpers\Url;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
+use kartik\mpdf\Pdf;
 use common\controllers\MasterController as MasterCommonController;
 
 /**
@@ -318,6 +319,46 @@ class MasterController extends MasterCommonController {
         }
 
         return $strReturn;
+    }
+
+    // Privacy statement output demo
+    public function actionMpdfDocument($content) {
+        //$orderId = Yii::$app->request->get('OrderNo');
+        // $orderId = $params['orderId'];
+        // get your HTML raw content without any layouts or scripts
+        // $content = $this->renderPartial('purchase_order');
+        // $model = YourModel::findOne($id);
+        // $content = $this->renderPartial('print', [ 'model' => $model]);
+        // setup kartik\mpdf\Pdf component
+        $pdf = new Pdf([
+            // set to use core fonts only
+            'mode' => Pdf::MODE_UTF8,
+            // A4 paper format
+            'format' => Pdf::FORMAT_A4,
+            // portrait orientation
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            // stream to browser inline
+            'destination' => Pdf::DEST_BROWSER,
+            // your html content input
+            'content' => $content,
+            // format content from your own css file if needed or use the
+            // enhanced bootstrap css built by Krajee for mPDF formatting
+            'cssFile' => '@frontend/web/css/pdf.css',
+            // any css to be embedded if required
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            //'cssInline' => 'body{font-size:9px}',
+            // set mPDF properties on the fly
+            'options' => ['title' => 'Cost.fit Print Purchase Order'],
+            // call mPDF methods on the fly
+            'methods' => [
+                'SetHeader' => ['Cost.fit Print Purchase Order'], //Krajee Report Header
+                'SetFooter' => ['{PAGENO}'],
+            ]
+        ]);
+
+
+        // return the pdf output as per the destination setting
+        return $pdf->render();
     }
 
 }
