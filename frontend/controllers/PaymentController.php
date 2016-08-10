@@ -93,6 +93,33 @@ class PaymentController extends MasterController {
         // $model = YourModel::findOne($id);
         // $content = $this->renderPartial('print', [ 'model' => $model]);
         // setup kartik\mpdf\Pdf component
+
+
+        $this->actionMpdfDocument($content);
+    }
+
+    public function actionPrintPayIn() {
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
+
+        $this->layout_payment = "/content";
+        $this->title = 'Cost.fit | My Profile';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = "My Profile";
+
+        return $this->render('payment');
+    }
+
+    // Privacy statement output demo
+    public function actionMpdfDocument($content) {
+        //$orderId = Yii::$app->request->get('OrderNo');
+        // $orderId = $params['orderId'];
+        // get your HTML raw content without any layouts or scripts
+        // $content = $this->renderPartial('purchase_order');
+        // $model = YourModel::findOne($id);
+        // $content = $this->renderPartial('print', [ 'model' => $model]);
+        // setup kartik\mpdf\Pdf component
         $pdf = new Pdf([
             // set to use core fonts only
             'mode' => Pdf::MODE_UTF8,
@@ -115,58 +142,6 @@ class PaymentController extends MasterController {
             // call mPDF methods on the fly
             'methods' => [
                 'SetHeader' => ['Cost.fit Print Purchase Order'], //Krajee Report Header
-                'SetFooter' => ['{PAGENO}'],
-            ]
-        ]);
-
-
-        // return the pdf output as per the destination setting
-        return $pdf->render();
-    }
-
-    public function actionPrintPayIn() {
-        if (Yii::$app->user->isGuest == 1) {
-            return Yii::$app->response->redirect(Yii::$app->homeUrl);
-        }
-
-        $this->layout_payment = "/content";
-        $this->title = 'Cost.fit | My Profile';
-        $this->subTitle = 'Home';
-        $this->subSubTitle = "My Profile";
-
-        return $this->render('payment');
-    }
-
-    // Privacy statement output demo
-    public function actionMpdfDemo1($hash) {
-        $orderId = Yii::$app->request->get('OrderNo');
-        $orderId = $params['orderId'];
-        // get your HTML raw content without any layouts or scripts
-        $content = $this->renderPartial('purchase_order');
-        // $model = YourModel::findOne($id);
-        // $content = $this->renderPartial('print', [ 'model' => $model]);
-        // setup kartik\mpdf\Pdf component
-        $pdf = new Pdf([
-            // set to use core fonts only
-            'mode' => Pdf::MODE_UTF8,
-            // A4 paper format
-            'format' => Pdf::FORMAT_A4,
-            // portrait orientation
-            'orientation' => Pdf::ORIENT_PORTRAIT,
-            // stream to browser inline
-            'destination' => Pdf::DEST_BROWSER,
-            // your html content input
-            'content' => $content,
-            // format content from your own css file if needed or use the
-            // enhanced bootstrap css built by Krajee for mPDF formatting
-            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
-            // any css to be embedded if required
-            'cssInline' => '.kv-heading-1{font-size:18px}',
-            // set mPDF properties on the fly
-            'options' => ['title' => 'Krajee Report Title'],
-            // call mPDF methods on the fly
-            'methods' => [
-                'SetHeader' => ['Krajee Report Header'],
                 'SetFooter' => ['{PAGENO}'],
             ]
         ]);
