@@ -83,7 +83,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     $bg = $bg_odd_number; // เลขคี่
                 }
                 ?>
-                <tr style="padding: 15px; background-color: <?php echo $bg; ?>; border-bottom: 1px #000000 solid;">
+                <tr style="background-color: <?php echo $bg; ?>; border-bottom: 1px #000000 solid;">
                     <td style="font-size: 12px;"><?php echo ++$num; ?></td>
                     <td style="font-size: 12px;"><?php echo isset($value->product->code) ? $value->product->code : '-'; ?></td>
                     <td style="font-size: 12px;"><?php echo isset($value->product->title) ? $value->product->title : ''; ?></td>
