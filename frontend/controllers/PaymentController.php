@@ -18,7 +18,8 @@ use yii\data\ActiveDataProvider;
 /**
  * Payment Controller
  */
-class PaymentController extends MasterController {
+class PaymentController extends MasterController
+{
 
     public $enableCsrfValidation = false;
 
@@ -27,7 +28,8 @@ class PaymentController extends MasterController {
      *
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
@@ -40,7 +42,8 @@ class PaymentController extends MasterController {
         return $this->render('payment');
     }
 
-    public function actionPrintPurchaseOrder($hash, $title) {
+    public function actionPrintPurchaseOrder($hash, $title)
+    {
 
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
@@ -60,7 +63,7 @@ class PaymentController extends MasterController {
         //echo $orderId;
         if (isset($params['orderId'])) {
             $order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . $params['orderId'] . '" ')
-                    ->one();
+            ->one();
 
             /* if (count($Order) == 1) {
               $Order = $Order[0]->attributes;
@@ -94,7 +97,8 @@ class PaymentController extends MasterController {
         $this->actionMpdfDocument($content);
     }
 
-    public function actionPrintPayIn() {
+    public function actionPrintPayIn()
+    {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
