@@ -472,4 +472,24 @@ class Order extends \common\models\costfit\master\OrderMaster {
         return $this->hasMany(OrderItem::className(), ['orderId' => 'orderId']); //[Order :: ปลายทาง ,  OrderItem :: ต้นทาง]
     }
 
+    public function getUser() {
+        return $this->hasOne(User::className(), ['userId' => 'userId']);
+    }
+
+    public function getAddress() {
+        return $this->hasOne(address::className(), ['addressId' => 'addressId']);
+    }
+
+    public function getBillingProvince() {
+        return $this->hasOne(\common\models\dbworld\States::className(), ['stateId' => 'billingProvinceId']);
+    }
+
+    public function getBillingCities() {
+        return $this->hasOne(\common\models\dbworld\Cities::className(), ['stateId' => 'billingProvinceId']);
+    }
+
+    public function getBillingCountry() {
+        return $this->hasOne(\common\models\dbworld\Countries::className(), ['countryId' => 'billingCountryId']);
+    }
+
 }

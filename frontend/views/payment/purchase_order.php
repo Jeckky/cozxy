@@ -33,11 +33,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <table class="table">
     <tr>
         <th colspan="4" style="text-align: left; vertical-align: text-top;">
-            ได้รับเงินจาก : คุณธนินัช บางเมือง <br>
-            เลขที่ประจำตัวผู้เสียภาษี : 3101300014028<br>
-            164/21 ซอยลาดพร้าว 1 แขวงจอมพล เขตจตุจักร
-            <br>จังหวัดกรุงเทพมหานคร 10900
-            <br>โทรศัพท์ : 081-6250777
+            ได้รับเงินจาก : <?php echo $order->user->firstname; ?> <?php echo $order->user->lastname; ?><br>
+            เลขที่ประจำตัวผู้เสียภาษี : <br>
+            <?php echo $order->billingAddress; ?><br>
+            เขต/ตำบล<?php echo $order->billingDistrictId; ?>  จังหวัด<?php echo isset($order->billingProvince) ? $order->billingProvince->localName : "-"; ?>
+            <br>ประเทศ<?php echo isset($order->BillingCountry) ? $order->BillingCountry->localName : "-"; ?> <?php echo $order->billingZipcode; ?>
+            <br>โทรศัพท์ :   <?php echo $order->billingTel; ?>
         </th>
         <th colspan="3" style="vertical-align: text-top; text-align: left;">
             ต้นฉบับ<br>
@@ -47,6 +48,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </th>
     </tr>
 </table>
+
 <hr>
 <!-- 2 -->
 <table class="table table-list-order" style="padding: 10px;" >
