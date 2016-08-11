@@ -37,7 +37,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             เลขที่ประจำตัวผู้เสียภาษี : <br>
             <?php echo $order->billingAddress; ?><br>
             เขต/ตำบล<?php echo $order->billingDistrictId; ?>  จังหวัด<?php echo isset($order->billingProvince) ? $order->billingProvince->localName : "-"; ?>
-            <br>ประเทศ<?php echo isset($order->BillingCountry) ? $order->BillingCountry->localName : "-"; ?> <?php echo $order->billingZipcode; ?>
+            <br>ประเทศ<?php echo isset($order->BillingCountry) ? $order->BillingCountry->countryName : "-"; ?> <?php echo $order->billingZipcode; ?>
             <br>โทรศัพท์ :   <?php echo $order->billingTel; ?>
         </th>
         <th colspan="3" style="vertical-align: text-top; text-align: left;">
