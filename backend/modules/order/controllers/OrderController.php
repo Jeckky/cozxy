@@ -47,11 +47,13 @@ class OrderController extends OrderMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($hash)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $k = base64_decode(base64_decode($hash));
+        $params = \common\models\ModelMaster::decodeParams($hash);
+        $order = \common\models\costfit\Order::find()->where('orderId = "' . $params['id'] . '" ')
+        ->one();
+        return $this->render('@frontend/views/profile/purchase_order', compact('order'));
     }
 
     /**

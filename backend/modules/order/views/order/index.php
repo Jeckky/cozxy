@@ -113,6 +113,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'header' => 'Actions',
                         'template' => '{view} {update} {items}',
                         'buttons' => [
+                            'view' => function($url, $model) {
+                                return Html::a('<i class="fa fa-eye" aria-hidden="true"></i>', Yii::$app->homeUrl . "order/order/view/" . $model->encodeParams(['id' => $model->orderId]), [
+                                    'title' => Yii::t('app', ' View Order No :' . $model->orderId),]);
+                            },
                             'items' => function($url, $model) {
                                 return Html::a('<br><u>Items</u>', ['/order/order-item', 'orderId' => $model->orderId], [
                                     'title' => Yii::t('app', 'Change today\'s lists'),]);

@@ -51,21 +51,14 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
     <section class="support">
         <div class="row">
             <!--Left Column-->
-            <div class="col-lg-12 col-md-12">
-                <div class="col-sm-12" style="margin-bottom: 5px; padding-left: 0px; padding-right: 0px;">
-                    <div class="col-sm-3 text-right" style="padding-left: 0px; padding-right: 0px;">&nbsp;</div>
-                    <div class="col-sm-3 text-right" style="padding-left: 0px; padding-right: 0px;">
-                        <a href="<?php echo Yii::$app->homeUrl; ?>payment/print-purchase-order/<?php echo $orderIdParams; ?>/<?php echo $order->orderNo; ?>" class="btn btn-black btn-xs">
-                            <i class="fa fa-print" aria-hidden="true"></i> พิมพ์</a>
-                    </div>
-                    <div class="col-sm-3 text-right" style="padding-left: 0px; padding-right: 0px;">
-                        <a href="<?php echo Yii::$app->homeUrl; ?>payment/print-pay-in" class="btn btn-black btn-xs">
-                            <i class="fa fa-print" aria-hidden="true"></i> พิมพ์ใบ Pay-in</a>
-                    </div>
-                    <div class="col-sm-3 text-right" style="padding-left: 0px; padding-right: 0px;">
-                        <a href="<?php echo Yii::$app->homeUrl; ?>profile/transfer-confirm/<?php echo $orderIdParams; ?>" class="btn btn-black btn-xs">
-                            <i class="fa fa-check" aria-hidden="true"></i> แจ้งชำระเงิน</a>
-                    </div>
+            <div class="col-lg-12 col-md-12 ">
+                <div class="col-sm-12 pull-right" style="margin-bottom: 5px; padding-left: 0px; padding-right: 0px;">
+                    <a href="<?php echo Yii::$app->homeUrl; ?>payment/print-purchase-order/<?php echo $orderIdParams; ?>/<?php echo $order->orderNo; ?>" class="btn btn-black btn-xs">
+                        <i class="fa fa-print" aria-hidden="true"></i> พิมพ์</a>
+                    <a href="<?php echo Yii::$app->homeUrl; ?>payment/print-pay-in" class="btn btn-black btn-xs">
+                        <i class="fa fa-print" aria-hidden="true"></i> พิมพ์ใบ Pay-in</a>
+                    <a href="<?php echo Yii::$app->homeUrl; ?>profile/transfer-confirm/<?php echo $orderIdParams; ?>" class="btn btn-black btn-xs">
+                        <i class="fa fa-check" aria-hidden="true"></i> แจ้งชำระเงิน</a>
                 </div>
                 <table class="table table-list-order" style="padding: 10px;" >
                     <thead>
@@ -98,10 +91,10 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                                     <td style="font-size: 12px;"><?php echo ++$num; ?></td>
                                     <td style="font-size: 12px;"><?php echo ($value->product->code != '') ? $value->product->code : '-'; ?></td>
                                     <td style="font-size: 12px;"><?php echo $value->product->title; ?></td>
-                                    <td style="font-size: 12px;"><?php echo ''; ?></td>
+                                    <td style="font-size: 12px;"><?php echo isset($value->product->units) ? $value->product->units->title : "-"; ?></td>
                                     <td style="font-size: 12px;"><?php echo $value->price; ?></td>
                                     <td style="font-size: 12px;"><?php echo $value->quantity ?></td>
-                                    <td style="font-size: 12px;"><?php echo $value->total; ?></td>
+                                    <td style="font-size: 12px;width: 15%;" ><?php echo $value->total; ?></td>
                                 </tr>
                                 <?php
                                 $i = $i++;

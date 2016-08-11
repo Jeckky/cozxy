@@ -86,6 +86,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'order/order/view/<hash>' => 'order/order/view',
             ],
         ],
         'view' => [
