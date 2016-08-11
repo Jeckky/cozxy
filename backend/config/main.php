@@ -87,6 +87,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 'order/order/view/<hash>' => 'order/order/view',
+                'order/order/print-purchase-order/<hash>/<title>' => 'order/order/print-purchase-order',
             ],
         ],
         'view' => [
