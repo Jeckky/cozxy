@@ -54,7 +54,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $orderId
                 <div class="col-sm-12" style="margin-bottom: 5px; padding-left: 0px; padding-right: 0px;">
                     <div class="col-sm-3 text-right" style="padding-left: 0px; padding-right: 0px;">&nbsp;</div>
                     <div class="col-sm-3 text-right" style="padding-left: 0px; padding-right: 0px;">
-                        <a href="<?php echo Yii::$app->homeUrl; ?>payment/print-purchase-order/<?php echo $orderIdParams; ?>" class="btn btn-black btn-xs">
+                        <a href="<?php echo Yii::$app->homeUrl; ?>payment/print-purchase-order/<?php echo $orderIdParams; ?>/<?php echo $orderNo; ?>" class="btn btn-black btn-xs">
                             <i class="fa fa-print" aria-hidden="true"></i> พิมพ์</a>
                     </div>
                     <div class="col-sm-3 text-right" style="padding-left: 0px; padding-right: 0px;">

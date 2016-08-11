@@ -40,7 +40,7 @@ class PaymentController extends MasterController {
         return $this->render('payment');
     }
 
-    public function actionPrintPurchaseOrder($hash) {
+    public function actionPrintPurchaseOrder($hash, $title) {
 
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);

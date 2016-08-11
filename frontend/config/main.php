@@ -42,7 +42,7 @@ return [
                 'search/<title>/<hash>' => 'search/index',
                 'profile/purchase-order/<hash>' => 'profile/purchase-order',
                 'profile/transfer-confirm/<hash>' => 'profile/transfer-confirm',
-                'payment/print-purchase-order/<hash>' => 'payment/print-purchase-order',
+                'payment/print-purchase-order/<hash>/<title>' => 'payment/print-purchase-order',
             ],
         ],
         /**
