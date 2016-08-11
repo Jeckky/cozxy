@@ -33,18 +33,24 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <table class="table">
     <tr>
         <th colspan="4" style="text-align: left; vertical-align: text-top;">
-            ได้รับเงินจาก : <?php echo $order->user->firstname; ?> <?php echo $order->user->lastname; ?><br>
+            ได้รับเงินจาก : คุณ<?php echo $order->user->firstname; ?> <?php echo $order->user->lastname; ?><br>
             เลขที่ประจำตัวผู้เสียภาษี : <br>
-            <?php echo $order->billingAddress; ?><br>
-            เขต/ตำบล<?php echo $order->billingDistrictId; ?>  จังหวัด<?php echo isset($order->billingProvince) ? $order->billingProvince->localName : "-"; ?>
-            <br>ประเทศ<?php echo isset($order->BillingCountry) ? $order->BillingCountry->countryName : "-"; ?> <?php echo $order->billingZipcode; ?>
+            <?php echo isset($order->billingAddress) ? $order->billingAddress : "-"; ?><br>
+            <?php echo isset($order->billingDistrict) ? $order->billingDistrict->localName : "-"; ?>
+            <?php echo isset($order->billingCities) ? $order->billingCities->localName : "-"; ?>
+            <?php echo isset($order->billingProvince) ? $order->billingProvince->localName : "-"; ?>
+            <br>ประเทศ<?php echo isset($order->billingCountry) ? $order->billingCountry->localName : " -"; ?>
+            <?php echo $order->billingZipcode; ?>
             <br>โทรศัพท์ :   <?php echo $order->billingTel; ?>
         </th>
         <th colspan="3" style="vertical-align: text-top; text-align: left;">
             ต้นฉบับ<br>
             เลขที่ใบสั่งซื้อ PO No. : <?php echo $order->orderNo; ?><br>
-            วันที่สั่งซื้อ : 5 กุมภาพันธ์ 2559 <br>
-            กำหนดชำระเงิน : 8 กุมภาพันธ์ 2559
+            วันที่สั่งซื้อ : <?php echo $this->context->dateThai($order->createDateTime, 1); ?><br>
+            กำหนดชำระเงิน :
+            <?php
+            echo $this->context->dateThai($order->createDateTime, 1);
+            ?>
         </th>
     </tr>
 </table>
@@ -58,9 +64,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <th style="font-size: 13px;">รหัสสินค้า</th>
             <th style="font-size: 13px;">รายการ</th>
             <th style="font-size: 13px;">หน่วย</th>
-            <th style="font-size: 13px;">ราคา/หน่วย</th>
-            <th style="font-size: 13px;">จำนวน</th>
-            <th style="font-size: 13px;">มูลค่าสินค้ารวมภาษี</th>
+            <th style="font-size: 13px;text-align: right;">ราคา/หน่วย</th>
+            <th style="font-size: 13px;text-align: right;">จำนวน</th>
+            <th style="font-size: 13px;text-align: right;">มูลค่าสินค้ารวมภาษี</th>
         </tr>
     </thead>
     <tbody>
@@ -77,14 +83,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     $bg = $bg_odd_number; // เลขคี่
                 }
                 ?>
-                <tr style="padding: 5px; background-color: <?php echo $bg; ?>;" >
+                <tr style="padding: 15px; background-color: <?php echo $bg; ?>;" >
                     <td style="font-size: 12px;"><?php echo ++$num; ?></td>
                     <td style="font-size: 12px;"><?php echo isset($value->product->code) ? $value->product->code : '-'; ?></td>
                     <td style="font-size: 12px;"><?php echo isset($value->product->title) ? $value->product->title : ''; ?></td>
                     <td style="font-size: 12px;"><?php echo isset($value->product->units) ? $value->product->units->title : ''; ?></td>
-                    <td style="font-size: 12px;"><?php echo isset($value->price) ? $value->price : ''; ?></td>
-                    <td style="font-size: 12px;"><?php echo isset($value->quantity) ? $value->quantity : '' ?></td>
-                    <td style="font-size: 12px;"><?php echo isset($value->total) ? $value->total : ''; ?></td>
+                    <td style="font-size: 12px; text-align: right;"><?php echo isset($value->price) ? $value->price : ''; ?></td>
+                    <td style="font-size: 12px; text-align: right;"><?php echo isset($value->quantity) ? $value->quantity : '' ?></td>
+                    <td style="font-size: 12px; text-align: right;"><?php echo isset($value->total) ? $value->total : ''; ?></td>
                 </tr>
                 <?php
                 $i = $i++;

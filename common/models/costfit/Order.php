@@ -485,7 +485,11 @@ class Order extends \common\models\costfit\master\OrderMaster {
     }
 
     public function getBillingCities() {
-        return $this->hasOne(\common\models\dbworld\Cities::className(), ['stateId' => 'billingProvinceId']);
+        return $this->hasOne(\common\models\dbworld\Cities::className(), ['cityId' => 'billingAmphurId']);
+    }
+
+    public function getbillingDistrict() {
+        return $this->hasOne(\common\models\dbworld\District::className(), ['cityId' => 'billingAmphurId']);
     }
 
     public function getBillingCountry() {
