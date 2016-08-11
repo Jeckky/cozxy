@@ -26,6 +26,7 @@ use Yii;
     * @property string $billingCountryId
     * @property string $billingProvinceId
     * @property string $billingAmphurId
+    * @property string $billingDistrictId
     * @property string $billingZipcode
     * @property string $billingTel
     * @property string $shippingCompany
@@ -34,10 +35,11 @@ use Yii;
     * @property string $shippingCountryId
     * @property string $shippingProvinceId
     * @property string $shippingAmphurId
+    * @property string $shippingDistrictId
     * @property string $shippingZipcode
     * @property string $shippingTel
     * @property integer $paymentType
-    * @property integer $couponId
+    * @property string $couponId
     * @property integer $checkStep
     * @property string $note
     * @property string $paymentDateTime
@@ -70,7 +72,7 @@ return [
             [['totalExVat', 'vat', 'total', 'discount', 'grandTotal', 'shippingRate', 'summary'], 'number'],
             [['sendDate', 'paymentDateTime', 'createDateTime', 'updateDateTime'], 'safe'],
             [['paymentType', 'createDateTime'], 'required'],
-            [['orderNo', 'invoiceNo', 'billingTax', 'billingTel', 'shippingTax', 'shippingTel'], 'string', 'max' => 45],
+            [['orderNo', 'invoiceNo', 'billingTax', 'billingDistrictId', 'billingTel', 'shippingTax', 'shippingDistrictId', 'shippingTel'], 'string', 'max' => 45],
             [['billingCompany', 'shippingCompany'], 'string', 'max' => 200],
             [['billingCountryId', 'shippingCountryId'], 'string', 'max' => 3],
             [['billingZipcode', 'shippingZipcode'], 'string', 'max' => 10],
@@ -103,6 +105,7 @@ return [
     'billingCountryId' => Yii::t('order', 'Billing Country ID'),
     'billingProvinceId' => Yii::t('order', 'Billing Province ID'),
     'billingAmphurId' => Yii::t('order', 'Billing Amphur ID'),
+    'billingDistrictId' => Yii::t('order', 'Billing District ID'),
     'billingZipcode' => Yii::t('order', 'Billing Zipcode'),
     'billingTel' => Yii::t('order', 'Billing Tel'),
     'shippingCompany' => Yii::t('order', 'Shipping Company'),
@@ -111,6 +114,7 @@ return [
     'shippingCountryId' => Yii::t('order', 'Shipping Country ID'),
     'shippingProvinceId' => Yii::t('order', 'Shipping Province ID'),
     'shippingAmphurId' => Yii::t('order', 'Shipping Amphur ID'),
+    'shippingDistrictId' => Yii::t('order', 'Shipping District ID'),
     'shippingZipcode' => Yii::t('order', 'Shipping Zipcode'),
     'shippingTel' => Yii::t('order', 'Shipping Tel'),
     'paymentType' => Yii::t('order', 'Payment Type'),

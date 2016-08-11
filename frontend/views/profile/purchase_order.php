@@ -9,21 +9,7 @@ use kartik\date\DatePicker;
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
-/*
-  if (is_array($Order)) {
-  $orderNo = $Order['orderNo'];
-  $orderId = $Order['orderId'];
-  $vat = $Order['vat'];
-  $totalExVat = $Order['totalExVat'];
-  $total = $Order['total'];
-  } else {
-  $orderNo = '-';
-  $vat = '-';
-  $totalExVat = '-';
-  $total = '-';
-  }
- */
-//$orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $orderId]);
+
 $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->orderId]);
 ?>
 <style>

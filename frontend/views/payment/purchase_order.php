@@ -5,20 +5,6 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\grid\GridView;
 
-/*
-  if (is_array($Order)) {
-  $orderNo = $Order['orderNo'];
-  $orderId = $Order['orderId'];
-  $vat = $Order['vat'];
-  $totalExVat = $Order['totalExVat'];
-  $total = $Order['total'];
-  } else {
-  $orderNo = '-';
-  $vat = '-';
-  $totalExVat = '-';
-  $total = '-';
-  }
- */
 $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->orderId]);
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
@@ -47,11 +33,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <table class="table">
     <tr>
         <th colspan="4" style="text-align: left; vertical-align: text-top;">
-            ได้รับเงินจาก : คุณธนินัช บางเมือง <br>
-            เลขที่ประจำตัวผู้เสียภาษี : 3101300014028<br>
-            164/21 ซอยลาดพร้าว 1 แขวงจอมพล เขตจตุจักร
-            <br>จังหวัดกรุงเทพมหานคร 10900
-            <br>โทรศัพท์ : 081-6250777
+            ได้รับเงินจาก : <?php echo $order->user->firstname; ?> <?php echo $order->user->lastname; ?><br>
+            เลขที่ประจำตัวผู้เสียภาษี : <br>
+            <?php echo $order->billingAddress; ?><br>
+            เขต/ตำบล<?php echo $order->billingDistrictId; ?>  จังหวัด<?php echo isset($order->billingProvince) ? $order->billingProvince->localName : "-"; ?>
+            <br>ประเทศ<?php echo isset($order->BillingCountry) ? $order->BillingCountry->localName : "-"; ?> <?php echo $order->billingZipcode; ?>
+            <br>โทรศัพท์ :   <?php echo $order->billingTel; ?>
         </th>
         <th colspan="3" style="vertical-align: text-top; text-align: left;">
             ต้นฉบับ<br>
@@ -61,6 +48,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </th>
     </tr>
 </table>
+
 <hr>
 <!-- 2 -->
 <table class="table table-list-order" style="padding: 10px;" >
@@ -81,23 +69,22 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         if (count($order->orderItems) > 0) {
             $num = 0;
             foreach ($order->orderItems as $value) {
-
-                $bg_even_number = '#fff';  // เลขคู่
-                $bg_odd_number = '#f5f5f5';  // เลขคี่
+                $bg_even_number = '#fff';
+                $bg_odd_number = '#f5f5f5';
                 if ($num % 2 == 0) {
-                    $bg = $bg_even_number;
+                    $bg = $bg_even_number; // เลขคู่
                 } else if ($num % 2 == 1) {
-                    $bg = $bg_odd_number;
+                    $bg = $bg_odd_number; // เลขคี่
                 }
                 ?>
                 <tr style="padding: 5px; background-color: <?php echo $bg; ?>;" >
                     <td style="font-size: 12px;"><?php echo ++$num; ?></td>
-                    <td style="font-size: 12px;"><?php echo ($value->product->code != '') ? $value->product->code : '-'; ?></td>
-                    <td style="font-size: 12px;"><?php echo $value->product->title; ?></td>
-                    <td style="font-size: 12px;"><?php echo ''; ?></td>
-                    <td style="font-size: 12px;"><?php echo $value->price; ?></td>
-                    <td style="font-size: 12px;"><?php echo $value->quantity ?></td>
-                    <td style="font-size: 12px;"><?php echo $value->total; ?></td>
+                    <td style="font-size: 12px;"><?php echo isset($value->product->code) ? $value->product->code : '-'; ?></td>
+                    <td style="font-size: 12px;"><?php echo isset($value->product->title) ? $value->product->title : ''; ?></td>
+                    <td style="font-size: 12px;"><?php echo isset($value->product->units) ? $value->product->units->title : ''; ?></td>
+                    <td style="font-size: 12px;"><?php echo isset($value->price) ? $value->price : ''; ?></td>
+                    <td style="font-size: 12px;"><?php echo isset($value->quantity) ? $value->quantity : '' ?></td>
+                    <td style="font-size: 12px;"><?php echo isset($value->total) ? $value->total : ''; ?></td>
                 </tr>
                 <?php
                 $i = $i++;

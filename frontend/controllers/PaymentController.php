@@ -18,8 +18,7 @@ use yii\data\ActiveDataProvider;
 /**
  * Payment Controller
  */
-class PaymentController extends MasterController
-{
+class PaymentController extends MasterController {
 
     public $enableCsrfValidation = false;
 
@@ -28,8 +27,7 @@ class PaymentController extends MasterController
      *
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
@@ -42,8 +40,7 @@ class PaymentController extends MasterController
         return $this->render('payment');
     }
 
-    public function actionPrintPurchaseOrder($hash, $title)
-    {
+    public function actionPrintPurchaseOrder($hash, $title) {
 
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
@@ -63,33 +60,9 @@ class PaymentController extends MasterController
         //echo $orderId;
         if (isset($params['orderId'])) {
             $order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . $params['orderId'] . '" ')
-            ->one();
-
-            /* if (count($Order) == 1) {
-              $Order = $Order[0]->attributes;
-
-              $OrderItem = \common\models\costfit\OrderItem::find()->where('orderId = ' . $params['orderId'])
-              ->all();
-              foreach ($OrderItem as $key => $value) {
-              $OrderItemList[$key]['quantity'] = $value['quantity'];
-              $OrderItemList[$key]['price'] = $value['price'];
-              $OrderItemList[$key]['total'] = $value['total'];
-
-              $product = \common\models\costfit\product::find()->where('productId = ' . $value['productId'])
-              ->all();
-              foreach ($product as $key => $item1) {
-              $product_itme[] = $product;
-              }
-              }
-              } else {
-              $Order = NULL;
-              $OrderItemList = NUll;
-              $product_itme = NUll;
-              } */
-
-            //return $this->render('@app/views/payment/purchase_order', compact('order', 'OrderItemList', 'product_itme', 'OrderId'));
+                    ->one();
         } else {
-            //return $this->redirect(['profile/order']);
+            return $this->redirect(['profile/order']);
         }
 
         //$content = $this->renderPartial('purchase_order');
@@ -97,8 +70,7 @@ class PaymentController extends MasterController
         $this->actionMpdfDocument($content);
     }
 
-    public function actionPrintPayIn()
-    {
+    public function actionPrintPayIn() {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
