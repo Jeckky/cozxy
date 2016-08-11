@@ -43,6 +43,8 @@ return [
                 'profile/purchase-order/<hash>' => 'profile/purchase-order',
                 'profile/transfer-confirm/<hash>' => 'profile/transfer-confirm',
                 'payment/print-purchase-order/<hash>/<title>' => 'payment/print-purchase-order',
+                'payment/print-receipt/<hash>/<title>' => 'payment/print-receipt',
+                'payment/print-pay-in/<hash>/<title>' => 'payment/print-pay-in',
             ],
         ],
         /**
