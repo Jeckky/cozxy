@@ -41,3 +41,9 @@ th {
 .foorter-purchase-order{
     text-align: right;
 }
+
+.table-list-order {
+    border-collapse: separate;
+    border-spacing: 5px 5px 5px 5px;
+    font-size: 12px;
+}

@@ -62,7 +62,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </table>
 <hr>
 <!-- 2 -->
-<table class="table" style="padding: 10px;">
+<table class="table table-list-order" style="padding: 10px;" >
     <thead>
         <tr style="background-color: #f5f5f5;">
             <th style="font-size: 13px;">ลำดับ</th>
@@ -80,8 +80,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         if (is_array($product_itme)) {
             $num = 0;
             foreach ($product_itme as $key => $value) {
+                $bg_even_number = '#fff';  // เลขคู่
+                $bg_odd_number = '#f5f5f5';  // เลขคู่
+                if ($num % 2 == 0) {
+                    $bg = $bg_even_number;
+                } else if ($num % 2 == 1) {
+                    $bg = $bg_odd_number;
+                }
                 ?>
-                <tr style="padding: 5px;">
+                <tr style="padding: 5px; background-color: <?php echo $bg; ?>;" >
                     <td style="font-size: 12px;"><?php echo ++$num; ?></td>
                     <td style="font-size: 12px;"><?php echo ($value[$i]->code != '') ? $value[$i]->code : '-'; ?></td>
                     <td style="font-size: 12px;"><?php echo $value[$i]->title; ?></td>
