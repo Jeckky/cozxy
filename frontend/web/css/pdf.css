@@ -16,19 +16,21 @@ body{ font-family: "Garuda"; font-size: 10pt; }
 
 .table{
     font-family: "Garuda"; font-size: 10pt;
-    font-size: 13px;
-    white-space:pre-line;
     color:#292c2e;
     padding: 20px;
+    width: 100%;
+    font-weight: normal;
 }
 
+/*
 .table>thead>tr>th {
     vertical-align: bottom;
     border-bottom: 1px solid #ddd;
 }
-
+*/
 th {
-    font-weight: 600;
+    font-weight: normal;
+    line-height: 25px;
 }
 
 .bg-purchase-order{
