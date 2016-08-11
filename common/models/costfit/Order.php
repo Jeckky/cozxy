@@ -465,4 +465,11 @@ class Order extends \common\models\costfit\master\OrderMaster {
         return $dataProvider;
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrderItems() {
+        return $this->hasMany(OrderItem::className(), ['orderId' => 'orderId']); //[Order :: ปลายทาง ,  OrderItem :: ต้นทาง]
+    }
+
 }

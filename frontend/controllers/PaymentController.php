@@ -59,37 +59,38 @@ class PaymentController extends MasterController {
         //echo htmlspecialchars($orderId);
         //echo $orderId;
         if (isset($params['orderId'])) {
-            $Order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . $params['orderId'] . '" ')
-                    ->all();
-            if (count($Order) == 1) {
-                $Order = $Order[0]->attributes;
-                $OrderItem = \common\models\costfit\OrderItem::find()->where('orderId = ' . $params['orderId'])
-                        ->all();
-                foreach ($OrderItem as $key => $value) {
-                    $OrderItemList[$key]['quantity'] = $value['quantity'];
-                    $OrderItemList[$key]['price'] = $value['price'];
-                    $OrderItemList[$key]['total'] = $value['total'];
+            $order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . $params['orderId'] . '" ')
+                    ->one();
 
-                    $product = \common\models\costfit\product::find()->where('productId = ' . $value['productId'])
-                            ->all();
-                    foreach ($product as $key => $item1) {
-                        $product_itme[] = $product;
-                    }
-                }
-            } else {
-                $Order = NULL;
-                $OrderItemList = NUll;
-                $product_itme = NUll;
-            }
+            /* if (count($Order) == 1) {
+              $Order = $Order[0]->attributes;
 
-            //return $this->render('@app/views/payment/purchase_order', compact('Order', 'OrderItemList', 'product_itme', 'OrderId'));
+              $OrderItem = \common\models\costfit\OrderItem::find()->where('orderId = ' . $params['orderId'])
+              ->all();
+              foreach ($OrderItem as $key => $value) {
+              $OrderItemList[$key]['quantity'] = $value['quantity'];
+              $OrderItemList[$key]['price'] = $value['price'];
+              $OrderItemList[$key]['total'] = $value['total'];
+
+              $product = \common\models\costfit\product::find()->where('productId = ' . $value['productId'])
+              ->all();
+              foreach ($product as $key => $item1) {
+              $product_itme[] = $product;
+              }
+              }
+              } else {
+              $Order = NULL;
+              $OrderItemList = NUll;
+              $product_itme = NUll;
+              } */
+
+            //return $this->render('@app/views/payment/purchase_order', compact('order', 'OrderItemList', 'product_itme', 'OrderId'));
         } else {
             //return $this->redirect(['profile/order']);
         }
 
         //$content = $this->renderPartial('purchase_order');
-        $content = $this->renderPartial('@app/views/payment/purchase_order', compact('Order', 'OrderItemList', 'product_itme', 'OrderId'));
-
+        $content = $this->renderPartial('@app/views/payment/purchase_order', compact('order'));
         $this->actionMpdfDocument($content);
     }
 

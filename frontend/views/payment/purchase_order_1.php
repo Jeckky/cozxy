@@ -5,21 +5,20 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\grid\GridView;
 
-/*
-  if (is_array($Order)) {
-  $orderNo = $Order['orderNo'];
-  $orderId = $Order['orderId'];
-  $vat = $Order['vat'];
-  $totalExVat = $Order['totalExVat'];
-  $total = $Order['total'];
-  } else {
-  $orderNo = '-';
-  $vat = '-';
-  $totalExVat = '-';
-  $total = '-';
-  }
- */
-$orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->orderId]);
+if (is_array($Order)) {
+    $orderNo = $Order['orderNo'];
+    $orderId = $Order['orderId'];
+    $vat = $Order['vat'];
+    $totalExVat = $Order['totalExVat'];
+    $total = $Order['total'];
+} else {
+    $orderNo = '-';
+    $vat = '-';
+    $totalExVat = '-';
+    $total = '-';
+}
+
+$orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $orderId]);
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
@@ -55,7 +54,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </th>
         <th colspan="3" style="vertical-align: text-top; text-align: left;">
             ต้นฉบับ<br>
-            เลขที่ใบสั่งซื้อ PO No. : <?php echo $order->orderNo; ?><br>
+            เลขที่ใบสั่งซื้อ PO No. : <?php echo $orderNo; ?><br>
             วันที่สั่งซื้อ : 5 กุมภาพันธ์ 2559 <br>
             กำหนดชำระเงิน : 8 กุมภาพันธ์ 2559
         </th>
@@ -78,10 +77,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <tbody>
         <?php
         $i = 0;
-        if (count($order->orderItems) > 0) {
+        if (is_array($product_itme)) {
             $num = 0;
-            foreach ($order->orderItems as $value) {
-
+            foreach ($product_itme as $key => $value) {
                 $bg_even_number = '#fff';  // เลขคู่
                 $bg_odd_number = '#f5f5f5';  // เลขคี่
                 if ($num % 2 == 0) {
@@ -92,12 +90,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 ?>
                 <tr style="padding: 5px; background-color: <?php echo $bg; ?>;" >
                     <td style="font-size: 12px;"><?php echo ++$num; ?></td>
-                    <td style="font-size: 12px;"><?php echo ($value->product->code != '') ? $value->product->code : '-'; ?></td>
-                    <td style="font-size: 12px;"><?php echo $value->product->title; ?></td>
+                    <td style="font-size: 12px;"><?php echo ($value[$i]->code != '') ? $value[$i]->code : '-'; ?></td>
+                    <td style="font-size: 12px;"><?php echo $value[$i]->title; ?></td>
                     <td style="font-size: 12px;"><?php echo ''; ?></td>
-                    <td style="font-size: 12px;"><?php echo $value->price; ?></td>
-                    <td style="font-size: 12px;"><?php echo $value->quantity ?></td>
-                    <td style="font-size: 12px;"><?php echo $value->total; ?></td>
+                    <td style="font-size: 12px;"><?php echo $OrderItemList[$key]['price']; ?></td>
+                    <td style="font-size: 12px;"><?php echo $OrderItemList[$key]['quantity'] ?></td>
+                    <td style="font-size: 12px;"><?php echo ($OrderItemList[$key]['price'] * $OrderItemList[$key]['quantity']); ?></td>
                 </tr>
                 <?php
                 $i = $i++;
@@ -116,7 +114,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </tr>
         <tr>
             <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้ารวมภาษีมูลค่าเพิ่ม / sub Total Included VAT :</td>
-            <td class="bg-purchase-order"><?php echo $order->vat; ?></td>
+            <td class="bg-purchase-order"><?php echo $vat; ?></td>
         </tr>
         <tr>
             <td colspan="6" class="text-right" class="foorter-purchase-order">ส่วนลด/Discount(3.00%) :</td>
@@ -124,15 +122,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </tr>
         <tr>
             <td colspan="6" class="text-right" class="foorter-purchase-order">ภาษีมูลค่าเพิ่ม/VAT 7 % :</td>
-            <td class="bg-purchase-order"><?php echo $order->vat; ?></td>
+            <td class="bg-purchase-order"><?php echo $vat; ?></td>
         </tr>
         <tr>
             <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้าไม่รวมภาษี/Sub Total excluded VAT :</td>
-            <td class="bg-purchase-order"><?php echo $order->totalExVat; ?></td>
+            <td class="bg-purchase-order"><?php echo $totalExVat; ?></td>
         </tr>
         <tr >
             <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้าที่ต้องชำระเงินรวมภาษีมูลค่าเพิ่ม/Total excluded VAT :</td>
-            <td class="bg-purchase-order"><?php echo $order->summary; ?></td>
+            <td class="bg-purchase-order"><?php echo $total; ?></td>
         </tr>
 
     </tbody>
