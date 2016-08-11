@@ -57,7 +57,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <hr>
 <!-- 2 -->
-<table class="table table-list-order" style="padding: 10px;" >
+<table class="table table-list-order" cellpadding="2">
     <thead>
         <tr style="background-color: #f5f5f5;">
             <th style="font-size: 13px;">ลำดับ</th>
