@@ -111,7 +111,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     ],
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
-                        'template' => '{view} {update} {items}',
+                        'template' => '{view}',
                         'buttons' => [
                             'view' => function($url, $model) {
                                 return Html::a('<i class="fa fa-eye" aria-hidden="true"></i>', Yii::$app->homeUrl . "order/order/view/" . $model->encodeParams(['id' => $model->orderId]), [
