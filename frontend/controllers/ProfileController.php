@@ -216,6 +216,7 @@ class ProfileController extends MasterController {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
+
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
 
@@ -229,34 +230,7 @@ class ProfileController extends MasterController {
         if (isset($params['orderId'])) {
             $order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . $params['orderId'] . '" ')
                     ->one();
-            // echo '<pre>';
-            // print_r($Order);
-            /*
-              if (count($Order) == 1) {
-              $Order = $Order[0]->attributes;
 
-              $OrderItem = \common\models\costfit\OrderItem::find()->where('orderId = ' . $params['orderId'])
-              ->all();
-              foreach ($OrderItem as $key => $value) {
-              $OrderItemList[$key]['quantity'] = $value['quantity'];
-              $OrderItemList[$key]['price'] = $value['price'];
-              $OrderItemList[$key]['total'] = $value['total'];
-
-              $product = \common\models\costfit\product::find()->where('productId = ' . $value['productId'])
-              ->all();
-              foreach ($product as $key => $item1) {
-              $product_itme[] = $product;
-              }
-              }
-              } else {
-              $Order = NULL;
-              $OrderItemList = NUll;
-              $product_itme = NUll;
-              }
-
-              return $this->render('@app/views/profile/purchase_order', compact('Order', 'OrderItemList', 'product_itme'));
-             *
-             */
             return $this->render('@app/views/profile/purchase_order', compact('order'));
         } else {
             return $this->redirect(['profile/order']);

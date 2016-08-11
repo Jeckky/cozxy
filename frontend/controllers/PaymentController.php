@@ -61,32 +61,8 @@ class PaymentController extends MasterController {
         if (isset($params['orderId'])) {
             $order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . $params['orderId'] . '" ')
                     ->one();
-
-            /* if (count($Order) == 1) {
-              $Order = $Order[0]->attributes;
-
-              $OrderItem = \common\models\costfit\OrderItem::find()->where('orderId = ' . $params['orderId'])
-              ->all();
-              foreach ($OrderItem as $key => $value) {
-              $OrderItemList[$key]['quantity'] = $value['quantity'];
-              $OrderItemList[$key]['price'] = $value['price'];
-              $OrderItemList[$key]['total'] = $value['total'];
-
-              $product = \common\models\costfit\product::find()->where('productId = ' . $value['productId'])
-              ->all();
-              foreach ($product as $key => $item1) {
-              $product_itme[] = $product;
-              }
-              }
-              } else {
-              $Order = NULL;
-              $OrderItemList = NUll;
-              $product_itme = NUll;
-              } */
-
-            //return $this->render('@app/views/payment/purchase_order', compact('order', 'OrderItemList', 'product_itme', 'OrderId'));
         } else {
-            //return $this->redirect(['profile/order']);
+            return $this->redirect(['profile/order']);
         }
 
         //$content = $this->renderPartial('purchase_order');
