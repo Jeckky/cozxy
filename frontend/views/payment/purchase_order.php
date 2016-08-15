@@ -83,21 +83,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </tr>
             <?php
         }
-        ?>
-        <?php for ($z = 0; $z <= 50; $z++) { ?>
-            <tr style="background-color: <?php echo $bg; ?>; border-bottom: 1px #000000 solid;">
-                <td style="font-size: 12px;"><?php echo $z; ?></td>
-                <td style="font-size: 12px;">test's</td>
-                <td style="font-size: 12px;">test's</td>
-                <td style="font-size: 12px;">test's</td>
-                <td style="font-size: 12px; text-align: right;">test's</td>
-                <td style="font-size: 12px; text-align: right;">test's</td>
-                <td style="font-size: 12px; text-align: right;">test's</td>
-            </tr>
-            <?php
-            $z = $z++;
-        }
-        ?>
+        ?> 
         <tr>
             <td colspan="6">&nbsp;</td>
             <td >&nbsp;</td>
