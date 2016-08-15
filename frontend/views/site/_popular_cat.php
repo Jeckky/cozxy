@@ -12,11 +12,11 @@
         <span class="tile-overlay"></span>
 
         <div class="footer" id="products-popular-footer">
-            <a href="<?php echo Yii::$app->homeUrl; ?>search/pop?category=<?= $model->categoryId; ?>"><?= $model->title; ?></a>
+            <a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $model->createTitle() ?>/<?= $model->encodeParams(['categoryId' => $model->categoryId]) ?>"><?= $model->title; ?></a>
             <span>
                 <small><?= $model->title; ?></small>
             </span>
-            <a href="<?php echo Yii::$app->homeUrl; ?>search/pop?category=<?= $model->categoryId; ?>"><button class="btn btn-primary btn-sm">view</button></a>
+            <a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $model->createTitle() ?>/<?= $model->encodeParams(['categoryId' => $model->categoryId]) ?>"><button class="btn btn-primary btn-sm">view</button></a>
         </div>
     </div>
 </div>
