@@ -153,7 +153,22 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <div data-content="This is a place for the unique commercial offer. Make it known."><img src="<?php echo Yii::$app->homeUrl; ?>images/icon/Fast-Deliver-1.png" alt="cost.fit" style="height: 44px;">Fast Deliver</div>
         <div data-content="This is a place for the unique commercial offer. Make it known."><i class="fa fa-shield"></i>Safe Buy</div>
     </div>
+
+    <div class="buttons group">
+        <div class="qnt-count">
+            <a class="incr-btn" href="#">-</a>
+            <input id="sent-s" class="form-control" type="text" value="<?= ($model->findMaxQuantity($model->productId) == 0) ? 0 : 1 ?>">
+            <a class="incr-btn" href="#" data-toggle="popover" data-content="Max Quantity For this Item" data-placement="bottom">+</a>
+        </div>
+        <!-- <a class="btn btn-primary btn-sm" id="addItemToCart" href="#" <?= ($model->findMaxQuantity($model->productId) <= 0) ? " disabled" : " " ?>><i class="icon-shopping-cart"></i>Add to cart</a>
+        <a class="btn btn-black btn-sm" href="<?php echo Yii::$app->homeUrl; ?>wishlist"><i class="icon-heart"></i>Add to wishlist</a>-->
+    </div>
+
 </div>
+
+
+
+
 
 <!--Product Gallery-->
 <div class="col-lg-6 col-md-6" id="productImage">
