@@ -34,6 +34,7 @@ $unsignedField = ""
  . ",merchant_defined_data1,merchant_defined_data2,merchant_defined_data3,merchant_defined_data4,merchant_defined_data5,merchant_defined_data6,merchant_defined_data7,merchant_defined_data8,merchant_defined_data9"
  . ",merchant_defined_data10,merchant_defined_data11,line_item_count";
 
+//throw new \yii\base\Exception(gmdate("Y-m-d\TH:i:s\Z"));
 echo Html::hiddenInput("transaction_type", "sale");
 echo Html::hiddenInput("signed_date_time", gmdate("Y-m-d\TH:i:s\Z"));
 echo Html::hiddenInput("locale", "en");
