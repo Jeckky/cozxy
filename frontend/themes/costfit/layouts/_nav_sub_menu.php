@@ -12,8 +12,7 @@
                 <li class="has-submenu"><a href="#" style="font-size: 14px;">Electricals & Electronics <i class="fa fa-chevron-down"></i></a>
                     <ul class="sub-submenu">
                         <a href="<?php echo Yii::$app->homeUrl; ?>search?category=24" class="menu-catalog-title-color" style="color: #000;">เครื่องใช้ไฟฟ้าภายในบ้าน</a>
-                        <li><a href="<?php echo Yii::$app->homeUrl; ?>search?category=24">coffee</a></li>
-                        <li><a href="<?php echo Yii::$app->homeUrl; ?>search?category=24">Tea</a></li>
+                        <li><a href="<?php echo Yii::$app->homeUrl; ?>search?category=24">coffee</a></li> 
                     </ul>
                 </li>
                 <?php
