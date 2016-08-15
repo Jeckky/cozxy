@@ -91,8 +91,9 @@ class PaymentController extends MasterController {
         } else {
             return $this->redirect(['profile/order']);
         }
-
+        //return $this->render('@app/views/payment/pay_in', compact('order'));
         //$content = $this->renderPartial('purchase_order');
+        //exit();
         $content = $this->renderPartial('@app/views/payment/pay_in', compact('order'));
         $this->actionMpdfDocument($content);
     }
