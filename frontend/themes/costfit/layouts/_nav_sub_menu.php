@@ -43,7 +43,7 @@ $MenuCategory = $this->context->actionMenuCategory();
                 <?php
             }
             ?>
-        </ul>
+        </ul>   
     </li>
     <?php if (!Yii::$app->user->isGuest): ?>
         <li class="has-submenu pill-right"><a href="#"><?= (Yii::$app->user->identity->email); ?></a>
