@@ -190,13 +190,15 @@ class CheckoutController extends MasterController
             $order->shippingTel = ($address_shipping['tel'] != '') ? $address_shipping['tel'] : '';
 
 
-
+            if ($order->paymentType == 2) {
+                $order->status = \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_DRAFT;
+            }
             if ($order->save(FALSE)) {
 
                 if ($order->paymentType == 1) {
                     $this->redirect(Yii::$app->homeUrl . 'checkout/order-thank');
                 } else {
-
+                    $this->redirect(Yii::$app->homeUrl . 'checkout/confirm-checkout?orderId=' . $order->orderId);
                 }
             }
         } else {
@@ -220,7 +222,18 @@ class CheckoutController extends MasterController
 
     public function actionConfirmCheckout()
     {
+        $model = \common\models\costfit\Order::find()->where("orderId=" . $_GET["orderId"])->one();
+        $ePayment = \common\models\costfit\EPayment::find()->where("PaymentMethodId = 2 AND type =" . \Yii::$app->params['ePaymentServerType'])->one();
         return $this->render('_confirm_checkout', compact('model', 'ePayment'));
+    }
+
+    public function actionConfirmation($id)
+    {
+        $model = \common\models\costfit\Order::find()->where("orderId=" . $id)->one();
+        $ePayment = \common\models\costfit\EPayment::find()->where("PaymentMethodId = 2 AND type =" . \Yii::$app->params['ePaymentServerType'])->one();
+        return $this->render("//e_payment/payment_confirmation", [
+            'model' => $model,
+            'ePayment' => $ePayment]);
     }
 
 }

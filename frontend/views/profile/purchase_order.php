@@ -46,15 +46,17 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                             <i class="fa fa-print" aria-hidden="true"></i> พิมพ์ใบ Pay-in</a>
                         <a href="<?php echo Yii::$app->homeUrl; ?>profile/transfer-confirm/<?php echo $orderIdParams; ?>" class="btn btn-primary btn-xs" target="_blank">
                             <i class="fa fa-check" aria-hidden="true"></i> แจ้งชำระเงิน</a>
-                        <a href="<?php echo Yii::$app->homeUrl; ?>profile/transfer-confirm/<?php echo $orderIdParams; ?>" class="btn btn-primary btn-xs" target="_blank">
+                        <a href="<?php echo Yii::$app->homeUrl; ?>checkout/confirm-checkout?orderId=<?= $order->orderId ?>" class="btn btn-primary btn-xs" target="_blank">
                             <i class="fa fa-dollar" aria-hidden="true"></i> ชำระอีกครั้ง</a>
                     <?php else: ?>
-                        <a href="<?php echo Yii::$app->homeUrl; ?>order/order/print-purchase-order/<?php echo $orderIdParams; ?>/<?php echo $order->orderNo; ?>" class="btn btn-primary btn-xs" target="_blank">
-                            <i class="fa fa-print" aria-hidden="true"></i> พิมพ์</a>
-    <!--                        <a href="<?php echo Yii::$app->homeUrl; ?>payment/print-pay-in" class="btn btn-primary btn-xs" target="_blank">
-                            <i class="fa fa-print" aria-hidden="true"></i> พิมพ์ใบ Pay-in</a>
-                        <a href="<?php echo Yii::$app->homeUrl; ?>profile/transfer-confirm/<?php echo $orderIdParams; ?>" class="btn btn-primary btn-xs" target="_blank">
-                            <i class="fa fa-check" aria-hidden="true"></i> แจ้งชำระเงิน</a>-->
+                        <?php if (Yii::$app->controller->id != 'checkout'): ?>
+                            <a href="<?php echo Yii::$app->homeUrl; ?>order/order/print-purchase-order/<?php echo $orderIdParams; ?>/<?php echo $order->orderNo; ?>" class="btn btn-primary btn-xs" target="_blank">
+                                <i class="fa fa-print" aria-hidden="true"></i> พิมพ์</a>
+        <!--                        <a href="<?php echo Yii::$app->homeUrl; ?>payment/print-pay-in" class="btn btn-primary btn-xs" target="_blank">
+                                <i class="fa fa-print" aria-hidden="true"></i> พิมพ์ใบ Pay-in</a>
+                            <a href="<?php echo Yii::$app->homeUrl; ?>profile/transfer-confirm/<?php echo $orderIdParams; ?>" class="btn btn-primary btn-xs" target="_blank">
+                                <i class="fa fa-check" aria-hidden="true"></i> แจ้งชำระเงิน</a>-->
+                        <?php endif; ?>
                     <?php endif; ?>
                 </div>
                 <table class="table table-list-order" style="padding: 10px;" >
