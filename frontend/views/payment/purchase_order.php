@@ -18,9 +18,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </td>
         <td colspan="3" style="padding: 5px; vertical-align: text-top; text-align: center;">
             <h2>
-                บริษัท กินซ่า โฮม จำกัด
+                บริษัท เอเทค เอ็นเตอร์ไพรส์ จำกัด
             </h2>
-            <br> เลขประจำตัวผู้เสียภาษี : 0105552077368 <br>
+            <br> เลขประจำตัวผู้เสียภาษี : 0105546109903 <br>
             สำนักงานใหญ่ เลขที่ 1 ซ.ลาดพร้าว 19 ถ.ลาดพร้าว <br>แขวงจอมพล เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900
         </td>
         <td colspan="2" style="vertical-align: text-top; text-align: right; "><br><br>
@@ -62,9 +62,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <th style="font-size: 12px;">รหัสสินค้า</th>
             <th style="font-size: 12px;">รายการ</th>
             <th style="font-size: 12px;">หน่วย</th>
-            <th style="font-size: 12px;text-align: right;">ราคา/หน่วย</th>
+            <th style="font-size: 12px;text-align: right;width: 18%;">ราคา/หน่วย(บาท)</th>
             <th style="font-size: 12px;text-align: right;">จำนวน</th>
-            <th style="font-size: 12px;text-align: right;">มูลค่าสินค้ารวมภาษี</th>
+            <th style="font-size: 12px;text-align: right;width: 23%;">มูลค่าสินค้า(บาท)</th>
         </tr>
     </thead>
     <tbody>
