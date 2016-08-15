@@ -15,12 +15,12 @@ body{ font-family: "Garuda"; font-size: 10pt; }
     color:#292c2e;
     width: 100%;
     font-weight: normal;
-    border: 0.5px solid #ccc;
+    border: 0.5px solid #eee;
     margin-bottom: 10px;
 }
 
 .table_bordered td {
-    border:0.5px solid #ccc;
+    border:0.5px solid #eee;
 }
 
 
@@ -37,7 +37,7 @@ body{ font-family: "Garuda"; font-size: 10pt; }
 th {
     font-weight: normal;
     line-height: 25px;
-    border:0.5px solid #ccc;
+    border:0.5px solid #eee;
 }
 
 .bg-purchase-order{
@@ -62,7 +62,7 @@ th {
     color:#292c2e;
     width: 100%;
     font-weight: normal;
-    border: 0.5px solid #ccc;
+    border: 0.5px solid #eee;
     margin-bottom: 10px;
     padding: 10px;
 }

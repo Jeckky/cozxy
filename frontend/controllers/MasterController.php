@@ -352,9 +352,9 @@ class MasterController extends MasterCommonController {
             // call mPDF methods on the fly
             'methods' => [
                 //'SetHeader' => ['Cost.fit Print Purchase Order'], //Krajee Report Header
-                //'SetFooter' => ['{PAGENO}'],
+                // 'SetFooter' => ['{PAGENO}'],
                 'SetHeader' => FALSE, //Krajee Report Header
-                'SetFooter' => FALSE,
+                'SetFooter' => ['{PAGENO}'],
             ]
         ]);
 
