@@ -11,13 +11,15 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 
-<table class="table table-bordered-pay-in" width="100%" cellpadding="2" cellspacing="0">
+<table class="table-bordered-pay-in" width="100%" cellpadding="2" cellspacing="0">
     <tr>
         <td>
             แบบฟอร์มสำหรับชำระเงิน (Bill Payment / Pay-in Slip)
         </td>
+    </tr>
+    <tr>
         <td>
-            xx
+            แบบฟอร์มสำหรับชำระเงิน (Bill Payment / Pay-in Slip) 
         </td>
     </tr>
 </table>
@@ -34,9 +36,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <tr>
         <td>
             แบบฟอร์มสำหรับชำระเงิน (Bill Payment / Pay-in Slip)
-        </td>
-        <td>
-            xx
         </td>
     </tr>
 </table>
