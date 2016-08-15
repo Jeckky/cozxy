@@ -322,7 +322,7 @@ class MasterController extends MasterCommonController {
     }
 
     // Privacy statement output demo
-    public function actionMpdfDocument($content) {
+    public function actionMpdfDocument($content, $header, $title) {
         //$orderId = Yii::$app->request->get('OrderNo');
         // $orderId = $params['orderId'];
         // get your HTML raw content without any layouts or scripts
@@ -330,6 +330,7 @@ class MasterController extends MasterCommonController {
         // $model = YourModel::findOne($id);
         // $content = $this->renderPartial('print', [ 'model' => $model]);
         // setup kartik\mpdf\Pdf component
+
         $pdf = new Pdf([
             // set to use core fonts only
             'mode' => Pdf::MODE_UTF8,
@@ -348,13 +349,20 @@ class MasterController extends MasterCommonController {
             'cssInline' => '.kv-heading-1{font-size:18px}',
             //'cssInline' => 'body{font-size:9px}',
             // set mPDF properties on the fly
-            'options' => ['title' => 'Cost.fit Print Purchase Order'],
+            // 'defaultFontSize' => 3,
+            // 'marginLeft' => 10,
+            // 'marginRight' => 10,
+            'marginTop' => 40,
+            // 'marginBottom' => 11,
+            //'marginHeader' => 6,
+            //'marginFooter' => 6,
+            'options' => ['title' => 'Cost.fit Print ' . $title],
             // call mPDF methods on the fly
             'methods' => [
-                //'SetHeader' => ['Cost.fit Print Purchase Order'], //Krajee Report Header
+                'SetHeader' => [$header], //Krajee Report Header
                 // 'SetFooter' => ['{PAGENO}'],
-                'SetHeader' => FALSE, //Krajee Report Header
-                'SetFooter' => ['{PAGENO}'],
+                // 'SetHeader' => FALSE, //Krajee Report Header
+                'SetFooter' => ['{PAGENO} / {nbpg}'],
             ]
         ]);
 

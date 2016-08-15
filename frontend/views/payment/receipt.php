@@ -11,23 +11,6 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 
-<table class="table table_bordered" width="100%"  cellpadding="2" cellspacing="0">
-    <tr>
-        <td colspan="2" style="text-align: left; vertical-align: text-top;"><br><br>
-            <img src="<?php echo $baseUrl; ?>/images/logo/costfit.png" alt="Cost Fit" width="93" height="48" broder ="0">
-        </td>
-        <td colspan="3" style="padding: 5px; vertical-align: text-top; text-align: center;">
-            <h2>
-                บริษัท เอเทค เอ็นเตอร์ไพรส์ จำกัด
-            </h2>
-            <br> เลขประจำตัวผู้เสียภาษี : 0105546109903 <br>
-            สำนักงานใหญ่ เลขที่ 1 ซ.ลาดพร้าว 19 ถ.ลาดพร้าว <br>แขวงจอมพล เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900
-        </td>
-        <td colspan="2" style="vertical-align: text-top; text-align: right; "><br><br>
-            ใบเสร็จ/ใบกำกับภาษี
-        </td>
-    </tr>
-</table>
 
 <!--<hr> 1 -->
 <table class="table table_bordered" width="100%" cellpadding="2" cellspacing="0">

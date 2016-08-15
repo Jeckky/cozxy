@@ -65,9 +65,10 @@ class PaymentController extends MasterController {
 
         //return $this->render('@app/views/payment/purchase_order', compact('order'));
         //$content = $this->renderPartial('purchase_order');
-
+        $title = 'Purchase Order';
+        $heading = $this->renderPartial('@app/views/payment/heading_order');
         $content = $this->renderPartial('@app/views/payment/purchase_order', compact('order'));
-        $this->actionMpdfDocument($content);
+        $this->actionMpdfDocument($content, $heading, $title);
     }
 
     public function actionPrintPayIn($hash, $title) {
@@ -94,8 +95,10 @@ class PaymentController extends MasterController {
         //return $this->render('@app/views/payment/pay_in', compact('order'));
         //$content = $this->renderPartial('purchase_order');
         //exit();
+        $title = 'PayIn';
+        $heading = $this->renderPartial('@app/views/payment/heading_order');
         $content = $this->renderPartial('@app/views/payment/pay_in', compact('order'));
-        $this->actionMpdfDocument($content);
+        $this->actionMpdfDocument($content, $heading, $title);
     }
 
     public function actionPrintReceipt($hash, $title) {
@@ -121,8 +124,10 @@ class PaymentController extends MasterController {
         }
 
         //$content = $this->renderPartial('purchase_order');
+        $title = 'Receipt';
+        $heading = $this->renderPartial('@app/views/payment/heading_order');
         $content = $this->renderPartial('@app/views/payment/receipt', compact('order'));
-        $this->actionMpdfDocument($content);
+        $this->actionMpdfDocument($content, $heading, $title);
     }
 
 }
