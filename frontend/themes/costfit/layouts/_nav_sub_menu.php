@@ -27,13 +27,13 @@ $MenuCategory = $this->context->actionMenuCategory();
                         <?php
                         $MenuCategoryParentId = $this->context->actionMenuCategoryParentId($items->categoryId);
                         foreach ($MenuCategoryParentId as $items_sub) {
-                            $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items->categoryId]);
+                            $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items_sub->categoryId]);
                             ?>
                             <a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub->createTitle() ?>/<?= $params ?>" class="menu-catalog-title-color" style="color: #000;"><?php echo $items_sub->title; ?></a>
                             <?php
                             $MenuCategorySubParentId = $this->context->actionMenuCategorySubParentId($items_sub->categoryId);
                             foreach ($MenuCategorySubParentId as $items_sub_parent) {
-                                $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items->categoryId]);
+                                $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items_sub_parent->categoryId]);
                                 ?>
                                 <li><a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub_parent->createTitle() ?>/<?= $params ?>"><?php echo $items_sub_parent->title; ?></a></li>
                             <?php } ?>
