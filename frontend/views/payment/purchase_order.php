@@ -48,6 +48,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <th style="font-size: 12px;text-align: right;">จำนวน</th>
             <th style="font-size: 12px;text-align: right;width: 23%;">มูลค่าสินค้า(บาท)</th>
         </tr>
+
     </thead>
     <tbody>
         <?php

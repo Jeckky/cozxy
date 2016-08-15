@@ -1,22 +1,46 @@
 <?php
+
 // echo Yii::$app->homeUrl . Yii::$app->controller->id;
 //echo 'Test =' . Yii::$app->homeUrl;
 //echo '<br>' . Yii::$app->controller->id;
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
+use common\controllers\MasterController;
+use common\models\ModelMaster;
+
+$MenuCategory = $this->context->actionMenuCategory();
 ?>
+<style>
+
+</style>
 <ul class="catalog" id="catalog_new" style="width: 100%;">
     <li class="has-submenu pull-left"><a href="#">Categories<i class="fa fa-chevron-down open"></i></a>
         <ul class="submenu">
             <?php
-            for ($i = 5; $i <= 10; $i++) {
+            // $list_menu_category = $this->Me
+            foreach ($MenuCategory as $items) {
+
+                $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items->categoryId]);
                 ?>
-                <li class="has-submenu"><a href="#" style="font-size: 14px;">Electricals & Electronics <i class="fa fa-chevron-down"></i></a>
+                <li class="has-submenu"><a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items->createTitle() ?>/<?= $params ?>" style="font-size: 14px;"><?php echo $items->title; ?> <i class="fa fa-chevron-down"></i></a>
                     <ul class="sub-submenu">
-                        <a href="<?php echo Yii::$app->homeUrl; ?>search?category=24" class="menu-catalog-title-color" style="color: #000;">เครื่องใช้ไฟฟ้าภายในบ้าน</a>
-                        <li><a href="<?php echo Yii::$app->homeUrl; ?>search?category=24">coffee</a></li> 
+                        <?php
+                        $MenuCategoryParentId = $this->context->actionMenuCategoryParentId($items->categoryId);
+                        foreach ($MenuCategoryParentId as $items_sub) {
+                            $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items->categoryId]);
+                            ?>
+                            <a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub->createTitle() ?>/<?= $params ?>" class="menu-catalog-title-color" style="color: #000;"><?php echo $items_sub->title; ?></a>
+                            <?php
+                            $MenuCategorySubParentId = $this->context->actionMenuCategorySubParentId($items_sub->categoryId);
+                            foreach ($MenuCategorySubParentId as $items_sub_parent) {
+                                $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items->categoryId]);
+                                ?>
+                                <li><a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub_parent->createTitle() ?>/<?= $params ?>"><?php echo $items_sub_parent->title; ?></a></li>
+                            <?php } ?>
+                        <?php } ?>
                     </ul>
                 </li>
                 <?php
-                $i = $i++;
             }
             ?>
         </ul>

@@ -323,13 +323,6 @@ class MasterController extends MasterCommonController {
 
     // Privacy statement output demo
     public function actionMpdfDocument($content, $header, $title) {
-        //$orderId = Yii::$app->request->get('OrderNo');
-        // $orderId = $params['orderId'];
-        // get your HTML raw content without any layouts or scripts
-        // $content = $this->renderPartial('purchase_order');
-        // $model = YourModel::findOne($id);
-        // $content = $this->renderPartial('print', [ 'model' => $model]);
-        // setup kartik\mpdf\Pdf component
 
         $pdf = new Pdf([
             // set to use core fonts only
@@ -369,6 +362,30 @@ class MasterController extends MasterCommonController {
 
         // return the pdf output as per the destination setting
         return $pdf->render();
+    }
+
+    public function actionMenuCategory() {
+        $list = \common\models\costfit\Category::find()
+                ->andWhere('parentId  is null ')
+                ->andWhere('status  =1')
+                ->all();
+        return $list;
+    }
+
+    public function actionMenuCategoryParentId($id) {
+        $list = \common\models\costfit\Category::find()
+                ->andWhere('parentId  =' . $id)
+                ->andWhere('status  =1')
+                ->all();
+        return $list;
+    }
+
+    public function actionMenuCategorySubParentId($id) {
+        $list = \common\models\costfit\Category::find()
+                ->andWhere('parentId  =' . $id)
+                ->andWhere('status  =1')
+                ->all();
+        return $list;
     }
 
 }
