@@ -18,7 +18,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </td>
         <td colspan="3" style="padding: 5px; vertical-align: text-top; text-align: center;">
             <h2>
-                บริษัท Cost.fit จำกัด
+                บริษัท กินซ่า โฮม จำกัด
             </h2>
             <br> เลขประจำตัวผู้เสียภาษี : 0105552077368 <br>
             สำนักงานใหญ่ เลขที่ 1 ซ.ลาดพร้าว 19 ถ.ลาดพร้าว <br>แขวงจอมพล เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900
@@ -58,13 +58,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <table class="table_bordered" width="100%" border="0" cellpadding="4" cellspacing="0">
     <thead>
         <tr style="background-color: #f5f5f5; ">
-            <th style="font-size: 13px;">ลำดับ</th>
-            <th style="font-size: 13px;">รหัสสินค้า</th>
-            <th style="font-size: 13px;">รายการ</th>
-            <th style="font-size: 13px;">หน่วย</th>
-            <th style="font-size: 13px;text-align: right;">ราคา/หน่วย</th>
-            <th style="font-size: 13px;text-align: right;">จำนวน</th>
-            <th style="font-size: 13px;text-align: right;">มูลค่าสินค้ารวมภาษี</th>
+            <th style="font-size: 12px;">ลำดับ</th>
+            <th style="font-size: 12px;">รหัสสินค้า</th>
+            <th style="font-size: 12px;">รายการ</th>
+            <th style="font-size: 12px;">หน่วย</th>
+            <th style="font-size: 12px;text-align: right;">ราคา/หน่วย</th>
+            <th style="font-size: 12px;text-align: right;">จำนวน</th>
+            <th style="font-size: 12px;text-align: right;">มูลค่าสินค้ารวมภาษี</th>
         </tr>
     </thead>
     <tbody>

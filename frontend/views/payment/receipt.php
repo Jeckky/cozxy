@@ -18,13 +18,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </td>
         <td colspan="3" style="padding: 5px; vertical-align: text-top; text-align: center;">
             <h2>
-                บริษัท Cost.fit จำกัด
+                บริษัท กินซ่า โฮม จำกัด
             </h2>
             <br> เลขประจำตัวผู้เสียภาษี : 0105552077368 <br>
             สำนักงานใหญ่ เลขที่ 1 ซ.ลาดพร้าว 19 ถ.ลาดพร้าว <br>แขวงจอมพล เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900
         </td>
         <td colspan="2" style="vertical-align: text-top; text-align: right; "><br><br>
-            ใบสั่งซื้อสินค้า/ใบแจ้งหนี้
+            ใบเสร็จ/ใบกำกับภาษี
         </td>
     </tr>
 </table>
@@ -44,10 +44,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <br>โทรศัพท์ :   <?php echo $order->billingTel; ?>
         </td>
         <td  colspan="3" style="text-align: left; vertical-align: text-top; padding: 5px; font-size: 12px; line-height: 20px;">
-            ต้นฉบับ<br>
-            เลขที่ใบสั่งซื้อ PO No. : <?php echo $order->orderNo; ?><br>
-            วันที่สั่งซื้อ : <?php echo $this->context->dateThai($order->createDateTime, 1); ?><br>
-            กำหนดชำระเงิน :
+            <?php echo $order->orderNo; ?><br>
+            IV<br>
+            ชำระเงิน :
             <?php
             echo $this->context->dateThai($order->createDateTime, 1);
             ?>
