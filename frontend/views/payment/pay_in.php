@@ -11,15 +11,23 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 
-<table class="table-bordered-pay-in" width="100%" cellpadding="2" cellspacing="0">
+<table class="table-bordered-pay-in" width="100%" cellpadding="3" cellspacing="0">
     <tr>
-        <td>
+        <td style="text-align: left;">
             แบบฟอร์มสำหรับชำระเงิน (Bill Payment / Pay-in Slip)
+        </td>
+        <td style="text-align: right;">
+            ส่วนที่ 1 สำหรับธนาคาร
         </td>
     </tr>
     <tr>
-        <td>
-            แบบฟอร์มสำหรับชำระเงิน (Bill Payment / Pay-in Slip) 
+        <td style="font-weight: bold;">
+            เพื่อนำเข้าบัญชี บจก. กินซ่า โฮม / เลขประจำตัวผู้เสียภาษี 0105552077368
+        </td>
+    </tr>
+    <tr>
+        <td style="font-size: 10px;">
+            สำนักงานแห่งใหญ่ เลขที่ 1 ซ.ลาดพร้าว 19 ถ.ลาดพร้าว 10900 โทร.02-938-3464
         </td>
     </tr>
 </table>

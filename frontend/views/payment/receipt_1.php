@@ -11,7 +11,25 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 
-<!--<hr> 1 -->
+<table class="table table_bordered" width="100%"  cellpadding="2" cellspacing="0">
+    <tr>
+        <td colspan="2" style="text-align: left; vertical-align: text-top;"><br><br>
+            <img src="<?php echo $baseUrl; ?>/images/logo/costfit.png" alt="Cost Fit" width="93" height="48" broder ="0">
+        </td>
+        <td colspan="3" style="padding: 5px; vertical-align: text-top; text-align: center;">
+            <h2>
+                บริษัท เอเทค เอ็นเตอร์ไพรส์ จำกัด
+            </h2>
+            <br> เลขประจำตัวผู้เสียภาษี : 0105546109903 <br>
+            สำนักงานใหญ่ เลขที่ 1 ซ.ลาดพร้าว 19 ถ.ลาดพร้าว <br>แขวงจอมพล เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900
+        </td>
+        <td colspan="2" style="vertical-align: text-top; text-align: right; "><br><br>
+            ใบเสร็จ/ใบกำกับภาษี
+        </td>
+    </tr>
+</table>
+
+<hr> 1 -->
 <table class="table table_bordered" width="100%" cellpadding="2" cellspacing="0">
     <tr>
         <td  colspan="4" style="text-align: left; vertical-align: text-top; padding: 5px; font-size: 12px; line-height: 20px;">
@@ -28,8 +46,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <td  colspan="3" style="text-align: left; vertical-align: text-top; padding: 5px; font-size: 12px; line-height: 20px;">
             ต้นฉบับ<br>
             เลขที่ใบสั่งซื้อ PO No. : <?php echo $order->orderNo; ?><br>
-            วันที่สั่งซื้อ : <?php echo $this->context->dateThai($order->createDateTime, 1); ?><br>
-            กำหนดชำระเงิน :
+            เลขที่ใบเสร็จรับเงิน : IV<br>
+            ชำระเงิน :
             <?php
             echo $this->context->dateThai($order->createDateTime, 1);
             ?>
@@ -37,7 +55,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     </tr>
 </table>
 <!-- 2 <hr>-->
-<table class="table_bordered" width="100%" border="0" cellpadding="2" cellspacing="0">
+<table class="table_bordered" width="100%" border="0" cellpadding="4" cellspacing="0">
     <thead>
         <tr style="background-color: #f5f5f5; ">
             <th style="font-size: 12px;">ลำดับ</th>
@@ -48,7 +66,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <th style="font-size: 12px;text-align: right;">จำนวน</th>
             <th style="font-size: 12px;text-align: right;width: 23%;">มูลค่าสินค้า(บาท)</th>
         </tr>
-
     </thead>
     <tbody>
         <?php
@@ -83,7 +100,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </tr>
             <?php
         }
-        ?> 
+        ?>
         <tr>
             <td colspan="6">&nbsp;</td>
             <td >&nbsp;</td>
