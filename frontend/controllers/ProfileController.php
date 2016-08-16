@@ -252,4 +252,15 @@ class ProfileController extends MasterController {
         return $this->render('@app/views/profile/transfer_confirm');
     }
 
+    public function actionShippingAddressDelete() {
+        $address_id = Yii::$app->request->post('address_id');
+        $model = \common\models\costfit\Address::find()->where("addressId ='" . $address_id . "'")->one();
+        if ($model->delete()) {
+            echo 'complete';
+        } else {
+            //$this->redirect(Yii::$app->homeUrl . 'profile');
+            echo 'wrong';
+        }
+    }
+
 }
