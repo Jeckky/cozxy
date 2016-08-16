@@ -43,15 +43,15 @@ $MenuCategory = $this->context->actionMenuCategory();
                 <?php
             }
             ?>
-        </ul>   
+        </ul>
     </li>
     <?php if (!Yii::$app->user->isGuest): ?>
         <li class="has-submenu pill-right"><a href="#"><?= (Yii::$app->user->identity->email); ?></a>
             <ul class="submenu">
                 <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
                 <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
-                <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/payment">Payment Methods</a></li>
-                <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>history">Easy Re-Order</a></li>
+                <!--<li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/payment">Payment Methods</a></li>
+                <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>history">Easy Re-Order</a></li>-->
             </ul>
         </li>
     <?php endif; ?>
