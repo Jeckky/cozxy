@@ -71,6 +71,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     ],
                 ]),
             ],
+            [
+                'attribute' => 'สถานะ',
+                'value' => function($model) {
+                    return ($model->paymentType == 1) ? '<span style="color: #ac2925">ยังไม่ชำระเงิน</span>' : '<span style="color: #006600">ชำระเงินแล้ว</span>';
+                },
+                'format' => 'raw',
+            ],
             // More complex one.
             ['class' => 'yii\grid\ActionColumn', 'options' => ['style' => ' width:120px; text-align: center;'],
                 'header' => 'จัดการ',
