@@ -20,7 +20,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     echo ($model->states['stateName']) ? $model->states['stateName'] : '' . ' ,';
     echo '<br>' . ($model->countries['localName']) ? $model->countries['localName'] : '' . ' ,';
     echo '<br>Zipcode ' . $model->zipcode;
-    echo '<a href="' . Yii::$app->homeUrl . 'profile/shipping-address?id=' . $model->addressId . '"><span style ="color:#b11010; cursor: hand;" > (edit ,</span></a>';
+    echo '<a href="' . Yii::$app->homeUrl . 'profile/shipping-address/' . \common\models\ModelMaster::encodeParams(['addressId' => $model->addressId]) . '"><span style ="color:#b11010; cursor: hand;" > (edit ,</span></a>';
     echo '<span class= "obutton feature2"  data-id="' . $model->addressId . '" data-toggle="modal" data-target="#modal-delete-item">'
     . '<span style ="color:#b11010; cursor: hand;" class="get-shipping-address"> del)</span></span>';
     echo $this->render('@frontend/views/modal/modal_delete_item');

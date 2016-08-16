@@ -95,10 +95,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 'options' => ['class' => 'space-bottom'],
     ]);
     ?>
+    <?php echo $form->field($model, 'firstname'); ?>
+    <?php echo $form->field($model, 'lastname'); ?>
     <?php echo $form->field($model, 'company'); ?>
     <?php echo $form->field($model, 'address')->textarea(); ?>
     <?php
     // Top most parent
+
     echo $form->field($model, 'countryId')->widget(kartik\select2\Select2::classname(), [
         //'options' => ['id' => 'address-countryid'],
         'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'countryName'),
@@ -110,32 +113,44 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     ])->label('Country');
 
     // Child level 1
+    // Additional input fields passed as params to the child dropdown's pluginOptions
+    echo Html::hiddenInput('input-type-1', $model->provinceId, ['id' => 'input-type-1']);
+    echo Html::hiddenInput('input-type-2', $model->provinceId, ['id' => 'input-type-2']);
     echo $form->field($model, 'provinceId')->widget(DepDrop::classname(), [
-        //'data' => [6 => 'Bank'],
+        'data' => [$model->provinceId => $model->provinceId],
         'options' => ['placeholder' => 'Select ...'],
+        //'options' => ['id' => 'address-provinceidxxx'],
         'type' => DepDrop::TYPE_SELECT2,
         'select2Options' => ['pluginOptions' => ['allowClear' => true]],
         'pluginOptions' => [
+            'initialize' => true,
             'depends' => ['address-countryid'],
-            'url' => Url::to(['child-states']),
+            'url' => Url::to(['child-states-address']),
             'loadingText' => 'Loading province ...',
+            'params' => ['input-type-1', 'input-type-2']
         ]
     ])->label('States');
 
 // Child level 2
+    echo Html::hiddenInput('input-type-11', $model->amphurId, ['id' => 'input-type-11']);
+    echo Html::hiddenInput('input-type-22', $model->amphurId, ['id' => 'input-type-22']);
     echo $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
         //'data' => [9 => 'Savings'],
         'options' => ['placeholder' => 'Select ...'],
         'type' => DepDrop::TYPE_SELECT2,
         'select2Options' => ['pluginOptions' => ['allowClear' => true]],
         'pluginOptions' => [
+            'initialize' => true,
             'depends' => ['address-provinceid'],
-            'url' => Url::to(['child-amphur']),
+            'url' => Url::to(['child-amphur-address']),
             'loadingText' => 'Loading amphur ...',
+            'params' => ['input-type-11', 'input-type-22']
         ]
     ])->label('Cities');
 
 // Child level 3
+    echo Html::hiddenInput('input-type-13', $model->districtId, ['id' => 'input-type-13']);
+    echo Html::hiddenInput('input-type-23', $model->districtId, ['id' => 'input-type-23']);
     echo $form->field($model, 'districtId')->widget(DepDrop::classname(), [
         //'data' => [12 => 'Savings A/C 2'],
         'options' => ['placeholder' => 'Select ...'],
@@ -145,8 +160,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             'depends' => ['address-amphurid'],
             //'initialize' => true,
             //'initDepends' => ['address-countryid'],
-            'url' => Url::to(['child-district']),
-            'loadingText' => 'Loading district ...'
+            'url' => Url::to(['child-district-address']),
+            'loadingText' => 'Loading district ...',
+            'params' => ['input-type-13', 'input-type-23']
         ]
     ])->label('District');
     ?>
@@ -158,3 +174,4 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <?php echo Html::submitButton(($label != '') ? $label : '', ['class' => 'btn btn-primary', 'name' => 'btn-shipping-address']) ?>
     <?php ActiveForm::end(); ?>
 </div>
+

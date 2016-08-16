@@ -388,4 +388,124 @@ class MasterController extends MasterCommonController {
         return $list;
     }
 
+    public function actionChildStatesAddress() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = ($_POST['depdrop_parents']);
+            if ($parents != null) {
+                $cat_id = $parents[0];
+                $param1 = null;
+                $param2 = null;
+                if (!empty($_POST['depdrop_params'])) {
+                    $params = $_POST['depdrop_params'];
+                    $param1 = $params[0]; // get the value of input-type-1
+                    $param2 = $params[1]; // get the value of input-type-2
+                }
+                $list = \common\models\dbworld\States::find()->andWhere(['countryId' => $cat_id])->asArray()->all();
+                $selected = null;
+                if ($cat_id != null && count($list) > 0) {
+                    $selected = '';
+                    foreach ($list as $i => $account) {
+                        $out[] = ['id' => $account['stateId'], 'name' => $account['localName']];
+                        $param1 = ($param1 != '') ? $param1 : $account['stateId'];
+                        if ($i == 0) {
+                            $selected = $param1; //$account['stateId'];
+                        } else {
+                            $selected = $param1;
+                        }
+                    }
+
+                    // Shows how you can preselect a value
+                    echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
+                    return;
+                }
+            }
+
+            //echo 'no';
+        }
+        echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
+    }
+
+    public function actionChildAmphurAddress() {
+        $out = [];
+
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = ($_POST['depdrop_parents']);
+            if ($parents != null) {
+                $cat_id = $parents[0];
+                $param1 = null;
+                $param2 = null;
+                if (!empty($_POST['depdrop_params'])) {
+                    $params = $_POST['depdrop_params'];
+                    $param1 = $params[0]; // get the value of input-type-1
+                    $param2 = $params[1]; // get the value of input-type-2
+                }
+
+                $list = \common\models\dbworld\Cities::find()->andWhere(['stateId' => $cat_id])->asArray()->all();
+                $selected = null;
+                if ($cat_id != null && count($list) > 0) {
+                    $selected = '';
+                    foreach ($list as $i => $account) {
+                        $out[] = ['id' => $account['cityId'], 'name' => $account['localName']];
+                        $param1 = ($param1 != '') ? $param1 : $account['cityId'];
+                        if ($i == 0) {
+                            $selected = $param1; //$account['stateId'];
+                        } else {
+                            $selected = $param1;
+                        }
+                    }
+
+                    // Shows how you can preselect a value
+                    echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
+                    return;
+                }
+            }
+
+            //echo 'no';
+        }
+
+        echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
+    }
+
+    public function actionChildDistrictAddress() {
+        $out = [];
+
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = ($_POST['depdrop_parents']);
+            if ($parents != null) {
+                $cat_id = $parents[0];
+                $param1 = null;
+                $param2 = null;
+                if (!empty($_POST['depdrop_params'])) {
+                    $params = $_POST['depdrop_params'];
+                    $param1 = $params[0]; // get the value of input-type-1
+                    $param2 = $params[1]; // get the value of input-type-2
+                }
+
+                $list = \common\models\dbworld\District::find()->andWhere(['cityId' => $cat_id])->asArray()->all();
+                $selected = null;
+                if ($cat_id != null && count($list) > 0) {
+                    $selected = '';
+                    foreach ($list as $i => $account) {
+                        $out[] = ['id' => $account['districtId'], 'name' => $account['localName']];
+                        $param1 = ($param1 != '') ? $param1 : $account['districtId'];
+                        if ($i == 0) {
+                            $selected = $param1; //$account['stateId'];
+                        } else {
+                            $selected = $param1;
+                        }
+                    }
+
+                    // Shows how you can preselect a value
+                    echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
+                    return;
+                }
+            }
+
+            //echo 'no';
+        }
+
+        echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
+    }
+
 }

@@ -98,17 +98,30 @@ class ProfileController extends MasterController {
         }
     }
 
-    public function actionShippingAddress() {
+    public function actionShippingAddress($hash) {
 
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
 
+
+        $k = base64_decode(base64_decode($hash));
+        $params = \common\models\ModelMaster::decodeParams($hash);
+        $addressId = $params['addressId'];
+
         $this->layout = "/content_profile";
         $this->title = 'Cost.fit | Default Shipping Assdress';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Default Shipping Assdress";
-        $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
+        if ($hash != 'add') {
+            $model = \common\models\costfit\Address::find()->where("addressId ='" . $addressId . "'")->one();
+            $model->scenario = 'shipping_address';
+            $action = 'edit';
+        } else {
+            $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
+            $action = 'add';
+        }
+
         //$loginForm = new \common\models\LoginForm();
         $model->type = \common\models\costfit\Address::TYPE_SHIPPING; // default Address First
         $status_address = Yii::$app->controller->action->id;
@@ -124,19 +137,31 @@ class ProfileController extends MasterController {
                 $this->redirect(Yii::$app->homeUrl . 'profile');
             }
         }
-        return $this->render('@app/views/profile/add_address', ['model' => $model, 'label' => $label]);
+        return $this->render('@app/views/profile/add_address', ['model' => $model, 'label' => $label, 'action' => $action]);
     }
 
-    public function actionBillingsAddress() {
+    public function actionBillingsAddress($hash) {
 
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
+
+
+
+        $k = base64_decode(base64_decode($hash));
+        $params = \common\models\ModelMaster::decodeParams($hash);
+        $addressId = $params['addressId'];
+
         $this->layout = "/content_profile";
         $this->title = 'Cost.fit | Default Shipping Assdress';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Default Shipping Assdress";
-        $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
+        if ($hash != 'add') {
+            $model = \common\models\costfit\Address::find()->where("addressId ='" . $addressId . "'")->one();
+            $model->scenario = 'shipping_address';
+        } else {
+            $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
+        }
         //$loginForm = new \common\models\LoginForm();
         $model->type = \common\models\costfit\Address::TYPE_BILLING; // default Address First
         $status_address = Yii::$app->controller->action->id;
