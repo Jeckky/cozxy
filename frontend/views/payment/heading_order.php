@@ -22,7 +22,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             สำนักงานใหญ่ เลขที่ 1 ซ.ลาดพร้าว 19 ถ.ลาดพร้าว <br>แขวงจอมพล เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900
         </td>
         <td colspan="2" style="vertical-align: text-top; text-align: right; "><br><br>
-            ใบสั่งซื้อสินค้า/ใบแจ้งหนี้
+            <?php echo $title; ?>
         </td>
     </tr>
 </table>
