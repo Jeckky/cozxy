@@ -63,6 +63,7 @@ class MasterController extends MasterCommonController {
             ]);
             // $this->view->params['cart']
             // - BILLING = 1; // ที่อยู่จัดส่งเอกสาร
+            //echo Yii::$app->user->id;
             $dataProvider_billing = new \yii\data\ActiveDataProvider([
                 'query' => \common\models\costfit\Address::find()->where("userId ='" . Yii::$app->user->id . "' and type = 1 ")->orderBy('addressId DESC'),
                 'pagination' => false,

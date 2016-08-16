@@ -169,6 +169,7 @@ class ProfileController extends MasterController {
         $label = 'Default billings address';
         $model->isDefault = 0;
 
+
         if (isset($_POST['Address'])) {
             $model->attributes = $_POST['Address'];
             $model->userId = Yii::$app->user->id;
