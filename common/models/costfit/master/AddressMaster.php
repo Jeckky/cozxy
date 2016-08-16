@@ -27,6 +27,7 @@ use Yii;
     * @property string $updateDateTime
     * @property string $longitude
     * @property string $latitude
+    * @property string $email
     *
             * @property User $user
     */
@@ -55,6 +56,7 @@ return [
             [['countryId'], 'string', 'max' => 3],
             [['zipcode'], 'string', 'max' => 10],
             [['longitude', 'latitude'], 'string', 'max' => 150],
+            [['email'], 'string', 'max' => 100],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => UserMaster::className(), 'targetAttribute' => ['userId' => 'userId']],
         ];
 }
@@ -85,6 +87,7 @@ return [
     'updateDateTime' => Yii::t('address', 'Update Date Time'),
     'longitude' => Yii::t('address', 'Longitude'),
     'latitude' => Yii::t('address', 'Latitude'),
+    'email' => Yii::t('address', 'Email'),
 ];
 }
 

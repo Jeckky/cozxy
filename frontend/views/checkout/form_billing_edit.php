@@ -220,8 +220,7 @@ $districtId = rand(0, 9999);
     </div>
     <div class="row">
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
-            <label for="co-email">อีเมล์ *</label>
-            <?= Html::textInput("Address[email]", NULL, ["class" => "form-control input-sm", 'placeHolder' => 'Email adress', 'id' => 'email']) ?>
+            <?php echo $form->field($address, 'email')->textInput(['class' => 'form-control input-sm', 'id' => 'email'])->label('อีเมล์'); ?>
         </div>
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
             <?php echo $form->field($address, 'tel')->textInput(['class' => 'form-control input-sm', 'id' => 'tel'])->label('โทร'); ?>

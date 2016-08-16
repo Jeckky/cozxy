@@ -128,7 +128,9 @@ class ProfileController extends MasterController {
         $label = 'Save shipping  address';
         $model->isDefault = 0;
 
+
         if (isset($_POST['Address'])) {
+
             $model->attributes = $_POST['Address'];
             $model->userId = Yii::$app->user->id;
             $model->createDateTime = new \yii\db\Expression("NOW()");

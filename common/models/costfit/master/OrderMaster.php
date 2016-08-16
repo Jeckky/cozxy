@@ -20,6 +20,8 @@ use Yii;
     * @property string $shippingRate
     * @property string $summary
     * @property string $sendDate
+    * @property string $billingFirstname
+    * @property string $billingLastname
     * @property string $billingCompany
     * @property string $billingTax
     * @property string $billingAddress
@@ -29,6 +31,8 @@ use Yii;
     * @property string $billingDistrictId
     * @property string $billingZipcode
     * @property string $billingTel
+    * @property string $shippingFirstname
+    * @property string $shippingLastname
     * @property string $shippingCompany
     * @property string $shippingTax
     * @property string $shippingAddress
@@ -46,6 +50,7 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
+    * @property string $email
     *
             * @property User $user
             * @property OrderItem[] $orderItems
@@ -73,9 +78,10 @@ return [
             [['sendDate', 'paymentDateTime', 'createDateTime', 'updateDateTime'], 'safe'],
             [['paymentType', 'createDateTime'], 'required'],
             [['orderNo', 'invoiceNo', 'billingTax', 'billingDistrictId', 'billingTel', 'shippingTax', 'shippingDistrictId', 'shippingTel'], 'string', 'max' => 45],
-            [['billingCompany', 'shippingCompany'], 'string', 'max' => 200],
+            [['billingFirstname', 'billingLastname', 'billingCompany', 'shippingFirstname', 'shippingLastname', 'shippingCompany'], 'string', 'max' => 200],
             [['billingCountryId', 'shippingCountryId'], 'string', 'max' => 3],
             [['billingZipcode', 'shippingZipcode'], 'string', 'max' => 10],
+            [['email'], 'string', 'max' => 100],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => UserMaster::className(), 'targetAttribute' => ['userId' => 'userId']],
         ];
 }
@@ -99,6 +105,8 @@ return [
     'shippingRate' => Yii::t('order', 'Shipping Rate'),
     'summary' => Yii::t('order', 'Summary'),
     'sendDate' => Yii::t('order', 'Send Date'),
+    'billingFirstname' => Yii::t('order', 'Billing Firstname'),
+    'billingLastname' => Yii::t('order', 'Billing Lastname'),
     'billingCompany' => Yii::t('order', 'Billing Company'),
     'billingTax' => Yii::t('order', 'Billing Tax'),
     'billingAddress' => Yii::t('order', 'Billing Address'),
@@ -108,6 +116,8 @@ return [
     'billingDistrictId' => Yii::t('order', 'Billing District ID'),
     'billingZipcode' => Yii::t('order', 'Billing Zipcode'),
     'billingTel' => Yii::t('order', 'Billing Tel'),
+    'shippingFirstname' => Yii::t('order', 'Shipping Firstname'),
+    'shippingLastname' => Yii::t('order', 'Shipping Lastname'),
     'shippingCompany' => Yii::t('order', 'Shipping Company'),
     'shippingTax' => Yii::t('order', 'Shipping Tax'),
     'shippingAddress' => Yii::t('order', 'Shipping Address'),
@@ -125,6 +135,7 @@ return [
     'status' => Yii::t('order', 'Status'),
     'createDateTime' => Yii::t('order', 'Create Date Time'),
     'updateDateTime' => Yii::t('order', 'Update Date Time'),
+    'email' => Yii::t('order', 'Email'),
 ];
 }
 
