@@ -66,7 +66,7 @@ class PaymentController extends MasterController {
         //return $this->render('@app/views/payment/purchase_order', compact('order'));
         //$content = $this->renderPartial('purchase_order');
         $title = 'Purchase Order';
-        $heading = $this->renderPartial('@app/views/payment/heading_order');
+        $heading = $this->renderPartial('@app/views/payment/heading_order', ['title' => 'ใบสั่งซื้อ​สิน​ค้า​/ใบ​แจ้ง​หนี้']);
         $content = $this->renderPartial('@app/views/payment/purchase_order', compact('order'));
         $this->actionMpdfDocument($content, $heading, $title);
     }
@@ -96,7 +96,7 @@ class PaymentController extends MasterController {
         //$content = $this->renderPartial('purchase_order');
         //exit();
         $title = 'PayIn';
-        $heading = $this->renderPartial('@app/views/payment/heading_order', ['title' => 'ใบสั่งซื้อ​สิน​ค้า​/ใบ​แจ้ง​หนี้']);
+        $heading = $this->renderPartial('@app/views/payment/heading_order', ['title' => 'Pay In']);
         $content = $this->renderPartial('@app/views/payment/pay_in', compact('order'));
         $this->actionMpdfDocument($content, $heading, $title);
     }
