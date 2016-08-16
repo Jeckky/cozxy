@@ -125,7 +125,7 @@ class ProfileController extends MasterController {
         $model->type = \common\models\costfit\Address::TYPE_SHIPPING; // default Address First
         $status_address = Yii::$app->controller->action->id;
 
-        $label = 'Default shipping  address';
+        $label = 'Save shipping  address';
         $model->isDefault = 0;
 
         if (isset($_POST['Address'])) {
@@ -163,7 +163,7 @@ class ProfileController extends MasterController {
         $model->type = \common\models\costfit\Address::TYPE_BILLING; // default Address First
         $status_address = Yii::$app->controller->action->id;
 
-        $label = 'Default billings address';
+        $label = 'Save billings address';
         $model->isDefault = 0;
 
 
