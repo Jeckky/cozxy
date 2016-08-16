@@ -21,7 +21,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="modal-body" >
                 <span class="text-center">
                     <center>
-                        <i class="icon-shopping-cart-content" style="zoom:8;"></i>
+                       <!-- <i class="icon-shopping-cart-content" style="zoom:8;"></i> -->
                     </center>
                 </span><br><center><code>ต้องการลบข้อมูล 1 รายการ  <span id="test"></span></code></center>
                 <p class="large text-center">
