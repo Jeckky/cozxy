@@ -55,7 +55,9 @@
     border-right: 1px #03a9f4  solid;
     border-bottom: 1px #03a9f4  solid;
     border-left: 1px #03a9f4  solid;
+    height: 530px;
     min-height: 220px;
+    overflow-y: scroll;
     width: 100%;
 }
 
