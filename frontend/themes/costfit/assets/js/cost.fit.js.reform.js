@@ -459,3 +459,9 @@ $('.shipping-address').click(function () {
             });
 });
 
+var x = "Total Height: " + screen.height;
+//alert(x);
+//document.getElementById('test-menu');
+//$('#test-menu').setAttribute("style", "width:" + x + "px;float:left;");
+//c$("#test-menu").css({"width": "" + x + "px"}).show();
+ 
