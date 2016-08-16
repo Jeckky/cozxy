@@ -99,7 +99,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <!--Special Offer-->
 <section class="special-offer">
-    <?php echo $this->render('product_special_offer'); ?>
+    <?php //echo $this->render('product_special_offer'); ?>
 </section><!--Special Offer Close-->
 
 <!--Brands Carousel Widget-->
