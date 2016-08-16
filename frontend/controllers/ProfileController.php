@@ -104,7 +104,6 @@ class ProfileController extends MasterController {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
 
-
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
         $addressId = $params['addressId'];
@@ -145,8 +144,6 @@ class ProfileController extends MasterController {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
-
-
 
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
