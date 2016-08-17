@@ -85,11 +85,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 'buttons' => [
                     'Order' => function($url, $model, $baseUrl) {
                         if ($model->paymentType == 1) { // ชำระเงินแล้ว
-                            return Html::a('ดูเพิ่มเติม', Yii::$app->homeUrl . "profile/purchase-order/" . $model->encodeParams(['orderId' => $model->orderId]), [
+                            return Html::a('ดูเพิ่มเติม', Yii::$app->homeUrl . "profile/purchase-order/" . $model->encodeParams(['orderId' => $model->orderId]), ['class' => 'btn btn-primary btn-xs'], [
                                         'title' => Yii::t('app', ' '),]);
                         } else {
-                            return Html::a('ดูเพิ่มเติม', Yii::$app->homeUrl . "payment/print-receipt/" . $model->encodeParams(['orderId' => $model->orderId]) . '/' . $model->orderNo, [
-                                        'title' => Yii::t('app', ' '),]);
+                            return Html::a('<i class="fa fa-print" aria-hidden="true"></i> ดูเพิ่มเติม', Yii::$app->homeUrl . "payment/print-receipt/" . $model->encodeParams(['orderId' => $model->orderId]) . '/' . $model->orderNo, ['class' => 'btn btn-primary btn-xs'], [
+                                        'title' => Yii::t('app', ' ')]);
                         }
                     },
                         ]
