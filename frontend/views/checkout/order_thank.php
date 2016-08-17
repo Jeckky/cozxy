@@ -33,7 +33,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="row space-top">
                     <div class="clo-lg-12 col-md-12 col-sm-12 space-bottom">
                         <h4 class="light-weight uppercase">
-                            หมายเลขสั่งซื้อสินค้าของท่านคือ  <a href="<?php echo Yii::$app->homeUrl; ?>register/confirm?token=1dqibNCP7K">OD20160700001</a>
+                            หมายเลขสั่งซื้อสินค้าของท่านคือ  <a href="<?= Yii::$app->homeUrl . "profile/order" ?>">OD20160700001</a>
                         </h4>
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6 ">
