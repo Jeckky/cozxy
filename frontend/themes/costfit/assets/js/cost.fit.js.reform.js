@@ -526,14 +526,17 @@ $(".incr-btn-cart").on("click", function (e) {
 });
 
 function itemzero(items, title) {
+    var privacy = $(".buttons").find(".total").text();
+    var item_cart = $('.total').html()
+
     if (title == 'cart') {
-        if (items == 0) {
+        if (item_cart == '0.00') {
             $("#modal-cart-not-item").modal('show');
         } else {
-            window.location = 'checkout';
+            window.location = 'cart';
         }
     } else if (title == 'checkout') {
-        if (items == 0) {
+        if (item_cart == '0.00') {
             $("#modal-cart-not-item").modal('show');
         } else {
             window.location = 'checkout';
