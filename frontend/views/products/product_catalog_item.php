@@ -56,13 +56,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 ");
                     ?>
                 <?php endif; ?>
-    <!--            <select name="size" id="changeOption">
-    <option>Size:28 Inches</option>
-    <option>Size:32 Inches</option>
-    <option>Size:40 Inches</option>
-    <option>Size:48 Inches</option>
-    <option>Size:50 Inches</option>
-    </select>-->
+                <!--            <select name="size" id="changeOption">
+                <option>Size:28 Inches</option>
+                <option>Size:32 Inches</option>
+                <option>Size:40 Inches</option>
+                <option>Size:48 Inches</option>
+                <option>Size:50 Inches</option>
+                </select>-->
             </div>
         <?php endif; ?>
     </div>
@@ -156,6 +156,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     </div>
 
     <div class="buttons group">
+        <h3>Select Fast Delive</h3>
         <div class="qnt-count">
             <a class="incr-btn" href="#">-</a>
             <input id="sent-s" class="form-control" type="text" value="<?= ($model->findMaxQuantity($model->productId) == 0) ? 0 : 1 ?>">
