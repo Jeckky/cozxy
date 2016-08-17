@@ -143,21 +143,21 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <div class="tab-pane fade" id="onsale">
                             <div class="container">
                                 <div class="row">
-                                    <?php for ($index1 = 0; $index1 <= 3; $index1++) {
-                                        ?>
+                                    <?php //for ($index1 = 0; $index1 <= 3; $index1++) {
+                                    ?>
 
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <a class="media-link" href="#">
-                                                <div class="overlay">
-                                                    <div class="descr"><div>Product Name<span>$14.95</span></div></div>
-                                                </div>
-                                                <img src="<?php echo $baseUrl; ?>/images/bestseller-items/teniqa30_49a2502a5e21c.jpg" alt="1" title="ขนาด 555 x 245"/>
-                                            </a>
-                                        </div>
-
-                                        <?php
-                                        $index1 = $index1++;
-                                    }
+                                    <!-- <div class="col-lg-6 col-md-6 col-sm-6">
+                                         <a class="media-link" href="#">
+                                             <div class="overlay">
+                                                 <div class="descr"><div>Product Name<span>$14.95</span></div></div>
+                                             </div>
+                                             <img src="<?php //echo $baseUrl;   ?>/images/bestseller-items/teniqa30_49a2502a5e21c.jpg" alt="1" title="ขนาด 555 x 245"/>
+                                         </a>
+                                     </div>
+                                    -->
+                                    <?php
+                                    // $index1 = $index1++;
+                                    //}
                                     ?>
                                 </div>
                             </div>
