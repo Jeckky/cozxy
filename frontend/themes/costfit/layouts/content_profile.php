@@ -63,7 +63,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
                     <?php } else { ?>
                         <div class="bs-example" data-example-id="btn-tags" style="background-color:#3cc; height:45px; margin-top: 20px;  padding: 10px 12px; color: #fff; border-width: 1px;  border-radius: 4px 4px 0 0; -webkit-box-shadow: none; box-shadow: none;">
-                            <span style="float: left; width: 70%; text-align: left;">Default shipping address</span>
+                            <span style="float: left; width: 70%; text-align: left;">Shipping address</span>
                             <span style="float: left; width: 30%; text-align: right;">
                                 <a href="<?php echo Yii::$app->homeUrl; ?>profile/shipping-address/add" style="color: #fff;"> + Add New </a>
                             </span>
@@ -90,7 +90,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         </div>
                         <!--Default Add New-->
                         <div class="bs-example" data-example-id="btn-tags" style="background-color:#3cc; height:45px; margin-top: 20px;  padding: 10px 12px; color: #fff; border-width: 1px;  border-radius: 4px 4px 0 0; -webkit-box-shadow: none; box-shadow: none;">
-                            <span style="float: left; width: 70%; text-align: left;">Default billings address</span>
+                            <span style="float: left; width: 70%; text-align: left;">Billings address</span>
                             <span style="float: left; width: 30%; text-align: right;">
                                 <a href="<?php echo Yii::$app->homeUrl; ?>profile/billings-address/add" style="color: #fff;"> + Add New </a>
                             </span>

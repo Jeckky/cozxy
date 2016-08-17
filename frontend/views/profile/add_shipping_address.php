@@ -5,9 +5,16 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 
-$orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => '']);
+if ($model->isDefault == '1') {
+    $bg = '#f5f5f5';
+} else if ($model->isDefault == '0') {
+    $bg = '#ffffff';
+} else {
+    $bg = '#ffffff';
+}
 ?>
-<p style="font-size: 12px;">
+
+<p style="font-size: 12px; background-color: <?php echo $bg; ?>">
     <?php
     echo ++$index . '. ';
     echo ($model->firstname) ? 'คุณ' . $model->firstname : '-';
