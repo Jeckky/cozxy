@@ -12,7 +12,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <style>
     .table-light{
-        font-size: 14px;
+        font-size: 12px;
         color: #434b50;
     }
     .asc{
