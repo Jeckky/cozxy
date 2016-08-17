@@ -139,7 +139,8 @@ class CartController extends MasterController
         if ($_POST["quantity"] <= $maxQuantity) {
             if (isset($price)) {
                 $res["status"] = TRUE;
-                $res["price"] = $price["priceText"];
+                $res["price"] = $price["price"];
+                $res["priceText"] = $price["priceText"];
                 $res["discountType"] = $price["discountType"];
                 $res["discountValue"] = $price["discountValue"];
             } else {
@@ -221,6 +222,42 @@ class CartController extends MasterController
         $res = [];
         $this->generateNewToken();
         $res["status"] = TRUE;
+        return \yii\helpers\Json::encode($res);
+    }
+
+    public function actionChangeQuantityItemAndSave()
+    {
+
+        $res = [];
+        $product = new \common\models\costfit\Product();
+        $price = $product->calProductPrice($_POST["productId"], $_POST["quantity"], 1);
+
+        $maxQuantity = $product->findMaxQuantity($_POST["productId"]);
+        if ($_POST["quantity"] <= $maxQuantity) {
+            if (isset($price)) {
+                $cart = \common\models\costfit\Order::findCartArray();
+                $oi = \common\models\costfit\OrderItem::find()->where("productId = " . $_POST["productId"] . " AND orderId=" . $cart["orderId"])->one();
+                $oi->price = $price["price"];
+                $oi->quantity = $_POST["quantity"];
+                $oi->total = $oi->price;
+                $oi->save();
+                $cart = \common\models\costfit\Order::findCartArray();
+                $res["status"] = TRUE;
+                $res["price"] = $price["price"];
+                $res["priceText"] = $price["priceText"];
+                $res["orderItemId"] = $oi->orderItemId;
+                $res["cart"] = $cart;
+                $res["discountType"] = $price["discountType"];
+                $res["discountValue"] = $price["discountValue"];
+            } else {
+                $res["status"] = FALSE;
+                $res['errorCode'] = 2;
+            }
+        } else {
+            $res["status"] = FALSE;
+            $res['errorCode'] = 1;
+        }
+
         return \yii\helpers\Json::encode($res);
     }
 

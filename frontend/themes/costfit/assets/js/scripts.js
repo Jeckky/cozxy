@@ -558,7 +558,7 @@ $(document).ready(function (e) {
             {
                 if (data.status)
                 {
-                    $('.price').html(data.price);
+                    $('.price').html(data.priceText);
                     if (data.discountValue != "null")
                     {
                         $('.discountPrice').html(data.discountValue + " ฿ extra offyour order");
