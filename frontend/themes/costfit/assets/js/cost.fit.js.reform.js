@@ -464,4 +464,11 @@ var x = "Total Height: " + screen.height;
 //document.getElementById('test-menu');
 //$('#test-menu').setAttribute("style", "width:" + x + "px;float:left;");
 //c$("#test-menu").css({"width": "" + x + "px"}).show();
- 
+
+
+
+$('.ship-to-dif-adress').click(function () {
+    //alert('Test');
+    //$(".new-address-form").addClass("panel-toggle active");
+    //panel-toggle active
+});
