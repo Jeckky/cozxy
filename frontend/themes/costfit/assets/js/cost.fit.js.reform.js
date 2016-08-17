@@ -527,7 +527,7 @@ $(".incr-btn-cart").on("click", function (e) {
 
 function itemzero(items, title) {
 
-    var item_cart = $('.total').html()
+    var item_cart = $('.total').html();
 
     if (title == 'cart') {
         if (item_cart == '0.00') {
