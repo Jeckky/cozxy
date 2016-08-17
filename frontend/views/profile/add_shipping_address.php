@@ -6,7 +6,7 @@ use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 
 if ($model->isDefault == '1') {
-    $bg = '#ccc';
+    $bg = '##f1ebeb ; padding: 5px;';
 } else if ($model->isDefault == '0') {
     $bg = '#ffffff';
 } else {
@@ -14,7 +14,7 @@ if ($model->isDefault == '1') {
 }
 ?>
 
-<p style="font-size: 12px; background-color: <?php echo $bg; ?>">
+<p style="font-size: 12px;   background-color: <?php echo $bg; ?>">
     <?php
     echo ++$index . '. ';
     echo ($model->firstname) ? 'คุณ' . $model->firstname : '-';
