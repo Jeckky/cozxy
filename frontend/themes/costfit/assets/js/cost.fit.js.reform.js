@@ -26,7 +26,6 @@ function proceed(data) {
                 }
             }
         });
-
     } else if (shop_data == 'update_cart') {
         window.location = 'history';
     } else if (shop_data == 'to_checkout') {
@@ -65,7 +64,6 @@ $('.checkout_select_address_billing').on('click', function () {
 $('.updateBillingCancel').on('click', function () {
     $("#billingUpdate").addClass("hide");
 });
-
 $('.checkout_update_address_shipping').on('click', function () {
 //alert('Id Name : ' + $(this).find('input').attr('id'));
 //alert('Value : ' + $(this).find('input').val());
@@ -80,7 +78,6 @@ $('.checkout_update_address_shipping').on('click', function () {
         if (status == "success") {
             var JSONObject = JSON.parse(data);
             $('.form-group').find('#' + $('.form-group').find('#countryDDId').val()).val(JSONObject.countryId).trigger('change');
-
             $.post("checkout/child-states", {// child-states //
                 'depdrop_parents[]': JSONObject.countryId,
                 'depdrop_all_params[]': JSONObject.countryId
@@ -154,7 +151,6 @@ $('.checkout_update_address_shipping').on('click', function () {
             $('.form-group').find('#lastname').val(JSONObject.lastname);
             $('.form-group').find('#company').val(JSONObject.company);
             $('.form-group').find('#address').val(JSONObject.address);
-
             $('.form-group').find('#zipcode').val(JSONObject.zipcode);
             $('.form-group').find('#email').val(JSONObject.email);
             $('.form-group').find('#tel').val(JSONObject.tel);
@@ -165,7 +161,6 @@ $('.checkout_update_address_shipping').on('click', function () {
 
     });
 });
-
 $('.new-address-form ').on('click', function () {
     $('.form-group').find('#address-hidden').html('');
     $('.actionFormEditShipping').hide();
@@ -184,17 +179,15 @@ $('.new-address-form ').on('click', function () {
     $('#formShipping').show();
     $('#formBilling').show();
 });
-
 $('.checkout_update_address_billing').on('click', function () {
-    //alert('Id Name : ' + $(this).find('input').attr('id'));
-    //alert('Value : ' + $(this).find('input').val());
+//alert('Id Name : ' + $(this).find('input').attr('id'));
+//alert('Value : ' + $(this).find('input').val());
     var edit_shipping = $(this).find('input').val();
     //$('.actionFormEditShipping').show();
     $('.actionFormBillingNew').hide();
     //$('.actionFormEditBilling').hide();
     $('.actionFormEditShipping').hide();
     $('.actionFormEditBilling').show();
-
     $.post("checkout/get-address", {
         address: edit_shipping
     }, function (data, status) {
@@ -202,9 +195,7 @@ $('.checkout_update_address_billing').on('click', function () {
         if (status == "success") {
 
             var JSONObject = JSON.parse(data);
-
             $('.form-group').find('#' + $('.form-group-billing').find('#countryDDId').val()).val(JSONObject.countryId).trigger('change');
-
             $.post("checkout/child-states", {// child-states //
                 'depdrop_parents[]': JSONObject.countryId,
                 'depdrop_all_params[]': JSONObject.countryId
@@ -295,13 +286,10 @@ $('.checkout_update_address_billing').on('click', function () {
         // window.location = 'checkout/order-thank';
     });
 });
-
-
 $('.checkout_select_address_shipping').on('click', function () {
     $('#formShippingUpdate').hide();
     $('#formShipping').hide();
 });
-
 $('.checkout_select_address_billing').on('click', function () {
     $('#formBillingUpdate').hide();
     $('#formBilling').hide();
@@ -382,7 +370,6 @@ $("#place-order").on('click', function () {
     var _placeUserId = $('input[id=placeUserId]').val();
     var _placeOrderId = $('input[id=placeOrderId]').val();
     var _notes = $("#order-notes").val();
-
     if (_placeUserId == '') {
         $("#modal-cart-not-item").modal('show');
     }
@@ -392,13 +379,13 @@ $("#place-order").on('click', function () {
     }
 
     if (_placeOrderId == '') {
-        //alert('สินค้าในตะกร้า 0 รายการ');
+//alert('สินค้าในตะกร้า 0 รายการ');
         $("#modal-cart-not-item").modal('show');
         //window.location = 'site';
 
     } else {
         if (_shipping === undefined) {
-            //alert('Please Select Shipping Address');
+//alert('Please Select Shipping Address');
             $("#modal-cart-not-shipping").modal('show');
         } else {
             if (_billing === undefined) {
@@ -409,8 +396,8 @@ $("#place-order").on('click', function () {
                     notes: _notes,
                     placeOrderId: _placeOrderId
                 }, function (data, status) {
-                    //alert("Data: " + data + "\nStatus: " + status);
-                    // window.location = 'checkout/order-thank';
+//alert("Data: " + data + "\nStatus: " + status);
+// window.location = 'checkout/order-thank';
                 });
             } else if (_billing != undefined) {
                 $.post("checkout/burn-checkouts", {
@@ -421,8 +408,8 @@ $("#place-order").on('click', function () {
                     notes: _notes,
                     placeOrderId: _placeOrderId
                 }, function (data, status) {
-                    //alert("Data: " + data + "\nStatus: " + status);
-                    // window.location = 'checkout/order-thank';
+//alert("Data: " + data + "\nStatus: " + status);
+// window.location = 'checkout/order-thank';
                 });
             }
         }
@@ -445,5 +432,36 @@ $("#btn-checkout-formBilling").on('click', function () {
 //alert('test : formBilling');
 // $this->redirect(['order-thank']);
 });
+/// Delete Default shipping address , Default billings address ///
+$('.get-shipping-address').click(function () {
+    var address_id = $(this).parent().attr('data-id');
+    $("span#spanTest").attr('data-id', address_id);
+});
+$('.shipping-address').click(function () {
 
+    var address_id = $(this).parent().data('id');
+    $.ajax
+            ({
+                url: '/profile/shipping-address-delete',
+                data: {"address_id": address_id},
+                type: 'post',
+                success: function (result)
+                {
+                    //alert(result);
+                    if (result = 'complete') {
+                        window.location = 'profile';
+                    } else if (result = 'wrong') {
+                        window.location = 'profile';
+                    } else {
+                        window.location = 'profile';
+                    }
+                }
+            });
+});
 
+var x = "Total Height: " + screen.height;
+//alert(x);
+//document.getElementById('test-menu');
+//$('#test-menu').setAttribute("style", "width:" + x + "px;float:left;");
+//c$("#test-menu").css({"width": "" + x + "px"}).show();
+ 

@@ -16,8 +16,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <table class="table table_bordered" width="100%" cellpadding="2" cellspacing="0">
     <tr>
         <td  colspan="4" style="text-align: left; vertical-align: text-top; padding: 5px; font-size: 12px; line-height: 20px;">
-            ได้รับเงินจาก : คุณ<?php echo $order->user->firstname; ?> <?php echo $order->user->lastname; ?><br>
-            เลขที่ประจำตัวผู้เสียภาษี : <br>
+            ได้รับเงินจาก : <?php
+            echo isset($order->billingCompany) ? 'บริษัท' . $order->billingCompany : 'คุณ' . $order->user->firstname . " " . $order->user->lastname;
+            ?>
+            <?php //echo $order->user->firstname;  ?> <?php //echo $order->user->lastname;  ?><br>
+            <!--เลขที่ประจำตัวผู้เสียภาษี :  <br>-->
             <?php echo isset($order->billingAddress) ? $order->billingAddress : "-"; ?><br>
             <?php echo isset($order->billingDistrict) ? $order->billingDistrict->localName : "-"; ?>
             <?php echo isset($order->billingCities) ? $order->billingCities->localName : "-"; ?>
@@ -27,7 +30,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <br>โทรศัพท์ :   <?php echo $order->billingTel; ?>
         </td>
         <td  colspan="3" style="text-align: left; vertical-align: text-top; padding: 5px; font-size: 12px; line-height: 20px;">
-            ต้นฉบับ<br>
             เลขที่ใบสั่งซื้อ PO No. : <?php echo $order->orderNo; ?><br>
             เลขที่ใบเสร็จรับเงิน : IV<br>
             ชำระเงิน :

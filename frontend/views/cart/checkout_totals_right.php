@@ -13,7 +13,7 @@
     ?>
     <tr>
         <td class="th">Cart subtotal</td>
-        <td class="price"><?= number_format($this->params['cart']['total'], 2) ?> $</td>
+        <td class="price"><?= number_format($this->params['cart']['total'], 2) ?> ฿</td>
     </tr>
     <?php if (isset($this->params['cart']['discount'])): ?>
         <tr>
@@ -27,6 +27,6 @@
     </tr>
     <tr>
         <td class="th">Order total</td>
-        <td class="price"><?= number_format($this->params ['cart']['summary'], 2) ?> $</td>
+        <td class="price"><?= number_format($this->params ['cart']['summary'], 2) ?> ฿</td>
     </tr>
-</table> 
+</table>

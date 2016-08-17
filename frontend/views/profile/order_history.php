@@ -71,13 +71,20 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     ],
                 ]),
             ],
+            [
+                'attribute' => 'สถานะ',
+                'value' => function($model) {
+                    return ($model->paymentType == 1) ? '<span style="color: #ac2925">ยังไม่ชำระเงิน</span>' : '<span style="color: #006600">ชำระเงินแล้ว</span>';
+                },
+                'format' => 'raw',
+            ],
             // More complex one.
-            ['class' => 'yii\grid\ActionColumn', 'options' => ['style' => ' width:20px; text-align: center;'],
+            ['class' => 'yii\grid\ActionColumn', 'options' => ['style' => ' width:120px; text-align: center;'],
                 'header' => 'จัดการ',
                 'template' => ' {Order} ',
                 'buttons' => [
                     'Order' => function($url, $model, $baseUrl) {
-                        return Html::a('<i class="fa fa-eye" aria-hidden="true"></i>', Yii::$app->homeUrl . "profile/purchase-order/" . $model->encodeParams(['orderId' => $model->orderId]), [
+                        return Html::a('ดู Order เพิ่มเติม', Yii::$app->homeUrl . "profile/purchase-order/" . $model->encodeParams(['orderId' => $model->orderId]), [
                                     'title' => Yii::t('app', ' View Order No :' . $model->orderId),]);
                     },
                         ]

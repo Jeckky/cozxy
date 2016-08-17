@@ -45,6 +45,8 @@ return [
                 'payment/print-purchase-order/<hash>/<title>' => 'payment/print-purchase-order',
                 'payment/print-receipt/<hash>/<title>' => 'payment/print-receipt',
                 'payment/print-pay-in/<hash>/<title>' => 'payment/print-pay-in',
+                'profile/shipping-address/<hash>' => 'profile/shipping-address',
+                'profile/billings-address/<hash>' => 'profile/billings-address',
             ],
         ],
         /**

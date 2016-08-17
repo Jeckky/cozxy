@@ -53,23 +53,23 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
                         </section>
 
-                        <!--Colors Section-->
+                        <!--Colors Section
                         <section class="filter-section">
                             <h3>Filter by color</h3>
-                            <?php echo $this->render('@app/views/filter/filterbycolor'); ?>
-                        </section>
+                        <?php //echo $this->render('@app/views/filter/filterbycolor'); ?>
+                        </section>-->
 
-                        <!--Colors Section-->
+                        <!--Colors Section
                         <section class="filter-section">
                             <h3>Filter by size</h3>
-                            <?php echo $this->render('@app/views/filter/filterbysize'); ?>
-                        </section>
+                        <?php //echo $this->render('@app/views/filter/filterbysize'); ?>
+                        </section>-->
 
-                        <!--Categories Section-->
+                        <!--Categories Section
                         <section class="filter-section">
                             <h3>Categories</h3>
-                            <?php echo $this->render('@app/views/categories/categories'); ?>
-                        </section>
+                        <?php //echo $this->render('@app/views/categories/categories'); ?>
+                        </section>-->
                     </div>
                 </div><!--Filters-->
                 <div id="title-product-all" class="col-lg-9 col-md-9 col-sm-8">

@@ -166,55 +166,34 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     </div>
 </section><!--Shopping Cart Close-->
 
-<!--Catalog Grid-->
+<!--Catalog Grid
 <section class = "catalog-grid">
     <div class = "container">
         <h2>You may also like</h2>
         <div class = "row">
-            <?php for ($index = 0; $index <= 3; $index++) {
-                ?>
-                <!--Tile-->
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="tile">
-                        <div class="price-label">715,00 $</div>
-                        <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">
-                            <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
-                            <span class="tile-overlay"></span>
-                        </a>
-                        <div class="footer">
-                            <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">The Buccaneer</a>
-                            <span>by Pirate3d</span>
-                            <a href="<?php echo Yii::$app->homeUrl; ?>cart"><button class="btn btn-primary">Add to Cart</button></a>
-                        </div>
-                    </div>
+<?php //for ($index = 0; $index <= 3; $index++) {
+?>
+
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="tile">
+                <div class="price-label">715,00 $</div>
+                <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">
+                    <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
+                    <span class="tile-overlay"></span>
+                </a>
+                <div class="footer">
+                    <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">The Buccaneer</a>
+                    <span>by Pirate3d</span>
+                    <a href="<?php echo Yii::$app->homeUrl; ?>cart"><button class="btn btn-primary">Add to Cart</button></a>
                 </div>
-                <?php
-                $index = $index++;
-            }
-            ?>
-
+            </div>
         </div>
-    </div>
-</section><!--Catalog Grid Close-->
+<?php
+//$index = $index++;
+//}
+?>
 
+</div>
+</div>
+</section> Catalog Grid Close-->
 
-<script type="text/javascript">
-    //apply-coupon
-    //update-cart
-    //to-checkout
-    /*function proceed(data) {
-     var shop_data = data;
-     if (shop_data == 'apply_coupon') {
-     //window.location = '<?php //echo $baseUrl;                                                                   ?>';
-     } else if (shop_data == 'update_cart') {
-     window.location = '<?php //echo $baseUrl;                                                                   ?>' + '/history';
-     } else if (shop_data == 'to_checkout') {
-     window.location = '<?php //echo $baseUrl;                                                                   ?>' + '/checkout';
-     } else if (shop_data == '') {
-     //window.location = '<?php //echo $baseUrl;                                                                   ?>' ;
-     } else {
-     window.location = '<?php //echo $baseUrl;                                                                   ?>';
-     }
-     }*/
-
-</script>
