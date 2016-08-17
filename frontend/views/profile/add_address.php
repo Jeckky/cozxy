@@ -171,6 +171,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <?php echo $form->field($model, 'email'); ?>
     <?php echo $form->field($model, 'tel'); ?>
     <?php echo $form->field($model, 'isDefault')->radioList([1 => 'Yes', 0 => 'No'], ['itemOptions' => ['class' => 'radio']])->label('Default address') ?>
+    <?php
+    //($model->isDefault = '1') ? 1 : 0;
+    ?>
 
     <?php echo Html::submitButton(($label != '') ? $label : '', ['class' => 'btn btn-primary', 'name' => 'btn-shipping-address']) ?>
     <?php ActiveForm::end(); ?>

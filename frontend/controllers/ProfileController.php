@@ -120,13 +120,13 @@ class ProfileController extends MasterController {
             $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
             $action = 'add';
         }
-
+        //echo $model->isDefault;
         //$loginForm = new \common\models\LoginForm();
         $model->type = \common\models\costfit\Address::TYPE_SHIPPING; // default Address First
         $status_address = Yii::$app->controller->action->id;
 
         $label = 'Save shipping  address';
-        $model->isDefault = 0;
+        //$model->isDefault = 0;
 
 
         if (isset($_POST['Address'])) {
