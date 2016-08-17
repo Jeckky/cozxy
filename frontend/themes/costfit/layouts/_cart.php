@@ -2,7 +2,7 @@
 $check_item = count($this->params['cart']['items']);
 ?>
 <div class="cart-btn">
-    <a class="btn btn-outlined-invert" href="<?= Yii::$app->homeUrl ?>cart">
+    <a class="btn btn-outlined-invert">
         <i class="icon-shopping-cart-content"></i><span><?= $this->params['cart']['qty'] ?></span><b id="cartTotal"><?= number_format($this->params['cart']['total'], 2) ?></b>
     </a>
 
