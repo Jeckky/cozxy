@@ -466,9 +466,9 @@ var x = "Total Height: " + screen.height;
 //c$("#test-menu").css({"width": "" + x + "px"}).show();
 
 
-
-$('.ship-to-dif-adress').click(function () {
-    //alert('Test');
-    //$(".new-address-form").addClass("panel-toggle active");
-    //panel-toggle active
-});
+/*
+ $('.ship-to-dif-adress').click(function () {
+ //alert('Test');
+ $("#NewBilling").addClass("hidden-panel");
+ //panel-toggle active
+ });*/
