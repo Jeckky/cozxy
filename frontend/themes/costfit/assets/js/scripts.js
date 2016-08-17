@@ -196,14 +196,46 @@ $(document).ready(function (e) {
      *******************************************/
     $(document).on('click', '.wishlist .delete i', function () {
         var $target = $(this).parent().parent();
-        $target.hide(300, function () {
-            $.when($target.remove()).then(function () {
-                if ($positions.length === 1) {
-                    $('.wishlist .items-list').remove();
-                    $('.wishlist .title').text('Wishlist is empty!');
+        var pId = $(this).parent().parent().find("#productId").val();
+//        $target.hide(300, function () {
+        $.when($target.remove()).then(function () {
+            $.ajax({
+                type: "POST",
+                dataType: "JSON",
+                url: "cart/delete-wishlist",
+                data: {productId: pId},
+                success: function (data)
+                {
+                    if (data.status)
+                    {
+                        $target.hide(300, function () {
+                            $('.wishlist .items-list').remove();
+                            $('.wishlist .title').text('Wishlist is empty!');
+//                                    $positionQty = $positionQty - itemQty;
+//                                    $('.cart-btn a span').text($positionQty);
+//                                    if ($positions.length === 1) {
+//                                        $('.shopping-cart .items-list').remove();
+//                                        $('.shopping-cart .title').text('Shopping cart is empty!');
+//                                    }
+//                                    $('.cart-btn a').find("#cartTotal").html(data.cart.totalFormatText);
+//                                    $('.cart-dropdown .footer .total').html(data.cart.totalFormatText);
+//                                    if ($('.cart-dropdown').find("#item" + orderItemId) !== undefined)
+//                                    {
+//                                        $('.cart-dropdown').find("#item" + orderItemId).remove();
+//                                    }
+//                                    if ($('.shopping-cart .cart-sidebar .cart-totals .total').html() !== undefined)
+//                                    {
+//                                        $('.shopping-cart .cart-sidebar .cart-totals .total').html(data.cart.totalFormatText);
+//                                        $('.shopping-cart .cart-sidebar .cart-totals .shipping').html(data.cart.shippingFormatText);
+//                                        $('.shopping-cart .cart-sidebar .cart-totals .summary').html(data.cart.summaryFormatText);
+//                                    }
+                        });
+                    }
                 }
             });
+
         });
+//        });
     });
 
     /*Catalog 3-rd Level Submenu positioning
@@ -556,6 +588,11 @@ $(document).ready(function (e) {
     $addToCartBtn.click(function () {
         $addedToCartMessage.removeClass('visible');
         var $itemName = $(this).parent().parent().find('h1').text();
+
+        if (typeof $itemName == 'undefined' || $itemName == '')
+        {
+            var $itemName = $(this).parent().parent().find('.title').html();
+        }
         var $itemId = $(this).parent().parent().find('#productId').val();
         var $itemPrice = $(this).parent().parent().find('.price').text();
         var $itemQnty = $(this).parent().find('#quantity').val();

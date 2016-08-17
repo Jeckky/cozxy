@@ -104,9 +104,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             </td>
                             <td class="price"><?= $item["price"] . " ฿" ?></td>
                             <td class="qnt-count">
-                                <a class="incr-btn" href="#">-</a>
+                                <a class="incr-btn-cart" href="#">-</a>
                                 <input class="quantity form-control" style="font-size: 14px" type="text" value="<?= $item["qty"] ?>">
-                                <a class="incr-btn" href="#">+</a>
+                                <a class="incr-btn-cart" href="#">+</a>
                             </td>
                             <td class="total"><?= $item["qty"] * $item["price"] . " ฿" ?></td>
                             <td class="delete"><i class="icon-delete"></i><?= yii\helpers\Html::hiddenInput("orderItemId", $item['orderItemId'], ['id' => 'orderItemId']); ?></td>

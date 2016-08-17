@@ -472,3 +472,53 @@ var x = "Total Height: " + screen.height;
  $("#NewBilling").addClass("hidden-panel");
  //panel-toggle active
  });*/
+
+//Add(+/-) Button Number Incrementers
+$(".incr-btn-cart").on("click", function (e) {
+    var $button = $(this);
+    var oldValue = $button.parent().find("input").val();
+    var newVal = 1
+    if ($button.text() == "+") {
+        newVal = parseFloat(oldValue) + 1;
+    } else {
+        // Don't allow decrementing below 1
+        if (oldValue > 1) {
+            newVal = parseFloat(oldValue) - 1;
+        } else {
+            newVal = 1;
+        }
+        $('.incr-btn').popover('hide');
+    }
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: "cart/change-quantity-item",
+        data: {productId: $("#productId").val(), quantity: newVal},
+        success: function (data)
+        {
+            if (data.status)
+            {
+                $('.price').html(data.price);
+                if (data.discountValue != "null")
+                {
+                    $('.discountPrice').html(data.discountValue + " ฿ extra offyour order");
+                } else
+                {
+                    $('.discountPrice').html("&nbsp;Add more than 1 item to your order");
+                }
+                $('#pp' + oldValue).removeClass("priceActive");
+                $('#pp' + newVal).addClass("priceActive");
+
+                $button.parent().find("input").val(newVal);
+            } else
+            {
+                if (data.errorCode === 1)
+                {
+                    newVal = newVal - 1;
+                    $('.incr-btn').popover('show');
+                }
+                $button.parent().find("input").val(newVal);
+            }
+        }
+    });
+});
