@@ -6,7 +6,7 @@ use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 
 if ($model->isDefault == '1') {
-    $bg = '##f1ebeb ; padding: 5px;';
+    $bg = '#f1ebeb ; padding: 5px;';
 } else if ($model->isDefault == '0') {
     $bg = '#ffffff';
 } else {
