@@ -11,7 +11,7 @@ use yii\widgets\ListView;
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
-$createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDateTime, '');
+$createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDateTime, 1);
 ?>
 
 <div class="row cs-page">
