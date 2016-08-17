@@ -28,17 +28,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <h1><?= $model->title; ?></h1>
     <?= Html::hiddenInput("productId", $model->productId, ['id' => 'productId']); ?>
     <div class="form-group">
+        <?php if (isset($model->productGroup)): ?>
+            <div class="select-style">
+                <?php if (count($model->productGroup->products) > 1): ?>
+                    <select name="size" id="changeOption">
+                        <?php foreach ($model->productGroup->products as $option): ?>
+                            <option <?= (isset($productId) && ($productId == $option->productId)) ? " selected" : " " ?> value="<?= $option->productId ?>"><?= $option->optionName; ?></option>
+                        <?php endforeach; ?>
+                    </select>
 
-        <div class="select-style">
-            <?php if (count($model->productGroup->products) > 1): ?>
-                <select name="size" id="changeOption">
-                    <?php foreach ($model->productGroup->products as $option): ?>
-                        <option <?= (isset($productId) && ($productId == $option->productId)) ? " selected" : " " ?> value="<?= $option->productId ?>"><?= $option->optionName; ?></option>
-                    <?php endforeach; ?>
-                </select>
-
-                <?php
-                $this->registerJs("
+                    <?php
+                    $this->registerJs("
                     $('#changeOption').change(function () {
         $.ajax({
             type: \"POST\",
@@ -54,16 +54,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         });
     });
                 ");
-                ?>
-            <?php endif; ?>
-<!--            <select name="size" id="changeOption">
-<option>Size:28 Inches</option>
-<option>Size:32 Inches</option>
-<option>Size:40 Inches</option>
-<option>Size:48 Inches</option>
-<option>Size:50 Inches</option>
-</select>-->
-        </div>
+                    ?>
+                <?php endif; ?>
+    <!--            <select name="size" id="changeOption">
+    <option>Size:28 Inches</option>
+    <option>Size:32 Inches</option>
+    <option>Size:40 Inches</option>
+    <option>Size:48 Inches</option>
+    <option>Size:50 Inches</option>
+    </select>-->
+            </div>
+        <?php endif; ?>
     </div>
     <div class="buttons group products-buttons-group">
         <div class="form-group">

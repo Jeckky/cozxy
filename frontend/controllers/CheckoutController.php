@@ -21,6 +21,15 @@ class CheckoutController extends MasterController
 
     public $enableCsrfValidation = false;
 
+    public function beforeAction($action)
+    {
+        if ($action->id == 'confirmation' || $action->id == 'confirm-checkout') {
+            $this->enableCsrfValidation = false;
+        }
+
+        return parent::beforeAction($action);
+    }
+
     /**
      * Displays homepage.
      *
@@ -229,6 +238,7 @@ class CheckoutController extends MasterController
 
     public function actionConfirmation($id)
     {
+
         $model = \common\models\costfit\Order::find()->where("orderId=" . $id)->one();
         $ePayment = \common\models\costfit\EPayment::find()->where("PaymentMethodId = 2 AND type =" . \Yii::$app->params['ePaymentServerType'])->one();
         return $this->render("//e_payment/payment_confirmation", [
