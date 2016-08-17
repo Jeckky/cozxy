@@ -31,7 +31,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'tableOptions' => [
-            'class' => 'table table-light',
+            'class' => 'table table-light  table-hover',
         ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
