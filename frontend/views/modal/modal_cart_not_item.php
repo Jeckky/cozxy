@@ -13,17 +13,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header" style="border-bottom-color:#fff;">
+            <div class="modal-header"  style="color: #000;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
                 <span class="text-left">
-                    รายการสินค้าในตะกร้า 
+                    รายการสินค้าในตะกร้า
                 </span>
             </div>
             <br>
             <div class="modal-body" >
                 <span class="text-center">
                     <center>
-                        <i class="icon-shopping-cart-content" style="zoom:8;"></i>
+                        <!--<i class="icon-shopping-cart-content" style="zoom:8;"></i>-->
                     </center>
                 </span><br><center><code>สินค้าในตะกร้า 0 รายการ</code></center>
                 <p class="large text-center">
