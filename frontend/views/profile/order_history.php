@@ -23,7 +23,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     }
 </style>
 
-<div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup">
+<div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="font-size: 14px;">
     <h3>รายการใบสั่งซื้อสินค้าทั้งหมด</h3>
 
     <?php
@@ -53,7 +53,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             [
                 'attribute' => 'วันที่สั่งซื้อ',
                 'value' => function($model) {
-                    return date("d M Y h:i:s", strtotime($model->createDateTime));
+                    return $this->context->dateThai($model->createDateTime, 1);
                 },
                 'format' => 'raw',
                 'filter' => DatePicker::widget([
