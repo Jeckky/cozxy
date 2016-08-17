@@ -58,8 +58,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--Breadcrumbs-->
 <ol class="breadcrumb">
     <li><a href="<?php echo Yii::$app->homeUrl; ?>">Home</a></li>
-    <li><a href="<?php echo Yii::$app->homeUrl . Yii::$app->controller->id; ?>"><?= isset($this->context->subTitle) ? $this->context->subTitle : "subTitle" ?></a></li>
-    <li><?= isset($this->context->subSubTitle) ? $this->context->subSubTitle : "sub sub Title" ?></li>
+    <li><a href="<?php echo Yii::$app->homeUrl . Yii::$app->controller->id; ?>?productId=<?php echo $model->productId; ?>"><?= isset($this->context->subTitle) ? $this->context->subTitle : "subTitle" ?></a></li>
+
 </ol><!--Breadcrumbs Close-->
 
 <!--Shopping Cart Message-->

@@ -16,17 +16,15 @@ use frontend\models\ContactForm;
 /**
  * Products controller
  */
-class ProductsController extends MasterController
-{
+class ProductsController extends MasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
                 'only' => ['create', 'update'],
                 'rules' => [
-                    // deny all POST requests
+// deny all POST requests
                     [
                         'allow' => false,
                         'verbs' => ['POST']
@@ -47,20 +45,21 @@ class ProductsController extends MasterController
      *
      * @return mixed
      */
-    public function actionIndex()
-    {
-        //return Yii::$app->getResponse()->redirect('register/login');
-        $this->title = 'Cost.fit | Products';
-        $this->subTitle = 'Shop - filters left 3 cols ';
-        $this->subSubTitle = 'Shop - single item v2';
+    public function actionIndex() {
+//return Yii::$app->getResponse()->redirect('register/login');
+
         $model = \common\models\costfit\Product::find()->where("productId =" . $_GET["productId"])->one();
+
+
+        $this->title = 'Cost.fit | Products';
+        $this->subTitle = $model->attributes['title'];
+        $this->subSubTitle = '';
         return $this->render('products', ['model' => $model]);
     }
 
-    public function actionChangeOption()
-    {
+    public function actionChangeOption() {
         $res = [];
-        $model = \common\models\costfit\Product::find()->where("productId =" . $_POST["productId"])->one();
+        $model = \common\models\costfit\Product::find()->where("productId = " . $_POST["productId"])->one();
         $res["productId"] = $model->productId;
         $res["productName"] = $model->title;
         $res['oldPrice'] = number_format($model->price, 2) . " ฿";
