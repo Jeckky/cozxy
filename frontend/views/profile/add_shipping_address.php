@@ -18,8 +18,9 @@ if ($model->isDefault == '1') {
     <?php
     echo ++$index . '. ';
     echo ($model->firstname) ? 'คุณ' . $model->firstname : '-';
-    echo ($model->lastname) ? '&nbsp;' . $model->lastname : '-' . '<br>';
-    echo ($model->company) ? $model->company : $model->company . ' ,';
+    echo ($model->lastname) ? '&nbsp;' . $model->lastname : '-';
+    echo '<br>';
+    echo ($model->company) ? $model->company : $model->company . '<br>' . ' ,';
     echo ($model->address) ? $model->address : '' . ' ,';
     echo ($model->district['localName']) ? $model->district['localName'] : '' . ' ,';
     echo ($model->cities['cityName']) ? $model->cities['cityName'] : '' . ' ,';
