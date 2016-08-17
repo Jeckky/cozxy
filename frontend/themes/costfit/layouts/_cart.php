@@ -1,5 +1,5 @@
 <?php
-echo $check_item = count($this->params['cart']['items']);
+$check_item = count($this->params['cart']['items']);
 ?>
 <div class="cart-btn">
     <a class="btn btn-outlined-invert" href="<?= Yii::$app->homeUrl ?>cart">
