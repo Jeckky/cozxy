@@ -1,4 +1,5 @@
 /*  By  Taninut.B , 7/5/2016 */
+var $addToWishlistBtn = $('#addItemToWishlist');
 
 function proceed(data) {
     var shop_data = data;
@@ -552,4 +553,25 @@ function itemzero(items, title) {
         }
     }
 }
+
+$addToWishlistBtn.click(function () {
+    var $pId = $(this).parent().parent().find('#productId').val();
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: "cart/add-wishlist",
+        data: {productId: $pId},
+        success: function (data)
+        {
+            if (data.status)
+            {
+                $(this).attr('disabled', 'disabled');
+            } else
+            {
+                alert(data.message);
+            }
+        }
+    });
+
+});
 

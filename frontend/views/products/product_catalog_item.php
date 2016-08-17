@@ -56,13 +56,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 ");
                     ?>
                 <?php endif; ?>
-                <!--            <select name="size" id="changeOption">
-                <option>Size:28 Inches</option>
-                <option>Size:32 Inches</option>
-                <option>Size:40 Inches</option>
-                <option>Size:48 Inches</option>
-                <option>Size:50 Inches</option>
-                </select>-->
+                            <!--            <select name="size" id="changeOption">
+                            <option>Size:28 Inches</option>
+                            <option>Size:32 Inches</option>
+                            <option>Size:40 Inches</option>
+                            <option>Size:48 Inches</option>
+                            <option>Size:50 Inches</option>
+                            </select>-->
             </div>
         <?php endif; ?>
     </div>
@@ -128,7 +128,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <a class="incr-btn" href="#" data-toggle="popover" data-content="Max Quantity For this Item" data-placement="bottom">+</a>
         </div>
         <a class="btn btn-primary btn-sm" id="addItemToCart" href="#" <?= ($model->findMaxQuantity($model->productId) <= 0) ? " disabled" : " " ?>><i class="icon-shopping-cart"></i>Add to cart</a>
-        <a class="btn btn-black btn-sm" href="<?php echo Yii::$app->homeUrl; ?>wishlist"><i class="icon-heart"></i>Add to wishlist</a>
+        <a class="btn btn-black btn-sm" id="addItemToWishlist" href="#" <?= (\common\models\costfit\Wishlist::isExistingList($model->productId)) ? " disabled" : " " ?>><i class="icon-heart"></i>Add to wishlist</a>
     </div>
     <p class="p-style2"><?//= strip_tags($model->shortDescription); ?></p>
     <div class="row">
