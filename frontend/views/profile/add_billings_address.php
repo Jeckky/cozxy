@@ -13,6 +13,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <p style="font-size: 12px;">
     <?php
     echo ++$index . '. ';
+    echo ($model->firstname) ? 'คุณ' . $model->firstname : '-';
+    echo ($model->lastname) ? '&nbsp;' . $model->lastname : '-';
+    echo '<br>';
     echo ($model->company) ? $model->company : $model->company . ' ,';
     echo ($model->address) ? $model->address : '' . ' ,';
     echo ($model->district['localName']) ? $model->district['localName'] : '' . ' ,';
