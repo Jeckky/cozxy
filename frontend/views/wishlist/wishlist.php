@@ -38,7 +38,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             <td class="button">
                                 <?= Html::hiddenInput("quantity", 1, ['id' => 'quantity']); ?>
                                 <a class="btn btn-primary btn-sm" id="addItemToCart" href="#" <?= ($wishlist->product->findMaxQuantity($wishlist->productId) <= 0) ? " disabled" : " " ?>><i class="icon-shopping-cart"></i>Add to cart</a>
-                            </td> 
+                            </td>
                             <td class="delete" id='deleteWishlist'><i class="icon-delete"></i></td>
                         </tr>
                     <?php endforeach; ?>
@@ -48,7 +48,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <!--Sidebar-->
             <div class="col-lg-3 col-md-3">
                 <?php echo $this->render('@app/views/coupon/coupon'); ?>
-                <!--Top items-->
+                <!--Top items
                 <h3 class="space-top">Top items</h3>
                 <div class="top-item">
                     <div class="price-label">715,00 $</div>
@@ -59,7 +59,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <div class="price-label">715,00 $</div>
                     <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888"><img src="<?php echo $directoryAsset; ?>/img/offers/special-offer.png" alt="Special Offer"/></a>
                     <div class="footer"><a href="#">The Buccaneer</a></div>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>
