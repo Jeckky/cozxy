@@ -88,7 +88,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             return Html::a('ดูเพิ่มเติม', Yii::$app->homeUrl . "profile/purchase-order/" . $model->encodeParams(['orderId' => $model->orderId]), ['class' => 'btn btn-primary btn-xs'], [
                                         'title' => Yii::t('app', ' '),]);
                         } else {
-                            return Html::a('<i class="fa fa-print" aria-hidden="true"></i> ดูเพิ่มเติม', Yii::$app->homeUrl . "payment/print-receipt/" . $model->encodeParams(['orderId' => $model->orderId]) . '/' . $model->orderNo, ['class' => 'btn btn-primary btn-xs'], [
+                            return Html::a('<i class="fa fa-print" aria-hidden="true"></i> ดูเพิ่มเติม', Yii::$app->homeUrl . "payment/print-receipt/" . $model->encodeParams(['orderId' => $model->orderId]) . '/' . $model->orderNo, ['class' => 'btn btn-black   btn-xs'], [
                                         'title' => Yii::t('app', ' ')]);
                         }
                     },
