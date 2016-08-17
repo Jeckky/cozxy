@@ -526,7 +526,7 @@ $(".incr-btn-cart").on("click", function (e) {
 });
 
 function itemzero(items, title) {
-    var privacy = $(".buttons").find(".total").text();
+
     var item_cart = $('.total').html()
 
     if (title == 'cart') {
