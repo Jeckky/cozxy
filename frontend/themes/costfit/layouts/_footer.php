@@ -32,6 +32,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <!--Footer-->
 <footer class="footer">
+    <?php
+    echo $this->render('@app/views/modal/modal_cart_not_item');
+    echo $this->render('@app/views/modal/modal_cart_not_shipping');
+    ?>
     <div class="container">
         <div class="row">
             <div class="col-lg-5 col-md-5 col-sm-5">

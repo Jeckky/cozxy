@@ -1,3 +1,6 @@
+<?php
+$check_item = count($this->params['cart']['items']);
+?>
 <div class="cart-btn">
     <a class="btn btn-outlined-invert" href="<?= Yii::$app->homeUrl ?>cart">
         <i class="icon-shopping-cart-content"></i><span><?= $this->params['cart']['qty'] ?></span><b id="cartTotal"><?= number_format($this->params['cart']['total'], 2) ?></b>
@@ -32,15 +35,26 @@
                     <a class="btn btn-outlined-invert" href="<?= Yii::$app->homeUrl ?>register/login"><i class="icon-download"></i>Checkout</a>
                     <?php
                 } else {
-                    ?>
-                    <a class="btn btn-outlined-invert" href="<?= Yii::$app->homeUrl ?>checkout"><i class="icon-download"></i>Checkout</a>
-                    <?php
+                    if ($check_item != 0) {
+                        ?>
+                        <a class="btn btn-outlined-invert" onclick="itemzero(<?php echo $check_item; ?>, 'checkout')"><i class="icon-download"></i>Checkout</a>
+                        <?php
+                    } else {
+                        ?>
+                        <a class="btn btn-outlined-invert" onclick="itemzero(<?php echo $check_item; ?>, 'checkout')"><i class="icon-download"></i>Checkout</a>
+                        <?php
+                    }
                 }
-                ?>
-
-                <a class="btn btn-outlined-invert" href="<?= Yii::$app->homeUrl ?>cart">
-                    <i class="icon-shopping-cart-content"></i>To cart
-                </a>
+                if ($check_item != 0) {
+                    ?>
+                    <a class="btn btn-outlined-invert" onclick="itemzero(<?php echo $check_item; ?>, 'cart')">
+                        <i class="icon-shopping-cart-content"></i>To cart
+                    </a>
+                <?php } else { ?>
+                    <a class="btn btn-outlined-invert" onclick="itemzero(<?php echo $check_item; ?>, 'cart')">
+                        <i class="icon-shopping-cart-content"></i>To cart
+                    </a>
+                <?php } ?>
             </div>
             <div class="total"><?= number_format($this->params['cart']['total'], 2) ?></div>
         </div>

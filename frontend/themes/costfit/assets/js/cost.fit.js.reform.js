@@ -379,13 +379,13 @@ $("#place-order").on('click', function () {
     }
 
     if (_placeOrderId == '') {
-//alert('สินค้าในตะกร้า 0 รายการ');
+        //alert('สินค้าในตะกร้า 0 รายการ');
         $("#modal-cart-not-item").modal('show');
         //window.location = 'site';
 
     } else {
         if (_shipping === undefined) {
-//alert('Please Select Shipping Address');
+            //alert('Please Select Shipping Address');
             $("#modal-cart-not-shipping").modal('show');
         } else {
             if (_billing === undefined) {
@@ -396,8 +396,8 @@ $("#place-order").on('click', function () {
                     notes: _notes,
                     placeOrderId: _placeOrderId
                 }, function (data, status) {
-//alert("Data: " + data + "\nStatus: " + status);
-// window.location = 'checkout/order-thank';
+                    //alert("Data: " + data + "\nStatus: " + status);
+                    // window.location = 'checkout/order-thank';
                 });
             } else if (_billing != undefined) {
                 $.post("checkout/burn-checkouts", {
@@ -408,15 +408,17 @@ $("#place-order").on('click', function () {
                     notes: _notes,
                     placeOrderId: _placeOrderId
                 }, function (data, status) {
-//alert("Data: " + data + "\nStatus: " + status);
-// window.location = 'checkout/order-thank';
+                    //alert("Data: " + data + "\nStatus: " + status);
+                    // window.location = 'checkout/order-thank';
                 });
             }
         }
     }
 
-// $this->redirect(['order-thank']);
+    // $this->redirect(['order-thank']);
 });
+
+
 $("#btn-checkout-formShipping").on('click', function () {
 //alert('Id Name : ' + $(this).find('input').attr('id'));
 //alert('Value : ' + $(this).find('input').val()); Address[countryId]
@@ -522,3 +524,20 @@ $(".incr-btn-cart").on("click", function (e) {
         }
     });
 });
+
+function itemzero(items, title) {
+    if (title == 'cart') {
+        if (items == 0) {
+            $("#modal-cart-not-item").modal('show');
+        } else {
+            window.location = 'checkout';
+        }
+    } else if (title == 'checkout') {
+        if (items == 0) {
+            $("#modal-cart-not-item").modal('show');
+        } else {
+            window.location = 'checkout';
+        }
+    }
+}
+

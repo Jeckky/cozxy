@@ -13,7 +13,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header" style="border-bottom-color:#fff;">
+            <div class="modal-header" style="color: #000;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
                 <span class="text-left">
                     Select Shipping Address
@@ -23,7 +23,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="modal-body" >
                 <span class="text-center">
                     <center>
-                        <img src="<?php echo $baseUrl; ?>/images/icon/Fast-Deliver-1.png" alt="cost.fit" style="zoom:5;">
+                       <!-- <img src="<?php echo $baseUrl; ?>/images/icon/Fast-Deliver-1.png" alt="cost.fit" style="zoom:5;">-->
                     </center>
                 </span><br><center><code> Select Shipping Address Please</code></center>
                 <p class="large text-center">
