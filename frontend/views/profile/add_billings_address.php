@@ -11,7 +11,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 // https://github.com/kartik-v/yii2-widget-depdrop //
 
 if ($model->isDefault == '1') {
-    $bg = '#f5f5f5';
+    $bg = '#ccc';
 } else if ($model->isDefault == '0') {
     $bg = '#ffffff';
 } else {
