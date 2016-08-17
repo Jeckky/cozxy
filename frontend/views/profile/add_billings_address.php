@@ -9,8 +9,16 @@ use kartik\depdrop\DepDrop;
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 // https://github.com/kartik-v/yii2-widget-depdrop //
+
+if ($model->isDefault == '1') {
+    $bg = '#f5f5f5';
+} else if ($model->isDefault == '0') {
+    $bg = '#ffffff';
+} else {
+    $bg = '#ffffff';
+}
 ?>
-<p style="font-size: 12px;">
+<p style="font-size: 12px; background-color: <?php echo $bg; ?>">
     <?php
     echo ++$index . '. ';
     echo ($model->firstname) ? 'คุณ' . $model->firstname : '-';
