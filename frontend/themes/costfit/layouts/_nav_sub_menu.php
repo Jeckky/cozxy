@@ -10,7 +10,6 @@ use common\models\ModelMaster;
 
 $MenuCategory = $this->context->actionMenuCategory();
 ?>
-
 <style>
     /*#test-menu{
         min-heigh: 480px;
@@ -23,7 +22,7 @@ $MenuCategory = $this->context->actionMenuCategory();
     <li class="has-submenu pull-left"><a href="#">Categories<i class="fa fa-chevron-down open"></i></a>
         <ul class="submenu" >
             <?php
-// $list_menu_category = $this->Me
+            // $list_menu_category = $this->Me
             foreach ($MenuCategory as $items) {
 
                 $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items->categoryId]);
