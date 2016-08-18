@@ -95,4 +95,18 @@ class Category extends \common\models\costfit\master\CategoryMaster {
         }
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParent() {
+        return $this->hasOne(Category::className(), ['categoryId' => 'parentId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategories() {
+        return $this->hasMany(Category::className(), ['parentId' => 'categoryIdlo']);
+    }
+
 }

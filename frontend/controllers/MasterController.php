@@ -370,6 +370,7 @@ class MasterController extends MasterCommonController {
                 ->andWhere('parentId  is null ')
                 ->andWhere('status  =1')
                 ->all();
+
         return $list;
     }
 

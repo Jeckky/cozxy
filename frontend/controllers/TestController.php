@@ -36,4 +36,29 @@ class TestController extends MasterController {
         return $this->render('test', compact('dataProvider', 'searchModel'));
     }
 
+    public function actionCategories() {
+        $categories = \common\models\costfit\Category::find()->all(); // ->andWhere('level<3')
+        $list = [];
+
+        foreach ($categories as $category) {
+            // if record is root it may have the **null** value (for correct foreign keys)
+            // but you can specify this in  **emptyParentAttributeValue** property
+            $list[$category->parentId ? $category->parentId : 0][] = $category;
+        }
+
+        //echo '<pre>';
+        //print_r($list[0]);
+
+        foreach ($list[0] as $category) {
+            echo $category->title . '[' . $category->categoryId . '] <br>';
+            //echo $list[$category->categoryId];
+            //echo '<pre>';
+            //print_r($list[$category->categoryId]);
+
+            foreach ($list[$category->categoryId] as $subCategory) {
+                echo ' - ' . $subCategory->title;
+            }
+        }
+    }
+
 }

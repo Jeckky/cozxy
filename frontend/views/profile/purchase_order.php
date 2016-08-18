@@ -60,7 +60,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         <?php endif; ?>
                     <?php endif; ?>
                 </div>
-                <table class="table table-list-order" style="padding: 10px;" >
+                <table class="table table-list-order table-hover" style="padding: 10px;" >
                     <thead>
                         <tr style="background-color: #f5f5f5;">
                             <th style="font-size: 13px;">ลำดับ</th>
