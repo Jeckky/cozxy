@@ -22,7 +22,7 @@ $categoryId = $params['categoryId'];
 
     <ol class="breadcrumb">
         <li><a href="<?php echo Yii::$app->homeUrl; ?>">Home</a></li>
-        <li>Shop - filters left 3 cols</li>
+
     </ol><!--Breadcrumbs Close-->
 
     <section class="catalog-grid">
