@@ -422,19 +422,15 @@ $("#place-order").on('click', function () {
 
 
 $("#btn-checkout-formShipping").on('click', function () {
-//alert('Id Name : ' + $(this).find('input').attr('id'));
-//alert('Value : ' + $(this).find('input').val()); Address[countryId]
+
     var x = document.getElementsByName("countryId");
     var inputs = $('#default-shipping-address').getElementsByTagName('input');
-    //alert(inputs);
-    //alert('test : formShipping');
-    // $this->redirect(['order-thank']);
+
 });
+
+
 $("#btn-checkout-formBilling").on('click', function () {
-//alert('Id Name : ' + $(this).find('input').attr('id'));
-//alert('Value : ' + $(this).find('input').val());
-//alert('test : formBilling');
-// $this->redirect(['order-thank']);
+
 });
 /// Delete Default shipping address , Default billings address ///
 $('.get-shipping-address').click(function () {
@@ -527,7 +523,7 @@ $(".incr-btn-cart").on("click", function (e) {
                 if (data.errorCode === 1)
                 {
                     newVal = newVal - 1;
-                    alert("ไม่สามารถสั่งซื้อเกินจำนวนที่กำหนดได้");
+                    alert("ไม่สามารaddItemToWishlistถสั่งซื้อเกินจำนวนที่กำหนดได้");
 //                    $('.incr-btn').popover('show');
                 }
                 $button.parent().find("input").val(newVal);
@@ -639,3 +635,7 @@ $(".addWishlistItemToCart").click(function () {
     $addedToCartMessage.addClass('visible');
 });
 
+$("#GuestaddItemToWishlist").on('click', function () {
+    //alert('test');
+    $("#modal-guest-add-item-to-wishlist").modal('show');
+});
