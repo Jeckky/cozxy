@@ -40,29 +40,29 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <?php
                     $this->registerJs("
                     $('#changeOption').change(function () {
-        $.ajax({
-            type: \"POST\",
-            dataType: \"JSON\",
-            url: \"products/change-option\",
-            data: {productId: $(this).val()},
-            success: function (data)
-            {
-                $('#productItem').html(data.productItem);
-                $('#productTabs').html(data.productTabs);
-                $('#productImage').html(data.productImage);
-            }
-        });
-    });
+                            $.ajax({
+                                type: \"POST\",
+                                dataType: \"JSON\",
+                                url: \"products/change-option\",
+                                data: {productId: $(this).val()},
+                                success: function (data)
+                                {
+                                    $('#productItem').html(data.productItem);
+                                    $('#productTabs').html(data.productTabs);
+                                    $('#productImage').html(data.productImage);
+                                }
+                            });
+                        });
                 ");
                     ?>
                 <?php endif; ?>
-                            <!--            <select name="size" id="changeOption">
-                            <option>Size:28 Inches</option>
-                            <option>Size:32 Inches</option>
-                            <option>Size:40 Inches</option>
-                            <option>Size:48 Inches</option>
-                            <option>Size:50 Inches</option>
-                            </select>-->
+                                                        <!--            <select name="size" id="changeOption">
+                                                        <option>Size:28 Inches</option>
+                                                        <option>Size:32 Inches</option>
+                                                        <option>Size:40 Inches</option>
+                                                        <option>Size:48 Inches</option>
+                                                        <option>Size:50 Inches</option>
+                                                        </select>-->
             </div>
         <?php endif; ?>
     </div>
@@ -83,7 +83,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="buttons group products-buttons-group" style="margin-top: -18px;">
         <div class="form-group">
             <label for="shopping-dollar" class="col-sm-1 " style="padding-right: 0px; padding-left: 0px; margin-bottom: 0px;">
-                <img  src="<?php echo Yii::$app->homeUrl; ?>images/icon/2.png" alt="thumb" class="img-responsive"/>
+                <img  src="<?php echo Yii::$app->homeUrl; ?>images/icon/Bitcoin-48.png" alt="thumb" class="img-responsive" width="42" height="42"/>
             </label>
             <div class="col-sm-11 text-left discountPrice" style="padding: 0px; margin-left: 0px; margin-top: 15px;">
                 &nbsp;Add more than 1 item to your order
