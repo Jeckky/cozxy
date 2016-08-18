@@ -71,6 +71,16 @@ class MasterController extends MasterCommonController {
             $this->view->params['listDataProvider']['shipping'] = $dataProvider_shipping;
             $this->view->params['listDataProvider']['billing'] = $dataProvider_billing;
         }
+
+        if ($this->id == "search") {
+
+
+            //echo (explode("search", $_SERVER['REQUEST_URI']));
+            // $order = \common\models\costfit\Category::find()->where("token ='" . $token . "' AND status=" . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
+            //if (isset($order) && isset($order->userId)) {
+            //$this->getView()->registerJs("$('#confirmCartModal').modal('show');", \yii\web\View::POS_READY);
+            //}
+        }
     }
 
     public function getToken() {

@@ -49,31 +49,31 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <!--Price Section-->
                         <section class="filter-section">
                             <h3>Filter by price</h3>
-                            <?php echo $this->render('@app/views/filter/filterbyprice'); ?>
+<?php echo $this->render('@app/views/filter/filterbyprice'); ?>
 
                         </section>
 
                         <!--Colors Section
                         <section class="filter-section">
                             <h3>Filter by color</h3>
-                        <?php //echo $this->render('@app/views/filter/filterbycolor'); ?>
+<?php //echo $this->render('@app/views/filter/filterbycolor');   ?>
                         </section>-->
 
                         <!--Colors Section
                         <section class="filter-section">
                             <h3>Filter by size</h3>
-                        <?php //echo $this->render('@app/views/filter/filterbysize'); ?>
+<?php //echo $this->render('@app/views/filter/filterbysize');   ?>
                         </section>-->
 
                         <!--Categories Section
                         <section class="filter-section">
                             <h3>Categories</h3>
-                        <?php //echo $this->render('@app/views/categories/categories'); ?>
+<?php //echo $this->render('@app/views/categories/categories');   ?>
                         </section>-->
                     </div>
                 </div><!--Filters-->
                 <div id="title-product-all" class="col-lg-9 col-md-9 col-sm-8">
-                    <?php echo $content; ?>
+<?php echo $content; ?>
                 </div><!--title-product-all-->
             </div><!--row-->
             <!--</div>container-->
@@ -81,14 +81,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     </section><!--catalog-grid-->
 
     <!--Brands Carousel Widget-->
-    <?php echo $this->render('@app/themes/costfit/layouts/_brand_carousel'); ?>
+<?php echo $this->render('@app/themes/costfit/layouts/_brand_carousel'); ?>
 </div>
-<?php
-$logoImage = common\models\costfit\ContentGroup::find()->where("lower(title)='logoImage'")->one();
-$news = common\models\costfit\ContentGroup::find()->where("lower(title)='NEWS'")->one();
-$footerContact = common\models\costfit\ContentGroup::find()->where("lower(title)='contactFooter'")->one();
-echo $this->render('_footer', compact('logoImage', 'news', 'footerContact'));
-?>
+    <?php
+    $logoImage = common\models\costfit\ContentGroup::find()->where("lower(title)='logoImage'")->one();
+    $news = common\models\costfit\ContentGroup::find()->where("lower(title)='NEWS'")->one();
+    $footerContact = common\models\costfit\ContentGroup::find()->where("lower(title)='contactFooter'")->one();
+    echo $this->render('_footer', compact('logoImage', 'news', 'footerContact'));
+    ?>
 <?php $this->registerJs("
 ", \yii\web\View::POS_END); ?>
 <?php $this->endContent(); ?>
