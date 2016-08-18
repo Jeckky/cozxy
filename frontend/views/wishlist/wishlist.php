@@ -37,7 +37,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             <td class="price"><?= $wishlist->product->calProductPrice($wishlist->productId, 1); ?></td>
                             <td class="button">
                                 <?= Html::hiddenInput("quantity", 1, ['id' => 'quantity']); ?>
-                                <a class="btn btn-primary btn-sm" id="addItemToCart" href="#" <?= ($wishlist->product->findMaxQuantity($wishlist->productId) <= 0) ? " disabled" : " " ?>><i class="icon-shopping-cart"></i>Add to cart</a>
+                                <a class="btn btn-primary btn-sm addWishlistItemToCart" href="#" <?= ($wishlist->product->findMaxQuantity($wishlist->productId) <= 0) ? " disabled" : " " ?>><i class="icon-shopping-cart"></i>Add to cart</a>
                             </td>
                             <td class="delete" id='deleteWishlist'><i class="icon-delete"></i></td>
                         </tr>

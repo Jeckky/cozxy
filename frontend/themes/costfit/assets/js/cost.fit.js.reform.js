@@ -1,5 +1,6 @@
 /*  By  Taninut.B , 7/5/2016 */
 var $addToWishlistBtn = $('#addItemToWishlist');
+var $addedToCartMessage = $('.cart-message');
 
 function proceed(data) {
     var shop_data = data;
@@ -574,5 +575,40 @@ $addToWishlistBtn.click(function () {
         }
     });
 
+});
+
+$(".addWishlistItemToCart").click(function () {
+    $addedToCartMessage.removeClass('visible');
+    var $itemName = $(this).parent().parent().find('.title').html();
+    var $itemId = $(this).parent().parent().find('#productId').val();
+    var $itemPrice = $(this).parent().parent().find('.price').text();
+    var $itemQnty = $(this).parent().find('#quantity').val();
+    var $cartTotalItems = parseInt($('.cart-btn a span').text()) + parseInt($itemQnty);
+    $addedToCartMessage.find('p').text('"' + $itemName + '"' + '  ' + 'was successfully added to your cart.');
+//        var getUrl = window.location;
+//        var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+//        alert(baseUrl);
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: "cart/add-to-cart?id=" + $itemId,
+        data: {quantity: $itemQnty},
+        success: function (data)
+        {
+            if (data.status)
+            {
+                $('.cart-dropdown table').append(
+                        '<tr class="item"><td><div class="delete"></div><a href="#">' + $itemName +
+                        '<td><input type="text" value="' + $itemQnty +
+                        '"></td><td class="price">' + $itemPrice + '</td>'
+                        );
+                $('.cart-btn a span').text($cartTotalItems);
+                $('.cart-btn a').find("#cartTotal").html(data.cart.totalFormatText);
+                $('.cart-dropdown .footer .total').html(data.cart.totalFormatText);
+            }
+        }
+    });
+
+    $addedToCartMessage.addClass('visible');
 });
 
