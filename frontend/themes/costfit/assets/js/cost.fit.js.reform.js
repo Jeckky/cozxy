@@ -526,8 +526,8 @@ $(".incr-btn-cart").on("click", function (e) {
             {
                 if (data.errorCode === 1)
                 {
-                    alert("error code = 1");
                     newVal = newVal - 1;
+                    alert("ไม่สามารถสั่งซื้อเกินจำนวนที่กำหนดได้");
 //                    $('.incr-btn').popover('show');
                 }
                 $button.parent().find("input").val(newVal);

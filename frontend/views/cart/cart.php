@@ -100,7 +100,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <tr class="item first" id="item<?= $item['orderItemId'] ?>">
                             <?= Html::hiddenInput("productId", $item["productId"], ['id' => 'productId']); ?>
                             <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?php echo $item["productId"]; ?>"><img src="<?php echo $item["image"]; ?>" alt="Lorem ipsum" width="152" height="119"/></a></td>
-                            <td class="name">
+                            <td class="name" style="width:40%">
                                 <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?php echo $item["productId"]; ?>" style="font-size:14px;word-wrap: break-word; "><?= $item["title"] ?></a>
                             </td>
                             <td class="price"><?= $item["price"] . " ฿" ?></td>
