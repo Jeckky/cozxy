@@ -566,7 +566,6 @@ function itemzero(items, title) {
                 window.location = window.location.protocol + "//" + window.location.host + '/cart';
             }
 
-
         }
     } else if (title == 'checkout') {
         if (item_cart == '0.00') {

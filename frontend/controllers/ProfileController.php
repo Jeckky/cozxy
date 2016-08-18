@@ -112,6 +112,7 @@ class ProfileController extends MasterController {
         $this->title = 'Cost.fit | Default Shipping Assdress';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Default Shipping Assdress";
+
         if ($hash != 'add') {
             $model = \common\models\costfit\Address::find()->where("addressId ='" . $addressId . "'")->one();
             $model->scenario = 'shipping_address';
@@ -120,18 +121,20 @@ class ProfileController extends MasterController {
             $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
             $action = 'add';
         }
-        //echo $model->isDefault;
-        //$loginForm = new \common\models\LoginForm();
+
         $model->type = \common\models\costfit\Address::TYPE_SHIPPING; // default Address First
         $status_address = Yii::$app->controller->action->id;
 
         $label = 'Save shipping  address';
         //$model->isDefault = 0;
-
-
         if (isset($_POST['Address'])) {
 
             $model->attributes = $_POST['Address'];
+            //echo $_POST["Address"]['isDefault'];
+            if ($_POST["Address"]['isDefault']) {
+                \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_SHIPPING]);
+                $model->isDefault = 1;
+            }
             $model->userId = Yii::$app->user->id;
             $model->createDateTime = new \yii\db\Expression("NOW()");
             if ($model->save(FALSE)) {
@@ -161,16 +164,18 @@ class ProfileController extends MasterController {
         } else {
             $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
         }
-        //$loginForm = new \common\models\LoginForm();
         $model->type = \common\models\costfit\Address::TYPE_BILLING; // default Address First
         $status_address = Yii::$app->controller->action->id;
 
         $label = 'Save billings address';
-        $model->isDefault = 0;
-
 
         if (isset($_POST['Address'])) {
+
             $model->attributes = $_POST['Address'];
+            if ($_POST["Address"]['isDefault']) {
+                \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_BILLING]);
+                $model->isDefault = 1;
+            }
             $model->userId = Yii::$app->user->id;
             $model->createDateTime = new \yii\db\Expression("NOW()");
             if ($model->save(FALSE)) {
