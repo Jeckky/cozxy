@@ -20,12 +20,14 @@ use common\models\costfit\ContentGroup;
 /**
  * Site controller
  */
-class SiteController extends MasterController {
+class SiteController extends MasterController
+{
 
     /**
      * @inheritdoc
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -55,7 +57,8 @@ class SiteController extends MasterController {
     /**
      * @inheritdoc
      */
-    public function actions() {
+    public function actions()
+    {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -76,7 +79,8 @@ class SiteController extends MasterController {
      *
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
 //        throw new \yii\base\Exception(print_r(\Yii::$app->user->identity, true));
         $this->title = 'My Cost.fit';
         $bannerGroup = ContentGroup::find()->where("lower(title) = 'banner' and status=1")->one();
@@ -86,11 +90,12 @@ class SiteController extends MasterController {
         $bottomContent = Content::find()->where("contentGroupId='" . $bottomIndexGroup->contentGroupId . "'")->all();
         $lastIndexGroup = ContentGroup::find()->where("lower(title)='lastIndex'")->one();
         $lastIndexContent = Content::find()->where("contentGroupId='" . $lastIndexGroup->contentGroupId . "' order by contentId DESC limit 0,1")->one();
-        $product = \common\models\costfit\search\Product::find()->where("categoryId='3'")->all();
+        $product = \common\models\costfit\search\Product::find()->where("RAND()")->all();
+        $product2 = \common\models\costfit\search\Product::find()->where("RAND()")->all();
         $saveCat = Category::findAllSaveCategory();
         $popularCat = Category::findAllPopularCategory();
         //$footer = "adfadf";
-        return $this->render('index', compact('saveCat', 'popularCat', 'bannerGroup', 'topOneContent', 'bottomContent', 'lastIndexContent', 'product', 'footer'));
+        return $this->render('index', compact('saveCat', 'popularCat', 'bannerGroup', 'topOneContent', 'bottomContent', 'lastIndexContent', 'product', 'product2', 'footer'));
     }
 
     /**
@@ -98,7 +103,8 @@ class SiteController extends MasterController {
      *
      * @return mixed
      */
-    public function actionLogin() {
+    public function actionLogin()
+    {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -108,7 +114,7 @@ class SiteController extends MasterController {
             return $this->goBack();
         } else {
             return $this->render('login', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -118,7 +124,8 @@ class SiteController extends MasterController {
      *
      * @return mixed
      */
-    public function actionLogout() {
+    public function actionLogout()
+    {
         Yii::$app->user->logout();
 
         return $this->goHome();
@@ -129,7 +136,8 @@ class SiteController extends MasterController {
      *
      * @return mixed
      */
-    public function actionContact() {
+    public function actionContact()
+    {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
@@ -141,7 +149,7 @@ class SiteController extends MasterController {
             return $this->refresh();
         } else {
             return $this->render('contact', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -151,7 +159,8 @@ class SiteController extends MasterController {
      *
      * @return mixed
      */
-    public function actionAbout() {
+    public function actionAbout()
+    {
         return $this->render('about');
     }
 
@@ -160,7 +169,8 @@ class SiteController extends MasterController {
      *
      * @return mixed
      */
-    public function actionSignup() {
+    public function actionSignup()
+    {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
@@ -171,7 +181,7 @@ class SiteController extends MasterController {
         }
 
         return $this->render('signup', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -180,7 +190,8 @@ class SiteController extends MasterController {
      *
      * @return mixed
      */
-    public function actionRequestPasswordReset() {
+    public function actionRequestPasswordReset()
+    {
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
@@ -193,7 +204,7 @@ class SiteController extends MasterController {
         }
 
         return $this->render('requestPasswordResetToken', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -204,7 +215,8 @@ class SiteController extends MasterController {
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token) {
+    public function actionResetPassword($token)
+    {
         try {
             $model = new ResetPasswordForm($token);
         } catch (InvalidParamException $e) {
@@ -218,15 +230,17 @@ class SiteController extends MasterController {
         }
 
         return $this->render('resetPassword', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
-    public function actionRegister() {
+    public function actionRegister()
+    {
         return $this->render('register');
     }
 
-    public function successCallback($client) {
+    public function successCallback($client)
+    {
         $attributes = $client->getUserAttributes();
 //        throw new \yii\base\Exception(print_r($attributes, true));
         if (isset($attributes['email'])) {
