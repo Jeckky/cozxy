@@ -41,9 +41,13 @@ class Wishlist extends \common\models\costfit\master\WishlistMaster
 
     public static function isExistingList($productId)
     {
-        $ws = \common\models\costfit\Wishlist::find()->where("productId =" . $productId . " AND userId = " . \Yii::$app->user->id)->one();
-        if (isset($ws)) {
-            return TRUE;
+        if (isset(\Yii::$app->user->id)) {
+            $ws = \common\models\costfit\Wishlist::find()->where("productId =" . $productId . " AND userId = " . \Yii::$app->user->id)->one();
+            if (isset($ws)) {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
         } else {
             return FALSE;
         }
