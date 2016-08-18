@@ -565,7 +565,8 @@ $addToWishlistBtn.click(function () {
         {
             if (data.status)
             {
-                $(this).attr('disabled', 'disabled');
+                $('#addItemToWishlist').attr('disabled', true);
+                alert("Sucees to add wishlist");
             } else
             {
                 alert(data.message);

@@ -211,6 +211,7 @@ $(document).ready(function (e) {
                         $target.hide(300, function () {
                             $('.wishlist .items-list').remove();
                             $('.wishlist .title').text('Wishlist is empty!');
+                            alert("Delete wishlist success");
 //                                    $positionQty = $positionQty - itemQty;
 //                                    $('.cart-btn a span').text($positionQty);
 //                                    if ($positions.length === 1) {
