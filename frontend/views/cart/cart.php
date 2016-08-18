@@ -99,15 +99,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         ?>
                         <tr class="item first" id="item<?= $item['orderItemId'] ?>">
                             <?= Html::hiddenInput("productId", $item["productId"], ['id' => 'productId']); ?>
-                            <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?php echo $item["productId"]; ?>"><img src="<?php echo $item["image"]; ?>" alt="Lorem ipsum"/></a></td>
+                            <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?php echo $item["productId"]; ?>"><img src="<?php echo $item["image"]; ?>" alt="Lorem ipsum" width="152" height="119"/></a></td>
                             <td class="name">
                                 <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?php echo $item["productId"]; ?>" style="font-size:14px;word-wrap: break-word; "><?= $item["title"] ?></a>
                             </td>
                             <td class="price"><?= $item["price"] . " ฿" ?></td>
                             <td class="qnt-count">
-                                <a class="incr-btn-cart" href="#">-</a>
+                                <a class="incr-btn-cart incr-btn" href="#">-</a>
                                 <input class="quantity form-control" style="font-size: 14px" type="text" value="<?= $item["qty"] ?>">
-                                <a class="incr-btn-cart" href="#">+</a>
+                                <a class="incr-btn-cart incr-btn" href="#">+</a>
                             </td>
                             <td class="total"><?= $item["qty"] * $item["price"] . " ฿" ?></td>
                             <td class="delete"><i class="icon-delete"></i><?= yii\helpers\Html::hiddenInput("orderItemId", $item['orderItemId'], ['id' => 'orderItemId']); ?></td>
