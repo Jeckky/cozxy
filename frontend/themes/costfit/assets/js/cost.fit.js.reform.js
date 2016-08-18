@@ -638,4 +638,4 @@ $(".addWishlistItemToCart").click(function () {
 $("#GuestaddItemToWishlist").on('click', function () {
     //alert('test');
     $("#modal-guest-add-item-to-wishlist").modal('show');
-});
+});  
