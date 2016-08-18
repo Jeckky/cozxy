@@ -446,7 +446,7 @@ $('.shipping-address').click(function () {
     var address_id = $(this).parent().data('id');
     $.ajax
             ({
-                url: '/profile/shipping-address-delete',
+                url: 'profile/shipping-address-delete',
                 data: {"address_id": address_id},
                 type: 'post',
                 success: function (result)
