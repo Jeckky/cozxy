@@ -537,25 +537,47 @@ $(".incr-btn-cart").on("click", function (e) {
 });
 
 function itemzero(items, title) {
+// If URL is http://www.somedomain.com/account/search?filter=a#top
 
+    // window.location.pathname // /account/search
+
+// For reference:
+
+    //window.location.host     // www.somedomain.com (includes port if there is one)
+    //window.location.hostname // www.somedomain.com
+    // window.location.hash     // #top
+    //window.location.href     // http://www.somedomain.com/account/search?filter=a#top
+    //window.location.port     // (empty string)
+    //window.location.protocol // http:
+    //window.location.search   // ?filter=a
     var item_cart = $('.total').html();
     var pathArray = window.location.pathname;
     var newURL = window.location.protocol + "//" + window.location.host + window.location.pathname;
-    //alert(window.location.pathname);
+
     if (title == 'cart') {
         if (item_cart == '0.00') {
             $("#modal-cart-not-item").modal('show');
         } else {
-            window.location = 'cart';
+            //window.location = 'cart';
             //newURL = window.location.protocol + "//" + window.location.host + 'cart';
+            if (window.location.host == 'localhost') {
+                window.location = window.location.protocol + "//" + window.location.host + '/cost.fit-frontend/cart';
+            } else {
+                window.location = window.location.protocol + "//" + window.location.host + '/cart';
+            }
+
 
         }
     } else if (title == 'checkout') {
         if (item_cart == '0.00') {
             $("#modal-cart-not-item").modal('show');
         } else {
-            window.location = 'checkout';
-            //newURL = window.location.protocol + "//" + window.location.host + 'checkout';
+            //window.location = 'checkout';
+            if (window.location.host == 'localhost') {
+                window.location = window.location.protocol + "//" + window.location.host + '/cost.fit-frontend/checkout';
+            } else {
+                window.location = window.location.protocol + "//" + window.location.host + '/checkout';
+            }
 
         }
     }
