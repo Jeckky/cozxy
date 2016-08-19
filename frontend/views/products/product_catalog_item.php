@@ -10,9 +10,16 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--Product Description-->
 <style>
     .popover-content {
-        color: #000;
+        color: red;
         /*background-color: red;*/
         font-size: 10px;
+        padding: 10px;
+    }
+    .popover .popover-content {
+        border: none !important;
+        text-align: left !important;
+        padding: 5 !important;
+        font-size: .875em !important;
     }
     .priceActive  > thead > tr{
         border-top: 3px #3cc solid;
@@ -30,6 +37,33 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         font-weight: normal;
         cursor: pointer;
     }
+
+    /* Popover */
+    .popover {
+        // border: 2px dotted red;
+        padding: 15px;
+    }
+
+    /* Popover Header */
+    .popover-title {
+        background-color: #73AD21;
+        color: #FFFFFF;
+        font-size: 28px;
+        text-align:center;
+    }
+
+    /* Popover Body */
+    .popover-content {
+        color: red;
+        padding: 25px;
+    }
+
+    /* Popover Arrow */
+    .arrow {
+        // border-right-color: red !important;
+    }
+
+
 
 </style>
 <div class="col-lg-6 col-md-6">
@@ -64,13 +98,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 ");
                     ?>
                 <?php endif; ?>
-                                                                                                                                                                                                                                                                                    <!--            <select name="size" id="changeOption">
-                                                                                                                                                                                                                                                                                    <option>Size:28 Inches</option>
-                                                                                                                                                                                                                                                                                    <option>Size:32 Inches</option>
-                                                                                                                                                                                                                                                                                    <option>Size:40 Inches</option>
-                                                                                                                                                                                                                                                                                    <option>Size:48 Inches</option>
-                                                                                                                                                                                                                                                                                    <option>Size:50 Inches</option>
-                                                                                                                                                                                                                                                                                    </select>-->
+                                                                                                                                                                                                                                                                                                                                                                        <!--            <select name="size" id="changeOption">
+                                                                                                                                                                                                                                                                                                                                                                        <option>Size:28 Inches</option>
+                                                                                                                                                                                                                                                                                                                                                                        <option>Size:32 Inches</option>
+                                                                                                                                                                                                                                                                                                                                                                        <option>Size:40 Inches</option>
+                                                                                                                                                                                                                                                                                                                                                                        <option>Size:48 Inches</option>
+                                                                                                                                                                                                                                                                                                                                                                        <option>Size:50 Inches</option>
+                                                                                                                                                                                                                                                                                                                                                                        </select>-->
             </div>
         <?php endif; ?>
     </div>
@@ -132,7 +166,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
    <!-- <p class="p-style2"><?//= strip_tags($model->shortDescription); ?></p>-->
     <div class="panel panel-warning">
         <div class="panel-heading">
-            <h3 class="panel-title">ส่งสินค้า</h3> 
+            <h3 class="panel-title">ส่งสินค้า</h3>
         </div>
         <div class="panel-body">
             <div class="form-group col-lg-12" style="margin-bottom:5px;">
