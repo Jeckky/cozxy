@@ -46,7 +46,7 @@ $MenuCategory = $this->context->actionMenuCategory();
                 <?php
             }
             ?>
-        </li> 
+        </li>
         <?php
     }
     ?>
@@ -73,45 +73,49 @@ $MenuCategory = $this->context->actionMenuCategory();
                 $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items->categoryId]);
                 ?>
                 <li class="has-submenu" style="">
-                    <a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items->createTitle() ?>/<?= $params ?>" style="font-size: 14px;">
+                    <a href="#" style="font-size: 14px;">
                         <?php echo $items->title; ?> <i class="fa fa-chevron-down"></i>
                     </a>
-                    <ul class="sub-submenu" id="test-menu" style="width: 700px;">
+                    <ul class="sub-submenu" id="test-menu" style="width: 900px; float: left; ">
                         <?php
                         $MenuCategoryParentId = $this->context->actionMenuCategoryParentId($items->categoryId);
+                        $num = 0;
                         foreach ($MenuCategoryParentId as $items_sub) {
                             $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items_sub->categoryId]);
+                            $MenuCategorySubParentId = $this->context->actionMenuCategorySubParentId($items_sub->categoryId);
                             ?>
-                            <div class="col-md-6" style="float: left; width: 50%;" id="menu-categories-items">
-                                <a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub->createTitle() ?>/<?= $params ?>" class="menu-catalog-title-color" style="color: #000; font-weight: 900"><?php echo $items_sub->title; ?></a>
+                            <a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub->createTitle() ?>/<?= $params ?>" style="color: #000; font-weight: 900 ; width:50%; border-bottom :1px #dfdfdf solid;">
+                                <?php echo $items_sub->title; ?> <span style="color:#6c6c6c; font-size: 10px;">(<?php echo count($MenuCategorySubParentId); ?>)</span></a>
                                 <?php
-                                $MenuCategorySubParentId = $this->context->actionMenuCategorySubParentId($items_sub->categoryId);
                                 foreach ($MenuCategorySubParentId as $items_sub_parent) {
                                     $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items_sub_parent->categoryId]);
                                     ?>
-                                    <li class="col-md-12" style="width: 100%;"><a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub_parent->createTitle() ?>/<?= $params ?>"><?php echo '&nbsp;-&nbsp;' . $items_sub_parent->title; ?></a></li>
-                                <?php } ?>
-                            </div>
-                        <?php } ?>
+                                <li class="col-md-12" style="float: left; width: 100%; width: 50%; "><a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub_parent->createTitle() ?>/<?= $params ?>"><?php echo '&nbsp;-&nbsp;' . $items_sub_parent->title; ?></a></li>
+                            <?php } ?>
+                    </li>
 
-                    </ul>
-                </li>
-                <?php
-            }
-            ?>
-        </ul>
-    </li>
-    <?php if (!Yii::$app->user->isGuest): ?>
-        <li class="has-submenu pill-right"><a href="#"><?= (Yii::$app->user->identity->email); ?></a>
-            <ul class="submenu">
-                <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
-                <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
-                <!--<li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/payment">Payment Methods</a></li>
-                <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>history">Easy Re-Order</a></li>-->
+                    <?php
+                }
+                ?>
+
             </ul>
         </li>
-    <?php endif; ?>
-    <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>coupon">Super special offers</a></li><!--ข้อเสนอพิเศษจากพาร์ทเนอร์-->
-    <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works">How Works</a></li>
+        <?php
+    }
+    ?>
+</ul>
+</li>
+<?php if (!Yii::$app->user->isGuest): ?>
+    <li class="has-submenu pill-right"><a href="#"><?= (Yii::$app->user->identity->email); ?></a>
+        <ul class="submenu">
+            <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
+            <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
+            <!--<li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/payment">Payment Methods</a></li>
+            <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>history">Easy Re-Order</a></li>-->
+        </ul>
+    </li>
+<?php endif; ?>
+<li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>coupon">Super special offers</a></li><!--ข้อเสนอพิเศษจากพาร์ทเนอร์-->
+<li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works">How Works</a></li>
 </ul>
 
