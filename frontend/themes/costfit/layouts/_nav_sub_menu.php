@@ -72,31 +72,33 @@ $MenuCategory = $this->context->actionMenuCategory();
             foreach ($MenuCategory as $items) {
                 $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items->categoryId]);
                 ?>
-                <li class="has-submenu">
+                <li class="has-submenu" style="">
                     <a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items->createTitle() ?>/<?= $params ?>" style="font-size: 14px;">
                         <?php echo $items->title; ?> <i class="fa fa-chevron-down"></i>
                     </a>
-                    <ul class="sub-submenu" id="test-menu" style="width: 700px;">
+                    <ul class="sub-submenu" id="test-menu" style="width: 750px;">
                         <?php
                         $MenuCategoryParentId = $this->context->actionMenuCategoryParentId($items->categoryId);
                         foreach ($MenuCategoryParentId as $items_sub) {
                             $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items_sub->categoryId]);
                             ?>
-                            <a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub->createTitle() ?>/<?= $params ?>" class="menu-catalog-title-color" style="color: #000; font-weight: 900"><?php echo $items_sub->title; ?></a>
-                            <?php
-                            $MenuCategorySubParentId = $this->context->actionMenuCategorySubParentId($items_sub->categoryId);
-                            foreach ($MenuCategorySubParentId as $items_sub_parent) {
-                                $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items_sub_parent->categoryId]);
-                                ?>
-                                <li><a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub_parent->createTitle() ?>/<?= $params ?>"><?php echo '&nbsp;-&nbsp;' . $items_sub_parent->title; ?></a></li>
-                            <?php } ?>
+                            <div class="col-md-6">
+                                <a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub->createTitle() ?>/<?= $params ?>" class="menu-catalog-title-color" style="color: #000; font-weight: 900"><?php echo $items_sub->title; ?></a>
+                                <?php
+                                $MenuCategorySubParentId = $this->context->actionMenuCategorySubParentId($items_sub->categoryId);
+                                foreach ($MenuCategorySubParentId as $items_sub_parent) {
+                                    $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items_sub_parent->categoryId]);
+                                    ?>
+                                    <li><a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub_parent->createTitle() ?>/<?= $params ?>"><?php echo '&nbsp;-&nbsp;' . $items_sub_parent->title; ?></a></li>
+                                <?php } ?>
+                            </div>
                         <?php } ?>
+
                     </ul>
                 </li>
                 <?php
             }
             ?>
-
         </ul>
     </li>
     <?php if (!Yii::$app->user->isGuest): ?>
