@@ -111,7 +111,7 @@ $(document).ready(function (e) {
         var $positions = $('.cart-dropdown .item');
         var $positionQty = parseInt($('.cart-btn a span').text());
         var orderItemId = $(this).find("#orderItemId").val();
-        var itemQty = $('.cart-dropdown .item').find("#qty").val();
+        var itemQty = $(this).parent().parent().find(".qty").find("#qty").val();
         $.ajax({
             type: "POST",
             dataType: "JSON",
