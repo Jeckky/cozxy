@@ -47,7 +47,7 @@ $MenuCategory = $this->context->actionMenuCategory();
                 <?php
             }
             ?>
-        </li> 
+        </li>
     </li>
     <?php
 }
