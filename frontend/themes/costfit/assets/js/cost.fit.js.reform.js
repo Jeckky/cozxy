@@ -477,7 +477,8 @@ var x = "Total Height: " + screen.height;
 $(".incr-btn-cart").on("click", function (e) {
     var $button = $(this);
     var oldValue = $button.parent().find("input").val();
-    var pId = $("#productId").val();
+    var pId = $button.parent().parent().find("#productId").val();
+//    var pId = $("#productId").val();
     var newVal = 1
     if ($button.text() == "+") {
         newVal = parseFloat(oldValue) + 1;
@@ -498,7 +499,7 @@ $(".incr-btn-cart").on("click", function (e) {
         {
             if (data.status)
             {
-                $('.price').html(data.price);
+                $button.parent().parent().find(".price").html(data.price);
 //                if (data.discountValue != "null")
 //                {
 //                    $('.discountPrice').html(data.discountValue + " ฿ extra offyour order");
@@ -523,7 +524,7 @@ $(".incr-btn-cart").on("click", function (e) {
                 if (data.errorCode === 1)
                 {
                     newVal = newVal - 1;
-                    alert("ไม่สามารaddItemToWishlistถสั่งซื้อเกินจำนวนที่กำหนดได้");
+                    alert("ไม่สามารถสั่งซื้อเกินจำนวนที่กำหนดได้");
 //                    $('.incr-btn').popover('show');
                 }
                 $button.parent().find("input").val(newVal);
@@ -638,4 +639,4 @@ $(".addWishlistItemToCart").click(function () {
 $("#GuestaddItemToWishlist").on('click', function () {
     //alert('test');
     $("#modal-guest-add-item-to-wishlist").modal('show');
-});  
+});

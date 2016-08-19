@@ -21,7 +21,7 @@ class CartController extends MasterController
 
     public function beforeAction($action)
     {
-        if ($action->id == 'add-coupon') {
+        if ($action->id == 'add-coupon' || $action->id == 'change-quantity-item-and-save') {
             $this->enableCsrfValidation = false;
         }
 
@@ -233,6 +233,7 @@ class CartController extends MasterController
         $price = $product->calProductPrice($_POST["productId"], $_POST["quantity"], 1);
 
         $maxQuantity = $product->findMaxQuantity($_POST["productId"]);
+//        throw new \yii\base\Exception("max quantity=" . $maxQuantity);
         if ($_POST["quantity"] <= $maxQuantity) {
             if (isset($price)) {
                 $cart = \common\models\costfit\Order::findCartArray();
