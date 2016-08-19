@@ -101,13 +101,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 ");
                     ?>
                 <?php endif; ?>
-                                                                                                                                                                                                                                                                                                                                                                                                    <!--            <select name="size" id="changeOption">
-                                                                                                                                                                                                                                                                                                                                                                                                    <option>Size:28 Inches</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option>Size:32 Inches</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option>Size:40 Inches</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option>Size:48 Inches</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option>Size:50 Inches</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    </select>-->
+                                                                                                                                                                                             <!--<select name="size" id="changeOption"><option>Size:50 Inches</option> </select>-->
             </div>
         <?php endif; ?>
     </div>
@@ -202,10 +196,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>-->
         <div class="col-lg-8 col-md-8 col-sm-7">
             <h3>Tags</h3>
-            <div class="tags">
-                <a href="#">Backpack</a>,
-                <a href="#">Chanel</a>,
-                <a href="#">Wristlet</a>
+            <div class="tags">&nbsp;
+                <?php
+                //echo $model->tags;
+                $tags = explode(',', $model->tags);
+                //echo '<pre>';
+                //print_r($tags);
+                foreach (explode(',', $model->tags) as $key => $value) {
+                    echo '<a href="' . $baseUrl . '/search-cost-fit?search_hd=' . trim($value) . '">' . $value . '</a> &nbsp ,';
+                }
+                ?>
+                <a href="#">cost.fit</a>
             </div>
         </div>
     </div>

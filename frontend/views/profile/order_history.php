@@ -95,6 +95,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         ]
                     ],
                 ], 'layout' => "{pager}\n{items}\n",
+                    /* 'pager' => [
+                      'firstPageLabel' => 'first',
+                      'lastPageLabel' => 'last',
+                      'nextPageLabel' => 'next',
+                      'prevPageLabel' => 'previous',
+                      'maxButtonCount' => 3,
+                      ], */
             ]);
             ?>
 </div>
