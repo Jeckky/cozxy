@@ -46,169 +46,168 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 'itemView' => function ($model, $key, $index, $widget) {
                     return $this->render('_save_cat', ['model' => $model]);
                 },
-                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                'summaryOptions' => ['class' => 'sort-by-section clearfix'],
 //            'layout'=>"{summary}{pager}{items}"
-                        'layout' => "{items}"
-                    ])
-                    ?>
+                'layout' => "{items}"
+            ])
+            ?>
+        </div>
+    </div>
+</section><!--Categories Close-->
+<!--Saved Category-->
+<!--Popular Category-->
+<section class="catalog-grid">
+    <div class="container">
+        <h2 class="dark-color">SHOP POPULAR CATEGORIES</h2>
+        <div class="row">
+            <?php
+            echo \yii\widgets\ListView::widget([
+                'dataProvider' => $popularCat,
+                'itemView' => function ($model, $key, $index, $widget) {
+                    return $this->render('_popular_cat', ['model' => $model]);
+                },
+                'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+//            'layout'=>"{summary}{pager}{items}"
+                'layout' => "{items}"
+            ])
+            ?>
+        </div>
+    </div>
+</section><!--Catalog Grid Close-->
+<!--Popular Category Close-->
+
+<section style="background-position: 50% 145.5px; background-color: #f5f5f5; " data-stellar-background-ratio="0.5">
+    <div class="container">
+        <div class="row" style="background-image: url('<?php echo $baseUrl . $topOneContent->image; ?>');background-size: 100% 100%;">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
+                <h2 style="color: #fff;"><?php echo $topOneContent->title; ?></h2>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="color: #fff;">
+                        <p class="p-style3" style="color: #fff;">
+                            <?php echo $topOneContent->description; ?>
+                        </p>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 10px;">
+                        <button class="btn btn-black btn-sm" value="100$-300$">READ MORE</button>
+                    </div>
                 </div>
             </div>
-        </section><!--Categories Close-->
-        <!--Saved Category-->
-        <!--Popular Category-->
-        <section class="catalog-grid">
-            <div class="container">
-                <h2 class="dark-color">SHOP POPULAR CATEGORIES</h2>
+        </div>
+    </div>
+</section>
+
+<!--Tabs Widget-->
+
+<!--Tabs Widget-->
+<section class="tabs-widget">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#bestsel" data-toggle="tab">Bestseller items</a></li>
+        <li><a href="#onsale" data-toggle="tab">Items on sale</a></li>
+    </ul>
+    <div class="tab-content">
+
+        <div class="tab-pane fade in active" id="bestsel">
+            <div class="container" >
                 <div class="row">
-                    <?php
-                    echo \yii\widgets\ListView::widget([
-                        'dataProvider' => $popularCat,
-                        'itemView' => function ($model, $key, $index, $widget) {
-                            return $this->render('_popular_cat', ['model' => $model]);
-                        },
-                                'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-//            'layout'=>"{summary}{pager}{items}"
-                                'layout' => "{items}"
-                            ])
+                    <div  id="photos-bestseller-items">
+                        <?php
+                        // $i = 1;
+                        foreach ($product as $products) {
                             ?>
-                        </div>
-                    </div>
-                </section><!--Catalog Grid Close-->
-                <!--Popular Category Close-->
-
-                <section style="background-position: 50% 145.5px; background-color: #f5f5f5; " data-stellar-background-ratio="0.5">
-                    <div class="container">
-                        <div class="row" style="background-image: url('<?php echo $baseUrl . $topOneContent->image; ?>');background-size: 100% 100%;">
-                            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-                                <h2 style="color: #fff;"><?php echo $topOneContent->title; ?></h2>
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12" style="color: #fff;">
-                                        <p class="p-style3" style="color: #fff;">
-                                            <?php echo $topOneContent->description; ?>
-                                        </p>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 10px;">
-                                        <button class="btn btn-black btn-sm" value="100$-300$">READ MORE</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!--Tabs Widget-->
-
-                <!--Tabs Widget-->
-                <section class="tabs-widget">
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a href="#bestsel" data-toggle="tab">Bestseller items</a></li>
-                        <li><a href="#onsale" data-toggle="tab">Items on sale</a></li>
-                    </ul>
-                    <div class="tab-content">
-
-                        <div class="tab-pane fade in active" id="bestsel">
-                            <div class="container" >
-                                <div class="row">
-                                    <div  id="photos-bestseller-items">
-                                        <?php
-                                        // $i = 1;
-                                        foreach ($product as $products) {
-                                            ?>
-                                            <div id="photos-bestseller-items-padding">
-                                                <a class="media-link" href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?= $products->productId ?>" id="media-link-bestseller" >
-                                                    <div class="overlay" >
-                                                        <div class="descrx desc-bestseller">
-                                                            <div class="product-name"><?php echo $products->title; ?>
-                                                                <div class="bestseller-name-price"><?php echo isset($products->productOnePrice) ? $products->productOnePrice->price : $products->price; ?></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <?php if (isset($products->productImages[0]->image) && !empty($products->productImages[0]->image)): ?>
-                                                        <img src="<?php echo Yii::$app->homeUrl . $products->productImages[0]->image; ?>" alt="1"/>
-                                                    <?php else: ?>
-                                                        <img src="<?php echo $baseUrl; ?>/images/ProductImage/15.jpg" alt="1"/>
-                                                    <?php endif; ?>
-                                                </a>
+                            <div id="photos-bestseller-items-padding">
+                                <a class="media-link" href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?= $products->productId ?>" id="media-link-bestseller" >
+                                    <div class="overlay" >
+                                        <div class="descrx desc-bestseller">
+                                            <div class="product-name"><?php echo $products->title; ?>
+                                                <div class="bestseller-name-price"><?php echo isset($products->productOnePrice) ? $products->productOnePrice->price : $products->price; ?></div>
                                             </div>
-
-                                            <?php
-                                        }
-                                        ?>
+                                        </div>
                                     </div>
-                                </div><!-- row zone 1 -->
+                                    <?php if (isset($products->productImages[0]->image) && !empty($products->productImages[0]->image)): ?>
+                                        <img src="<?php echo Yii::$app->homeUrl . $products->productImages[0]->image; ?>" alt="1"/>
+                                    <?php else: ?>
+                                        <img src="<?php echo $baseUrl; ?>/images/ProductImage/15.jpg" alt="1"/>
+                                    <?php endif; ?>
+                                </a>
                             </div>
-                        </div>
 
-                        <div class="tab-pane fade" id="onsale">
-                            <div class="container" >
-                                <div class="row">
-                                    <div  id="photos-bestseller-items">
-                                        <?php
-                                        // $i = 1;
-                                        foreach ($product2 as $item) {
-                                            ?>
-                                            <div id="photos-bestseller-items-padding">
-                                                <a class="media-link" href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?= $item->productId ?>" id="media-link-bestseller" >
-                                                    <div class="overlay" >
-                                                        <div class="descrx desc-bestseller">
-                                                            <div class="product-name"><?php echo $item->title; ?>
-                                                                <div class="bestseller-name-price"><?php echo isset($item->productOnePrice) ? $item->productOnePrice->price : $item->price; ?></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <?php if (isset($item->productImages[0]->image) && !empty($item->productImages[0]->image)): ?>
-                                                        <img src="<?php echo Yii::$app->homeUrl . $item->productImages[0]->image; ?>" alt="1"/>
-                                                    <?php else: ?>
-                                                        <img src="<?php echo $baseUrl; ?>/images/ProductImage/15.jpg" alt="1"/>
-                                                    <?php endif; ?>
-                                                </a>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                </div><!-- row zone 1 -->
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="onsale">
+            <div class="container" >
+                <div class="row">
+                    <div  id="photos-bestseller-items">
+                        <?php
+                        // $i = 1;
+                        foreach ($product2 as $item) {
+                            ?>
+                            <div id="photos-bestseller-items-padding">
+                                <a class="media-link" href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?= $item->productId ?>" id="media-link-bestseller" >
+                                    <div class="overlay" >
+                                        <div class="descrx desc-bestseller">
+                                            <div class="product-name"><?php echo $item->title; ?>
+                                                <div class="bestseller-name-price"><?php echo isset($item->productOnePrice) ? $item->productOnePrice->price : $item->price; ?></div>
                                             </div>
-                                            <?php
-                                        }
-                                        ?>
+                                        </div>
                                     </div>
-                                </div><!-- row zone 1 -->
+                                    <?php if (isset($item->productImages[0]->image) && !empty($item->productImages[0]->image)): ?>
+                                        <img src="<?php echo Yii::$app->homeUrl . $item->productImages[0]->image; ?>" alt="1"/>
+                                    <?php else: ?>
+                                        <img src="<?php echo $baseUrl; ?>/images/ProductImage/15.jpg" alt="1"/>
+                                    <?php endif; ?>
+                                </a>
                             </div>
-                        </div>
+                            <?php
+                        }
+                        ?>
                     </div>
-                </section><!--Tabs Widget Close-->
+                </div><!-- row zone 1 -->
+            </div>
+        </div>
+    </div>
+</section><!--Tabs Widget Close-->
 
-                <!--Features Tabs-->
-                <section class="feature-tabs">
-                    <div class="container">
-                        <div class="row">
-                            <div class="tabs-content col-lg-6 col-md-6">
-                                <?php
-                                $i = 1;
-                                foreach ($bottomContent as $content) {
-                                    if ($i > 3) {
-                                        break;
-                                    }
-                                    ?>
-                                    <div class="tabs-pane <?= ($i == 1) ? 'current' : '' ?>" id="tab<?= $i ?>">
-                                        <!--<div class="tabs-pane current" id="tab-1">-->
-                                        <h2 class="<?= ($i == 1) ? 'title-head' : '' ?>">
-                                            <?php echo $content->title; ?>
-                                        </h2>
-                                        <p class="p-style3"><?php echo $content->description; ?></p>
-                                    </div>
-                                    <?php
-                                    $i++;
-                                }
-                                ?>
-                            </div>
-                            <div class="tabs col-lg-6 col-md-6 group">
-                                <span class="tab active" data-tab="#tab1"><i class="fa fa-archive"></i></span>
-                                <span class="tab" data-tab="#tab2"><i class="fa fa-recycle"></i></span>
-                                <span class="tab" data-tab="#tab3"><i class="fa fa-gift"></i></span>
-                            </div>
-                        </div>
+<!--Features Tabs-->
+<section class="feature-tabs">
+    <div class="container">
+        <div class="row">
+            <div class="tabs-content col-lg-6 col-md-6">
+                <?php
+                $i = 1;
+                foreach ($bottomContent as $content) {
+                    if ($i > 3) {
+                        break;
+                    }
+                    ?>
+                    <div class="tabs-pane <?= ($i == 1) ? 'current' : '' ?>" id="tab<?= $i ?>">
+                        <!--<div class="tabs-pane current" id="tab-1">-->
+                        <h2 class="<?= ($i == 1) ? 'title-head' : '' ?>">
+                            <?php echo $content->title; ?>
+                        </h2>
+                        <p class="p-style3"><?php echo $content->description; ?></p>
                     </div>
-                </section>
-                <!--Subscription Widget-->
-                <?php echo $this->render('@app/themes/costfit/layouts/_subscription', compact('lastIndexContent')); ?>
-                <!--Brands Carousel Widget-->
-                <?php echo $this->render('@app/themes/costfit/layouts/_brand_carousel'); ?>
-
+                    <?php
+                    $i++;
+                }
+                ?>
+            </div>
+            <div class="tabs col-lg-6 col-md-6 group">
+                <span class="tab active" data-tab="#tab1"><i class="fa fa-archive"></i></span>
+                <span class="tab" data-tab="#tab2"><i class="fa fa-recycle"></i></span>
+                <span class="tab" data-tab="#tab3"><i class="fa fa-gift"></i></span>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Subscription Widget-->
+<?php echo $this->render('@app/themes/costfit/layouts/_subscription', compact('lastIndexContent')); ?>
+<!--Brands Carousel Widget-->
+<?php echo $this->render('@app/themes/costfit/layouts/_brand_carousel'); ?>
 
