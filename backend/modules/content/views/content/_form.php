@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 //use yii\widgets\MaskedInput;
 use common\models\areawow;
-use kartik\date\DatePicker;
+use yii\jui\DatePicker;
 use common\models\costfit\ContentGroup;
 
 /* @var $this yii\web\View */
@@ -46,27 +46,16 @@ use common\models\costfit\ContentGroup;
 
         <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
 
-
         <?=
-        $form->field($model, 'endDate')->textInput()->widget(DatePicker::classname(), [
-
-            'size' => 'sm',
+        $form->field($model, 'startDate')->textInput()->widget(\yii\jui\DatePicker::classname(), ['options' => ['class' => 'form-control'],
             'language' => 'th',
-            'type' => DatePicker::TYPE_INPUT,
-            'options' => [
-                'placeholder' => 'Search date ...',
-                'class' => 'input-sm col-sm-6',
-            ],
-            'pluginOptions' => [
-                'autoclose' => true,
-                'format' => 'yyyy-mm-dd',
-            ],
-        ]);
+            'dateFormat' => 'yyyy-MM-dd',]);
         ?>
-
-
-
-
+        <?=
+        $form->field($model, 'endDate')->textInput()->widget(\yii\jui\DatePicker::classname(), ['options' => ['class' => 'form-control'],
+            'language' => 'th',
+            'dateFormat' => 'yyyy-MM-dd',]);
+        ?>
         <?= (isset($model->image) && !empty($model->image)) ? Html::img(Yii::$app->homeUrl . $model->image, ['style' => 'width:150px', 'class' => 'col-lg-offset-3']) : ''; ?>
 
         <?= $form->field($model, 'image', ['options' => ['class' => 'row form-group']])->fileInput() ?>
