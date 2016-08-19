@@ -101,7 +101,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 ");
                     ?>
                 <?php endif; ?>
-                                                                                                                                                                                                                                     <!--<select name="size" id="changeOption"><option>Size:50 Inches</option> </select>-->
+                                                                                                                                                                                                                                                     <!--<select name="size" id="changeOption"><option>Size:50 Inches</option> </select>-->
             </div>
         <?php endif; ?>
     </div>
@@ -177,7 +177,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="form-group  col-lg-12">
                 <div class="checkbox form-group">
                     <label>
-                        <input type="checkbox" name="sizes" value="blue" id="size_3">
+                        <input type="checkbox" name="sizes" id="slow-date">
                         ต้องการส่งสินค้าราคาประหยัดอีก xxx  บาท (ส่งภายใน 15 วัน)
                     </label>
                 </div>
@@ -223,7 +223,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <input id="sent-s" class="form-control" type="text" value="<?= ($model->findMaxQuantity($model->productId) == 0) ? 0 : 1 ?>">
             <a class="incr-btn" href="#" data-toggle="popover" data-content="Max Quantity For this Item" data-placement="bottom">+</a>
         </div>
-     </div> 
+     </div>
     -->
 </div>
 

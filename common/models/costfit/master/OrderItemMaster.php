@@ -16,6 +16,7 @@ use Yii;
     * @property string $quantity
     * @property string $price
     * @property string $total
+    * @property integer $sendDate
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -40,7 +41,7 @@ public function rules()
 {
 return [
             [['orderId', 'productId', 'quantity', 'price', 'createDateTime'], 'required'],
-            [['orderId', 'productId', 'productGroupId', 'brandId', 'categoryId', 'status'], 'integer'],
+            [['orderId', 'productId', 'productGroupId', 'brandId', 'categoryId', 'sendDate', 'status'], 'integer'],
             [['quantity', 'price', 'total'], 'number'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['orderId'], 'exist', 'skipOnError' => true, 'targetClass' => OrderMaster::className(), 'targetAttribute' => ['orderId' => 'orderId']],
@@ -63,6 +64,7 @@ return [
     'quantity' => Yii::t('order_item', 'Quantity'),
     'price' => Yii::t('order_item', 'Price'),
     'total' => Yii::t('order_item', 'Total'),
+    'sendDate' => Yii::t('order_item', 'Send Date'),
     'status' => Yii::t('order_item', 'Status'),
     'createDateTime' => Yii::t('order_item', 'Create Date Time'),
     'updateDateTime' => Yii::t('order_item', 'Update Date Time'),
