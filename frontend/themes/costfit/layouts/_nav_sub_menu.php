@@ -16,6 +16,7 @@ $MenuCategory = $this->context->actionMenuCategory();
         min-height: 500px;
         overflow-y: scroll;
     }*/
+
 </style>
 <!-- Show For Mobile -->
 <ul class="catalog hidden-sm hidden-md  hidden-lg" style="max-width: 100%;" >
@@ -76,20 +77,20 @@ $MenuCategory = $this->context->actionMenuCategory();
                     <a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items->createTitle() ?>/<?= $params ?>" style="font-size: 14px;">
                         <?php echo $items->title; ?> <i class="fa fa-chevron-down"></i>
                     </a>
-                    <ul class="sub-submenu" id="test-menu" style="width: 750px;">
+                    <ul class="sub-submenu" id="test-menu" style="width: 700px;">
                         <?php
                         $MenuCategoryParentId = $this->context->actionMenuCategoryParentId($items->categoryId);
                         foreach ($MenuCategoryParentId as $items_sub) {
                             $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items_sub->categoryId]);
                             ?>
-                            <div class="col-md-6">
+                            <div class="col-md-6" style="float: left; width: 50%;" id="menu-categories-items">
                                 <a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub->createTitle() ?>/<?= $params ?>" class="menu-catalog-title-color" style="color: #000; font-weight: 900"><?php echo $items_sub->title; ?></a>
                                 <?php
                                 $MenuCategorySubParentId = $this->context->actionMenuCategorySubParentId($items_sub->categoryId);
                                 foreach ($MenuCategorySubParentId as $items_sub_parent) {
                                     $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items_sub_parent->categoryId]);
                                     ?>
-                                    <li><a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub_parent->createTitle() ?>/<?= $params ?>"><?php echo '&nbsp;-&nbsp;' . $items_sub_parent->title; ?></a></li>
+                                    <li class="col-md-12" style="width: 100%;"><a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub_parent->createTitle() ?>/<?= $params ?>"><?php echo '&nbsp;-&nbsp;' . $items_sub_parent->title; ?></a></li>
                                 <?php } ?>
                             </div>
                         <?php } ?>
