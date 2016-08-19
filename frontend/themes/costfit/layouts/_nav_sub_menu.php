@@ -31,15 +31,14 @@ $MenuCategory = $this->context->actionMenuCategory();
                 $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items_sub->categoryId]);
                 ?>
                 <ul class="submenu">
-                    <li class="has-submenu"><a href="#"><?php echo $items_sub->title; ?></a></li>
+                    <li class="has-submenu"><a href="#" style="font-size: 12px; font-weight: bold;"><?php echo $items_sub->title; ?></a></li>
                     <ul class="has-submenu">
                         <?php
                         $MenuCategorySubParentId = $this->context->actionMenuCategorySubParentId($items_sub->categoryId);
                         foreach ($MenuCategorySubParentId as $items_sub_parent) {
                             $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items_sub_parent->categoryId]);
                             ?>
-                            <li><a href="#"><?php echo '&nbsp;-&nbsp;' . $items_sub_parent->title; ?></a></li>
-
+                            <li><a href="#" style="font-size: 12px;"><?php echo '&nbsp;-&nbsp;' . $items_sub_parent->title; ?></a></li>
                         <?php } ?>
                     </ul>
                 </ul>
@@ -71,11 +70,13 @@ $MenuCategory = $this->context->actionMenuCategory();
             <?php
             // $list_menu_category = $this->Me
             foreach ($MenuCategory as $items) {
-
                 $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items->categoryId]);
                 ?>
-                <li class="has-submenu"><a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items->createTitle() ?>/<?= $params ?>" style="font-size: 14px;"><?php echo $items->title; ?> <i class="fa fa-chevron-down"></i></a>
-                    <ul class="sub-submenu" id="test-menu" style="width: 100%;">
+                <li class="has-submenu">
+                    <a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items->createTitle() ?>/<?= $params ?>" style="font-size: 14px;">
+                        <?php echo $items->title; ?> <i class="fa fa-chevron-down"></i>
+                    </a>
+                    <ul class="sub-submenu" id="test-menu" style="width: 700px;">
                         <?php
                         $MenuCategoryParentId = $this->context->actionMenuCategoryParentId($items->categoryId);
                         foreach ($MenuCategoryParentId as $items_sub) {
