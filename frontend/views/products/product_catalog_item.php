@@ -42,6 +42,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     .popover {
         // border: 2px dotted red;
         padding: 15px;
+
     }
 
     /* Popover Header */
@@ -54,6 +55,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
     /* Popover Body */
     .popover-content {
+
         color: red;
         padding: 25px;
     }
@@ -61,6 +63,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     /* Popover Arrow */
     .arrow {
         // border-right-color: red !important;
+
     }
 
 
@@ -98,13 +101,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 ");
                     ?>
                 <?php endif; ?>
-                                                                                                                                                                                                                                                                                                                                                                        <!--            <select name="size" id="changeOption">
-                                                                                                                                                                                                                                                                                                                                                                        <option>Size:28 Inches</option>
-                                                                                                                                                                                                                                                                                                                                                                        <option>Size:32 Inches</option>
-                                                                                                                                                                                                                                                                                                                                                                        <option>Size:40 Inches</option>
-                                                                                                                                                                                                                                                                                                                                                                        <option>Size:48 Inches</option>
-                                                                                                                                                                                                                                                                                                                                                                        <option>Size:50 Inches</option>
-                                                                                                                                                                                                                                                                                                                                                                        </select>-->
+                                                                                                                                                                                                                                                                                                                                                                                            <!--            <select name="size" id="changeOption">
+                                                                                                                                                                                                                                                                                                                                                                                            <option>Size:28 Inches</option>
+                                                                                                                                                                                                                                                                                                                                                                                            <option>Size:32 Inches</option>
+                                                                                                                                                                                                                                                                                                                                                                                            <option>Size:40 Inches</option>
+                                                                                                                                                                                                                                                                                                                                                                                            <option>Size:48 Inches</option>
+                                                                                                                                                                                                                                                                                                                                                                                            <option>Size:50 Inches</option>
+                                                                                                                                                                                                                                                                                                                                                                                            </select>-->
             </div>
         <?php endif; ?>
     </div>
