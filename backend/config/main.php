@@ -96,6 +96,26 @@ return [
                 'baseUrl' => '@web'
             ]
         ],
+        'assetManager' => [
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'js' => [],
+                    'depends' => ['\backend\assets\CostFitAsset']
+                ],
+                'yii\bootstrap\BootstrapPluginAsset' => [
+                    'js' => []
+                ],
+                'yii\bootstrap\BootstrapAsset' => [
+                    'css' => [],
+                    'js' => []
+                ],
+                'yii\web\YiiAsset' => [
+                    'depends' => [
+                        'backend\assets\CostFitAsset',
+                    ]
+                ]
+            ],
+        ],
     ],
     'params' => $params,
 ];
