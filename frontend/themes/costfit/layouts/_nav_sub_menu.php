@@ -39,7 +39,7 @@ $MenuCategory = $this->context->actionMenuCategory();
                         foreach ($MenuCategorySubParentId as $items_sub_parent) {
                             $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items_sub_parent->categoryId]);
                             ?>
-                            <li><a href="#" style="font-size: 12px;"><?php echo '&nbsp;-&nbsp;' . $items_sub_parent->title; ?></a></li>
+                            <li><a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub_parent->createTitle() ?>/<?= $params ?>" style="font-size: 12px;"><?php echo '&nbsp;-&nbsp;' . $items_sub_parent->title; ?></a></li>
                         <?php } ?>
                     </ul>
                 </ul>
