@@ -595,6 +595,7 @@ $(document).ready(function (e) {
             var $itemName = $(this).parent().parent().find('.title').html();
         }
         var $itemId = $(this).parent().parent().find('#productId').val();
+        var $sendDate = $(this).parent().parent().find('#sendDate').val();
         var $itemPrice = $(this).parent().parent().find('.price').text();
         var $itemQnty = $(this).parent().find('#quantity').val();
         var $cartTotalItems = parseInt($('.cart-btn a span').text()) + parseInt($itemQnty);
@@ -606,7 +607,7 @@ $(document).ready(function (e) {
             type: "POST",
             dataType: "JSON",
             url: "cart/add-to-cart?id=" + $itemId,
-            data: {quantity: $itemQnty},
+            data: {quantity: $itemQnty, sendDate: $sendDate},
             success: function (data)
             {
                 if (data.status)
