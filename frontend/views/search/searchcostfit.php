@@ -39,9 +39,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
         <h2 class="with-sorting">Showing results for "test test's"</h2>
         <form class="sort-form sorting" role="form" autocomplete="off" novalidate="novalidate" method="post" action="<?php echo Yii::$app->homeUrl; ?>search-cost-fit">
-            <?php if (isset($_POST['search_hd'])): ?>
+            <?php if (isset($_POST['search_hd'])) { ?>
                 <input type="hidden" value="<?= $_POST['search_hd'] ?>" name="search_hd">
-            <?php endif; ?>
+            <?php } else { ?>
+                <input type="hidden" value="<?= $search_hd ?>" name="search_hd">
+            <?php } ?>
             <input type="hidden" value="ASC" name="sortName" id="sortName">
             <input type="hidden" value="ASC" name="sortPrice" id="sortPrice">
             <a href="#" onclick="<?= ($sortName == "ASC") ? "$('#sortName').val('DESC');" : "$('#sortName').val('ASC');" ?>$('.sort-form').submit()" <?= ($sortName == "ASC") ? " " : " class='sorted'" ?>>Sort by name</a>
@@ -80,12 +82,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     }
                     ?>
                 </div>
-                <!--Pagination-->
+                <!--Pagination
                 <div class="col-md-12 text-center">
                     <button type="button" id="see-more-search-cost-fit" data-loading-text="Loading..." class="btn btn-black" autocomplete="off">
                         See More
                     </button>
-                </div>
+                </div>-->
                 <!--<ul class="pagination">
                     <li class="prev-page"><a class="icon-arrow-left" href="#"></a></li>
                     <li class="active"><a href="#">1</a></li>
