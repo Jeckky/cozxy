@@ -101,7 +101,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 ");
                     ?>
                 <?php endif; ?>
-                                                                                                                                                                                                                             <!--<select name="size" id="changeOption"><option>Size:50 Inches</option> </select>-->
+                                                                                                                                                                                                                                     <!--<select name="size" id="changeOption"><option>Size:50 Inches</option> </select>-->
             </div>
         <?php endif; ?>
     </div>
@@ -223,7 +223,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <input id="sent-s" class="form-control" type="text" value="<?= ($model->findMaxQuantity($model->productId) == 0) ? 0 : 1 ?>">
             <a class="incr-btn" href="#" data-toggle="popover" data-content="Max Quantity For this Item" data-placement="bottom">+</a>
         </div>
-     </div>
+     </div> 
     -->
 </div>
 
