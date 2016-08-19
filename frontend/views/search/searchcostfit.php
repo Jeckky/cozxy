@@ -37,7 +37,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </div>
         </form>
 
-        <h2 class="with-sorting">Showing results for "test test's"</h2>
+        <h2 class="with-sorting">Showing results for "<?= isset($_POST['search_hd']) ? $_POST['search_hd'] : ($search_hd) ? $search_hd : '' ?>"</h2>
         <form class="sort-form sorting" role="form" autocomplete="off" novalidate="novalidate" method="post" action="<?php echo Yii::$app->homeUrl; ?>search-cost-fit">
             <?php if (isset($_POST['search_hd'])) { ?>
                 <input type="hidden" value="<?= $_POST['search_hd'] ?>" name="search_hd">
