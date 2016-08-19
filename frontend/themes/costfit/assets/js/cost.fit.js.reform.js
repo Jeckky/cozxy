@@ -641,6 +641,26 @@ $("#GuestaddItemToWishlist").on('click', function () {
     $("#modal-guest-add-item-to-wishlist").modal('show');
 });
 
-$("#slow-date").on('click', function () {
-    alert('test');
+
+//$("#lateShippingCheck").on('click', function () {
+//    var sendDate = $(this).parent().parent().parent().parent().parent().find("sendDate");
+//    alert(sendDate.val());
+//
+//});
+$('#lateShippingCheck').on('ifChecked', function (event) {
+    var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
+    alert(sendDate.val());
 });
+
+$('#lateShippingCheck').on('ifUnchecked', function (event) {
+    alert(event.type + ' callback');
+});
+/*
+ function validate() {
+ if (remember.checked == 1) {
+ alert("checked");
+ } else {
+ alert("You didn't check it! Let me check it for you.")
+ }
+ }
+ */

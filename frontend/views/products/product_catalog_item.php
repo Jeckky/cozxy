@@ -72,6 +72,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <div class="col-lg-6 col-md-6">
     <h1><?= $model->title; ?></h1>
     <?= Html::hiddenInput("productId", $model->productId, ['id' => 'productId']); ?>
+    <?= Html::hiddenInput("sendDate", 2, ['id' => 'sendDate']); ?>
     <div class="form-group">
         <?php if (isset($model->productGroup)): ?>
             <div class="select-style">
@@ -101,7 +102,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 ");
                     ?>
                 <?php endif; ?>
-                                                                                                                                                                                                                                                     <!--<select name="size" id="changeOption"><option>Size:50 Inches</option> </select>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                         <!--<select name="size" id="changeOption"><option>Size:50 Inches</option> </select>-->
             </div>
         <?php endif; ?>
     </div>
@@ -175,11 +176,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 </div>
             </div>
             <div class="form-group  col-lg-12">
-                <div class="checkbox form-group">
-                    <label>
-                        <input type="checkbox" name="sizes" id="slow-date">
-                        ต้องการส่งสินค้าราคาประหยัดอีก xxx  บาท (ส่งภายใน 15 วัน)
-                    </label>
+                <!--                <div class="checkbox form-group">
+                                    <input id="lateShippingCheck" name="lateShippingCheck" type="checkbox" />
+                                    <label for="lateShippingCheck"> ต้องการส่งสินค้าราคาประหยัดอีก xxx  บาท (ส่งภายใน 15 วัน)</label>
+                                </div>-->
+                <div class="checkbox">
+                    <label><input type="checkbox" id="lateShippingCheck" name="lateShippingCheck">  ต้องการส่งสินค้าราคาประหยัดอีก xxx  บาท (ส่งภายใน 15 วัน)</label>
                 </div>
             </div>
         </div>
