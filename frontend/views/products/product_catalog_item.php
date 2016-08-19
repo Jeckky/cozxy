@@ -101,7 +101,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 ");
                     ?>
                 <?php endif; ?>
-                                                                                                                                                                                                                 <!--<select name="size" id="changeOption"><option>Size:50 Inches</option> </select>-->
+                                                                                                                                                                                                                             <!--<select name="size" id="changeOption"><option>Size:50 Inches</option> </select>-->
             </div>
         <?php endif; ?>
     </div>
@@ -199,8 +199,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="tags">&nbsp;
                 <?php
                 $tags = explode(',', $model->tags);
-                foreach (explode(',', $model->tags) as $key => $value) {
-                    echo '<a href="' . $baseUrl . '/search-cost-fit?search_hd=' . trim($value) . '">' . $value . '</a> &nbsp ,';
+                if (count($model->tags) > 0) {
+                    foreach (explode(',', $model->tags) as $key => $value) {
+                        echo '<a href="' . $baseUrl . '/search-cost-fit?search_hd=' . trim($value) . '">' . $value . '</a> &nbsp ,';
+                    }
                 }
                 ?>
                 <a href="<?php $baseUrl ?>/search-cost-fit?search_hd=cost.fit">cost.fit</a>
