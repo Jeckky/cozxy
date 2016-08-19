@@ -64,13 +64,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 ");
                     ?>
                 <?php endif; ?>
-                                                                                                                                                                                                                                                                                <!--            <select name="size" id="changeOption">
-                                                                                                                                                                                                                                                                                <option>Size:28 Inches</option>
-                                                                                                                                                                                                                                                                                <option>Size:32 Inches</option>
-                                                                                                                                                                                                                                                                                <option>Size:40 Inches</option>
-                                                                                                                                                                                                                                                                                <option>Size:48 Inches</option>
-                                                                                                                                                                                                                                                                                <option>Size:50 Inches</option>
-                                                                                                                                                                                                                                                                                </select>-->
+                                                                                                                                                                                                                                                                                    <!--            <select name="size" id="changeOption">
+                                                                                                                                                                                                                                                                                    <option>Size:28 Inches</option>
+                                                                                                                                                                                                                                                                                    <option>Size:32 Inches</option>
+                                                                                                                                                                                                                                                                                    <option>Size:40 Inches</option>
+                                                                                                                                                                                                                                                                                    <option>Size:48 Inches</option>
+                                                                                                                                                                                                                                                                                    <option>Size:50 Inches</option>
+                                                                                                                                                                                                                                                                                    </select>-->
             </div>
         <?php endif; ?>
     </div>
@@ -132,7 +132,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
    <!-- <p class="p-style2"><?//= strip_tags($model->shortDescription); ?></p>-->
     <div class="panel panel-warning">
         <div class="panel-heading">
-            <h3 class="panel-title">ส่งสินค้า</h3>
+            <h3 class="panel-title">ส่งสินค้า</h3> 
         </div>
         <div class="panel-body">
             <div class="form-group col-lg-12" style="margin-bottom:5px;">
