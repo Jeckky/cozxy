@@ -20,13 +20,13 @@ use common\models\costfit\Brand;
 
     <?php
     $form = ActiveForm::begin([
-        'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
-        'fieldConfig' => [
-            'template' => '{label}<div class="col-sm-9">{input}</div>',
-            'labelOptions' => [
-                'class' => 'col-sm-3 control-label'
-            ]
-        ]
+                'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+                'fieldConfig' => [
+                    'template' => '{label}<div class="col-sm-9">{input}</div>',
+                    'labelOptions' => [
+                        'class' => 'col-sm-3 control-label'
+                    ]
+                ]
     ]);
     ?>
 
@@ -70,7 +70,7 @@ use common\models\costfit\Brand;
         <?= $form->field($model, 'unit', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(common\models\costfit\Unit::find()->all(), 'unitId', 'title'), ['prompt' => '-- Select Unit --']) ?>
 
         <?= $form->field($model, 'smallUnit', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(common\models\costfit\Unit::find()->all(), 'unitId', 'title'), ['prompt' => '-- Select Small Unit --']) ?>
-
+        <?= $form->field($model, 'tags', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
                 <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

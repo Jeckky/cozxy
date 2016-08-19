@@ -26,6 +26,7 @@ use Yii;
     * @property string $price
     * @property string $unit
     * @property string $smallUnit
+    * @property string $tags
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -65,6 +66,7 @@ return [
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['code'], 'string', 'max' => 100],
             [['title', 'optionName'], 'string', 'max' => 200],
+            [['tags'], 'string', 'max' => 255],
             [['brandId'], 'exist', 'skipOnError' => true, 'targetClass' => BrandMaster::className(), 'targetAttribute' => ['brandId' => 'brandId']],
             [['categoryId'], 'exist', 'skipOnError' => true, 'targetClass' => CategoryMaster::className(), 'targetAttribute' => ['categoryId' => 'categoryId']],
             [['productGroupId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductGroupMaster::className(), 'targetAttribute' => ['productGroupId' => 'productGroupId']],
@@ -98,6 +100,7 @@ return [
     'price' => Yii::t('product', 'Price'),
     'unit' => Yii::t('product', 'Unit'),
     'smallUnit' => Yii::t('product', 'Small Unit'),
+    'tags' => Yii::t('product', 'Tags'),
     'status' => Yii::t('product', 'Status'),
     'createDateTime' => Yii::t('product', 'Create Date Time'),
     'updateDateTime' => Yii::t('product', 'Update Date Time'),

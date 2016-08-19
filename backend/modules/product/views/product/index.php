@@ -99,6 +99,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             ],
                             'code',
                             'title',
+                            'tags',
                             // 'optionName',
                             // 'description:ntext',
                             // 'width',
