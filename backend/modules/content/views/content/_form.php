@@ -3,10 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use yii\widgets\MaskedInput;
+//use yii\widgets\MaskedInput;
 use common\models\areawow;
-use yii\jui\DatePicker;
-//use yii\widgets\Pjax;
+use kartik\date\DatePicker;
 use common\models\costfit\ContentGroup;
 
 /* @var $this yii\web\View */
@@ -29,13 +28,17 @@ use common\models\costfit\ContentGroup;
     ?>
 
     <div class="panel-heading">
-        <span class="panel-title"><?= $title ?></span>
+        <span class="panel-title"><?= $title ?><?php
+            if (isset($contentGroup)) {
+                echo " : " . $contentGroup;
+            } else {
+                echo "";
+            }
+            ?></span>
     </div>
 
     <div class="panel-body">
         <?= $form->errorSummary($model) ?>
-
-        <?= $form->field($model, 'contentGroupId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(ContentGroup::find()->all(), 'contentGroupId', 'title'), ['prompt' => '-- Select ContentGroup --']) ?>
 
         <?= $form->field($model, 'headTitle', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
 
@@ -43,19 +46,24 @@ use common\models\costfit\ContentGroup;
 
         <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
 
-        <?=
-        $form->field($model, 'startDate')->textInput()->widget(DatePicker::classname(), ['options' => [
-                'class' => 'form-control'],
-            'language' => 'en',
-            'dateFormat' => 'yyyy-MM-dd']);
-        ?>
 
         <?=
-        $form->field($model, 'endDate')->textInput()->widget(DatePicker::classname(), ['options' => [
-                'class' => 'form-control'],
-            'language' => 'en',
-            'dateFormat' => 'yyyy-MM-dd']);
+        $form->field($model, 'endDate')->textInput()->widget(DatePicker::classname(), [
+
+            'size' => 'sm',
+            'language' => 'th',
+            'type' => DatePicker::TYPE_INPUT,
+            'options' => [
+                'placeholder' => 'Search date ...',
+                'class' => 'input-sm col-sm-6',
+            ],
+            'pluginOptions' => [
+                'autoclose' => true,
+                'format' => 'yyyy-mm-dd',
+            ],
+        ]);
         ?>
+
 
 
 

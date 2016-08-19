@@ -41,6 +41,7 @@ class ContentController extends ContentMasterController {
 
         return $this->render('index', [
                     'dataProvider' => $dataProvider,
+                    'contentGroupId' => $_GET["contentGroupId"]
         ]);
     }
 
@@ -62,8 +63,11 @@ class ContentController extends ContentMasterController {
      */
     public function actionCreate() {
         $model = new Content();
+        $contentGroup = '';
         if (isset($_GET["contentGroupId"])) {
             $model->contentGroupId = $_GET["contentGroupId"];
+            $GroupName = \common\models\costfit\ContentGroup::find()->where("contentGroupId='" . $_GET["contentGroupId"] . "'")->one();
+            $contentGroup = $GroupName->title;
         }
         if (isset($_POST["Content"])) {
             $model->attributes = $_POST["Content"];
@@ -85,11 +89,14 @@ class ContentController extends ContentMasterController {
                 if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
                     //Do Some Thing
                 }
-                return $this->redirect(['index']);
+                return $this->redirect(['index',
+                            'contentGroupId' => $_GET["contentGroupId"]
+                ]);
             }
         }
         return $this->render('create', [
                     'model' => $model,
+                    'contentGroup' => $contentGroup
         ]);
     }
 
@@ -101,6 +108,7 @@ class ContentController extends ContentMasterController {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
+        $contentGroup = '';
         if (isset($_POST["Content"])) {
             $model->attributes = $_POST["Content"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
@@ -128,11 +136,14 @@ class ContentController extends ContentMasterController {
                 if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
                     //Do Some Thing
                 }
-                return $this->redirect(['index']);
+                return $this->redirect(['index',
+                            'contentGroupId' => $model->contentGroupId
+                ]);
             }
         }
         return $this->render('update', [
                     'model' => $model,
+                    'contentGroup' => $contentGroup
         ]);
     }
 

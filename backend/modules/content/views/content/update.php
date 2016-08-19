@@ -13,9 +13,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <div class="content-update">
 
-    <?= $this->render('_form', [
+    <?=
+    $this->render('_form', [
         'model' => $model,
+        'contentGroup' => $contentGroup,
         'title' => Html::encode($this->title)
-    ]) ?>
+    ])
+    ?>
 
 </div>

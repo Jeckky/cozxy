@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 
-
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\Content */
 
@@ -13,9 +12,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <div class="content-create">
 
-    <?= $this->render('_form', [
+    <?=
+    $this->render('_form', [
         'model' => $model,
+        'contentGroup' => $contentGroup,
         'title' => Html::encode($this->title)
-    ]) ?>
+    ])
+    ?>
 
 </div>

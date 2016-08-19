@@ -52,14 +52,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'buttons' => [
                             'content' => function($url, $model) {
                                 return Html::a('<br><u>Content</u>', ['/content/content', 'contentGroupId' => $model->contentGroupId], [
-                                    'title' => Yii::t('app', 'Change today\'s lists'),]);
+                                            'title' => Yii::t('app', 'Change today\'s lists'),]);
                             },
-                        ]
-                    ],
-                ],
-            ]);
-            ?>
-        </div>
-    </div>
-    <?php Pjax::end(); ?>
+                                ]
+                            ],
+                        ],
+                    ]);
+                    ?>
+                </div>
+            </div>
+            <?php Pjax::end(); ?>
 </div>
