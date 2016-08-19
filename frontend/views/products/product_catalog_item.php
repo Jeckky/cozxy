@@ -72,7 +72,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <div class="col-lg-6 col-md-6">
     <h1><?= $model->title; ?></h1>
     <?= Html::hiddenInput("productId", $model->productId, ['id' => 'productId']); ?>
+
     <?= Html::hiddenInput("sendDate", 2, ['id' => 'sendDate']); ?>
+
     <div class="form-group">
         <?php if (isset($model->productGroup)): ?>
             <div class="select-style">
@@ -102,7 +104,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 ");
                     ?>
                 <?php endif; ?>
-                                                                                                                                                                                                                                                                                                                                                                                                                                         <!--<select name="size" id="changeOption"><option>Size:50 Inches</option> </select>-->
+
             </div>
         <?php endif; ?>
     </div>

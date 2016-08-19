@@ -49,12 +49,13 @@ class ProductsController extends MasterController {
 //return Yii::$app->getResponse()->redirect('register/login');
 
         $model = \common\models\costfit\Product::find()->where("productId =" . $_GET["productId"])->one();
-
-
+        //$shippingDate = \common\models\costfit\ProductShippingPrice::find()->where("productId =" . $_GET["productId"] . " and shippingTypeId=1")->one();
+        $fastestDate = 1;
+        //throw new \yii\base\Exception($fastestDate);
         $this->title = 'Cost.fit | Products';
         $this->subTitle = $model->attributes['title'];
         $this->subSubTitle = '';
-        return $this->render('products', ['model' => $model]);
+        return $this->render('products', ['model' => $model, 'fastestDate' => $fastestDate]);
     }
 
     public function actionChangeOption() {
