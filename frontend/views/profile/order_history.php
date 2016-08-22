@@ -33,6 +33,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         'tableOptions' => [
             'class' => 'table table-light  table-hover',
         ],
+        'rowOptions' => function ($model, $index, $widget, $grid) {
+
+    if ($model->status >= \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS) {
+        return ['class' => 'alert alert success'];
+    } else {
+        return [];
+    }
+},
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             // Simple columns defined by the data contained in $dataProvider.
@@ -41,7 +49,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 'attribute' => 'orderNo',
                 'value' => function ($model) {
                     if ($model->total != null) {
-                        return 'Order No : ' . $model->orderNo . '<br><span style ="font-size: 12px;"> ยอดรวม : ' . $model->summary . ' THB</span>';
+                        if (!isset($model->invoiceNo) && empty($model->invoiceNo)) {
+                            return 'Order No : ' . $model->orderNo . '<br><span style ="font-size: 12px;"> ยอดรวม : ' . $model->summary . ' THB</span>';
+                        } else {
+                            return '<span style="font-weught:bold;">Invoice No : ' . $model->invoiceNo . '</span><br><span style ="font-size: 12px;"> ยอดรวม : ' . $model->summary . ' THB</span>';
+                        }
                         //or: return Html::encode($model->some_attribute)
                     } else {
                         return '';
@@ -74,7 +86,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             [
                 'attribute' => 'สถานะ',
                 'value' => function($model) {
-                    return ($model->paymentType == 1) ? '<span style="color: #ac2925">ยังไม่ชำระเงิน</span>' : '<span style="color: #006600">ชำระเงินแล้ว</span>';
+                    return ($model->status < \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS) ? '<span style="color: #ac2925">ยังไม่ชำระเงิน</span>' : '<span style="color: #006600">ชำระเงินแล้ว</span>';
                 },
                 'format' => 'raw',
             ],
@@ -84,7 +96,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 'template' => ' {Order} ',
                 'buttons' => [
                     'Order' => function($url, $model, $baseUrl) {
-                        if ($model->paymentType == 1) { // ชำระเงินแล้ว
+                        if ($model->status < \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS) { // ชำระเงินแล้ว
                             return Html::a('ดูเพิ่มเติม', Yii::$app->homeUrl . "profile/purchase-order/" . $model->encodeParams(['orderId' => $model->orderId]), ['class' => 'btn btn-primary btn-xs'], [
                                         'title' => Yii::t('app', ' '),]);
                         } else {
