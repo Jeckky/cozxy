@@ -60,9 +60,9 @@ $categoryId = $params['categoryId'];
 
                         <!--Price Section-->
                         <section class="filter-section">
-                            <h3>Filter by price</h3>
-                            <?php echo $this->render('@app/views/filter/filterbyprice'); ?>
-
+                            <!-- <h3>Filter by price</h3>
+                            <?php //echo $this->render('@app/views/filter/filterbyprice'); ?>
+                            -->
                         </section>
 
                         <!--Colors Section

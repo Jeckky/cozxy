@@ -23,8 +23,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?= $model->productId ?>"><?= $model->title; ?></a>
             <span><?//= $model->shortDescription; ?></span>
             <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?= $model->productId ?>"><button class="btn btn-primary" id="addItemToCart"><i class="fa fa-search"></i>View</button></a>
-
         </div>
-
     </div>
 </div>
