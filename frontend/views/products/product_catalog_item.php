@@ -40,7 +40,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
     /* Popover */
     .popover {
-        // border: 2px dotted red;
+        /* border: 2px dotted red;*/
         padding: 15px;
 
     }
@@ -62,7 +62,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
     /* Popover Arrow */
     .arrow {
-        // border-right-color: red !important;
+        /* border-right-color: red !important;*/
 
     }
 
