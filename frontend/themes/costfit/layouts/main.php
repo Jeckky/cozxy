@@ -11,6 +11,7 @@ use frontend\widgets\Alert;
 /* @var $content string */
 
 AppAsset::register($this);
+$baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -19,10 +20,16 @@ AppAsset::register($this);
         <meta charset="<?= Yii::$app->charset ?>"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <?= Html::csrfMetaTags() ?>
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <title>
-            <?= Html::encode(isset($this->context->getTitleProduct()->attributes['title']) ? $this->context->getTitleProduct()->attributes['title'] . ' : Cost.fit' : "My Cost.fit") ?></title>
+        <title><?= Html::encode(isset($this->context->getTitleProduct()->attributes['title']) ? $this->context->getTitleProduct()->attributes['title'] . ' : Cost.fit' : "My Cost.fit") ?></title>
+        <meta http-equiv="Cache-Control" content="no-store">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta name="description" content="<?= Html::encode(isset($this->context->getTitleProduct()->attributes['title']) ? $this->context->getTitleProduct()->attributes['title'] . ' : Cost.fit' : "My Cost.fit") ?>">
+        <meta name="KeyWords" content="<?= Html::encode(isset($this->context->getTitleProduct()->attributes['tags']) ? $this->context->getTitleProduct()->attributes['tags'] . ' : Cost.fit' : "My Cost.fit") ?>">
+        <meta name="author" content="Cost.fit">
+        <meta itemprop="name" content="Cost.fit">
+        <meta itemprop="description" content="<?= Html::encode(isset($this->context->getTitleProduct()->attributes['title']) ? $this->context->getTitleProduct()->attributes['title'] . ' : Cost.fit' : "My Cost.fit") ?>">
+        <meta itemprop="image" content="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png">
+        <link rel="image_src" type="image/jpeg" href="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png">
         <?php $this->head() ?>
     </head>
     <body class="">
