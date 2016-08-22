@@ -31,10 +31,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </td>
         <td  colspan="3" style="text-align: left; vertical-align: text-top; padding: 5px; font-size: 12px; line-height: 20px;">
             เลขที่ใบสั่งซื้อ PO No. : <?php echo $order->orderNo; ?><br>
-            เลขที่ใบเสร็จรับเงิน : IV<br>
+            เลขที่ใบเสร็จรับเงิน : <?php echo $order->invoiceNo; ?><br>
             ชำระเงิน :
             <?php
-            echo $this->context->dateThai($order->createDateTime, 1);
+            echo $this->context->dateThai($order->paymentDateTime, 1);
             ?>
         </td>
     </tr>
