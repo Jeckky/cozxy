@@ -54,6 +54,7 @@ class ProductsController extends MasterController {
         //throw new \yii\base\Exception($fastestDate);
         $this->title = 'Cost.fit | Products';
         $this->subTitle = $model->attributes['title'];
+
         $this->subSubTitle = '';
         return $this->render('products', ['model' => $model, 'fastestDate' => $fastestDate]);
     }
