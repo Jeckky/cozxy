@@ -73,7 +73,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <h1><?= $model->title; ?></h1>
     <?= Html::hiddenInput("productId", $model->productId, ['id' => 'productId']); ?>
 
-    <?= Html::hiddenInput("sendDate", $fastDate, ['id' => 'sendDate']); ?>
+    <?= Html::hiddenInput("sendDate", $fastId, ['id' => 'sendDate']); ?>
     <?= Html::hiddenInput("fastId", $fastId, ['id' => 'fastId']); ?>
 
     <div class="form-group">

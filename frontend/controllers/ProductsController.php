@@ -61,25 +61,12 @@ class ProductsController extends MasterController {
                 }
             }
         }
-        $findMinDates = \common\models\costfit\ProductShippingPrice::find()->where("productId =" . Yii::$app->request->get('productId') . " and shippingTypeId!=" . $fastId)->all();
-        if (isset($findMinDates)) {
-            foreach ($findMinDates as $findMinDate) {
-                $shippingType = \common\models\costfit\ShippingType::find()->where("shippingTypeId=" . $findMinDate->shippingTypeId)->one();
-                if (isset($shippingType)) {
-                    if ($shippingType->date < $minDate) {
-                        $minDate = $shippingType->date;
-                    }
-                }
-            }
-        } else {
-            $minDate = $fastDate;
-        }
 
         $this->title = 'Cost.fit | Products';
         $this->subTitle = $model->attributes['title'];
 
         $this->subSubTitle = '';
-        return $this->render('products', ['model' => $model, 'fastDate' => $fastDate, 'minDate' => $minDate, 'fastId' => $fastId]);
+        return $this->render('products', ['model' => $model, 'fastDate' => $fastDate, 'fastId' => $fastId]);
     }
 
     public function actionChangeOption() {
@@ -101,16 +88,47 @@ class ProductsController extends MasterController {
         $productId = Yii::$app->request->post('productId');
         $sendDate = Yii::$app->request->post('sendDate');
         $fastId = Yii::$app->request->post('fastId');
-
-        //$model = \common\models\costfit\ProductShippingPrice::find()->where("productId = " . $productId . ' and  shippingTypeId !=' . $sendDate)->one();
-        $model = \common\models\costfit\ShippingType::find()->where("shippingTypeId = " . $fastId . " and date != " . $sendDate . "  order by date asc")->one();
-
-        if (is_array($model)) {
-            return json_encode($model->attributes);
+        $minDate = 99;
+        $findMinDates = \common\models\costfit\ProductShippingPrice::find()->where("productId =" . $productId . " and shippingTypeId!=" . $fastId)->all();
+        if (isset($findMinDates)) {
+            foreach ($findMinDates as $findMinDate) {
+                $model = \common\models\costfit\ShippingType::find()->where("shippingTypeId=" . $findMinDate->shippingTypeId)->one();
+                if (isset($model)) {
+                    if ($model->date < $minDate) {
+                        $minDate = $model->shippingTypeId;
+                    }
+                }
+            }
         } else {
-            $model = array();
-            return json_encode($model);
+            $minDate = $fastId;
         }
+        echo $minDate;
+        /* $model = \common\models\costfit\ShippingType::find()->where("shippingTypeId = " . $fastId . " and date != " . $sendDate . "  order by date asc")->one();
+
+          if (is_array($model)) {
+          return json_encode($model->attributes);
+          } else {
+          $model = array();
+          return json_encode($model);
+          } */
+        //return json_encode($model->attributes);
+    }
+
+    public function actionGetDefultProductShippingPrice() {
+        $icheck = Yii::$app->request->post('icheck');
+        $productId = Yii::$app->request->post('productId');
+        $sendDate = Yii::$app->request->post('sendDate');
+        $fastId = Yii::$app->request->post('fastId');
+
+        echo $fastId;
+        /* $model = \common\models\costfit\ShippingType::find()->where("shippingTypeId = " . $fastId . " and date != " . $sendDate . "  order by date asc")->one();
+
+          if (is_array($model)) {
+          return json_encode($model->attributes);
+          } else {
+          $model = array();
+          return json_encode($model);
+          } */
         //return json_encode($model->attributes);
     }
 

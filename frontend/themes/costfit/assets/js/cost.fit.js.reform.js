@@ -649,7 +649,7 @@ $('#lateShippingCheck').on('ifChecked', function (event) {
         success: function (data)
         {
             //alert(data.shippingTypeId);
-            $("#sendDate").val(data.date);
+            $("#sendDate").val(data);
         }
     });
 });
@@ -658,15 +658,16 @@ $('#lateShippingCheck').on('ifUnchecked', function (event) {
     //alert(event.type + ' callback');
     var productId = $('input[id=productId]').val();
     var sendDate = $('input[id=sendDate]').val();
+    var fastId = $('input[id=fastId]').val();
     //alert(productId);
     $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: "products/get-product-shipping-price",
-        data: {'productId': productId, 'sendDate': sendDate},
+        url: "products/get-defult-product-shipping-price",
+        data: {'productId': productId, 'sendDate': sendDate, 'fastId': fastId},
         success: function (data)
         {
-            $("#sendDate").val(data.date);
+            $("#sendDate").val(data);
         }
     });
 });
