@@ -257,7 +257,7 @@ class CheckoutController extends MasterController {
                     $res["message"] = \common\models\costfit\EPayment::getReasonCodeText($_POST["reason_code"]);
                 }
             } else if ($_REQUEST["decision"] == "REVIEW") {
-                $order->status = Order::ORDER_STATUS_E_PAYMENT_DRAFT;
+                $order->status = Order::ORDER_STATUS_E_PAYMENT_PENDING;
                 $order->save();
                 $res["status"] = 2;
                 $res["message"] = \common\models\costfit\EPayment::getReasonCodeText($_POST["reason_code"]);
