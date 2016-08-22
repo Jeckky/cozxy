@@ -29,14 +29,16 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 &nbsp;
             </div>
             <div class="col-lg-5 col-md-5">
-                <?php if ($res['status']): ?>
+                <?php if ($res['status'] == 1): ?>
                     <h2 class="title">COST.FIT - ชำระเงินค้าสินค้าเสร็จสมบูรณ์ </h2>
+                <?php elseif ($res['status'] == 2): ?>
+                    <h2 class="title"  style="color:orange">COST.FIT - การชำระเงินไม่สมบูรณ์รอพิจารณาและติดต่อจาก COST.FIT </h2>
                 <?php else: ?>
                     <h2 class="title" style="color:red">COST.FIT - ชำระเงินค้าสินค้าไม่สำเร็จ </h2>
                 <?php endif; ?>
                 <div class="row space-top">
                     <div class="clo-lg-12 col-md-12 col-sm-12 space-bottom">
-                        <?php if ($res['status']): ?>
+                        <?php if ($res['status'] == 1): ?>
                             <h4 class="light-weight uppercase">
                                 หมายเลขใบเสร็จรับเงินของท่านคือ  <a href="<?= Yii::$app->homeUrl . "profile/order" ?>"><?= isset($res['invoiceNo']) ? $res['invoiceNo'] : "-" ?></a>
                             </h4>

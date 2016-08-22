@@ -260,23 +260,22 @@ class CheckoutController extends MasterController
                 $order->invoiceNo = Order::genInvNo($order);
                 $order->status = Order::ORDER_STATUS_E_PAYMENT_SUCCESS;
                 if ($order->save()) {
-                    if (Order::saveOrderPaymentHistory($order, $_REQUEST["decision"], $_POST["reason_code"])) {
-                        $res["status"] = TRUE;
-                        $res["invoiceNo"] = $order->invoiceNo;
-                        $res["message"] = \common\models\costfit\EPayment::getReasonCodeText($_POST["reason_code"]);
-                    }
+                    $res["status"] = 1;
+                    $res["invoiceNo"] = $order->invoiceNo;
+                    $res["message"] = \common\models\costfit\EPayment::getReasonCodeText($_POST["reason_code"]);
                 }
             } else if ($_REQUEST["decision"] == "REVIEW") {
                 $order->status = Order::ORDER_STATUS_E_PAYMENT_DRAFT;
                 $order->save();
-                $res["status"] = TRUE;
+                $res["status"] = 2;
                 $res["message"] = \common\models\costfit\EPayment::getReasonCodeText($_POST["reason_code"]);
             } else {
                 $order->status = Order::ORDER_STATUS_E_PAYMENT_DRAFT;
                 $order->save();
-                $res["status"] = FALSE;
+                $res["status"] = 3;
                 $res["message"] = \common\models\costfit\EPayment::getReasonCodeText($_POST["reason_code"]);
             }
+            Order::saveOrderPaymentHistory($order, $_REQUEST["decision"], $_POST["reason_code"]);
         }
 
         return $this->render('payment_result', compact('res'));
