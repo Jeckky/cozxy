@@ -25,10 +25,10 @@ echo Html::hiddenInput("signed_field_names", "access_key,profile_id,transaction_
 );
 //Product Parameter
 $unsignedField = ""
- . "bill_to_address_city,bill_to_address_country,bill_to_address_line1,bill_to_address_line2,bill_to_address_postal_code"
+ . "bill_to_address_city,bill_to_address_country,bill_to_address_line1,bill_to_address_postal_code"
  . ",bill_to_address_state,bill_to_email,bill_to_forename,bill_to_phone,bill_to_surname,bill_to_address_country"
  . ",device_fingerprint_id,customer_ip_address,consumer_id"
- . ",ship_to_address_city,ship_to_address_country,ship_to_address_line1,ship_to_address_line2,ship_to_address_postal_code"
+ . ",ship_to_address_city,ship_to_address_country,ship_to_address_line1,ship_to_address_postal_code"
  . ",ship_to_address_state,ship_to_forename,ship_to_phone,ship_to_surname,shipping_method"
 //	. ", item_0_name, item_1_name"
  . ",merchant_defined_data1,merchant_defined_data2,merchant_defined_data3,merchant_defined_data4,merchant_defined_data5,merchant_defined_data6,merchant_defined_data7,merchant_defined_data8,merchant_defined_data9"
@@ -51,7 +51,7 @@ echo Html::hiddenInput("amount", number_format($model->summary, 2, ".", ""));
 echo Html::hiddenInput("bill_to_address_city", $model->billingCities->localName);
 echo Html::hiddenInput("bill_to_address_country", "TH");
 echo Html::hiddenInput("bill_to_address_line1", $model->billingAddress);
-//echo Html::hiddenInput("bill_to_address_line2", $model->billingAddress2);
+//echo Html::hiddenInput("bill_to_address_line2", "");
 echo Html::hiddenInput("bill_to_address_postal_code", $model->billingZipcode);
 echo Html::hiddenInput("bill_to_address_state", $model->billingProvince->localName);
 //echo Html::hiddenInput("bill_to_company_name", $model->billingCompany);
@@ -65,7 +65,7 @@ echo Html::hiddenInput("bill_to_phone", $model->billingTel);
 echo Html::hiddenInput("ship_to_address_city", $model->shippingCities->localName);
 echo Html::hiddenInput("ship_to_address_country", "TH");
 echo Html::hiddenInput("ship_to_address_line1", $model->shippingAddress);
-//echo Html::hiddenInput("ship_to_address_line2", $model->shippingAddress2);
+//echo Html::hiddenInput("ship_to_address_line2", "");
 echo Html::hiddenInput("ship_to_address_postal_code", $model->shippingZipcode);
 echo Html::hiddenInput("ship_to_address_state", $model->shippingProvince->localName);
 //echo Html::hiddenInput("ship_to_company_name", $model->billingCompany);
@@ -110,7 +110,7 @@ foreach ($model->orderItems as $item) {
     echo Html::hiddenInput("item_" . $i . "_code", "default");
     echo Html::hiddenInput("item_" . $i . "_name", isset($item->product->title) ? $item->product->title : $item->title);
     echo Html::hiddenInput("item_" . $i . "_sku", isset($item->product->isbn) ? $item->product->isbn : "-");
-    echo Html::hiddenInput("item_" . $i . "_quantity", $item->quantity);
+    echo Html::hiddenInput("item_" . $i . "_quantity", number_format($item->quantity, 0));
     $i++;
 }
 echo Html::hiddenInput("unsigned_field_names", $unsignedField

@@ -25,7 +25,7 @@ use yii\bootstrap\ActiveForm;
 //            'options' => [
 //                'tag' => 'div',
 //                'class' => 'pager-wrapper',
-//                'id' => 'pager-container',
+//                'id' => 'pager-container', 
 //            ],
 //            // Customzing CSS class for pager link
 //            'linkOptions' => ['class' => 'mylink'],
