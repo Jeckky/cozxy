@@ -77,8 +77,8 @@ class ProductsController extends MasterController {
         $icheck = Yii::$app->request->post('icheck');
         $productId = Yii::$app->request->post('productId');
         $sendDate = Yii::$app->request->post('sendDate');
-        //echo 'test : ' . $icheck;
-        // echo '<br>test : ' . $productId;
+        echo 'sendDate : ' . $sendDate;
+        echo '<br>productI : ' . $productId;
     }
 
 }
