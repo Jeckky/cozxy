@@ -641,7 +641,6 @@ $("#GuestaddItemToWishlist").on('click', function () {
     $("#modal-guest-add-item-to-wishlist").modal('show');
 });
 
-
 //$("#lateShippingCheck").on('click', function () {
 //    var sendDate = $(this).parent().parent().parent().parent().parent().find("sendDate");
 //    alert(sendDate.val());
@@ -686,7 +685,6 @@ $('#lateShippingCheck').on('ifUnchecked', function (event) {
             }
         }
     });
-
 });
 /*
  function validate() {
