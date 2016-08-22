@@ -34,7 +34,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             เลขที่ใบเสร็จรับเงิน : <?php echo $order->invoiceNo; ?><br>
             ชำระเงิน :
             <?php
-            echo $this->context->dateThai($order->paymentDateTime, 1);
+            echo isset($order->paymentDateTime) ? $this->context->dateThai($order->paymentDateTime, 1) : '-';
             ?>
         </td>
     </tr>
