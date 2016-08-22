@@ -659,9 +659,10 @@ $('#lateShippingCheck').on('ifChecked', function (event) {
         data: {'productId': productId, 'sendDate': sendDate},
         success: function (data)
         {
+            var JSONObject2 = JSON.parse(data);
             if (data.status)
             {
-
+                $('input[id=sendDate]').html('555');
             }
         }
     });
@@ -686,12 +687,3 @@ $('#lateShippingCheck').on('ifUnchecked', function (event) {
         }
     });
 });
-/*
- function validate() {
- if (remember.checked == 1) {
- alert("checked");
- } else {
- alert("You didn't check it! Let me check it for you.")
- }
- }
- */

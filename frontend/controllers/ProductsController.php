@@ -79,6 +79,11 @@ class ProductsController extends MasterController {
         $sendDate = Yii::$app->request->post('sendDate');
         echo 'sendDate : ' . $sendDate;
         echo '<br>productI : ' . $productId;
+        $model = \common\models\costfit\ProductShippingPrice::find()->where("productId = " . $productId . ' and  shippingTypeId =' . $sendDate)->one();
+        // $res["productId"] = $model->productId;
+        //echo '<pre>';
+        //print_r($model->attributes);
+        return json_encode($model->attributes);
     }
 
 }
