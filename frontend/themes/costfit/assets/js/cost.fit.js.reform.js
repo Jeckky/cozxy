@@ -534,19 +534,7 @@ $(".incr-btn-cart").on("click", function (e) {
 });
 
 function itemzero(items, title) {
-// If URL is http://www.somedomain.com/account/search?filter=a#top
 
-    // window.location.pathname // /account/search
-
-// For reference:
-
-    //window.location.host     // www.somedomain.com (includes port if there is one)
-    //window.location.hostname // www.somedomain.com
-    // window.location.hash     // #top
-    //window.location.href     // http://www.somedomain.com/account/search?filter=a#top
-    //window.location.port     // (empty string)
-    //window.location.protocol // http:
-    //window.location.search   // ?filter=a
     var item_cart = $('.total').html();
     var pathArray = window.location.pathname;
     var newURL = window.location.protocol + "//" + window.location.host + window.location.pathname;
@@ -659,11 +647,8 @@ $('#lateShippingCheck').on('ifChecked', function (event) {
         data: {'productId': productId, 'sendDate': sendDate},
         success: function (data)
         {
-            var JSONObject2 = JSON.parse(data);
-            if (data.status)
-            {
-                $('input[id=sendDate]').html('555');
-            }
+            //alert(data.shippingTypeId);
+            $("#sendDate").val(data.shippingTypeId);
         }
     });
 });
@@ -680,10 +665,7 @@ $('#lateShippingCheck').on('ifUnchecked', function (event) {
         data: {'productId': productId, 'sendDate': sendDate},
         success: function (data)
         {
-            if (data.status)
-            {
-
-            }
+            $("#sendDate").val(data.shippingTypeId);
         }
     });
 });
