@@ -649,18 +649,25 @@ $("#GuestaddItemToWishlist").on('click', function () {
 //});
 $('#lateShippingCheck').on('ifChecked', function (event) {
     var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
-    alert(sendDate.val());
+    //alert(sendDate.val());
+    var productId = $('input[id=productId]').val();
+    //alert(productId);
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: "products/get-product-shipping-price",
+        data: {'icheck': event.type, 'productId': productId},
+        success: function (data)
+        {
+            if (data.status)
+            {
+
+            }
+        }
+    });
 });
 
 $('#lateShippingCheck').on('ifUnchecked', function (event) {
     alert(event.type + ' callback');
+
 });
-/*
- function validate() {
- if (remember.checked == 1) {
- alert("checked");
- } else {
- alert("You didn't check it! Let me check it for you.")
- }
- }
- */

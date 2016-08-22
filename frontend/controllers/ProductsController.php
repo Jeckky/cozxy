@@ -73,4 +73,11 @@ class ProductsController extends MasterController {
         return \yii\helpers\Json::encode($res);
     }
 
+    public function actionGetProductShippingPrice() {
+        $icheck = Yii::$app->request->post('icheck');
+        $productId = Yii::$app->request->post('productId');
+        echo 'test : ' . $icheck;
+        echo '<br>test : ' . $productId;
+    }
+
 }
