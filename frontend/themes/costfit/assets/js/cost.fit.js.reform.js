@@ -656,7 +656,7 @@ $('#lateShippingCheck').on('ifChecked', function (event) {
         type: "POST",
         dataType: "JSON",
         url: "products/get-product-shipping-price",
-        data: {'icheck': event.type, 'productId': productId},
+        data: {'icheck': event.type, 'productId': productId, 'sendDate': sendDate},
         success: function (data)
         {
             if (data.status)
