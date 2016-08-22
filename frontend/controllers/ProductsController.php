@@ -47,7 +47,6 @@ class ProductsController extends MasterController {
      */
     public function actionIndex() {
 //return Yii::$app->getResponse()->redirect('register/login');
-
         $model = \common\models\costfit\Product::find()->where("productId =" . Yii::$app->request->get('productId'))->one();
         $fastDate = 99;
         $minDate = 99;
