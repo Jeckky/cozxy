@@ -45,6 +45,9 @@ class CostfitAsset extends AssetBundle {
         'mailer/mailer.js',
         'js/scripts.js',
         'js/cost.fit.js.reform.js',
+        'js/404.js',
+        'js/plugins/smoothscroll.js',
+        'js/plugins/jquery.placeholder.js',
     ];
 
 }

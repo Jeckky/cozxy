@@ -46,27 +46,30 @@ class ProductsController extends MasterController {
      * @return mixed
      */
     public function actionIndex() {
-//return Yii::$app->getResponse()->redirect('register/login');
-
-        $model = \common\models\costfit\Product::find()->where("productId =" . Yii::$app->request->get('productId'))->one();
-        $fastDate = 99;
-        $minDate = 99;
-        $productShippingDates = \common\models\costfit\ProductShippingPrice::find()->where("productId =" . Yii::$app->request->get('productId'))->all();
-        foreach ($productShippingDates as $productShippingDate) {
-            $shippingType = \common\models\costfit\ShippingType::find()->where("shippingTypeId=" . $productShippingDate->shippingTypeId)->one();
-            if (isset($shippingType)) {
-                if ($shippingType->date < $fastDate) {
-                    $fastDate = $shippingType->date;
-                    $fastId = $productShippingDate->shippingTypeId;
+        //return Yii::$app->getResponse()->redirect('register/login');
+        if (Yii::$app->request->get('productId') != '') {
+            $model = \common\models\costfit\Product::find()->where("productId =" . Yii::$app->request->get('productId'))->one();
+            $fastDate = 99;
+            $minDate = 99;
+            $productShippingDates = \common\models\costfit\ProductShippingPrice::find()->where("productId =" . Yii::$app->request->get('productId'))->all();
+            foreach ($productShippingDates as $productShippingDate) {
+                $shippingType = \common\models\costfit\ShippingType::find()->where("shippingTypeId=" . $productShippingDate->shippingTypeId)->one();
+                if (isset($shippingType)) {
+                    if ($shippingType->date < $fastDate) {
+                        $fastDate = $shippingType->date;
+                        $fastId = $productShippingDate->shippingTypeId;
+                    }
                 }
             }
+
+            $this->title = 'Cost.fit | Products';
+            $this->subTitle = $model->attributes['title'];
+
+            $this->subSubTitle = '';
+            return $this->render('products', ['model' => $model, 'fastDate' => $fastDate, 'fastId' => $fastId]);
+        } else {
+            return $this->render('@app/views/error/error');
         }
-
-        $this->title = 'Cost.fit | Products';
-        $this->subTitle = $model->attributes['title'];
-
-        $this->subSubTitle = '';
-        return $this->render('products', ['model' => $model, 'fastDate' => $fastDate, 'fastId' => $fastId]);
     }
 
     public function actionChangeOption() {
