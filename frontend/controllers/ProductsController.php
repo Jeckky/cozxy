@@ -69,7 +69,6 @@ class ProductsController extends MasterController {
                     }
                 }
 
-
                 $this->title = 'Cost.fit | Products';
                 $this->subTitle = $model->attributes['title'];
                 $this->subSubTitle = '';

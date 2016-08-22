@@ -73,8 +73,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 <div class="footer search-category-footer">
                                     <a href="<?php echo Yii::$app->homeUrl . "products?productId=" . $item->productId; ?>"><?= $item->title; ?></a>
                                     <!--<span>by Pirate3d</span>-->
-                                    <button class="btn btn-success">View</button>
-                                    <button class="btn btn-primary">Add to Cart</button>
+                                    <a href="<?php echo Yii::$app->homeUrl . "products?productId=" . $item->productId; ?>">View</a>
+                                    <a href="<?php echo Yii::$app->homeUrl . "products?productId=" . $item->productId; ?>"><button class="btn btn-primary">View</button></a>
                                 </div>
                             </div>
                         </div>
