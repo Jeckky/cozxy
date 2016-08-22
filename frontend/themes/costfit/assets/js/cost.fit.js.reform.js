@@ -669,7 +669,24 @@ $('#lateShippingCheck').on('ifChecked', function (event) {
 });
 
 $('#lateShippingCheck').on('ifUnchecked', function (event) {
-    alert(event.type + ' callback');
+    //alert(event.type + ' callback');
+    var productId = $('input[id=productId]').val();
+    var sendDate = $('input[id=sendDate]').val();
+    //alert(productId);
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: "products/get-product-shipping-price",
+        data: {'productId': productId, 'sendDate': sendDate},
+        success: function (data)
+        {
+            if (data.status)
+            {
+
+            }
+        }
+    });
+
 });
 /*
  function validate() {
