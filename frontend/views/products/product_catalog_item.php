@@ -73,7 +73,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <h1><?= $model->title; ?></h1>
     <?= Html::hiddenInput("productId", $model->productId, ['id' => 'productId']); ?>
 
-    <?= Html::hiddenInput("sendDate", 2, ['id' => 'sendDate']); ?>
+    <?= Html::hiddenInput("sendDate", $fastDate, ['id' => 'sendDate']); ?>
 
     <div class="form-group">
         <?php if (isset($model->productGroup)): ?>
@@ -183,7 +183,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     <label for="lateShippingCheck"> ต้องการส่งสินค้าราคาประหยัดอีก xxx  บาท (ส่งภายใน 15 วัน)</label>
                                 </div>-->
                 <div class="checkbox">
-                    <label><input type="checkbox" id="lateShippingCheck" name="lateShippingCheck">  ต้องการส่งสินค้าราคาประหยัดอีก xxx  บาท (ส่งภายใน 15 วัน)</label>
+                    <label><input type="checkbox" id="lateShippingCheck" name="lateShippingCheck">  ต้องการส่งสินค้าราคาประหยัดอีก 1,xxx  บาท (ส่งภายใน 15 วัน)</label>
                 </div>
             </div>
         </div>
