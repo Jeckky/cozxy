@@ -12,6 +12,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use \common\models\costfit\Order;
 
 /**
  * Checkout controller
@@ -244,6 +245,41 @@ class CheckoutController extends MasterController
         return $this->render("//e_payment/payment_confirmation", [
             'model' => $model,
             'ePayment' => $ePayment]);
+    }
+
+    public function actionResult()
+    {
+        $this->title = 'Cost.fit | Order Thank';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = 'Order Thank';
+        $res = [];
+//        echo print_r($_REQUEST, TRUE);
+        if (isset($_REQUEST) && $_REQUEST != array()) {
+            $order = Order::find()->where("orderNo='" . $_REQUEST["req_reference_number"] . "'")->one();
+            if ($_REQUEST["decision"] == "ACCEPT") {
+                $order->invoiceNo = Order::genInvNo($order);
+                $order->status = Order::ORDER_STATUS_E_PAYMENT_SUCCESS;
+                if ($order->save()) {
+                    if (Order::saveOrderPaymentHistory($order, $_REQUEST["decision"], $_POST["reason_code"])) {
+                        $res["status"] = TRUE;
+                        $res["invoiceNo"] = $order->invoiceNo;
+                        $res["message"] = \common\models\costfit\EPayment::getReasonCodeText($_POST["reason_code"]);
+                    }
+                }
+            } else if ($_REQUEST["decision"] == "REVIEW") {
+                $order->status = Order::ORDER_STATUS_E_PAYMENT_DRAFT;
+                $order->save();
+                $res["status"] = TRUE;
+                $res["message"] = \common\models\costfit\EPayment::getReasonCodeText($_POST["reason_code"]);
+            } else {
+                $order->status = Order::ORDER_STATUS_E_PAYMENT_DRAFT;
+                $order->save();
+                $res["status"] = FALSE;
+                $res["message"] = \common\models\costfit\EPayment::getReasonCodeText($_POST["reason_code"]);
+            }
+        }
+
+        return $this->render('payment_result', compact('res'));
     }
 
 }

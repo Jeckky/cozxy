@@ -27,7 +27,7 @@ return [
             'defaultRoute' => 'management',
         ],
         'auth' => [
-            'class' => 'backend\modules\auth\auth',
+            'class' => 'backend\modules\auth\Auth',
             'defaultRoute' => 'auth',
         ],
         'kt-generator' => [

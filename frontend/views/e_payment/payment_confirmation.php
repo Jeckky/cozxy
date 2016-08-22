@@ -5,7 +5,7 @@ include 'security.php';
 $this->registerJs("
 		setTimeout(function () {
 			$('#confirmationForm').submit();
-		}, 1000
+		}, 2000
 				);
 	", yii\web\View::POS_READY);
 ?>
@@ -65,14 +65,16 @@ foreach ($_REQUEST as $name => $value) {
 <?php // echo $ePayment->ePaymentUrl; ?>
 <form id="confirmationForm" action="<?php echo $ePayment->ePaymentUrl; ?>" method="post">
     <?php
+//    unset($params["_csrf"]);
     foreach ($params as $name => $value) {
         echo "<input type=\"hidden\" id=\"" . $name . "\" name=\"" . $name . "\" value=\"" . $value . "\"/>\n";
     }
 
     echo "<input type=\"hidden\" id=\"signature\" name=\"signature\" value=\"" . sign($params) . "\"/>\n";
+//    throw new yii\base\Exception(print_r($params, true));
     ?>
 
-    <!--<input type="submit" id="submit" value="submit" />-->
+<!--<input type="submit" id="submit" value="submit" />-->
 
 </form>
 
