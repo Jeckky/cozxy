@@ -91,7 +91,7 @@ class CheckoutController extends MasterController
                 ->all();
             }
 
-            $paymentMethods = \common\models\costfit\PaymentMethod::find()->all();
+            $paymentMethods = \common\models\costfit\PaymentMethod::find()->where("status = 1")->all();
 
             if (isset($_POST["Order"])) {
                 $this->redirect(['order-thank']);
