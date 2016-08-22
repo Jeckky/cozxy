@@ -639,12 +639,13 @@ $('#lateShippingCheck').on('ifChecked', function (event) {
     //alert(sendDate.val());
     var productId = $('input[id=productId]').val();
     var sendDate = $('input[id=sendDate]').val();
+    var fastId = $('input[id=fastId]').val();
     //alert(productId);
     $.ajax({
         type: "POST",
         dataType: "JSON",
         url: "products/get-product-shipping-price",
-        data: {'productId': productId, 'sendDate': sendDate},
+        data: {'productId': productId, 'sendDate': sendDate, 'fastId': fastId},
         success: function (data)
         {
             //alert(data.shippingTypeId);

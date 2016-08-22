@@ -79,7 +79,7 @@ class ProductsController extends MasterController {
         $this->subTitle = $model->attributes['title'];
 
         $this->subSubTitle = '';
-        return $this->render('products', ['model' => $model, 'fastDate' => $fastDate, 'minDate' => $minDate]);
+        return $this->render('products', ['model' => $model, 'fastDate' => $fastDate, 'minDate' => $minDate, 'fastId' => $fastId]);
     }
 
     public function actionChangeOption() {
@@ -100,10 +100,18 @@ class ProductsController extends MasterController {
         $icheck = Yii::$app->request->post('icheck');
         $productId = Yii::$app->request->post('productId');
         $sendDate = Yii::$app->request->post('sendDate');
+        $fastId = Yii::$app->request->post('fastId');
 
-//$model = \common\models\costfit\ProductShippingPrice::find()->where("productId = " . $productId . ' and  shippingTypeId !=' . $sendDate)->one();
-        $model = \common\models\costfit\ShippingType::find()->where("shippingTypeId =" . $sendDate . " order by date asc")->one();
-        return json_encode($model->attributes);
+        //$model = \common\models\costfit\ProductShippingPrice::find()->where("productId = " . $productId . ' and  shippingTypeId !=' . $sendDate)->one();
+        $model = \common\models\costfit\ShippingType::find()->where("shippingTypeId = " . $fastId . " and date != " . $sendDate . "  order by date asc")->one();
+
+        if (is_array($model)) {
+            return json_encode($model->attributes);
+        } else {
+            $model = array();
+            return json_encode($model);
+        }
+        //return json_encode($model->attributes);
     }
 
 }
