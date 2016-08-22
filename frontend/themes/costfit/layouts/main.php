@@ -22,8 +22,8 @@ AppAsset::register($this);
         <meta name="description" content="">
         <meta name="author" content="">
         <title>
-            <?= Html::encode(isset($this->context->titles) ? $this->context->title : "My Cost.fit") ?></title>
-            <?php $this->head() ?>
+            <?= Html::encode(isset($this->context->getTitleProduct()->attributes['title']) ? $this->context->getTitleProduct()->attributes['title'] . ' : Cost.fit' : "My Cost.fit") ?></title>
+        <?php $this->head() ?>
     </head>
     <body class="">
         <?php $this->beginBody() ?>
