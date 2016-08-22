@@ -48,25 +48,32 @@ class ProductsController extends MasterController {
     public function actionIndex() {
         //return Yii::$app->getResponse()->redirect('register/login');
         if (Yii::$app->request->get('productId') != '') {
+            $fastDate = '';
+            $fastId = '';
             $model = \common\models\costfit\Product::find()->where("productId =" . Yii::$app->request->get('productId'))->one();
             if (count($model) > 0) {
                 $fastDate = 99;
                 $minDate = 99;
                 $productShippingDates = \common\models\costfit\ProductShippingPrice::find()->where("productId =" . Yii::$app->request->get('productId'))->all();
+
                 foreach ($productShippingDates as $productShippingDate) {
                     $shippingType = \common\models\costfit\ShippingType::find()->where("shippingTypeId=" . $productShippingDate->shippingTypeId)->one();
-                    if (isset($shippingType)) {
+                    if (count($shippingType) > 0) {
                         if ($shippingType->date < $fastDate) {
                             $fastDate = $shippingType->date;
                             $fastId = $productShippingDate->shippingTypeId;
                         }
+                    } else {
+                        $fastDate = '';
+                        $fastId = '';
                     }
                 }
 
+
                 $this->title = 'Cost.fit | Products';
                 $this->subTitle = $model->attributes['title'];
-
                 $this->subSubTitle = '';
+
                 return $this->render('products', ['model' => $model, 'fastDate' => $fastDate, 'fastId' => $fastId]);
             } else {
                 return $this->render('@app/views/error/error');
