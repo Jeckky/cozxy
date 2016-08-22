@@ -259,6 +259,7 @@ class CheckoutController extends MasterController
             if ($_REQUEST["decision"] == "ACCEPT") {
                 $order->invoiceNo = Order::genInvNo($order);
                 $order->status = Order::ORDER_STATUS_E_PAYMENT_SUCCESS;
+                $history->paymentDateTime = new \yii\db\Expression('NOW()');
                 if ($order->save()) {
                     $res["status"] = 1;
                     $res["invoiceNo"] = $order->invoiceNo;
