@@ -51,7 +51,7 @@ class CartController extends MasterController {
                 throw new \yii\base\Exception("Can't Save Order");
             }
         }
-        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productId =" . $id)->one();
+        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productId =" . $id . " and sendDate=" . $_POST["sendDate"])->one();
         if (!isset($orderItem)) {
             $orderItem = new \common\models\costfit\OrderItem();
             $orderItem->quantity = $_POST["quantity"];
