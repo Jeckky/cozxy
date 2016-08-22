@@ -101,8 +101,8 @@ class ProductsController extends MasterController {
         $productId = Yii::$app->request->post('productId');
         $sendDate = Yii::$app->request->post('sendDate');
 
-        $model = \common\models\costfit\ProductShippingPrice::find()->where("productId = " . $productId . ' and  shippingTypeId =' . $sendDate)->one();
-
+//$model = \common\models\costfit\ProductShippingPrice::find()->where("productId = " . $productId . ' and  shippingTypeId !=' . $sendDate)->one();
+        $model = \common\models\costfit\ShippingType::find()->where("shippingTypeId =" . $sendDate)->one();
         return json_encode($model->attributes);
     }
 

@@ -648,7 +648,7 @@ $('#lateShippingCheck').on('ifChecked', function (event) {
         success: function (data)
         {
             //alert(data.shippingTypeId);
-            $("#sendDate").val(data.shippingTypeId);
+            $("#sendDate").val(data.date);
         }
     });
 });
@@ -665,7 +665,7 @@ $('#lateShippingCheck').on('ifUnchecked', function (event) {
         data: {'productId': productId, 'sendDate': sendDate},
         success: function (data)
         {
-            $("#sendDate").val(data.shippingTypeId);
+            $("#sendDate").val(data.date);
         }
     });
 });
