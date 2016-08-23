@@ -106,7 +106,7 @@ $MenuCategory = $this->context->actionMenuCategory();
 </ul>
 </li>
 <?php if (!Yii::$app->user->isGuest): ?>
-    <li class="has-submenu pill-right"><a href="#"><?= (Yii::$app->user->identity->email); ?></a>
+    <li class="has-submenu pill-right"><a href="#">ACCOUNT</a>
         <ul class="submenu">
             <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
             <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
