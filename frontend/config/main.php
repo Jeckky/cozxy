@@ -47,6 +47,8 @@ return [
                 'payment/print-pay-in/<hash>/<title>' => 'payment/print-pay-in',
                 'profile/shipping-address/<hash>' => 'profile/shipping-address',
                 'profile/billings-address/<hash>' => 'profile/billings-address',
+                'checkout/confirm-checkout/<hash>' => 'checkout/confirm-checkout',
+                'checkout/confirmation/<hash>' => 'checkout/confirmation',
             ],
         ],
         /**
