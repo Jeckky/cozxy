@@ -16,7 +16,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <a class="google" href="#"><i class="fa fa-google-plus-square"></i></a>
                     <a class="twitter" href="#"><i class="fa fa-twitter-square"></i></a>-->
                     <?= common\yii2\authclient\widgets\AuthChoice::widget(['baseAuthUrl' => ['site/auth']]) ?>
-                </div>
+                </div> 
             </div>
             <div class="modal-body">
                 <?php $loginForm = new common\models\LoginForm(); ?>
