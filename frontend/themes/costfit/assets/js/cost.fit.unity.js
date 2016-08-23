@@ -26,6 +26,8 @@ $(document).ready(function (e) {
     /*Shopping Cart Dropdown
      *******************************************/
     //Deleting Items
+
+
     $(document).on('click', '.cart-dropdown .delete', function () {
         var $target = $(this).parent().parent();
         var $positions = $('.cart-dropdown .item');
