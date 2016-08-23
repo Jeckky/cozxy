@@ -547,6 +547,8 @@ function itemzero(items, title) {
             //newURL = window.location.protocol + "//" + window.location.host + 'cart';
             if (window.location.host == 'localhost') {
                 window.location = window.location.protocol + "//" + window.location.host + '/cost.fit-frontend/cart';
+            } else if (window.location.host == '192.168.100.8') {
+                window.location = window.location.protocol + "//" + window.location.host + '/cost.fit/frontend/web/cart';
             } else {
                 window.location = window.location.protocol + "//" + window.location.host + '/cart';
             }
@@ -559,6 +561,8 @@ function itemzero(items, title) {
             //window.location = 'checkout';
             if (window.location.host == 'localhost') {
                 window.location = window.location.protocol + "//" + window.location.host + '/cost.fit-frontend/checkout';
+            } else if (window.location.host == '192.168.100.8') {
+                window.location = window.location.protocol + "//" + window.location.host + '/cost.fit/frontend/web/checkout';
             } else {
                 window.location = window.location.protocol + "//" + window.location.host + '/checkout';
             }
