@@ -11,7 +11,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </div>
             <div class="price-label"><?= isset($model->productOnePrice) ? $model->productOnePrice->price : "Not Set"; ?> ฿</div>
         </div>
-        <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?= $model->productId ?>" style="min-height: 210px; max-height: 210px;">
+        <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId]) ?>" style="min-height: 210px; max-height: 210px;">
             <?php if (isset($model->productImages[0]->image) && !empty($model->productImages[0]->image)): ?>
                 <img src="<?php echo Yii::$app->homeUrl . $model->productImages[0]->image; ?>" alt="1"/>
             <?php else: ?>
@@ -20,9 +20,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <span class="tile-overlay"></span>
         </a>
         <div class="footer search-category-footer">
-            <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?= $model->productId ?>"><?= $model->title; ?></a>
+            <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId]) ?>"><?= $model->title; ?></a>
             <span><?//= $model->shortDescription; ?></span>
-            <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?= $model->productId ?>"><button class="btn btn-primary" id="addItemToCart"><i class="fa fa-search"></i>View</button></a>
+            <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId]) ?>"><button class="btn btn-primary" id="addItemToCart"><i class="fa fa-search"></i>View</button></a>
         </div>
     </div>
 </div>

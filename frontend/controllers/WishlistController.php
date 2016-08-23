@@ -27,6 +27,7 @@ class WishlistController extends MasterController {
      */
     public function actionIndex() {
         //return Yii::$app->getResponse()->redirect('register/login');
+
         $this->layout = 'content_right';
         $this->title = 'Cost.fit | wishlist';
         $this->subTitle = 'Wishlist';

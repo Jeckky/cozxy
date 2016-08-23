@@ -45,17 +45,23 @@ class ProductsController extends MasterController {
      *
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex($hash) {
 
         //return Yii::$app->getResponse()->redirect('register/login');
-        if (Yii::$app->request->get('productId') != '') {
+        $k = base64_decode(base64_decode($hash));
+        $params = \common\models\ModelMaster::decodeParams($hash);
+
+        $productId = $params['productId'];
+
+        if ($productId != '') {
+
             $fastDate = '';
             $fastId = '';
-            $model = \common\models\costfit\Product::find()->where("productId =" . Yii::$app->request->get('productId'))->one();
+            $model = \common\models\costfit\Product::find()->where("productId =" . $productId)->one();
             if (count($model) > 0) {
                 $fastDate = 99;
                 $minDate = 99;
-                $productShippingDates = \common\models\costfit\ProductShippingPrice::find()->where("productId =" . Yii::$app->request->get('productId'))->all();
+                $productShippingDates = \common\models\costfit\ProductShippingPrice::find()->where("productId =" . $productId)->all();
 
                 foreach ($productShippingDates as $productShippingDate) {
                     $shippingType = \common\models\costfit\ShippingType::find()->where("shippingTypeId=" . $productShippingDate->shippingTypeId)->one();
