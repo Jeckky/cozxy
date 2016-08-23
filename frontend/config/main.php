@@ -48,6 +48,8 @@ return [
                 'profile/shipping-address/<hash>' => 'profile/shipping-address',
                 'profile/billings-address/<hash>' => 'profile/billings-address',
                 'products/<hash>' => 'products/index',
+                'checkout/confirm-checkout/<hash>' => 'checkout/confirm-checkout',
+                'checkout/confirmation/<hash>' => 'checkout/confirmation',
             ],
         ],
         /**

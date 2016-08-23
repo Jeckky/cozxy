@@ -161,7 +161,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <input id="quantity" class="form-control" type="text" value="<?= ($model->findMaxQuantity($model->productId) == 0) ? 0 : 1 ?>">
             <a class="incr-btn" href="#" data-toggle="popover" data-content="Max Quantity For this Item" data-placement="bottom">+</a>
         </div>
-        <a class="btn btn-primary btn-sm" id="addItemToCart" href="#" <?= ($model->findMaxQuantity($model->productId) <= 0) ? " disabled" : " " ?>><i class="icon-shopping-cart"></i>Add to cart</a>
+        <a class="btn btn-primary btn-sm" id="addItemToCartUnity" href="#" <?= ($model->findMaxQuantity($model->productId) <= 0) ? " disabled" : " " ?>><i class="icon-shopping-cart"></i>Add to cart</a>
         <a class="btn btn-black btn-sm" <?php if (\Yii::$app->user->isGuest == 1) { ?> id="GuestaddItemToWishlist" <?php } else { ?> id="addItemToWishlist" <?php } ?> href="#" <?= (\common\models\costfit\Wishlist::isExistingList($model->productId)) ? " disabled" : " " ?>><i class="icon-heart"></i>Add to wishlist</a>
     </div>
    <!-- <p class="p-style2"><?//= strip_tags($model->shortDescription); ?></p>-->
