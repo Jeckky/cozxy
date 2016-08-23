@@ -111,21 +111,24 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     ],
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
-                        'template' => '{view}',
+                        'template' => '{view}{history}',
                         'buttons' => [
                             'view' => function($url, $model) {
                                 return Html::a('<i class="fa fa-eye" aria-hidden="true"></i>', Yii::$app->homeUrl . "order/order/view/" . $model->encodeParams(['id' => $model->orderId]), [
-                                    'title' => Yii::t('app', ' View Order No :' . $model->orderId),]);
+                                            'title' => Yii::t('app', ' View Order No :' . $model->orderId),]);
                             },
-                            'items' => function($url, $model) {
-                                return Html::a('<br><u>Items</u>', ['/order/order-item', 'orderId' => $model->orderId], [
-                                    'title' => Yii::t('app', 'Change today\'s lists'),]);
+                                    'history' => function($url, $model) {
+                                $paymentHistory = \common\models\costfit\OrderPaymentHistory::find()->where("orderId=" . $model->orderId)->one();
+                                if (isset($paymentHistory)) {
+                                    return Html::a('<br><u>Payment History</u>', ['payment-history', 'orderId' => $model->orderId], [
+                                                'title' => Yii::t('app', 'history\'s lists'),]);
+                                }
                             },]
-                    ],
-                ],
-            ]);
-            ?>
-        </div>
-    </div>
-    <?php Pjax::end(); ?>
+                            ],
+                        ],
+                    ]);
+                    ?>
+                </div>
+            </div>
+            <?php Pjax::end(); ?>
 </div>

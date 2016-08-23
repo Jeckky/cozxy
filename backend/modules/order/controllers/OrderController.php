@@ -8,15 +8,14 @@ use yii\data\ActiveDataProvider;
 use backend\controllers\BackendMasterController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\costfit\OrderPaymentHistory;
 
 /**
  * OrderController implements the CRUD actions for Order model.
  */
-class OrderController extends OrderMasterController
-{
+class OrderController extends OrderMasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -31,14 +30,13 @@ class OrderController extends OrderMasterController
      * Lists all Order models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $dataProvider = new ActiveDataProvider([
-            'query' => Order::find()->where("status = 2")->orderBy("updateDateTime DESC"),
+            'query' => Order::find()->where("status >" . Order::ORDER_STATUS_REGISTER_USER . "")->orderBy("updateDateTime DESC"),
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -47,12 +45,11 @@ class OrderController extends OrderMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($hash)
-    {
+    public function actionView($hash) {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
         $order = \common\models\costfit\Order::find()->where('orderId = "' . $params['id'] . '" ')
-        ->one();
+                ->one();
         return $this->render('@frontend/views/profile/purchase_order', compact('order'));
     }
 
@@ -61,8 +58,7 @@ class OrderController extends OrderMasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new Order();
         if (isset($_POST["Order"])) {
             $model->attributes = $_POST["Order"];
@@ -72,7 +68,7 @@ class OrderController extends OrderMasterController
             }
         }
         return $this->render('create', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -82,8 +78,7 @@ class OrderController extends OrderMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
         if (isset($_POST["Order"])) {
             $model->attributes = $_POST["Order"];
@@ -96,7 +91,7 @@ class OrderController extends OrderMasterController
             }
         }
         return $this->render('update', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -106,8 +101,7 @@ class OrderController extends OrderMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -120,8 +114,7 @@ class OrderController extends OrderMasterController
      * @return Order the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = Order::findOne($id)) !== null) {
             return $model;
         } else {
@@ -129,8 +122,7 @@ class OrderController extends OrderMasterController
         }
     }
 
-    public function actionPrintPurchaseOrder($hash, $title)
-    {
+    public function actionPrintPurchaseOrder($hash, $title) {
 
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
@@ -150,7 +142,7 @@ class OrderController extends OrderMasterController
         //echo $orderId;
         if (isset($params['orderId'])) {
             $order = \common\models\costfit\Order::find()->where('orderId = "' . $params['orderId'] . '" ')
-            ->one();
+                    ->one();
         } else {
             return $this->redirect(['profile/order']);
         }
@@ -160,8 +152,7 @@ class OrderController extends OrderMasterController
         $this->actionMpdfDocument($content);
     }
 
-    public function actionPrintPayIn()
-    {
+    public function actionPrintPayIn() {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
@@ -172,6 +163,23 @@ class OrderController extends OrderMasterController
         $this->subSubTitle = "My Profile";
 
         return $this->render('payment');
+    }
+
+    public function actionPaymentHistory() {
+        //  throw new \yii\base\Exception($_GET['orderId']);
+        if (isset($_GET['orderId'])) {
+            $order = Order::find()->where("orderId='" . $_GET['orderId'] . "'")->one();
+            $dataProvider = new ActiveDataProvider([
+                'query' => OrderPaymentHistory::find()->where("orderId='" . Yii::$app->request->get('orderId') . "'")->orderBy("updateDateTime DESC"),
+            ]);
+
+            return $this->render('payment', [
+                        'dataProvider' => $dataProvider,
+                        'order' => $order
+            ]);
+        } else {
+            return $this->render('@app/views/error/error');
+        }
     }
 
 }
