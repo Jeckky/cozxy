@@ -526,12 +526,13 @@ class Order extends \common\models\costfit\master\OrderMaster
         return $this->hasOne(\common\models\dbworld\Countries::className(), ['countryId' => 'shippingCountryId']);
     }
 
-    public static function saveOrderPaymentHistory($order, $decision, $reasonCode)
+    public static function saveOrderPaymentHistory($order, $decision, $reasonCode, $userIp)
     {
         $history = new OrderPaymentHistory();
         $history->orderId = $order->orderId;
         $history->decision = $decision;
         $history->reasonCode = $reasonCode;
+        $history->userIp = $userIp;
         $history->reason = EPayment::getReasonCodeText($reasonCode);
         $history->createDateTime = new \yii\db\Expression('NOW()');
         if ($history->save()) {
