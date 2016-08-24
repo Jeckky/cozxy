@@ -81,7 +81,7 @@ $(document).ready(function (e) {
         $.ajax({
             type: "POST",
             dataType: "JSON",
-            url: "cart/delete-cart-item?id=" + orderItemId,
+            url: "../cart/delete-cart-item?id=" + orderItemId,
             //data: {quantity: $itemQnty},
             success: function (data)
             {
@@ -124,7 +124,7 @@ $(document).ready(function (e) {
             $.ajax({
                 type: "POST",
                 dataType: "JSON",
-                url: "cart/delete-wishlist",
+                url: "../cart/delete-wishlist",
                 data: {productId: pId},
                 success: function (data)
                 {

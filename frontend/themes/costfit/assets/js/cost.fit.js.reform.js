@@ -493,7 +493,7 @@ $(".incr-btn-cart").on("click", function (e) {
     $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: "cart/change-quantity-item-and-save",
+        url: "../cart/change-quantity-item-and-save",
         data: {productId: pId, quantity: newVal},
         success: function (data)
         {
@@ -576,7 +576,7 @@ $addToWishlistBtn.click(function () {
     $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: "cart/add-wishlist",
+        url: "../cart/add-wishlist",
         data: {productId: $pId},
         success: function (data)
         {
@@ -607,7 +607,7 @@ $(".addWishlistItemToCart").click(function () {
     $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: "cart/add-to-cart?id=" + $itemId,
+        url: "../cart/add-to-cart?id=" + $itemId,
         data: {quantity: $itemQnty},
         success: function (data)
         {
