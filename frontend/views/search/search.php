@@ -9,7 +9,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 
 <div class="row">
-    <!-- ตัวอย่างตรีม 
+    <!-- ตัวอย่างตรีม
     <div class="col-lg-4 col-md-6 col-sm-12">
         <div class="tile">
             <div class="badges">
@@ -31,11 +31,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     echo \yii\widgets\ListView::widget([
         'dataProvider' => $products,
         'itemView' => function ($model, $key, $index, $widget) {
-            return $this->render('_product', ['model' => $model]);
+            return $this->render('_product', ['model' => $model->product]);
         },
-                'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
 //            'layout'=>"{summary}{pager}{items}"
-                'layout' => "{items}",
+        'layout' => "{items}",
 //        'pager' => [
 //            'firstPageLabel' => 'first',
 //            'lastPageLabel' => 'last',
@@ -58,8 +58,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 //            'firstPageCssClass' => 'myfirst',
 //            'lastPageCssClass' => 'mylast',
 //        ],
-            ])
-            ?>
+    ])
+    ?>
 
 </div>
 <!--Pagination-->
