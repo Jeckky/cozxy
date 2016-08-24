@@ -111,7 +111,7 @@ $MenuCategory = $this->context->actionMenuCategory();
 </li>
 <?php if (!Yii::$app->user->isGuest): ?>
     <li class="has-submenu pill-right"><span class="sorting" id="sortingAccount"><a href="#" class="sorting">Account</a></span>
-        <ul class="submenu">
+        <ul class="submenu" id="submenu-sorting-account">
             <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
             <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
             <!--<li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/payment">Payment Methods</a></li>

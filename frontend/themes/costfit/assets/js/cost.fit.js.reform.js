@@ -676,8 +676,17 @@ $('#lateShippingCheck').on('ifUnchecked', function (event) {
     });
 });
 
-$("#sortingAccount").on('click', function () {
-    alert('test');
-    //$("#modal-guest-add-item-to-wishlist").modal('show');
+$(".sorting").on('click', function () {
+
+    var sorted_id = $(this).parent().attr('id');
+    //alert(address_id);
+    if (sorted_id == 'sortingAccount') {
+        $("#sortingAccount").attr('id', 'sortedAccount');
+        $("#submenu-sorting-account").hide();
+    } else if (sorted_id == 'sortedAccount') {
+        $("#sortedAccount").attr('id', 'sortingAccount');
+        $("#submenu-sorting-account").show();
+    }
 });
+
 
