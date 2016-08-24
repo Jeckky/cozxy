@@ -78,7 +78,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </div>
                     <div class="price-label"><?php echo $product[0]->price; ?></div>
                     <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product[0]->encodeParams(['productId' => $product[0]->productId]) ?>">
-                        <img src="<?php echo Yii::$app->homeUrl . $product[0]->productImages[0]->imageThumbnail1; ?>" alt="1"/>
+                        <?php
+                        if (isset($product[0]->productImages[0]->imageThumbnail1)) {
+                            ?>
+                            <img src="<?php echo Yii::$app->homeUrl . $product[0]->productImages[0]->imageThumbnail1; ?>" alt="1"/>
+                            <?php
+                        } else {
+                            ?>
+                            <img src="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1"/>
+                            <?php
+                        }
+                        ?>
                         <span class="tile-overlay"></span>
                     </a>
                     <div class="footer">
@@ -97,7 +107,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <div class="price-label"><?php echo $product[1]->price; ?></div>
                     <div class="price-label old-price"><?php echo $product[1]->price; ?></div>
                     <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product[1]->encodeParams(['productId' => $product[1]->productId]) ?>">
-                        <img src="<?php echo Yii::$app->homeUrl . $product[1]->productImages[0]->imageThumbnail1; ?>" alt="1"/>
+                        <?php
+                        if (isset($product[1]->productImages[0]->imageThumbnail1)) {
+                            ?>
+                            <img src="<?php echo Yii::$app->homeUrl . $product[1]->productImages[0]->imageThumbnail1; ?>" alt="1"/>
+                            <?php
+                        } else {
+                            ?>
+                            <img src="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1"/>
+                            <?php
+                        }
+                        ?>
                         <span class="tile-overlay"></span>
                     </a>
                     <div class="footer">
@@ -115,7 +135,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </div>
                     <div class="price-label"><?php echo $product[2]->price; ?></div>
                     <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product[2]->encodeParams(['productId' => $product[2]->productId]) ?>">
-                        <img src="<?php echo Yii::$app->homeUrl . $product[2]->productImages[0]->imageThumbnail1; ?>" alt="1"/>
+                        <?php
+                        if (isset($product[2]->productImages[0]->imageThumbnail1)) {
+                            ?>
+                            <img src="<?php echo Yii::$app->homeUrl . $product[2]->productImages[0]->imageThumbnail1; ?>" alt="1"/>
+                            <?php
+                        } else {
+                            ?>
+                            <img src="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1"/>
+                            <?php
+                        }
+                        ?>
                         <span class="tile-overlay"></span>
                     </a>
                     <div class="footer">
@@ -131,7 +161,18 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
                     <div class="price-label"><?php echo $product[3]->price; ?></div>
                     <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product[3]->encodeParams(['productId' => $product[3]->productId]) ?>">
-                        <img src="<?php echo Yii::$app->homeUrl . $product[3]->productImages[0]->imageThumbnail1; ?>" alt="1"/>
+                        <?php
+                        if (isset($product[2]->productImages[0]->imageThumbnail1)) {
+                            ?>
+                            <img src="<?php echo Yii::$app->homeUrl . $product[3]->productImages[0]->imageThumbnail1; ?>" alt="1"/>
+                            <?php
+                        } else {
+                            ?>
+                            <img src="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1"/>
+                            <?php
+                        }
+                        ?>
+
                         <span class="tile-overlay"></span>
                     </a>
                     <div class="footer">
