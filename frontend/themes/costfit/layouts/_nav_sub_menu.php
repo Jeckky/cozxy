@@ -16,6 +16,11 @@ $MenuCategory = $this->context->actionMenuCategory();
         min-height: 500px;
         overflow-y: scroll;
     }*/
+    .sorting {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0px 0 0px 0px;
+    }
 
 </style>
 <!-- Show For Mobile -->
@@ -51,7 +56,7 @@ $MenuCategory = $this->context->actionMenuCategory();
     }
     ?>
     <?php if (!Yii::$app->user->isGuest): ?>
-        <li class="has-submenu pill-right"><a href="#"><?= (Yii::$app->user->identity->email); ?><i class="fa fa-chevron-down"></i></a>
+        <li class="has-submenu pill-right"><a href="#">Account<i class="fa fa-chevron-down"></i></a>
             <ul class="submenu">
                 <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile" style="font-size: 12px;">My Profile</a></li>
                 <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order" style="font-size: 12px;">Order History</a></li>
@@ -63,6 +68,7 @@ $MenuCategory = $this->context->actionMenuCategory();
     <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>coupon">Super special offers</a></li><!--ข้อเสนอพิเศษจากพาร์ทเนอร์-->
     <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works">How Works</a></li>
 </ul>
+<!-- Show For Desktop -->
 <!-- Show For Desktop -->
 <ul class="catalog hidden-xs" id="catalog_new" style="width: 100%;">
     <li class="has-submenu pull-left"><a href="#">Categories<i class="fa fa-chevron-down open"></i></a>
@@ -106,7 +112,7 @@ $MenuCategory = $this->context->actionMenuCategory();
 </ul>
 </li>
 <?php if (!Yii::$app->user->isGuest): ?>
-    <li class="has-submenu pill-right"><a href="#">ACCOUNT</a>
+    <li class="has-submenu pill-right"><span class="sorting" id="sorting-account"><a href="#" class="sorting">Account</a></span>
         <ul class="submenu">
             <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
             <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
