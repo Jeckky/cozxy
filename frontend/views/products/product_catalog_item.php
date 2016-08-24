@@ -92,7 +92,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             $.ajax({
                                 type: \"POST\",
                                 dataType: \"JSON\",
-                                url: \"products/change-option\",
+                                url: \"change-option/\",
                                 data: {productId: $(this).val()},
                                 success: function (data)
                                 {

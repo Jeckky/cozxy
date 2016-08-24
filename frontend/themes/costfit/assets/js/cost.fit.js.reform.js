@@ -475,6 +475,7 @@ var x = "Total Height: " + screen.height;
 
 //Add(+/-) Button Number Incrementers
 $(".incr-btn-cart").on("click", function (e) {
+    event.preventDefault();
     var $button = $(this);
     var oldValue = $button.parent().find("input").val();
     var pId = $button.parent().parent().find("#productId").val();
@@ -493,7 +494,7 @@ $(".incr-btn-cart").on("click", function (e) {
     $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: "cart/change-quantity-item-and-save",
+        url: "../cart/change-quantity-item-and-save",
         data: {productId: pId, quantity: newVal},
         success: function (data)
         {
@@ -574,11 +575,12 @@ function itemzero(items, title) {
 }
 
 $addToWishlistBtn.click(function () {
+    event.preventDefault();
     var $pId = $(this).parent().parent().find('#productId').val();
     $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: "cart/add-wishlist",
+        url: "../cart/add-wishlist",
         data: {productId: $pId},
         success: function (data)
         {
@@ -596,6 +598,7 @@ $addToWishlistBtn.click(function () {
 });
 
 $(".addWishlistItemToCart").click(function () {
+    event.preventDefault();
     $addedToCartMessage.removeClass('visible');
     var $itemName = $(this).parent().parent().find('.title').html();
     var $itemId = $(this).parent().parent().find('#productId').val();
@@ -609,7 +612,7 @@ $(".addWishlistItemToCart").click(function () {
     $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: "cart/add-to-cart?id=" + $itemId,
+        url: "../cart/add-to-cart?id=" + $itemId,
         data: {quantity: $itemQnty},
         success: function (data)
         {

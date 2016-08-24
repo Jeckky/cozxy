@@ -536,6 +536,7 @@ $(document).ready(function (e) {
 
     //Add(+/-) Button Number Incrementers
     $(".incr-btn").on("click", function (e) {
+        event.preventDefault();
         var $button = $(this);
         var oldValue = $button.parent().find("input").val();
         var newVal = 1
@@ -553,7 +554,7 @@ $(document).ready(function (e) {
         $.ajax({
             type: "POST",
             dataType: "JSON",
-            url: "cart/change-quantity-item",
+            url: "../cart/change-quantity-item",
             data: {productId: $("#productId").val(), quantity: newVal},
             success: function (data)
             {
@@ -606,7 +607,7 @@ $(document).ready(function (e) {
         $.ajax({
             type: "POST",
             dataType: "JSON",
-            url: "cart/add-to-cart?id=" + $itemId,
+            url: "../cart/add-to-cart?id=" + $itemId,
             data: {quantity: $itemQnty, sendDate: $sendDate},
             success: function (data)
             {

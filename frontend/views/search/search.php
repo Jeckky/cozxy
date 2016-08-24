@@ -3,9 +3,30 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+
+$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
+$baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 
 <div class="row">
+    <!-- ตัวอย่างตรีม 
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="tile">
+            <div class="badges">
+                <span class="sale">Sale</span>
+            </div>
+            <div class="price-label">715,00 $</div>
+            <a href="#">
+                <img src="<?//php echo $directoryAsset; ?>/img/catalog/1.png" alt="1">
+                <span class="tile-overlay"></span>
+            </a>
+            <div class="footer">
+                <a href="#">The Buccaneer</a>
+                <span>by Pirate3d</span>
+                <button class="btn btn-primary">Add to Cart</button>
+            </div>
+        </div>
+    </div>-->
     <?php
     echo \yii\widgets\ListView::widget([
         'dataProvider' => $products,
@@ -25,7 +46,7 @@ use yii\bootstrap\ActiveForm;
 //            'options' => [
 //                'tag' => 'div',
 //                'class' => 'pager-wrapper',
-//                'id' => 'pager-container', 
+//                'id' => 'pager-container',
 //            ],
 //            // Customzing CSS class for pager link
 //            'linkOptions' => ['class' => 'mylink'],
