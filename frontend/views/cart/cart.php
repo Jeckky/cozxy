@@ -59,9 +59,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--Shopping Cart-->
 <section class="shopping-cart">
     <!--Shopping Cart Message-->
-
-
-
     <div class="container">
         <?php
         if (isset($this->params['cart']['orderMessage'])):
@@ -100,10 +97,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <tr class="item first" id="item<?= $item['orderItemId'] ?>">
                             <?= Html::hiddenInput("productId", $item["productId"], ['id' => 'productId']); ?>
                             <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?php echo $item["productId"]; ?>"><img src="<?php echo $item["image"]; ?>" alt="Lorem ipsum" width="152" height="119"/></a></td>
-                            <td class="name" style="width:40%">
+                            <td class="name" style="width:30%">
                                 <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?php echo $item["productId"]; ?>" style="font-size:14px;word-wrap: break-word; "><?= $item["title"] ?></a>
                             </td>
-                            <td class="price"><?= $item["price"] . " ฿" ?></td>
+                            <td>
+                                <span style="text-decoration: line-through; color:#ccc; font-weight: bold;"> <?= "xx ฿" ?></span> <br>
+                                <span class="price" style="font-weight: bold;"><?= $item["price"] . " ฿" ?></span> <br>
+                                <span style="color: red;font-size: 13px;">You Saved ??.00 ฿</span><br>
+                                <span style="font-size: 13px;">จัดส่งภายใน ?? วัน </span>
+                            </td>
                             <td class="qnt-count">
                                 <a class="incr-btn-cart incr-btn" href="#">-</a>
                                 <input class="quantity form-control" style="font-size: 14px" type="text" value="<?= $item["qty"] ?>">
@@ -124,17 +126,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <form class="cart-sidebar">
                     <div class="cart-totals">
                         <?php echo $this->render('@app/views/cart/cart_totals_right'); ?>
-
                         <!-- coupon -->
                         <?php echo $this->render('@app/views/coupon/coupon'); ?>
-
                         <!--<input type="button" class="btn btn-primary btn-sm btn-block" name="update-cart" value="Update shopping cart" onclick="proceed('update_cart')">-->
                         <?php if (!Yii::$app->user->isGuest) { ?>
                             <input type="button" class="btn btn-black btn-block" name="to-checkout" value="Proceed to checkout" onclick="proceed('to_checkout')">
                         <?php } else { ?>
                             <input type="button" class="btn btn-black btn-block" name="to-checkout" value="Proceed to checkout" onclick="proceed('to_guest')">
                         <?php } ?>
-
                     </div>
 
                     <a class="panel-toggle hide" href="#calc-shipping"><h3>Calculate shipping</h3></a>
