@@ -94,7 +94,7 @@ return [
                     'clientSecret' => 'd4503ebb0f9b512e58d73fee8134853f',
                 ],
                 'google' => [
-//                    'class' => 'yii\authclient\clients\Google',
+                    //'class' => 'yii\authclient\clients\Google',
                     'class' => 'yii\authclient\clients\GoogleOAuth',
                     'clientId' => '500504362756-3n51v4ic4aqak5vnomg8qmmar340no72.apps.googleusercontent.com',
                     'clientSecret' => 'tBiQFFFNp6DPojoTmd1oN_Ro',
