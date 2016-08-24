@@ -68,7 +68,7 @@ $MenuCategory = $this->context->actionMenuCategory();
     <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>coupon">Super special offers</a></li><!--ข้อเสนอพิเศษจากพาร์ทเนอร์-->
     <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works">How Works</a></li>
 </ul>
-<!-- Show For Desktop -->
+
 <!-- Show For Desktop -->
 <ul class="catalog hidden-xs" id="catalog_new" style="width: 100%;">
     <li class="has-submenu pull-left"><a href="#">Categories<i class="fa fa-chevron-down open"></i></a>
@@ -99,11 +99,9 @@ $MenuCategory = $this->context->actionMenuCategory();
                                 <li class="col-md-12" style="float: left; width: 100%; width: 50%; "><a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub_parent->createTitle() ?>/<?= $params ?>"><?php echo '&nbsp;-&nbsp;' . $items_sub_parent->title; ?></a></li>
                             <?php } ?>
                     </li>
-
                     <?php
                 }
                 ?>
-
             </ul>
         </li>
         <?php
@@ -112,7 +110,7 @@ $MenuCategory = $this->context->actionMenuCategory();
 </ul>
 </li>
 <?php if (!Yii::$app->user->isGuest): ?>
-    <li class="has-submenu pill-right"><span class="sorting" id="sorting-account"><a href="#" class="sorting">Account</a></span>
+    <li class="has-submenu pill-right"><span class="sorting" id="sortingAccount"><a href="#" class="sorting">Account</a></span>
         <ul class="submenu">
             <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
             <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>

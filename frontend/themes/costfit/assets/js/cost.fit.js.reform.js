@@ -54,7 +54,6 @@ $('#see-more-search-cost-fit').on('click', function () {
 
 // Create date 7/7/2016 By Pew , ReFrom By :
 
-
 $('.checkout_select_address_billing').on('click', function () {
 //alert('Id Name : ' + $(this).find('input').attr('id'));
 // alert('Value : ' + $(this).find('input').val());
@@ -66,6 +65,7 @@ $('.checkout_select_address_billing').on('click', function () {
 $('.updateBillingCancel').on('click', function () {
     $("#billingUpdate").addClass("hide");
 });
+
 $('.checkout_update_address_shipping').on('click', function () {
 //alert('Id Name : ' + $(this).find('input').attr('id'));
 //alert('Value : ' + $(this).find('input').val());
@@ -675,3 +675,9 @@ $('#lateShippingCheck').on('ifUnchecked', function (event) {
         }
     });
 });
+
+$("#sortingAccount").on('click', function () {
+    alert('test');
+    //$("#modal-guest-add-item-to-wishlist").modal('show');
+});
+

@@ -124,6 +124,21 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </div>
         </div>
     </div>
+    <div class="buttons group products-buttons-group" style="margin-top: -18px;">
+        <div class="form-group">
+            <label for="shopping-cart" class="col-sm-1" style="padding-right: 0px;  padding-left: 0px;  margin-bottom: 0px;">
+                <img  src="<?php echo Yii::$app->homeUrl; ?>images/icon/1.png" alt="thumb" class="img-responsive"/>
+            </label>
+            <div class="col-sm-11 text-left discountPrice" style="padding: 0px; margin-left: 0px; margin-top: 15px;">
+                &nbsp;ส่งสินค้าภายใน 7 วัน
+            </div>
+            <div class="form-group  col-lg-12" style="margin-bottom: 5px;">
+                <div class="checkbox">
+                    <label><input type="checkbox" id="lateShippingCheck" name="lateShippingCheck">  ต้องการส่งสินค้าราคาประหยัดอีก 1,xxx  บาท (ส่งภายใน 15 วัน)</label>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="buttons group">
         <?php
         $i = 0;
@@ -165,40 +180,27 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <a class="btn btn-black btn-sm" <?php if (\Yii::$app->user->isGuest == 1) { ?> id="GuestaddItemToWishlist" <?php } else { ?> id="addItemToWishlist" <?php } ?> href="#" <?= (\common\models\costfit\Wishlist::isExistingList($model->productId)) ? " disabled" : " " ?>><i class="icon-heart"></i>Add to wishlist</a>
     </div>
    <!-- <p class="p-style2"><?//= strip_tags($model->shortDescription); ?></p>-->
-    <div class="panel panel-warning">
+    <!--<div class="panel panel-warning">
         <div class="panel-heading">
             <h3 class="panel-title">ส่งสินค้า</h3>
         </div>
         <div class="panel-body">
             <div class="form-group col-lg-12" style="margin-bottom:5px;">
                 <label for="shopping-cart" class="col-sm-1" style="padding-right: 0px;  padding-left: 0px;  margin-bottom: 0px;">
-                    <img  src="<?php echo Yii::$app->homeUrl; ?>images/icon/1.png" alt="thumb" class="img-responsive"/>
+                    <img  src="<?//php echo Yii::$app->homeUrl; ?>images/icon/1.png" alt="thumb" class="img-responsive"/>
                 </label>
                 <div class="col-sm-11 text-left" style="padding: 0px; margin-left: 0px; margin-top: 15px;">
                     &nbsp;ส่งสินค้าภายใน 7 วัน
                 </div>
             </div>
             <div class="form-group  col-lg-12">
-                <!--                <div class="checkbox form-group">
-                                    <input id="lateShippingCheck" name="lateShippingCheck" type="checkbox" />
-                                    <label for="lateShippingCheck"> ต้องการส่งสินค้าราคาประหยัดอีก xxx  บาท (ส่งภายใน 15 วัน)</label>
-                                </div>-->
                 <div class="checkbox">
                     <label><input type="checkbox" id="lateShippingCheck" name="lateShippingCheck">  ต้องการส่งสินค้าราคาประหยัดอีก 1,xxx  บาท (ส่งภายใน 15 วัน)</label>
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
     <div class="row">
-        <!--
-        <div class="col-lg-4 col-md-4 col-sm-5">
-            <h3>Tell friends</h3>
-            <div class="social-links">
-                <a href="#"><i class="fa fa-tumblr-square"></i></a>
-                <a href="#"><i class="fa fa-pinterest-square"></i></a>
-                <a href="#"><i class="fa fa-facebook-square"></i></a>
-            </div>
-        </div>-->
         <div class="col-lg-8 col-md-8 col-sm-7">
             <h3>Tags</h3>
             <div class="tags">&nbsp;
@@ -214,27 +216,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </div>
         </div>
     </div>
-    <!--
-    <div class="promo-labels">
-        <div data-content="This is a place for the unique commercial offer. Make it known."><i class="fa fa-truck"></i>Save for </div>
-        <div data-content="This is a place for the unique commercial offer. Make it known."><i class="fa fa-truck"></i>Free delivery</div>
-        <div data-content="This is a place for the unique commercial offer. Make it known."><i class="fa fa-shield"></i>Safe Buy</div>
-    </div>
-
-    <div class="buttons group">
-        <h3>Select Fast Delive</h3>
-        <div class="qnt-count">
-            <a class="incr-btn" href="#">-</a>
-            <input id="sent-s" class="form-control" type="text" value="<?= ($model->findMaxQuantity($model->productId) == 0) ? 0 : 1 ?>">
-            <a class="incr-btn" href="#" data-toggle="popover" data-content="Max Quantity For this Item" data-placement="bottom">+</a>
-        </div>
-     </div>
-    -->
 </div>
-
-
-
-
 
 <!--Product Gallery-->
 <div class="col-lg-6 col-md-6" id="productImage">
