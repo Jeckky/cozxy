@@ -17,6 +17,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         background: url(../img/forms/radio.png) no-repeat 0 0;
         border: 10px;
     }
+
+    .edit_select checkout_update_address_shipping > .checkout_update_address_shipping{
+        border: 10px #000 solid;
+    }
 </style>
 <section class="checkout">
     <div class="container">

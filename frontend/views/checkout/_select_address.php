@@ -17,6 +17,7 @@ use kartik\depdrop\DepDrop;
         height: 203px;
         overflow-y: auto;
     }
+
 </style>
 
 <?php if (!Yii::$app->user->isGuest): ?>
@@ -59,8 +60,9 @@ use kartik\depdrop\DepDrop;
                                                     ?> value="<?php echo $value->addressId; ?>"> เลือก
                                                 </label>
 
-                                                <label class="btn btn-sm btn-warning edit_select checkout_update_address<?= ($type == 1) ? "_billing" : "_shipping" ?>" style="width: 46%;">
-                                                    <input type="radio" id="edit-form-biiling-checkout" name="edit-form-biiling-checkout" value="<?php echo $value->addressId; ?>">แก้ไข<span class="pp-label"></span>
+                                                <label class="btn btn-sm btn-warning edit_select checkout_update_address<?= ($type == 1) ? "_billing" : "_shipping" ?>" style="width: 40%;">
+                                                    <input type="hidden" id="edit-form-biiling-checkout" name="edit-form-biiling-checkout" value="<?php echo $value->addressId; ?>">
+                                                    <!--<input type="radio" id="edit-form-biiling-checkout" name="edit-form-biiling-checkout" value="<?//php echo $value->addressId; ?>">-->แก้ไข<span class="pp-label"></span>
                                                 </label>
 
                                             </div>

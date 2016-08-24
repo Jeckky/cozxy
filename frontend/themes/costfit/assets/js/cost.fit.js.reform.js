@@ -70,6 +70,7 @@ $('.checkout_update_address_shipping').on('click', function () {
 //alert('Id Name : ' + $(this).find('input').attr('id'));
 //alert('Value : ' + $(this).find('input').val());
     var edit_shipping = $(this).find('input').val();
+    //alert(edit_shipping);
     $('.actionFormEditShipping').show();
     $('.actionFormBillingNew').hide();
     $('.actionFormEditBilling').hide();
@@ -701,4 +702,4 @@ $(".sorting").on('click', function () {
     }
 });
 
-
+ 
