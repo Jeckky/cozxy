@@ -129,13 +129,16 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <label for="shopping-cart" class="col-sm-1" style="padding-right: 0px;  padding-left: 0px;  margin-bottom: 0px;">
                 <img  src="<?php echo Yii::$app->homeUrl; ?>images/icon/1.png" alt="thumb" class="img-responsive"/>
             </label>
-            <div class="col-sm-11 text-left discountPrice" style="padding: 0px; margin-left: 0px; margin-top: 15px;">
-                &nbsp;ส่งสินค้าภายใน 7 วัน
+            <div id="choose" class="col-sm-11 text-left " style="padding: 0px; margin-left: 0px; margin-top: 15px;">
+                &nbsp;ส่งสินค้าภายใน <?php echo Product::getShippingDate($model->productId, 1); ?> วัน
+            </div>
+            <div id="unchoose" class="col-sm-11 text-left " style="padding: 0px; margin-left: 0px; margin-top: 15px;text-decoration: line-through;color:#bbb;display: none;">
+                &nbsp;ส่งสินค้าภายใน <?php echo Product::getShippingDate($model->productId, 1); ?> วัน
             </div>
             <div class="form-group  col-lg-12" style="margin-bottom: 5px;">
                 <div class="checkbox">
                     <label style="color: red;">
-                        <input type="checkbox" id="lateShippingCheck" name="lateShippingCheck">  ต้องการส่งสินค้าราคาประหยัดอีก ???  บาท (ส่งภายใน 15 วัน)
+                        <input type="checkbox" id="lateShippingCheck" name="lateShippingCheck">  ต้องการส่งสินค้าราคาประหยัดอีก ???  บาท (ส่งภายใน <?php echo Product::getShippingDate($model->productId, 2); ?> วัน)
                     </label>
                 </div>
             </div>

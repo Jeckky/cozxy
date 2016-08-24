@@ -176,4 +176,41 @@ class Product extends \common\models\costfit\master\ProductMaster {
         return $fastId;
     }
 
+    public static function getShippingDate($productId, $type) {
+        $fastDate = 99;
+        $productShippingDates = ProductShippingPrice::find()->where("productId =" . $productId)->all();
+        foreach ($productShippingDates as $productShippingDate) {
+            $shippingType = ShippingType::find()->where("shippingTypeId=" . $productShippingDate->shippingTypeId)->one();
+            if (count($shippingType) > 0) {
+                if ($shippingType->date < $fastDate) {
+                    $fastDate = $shippingType->date;
+                    $fastId = $productShippingDate->shippingTypeId;
+                }
+            } else {
+                $fastDate = '';
+                $fastId = '';
+            }
+        }
+        $minDate = 99;
+        $findMinDates = ProductShippingPrice::find()->where("productId =" . $productId . " and shippingTypeId!=" . $fastId)->all();
+        if (isset($findMinDates)) {
+            foreach ($findMinDates as $findMinDate) {
+                $model = ShippingType::find()->where("shippingTypeId=" . $findMinDate->shippingTypeId)->one();
+                if (isset($model)) {
+                    if ($model->date < $minDate) {
+                        $minDate = $model->date;
+                    }
+                }
+            }
+        } else {
+            $minDate = $fastId;
+        }
+
+        if ($type == 1) {
+            return $fastDate;
+        } else {
+            return $minDate;
+        }
+    }
+
 }

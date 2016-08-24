@@ -669,6 +669,8 @@ $('#lateShippingCheck').on('ifChecked', function (event) {
         {
             // alert(productId);
             $("#fastId").val(data);
+            $("#choose").hide();
+            $("#unchoose").show();
         }
 
     });
@@ -685,6 +687,8 @@ $('#lateShippingCheck').on('ifUnchecked', function (event) {
         {
             //  alert(data);
             $("#fastId").val(data);
+            $("#choose").show();
+            $("#unchoose").hide();
         }
     });
 });
