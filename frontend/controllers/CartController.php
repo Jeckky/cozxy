@@ -234,7 +234,7 @@ class CartController extends MasterController
         $product = new \common\models\costfit\Product();
         $price = $product->calProductPrice($_POST["productId"], $_POST["quantity"], 1);
 
-        $maxQuantity = $product->findMaxQuantity($_POST["productId"]);
+        $maxQuantity = $product->findMaxQuantity($_POST["productId"], 0);
 //        throw new \yii\base\Exception("max quantity=" . $maxQuantity);
         if ($_POST["quantity"] <= $maxQuantity) {
             if (isset($price)) {

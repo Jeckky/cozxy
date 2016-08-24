@@ -494,7 +494,7 @@ $(".incr-btn-cart").on("click", function (e) {
     $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: "../cart/change-quantity-item-and-save",
+        url: "cart/change-quantity-item-and-save",
         data: {productId: pId, quantity: newVal},
         success: function (data)
         {
