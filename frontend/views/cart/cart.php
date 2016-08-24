@@ -56,6 +56,25 @@ use common\models\ModelMaster;
         clear: both;
         height: 0
     }
+    .incr-btn-cart {
+        display: inline-block;
+        width: 20px;
+        height: 40px;
+        border-radius: 0;
+        background: #ff9016;
+        color: #fff;
+        text-align: center;
+        font-size: 1.375em;
+        line-height: 34px;
+        transition: background .3s
+    }
+    .incr-btn-cart {
+        background: #03a9f4;
+    }
+    incr-btn-cart:hover {
+        color: #fff;
+        background: #0286c2;
+    }
 </style>
 
 <!--Shopping Cart-->
