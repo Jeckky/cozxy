@@ -21,6 +21,7 @@ $MenuCategory = $this->context->actionMenuCategory();
         vertical-align: middle;
         margin: 0px 0 0px 0px;
     }
+
     .menu .catalog li .submenu li {
         width: 230px;
         border-top: 1px solid #fff;
@@ -113,8 +114,10 @@ $MenuCategory = $this->context->actionMenuCategory();
 </ul>
 </li>
 <?php if (!Yii::$app->user->isGuest): ?>
-    <li class="has-submenu pill-right"><span class="sorting" id="sortingAccount"><a href="#" class="sorting">Account</a></span>
-        <ul class="submenu" id="submenu-sorting-account">
+    <li class="has-submenu pill-right">
+        <span class="sorting" id="sortingAccount" style="padding: 1px 1px 1px 1px;">
+            <a href="#" class="sorting" style="padding: 1px 1px 1px 1px;">Account</a></span>
+        <ul class="submenu" id="submenu-sorting-account" style="margin-top: -1px;">
             <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
             <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
             <!--<li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/payment">Payment Methods</a></li>
