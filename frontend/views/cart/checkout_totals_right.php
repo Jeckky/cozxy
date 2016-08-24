@@ -2,14 +2,14 @@
     <tr>
         <th>Product</th>
     </tr>
-    <?php foreach ($this->params['cart']['items'] as $item) {
-        ?>
-        <tr>
-            <td class="name border"><?= $item['code'] ?><span>x<?= $item['qty'] ?></span></td>
-            <td class="price border"><?= $item['total'] ?> ฿</td>
-        </tr>
-        <?php
-    }
+    <?php //foreach ($this->params['cart']['items'] as $item) {
+    ?>
+        <!--<tr>
+            <td class="name border"><?//= $item['code'] ?><span>x<?//= $item['qty'] ?></span></td>
+            <td class="price border"><?//= $item['total'] ?> ฿</td>
+        </tr>-->
+    <?php
+    //}
     ?>
     <tr>
         <td class="th">Cart subtotal</td>
