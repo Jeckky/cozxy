@@ -158,8 +158,22 @@ class Product extends \common\models\costfit\master\ProductMaster {
         return $this->hasOne(ProductImage::className(), ['productId' => 'productId']);
     }
 
-    public static function getShippingTypeId($type = 1) {
-        
+    public static function getShippingTypeId($productId) {
+        $fastDate = 99;
+        $productShippingDates = ProductShippingPrice::find()->where("productId =" . $productId)->all();
+        foreach ($productShippingDates as $productShippingDate) {
+            $shippingType = ShippingType::find()->where("shippingTypeId=" . $productShippingDate->shippingTypeId)->one();
+            if (count($shippingType) > 0) {
+                if ($shippingType->date < $fastDate) {
+                    $fastDate = $shippingType->date;
+                    $fastId = $productShippingDate->shippingTypeId;
+                }
+            } else {
+                $fastDate = '';
+                $fastId = '';
+            }
+        }
+        return $fastId;
     }
 
 }

@@ -2,18 +2,34 @@
     <tr>
         <th>Product</th>
     </tr>
-    <?php foreach ($this->params['cart']['items'] as $item) {
-        ?>
-        <tr>
-            <td class="name border"><?= $item['code'] ?><span>x<?= $item['qty'] ?></span></td>
-            <td class="price border"><?= $item['total'] ?> ฿</td>
-        </tr>
-        <?php
-    }
+    <?php //foreach ($this->params['cart']['items'] as $item) {
+    ?>
+        <!--<tr>
+            <td class="name border"><?//= $item['code'] ?><span>x<?//= $item['qty'] ?></span></td>
+            <td class="price border"><?//= $item['total'] ?> ฿</td>
+        </tr>-->
+    <?php
+    //}
     ?>
     <tr>
         <td class="th">Cart subtotal</td>
         <td class="price"><?= number_format($this->params['cart']['total'], 2) ?> ฿</td>
+    </tr>
+    <tr>
+        <td>Price Subtotal</td>
+        <td class="total align-r">xxx ฿</td>
+    </tr>
+    <tr style="color: red;">
+        <td>Extra savings</td>
+        <td class="total align-r">xxx ฿</td>
+    </tr>
+    <tr>
+        <td>Shipping Free</td>
+        <td class="total align-r">xxx ฿</td>
+    </tr>
+    <tr>
+        <td>Estimated Tax</td>
+        <td class="total align-r">xxx ฿</td>
     </tr>
     <?php if (isset($this->params['cart']['discount'])): ?>
         <tr>

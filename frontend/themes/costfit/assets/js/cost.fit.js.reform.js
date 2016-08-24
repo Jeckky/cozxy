@@ -640,38 +640,34 @@ $("#GuestaddItemToWishlist").on('click', function () {
 //});
 $('#lateShippingCheck').on('ifChecked', function (event) {
     //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
-    //alert(sendDate.val());
     var productId = $('input[id=productId]').val();
-    var sendDate = $('input[id=sendDate]').val();
     var fastId = $('input[id=fastId]').val();
     //alert(productId);
     $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: "products/get-product-shipping-price",
-        data: {'productId': productId, 'sendDate': sendDate, 'fastId': fastId},
+        url: "../products/get-product-shipping-price/",
+        data: {'productId': productId, 'fastId': fastId},
         success: function (data)
         {
-            //alert(data.shippingTypeId);
-            $("#sendDate").val(data);
+            // alert(productId);
+            $("#fastId").val(data);
         }
+
     });
 });
 
 $('#lateShippingCheck').on('ifUnchecked', function (event) {
-    //alert(event.type + ' callback');
     var productId = $('input[id=productId]').val();
-    var sendDate = $('input[id=sendDate]').val();
-    var fastId = $('input[id=fastId]').val();
-    //alert(productId);
     $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: "products/get-defult-product-shipping-price",
-        data: {'productId': productId, 'sendDate': sendDate, 'fastId': fastId},
+        url: "../products/get-defult-product-shipping-price/",
+        data: {'productId': productId},
         success: function (data)
         {
-            $("#sendDate").val(data);
+            //  alert(data);
+            $("#fastId").val(data);
         }
     });
 });

@@ -12,10 +12,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="price-label"><?= isset($model->productOnePrice) ? $model->productOnePrice->price : "Not Set"; ?> ฿</div>
         </div>
         <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId]) ?>" style="min-height: 210px; max-height: 210px;">
+
             <?php if (isset($model->productImages[0]->imageThumbnail1) && !empty($model->productImages[0]->imageThumbnail1)): ?>
+
                 <img src="<?php echo Yii::$app->homeUrl . $model->productImages[0]->imageThumbnail1; ?>" alt="1"/>
             <?php else: ?>
-                <img src="<?php echo $baseUrl; ?>/images/ProductImage/15.jpg" alt="1"/>
+                <img src="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1"/>
             <?php endif; ?>
             <span class="tile-overlay"></span>
         </a>
