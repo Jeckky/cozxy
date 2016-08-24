@@ -90,12 +90,13 @@ class SiteController extends MasterController
         $bottomContent = Content::find()->where("contentGroupId='" . $bottomIndexGroup->contentGroupId . "'")->all();
         $lastIndexGroup = ContentGroup::find()->where("lower(title)='lastIndex'")->one();
         $lastIndexContent = Content::find()->where("contentGroupId='" . $lastIndexGroup->contentGroupId . "' order by contentId DESC limit 0,1")->one();
-        $product = \common\models\costfit\search\Product::find()->where("RAND()")->all();
-        $product2 = \common\models\costfit\search\Product::find()->where("RAND()")->all();
+        $product = \common\models\costfit\search\Product::bestSellers();
+        $product2 = \common\models\costfit\search\Product::itemOnSales();
+        $hotProducts = \common\models\costfit\search\Product::hotProducts();
         $saveCat = Category::findAllSaveCategory();
         $popularCat = Category::findAllPopularCategory();
         //$footer = "adfadf";
-        return $this->render('index', compact('saveCat', 'popularCat', 'bannerGroup', 'topOneContent', 'bottomContent', 'lastIndexContent', 'product', 'product2', 'footer'));
+        return $this->render('index', compact('saveCat', 'popularCat', 'bannerGroup', 'topOneContent', 'bottomContent', 'lastIndexContent', 'product', 'product2', 'footer', 'hotProduct'));
     }
 
     /**

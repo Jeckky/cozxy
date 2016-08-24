@@ -12,6 +12,7 @@ use common\models\costfit\Product as ProductModel;
  */
 class Product extends ProductModel
 {
+
     /**
      * @inheritdoc
      */
@@ -74,9 +75,25 @@ class Product extends ProductModel
         ]);
 
         $query->andFilterWhere(['like', 'code', $this->code])
-            ->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        ->andFilterWhere(['like', 'title', $this->title])
+        ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }
+
+    public static function bestSellers()
+    {
+        return \common\models\costfit\search\Product::find()->where("RAND()")->all();
+    }
+
+    public static function itemOnSales()
+    {
+        return \common\models\costfit\search\Product::find()->where("RAND()")->all();
+    }
+
+    public static function hotProducts()
+    {
+        return \common\models\costfit\search\Product::find()->where("RAND()")->all();
+    }
+
 }

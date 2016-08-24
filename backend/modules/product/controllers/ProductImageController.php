@@ -72,7 +72,7 @@ class ProductImageController extends ProductMasterController
 
             if (isset($imageObj) && !empty($imageObj)) {
                 $imageObjImage = Yii::$app->image->load($imageObj->tempName);
-//                throw news \yii\base\Exception(print_r($imageObj, true));
+//                throw news \yii\base\Exception(print_r($imageObjImage, true));
                 $folderName = "ProductImage"; //  Size 553 x 484
                 $folderThumbnail1 = "thumbnail1"; // Size 356 x 390
                 $folderThumbnail2 = "thumbnail2"; // Size 137 x 130
@@ -112,6 +112,7 @@ class ProductImageController extends ProductMasterController
             if ($model->save()) {
                 if (isset($imageObj)) {
                     //Image Size 553 x 484 field image
+
                     $imageObjImage->resize(553, 484);
                     $imageObjImage->save($urlFile);
                     //Image Size 553 x 484 field image
@@ -122,7 +123,7 @@ class ProductImageController extends ProductMasterController
                     //Image Size 356 x 390 field imageThumbnail1
                     //
                     //Image Size 137 x 130  field  imageThumbnail2
-                    $imageObjImage->resize(137, 137);
+                    $imageObjImage->resize(137, 130);
                     $imageObjImage->save($urlFile2);
                     //Image Size 137 x 130  field  imageThumbnail2
                 }
@@ -150,6 +151,7 @@ class ProductImageController extends ProductMasterController
 
             if (isset($imageObj) && !empty($imageObj)) {
                 $imageObjImage = Yii::$app->image->load($imageObj->tempName);
+//                throw new \yii\base\Exception(print_r($imageObjImage, true));
                 $folderName = "ProductImage"; //  Size 553 x 484
                 $folderThumbnail1 = "thumbnail1"; // Size 356 x 390
                 $folderThumbnail2 = "thumbnail2"; // Size 137 x 130
@@ -201,6 +203,9 @@ class ProductImageController extends ProductMasterController
                 if (isset($imageObj)) {
                     //Image Size 553 x 484 field image
                     $imageObjImage->resize(553, 484);
+//                    $imageObjImage->crop(500, 500);
+//                    $watermark = Yii::$app->image->load(\Yii::$app->basePath . "/web/images/ProductImage/Q0mGZ5bBQ5.png");
+//                    $imageObjImage->watermark($watermark, NULL, NULL, $opacity = 30);
                     $imageObjImage->save($urlFile);
                     //Image Size 553 x 484 field image
                     //
@@ -210,7 +215,7 @@ class ProductImageController extends ProductMasterController
                     //Image Size 356 x 390 field imageThumbnail1
                     //
                     //Image Size 137 x 130  field  imageThumbnail2
-                    $imageObjImage->resize(137, 137);
+                    $imageObjImage->resize(137, 130);
                     $imageObjImage->save($urlFile2);
                     //Image Size 137 x 130  field  imageThumbnail2
                 }
