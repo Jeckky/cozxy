@@ -125,7 +125,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                         </div>
                                                     </div>
                                                     <?php if (isset($products->productImages[0]->imageThumbnail1) && !empty($products->productImages[0]->imageThumbnail1)): ?>
-                                                        <img src="<?php echo Yii::$app->homeUrl . $products->productImages[0]->image; ?>" alt="1"/>
+                                                        <img src="<?php echo Yii::$app->homeUrl . $products->productImages[0]->imageThumbnail1; ?>" alt="1"/>
                                                     <?php else: ?>
                                                         <img src="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1"/>
                                                     <?php endif; ?>
@@ -157,10 +157,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <?php if (isset($item->productImages[0]->image) && !empty($item->productImages[0]->image)): ?>
-                                                        <img src="<?php echo Yii::$app->homeUrl . $item->productImages[0]->image; ?>" alt="1"/>
+                                                    <?php if (isset($item->productImages[0]->imageThumbnail1) && !empty($item->productImages[0]->imageThumbnail1)): ?>
+                                                        <img src="<?php echo Yii::$app->homeUrl . $item->productImages[0]->imageThumbnail1; ?>" alt="1"/>
                                                     <?php else: ?>
-                                                        <img src="<?php echo $baseUrl; ?>/images/ProductImage/15.jpg" alt="1"/>
+                                                        <img src="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1"/>
                                                     <?php endif; ?>
                                                 </a>
                                             </div>
