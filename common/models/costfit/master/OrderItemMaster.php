@@ -13,6 +13,7 @@ use Yii;
     * @property string $productGroupId
     * @property string $brandId
     * @property string $categoryId
+    * @property string $priceOnePiece
     * @property string $quantity
     * @property string $price
     * @property string $total
@@ -40,9 +41,9 @@ return 'order_item';
 public function rules()
 {
 return [
-            [['orderId', 'productId', 'quantity', 'price', 'createDateTime'], 'required'],
+            [['orderId', 'productId', 'priceOnePiece', 'quantity', 'price', 'createDateTime'], 'required'],
             [['orderId', 'productId', 'productGroupId', 'brandId', 'categoryId', 'sendDate', 'status'], 'integer'],
-            [['quantity', 'price', 'total'], 'number'],
+            [['priceOnePiece', 'quantity', 'price', 'total'], 'number'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['orderId'], 'exist', 'skipOnError' => true, 'targetClass' => OrderMaster::className(), 'targetAttribute' => ['orderId' => 'orderId']],
             [['productId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductMaster::className(), 'targetAttribute' => ['productId' => 'productId']],
@@ -61,6 +62,7 @@ return [
     'productGroupId' => Yii::t('order_item', 'Product Group ID'),
     'brandId' => Yii::t('order_item', 'Brand ID'),
     'categoryId' => Yii::t('order_item', 'Category ID'),
+    'priceOnePiece' => Yii::t('order_item', 'Price One Piece'),
     'quantity' => Yii::t('order_item', 'Quantity'),
     'price' => Yii::t('order_item', 'Price'),
     'total' => Yii::t('order_item', 'Total'),
