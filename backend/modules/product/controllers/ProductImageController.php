@@ -69,8 +69,9 @@ class ProductImageController extends ProductMasterController
             $model->attributes = $_POST["ProductImage"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $imageObj = \yii\web\UploadedFile::getInstanceByName("ProductImage[image]");
-            $imageObjImage = Yii::$app->image->load($imageObj->tempName);
+
             if (isset($imageObj) && !empty($imageObj)) {
+                $imageObjImage = Yii::$app->image->load($imageObj->tempName);
 //                throw news \yii\base\Exception(print_r($imageObj, true));
                 $folderName = "ProductImage"; //  Size 553 x 484
                 $folderThumbnail1 = "thumbnail1"; // Size 356 x 390
@@ -146,8 +147,9 @@ class ProductImageController extends ProductMasterController
             $model->attributes = $_POST["ProductImage"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             $imageObj = \yii\web\UploadedFile::getInstanceByName("ProductImage[image]");
-            $imageObjImage = Yii::$app->image->load($imageObj->tempName);
+
             if (isset($imageObj) && !empty($imageObj)) {
+                $imageObjImage = Yii::$app->image->load($imageObj->tempName);
                 $folderName = "ProductImage"; //  Size 553 x 484
                 $folderThumbnail1 = "thumbnail1"; // Size 356 x 390
                 $folderThumbnail2 = "thumbnail2"; // Size 137 x 130

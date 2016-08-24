@@ -43,6 +43,8 @@ use yii\jui\DatePicker;
 
         <?= (isset($model->image) && !empty($model->image)) ? Html::hiddenInput((new ReflectionClass($model))->getShortName() . '[imageOld]', $model->image) : ''; ?>
 
+        <?= $form->field($model, 'status')->checkbox()->label("") ?>
+
         <?= $form->field($model, 'parentId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'), ['prompt' => '-- Select Parent --']) ?>
 
         <div class="form-group">
