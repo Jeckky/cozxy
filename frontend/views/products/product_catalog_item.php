@@ -135,7 +135,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="form-group  col-lg-12" style="margin-bottom: 5px;">
                 <div class="checkbox">
                     <label style="color: red;">
-                        <input type="checkbox" id="lateShippingCheck" name="lateShippingCheck">  ต้องการส่งสินค้าราคาประหยัดอีก 1,xxx  บาท (ส่งภายใน 15 วัน)
+                        <input type="checkbox" id="lateShippingCheck" name="lateShippingCheck">  ต้องการส่งสินค้าราคาประหยัดอีก ???  บาท (ส่งภายใน 15 วัน)
                     </label>
                 </div>
             </div>
@@ -158,11 +158,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <tr class="item first">
                             <td class="thumb"><?= number_format($pp->getSavePrice(), 2) . " ฿"; ?></td>
                         </tr>
-                        <tr class="item first">
+                        <!--<tr class="item first">
                             <td class="name">
                                 <small>off your order</small>
                             </td>
-                        </tr>
+                        </tr>-->
                     </tbody>
                 </table>
             </div>
