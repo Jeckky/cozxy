@@ -78,7 +78,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </div>
                     <div class="price-label"><?php echo $product[0]->price; ?></div>
                     <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product[0]->encodeParams(['productId' => $product[0]->productId]) ?>">
-                        <img src="<?php echo Yii::$app->homeUrl . $product[0]->productImages[0]->image; ?>" alt="1"/>
+                        <img src="<?php echo Yii::$app->homeUrl . $product[0]->productImages[0]->imageThumbnail1; ?>" alt="1"/>
                         <span class="tile-overlay"></span>
                     </a>
                     <div class="footer">

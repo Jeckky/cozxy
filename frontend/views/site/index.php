@@ -124,7 +124,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <?php if (isset($products->productImages[0]->image) && !empty($products->productImages[0]->image)): ?>
+                                                    <?php if (isset($products->productImages[0]->image) && !empty($products->productImages[0]->imageThumbnail1)): ?>
                                                         <img src="<?php echo Yii::$app->homeUrl . $products->productImages[0]->image; ?>" alt="1"/>
                                                     <?php else: ?>
                                                         <img src="<?php echo $baseUrl; ?>/images/ProductImage/15.jpg" alt="1"/>
