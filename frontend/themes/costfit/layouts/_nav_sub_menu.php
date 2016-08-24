@@ -21,7 +21,10 @@ $MenuCategory = $this->context->actionMenuCategory();
         vertical-align: middle;
         margin: 0px 0 0px 0px;
     }
-
+    .menu .catalog li .submenu li {
+        width: 230px;
+        border-top: 1px solid #fff;
+    }
 </style>
 <!-- Show For Mobile -->
 <ul class="catalog hidden-sm hidden-md  hidden-lg" style="max-width: 100%;" >
@@ -72,13 +75,13 @@ $MenuCategory = $this->context->actionMenuCategory();
 <!-- Show For Desktop -->
 <ul class="catalog hidden-xs" id="catalog_new" style="width: 100%;">
     <li class="has-submenu pull-left"><a href="#">Categories<i class="fa fa-chevron-down open"></i></a>
-        <ul class="submenu" >
+        <ul class="submenu">
             <?php
             // $list_menu_category = $this->Me
             foreach ($MenuCategory as $items) {
                 $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items->categoryId]);
                 ?>
-                <li class="has-submenu" style="">
+                <li class="has-submenu">
                     <a href="#" style="font-size: 14px;">
                         <?php echo $items->title; ?> <i class="fa fa-chevron-down"></i>
                     </a>
