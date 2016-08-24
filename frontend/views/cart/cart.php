@@ -103,17 +103,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             <td>
                                 <span style="text-decoration: line-through; color:#ccc; font-weight: bold;"> <?= $item["priceOnePiece"] ?> ฿</span> <br>
                                 <span class="price" style="font-weight: bold;"><?= $item["price"] . " ฿" ?></span> <br>
-                                <?php if ($item["priceOnePiece"] - $item["price"] > 0): ?>
-                                    <span style="color: red;font-size: 13px;">You Saved <?= number_format($item["priceOnePiece"] - $item["price"]) ?> ฿</span><br>
-                                <?php endif; ?>
+                                <span class="savings <?= ($item["priceOnePiece"] - $item["price"] == 0) ? " hide" : " " ?>" style="color: red;font-size: 13px;">You Saved -<?= number_format($item["priceOnePiece"] - $item["price"]) ?> ฿</span><br>
                                 <?php if (isset($item["sendDateNoDate"])): ?>
                                     <span style="font-size: 13px;">จัดส่งภายใน <?= $item["sendDateNoDate"] ?>  วัน </span>
                                 <?php endif; ?>
                             </td>
                             <td class="qnt-count">
-                                <a class="incr-btn-cart incr-btn" href="#">-</a>
+                                <a class="incr-btn-cart " href="#">-</a>
                                 <input class="quantity form-control" style="font-size: 14px" type="text" value="<?= $item["qty"] ?>">
-                                <a class="incr-btn-cart incr-btn" href="#">+</a>
+                                <a class="incr-btn-cart" href="#">+</a>
                             </td>
                             <td class="total"><?= $item["qty"] * $item["price"] . " ฿" ?></td>
                             <td class="delete"><i class="icon-delete"></i><?= yii\helpers\Html::hiddenInput("orderItemId", $item['orderItemId'], ['id' => 'orderItemId']); ?></td>

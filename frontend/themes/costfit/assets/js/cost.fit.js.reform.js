@@ -515,6 +515,8 @@ $(".incr-btn-cart").on("click", function (e) {
                 $button.parent().find("input").val(newVal);
                 $('.cart-dropdown table').find('tbody').find("#item" + data.orderItemId).find(".qty").find("#qty").val(newVal);
                 $('.cart-dropdown table').find('tbody').find("#item" + data.orderItemId).find(".price").html(data.price);
+
+
                 $('.cart-btn a span').text(data.cart.qty);
                 $('.cart-btn a').find("#cartTotal").html(data.cart.summaryFormatText);
                 $('.cart-dropdown').find(".footer").find('.total').html(data.cart.summaryFormatText);
@@ -522,6 +524,15 @@ $(".incr-btn-cart").on("click", function (e) {
                 $('.shopping-cart').find(".cart-sidebar").find(".total").html(data.cart.totalFormatText + " ฿");
                 $('.shopping-cart').find(".cart-sidebar").find(".savings").html(data.cart.totalItemDiscountText + " ฿");
                 $('.shopping-cart').find(".cart-sidebar").find(".summary").html(data.cart.summaryFormatText + " ฿");
+                if (parseInt(data.saving) > 0)
+                {
+                    $('.shopping-cart').find(".items-list").find("#item" + data.orderItemId).find(".savings").html("You Saved -" + data.saving + " ฿");
+                    $('.shopping-cart').find(".items-list").find("#item" + data.orderItemId).find(".savings").removeClass("hide");
+
+                } else
+                {
+                    $('.shopping-cart').find(".items-list").find("#item" + data.orderItemId).find(".savings").addClass("hide");
+                }
             } else
             {
                 if (data.errorCode === 1)

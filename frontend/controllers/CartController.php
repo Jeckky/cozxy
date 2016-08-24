@@ -242,12 +242,16 @@ class CartController extends MasterController
                 $oi = \common\models\costfit\OrderItem::find()->where("productId = " . $_POST["productId"] . " AND orderId=" . $cart["orderId"])->one();
                 $oi->price = $price["price"];
                 $oi->quantity = $_POST["quantity"];
+                $oi->priceOnePiece = $oi->product->calProductPrice($_POST["productId"], 1);
                 $oi->total = $oi->price * $_POST["quantity"];
                 $oi->save();
                 $cart = \common\models\costfit\Order::findCartArray();
                 $res["status"] = TRUE;
                 $res["price"] = $price["price"];
                 $res["priceText"] = $price["priceText"];
+                $res["priceOnePiece"] = $oi->priceOnePiece;
+                $res["priceOnePieceText"] = number_format($oi->priceOnePiece, 2);
+                $res["saving"] = $oi->priceOnePiece - $price["price"];
                 $res["orderItemId"] = $oi->orderItemId;
                 $res["cart"] = $cart;
                 $res["discountType"] = $price["discountType"];
