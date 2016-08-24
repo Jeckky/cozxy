@@ -475,6 +475,7 @@ var x = "Total Height: " + screen.height;
 
 //Add(+/-) Button Number Incrementers
 $(".incr-btn-cart").on("click", function (e) {
+    event.preventDefault();
     var $button = $(this);
     var oldValue = $button.parent().find("input").val();
     var pId = $button.parent().parent().find("#productId").val();
@@ -572,6 +573,7 @@ function itemzero(items, title) {
 }
 
 $addToWishlistBtn.click(function () {
+    event.preventDefault();
     var $pId = $(this).parent().parent().find('#productId').val();
     $.ajax({
         type: "POST",
@@ -594,6 +596,7 @@ $addToWishlistBtn.click(function () {
 });
 
 $(".addWishlistItemToCart").click(function () {
+    event.preventDefault();
     $addedToCartMessage.removeClass('visible');
     var $itemName = $(this).parent().parent().find('.title').html();
     var $itemId = $(this).parent().parent().find('#productId').val();

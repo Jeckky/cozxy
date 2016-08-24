@@ -117,6 +117,7 @@ $(document).ready(function (e) {
     /*Wishlist Deleting Items
      *******************************************/
     $(document).on('click', '.wishlist .delete i', function () {
+        event.preventDefault();
         var $target = $(this).parent().parent();
         var pId = $(this).parent().parent().find("#productId").val();
 //        $target.hide(300, function () {
@@ -165,6 +166,7 @@ $(document).ready(function (e) {
     /*Added To Cart Message + Action (For Demo Purpose)
      **************************************************/
     $addToCartBtn.click(function () {
+        event.preventDefault();
         $addedToCartMessage.removeClass('visible');
         var $itemName = $(this).parent().parent().find('h1').text();
 
