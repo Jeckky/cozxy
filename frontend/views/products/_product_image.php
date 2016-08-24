@@ -10,7 +10,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <!--Slide1-->
         <div class="ms-slide">
             <img src="<?php echo Yii::$app->homeUrl . $image->image; ?>" data-src="<?php echo Yii::$app->homeUrl . $image->image; ?>" alt="<?= $image->title ?>"/>
-            <img class="ms-thumb" src="<?php echo Yii::$app->homeUrl . $image->image; ?>" alt="thumb" />
+            <img class="ms-thumb" src="<?php echo Yii::$app->homeUrl . $image->imageThumbnail2; ?>" alt="thumb" />
         </div>
         <!--Slide2-->
         <?php
