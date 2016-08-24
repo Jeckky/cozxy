@@ -66,7 +66,7 @@ class CartController extends MasterController
         $orderItem->productId = $id;
         $orderItem->sendDate = $_POST["fastId"];
         $orderItem->priceOnePiece = $orderItem->product->calProductPrice($id, 1);
-        $orderItem->price = $orderItem->product->calProductPrice($id, $_POST["quantity"]);
+        $orderItem->price = $orderItem->product->calProductPrice($id, $orderItem->quantity);
         $orderItem->total = $orderItem->quantity * $orderItem->price;
         $orderItem->createDateTime = new \yii\db\Expression("NOW()");
         if ($orderItem->save()) {
@@ -242,7 +242,7 @@ class CartController extends MasterController
                 $oi = \common\models\costfit\OrderItem::find()->where("productId = " . $_POST["productId"] . " AND orderId=" . $cart["orderId"])->one();
                 $oi->price = $price["price"];
                 $oi->quantity = $_POST["quantity"];
-                $oi->total = $oi->price;
+                $oi->total = $oi->price * $_POST["quantity"];
                 $oi->save();
                 $cart = \common\models\costfit\Order::findCartArray();
                 $res["status"] = TRUE;

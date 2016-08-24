@@ -101,10 +101,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=<?php echo $item["productId"]; ?>" style="font-size:14px;word-wrap: break-word; "><?= $item["title"] ?></a>
                             </td>
                             <td>
-                                <span style="text-decoration: line-through; color:#ccc; font-weight: bold;"> <?= "xx ฿" ?></span> <br>
+                                <span style="text-decoration: line-through; color:#ccc; font-weight: bold;"> <?= $item["priceOnePiece"] ?> ฿</span> <br>
                                 <span class="price" style="font-weight: bold;"><?= $item["price"] . " ฿" ?></span> <br>
-                                <span style="color: red;font-size: 13px;">You Saved ??.00 ฿</span><br>
-                                <span style="font-size: 13px;">จัดส่งภายใน ?? วัน </span>
+                                <?php if ($item["priceOnePiece"] - $item["price"] > 0): ?>
+                                    <span style="color: red;font-size: 13px;">You Saved <?= number_format($item["priceOnePiece"] - $item["price"]) ?> ฿</span><br>
+                                <?php endif; ?>
+                                <?php if (isset($item["sendDateNoDate"])): ?>
+                                    <span style="font-size: 13px;">จัดส่งภายใน <?= $item["sendDateNoDate"] ?>  วัน </span>
+                                <?php endif; ?>
                             </td>
                             <td class="qnt-count">
                                 <a class="incr-btn-cart incr-btn" href="#">-</a>

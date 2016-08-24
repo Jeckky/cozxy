@@ -45,4 +45,9 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster
         return $this->hasOne(Product::className(), ['productId' => 'productId']);
     }
 
+    public function getShippingType()
+    {
+        return $this->hasOne(ShippingType::className(), ['shippingTypeId' => 'sendDate']);
+    }
+
 }

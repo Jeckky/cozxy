@@ -10,24 +10,28 @@
         </tr>
     <?php endif; ?>
     <tr>
-        <td>Price Subtotal</td>
-        <td class="total align-r">xxx ฿</td>
+        <td>Starting Subtotal</td>
+        <td class="subtotal align-r"><?= number_format($this->params['cart']['totalWithoutDiscount'], 2) ?> ฿</td>
     </tr>
     <tr style="color: red;">
-        <td>Extra savings</td>
-        <td class="total align-r">xxx ฿</td>
+        <td>Extra Savings</td>
+        <td class="savings align-r"><?= number_format($this->params['cart']['totalItemDiscount'], 2) ?> ฿</td>
     </tr>
-    <tr>
+    <tr style="color: red;">
+        <td>Subtotal</td>
+        <td class="total align-r"><?= number_format($this->params['cart']['total'], 2) ?> ฿</td>
+    </tr>
+<!--    <tr>
         <td>Shipping Free</td>
         <td class="total align-r">xxx ฿</td>
-    </tr>
-    <tr>
+    </tr>-->
+<!--    <tr>
         <td>Estimated Tax</td>
         <td class="total align-r">xxx ฿</td>
-    </tr>
+    </tr>-->
 
     <tr class="devider">
-        <td>Shipping</td>
+        <td>Shipping Fee</td>
         <td class="shipping align-r"><?= (isset($this->params['cart']['shippingRate']) && $this->params['cart']['shippingRate'] == 0) ? "Free Shipping" : number_format($this->params['cart']['shippingRate'], 2) ?></td>
     </tr>
 

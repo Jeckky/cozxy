@@ -517,8 +517,10 @@ $(".incr-btn-cart").on("click", function (e) {
                 $('.cart-btn a span').text(data.cart.qty);
                 $('.cart-btn a').find("#cartTotal").html(data.cart.summaryFormatText);
                 $('.cart-dropdown').find(".footer").find('.total').html(data.cart.summaryFormatText);
-                $('.shopping-cart').find(".cart-sidebar").find(".total").html(data.cart.summaryFormatText);
-                $('.shopping-cart').find(".cart-sidebar").find(".summary").html(data.cart.summaryFormatText);
+                $('.shopping-cart').find(".cart-sidebar").find(".subtotal").html(data.cart.totalWithoutDiscountText + " ฿");
+                $('.shopping-cart').find(".cart-sidebar").find(".total").html(data.cart.totalFormatText + " ฿");
+                $('.shopping-cart').find(".cart-sidebar").find(".savings").html(data.cart.totalItemDiscountText + " ฿");
+                $('.shopping-cart').find(".cart-sidebar").find(".summary").html(data.cart.summaryFormatText + " ฿");
             } else
             {
                 if (data.errorCode === 1)

@@ -102,14 +102,17 @@ class Order extends \common\models\costfit\master\OrderMaster
         $order = Order::getOrder();
         $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
         $total = 0;
+        $totalWithoutDiacount = 0;
+        $totalItemDiscount = 0;
         $quantity = 0;
         $shipping = 0;
         $items = [];
         if (isset($order)) {
             foreach ($order->orderItems as $item) {
-
                 $total+=$item->total;
                 $quantity+=$item->quantity;
+                $totalWithoutDiacount +=$item->quantity * $item->priceOnePiece;
+                $totalItemDiscount+=($item->price * $item->quantity) - ($item->priceOnePiece * $item->quantity);
                 $items[$item->orderItemId] = [
                     'orderItemId' => $item->orderItemId,
                     'productId' => $item->productId,
@@ -117,6 +120,9 @@ class Order extends \common\models\costfit\master\OrderMaster
                     'code' => $item->product->code,
                     'qty' => $item->quantity,
                     'price' => $item->price,
+                    'priceOnePiece' => $item->priceOnePiece,
+                    'sendDate' => $item->sendDate,
+                    'sendDateNoDate' => isset($item->shippingType) ? $item->shippingType->date : NULL,
                     'total' => $item->total,
                     'image' => isset($item->product->productImages[0]) ? \Yii::$app->homeUrl . $item->product->productImages[0]->image : $directoryAsset . "/img/catalog/shopping-cart-thumb.jpg",
                 ];
@@ -128,6 +134,10 @@ class Order extends \common\models\costfit\master\OrderMaster
             $res["vat"] = $order->vat;
             $res["vatFormatText"] = number_format($order->vat, 2);
             $res["total"] = $order->total;
+            $res["totalWithoutDiscount"] = $totalWithoutDiacount;
+            $res["totalWithoutDiscountText"] = number_format($totalWithoutDiacount, 2);
+            $res["totalItemDiscount"] = $totalItemDiscount;
+            $res["totalItemDiscountText"] = number_format($totalItemDiscount, 2);
             $res["totalFormatText"] = number_format($order->total, 2);
 
             if (isset($order->coupon)) {
@@ -187,6 +197,7 @@ class Order extends \common\models\costfit\master\OrderMaster
                 ]
             ];
         }
+//        throw new \yii\base\Exception(print_r($res, true));
         return $res;
     }
 
