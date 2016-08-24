@@ -85,7 +85,7 @@ class ProductImageController extends ProductMasterController
                 if (!file_exists($urlFolder)) {
                     mkdir($urlFolder, 0777);
                 }
-                $model->image = '/' . 'images/' . $folderName . "/" . $fileName;
+                $model->image = 'images/' . $folderName . "/" . $fileName;
                 //Image Size 553 x 484 field image
                 //
                 //Image Size 356 x 390 field imageThumbnail1
@@ -95,7 +95,7 @@ class ProductImageController extends ProductMasterController
                 if (!file_exists($urlFolder1)) {
                     mkdir($urlFolder1, 0777);
                 }
-                $model->imageThumbnail1 = '/' . 'images/' . $folderName . "/" . $folderThumbnail1 . "/" . $fileName1;
+                $model->imageThumbnail1 = 'images/' . $folderName . "/" . $folderThumbnail1 . "/" . $fileName1;
                 //Image Size 356 x 390 field  imageThumbnail1
                 //
                 //Image Size 137 x 130  field  imageThumbnail2
@@ -105,7 +105,7 @@ class ProductImageController extends ProductMasterController
                 if (!file_exists($urlFolder2)) {
                     mkdir($urlFolder2, 0777);
                 }
-                $model->imageThumbnail2 = '/' . 'images/' . $folderName . "/" . $folderThumbnail2 . "/" . $fileName2;
+                $model->imageThumbnail2 = 'images/' . $folderName . "/" . $folderThumbnail2 . "/" . $fileName2;
                 //Image Size 137 x 130  field  imageThumbnail2
             //
             }
@@ -162,7 +162,7 @@ class ProductImageController extends ProductMasterController
                 if (!file_exists($urlFolder)) {
                     mkdir($urlFolder, 0777);
                 }
-                $model->image = '/' . 'images/' . $folderName . "/" . $fileName;
+                $model->image = 'images/' . $folderName . "/" . $fileName;
                 //Image Size 553 x 484 field image
                 //
                 //Image Size 356 x 390 field imageThumbnail1
@@ -172,7 +172,7 @@ class ProductImageController extends ProductMasterController
                 if (!file_exists($urlFolder1)) {
                     mkdir($urlFolder1, 0777);
                 }
-                $model->imageThumbnail1 = '/' . 'images/' . $folderName . "/" . $folderThumbnail1 . "/" . $fileName1;
+                $model->imageThumbnail1 = 'images/' . $folderName . "/" . $folderThumbnail1 . "/" . $fileName1;
                 //Image Size 356 x 390 field  imageThumbnail1
                 //
                 //Image Size 137 x 130  field  imageThumbnail2
@@ -182,7 +182,7 @@ class ProductImageController extends ProductMasterController
                 if (!file_exists($urlFolder2)) {
                     mkdir($urlFolder2, 0777);
                 }
-                $model->imageThumbnail2 = '/' . 'images/' . $folderName . "/" . $folderThumbnail2 . "/" . $fileName2;
+                $model->imageThumbnail2 = 'images/' . $folderName . "/" . $folderThumbnail2 . "/" . $fileName2;
                 //Image Size 137 x 130  field  imageThumbnail2
             } else {
                 if (isset($_POST["ProductImage"]["imageOld"])) {
