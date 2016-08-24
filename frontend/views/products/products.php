@@ -79,7 +79,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <section class="catalog-single">
     <div class="container" >
         <div class="row" id="productItem">
-            <?php echo $this->render('product_catalog_item', ['model' => $model, 'fastDate' => $fastDate, 'fastId' => $fastId]); ?>
+            <?php echo $this->render('product_catalog_item', ['model' => $model]); ?>
         </div>
     </div>
 </section><!--Catalog Single Item Close-->

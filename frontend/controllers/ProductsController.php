@@ -54,33 +54,13 @@ class ProductsController extends MasterController {
         $productId = $params['productId'];
 
         if ($productId != '') {
-
-            $fastDate = '';
-            $fastId = '';
             $model = \common\models\costfit\Product::find()->where("productId =" . $productId)->one();
             if (count($model) > 0) {
-                $fastDate = 99;
-                $minDate = 99;
-                $productShippingDates = \common\models\costfit\ProductShippingPrice::find()->where("productId =" . $productId)->all();
-
-                foreach ($productShippingDates as $productShippingDate) {
-                    $shippingType = \common\models\costfit\ShippingType::find()->where("shippingTypeId=" . $productShippingDate->shippingTypeId)->one();
-                    if (count($shippingType) > 0) {
-                        if ($shippingType->date < $fastDate) {
-                            $fastDate = $shippingType->date;
-                            $fastId = $productShippingDate->shippingTypeId;
-                        }
-                    } else {
-                        $fastDate = '';
-                        $fastId = '';
-                    }
-                }
-
                 $this->title = 'Cost.fit | Products';
                 $this->subTitle = $model->attributes['title'];
                 $this->subSubTitle = '';
 
-                return $this->render('products', ['model' => $model, 'fastDate' => $fastDate, 'fastId' => $fastId]);
+                return $this->render('products', ['model' => $model]);
             } else {
                 return $this->render('@app/views/error/error');
             }
@@ -104,9 +84,7 @@ class ProductsController extends MasterController {
     }
 
     public function actionGetProductShippingPrice() {
-        $icheck = Yii::$app->request->post('icheck');
         $productId = Yii::$app->request->post('productId');
-        $sendDate = Yii::$app->request->post('sendDate');
         $fastId = Yii::$app->request->post('fastId');
         $minDate = 99;
         $findMinDates = \common\models\costfit\ProductShippingPrice::find()->where("productId =" . $productId . " and shippingTypeId!=" . $fastId)->all();
@@ -123,33 +101,12 @@ class ProductsController extends MasterController {
             $minDate = $fastId;
         }
         echo $minDate;
-        /* $model = \common\models\costfit\ShippingType::find()->where("shippingTypeId = " . $fastId . " and date != " . $sendDate . "  order by date asc")->one();
-
-          if (is_array($model)) {
-          return json_encode($model->attributes);
-          } else {
-          $model = array();
-          return json_encode($model);
-          } */
-        //return json_encode($model->attributes);
     }
 
     public function actionGetDefultProductShippingPrice() {
-        $icheck = Yii::$app->request->post('icheck');
         $productId = Yii::$app->request->post('productId');
-        $sendDate = Yii::$app->request->post('sendDate');
-        $fastId = Yii::$app->request->post('fastId');
-
-        echo $fastId;
-        /* $model = \common\models\costfit\ShippingType::find()->where("shippingTypeId = " . $fastId . " and date != " . $sendDate . "  order by date asc")->one();
-
-          if (is_array($model)) {
-          return json_encode($model->attributes);
-          } else {
-          $model = array();
-          return json_encode($model);
-          } */
-        //return json_encode($model->attributes);
+        $default = \common\models\costfit\Product::getShippingTypeId($productId);
+        echo $default;
     }
 
 }

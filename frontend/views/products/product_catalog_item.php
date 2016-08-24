@@ -3,6 +3,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use common\models\costfit\Product;
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
@@ -73,8 +74,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <h1><?= $model->title; ?></h1>
     <?= Html::hiddenInput("productId", $model->productId, ['id' => 'productId']); ?>
 
-    <?= Html::hiddenInput("sendDate", $fastId, ['id' => 'sendDate']); ?>
-    <?= Html::hiddenInput("fastId", $fastId, ['id' => 'fastId']); ?>
+    <?= Html::hiddenInput("fastId", $fastId = Product::getShippingTypeId($model->productId), ['id' => 'fastId']); ?>
 
     <div class="form-group">
         <?php if (isset($model->productGroup)): ?>
