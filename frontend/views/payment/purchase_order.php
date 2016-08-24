@@ -101,12 +101,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้ารวมภาษีมูลค่าเพิ่ม / sub Total Include VAT :</td>
             <td class="bg-purchase-order"><?php echo $order->total; ?></td>
         </tr>
+        <!--
         <tr>
             <td colspan="6" class="text-right" class="foorter-purchase-order">ส่วนลด/Discount(3.00%) :</td>
             <td class="bg-purchase-order"> - </td>
         </tr>
-
-
+        -->
         <tr >
             <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้าที่ต้องชำระเงินรวมภาษีมูลค่าเพิ่ม/Total Include VAT :</td>
             <td class="bg-purchase-order"><?php echo $order->summary; ?></td>

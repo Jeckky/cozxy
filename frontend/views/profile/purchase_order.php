@@ -115,10 +115,12 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                             <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้ารวมภาษีมูลค่าเพิ่ม / sub Total Included VAT :</td>
                             <td class="bg-purchase-order"><?php echo $order->vat; ?></td>
                         </tr>
+                        <!--
                         <tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">ส่วนลด/Discount(3.00%) :</td>
                             <td class="bg-purchase-order"> - </td>
                         </tr>
+                        -->
                         <tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">ภาษีมูลค่าเพิ่ม/VAT 7 % :</td>
                             <td class="bg-purchase-order"><?php echo $order->vat; ?></td>
@@ -132,7 +134,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                             <td class="bg-purchase-order"><?php echo $order->summary; ?></td>
                         </tr>
 
-                    </tbody>
+                    </tbody> 
                 </table>
             </div>
         </div>
