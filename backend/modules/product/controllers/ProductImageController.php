@@ -12,9 +12,11 @@ use yii\filters\VerbFilter;
 /**
  * ProductImageController implements the CRUD actions for ProductImage model.
  */
-class ProductImageController extends ProductMasterController {
+class ProductImageController extends ProductMasterController
+{
 
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -29,13 +31,14 @@ class ProductImageController extends ProductMasterController {
      * Lists all ProductImage models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $dataProvider = new ActiveDataProvider([
             'query' => ProductImage::find()->where("productId =" . $_GET["productId"]),
         ]);
 
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -44,9 +47,10 @@ class ProductImageController extends ProductMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -55,7 +59,8 @@ class ProductImageController extends ProductMasterController {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $model = new ProductImage();
         if (isset($_GET['productId'])) {
             $model->productId = $_GET["productId"];
@@ -64,27 +69,68 @@ class ProductImageController extends ProductMasterController {
             $model->attributes = $_POST["ProductImage"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $imageObj = \yii\web\UploadedFile::getInstanceByName("ProductImage[image]");
+
             if (isset($imageObj) && !empty($imageObj)) {
-                $folderName = "ProductImage";
+                $imageObjImage = Yii::$app->image->load($imageObj->tempName);
+//                throw news \yii\base\Exception(print_r($imageObj, true));
+                $folderName = "ProductImage"; //  Size 553 x 484
+                $folderThumbnail1 = "thumbnail1"; // Size 356 x 390
+                $folderThumbnail2 = "thumbnail2"; // Size 137 x 130
                 $file = $imageObj->name;
                 $filenameArray = explode('.', $file);
+                //Image Size 553 x 484 field image
                 $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
                 $fileName = \Yii::$app->security->generateRandomString(10) . '.' . $filenameArray[1];
                 $urlFile = $urlFolder . $fileName;
-                $model->image = '/' . 'images/' . $folderName . "/" . $fileName;
                 if (!file_exists($urlFolder)) {
                     mkdir($urlFolder, 0777);
                 }
+                $model->image = 'images/' . $folderName . "/" . $fileName;
+                //Image Size 553 x 484 field image
+                //
+                //Image Size 356 x 390 field imageThumbnail1
+                $urlFolder1 = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/" . $folderThumbnail1 . "/";
+                $fileName1 = \Yii::$app->security->generateRandomString(10) . '.' . $filenameArray[1];
+                $urlFile1 = $urlFolder1 . $fileName1;
+                if (!file_exists($urlFolder1)) {
+                    mkdir($urlFolder1, 0777);
+                }
+                $model->imageThumbnail1 = 'images/' . $folderName . "/" . $folderThumbnail1 . "/" . $fileName1;
+                //Image Size 356 x 390 field  imageThumbnail1
+                //
+                //Image Size 137 x 130  field  imageThumbnail2
+                $urlFolder2 = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/" . $folderThumbnail2 . "/";
+                $fileName2 = \Yii::$app->security->generateRandomString(10) . '.' . $filenameArray[1];
+                $urlFile2 = $urlFolder2 . $fileName2;
+                if (!file_exists($urlFolder2)) {
+                    mkdir($urlFolder2, 0777);
+                }
+                $model->imageThumbnail2 = 'images/' . $folderName . "/" . $folderThumbnail2 . "/" . $fileName2;
+                //Image Size 137 x 130  field  imageThumbnail2
+            //
             }
             if ($model->save()) {
-                if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
-                    //Do Some Thing
+                if (isset($imageObj)) {
+                    //Image Size 553 x 484 field image
+                    $imageObjImage->resize(553, 484);
+                    $imageObjImage->save($urlFile);
+                    //Image Size 553 x 484 field image
+                    //
+                    //Image Size 356 x 390 field imageThumbnail1
+                    $imageObjImage->resize(356, 390);
+                    $imageObjImage->save($urlFile1);
+                    //Image Size 356 x 390 field imageThumbnail1
+                    //
+                    //Image Size 137 x 130  field  imageThumbnail2
+                    $imageObjImage->resize(137, 137);
+                    $imageObjImage->save($urlFile2);
+                    //Image Size 137 x 130  field  imageThumbnail2
                 }
                 return $this->redirect(['index?productId=' . $model->productId]);
             }
         }
         return $this->render('create', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -94,40 +140,85 @@ class ProductImageController extends ProductMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $model = $this->findModel($id);
         if (isset($_POST["ProductImage"])) {
             $model->attributes = $_POST["ProductImage"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-
             $imageObj = \yii\web\UploadedFile::getInstanceByName("ProductImage[image]");
+
             if (isset($imageObj) && !empty($imageObj)) {
-                $folderName = "ProductImage";
+                $imageObjImage = Yii::$app->image->load($imageObj->tempName);
+                $folderName = "ProductImage"; //  Size 553 x 484
+                $folderThumbnail1 = "thumbnail1"; // Size 356 x 390
+                $folderThumbnail2 = "thumbnail2"; // Size 137 x 130
                 $file = $imageObj->name;
                 $filenameArray = explode('.', $file);
+                //Image Size 553 x 484 field image
                 $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
                 $fileName = \Yii::$app->security->generateRandomString(10) . '.' . $filenameArray[1];
                 $urlFile = $urlFolder . $fileName;
-                $model->image = '/' . 'images/' . $folderName . "/" . $fileName;
                 if (!file_exists($urlFolder)) {
                     mkdir($urlFolder, 0777);
                 }
+                $model->image = 'images/' . $folderName . "/" . $fileName;
+                //Image Size 553 x 484 field image
+                //
+                //Image Size 356 x 390 field imageThumbnail1
+                $urlFolder1 = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/" . $folderThumbnail1 . "/";
+                $fileName1 = \Yii::$app->security->generateRandomString(10) . '.' . $filenameArray[1];
+                $urlFile1 = $urlFolder1 . $fileName1;
+                if (!file_exists($urlFolder1)) {
+                    mkdir($urlFolder1, 0777);
+                }
+                $model->imageThumbnail1 = 'images/' . $folderName . "/" . $folderThumbnail1 . "/" . $fileName1;
+                //Image Size 356 x 390 field  imageThumbnail1
+                //
+                //Image Size 137 x 130  field  imageThumbnail2
+                $urlFolder2 = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/" . $folderThumbnail2 . "/";
+                $fileName2 = \Yii::$app->security->generateRandomString(10) . '.' . $filenameArray[1];
+                $urlFile2 = $urlFolder2 . $fileName2;
+                if (!file_exists($urlFolder2)) {
+                    mkdir($urlFolder2, 0777);
+                }
+                $model->imageThumbnail2 = 'images/' . $folderName . "/" . $folderThumbnail2 . "/" . $fileName2;
+                //Image Size 137 x 130  field  imageThumbnail2
             } else {
                 if (isset($_POST["ProductImage"]["imageOld"])) {
                     $model->image = $_POST["ProductImage"]["imageOld"];
+                }
+                if (isset($_POST["ProductImage"]["imageThumbnail1Old"])) {
+                    $model->imageThumbnail1 = $_POST["ProductImage"]["imageThumbnail1Old"];
+                }
+                if (isset($_POST["ProductImage"]["imageThumbnail2Old"])) {
+                    $model->imageThumbnail2 = $_POST["ProductImage"]["imageThumbnail2Old"];
                 }
             }
 
 
             if ($model->save()) {
-                if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
-                    //Do Some Thing
+                if (isset($imageObj)) {
+                    //Image Size 553 x 484 field image
+                    $imageObjImage->resize(553, 484);
+                    $imageObjImage->save($urlFile);
+                    //Image Size 553 x 484 field image
+                    //
+                    //Image Size 356 x 390 field imageThumbnail1
+                    $imageObjImage->resize(356, 390);
+                    $imageObjImage->save($urlFile1);
+                    //Image Size 356 x 390 field imageThumbnail1
+                    //
+                    //Image Size 137 x 130  field  imageThumbnail2
+                    $imageObjImage->resize(137, 137);
+                    $imageObjImage->save($urlFile2);
+                    //Image Size 137 x 130  field  imageThumbnail2
                 }
                 return $this->redirect(['index?productId=' . $model->productId]);
             }
         }
         return $this->render('update', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -137,7 +228,8 @@ class ProductImageController extends ProductMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -150,7 +242,8 @@ class ProductImageController extends ProductMasterController {
      * @return ProductImage the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id) {
+    protected function findModel($id)
+    {
         if (($model = ProductImage::findOne($id)) !== null) {
             return $model;
         } else {

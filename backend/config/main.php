@@ -116,6 +116,10 @@ return [
                 ]
             ],
         ],
+        'image' => [
+            'class' => 'yii\image\ImageDriver',
+            'driver' => 'GD', //GD or Imagick
+        ],
     ],
     'params' => $params,
 ];

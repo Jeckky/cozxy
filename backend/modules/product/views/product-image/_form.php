@@ -42,9 +42,9 @@ use common\models\costfit\Product;
 
         <?= (isset($model->image) && !empty($model->image)) ? Html::img(Yii::$app->homeUrl . $model->image, ['style' => 'width:150px', 'class' => 'col-lg-offset-3']) : ''; ?>
 
-        <?= $form->field($model, 'image', ['options' => ['class' => 'row form-group']])->fileInput() ?> 
+        <?= $form->field($model, 'image', ['options' => ['class' => 'row form-group']])->fileInput() ?>
 
-        <?= (isset($model->image) && !empty($model->image)) ? Html::hiddenInput((new ReflectionClass($model))->getShortName() . '[imageOld]', $model->image) : ''; ?>
+        <?= (isset($model->image) && !empty($model->image)) ? Html::hiddenInput((new ReflectionClass($model))->getShortName() . '[imageOld]', $model->image) . Html::hiddenInput((new ReflectionClass($model))->getShortName() . '[imageThumbnail1Old]', $model->imageThumbnail1) . Html::hiddenInput((new ReflectionClass($model))->getShortName() . '[imageThumbnail2Old]', $model->imageThumbnail2) : ''; ?>
 
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
