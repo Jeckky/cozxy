@@ -164,9 +164,11 @@ class Product extends \common\models\costfit\master\ProductMaster {
     }
 
     public function addProductShipping($id) {
+        $date = ShippingType::find()->where("1")->orderBy("date ASC")->all();
         $productShippingPrice = new ProductShippingPrice();
         $productShippingPrice->productId = $id;
-        $productShippingPrice->shippingTypeId = 1;
+        $productShippingPrice->shippingTypeId = $date[0]->shippingTypeId;
+        $productShippingPrice->date = $date[0]->date;
         $productShippingPrice->discount = 0;
         $productShippingPrice->type = 1;
         $productShippingPrice->createDateTime = new \yii\db\Expression('NOW()');
@@ -174,7 +176,8 @@ class Product extends \common\models\costfit\master\ProductMaster {
         $productShippingPrice->save(false);
         $productShippingPrice = new ProductShippingPrice();
         $productShippingPrice->productId = $id;
-        $productShippingPrice->shippingTypeId = 2;
+        $productShippingPrice->shippingTypeId = $date[1]->shippingTypeId;
+        $productShippingPrice->date = $date[1]->date;
         $productShippingPrice->discount = 0;
         $productShippingPrice->type = 1;
         $productShippingPrice->createDateTime = new \yii\db\Expression('NOW()');
