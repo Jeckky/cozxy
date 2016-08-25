@@ -285,7 +285,7 @@ class SiteController extends MasterController {
             }
             $html .= '<div id="products-save-cat" class="category col-lg-2 col-md-2 col-sm-4 col-xs-6">
                         <input type="hidden" id="seeMoreId[]" value="">
-                        <a href="' . Yii::$app->homeUrl . 'search/' . $value->createTitle() . $value->encodeParams(['categoryId' => $value->categoryId]) . '">
+                        <a href="' . Yii::$app->homeUrl . 'search/' . $value->createTitle() . '/' . $value->encodeParams(['categoryId' => $value->categoryId]) . '">
                         <img src="' . Yii::$app->homeUrl . $value->image . '" alt="1">
                         <p>' . $value->title . '</p>
                         </a>
