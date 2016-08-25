@@ -51,27 +51,59 @@ class Product extends \common\models\costfit\master\ProductMaster {
         return $this->hasOne(ProductPrice::className(), ['productId' => 'productId'])->andWhere('quantity = 1');
     }
 
-    public function calProductPrice($productId, $quantity, $returnArray = 0) {
+    public function calProductPrice($productId, $quantity, $returnArray = 0, $shippingStep = 1) {
         $product = Product::find()->where("productId = $productId")->one();
         $productPrice = ProductPrice::find()->where("productId = $productId AND quantity = $quantity")->one();
-
+        $shippingDisCount = ProductShippingPrice::find()->where("productId=" . $productId)->orderBy("date ASC")->all();
         if (!$returnArray) {
             if (isset($productPrice)) {
-                return $productPrice->price;
+                if (isset($shippingDisCount) && count($shippingDisCount) > 0) {
+                    if ($shippingDisCount[$shippingStep - 1]->type == 1) {
+                        return $productPrice->price - $shippingDisCount[$shippingStep - 1]->discount;
+                    } else {
+                        return $productPrice->price * ((100 - $shippingDisCount[$shippingStep - 1]->discount) / 100);
+                    }
+                } else {
+                    return $productPrice->price;
+                }
             } else {
-                return $product->price;
+                if (isset($shippingDisCount) && count($shippingDisCount) > 0) {
+                    if ($shippingDisCount[$shippingStep - 1]->type == 1) {
+                        return $productPrice->price - $shippingDisCount[$shippingStep - 1]->discount;
+                    } else {
+                        return $productPrice->price * ((100 - $shippingDisCount[$shippingStep - 1]->discount) / 100);
+                    }
+                } else {
+                    return $productPrice->price;
+                }
             }
         } else {
             $res = [];
             if (isset($productPrice)) {
-                $price = $productPrice->price;
+                if (isset($shippingDisCount) && count($shippingDisCount) > 0) {
+                    if ($shippingDisCount[$shippingStep - 1]->type == 1) {
+                        $price = $productPrice->price - $shippingDisCount[$shippingStep - 1]->discount;
+                    } else {
+                        $price = $productPrice->price * ((100 - $shippingDisCount[$shippingStep - 1]->discount) / 100);
+                    }
+                } else {
+                    $price = $productPrice->price;
+                }
                 $res["discountType"] = isset($productPrice->discountType) ? $productPrice->discountType : NULL;
                 $res["discountValue"] = isset($productPrice->discountValue) ? $productPrice->discountValue : NULL;
                 $res["discountValueText"] = isset($productPrice->discountValue) ? number_format($productPrice->discountValue, 2) : NULL;
                 $res["price"] = $price;
                 $res["priceText"] = number_format($price, 2) . " ฿";
             } else {
-                $price = $product->price;
+                if (isset($shippingDisCount) && count($shippingDisCount) > 0) {
+                    if ($shippingDisCount[$shippingStep - 1]->type == 1) {
+                        $price = $productPrice->price - $shippingDisCount[$shippingStep - 1]->discount;
+                    } else {
+                        $price = $productPrice->price * ((100 - $shippingDisCount[$shippingStep - 1]->discount) / 100);
+                    }
+                } else {
+                    $price = $productPrice->price;
+                }
                 $res["discountType"] = isset($productPrice->discountType) ? $productPrice->discountType : NULL;
                 $res["discountValue"] = isset($productPrice->discountValue) ? $productPrice->discountValue : NULL;
                 $res["discountValueText"] = isset($productPrice->discountValue) ? number_format($productPrice->discountValue, 2) : NULL;
