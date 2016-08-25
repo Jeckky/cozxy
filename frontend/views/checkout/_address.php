@@ -19,7 +19,7 @@ echo $this->render('_select_address', ['type' => $type, 'addresses' => $addresse
         <div class="col-lg-10 actionFormBillingNew">
             <div class="hidden-panel <?//= (Yii::$app->user->isGuest || count($user->addresses) == 0) ? " expanded" : "" ?>" id="New<?= ($type == 1) ? "Billing" : "Shipping" ?>">
                  <?php echo $this->render('form_billing', ['type' => $type, 'address' => $address]); ?>
-        </div>
+        </div> 
     </div>
     <?php
 }
