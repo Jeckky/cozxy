@@ -17,28 +17,31 @@ use \common\models\costfit\master\ProductHotMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class ProductHot extends \common\models\costfit\master\ProductHotMaster
-{
+class ProductHot extends \common\models\costfit\master\ProductHotMaster {
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function getProduct()
-    {
+    public function getProduct() {
         return $this->hasOne(\common\models\costfit\Product::className(), ['productId' => 'productId']);
+    }
+
+    public static function findAllHotProducts() {
+        $query = ProductHot::find()->where('date(startDate) <= curdate() And date(endDate) >= curdate()');
+        return new \yii\data\ActiveDataProvider([
+            'query' => $query,
+        ]);
     }
 
 }

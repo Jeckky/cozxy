@@ -37,29 +37,27 @@ class SearchController extends MasterController
         $this->layout = "/content_left";
         $this->title = 'Cost.fit | Products';
         $this->subTitle = 'ชื่อ search';
+//        throw new \yii\base\Exception(print_r($_POST, true));
+        $whereArray = [];
+        $whereArray["category_to_product.categoryId"] = $params['categoryId'];
+        $whereArray["product_price.quantity"] = 1;
 
-        /*
-          if (isset($_GET["category"])) {
-          $products = \common\models\costfit\Product::find()
-          ->join("INNER JOIN", "category_to_product ctp", 'ctp.productId = product.productId')
-          ->where("ctp.categoryId=" . $_GET["category"]);
-          //            ->groupBy("ctp.productId");
-          } else {
-          $products = \common\models\costfit\Product::find();
-          }
-         */
+        $products = \common\models\costfit\CategoryToProduct::find()
+        ->join("LEFT JOIN", "product_price", "product_price.productId = category_to_product.productId")
+        ->where($whereArray);
 
-//        $products = \common\models\costfit\Product::find()
-//        ->join("INNER JOIN", "category_to_product ctp", 'ctp.productId = product.productId')
-//        ->where("ctp.categoryId=" . $params['categoryId']);
-//        throw new \yii\base\Exception($category);
-        $products = \common\models\costfit\CategoryToProduct::find()->where("categoryId=" . $params['categoryId']);
+        if (isset($_POST["min"])) {
+            $products->andWhere("product_price.price >=" . $_POST["min"]);
+        }
+        if (isset($_POST["max"])) {
+            $products->andWhere("product_price.price <=" . $_POST["max"]);
+        }
 
         $products = new \yii\data\ActiveDataProvider([
             'query' => $products,
         ]);
 
-        return $this->render('search', compact('products'));
+        return $this->render('search', ['products' => $products]);
     }
 
     public function actionPop($category)

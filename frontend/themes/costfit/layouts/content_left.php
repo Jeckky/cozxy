@@ -18,6 +18,7 @@ $categoryId = $params['categoryId'];
 <?php $this->beginContent('@app/themes/costfit/layouts/main.php'); ?>
 <?= $this->render('_modal_login') ?>
 <?= $this->render('_header') ?>
+
 <div class="page-content">
 
     <ol class="breadcrumb">
@@ -46,10 +47,15 @@ $categoryId = $params['categoryId'];
                                 <h3><a href="#"><?php echo $value->title; ?></a></h3>
                                 <div class="cont-info-widget">
                                     <ul>
-                                        <?php foreach ($this->context->sub_category($value->parentId) as $item) {
-                                            ?>
-                                            <li>&nbsp;&nbsp;<a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $item->createTitle() ?>/<?= $item->encodeParams(['categoryId' => $item->categoryId]) ?>"><?php echo $item->title; ?></a></li>
-                                        <?php } ?>
+                                        <?php
+                                        foreach ($this->context->sub_category($value->parentId) as $item) {
+                                            if ($value->categoryId != $item->categoryId) {
+                                                ?>
+                                                <li>&nbsp;&nbsp;<a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $item->createTitle() ?>/<?= $item->encodeParams(['categoryId' => $item->categoryId]) ?>"><?php echo $item->title; ?></a></li>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
                                     </ul>
                                 </div>
                             <?php } ?>
@@ -60,27 +66,27 @@ $categoryId = $params['categoryId'];
 
                         <!--Price Section-->
                         <section class="filter-section">
-                            <!-- <h3>Filter by price</h3>
-                            <?php //echo $this->render('@app/views/filter/filterbyprice'); ?>
-                            -->
+                            <h3>Filter by price</h3>
+                            <?php echo $this->render('@app/views/filter/filterbyprice', ['categoryId' => $categoryId, 'title' => $url_parameter[1]]); ?>
+
                         </section>
 
                         <!--Colors Section
                         <section class="filter-section">
                             <h3>Filter by color</h3>
-                        <?php //echo $this->render('@app/views/filter/filterbycolor');             ?>
+                        <?php //echo $this->render('@app/views/filter/filterbycolor');              ?>
                         </section>-->
 
                         <!--Colors Section
                         <section class="filter-section">
                             <h3>Filter by size</h3>
-                        <?php //echo $this->render('@app/views/filter/filterbysize');             ?>
+                        <?php //echo $this->render('@app/views/filter/filterbysize');              ?>
                         </section>-->
 
                         <!--Categories Section
                         <section class="filter-section">
                             <h3>Categories</h3>
-                        <?php //echo $this->render('@app/views/categories/categories');             ?>
+                        <?php //echo $this->render('@app/views/categories/categories');              ?>
                         </section>-->
                     </div>
                 </div><!--Filters-->

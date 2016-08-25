@@ -30,6 +30,16 @@ class CategoryToProduct extends \common\models\costfit\master\CategoryToProductM
     /**
      * @inheritdoc
      */
+    public function attributes()
+    {
+        return array_merge(parent::attributes(), [
+            'minPrice', 'maxPrice'
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), []);
