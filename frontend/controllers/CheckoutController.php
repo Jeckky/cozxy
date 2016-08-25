@@ -123,9 +123,6 @@ class CheckoutController extends MasterController {
                 }
 
                 if ($address->save(FALSE)) {
-
-
-
                     $this->redirect(Yii::$app->homeUrl . 'checkout');
                 }
             }

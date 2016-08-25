@@ -54,9 +54,9 @@ use kartik\depdrop\DepDrop;
                                                 <label class="btn btn-sm btn-info checkout_select_address<?= ($type == 1) ? "_billing" : "_shipping" ?>">
                                                     <input type="radio" name="checkout_select_address<?= ($type == 1) ? "_billing" : "_shipping" ?>" id="checkout_select_address<?= ($type == 1) ? "_billing" : "_shipping" ?>"
                                                     <?php
-                                                    if ($type == 2) {
-                                                        echo ($value->isDefault == 1) ? 'checked' : '';
-                                                    }
+                                                    //if ($type == 2) {
+                                                    echo ($value->isDefault == 1) ? 'checked' : '';
+                                                    //}
                                                     ?> value="<?php echo $value->addressId; ?>"> เลือก
                                                 </label>
                                                 <label class="btn btn-sm btn-black edit_select checkout_update_address<?= ($type == 1) ? "_billing" : "_shipping" ?>" style="width: 40%;">
