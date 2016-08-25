@@ -24,8 +24,8 @@ use kartik\depdrop\DepDrop;
     <?php
     if (count($user->addresses) > 0):
         ?>
-        <a class="panel-toggle active action" href="#costfit-select-<?= ($type == 1) ? "Billing" : "Shipping" ?>-address"><i></i>Select <?= ($type == 1) ? "Billing" : "Shipping" ?> Address</a>
-        <div class="row" style="background-color: rgba(249, 249, 249, 0.32);">
+        <a class="panel-toggle active action" href="#costfit-select-<?= ($type == 1) ? "Billing" : "Shipping" ?>-address" style="margin-left: 10px;"><i></i>Select <?= ($type == 1) ? "Billing" : "Shipping" ?> Address</a>
+        <div class="row" style="background-color: rgba(249, 249, 249, 0.32); width: 98%; margin-left: 2%;">
             <div class="col-lg-12">
                 <div class="hidden-panel expanded main-shipping-address" id="costfit-select-<?= ($type == 1) ? "Billing" : "Shipping" ?>-address" style="color: #292c2e;">
                     <?php
@@ -54,21 +54,18 @@ use kartik\depdrop\DepDrop;
                                                 <label class="btn btn-sm btn-info checkout_select_address<?= ($type == 1) ? "_billing" : "_shipping" ?>">
                                                     <input type="radio" name="checkout_select_address<?= ($type == 1) ? "_billing" : "_shipping" ?>" id="checkout_select_address<?= ($type == 1) ? "_billing" : "_shipping" ?>"
                                                     <?php
-                                                    if ($type == 2) {
-                                                        echo ($value->isDefault == 1) ? 'checked' : '';
-                                                    }
+                                                    //if ($type == 2) {
+                                                    echo ($value->isDefault == 1) ? 'checked' : '';
+                                                    //}
                                                     ?> value="<?php echo $value->addressId; ?>"> เลือก
                                                 </label>
-
-                                                <label class="btn btn-sm btn-warning edit_select checkout_update_address<?= ($type == 1) ? "_billing" : "_shipping" ?>" style="width: 40%;">
+                                                <label class="btn btn-sm btn-black edit_select checkout_update_address<?= ($type == 1) ? "_billing" : "_shipping" ?>" style="width: 40%;">
                                                     <input type="hidden" id="edit-form-biiling-checkout" name="edit-form-biiling-checkout" value="<?php echo $value->addressId; ?>">
                                                     <!--<input type="radio" id="edit-form-biiling-checkout" name="edit-form-biiling-checkout" value="<?//php echo $value->addressId; ?>">-->แก้ไข<span class="pp-label"></span>
                                                 </label>
-
                                             </div>
                                         </div>
                                     </a>
-
                                 </div>
                             </div>
                         </div>
@@ -79,7 +76,6 @@ use kartik\depdrop\DepDrop;
                 <div class="col-lg-12 actionFormEdit<?= ($type == 1) ? "Billing" : "Shipping" ?>" style="display: none;">
                     <?php echo $this->render('form_billing', ['address' => $address, 'type' => $type, 'isUpdate' => true]); ?>
                 </div>
-
                 <div class="row hide " id="<?= ($type == 1) ? "billing" : "shipping" ?>Update">
                     <div class="col-lg-12">
                         <?php //echo $this->render('form_billing', ['address' => $address, 'type' => $type, 'isUpdate' => true]); ?>
@@ -90,4 +86,3 @@ use kartik\depdrop\DepDrop;
     <?php endif; ?>
 <?php endif;
 ?>
-<br><br>

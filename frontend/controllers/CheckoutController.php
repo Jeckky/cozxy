@@ -32,7 +32,9 @@ class CheckoutController extends MasterController {
 
     /**
      * Displays homepage.
-     *
+     * default Address First
+      - BILLING = 1; // ที่อยู่จัดส่งเอกสาร
+      - SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
      * @return mixed
      */
     public function actionIndex() {
@@ -51,15 +53,18 @@ class CheckoutController extends MasterController {
         }
 
         $addressId = Yii::$app->request->post('addressId');
+        $addressEdit = Yii::$app->request->post('addressEdit');
         $address = new \common\models\costfit\Address();
         $address->scenario = 'shipping_address';
+
         if (isset($addressId)) { // ตรวจสอบว่า มี hidden addressId ให้ update ในเทเบิล address
             if (isset($_POST['Address'])) {
+                //print_r($_POST['Address']);
                 $address = \common\models\costfit\Address::find()
                         ->where('userId =' . \Yii::$app->user->id . ' and addressId=' . $addressId)
                         ->one();
 
-                //$address->attributes = $_POST['Address'];
+                $address->attributes = $_POST['Address'];
                 $address->countryId = (isset($_POST['Address']['countryId']) ? $_POST['Address']['countryId'] : '');
                 $address->provinceId = (isset($_POST['Address']['provinceId']) ? $_POST['Address']['provinceId'] : '');
                 $address->amphurId = (isset($_POST['Address']['amphurId']) ? $_POST['Address']['amphurId'] : '');
@@ -70,7 +75,7 @@ class CheckoutController extends MasterController {
                 }
             }
         } else {
-
+            //echo 'no hidden ';
             if (\Yii::$app->user->isGuest) {
                 $address_shipping = \common\models\costfit\Address::find()->where('userId=' . 0 . ' and type = 2  ')
                         ->orderBy('isDefault desc ')
@@ -101,16 +106,21 @@ class CheckoutController extends MasterController {
 
                 if ($_POST['Address']['typeForm'] == 'formShipping') {
                     //$model_ = new \common\models\costfit\Address();
-                    $address->type = \common\models\costfit\Address::TYPE_SHIPPING; // default Address First
+                    \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_SHIPPING]);
+                    $address->type = \common\models\costfit\Address::TYPE_SHIPPING; //- SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
+                    $address->isDefault = 1; // default Address First
+                    $address->createDateTime = new \yii\db\Expression("NOW()");
                     $address->attributes = $_POST['Address'];
                 }
 
                 if ($_POST['Address']['typeForm'] == 'formBilling') {
+                    \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_BILLING]);
                     //$model = new \common\models\costfit\Address();
-                    $address->type = \common\models\costfit\Address::TYPE_BILLING; // default Address First
+                    $address->type = \common\models\costfit\Address::TYPE_BILLING; //- BILLING = 1; // ที่อยู่จัดส่งเอกสาร
+                    $address->isDefault = 1; // default Address First
+                    $address->createDateTime = new \yii\db\Expression("NOW()");
                     $address->attributes = $_POST['Address'];
                 }
-
 
                 if ($address->save(FALSE)) {
                     $this->redirect(Yii::$app->homeUrl . 'checkout');
@@ -195,7 +205,6 @@ class CheckoutController extends MasterController {
             $order->shippingZipcode = ($address_shipping['zipcode'] != '') ? $address_shipping['zipcode'] : '';
             $order->shippingTel = ($address_shipping['tel'] != '') ? $address_shipping['tel'] : '';
 
-
             if ($order->paymentType == 2) {
                 $order->status = \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_DRAFT;
             }
@@ -261,10 +270,11 @@ class CheckoutController extends MasterController {
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Order Thank';
         $res = [];
-//        throw new \yii\base\Exception(print_r($_REQUEST, TRUE));
+        throw new \yii\base\Exception(print_r($_REQUEST, TRUE));
         if (isset($_REQUEST) && $_REQUEST != array()) {
             $order = Order::find()->where("orderNo='" . $_REQUEST["req_reference_number"] . "'")->one();
             if ($_REQUEST["decision"] == "ACCEPT") {
+
                 $order->invoiceNo = Order::genInvNo($order);
                 $order->status = Order::ORDER_STATUS_E_PAYMENT_SUCCESS;
                 $order->paymentDateTime = new \yii\db\Expression('NOW()');

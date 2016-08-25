@@ -52,6 +52,7 @@ class Product extends \common\models\costfit\master\ProductMaster {
     }
 
     public function calProductPrice($productId, $quantity, $returnArray = 0, $shippingStep = 1) {
+
         $product = Product::find()->where("productId = $productId")->one();
         $productPrice = ProductPrice::find()->where("productId = $productId AND quantity = $quantity")->one();
         $shippingDisCount = ProductShippingPrice::find()->where("productId=" . $productId)->orderBy("date ASC")->all();

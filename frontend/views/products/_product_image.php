@@ -10,15 +10,22 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <!--Slide1-->
         <div class="ms-slide">
             <img src="<?php echo Yii::$app->homeUrl . $image->image; ?>" data-src="<?php echo Yii::$app->homeUrl . $image->image; ?>" alt="<?= $image->title ?>"/>
-
-            <img  class="ms-thumb"  src="<?php echo Yii::$app->homeUrl . $image->imageThumbnail2; ?>" alt="1"/>
+            <?php
+            //echo 'imageThumbnail2 : ' . count($image->imageThumbnail2);
+            if (count($image->imageThumbnail2) > 0) {
+                ?>
+                <img class="ms-thumb" src="<?php echo Yii::$app->homeUrl . $image->imageThumbnail2; ?>" alt="1"/>
+            <?php } else { ?>
+                <img class="ms-thumb" src="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
+            <?php } ?>
         </div>
         <!--Slide2-->
         <?php
     }
     ?>
-    <div class="ms-slide">
-        <img src="<?php echo $directoryAsset; ?>/masterslider/blank.gif" data-src="<?php echo $directoryAsset; ?>/img/catalog/product-gallery/1.jpg" alt="Lorem ipsum"/>
-        <img class="ms-thumb" src="<?php echo $directoryAsset; ?>/img/catalog/product-gallery/th_1.jpg" alt="thumb" />
-    </div>
+    <!--
+<div class="ms-slide">
+    <img src="<?php echo $directoryAsset; ?>/masterslider/blank.gif" data-src="<?php echo $directoryAsset; ?>/img/catalog/product-gallery/1.jpg" alt="Lorem ipsum"/>
+    <img class="ms-thumb" src="<?php echo $directoryAsset; ?>/img/catalog/product-gallery/th_1.jpg" alt="thumb" />
+</div>-->
 </div>
