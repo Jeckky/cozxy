@@ -706,3 +706,57 @@ $(".sorting").on('click', function () {
     }
 });
 
+$(".see-more").on('click', function () {
+    $('#save-main-new').append('<div id="save-append">xxxx</div>');
+});
+
+//  Check seeMoreSave //
+
+function seeMoreSave(btnnn) {
+    alert(btnnn.parent().html());
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: "site/save-append",
+        data: {'categoryId': 80},
+        success: function (data)
+        {
+            alert(data);
+            $('#save-main-new').append('<div id="save-append">' + data + '</div>');
+        }
+    });
+
+    $('#save-main-new').append('<div id="save-append"> xxxx </div>');
+
+}
+
+$(".see-more-x").on('click', function () {
+
+    var ids = [];
+    $(this).parent().find("#save-main-limit").find(".list-view").find(".category").each(function () {
+        ids.push($(this).find('#seeMoreId').val());
+    });
+
+    $.ajax({
+        type: "POST",
+        //dataType: "JSON",
+        url: "site/save-append",
+        data: {'ids': ids},
+        success: function (data)
+        {
+            //$(this).parent().find("#save-main-limit").find(".list-view").find(".category").each(function () {
+            //ids.push($(this).find('#seeMoreId').html);
+            //});
+            $('#save-main-new').append('<div id="save-append">' + data + '</div>');
+        }
+    });
+
+
+
+//    $('#save-main-new').append('<div id="save-append"> xxxx </div>');
+});
+
+
+
+
+

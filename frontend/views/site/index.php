@@ -11,6 +11,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         font-weight: normal;
         margin-bottom: 24px;
     }
+    .see-more{
+        cursor: hand;
+    }
 </style>
 <!--Hero Slider-->
 <section class="hero-slider">
@@ -67,20 +70,23 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <section class="cat-tiles">
             <div class="container">
                 <h2>SAVE ON EVERYDAY ESSENTIALS</h2>
-                <div class="row">
-                    <!--Category-->
+                <div class="row" id="save-main-limit">
+                    <!--SAVE ON EVERYDAY ESSENTIALS-->
                     <?php
+                    //echo 'saveCat : ' . $saveCat->getTotalCount();
                     echo \yii\widgets\ListView::widget([
                         'dataProvider' => $saveCat,
                         'itemView' => function ($model, $key, $index, $widget) {
                             return $this->render('_save_cat', ['model' => $model]);
                         },
                                 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-//            'layout'=>"{summary}{pager}{items}"
+//                                'layout' => "{items}\n{pager}",
                                 'layout' => "{items}"
-                            ])
+                            ]);
                             ?>
                         </div>
+                        <div class="row" id="save-main-new"></div>
+                        <div class="row text-right see-more-x col-md-12">See more <i class="fa fa-angle-right" aria-hidden="true"></i></div>
                     </div>
                 </section><!--Categories Close-->
                 <!--Saved Category-->
@@ -96,7 +102,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     return $this->render('_popular_cat', ['model' => $model]);
                                 },
                                         'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-//            'layout'=>"{summary}{pager}{items}"
                                         'layout' => "{items}"
                                     ])
                                     ?>
