@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 echo $this->render('_select_address', ['type' => $type, 'addresses' => $addresses, 'address' => $address, 'user' => $user]);
 ?>
 <!--Checkout Form New Address-->
-<a class="new-address-form panel-toggle <?= (Yii::$app->user->isGuest || count($user->addresses) == 0) ? " active action" : "" ?>" href="#New<?= ($type == 1) ? "Billing" : "Shipping" ?>">
+<a class="new-address-form panel-toggle <?= (Yii::$app->user->isGuest || count($user->addresses) == 0) ? " active action" : "" ?>" href="#New<?= ($type == 1) ? "Billing" : "Shipping" ?>" style="margin-left: 5px;">
     <i></i>New <?= ($type == 1) ? "Billing" : "Shipping" ?> Address</a>
 <div class="row">
     <?php

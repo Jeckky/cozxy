@@ -24,8 +24,8 @@ use kartik\depdrop\DepDrop;
     <?php
     if (count($user->addresses) > 0):
         ?>
-        <a class="panel-toggle active action" href="#costfit-select-<?= ($type == 1) ? "Billing" : "Shipping" ?>-address"><i></i>Select <?= ($type == 1) ? "Billing" : "Shipping" ?> Address</a>
-        <div class="row" style="background-color: rgba(249, 249, 249, 0.32);">
+        <a class="panel-toggle active action" href="#costfit-select-<?= ($type == 1) ? "Billing" : "Shipping" ?>-address" style="margin-left: 10px;"><i></i>Select <?= ($type == 1) ? "Billing" : "Shipping" ?> Address</a>
+        <div class="row" style="background-color: rgba(249, 249, 249, 0.32); width: 98%; margin-left: 2%;">
             <div class="col-lg-12">
                 <div class="hidden-panel expanded main-shipping-address" id="costfit-select-<?= ($type == 1) ? "Billing" : "Shipping" ?>-address" style="color: #292c2e;">
                     <?php
@@ -85,4 +85,4 @@ use kartik\depdrop\DepDrop;
         </div>
     <?php endif; ?>
 <?php endif;
-?> 
+?>
