@@ -1,13 +1,19 @@
 <?php
 $check_item = count($this->params['cart']['items']);
 ?>
+<style type="text/css">
+    .body{
+        min-height: 250px;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+</style>
 <div class="cart-btn">
     <a class="btn btn-outlined-invert">
         <i class="icon-shopping-cart-content"></i><span><?= $this->params['cart']['qty'] ?></span><b id="cartTotal"><?= number_format($this->params['cart']['total'], 2) ?></b>
     </a>
-
     <!--Cart Dropdown-->
-    <div class="cart-dropdown">
+    <div class="cart-dropdown" style="margin-top: -15px; font-size: 14px;">
         <span></span><!--Small rectangle to overlap Cart button-->
         <div class="body">
             <table id="cartTable">
@@ -24,7 +30,7 @@ $check_item = count($this->params['cart']['items']);
                         <td class="qty"><input id="qty" type="text" value="<?= $item['qty'] ?>"></td>
                         <td class="price"><?= number_format($item['price'], 2) ?></td>
                     </tr>
-                <?php endforeach; ?>
+                <?php endforeach; ?> 
             </table>
         </div>
         <div class="footer group">
@@ -39,11 +45,9 @@ $check_item = count($this->params['cart']['items']);
                     <a class = "btn btn-outlined-invert" onclick = "itemzero(<?php echo $check_item; ?>, 'checkout')"><i class = "icon-download"></i>Checkout</a>
                 <?php }
                 ?>
-
                 <a class="btn btn-outlined-invert" onclick="itemzero(<?php echo $check_item; ?>, 'cart')">
                     <i class="icon-shopping-cart-content"></i>To cart
                 </a>
-
             </div>
             <div class="total"><?= number_format($this->params['cart']['total'], 2) ?></div>
         </div>
