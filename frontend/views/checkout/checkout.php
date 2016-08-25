@@ -113,6 +113,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 </div>
                             </div>
                         <?php endif; ?>
+
                         <?php echo $this->render('_address', ['type' => 2, 'address' => $address, 'addresses' => $address_shipping, 'user' => $user]); ?>
                         <div class=" form-group" >
                             <label class="ship-to-dif-adress btn btn-primary"><span>Click for Billing to a different adress?</span></label>

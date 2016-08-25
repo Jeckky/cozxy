@@ -706,4 +706,3 @@ $(".sorting").on('click', function () {
     }
 });
 
- 

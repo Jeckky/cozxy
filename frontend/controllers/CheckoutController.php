@@ -51,26 +51,38 @@ class CheckoutController extends MasterController {
         }
 
         $addressId = Yii::$app->request->post('addressId');
+        $addressEdit = Yii::$app->request->post('addressEdit');
         $address = new \common\models\costfit\Address();
         $address->scenario = 'shipping_address';
+
+        //echo 'addressId : ' . $addressId;
+        //echo '<br> print r :';
+        //print_r($addressId);
+        //echo '<br>';
+        //echo 'edit' . $addressEdit;
         if (isset($addressId)) { // ตรวจสอบว่า มี hidden addressId ให้ update ในเทเบิล address
+            //echo 'hidden ';
+            //echo '<pre>';
+            //print_r($_POST['Address']);
             if (isset($_POST['Address'])) {
+                //print_r($_POST['Address']);
                 $address = \common\models\costfit\Address::find()
                         ->where('userId =' . \Yii::$app->user->id . ' and addressId=' . $addressId)
                         ->one();
 
-                //$address->attributes = $_POST['Address'];
+                $address->attributes = $_POST['Address'];
                 $address->countryId = (isset($_POST['Address']['countryId']) ? $_POST['Address']['countryId'] : '');
                 $address->provinceId = (isset($_POST['Address']['provinceId']) ? $_POST['Address']['provinceId'] : '');
                 $address->amphurId = (isset($_POST['Address']['amphurId']) ? $_POST['Address']['amphurId'] : '');
                 $address->districtId = (isset($_POST['Address']['districtId']) ? $_POST['Address']['districtId'] : '');
-
+                //echo '<pre>xxx';
+                //print_r($address);
                 if ($address->save(FALSE)) {
                     $this->redirect(Yii::$app->homeUrl . 'checkout');
                 }
             }
         } else {
-
+            //echo 'no hidden ';
             if (\Yii::$app->user->isGuest) {
                 $address_shipping = \common\models\costfit\Address::find()->where('userId=' . 0 . ' and type = 2  ')
                         ->orderBy('isDefault desc ')
