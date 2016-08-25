@@ -8,12 +8,10 @@ use yii\helpers\ArrayHelper;
 <?php
 echo $this->render('_select_address', ['type' => $type, 'addresses' => $addresses, 'address' => $address, 'user' => $user]);
 ?>
-
 <!--Checkout Form New Address-->
 <a class="new-address-form panel-toggle <?= (Yii::$app->user->isGuest || count($user->addresses) == 0) ? " active action" : "" ?>" href="#New<?= ($type == 1) ? "Billing" : "Shipping" ?>">
     <i></i>New <?= ($type == 1) ? "Billing" : "Shipping" ?> Address</a>
 <div class="row">
-
     <?php
     if (!Yii::$app->user->isGuest) {
         $user = new \common\models\costfit\User();

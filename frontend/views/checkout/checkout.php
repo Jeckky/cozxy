@@ -102,6 +102,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 </div>
                             </div>
                         <?php endif; ?>
+
                         <?php if (!isset($this->params['cart']['discount'])): ?>
                             <!--Checkout Form coupon-->
                             <a class="panel-toggle" href="#coupon"><i></i>Have a coupon? Click here to enter your code</a>
@@ -113,12 +114,22 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 </div>
                             </div>
                         <?php endif; ?>
-
-                        <?php echo $this->render('_address', ['type' => 2, 'address' => $address, 'addresses' => $address_shipping, 'user' => $user]); ?>
-                        <div class=" form-group" >
-                            <label class="ship-to-dif-adress btn btn-primary"><span>Click for Billing to a different adress?</span></label>
+                        <div class="form-group" style="margin-bottom: 10px;  background-color: #f5f5f5; padding: 5px;">
+                            <label class="ship-to-dif-adress" style="margin-bottom:0px;">
+                                <h3 style="margin-bottom: 8px;">
+                                    Click for Shipping to adress?
+                                </h3>
+                            </label>
                         </div>
-                        <div class="shippingArea hide">
+                        <?php echo $this->render('_address', ['type' => 2, 'address' => $address, 'addresses' => $address_shipping, 'user' => $user]); ?>
+                        <div class="form-group" style="margin-bottom: 10px;  background-color: #f5f5f5; padding: 5px;">
+                            <label class="ship-to-dif-adress" style="margin-bottom:0px;">
+                                <h3 style="margin-bottom: 8px;">
+                                    Click for Billing to a different adress?
+                                </h3>
+                            </label>
+                        </div>
+                        <div class="shippingArea">
                             <?php echo $this->render('_address', ['type' => 1, 'address' => $address, 'addresses' => $address_billing, 'user' => $user]); ?>
                         </div>
                         <h3>Order notes</h3>
@@ -155,11 +166,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <input class="btn btn-black btn-block" type="submit"onclick="$('#checkout-form').submit();" name="place-order" value="Place order">
                 -->
                 <?php
-                //echo '<pre>';
-                //print_r($address_shipping);
-                //echo '<hr>';
-                //echo '<pre>';
-                /// print_r($address_billing);
                 if (isset($this->params['cart']['orderId'])) {
                     $orderId = $this->params['cart']['orderId'];
                 } else {
