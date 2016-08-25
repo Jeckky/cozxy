@@ -83,9 +83,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             <option <?= (isset($productId) && ($productId == $option->productId)) ? " selected" : " " ?> value="<?= $option->productId ?>"><?= $option->optionName; ?></option>
                         <?php endforeach; ?>
                     </select>
-
                     <?php
                     $this->registerJs("
+
                     $('#changeOption').change(function () {
                             $.ajax({
                                 type: \"POST\",
@@ -94,9 +94,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 data: {productId: $(this).val()},
                                 success: function (data)
                                 {
+
                                     $('#productItem').html(data.productItem);
                                     $('#productTabs').html(data.productTabs);
                                     $('#productImage').html(data.productImage);
+
                                 }
                             });
                         });

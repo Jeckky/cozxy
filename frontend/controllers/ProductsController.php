@@ -81,6 +81,7 @@ class ProductsController extends MasterController {
         $res["productPriceTable"] = $this->renderPartial('_product_price_table', ['model' => $model]);
         $res["productImage"] = $this->renderPartial('_product_image', ['model' => $model]);
         return \yii\helpers\Json::encode($res);
+        //echo $res;
     }
 
     public function actionGetProductShippingPrice() {

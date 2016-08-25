@@ -131,7 +131,7 @@ use common\models\ModelMaster;
                             </td>
                             <td class="qnt-count">
                                 <a class="incr-btn-cart " href="#">-</a>
-                                <input class="quantity form-control" style="font-size: 14px" type="text" value="<?= $item["qty"] ?>">
+                                <input class="quantity form-control" style="font-size: 14px" type="text" value="<?= $item["qty"] ?>" readonly="true">
                                 <a class="incr-btn-cart" href="#">+</a>
                             </td>
                             <td class="total"><?= $item["qty"] * $item["price"] . " ฿" ?></td>
@@ -141,6 +141,11 @@ use common\models\ModelMaster;
                     }
                     ?>
                 </table>
+                <div class="checkbox ">
+                    <label style="color:#03a9f4">
+                        <input type="checkbox" id="lateShippingCheck" name="lateShippingCheck">  ต้องการส่งสินค้าช้าที่สุดเพื่อประหยัดค่าใช้จ่าย ( วัน)
+                    </label>
+                </div>
             </div>
 
             <!--Sidebar-->
