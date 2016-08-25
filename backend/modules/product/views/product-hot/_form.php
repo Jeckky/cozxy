@@ -6,7 +6,7 @@ use yii\helpers\ArrayHelper;
 use yii\widgets\MaskedInput;
 use common\models\areawow;
 use yii\jui\DatePicker;
-use common\models\areawow\Product; 
+use common\models\costfit\Product;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\ProductHot */
@@ -15,32 +15,44 @@ use common\models\areawow\Product;
 
 <div class="product-hot-form">
 
-    <?php $form = ActiveForm::begin([
-    'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
-    'fieldConfig' => [
-    'template' => '{label}<div class="col-sm-9">{input}</div>',
-    'labelOptions'=>[
-    'class'=>'col-sm-3 control-label'
-    ]
-    ]
-    ]); ?>
+    <?php
+    $form = ActiveForm::begin([
+        'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+        'fieldConfig' => [
+            'template' => '{label}<div class="col-sm-9">{input}</div>',
+            'labelOptions' => [
+                'class' => 'col-sm-3 control-label'
+            ]
+        ]
+    ]);
+    ?>
 
     <div class="panel-heading">
-        <span class="panel-title"><?=$title?></span>
+        <span class="panel-title"><?= $title ?></span>
     </div>
 
     <div class="panel-body">
-        		<?= $form->errorSummary($model)?>
+        <?= $form->errorSummary($model) ?>
 
-		<?= $form->field($model, 'productId',['options'=>['class'=>'row form-group']])->dropDownList(ArrayHelper::map(Product::find()->all(), 'productId', 'title'), ['prompt' => '-- Select Product --']) ?>
+        <?= $form->field($model, 'productId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(Product::find()->all(), 'productId', 'title'), ['prompt' => '-- Select Product --']) ?>
 
-		<?= $form->field($model, 'price',['options'=>['class'=>'row form-group']])->textInput(['maxlength' => 15]) ?>
+        <?= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
 
-		<?= $form->field($model, 'startDate',['options'=>['class'=>'row form-group']])->textInput() ?>
+        <?=
+        $form->field($model, 'startDate', ['options' => ['class' => 'row form-group']])->widget(\yii\jui\DatePicker::classname(), [
+            'language' => 'th',
+            'dateFormat' => 'yyyy-MM-dd',
+        ])
+        ?>
 
-		<?= $form->field($model, 'endDate',['options'=>['class'=>'row form-group']])->textInput() ?>
+        <?=
+        $form->field($model, 'endDate', ['options' => ['class' => 'row form-group']])->widget(\yii\jui\DatePicker::classname(), [
+            'language' => 'th',
+            'dateFormat' => 'yyyy-MM-dd',
+        ])
+        ?>
 
-                <div class="form-group">
+        <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
                 <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>
