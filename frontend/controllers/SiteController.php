@@ -92,7 +92,7 @@ class SiteController extends MasterController {
         $saveCat = Category::findAllSaveCategory();
         $popularCat = Category::findAllPopularCategory();
         $hotProduct = \common\models\costfit\ProductHot::findAllHotProducts();
-        //$footer = "adfadf";
+//$footer = "adfadf";
         return $this->render('index', compact('saveCat', 'popularCat', 'bannerGroup', 'topOneContent', 'bottomContent', 'lastIndexContent', 'product', 'product2', 'footer', 'hotProduct'));
     }
 
@@ -233,13 +233,13 @@ class SiteController extends MasterController {
         $attributes = $client->getUserAttributes();
 //        throw new \yii\base\Exception(print_r($attributes, true));
         if (isset($attributes['email'])) {
-            //facebook
+//facebook
             $email = $attributes['email'];
             $name = explode(' ', $attributes['name']);
             $fName = current($name);
             $lName = end($name);
         } else {
-            //google
+//google
             $fName = $attributes['name']['givenName'];
             $lName = $attributes['name']['familyName'];
             $email = $attributes['emails'][0]['value'];
@@ -259,12 +259,53 @@ class SiteController extends MasterController {
             $model->fName = $fName;
             $model->lName = $lName;
             if ($user = $model->signup(2)) {
-                //login
+//login
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();
                 }
             }
         }
+    }
+
+    public function actionSaveAppend() {
+//$saveCat = Category::findAllSaveCategory();
+        $ids = implode(",", $_POST['ids']);
+        $html = '<div id="products-save-cat" class="category col-lg-2 col-md-2 col-sm-4 col-xs-6"> </div>';
+        $categoryId = Yii::$app->request->post('categoryId');
+        $query = Category::find()
+                ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
+                ->where('sc.type = 1 and sc.categoryId not in(' . $ids . ")")
+                ->limit(6)
+                ->all();
+
+        $i = 0;
+
+        foreach ($query as $key => $value) {
+
+            if (count($value->image) > 0) {
+                $url_image = $value->image;
+            } else {
+                $url_image = '/images/ContentGroup/DUHWYsdXVc.png';
+            }
+
+            if ($i == 0) {
+                $html = "";
+            } else {
+                $html .= '<div id="products-save-cat" class="category col-lg-2 col-md-2 col-sm-4 col-xs-6">
+                        <input type="hidden" id="seeMoreId" value="' . $value->categoryId . '">
+                        <a href="' . Yii::$app->homeUrl . 'search/' . $value->createTitle() . '/' . $value->encodeParams(['categoryId' => $value->categoryId]) . '">
+                        <img src="' . Yii::$app->homeUrl . $url_image . '" alt="1">
+                        <p>' . $value->title . '</p>
+                        </a>
+                     </div>';
+            }
+
+            $i++;
+        }
+        echo $html;
+        //echo '<pre>';
+        // print_r($query);
+        //return json_encode($query);
     }
 
 }

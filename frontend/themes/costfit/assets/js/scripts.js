@@ -172,6 +172,7 @@ $(document).ready(function (e) {
                             if ($positions.length === 1) {
                                 $('.shopping-cart .items-list').remove();
                                 $('.shopping-cart .title').text('Shopping cart is empty!');
+                                $('#showSlow').hide();
                             }
                             $('.cart-btn a').find("#cartTotal").html(data.cart.totalFormatText);
                             $('.cart-dropdown .footer .total').html(data.cart.totalFormatText);

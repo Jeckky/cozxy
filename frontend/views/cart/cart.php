@@ -131,16 +131,24 @@ use common\models\ModelMaster;
                             </td>
                             <td class="qnt-count">
                                 <a class="incr-btn-cart " href="#">-</a>
-                                <input class="quantity form-control" style="font-size: 14px" type="text" value="<?= $item["qty"] ?>">
+                                <input class="quantity form-control" style="font-size: 14px" type="text" value="<?= $item["qty"] ?>" readonly="true">
                                 <a class="incr-btn-cart" href="#">+</a>
                             </td>
                             <td class="total"><?= $item["qty"] * $item["price"] . " ฿" ?></td>
                             <td class="delete"><i class="icon-delete"></i><?= yii\helpers\Html::hiddenInput("orderItemId", $item['orderItemId'], ['id' => 'orderItemId']); ?></td>
                         </tr>
+                        <?= Html::hiddenInput("orderId", $this->params['cart']['orderId'], ['id' => 'orderId']); ?>
                         <?php
                     }
                     ?>
                 </table>
+                <?php if (isset($this->params['cart']['items']) && !empty($this->params['cart']['items'])) { ?>
+                    <div class="checkbox " id="showSlow">
+                        <label style="color:#03a9f4">
+                            <input type="checkbox" id="slowest" name="slowest">  ต้องการส่งสินค้าช้าที่สุดเพื่อประหยัดค่าใช้จ่าย
+                        </label>
+                    </div>
+                <?php } ?>
             </div>
 
             <!--Sidebar-->

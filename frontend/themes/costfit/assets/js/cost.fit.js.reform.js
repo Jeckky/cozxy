@@ -706,3 +706,89 @@ $(".sorting").on('click', function () {
     }
 });
 
+$(".see-more").on('click', function () {
+    $('#save-main-new').append('<div id="save-append">xxxx</div>');
+});
+
+//  Check seeMoreSave //
+$(".see-more-x").on('click', function () {
+
+    var ids = [];
+    $(this).parent().find("#save-main-limit").find(".list-view").find(".category").each(function () {
+        ids.push($(this).find('#seeMoreId').val());
+    });
+    //alert(ids);
+
+    $.ajax({
+        type: "POST",
+        //dataType: "JSON",
+        url: "site/save-append",
+        data: {'ids': ids},
+        success: function (data)
+        {
+            if (data != '') {
+                $('.list-view').append('<div id="save-append">' + data + '</div>');
+            } else {
+
+            }
+        }
+    });
+});
+
+function changeoption(value)
+{
+    if (window.location.host == 'localhost') {
+        urls = window.location.protocol + "//" + window.location.host + '/cost.fit-frontend/products/change-option/';
+    } else if (window.location.host == '192.168.100.8') {
+        urls = window.location.protocol + "//" + window.location.host + '/cost.fit/frontend/web/products/change-option/';
+    } else {
+        urls = window.location.protocol + "//" + window.location.host + '/products/change-option/';
+    }
+
+    $.post(urls, {
+        productId: value
+    }, function (data, status) {
+
+        var JSONObject = JSON.parse(data);
+        //alert(JSONObject.productImagexx);
+        $('#productItem').html(JSONObject.productItem);
+        $('#productTabs').html(JSONObject.productTabs);
+        $('#productImage').html(JSONObject.productImage);
+        $('#image-thumbmail2').html(JSONObject.image);
+        $('#image-thumbmail222').html(JSONObject.imageThumbnail2);
+        $('.price').html(JSONObject.price);
+        $('.old-price').html(JSONObject.oldPrice);
+    });
+
+}
+
+
+$('#slowest').on('ifChecked', function (event) {
+    //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
+    var orderId = $('input[id=orderId]').val();
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: "cart/save-slowest/",
+        data: {'orderId': orderId, 'type': 1},
+        success: function (data)
+        {
+        }
+    });
+});
+
+$('#slowest').on('ifUnchecked', function (event) {
+    //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
+    var orderId = $('input[id=orderId]').val();
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: "cart/save-slowest/",
+        data: {'orderId': orderId, 'type': 2},
+        success: function (data)
+        {
+
+        }
+
+    });
+});
