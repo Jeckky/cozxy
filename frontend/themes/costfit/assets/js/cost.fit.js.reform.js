@@ -757,33 +757,35 @@ function changeoption(value)
         $('.old-price').html(JSONObject.oldPrice);
     });
 
-
-    $('#slowest').on('ifChecked', function (event) {
-        //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
-        var orderId = $('input[id=orderId]').val();
-        $.ajax({
-            type: "POST",
-            dataType: "JSON",
-            url: "cart/save-slowest/",
-            data: {'orderId': orderId, 'type': 1},
-            success: function (data)
-            {
-            }
-        });
-    });
-    $('#slowest').on('ifUnchecked', function (event) {
-        //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
-        var orderId = $('input[id=orderId]').val();
-        $.ajax({
-            type: "POST",
-            dataType: "JSON",
-            url: "cart/save-slowest/",
-            data: {'orderId': orderId, 'type': 2},
-            success: function (data)
-            {
-
-            }
-
-        });
 }
-);
+
+
+$('#slowest').on('ifChecked', function (event) {
+    //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
+    var orderId = $('input[id=orderId]').val();
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: "cart/save-slowest/",
+        data: {'orderId': orderId, 'type': 1},
+        success: function (data)
+        {
+        }
+    });
+});
+
+$('#slowest').on('ifUnchecked', function (event) {
+    //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
+    var orderId = $('input[id=orderId]').val();
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: "cart/save-slowest/",
+        data: {'orderId': orderId, 'type': 2},
+        success: function (data)
+        {
+
+        }
+
+    });
+});
