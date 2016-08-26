@@ -139,7 +139,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="checkbox">
                     <label style="color: red;">
                         <input type="checkbox" id="lateShippingCheck" name="lateShippingCheck">  ต้องการส่งสินค้าราคาประหยัดอีก
-                        <?php echo $model->calProductPrice($model->productId, 1, 0, 1) - $model->calProductPrice($model->productId, 1, 0, 2) ?></span>  บาท (ส่งภายใน <?php echo Product::getShippingDate($model->productId, 2); ?> วัน)
+                        <?php echo $model->calProductPrice($model->productId, 1, 0, 1) - $model->calProductPrice($model->productId, 1, 0, 2) ?>  บาท (ส่งภายใน <?php echo Product::getShippingDate($model->productId, 2); ?> วัน)
                     </label>
                 </div>
             </div>
