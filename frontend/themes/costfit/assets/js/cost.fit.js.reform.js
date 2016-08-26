@@ -712,23 +712,6 @@ $(".see-more").on('click', function () {
 
 //  Check seeMoreSave //
 
-function seeMoreSave(btnnn) {
-    alert(btnnn.parent().html());
-    $.ajax({
-        type: "POST",
-        dataType: "JSON",
-        url: "site/save-append",
-        data: {'categoryId': 80},
-        success: function (data)
-        {
-            alert(data);
-            $('#save-main-new').append('<div id="save-append">' + data + '</div>');
-        }
-    });
-
-    $('#save-main-new').append('<div id="save-append"> xxxx </div>');
-
-}
 
 $(".see-more-x").on('click', function () {
 
@@ -752,8 +735,32 @@ $(".see-more-x").on('click', function () {
             }
         }
     });
-
 });
+
+
+function changeoption(value)
+{
+    if (window.location.host == 'localhost') {
+        urls = window.location.protocol + "//" + window.location.host + '/cost.fit-frontend/products/change-option/';
+    } else if (window.location.host == '192.168.100.8') {
+        urls = window.location.protocol + "//" + window.location.host + '/cost.fit/frontend/web/products/change-option/';
+    } else {
+        urls = window.location.protocol + "//" + window.location.host + '/products/change-option/';
+    }
+
+    $.post(urls, {
+        productId: value
+    }, function (data, status) {
+        var JSONObject = JSON.parse(data);
+
+        $('#productItem').html(JSONObject.productItem);
+        $('#productTabs').html(JSONObject.productTabs);
+        $('#productImage').html(JSONObject.productImage);
+        $('.price').html(JSONObject.price);
+        $('.old-price').html(JSONObject.oldPrice);
+    });
+
+}
 
 
 

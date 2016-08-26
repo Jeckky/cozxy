@@ -6,8 +6,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <?php
     foreach ($model->productImages as $image) {
         // รูปภาพ default : /cost.fit/assets/img/catalog/product-gallery/th_1.jpg
-        ?>
-        <!--Slide1-->
+        ?> 
         <div class="ms-slide">
             <img src="<?php echo Yii::$app->homeUrl . $image->image; ?>" data-src="<?php echo Yii::$app->homeUrl . $image->image; ?>" alt="<?= $image->title ?>"/>
             <?php
@@ -19,13 +18,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <img class="ms-thumb" src="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
             <?php } ?>
         </div>
-        <!--Slide2-->
         <?php
     }
     ?>
-    <!--
-<div class="ms-slide">
-    <img src="<?php echo $directoryAsset; ?>/masterslider/blank.gif" data-src="<?php echo $directoryAsset; ?>/img/catalog/product-gallery/1.jpg" alt="Lorem ipsum"/>
-    <img class="ms-thumb" src="<?php echo $directoryAsset; ?>/img/catalog/product-gallery/th_1.jpg" alt="thumb" />
-</div>-->
 </div>
