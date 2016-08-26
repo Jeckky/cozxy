@@ -279,17 +279,27 @@ class SiteController extends MasterController {
                 ->all();
 
         $i = 0;
+
         foreach ($query as $key => $value) {
+
+            if (count($value->image) > 0) {
+                $url_image = $value->image;
+            } else {
+                $url_image = '/images/ContentGroup/DUHWYsdXVc.png';
+            }
+
             if ($i == 0) {
                 $html = "";
-            }
-            $html .= '<div id="products-save-cat" class="category col-lg-2 col-md-2 col-sm-4 col-xs-6">
-                        <input type="hidden" id="seeMoreId[]" value="">
+            } else {
+                $html .= '<div id="products-save-cat" class="category col-lg-2 col-md-2 col-sm-4 col-xs-6">
+                        <input type="hidden" id="seeMoreId" value="' . $value->categoryId . '">
                         <a href="' . Yii::$app->homeUrl . 'search/' . $value->createTitle() . '/' . $value->encodeParams(['categoryId' => $value->categoryId]) . '">
-                        <img src="' . Yii::$app->homeUrl . $value->image . '" alt="1">
+                        <img src="' . Yii::$app->homeUrl . $url_image . '" alt="1">
                         <p>' . $value->title . '</p>
                         </a>
                      </div>';
+            }
+
             $i++;
         }
         echo $html;

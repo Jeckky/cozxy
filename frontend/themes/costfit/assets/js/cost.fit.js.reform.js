@@ -736,6 +736,7 @@ $(".see-more-x").on('click', function () {
     $(this).parent().find("#save-main-limit").find(".list-view").find(".category").each(function () {
         ids.push($(this).find('#seeMoreId').val());
     });
+    //alert(ids);
 
     $.ajax({
         type: "POST",
@@ -744,16 +745,14 @@ $(".see-more-x").on('click', function () {
         data: {'ids': ids},
         success: function (data)
         {
-            //$(this).parent().find("#save-main-limit").find(".list-view").find(".category").each(function () {
-            //ids.push($(this).find('#seeMoreId').html);
-            //});
-            $('#save-main-new').append('<div id="save-append">' + data + '</div>');
+            if (data != '') {
+                $('.list-view').append('<div id="save-append">' + data + '</div>');
+            } else {
+
+            }
         }
     });
 
-
-
-//    $('#save-main-new').append('<div id="save-append"> xxxx </div>');
 });
 
 
