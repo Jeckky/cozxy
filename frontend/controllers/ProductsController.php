@@ -80,14 +80,19 @@ class ProductsController extends MasterController {
         $res["productItem"] = $this->renderPartial('product_catalog_item', ['model' => $model, 'productId' => $_POST["productId"]]);
         $res["productTabs"] = $this->renderPartial('product_tabs_widget', ['model' => $model]);
         $res["productPriceTable"] = $this->renderPartial('_product_price_table', ['model' => $model]);
-        $res["productImage"] = $this->renderPartial('_product_image', ['model' => $model]);
-
-        //foreach ($model->productImages as $image) {
-        // $productImage = '<div class="ms-slide">'
-        //  . '<img src="' . Yii::$app->homeUrl . $image->image . '" data-src="' . Yii::$app->homeUrl . $image->image . '" alt="' . $image->title . '"/>'
-        // . '</div>';
-        // }
-        // $res["productImage"] = $productImage;
+        //$res["productImage"] = $this->renderPartial('_product_image_loadding', ['model' => $model]);
+        //echo count($model->productImages);
+        foreach ($model->productImages as $image) {
+            //$xx = '<div class="ms-slide-bgcont" style="height: 100%; opacity: 1;"><img src="/cost.fit-frontend//images/ProductImage/6FegsyR3cy.png" alt="e" style="height: 484px; width: 618.444px; margin-top: 0px; margin-left: -34px;"></div>';
+            $productImagex[] = '<img src="' . Yii::$app->homeUrl . $image->image . '" data-src="' . Yii::$app->homeUrl . $image->image . '" alt="' . $image->title . '"/>'
+            ;
+        }
+        foreach ($model->productImages as $image) {
+            $productImagexx[] = '<img class="ms-thumb" src="' . Yii::$app->homeUrl . $image->imageThumbnail2 . '" data-src="' . Yii::$app->homeUrl . $image->imageThumbnail2 . '" alt="' . $image->title . '"/>'
+            ;
+        }
+        $res["image"] = $productImagex;
+        $res["imageThumbnail2"] = $productImagexx;
         return \yii\helpers\Json::encode($res);
     }
 
