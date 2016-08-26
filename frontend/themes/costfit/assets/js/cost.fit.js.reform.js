@@ -711,31 +711,13 @@ $(".see-more").on('click', function () {
 });
 
 //  Check seeMoreSave //
-
-function seeMoreSave(btnnn) {
-    alert(btnnn.parent().html());
-    $.ajax({
-        type: "POST",
-        dataType: "JSON",
-        url: "site/save-append",
-        data: {'categoryId': 80},
-        success: function (data)
-        {
-            alert(data);
-            $('#save-main-new').append('<div id="save-append">' + data + '</div>');
-        }
-    });
-
-    $('#save-main-new').append('<div id="save-append"> xxxx </div>');
-
-}
-
 $(".see-more-x").on('click', function () {
 
     var ids = [];
     $(this).parent().find("#save-main-limit").find(".list-view").find(".category").each(function () {
         ids.push($(this).find('#seeMoreId').val());
     });
+    //alert(ids);
 
     $.ajax({
         type: "POST",
@@ -744,44 +726,64 @@ $(".see-more-x").on('click', function () {
         data: {'ids': ids},
         success: function (data)
         {
-            //$(this).parent().find("#save-main-limit").find(".list-view").find(".category").each(function () {
-            //ids.push($(this).find('#seeMoreId').html);
-            //});
-            $('#save-main-new').append('<div id="save-append">' + data + '</div>');
+            if (data != '') {
+                $('.list-view').append('<div id="save-append">' + data + '</div>');
+            } else {
+
+            }
         }
+    });
+});
+
+function changeoption(value)
+{
+    if (window.location.host == 'localhost') {
+        urls = window.location.protocol + "//" + window.location.host + '/cost.fit-frontend/products/change-option/';
+    } else if (window.location.host == '192.168.100.8') {
+        urls = window.location.protocol + "//" + window.location.host + '/cost.fit/frontend/web/products/change-option/';
+    } else {
+        urls = window.location.protocol + "//" + window.location.host + '/products/change-option/';
+    }
+
+    $.post(urls, {
+        productId: value
+    }, function (data, status) {
+
+        var JSONObject = JSON.parse(data);
+        $('#productItem').html(JSONObject.productItem);
+        $('#productTabs').html(JSONObject.productTabs);
+        $('#productImage').html(JSONObject.productImage);
+        $('.price').html(JSONObject.price);
+        $('.old-price').html(JSONObject.oldPrice);
     });
 
 
-
-//    $('#save-main-new').append('<div id="save-append"> xxxx </div>');
-});
-$('#slowest').on('ifChecked', function (event) {
-    //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
-    var orderId = $('input[id=orderId]').val();
-    $.ajax({
-        type: "POST",
-        dataType: "JSON",
-        url: "cart/save-slowest/",
-        data: {'orderId': orderId, 'type': 1},
-        success: function (data)
-        {
-
-        }
-
+    $('#slowest').on('ifChecked', function (event) {
+        //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
+        var orderId = $('input[id=orderId]').val();
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: "cart/save-slowest/",
+            data: {'orderId': orderId, 'type': 1},
+            success: function (data)
+            {
+            }
+        });
     });
-});
-$('#slowest').on('ifUnchecked', function (event) {
-    //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
-    var orderId = $('input[id=orderId]').val();
-    $.ajax({
-        type: "POST",
-        dataType: "JSON",
-        url: "cart/save-slowest/",
-        data: {'orderId': orderId, 'type': 2},
-        success: function (data)
-        {
+    $('#slowest').on('ifUnchecked', function (event) {
+        //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
+        var orderId = $('input[id=orderId]').val();
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: "cart/save-slowest/",
+            data: {'orderId': orderId, 'type': 2},
+            success: function (data)
+            {
 
-        }
+            }
 
-    });
-});
+        });
+}
+);

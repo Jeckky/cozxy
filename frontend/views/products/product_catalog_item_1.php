@@ -8,7 +8,7 @@ use common\models\costfit\Product;
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
-
+<!--Product Description-->
 <style>
     .popover-content {
         color: red;
@@ -82,7 +82,28 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <?php foreach ($model->productGroup->products as $option): ?>
                             <option <?= (isset($productId) && ($productId == $option->productId)) ? " selected" : " " ?> value="<?= $option->productId ?>"><?= $option->optionName; ?></option>
                         <?php endforeach; ?>
-                    </select> 
+                    </select>
+                    <?//php
+                    $this->registerJs("
+
+                    $('#changeOption').change(function () {
+                    $.ajax({
+                    type: \"POST\",
+                    dataType: \"JSON\",
+                    url: \"change-option/\",
+                    data: {productId: $(this).val()},
+                    success: function (data)
+                    {
+
+                    $('#productItem').html(data.productItem);
+                    $('#productTabs').html(data.productTabs);
+                    $('#productImage').html(data.productImage);
+
+                    }
+                    });
+                    });
+                    ");
+                    ?>
                 <?php endif; ?>
 
             </div>
@@ -118,7 +139,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="checkbox">
                     <label style="color: red;">
                         <input type="checkbox" id="lateShippingCheck" name="lateShippingCheck">  ต้องการส่งสินค้าราคาประหยัดอีก
-                        <?php echo $model->calProductPrice($model->productId, 1, 0, 1) - $model->calProductPrice($model->productId, 1, 0, 2) ?>  บาท (ส่งภายใน <?php echo Product::getShippingDate($model->productId, 2); ?> วัน)
+                        <?php echo $model->calProductPrice($model->productId, 1, 0, 1) - $model->calProductPrice($model->productId, 1, 0, 2) ?></span>  บาท (ส่งภายใน <?php echo Product::getShippingDate($model->productId, 2); ?> วัน)
                     </label>
                 </div>
             </div>

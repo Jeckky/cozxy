@@ -24,7 +24,7 @@ class ProductsController extends MasterController {
                 'class' => \yii\filters\AccessControl::className(),
                 'only' => ['create', 'update'],
                 'rules' => [
-// deny all POST requests
+                    // deny all POST requests
                     [
                         'allow' => false,
                         'verbs' => ['POST']
@@ -70,8 +70,9 @@ class ProductsController extends MasterController {
     }
 
     public function actionChangeOption() {
+        $productId = Yii::$app->request->post('productId');
+        $model = \common\models\costfit\Product::find()->where("productId = " . $productId)->one();
         $res = [];
-        $model = \common\models\costfit\Product::find()->where("productId = " . $_POST["productId"])->one();
         $res["productId"] = $model->productId;
         $res["productName"] = $model->title;
         $res['oldPrice'] = number_format($model->price, 2) . " ฿";
@@ -80,8 +81,14 @@ class ProductsController extends MasterController {
         $res["productTabs"] = $this->renderPartial('product_tabs_widget', ['model' => $model]);
         $res["productPriceTable"] = $this->renderPartial('_product_price_table', ['model' => $model]);
         $res["productImage"] = $this->renderPartial('_product_image', ['model' => $model]);
+
+        //foreach ($model->productImages as $image) {
+        // $productImage = '<div class="ms-slide">'
+        //  . '<img src="' . Yii::$app->homeUrl . $image->image . '" data-src="' . Yii::$app->homeUrl . $image->image . '" alt="' . $image->title . '"/>'
+        // . '</div>';
+        // }
+        // $res["productImage"] = $productImage;
         return \yii\helpers\Json::encode($res);
-        //echo $res;
     }
 
     public function actionGetProductShippingPrice() {
@@ -108,6 +115,23 @@ class ProductsController extends MasterController {
         $productId = Yii::$app->request->post('productId');
         $default = \common\models\costfit\Product::getShippingTypeId($productId);
         echo $default;
+    }
+
+    public function actionChangeOptionTest() {
+        $res = [];
+        $model = \common\models\costfit\Product::find()->where("productId = " . $_POST["productId"])->one();
+
+        $res["productId"] = $model->productId;
+        $res["productName"] = $model->title;
+        $res['oldPrice'] = number_format($model->price, 2) . " ฿";
+        $res["price"] = number_format($model->calProductPrice($model->productId, 1), 2) . " ฿";
+        $res["productItem"] = $this->renderPartial('product_catalog_item', ['model' => $model, 'productId' => $_POST["productId"]]);
+        $res["productTabs"] = $this->renderPartial('product_tabs_widget', ['model' => $model]);
+        $res["productPriceTable"] = $this->renderPartial('_product_price_table', ['model' => $model]);
+        $res["productImage"] = $this->renderPartial('_product_image', ['model' => $model]);
+
+
+        return \yii\helpers\Json::encode($res);
     }
 
 }

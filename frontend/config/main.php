@@ -95,9 +95,14 @@ return [
                 ],
                 'google' => [
 
+<<<<<<< HEAD
                     //'class' => 'yii\authclient\clients\Google',
                     'class' => 'yii\authclient\clients\GoogleOAuth',
                     //   'class' => 'yii\authclient\clients\Google',
+=======
+                    'class' => 'yii\authclient\clients\Google',
+//                    'class' => 'yii\authclient\clients\GoogleOAuth',
+>>>>>>> origin/master
                     'clientId' => '500504362756-3n51v4ic4aqak5vnomg8qmmar340no72.apps.googleusercontent.com',
                     'clientSecret' => 'tBiQFFFNp6DPojoTmd1oN_Ro',
 //                    'scope' => 'https://www.googleapis.com/auth/userinfo.email',
