@@ -16,11 +16,9 @@ use frontend\models\ContactForm;
 /**
  * Products controller
  */
-class ProductsController extends MasterController
-{
+class ProductsController extends MasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
@@ -47,8 +45,7 @@ class ProductsController extends MasterController
      *
      * @return mixed
      */
-    public function actionIndex($hash)
-    {
+    public function actionIndex($hash) {
 
         //return Yii::$app->getResponse()->redirect('register/login');
         $k = base64_decode(base64_decode($hash));
@@ -72,8 +69,7 @@ class ProductsController extends MasterController
         }
     }
 
-    public function actionChangeOption()
-    {
+    public function actionChangeOption() {
         $productId = Yii::$app->request->post('productId');
         $model = \common\models\costfit\Product::find()->where("productId = " . $productId)->one();
         $res = [];
@@ -100,8 +96,7 @@ class ProductsController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionGetProductShippingPrice()
-    {
+    public function actionGetProductShippingPrice() {
         $productId = Yii::$app->request->post('productId');
         $fastId = Yii::$app->request->post('fastId');
         $minDate = 99;
@@ -121,29 +116,10 @@ class ProductsController extends MasterController
         echo $minDate;
     }
 
-    public function actionGetDefultProductShippingPrice()
-    {
+    public function actionGetDefultProductShippingPrice() {
         $productId = Yii::$app->request->post('productId');
         $default = \common\models\costfit\Product::getShippingTypeId($productId);
         echo $default;
-    }
-
-    public function actionChangeOptionTest()
-    {
-        $res = [];
-        $model = \common\models\costfit\Product::find()->where("productId = " . $_POST["productId"])->one();
-
-        $res["productId"] = $model->productId;
-        $res["productName"] = $model->title;
-        $res['oldPrice'] = number_format($model->price, 2) . " ฿";
-        $res["price"] = number_format($model->calProductPrice($model->productId, 1), 2) . " ฿";
-        $res["productItem"] = $this->renderPartial('product_catalog_item', ['model' => $model, 'productId' => $_POST["productId"]]);
-        $res["productTabs"] = $this->renderPartial('product_tabs_widget', ['model' => $model]);
-        $res["productPriceTable"] = $this->renderPartial('_product_price_table', ['model' => $model]);
-        $res["productImage"] = $this->renderPartial('_product_image', ['model' => $model]);
-
-
-        return \yii\helpers\Json::encode($res);
     }
 
 }

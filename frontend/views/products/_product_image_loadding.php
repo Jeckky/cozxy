@@ -47,11 +47,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     slider.control('arrows');
     slider.control('thumblist', {autohide: false, dir: 'h', arrows: false, align: 'bottom', width: 127, height: 137, margin: 5, space: 5});
 
+
     slider.setup('masterslider', {
         width: 553,
         height: 484,
         space: 5,
-        view: 'scale'
+        view: 'scale',
     });
 
 </script>
