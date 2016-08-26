@@ -4,7 +4,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 //echo '<pre>';
 ?>
 
-<link href="/cost.fit-frontend/assets/243cd55c/masterslider/style/masterslider.css" rel="stylesheet">
+<link href="<?php $baseUrl; ?>/masterslider/style/masterslider.css" rel="stylesheet">
 
 <div class="col-lg-12 col-md-12" id="productImage" style="position: relative;  padding-right: 0px; padding-left: 0px;">
     <div class="prod-gal master-slider ms-wk" id="prod-gal" style="margin: 0px; visibility: visible; opacity: 1">
@@ -39,7 +39,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!-- end of template -->
 
 <!-- Master Slider -->
-<script src="/cost.fit-frontend/assets/243cd55c/js/plugins/masterslider.min.js"></script>
+<script src="<?php $baseUrl; ?>/js/plugins/masterslider.min.js"></script>
 <script type="text/javascript">
 
     var slider = new MasterSlider();

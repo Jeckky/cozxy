@@ -82,7 +82,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <?php foreach ($model->productGroup->products as $option): ?>
                             <option <?= (isset($productId) && ($productId == $option->productId)) ? " selected" : " " ?> value="<?= $option->productId ?>"><?= $option->optionName; ?></option>
                         <?php endforeach; ?>
-                    </select> 
+                    </select>
                 <?php endif; ?>
 
             </div>
@@ -207,3 +207,16 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <div class="col-lg-6 col-md-6" id="productImage">
     <?php echo $this->render('_product_image', ['model' => $model]); ?>
 </div>
+<script src="/cost.fit-frontend/assets/243cd55c/js/plugins/icheck.min.js"></script>
+<script>
+                        $('input').iCheck();
+                        /*
+                         $('input').iCheck({
+                         checkboxClass: 'icheckbox_square-blue',
+                         radioClass: 'iradio_square-blue',
+                         increaseArea: '20%' // optional
+                         });
+                         */
+
+</script>
+
