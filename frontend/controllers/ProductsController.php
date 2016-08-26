@@ -84,7 +84,7 @@ class ProductsController extends MasterController
         $res["productItem"] = $this->renderPartial('product_catalog_item', ['model' => $model, 'productId' => $_POST["productId"]]);
         $res["productTabs"] = $this->renderPartial('product_tabs_widget', ['model' => $model]);
         $res["productPriceTable"] = $this->renderPartial('_product_price_table', ['model' => $model]);
-        //$res["productImage"] = $this->renderPartial('_product_image_loadding', ['model' => $model]);
+        $res["productImage"] = $this->renderPartial('_product_image_loadding', ['model' => $model]);
         //echo count($model->productImages);
         foreach ($model->productImages as $image) {
             //$xx = '<div class="ms-slide-bgcont" style="height: 100%; opacity: 1;"><img src="/cost.fit-frontend//images/ProductImage/6FegsyR3cy.png" alt="e" style="height: 484px; width: 618.444px; margin-top: 0px; margin-left: -34px;"></div>';
