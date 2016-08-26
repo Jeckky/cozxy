@@ -711,8 +711,6 @@ $(".see-more").on('click', function () {
 });
 
 //  Check seeMoreSave //
-
-
 $(".see-more-x").on('click', function () {
 
     var ids = [];
@@ -737,7 +735,6 @@ $(".see-more-x").on('click', function () {
     });
 });
 
-
 function changeoption(value)
 {
     if (window.location.host == 'localhost') {
@@ -751,8 +748,8 @@ function changeoption(value)
     $.post(urls, {
         productId: value
     }, function (data, status) {
-        var JSONObject = JSON.parse(data);
 
+        var JSONObject = JSON.parse(data);
         $('#productItem').html(JSONObject.productItem);
         $('#productTabs').html(JSONObject.productTabs);
         $('#productImage').html(JSONObject.productImage);
