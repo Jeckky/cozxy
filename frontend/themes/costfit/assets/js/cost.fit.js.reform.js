@@ -789,6 +789,5 @@ $('#slowest').on('ifUnchecked', function (event) {
         {
 
         }
-
     });
 });
