@@ -91,7 +91,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     ?>
                 </div>
                 <div class="row" id="save-main-limit"></div>
-                <div class="row text-right see-more-x col-md-12">See more <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+                <div class="row see-more-x col-md-12 text-right">
+                    <span class="btn btn-primary btn-xs ">See more <i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                </div>
             </div>
         </section><!--Categories Close-->
         <!--Saved Category-->
