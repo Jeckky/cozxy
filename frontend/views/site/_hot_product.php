@@ -16,7 +16,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <?php } ?>
                 <?php echo $model->title; ?>
             </a>
-            <span class="tile-overlay"></span> 
+            <span class="tile-overlay"></span>
         </div>
     </div>
 <?php } else { ?>
