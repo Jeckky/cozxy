@@ -1,7 +1,7 @@
 <?php
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
-//echo '<pre>';
+//echo '<pre>';   
 ?>
 
 <link href="<?php echo $directoryAsset; ?>/masterslider/style/masterslider.css" rel="stylesheet">
