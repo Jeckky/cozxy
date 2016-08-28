@@ -8,9 +8,9 @@ use common\models\costfit\Product;
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
-<!--
+
 <link href="<?php echo $directoryAsset; ?>/masterslider/style/masterslider.css" rel="stylesheet">
--->
+
 <style>
     .popover-content {
         color: red;
@@ -213,18 +213,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <script src="<?php echo $directoryAsset; ?>/js/plugins/icheck.min.js"></script>
 <script>
                 $('input').iCheck();
-                /*$('input').iCheck('check', function () {
-                 alert('Well done, Sir');
-                 });
-                 // $('input').iCheck();
-
-                 $('input').iCheck({
-                 checkboxClass: 'icheckbox_square-blue',
-                 radioClass: 'iradio_square-blue',
-                 increaseArea: '20%' // optional
-                 });
-                 */
-
                 $('#lateShippingCheck').on('ifChecked', function (event) {
                     //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
                     //alert('xxx');
@@ -317,4 +305,5 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 });
 
 </script>
+
 

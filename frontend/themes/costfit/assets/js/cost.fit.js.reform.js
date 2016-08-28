@@ -658,7 +658,7 @@ $("#GuestaddItemToWishlist").on('click', function () {
 //});
 $('#lateShippingCheck').on('ifChecked', function (event) {
     //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
-    alert('xxx');
+    //alert('xxx');
     var productId = $('input[id=productId]').val();
     var fastId = $('input[id=fastId]').val();
     //alert(productId);
