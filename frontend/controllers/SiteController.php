@@ -236,7 +236,10 @@ class SiteController extends MasterController {
         // exit();
         $attributes = $client->getUserAttributes();
 
-        throw new \yii\base\Exception(print_r($attributes, true));
+        //  throw new \yii\base\Exception($_GET['authclient']);
+        //throw new \yii\base\Exception(print_r($attributes, true));
+        $auth_type = '';
+
         if (isset($attributes['email'])) {
 //facebook
             echo 'facebook';
@@ -244,19 +247,20 @@ class SiteController extends MasterController {
             $name = explode(' ', $attributes['name']);
             $fName = current($name);
             $lName = end($name);
+            $auth_type = 'facebook';
         } else {
 //google
-            echo 'google';
+
             $fName = $attributes['name']['givenName'];
             $lName = $attributes['name']['familyName'];
             $email = $attributes['emails'][0]['value'];
+            $auth_type = 'google';
         }
 
         $user = \common\models\costfit\User::find()->where(['email' => $email])->one();
         if (!empty($user)) {
-            // $model = \common\models\User::findOne(['email' => $email]);
             $login = new LoginForm();
-            $login->login2();
+            $login->login2($user);
             //Yii::$app->user->login($model);
             // throw new \yii\base\Exception(print_r(\Yii::$app->user->identity, true));
 //            if (\Yii::$app->user->isGuest) {
@@ -274,18 +278,17 @@ class SiteController extends MasterController {
             $model->username = $model->email = $email;
             $model->firstname = $fName;
             $model->lastname = $lName;
-            $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
-            $model->status = 0;
+            //$model->auth_type = $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
+            $model->password = $attributes['id'];
+            $model->auth_key = $model->password_hash = Yii::$app->security->generatePasswordHash($attributes['id']);
+            $model->auth_type = $auth_type;
+            $model->status = 1;
             $model->token = Yii::$app->security->generateRandomString(10);
             $model->createDateTime = new \yii\db\Expression("NOW()");
             $model->save(false);
-
-            return $this->redirect(['register/thank']);
-
-//login
-            // if (Yii::$app->getUser()->login($user)) {
-            //  return $this->goHome();
-            //}
+            $login = new LoginForm();
+            $user = \common\models\costfit\User::find()->where(['email' => $email])->one();
+            $login->login2($user);
         }
     }
 
