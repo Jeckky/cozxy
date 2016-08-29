@@ -235,7 +235,7 @@ class SiteController extends MasterController {
 
         if (isset($attributes['email'])) {
             //facebook
-            echo 'facebook';
+            //echo 'facebook';
             $email = $attributes['email'];
             $name = explode(' ', $attributes['name']);
             $fName = current($name);
