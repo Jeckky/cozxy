@@ -255,13 +255,13 @@ class SiteController extends MasterController {
             $login = new LoginForm();
             if ($user->status == 0) {
                 // กรณี status = 0 http://localhost/cost.fit-frontend/register/thank
-                if ($user->auth_type == 'facebook') {
-                    $status = '1';
-                } elseif ($user->auth_type == 'google') {
-                    $status = '2';
-                } else {
-                    $status = '3';
-                }
+                //if ($user->auth_type == 'facebook') {
+                $status = 1;
+                //} else if ($user->auth_type == 'google') {
+                //$status = 2;
+                //} else {
+                // $status = 3;
+                //}
 
 
                 $this->redirect(['register/thank', 'status' => $status]);

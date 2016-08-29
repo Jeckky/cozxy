@@ -36,11 +36,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             <!--กรุณากด  <a href="<?php echo Yii::$app->homeUrl; ?>register/confirm?token=1dqibNCP7K"> ลิงค์ เพื่อดู ยืนยันการสมัคร</a>-->
 
                             <?php
+                            //echo $_GET['status'];
                             if ($_GET['status'] == 1) {
                                 echo '<span style="color: red">อีเมล์มีอยู่ในระบบแล้ว</span> กรุณาตรวจสอบอีเมล์อีกครั้ง ';
                             } else if ($_GET['status'] == 2) {
                                 echo '<span style="color: red">อีเมล์มีอยู่ในระบบแล้ว</span> กรุณาตรวจสอบอีเมล์อีกครั้ง ';
-                            } elseif ($_GET['status'] == 3) {
+                            } else if ($_GET['status'] == 3) {
                                 echo ' กรุณาตรวจสอบอีเมล์ที่ลงสมัครไว้ เพื่อยืนยันการเป็นสมัครสมาชิก';
                             } else {
                                 echo ' กรุณาตรวจสอบอีเมล์ที่ลงสมัครไว้ เพื่อยืนยันการเป็นสมัครสมาชิก';
