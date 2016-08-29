@@ -231,6 +231,8 @@ class SiteController extends MasterController {
 
     public function successCallback($client) {
         $attributes = $client->getUserAttributes();
+        //  throw new \yii\base\Exception($_GET['authclient']);
+        //throw new \yii\base\Exception(print_r($attributes, true));
         $auth_type = '';
         if (isset($attributes['email'])) {
 //facebook
@@ -241,6 +243,7 @@ class SiteController extends MasterController {
             $auth_type = 'facebook';
         } else {
 //google
+
             $fName = $attributes['name']['givenName'];
             $lName = $attributes['name']['familyName'];
             $email = $attributes['emails'][0]['value'];
