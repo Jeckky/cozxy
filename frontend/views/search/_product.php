@@ -2,7 +2,7 @@
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 // throw new \yii\base\Exception(print_r($model->attributes, true));
-echo 'products id : ' . $model->productId . '<br>';
+//echo 'products id : ' . $model->productId . '<br>';
 ?>
 
 <!--Tile-->

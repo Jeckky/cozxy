@@ -17,8 +17,7 @@ use frontend\models\ContactForm;
 /**
  * Search controller
  */
-class SearchController extends MasterController
-{
+class SearchController extends MasterController {
 
     public $enableCsrfValidation = false;
 
@@ -27,8 +26,7 @@ class SearchController extends MasterController
      *
      * @return mixed
      */
-    public function actionIndex($title, $hash)
-    {
+    public function actionIndex($title, $hash) {
         //throw new \yii\base\Exception($title);
         $k = base64_decode(base64_decode($hash));
         $params = ModelMaster::decodeParams($hash);
@@ -43,8 +41,8 @@ class SearchController extends MasterController
         $whereArray["product_price.quantity"] = 1;
 
         $products = \common\models\costfit\CategoryToProduct::find()
-        ->join("LEFT JOIN", "product_price", "product_price.productId = category_to_product.productId")
-        ->where($whereArray);
+                ->join("LEFT JOIN", "product_price", "product_price.productId = category_to_product.productId")
+                ->where($whereArray);
 
         if (isset($_POST["min"])) {
             $products->andWhere("product_price.price >=" . $_POST["min"]);
@@ -57,11 +55,11 @@ class SearchController extends MasterController
             'query' => $products,
         ]);
 
+
         return $this->render('search', ['products' => $products]);
     }
 
-    public function actionPop($category)
-    {
+    public function actionPop($category) {
         //throw new \yii\base\Exception($category);
         $this->layout = "/content_left";
         $this->title = 'Cost.fit | Products';
@@ -78,8 +76,8 @@ class SearchController extends MasterController
 
         //throw new \yii\base\Exception($categoryId);
         $products = \common\models\costfit\Product::find()
-        ->join("INNER JOIN", "category_to_product ctp", 'ctp.productId = product.productId')
-        ->where("ctp.categoryId in($categoryId)");
+                ->join("INNER JOIN", "category_to_product ctp", 'ctp.productId = product.productId')
+                ->where("ctp.categoryId in($categoryId)");
 
         $products = new \yii\data\ActiveDataProvider([
             'query' => $products,
