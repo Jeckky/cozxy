@@ -28,12 +28,24 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="col-lg-1 col-md-1">
                 &nbsp;
             </div>
-            <div class="col-lg-5 col-md-5">
+            <div class="col-lg-6 col-md-6">
                 <h2 class="title">ขอบคุณที่ลงทะเบียนกับ COST.FIT</h2>
                 <div class="row space-top">
                     <div class="clo-lg-12 col-md-12 col-sm-12 space-bottom">
                         <h4 class="light-weight uppercase">
-                            กรุณากด  <a href="<?php echo Yii::$app->homeUrl; ?>register/confirm?token=1dqibNCP7K"> ลิงค์ เพื่อดู ยืนยันการสมัคร</a>
+                            <!--กรุณากด  <a href="<?php echo Yii::$app->homeUrl; ?>register/confirm?token=1dqibNCP7K"> ลิงค์ เพื่อดู ยืนยันการสมัคร</a>-->
+
+                            <?php
+                            if ($_GET['status'] == 1) {
+                                echo '<span style="color: red">อีเมล์มีอยู่ในระบบแล้ว</span> กรุณาตรวจสอบอีเมล์อีกครั้ง ';
+                            } else if ($_GET['status'] == 2) {
+                                echo '<span style="color: red">อีเมล์มีอยู่ในระบบแล้ว</span> กรุณาตรวจสอบอีเมล์อีกครั้ง ';
+                            } elseif ($_GET['status'] == 3) {
+                                echo ' กรุณาตรวจสอบอีเมล์ที่ลงสมัครไว้ เพื่อยืนยันการเป็นสมัครสมาชิก';
+                            } else {
+                                echo ' กรุณาตรวจสอบอีเมล์ที่ลงสมัครไว้ เพื่อยืนยันการเป็นสมัครสมาชิก';
+                            }
+                            ?>
                         </h4>
                         <p>อีเมลฉบับนี้เป็นการแจ้งข้อมูลโดยอัตโนมัติ กรุณาอย่าตอบกลับ</p>
                     </div>
@@ -41,7 +53,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </div>
 
             <!--Sidebar-->
-            <div class="col-lg-5 col-lg-offset-1 col-md-5">
+            <div class="col-lg-4 col-lg-offset-1 col-md-4">
                 <!--Contact Info-->
                 <h3>Contact info</h3>
                 <div class="latest-posts">

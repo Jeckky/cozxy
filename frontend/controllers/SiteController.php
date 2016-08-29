@@ -253,7 +253,21 @@ class SiteController extends MasterController {
         $user = \common\models\costfit\User::find()->where(['email' => $email])->one();
         if (!empty($user)) {
             $login = new LoginForm();
-            $login->login2($user);
+            if ($user->status == 0) {
+                // กรณี status = 0 http://localhost/cost.fit-frontend/register/thank
+                if ($user->auth_type == 'facebook') {
+                    $status = '1';
+                } elseif ($user->auth_type == 'google') {
+                    $status = '2';
+                } else {
+                    $status = '3';
+                }
+
+
+                $this->redirect(['register/thank', 'status' => $status]);
+            } else {
+                $login->login2($user);
+            }
         } else {
             $model = new \common\models\costfit\User(['scenario' => 'register']);
             $model->username = $model->email = $email;
