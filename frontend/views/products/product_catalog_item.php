@@ -195,11 +195,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 $tags = explode(',', $model->tags);
                 if (count($model->tags) > 0) {
                     foreach (explode(',', $model->tags) as $key => $value) {
-                        echo '<a href="' . $baseUrl . '/search-cost-fit?search_hd=' . trim($value) . '">' . $value . '</a> &nbsp ,';
+                        echo '<a href="' . Yii::$app->homeUrl . 'search-cost-fit?search_hd=' . trim($value) . '">' . $value . '</a> &nbsp ,';
                     }
                 }
                 ?>
-                <a href="<?php $baseUrl ?>/search-cost-fit?search_hd=cost.fit">cost.fit</a>
+                <a href="<?php echo Yii::$app->homeUrl; ?>search-cost-fit?search_hd=cost.fit">cost.fit</a>
             </div>
         </div>
     </div>
