@@ -241,7 +241,7 @@ class SiteController extends MasterController {
         $auth_type = '';
 
         if (isset($attributes['email'])) {
-//facebook
+            //facebook
             echo 'facebook';
             $email = $attributes['email'];
             $name = explode(' ', $attributes['name']);
@@ -249,7 +249,7 @@ class SiteController extends MasterController {
             $lName = end($name);
             $auth_type = 'facebook';
         } else {
-//google
+            //google
 
             $fName = $attributes['name']['givenName'];
             $lName = $attributes['name']['familyName'];
