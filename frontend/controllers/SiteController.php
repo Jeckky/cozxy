@@ -231,7 +231,7 @@ class SiteController extends MasterController {
 
     public function successCallback($client) {
         $attributes = $client->getUserAttributes();
-//        throw new \yii\base\Exception(print_r($attributes, true));
+        // throw new \yii\base\Exception(print_r($attributes, true));
         if (isset($attributes['email'])) {
 //facebook
             $email = $attributes['email'];
@@ -244,30 +244,46 @@ class SiteController extends MasterController {
             $lName = $attributes['name']['familyName'];
             $email = $attributes['emails'][0]['value'];
         }
-
-        $user = User::find()->where(['email' => $email])->one();
+        // throw new \yii\base\Exception($email);
+        $user = \common\models\costfit\User::find()->where(['email' => $email])->one();
         if (!empty($user)) {
-            Yii::$app->user->login($user);
+            // $model = \common\models\User::findOne(['email' => $email]);
+            $login = new LoginForm();
+            $login->login2();
+            //Yii::$app->user->login($model);
+            // throw new \yii\base\Exception(print_r(\Yii::$app->user->identity, true));
+//            if (\Yii::$app->user->isGuest) {
+//                throw new \yii\base\Exception(1111);
+//            } else {
+//                throw new \yii\base\Exception(222);
+//            }
+//            return $this->redirect(['register/thank']);
+//            Yii::$app->user->login($model->getUser());
         } else {
 //            $session = Yii::$app->session;
 //            $session['attributes'] = $attributes;
 //            $this->successUrl = Url::to(['signup']);
-
-            $model = new SignupForm();
+            $model = new \common\models\costfit\User(['scenario' => 'register']);
             $model->username = $model->email = $email;
-            $model->password = substr(md5(time()), 0, 8);
-            $model->fName = $fName;
-            $model->lName = $lName;
-            if ($user = $model->signup(2)) {
+            $model->firstname = $fName;
+            $model->lastname = $lName;
+            $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
+            $model->status = 0;
+            $model->token = Yii::$app->security->generateRandomString(10);
+            $model->createDateTime = new \yii\db\Expression("NOW()");
+            $model->save(false);
+
+            return $this->redirect(['register/thank']);
+
 //login
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
-            }
+            // if (Yii::$app->getUser()->login($user)) {
+            //  return $this->goHome();
+            //}
         }
     }
 
-    public function actionSaveAppend() {
+    public
+            function actionSaveAppend() {
 //$saveCat = Category::findAllSaveCategory();
         $ids = implode(",", $_POST['ids']);
         $html = '<div id="products-save-cat" class="category col-lg-2 col-md-2 col-sm-4 col-xs-6"> </div>';
