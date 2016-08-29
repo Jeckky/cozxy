@@ -303,9 +303,17 @@ class SiteController extends MasterController {
             $i++;
         }
         echo $html;
-        //echo '<pre>';
-        // print_r($query);
-        //return json_encode($query);
+//echo '<pre>';
+// print_r($query);
+//return json_encode($query);
+    }
+
+    public function actionOauth2Callback() {
+
+    }
+
+    public function actionAuth() {
+
     }
 
 }

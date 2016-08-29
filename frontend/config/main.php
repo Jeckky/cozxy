@@ -96,8 +96,8 @@ return [
                 'google' => [
                     'class' => 'yii\authclient\clients\Google',
                     //'class' => 'yii\authclient\clients\GoogleOAuth',
-                    'clientId' => '500504362756-3n51v4ic4aqak5vnomg8qmmar340no72.apps.googleusercontent.com',
-                    'clientSecret' => 'tBiQFFFNp6DPojoTmd1oN_Ro',
+                    'clientId' => '51351302330-9bnvl3nmdqmdspqece4rlbc71br0o5sh.apps.googleusercontent.com',
+                    'clientSecret' => 'N739bef0DKOS7VUKT4DKmAL2',
 //                    'scope' => 'https://www.googleapis.com/auth/userinfo.email',
                     'scope' => 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email',
                     'returnUrl' => 'http://localhost/cost.fit-frontend/site/auth?authclient=google',
