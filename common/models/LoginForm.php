@@ -60,9 +60,9 @@ class LoginForm extends Model {
         }
     }
 
-    public function login2() {
-
-        return Yii::$app->user->login($this->getUser(), 3600 * 24 * 30);
+    public function login2($user) {
+        $user1 = User::findByUsername($user->email);
+        return Yii::$app->user->login($user1, 3600 * 24 * 30);
     }
 
     /**
@@ -74,7 +74,6 @@ class LoginForm extends Model {
         if ($this->_user === null) {
             $this->_user = User::findByUsername($this->email);
         }
-
         return $this->_user;
     }
 
