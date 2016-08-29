@@ -113,7 +113,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         </tr>
                         <tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้ารวมภาษีมูลค่าเพิ่ม / sub Total Included VAT :</td>
-                            <td class="bg-purchase-order"><?php echo $order->vat; ?></td>
+                            <td class="bg-purchase-order"><?php echo $order->summary; ?></td>
                         </tr>
                         <!--
                         <tr>
@@ -134,7 +134,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                             <td class="bg-purchase-order"><?php echo $order->summary; ?></td>
                         </tr>
 
-                    </tbody> 
+                    </tbody>
                 </table>
             </div>
         </div>
