@@ -2,6 +2,7 @@
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 // throw new \yii\base\Exception(print_r($model->attributes, true));
+echo 'products id : ' . $model->productId . '<br>';
 ?>
 
 <!--Tile-->
@@ -11,7 +12,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="badges">
                 <span class="sale">Sale</span>
             </div>
-            <div class="price-label"><?= isset($model->productOnePrice) ? $model->productOnePrice->price : "Not Set"; ?> ฿</div> 
+            <div class="price-label"><?= isset($model->productOnePrice) ? $model->productOnePrice->price : "Not Set"; ?> ฿</div>
             <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $model->productId]) ?>" style="/*min-height: 210px; max-height: 210px;*/">
                 <?php if (isset($model->productImages[0]->imageThumbnail1) && !empty($model->productImages[0]->imageThumbnail1)): ?>
                     <img src="<?php echo Yii::$app->homeUrl . $model->productImages[0]->imageThumbnail1; ?>" alt="1"/>
