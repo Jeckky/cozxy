@@ -98,12 +98,11 @@ return [
 
                     //'class' => 'yii\authclient\clients\Google',
                     'class' => 'yii\authclient\clients\GoogleOAuth',
-                    //   'class' => 'yii\authclient\clients\Google',
                     'clientId' => '500504362756-3n51v4ic4aqak5vnomg8qmmar340no72.apps.googleusercontent.com',
                     'clientSecret' => 'tBiQFFFNp6DPojoTmd1oN_Ro',
 //                    'scope' => 'https://www.googleapis.com/auth/userinfo.email',
                     'scope' => 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email',
-                    'returnUrl' => 'http://localhost/areawow-frontend/site/auth?authclient=google',
+                    'returnUrl' => 'http://localhost/cost.fit-frontend/site/auth?authclient=google',
                 ]
             ],
         ],

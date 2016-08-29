@@ -476,6 +476,7 @@ var x = "Total Height: " + screen.height;
 
 //Add(+/-) Button Number Incrementers
 $(".incr-btn-cart").on("click", function (e) {
+
     event.preventDefault();
     var $button = $(this);
     var oldValue = $button.parent().find("input").val();
@@ -657,6 +658,7 @@ $("#GuestaddItemToWishlist").on('click', function () {
 //});
 $('#lateShippingCheck').on('ifChecked', function (event) {
     //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
+    //alert('xxx');
     var productId = $('input[id=productId]').val();
     var fastId = $('input[id=fastId]').val();
     //alert(productId);
@@ -750,9 +752,12 @@ function changeoption(value)
     }, function (data, status) {
 
         var JSONObject = JSON.parse(data);
+        //alert(JSONObject.productImagexx);
         $('#productItem').html(JSONObject.productItem);
         $('#productTabs').html(JSONObject.productTabs);
         $('#productImage').html(JSONObject.productImage);
+        $('#image-thumbmail2').html(JSONObject.image);
+        $('#image-thumbmail222').html(JSONObject.imageThumbnail2);
         $('.price').html(JSONObject.price);
         $('.old-price').html(JSONObject.oldPrice);
     });
@@ -786,6 +791,5 @@ $('#slowest').on('ifUnchecked', function (event) {
         {
 
         }
-
     });
 });

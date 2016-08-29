@@ -5,7 +5,7 @@
     <input type="hidden" id="seeMoreId" value="<?php echo $model->categoryId; ?>">
     <a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $model->createTitle() ?>/<?= $model->encodeParams(['categoryId' => $model->categoryId]) ?>">
         <img src="<?php echo (isset($model->image) && !empty($model->image)) ? Yii::$app->homeUrl . $model->image : Yii::$app->homeUrl . "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1"/>
-        <p><?= $model->title; ?></p>
+        <p ><?= $model->title; ?></p>
     </a>
 </div>
 <!--Categories Close-->
