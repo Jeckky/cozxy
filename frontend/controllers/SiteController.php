@@ -230,14 +230,7 @@ class SiteController extends MasterController {
     }
 
     public function successCallback($client) {
-        //echo $_GET[''];
-        //throw new \yii\base\Exception($_GET['authclient']);
-        //throw new \yii\base\Exception(print_r($client, TRUE));
-        // exit();
         $attributes = $client->getUserAttributes();
-
-        //  throw new \yii\base\Exception($_GET['authclient']);
-        //throw new \yii\base\Exception(print_r($attributes, true));
         $auth_type = '';
 
         if (isset($attributes['email'])) {
@@ -261,19 +254,7 @@ class SiteController extends MasterController {
         if (!empty($user)) {
             $login = new LoginForm();
             $login->login2($user);
-            //Yii::$app->user->login($model);
-            // throw new \yii\base\Exception(print_r(\Yii::$app->user->identity, true));
-//            if (\Yii::$app->user->isGuest) {
-//                throw new \yii\base\Exception(1111);
-//            } else {
-//                throw new \yii\base\Exception(222);
-//            }
-//            return $this->redirect(['register/thank']);
-//            Yii::$app->user->login($model->getUser());
         } else {
-//            $session = Yii::$app->session;
-//            $session['attributes'] = $attributes;
-//            $this->successUrl = Url::to(['signup']);
             $model = new \common\models\costfit\User(['scenario' => 'register']);
             $model->username = $model->email = $email;
             $model->firstname = $fName;
