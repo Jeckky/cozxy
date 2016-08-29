@@ -100,7 +100,7 @@ return [
                     'clientSecret' => 'tBiQFFFNp6DPojoTmd1oN_Ro',
 //                    'scope' => 'https://www.googleapis.com/auth/userinfo.email',
                     'scope' => 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email',
-                    'returnUrl' => 'http://localhost/areawow-frontend/site/auth?authclient=google',
+                    'returnUrl' => 'http://localhost/cost.fit-frontend/site/auth?authclient=google',
                 ]
             ],
         ],

@@ -17,6 +17,7 @@ use Yii;
     * @property string $token
     * @property integer $type
     * @property string $auth_key
+    * @property string $auth_type
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -45,6 +46,7 @@ return [
             [['type', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['username', 'firstname', 'password', 'lastname', 'email'], 'string', 'max' => 200],
+            [['auth_type'], 'string', 'max' => 45],
         ];
 }
 
@@ -64,6 +66,7 @@ return [
     'token' => Yii::t('user', 'Token'),
     'type' => Yii::t('user', 'Type'),
     'auth_key' => Yii::t('user', 'Auth Key'),
+    'auth_type' => Yii::t('user', 'Auth Type'),
     'status' => Yii::t('user', 'Status'),
     'createDateTime' => Yii::t('user', 'Create Date Time'),
     'updateDateTime' => Yii::t('user', 'Update Date Time'),
