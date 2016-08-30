@@ -372,16 +372,14 @@ $("#place-order").on('click', function () {
     var _payment01 = $('input[id=payment01]:checked').val();
     var _placeUserId = $('input[id=placeUserId]').val();
     var _placeOrderId = $('input[id=placeOrderId]').val();
+    var _countItems = $('input[id=countItems]').val();
     var _notes = $("#order-notes").val();
     if (_placeUserId == '') {
         $("#modal-cart-not-item").modal('show');
     }
 
-    if (_placeOrderId == '') {
-        $("#modal-cart-not-item").modal('show');
-    }
 
-    if (_placeOrderId == '') {
+    if (_countItems == '') {
         //alert('สินค้าในตะกร้า 0 รายการ');
         $("#modal-cart-not-item").modal('show');
         //window.location = 'site';

@@ -166,13 +166,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <input class="btn btn-black btn-block" type="submit"onclick="$('#checkout-form').submit();" name="place-order" value="Place order">
                 -->
                 <?php
-                if (isset($this->params['cart']['orderId'])) {
+                if (count($this->params['cart']['orderId'])) {
                     $orderId = $this->params['cart']['orderId'];
                 } else {
                     $orderId = NULL;
                 }
                 echo Html::hiddenInput("placeUserId", (!Yii::$app->user->isGuest) ? Yii::$app->user->id : 0, ['id' => 'placeUserId']);
                 echo Html::hiddenInput("placeOrderId", $orderId, ['id' => 'placeOrderId']);
+                echo Html::hiddenInput("countItems", (count($this->params['cart']['items']) > 0) ? count($this->params['cart']['items']) : NULL, ['id' => 'countItems']);
                 ?>
                 <input class="btn btn-black btn-block" type="submit" name="place-order" id="place-order" value="Place order">
             </div>

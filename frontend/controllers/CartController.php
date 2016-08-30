@@ -106,19 +106,6 @@ class CartController extends MasterController {
             $order->save(); // Save For Cal new total
             $cartArray = \common\models\costfit\Order::findCartArray();
             $res["cart"] = $cartArray;
-//            $pQuan = 0;
-//            foreach ($cartArray["items"] as $item) {
-//                if ($item["productId"] == $id) {
-//                    $pQuan+=$item["qty"];
-//                }
-//            }
-//            $product = new \common\models\costfit\Product();
-//            $maxQuantity = $product->findMaxQuantity($id);
-//            if ($pQuan >= $maxQuantity) {
-//                $res["isMaxQuantity"] = TRUE;
-//            } else {
-//                $res["isMaxQuantity"] = FALSE;
-//            }
         } else {
             $res["status"] = FALSE;
         }

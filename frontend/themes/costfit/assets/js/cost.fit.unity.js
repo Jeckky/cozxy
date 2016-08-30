@@ -87,7 +87,7 @@ $(document).ready(function (e) {
         var orderItemId = $(this).parent().find("#orderItemId").val();
         var $positionQty = parseInt($('.cart-btn a span').text());
         var itemQty = $('.cart-dropdown .item').find("#qty").val();
-        alert($baseUrl);
+        //alert($baseUrl);
         $.ajax({
             type: "POST",
             dataType: "JSON",
@@ -113,9 +113,16 @@ $(document).ready(function (e) {
                             }
                             if ($('.shopping-cart .cart-sidebar .cart-totals .total').html() !== undefined)
                             {
+                                $('.shopping-cart .cart-sidebar .cart-totals .subtotal').html(data.cart.totalWithoutDiscountText + " ฿");
                                 $('.shopping-cart .cart-sidebar .cart-totals .total').html(data.cart.totalFormatText);
                                 $('.shopping-cart .cart-sidebar .cart-totals .shipping').html(data.cart.shippingFormatText);
                                 $('.shopping-cart .cart-sidebar .cart-totals .summary').html(data.cart.summaryFormatText);
+                                //alert(data.cart.items.length);
+                                //alert($('.shopping-cart .item-list .showSlow').html());
+                                if (data.cart.items.length == 0) {
+                                    $('.shopping-cart #showSlow').addClass("hide");
+                                }
+
                             }
                         });
                     });
@@ -193,7 +200,7 @@ $(document).ready(function (e) {
         $addedToCartMessage.find('p').text('"' + $itemName + '"' + '  ' + 'was successfully added to your cart.');
 //        var getUrl = window.location;
 //        var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-//        alert(baseUrl); 
+//        alert(baseUrl);
 
         $.ajax({
             type: "POST",
