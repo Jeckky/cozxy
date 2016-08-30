@@ -23,7 +23,7 @@ $(document).ready(function (e) {
     } else if (window.location.host == '192.168.100.8') {
         $baseUrl = window.location.protocol + "//" + window.location.host + '/cost.fit/frontend/web/';
     } else {
-        $baseUrl = window.location.protocol + "//" + window.location.host + '/cart/delete-cart-item';
+        $baseUrl = window.location.protocol + "//" + window.location.host + '/';
     }
 
     /*Adding Placeholder Support in Older Browsers

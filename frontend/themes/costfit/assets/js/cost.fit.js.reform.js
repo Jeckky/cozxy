@@ -378,7 +378,6 @@ $("#place-order").on('click', function () {
         $("#modal-cart-not-item").modal('show');
     }
 
-
     if (_countItems == '') {
         //alert('สินค้าในตะกร้า 0 รายการ');
         $("#modal-cart-not-item").modal('show');
