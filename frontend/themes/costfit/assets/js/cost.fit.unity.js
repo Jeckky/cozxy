@@ -17,7 +17,14 @@ $(document).ready(function (e) {
      *******************************************/
 
     var $addToCartBtn = $('#addItemToCartUnity');
-
+    var $baseUrl = window.location.protocol + "//" + window.location.host;
+    if (window.location.host == 'localhost') {
+        $baseUrl = window.location.protocol + "//" + window.location.host + '/cost.fit-frontend/';
+    } else if (window.location.host == '192.168.100.8') {
+        $baseUrl = window.location.protocol + "//" + window.location.host + '/cost.fit/frontend/web/';
+    } else {
+        $baseUrl = window.location.protocol + "//" + window.location.host + '/cart/delete-cart-item';
+    }
 
     /*Adding Placeholder Support in Older Browsers
      ************************************************/
@@ -25,19 +32,21 @@ $(document).ready(function (e) {
 
     /*Shopping Cart Dropdown
      *******************************************/
-    //Deleting Items
+    //wishlist
 
 
     $(document).on('click', '.cart-dropdown .delete', function () {
+
         var $target = $(this).parent().parent();
         var $positions = $('.cart-dropdown .item');
         var $positionQty = parseInt($('.cart-btn a span').text());
         var orderItemId = $(this).find("#orderItemId").val();
         var itemQty = $(this).parent().parent().find(".qty").find("#qty").val();
+
         $.ajax({
             type: "POST",
             dataType: "JSON",
-            url: "../cart/delete-cart-item?id=" + orderItemId,
+            url: $baseUrl + 'cart/delete-cart-item' + "?id=" + orderItemId,
             //data: {quantity: $itemQnty},
             success: function (data)
             {
@@ -78,10 +87,11 @@ $(document).ready(function (e) {
         var orderItemId = $(this).parent().find("#orderItemId").val();
         var $positionQty = parseInt($('.cart-btn a span').text());
         var itemQty = $('.cart-dropdown .item').find("#qty").val();
+        alert($baseUrl);
         $.ajax({
             type: "POST",
             dataType: "JSON",
-            url: "cart/delete-cart-item?id=" + orderItemId,
+            url: $baseUrl + '/cart/delete-cart-item' + "?id=" + orderItemId,
             //data: {quantity: $itemQnty},
             success: function (data)
             {
@@ -120,12 +130,13 @@ $(document).ready(function (e) {
         event.preventDefault();
         var $target = $(this).parent().parent();
         var pId = $(this).parent().parent().find("#productId").val();
+
 //        $target.hide(300, function () {
         $.when($target.remove()).then(function () {
             $.ajax({
                 type: "POST",
                 dataType: "JSON",
-                url: "../cart/delete-wishlist",
+                url: $baseUrl + '/cart/delete-wishlist',
                 data: {productId: pId},
                 success: function (data)
                 {
@@ -183,10 +194,11 @@ $(document).ready(function (e) {
 //        var getUrl = window.location;
 //        var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
 //        alert(baseUrl);
+
         $.ajax({
             type: "POST",
             dataType: "JSON",
-            url: "../cart/add-to-cart?id=" + $itemId,
+            url: $baseUrl + '/cart/add-to-cart' + "?id=" + $itemId,
             data: {quantity: $itemQnty, fastId: $fastId},
             success: function (data)
             {
@@ -224,10 +236,11 @@ $(document).ready(function (e) {
             }
             $('.incr-btn').popover('hide');
         }
+
         $.ajax({
             type: "POST",
             dataType: "JSON",
-            url: "../cart/change-quantity-item",
+            url: $baseUrl + '/cart/change-quantity-item',
             data: {productId: $("#productId").val(), quantity: newVal},
             success: function (data)
             {
