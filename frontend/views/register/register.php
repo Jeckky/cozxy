@@ -16,7 +16,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--Login / Register-->
 <section class="log-reg container">
     <h2>Login/ register</h2>
-    <h4>Use social accounts</h4>
+    <h4>Use social accounts</h4> <code><?= isset($ms) ? $ms : ''; ?></code>
     <div class="social-login">
 <!--        <a class="facebook" href="#"><i class="fa fa-facebook-square"></i></a>
         <a class="google" href="#"><i class="fa fa-google-plus-square"></i></a>
@@ -59,6 +59,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         ?>
         <!--Registration-->
         <div class="col-lg-7 col-md-7 col-sm-7">
+
             <?php $form = ActiveForm::begin(['id' => 'register-form', 'action' => $baseUrl . '/register/register', 'options' => ['class' => 'registr-form']]); ?>
             <?//= $form->errorSummary($model); ?>
             <?= $form->field($model, 'email') ?>

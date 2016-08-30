@@ -50,6 +50,10 @@ class RegisterController extends MasterController {
     public function actionRegister() {
         $model = new \common\models\costfit\User(['scenario' => 'register']);
         $loginForm = new \common\models\LoginForm();
+        $ms = '';
+        if (isset($_GET['ms'])) {
+            $ms = 'เนื่องจากบัญชี facebook นี้ไม่ได้ใช้ email ในการสมัคร กรุณาสมัครสมาชิกเพื่อเข้าใช้งาน';
+        }
         if (isset($_POST["User"])) {
             $model->attributes = $_POST["User"];
             $model->username = $_POST["User"]['email'];
@@ -77,7 +81,7 @@ class RegisterController extends MasterController {
             }
         }
         $term = \common\models\costfit\ContentGroup::find()->where("lower(title)='term'")->one();
-        return $this->render('register', ['model' => $model, 'loginForm' => $loginForm, 'term' => $term]);
+        return $this->render('register', ['model' => $model, 'loginForm' => $loginForm, 'term' => $term, 'ms' => $ms]);
     }
 
     public function actionThank() {

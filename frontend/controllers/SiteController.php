@@ -232,58 +232,52 @@ class SiteController extends MasterController {
     public function successCallback($client) {
         $attributes = $client->getUserAttributes();
         $auth_type = '';
-
-        if (isset($attributes['email'])) {
+        // throw new \yii\base\Exception(print_r($attributes, true));
+        if ($_GET['authclient'] == 'facebook') {
             //facebook
-            //echo 'facebook';
-            $email = $attributes['email'];
+            $email = isset($attributes['email']) ? $attributes['email'] : '-';
             $name = explode(' ', $attributes['name']);
             $fName = current($name);
             $lName = end($name);
             $auth_type = 'facebook';
-        } else {
+        } else if ($_GET['authclient'] == 'google') {
             //google
-
             $fName = $attributes['name']['givenName'];
             $lName = $attributes['name']['familyName'];
-            $email = $attributes['emails'][0]['value'];
+            $email = isset($attributes['emails'][0]['value']) ? $attributes['emails'][0]['value'] : '-';
             $auth_type = 'google';
         }
-
-        $user = \common\models\costfit\User::find()->where(['email' => $email])->one();
-        if (!empty($user)) {
-            $login = new LoginForm();
-            if ($user->status == 0) {
-                // กรณี status = 0 http://localhost/cost.fit-frontend/register/thank
-                //if ($user->auth_type == 'facebook') {
-                $status = 1;
-                //} else if ($user->auth_type == 'google') {
-                //$status = 2;
-                //} else {
-                // $status = 3;
-                //}
-
-
-                $this->redirect(['register/thank', 'status' => $status]);
+        if ($email == '-') {
+            $ms = 1;
+            $this->redirect(['register/register', 'ms' => $ms]);
+        } else {
+            $user = \common\models\costfit\User::find()->where(['email' => $email])->one();
+            if (!empty($user)) {
+                $login = new LoginForm();
+                if ($user->status == 0) {
+                    // กรณี status = 0 http://localhost/cost.fit-frontend/register/thank
+                    $status = 1;
+                    $this->redirect(['register/thank', 'status' => $status]);
+                } else {
+                    $login->login2($user);
+                }
             } else {
+                $model = new \common\models\costfit\User(['scenario' => 'register']);
+                $model->username = $model->email = $email;
+                $model->firstname = $fName;
+                $model->lastname = $lName;
+                //$model->auth_type = $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
+                $model->password = $attributes['id'];
+                $model->auth_key = $model->password_hash = Yii::$app->security->generatePasswordHash($attributes['id']);
+                $model->auth_type = $auth_type;
+                $model->status = 1;
+                $model->token = Yii::$app->security->generateRandomString(10);
+                $model->createDateTime = new \yii\db\Expression("NOW()");
+                $model->save(false);
+                $login = new LoginForm();
+                $user = \common\models\costfit\User::find()->where(['email' => $email])->one();
                 $login->login2($user);
             }
-        } else {
-            $model = new \common\models\costfit\User(['scenario' => 'register']);
-            $model->username = $model->email = $email;
-            $model->firstname = $fName;
-            $model->lastname = $lName;
-            //$model->auth_type = $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
-            $model->password = $attributes['id'];
-            $model->auth_key = $model->password_hash = Yii::$app->security->generatePasswordHash($attributes['id']);
-            $model->auth_type = $auth_type;
-            $model->status = 1;
-            $model->token = Yii::$app->security->generateRandomString(10);
-            $model->createDateTime = new \yii\db\Expression("NOW()");
-            $model->save(false);
-            $login = new LoginForm();
-            $user = \common\models\costfit\User::find()->where(['email' => $email])->one();
-            $login->login2($user);
         }
     }
 
