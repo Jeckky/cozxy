@@ -2,15 +2,26 @@
 var $addToWishlistBtn = $('#addItemToWishlist');
 var $addedToCartMessage = $('.cart-message');
 
+var $baseUrl = window.location.protocol + "//" + window.location.host;
+if (window.location.host == 'localhost') {
+    $baseUrl = window.location.protocol + "//" + window.location.host + '/cost.fit-frontend/';
+} else if (window.location.host == '192.168.100.8') {
+    $baseUrl = window.location.protocol + "//" + window.location.host + '/cost.fit/frontend/web/';
+} else {
+    $baseUrl = window.location.protocol + "//" + window.location.host + '/';
+}
+
+//alert($baseUrl);
+
 function proceed(data) {
     var shop_data = data;
     if (shop_data == 'apply_coupon') {
-//window.location = '';
+        //window.location = '';
         couponCode = $(".coupon").find("#coupon-code").val();
         $.ajax({
             type: "POST",
             dataType: "JSON",
-            url: "cart/add-coupon",
+            url: $baseUrl + "cart/add-coupon",
             data: {couponCode: couponCode},
             success: function (data)
             {
@@ -29,13 +40,13 @@ function proceed(data) {
             }
         });
     } else if (shop_data == 'update_cart') {
-        window.location = 'history';
+        window.location = $baseUrl + 'history';
     } else if (shop_data == 'to_checkout') {
-        window.location = 'checkout';
+        window.location = $baseUrl + 'checkout';
     } else if (shop_data == 'to_guest') {
-        window.location = 'register/login';
+        window.location = $baseUrl + 'register/login';
     } else if (shop_data == '') {
-//window.location = '' ;
+        //window.location = '' ;
     } else {
         window.location = '';
     }
@@ -440,18 +451,18 @@ $('.shipping-address').click(function () {
     var address_id = $(this).parent().data('id');
     $.ajax
             ({
-                url: 'profile/shipping-address-delete',
+                url: $baseUrl + 'profile/shipping-address-delete',
                 data: {"address_id": address_id},
                 type: 'post',
                 success: function (result)
                 {
                     //alert(result);
                     if (result = 'complete') {
-                        window.location = 'profile';
+                        window.location = $baseUrl + 'profile';
                     } else if (result = 'wrong') {
-                        window.location = 'profile';
+                        window.location = $baseUrl + 'profile';
                     } else {
-                        window.location = 'profile';
+                        window.location = $baseUrl + 'profile';
                     }
                 }
             });
@@ -493,7 +504,7 @@ $(".incr-btn-cart").on("click", function (e) {
     $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: "cart/change-quantity-item-and-save",
+        url: $baseUrl + "cart/change-quantity-item-and-save",
         data: {productId: pId, quantity: newVal},
         success: function (data)
         {
@@ -556,30 +567,30 @@ function itemzero(items, title) {
         if (item_cart == '0.00') {
             $("#modal-cart-not-item").modal('show');
         } else {
-            //window.location = 'cart';
-            //newURL = window.location.protocol + "//" + window.location.host + 'cart';
-            if (window.location.host == 'localhost') {
-                window.location = window.location.protocol + "//" + window.location.host + '/cost.fit-frontend/cart';
-            } else if (window.location.host == '192.168.100.8') {
-                window.location = window.location.protocol + "//" + window.location.host + '/cost.fit/frontend/web/cart';
-            } else {
-                window.location = window.location.protocol + "//" + window.location.host + '/cart';
-            }
 
+            /*if (window.location.host == 'localhost') {
+             window.location = window.location.protocol + "//" + window.location.host + '/cost.fit-frontend/cart';
+             } else if (window.location.host == '192.168.100.8') {
+             window.location = window.location.protocol + "//" + window.location.host + '/cost.fit/frontend/web/cart';
+             } else {
+             window.location = window.location.protocol + "//" + window.location.host + '/cart';
+             }*/
+            window.location = $baseUrl + 'cart';
         }
     } else if (title == 'checkout') {
         if (item_cart == '0.00') {
             $("#modal-cart-not-item").modal('show');
         } else {
-            //window.location = 'checkout';
-            if (window.location.host == 'localhost') {
-                window.location = window.location.protocol + "//" + window.location.host + '/cost.fit-frontend/checkout';
-            } else if (window.location.host == '192.168.100.8') {
-                window.location = window.location.protocol + "//" + window.location.host + '/cost.fit/frontend/web/checkout';
-            } else {
-                window.location = window.location.protocol + "//" + window.location.host + '/checkout';
-            }
-
+            window.location = $baseUrl + 'checkout';
+            /*
+             if (window.location.host == 'localhost') {
+             window.location = window.location.protocol + "//" + window.location.host + '/cost.fit-frontend/checkout';
+             } else if (window.location.host == '192.168.100.8') {
+             window.location = window.location.protocol + "//" + window.location.host + '/cost.fit/frontend/web/checkout';
+             } else {
+             window.location = window.location.protocol + "//" + window.location.host + '/checkout';
+             }
+             */
         }
     }
 }
@@ -590,7 +601,7 @@ $addToWishlistBtn.click(function () {
     $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: "../cart/add-wishlist",
+        url: $baseUrl + "cart/add-wishlist",
         data: {productId: $pId},
         success: function (data)
         {
@@ -622,7 +633,7 @@ $(".addWishlistItemToCart").click(function () {
     $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: "../cart/add-to-cart?id=" + $itemId,
+        url: $baseUrl + "cart/add-to-cart?id=" + $itemId,
         data: {quantity: $itemQnty},
         success: function (data)
         {
@@ -662,7 +673,7 @@ $('#lateShippingCheck').on('ifChecked', function (event) {
     $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: "../products/get-product-shipping-price/",
+        url: $baseUrl + "products/get-product-shipping-price/",
         data: {'productId': productId, 'fastId': fastId},
         success: function (data)
         {
@@ -680,7 +691,7 @@ $('#lateShippingCheck').on('ifUnchecked', function (event) {
     $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: "../products/get-defult-product-shipping-price/",
+        url: $baseUrl + "products/get-defult-product-shipping-price/",
         data: {'productId': productId},
         success: function (data)
         {
@@ -721,7 +732,7 @@ $(".see-more-x").on('click', function () {
     $.ajax({
         type: "POST",
         //dataType: "JSON",
-        url: "site/save-append",
+        url: $baseUrl + "site/save-append",
         data: {'ids': ids},
         success: function (data)
         {
@@ -736,18 +747,17 @@ $(".see-more-x").on('click', function () {
 
 function changeoption(value)
 {
-    if (window.location.host == 'localhost') {
-        urls = window.location.protocol + "//" + window.location.host + '/cost.fit-frontend/products/change-option/';
-    } else if (window.location.host == '192.168.100.8') {
-        urls = window.location.protocol + "//" + window.location.host + '/cost.fit/frontend/web/products/change-option/';
-    } else {
-        urls = window.location.protocol + "//" + window.location.host + '/products/change-option/';
-    }
-
-    $.post(urls, {
+    /*if (window.location.host == 'localhost') {
+     urls = window.location.protocol + "//" + window.location.host + '/cost.fit-frontend/products/change-option/';
+     } else if (window.location.host == '192.168.100.8') {
+     urls = window.location.protocol + "//" + window.location.host + '/cost.fit/frontend/web/products/change-option/';
+     } else {
+     urls = window.location.protocol + "//" + window.location.host + '/products/change-option/';
+     }
+     */
+    $.post($baseUrl + 'change-option/', {
         productId: value
     }, function (data, status) {
-
         var JSONObject = JSON.parse(data);
         //alert(JSONObject.productImagexx);
         $('#productItem').html(JSONObject.productItem);
@@ -768,7 +778,7 @@ $('#slowest').on('ifChecked', function (event) {
     $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: "cart/save-slowest/",
+        url: $baseUrl + "cart/save-slowest/",
         data: {'orderId': orderId, 'type': 1},
         success: function (data)
         {
@@ -782,7 +792,7 @@ $('#slowest').on('ifUnchecked', function (event) {
     $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: "cart/save-slowest/",
+        url: $baseUrl + "cart/save-slowest/",
         data: {'orderId': orderId, 'type': 2},
         success: function (data)
         {
