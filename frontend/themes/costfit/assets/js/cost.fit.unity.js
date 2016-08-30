@@ -193,7 +193,7 @@ $(document).ready(function (e) {
         $addedToCartMessage.find('p').text('"' + $itemName + '"' + '  ' + 'was successfully added to your cart.');
 //        var getUrl = window.location;
 //        var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-//        alert(baseUrl);
+//        alert(baseUrl); 
 
         $.ajax({
             type: "POST",
