@@ -1,7 +1,7 @@
 <?php
 
 $params = array_merge(
-        require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
+require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
 );
 
 return [
@@ -51,6 +51,7 @@ return [
                 'products/<hash>' => 'products/index',
                 'checkout/confirm-checkout/<hash>' => 'checkout/confirm-checkout',
                 'checkout/confirmation/<hash>' => 'checkout/confirmation',
+                'checkout/reverse-order-to-cart/<hash>' => 'checkout/reverse-order-to-cart',
             ],
         ],
         /**
