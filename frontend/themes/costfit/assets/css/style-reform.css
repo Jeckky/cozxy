@@ -133,9 +133,9 @@
 /* Just in case there are inline attributes */
 #photos-bestseller-items img {
 
-    width: 100% !important;
+    /*width: 100% !important;
     height: auto !important;
-
+    */
 }
 
 #photos-bestseller-items-padding{
