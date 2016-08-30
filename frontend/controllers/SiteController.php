@@ -263,12 +263,16 @@ class SiteController extends MasterController {
                     $flag = FALSE;
                     $typeLogin = explode(",", $user->auth_type);
                     foreach ($typeLogin as $logins) {
-                        if ($logins == $type) {
+                        if ($logins == $type) {//เคย login ด้วย email นี้ social นี้ หรือไม่
                             $flag = TRUE;
                         }
                     }
-                    if (!$flag) {
-                        $user->auth_type = $user->auth_type . "," . $type;
+                    if (!$flag) {//ถ้าไม่เคย
+                        if ($user->auth_type == '') {
+                            $user->auth_type = $type;
+                        } else {
+                            $user->auth_type = $user->auth_type . "," . $type;
+                        }
                         $user->save();
                     }
                     $login->login2($user);
