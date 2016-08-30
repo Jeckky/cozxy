@@ -259,6 +259,18 @@ class SiteController extends MasterController {
                     $status = 1;
                     $this->redirect(['register/thank', 'status' => $status]);
                 } else {
+                    $type = $auth_type;
+                    $flag = FALSE;
+                    $typeLogin = explode(",", $user->auth_type);
+                    foreach ($typeLogin as $logins) {
+                        if ($logins == $type) {
+                            $flag = TRUE;
+                        }
+                    }
+                    if (!$flag) {
+                        $user->auth_type = $user->auth_type . "," . $type;
+                        $user->save();
+                    }
                     $login->login2($user);
                 }
             } else {
