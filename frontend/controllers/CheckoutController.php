@@ -193,19 +193,23 @@ class CheckoutController extends MasterController
             $order->status = Order::ORDER_STATUS_CHECKOUTS;
             $order->userId = $placeUserId;
             $order->updateDateTime = new \yii\db\Expression("NOW()");
+            // Billing //
             $order->billingCompany = ($address_billing['company'] != '') ? $address_billing['company'] : '';
-            $order->shippingTax = ($address_billing['tax'] != '') ? $address_billing['tax'] : '';
+            $order->billingTax = ($address_billing['tax'] != '') ? $address_billing['tax'] : '';
             $order->billingAddress = ($address_billing['address'] != '') ? $address_billing['address'] : '';
             $order->billingCountryId = ($address_billing['countryId'] != '') ? $address_billing['countryId'] : '';
             $order->billingProvinceId = ($address_billing['provinceId'] != '') ? $address_billing['provinceId'] : '';
+            $order->billingDistrictId = ($address_billing['districtId'] != '') ? $address_billing['districtId'] : '';
             $order->billingAmphurId = ($address_billing['amphurId'] != '') ? $address_billing['amphurId'] : '';
             $order->billingZipcode = ($address_billing['zipcode'] != '') ? $address_billing['zipcode'] : '';
             $order->billingTel = ($address_billing['tel'] != '') ? $address_billing['tel'] : '';
+            // Shipping //
             $order->shippingCompany = ($address_shipping['company'] != '') ? $address_shipping['company'] : '';
             $order->shippingTax = ($address_shipping['tax'] != '') ? $address_shipping['tax'] : '';
             $order->shippingAddress = ($address_shipping['address'] != '') ? $address_shipping['address'] : '';
             $order->shippingCountryId = ($address_shipping['countryId'] != '') ? $address_shipping['countryId'] : '';
             $order->shippingProvinceId = ($address_shipping['provinceId'] != '') ? $address_shipping['provinceId'] : '';
+            $order->shippingDistrictId = ($address_shipping['districtId'] != '') ? $address_shipping['districtId'] : '';
             $order->shippingAmphurId = ($address_shipping['amphurId'] != '') ? $address_shipping['amphurId'] : '';
             $order->shippingZipcode = ($address_shipping['zipcode'] != '') ? $address_shipping['zipcode'] : '';
             $order->shippingTel = ($address_shipping['tel'] != '') ? $address_shipping['tel'] : '';
