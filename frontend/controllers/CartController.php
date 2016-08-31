@@ -35,8 +35,10 @@ class CartController extends MasterController {
         $this->layout = "/content_right";
         $this->title = 'Cost.fit | cart';
         $this->subTitle = 'Shopping Cart';
+        $product = \common\models\costfit\search\Product::find()->where("categoryId='3'")->all();
         $this->subSubTitle = '';
-        return $this->render('cart');
+        //return $this->render('cart');
+        return $this->render('cart', compact('product'));
     }
 
     public function actionAddToCart($id) {

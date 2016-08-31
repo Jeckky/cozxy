@@ -293,4 +293,18 @@ class ProfileController extends MasterController {
         }
     }
 
+    public function actionTracking() {
+        $this->title = 'Cost.fit | tracking';
+        $this->subTitle = 'tracking';
+        $this->subSubTitle = 'Delivery';
+        return $this->render('@app/views/tracking/tracking');
+    }
+
+    public function actionReOrder() {
+        $this->title = 'Cost.fit | tracking';
+        $this->subTitle = 'tracking';
+        $this->subSubTitle = 'Delivery';
+        return $this->render('@app/views/history/history');
+    }
+
 }
