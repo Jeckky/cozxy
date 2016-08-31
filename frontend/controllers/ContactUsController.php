@@ -37,8 +37,9 @@ class ContactUsController extends MasterController {
             $model->message = $_POST['message'];
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $model->updateDateTime = new \yii\db\Expression('NOW()');
+            $model->save();
         }
-        return $this->render('@app/views/contactus/contactus');
+        return $this->render('@app/views/contactus/contactus', ['email' => $_POST['email']]);
     }
 
 }
