@@ -111,7 +111,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         <a href="<?php echo Yii::$app->homeUrl; ?>profile/transfer-confirm/<?php echo $orderIdParams; ?>" class="btn btn-primary btn-xs" target="_blank">
                             <i class="fa fa-check" aria-hidden="true"></i> แจ้งชำระเงิน</a>
                         -->
-                        <a href="<?php echo Yii::$app->homeUrl; ?>checkout/confirm-checkout?orderId=<?= $order->orderId ?>" class="btn btn-primary btn-xs" target="_blank">
+                        <a href="<?php echo Yii::$app->homeUrl; ?>checkout/confirm-checkout/<?php echo $orderIdParams; ?>" class="btn btn-primary btn-xs" target="_blank">
                             <i class="fa fa-dollar" aria-hidden="true"></i> ชำระอีกครั้ง</a>
                     <?php else: ?>
                         <?php if (Yii::$app->controller->id != 'checkout'): ?>
