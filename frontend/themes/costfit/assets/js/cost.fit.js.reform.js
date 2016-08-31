@@ -840,7 +840,7 @@ $('.search-brands').on('ifChecked', function (event) {
 });
 
 $('#search-brands').on('ifUnchecked', function (event) {
-    alert('if Un checked');
+    //alert('if Un checked');
     var productId = $('input[id=productId]').val();
     $.ajax({
         type: "POST",

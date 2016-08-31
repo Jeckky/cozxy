@@ -96,8 +96,8 @@ return [
                     'clientSecret' => 'd4503ebb0f9b512e58d73fee8134853f',
                 ],
                 'google' => [
-                    //'class' => 'yii\authclient\clients\Google',
-                    'class' => 'yii\authclient\clients\GoogleOAuth',
+                    'class' => 'yii\authclient\clients\Google',
+                    //'class' => 'yii\authclient\clients\GoogleOAuth',
                     'clientId' => '51351302330-9bnvl3nmdqmdspqece4rlbc71br0o5sh.apps.googleusercontent.com',
                     'clientSecret' => 'N739bef0DKOS7VUKT4DKmAL2',
                     //'scope' => 'https://www.googleapis.com/auth/userinfo.email',
