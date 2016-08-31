@@ -70,8 +70,12 @@
 }
 
 #products-category-search{
-    min-height: 480px;
-    max-height: 480px;
+    /*
+     min-height: 480px;
+     max-height: 480px;
+    */
+    min-height: 100%;
+    max-height: 560px;
 }
 
 #products-popular{
