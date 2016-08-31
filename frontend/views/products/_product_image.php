@@ -9,7 +9,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         ?>
         <div class="ms-slide">
 
-            <img src="<?php echo Yii::$app->homeUrl . $image->image; ?>" data-src="<?php echo Yii::$app->homeUrl . $image->image; ?>" alt="<?= $image->title ?>"/>
+            <img src="<?php echo Yii::$app->homeUrl . $image->image; ?>" data-src="<?php echo Yii::$app->homeUrl . $image->image; ?>" alt="<?= $image->title ?>" class="img-responsive img-thumbnail"/>
             <?php
             //echo 'imageThumbnail2 : ' . count($image->imageThumbnail2);
             if (count($image->imageThumbnail2) > 0) {
