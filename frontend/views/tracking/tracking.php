@@ -11,7 +11,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--Breadcrumbs-->
 <ol class="breadcrumb">
     <li><a href="<?php echo Yii::$app->homeUrl; ?>">Home</a></li>
-    <li><a href="<?php echo Yii::$app->homeUrl . Yii::$app->controller->id; ?>"><?= isset($this->context->subSubTitle) ? $this->context->subSubTitle : "Delivery" ?></li>
+    <li><a href="<?php echo Yii::$app->homeUrl . Yii::$app->controller->id; ?>"><?= isset($this->context->subSubTitle) ? $this->context->subSubTitle : "Delivery" ?></a></li>
 </ol><!--Breadcrumbs Close-->
 
 <!--Support-->
@@ -80,7 +80,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             </div>
                             <div id="collapseOne" class="collapse">
                                 <div class="panel-body">
-                                    <table>
+                                    <!--<table>
                                         <tr>
                                             <td>jabuary 23.2014 11.03am Alexandria VA US</td>
                                             <td>Delivered</td>
@@ -113,7 +113,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             <td>jabuary 23.2014 11.03am Alexandria VA US</td>
                                             <td>Package arrived at a carrier facility</td>
                                         </tr>
-                                    </table>
+                                    </table>-->
                                 </div>
                             </div>
                         </div>
@@ -128,10 +128,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <div class="shipment-title">Delivering to</div>
 
                         <div>
-                            Ivan Petrov <br />
-                            Chestnut st. 2515 <br />
-                            San Francisco, 94123 <br />
-                            415 000 00 00 <br />
+                            <!-- Ivan Petrov <br />
+                             Chestnut st. 2515 <br />
+                             San Francisco, 94123 <br />
+                             415 000 00 00 <br />
+                            -->
                         </div>
                     </div>
 
@@ -139,7 +140,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <div class="shipment-title">Carrier</div>
 
                         <div>
-                            UPS
+                            <!-- UPS -->
                         </div>
                     </div>
 
@@ -147,15 +148,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <div class="shipment-title">Tracking #</div>
 
                         <div>
-                            AZX3355FD53
+                            <!-- AZX3355FD53 -->
                         </div>
                     </div>
 
                     <div class="shipment">
-                        <div class="shipment-title">Order #</div>
-
+                        <div class="shipment-title">Order #</div> 
                         <div>
-                            65468986
+                            <!-- 65468986 -->
                         </div>
                     </div>
                 </div>
@@ -165,10 +165,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </section><!--Support Close-->
 
 <!--Delivery Info-->
+<!--
 <section class="gray-bg tech-specs">
     <div class="container">
         <div class="row">
-            <!--Column 1-->
+
             <div class="col-lg-6 col-md-6 col-sm-6 dark-color">
                 <h3>Track Your Package</h3>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat.</p>
@@ -179,36 +180,36 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
                 <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat.</p>
             </div>
-            <!--Column 2-->
+
             <div class="col-lg-6 col-md-6 col-sm-6">
-                <!--Item-->
-                <div class="item">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-umbrella"></i><span>Customizable</span></div>
-                        <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Amet cras posuere pede placerat, velit neque ut mollis elit mattis integer.</p></div>
-                    </div>
-                </div>
-                <!--Item-->
-                <div class="item">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-4"><i class="fa fa-archive"></i><span>Package</span></div>
-                        <div class="col-lg-8 col-md-8 col-sm-8"><p class="p-style2">Individual packing</p></div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-smile-o"></i><span>Mentions</span></div>
-                        <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Give a smile</p></div>
-                    </div>
-                </div>
-                <!--Item-->
-                <div class="item">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-dollar"></i><span>Best Price</span></div>
-                        <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Affordable prices</p></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="item">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-umbrella"></i><span>Customizable</span></div>
+        <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Amet cras posuere pede placerat, velit neque ut mollis elit mattis integer.</p></div>
     </div>
-</section><!--Delivery Info Close-->
+</div>
+
+<div class="item">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4"><i class="fa fa-archive"></i><span>Package</span></div>
+        <div class="col-lg-8 col-md-8 col-sm-8"><p class="p-style2">Individual packing</p></div>
+    </div>
+</div>
+<div class="item">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-smile-o"></i><span>Mentions</span></div>
+        <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Give a smile</p></div>
+    </div>
+</div>
+
+<div class="item">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-3"><i class="fa fa-dollar"></i><span>Best Price</span></div>
+        <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">Affordable prices</p></div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</section>-->
+<!--Delivery Info Close-->
