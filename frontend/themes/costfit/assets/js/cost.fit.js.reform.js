@@ -842,10 +842,16 @@ $('#slowest').on('ifUnchecked', function (event) {
 
 $('#search-brands').on('ifChecked', function (event) {
     //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
-    // alert('if Checked');
+    var ids = [];
+    $(this).parent().find("#subscr-form").find(".checkbox").find("#search-brands").each(function () {
+        ids.push($(this).find('#search-brands').val());
+    });
+
+    //alert('ids');
+    //alert('if Checked');
     var productId = $('input[id=productId]').val();
     var fastId = $('input[id=fastId]').val();
-    //alert(productId);
+
     $.ajax({
         type: "POST",
         dataType: "JSON",
@@ -863,7 +869,7 @@ $('#search-brands').on('ifChecked', function (event) {
 });
 
 $('#search-brands').on('ifUnchecked', function (event) {
-    ///alert('if Un checked');
+    //alert('if Un checked');
     var productId = $('input[id=productId]').val();
     $.ajax({
         type: "POST",

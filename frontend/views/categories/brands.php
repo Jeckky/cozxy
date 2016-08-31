@@ -31,7 +31,6 @@ if (isset($categoryId)) {
                     <div class="checkbox">
                         <input type="checkbox" id="search-brands" name="search-brands" value="<?php echo $categoryId; ?>"><?php echo $brands->title . " (" . $total . ")"; ?>
                     </div>
-
                     <?php
                 }
             }
