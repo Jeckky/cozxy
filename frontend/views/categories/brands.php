@@ -29,7 +29,7 @@ if (isset($categoryId)) {
                 if (isset($brands)) {
                     ?>
                     <div class="checkbox">
-                        <input type="checkbox" id="brands[]" name="brands[]" value="<?php echo $categoryId; ?>"><?php echo $brands->title . " (" . $total . ")"; ?>
+                        <input type="checkbox" id="search-brands" name="search-brands" value="<?php echo $categoryId; ?>"><?php echo $brands->title . " (" . $total . ")"; ?>
                     </div>
 
                     <?php
@@ -56,11 +56,6 @@ function check($brandId, $allBrands) {
 }
 ?>
 <script>
-
-    // you can also change options after inputs are customized
-
-
-
 
 
 

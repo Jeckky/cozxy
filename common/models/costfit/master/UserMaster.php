@@ -46,7 +46,7 @@ return [
             [['type', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['username', 'firstname', 'password', 'lastname', 'email'], 'string', 'max' => 200],
-            [['auth_type'], 'string', 'max' => 45],
+            [['auth_type'], 'string', 'max' => 255],
         ];
 }
 

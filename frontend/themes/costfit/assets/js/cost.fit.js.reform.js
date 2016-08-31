@@ -728,7 +728,6 @@ $(".see-more-x").on('click', function () {
         ids.push($(this).find('#seeMoreId').val());
     });
     //alert(ids);
-
     $.ajax({
         type: "POST",
         //dataType: "JSON",
@@ -801,22 +800,23 @@ $('#slowest').on('ifUnchecked', function (event) {
     });
 });
 
-
-$("input[name='brands']:checkbox").each(function () {
-    $(this).on('ifChecked', function () {
-        $.ajax({
-            url: "/ajax/something/"
-        })
-                .done(function (data) {
-                    currentChecked = $(this);
-                })
-                .fail(function (data) {
-                    $(this).removeAttr('checked');
-                    currentChecked.prop('checked', true);
-                });
-    });
-});
 /*
+ $("input[name='brands']:checkbox").each(function () {
+ $(this).on('ifChecked', function () {
+ $.ajax({
+ url: "/ajax/something/"
+ })
+ .done(function (data) {
+ currentChecked = $(this);
+ })
+ .fail(function (data) {
+ $(this).removeAttr('checked');
+ currentChecked.prop('checked', true);
+ });
+ });
+ });
+
+
  $('#brands').on('ifChecked', function (event) {
  alert('test');
 
@@ -839,3 +839,43 @@ $("input[name='brands']:checkbox").each(function () {
  });
  */
 
+
+$('#search-brands').on('ifChecked', function (event) {
+    //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
+    // alert('if Checked');
+    var productId = $('input[id=productId]').val();
+    var fastId = $('input[id=fastId]').val();
+    //alert(productId);
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: $baseUrl,
+        data: {'productId': productId, 'fastId': fastId},
+        success: function (data)
+        {
+            // alert(productId);
+            $("#fastId").val(data);
+            $("#choose").hide();
+            $("#unchoose").show();
+        }
+
+    });
+});
+
+$('#search-brands').on('ifUnchecked', function (event) {
+    ///alert('if Un checked');
+    var productId = $('input[id=productId]').val();
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: $baseUrl,
+        data: {'productId': productId},
+        success: function (data)
+        {
+            //  alert(data);
+            $("#fastId").val(data);
+            $("#choose").show();
+            $("#unchoose").hide();
+        }
+    });
+});
