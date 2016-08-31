@@ -88,6 +88,11 @@ $categoryId = $params['categoryId'];
                             <h3>Categories</h3>
                         <?php //echo $this->render('@app/views/categories/categories');              ?>
                         </section>-->
+                        <!--Categories Section-->
+                        <section class="filter-section">
+                            <h3>Brands</h3>
+                            <?php echo $this->render('@app/views/categories/brands', ['categoryId' => $categoryId, 'title' => $url_parameter[1]]); ?>
+                        </section>
                     </div>
                 </div><!--Filters-->
                 <div id="title-product-all" class="col-lg-9 col-md-9 col-sm-8">

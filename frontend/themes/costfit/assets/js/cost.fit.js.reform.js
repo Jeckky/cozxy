@@ -800,3 +800,42 @@ $('#slowest').on('ifUnchecked', function (event) {
         }
     });
 });
+
+
+$("input[name='brands']:checkbox").each(function () {
+    $(this).on('ifChecked', function () {
+        $.ajax({
+            url: "/ajax/something/"
+        })
+                .done(function (data) {
+                    currentChecked = $(this);
+                })
+                .fail(function (data) {
+                    $(this).removeAttr('checked');
+                    currentChecked.prop('checked', true);
+                });
+    });
+});
+/*
+ $('#brands').on('ifChecked', function (event) {
+ alert('test');
+
+ // alert(productId);
+ //alert(fastId);
+ $.ajax({
+ type: "POST",
+ dataType: "JSON",
+ url: "",
+ data: {'productId': productId, 'fastId': fastId},
+ success: function (data)
+ {
+ // alert(productId);
+ $("#fastId").val(data);
+ $("#choose").hide();
+ $("#unchoose").show();
+ }
+
+ });
+ });
+ */
+
