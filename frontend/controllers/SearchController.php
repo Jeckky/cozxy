@@ -86,4 +86,9 @@ class SearchController extends MasterController {
         return $this->render('search', compact('products'));
     }
 
+    public function actionSearchBrands() {
+
+        echo 'loadding brands ...';
+    }
+
 }

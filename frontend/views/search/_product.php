@@ -7,7 +7,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <!--Tile-->
 <?php if (isset($model->productId)): ?>
-    <div id="products-category-search" class="col-lg-4 col-md-6 col-sm-12">
+    <div id="products-category-searc" class="col-lg-4 col-md-6 col-sm-12 ">
         <div class="tile">
             <div class="badges">
                 <span class="sale">Sale</span>

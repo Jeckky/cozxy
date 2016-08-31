@@ -29,13 +29,14 @@ if (isset($categoryId)) {
                 if (isset($brands)) {
                     ?>
                     <div class="checkbox">
-                        <input type="checkbox" id="search-brands" name="search-brands" value="<?php echo $categoryId; ?>"><?php echo $brands->title . " (" . $total . ")"; ?>
+                        <input type="checkbox" class="search-brands" id="search-brands" name="search-brands[]" value="<?php echo $brands->brandId; ?>"><?php echo $brands->title . " (" . $total . ")"; ?>
                     </div>
                     <?php
                 }
             }
         }
         ?>
+        <input id="search-brands-categoryId" type="hidden" name="search-brands-categoryId" value="<?php echo $categoryId; ?>">
     </form>
     <?php
 }
@@ -54,8 +55,3 @@ function check($brandId, $allBrands) {
     }
 }
 ?>
-<script>
-
-
-
-</script>
