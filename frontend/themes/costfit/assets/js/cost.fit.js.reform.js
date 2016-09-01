@@ -839,20 +839,28 @@ $('.search-brands').on('ifChecked', function (event) {
     });
 });
 
-$('#search-brands').on('ifUnchecked', function (event) {
-    //alert('if Un checked');
-    var productId = $('input[id=productId]').val();
+$('.search-brands').on('ifUnchecked', function (event) {
+    //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
+//    alert($(".subscr-form").find(".checkbox").find('.icheckbox').find('.search-brands').val());
+    var categoryId = $('input[id=search-brands-categoryId]').val();
+
+    var ids = [];
+    $(".subscr-form").find(".checkbox").find('.icheckbox').each(function () {
+        if ($(this).find('.search-brands').prop('checked'))
+        {
+            ids.push($(this).find('.search-brands').val());
+        }
+    });
+    //alert(categoryId);
     $.ajax({
         type: "POST",
-        dataType: "JSON",
-        url: $baseUrl,
-        data: {'productId': productId},
+        //dataType: "JSON",
+        url: $baseUrl + 'search/search-brands',
+        data: {'brandId': ids, 'categoryId': categoryId},
         success: function (data)
         {
-            //  alert(data);
-            $("#fastId").val(data);
-            $("#choose").show();
-            $("#unchoose").hide();
+            $(".products-searchs-brands").html(data);
         }
+
     });
 });
