@@ -25,14 +25,16 @@ if (isset($categoryId)) {
 //        throw new \yii\base\Exception(print_r($this->params['brandId'], true));
         if (isset($allBrands) && !empty($allBrands)) {
             foreach ($allBrands as $brand) {
-                $brands = \common\models\costfit\Brand::find()->where("brandId=" . $brand)->one();
-                $total = count(common\models\costfit\Product::find()->where("brandId=" . $brand . " and categoryId=" . $categoryId)->all());
-                if (isset($brands)) {
-                    ?>
-                    <div class="checkbox">
-                        <input type="checkbox" <?= (in_array($brands->brandId, isset($this->params['brandId']) ? $this->params['brandId'] : [])) ? " checked " : " " ?> class="search-brands" id="search-brands" name="search-brands[]" value="<?php echo $brands->brandId; ?>"><?php echo $brands->title . " (" . $total . ")"; ?>
-                    </div>
-                    <?php
+                if (isset($brand)) {
+                    $brands = \common\models\costfit\Brand::find()->where("brandId=" . $brand)->one();
+                    $total = count(common\models\costfit\Product::find()->where("brandId=" . $brand . " and categoryId=" . $categoryId)->all());
+                    if (isset($brands)) {
+                        ?>
+                        <div class="checkbox">
+                            <input type="checkbox" <?= (in_array($brands->brandId, isset($this->params['brandId']) ? $this->params['brandId'] : [])) ? " checked " : " " ?> class="search-brands" id="search-brands" name="search-brands[]" value="<?php echo $brands->brandId; ?>"><?php echo $brands->title . " (" . $total . ")"; ?>
+                        </div>
+                        <?php
+                    }
                 }
             }
         }
@@ -42,8 +44,7 @@ if (isset($categoryId)) {
     <?php
 }
 
-function check($brandId, $allBrands)
-{
+function check($brandId, $allBrands) {
     $check = 0;
     foreach ($allBrands as $old) {
         if ($old == $brandId) {
