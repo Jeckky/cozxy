@@ -213,6 +213,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <script src="<?php echo $directoryAsset; ?>/js/plugins/icheck.min.js"></script>
 <?php
 $this->registerJs("$('input').iCheck();
+    alert('test icheck!!');
                         $('#lateShippingCheck').on('ifChecked', function (event) {
 
                             var productId = $('input[id=productId]').val();
