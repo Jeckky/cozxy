@@ -825,7 +825,7 @@ $('.search-brands').on('ifChecked', function (event) {
             ids.push($(this).find('.search-brands').val());
         }
     });
-
+    //alert(categoryId);
     $.ajax({
         type: "POST",
         //dataType: "JSON",

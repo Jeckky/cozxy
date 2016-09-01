@@ -87,8 +87,36 @@ class SearchController extends MasterController {
     }
 
     public function actionSearchBrands() {
+        $this->layout = "/content_left";
+        $this->title = 'Cost.fit | Products';
+        $this->subTitle = 'ชื่อ search';
+        $categoryId = $_POST['categoryId'];
+//        throw new \yii\base\Exception(print_r($_POST['brandId'], true));
+        // $allBrand = "";
 
-        echo 'loadding brands ...';
+        $idString = implode(",", $_POST['brandId']);
+
+        $whereArray = [];
+        $whereArray["category_to_product.categoryId"] = $categoryId;
+        $whereArray["product_price.quantity"] = 1;
+        $whereArray["product.brandId"] = "in ($idString)";
+
+        $products = \common\models\costfit\CategoryToProduct::find()
+                ->join("LEFT JOIN", "product_price", "product_price.productId = category_to_product.productId")
+                ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+                ->where($whereArray);
+
+        //throw new \yii\base\Exception(count($products));
+        //$products = \common\models\costfit\Product::find()->where("categoryId=" . $categoryId . " and brandId in(" . $idString . ")")->all();
+
+        $products = new \yii\data\ActiveDataProvider([
+            'query' => $products,
+        ]);
+        //throw new \yii\base\Exception($products->getCount());
+        return $this->render('search', ['products' => $products]);
+
+        //  return $this->renderPartial('search', ['products' => $products]);
+        //echo $idString;
     }
 
 }
