@@ -134,7 +134,12 @@ $(document).ready(function (e) {
     /*Wishlist Deleting Items
      *******************************************/
     $(document).on('click', '.wishlist .delete i', function () {
-        event.preventDefault();
+        if (navigator.userAgent.indexOf("Firefox") != -1) {
+            //alert('Firefox');
+        } else {
+            event.preventDefault();
+        }
+
         var $target = $(this).parent().parent();
         var pId = $(this).parent().parent().find("#productId").val();
 
@@ -184,7 +189,13 @@ $(document).ready(function (e) {
     /*Added To Cart Message + Action (For Demo Purpose)
      **************************************************/
     $addToCartBtn.click(function () {
-        event.preventDefault();
+
+        if (navigator.userAgent.indexOf("Firefox") != -1) {
+            //alert('Firefox');
+        } else {
+            event.preventDefault();
+        }
+
         $addedToCartMessage.removeClass('visible');
         var $itemName = $(this).parent().parent().find('h1').text();
 
@@ -228,7 +239,11 @@ $(document).ready(function (e) {
 
     //Add(+/-) Button Number Incrementers
     $(".incr-btn").on("click", function (e) {
-        event.preventDefault();
+        if (navigator.userAgent.indexOf("Firefox") != -1) {
+            //alert('Firefox');
+        } else {
+            event.preventDefault();
+        }
         var $button = $(this);
         var oldValue = $button.parent().find("input").val();
         var newVal = 1
