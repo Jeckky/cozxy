@@ -27,16 +27,19 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="overlay"></div>
                 <div class="ms-anim-layers">
                     <div class="ms-layer text-block" style="margin: 50px; padding: 108px 0px 0px 25px; font-size: 16px; line-height: 22px;">
-                        <h2 class="dark-color">
+                        <h2  style="width: 456px; left: 110px; top: 110px;"  class="dark-color ms-layer" data-effect="top(50,true)" data-duration="700" data-delay="250" data-ease="easeOutQuad">
                             <span style="color: #03a9f4;"><?= $banner->headTitle ?></span><br><?= $banner->title ?>
                         </h2>
-                        <p class="dark-color col-md-7"><?= strip_tags($banner->description); ?></p>
-                        <p class="dark-color col-md-7">
+                        <p  style="width: 456px; left: 110px; top: 210px;"  class="dark-color ms-layer col-md-7 " data-effect="back(500)" data-duration="700" data-delay="500" data-ease="easeOutQuad"><?= strip_tags($banner->description); ?></p>
+                        <p  style="width: 456px; left: 20px; top: 100px;" class="dark-color col-md-7">
                             <a class="btn btn-primary" href="<?= $banner->link; ?>"><?= $banner->linkTitle ?></a>
                         </p>
                         <!--<a class="btn btn-black" href="#">Browse all</a>-->
                     </div>
-                    <img style="right: 50px; margin: 0px; padding: 60px 0px 0px; font-size: 16px; line-height: 22px;" class="ms-layer img-block img-responsive" src="<?= Yii::$app->homeUrl . $banner->image ?>" alt="1">
+                    <img style="right: 50px;" class="ms-layer img-block" src="<?= Yii::$app->homeUrl . $banner->image ?>" alt="1" data-effect="back(500)" data-duration="800" data-delay="350" data-ease="easeOutQuad"/>
+
+                    <!--
+                   <img style="right: 50px; margin: 0px; padding: 60px 0px 0px; font-size: 16px; line-height: 22px;" class="ms-layer" src="<?//= Yii::$app->homeUrl . $banner->image ?>" alt="1">-->
                 </div>
             </div>
             <?php
