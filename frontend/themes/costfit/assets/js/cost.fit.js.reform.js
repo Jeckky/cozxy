@@ -730,7 +730,7 @@ function changeoption(value)
      urls = window.location.protocol + "//" + window.location.host + '/products/change-option/';
      }
      */
-    $.post($baseUrl + 'change-option/', {
+    $.post($baseUrl + 'products/change-option/', {
         productId: value
     }, function (data, status) {
         var JSONObject = JSON.parse(data);
