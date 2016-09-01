@@ -7,13 +7,16 @@ use yii\helpers\Html;
 use yii\web\View;
 use common\models\ModelMaster;
 
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
-$baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
-$url_search = (explode("search", $_SERVER['REQUEST_URI']));
-$url_parameter = explode("/", $url_search[1]);
-$k = base64_decode(base64_decode($url_parameter[2]));
-$params = \common\models\ModelMaster::decodeParams($url_parameter[2]);
-$categoryId = $params['categoryId'];
+//$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
+//$baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+//$url_search = (explode("search", $_SERVER['REQUEST_URI']));
+//$url_parameter = explode("/", $url_search[1]);
+//$k = base64_decode(base64_decode($url_parameter[2]));
+//throw new \yii\base\Exception(print_r($k, true));
+//$params = \common\models\ModelMaster::decodeParams($url_parameter[2]);
+//$categoryId = $params['categoryId'];
+$categoryId = $this->params['categoryId'];
+$title = $this->params['title'];
 ?>
 <?php $this->beginContent('@app/themes/costfit/layouts/main.php'); ?>
 <?= $this->render('_modal_login') ?>
@@ -67,31 +70,31 @@ $categoryId = $params['categoryId'];
                         <!--Price Section-->
                         <section class="filter-section">
                             <h3>Filter by price</h3>
-                            <?php echo $this->render('@app/views/filter/filterbyprice', ['categoryId' => $categoryId, 'title' => $url_parameter[1]]); ?>
+                            <?php echo $this->render('@app/views/filter/filterbyprice', ['categoryId' => $categoryId, 'title' => $title]); ?>
 
                         </section>
 
                         <!--Colors Section
                         <section class="filter-section">
                             <h3>Filter by color</h3>
-                        <?php //echo $this->render('@app/views/filter/filterbycolor');              ?>
+                        <?php //echo $this->render('@app/views/filter/filterbycolor');               ?>
                         </section>-->
 
                         <!--Colors Section
                         <section class="filter-section">
                             <h3>Filter by size</h3>
-                        <?php //echo $this->render('@app/views/filter/filterbysize');              ?>
+                        <?php //echo $this->render('@app/views/filter/filterbysize');               ?>
                         </section>-->
 
                         <!--Categories Section
                         <section class="filter-section">
                             <h3>Categories</h3>
-                        <?php //echo $this->render('@app/views/categories/categories');              ?>
+                        <?php //echo $this->render('@app/views/categories/categories');               ?>
                         </section>-->
                         <!--Categories Section-->
                         <section class="filter-section">
                             <h3>Brands</h3>
-                            <?php echo $this->render('@app/views/categories/brands', ['categoryId' => $categoryId, 'title' => $url_parameter[1]]); ?>
+                            <?php echo $this->render('@app/views/categories/brands', ['categoryId' => $categoryId, 'title' => $title, 'brandIds' => isset($this->params['categoryId']) ? $this->params['categoryId'] : NULL]); ?>
                         </section>
                     </div>
                 </div><!--Filters-->
