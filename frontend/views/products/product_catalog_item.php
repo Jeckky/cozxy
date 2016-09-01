@@ -211,99 +211,93 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </div>
 
 <script src="<?php echo $directoryAsset; ?>/js/plugins/icheck.min.js"></script>
-<script>
-                $('input').iCheck();
-                $('#lateShippingCheck').on('ifChecked', function (event) {
-                    //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
-                    //alert('xxx');
-                    var productId = $('input[id=productId]').val();
-                    var fastId = $('input[id=fastId]').val();
-                    // alert(productId);
-                    //alert(fastId);
-                    $.ajax({
-                        type: "POST",
-                        dataType: "JSON",
-                        url: "../products/get-product-shipping-price/",
-                        data: {'productId': productId, 'fastId': fastId},
-                        success: function (data)
-                        {
-                            // alert(productId);
-                            $("#fastId").val(data);
-                            $("#choose").hide();
-                            $("#unchoose").show();
-                        }
+<?php
+$this->registerJs("$('input').iCheck();
+                        $('#lateShippingCheck').on('ifChecked', function (event) {
 
-                    });
-                });
+                            var productId = $('input[id=productId]').val();
+                            var fastId = $('input[id=fastId]').val();
 
-                $('#lateShippingCheck').on('ifUnchecked', function (event) {
-                    var productId = $('input[id=productId]').val();
-                    $.ajax({
-                        type: "POST",
-                        dataType: "JSON",
-                        url: "../products/get-defult-product-shipping-price/",
-                        data: {'productId': productId},
-                        success: function (data)
-                        {
-                            //  alert(data);
-                            $("#fastId").val(data);
-                            $("#choose").show();
-                            $("#unchoose").hide();
-                        }
-                    });
-                });
-
-                //Add(+/-) Button Number Incrementers
-                $(".incr-btn").on("click", function (e) {
-                    event.preventDefault();
-                    var $button = $(this);
-                    var oldValue = $button.parent().find("input").val();
-                    var newVal = 1
-                    if ($button.text() == "+") {
-                        newVal = parseFloat(oldValue) + 1;
-                    } else {
-                        // Don't allow decrementing below 1
-                        if (oldValue > 1) {
-                            newVal = parseFloat(oldValue) - 1;
-                        } else {
-                            newVal = 1;
-                        }
-                        $('.incr-btn').popover('hide');
-                    }
-                    $.ajax({
-                        type: "POST",
-                        dataType: "JSON",
-                        url: "../cart/change-quantity-item",
-                        data: {productId: $("#productId").val(), quantity: newVal},
-                        success: function (data)
-                        {
-                            if (data.status)
-                            {
-//                    $('.price').html(data.priceText);
-                                if (data.discountValue != "null")
+                            $.ajax({
+                                type: 'POST',
+                                dataType: 'JSON',
+                                url: '../products/get-product-shipping-price/',
+                                data: {'productId': productId, 'fastId': fastId},
+                                success: function (data)
                                 {
-                                    $('.discountPrice').html(data.discountValue + " ฿ extra offyour order");
-                                } else
-                                {
-                                    $('.discountPrice').html("&nbsp;Add more than 1 item to your order");
+                                    // alert(productId);
+                                    $('#fastId').val(data);
+                                    $('#choose').hide();
+                                    $('#unchoose').show();
                                 }
-                                $('#pp' + oldValue).removeClass("priceActive");
-                                $('#pp' + newVal).addClass("priceActive");
 
-                                $button.parent().find("input").val(newVal);
-                            } else
-                            {
-                                if (data.errorCode === 1)
+                            });
+                        });
+                        $('#lateShippingCheck').on('ifUnchecked', function (event) {
+                            var productId = $('input[id=productId]').val();
+                            $.ajax({
+                                type: 'POST',
+                                dataType: 'JSON',
+                                url: '../products/get-defult-product-shipping-price/',
+                                data: {'productId': productId},
+                                success: function (data)
                                 {
-                                    newVal = newVal - 1;
-                                    $('.incr-btn').popover('show');
+                                    //  alert(data);
+                                    $('#fastId').val(data);
+                                    $('#choose').show();
+                                    $('#unchoose').hide();
                                 }
-                                $button.parent().find("input").val(newVal);
+                            });
+                        });
+
+                        $('.incr-btn').on('click', function (e) {
+                            event.preventDefault();
+                            var \$button = $(this);
+                            var oldValue = \$button.parent().find('input').val();
+                            var newVal = 1
+                            if (\$button.text() == " + ") {
+                                newVal = parseFloat(oldValue) + 1;
+                            } else {
+                                // Don't allow decrementing below 1
+                                if (oldValue > 1) {
+                                    newVal = parseFloat(oldValue) - 1;
+                                } else {
+                                    newVal = 1;
+                                }
+                                $('.incr-btn').popover('hide');
                             }
-                        }
-                    });
-                });
+                            $.ajax({
+                                type: 'POST',
+                                dataType: 'JSON',
+                                url: '../cart/change-quantity-item',
+                                data: {productId: $('#productId').val(), quantity: newVal},
+                                success: function (data)
+                                {
+                                    if (data.status)
+                                    {
 
-</script>
+                                        if (data.discountValue != 'null')
+                                        {
+                                            $('.discountPrice').html(data.discountValue + ' ฿ extra offyour order');
+                                        } else
+                                        {
+                                            $('.discountPrice').html('&nbsp;Add more than 1 item to your order');
+                                        }
+                                        $('#pp' + oldValue).removeClass('priceActive');
+                                        $('#pp' + newVal).addClass('priceActive');
+                                        \$button.parent().find('input').val(newVal);
+                                    } else
+                                    {
+                                        if (data.errorCode === 1)
+                                        {
+                                            newVal = newVal - 1;
+                                            $('.incr-btn').popover('show');
+                                        }
+                                        \$button.parent().find('input').val(newVal);
+                                    }
+                                }
+                            });
+                        });", \yii\web\View::POS_LOAD, 'my-options');
+?>
 
 
