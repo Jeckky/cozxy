@@ -18,7 +18,7 @@ if (isset($categoryId)) {
         <div class="form-group">
             <label class="sr-only" for="subscr-name">Enter name</label>
             <input type="text" class="form-control input-sm" name="subscr-name" id="subscr-name" placeholder="Search by Brand" required="">
-            <button class="subscr-next"><i class="icon-magnifier"></i></button>
+            <button class="subscr-next" style="top:4px;"><i class="icon-magnifier"></i></button>
         </div>
 
         <?php
