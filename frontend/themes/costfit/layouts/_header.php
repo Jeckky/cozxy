@@ -20,9 +20,13 @@ $logo = common\models\costfit\ContentGroup::find()->where("lower(title)='logoima
 
     <!--Mobile Menu Toggle-->
     <div class="menu-toggle"><i class="fa fa-list"></i></div>
-
-    <div class="container">
+    <!-- Show For Desktop -->
+    <div class="container hidden-xs hidden-sm">
         <a class="logo" href="<?= Yii::$app->homeUrl ?>"><img src="<?php echo Yii::$app->homeUrl . $logo->image; ?>" alt="Cost Fit" class="img-responsive"/></a>
+    </div>
+    <!-- Show For Mobile -->
+    <div class="container hidden-md  hidden-lg">
+        <a class="logo" href="<?= Yii::$app->homeUrl ?>"><img src="<?php echo Yii::$app->homeUrl . $logo->image; ?>" alt="Cost Fit" class="img-responsive" style="width: 70px; height: 32px;"/></a>
     </div>
 
     <!--Main Menu-->
