@@ -106,8 +106,8 @@ class SearchController extends MasterController {
         } else {
             $idString = null;
         }
-
-        return $this->redirect(['search/' . rawurlencode($cat->title) . "/" . ModelMaster::encodeParams(['categoryId' => $categoryId, 'brandId' => $idString])]);
+        //  $items_sub->createTitle() 
+        return $this->redirect(['search/' . rawurlencode($cat->createTitle()) . "/" . ModelMaster::encodeParams(['categoryId' => $categoryId, 'brandId' => $idString])]);
     }
 
 }
