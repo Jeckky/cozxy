@@ -24,7 +24,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <h4 class="light-weight uppercase">Shipment Tracking</h4>
 
                     <div class="ship-scale">
-                        <span class="round done">
+                        <span class="round <!--done-->">
                             <i class="fa fa-check"></i>
 
                             <span class="textik">Shipping soon</span>
@@ -32,7 +32,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
                         </span>
 
-                        <span class="flat done">
+                        <span class="flat <!--done-->">
                             <span class="round">
                                 <i class="fa fa-check"></i>
 
@@ -153,7 +153,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </div>
 
                     <div class="shipment">
-                        <div class="shipment-title">Order #</div> 
+                        <div class="shipment-title">Order #</div>
                         <div>
                             <!-- 65468986 -->
                         </div>
