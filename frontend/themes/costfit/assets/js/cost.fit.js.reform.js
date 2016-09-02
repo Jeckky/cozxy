@@ -1,6 +1,9 @@
 /*  By  Taninut.B , 7/5/2016 */
 var $addToWishlistBtn = $('#addItemToWishlist');
 var $addedToCartMessage = $('.cart-message');
+
+alert(window.location.pathname);
+
 var $baseUrl = window.location.protocol + "//" + window.location.host;
 if (window.location.host == 'localhost') {
     $baseUrl = window.location.protocol + "//" + window.location.host + '/cost.fit-frontend/';
