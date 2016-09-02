@@ -25,7 +25,7 @@ $(document).ready(function (e) {
     } else {
         $baseUrl = window.location.protocol + "//" + window.location.host + '/';
     }
-
+    //console.log($baseUrl);
     /*Adding Placeholder Support in Older Browsers
      ************************************************/
     $('input, textarea').placeholder();
