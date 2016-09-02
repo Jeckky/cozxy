@@ -6,6 +6,8 @@ use yii\bootstrap\ActiveForm;
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+echo 'product : ' . count($product);
+exit();
 ?>
 
 <!--Wishlist-->
@@ -70,9 +72,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="container">
         <h2>You may also like</h2>
         <div class="row">
-            <?php
-            print_r($product);
-            ?>
             <!--Tile-->
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="tile">
@@ -165,7 +164,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <div class="price-label"><?php echo $product[3]->price; ?></div>
                     <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product[3]->encodeParams(['productId' => $product[3]->productId]) ?>">
                         <?php
-                        if (isset($product[2]->productImages[0]->imageThumbnail1)) {
+                        if (isset($product[3]->productImages[0]->imageThumbnail1)) {
                             ?>
                             <img src="<?php echo Yii::$app->homeUrl . $product[3]->productImages[0]->imageThumbnail1; ?>" alt="1"/>
                             <?php
