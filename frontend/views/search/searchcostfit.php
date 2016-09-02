@@ -64,17 +64,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     </div>
                                     <div class="price-label"><?= $item->price ?> ฿</div>
                                 </div>
-                                <a href="<?php echo Yii::$app->homeUrl . "products?productId=" . $item->productId; ?>" style="min-height: 210px; max-height: 210px;">
+                                <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $item->productId]) ?>" style="min-height: 210px; max-height: 210px;">
                                     <?php if (isset($item->productImages[0])): ?>
                                         <img src="<?php echo Yii::$app->homeUrl . $item->productImages[0]->image; ?>" alt="1"/>
                                     <?php endif; ?>
                                     <span class="tile-overlay"></span>
                                 </a>
                                 <div class="footer search-category-footer">
-                                    <a href="<?php echo Yii::$app->homeUrl . "products?productId=" . $item->productId; ?>"><?= $item->title; ?></a>
+                                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $item->productId]) ?>"><?= $item->title; ?></a>
                                     <!--<span>by Pirate3d</span>-->
-                                    <a href="<?php echo Yii::$app->homeUrl . "products?productId=" . $item->productId; ?>">View</a>
-                                    <a href="<?php echo Yii::$app->homeUrl . "products?productId=" . $item->productId; ?>"><button class="btn btn-primary">View</button></a>
+                                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $item->productId]) ?>">View</a>
+                                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $item->productId]) ?>"><button class="btn btn-primary">View</button></a>
                                 </div>
                             </div>
                         </div>

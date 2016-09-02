@@ -38,8 +38,72 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
         <div class="row">
             <!--Left Column-->
             <div class="col-lg-12 col-md-12 ">
-                <div class="col-sm-12 pull-right" style="margin-bottom: 5px; padding-left: 0px; padding-right: 0px;">
-                    <?php if (Yii::$app->controller->id == 'profile'): ?>
+                <div class="col-lg-6 col-md-6 ">
+                    <h5>Shipping to adress</h5>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td style="line-height: 20px;">
+                                    <?php
+                                    echo isset($order->attributes['shippingCompany']) ? 'บริษัท' . $order->attributes['shippingCompany'] : 'คุณ' . $order->user->firstname . " " . $order->user->lastname . '<br>';
+                                    echo isset($order->attributes['shippingAddress']) ? $order->attributes['shippingAddress'] : '';
+                                    echo '<br>';
+                                    $District = \common\models\dbWorld\District::find()->where("districtId = '" . $order->attributes['shippingDistrictId'] . "' ")->one();
+                                    echo isset($District->attributes['localName']) ? $District->attributes['localName'] : '';
+                                    echo '&nbsp;';
+                                    $Cities = \common\models\dbWorld\Cities::find()->where("cityId = '" . $order->attributes['shippingAmphurId'] . "' ")->one();
+                                    echo isset($Cities->attributes['localName']) ? $Cities->attributes['localName'] : '';
+                                    echo '&nbsp;';
+                                    $States = \common\models\dbWorld\States::find()->where("stateId = '" . $order->attributes['shippingProvinceId'] . "' ")->one();
+                                    echo isset($States->attributes['localName']) ? $States->attributes['localName'] : '';
+                                    echo '&nbsp;';
+                                    $Countries = \common\models\dbWorld\Countries::find()->where("countryId = '" . $order->attributes['shippingCountryId'] . "' ")->one();
+                                    echo isset($Countries->attributes['localName']) ? 'ประเทศ' . $Countries->attributes['localName'] : 'ประเทศ' . 'ไม่ระบุ';
+                                    echo '<br> รหัสไปรษณีย์';
+                                    echo isset($order->attributes['shippingZipcode']) ? $order->attributes['shippingZipcode'] : '';
+                                    echo '<br> โทร ';
+                                    echo isset($order->attributes['shippingTel']) ? $order->attributes['shippingTel'] : '';
+                                    echo '<br>';
+                                    ?>
+                                </td>
+                        </tbody>
+                    </table>
+                </div>
+                <div class = "col-lg-6 col-md-6 " style="border-left: 1px #f5f5f5 solid;">
+                    <h5>Billing to a different adress</h5>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td style="line-height: 20px;">
+                                    <?php
+                                    echo isset($order->attributes['billingCompany']) ? 'บริษัท' . $order->attributes['billingCompany'] . '<br>' : 'คุณ' . $order->user->firstname . " " . $order->user->lastname . '<br>';
+                                    echo isset($order->attributes['billingAddress']) ? $order->attributes['billingAddress'] : '';
+                                    echo '<br>';
+                                    $District = \common\models\dbWorld\District::find()->where("districtId = '" . $order->attributes['billingDistrictId'] . "' ")->one();
+                                    echo isset($District->attributes['localName']) ? $District->attributes['localName'] : '';
+                                    echo '&nbsp;';
+                                    $Cities = \common\models\dbWorld\Cities::find()->where("cityId = '" . $order->attributes['billingAmphurId'] . "' ")->one();
+                                    echo isset($Cities->attributes['localName']) ? $Cities->attributes['localName'] : '';
+                                    echo '&nbsp;';
+                                    $States = \common\models\dbWorld\States::find()->where("stateId = '" . $order->attributes['billingProvinceId'] . "' ")->one();
+                                    echo isset($States->attributes['localName']) ? $States->attributes['localName'] : '';
+                                    echo '&nbsp;';
+                                    $Countries = \common\models\dbWorld\Countries::find()->where("countryId = '" . $order->attributes['billingCountryId'] . "' ")->one();
+                                    echo isset($Countries->attributes['localName']) ? 'ประเทศ' . $Countries->attributes['localName'] : 'ประเทศ' . 'ไม่ระบุ';
+                                    echo '<br> รหัสไปรษณีย์ ';
+                                    echo isset($order->attributes['billingZipcode']) ? $order->attributes['billingZipcode'] : '';
+                                    echo '<br> โทร';
+                                    echo $order->attributes['billingTel'] . '<br>';
+                                    ?>
+                                </td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class = "col-lg-12 col-md-12 ">
+                <div class = "col-sm-12 pull-right" style = "margin-bottom: 5px; padding-left: 0px; padding-right: 0px;">
+                    <?php if (Yii::$app->controller->id == 'profile'):
+                        ?>
                         <a href="<?php echo Yii::$app->homeUrl; ?>payment/print-purchase-order/<?php echo $orderIdParams; ?>/<?php echo $order->orderNo; ?>" class="btn btn-primary btn-xs" target="_blank">
                             <i class="fa fa-print" aria-hidden="true"></i> พิมพ์</a>
                         <!--<a href="<?php echo Yii::$app->homeUrl; ?>payment/print-pay-in/<?php echo $orderIdParams; ?>/<?php echo $order->orderNo; ?>" class="btn btn-primary btn-xs">
@@ -47,7 +111,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         <a href="<?php echo Yii::$app->homeUrl; ?>profile/transfer-confirm/<?php echo $orderIdParams; ?>" class="btn btn-primary btn-xs" target="_blank">
                             <i class="fa fa-check" aria-hidden="true"></i> แจ้งชำระเงิน</a>
                         -->
-                        <a href="<?php echo Yii::$app->homeUrl; ?>checkout/confirm-checkout?orderId=<?= $order->orderId ?>" class="btn btn-primary btn-xs" target="_blank">
+                        <a href="<?php echo Yii::$app->homeUrl; ?>checkout/confirm-checkout/<?php echo $orderIdParams; ?>" class="btn btn-primary btn-xs" target="_blank">
                             <i class="fa fa-dollar" aria-hidden="true"></i> ชำระอีกครั้ง</a>
                     <?php else: ?>
                         <?php if (Yii::$app->controller->id != 'checkout'): ?>
@@ -113,7 +177,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         </tr>
                         <tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้ารวมภาษีมูลค่าเพิ่ม / sub Total Included VAT :</td>
-                            <td class="bg-purchase-order"><?php echo $order->vat; ?></td>
+                            <td class="bg-purchase-order"><?php echo $order->summary; ?></td>
                         </tr>
                         <!--
                         <tr>
@@ -134,7 +198,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                             <td class="bg-purchase-order"><?php echo $order->summary; ?></td>
                         </tr>
 
-                    </tbody> 
+                    </tbody>
                 </table>
             </div>
         </div>

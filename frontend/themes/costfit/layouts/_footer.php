@@ -6,20 +6,20 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <!--Sticky Buttons-->
 <div class="sticky-btns">
-    <form class="quick-contact ajax-form" method="post" name="quick-contact">
+    <form class="quick-contact" method="post" name="quick-contact" action="<?= $baseUrl ?>/contact-us">
         <h3>Contact us</h3>
         <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do.</p>
         <div class="form-group">
             <label for="qc-name">Full name</label>
-            <input class="form-control input-sm" type="text" name="name" id="qc-name" placeholder="Enter full name">
+            <input class="form-control input-sm" type="text" name="name" id="qc-name" placeholder="Enter full name" required="true">
         </div>
         <div class="form-group">
             <label for="qc-email">Email</label>
-            <input class="form-control input-sm" type="email" name="email" id="qc-email" placeholder="Enter email">
+            <input class="form-control input-sm" type="email" name="email" id="qc-email" placeholder="Enter email" required="true">
         </div>
         <div class="form-group">
             <label for="qc-message">Your message</label>
-            <textarea class="form-control input-sm" name="message" id="qc-message" placeholder="Enter your message"></textarea>
+            <textarea class="form-control input-sm" name="message" id="qc-message" placeholder="Enter your message" required="true"></textarea>
         </div>
         <!-- Validation Response -->
         <div class="response-holder"></div>

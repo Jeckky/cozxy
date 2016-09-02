@@ -70,6 +70,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="container">
         <h2>You may also like</h2>
         <div class="row">
+            <?php
+            print_r($product);
+            ?>
             <!--Tile-->
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="tile">

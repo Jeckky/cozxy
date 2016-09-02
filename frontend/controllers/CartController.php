@@ -21,7 +21,7 @@ class CartController extends MasterController
 
     public function beforeAction($action)
     {
-        if ($action->id == 'add-coupon' || $action->id == 'change-quantity-item-and-save') {
+        if ($action->id == 'add-coupon' || $action->id == 'change-quantity-item-and-save' || $action->id == 'add-to-cart') {
             $this->enableCsrfValidation = false;
         }
 
@@ -38,8 +38,10 @@ class CartController extends MasterController
         $this->layout = "/content_right";
         $this->title = 'Cost.fit | cart';
         $this->subTitle = 'Shopping Cart';
+        $product = \common\models\costfit\search\Product::find()->where("categoryId='3'")->all();
         $this->subSubTitle = '';
-        return $this->render('cart');
+        //return $this->render('cart');
+        return $this->render('cart', compact('product'));
     }
 
     public function actionAddToCart($id)
@@ -111,19 +113,6 @@ class CartController extends MasterController
             $order->save(); // Save For Cal new total
             $cartArray = \common\models\costfit\Order::findCartArray();
             $res["cart"] = $cartArray;
-//            $pQuan = 0;
-//            foreach ($cartArray["items"] as $item) {
-//                if ($item["productId"] == $id) {
-//                    $pQuan+=$item["qty"];
-//                }
-//            }
-//            $product = new \common\models\costfit\Product();
-//            $maxQuantity = $product->findMaxQuantity($id);
-//            if ($pQuan >= $maxQuantity) {
-//                $res["isMaxQuantity"] = TRUE;
-//            } else {
-//                $res["isMaxQuantity"] = FALSE;
-//            }
         } else {
             $res["status"] = FALSE;
         }
@@ -266,6 +255,22 @@ class CartController extends MasterController
         }
 
         return \yii\helpers\Json::encode($res);
+    }
+
+    public function actionSaveSlowest()
+    {
+        if (isset($_POST['orderId'])) {
+            $order = \common\models\costfit\Order::find()->where("orderId=" . $_POST['orderId'])->one();
+            if (isset($order)) {
+                if ($_POST['type'] == 1) {
+                    $order->isSlowest = 1;
+                } else {
+                    $order->isSlowest = 0;
+                }
+                $order->save(false);
+            }
+        }
+        echo $_POST['orderId'];
     }
 
 }

@@ -31,47 +31,85 @@ use \common\models\costfit\master\ProductMaster;
  * @property StoreProduct[] $storeProducts
  * @property StoreProductOrderItem[] $storeProductOrderItems
  */
-class Product extends \common\models\costfit\master\ProductMaster {
+class Product extends \common\models\costfit\master\ProductMaster
+{
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function getProductOnePrice() {
+    public function getProductOnePrice()
+    {
         return $this->hasOne(ProductPrice::className(), ['productId' => 'productId'])->andWhere('quantity = 1');
     }
 
-    public function calProductPrice($productId, $quantity, $returnArray = 0) {
+    public function calProductPrice($productId, $quantity, $returnArray = 0, $shippingStep = 1)
+    {
+
         $product = Product::find()->where("productId = $productId")->one();
         $productPrice = ProductPrice::find()->where("productId = $productId AND quantity = $quantity")->one();
-
+        $shippingDisCount = ProductShippingPrice::find()->where("productId=" . $productId)->orderBy("date ASC")->all();
         if (!$returnArray) {
             if (isset($productPrice)) {
-                return $productPrice->price;
+                if (isset($shippingDisCount) && count($shippingDisCount) > 0) {
+                    if ($shippingDisCount[$shippingStep - 1]->type == 1) {
+                        return $productPrice->price - $shippingDisCount[$shippingStep - 1]->discount;
+                    } else {
+                        return $productPrice->price * ((100 - $shippingDisCount[$shippingStep - 1]->discount) / 100);
+                    }
+                } else {
+                    return $productPrice->price;
+                }
             } else {
-                return $product->price;
+                if (isset($shippingDisCount) && count($shippingDisCount) > 0) {
+                    if ($shippingDisCount[$shippingStep - 1]->type == 1) {
+                        return $productPrice->price - $shippingDisCount[$shippingStep - 1]->discount;
+                    } else {
+                        return $productPrice->price * ((100 - $shippingDisCount[$shippingStep - 1]->discount) / 100);
+                    }
+                } else {
+                    return $productPrice->price;
+                }
             }
         } else {
             $res = [];
             if (isset($productPrice)) {
-                $price = $productPrice->price;
+                if (isset($shippingDisCount) && count($shippingDisCount) > 0) {
+                    if ($shippingDisCount[$shippingStep - 1]->type == 1) {
+                        $price = $productPrice->price - $shippingDisCount[$shippingStep - 1]->discount;
+                    } else {
+                        $price = $productPrice->price * ((100 - $shippingDisCount[$shippingStep - 1]->discount) / 100);
+                    }
+                } else {
+                    $price = $productPrice->price;
+                }
                 $res["discountType"] = isset($productPrice->discountType) ? $productPrice->discountType : NULL;
                 $res["discountValue"] = isset($productPrice->discountValue) ? $productPrice->discountValue : NULL;
                 $res["discountValueText"] = isset($productPrice->discountValue) ? number_format($productPrice->discountValue, 2) : NULL;
                 $res["price"] = $price;
                 $res["priceText"] = number_format($price, 2) . " ฿";
             } else {
-                $price = $product->price;
+                if (isset($shippingDisCount) && count($shippingDisCount) > 0) {
+                    if ($shippingDisCount[$shippingStep - 1]->type == 1) {
+                        $price = $productPrice->price - $shippingDisCount[$shippingStep - 1]->discount;
+                    } else {
+                        $price = $productPrice->price * ((100 - $shippingDisCount[$shippingStep - 1]->discount) / 100);
+                    }
+                } else {
+                    $price = $productPrice->price;
+                }
                 $res["discountType"] = isset($productPrice->discountType) ? $productPrice->discountType : NULL;
                 $res["discountValue"] = isset($productPrice->discountValue) ? $productPrice->discountValue : NULL;
                 $res["discountValueText"] = isset($productPrice->discountValue) ? number_format($productPrice->discountValue, 2) : NULL;
@@ -86,7 +124,8 @@ class Product extends \common\models\costfit\master\ProductMaster {
         }
     }
 
-    public static function findMaxQuantity($id, $checkInCart = 1) {
+    public static function findMaxQuantity($id, $checkInCart = 1)
+    {
 //        throw new \yii\base\Exception("productId =" . $id);
         $productPrice = ProductPrice::find()->select("MAX(quantity) as maxQuantity")->where("productId = $id")->one();
         if (isset($productPrice)) {
@@ -101,7 +140,8 @@ class Product extends \common\models\costfit\master\ProductMaster {
         }
     }
 
-    public static function findQuantityInCart($id) {
+    public static function findQuantityInCart($id)
+    {
         $order = Order::findCartArray();
         $quantity = 0;
         foreach ($order["items"] as $item) {
@@ -114,26 +154,33 @@ class Product extends \common\models\costfit\master\ProductMaster {
         return $quantity;
     }
 
-    public function getProductPrices() {
+    public function getProductPrices()
+    {
         return $this->hasMany(ProductPrice::className(), ['productId' => 'productId']);
     }
 
-    public function getBestSellProduct() {
+    public function getBestSellProduct()
+    {
         //return $this->hasMany(ProductPrice::className(), ['productId' => 'productId']);
     }
 
-    public function findOutProducts() {
+    public function findOutProducts()
+    {
         //return $this->hasMany(ProductPrice::className(), ['productId' => 'productId']);
     }
 
-    public function findOnSellProducts() {
+    public function findOnSellProducts()
+    {
         //return $this->hasMany(ProductPrice::className(), ['productId' => 'productId']);
     }
 
-    public function addProductShipping($id) {
+    public function addProductShipping($id)
+    {
+        $date = ShippingType::find()->where("1")->orderBy("date ASC")->all();
         $productShippingPrice = new ProductShippingPrice();
         $productShippingPrice->productId = $id;
-        $productShippingPrice->shippingTypeId = 1;
+        $productShippingPrice->shippingTypeId = $date[0]->shippingTypeId;
+        $productShippingPrice->date = $date[0]->date;
         $productShippingPrice->discount = 0;
         $productShippingPrice->type = 1;
         $productShippingPrice->createDateTime = new \yii\db\Expression('NOW()');
@@ -141,7 +188,8 @@ class Product extends \common\models\costfit\master\ProductMaster {
         $productShippingPrice->save(false);
         $productShippingPrice = new ProductShippingPrice();
         $productShippingPrice->productId = $id;
-        $productShippingPrice->shippingTypeId = 2;
+        $productShippingPrice->shippingTypeId = $date[1]->shippingTypeId;
+        $productShippingPrice->date = $date[1]->date;
         $productShippingPrice->discount = 0;
         $productShippingPrice->type = 1;
         $productShippingPrice->createDateTime = new \yii\db\Expression('NOW()');
@@ -150,15 +198,18 @@ class Product extends \common\models\costfit\master\ProductMaster {
         //throw new \yii\base\Exception('adfasdf');
     }
 
-    public function getUnits() {
+    public function getUnits()
+    {
         return $this->hasOne(Unit::className(), ['unitId' => 'unit']);
     }
 
-    public function getImages() {
+    public function getImages()
+    {
         return $this->hasOne(ProductImage::className(), ['productId' => 'productId']);
     }
 
-    public static function getShippingTypeId($productId) {
+    public static function getShippingTypeId($productId)
+    {
         $fastDate = 99;
         $productShippingDates = ProductShippingPrice::find()->where("productId =" . $productId)->all();
         foreach ($productShippingDates as $productShippingDate) {
@@ -174,6 +225,44 @@ class Product extends \common\models\costfit\master\ProductMaster {
             }
         }
         return $fastId;
+    }
+
+    public static function getShippingDate($productId, $type)
+    {
+        $fastDate = 99;
+        $productShippingDates = ProductShippingPrice::find()->where("productId =" . $productId)->all();
+        foreach ($productShippingDates as $productShippingDate) {
+            $shippingType = ShippingType::find()->where("shippingTypeId=" . $productShippingDate->shippingTypeId)->one();
+            if (count($shippingType) > 0) {
+                if ($shippingType->date < $fastDate) {
+                    $fastDate = $shippingType->date;
+                    $fastId = $productShippingDate->shippingTypeId;
+                }
+            } else {
+                $fastDate = '';
+                $fastId = '';
+            }
+        }
+        $minDate = 99;
+        $findMinDates = ProductShippingPrice::find()->where("productId =" . $productId . " and shippingTypeId!=" . $fastId)->all();
+        if (isset($findMinDates)) {
+            foreach ($findMinDates as $findMinDate) {
+                $model = ShippingType::find()->where("shippingTypeId=" . $findMinDate->shippingTypeId)->one();
+                if (isset($model)) {
+                    if ($model->date < $minDate) {
+                        $minDate = $model->date;
+                    }
+                }
+            }
+        } else {
+            $minDate = $fastId;
+        }
+
+        if ($type == 1) {
+            return $fastDate;
+        } else {
+            return $minDate;
+        }
     }
 
 }

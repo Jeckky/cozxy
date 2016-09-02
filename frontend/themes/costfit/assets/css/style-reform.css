@@ -70,8 +70,13 @@
 }
 
 #products-category-search{
-    min-height: 480px;
-    max-height: 480px;
+    /*
+     min-height: 480px;
+     max-height: 480px;
+    */
+
+    min-height: 100%;
+    max-height: 560px;
 }
 
 #products-popular{
@@ -93,8 +98,8 @@
 }
 
 .search-category-footer{
-    min-height: 180px;
-    /* max-height: 180px; */
+    min-height: 150px;
+    /* max-height: 180px; */ 
     word-wrap: break-word;
 }
 
@@ -133,9 +138,9 @@
 /* Just in case there are inline attributes */
 #photos-bestseller-items img {
 
-    width: 100% !important;
+    /*width: 100% !important;
     height: auto !important;
-
+    */
 }
 
 #photos-bestseller-items-padding{

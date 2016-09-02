@@ -131,16 +131,24 @@ use common\models\ModelMaster;
                             </td>
                             <td class="qnt-count">
                                 <a class="incr-btn-cart " href="#">-</a>
-                                <input class="quantity form-control" style="font-size: 14px" type="text" value="<?= $item["qty"] ?>">
+                                <input class="quantity form-control" style="font-size: 14px" type="text" value="<?= $item["qty"] ?>" readonly="true">
                                 <a class="incr-btn-cart" href="#">+</a>
                             </td>
                             <td class="total"><?= $item["qty"] * $item["price"] . " ฿" ?></td>
                             <td class="delete"><i class="icon-delete"></i><?= yii\helpers\Html::hiddenInput("orderItemId", $item['orderItemId'], ['id' => 'orderItemId']); ?></td>
                         </tr>
+                        <?= Html::hiddenInput("orderId", $this->params['cart']['orderId'], ['id' => 'orderId']); ?>
                         <?php
                     }
                     ?>
                 </table>
+                <?php if (isset($this->params['cart']['items']) && !empty($this->params['cart']['items'])) { ?>
+                    <div class="checkbox " id="showSlow">
+                        <label style="color:#03a9f4">
+                            <input type="checkbox" id="slowest" name="slowest">  ต้องการส่งสินค้าช้าที่สุดเพื่อประหยัดค่าใช้จ่าย
+                        </label>
+                    </div>
+                <?php } ?>
             </div>
 
             <!--Sidebar-->
@@ -189,34 +197,45 @@ use common\models\ModelMaster;
     </div>
 </section><!--Shopping Cart Close-->
 
-<!--Catalog Grid
+<!--Catalog Grid-->
 <section class = "catalog-grid">
     <div class = "container">
         <h2>You may also like</h2>
         <div class = "row">
-<?php //for ($index = 0; $index <= 3; $index++) {
-?>
-
-        <div class="col-lg-3 col-md-4 col-sm-6">
-            <div class="tile">
-                <div class="price-label">715,00 $</div>
-                <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">
-                    <img src="<?php echo $directoryAsset; ?>/img/catalog/1.png" alt="1"/>
-                    <span class="tile-overlay"></span>
-                </a>
-                <div class="footer">
-                    <a href="<?php echo Yii::$app->homeUrl; ?>products?productId=8888888">The Buccaneer</a>
-                    <span>by Pirate3d</span>
-                    <a href="<?php echo Yii::$app->homeUrl; ?>cart"><button class="btn btn-primary">Add to Cart</button></a>
-                </div>
-            </div>
+            <?php
+            if (count($product) > 0):
+                for ($index = 0; $index <= 3; $index++) {
+                    ?>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="tile">
+                            <div class="price-label"><?php echo $product[$index]->price; ?></div>
+                            <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product[$index]->encodeParams(['productId' => $product[$index]->productId]) ?>">
+                                <?php
+                                if (isset($product[$index]->productImages[$index]->imageThumbnail1)) {
+                                    ?>
+                                    <img src="<?php echo Yii::$app->homeUrl . $product[$index]->productImages[$index]->imageThumbnail1; ?>" alt="1"/>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <img src="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1"/>
+                                    <?php
+                                }
+                                ?>
+                                <span class="tile-overlay"></span>
+                            </a>
+                            <div class="footer">
+                                <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product[$index]->encodeParams(['productId' => $product[$index]->productId]) ?>"><?= $product[$index]->title ?></a>
+                                <span>by cost.fit</span>
+                                <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product[$index]->encodeParams(['productId' => $product[$index]->productId]) ?>"><button class="btn btn-primary">View</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                    $index = $index++;
+                }
+            endif;
+            ?>
         </div>
-<?php
-//$index = $index++;
-//}
-?>
-
-</div>
-</div>
-</section> Catalog Grid Close-->
+    </div>
+</section> <!--Catalog Grid Close-->
 

@@ -7,9 +7,10 @@ use Yii;
 /**
 * This is the model class for table "product_shipping_price".
 *
-    * @property integer $productShippingPriceId
-    * @property integer $productId
-    * @property integer $shippingTypeId
+    * @property string $productShippingPriceId
+    * @property string $productId
+    * @property string $shippingTypeId
+    * @property string $date
     * @property string $discount
     * @property string $type
     * @property integer $status
@@ -33,7 +34,7 @@ public function rules()
 {
 return [
             [['productId', 'shippingTypeId', 'type'], 'required'],
-            [['productId', 'shippingTypeId', 'status'], 'integer'],
+            [['productId', 'shippingTypeId', 'date', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['discount', 'type'], 'string', 'max' => 45],
         ];
@@ -48,6 +49,7 @@ return [
     'productShippingPriceId' => Yii::t('product_shipping_price', 'Product Shipping Price ID'),
     'productId' => Yii::t('product_shipping_price', 'Product ID'),
     'shippingTypeId' => Yii::t('product_shipping_price', 'Shipping Type ID'),
+    'date' => Yii::t('product_shipping_price', 'Date'),
     'discount' => Yii::t('product_shipping_price', 'Discount'),
     'type' => Yii::t('product_shipping_price', 'Type'),
     'status' => Yii::t('product_shipping_price', 'Status'),

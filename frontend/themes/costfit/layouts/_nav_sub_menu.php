@@ -28,7 +28,7 @@ $MenuCategory = $this->context->actionMenuCategory();
     }
 </style>
 <!-- Show For Mobile -->
-<ul class="catalog hidden-sm hidden-md  hidden-lg" style="max-width: 100%;" >
+<ul class="catalog hidden-md  hidden-lg" style="max-width: 100%;" >
     <?php
     // $list_menu_category = $this->Me
     foreach ($MenuCategory as $items) {
@@ -74,7 +74,7 @@ $MenuCategory = $this->context->actionMenuCategory();
 </ul>
 
 <!-- Show For Desktop -->
-<ul class="catalog hidden-xs" id="catalog_new" style="width: 100%;">
+<ul class="catalog hidden-xs hidden-sm " id="catalog_new" style="width: 100%;">
     <li class="has-submenu pull-left"><a href="#">Categories<i class="fa fa-chevron-down open"></i></a>
         <ul class="submenu">
             <?php
@@ -116,10 +116,11 @@ $MenuCategory = $this->context->actionMenuCategory();
 <?php if (!Yii::$app->user->isGuest): ?>
     <li class="has-submenu pill-right">
         <span class="sorting" id="sortingAccount" style="padding: 1px 1px 1px 1px;">
-            <a href="#" class="sorting" style="padding: 1px 1px 1px 1px;">Account</a></span>
+            <a href="#" class="sorting" style="padding: 1px 1px 1px 5px;">Account</a></span>
         <ul class="submenu" id="submenu-sorting-account" style="margin-top: -1px;">
             <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
             <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
+            <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/tracking">Tracking</a></li>
             <!--<li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/payment">Payment Methods</a></li>
             <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>history">Easy Re-Order</a></li>-->
         </ul>

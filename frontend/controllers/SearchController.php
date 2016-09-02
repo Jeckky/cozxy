@@ -30,32 +30,42 @@ class SearchController extends MasterController {
         //throw new \yii\base\Exception($title);
         $k = base64_decode(base64_decode($hash));
         $params = ModelMaster::decodeParams($hash);
-        //throw new \yii\base\Exception(print_r($params, true));
+//        throw new \yii\base\Exception(print_r($params, true));
         //return Yii::$app->getResponse()->redirect('register/login');
+        $this->view->params['categoryId'] = $params['categoryId'];
+        $this->view->params['title'] = $title;
         $this->layout = "/content_left";
         $this->title = 'Cost.fit | Products';
         $this->subTitle = 'ชื่อ search';
+//        throw new \yii\base\Exception(print_r($_POST, true));
+        $whereArray = [];
+        $whereArray["category_to_product.categoryId"] = $params['categoryId'];
+        $whereArray["product_price.quantity"] = 1;
 
-        /*
-          if (isset($_GET["category"])) {
-          $products = \common\models\costfit\Product::find()
-          ->join("INNER JOIN", "category_to_product ctp", 'ctp.productId = product.productId')
-          ->where("ctp.categoryId=" . $_GET["category"]);
-          //            ->groupBy("ctp.productId");
-          } else {
-          $products = \common\models\costfit\Product::find();
-          }
-         */
+        $products = \common\models\costfit\CategoryToProduct::find()
+                ->join("LEFT JOIN", "product_price", "product_price.productId = category_to_product.productId")
+                ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+                ->where($whereArray);
 
-        $products = \common\models\costfit\Product::find()
-                ->join("INNER JOIN", "category_to_product ctp", 'ctp.productId = product.productId')
-                ->where("ctp.categoryId=" . $params['categoryId']);
+        if (isset($_POST["min"])) {
+            $products->andWhere("product_price.price >=" . $_POST["min"]);
+        }
+        if (isset($_POST["max"])) {
+            $products->andWhere("product_price.price <=" . $_POST["max"]);
+        }
+
+        if (isset($params['brandId'])) {
+            $idString = $params['brandId'];
+            $this->view->params['brandId'] = explode(",", $idString);
+            $products->andWhere("product.brandId in ($idString)");
+        }
 
         $products = new \yii\data\ActiveDataProvider([
             'query' => $products,
         ]);
 
-        return $this->render('search', compact('products'));
+
+        return $this->render('search', ['products' => $products]);
     }
 
     public function actionPop($category) {
@@ -83,6 +93,21 @@ class SearchController extends MasterController {
         ]);
 
         return $this->render('search', compact('products'));
+    }
+
+    public function actionSearchBrands() {
+        $this->layout = "/content_left";
+        $this->title = 'Cost.fit | Products';
+        $this->subTitle = 'ชื่อ search';
+        $categoryId = $_POST['categoryId'];
+        $cat = \common\models\costfit\Category::find()->where("categoryId=" . $categoryId)->one();
+        if (isset($_POST['brandId'])) {
+            $idString = implode(",", $_POST['brandId']);
+        } else {
+            $idString = null;
+        }
+        //  $items_sub->createTitle() 
+        return $this->redirect(['search/' . rawurlencode($cat->createTitle()) . "/" . ModelMaster::encodeParams(['categoryId' => $categoryId, 'brandId' => $idString])]);
     }
 
 }

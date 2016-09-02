@@ -54,18 +54,20 @@ class Category extends \common\models\costfit\master\CategoryMaster {
             $query = Category::find()
                     ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
                     ->where('sc.type = 1')
-                    ->limit($limit)
-                    ->orderBy(new \yii\db\Expression('rand()'));
+                    ->orderBy(new \yii\db\Expression('rand()'))
+                    ->limit($limit);
         } else {
             $query = Category::find()
                     ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
                     ->where('sc.type = 1')
-                    ->limit($limit);
+                    ->LIMIT($limit);
         }
-
         if ($returnType == 1) {
             return new \yii\data\ActiveDataProvider([
                 'query' => $query,
+                'pagination' => [
+                    'pageSize' => $limit,
+                ],
             ]);
         } else {
             return $query->all();
@@ -77,8 +79,8 @@ class Category extends \common\models\costfit\master\CategoryMaster {
             $query = Category::find()
                     ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
                     ->where('sc.type = 2')
-                    ->limit($limit)
-                    ->orderBy(new \yii\db\Expression('rand()'));
+                    ->limit($limit);
+            //->orderBy(new \yii\db\Expression('rand()'));
         } else {
             $query = Category::find()
                     ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
@@ -106,7 +108,7 @@ class Category extends \common\models\costfit\master\CategoryMaster {
      * @return \yii\db\ActiveQuery
      */
     public function getCategories() {
-        return $this->hasMany(Category::className(), ['parentId' => 'categoryIdlo']);
+        return $this->hasMany(Category::className(), ['parentId' => 'categoryId']);
     }
 
 }

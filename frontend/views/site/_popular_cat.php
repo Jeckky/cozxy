@@ -7,7 +7,7 @@
         <div class="price-label">715,00 $</div>-->
 
         <img src="<?=
-        (isset($model->image) && !empty($model->image)) ? Yii::$app->homeUrl . $model->image : Yii::$app->urlManagerFrontend->baseUrl . "/../themes/costfit/assets/img/catalog/1.png";
+        (isset($model->image) && !empty($model->image)) ? Yii::$app->homeUrl . $model->image : Yii::$app->urlManagerFrontend->baseUrl . "/images/ContentGroup/DUHWYsdXVc.png";
         ?>" alt="1"/>
         <span class="tile-overlay"></span>
 

@@ -20,14 +20,12 @@ use common\models\costfit\ContentGroup;
 /**
  * Site controller
  */
-class SiteController extends MasterController
-{
+class SiteController extends MasterController {
 
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -57,8 +55,7 @@ class SiteController extends MasterController
     /**
      * @inheritdoc
      */
-    public function actions()
-    {
+    public function actions() {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -79,8 +76,7 @@ class SiteController extends MasterController
      *
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
 //        throw new \yii\base\Exception(print_r(\Yii::$app->user->identity, true));
         $this->title = 'My Cost.fit';
         $bannerGroup = ContentGroup::find()->where("lower(title) = 'banner' and status=1")->one();
@@ -95,7 +91,8 @@ class SiteController extends MasterController
         $hotProducts = \common\models\costfit\search\Product::hotProducts();
         $saveCat = Category::findAllSaveCategory();
         $popularCat = Category::findAllPopularCategory();
-        //$footer = "adfadf";
+        $hotProduct = \common\models\costfit\ProductHot::findAllHotProducts();
+//$footer = "adfadf";
         return $this->render('index', compact('saveCat', 'popularCat', 'bannerGroup', 'topOneContent', 'bottomContent', 'lastIndexContent', 'product', 'product2', 'footer', 'hotProduct'));
     }
 
@@ -104,8 +101,7 @@ class SiteController extends MasterController
      *
      * @return mixed
      */
-    public function actionLogin()
-    {
+    public function actionLogin() {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -115,7 +111,7 @@ class SiteController extends MasterController
             return $this->goBack();
         } else {
             return $this->render('login', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -125,8 +121,7 @@ class SiteController extends MasterController
      *
      * @return mixed
      */
-    public function actionLogout()
-    {
+    public function actionLogout() {
         Yii::$app->user->logout();
 
         return $this->goHome();
@@ -137,8 +132,7 @@ class SiteController extends MasterController
      *
      * @return mixed
      */
-    public function actionContact()
-    {
+    public function actionContact() {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
@@ -150,7 +144,7 @@ class SiteController extends MasterController
             return $this->refresh();
         } else {
             return $this->render('contact', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -160,8 +154,7 @@ class SiteController extends MasterController
      *
      * @return mixed
      */
-    public function actionAbout()
-    {
+    public function actionAbout() {
         return $this->render('about');
     }
 
@@ -170,8 +163,7 @@ class SiteController extends MasterController
      *
      * @return mixed
      */
-    public function actionSignup()
-    {
+    public function actionSignup() {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
@@ -182,7 +174,7 @@ class SiteController extends MasterController
         }
 
         return $this->render('signup', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -191,8 +183,7 @@ class SiteController extends MasterController
      *
      * @return mixed
      */
-    public function actionRequestPasswordReset()
-    {
+    public function actionRequestPasswordReset() {
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
@@ -205,7 +196,7 @@ class SiteController extends MasterController
         }
 
         return $this->render('requestPasswordResetToken', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -216,8 +207,7 @@ class SiteController extends MasterController
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token)
-    {
+    public function actionResetPassword($token) {
         try {
             $model = new ResetPasswordForm($token);
         } catch (InvalidParamException $e) {
@@ -231,52 +221,121 @@ class SiteController extends MasterController
         }
 
         return $this->render('resetPassword', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
-    public function actionRegister()
-    {
+    public function actionRegister() {
         return $this->render('register');
     }
 
-    public function successCallback($client)
-    {
+    public function successCallback($client) {
         $attributes = $client->getUserAttributes();
-//        throw new \yii\base\Exception(print_r($attributes, true));
-        if (isset($attributes['email'])) {
+        $auth_type = '';
+        // throw new \yii\base\Exception(print_r($attributes, true));
+        if ($_GET['authclient'] == 'facebook') {
             //facebook
-            $email = $attributes['email'];
+            $email = isset($attributes['email']) ? $attributes['email'] : '-';
             $name = explode(' ', $attributes['name']);
             $fName = current($name);
             $lName = end($name);
-        } else {
+            $auth_type = 'facebook';
+        } else if ($_GET['authclient'] == 'google') {
             //google
             $fName = $attributes['name']['givenName'];
             $lName = $attributes['name']['familyName'];
-            $email = $attributes['emails'][0]['value'];
+            $email = isset($attributes['emails'][0]['value']) ? $attributes['emails'][0]['value'] : '-';
+            $auth_type = 'google';
         }
-
-        $user = User::find()->where(['email' => $email])->one();
-        if (!empty($user)) {
-            Yii::$app->user->login($user);
+        if ($email == '-') {
+            $ms = 1;
+            $this->redirect(['register/register', 'ms' => $ms]);
         } else {
-//            $session = Yii::$app->session;
-//            $session['attributes'] = $attributes;
-//            $this->successUrl = Url::to(['signup']);
-
-            $model = new SignupForm();
-            $model->username = $model->email = $email;
-            $model->password = substr(md5(time()), 0, 8);
-            $model->fName = $fName;
-            $model->lName = $lName;
-            if ($user = $model->signup(2)) {
-                //login
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
+            $user = \common\models\costfit\User::find()->where(['email' => $email])->one();
+            if (!empty($user)) {
+                $login = new LoginForm();
+                if ($user->status == 0) {
+                    // กรณี status = 0 http://localhost/cost.fit-frontend/register/thank
+                    $status = 1;
+                    $this->redirect(['register/thank', 'status' => $status]);
+                } else {
+                    $type = $auth_type;
+                    $flag = FALSE;
+                    $typeLogin = explode(",", $user->auth_type);
+                    foreach ($typeLogin as $logins) {
+                        if ($logins == $type) {//เคย login ด้วย email นี้ social นี้ หรือไม่
+                            $flag = TRUE;
+                        }
+                    }
+                    if (!$flag) {//ถ้าไม่เคย
+                        if ($user->auth_type == '') {
+                            $user->auth_type = $type;
+                        } else {
+                            $user->auth_type = $user->auth_type . "," . $type;
+                        }
+                        $user->save();
+                    }
+                    $login->login2($user);
                 }
+            } else {
+                $model = new \common\models\costfit\User(['scenario' => 'register']);
+                $model->username = $model->email = $email;
+                $model->firstname = $fName;
+                $model->lastname = $lName;
+                //$model->auth_type = $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
+                $model->password = $attributes['id'];
+                $model->auth_key = $model->password_hash = Yii::$app->security->generatePasswordHash($attributes['id']);
+                $model->auth_type = $auth_type;
+                $model->status = 1;
+                $model->token = Yii::$app->security->generateRandomString(10);
+                $model->createDateTime = new \yii\db\Expression("NOW()");
+                $model->save(false);
+                $login = new LoginForm();
+                $user = \common\models\costfit\User::find()->where(['email' => $email])->one();
+                $login->login2($user);
             }
         }
+    }
+
+    public function actionSaveAppend() {
+//$saveCat = Category::findAllSaveCategory();
+        $ids = implode(",", $_POST['ids']);
+        $html = '<div id="products-save-cat" class="category col-lg-2 col-md-2 col-sm-4 col-xs-6"> </div>';
+        $categoryId = Yii::$app->request->post('categoryId');
+        $query = Category::find()
+                ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
+                ->where('sc.type = 1 and sc.categoryId not in(' . $ids . ")")
+                ->limit(6)
+                ->all();
+
+        $i = 0;
+
+        foreach ($query as $key => $value) {
+
+            if (count($value->image) > 0) {
+                $url_image = $value->image;
+            } else {
+                $url_image = '/images/ContentGroup/DUHWYsdXVc.png';
+            }
+
+            if ($i == 0) {
+                $html = "";
+            } else {
+                $html .= '<div id="products-save-cat" class="category col-lg-2 col-md-2 col-sm-4 col-xs-6">
+                        <input type="hidden" id="seeMoreId" value="' . $value->categoryId . '">
+                        <a href="' . Yii::$app->homeUrl . 'search/' . $value->createTitle() . '/' . $value->encodeParams(['categoryId' => $value->categoryId]) . '">
+                        <img src="' . Yii::$app->homeUrl . $url_image . '" alt="1">
+                        <p>' . $value->title . '</p>
+                        </a>
+                     </div>';
+            }
+
+            $i++;
+        }
+        echo $html;
+//echo '<pre>';
+// print_r($query);
+//return json_encode($query);
     }
 
 }

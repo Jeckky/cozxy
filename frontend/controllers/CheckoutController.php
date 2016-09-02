@@ -18,11 +18,13 @@ use \common\models\costfit\Order;
 /**
  * Checkout controller
  */
-class CheckoutController extends MasterController {
+class CheckoutController extends MasterController
+{
 
     public $enableCsrfValidation = false;
 
-    public function beforeAction($action) {
+    public function beforeAction($action)
+    {
         if ($action->id == 'confirmation' || $action->id == 'confirm-checkout') {
             $this->enableCsrfValidation = false;
         }
@@ -32,10 +34,13 @@ class CheckoutController extends MasterController {
 
     /**
      * Displays homepage.
-     *
+     * default Address First
+      - BILLING = 1; // ที่อยู่จัดส่งเอกสาร
+      - SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         if (Yii::$app->user->isGuest == 1) {
             //return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         }
@@ -51,15 +56,18 @@ class CheckoutController extends MasterController {
         }
 
         $addressId = Yii::$app->request->post('addressId');
+        $addressEdit = Yii::$app->request->post('addressEdit');
         $address = new \common\models\costfit\Address();
         $address->scenario = 'shipping_address';
+
         if (isset($addressId)) { // ตรวจสอบว่า มี hidden addressId ให้ update ในเทเบิล address
             if (isset($_POST['Address'])) {
+                //print_r($_POST['Address']);
                 $address = \common\models\costfit\Address::find()
-                        ->where('userId =' . \Yii::$app->user->id . ' and addressId=' . $addressId)
-                        ->one();
+                ->where('userId =' . \Yii::$app->user->id . ' and addressId=' . $addressId)
+                ->one();
 
-                //$address->attributes = $_POST['Address'];
+                $address->attributes = $_POST['Address'];
                 $address->countryId = (isset($_POST['Address']['countryId']) ? $_POST['Address']['countryId'] : '');
                 $address->provinceId = (isset($_POST['Address']['provinceId']) ? $_POST['Address']['provinceId'] : '');
                 $address->amphurId = (isset($_POST['Address']['amphurId']) ? $_POST['Address']['amphurId'] : '');
@@ -70,23 +78,23 @@ class CheckoutController extends MasterController {
                 }
             }
         } else {
-
+            //echo 'no hidden ';
             if (\Yii::$app->user->isGuest) {
                 $address_shipping = \common\models\costfit\Address::find()->where('userId=' . 0 . ' and type = 2  ')
-                        ->orderBy('isDefault desc ')
-                        ->all();
+                ->orderBy('isDefault desc ')
+                ->all();
 
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . 0 . ' and type = 1  ')
-                        ->orderBy('isDefault desc  ')
-                        ->all();
+                ->orderBy('isDefault desc  ')
+                ->all();
             } else {
                 $address_shipping = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 2  ')
-                        ->orderBy('isDefault desc ')
-                        ->all();
+                ->orderBy('isDefault desc ')
+                ->all();
 
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 1  ')
-                        ->orderBy('isDefault desc  ')
-                        ->all();
+                ->orderBy('isDefault desc  ')
+                ->all();
             }
 
             $paymentMethods = \common\models\costfit\PaymentMethod::find()->where("status = 1")->all();
@@ -101,16 +109,21 @@ class CheckoutController extends MasterController {
 
                 if ($_POST['Address']['typeForm'] == 'formShipping') {
                     //$model_ = new \common\models\costfit\Address();
-                    $address->type = \common\models\costfit\Address::TYPE_SHIPPING; // default Address First
+                    \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_SHIPPING]);
+                    $address->type = \common\models\costfit\Address::TYPE_SHIPPING; //- SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
+                    $address->isDefault = 1; // default Address First
+                    $address->createDateTime = new \yii\db\Expression("NOW()");
                     $address->attributes = $_POST['Address'];
                 }
 
                 if ($_POST['Address']['typeForm'] == 'formBilling') {
+                    \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_BILLING]);
                     //$model = new \common\models\costfit\Address();
-                    $address->type = \common\models\costfit\Address::TYPE_BILLING; // default Address First
+                    $address->type = \common\models\costfit\Address::TYPE_BILLING; //- BILLING = 1; // ที่อยู่จัดส่งเอกสาร
+                    $address->isDefault = 1; // default Address First
+                    $address->createDateTime = new \yii\db\Expression("NOW()");
                     $address->attributes = $_POST['Address'];
                 }
-
 
                 if ($address->save(FALSE)) {
                     $this->redirect(Yii::$app->homeUrl . 'checkout');
@@ -120,7 +133,8 @@ class CheckoutController extends MasterController {
         }
     }
 
-    public function actionOrderThank() {
+    public function actionOrderThank()
+    {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         }
@@ -130,7 +144,8 @@ class CheckoutController extends MasterController {
         return $this->render('order_thank');
     }
 
-    public function actionBurnCheckouts() {
+    public function actionBurnCheckouts()
+    {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         }
@@ -154,18 +169,18 @@ class CheckoutController extends MasterController {
 
             if (isset($billing)) {
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . $placeUserId . ' and addressId =' . $billing)
-                        ->orderBy('addressId desc')
-                        ->one();
+                ->orderBy('addressId desc')
+                ->one();
                 $address_shipping = \common\models\costfit\Address::find()->where('userId=' . $placeUserId . ' and addressId = ' . $shipping)
-                        ->orderBy('addressId desc')
-                        ->one();
+                ->orderBy('addressId desc')
+                ->one();
             } else {
                 $address_shipping = \common\models\costfit\Address::find()->where('userId=' . $placeUserId . ' and addressId = ' . $shipping)
-                        ->orderBy('addressId desc')
-                        ->one();
+                ->orderBy('addressId desc')
+                ->one();
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . $placeUserId . ' and addressId = ' . $shipping)
-                        ->orderBy('addressId desc')
-                        ->one();
+                ->orderBy('addressId desc')
+                ->one();
             }
 
             $order = \common\models\costfit\Order::find()->where('userId= ' . $placeUserId . ' and orderId = ' . $placeOrderId)->one();
@@ -175,26 +190,29 @@ class CheckoutController extends MasterController {
             //print_r($order->orderNo);
             // exit();
             $order->paymentType = $payment01;
-            $order->status = 2;
+            $order->status = Order::ORDER_STATUS_CHECKOUTS;
             $order->userId = $placeUserId;
             $order->updateDateTime = new \yii\db\Expression("NOW()");
+            // Billing //
             $order->billingCompany = ($address_billing['company'] != '') ? $address_billing['company'] : '';
-            $order->shippingTax = ($address_billing['tax'] != '') ? $address_billing['tax'] : '';
+            $order->billingTax = ($address_billing['tax'] != '') ? $address_billing['tax'] : '';
             $order->billingAddress = ($address_billing['address'] != '') ? $address_billing['address'] : '';
             $order->billingCountryId = ($address_billing['countryId'] != '') ? $address_billing['countryId'] : '';
             $order->billingProvinceId = ($address_billing['provinceId'] != '') ? $address_billing['provinceId'] : '';
+            $order->billingDistrictId = ($address_billing['districtId'] != '') ? $address_billing['districtId'] : '';
             $order->billingAmphurId = ($address_billing['amphurId'] != '') ? $address_billing['amphurId'] : '';
             $order->billingZipcode = ($address_billing['zipcode'] != '') ? $address_billing['zipcode'] : '';
             $order->billingTel = ($address_billing['tel'] != '') ? $address_billing['tel'] : '';
+            // Shipping //
             $order->shippingCompany = ($address_shipping['company'] != '') ? $address_shipping['company'] : '';
             $order->shippingTax = ($address_shipping['tax'] != '') ? $address_shipping['tax'] : '';
             $order->shippingAddress = ($address_shipping['address'] != '') ? $address_shipping['address'] : '';
             $order->shippingCountryId = ($address_shipping['countryId'] != '') ? $address_shipping['countryId'] : '';
             $order->shippingProvinceId = ($address_shipping['provinceId'] != '') ? $address_shipping['provinceId'] : '';
+            $order->shippingDistrictId = ($address_shipping['districtId'] != '') ? $address_shipping['districtId'] : '';
             $order->shippingAmphurId = ($address_shipping['amphurId'] != '') ? $address_shipping['amphurId'] : '';
             $order->shippingZipcode = ($address_shipping['zipcode'] != '') ? $address_shipping['zipcode'] : '';
             $order->shippingTel = ($address_shipping['tel'] != '') ? $address_shipping['tel'] : '';
-
 
             if ($order->paymentType == 2) {
                 $order->status = \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_DRAFT;
@@ -217,20 +235,22 @@ class CheckoutController extends MasterController {
         }
     }
 
-    public function actionGetAddress() {
+    public function actionGetAddress()
+    {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         }
         $addressId = Yii::$app->request->post('address');
         $address = \common\models\costfit\Address::find()->where('addressId = ' . $addressId)
-                ->orderBy('isDefault desc, updateDateTime desc')
-                ->one();
+        ->orderBy('isDefault desc, updateDateTime desc')
+        ->one();
         //echo '<pre>';
         //print_r($address->attributes);
         echo json_encode($address->attributes);
     }
 
-    public function actionConfirmCheckout($hash) {
+    public function actionConfirmCheckout($hash)
+    {
 
         $k = base64_decode(base64_decode($hash));
         $params = ModelMaster::decodeParams($hash);
@@ -241,7 +261,8 @@ class CheckoutController extends MasterController {
         return $this->render('_confirm_checkout', compact('model', 'ePayment'));
     }
 
-    public function actionConfirmation($hash) {
+    public function actionConfirmation($hash)
+    {
 
         $k = base64_decode(base64_decode($hash));
         $params = ModelMaster::decodeParams($hash);
@@ -252,19 +273,21 @@ class CheckoutController extends MasterController {
         $model = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
         $ePayment = \common\models\costfit\EPayment::find()->where("PaymentMethodId = 2 AND type =" . \Yii::$app->params['ePaymentServerType'])->one();
         return $this->render("//e_payment/payment_confirmation", [
-                    'model' => $model,
-                    'ePayment' => $ePayment]);
+            'model' => $model,
+            'ePayment' => $ePayment]);
     }
 
-    public function actionResult() {
+    public function actionResult()
+    {
         $this->title = 'Cost.fit | Order Thank';
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Order Thank';
         $res = [];
-//        throw new \yii\base\Exception(print_r($_REQUEST, TRUE));
+        throw new \yii\base\Exception(print_r($_REQUEST, TRUE));
         if (isset($_REQUEST) && $_REQUEST != array()) {
             $order = Order::find()->where("orderNo='" . $_REQUEST["req_reference_number"] . "'")->one();
             if ($_REQUEST["decision"] == "ACCEPT") {
+
                 $order->invoiceNo = Order::genInvNo($order);
                 $order->status = Order::ORDER_STATUS_E_PAYMENT_SUCCESS;
                 $order->paymentDateTime = new \yii\db\Expression('NOW()');
@@ -288,6 +311,18 @@ class CheckoutController extends MasterController {
         }
 
         return $this->render('payment_result', compact('res'));
+    }
+
+    public function actionReverseOrderToCart($hash)
+    {
+        $params = \common\models\ModelMaster::decodeParams($hash);
+        $orderId = $params['orderId'];
+
+
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        $order->status = Order::ORDER_STATUS_DRAFT;
+        $order->save();
+        return $this->redirect(['/cart']);
     }
 
 }

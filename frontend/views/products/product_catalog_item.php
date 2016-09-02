@@ -8,7 +8,9 @@ use common\models\costfit\Product;
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
-<!--Product Description-->
+
+<link href="<?php echo $directoryAsset; ?>/masterslider/style/masterslider.css" rel="stylesheet">
+
 <style>
     .popover-content {
         color: red;
@@ -73,37 +75,16 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <div class="col-lg-6 col-md-6">
     <h1><?= $model->title; ?></h1>
     <?= Html::hiddenInput("productId", $model->productId, ['id' => 'productId']); ?>
-
     <?= Html::hiddenInput("fastId", $fastId = Product::getShippingTypeId($model->productId), ['id' => 'fastId']); ?>
-
     <div class="form-group">
         <?php if (isset($model->productGroup)): ?>
             <div class="select-style">
                 <?php if (count($model->productGroup->products) > 1): ?>
-                    <select name="size" id="changeOption">
+                    <select name="size" id="changeoption" onchange="changeoption(this.value);">
                         <?php foreach ($model->productGroup->products as $option): ?>
                             <option <?= (isset($productId) && ($productId == $option->productId)) ? " selected" : " " ?> value="<?= $option->productId ?>"><?= $option->optionName; ?></option>
                         <?php endforeach; ?>
                     </select>
-
-                    <?php
-                    $this->registerJs("
-                    $('#changeOption').change(function () {
-                            $.ajax({
-                                type: \"POST\",
-                                dataType: \"JSON\",
-                                url: \"change-option/\",
-                                data: {productId: $(this).val()},
-                                success: function (data)
-                                {
-                                    $('#productItem').html(data.productItem);
-                                    $('#productTabs').html(data.productTabs);
-                                    $('#productImage').html(data.productImage);
-                                }
-                            });
-                        });
-                ");
-                    ?>
                 <?php endif; ?>
 
             </div>
@@ -129,13 +110,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <label for="shopping-cart" class="col-sm-1" style="padding-right: 0px;  padding-left: 0px;  margin-bottom: 0px;">
                 <img  src="<?php echo Yii::$app->homeUrl; ?>images/icon/1.png" alt="thumb" class="img-responsive"/>
             </label>
-            <div class="col-sm-11 text-left discountPrice" style="padding: 0px; margin-left: 0px; margin-top: 15px;">
-                &nbsp;ส่งสินค้าภายใน 7 วัน
+            <div id="choose" class="col-sm-11 text-left " style="padding: 0px; margin-left: 0px; margin-top: 15px;">
+                &nbsp;ส่งสินค้าภายใน <?php echo Product::getShippingDate($model->productId, 1); ?> วัน
+            </div>
+            <div id="unchoose" class="col-sm-11 text-left " style="padding: 0px; margin-left: 0px; margin-top: 15px;text-decoration: line-through;color:#bbb;display: none;">
+                &nbsp;ส่งสินค้าภายใน <?php echo Product::getShippingDate($model->productId, 1); ?> วัน
             </div>
             <div class="form-group  col-lg-12" style="margin-bottom: 5px;">
                 <div class="checkbox">
                     <label style="color: red;">
-                        <input type="checkbox" id="lateShippingCheck" name="lateShippingCheck">  ต้องการส่งสินค้าราคาประหยัดอีก ???  บาท (ส่งภายใน 15 วัน)
+                        <input type="checkbox" id="lateShippingCheck" name="lateShippingCheck">  ต้องการส่งสินค้าราคาประหยัดอีก
+                        <?php echo $model->calProductPrice($model->productId, 1, 0, 1) - $model->calProductPrice($model->productId, 1, 0, 2) ?>  บาท (ส่งภายใน <?php echo Product::getShippingDate($model->productId, 2); ?> วัน)
                     </label>
                 </div>
             </div>
@@ -210,11 +195,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 $tags = explode(',', $model->tags);
                 if (count($model->tags) > 0) {
                     foreach (explode(',', $model->tags) as $key => $value) {
-                        echo '<a href="' . $baseUrl . '/search-cost-fit?search_hd=' . trim($value) . '">' . $value . '</a> &nbsp ,';
+                        echo '<a href="' . Yii::$app->homeUrl . 'search-cost-fit?search_hd=' . trim($value) . '">' . $value . '</a> &nbsp ,';
                     }
                 }
                 ?>
-                <a href="<?php $baseUrl ?>/search-cost-fit?search_hd=cost.fit">cost.fit</a>
+                <a href="<?php echo Yii::$app->homeUrl; ?>search-cost-fit?search_hd=cost.fit">cost.fit</a>
             </div>
         </div>
     </div>
@@ -224,4 +209,94 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <div class="col-lg-6 col-md-6" id="productImage">
     <?php echo $this->render('_product_image', ['model' => $model]); ?>
 </div>
+
+<?php
+$this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' => [frontend\assets\AppAsset::className()]]);
+?>
+<script>
+    $('input').iCheck();
+    $('#lateShippingCheck').on('ifChecked', function (event) {
+        var productId = $('input[id=productId]').val();
+        var fastId = $('input[id=fastId]').val();
+        $.ajax({
+            type: 'POST',
+            dataType: 'JSON',
+            url: '<?= Yii::$app->homeUrl ?>products/get-product-shipping-price/',
+            data: {'productId': productId, 'fastId': fastId},
+            success: function (data)
+            {
+                // alert(productId);
+                $('#fastId').val(data);
+                $('#choose').hide();
+                $('#unchoose').show();
+            }
+
+        });
+    });
+    $('#lateShippingCheck').on('ifUnchecked', function (event) {
+        var productId = $('input[id=productId]').val();
+        $.ajax({
+            type: 'POST',
+            dataType: 'JSON',
+            url: '<?= Yii::$app->homeUrl ?>products/get-defult-product-shipping-price/',
+            data: {'productId': productId},
+            success: function (data)
+            {
+                //  alert(data);
+                $('#fastId').val(data);
+                $('#choose').show();
+                $('#unchoose').hide();
+            }
+        });
+    });
+    $('.incr-btn').on('click', function (e) {
+        event.preventDefault();
+        var $button = $(this);
+        var oldValue = $button.parent().find('input').val();
+        var newVal = 1
+        if ($button.text() == '+') {
+            newVal = parseFloat(oldValue) + 1;
+        } else {
+            // Don't allow decrementing below 1
+            if (oldValue > 1) {
+                newVal = parseFloat(oldValue) - 1;
+            } else {
+                newVal = 1;
+            }
+            $('.incr-btn').popover('hide');
+        }
+        $.ajax({
+            type: 'POST',
+            dataType: 'JSON',
+            url: '<?= Yii::$app->homeUrl ?>cart/change-quantity-item',
+            data: {productId: $('#productId').val(), quantity: newVal},
+            success: function (data)
+            {
+                if (data.status)
+                {
+
+                    if (data.discountValue != 'null')
+                    {
+                        $('.discountPrice').html(data.discountValue + ' ฿ extra offyour order');
+                    } else
+                    {
+                        $('.discountPrice').html('&nbsp;Add more than 1 item to your order');
+                    }
+                    $('#pp' + oldValue).removeClass('priceActive');
+                    $('#pp' + newVal).addClass('priceActive');
+                    $button.parent().find('input').val(newVal);
+                } else
+                {
+                    if (data.errorCode === 1)
+                    {
+                        newVal = newVal - 1;
+                        $('.incr-btn').popover('show');
+                    }
+                    $button.parent().find('input').val(newVal);
+                }
+            }
+        });
+    });
+</script>
+
 
