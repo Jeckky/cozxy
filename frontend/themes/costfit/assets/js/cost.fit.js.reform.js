@@ -2,7 +2,7 @@
 var $addToWishlistBtn = $('#addItemToWishlist');
 var $addedToCartMessage = $('.cart-message');
 
-alert(window.location.pathname);
+//alert(window.location.pathname);
 
 var $baseUrl = window.location.protocol + "//" + window.location.host;
 if (window.location.host == 'localhost') {
