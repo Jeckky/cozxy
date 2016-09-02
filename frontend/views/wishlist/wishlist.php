@@ -76,7 +76,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <div class="badges">
                         <span class="sale">Sale</span>
                     </div>
-                    <div class="price-label"><?php echo $product[0]->price; ?></div>
+                    <div class="price-label"><?php echo isset($product[0]->price) ? $product[0]->price : ''; ?></div>
                     <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product[0]->encodeParams(['productId' => $product[0]->productId]) ?>">
                         <?php
                         if (isset($product[0]->productImages[0]->imageThumbnail1)) {
