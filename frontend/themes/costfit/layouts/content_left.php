@@ -21,7 +21,19 @@ $title = $this->params['title'];
 <?php $this->beginContent('@app/themes/costfit/layouts/main.php'); ?>
 <?= $this->render('_modal_login') ?>
 <?= $this->render('_header') ?>
-
+<!--Filters Modal-->
+<div class="modal fade" id="filterModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button></div>
+            <div class="modal-body">
+                <!--Here goes filters dynamically pasted by jQuery-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--Filters Toggle-->
+<div class="filter-toggle" data-toggle="modal" data-target="#filterModal"><i class="fa fa-filter"></i></div>
 <div class="page-content">
 
     <ol class="breadcrumb">
