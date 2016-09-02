@@ -12,7 +12,7 @@ if (window.location.host == 'localhost') {
 } else {
     $baseUrl = window.location.protocol + "//" + window.location.host + '/';
 }
-
+console.log($baseUrl);
 //alert($baseUrl);
 
 function proceed(data) {
