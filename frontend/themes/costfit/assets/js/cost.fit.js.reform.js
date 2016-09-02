@@ -17,6 +17,7 @@ var str = window.location.pathname;
 var res = str.split("/");
 console.log(window.location.pathname);
 console.log(res);
+console.log(res[1])
 //alert($baseUrl);
 
 function proceed(data) {
