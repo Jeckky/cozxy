@@ -7,6 +7,7 @@ use yii\bootstrap\ActiveForm;
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 echo 'product : ' . count($product);
+exit();
 ?>
 
 <!--Wishlist-->
