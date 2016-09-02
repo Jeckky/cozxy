@@ -95,33 +95,6 @@ class SearchController extends MasterController {
         return $this->render('search', compact('products'));
     }
 
-//    public function actionSearchBrands()
-//    {
-//        $this->layout = "/content_left";
-//        $this->title = 'Cost.fit | Products';
-//        $this->subTitle = 'ชื่อ search';
-//        $categoryId = $_POST['categoryId'];
-//
-//        $idString = implode(",", $_POST['brandId']);
-//
-//        $whereArray = [];
-//        $whereArray["category_to_product.categoryId"] = $categoryId;
-//        $whereArray["product_price.quantity"] = 1;
-//
-//        $products = \common\models\costfit\CategoryToProduct::find()
-//        ->join("LEFT JOIN", "product_price", "product_price.productId = category_to_product.productId")
-//        ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
-//        ->where($whereArray);
-//
-//        $products->andWhere("product.brandId in ($idString)");
-//
-//
-//        $products = new \yii\data\ActiveDataProvider([
-//            'query' => $products,
-//        ]);
-//        echo $this->render('search', ['products' => $products]);
-//    }
-
     public function actionSearchBrands() {
         $this->layout = "/content_left";
         $this->title = 'Cost.fit | Products';
@@ -134,7 +107,7 @@ class SearchController extends MasterController {
             $idString = null;
         }
 
-        return $this->redirect(['search/' . $cat->title . "/" . ModelMaster::encodeParams(['categoryId' => $categoryId, 'brandId' => $idString])]);
+        return $this->redirect(['search/' . iconv('UTF-8', 'TIS-620', $cat->title) . "/" . ModelMaster::encodeParams(['categoryId' => $categoryId, 'brandId' => $idString])]);
     }
 
 }
