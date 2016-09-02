@@ -37,9 +37,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <!--<a class="btn btn-black" href="#">Browse all</a>-->
                     </div>
                     <img style="right: 50px;" class="ms-layer img-block" src="<?= Yii::$app->homeUrl . $banner->image ?>" alt="1" data-effect="back(500)" data-duration="800" data-delay="350" data-ease="easeOutQuad"/>
-
-                    <!--
-                   <img style="right: 50px; margin: 0px; padding: 60px 0px 0px; font-size: 16px; line-height: 22px;" class="ms-layer" src="<?//= Yii::$app->homeUrl . $banner->image ?>" alt="1">-->
                 </div>
             </div>
             <?php
