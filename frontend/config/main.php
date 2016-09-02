@@ -51,9 +51,9 @@ return [
                 'checkout/confirm-checkout/<hash>' => 'checkout/confirm-checkout',
                 'checkout/confirmation/<hash>' => 'checkout/confirmation',
                 'checkout/reverse-order-to-cart/<hash>' => 'checkout/reverse-order-to-cart',
-	            //mobile
-	            'mobile/product/<hash>' => 'mobile/product',
-	            'mobile/product/product/<hash>' => 'mobile/product/product',
+                //mobile
+                'mobile/product/<hash>' => 'mobile/product',
+                'mobile/product/product/<hash>' => 'mobile/product/product',
             ],
         ],
         /**
