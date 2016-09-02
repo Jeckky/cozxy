@@ -13,7 +13,10 @@ if (window.location.host == 'localhost') {
     $baseUrl = window.location.protocol + "//" + window.location.host + '/';
 }
 console.log($baseUrl);
+var str = window.location.pathname;
+var res = str.split("/");
 console.log(window.location.pathname);
+console.log(res);
 //alert($baseUrl);
 
 function proceed(data) {
