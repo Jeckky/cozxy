@@ -8,16 +8,17 @@ var $baseUrl = window.location.protocol + "//" + window.location.host;
 if (window.location.host == 'localhost') {
     $baseUrl = window.location.protocol + "//" + window.location.host + '/cost.fit-frontend/';
 } else if (window.location.host == '192.168.100.8') {
-    $baseUrl = window.location.protocol + "//" + window.location.host + '/cost.fit-test/frontend/web/';
+    //console.log($baseUrl);
+    var str = window.location.pathname;
+    var res = str.split("/");
+    //console.log(window.location.pathname);
+    //console.log(res);
+    // console.log(res[1])
+    $baseUrl = window.location.protocol + "//" + window.location.host + '/' + res[1] + '/frontend/web/';
 } else {
     $baseUrl = window.location.protocol + "//" + window.location.host + '/';
 }
-console.log($baseUrl);
-var str = window.location.pathname;
-var res = str.split("/");
-console.log(window.location.pathname);
-console.log(res);
-console.log(res[1])
+
 //alert($baseUrl);
 
 function proceed(data) {
