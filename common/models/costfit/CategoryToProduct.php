@@ -32,6 +32,14 @@ class CategoryToProduct extends \common\models\costfit\master\CategoryToProductM
         return array_merge(parent::attributeLabels(), []);
     }
 
+	/**
+	 * relation
+	 */
+	public function getProduct()
+	{
+		return $this->hasOne(Product::className(), ['productId'=>'productId']);
+	}
+
     public static function saveCategoryToProduct($categoryId, $productId) {
         $model = new CategoryToProduct();
         CategoryToProduct::deleteAll("productId = " . $productId);
