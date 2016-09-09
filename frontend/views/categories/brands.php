@@ -3,9 +3,19 @@
 <?php
 if (isset($categoryId)) {
     $allBrands = [];
+    $allCategory = "";
     $flag = FALSE;
     $i = 0;
-    $products = common\models\costfit\Product::find()->where("categoryId=" . $categoryId)->all();
+    $allCategorys = common\models\costfit\Category::find()->where("parentId=" . $categoryId)->all();
+    if (isset($allCategorys) && !empty($allCategorys)) {
+        foreach ($allCategorys as $category) {
+            $allCategory = $allCategory . $category->categoryId . ",";
+        }
+        $allCategory = $categoryId . "," . substr($allCategory, 0, -1);
+    } else {
+        $allCategory = $categoryId;
+    }
+    $products = common\models\costfit\Product::find()->where("categoryId in (" . $allCategory . ")")->all();
     foreach ($products as $product) {
         $flag = check($product->brandId, $allBrands);
         if ($flag == TRUE) {
