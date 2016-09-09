@@ -37,7 +37,7 @@ if (isset($categoryId)) {
             foreach ($allBrands as $brand) {
                 if (isset($brand)) {
                     $brands = \common\models\costfit\Brand::find()->where("brandId=" . $brand)->one();
-                    $total = count(common\models\costfit\Product::find()->where("brandId=" . $brand . " and categoryId=" . $categoryId)->all());
+                    $total = count(common\models\costfit\Product::find()->where("brandId=" . $brand . " and categoryId in (" . $allCategory . ")")->all());
                     if (isset($brands)) {
                         ?>
                         <div class="checkbox">
