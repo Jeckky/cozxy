@@ -15,6 +15,9 @@ return [
         ],
         'datecontrol' => [
             'class' => '\kartik\datecontrol\Module'
+        ],
+        'mobile' => [
+            'class' => '\frontend\modules\mobile\Mobile'
         ]
     ],
     'components' => [
