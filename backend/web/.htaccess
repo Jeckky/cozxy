@@ -1,8 +1,9 @@
 RewriteEngine on
 
 #Rewrite on Alias delete when production
-RewriteBase /backend.cost.fit/
-
+#RewriteBase /cost.fit-test/frontend/web
+RewriteBase /cost.fit-backend
+#RewriteBase /cost.fit/frontend/web
 # If a directory or a file exists, use it directly
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
