@@ -118,4 +118,14 @@ class UserController extends UserMasterController {
         }
     }
 
+    public function actionOrderHistory() {
+        $userId = $_GET['id'];
+        $user = User::find()->where("userId=" . $userId)->one();
+        $model = \common\models\costfit\Order::find()->where("userId=" . $userId)->all();
+        return $this->render('order', [
+                    'model' => $model,
+                    'userName' => $user->firstname . " " . $user->lastname
+        ]);
+    }
+
 }

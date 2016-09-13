@@ -10,7 +10,7 @@ $this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
-    <div class="panel-heading">
+    <div class="panel-heading" >
         <div class="row">
             <div class="col-md-6"><h4><?= $this->title ?></h4></div>
             <div class="col-md-6">
@@ -42,11 +42,26 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'password',
                 // 'lastname',
                 'email:email',
+                ['attribute' => 'orderHistory',
+                    'format' => 'raw',
+                    'value' => function($model) {
+                        return Html::a('<span class="text-center">Order</span>', 'user/order-history?id=' . $model->userId);
+                    }
+                ],
+                ['attribute' => 'orderSummary',
+                    'format' => 'html',
+                    'value' => function($model) {
+                        return isset($model->OrderSummary) ? '<span class="pull-right">' . $model->OrderSummary . '</span>' : ' ';
+                    }
+                ],
                 // 'token:ntext',
                 // 'type',
                 // 'auth_key:ntext',
                 'auth_type',
-                'status',
+                ['attribute' => 'status',
+                    'value' => function($model) {
+                        return $model->getStatusText($model->status);
+                    }],
                 // 'createDateTime',
                 // 'updateDateTime',
                 ['class' => 'yii\grid\ActionColumn',
