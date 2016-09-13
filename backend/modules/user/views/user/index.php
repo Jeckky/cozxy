@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -22,6 +23,19 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="panel-body">
+        <?php
+        $form = ActiveForm::begin(['method' => 'GET']);
+        ?>
+        <div class="row">
+            <div class="col-lg-4">
+                <input class="form-control" type="text" value="<?= isset($_GET['searchName']) ? $_GET['searchName'] : '' ?>" name="searchName" placeholder="ชื่อ, Email">
+            </div>
+            <div class="col-lg-2">
+                <button class="btn btn-warning">ค้นหา</button>
+            </div>
+        </div>
+        <?php ActiveForm::end(); ?>
+        <br>
 
 <!--        <p>
             <?//= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>

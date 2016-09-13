@@ -35,10 +35,13 @@ class UserController extends UserMasterController {
     public function actionIndex() {
         //throw new \yii\base\Exception('aaa');
         $model = new User();
+        $query = User::find();
+        if (isset($_GET['searchName'])) {
+            $query = User::find()->where("firstname like '%" . $_GET['searchName'] . "%' or lastname like '%" . $_GET['searchName'] . "%' or email like '%" . $_GET['searchName'] . "%'");
+        }
         $dataProvider = new ActiveDataProvider([
-            'query' => User::find(),
+            'query' => $query,
         ]);
-
         return $this->render('index', [
                     'dataProvider' => $dataProvider,
                     'model' => $model,
@@ -121,7 +124,7 @@ class UserController extends UserMasterController {
     public function actionOrderHistory() {
         $userId = $_GET['id'];
         $user = User::find()->where("userId=" . $userId)->one();
-        $model = \common\models\costfit\Order::find()->where("userId=" . $userId)->all();
+        $model = \common\models\costfit\Order::find()->where("userId=" . $userId . " order by createDateTime DESC")->all();
         return $this->render('order', [
                     'model' => $model,
                     'userName' => $user->firstname . " " . $user->lastname

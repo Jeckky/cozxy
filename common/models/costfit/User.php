@@ -79,7 +79,8 @@ class User extends \common\models\costfit\master\UserMaster {
             'newPassword',
             'rePassword',
             'orderHistory',
-            'orderSummary'
+            'orderSummary',
+            'searchUser'
         ]);
     }
 
