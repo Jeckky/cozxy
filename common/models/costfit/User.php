@@ -54,7 +54,7 @@ class User extends \common\models\costfit\master\UserMaster {
     }
 
     public function uniqueEmail($attribute, $email) {
-        throw new \yii\base\Exception($email);
+        // throw new \yii\base\Exception($email);
         $user = static::findOne(['email' => Yii::$app->encrypter->encrypt($email)]);
         if (count($user) > 0)
             $this->addError($attribute, 'This email is already in use".');
@@ -78,6 +78,8 @@ class User extends \common\models\costfit\master\UserMaster {
      */
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
+            'username' => 'Email',
+            'firstname' => 'Name',
         ]);
     }
 
@@ -106,6 +108,14 @@ class User extends \common\models\costfit\master\UserMaster {
 
     public function updateProfile($email, $userId) {
         return 'ok';
+    }
+
+    public function getFullName() {
+        $fullName = '';
+        if (isset($this->firstname)) {
+            $fullName = $this->firstname . "  " . $this->lastname;
+        }
+        return $fullName;
     }
 
 }

@@ -10,13 +10,12 @@ use common\models\costfit\User as UserModel;
 /**
  * User represents the model behind the search form about `\common\models\costfit\User`.
  */
-class User extends UserModel
-{
+class User extends UserModel {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['userId', 'type', 'status'], 'integer'],
             [['username', 'hash_password', 'firstname', 'password', 'lastname', 'email', 'createDateTime', 'updateDateTime'], 'safe'],
@@ -26,8 +25,7 @@ class User extends UserModel
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ class User extends UserModel
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = UserModel::find();
 
         // add conditions that should always apply here
@@ -67,12 +64,13 @@ class User extends UserModel
         ]);
 
         $query->andFilterWhere(['like', 'username', $this->username])
-            ->andFilterWhere(['like', 'hash_password', $this->hash_password])
-            ->andFilterWhere(['like', 'firstname', $this->firstname])
-            ->andFilterWhere(['like', 'password', $this->password])
-            ->andFilterWhere(['like', 'lastname', $this->lastname])
-            ->andFilterWhere(['like', 'email', $this->email]);
+                ->andFilterWhere(['like', 'hash_password', $this->hash_password])
+                ->andFilterWhere(['like', 'firstname', $this->firstname])
+                ->andFilterWhere(['like', 'password', $this->password])
+                ->andFilterWhere(['like', 'lastname', $this->lastname])
+                ->andFilterWhere(['like', 'email', $this->email]);
 
         return $dataProvider;
     }
+
 }

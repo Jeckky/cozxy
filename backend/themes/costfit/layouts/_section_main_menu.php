@@ -6,6 +6,7 @@ use yii\widgets\Breadcrumbs;
 
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
+//throw new \yii\base\Exception($baseUrl);
 ?>
 <?php
 //menu test nav widget
@@ -59,7 +60,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                 <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูล User</span><span class="label label-warning">Updated</span></a>
                 <ul>
                     <li>
-                        <a tabindex="-1" href="#"><i class="fa fa-square"></i> <span class="mm-text">สมาชิก</span></a>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/user/user"><i class="fa fa-square"></i> <span class="mm-text">สมาชิก</span></a>
                     </li>
                 </ul>
             </li>
@@ -213,7 +214,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                                 <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=frontOrder"><span class="mm-text">Order</span></a>
                             </li>
                             <!--                            <li>
-                                                            <a tabindex="-1" href="<?php // echo $baseUrl;                                         ?>/shipping/package-type"><span class="mm-text">Package Type</span></a>
+                                                            <a tabindex="-1" href="<?php // echo $baseUrl;                                               ?>/shipping/package-type"><span class="mm-text">Package Type</span></a>
                                                         </li>-->
                         </ul>
                     </li>

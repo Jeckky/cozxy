@@ -1,10 +1,10 @@
 <?php
 
-namespace backend\controllers;
+namespace backend\modules\user\controllers;
 
 use Yii;
 use common\models\costfit\User;
-use common\models\costfit\search\User as UserSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * UserController implements the CRUD actions for User model.
  */
-class UserController extends \backend\controllers\BackendMasterController {
+class UserController extends UserMasterController {
 
     /**
      * @inheritdoc
@@ -33,12 +33,15 @@ class UserController extends \backend\controllers\BackendMasterController {
      * @return mixed
      */
     public function actionIndex() {
-        $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        //throw new \yii\base\Exception('aaa');
+        $model = new User();
+        $dataProvider = new ActiveDataProvider([
+            'query' => User::find(),
+        ]);
 
         return $this->render('index', [
-                    'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'model' => $model,
         ]);
     }
 
@@ -80,7 +83,7 @@ class UserController extends \backend\controllers\BackendMasterController {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->userId]);
+            return $this->redirect(['index', 'id' => $model->userId]);
         } else {
             return $this->render('update', [
                         'model' => $model,
