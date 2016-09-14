@@ -32,6 +32,15 @@ class User extends \common\models\costfit\master\UserMaster {
     public $newPassword;
     public $rePassword;
 
+    const USER_REGISTER = 0;
+    const USER_CONFIRM_EMAIL = 1;
+    const USER_BLOCK = 99;
+
+    //const USER_STATUS_CHECKOUTS = 2;
+    //const USER_STATUS_E_PAYMENT_DRAFT = 3;
+    //const USER_STATUS_COMFIRM_PAYMENT = 4;
+    // const USER_STATUS_E_PAYMENT_SUCCESS = 5;
+
     /**
      * @inheritdoc
      */
@@ -69,7 +78,10 @@ class User extends \common\models\costfit\master\UserMaster {
 //            'confirmPassword'
             'currentPassword',
             'newPassword',
-            'rePassword'
+            'rePassword',
+            'orderHistory',
+            'orderSummary',
+            'searchUser'
         ]);
     }
 
@@ -80,7 +92,26 @@ class User extends \common\models\costfit\master\UserMaster {
         return array_merge(parent::attributeLabels(), [
             'username' => 'Email',
             'firstname' => 'Name',
+            'orderHistory' => 'Order History',
+            'orderSummary' => 'Order Summary'
         ]);
+    }
+
+    public function findAllStatusArray() {
+        return [
+            self::USER_REGISTER => "ยังไม่ยืนยันผ่านอีเมลล์",
+            self::USER_CONFIRM_EMAIL => "ยืนยันผ่านแล้ว",
+            self::USER_BLOCK => "ถูกระงับ",
+        ];
+    }
+
+    public function getStatusText($status) {
+        $res = $this->findAllStatusArray($status);
+        if (isset($res[$status])) {
+            return $res[$status];
+        } else {
+            return NULL;
+        }
     }
 
     public static function getIsExistWishlist($productId) {
@@ -116,6 +147,16 @@ class User extends \common\models\costfit\master\UserMaster {
             $fullName = $this->firstname . "  " . $this->lastname;
         }
         return $fullName;
+    }
+
+    public function getOrderSummary() {
+        $summary = 0;
+        $orders = Order::find()->where("userId=" . $this->userId)->all();
+        if (isset($orders)) {
+            foreach ($orders as $order)
+                $summary+=$order->summary;
+        }
+        return $summary;
     }
 
 }

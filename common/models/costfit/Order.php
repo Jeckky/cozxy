@@ -521,7 +521,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
     }
 
     public static function findSlowestDate($orderId) {
-        
+
     }
 
 }

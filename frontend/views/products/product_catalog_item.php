@@ -8,7 +8,6 @@ use common\models\costfit\Product;
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
-
 <link href="<?php echo $directoryAsset; ?>/masterslider/style/masterslider.css" rel="stylesheet">
 
 <style>
@@ -72,7 +71,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 
 </style>
-<div class="col-lg-6 col-md-6">
+<div class="col-lg-6 col-md-6 text-left">
     <h1><?= $model->title; ?></h1>
     <?= Html::hiddenInput("productId", $model->productId, ['id' => 'productId']); ?>
     <?= Html::hiddenInput("fastId", $fastId = Product::getShippingTypeId($model->productId), ['id' => 'fastId']); ?>
@@ -86,7 +85,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <?php endforeach; ?>
                     </select>
                 <?php endif; ?>
-
             </div>
         <?php endif; ?>
     </div>
@@ -96,24 +94,24 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <div class="price"><?= number_format($model->calProductPrice($model->productId, 1), 2) . " ฿" ?></div>
     </div>
     <div class="buttons group products-buttons-group" style="margin-top: -18px;">
-        <div class="form-group">
-            <label for="shopping-dollar" class="col-sm-1 " style="padding-right: 0px; padding-left: 0px; margin-bottom: 0px;">
-                <img  src="<?php echo Yii::$app->homeUrl; ?>images/icon/Bitcoin-48.png" alt="thumb" class="img-responsive" width="42" height="42"/>
+        <div class="form-group" style="word-wrap: break-word;">
+            <label for="shopping-dollar" class="col-sm-1 " style="float: left; padding-right: 0px; padding-left: 0px; margin-bottom: 0px;">
+                <img  src="<?php echo Yii::$app->homeUrl; ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
             </label>
-            <div class="col-sm-11 text-left discountPrice" style="padding: 0px; margin-left: 0px; margin-top: 15px;">
+            <div class="col-sm-11 text-left discountPrice " style="float: left; padding: 0px; margin-left: 0px; margin-top: 15px;">
                 &nbsp;Add more than 1 item to your order
             </div>
         </div>
     </div>
-    <div class="buttons group products-buttons-group" style="margin-top: -18px;">
+    <div class="buttons group products-buttons-group">
         <div class="form-group">
-            <label for="shopping-cart" class="col-sm-1" style="padding-right: 0px;  padding-left: 0px;  margin-bottom: 0px;">
-                <img  src="<?php echo Yii::$app->homeUrl; ?>images/icon/1.png" alt="thumb" class="img-responsive"/>
+            <label for="shopping-cart" class="col-sm-1" style="float: left; padding-right: 0px;  padding-left: 0px;  margin-bottom: 0px;">
+                <img  src="<?php echo Yii::$app->homeUrl; ?>images/icon/1.png" alt="thumb" class="img-responsive" width="38" height="38"/>
             </label>
-            <div id="choose" class="col-sm-11 text-left " style="padding: 0px; margin-left: 0px; margin-top: 15px;">
+            <div id="choose" class="col-sm-11 text-left " style="float: left; padding: 0px; margin-left: 0px; margin-top: 15px;">
                 &nbsp;ส่งสินค้าภายใน <?php echo Product::getShippingDate($model->productId, 1); ?> วัน
             </div>
-            <div id="unchoose" class="col-sm-11 text-left " style="padding: 0px; margin-left: 0px; margin-top: 15px;text-decoration: line-through;color:#bbb;display: none;">
+            <div id="unchoose" class="col-sm-11 text-left " style="padding: 0px; margin-left: 0px; margin-top: 18px;text-decoration: line-through;color:#bbb;display: none;">
                 &nbsp;ส่งสินค้าภายใน <?php echo Product::getShippingDate($model->productId, 1); ?> วัน
             </div>
             <div class="form-group  col-lg-12" style="margin-bottom: 5px;">
@@ -131,7 +129,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         $i = 0;
         foreach ($model->productPrices as $pp) {
             ?>
-            <div  class="col-lg-2 col-md-2 col-sm-12 " style="float: left; padding-right: 0px; padding-left: 0px;">
+            <div class="col-lg-2 col-md-3" style="float: left; padding-right: 0px; padding-left: 0px;">
                 <table id="pp<?= number_format($pp->quantity, 0) ?>" class="col-lg-12 col-md-12 text-center <?= ($i == 0) ? " priceActive" : " " ?>" style="font-size: 14px; border: 1px #f5f5f5 solid;">
 
                     <thead style="border-bottom: 1px #f5f5f5 solid;">
@@ -166,27 +164,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <a class="btn btn-primary btn-sm" id="addItemToCartUnity" href="#" <?= ($model->findMaxQuantity($model->productId) <= 0) ? " disabled" : " " ?>><i class="icon-shopping-cart"></i>Add to cart</a>
         <a class="btn btn-black btn-sm" <?php if (\Yii::$app->user->isGuest == 1) { ?> id="GuestaddItemToWishlist" <?php } else { ?> id="addItemToWishlist" <?php } ?> href="#" <?= (\common\models\costfit\Wishlist::isExistingList($model->productId)) ? " disabled" : " " ?>><i class="icon-heart"></i>Add to wishlist</a>
     </div>
-   <!-- <p class="p-style2"><?//= strip_tags($model->shortDescription); ?></p>-->
-    <!--<div class="panel panel-warning">
-        <div class="panel-heading">
-            <h3 class="panel-title">ส่งสินค้า</h3>
-        </div>
-        <div class="panel-body">
-            <div class="form-group col-lg-12" style="margin-bottom:5px;">
-                <label for="shopping-cart" class="col-sm-1" style="padding-right: 0px;  padding-left: 0px;  margin-bottom: 0px;">
-                    <img  src="<?//php echo Yii::$app->homeUrl; ?>images/icon/1.png" alt="thumb" class="img-responsive"/>
-                </label>
-                <div class="col-sm-11 text-left" style="padding: 0px; margin-left: 0px; margin-top: 15px;">
-                    &nbsp;ส่งสินค้าภายใน 7 วัน
-                </div>
-            </div>
-            <div class="form-group  col-lg-12">
-                <div class="checkbox">
-                    <label><input type="checkbox" id="lateShippingCheck" name="lateShippingCheck">  ต้องการส่งสินค้าราคาประหยัดอีก 1,xxx  บาท (ส่งภายใน 15 วัน)</label>
-                </div>
-            </div>
-        </div>
-    </div>-->
+
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-7">
             <h3>Tags</h3>

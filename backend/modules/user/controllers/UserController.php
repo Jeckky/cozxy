@@ -22,7 +22,7 @@ class UserController extends UserMasterController {
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['GET'],
                 ],
             ],
         ];
@@ -35,10 +35,13 @@ class UserController extends UserMasterController {
     public function actionIndex() {
         //throw new \yii\base\Exception('aaa');
         $model = new User();
+        $query = User::find();
+        if (isset($_GET['searchName'])) {
+            $query = User::find()->where("firstname like '%" . $_GET['searchName'] . "%' or lastname like '%" . $_GET['searchName'] . "%' or email like '%" . $_GET['searchName'] . "%'");
+        }
         $dataProvider = new ActiveDataProvider([
-            'query' => User::find(),
+            'query' => $query,
         ]);
-
         return $this->render('index', [
                     'dataProvider' => $dataProvider,
                     'model' => $model,
@@ -91,6 +94,28 @@ class UserController extends UserMasterController {
         }
     }
 
+    public function actionBlock($id) {
+        //
+        $model = User::find()->where("userId=" . $_GET['id'])->one();
+        if (isset($_GET['id'])) {
+            $model->status = 99;
+            $model->updateDateTime = new \yii\db\Expression('NOW()');
+            $model->save(false);
+            return $this->redirect(['index']);
+        }
+    }
+
+    public function actionUnBlock($id) {
+        //
+        $model = User::find()->where("userId=" . $_GET['id'])->one();
+        if (isset($_GET['id'])) {
+            $model->status = 1;
+            $model->updateDateTime = new \yii\db\Expression('NOW()');
+            $model->save(false);
+            return $this->redirect(['index']);
+        }
+    }
+
     /**
      * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -116,6 +141,16 @@ class UserController extends UserMasterController {
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionOrderHistory() {
+        $userId = $_GET['id'];
+        $user = User::find()->where("userId=" . $userId)->one();
+        $model = \common\models\costfit\Order::find()->where("userId=" . $userId . " order by createDateTime DESC")->all();
+        return $this->render('order', [
+                    'model' => $model,
+                    'userName' => $user->firstname . " " . $user->lastname
+        ]);
     }
 
 }
