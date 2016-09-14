@@ -102,7 +102,7 @@ class StoreSlotController extends StoreMasterController
                             return $this->redirect(['index', 'parentId' => $model->parentId, 'level' => $model->level]);
                         }
                     } else {
-                        return $this->redirect(['index']);
+                        return $this->redirect(['index', 'storeId' => $model->storeId, 'parentId' => $model->parentId, 'level' => $model->level]);
                     }
                 }
             }
@@ -128,7 +128,7 @@ class StoreSlotController extends StoreMasterController
 
 
             if ($model->save()) {
-                return $this->redirect(['index']);
+                return $this->redirect(['index', 'storeId' => $model->storeId, 'parentId' => $model->parentId, 'level' => $model->level]);
             }
         }
         return $this->render('update', [
@@ -144,9 +144,10 @@ class StoreSlotController extends StoreMasterController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'storeId' => $model->storeId, 'parentId' => $model->parentId, 'level' => $model->level]);
     }
 
     /**
