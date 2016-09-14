@@ -22,7 +22,7 @@ class UserController extends UserMasterController {
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['GET'],
                 ],
             ],
         ];
@@ -91,6 +91,28 @@ class UserController extends UserMasterController {
             return $this->render('update', [
                         'model' => $model,
             ]);
+        }
+    }
+
+    public function actionBlock($id) {
+        //
+        $model = User::find()->where("userId=" . $_GET['id'])->one();
+        if (isset($_GET['id'])) {
+            $model->status = 99;
+            $model->updateDateTime = new \yii\db\Expression('NOW()');
+            $model->save(false);
+            return $this->redirect(['index']);
+        }
+    }
+
+    public function actionUnBlock($id) {
+        //
+        $model = User::find()->where("userId=" . $_GET['id'])->one();
+        if (isset($_GET['id'])) {
+            $model->status = 1;
+            $model->updateDateTime = new \yii\db\Expression('NOW()');
+            $model->save(false);
+            return $this->redirect(['index']);
         }
     }
 

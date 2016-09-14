@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Users';
+$this->title = 'สมาชิก';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <input class="form-control" type="text" value="<?= isset($_GET['searchName']) ? $_GET['searchName'] : '' ?>" name="searchName" placeholder="ชื่อ, Email">
             </div>
             <div class="col-lg-2">
-                <button class="btn btn-warning">ค้นหา</button>
+                <button class="btn btn-primary">ค้นหา</button>
             </div>
         </div>
         <?php ActiveForm::end(); ?>
@@ -80,20 +80,29 @@ $this->params['breadcrumbs'][] = $this->title;
                 // 'updateDateTime',
                 ['class' => 'yii\grid\ActionColumn',
                     'header' => 'Actions',
-                    'template' => '{update}{delete}',
+                    'template' => '{update}{block}{delete}',
                     'buttons' => [
                         'delete' => function ($url, $model) {
                             return Html::a('<span class="btn btn-xs btn-danger" style="margin-left: 5px;
-            " >Delete</span>', 'user/delete?id=' . $model->userId);
+            " >Delete</span>', '../user/delete?id=' . $model->userId, ['data-confirm' => 'Are you sure?']);
                         },
-                        'update' => function ($url, $model) {
-                            return Html::a('<span class="btn btn-xs btn-warning" style="margin-left: 5px;
+                                'block' => function ($url, $model) {
+                            if ($model->status != 99) {
+                                return Html::a('<span class="btn btn-xs btn-warning" style="margin-left: 5px;
+            " >Block</span>', '../user/block?id=' . $model->userId);
+                            } else {
+                                return Html::a('<span class="btn btn-xs btn-warning" style="margin-left: 5px;
+            " >Unblock</span>', '../user/un-block?id=' . $model->userId);
+                            }
+                        },
+                                'update' => function ($url, $model) {
+                            return Html::a('<span class="btn btn-xs btn-success" style="margin-left: 5px;
             " >Edit</span>', 'user/update?id=' . $model->userId);
                         },
+                            ],
+                        ],
                     ],
-                ],
-            ],
-        ]);
-        ?>
+                ]);
+                ?>
     </div>
 </div>

@@ -34,6 +34,7 @@ class User extends \common\models\costfit\master\UserMaster {
 
     const USER_REGISTER = 0;
     const USER_CONFIRM_EMAIL = 1;
+    const USER_BLOCK = 99;
 
     //const USER_STATUS_CHECKOUTS = 2;
     //const USER_STATUS_E_PAYMENT_DRAFT = 3;
@@ -100,6 +101,7 @@ class User extends \common\models\costfit\master\UserMaster {
         return [
             self::USER_REGISTER => "ยังไม่ยืนยันผ่านอีเมลล์",
             self::USER_CONFIRM_EMAIL => "ยืนยันผ่านแล้ว",
+            self::USER_BLOCK => "ถูกระงับ",
         ];
     }
 
