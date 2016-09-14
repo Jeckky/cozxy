@@ -97,7 +97,14 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     </li>
                 </ul>
             </li>
-
+            <li class="mm-dropdown">
+                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">LED Control</span><span class="label label-warning">Updated</span></a>
+                <ul>
+                    <li>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/led/led"><i class="fa fa-square"></i> <span class="mm-text">LED</span></a>
+                    </li>
+                </ul>
+            </li>
             <li class="mm-dropdown">
                 <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Supplier </span><span class="label label-danger">new</span></a>
                 <ul>
@@ -207,7 +214,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                                 <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=frontOrder"><span class="mm-text">Order</span></a>
                             </li>
                             <!--                            <li>
-                                                            <a tabindex="-1" href="<?php // echo $baseUrl;                                                            ?>/shipping/package-type"><span class="mm-text">Package Type</span></a>
+                                                            <a tabindex="-1" href="<?php // echo $baseUrl;                                                               ?>/shipping/package-type"><span class="mm-text">Package Type</span></a>
                                                         </li>-->
                         </ul>
                     </li>
