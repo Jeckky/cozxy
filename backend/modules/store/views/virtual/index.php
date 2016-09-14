@@ -14,22 +14,22 @@
 
                         <tbody>
                             <tr>
-                                <td>1</td>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+
                             </tr>
                             <tr>
-                                <td>2</td>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+
                             </tr>
                             <tr>
-                                <td>3</td>
-                                <td>Larry</td>
-                                <td>the Bird</td>
-                                <td>@twitter</td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+
                             </tr>
                         </tbody>
                     </table>
@@ -46,22 +46,22 @@
 
                         <tbody>
                             <tr>
-                                <td>1</td>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+
                             </tr>
                             <tr>
-                                <td>2</td>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+
                             </tr>
                             <tr>
-                                <td>3</td>
-                                <td>Larry</td>
-                                <td>the Bird</td>
-                                <td>@twitter</td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+
                             </tr>
                         </tbody>
                     </table>
