@@ -66,22 +66,11 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             </li>
 
             <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการรายการสั่งซื้อสินค้า  </span><span class="label label-danger">new</span><span class="badge badge-primary">1</span></a>
+                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการรายการสั่งซื้อสินค้า  </span></a>
                 <ul>
                     <li>
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/order/order"><span class="mm-text">Order</span></a>
                     </li>
-                    <!--                    <li class="mm-dropdown">
-                                            <a tabindex="-1" href="#"><span class="mm-text">Content</span><span class="label label-warning">2</span></a>
-                                            <ul>
-                                                <li>
-                                                    <a tabindex="-1" href="<?php echo $baseUrl; ?>/content/content-group"><span class="mm-text">Package</span></a>
-                                                </li>
-                                                <li>
-                                                    <a tabindex="-1" href="<?php echo $baseUrl; ?>/shipping/package-type"><span class="mm-text">Package Type</span></a>
-                                                </li>
-                                            </ul>
-                                        </li>-->
                 </ul>
             </li>
 
@@ -90,6 +79,10 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                 <ul>
                     <li>
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/store"><span class="mm-text">Store</span></a>
+
+                    </li>
+                    <li>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/virtual"><span class="mm-text">Virtual</span></a>
                     </li>
                     <li>
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/store-product-group"><span class="mm-text">Import Product</span></a>
@@ -214,7 +207,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                                 <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=frontOrder"><span class="mm-text">Order</span></a>
                             </li>
                             <!--                            <li>
-                                                            <a tabindex="-1" href="<?php // echo $baseUrl;                                               ?>/shipping/package-type"><span class="mm-text">Package Type</span></a>
+                                                            <a tabindex="-1" href="<?php // echo $baseUrl;                                                            ?>/shipping/package-type"><span class="mm-text">Package Type</span></a>
                                                         </li>-->
                         </ul>
                     </li>
