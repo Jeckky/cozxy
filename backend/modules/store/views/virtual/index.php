@@ -26,7 +26,7 @@
                         <tbody>
                             <?php
                             $s = 1;
-                            for ($y = 0; $y < 5; $y++) {
+                            for ($y = 0; $y < 3; $y++) {
                                 ?>
                                 <tr>
                                     <th scope="row" class="bg-dark-gray">S<?php echo $s; ?></th>
@@ -82,7 +82,7 @@
                         <tbody>
                             <?php
                             $s1 = 1;
-                            for ($x = $y; $x < 10; $x++) {
+                            for ($x = 0; $x < 3; $x++) {
                                 ?>
                                 <tr>
                                     <th scope="row" class="bg-dark-gray">S<?php echo $s1; ?></th>
