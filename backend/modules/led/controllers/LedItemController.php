@@ -99,7 +99,7 @@ class LedItemController extends LedItemMasterController {
                     $findColor = LedItem::find()->where("ledId=" . $_GET['ledId'] . " and color=" . $dColor)->one();
 
                     if (!isset($findColor) && empty($findColor)) {
-                        //throw new \yii\base\Exception(1111);
+                        throw new \yii\base\Exception(1111);
                         $model->color = $dColor;
                         break;
                     }
