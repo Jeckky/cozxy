@@ -1,9 +1,13 @@
 <?php
 /* @var $this yii\web\View */
 ?>
+
 <h1>virtual/index</h1>
 <div class="row">
-    <?php for ($i = 1; $i <= 10; $i++) { ?>
+    <?php
+    $s = 1;
+    for ($i = 1; $i <= 10; $i++) {
+        ?>
         <div class="col-sm-6">
             <div class="panel">
                 <div class="panel-heading">
@@ -20,27 +24,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row" class="bg-dark-gray">S<?php echo $i; ?></th>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
-
-                            </tr>
-                            <tr>
-                                <th scope="row" class="bg-dark-gray">S<?php echo $i; ?></th>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?><span class="badge badge-primary">1</span></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?><span class="badge badge-primary">1</span></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?><span class="badge badge-primary">1</span></td>
-
-                            </tr>
-                            <tr>
-                                <th scope="row" class="bg-dark-gray">S<?php echo $i; ?></th>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
-
-                            </tr>
+                            <?php
+                            $s = 1;
+                            for ($y = 0; $y < 5; $y++) {
+                                ?>
+                                <tr>
+                                    <th scope="row" class="bg-dark-gray">S<?php echo $s; ?></th>
+                                    <td>R<?php echo $i; ?>C<?php echo '1'; ?>S<?php echo $s; ?> <span class="badge badge-primary">1</span></td>
+                                    <td>R<?php echo $i; ?>C<?php echo '2'; ?>S<?php echo $s; ?> <span class="badge badge-primary">1</span></td>
+                                    <td>R<?php echo $i; ?>C<?php echo '3'; ?>S<?php echo $s; ?> <span class="badge badge-primary">1</span></td>
+                                </tr>
+                                <?php
+                                $s = ++$s;
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -62,32 +59,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row" class="bg-dark-gray">S<?php echo $i; ?></th>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
-
-                            </tr>
-                            <tr>
-                                <th scope="row" class="bg-dark-gray">S<?php echo $i; ?></th>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
-
-                            </tr>
-                            <tr>
-                                <th scope="row" class="bg-dark-gray">S<?php echo $i; ?></th>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
-
-                            </tr>
+                            <?php
+                            $s1 = 1;
+                            for ($x = 0; $x < 5; $x++) {
+                                ?>
+                                <tr>
+                                    <th scope="row" class="bg-dark-gray">S<?php echo $s1; ?></th>
+                                    <td>R<?php echo $i; ?>C<?php echo '1'; ?>S<?php echo $s1; ?> <span class="badge badge-primary">1</span></td>
+                                    <td>R<?php echo $i; ?>C<?php echo '2'; ?>S<?php echo $s1; ?> <span class="badge badge-primary">1</span></td>
+                                    <td>R<?php echo $i; ?>C<?php echo '3'; ?>S<?php echo $s1; ?> <span class="badge badge-primary">1</span></td>
+                                </tr>
+                                <?php
+                                $s1 = ++$s1;
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-    <?php }
+        <?php
+    }
     ?>
 </div>
