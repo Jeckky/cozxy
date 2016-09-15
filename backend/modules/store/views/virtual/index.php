@@ -30,9 +30,27 @@
                                 ?>
                                 <tr>
                                     <th scope="row" class="bg-dark-gray">S<?php echo $s; ?></th>
-                                    <td>R<?php echo $i; ?>C<?php echo '1'; ?>S<?php echo $s; ?> <span class="badge badge-primary">1</span></td>
-                                    <td>R<?php echo $i; ?>C<?php echo '2'; ?>S<?php echo $s; ?> <span class="badge badge-primary">1</span></td>
-                                    <td>R<?php echo $i; ?>C<?php echo '3'; ?>S<?php echo $s; ?> <span class="badge badge-primary">1</span></td>
+                                    <td>
+                                        <span class="badge badge-primary">&nbsp;</span>
+                                        <span class="badge badge-info">&nbsp;</span>
+                                        <span class="badge badge-danger">&nbsp;</span>
+                                        <span class="badge badge-warning">&nbsp;</span>
+                                        <span class="badge badge-success">&nbsp;</span><a href="#" class="label label-tag">R<?php echo $i; ?>C<?php echo '1'; ?>S<?php echo $s; ?></a>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-primary">&nbsp;</span>
+                                        <span class="badge badge-info">&nbsp;</span>
+                                        <span class="badge badge-danger">&nbsp;</span>
+                                        <span class="badge badge-warning">&nbsp;</span>
+                                        <span class="badge badge-success">&nbsp;</span><a href="#" class="label label-tag">R<?php echo $i; ?>C<?php echo '2'; ?>S<?php echo $s; ?></a>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-primary">&nbsp;</span>
+                                        <span class="badge badge-info">&nbsp;</span>
+                                        <span class="badge badge-danger">&nbsp;</span>
+                                        <span class="badge badge-warning">&nbsp;</span>
+                                        <span class="badge badge-success">&nbsp;</span><a href="#" class="label label-tag">R<?php echo $i; ?>C<?php echo '3'; ?>S<?php echo $s; ?></a>
+                                    </td>
                                 </tr>
                                 <?php
                                 $s = ++$s;
@@ -53,21 +71,42 @@
                         <thead class="bg-dark-gray">
                             <tr>
                                 <th>#</th>
-                                <th>C1</th>
-                                <th>C2</th>
-                                <th>C3</th>
+                                <th>C4</th>
+                                <th>C5</th>
+                                <th>C6</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $s1 = 1;
-                            for ($x = 0; $x < 5; $x++) {
+                            for ($x = $y; $x < 10; $x++) {
                                 ?>
                                 <tr>
                                     <th scope="row" class="bg-dark-gray">S<?php echo $s1; ?></th>
-                                    <td>R<?php echo $i; ?>C<?php echo '1'; ?>S<?php echo $s1; ?> <span class="badge badge-primary">1</span></td>
-                                    <td>R<?php echo $i; ?>C<?php echo '2'; ?>S<?php echo $s1; ?> <span class="badge badge-primary">1</span></td>
-                                    <td>R<?php echo $i; ?>C<?php echo '3'; ?>S<?php echo $s1; ?> <span class="badge badge-primary">1</span></td>
+                                    <td>
+                                        <span class="badge badge-primary">&nbsp;</span>
+                                        <span class="badge badge-info">&nbsp;</span>
+                                        <span class="badge badge-danger">&nbsp;</span>
+                                        <span class="badge badge-warning">&nbsp;</span>
+                                        <span class="badge badge-success">&nbsp;</span>
+                                        <a href="#" class="label label-tag">R<?php echo $i; ?>C<?php echo '4'; ?>S<?php echo $s1; ?></a>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-primary">&nbsp;</span>
+                                        <span class="badge badge-info">&nbsp;</span>
+                                        <span class="badge badge-danger">&nbsp;</span>
+                                        <span class="badge badge-warning">&nbsp;</span>
+                                        <span class="badge badge-success">&nbsp;</span>
+                                        <a href="#" class="label label-tag">R<?php echo $i; ?>C<?php echo '5'; ?>S<?php echo $s1; ?></a>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-primary">&nbsp;</span>
+                                        <span class="badge badge-info">&nbsp;</span>
+                                        <span class="badge badge-danger">&nbsp;</span>
+                                        <span class="badge badge-warning">&nbsp;</span>
+                                        <span class="badge badge-success">&nbsp;</span>
+                                        <a href="#" class="label label-tag">R<?php echo $i; ?>C<?php echo '6'; ?>S<?php echo $s1; ?></a>
+                                    </td>
                                 </tr>
                                 <?php
                                 $s1 = ++$s1;
