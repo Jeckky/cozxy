@@ -119,7 +119,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="container">
         <div class="row">
             <!--<div class="col-lg-4 col-md-5 col-sm-5">
-                <img class="center-block" src="<?php //echo $directoryAsset;              ?>/img/posts-widget/1.jpg" alt="Description"/>
+                <img class="center-block" src="<?php //echo $directoryAsset;                  ?>/img/posts-widget/1.jpg" alt="Description"/>
             </div>-->
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <!--                <p class="p-style2">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore.</p>
@@ -148,9 +148,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </div>
 
 <!--Tab3 (Reviews)-->
-<div class="tab-pane fade" id="review">
+<div class="tab-pane fade" id="term">
     <div class="container">
         <div class="row">
+            <?php
+            if (isset($term) && !empty($term)) {
+                echo $term->description;
+            }
+            ?>
             <!--Disqus Comments Plugin-->
             <!--<div class="col-lg-10 col-lg-offset-1">
                 <div id="disqus_thread"></div>

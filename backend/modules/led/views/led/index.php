@@ -40,8 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             'led' => function ($url, $model) {
 
-                                return Html::a('<span class="btn btn-xs btn-warning" style="margin-left: 5px;
-            " >+LED</span>', 'led-item/index?id=' . $model->ledId);
+                                return Html::a('<span class="btn btn-xs btn-warning " style="margin-left: 5px;
+            ">LED</span>', 'led-item/index?id=' . $model->ledId);
                             },
                             'update' => function ($url, $model) {
                                 return Html::a('<span class="btn btn-xs btn-success" style="margin-left: 5px;

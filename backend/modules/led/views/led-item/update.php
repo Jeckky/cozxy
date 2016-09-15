@@ -11,11 +11,13 @@ $this->params['breadcrumbs'][] = ['label' => $model->ledItemId, 'url' => ['view'
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="led-item-update">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
+    <?=
+    $this->render('_form', [
         'model' => $model,
-    ]) ?>
+        'defultColor' => $defultColor,
+        'oldColor' => $oldColor,
+        'sort' => $sort
+    ])
+    ?>
 
 </div>

@@ -214,7 +214,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                                 <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=frontOrder"><span class="mm-text">Order</span></a>
                             </li>
                             <!--                            <li>
-                                                            <a tabindex="-1" href="<?php // echo $baseUrl;                                                               ?>/shipping/package-type"><span class="mm-text">Package Type</span></a>
+                                                            <a tabindex="-1" href="<?php // echo $baseUrl;                                                                ?>/shipping/package-type"><span class="mm-text">Package Type</span></a>
                                                         </li>-->
                         </ul>
                     </li>

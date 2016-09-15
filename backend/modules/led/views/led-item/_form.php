@@ -7,7 +7,7 @@ use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\LedItem */
 /* @var $form yii\widgets\ActiveForm */
-$sort = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+//$sort = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 ?>
 
 <div class="led-item-form">
@@ -22,23 +22,34 @@ $sort = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
             </div>
         </div>
         <div class="panel-body">
-            <?php $form = ActiveForm::begin(); ?>
-            <div  style="background-color: #00cc66;height: 50px;width: 300px;"><input type="radio" value="1" name="color"/></div><br>
-            <div  style="background-color: #F00;height: 50px;width: 300px;"><input type="radio" value="2" name="color"/></div><br>
-            <div  style="background-color: #003eff;height: 50px;width: 300px;"><input type="radio" value="3" name="color"/></div><br>
-            <div  style="background-color: #ff99ff;height: 50px;width: 300px;"><input type="radio" value="4" name="color"/></div><br>
-            <div  style="background-color: #ffff00;height: 50px;width: 300px;"><input type="radio" value="5" name="color"/></div><br>
+            <?php
+            $form = ActiveForm::begin();
+            foreach ($defultColor as $defult) {
+                $flag = true;
+                foreach ($oldColor as $old) {
+                    if ($defult == $old) {
+                        $flag = false;
+                    }
+                }
+                if ($flag == true) {
+                    if ($defult == 1) {
+                        $showColor = '#00cc66';
+                    } else if ($defult == 2) {
+                        $showColor = '#F00';
+                    } else if ($defult == 3) {
+                        $showColor = '#003eff';
+                    } else if ($defult == 4) {
+                        $showColor = '#ff99ff';
+                    } else if ($defult == 5) {
+                        $showColor = '#ffff00';
+                    }
+                    ?>
+                    <div  style="background-color: <?= $showColor ?>;height: 50px;width: 300px;"><input type="radio" value="<?= $defult ?>" name="color" required/></div><br>
+                    <?php
+                }
+            }
+            ?>
             <div  style="height: 50px;width: 300px;"><?= $form->field($model, 'sortOrder')->dropDownList($sort) ?></div><br>
-            <?//= $form->field($model, 'color')->textInput() ?>
-
-
-
-            <?//= $form->field($model, 'status')->textInput() ?>
-
-            <?//= $form->field($model, 'createDateTime')->textInput() ?>
-
-            <?//= $form->field($model, 'updateDateTime')->textInput() ?>
-
             <div class="form-group">
                 <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>
