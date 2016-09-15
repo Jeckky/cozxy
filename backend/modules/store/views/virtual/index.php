@@ -11,21 +11,31 @@
                 </div>
                 <div class="panel-body">
                     <table class="table table-bordered">
-
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>C1</th>
+                                <th>C2</th>
+                                <th>C3</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             <tr>
+                                <th scope="row">S<?php echo $i; ?></th>
                                 <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
                                 <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
                                 <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
 
                             </tr>
                             <tr>
+                                <th scope="row">S<?php echo $i; ?></th>
                                 <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
                                 <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
                                 <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
 
                             </tr>
                             <tr>
+                                <th scope="row">S<?php echo $i; ?></th>
                                 <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
                                 <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
                                 <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
@@ -43,21 +53,31 @@
                 </div>
                 <div class="panel-body">
                     <table class="table table-bordered">
-
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>C1</th>
+                                <th>C2</th>
+                                <th>C3</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             <tr>
+                                <th scope="row">S<?php echo $i; ?></th>
                                 <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
                                 <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
                                 <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
 
                             </tr>
                             <tr>
+                                <th scope="row">S<?php echo $i; ?></th>
                                 <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
                                 <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
                                 <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
 
                             </tr>
                             <tr>
+                                <th scope="row">S<?php echo $i; ?></th>
                                 <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
                                 <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
                                 <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
