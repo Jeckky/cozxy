@@ -20,13 +20,13 @@ use common\models\costfit\Brand;
 
     <?php
     $form = ActiveForm::begin([
-                'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
-                'fieldConfig' => [
-                    'template' => '{label}<div class="col-sm-9">{input}</div>',
-                    'labelOptions' => [
-                        'class' => 'col-sm-3 control-label'
-                    ]
-                ]
+        'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+        'fieldConfig' => [
+            'template' => '{label}<div class="col-sm-9">{input}</div>',
+            'labelOptions' => [
+                'class' => 'col-sm-3 control-label'
+            ]
+        ]
     ]);
     ?>
 
@@ -44,6 +44,8 @@ use common\models\costfit\Brand;
         <?= $form->field($model, 'brandId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(Brand::find()->all(), 'brandId', 'title'), ['prompt' => '-- Select Brand --']) ?>
 
         <?= $form->field($model, 'categoryId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(Category::find()->all(), 'categoryId', 'title'), ['prompt' => '-- Select Category --']) ?>
+
+        <?= $form->field($model, 'isbn', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 100]) ?>
 
         <?= $form->field($model, 'code', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 100]) ?>
 

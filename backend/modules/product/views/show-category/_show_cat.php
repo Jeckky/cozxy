@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 $form = ActiveForm::begin([
-    'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
-    'fieldConfig' => [
-        'template' => '{label}<div class="col-sm-9">{input}</div>',
-        'labelOptions' => [
-            'class' => 'col-sm-3 control-label'
-        ]
-    ]
-]);
+            'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+            'fieldConfig' => [
+                'template' => '{label}<div class="col-sm-9">{input}</div>',
+                'labelOptions' => [
+                    'class' => 'col-sm-3 control-label'
+                ]
+            ]
+        ]);
 ?>
 
 <div class="row">
@@ -61,7 +61,7 @@ $form = ActiveForm::begin([
                             </label>
                         </td>
                         <td>
-                            <a href="<?= Yii::$app->homeUrl . "product/show-category/delete-show-category?id=" . $cat->categoryId; ?>" class="btn btn-danger btn-xs" onclick="return confirm('คุณต้องการลบ Show Category หรือไม่?')" >Delete</a>
+                            <a href="<?= Yii::$app->homeUrl . "product/show-category/delete-show-category?id=" . $cat->categoryId; ?>" class="btn btn-danger btn-xs" onclick="return confirm('คุณต้องการลบ Show Category หรือไม่?')" >Reset</a>
                         </td>
                     </tr>
                     <?php

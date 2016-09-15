@@ -23,31 +23,47 @@ use \common\models\costfit\master\StoreProductGroupMaster;
  * @property StoreProduct[] $storeProducts
  * @property Supplier $supplier
  */
-class StoreProductGroup extends \common\models\costfit\master\StoreProductGroupMaster {
+class StoreProductGroup extends \common\models\costfit\master\StoreProductGroupMaster
+{
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributes()
+    {
+        return array_merge(parent::attributes(), [
+            'isbn'
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function getSupplierName() {
+    public function getSupplierName()
+    {
         return $this->hasOne(Supplier::className(), ['supplierId' => 'supplierId']);
     }
 
-    public function getStoreProducts() {
+    public function getStoreProducts()
+    {
         return $this->hasMany(StoreProduct::className(), ['storeProductGroupId' => 'storeProductGroupId'])->orderBy("status");
     }
 
-    public function checkPo($id) {
+    public function checkPo($id)
+    {
         $checkPo = StoreProductGroup::find()->where("storeProductGroupId='" . $id . "' and status!=3")->all();
         if (count($checkPo) == 0) {
             $this->redirect(['store-product-group/index']);

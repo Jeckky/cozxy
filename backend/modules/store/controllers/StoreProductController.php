@@ -13,9 +13,11 @@ use common\models\costfit\StoreProductGroup;
 /**
  * StoreProductController implements the CRUD actions for StoreProduct model.
  */
-class StoreProductController extends StoreMasterController {
+class StoreProductController extends StoreMasterController
+{
 
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -30,7 +32,8 @@ class StoreProductController extends StoreMasterController {
      * Lists all StoreProduct models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $storeProductGroupId = '';
         if (isset($_GET["storeId"])) {
             $query = StoreProduct::find()->where("storeId=" . $_GET["storeId"]);
@@ -47,8 +50,8 @@ class StoreProductController extends StoreMasterController {
         ]);
 
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
-                    'storeProductGroupId' => $storeProductGroupId
+            'dataProvider' => $dataProvider,
+            'storeProductGroupId' => $storeProductGroupId
         ]);
     }
 
@@ -57,9 +60,10 @@ class StoreProductController extends StoreMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -68,7 +72,8 @@ class StoreProductController extends StoreMasterController {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $storeProductGroupId = '';
         $model = new StoreProduct();
         if (isset($_GET["storeId"])) {
@@ -87,14 +92,14 @@ class StoreProductController extends StoreMasterController {
                 $this->updateStoreProductGroupSummary($model->storeProductGroupId);
 
                 return $this->redirect(['index',
-                            'storeId' => $model->storeId,
-                            'storeProductGroupId' => $storeProductGroupId
+                    'storeId' => $model->storeId,
+                    'storeProductGroupId' => $storeProductGroupId
                 ]);
             }
         }
         return $this->render('create', [
-                    'model' => $model,
-                    'storeProductGroupId' => $storeProductGroupId
+            'model' => $model,
+            'storeProductGroupId' => $storeProductGroupId
         ]);
     }
 
@@ -104,7 +109,8 @@ class StoreProductController extends StoreMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $storeProductGroupId = '';
         $model = $this->findModel($id);
         if (isset($_GET['storeProductGroupId'])) {
@@ -121,8 +127,8 @@ class StoreProductController extends StoreMasterController {
             }
         }
         return $this->render('update', [
-                    'model' => $model,
-                    'storeProductGroupId' => $storeProductGroupId
+            'model' => $model,
+            'storeProductGroupId' => $storeProductGroupId
         ]);
     }
 
@@ -132,7 +138,8 @@ class StoreProductController extends StoreMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         $model = StoreProduct::find()->where("storeProductId='" . $id . "'")->one();
         $store = $model->storeId;
         $storeProductGroupId = $model->storeProductGroupId;
@@ -147,7 +154,8 @@ class StoreProductController extends StoreMasterController {
      * @return StoreProduct the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id) {
+    protected function findModel($id)
+    {
         if (($model = StoreProduct::findOne($id)) !== null) {
             return $model;
         } else {
@@ -155,7 +163,8 @@ class StoreProductController extends StoreMasterController {
         }
     }
 
-    public function actionCheck() {
+    public function actionCheck()
+    {
         if (isset($_GET['storeProductGroupId'])) {
             $model = StoreProductGroup::find()->where("storeProductGroupId='" . $_GET['storeProductGroupId'] . "'")->one();
         }
@@ -202,12 +211,13 @@ class StoreProductController extends StoreMasterController {
             $model = StoreProductGroup::find()->where("storeProductGroupId='" . $_POST["storeProductGroupId"] . "'")->one();
         }
         return $this->render('check', ['model' => $model,
-                    'msError' => $msError,
-                    'errorId' => $errorId
+            'msError' => $msError,
+            'errorId' => $errorId
         ]);
     }
 
-    public function updateStoreProductGroupSummary($productStoreGroupId) {
+    public function updateStoreProductGroupSummary($productStoreGroupId)
+    {
         $summary = 0;
         $stg = StoreProductGroup::find()->where("storeProductGroupId =" . $productStoreGroupId)->one();
         foreach ($stg->storeProducts as $sp) {
@@ -217,7 +227,8 @@ class StoreProductController extends StoreMasterController {
         $stg->save();
     }
 
-    public function checkPo($id) {
+    public function checkPo($id)
+    {
         $checkPo = StoreProduct::find()->where("storeProductGroupId='" . $id . "' and status!=3")->all();
         if (count($checkPo) == 0) {
             $changePoStatus = StoreProductGroup::find()->where("storeProductGroupId='" . $id . "'")->one();
@@ -225,6 +236,26 @@ class StoreProductController extends StoreMasterController {
             $changePoStatus->save(FALSE);
             return $this->redirect(['store-product-group/index']);
         }
+    }
+
+    public function actionArrange()
+    {
+
+        if (isset($_POST["StoreProduct"])) {
+            $product = \common\models\costfit\Product::find()->where("isbn ='" . $_POST["StoreProduct"]['isbn'] . "'")
+            ->join("LEFT JOIN", 'store_product sp', 'product.productId=sp.productId')
+            ->orderBy('sp.createDateTime ASC')
+            ->one();
+
+            return $this->render('arrange', ['model' => $product,
+            ]
+            );
+        }
+
+        if (isset($_POST['quantity']) && isset($_POST['slot'])) {
+            
+        }
+        return $this->render('arrange_index');
     }
 
 }

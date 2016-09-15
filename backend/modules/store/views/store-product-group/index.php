@@ -72,21 +72,26 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     // 'updateDateTime',
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
-                        'template' => '{view} {update} {delete} {product} {check}',
+                        'template' => '{view} {update} {delete} {product} {qc} {arrange}',
                         'buttons' => [
                             'product' => function($url, $model) {
                                 return Html::a('<br><u>Product</u>', ['/store/store-product', 'storeProductGroupId' => $model->storeProductGroupId], [
-                                            'title' => Yii::t('app', 'Change today\'s lists'),]);
+                                    'title' => Yii::t('app', 'Change today\'s lists'),]);
                             },
-                                    'check' => function($url, $model) {
+                            'qc' => function($url, $model) {
                                 return Html::a('<br><u>ตรวจรับ</u>', ['/store/store-product/check', 'storeProductGroupId' => $model->storeProductGroupId], [
-                                            'title' => Yii::t('app', 'check\'s lists'),]);
-                            },]
-                            ],
-                        ],
-                    ]);
-                    ?>
-                </div>
-            </div>
-            <?php Pjax::end(); ?>
+                                    'title' => Yii::t('app', 'check\'s lists'),]);
+                            },
+                            'arrange' => function($url, $model) {
+                                return Html::a('<br><u>จัดเรียง</u>', ['/store/store-product/arrange', 'storeProductGroupId' => $model->storeProductGroupId], [
+                                    'title' => Yii::t('app', 'check\'s lists'),]);
+                            },
+                        ]
+                    ],
+                ],
+            ]);
+            ?>
+        </div>
+    </div>
+    <?php Pjax::end(); ?>
 </div>
