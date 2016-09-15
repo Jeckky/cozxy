@@ -22,23 +22,23 @@
                         <tbody>
                             <tr>
                                 <th scope="row" class="bg-dark-gray">S<?php echo $i; ?></th>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
 
                             </tr>
                             <tr>
                                 <th scope="row" class="bg-dark-gray">S<?php echo $i; ?></th>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?><span class="badge badge-primary">1</span></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?><span class="badge badge-primary">1</span></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?><span class="badge badge-primary">1</span></td>
 
                             </tr>
                             <tr>
                                 <th scope="row" class="bg-dark-gray">S<?php echo $i; ?></th>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
 
                             </tr>
                         </tbody>
@@ -64,23 +64,23 @@
                         <tbody>
                             <tr>
                                 <th scope="row" class="bg-dark-gray">S<?php echo $i; ?></th>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
 
                             </tr>
                             <tr>
                                 <th scope="row" class="bg-dark-gray">S<?php echo $i; ?></th>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
 
                             </tr>
                             <tr>
                                 <th scope="row" class="bg-dark-gray">S<?php echo $i; ?></th>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
-                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
+                                <td>R<?php echo $i; ?>C<?php echo $i; ?>S<?php echo $i; ?> <span class="badge badge-primary">1</span></td>
 
                             </tr>
                         </tbody>
@@ -88,6 +88,6 @@
                 </div>
             </div>
         </div>
-        <?php }
+    <?php }
     ?>
 </div>
