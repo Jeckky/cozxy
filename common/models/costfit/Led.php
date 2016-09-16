@@ -6,31 +6,31 @@ use Yii;
 use \common\models\costfit\master\LedMaster;
 
 /**
-* This is the model class for table "led".
-*
-    * @property string $ledId
-    * @property string $code
-    * @property string $ip
-    * @property string $shelf
-    * @property integer $status
-    * @property string $createDateTime
-    * @property string $updateDateTime
-*/
+ * This is the model class for table "led".
+ *
+ * @property string $ledId
+ * @property string $code
+ * @property string $ip
+ * @property string $shelf
+ * @property integer $status
+ * @property string $createDateTime
+ * @property string $updateDateTime
+ */
+class Led extends \common\models\costfit\master\LedMaster {
 
-class Led extends \common\models\costfit\master\LedMaster{
-/**
-* @inheritdoc
-*/
-public function rules()
-{
-return array_merge(parent::rules(), []);
-}
+    /**
+     * @inheritdoc
+     */
+    public function rules() {
+        return array_merge(parent::rules(), []);
+    }
 
-/**
-* @inheritdoc
-*/
-public function attributeLabels()
-{
-return array_merge(parent::attributeLabels(), []);
-}
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels() {
+        return array_merge(parent::attributeLabels(), [
+        ]);
+    }
+
 }

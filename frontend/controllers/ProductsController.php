@@ -50,7 +50,11 @@ class ProductsController extends MasterController {
         //return Yii::$app->getResponse()->redirect('register/login');
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
-
+        $term = \common\models\costfit\ContentGroup::find()->where("lower(title)='term'")->one();
+        $terms = '';
+        if (isset($term)) {
+            $terms = \common\models\costfit\Content::find()->where("contentGroupId=" . $term->contentGroupId)->one();
+        }
         $productId = $params['productId'];
 
         if ($productId != '') {
@@ -60,7 +64,7 @@ class ProductsController extends MasterController {
                 $this->subTitle = $model->attributes['title'];
                 $this->subSubTitle = '';
 
-                return $this->render('products', ['model' => $model]);
+                return $this->render('products', ['model' => $model, 'term' => $terms]);
             } else {
                 return $this->render('@app/views/error/error');
             }

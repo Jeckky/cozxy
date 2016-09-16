@@ -36,6 +36,9 @@ return [
         'store' => [
             'class' => 'backend\modules\store\Store',
         ],
+        'led' => [
+            'class' => 'backend\modules\led\Led',
+        ],
         'supplier' => [
             'class' => 'backend\modules\supplier\Supplier',
         ],
