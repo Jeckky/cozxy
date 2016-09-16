@@ -12,11 +12,9 @@ use yii\filters\VerbFilter;
 /**
  * StoreSlotController implements the CRUD actions for StoreSlot model.
  */
-class StoreSlotController extends StoreMasterController
-{
+class StoreSlotController extends StoreMasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -31,8 +29,7 @@ class StoreSlotController extends StoreMasterController
      * Lists all StoreSlot models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         if (isset($_GET['storeId'])) {
             $query = StoreSlot::find()->where("storeId =" . $_GET["storeId"] . " AND level = 1");
         }
@@ -52,7 +49,7 @@ class StoreSlotController extends StoreMasterController
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -61,10 +58,9 @@ class StoreSlotController extends StoreMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -73,8 +69,7 @@ class StoreSlotController extends StoreMasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new StoreSlot();
         if (isset($_GET['storeId'])) {
             $model->storeId = $_GET["storeId"];
@@ -110,7 +105,7 @@ class StoreSlotController extends StoreMasterController
             }
         }
         return $this->render('create', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -120,8 +115,7 @@ class StoreSlotController extends StoreMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
         if (isset($_POST["StoreSlot"])) {
             $model->attributes = $_POST["StoreSlot"];
@@ -133,7 +127,7 @@ class StoreSlotController extends StoreMasterController
             }
         }
         return $this->render('update', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -143,8 +137,7 @@ class StoreSlotController extends StoreMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $model = $this->findModel($id);
         $model->delete();
 
@@ -158,8 +151,7 @@ class StoreSlotController extends StoreMasterController
      * @return StoreSlot the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = StoreSlot::findOne($id)) !== null) {
             return $model;
         } else {
@@ -167,8 +159,7 @@ class StoreSlotController extends StoreMasterController
         }
     }
 
-    public function generateBarcode($model)
-    {
+    public function generateBarcode($model) {
         if ($model->level == 1) {
             $model->barcode = $model->code;
         } else {

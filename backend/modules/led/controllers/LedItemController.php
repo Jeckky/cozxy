@@ -113,7 +113,7 @@ class LedItemController extends LedItemMasterController {
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             if ($model->save(false)) {
-                return $this->redirect(['index', 'id' => $_GET['ledId']]);
+                return $this->redirect(['../led/led-item', 'id' => $_GET['ledId']]);
             }
         } else {
             return $this->render('create', [
@@ -135,6 +135,7 @@ class LedItemController extends LedItemMasterController {
 
         $defultColor = ['1', '2', '3', '4', '5'];
         $oldColor = [];
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         $j = 1;
         $led = LedItem::find()->where("ledItemId=" . $id)->one();
         $model = LedItem::find()->where("ledItemId=" . $id)->one();
@@ -162,7 +163,7 @@ class LedItemController extends LedItemMasterController {
             $model->status = 1;
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             if ($model->save(false)) {
-                return $this->redirect(['index', 'id' => $led->ledId]);
+                return $this->redirect(['../led/led-item', 'id' => $led->ledId]);
             }
         } else {
             return $this->render('update', [
@@ -184,7 +185,7 @@ class LedItemController extends LedItemMasterController {
         //  throw new \yii\base\Exception($id);
         $led = \common\models\costfit\LedItem::find()->where("ledItemId=" . $id)->one();
         $this->findModel($id)->delete();
-        return $this->redirect(['index', 'id' => $led->ledId]);
+        return $this->redirect(['../led/led-item', 'id' => $led->ledId]);
     }
 
     /**

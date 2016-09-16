@@ -62,11 +62,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             'update' => function ($url, $model) {
                                 return Html::a('<span class="btn btn-xs btn-success" style="margin-left: 5px;
-            " >Edit</span>', '../led-item/update?id=' . $model->ledItemId);
+            " >Edit</span>', 'led-item/update?id=' . $model->ledItemId);
                             },
                             'delete' => function ($url, $model) {
                                 return Html::a('<span class="btn btn-xs btn-danger" style="margin-left: 5px;
-            " >Delete</span>', '../led-item/delete?id=' . $model->ledItemId, ['data-confirm' => 'Are you sure?']);
+            " >Delete</span>', 'led-item/delete?id=' . $model->ledItemId, ['data-confirm' => 'Are you sure?']);
                             },
                                 ],
                             ],
