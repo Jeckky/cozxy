@@ -15,7 +15,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
     <?php
     $msg = "111";
-    QRcode::png('code data text', Yii::$app->homeUrl . 'images/qr' . $msg . '.png'); // creates file
+    //QRcode::png('code data text', Yii::$app->homeUrl . 'images/qr' . $msg . '.png'); // creates file
     ?>
 
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
@@ -80,19 +80,19 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             'column' => function($url, $model) {
                                 if ($model->level == 1)
                                     return Html::a('<br><u>Column</u>', ['/store/store-slot', 'parentId' => $model->storeSlotId, 'level' => 2], [
-                                        'title' => Yii::t('app', 'Change today\'s lists'),]);
+                                                'title' => Yii::t('app', 'Change today\'s lists'),]);
                             },
-                            'slot' => function($url, $model) {
+                                    'slot' => function($url, $model) {
                                 if ($model->level == 2)
                                     return Html::a('<br><u>Slot</u>', ['/store/store-slot', 'parentId' => $model->storeSlotId, 'level' => 3], [
-                                        'title' => Yii::t('app', 'Change today\'s lists'),]);
+                                                'title' => Yii::t('app', 'Change today\'s lists'),]);
                             },
-                        ]
-                    ],
-                ],
-            ]);
-            ?>
-        </div>
-    </div>
-    <?php Pjax::end(); ?>
+                                ]
+                            ],
+                        ],
+                    ]);
+                    ?>
+                </div>
+            </div>
+            <?php Pjax::end(); ?>
 </div>
