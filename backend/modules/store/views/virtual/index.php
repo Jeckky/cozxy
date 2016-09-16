@@ -96,7 +96,7 @@
                                         <i id="R<?php echo $i; ?>C<?php echo '4'; ?>S<?php echo $s1; ?>-2" class="fa fa-circle-o text-default"  style="zoom: 2;"></i>
                                         <i id="R<?php echo $i; ?>C<?php echo '4'; ?>S<?php echo $s1; ?>-3" class="fa fa-circle-o text-default"  style="zoom: 2;"></i>
                                         <i id="R<?php echo $i; ?>C<?php echo '4'; ?>S<?php echo $s1; ?>-4" class="fa fa-circle-o text-default"  style="zoom: 2;"></i>
-                                        <i id="R<?php echo $i; ?>C<?php echo '4'; ?>S<?php echo $s1; ?>-5" class="fa fa-circle-o text-default style="zoom: 2;"></i>
+                                        <i id="R<?php echo $i; ?>C<?php echo '4'; ?>S<?php echo $s1; ?>-5" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
                                         <a href="#" class="label label-tag">R<?php echo $i; ?>C<?php echo '4'; ?>S<?php echo $s1; ?></a>
                                     </td>
                                     <td id="R<?php echo $i; ?>C<?php echo '5'; ?>S<?php echo $s1; ?>">
