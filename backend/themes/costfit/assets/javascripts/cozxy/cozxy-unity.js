@@ -33,19 +33,19 @@ $.get($baseUrl + "store/virtual/leditems", function (data, status) {
         // fa fa-circle
         // fa-circle-o text-default
         if (json_obj[i].color == 1) {
-            var color = 'fa fa-circle text-success';
+            var color_text = 'fa fa-circle text-success';
         } else if (json_obj[i].color == 2) {
-            var color = 'fa fa-circle text-danger';
+            var color_text = 'fa fa-circle text-danger';
         } else if (json_obj[i].color == 3) {
-            var color = 'fa fa-circle text-primary';
+            var color_text = 'fa fa-circle text-primary';
         } else if (json_obj[i].color == 4) {
-            var color = 'fa fa-circle text-pink';
+            var color_text = 'fa fa-circle text-pink';
         } else if (json_obj[i].color == 5) {
-            var color = 'fa fa-circle text-warning';
+            var color_text = 'fa fa-circle text-warning';
         } else {
-            var color = 'fa fa-circle-o text-default';
+            var color_text = 'fa fa-circle-o text-default';
         }
-        $('#' + json_obj[i].slot + '').find('#' + json_obj[i].slot + '-' + json_obj[i].color).attr('class', '' + color + '');
+        $('#' + json_obj[i].slot + '').find('#' + json_obj[i].slot + '-' + json_obj[i].color).attr('class', '' + color_text + '');
         console.log(json_obj[i].slot + '-' + json_obj[i].color);
     }
 });
