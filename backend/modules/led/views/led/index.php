@@ -45,17 +45,17 @@ $this->params['breadcrumbs'][] = $this->title;
                             },
                             'update' => function ($url, $model) {
                                 return Html::a('<span class="btn btn-xs btn-success" style="margin-left: 5px;
-            " >Edit</span>', '../led-item/update?id=' . $model->ledId);
+            " >Edit</span>', '../led/led/update?id=' . $model->ledId);
                             },
                             'delete' => function ($url, $model) {
                                 return Html::a('<span class="btn btn-xs btn-danger" style="margin-left: 5px;
-            " >Delete</span>', '../led-item/delete?id=' . $model->ledId);
+            " >Delete</span>', 'led/delete?id=' . $model->ledId, ['data-confirm' => 'Are you sure?']);
                             },
+                                ],
+                            ],
                         ],
-                    ],
-                ],
-            ]);
-            ?>
+                    ]);
+                    ?>
         </div>
     </div>
 </div>

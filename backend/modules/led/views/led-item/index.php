@@ -66,13 +66,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             },
                             'delete' => function ($url, $model) {
                                 return Html::a('<span class="btn btn-xs btn-danger" style="margin-left: 5px;
-            " >Delete</span>', '../led-item/delete?id=' . $model->ledItemId);
+            " >Delete</span>', '../led-item/delete?id=' . $model->ledItemId, ['data-confirm' => 'Are you sure?']);
                             },
+                                ],
+                            ],
                         ],
-                    ],
-                ],
-            ]);
-            ?>
+                    ]);
+                    ?>
         </div>
     </div>
 </div>
