@@ -6,7 +6,7 @@
 <div class="row">
     <?php
     $s = 1;
-    for ($i = 1; $i <= 10; $i++) {
+    for ($i = 1; $i <= 5; $i++) {
         ?>
         <div class="col-sm-6">
             <div class="panel">
@@ -46,7 +46,7 @@
                                         <i class="fa fa-circle-o text-primary" style="zoom: 2;"></i>
                                         <a href="#" class="label label-tag">R<?php echo $i; ?>C<?php echo '2'; ?>S<?php echo $s; ?></a>
                                     </td>
-                                    <td>  
+                                    <td>
                                         <i class="fa fa-circle text-danger" style="zoom: 2;"></i>
                                         <i class="fa fa-circle-o text-primary" style="zoom: 2;"></i>
                                         <i class="fa fa-circle-o text-primary" style="zoom: 2;"></i>
