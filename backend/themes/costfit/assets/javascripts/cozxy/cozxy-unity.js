@@ -3,8 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var $baseUrl = window.location.protocol + "//" + window.location.host;
+if (window.location.host == 'localhost') {
+    $baseUrl = window.location.protocol + "//" + window.location.host + '/cost.fit-frontend/';
+} else if (window.location.host == '192.168.100.8') {
+    //console.log($baseUrl);
+    var str = window.location.pathname;
+    var res = str.split("/");
+    //console.log(window.location.pathname);
+    //console.log(res);
+    // console.log(res[1])
+    $baseUrl = window.location.protocol + "//" + window.location.host + '/' + res[1] + '/backend/web/';
+} else {
+    $baseUrl = window.location.protocol + "//" + window.location.host + '/';
+}
 
-$.get("http://localhost/cost.fit-backend/store/virtual/leditems", function (data, status) {
+$.get($baseUrl + "store/virtual/leditems", function (data, status) {
     var json_obj = $.parseJSON(data); //parse JSON
     /*
      * 1 :  สีเขียว
