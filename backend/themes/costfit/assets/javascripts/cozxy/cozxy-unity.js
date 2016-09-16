@@ -46,7 +46,7 @@ $.get($baseUrl + "store/virtual/leditems", function (data, status) {
             var color = 'fa fa-circle-o text-default';
         }
         $('#' + json_obj[i].slot + '').find('#' + json_obj[i].slot + '-' + json_obj[i].color).attr('class', '' + color + '');
-        //console.log(json_obj[i].slot + '-' + json_obj[i].color);
+        console.log(json_obj[i].slot + '-' + json_obj[i].color);
     }
 });
 
