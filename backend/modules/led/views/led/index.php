@@ -41,11 +41,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             'led' => function ($url, $model) {
 
                                 return Html::a('<span class="btn btn-xs btn-warning " style="margin-left: 5px;
-            ">LED</span>', 'led-item/index?id=' . $model->ledId);
+            ">LED</span>', '../led/led-item?id=' . $model->ledId);
                             },
                             'update' => function ($url, $model) {
                                 return Html::a('<span class="btn btn-xs btn-success" style="margin-left: 5px;
-            " >Edit</span>', '../led/led/update?id=' . $model->ledId);
+            " >Edit</span>', 'led/update?id=' . $model->ledId);
                             },
                             'delete' => function ($url, $model) {
                                 return Html::a('<span class="btn btn-xs btn-danger" style="margin-left: 5px;

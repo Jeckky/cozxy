@@ -62,13 +62,14 @@ class LedController extends LedMasterController {
      */
     public function actionCreate() {
         $model = new Led();
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         if (isset($_POST["Led"])) {
             $model->attributes = $_POST["Led"];
             $model->createDateTime = new \yii\db\Expression('Now()');
             $model->updateDateTime = new \yii\db\Expression('Now()');
             $model->status = 1;
             if ($model->save(false)) {
-                return $this->redirect(['index', 'id' => $model->ledId]);
+                return $this->redirect($baseUrl . '/led/led');
             }
         } else {
             return $this->render('create', [
@@ -85,9 +86,9 @@ class LedController extends LedMasterController {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
-
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index', 'id' => $model->ledId]);
+            return $this->redirect($baseUrl . '/led/led');
         } else {
             return $this->render('update', [
                         'model' => $model,
@@ -103,8 +104,8 @@ class LedController extends LedMasterController {
      */
     public function actionDelete($id) {
         $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        return $this->redirect($baseUrl . '/led/led');
     }
 
     /**
