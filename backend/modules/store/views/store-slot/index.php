@@ -13,6 +13,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <div class="store-slot-index">
 
+    <?php
+    $msg = "111";
+    QRcode::png('code data text', Yii::$app->homeUrl . 'images/qr' . $msg . '.png'); // creates file
+    ?>
 
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-default">
@@ -51,6 +55,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     ['class' => 'yii\grid\SerialColumn'],
                     'storeSlotId',
                     'storeId',
+                    'barcode',
+//                    [
+//                        'attribute' => 'barcode',
+//                        'value' => function($model) {
+//                            return QrCode::png($model->barcode);
+//                        }
+//                    ],
                     'code',
                     'title',
                     'description:ntext',
@@ -64,11 +75,11 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     // 'updateDateTime',
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
-                        'template' => '{view} {update} {delete} {shelfFloor} {slot}',
+                        'template' => '{view} {update} {delete} {column} {slot}',
                         'buttons' => [
-                            'shelfFloor' => function($url, $model) {
+                            'column' => function($url, $model) {
                                 if ($model->level == 1)
-                                    return Html::a('<br><u>Shelf Floor</u>', ['/store/store-slot', 'parentId' => $model->storeSlotId, 'level' => 2], [
+                                    return Html::a('<br><u>Column</u>', ['/store/store-slot', 'parentId' => $model->storeSlotId, 'level' => 2], [
                                         'title' => Yii::t('app', 'Change today\'s lists'),]);
                             },
                             'slot' => function($url, $model) {

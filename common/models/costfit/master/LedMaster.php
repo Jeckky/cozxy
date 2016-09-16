@@ -10,7 +10,7 @@ use Yii;
     * @property string $ledId
     * @property string $code
     * @property string $ip
-    * @property string $shelf
+    * @property string $slot
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -34,7 +34,7 @@ return [
             [['code', 'ip', 'createDateTime'], 'required'],
             [['status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['code', 'ip', 'shelf'], 'string', 'max' => 45],
+            [['code', 'ip', 'slot'], 'string', 'max' => 45],
         ];
 }
 
@@ -47,7 +47,7 @@ return [
     'ledId' => Yii::t('led', 'Led ID'),
     'code' => Yii::t('led', 'Code'),
     'ip' => Yii::t('led', 'Ip'),
-    'shelf' => Yii::t('led', 'Shelf'),
+    'slot' => Yii::t('led', 'Slot'),
     'status' => Yii::t('led', 'Status'),
     'createDateTime' => Yii::t('led', 'Create Date Time'),
     'updateDateTime' => Yii::t('led', 'Update Date Time'),

@@ -9,6 +9,7 @@ use Yii;
  *
  * @property string $storeSlotId
  * @property string $storeId
+ * @property string $barcode
  * @property string $code
  * @property string $title
  * @property string $description
@@ -44,12 +45,12 @@ class StoreSlotMaster extends \common\models\ModelMaster
     public function rules()
     {
         return [
-            [['storeId', 'title', 'level', 'createDateTime'], 'required'],
+            [['storeId', 'barcode', 'code', 'title', 'level', 'createDateTime'], 'required'],
             [['storeId', 'parentId', 'level', 'status'], 'integer'],
             [['description'], 'string'],
             [['width', 'height', 'depth', 'weight', 'maxWeight'], 'number'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['code'], 'string', 'max' => 100],
+            [['barcode', 'code'], 'string', 'max' => 100],
             [['title'], 'string', 'max' => 200],
             [['parentId'], 'exist', 'skipOnError' => true, 'targetClass' => StoreSlotMaster::className(), 'targetAttribute' => ['parentId' => 'storeSlotId']],
             [['storeId'], 'exist', 'skipOnError' => true, 'targetClass' => StoreMaster::className(), 'targetAttribute' => ['storeId' => 'storeId']],
@@ -64,6 +65,7 @@ class StoreSlotMaster extends \common\models\ModelMaster
         return [
             'storeSlotId' => Yii::t('store_slot', 'Store Slot ID'),
             'storeId' => Yii::t('store_slot', 'Store ID'),
+            'barcode' => Yii::t('store_slot', 'Barcode'),
             'code' => Yii::t('store_slot', 'Code'),
             'title' => Yii::t('store_slot', 'Title'),
             'description' => Yii::t('store_slot', 'Description'),

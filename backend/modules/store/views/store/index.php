@@ -52,7 +52,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     // 'updateDateTime',
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
-                        'template' => '{view} {update} {delete} {product} {location} {shelf}',
+                        'template' => '{view} {update} {delete} {product} {location} {row}',
                         'buttons' => [
                             'location' => function($url, $model) {
                                 return Html::a('<br><u>Location</u>', ['/store/store-location', 'storeId' => $model->storeId], [
@@ -62,8 +62,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 return Html::a('<br><u>Product</u>', ['/store/store-product', 'storeId' => $model->storeId], [
                                     'title' => Yii::t('app', 'Change today\'s lists'),]);
                             },
-                            'shelf' => function($url, $model) {
-                                return Html::a('<br><u>Shelf</u>', ['/store/store-slot', 'storeId' => $model->storeId], [
+                            'row' => function($url, $model) {
+                                return Html::a('<br><u>Row</u>', ['/store/store-slot', 'storeId' => $model->storeId], [
                                     'title' => Yii::t('app', 'Change today\'s lists'),]);
                             },
                         ]

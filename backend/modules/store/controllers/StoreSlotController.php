@@ -91,6 +91,8 @@ class StoreSlotController extends StoreMasterController
             $model->createDateTime = new \yii\db\Expression('NOW()');
 
 
+            $this->generateBarcode($model);
+
             if ($model->save()) {
                 if (isset($_GET['storeId'])) {
                     return $this->redirect(['index', 'storeId' => $model->storeId]);
@@ -124,8 +126,7 @@ class StoreSlotController extends StoreMasterController
         if (isset($_POST["StoreSlot"])) {
             $model->attributes = $_POST["StoreSlot"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-
-
+            $this->generateBarcode($model);
 
             if ($model->save()) {
                 return $this->redirect(['index', 'storeId' => $model->storeId, 'parentId' => $model->parentId, 'level' => $model->level]);
@@ -163,6 +164,19 @@ class StoreSlotController extends StoreMasterController
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function generateBarcode($model)
+    {
+        if ($model->level == 1) {
+            $model->barcode = $model->code;
+        } else {
+            if ($model->level == 2) {
+                $model->barcode = $model->parent->code . $model->code;
+            } else {
+                $model->barcode = $model->parent->parent->code . $model->parent->code . $model->code;
+            }
         }
     }
 

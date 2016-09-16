@@ -253,7 +253,8 @@ class StoreProductController extends StoreMasterController
         }
 
         if (isset($_POST['quantity']) && isset($_POST['slot'])) {
-            
+            $slot = \common\models\costfit\StoreSlot::find()->where('barcode=' . $_POST["slot"])->one();
+            StoreProduct::arrangeProductToSlot($product->storeProductId, $slot->slotId, $_POST['quantity']);
         }
         return $this->render('arrange_index');
     }

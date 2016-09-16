@@ -50,9 +50,9 @@ class StoreSlot extends \common\models\costfit\master\StoreSlotMaster
     public function getLevelArray()
     {
         return [
-            self::LEVEL_SHELF => 'Shelf',
-            self::LEVEL_SHELF_FLOOR => 'Shelf Floor',
-            self::LEVEL_SHELF_FLOOR_SLOT => 'Shelf Slot',
+            self::LEVEL_SHELF => 'ROW',
+            self::LEVEL_SHELF_FLOOR => 'COLUMN',
+            self::LEVEL_SHELF_FLOOR_SLOT => 'SLOT',
         ];
     }
 
