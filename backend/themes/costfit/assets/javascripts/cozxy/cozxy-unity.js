@@ -5,7 +5,7 @@
  */
 var $baseUrl = window.location.protocol + "//" + window.location.host;
 if (window.location.host == 'localhost') {
-    $baseUrl = window.location.protocol + "//" + window.location.host + '/cost.fit-frontend/';
+    $baseUrl = window.location.protocol + "//" + window.location.host + '/cost.fit-backend/';
 } else if (window.location.host == '192.168.100.8') {
     //console.log($baseUrl);
     var str = window.location.pathname;
