@@ -87,7 +87,7 @@ class LedController extends LedMasterController {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ledId]);
+            return $this->redirect(['index', 'id' => $model->ledId]);
         } else {
             return $this->render('update', [
                         'model' => $model,
