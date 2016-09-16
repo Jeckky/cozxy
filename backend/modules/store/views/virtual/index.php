@@ -3,6 +3,11 @@
 ?>
 
 <h1>virtual/index</h1>
+<style>
+    .text-pink{
+        color: #ff99ff;
+    }
+</style>
 <div class="row">
     <?php
     $s = 1;
@@ -30,28 +35,28 @@
                                 ?>
                                 <tr>
                                     <th scope="row" class="bg-dark-gray">S<?php echo $s; ?></th>
-                                    <td>
-                                        <i class="fa fa-circle text-danger" style="zoom: 2;"></i>
-                                        <i class="fa fa-circle-o text-primary" style="zoom: 2;"></i>
-                                        <i class="fa fa-circle-o text-primary" style="zoom: 2;"></i>
-                                        <i class="fa fa-circle-o text-primary" style="zoom: 2;"></i>
-                                        <i class="fa fa-circle-o text-primary" style="zoom: 2;"></i>
+                                    <td id="R<?php echo $i; ?>C<?php echo '1'; ?>S<?php echo $s; ?>">
+                                        <i id="R<?php echo $i; ?>C<?php echo '1'; ?>S<?php echo $s; ?>-1" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
+                                        <i  id="R<?php echo $i; ?>C<?php echo '1'; ?>S<?php echo $s; ?>-2" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
+                                        <i  id="R<?php echo $i; ?>C<?php echo '1'; ?>S<?php echo $s; ?>-3" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
+                                        <i  id="R<?php echo $i; ?>C<?php echo '1'; ?>S<?php echo $s; ?>-4" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
+                                        <i  id="R<?php echo $i; ?>C<?php echo '1'; ?>S<?php echo $s; ?>-5" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
                                         <a href="#" class="label label-tag">R<?php echo $i; ?>C<?php echo '1'; ?>S<?php echo $s; ?></a>
                                     </td>
-                                    <td>
-                                        <i class="fa fa-circle text-danger" style="zoom: 2;"></i>
-                                        <i class="fa fa-circle-o text-primary" style="zoom: 2;"></i>
-                                        <i class="fa fa-circle-o text-primary" style="zoom: 2;"></i>
-                                        <i class="fa fa-circle-o text-primary" style="zoom: 2;"></i>
-                                        <i class="fa fa-circle-o text-primary" style="zoom: 2;"></i>
+                                    <td id="R<?php echo $i; ?>C<?php echo '2'; ?>S<?php echo $s; ?>">
+                                        <i id="R<?php echo $i; ?>C<?php echo '2'; ?>S<?php echo $s; ?>-1" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
+                                        <i  id="R<?php echo $i; ?>C<?php echo '2'; ?>S<?php echo $s; ?>-2" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
+                                        <i  id="R<?php echo $i; ?>C<?php echo '2'; ?>S<?php echo $s; ?>-3" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
+                                        <i  id="R<?php echo $i; ?>C<?php echo '2'; ?>S<?php echo $s; ?>-4" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
+                                        <i  id="R<?php echo $i; ?>C<?php echo '2'; ?>S<?php echo $s; ?>-5" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
                                         <a href="#" class="label label-tag">R<?php echo $i; ?>C<?php echo '2'; ?>S<?php echo $s; ?></a>
                                     </td>
-                                    <td>
-                                        <i class="fa fa-circle text-danger" style="zoom: 2;"></i>
-                                        <i class="fa fa-circle-o text-primary" style="zoom: 2;"></i>
-                                        <i class="fa fa-circle-o text-primary" style="zoom: 2;"></i>
-                                        <i class="fa fa-circle-o text-primary" style="zoom: 2;"></i>
-                                        <i class="fa fa-circle-o text-primary" style="zoom: 2;"></i>
+                                    <td id="R<?php echo $i; ?>C<?php echo '3'; ?>S<?php echo $s; ?>">
+                                        <i  id="R<?php echo $i; ?>C<?php echo '3'; ?>S<?php echo $s; ?>-1" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
+                                        <i  id="R<?php echo $i; ?>C<?php echo '3'; ?>S<?php echo $s; ?>-2"  class="fa fa-circle-o text-default" style="zoom: 2;"></i>
+                                        <i  id="R<?php echo $i; ?>C<?php echo '3'; ?>S<?php echo $s; ?>-3"  class="fa fa-circle-o text-default" style="zoom: 2;"></i>
+                                        <i  id="R<?php echo $i; ?>C<?php echo '3'; ?>S<?php echo $s; ?>-4"  class="fa fa-circle-o text-default" style="zoom: 2;"></i>
+                                        <i  id="R<?php echo $i; ?>C<?php echo '3'; ?>S<?php echo $s; ?>-5"  class="fa fa-circle-o text-default" style="zoom: 2;"></i>
                                         <a href="#" class="label label-tag">R<?php echo $i; ?>C<?php echo '3'; ?>S<?php echo $s; ?></a>
                                     </td>
                                 </tr>
@@ -86,26 +91,26 @@
                                 ?>
                                 <tr>
                                     <th scope="row" class="bg-dark-gray">S<?php echo $s1; ?></th>
-                                    <td>
-                                        <i class="fa fa-circle text-danger" style="zoom: 2;"></i>
-                                        <i class="fa fa-circle text-success"  style="zoom: 2;"></i>
-                                        <i class="fa fa-circle-o text-default"  style="zoom: 2;"></i>
-                                        <i class="fa fa-circle text-warning"  style="zoom: 2;"></i>
-                                        <i class="fa fa-circle text-primary"  style="zoom: 2;"></i>
+                                    <td id="R<?php echo $i; ?>C<?php echo '4'; ?>S<?php echo $s1; ?>">
+                                        <i id="R<?php echo $i; ?>C<?php echo '4'; ?>S<?php echo $s1; ?>-1" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
+                                        <i id="R<?php echo $i; ?>C<?php echo '4'; ?>S<?php echo $s1; ?>-2" class="fa fa-circle-o text-default"  style="zoom: 2;"></i>
+                                        <i id="R<?php echo $i; ?>C<?php echo '4'; ?>S<?php echo $s1; ?>-3" class="fa fa-circle-o text-default"  style="zoom: 2;"></i>
+                                        <i id="R<?php echo $i; ?>C<?php echo '4'; ?>S<?php echo $s1; ?>-4" class="fa fa-circle-o text-default"  style="zoom: 2;"></i>
+                                        <i id="R<?php echo $i; ?>C<?php echo '4'; ?>S<?php echo $s1; ?>-5" class="fa fa-circle-o text-default style="zoom: 2;"></i>
                                         <a href="#" class="label label-tag">R<?php echo $i; ?>C<?php echo '4'; ?>S<?php echo $s1; ?></a>
                                     </td>
-                                    <td>
-                                        <i class="fa fa-circle text-danger" style="zoom: 2;"></i>
+                                    <td id="R<?php echo $i; ?>C<?php echo '5'; ?>S<?php echo $s1; ?>">
+                                        <i class="fa fa-circle-o text-default" style="zoom: 2;"></i>
                                         <i class="fa fa-circle-o text-default"  style="zoom: 2;"></i>
                                         <i class="fa fa-circle-o text-default"  style="zoom: 2;"></i>
-                                        <i class="fa fa-circle text-warning"  style="zoom: 2;"></i>
+                                        <i class="fa fa-circle-o text-default"  style="zoom: 2;"></i>
                                         <i class="fa fa-circle-o text-default"  style="zoom: 2;"></i>
                                         <a href="#" class="label label-tag">R<?php echo $i; ?>C<?php echo '5'; ?>S<?php echo $s1; ?></a>
                                     </td>
-                                    <td>
-                                        <i class="fa fa-circle text-danger" style="zoom: 2;"></i>
+                                    <td id="R<?php echo $i; ?>C<?php echo '6'; ?>S<?php echo $s1; ?>">
                                         <i class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <i class="fa fa-circle text-success" style="zoom: 2;"></i>
+                                        <i class="fa fa-circle-o text-default" style="zoom: 2;"></i>
+                                        <i class="fa fa-circle-o text-default" style="zoom: 2;"></i>
                                         <i class="fa fa-circle-o text-default" style="zoom: 2;"></i>
                                         <i class="fa fa-circle-o text-default" style="zoom: 2;"></i>
                                         <a href="#" class="label label-tag">R<?php echo $i; ?>C<?php echo '6'; ?>S<?php echo $s1; ?></a>
@@ -123,4 +128,7 @@
         <?php
     }
     ?>
+</div>
+
+<div id="cand">
 </div>

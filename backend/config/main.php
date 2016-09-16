@@ -85,7 +85,7 @@ return [
             ],
         ],
         'errorHandler' => [
-            //'errorAction' => 'site/error',
+//'errorAction' => 'site/error',
             'errorAction' => 'error/error',
         ],
         'urlManager' => [

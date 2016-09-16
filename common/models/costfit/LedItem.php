@@ -34,4 +34,20 @@ class LedItem extends \common\models\costfit\master\LedItemMaster {
         ]);
     }
 
+    public function getLeds() {
+
+        $query = new \yii\db\Query();
+        $query->select('*')
+                ->from('led_item')
+                ->join('INNER JOIN', 'led', 'led.ledId = led_item.ledId')
+                ->where(['led.status' => 1])
+                ->orderBy('led_item.color asc ,`led`.`slot` asc  ');
+
+        $command = $query->createCommand();
+        $data = $command->queryAll();
+        return $data;
+
+        //return $this->hasOne(Led::className(), ['ledId' => 'ledId']);
+    }
+
 }
