@@ -109,7 +109,7 @@ class LedItemController extends LedItemMasterController {
             $model->ledId = $_GET['ledId'];
 
             $model->sortOrder = $_POST['LedItem']['sortOrder'];
-            $model->status = 1;
+            $model->status = 0;
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             if ($model->save(false)) {
@@ -201,6 +201,19 @@ class LedItemController extends LedItemMasterController {
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionChange($id, $type) {
+        $model = LedItem::find()->where("ledItemId=" . $id)->one();
+        if (isset($model) && !empty($model)) {
+            if ($type == 'on') {
+                $model->status = 1;
+            } else {
+                $model->status = 0;
+            }
+            $model->save(false);
+        }
+        return $this->redirect(['../led/led-item', 'id' => $model->ledId]);
     }
 
 }

@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     // 'updateDateTime',
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
-                        'template' => '{update}{delete}',
+                        'template' => '{update}{delete}{change}',
                         'buttons' => [
 
                             'update' => function ($url, $model) {
@@ -67,6 +67,15 @@ $this->params['breadcrumbs'][] = $this->title;
                             'delete' => function ($url, $model) {
                                 return Html::a('<span class="btn btn-xs btn-danger" style="margin-left: 5px;
             " >Delete</span>', 'led-item/delete?id=' . $model->ledItemId, ['data-confirm' => 'Are you sure?']);
+                            },
+                                    'change' => function ($url, $model) {
+                                if ($model->status == 0) {
+                                    return Html::a('<span class="btn btn-xs btn-warning" style="margin-left: 5px;
+            " >Turn on</span>', 'led-item/change?id=' . $model->ledItemId . '&&type=on');
+                                } else {
+                                    return Html::a('<span class="btn btn-xs btn-warning" style="margin-left: 5px;
+            " >Turn off</span>', 'led-item/change?id=' . $model->ledItemId . '&&type=off');
+                                }
                             },
                                 ],
                             ],
