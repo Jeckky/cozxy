@@ -85,14 +85,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     return $this->render('_save_cat', ['model' => $model]);
                 },
                         'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-//                                'layout' => "{items}\n{pager}",
+                        //   'layout' => "{items}\n{pager}",
                         'layout' => "{items}"
                     ]);
                     ?>
                 </div>
                 <div class="row" id="save-main-limit"></div>
                 <div class="row see-more-x col-md-12 text-right">
-                    <span class="btn btn-primary btn-xs ">See more <i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                    <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
                 </div>
             </div>
         </section><!--Categories Close-->

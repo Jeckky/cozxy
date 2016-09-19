@@ -724,7 +724,7 @@ $(".see-more-x").on('click', function () {
             if (data != '') {
                 $('.list-view').append('<div id="save-append">' + data + '</div>');
             } else {
-
+                $('#btn-see-more').attr('disabled', 'disabled');
             }
         }
     });
