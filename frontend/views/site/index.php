@@ -173,7 +173,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                 </div>
                                             </div>
                                             <?php if (isset($products->productImages[0]->imageThumbnail1) && !empty($products->productImages[0]->imageThumbnail1)): ?>
-                                                <img src="<?php echo Yii::$app->homeUrl . $products->productImages[0]->imageThumbnail1; ?>" alt="1"/>
+                                                <?php
+                                                $filename = $products->productImages[0]->imageThumbnail1;
+                                                if (file_exists($filename)) {
+                                                    echo "<img src=\" " . Yii::$app->homeUrl . $products->productImages[0]->imageThumbnail1 . "  \" alt=\"1\"/>";
+                                                } else {
+                                                    echo "<img src=\"" . $baseUrl . "/images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\"/>";
+                                                }
+                                                ?>
                                             <?php else: ?>
                                                 <img src="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1"/>
                                             <?php endif; ?>
@@ -206,7 +213,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                 </div>
                                             </div>
                                             <?php if (isset($item->productImages[0]->imageThumbnail1) && !empty($item->productImages[0]->imageThumbnail1)): ?>
-                                                <img src="<?php echo Yii::$app->homeUrl . $item->productImages[0]->imageThumbnail1; ?>" alt="1" class="img-responsive"/>
+                                                <?php
+                                                $filename = $item->productImages[0]->imageThumbnail1;
+                                                if (file_exists($filename)) {
+                                                    echo "<img src=\" " . Yii::$app->homeUrl . $item->productImages[0]->imageThumbnail1 . "  \" alt=\"1\" class=\"img-responsive\"/>";
+                                                } else {
+                                                    echo "<img src=\"" . $baseUrl . "/images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" class=\"img-responsive\"/>";
+                                                }
+                                                ?>
                                             <?php else: ?>
                                                 <img src="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1" class="img-responsive"/>
                                             <?php endif; ?>
