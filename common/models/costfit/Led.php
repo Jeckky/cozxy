@@ -16,21 +16,29 @@ use \common\models\costfit\master\LedMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class Led extends \common\models\costfit\master\LedMaster {
+class Led extends \common\models\costfit\master\LedMaster
+{
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), [
         ]);
+    }
+
+    public function getLedItems()
+    {
+        return $this->hasMany(LedItem::className(), ['ledId' => 'ledId'])->orderBy("led_item.sortOrder ASC");
     }
 
 }

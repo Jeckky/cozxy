@@ -17,11 +17,11 @@ $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <div class="store-slot-index">
 
-<?php
-$msg = "111";
+    <?php
+    $msg = "111";
 //QRcode::png('code data text', 'filename.png');
 //QRcode::png('code data text', Yii::$app->homeUrl . 'images/qr' . $msg . '.png'); // creates file
-?>
+    ?>
 
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-default">
@@ -30,7 +30,7 @@ $msg = "111";
                 <div class="col-md-6"><?= $this->title ?></div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
-<?php if (isset($_GET['storeId'])): ?>
+                        <?php if (isset($_GET['storeId'])): ?>
                             <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Store Slot', ['create?storeId=' . $_GET["storeId"]], ['class' => 'btn btn-success btn-xs']) ?>
                         <?php else: ?>
                             <?php if (isset($_GET['parentId'])): ?>
@@ -47,59 +47,60 @@ $msg = "111";
         </div>
         <div class="panel-body">
 
-<?=
-GridView::widget([
-    'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
-    'dataProvider' => $dataProvider,
-    'pager' => [
-        'options' => ['class' => 'pagination pagination-xs']
-    ],
-    'options' => [
-        'class' => 'table-light'
-    ],
-    'columns' => [
-        ['class' => 'yii\grid\SerialColumn'],
-        'storeSlotId',
-        'storeId',
-        'barcode',
-//                    [
-//                        'attribute' => 'barcode',
-//                        'value' => function($model) {
-//                            return QrCode::png($model->barcode);
-//                        }
-//                    ],
-        'code',
-        'title',
-        'description:ntext',
-        // 'width',
-        // 'height',
-        // 'depth',
-        // 'weight',
-        // 'maxWeight',
-        // 'status',
-        // 'createDateTime',
-        // 'updateDateTime',
-        ['class' => 'yii\grid\ActionColumn',
-            'header' => 'Actions',
-            'template' => '{view} {update} {delete} {column} {slot}',
-            'buttons' => [
-                'column' => function($url, $model) {
-                    if ($model->level == 1)
-                        return Html::a('<br><u>Column</u>', ['/store/store-slot', 'parentId' => $model->storeSlotId, 'level' => 2], [
-                                    'title' => Yii::t('app', 'Change today\'s lists'),]);
-                },
-                        'slot' => function($url, $model) {
-                    if ($model->level == 2)
-                        return Html::a('<br><u>Slot</u>', ['/store/store-slot', 'parentId' => $model->storeSlotId, 'level' => 3], [
-                                    'title' => Yii::t('app', 'Change today\'s lists'),]);
-                },
-                    ]
+            <?=
+            GridView::widget([
+                'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
+                'dataProvider' => $dataProvider,
+                'pager' => [
+                    'options' => ['class' => 'pagination pagination-xs']
                 ],
-            ],
-        ]);
-        ?>
-                </div>
-            </div>
-        <?php Pjax::end(); ?>
+                'options' => [
+                    'class' => 'table-light'
+                ],
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    'storeSlotId',
+                    'storeId',
+                    'barcode',
+                    [
+                        'attribute' => 'qr',
+                        'format' => 'html',
+                        'value' => function($model) {
+                            return Html::img("https://chart.googleapis.com/chart?chs=450x450&cht=qr&chl=" . $model->barcode, ['style' => 'width:150px']);
+                        }
+                    ],
+                    'code',
+                    'title',
+                    'description:ntext',
+                    // 'width',
+                    // 'height',
+                    // 'depth',
+                    // 'weight',
+                    // 'maxWeight',
+                    // 'status',
+                    // 'createDateTime',
+                    // 'updateDateTime',
+                    ['class' => 'yii\grid\ActionColumn',
+                        'header' => 'Actions',
+                        'template' => '{view} {update} {delete} {column} {slot}',
+                        'buttons' => [
+                            'column' => function($url, $model) {
+                                if ($model->level == 1)
+                                    return Html::a('<br><u>Column</u>', ['/store/store-slot', 'parentId' => $model->storeSlotId, 'level' => 2], [
+                                        'title' => Yii::t('app', 'Change today\'s lists'),]);
+                            },
+                            'slot' => function($url, $model) {
+                                if ($model->level == 2)
+                                    return Html::a('<br><u>Slot</u>', ['/store/store-slot', 'parentId' => $model->storeSlotId, 'level' => 3], [
+                                        'title' => Yii::t('app', 'Change today\'s lists'),]);
+                            },
+                        ]
+                    ],
+                ],
+            ]);
+            ?>
         </div>
-            <?php ?>
+    </div>
+    <?php Pjax::end(); ?>
+</div>
+<?php ?>
