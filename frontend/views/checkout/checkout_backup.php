@@ -117,7 +117,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <div class="form-group" style="margin-bottom: 10px;  background-color: #f5f5f5; padding: 5px;">
                             <label class="ship-to-dif-adress" style="margin-bottom:0px;">
                                 <h3 style="margin-bottom: 8px;">
-                                    Click for picking point ?
+                                    Click for Shipping to adress?
                                 </h3>
                             </label>
                         </div>

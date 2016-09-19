@@ -63,9 +63,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
                     <?php } else { ?>
                         <div class="bs-example" data-example-id="btn-tags" style="background-color:#3cc; height:45px; margin-top: 20px;  padding: 10px 12px; color: #fff; border-width: 1px;  border-radius: 4px 4px 0 0; -webkit-box-shadow: none; box-shadow: none;">
-                            <span style="float: left; width: 70%; text-align: left;">Shipping address</span>
+                            <span style="float: left; width: 70%; text-align: left;">Picking Point</span>
                             <span style="float: left; width: 30%; text-align: right;">
-                                <a href="<?php echo Yii::$app->homeUrl; ?>profile/shipping-address/add" style="color: #fff;"> + Add New </a>
+                                <a href="<?php echo Yii::$app->homeUrl; ?>profile/picking-point/add" style="color: #fff;"> + Add New </a>
                             </span>
                         </div>
                         <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="margin: 0 0 ">
@@ -81,7 +81,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     ],
                                     'layout' => "{pager}\n{items}\n", //{summary}
                                     'itemView' => function ($model, $key, $index, $widget) {
-                                return $this->render('@frontend/views/profile/add_shipping_address', ['model' => $model, 'index' => $index]);
+                                return $this->render('@frontend/views/profile/list_picking_point', ['model' => $model, 'index' => $index]);
                             },
                                 ]);
                             endif;

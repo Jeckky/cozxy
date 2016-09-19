@@ -31,6 +31,7 @@ class Address extends \common\models\costfit\master\AddressMaster {
 
     const TYPE_BILLING = 1; // ที่อยู่จัดส่งเอกสาร
     const TYPE_SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
+    const TYPE_PICKINGPOINT = 3; // ที่อยู่จัดส่งสินค้า
 
     /**
      * @inheritdoc
