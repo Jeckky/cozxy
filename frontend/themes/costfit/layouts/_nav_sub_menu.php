@@ -28,7 +28,7 @@ $MenuCategory = $this->context->actionMenuCategory();
     }
 </style>
 <!-- Show For Mobile -->
-<ul class="catalog hidden-md  hidden-lg" style="max-width: 100%;" >
+<ul class="catalog hidden-md  hidden-lg" style="max-width: 100%;">
     <?php
     // $list_menu_category = $this->Me
     foreach ($MenuCategory as $items) {
@@ -48,7 +48,7 @@ $MenuCategory = $this->context->actionMenuCategory();
                         foreach ($MenuCategorySubParentId as $items_sub_parent) {
                             $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items_sub_parent->categoryId]);
                             ?>
-                            <li><a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub_parent->createTitle() ?>/<?= $params ?>" style="font-size: 12px;"><?php echo '&nbsp;-&nbsp;' . $items_sub_parent->title; ?></a></li>
+                            <li style="width: 100%;"><a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub_parent->createTitle() ?>/<?= $params ?>" style="font-size: 12px;"><?php echo '&nbsp;-&nbsp;' . $items_sub_parent->title; ?></a></li>
                         <?php } ?>
                     </ul>
                 </ul>
