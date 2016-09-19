@@ -21,7 +21,7 @@ if (window.location.host == 'localhost') {
 $.get($baseUrl + "store/virtual/leditems", function (data, status) {
     var json_obj = $.parseJSON(data); //parse JSON
     /*
-     * 1 :  สีเขียว
+     *  1 :  สีเขียว
      2 : สีแดง
      3 : สีน้ำเงิน
      4 :สีชมพู่
