@@ -126,16 +126,18 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="container">
                 <div class="row" style="background-image: url('<?php echo $baseUrl . $topOneContent->image; ?>');background-size: 100% 100%;">
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-                        <h2 style="color: #fff;"><?php echo $topOneContent->title; ?></h2>
+                        <h2><?php echo $topOneContent->title; ?></h2>
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12" style="color: #fff;">
                                 <p class="p-style3" style="color: #fff;">
                                     <?php echo $topOneContent->description; ?>
                                 </p>
                             </div>
+                            <!--
                             <div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 10px;">
-                                <button class="btn btn-black btn-sm" value="100$-300$">READ MORE</button>
+                                <button class="btn btn-black btn-xs">READ MORE</button>
                             </div>
+                            -->
                         </div>
                     </div>
                 </div>
