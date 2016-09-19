@@ -32,7 +32,7 @@ $.get($baseUrl + "store/virtual/leditems", function (data, status) {
         //console.log(json_obj[i].code + ",  " + json_obj[i].slot + ' , ' + json_obj[i].color);
         // fa fa-circle
         // fa-circle-o text-default
-        console.log(json_obj[i].color + '<br>');
+        //console.log(json_obj[i].color + '<br>');
         if (json_obj[i].color == 1) {
             var color_text = 'fa fa-circle text-success';
         } else if (json_obj[i].color == 2) {
@@ -47,7 +47,7 @@ $.get($baseUrl + "store/virtual/leditems", function (data, status) {
             var color_text = 'fa fa-circle-o text-default';
         }
         $('#' + json_obj[i].slot + '').find('#' + json_obj[i].slot + '-' + json_obj[i].color).attr('class', '' + color_text + '');
-        console.log(json_obj[i].slot + '-' + json_obj[i].color);
+        //console.log(json_obj[i].slot + '-' + json_obj[i].color);
     }
 });
 
