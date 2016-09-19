@@ -69,7 +69,7 @@
                                                 <?php
                                                 endif;
                                                 ?>
-                                                <span class="pull-right">SLOT : R<?php echo $i; ?>C<?php echo $c; ?>S<?php echo $s; ?></span>
+                                                <span class="pull-right help-block">SLOT : R<?php echo $i; ?>C<?php echo $c; ?>S<?php echo $s; ?></span>
                                             </td>
                                             <?php
                                         endif;
