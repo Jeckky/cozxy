@@ -64,7 +64,7 @@
                                                     <a href="<?= Yii::$app->homeUrl . "store/virtual/remove-led-from-slot?id=" . $led->ledId ?>" class="btn btn-danger btn-xs" title="Remove LED from Slot" onclick="return confirm('คุณต้องการนำ LED <?= $led->code; ?> ออกจาก Slot')"><i class="glyphicon glyphicon-minus"></i></a>
                                                 <?php else: ?>
                                                     NOT Set LED
-                                                    <a href="#" class="label label-tag">LED : NOT SET</a>
+                                                    <!--<a href="#" class="label label-tag">LED : NOT SET</a>-->
                                                     <a href="#" onclick="showLedList('R<?php echo $i; ?>C<?php echo $c; ?>S<?php echo $s . "','" . Yii::$app->homeUrl . "store/virtual/select-led" ?>')" class="btn btn-success btn-xs" title="Add LED to Slot"><i class="fa fa-plus"></i></a>
                                                 <?php
                                                 endif;
