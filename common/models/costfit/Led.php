@@ -22,9 +22,20 @@ class Led extends \common\models\costfit\master\LedMaster
     /**
      * @inheritdoc
      */
+<<<<<<< HEAD
     public function rules()
     {
         return array_merge(parent::rules(), []);
+=======
+    public function rules() {
+        return array_merge(parent::rules(), [
+        ]);
+    }
+
+    public function attributes() {
+        // add related fields to searchable attributes
+        return array_merge(parent::attributes(), ['start', 'end']);
+>>>>>>> origin/master
     }
 
     /**
@@ -36,9 +47,21 @@ class Led extends \common\models\costfit\master\LedMaster
         ]);
     }
 
+<<<<<<< HEAD
     public function getLedItems()
     {
         return $this->hasMany(LedItem::className(), ['ledId' => 'ledId'])->orderBy("led_item.sortOrder ASC");
+=======
+    public function createLedItems($ledId) {
+        for ($i = 1; $i < 6; $i++):
+            $ledItems = new LedItem();
+            $ledItems->ledId = $ledId;
+            $ledItems->color = $i;
+            $ledItems->sortOrder = $i;
+            $ledItems->status = 0;
+            $ledItems->save(false);
+        endfor;
+>>>>>>> origin/master
     }
 
 }

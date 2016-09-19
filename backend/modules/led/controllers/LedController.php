@@ -33,14 +33,54 @@ class LedController extends LedMasterController {
      * @return mixed
      */
     public function actionIndex() {
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         $model = new Led();
+        if (isset($_GET['Led']['start']) && isset($_GET['Led']['start']) && isset($_GET['Led']['start'])) {
+            $start = $_GET['Led']['start'];
+            $end = $_GET['Led']['end'];
+            $ip = $_GET['Led']['ip'];
+            if ($end < $start) {
+                $ms = 'Error input, "End" just more or equal as "Start".';
+                return $this->redirect($baseUrl . '/led/led?msg=' . $ms . '&&start=' . $start . '&&end=' . $end . '&&ip=' . $ip);
+            }
+            $checkIp = [];
+            for ($i = $start; $i <= $end; $i++):
+                $chekSameIp = true;
+                $chekSameIp = $this->chekIp($ip);
+                if (!$chekSameIp) {
+                    $led = new Led();
+                    $led->code = "Led" . $i;
+                    $led->status = 1;
+                    $led->createDateTime = new \yii\db\Expression('Now()');
+                    $led->updateDateTime = new \yii\db\Expression('Now()');
+                    $led->ip = $ip;
+                    $led->save(false);
+                } else {
+                    $ms = $ip . ' was exist.';
+                    return $this->redirect($baseUrl . '/led/led?msg=' . $ms . '&&start=' . $start . '&&end=' . $end . '&&ip=' . $ip);
+                }
+                $ledId = Yii::$app->db->getLastInsertID();
+                $model->createLedItems($ledId);
+                $ip++;
+                $checkIp = substr($ip, -3);
+                $front = explode('.', $ip);
+                // throw new \yii\base\Exception($checkIp);
+                if ($checkIp >= '254') {
+                    //$showLastIp = ($ip - 1) . '.' . $front[2] . '.253'; // ip address ตัวสุดท้ายที่ สามารถบันทึกได้
+                    $ms = 'System has created from ' . $_GET['Led']['ip'] . ' to ' . $showLastIp . ' ip ' . $ip . ' is Unable.';
+                    //  $ms = 'System has created from ' . $_GET['Led']['ip'] . ' to ' . $ip-- . ' ip ' . $ip . ' is Unable';
+                    return $this->redirect($baseUrl . '/led/led?msg=' . $ms . '&&start=' . $start . '&&end=' . $end . '&&ip=' . $_GET['Led']['ip']);
+                }
+            endfor;
+            $model->code = "Led";
+        }
         $dataProvider = new ActiveDataProvider([
             'query' => Led::find(),
         ]);
 
         return $this->render('index', [
                     'dataProvider' => $dataProvider,
-                    'model' => $model,
+                    'model' => $model
         ]);
     }
 
@@ -69,6 +109,8 @@ class LedController extends LedMasterController {
             $model->updateDateTime = new \yii\db\Expression('Now()');
             $model->status = 1;
             if ($model->save(false)) {
+                $ledId = Yii::$app->db->getLastInsertID();
+                $model->createLedItems($ledId);
                 return $this->redirect($baseUrl . '/led/led');
             }
         } else {
@@ -104,6 +146,10 @@ class LedController extends LedMasterController {
      */
     public function actionDelete($id) {
         $this->findModel($id)->delete();
+        $items = \common\models\costfit\LedItem::find()->where("ledId=" . $id)->all();
+        foreach ($items as $item) {
+            $item->delete();
+        }
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         return $this->redirect($baseUrl . '/led/led');
     }
@@ -120,6 +166,15 @@ class LedController extends LedMasterController {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    function chekIp($ip) {
+        $led = Led::find()->where("ip='" . $ip . "'")->all();
+        if (isset($led) and ! empty($led)) {
+            return true;
+        } else {
+            return false;
         }
     }
 

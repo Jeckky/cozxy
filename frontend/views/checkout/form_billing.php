@@ -224,8 +224,8 @@ $districtId = rand(0, 9999);
     <div class="row">
         <div class="form-group col-lg-6 col-md-6 col-sm-6 form-group<?= (isset($type) && $type == 1) ? "-billing" : "-shipping" ?>">
             <?php
-// Child level 3
-//echo Html::hiddenInput('model_id3', '395', ['id' => 'model_id3']);
+            // Child level 3
+            //echo Html::hiddenInput('model_id3', '395', ['id' => 'model_id3']);
             echo $form->field($address, 'districtId')->widget(DepDrop::classname(), [
                 //'data' => [12 => 'Savings A/C 2'],
                 'options' => ['placeholder' => 'Select ...', 'id' => $districtId],

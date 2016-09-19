@@ -85,14 +85,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     return $this->render('_save_cat', ['model' => $model]);
                 },
                         'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-//                                'layout' => "{items}\n{pager}",
+                        //   'layout' => "{items}\n{pager}",
                         'layout' => "{items}"
                     ]);
                     ?>
                 </div>
                 <div class="row" id="save-main-limit"></div>
                 <div class="row see-more-x col-md-12 text-right">
-                    <span class="btn btn-primary btn-xs ">See more <i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                    <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
                 </div>
             </div>
         </section><!--Categories Close-->
@@ -126,16 +126,18 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="container">
                 <div class="row" style="background-image: url('<?php echo $baseUrl . $topOneContent->image; ?>');background-size: 100% 100%;">
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-                        <h2 style="color: #fff;"><?php echo $topOneContent->title; ?></h2>
+                        <h2><?php echo $topOneContent->title; ?></h2>
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12" style="color: #fff;">
                                 <p class="p-style3" style="color: #fff;">
                                     <?php echo $topOneContent->description; ?>
                                 </p>
                             </div>
+                            <!--
                             <div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 10px;">
-                                <button class="btn btn-black btn-sm" value="100$-300$">READ MORE</button>
+                                <button class="btn btn-black btn-xs">READ MORE</button>
                             </div>
+                            -->
                         </div>
                     </div>
                 </div>
@@ -171,7 +173,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                 </div>
                                             </div>
                                             <?php if (isset($products->productImages[0]->imageThumbnail1) && !empty($products->productImages[0]->imageThumbnail1)): ?>
-                                                <img src="<?php echo Yii::$app->homeUrl . $products->productImages[0]->imageThumbnail1; ?>" alt="1"/>
+                                                <?php
+                                                $filename = $products->productImages[0]->imageThumbnail1;
+                                                if (file_exists($filename)) {
+                                                    echo "<img src=\" " . Yii::$app->homeUrl . $products->productImages[0]->imageThumbnail1 . "  \" alt=\"1\"/>";
+                                                } else {
+                                                    echo "<img src=\"" . $baseUrl . "/images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\"/>";
+                                                }
+                                                ?>
                                             <?php else: ?>
                                                 <img src="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1"/>
                                             <?php endif; ?>
@@ -204,7 +213,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                 </div>
                                             </div>
                                             <?php if (isset($item->productImages[0]->imageThumbnail1) && !empty($item->productImages[0]->imageThumbnail1)): ?>
-                                                <img src="<?php echo Yii::$app->homeUrl . $item->productImages[0]->imageThumbnail1; ?>" alt="1" class="img-responsive"/>
+                                                <?php
+                                                $filename = $item->productImages[0]->imageThumbnail1;
+                                                if (file_exists($filename)) {
+                                                    echo "<img src=\" " . Yii::$app->homeUrl . $item->productImages[0]->imageThumbnail1 . "  \" alt=\"1\" class=\"img-responsive\"/>";
+                                                } else {
+                                                    echo "<img src=\"" . $baseUrl . "/images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" class=\"img-responsive\"/>";
+                                                }
+                                                ?>
                                             <?php else: ?>
                                                 <img src="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1" class="img-responsive"/>
                                             <?php endif; ?>

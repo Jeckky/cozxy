@@ -44,7 +44,7 @@ use yii\helpers\ArrayHelper;
                         $showColor = '#ffff00';
                     }
                     ?>
-                    <div  style="background-color: <?= $showColor ?>;height: 50px;width: 300px;"><input type="radio" value="<?= $defult ?>" name="color" required/></div><br>
+                    <div  style="background-color: <?= $showColor ?>;height: 50px;width: 300px;"><input type="radio" value="<?= $defult ?>" name="color"/></div><br>
                     <?php
                 }
             }

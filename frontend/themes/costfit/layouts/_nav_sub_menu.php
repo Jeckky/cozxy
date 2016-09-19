@@ -28,7 +28,7 @@ $MenuCategory = $this->context->actionMenuCategory();
     }
 </style>
 <!-- Show For Mobile -->
-<ul class="catalog hidden-md  hidden-lg" style="max-width: 100%;" >
+<ul class="catalog hidden-md  hidden-lg" style="max-width: 100%;">
     <?php
     // $list_menu_category = $this->Me
     foreach ($MenuCategory as $items) {
@@ -48,7 +48,7 @@ $MenuCategory = $this->context->actionMenuCategory();
                         foreach ($MenuCategorySubParentId as $items_sub_parent) {
                             $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items_sub_parent->categoryId]);
                             ?>
-                            <li><a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub_parent->createTitle() ?>/<?= $params ?>" style="font-size: 12px;"><?php echo '&nbsp;-&nbsp;' . $items_sub_parent->title; ?></a></li>
+                            <li style="width: 100%;"><a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub_parent->createTitle() ?>/<?= $params ?>" style="font-size: 12px;"><?php echo '&nbsp;-&nbsp;' . $items_sub_parent->title; ?></a></li>
                         <?php } ?>
                     </ul>
                 </ul>
@@ -60,17 +60,17 @@ $MenuCategory = $this->context->actionMenuCategory();
     }
     ?>
     <?php if (!Yii::$app->user->isGuest): ?>
-        <li class="has-submenu pill-right"><a href="#">Account<i class="fa fa-chevron-down"></i></a>
+        <li class="has-submenu pull-right"><a href="#">Account<i class="fa fa-chevron-down"></i></a>
             <ul class="submenu">
-                <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile" style="font-size: 12px;">My Profile</a></li>
-                <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order" style="font-size: 12px;">Order History</a></li>
-                <!--<li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/payment">Payment Methods</a></li>
-                <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>history">Easy Re-Order</a></li>-->
+                <li class="pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile" style="font-size: 12px;">My Profile</a></li>
+                <li class="pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order" style="font-size: 12px;">Order History</a></li>
+                <!--<li class="pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/payment">Payment Methods</a></li>
+                <li class="pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>history">Easy Re-Order</a></li>-->
             </ul>
         </li>
     <?php endif; ?>
-    <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>coupon">Super special offers</a></li><!--ข้อเสนอพิเศษจากพาร์ทเนอร์-->
-    <li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works">How Works</a></li>
+    <li class="has-submenu pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>coupon">Super special offers</a></li><!--ข้อเสนอพิเศษจากพาร์ทเนอร์-->
+    <li class="has-submenu pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works">How Works</a></li>
 </ul>
 
 <!-- Show For Desktop -->
@@ -114,19 +114,18 @@ $MenuCategory = $this->context->actionMenuCategory();
 </ul>
 </li>
 <?php if (!Yii::$app->user->isGuest): ?>
-    <li class="has-submenu pill-right">
+    <li class="has-submenu  ">
         <span class="sorting" id="sortingAccount" style="padding: 1px 1px 1px 1px;">
             <a href="#" class="sorting" style="padding: 1px 1px 1px 5px;">Account</a></span>
         <ul class="submenu" id="submenu-sorting-account" style="margin-top: -1px;">
-            <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
-            <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
-            <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/tracking">Tracking</a></li>
+            <li><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
+            <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
+            <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/tracking">Tracking</a></li>
             <!--<li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/payment">Payment Methods</a></li>
-            <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>history">Easy Re-Order</a></li>-->
+            <li class="pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>history">Easy Re-Order</a></li>-->
         </ul>
     </li>
 <?php endif; ?>
-<li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>coupon">Super special offers</a></li><!--ข้อเสนอพิเศษจากพาร์ทเนอร์-->
-<li class="has-submenu pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works">How Works</a></li>
+<li class="has-submenu pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works">How Works</a></li>
+<li class="has-submenu pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>coupon">Super special offers</a></li><!--ข้อเสนอพิเศษจากพาร์ทเนอร์-->
 </ul>
-
