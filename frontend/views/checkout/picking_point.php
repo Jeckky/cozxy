@@ -30,6 +30,7 @@ $districtId = rand(0, 9999);
             'loadingText' => 'Loading country ...',
         //'initialize' => true,
         ],
+        'data' => ['THA' => 'ประเทศไทย'],
         'options' => [
             'placeholder' => 'Select country ...',
             'id' => $countryId,
