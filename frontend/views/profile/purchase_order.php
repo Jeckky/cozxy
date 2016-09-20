@@ -39,18 +39,18 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
             <!--Left Column-->
             <div class="col-lg-12 col-md-12 ">
                 <div class="col-lg-6 col-md-6 ">
-                    <h5>Shipping to adress</h5>
+                    <h5>Picking Point</h5>
                     <table class="table">
                         <tbody>
                             <tr>
                                 <td style="line-height: 20px;">
                                     <?php
-                                    echo isset($order->attributes['shippingCompany']) ? 'บริษัท' . $order->attributes['shippingCompany'] : 'คุณ' . $order->user->firstname . " " . $order->user->lastname . '<br>';
-                                    echo isset($order->attributes['shippingAddress']) ? $order->attributes['shippingAddress'] : '';
-                                    echo '<br>';
-                                    $District = \common\models\dbworld\District::find()->where("districtId = '" . $order->attributes['shippingDistrictId'] . "' ")->one();
-                                    echo isset($District->attributes['localName']) ? $District->attributes['localName'] : '';
-                                    echo '&nbsp;';
+                                    //echo isset($order->attributes['shippingCompany']) ? 'บริษัท' . $order->attributes['shippingCompany'] : 'คุณ' . $order->user->firstname . " " . $order->user->lastname . '<br>';
+                                    //echo isset($order->attributes['shippingAddress']) ? $order->attributes['shippingAddress'] : '';
+                                    //echo '<br>';
+                                    //$District = \common\models\dbworld\District::find()->where("districtId = '" . $order->attributes['shippingDistrictId'] . "' ")->one();
+                                    //echo isset($District->attributes['localName']) ? $District->attributes['localName'] : '';
+                                    //echo '&nbsp;';
                                     $Cities = \common\models\dbworld\Cities::find()->where("cityId = '" . $order->attributes['shippingAmphurId'] . "' ")->one();
                                     echo isset($Cities->attributes['localName']) ? $Cities->attributes['localName'] : '';
                                     echo '&nbsp;';
@@ -59,11 +59,11 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                                     echo '&nbsp;';
                                     $Countries = \common\models\dbworld\Countries::find()->where("countryId = '" . $order->attributes['shippingCountryId'] . "' ")->one();
                                     echo isset($Countries->attributes['localName']) ? 'ประเทศ' . $Countries->attributes['localName'] : 'ประเทศ' . 'ไม่ระบุ';
-                                    echo '<br> รหัสไปรษณีย์';
-                                    echo isset($order->attributes['shippingZipcode']) ? $order->attributes['shippingZipcode'] : '';
-                                    echo '<br> โทร ';
-                                    echo isset($order->attributes['shippingTel']) ? $order->attributes['shippingTel'] : '';
-                                    echo '<br>';
+                                    //echo '<br> รหัสไปรษณีย์';
+                                    //echo isset($order->attributes['shippingZipcode']) ? $order->attributes['shippingZipcode'] : '';
+                                    //echo '<br> โทร ';
+                                    //echo isset($order->attributes['shippingTel']) ? $order->attributes['shippingTel'] : '';
+                                    // echo '<br>';
                                     ?>
                                 </td>
                         </tbody>

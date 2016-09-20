@@ -260,7 +260,8 @@ class ProfileController extends MasterController {
         if (isset($params['orderId'])) {
             $order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . $params['orderId'] . '" ')
                     ->one();
-
+            //echo '<pre>';
+            //print_r($order);
             return $this->render('@app/views/profile/purchase_order', compact('order'));
         } else {
             return $this->redirect(['profile/order']);
