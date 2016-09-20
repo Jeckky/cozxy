@@ -341,7 +341,7 @@ class ProfileController extends MasterController {
             $model->attributes = $_POST['Address'];
             //echo $_POST["Address"]['isDefault'];
             if ($_POST["Address"]['isDefault']) {
-                \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_SHIPPING]);
+                \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_PICKINGPOINT]);
                 $model->isDefault = 1;
             }
             $model->userId = Yii::$app->user->id;
