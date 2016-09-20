@@ -14,6 +14,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--<hr> 1 -->
 <table class="table table_bordered" width="100%" cellpadding="2" cellspacing="0">
     <tr>
+        <td colspan="4" style="text-align: left; vertical-align: text-top; padding: 5px; font-size: 12px; line-height: 20px;">
+            สถานที่รับเอกสาร
+        </td>
+        <td colspan="3" style="text-align: left; vertical-align: text-top; padding: 5px; font-size: 12px; line-height: 20px;">
+            เลขที่ใบสั่งซื้อ PO No. : <?php echo $order->orderNo; ?>
+        </td>
+    </tr>
+    <tr>
         <td  colspan="4" style="text-align: left; vertical-align: text-top; padding: 5px; font-size: 12px; line-height: 20px;">
             <?php
             echo isset($order->billingCompany) ? 'บริษัท' . $order->billingCompany : 'คุณ' . $order->user->firstname . " " . $order->user->lastname;
@@ -28,7 +36,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <br>โทรศัพท์ :   <?php echo $order->billingTel; ?>
         </td>
         <td  colspan="3" style="text-align: left; vertical-align: text-top; padding: 5px; font-size: 12px; line-height: 20px;">
-            เลขที่ใบสั่งซื้อ PO No. : <?php echo $order->orderNo; ?><br>
+            <!--เลขที่ใบสั่งซื้อ PO No. : <?php echo $order->orderNo; ?><br>-->
             วันที่สั่งซื้อ : <?php echo $this->context->dateThai($order->createDateTime, 1); ?><br>
             กำหนดชำระเงิน :
             <?php
