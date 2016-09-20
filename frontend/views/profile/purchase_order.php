@@ -59,6 +59,8 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                                     echo '&nbsp;';
                                     $Countries = \common\models\dbworld\Countries::find()->where("countryId = '" . $order->attributes['shippingCountryId'] . "' ")->one();
                                     echo isset($Countries->attributes['localName']) ? 'ประเทศ' . $Countries->attributes['localName'] : 'ประเทศ' . 'ไม่ระบุ';
+                                    //echo '123<pre>';
+                                    //print_r($Countries);
                                     //echo '<br> รหัสไปรษณีย์';
                                     //echo isset($order->attributes['shippingZipcode']) ? $order->attributes['shippingZipcode'] : '';
                                     //echo '<br> โทร ';

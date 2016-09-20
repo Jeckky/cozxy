@@ -252,7 +252,7 @@ class ProfileController extends MasterController {
 
         $orderId = Yii::$app->request->get('OrderNo');
         $this->layout = "/content_profile";
-        $this->title = 'Cost.fit | Order Purchase ';
+        $this->title = 'Cost.fit | Order Purchase';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Order Purchase";
 
