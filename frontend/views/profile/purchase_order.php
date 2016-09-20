@@ -104,8 +104,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
             </div>
             <div class = "col-lg-12 col-md-12 ">
                 <div class = "col-sm-12 pull-right" style = "margin-bottom: 5px; padding-left: 0px; padding-right: 0px;">
-                    <?php if (Yii::$app->controller->id == 'profile'):
-                        ?>
+                    <?php if (Yii::$app->controller->id == 'profile'): ?>
                         <a href="<?php echo Yii::$app->homeUrl; ?>payment/print-purchase-order/<?php echo $orderIdParams; ?>/<?php echo $order->orderNo; ?>" class="btn btn-primary btn-xs" target="_blank">
                             <i class="fa fa-print" aria-hidden="true"></i> พิมพ์</a>
                         <!--<a href="<?php echo Yii::$app->homeUrl; ?>payment/print-pay-in/<?php echo $orderIdParams; ?>/<?php echo $order->orderNo; ?>" class="btn btn-primary btn-xs">
