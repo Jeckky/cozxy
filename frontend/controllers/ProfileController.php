@@ -334,7 +334,7 @@ class ProfileController extends MasterController {
         $model->type = \common\models\costfit\Address::TYPE_PICKINGPOINT; // default Address First
         $status_address = Yii::$app->controller->action->id;
 
-        $label = 'Save shipping  address';
+        $label = 'Save picking point';
         //$model->isDefault = 0;
         if (isset($_POST['Address'])) {
 
