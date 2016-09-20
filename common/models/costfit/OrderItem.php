@@ -35,6 +35,16 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster
     /**
      * @inheritdoc
      */
+    public function attributes()
+    {
+        return array_merge(parent::attributes(), [
+            'maxDate'
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), []);
@@ -48,6 +58,17 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster
     public function getShippingType()
     {
         return $this->hasOne(ShippingType::className(), ['shippingTypeId' => 'sendDate']);
+    }
+
+    public static function findSlowestDate($orderId)
+    {
+        $model = OrderItem::find()
+        ->select("MAX(st.date) as maxDate")
+        ->join("LEFT JOIN", 'shipping_type st', 'st.shippingTypeId = order_item.sendDate')
+        ->where('order_item.orderId=' . $orderId)
+        ->one();
+
+        return isset($model->maxDate) ? $model->maxDate : NULL;
     }
 
 }
