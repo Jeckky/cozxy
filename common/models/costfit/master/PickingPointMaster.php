@@ -9,7 +9,9 @@ use Yii;
 *
     * @property integer $pickingId
     * @property string $userId
+    * @property integer $pickingItemsId
     * @property string $title
+    * @property string $description
     * @property string $countryId
     * @property string $provinceId
     * @property string $amphurId
@@ -35,10 +37,10 @@ return 'picking_point';
 public function rules()
 {
 return [
-            [['userId', 'createDateTime'], 'required'],
-            [['userId', 'provinceId', 'amphurId', 'status', 'type', 'isDefault'], 'integer'],
+            [['pickingId', 'userId', 'pickingItemsId', 'createDateTime'], 'required'],
+            [['pickingId', 'userId', 'pickingItemsId', 'provinceId', 'amphurId', 'status', 'type', 'isDefault'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['title', 'countryId'], 'string', 'max' => 45],
+            [['title', 'description', 'countryId'], 'string', 'max' => 45],
         ];
 }
 
@@ -50,7 +52,9 @@ public function attributeLabels()
 return [
     'pickingId' => Yii::t('picking_point', 'Picking ID'),
     'userId' => Yii::t('picking_point', 'User ID'),
+    'pickingItemsId' => Yii::t('picking_point', 'Picking Items ID'),
     'title' => Yii::t('picking_point', 'Title'),
+    'description' => Yii::t('picking_point', 'Description'),
     'countryId' => Yii::t('picking_point', 'Country ID'),
     'provinceId' => Yii::t('picking_point', 'Province ID'),
     'amphurId' => Yii::t('picking_point', 'Amphur ID'),

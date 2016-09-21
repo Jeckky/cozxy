@@ -24,6 +24,8 @@ use \common\models\costfit\master\OrderItemMaster;
 class OrderItem extends \common\models\costfit\master\OrderItemMaster
 {
 
+    const DATE_GAP_TO_PICKING = 2;
+
     /**
      * @inheritdoc
      */

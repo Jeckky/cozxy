@@ -18,7 +18,7 @@ use Yii;
     * @property string $price
     * @property string $total
     * @property integer $sendDate
-    * @property string $senDateTime
+    * @property string $sendDateTime
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -45,7 +45,7 @@ return [
             [['orderId', 'productId', 'priceOnePiece', 'quantity', 'price', 'createDateTime'], 'required'],
             [['orderId', 'productId', 'productGroupId', 'brandId', 'categoryId', 'sendDate', 'status'], 'integer'],
             [['priceOnePiece', 'quantity', 'price', 'total'], 'number'],
-            [['senDateTime', 'createDateTime', 'updateDateTime'], 'safe'],
+            [['sendDateTime', 'createDateTime', 'updateDateTime'], 'safe'],
             [['orderId'], 'exist', 'skipOnError' => true, 'targetClass' => OrderMaster::className(), 'targetAttribute' => ['orderId' => 'orderId']],
             [['productId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductMaster::className(), 'targetAttribute' => ['productId' => 'productId']],
         ];
@@ -68,7 +68,7 @@ return [
     'price' => Yii::t('order_item', 'Price'),
     'total' => Yii::t('order_item', 'Total'),
     'sendDate' => Yii::t('order_item', 'Send Date'),
-    'senDateTime' => Yii::t('order_item', 'Sen Date Time'),
+    'sendDateTime' => Yii::t('order_item', 'Send Date Time'),
     'status' => Yii::t('order_item', 'Status'),
     'createDateTime' => Yii::t('order_item', 'Create Date Time'),
     'updateDateTime' => Yii::t('order_item', 'Update Date Time'),

@@ -85,6 +85,9 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/virtual"><span class="mm-text">Virtual</span></a>
                     </li>
                     <li>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/picking"><span class="mm-text">Picking</span></a>
+                    </li>
+                    <li>
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/store-product/arrange"><span class="mm-text">จัดเรียง</span></a>
                     </li>
                     <li>
