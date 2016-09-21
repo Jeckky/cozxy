@@ -73,4 +73,21 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster
         return isset($model->maxDate) ? $model->maxDate : NULL;
     }
 
+    public static function countPickingItemsArray($orderId)
+    {
+        $res = [];
+        $query = \common\models\costfit\OrderItem::find()
+        ->where("DATE(DATE_SUB(sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() and orderId=" . $orderId)
+        ->all();
+
+        $res['countItems'] = count($query);
+        $sumQuantity = 0;
+        foreach ($query as $item) {
+            $sumQuantity+=$item->quantity;
+        }
+        $res['sumQuantity'] = $sumQuantity;
+
+        return $res;
+    }
+
 }

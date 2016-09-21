@@ -27,7 +27,7 @@ class PickingController extends StoreMasterController
     {
         $query = \common\models\costfit\Order::find()
         ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-        ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE()");
+        ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Orders';
+$this->title = 'Picking List';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
@@ -38,15 +38,22 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     'class' => 'table-light'
                 ],
                 'columns' => [
+                    [
+                        'class' => 'yii\grid\CheckboxColumn',
+                        'checkboxOptions' => [
+                            'class' => 'input-lg'
+                        ]
+                    // you may configure additional properties here
+                    ],
                     ['class' => 'yii\grid\SerialColumn'],
                     'orderNo',
-                    'invoiceNo',
-                    [
-                        'attribute' => 'userId',
-                        'value' => function($model) {
-                            return isset($model->user) ? $model->user->firstname . " " . $model->user->lastname : NULL;
-                        }
-                    ],
+//                    'invoiceNo',
+//                    [
+//                        'attribute' => 'userId',
+//                        'value' => function($model) {
+//                            return isset($model->user) ? $model->user->firstname . " " . $model->user->lastname : NULL;
+//                        }
+//                    ],
 //                    'token:ntext',
                     // 'totalExVat',
                     // 'vat',
@@ -54,11 +61,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     // 'discount',
                     // 'grandTotal',
                     // 'shippingRate',
-                    'summary',
+//                    'summary',
                     [
                         'attribute' => 'countItem',
+                        'format' => 'html',
                         'value' => function($model) {
-                            return count($model->orderItems) . " รายการ";
+                            $countItemsArray = common\models\costfit\OrderItem::countPickingItemsArray($model->orderId);
+                            return $countItemsArray['countItems'] . " รายการ<br>" . $countItemsArray['sumQuantity'] . " ชิ้น";
                         }
                     ],
                     // 'sendDate',
@@ -83,52 +92,50 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     // 'checkStep',
                     // 'note:ntext',
 //                    'paymentDateTime',
-                    [
-                        'attribute' => 'paymentType',
-                        'value' => function($model) {
-                            return ($model->paymentType == 1) ? 'โอนผ่านธนาคาร' : 'จ่ายผ่านบัตรเครดิต';
-                        }
-                    ],
-                    [
-                        'attribute' => 'paymentDateTime',
-                        'value' => function($model) {
-                            return (isset($model->paymentDateTime) && !empty($model->paymentDateTime)) ? $this->context->dateThai($model->paymentDateTime, 2, true) : NULL;
-                        }
-                    ],
+//                    [
+//                        'attribute' => 'paymentType',
+//                        'value' => function($model) {
+//                            return ($model->paymentType == 1) ? 'โอนผ่านธนาคาร' : 'จ่ายผ่านบัตรเครดิต';
+//                        }
+//                    ],
+//                    [
+//                        'attribute' => 'paymentDateTime',
+//                        'value' => function($model) {
+//                            return (isset($model->paymentDateTime) && !empty($model->paymentDateTime)) ? $this->context->dateThai($model->paymentDateTime, 2, true) : NULL;
+//                        }
+//                    ],
 //                    'status',
-                    [
-                        'attribute' => 'status',
-                        'value' => function($model) {
-                            return $model->getStatusText($model->status);
-                        }
-                    ],
+//                    [
+//                        'attribute' => 'status',
+//                        'value' => function($model) {
+//                            return $model->getStatusText($model->status);
+//                        }
+//                    ],
                     // 'createDateTime',
-                    [
-                        'attribute' => 'updateDateTime',
-                        'value' => function($model) {
-                            return (isset($model->updateDateTime) && !empty($model->updateDateTime)) ? $this->context->dateThai($model->updateDateTime, 2, true) : NULL;
-                        }
-                    ],
+//                    [
+//                        'attribute' => 'updateDateTime',
+//                        'value' => function($model) {
+//                            return (isset($model->updateDateTime) && !empty($model->updateDateTime)) ? $this->context->dateThai($model->updateDateTime, 2, true) : NULL;
+//                        }
+//                    ],
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
-                        'template' => '{view}{history}',
+                        'template' => '{view}',
                         'buttons' => [
                             'view' => function($url, $model) {
-                                return Html::a('<i class="fa fa-eye" aria-hidden="true"></i>', Yii::$app->homeUrl . "order/order/view/" . $model->encodeParams(['id' => $model->orderId]), [
-                                            'title' => Yii::t('app', ' View Order No :' . $model->orderId),]);
+                                return Html::a('<i class="fa fa-eye" aria-hidden="true"></i>View', Yii::$app->homeUrl . "order/order/view/" . $model->encodeParams(['id' => $model->orderId]), [
+                                    'title' => Yii::t('app', ' View Order No :' . $model->orderId), 'class' => 'btn btn-info']);
                             },
-                                    'history' => function($url, $model) {
-                                $paymentHistory = \common\models\costfit\OrderPaymentHistory::find()->where("orderId=" . $model->orderId)->one();
-                                if (isset($paymentHistory)) {
-                                    return Html::a('<br><u>Payment History</u>', ['payment-history', 'orderId' => $model->orderId], [
-                                                'title' => Yii::t('app', 'history\'s lists'),]);
-                                }
+                            'pick' => function($url, $model) {
+                                return Html::a('<u><i class="fa fa-check" aria-hidden="true"></i>Pick</u>', ['payment-history', 'orderId' => $model->orderId], [
+                                    'title' => Yii::t('app', 'history\'s lists'), 'class' => 'btn btn-warning']);
                             },]
-                            ],
-                        ],
-                    ]);
-                    ?>
-                </div>
-            </div>
-            <?php Pjax::end(); ?>
+                    ],
+                ],
+            ]);
+            ?>
+            <?= Html::a("Pick", NULL, ['class' => 'btn btn-success btn-lg']) ?>
+        </div>
+    </div>
+    <?php Pjax::end(); ?>
 </div>
