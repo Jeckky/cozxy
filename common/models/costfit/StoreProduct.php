@@ -25,8 +25,7 @@ use \common\models\costfit\master\StoreProductMaster;
  * @property Store $store
  * @property StoreProductOrderItem[] $storeProductOrderItems
  */
-class StoreProduct extends \common\models\costfit\master\StoreProductMaster
-{
+class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
 
     const SHIPPING_FROM_TYPE_COSTFIT = 1;
     const SHIPPING_FROM_TYPE_SUPPLIER_TO_COSTFIT = 2;
@@ -39,16 +38,14 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
             'quantity' => 'จำนวน',
             'price' => 'ราคา',
@@ -59,8 +56,7 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster
         ]);
     }
 
-    public function findAllShippingFromTypeArray()
-    {
+    public function findAllShippingFromTypeArray() {
         return [
             self::SHIPPING_FROM_TYPE_COSTFIT => "ส่งจาก costfit",
             self::SHIPPING_FROM_TYPE_SUPPLIER_TO_COSTFIT => "รับจาก Supplier ส่งจาก costfit",
@@ -68,8 +64,7 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster
         ];
     }
 
-    public function getShippingFromTypeText($type)
-    {
+    public function getShippingFromTypeText($type) {
         $res = $this->findAllShippingTypeFromArray();
         if (isset($res[$type])) {
             return $res[$type];
@@ -78,8 +73,7 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster
         }
     }
 
-    public function findAllStatusArray()
-    {
+    public function findAllStatusArray() {
         return [
             self::STATUS_IMPORT => "นำข้อมูลเข้า",
             self::STATUS_QC => "ตรวจและนับแล้ว",
@@ -88,8 +82,7 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster
         ];
     }
 
-    public function getStatusText($status)
-    {
+    public function getStatusText($status) {
         $res = $this->findAllStatusArray();
         if (isset($res[$status])) {
             return $res[$status];
@@ -98,64 +91,100 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster
         }
     }
 
-    public function getStores()
-    {
+    public function getStores() {
 
         return $this->hasOne(Store::className(), ['storeId' => 'storeId']);
     }
 
-    public function getProducts()
-    {
+    public function getProducts() {
         return $this->hasOne(Product::className(), ['productId' => 'productId']);
     }
 
-    public static function arrangeProductToSlot($storeProductId, $slotId, $quantity)
-    {
+    public static function arrangeProductToSlot($storeProductId, $slotId, $quantity) {
         $model = StoreProductArrange::find()->where('storeProductId =' . $storeProductId . ' AND slotId=' . $slotId . "")->one();
         $storeProduct = StoreProduct::find()->where("storeProductId =" . $storeProductId)->one();
         $haveSomeQuan = FALSE;
-        if (!isset($model)) {
+        if (!isset($model)) {//ไม่เคยมีการเอาของมาจัดเรืยงก่อนหน้านี้
             $model = new StoreProductArrange();
             $model->storeProductId = $storeProductId;
             $model->slotId = $slotId;
             $model->productId = $storeProduct->productId;
-            $model->quantity = $quantity;
-        } else {
-            if (($model->quantity + $quantity) > $storeProduct->quantity) {
-                $pushQuan = $storeProduct->quantity - $model->quantity;
+            if ($quantity > $storeProduct->importQuantity) {//ของที่เอามาจัดเรียงมากกว่าของที่ตรวจรับ ?
+                $pushQuan = $storeProduct->importQuantity; //ของที่จัดเรียง = จำนวนที่นำมาจัดเรียง - จำนวนของที่ตรวจรับ
                 $haveSomeQuan = TRUE;
-                $someQuan = $quantity - $pushQuan;
+                $someQuan = $quantity - $pushQuan; //ส่วนเกิน = ยอดที่น้ำมาจัดเรียง - จำนวนที่จัดเรียง
                 $model->quantity = $pushQuan;
-            } else {
+                $model->status = 4;
+                $storeProduct->status = 4;
+                //throw new \yii\base\Exception($someQuan . "=" . $quantity . "-" . $pushQuan . "import==>" . $storeProduct->quantity);
+            } else if ($quantity < $storeProduct->importQuantity) {//ของที่น้ำมาจัดเรียง น้อยกว่าของที่ ตรวจรับ
                 $model->quantity = $quantity;
+                $model->status = 3; //set status เป็นจัดเรียงแล้วบ้างส่วน
+            } else {//ของที่น้ำมาจัดเรียง เท่ากับของที่ รับเข้า
+                $model->status = 4; //set status เป็นจัดเรียงแล้วทั้งหมด
+                $storeProduct->status = 4;
+                $model->quantity = $quantity;
+            }
+        } else {//มีของอยู่แล้ว เอามาใส่เพิ่ม
+            if (($model->quantity + $quantity) > $storeProduct->importQuantity) {//ของที่เอามาจัดเรียงเพิ่ม + ของที่มีอยู่แล้ว มากกว่า จำนวนที่รับเข้า ?
+                $pushQuan = $storeProduct->importQuantity - $model->quantity; //จำนวนที่จัดเรียง($pushQuan) = จำนวนรวมใน PO ทั้งหมด($storeProduct->importQuantity)  -  จำนวนที่มีอยู่แล้วใน slot นั้น ($model->quantity)
+                $haveSomeQuan = TRUE;
+                //$someQuan = $quantity - $pushQuan; //ส่วนเกิน จากที่ตรวจรับ
+                $someQuan = ($model->quantity + $quantity) - $storeProduct->importQuantity;
+                $model->quantity = $pushQuan;
+                $model->status = 3;
+            } else if (($model->quantity + $quantity) < $storeProduct->importQuantity) {//ของที่นำมาจัดเรียง + ของที่มีอยู่แล้ว น้อยกว่า จำนวนที่รับเข้า
+                $pushQuan = $model->quantity + $quantity; //จำนวนที่จัดเรียง = ของที่มีอยู่แล้ว + ของที่นำมาจัดเรียง
+                $model->quantity = $pushQuan;
+                $model->status = 3; //set status เป็น รับเข้าแล้วบางส่วน
+            } else { //ถ้าของที่น้ำมาจัดเรียง + ของที่มีอยู่แล้ว เท่ากับ จำนวนที่รับมา
+                $pushQuan = $model->quantity + $quantity; //จำนวนที่บันทึก เท่ากับ  ของที่มีอยู่แล้ว + ของที่เอามาจัดเรียง
+                $model->quantity = $pushQuan;
+                $model->status = 4;
+                $storeProduct->status = 4;
             }
         }
 
-        if ($haveSomeQuan) {
+        $storeProduct->createDateTime = new yii\db\Expression("NOW()"); //อัพเดท store Product เพื่อ บอกว่า ดึง Id นี้ มาจัดเรียงแล้ว
+        $storeProduct->save();
+        if ($haveSomeQuan) { // ถ้ามีของเหลือจากการจัดเรียง ($someQuan)
             //Change Status of store product  = to arrange แล้ว
             //$storeProduct->status = xx
-//            $storeProduct->save();
+            //$storeProduct->save();
             //Change Status of store product  = to arrange แล้ว
-            $someQuanNew = 0;
-            while ($someQuan > 0) {
-                $otherStoreProduct = StoreProduct::find()->where("productId =" . $storeProduct->productId)->orderBy("createDateTime ASC")->one();
+            //$someQuanNew = 0;
+            while ($someQuan > 0) { //ถ้าส่วนที่เกินจาก ที่รับเข้า ยังมากกว่า 0 ทำ
+                //throw new \yii\base\Exception($someQuan);
+                $otherStoreProduct = StoreProduct::find()->where("productId =" . $storeProduct->productId . " and status=3")->orderBy("createDateTime ASC")->one(); // หาจาก store_product ที่ productId จากตัวที่ เวลาสร้างน้อยสุด(ตรวจรบครบแล้วแแต่ยังไม่มีการดึงมาจัดเรียง)
                 $modelNew = new StoreProductArrange();
                 $modelNew->storeProductId = $storeProductId;
                 $modelNew->slotId = $slotId;
                 $modelNew->productId = $storeProduct->productId;
                 $modelNew->createDateTime = new yii\db\Expression("NOW()");
-                if (($someQuan) > $otherStoreProduct->quantity) {
-                    $pushQuanNew = $otherStoreProduct->quantity;
-                    $someQuan = $someQuan - $otherStoreProduct->quantity;
-                    $model->quantity = $pushQuanNew;
+                $modelNew->status = 99; //set status เป็นของเกิน
+                if (isset($otherStoreProduct)) {
+                    $someQuan = $someQuan - $otherStoreProduct->importQuantity; //
+                    $modelNew->quantity = $someQuan;
+                    if (($someQuan) > $otherStoreProduct->importQuantity) {//ถ้า ส่วนที่เกิน มากกว่า ส่วนที่ไปหามาใหม่
+                        $pushQuanNew = $otherStoreProduct->importQuantity;
+                        $someQuan = $someQuan - $otherStoreProduct->importQuantity;
+                        $model->quantity = $pushQuanNew;
+                        $otherStoreProduct->status = 4;
+                    } else {
+                        $model->quantity = $someQuan;
+                        $someQuan = $someQuan - $otherStoreProduct->importQuantity;
+                        $otherStoreProduct->status = 4;
+                    }
+                    $otherStoreProduct->createDateTime = new yii\db\Expression("NOW()");
+                    $otherStoreProduct->save();
                 } else {
-                    $model->quantity = $someQuan;
-                    $someQuan = $someQuan - $otherStoreProduct->quantity;
+                    $modelNew->quantity = $someQuan;
+                    $modelNew->save(false);
+                    break;
                 }
-                $modelNew->save();
+                $modelNew->save(false);
             }
         }
-
         $model->createDateTime = new yii\db\Expression("NOW()");
         $model->save();
     }

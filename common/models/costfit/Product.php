@@ -31,32 +31,34 @@ use \common\models\costfit\master\ProductMaster;
  * @property StoreProduct[] $storeProducts
  * @property StoreProductOrderItem[] $storeProductOrderItems
  */
-class Product extends \common\models\costfit\master\ProductMaster
-{
+class Product extends \common\models\costfit\master\ProductMaster {
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
-        return array_merge(parent::rules(), []);
+    public function rules() {
+        return array_merge(parent::rules(), [
+            [['storeProductId'], 'safe'],
+        ]);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function getProductOnePrice()
-    {
+    public function attributes() {
+        // add related fields to searchable attributes
+        return array_merge(parent::attributes(), ['storeProductId']);
+    }
+
+    public function getProductOnePrice() {
         return $this->hasOne(ProductPrice::className(), ['productId' => 'productId'])->andWhere('quantity = 1');
     }
 
-    public function calProductPrice($productId, $quantity, $returnArray = 0, $shippingStep = 1)
-    {
+    public function calProductPrice($productId, $quantity, $returnArray = 0, $shippingStep = 1) {
 
         $product = Product::find()->where("productId = $productId")->one();
         $productPrice = ProductPrice::find()->where("productId = $productId AND quantity = $quantity")->one();
@@ -124,8 +126,7 @@ class Product extends \common\models\costfit\master\ProductMaster
         }
     }
 
-    public static function findMaxQuantity($id, $checkInCart = 1)
-    {
+    public static function findMaxQuantity($id, $checkInCart = 1) {
 //        throw new \yii\base\Exception("productId =" . $id);
         $productPrice = ProductPrice::find()->select("MAX(quantity) as maxQuantity")->where("productId = $id")->one();
         if (isset($productPrice)) {
@@ -140,8 +141,7 @@ class Product extends \common\models\costfit\master\ProductMaster
         }
     }
 
-    public static function findQuantityInCart($id)
-    {
+    public static function findQuantityInCart($id) {
         $order = Order::findCartArray();
         $quantity = 0;
         foreach ($order["items"] as $item) {
@@ -154,62 +154,46 @@ class Product extends \common\models\costfit\master\ProductMaster
         return $quantity;
     }
 
-    public function getProductPrices()
-    {
+    public function getProductPrices() {
         return $this->hasMany(ProductPrice::className(), ['productId' => 'productId']);
     }
 
-    public function getBestSellProduct()
-    {
+    public function getBestSellProduct() {
         //return $this->hasMany(ProductPrice::className(), ['productId' => 'productId']);
     }
 
-    public function findOutProducts()
-    {
+    public function findOutProducts() {
         //return $this->hasMany(ProductPrice::className(), ['productId' => 'productId']);
     }
 
-    public function findOnSellProducts()
-    {
+    public function findOnSellProducts() {
         //return $this->hasMany(ProductPrice::className(), ['productId' => 'productId']);
     }
 
-    public function addProductShipping($id)
-    {
+    public function addProductShipping($id) {
         $date = ShippingType::find()->where("1")->orderBy("date ASC")->all();
-        $productShippingPrice = new ProductShippingPrice();
-        $productShippingPrice->productId = $id;
-        $productShippingPrice->shippingTypeId = $date[0]->shippingTypeId;
-        $productShippingPrice->date = $date[0]->date;
-        $productShippingPrice->discount = 0;
-        $productShippingPrice->type = 1;
-        $productShippingPrice->createDateTime = new \yii\db\Expression('NOW()');
-        $productShippingPrice->updateDateTime = new \yii\db\Expression('NOW()');
-        $productShippingPrice->save(false);
-        $productShippingPrice = new ProductShippingPrice();
-        $productShippingPrice->productId = $id;
-        $productShippingPrice->shippingTypeId = $date[1]->shippingTypeId;
-        $productShippingPrice->date = $date[1]->date;
-        $productShippingPrice->discount = 0;
-        $productShippingPrice->type = 1;
-        $productShippingPrice->createDateTime = new \yii\db\Expression('NOW()');
-        $productShippingPrice->updateDateTime = new \yii\db\Expression('NOW()');
-        $productShippingPrice->save(false);
-        //throw new \yii\base\Exception('adfasdf');
+        for ($i = 0; $i <= 1; $i++):
+            $productShippingPrice = new ProductShippingPrice();
+            $productShippingPrice->productId = $id;
+            $productShippingPrice->shippingTypeId = $date[$i]->shippingTypeId;
+            $productShippingPrice->date = $date[$i]->date;
+            $productShippingPrice->discount = 0;
+            $productShippingPrice->type = 1;
+            $productShippingPrice->createDateTime = new \yii\db\Expression('NOW()');
+            $productShippingPrice->updateDateTime = new \yii\db\Expression('NOW()');
+            $productShippingPrice->save(false);
+        endfor;
     }
 
-    public function getUnits()
-    {
+    public function getUnits() {
         return $this->hasOne(Unit::className(), ['unitId' => 'unit']);
     }
 
-    public function getImages()
-    {
+    public function getImages() {
         return $this->hasOne(ProductImage::className(), ['productId' => 'productId']);
     }
 
-    public static function getShippingTypeId($productId)
-    {
+    public static function getShippingTypeId($productId) {
         $fastDate = 99;
         $productShippingDates = ProductShippingPrice::find()->where("productId =" . $productId)->all();
         foreach ($productShippingDates as $productShippingDate) {
@@ -227,8 +211,7 @@ class Product extends \common\models\costfit\master\ProductMaster
         return $fastId;
     }
 
-    public static function getShippingDate($productId, $type)
-    {
+    public static function getShippingDate($productId, $type) {
         $fastDate = 99;
         $productShippingDates = ProductShippingPrice::find()->where("productId =" . $productId)->all();
         foreach ($productShippingDates as $productShippingDate) {
