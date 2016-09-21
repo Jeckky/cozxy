@@ -20,49 +20,40 @@ $districtId = rand(0, 9999);
 ?>
 
 <div class=" col-lg-12 col-md-12 col-sm-12">
-    <?php
-    // Top most parent
-    echo $form->field($address, 'provinceId')->widget(kartik\select2\Select2::classname(), [
-        //'options' => ['id' => 'address-countryid'],
-        'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'countryName'),
-        'pluginOptions' => [
-            'placeholder' => 'Select...',
-            'loadingText' => 'Loading country ...',
-        //'initialize' => true,
-        ],
-        'data' => ['THA' => 'ประเทศไทย'],
-        'options' => [
-            'placeholder' => 'Select country ...',
-            'id' => $countryId,
-        ],
-    ])->label('ประเทศ');
+    <?php /*
+      // Top most parent
+      echo $form->field($address, 'provinceId')->widget(kartik\select2\Select2::classname(), [
+      //'options' => ['id' => 'address-countryid'],
+      'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'countryName'),
+      'pluginOptions' => [
+      'placeholder' => 'Select...',
+      'loadingText' => 'Loading country ...',
+      //'initialize' => true,
+      ],
+      'data' => ['THA' => 'ประเทศไทย'],
+      'options' => [
+      'placeholder' => 'Select country ...',
+      'id' => $countryId,
+      ],
+      ])->label('ประเทศ'); */
     ?>
     <?php
-    echo Html::hiddenInput("countryDDId", $countryId, ['id' => "countryDDId"]);
+    //echo Html::hiddenInput("countryDDId", $countryId, ['id' => "countryDDId"]);
     ?>
 </div>
 
 <div class="form-group col-lg-6 col-md-6 col-sm-6">
     <?php
     // Child level 1
-    //echo Html::hiddenInput('model_id1', '2526', ['id' => 'model_id1']);
-    echo $form->field($address, 'provinceId')->widget(DepDrop::classname(), [
-        // 'data' => [2526 => 'จังหวัดปทุมธานี'], // ensure at least the preselected value is available
-        'options' => ['placeholder' => 'Select ...', 'id' => $stateId],
-        'type' => DepDrop::TYPE_SELECT2,
-        'select2Options' => ['pluginOptions' => ['allowClear' => true]],
-        //'pluginEvents' => [
-        //  'change' => 'function() { $("#' . $stateId . '").trigger("change"); }',
-        //],
+
+    echo $form->field($address, 'provinceId')->widget(kartik\select2\Select2::classname(), [
+        'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'stateName'),
         'pluginOptions' => [
-            'depends' => [$countryId],
-            'url' => Url::to(['child-states']),
-            'loadingText' => 'Loading province ...',
-            //'tags' => '2526',
-            'initialize' => true,
-        //'params' => ['model_id1']
-        ]
-    ])->label('จังหวัด');
+            'placeholder' => 'Select...',
+            'loadingText' => 'Loading states ...',
+        ],
+        'options' => ['placeholder' => 'Select states ...'],
+    ])->label('เลือกจังหวัด');
     ?>
     <?php
     echo Html::hiddenInput("statesDDId", $stateId, ['id' => "statesDDId"]);
@@ -72,25 +63,27 @@ $districtId = rand(0, 9999);
 <div class="form-group col-lg-6 col-md-6 col-sm-6">
     <?php
     // Child level 2
-    //echo Html::hiddenInput('model_id2', '79745', ['id' => 'model_id2']);
     echo $form->field($address, 'amphurId')->widget(DepDrop::classname(), [
-        //'data' => [79683 => 'เขตพระโขนง'], // ensure at least the preselected value is available
-        'options' => ['placeholder' => 'Select ...', 'id' => $cityId],
+        //'data' => [9 => 'Savings'],
+        'options' => ['placeholder' => 'Select ...'],
         'type' => DepDrop::TYPE_SELECT2,
         'select2Options' => ['pluginOptions' => ['allowClear' => true]],
         'pluginOptions' => [
-            'depends' => [$stateId],
-            'url' => Url::to(['child-amphur']),
-            'loadingText' => 'Loading amphur ...',
             'initialize' => true,
+            'depends' => ['address-provinceid'],
+            'url' => Url::to(['child-amphur-address']),
+            'loadingText' => 'Loading amphur ...',
+            'params' => ['input-type-11', 'input-type-22']
         ]
-    ])->label('เขต/อำเภอ');
+    ])->label('เลือกอำเภอ/เขต');
     ?>
     <?php
     echo Html::hiddenInput("amphurDDId", $cityId, ['id' => "amphurDDId"]);
     ?>
 </div>
 
-
+<div class="form-group col-lg-6 col-md-6 col-sm-6">
+    test's.. picking point items DepDrop
+</div>
 
 <?php ActiveForm::end(); ?>

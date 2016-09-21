@@ -66,6 +66,9 @@ return [
             'uploadUrl' => '@web/images',
             'imageAllowExtensions' => ['jpg', 'png', 'gif']
         ],
+        'picking' => [
+            'class' => 'backend\modules\picking\Picking',
+        ],
     ],
     'components' => [
         'user' => [
@@ -85,7 +88,7 @@ return [
             ],
         ],
         'errorHandler' => [
-//'errorAction' => 'site/error',
+            //'errorAction' => 'site/error',
             'errorAction' => 'error/error',
         ],
         'urlManager' => [

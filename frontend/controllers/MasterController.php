@@ -57,8 +57,12 @@ class MasterController extends MasterCommonController {
 
         // - SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
         if ((!Yii::$app->user->isGuest) && $this->id == "profile") {
-            $dataProvider_shipping = new \yii\data\ActiveDataProvider([
+            $dataProvider_shipping_bk = new \yii\data\ActiveDataProvider([
                 'query' => \common\models\costfit\Address::find()->where("userId ='" . Yii::$app->user->id . "' and type = 3 ")->orderBy('addressId DESC'),
+                'pagination' => false,
+            ]);
+            $dataProvider_picking_point = new \yii\data\ActiveDataProvider([
+                'query' => \common\models\costfit\PickingPoint::find()->where("userId ='" . Yii::$app->user->id . "' and type = 1 ")->orderBy('pickingId DESC'),
                 'pagination' => false,
             ]);
             // $this->view->params['cart']
@@ -68,7 +72,7 @@ class MasterController extends MasterCommonController {
                 'query' => \common\models\costfit\Address::find()->where("userId ='" . Yii::$app->user->id . "' and type = 1 ")->orderBy('addressId DESC'),
                 'pagination' => false,
             ]);
-            $this->view->params['listDataProvider']['shipping'] = $dataProvider_shipping;
+            $this->view->params['listDataProvider']['shipping'] = $dataProvider_picking_point;
             $this->view->params['listDataProvider']['billing'] = $dataProvider_billing;
         }
     }

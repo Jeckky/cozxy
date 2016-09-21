@@ -45,17 +45,15 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             <li>
                 <a href="<?php echo $baseUrl; ?>/dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
             </li>
+            <!-- <li class="mm-dropdown">
+                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูลหลัก</span><span class="label label-warning">Updated</span></a>
+                <ul>
+                    <li>
+                        <a tabindex="-1" href="#"><i class="fa fa-square"></i> <span class="mm-text">ตั้งค่า</span></a>
+                    </li>
 
-            <!--            <li class="mm-dropdown">
-                            <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูลหลัก</span><span class="label label-warning">Updated</span></a>
-                            <ul>
-                                <li>
-                                    <a tabindex="-1" href="#"><i class="fa fa-square"></i> <span class="mm-text">ตั้งค่า</span></a>
-                                </li>
-
-                            </ul>
-                        </li>-->
-
+                </ul>
+            </li>-->
             <li class="mm-dropdown">
                 <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูล User</span><span class="label label-warning">Updated</span></a>
                 <ul>
@@ -106,6 +104,14 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     <li>
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/led/led"><i class="fa fa-square"></i> <span class="mm-text">LED</span></a>
                     </li>
+                </ul>
+            </li>
+            <li class="mm-dropdown">
+                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Picking Points</span></a>
+                <ul>
+                    <li>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/picking/picking"><i class="fa fa-square"></i> <span class="mm-text">Picking</span></a>
+                    </li> 
                 </ul>
             </li>
             <li class="mm-dropdown">
