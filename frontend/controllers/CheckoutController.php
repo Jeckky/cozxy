@@ -295,6 +295,24 @@ class CheckoutController extends MasterController
                     $res["status"] = 1;
                     $res["invoiceNo"] = $order->invoiceNo;
                     $res["message"] = \common\models\costfit\EPayment::getReasonCodeText($_POST["reason_code"]);
+
+
+                    // Update Send Date field
+                    // ****รอ Confirm เรื่อง สั่งหลังกี่โมง เลื่อนไปอีก 1 วัน****
+                    if ($order->isSlowest) {
+                        $maxDate = \common\models\costfit\OrderItem::findSlowestDate($order->orderId);
+                        foreach ($order->orderItems as $item):
+                            $item->sendDateTime = date('Y-m-d', strtotime("+$maxDate day"));
+                            $item->save();
+                        endforeach;
+                    } else {
+                        foreach ($order->orderItems as $item):
+                            $date = \common\models\costfit\ShippingType::find()->where('shippingTypeId=' . $item->sendDate)->one();
+                            $item->sendDateTime = date('Y-m-d', strtotime("+$date->date day"));
+                            $item->save();
+                        endforeach;
+                    }
+                    // Update Send Date field
                 }
             } else if ($_REQUEST["decision"] == "REVIEW") {
                 $order->status = Order::ORDER_STATUS_E_PAYMENT_PENDING;

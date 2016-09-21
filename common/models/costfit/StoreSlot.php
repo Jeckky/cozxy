@@ -66,4 +66,25 @@ class StoreSlot extends \common\models\costfit\master\StoreSlotMaster
         }
     }
 
+    public function getCols()
+    {
+        return $this->hasMany(StoreSlot::className(), ['parentId' => 'storeSlotId'])->where(['level' => 2]);
+    }
+
+    public function getSlots()
+    {
+        return $this->hasMany(StoreSlot::className(), ['parentId' => 'storeSlotId'])->where(['level' => 3]);
+    }
+
+    public static function getSlotsFromRow($rowId)
+    {
+        return StoreSlot::find()
+        ->join("LEFT JOIN", 'store_slot col', 'col.storeSlotId=store_slot.parentId')
+        ->join("LEFT JOIN", 'store_slot row', 'row.storeSlotId=col.parentId')
+        ->where("row.storeSlotId=$rowId and store_slot.level =3")
+        ->orderBy("store_slot.code DESC")
+        ->groupBy("store_slot.code")
+        ->all();
+    }
+
 }

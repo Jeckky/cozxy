@@ -10,124 +10,90 @@
 </style>
 <div class="row">
     <?php
-    $s = 1;
-    for ($i = 1; $i <= 5; $i++) {
+    $i = 1;
+    foreach ($storeSlots as $row):
         ?>
-        <div class="col-sm-6">
+        <div class="col-sm-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <span class="panel-title">Row <?php echo $i; ?></span>
+                    <span class="panel-title">ROW :<?php echo $row->code; ?></span>
                 </div>
                 <div class="panel-body"  style="padding: 4px;">
                     <table class="table table-bordered">
                         <thead class="bg-dark-gray">
                             <tr>
                                 <th>#</th>
-                                <th>C1</th>
-                                <th>C2</th>
-                                <th>C3</th>
+                                <?php foreach ($row->cols as $col): ?>
+                                    <th><?= $col->code; ?></th>
+                                <?php endforeach; ?>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            $s = 1;
-                            for ($y = 0; $y < 3; $y++) {
+                            $slots = \common\models\costfit\StoreSlot::getSlotsFromRow($row->storeSlotId);
+                            $s = count($slots);
+                            foreach ($slots as $slot):
                                 ?>
                                 <tr>
-                                    <th scope="row" class="bg-dark-gray">S<?php echo $s; ?></th>
-                                    <td id="R<?php echo $i; ?>C<?php echo '1'; ?>S<?php echo $s; ?>">
-                                        <i id="R<?php echo $i; ?>C<?php echo '1'; ?>S<?php echo $s; ?>-1" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <i  id="R<?php echo $i; ?>C<?php echo '1'; ?>S<?php echo $s; ?>-2" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <i  id="R<?php echo $i; ?>C<?php echo '1'; ?>S<?php echo $s; ?>-3" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <i  id="R<?php echo $i; ?>C<?php echo '1'; ?>S<?php echo $s; ?>-4" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <i  id="R<?php echo $i; ?>C<?php echo '1'; ?>S<?php echo $s; ?>-5" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <a href="#" class="label label-tag">R<?php echo $i; ?>C<?php echo '1'; ?>S<?php echo $s; ?></a>
-                                    </td>
-                                    <td id="R<?php echo $i; ?>C<?php echo '2'; ?>S<?php echo $s; ?>">
-                                        <i id="R<?php echo $i; ?>C<?php echo '2'; ?>S<?php echo $s; ?>-1" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <i  id="R<?php echo $i; ?>C<?php echo '2'; ?>S<?php echo $s; ?>-2" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <i  id="R<?php echo $i; ?>C<?php echo '2'; ?>S<?php echo $s; ?>-3" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <i  id="R<?php echo $i; ?>C<?php echo '2'; ?>S<?php echo $s; ?>-4" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <i  id="R<?php echo $i; ?>C<?php echo '2'; ?>S<?php echo $s; ?>-5" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <a href="#" class="label label-tag">R<?php echo $i; ?>C<?php echo '2'; ?>S<?php echo $s; ?></a>
-                                    </td>
-                                    <td id="R<?php echo $i; ?>C<?php echo '3'; ?>S<?php echo $s; ?>">
-                                        <i  id="R<?php echo $i; ?>C<?php echo '3'; ?>S<?php echo $s; ?>-1" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <i  id="R<?php echo $i; ?>C<?php echo '3'; ?>S<?php echo $s; ?>-2"  class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <i  id="R<?php echo $i; ?>C<?php echo '3'; ?>S<?php echo $s; ?>-3"  class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <i  id="R<?php echo $i; ?>C<?php echo '3'; ?>S<?php echo $s; ?>-4"  class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <i  id="R<?php echo $i; ?>C<?php echo '3'; ?>S<?php echo $s; ?>-5"  class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <a href="#" class="label label-tag">R<?php echo $i; ?>C<?php echo '3'; ?>S<?php echo $s; ?></a>
-                                    </td>
+                                    <th scope="row" class="bg-dark-gray"><?php echo $slot->code; ?></th>
+                                    <?php
+                                    $c = 1;
+                                    foreach ($row->cols as $col):
+                                        if ($col->storeSlotId = $slot->parentId):
+                                            ?>
+                                            <td id="R<?php echo $i; ?>C<?php echo $c; ?>S<?php echo $s; ?>">
+                                                <?php
+                                                $led = common\models\costfit\Led::find()->where("slot ='" . $row->code . $col->code . $slot->code . "'")->one();
+                                                $li = 1;
+                                                $tagId = "R" . $i . "C" . $c . "S" . $s . "-" . $li;
+                                                if (isset($led)):
+                                                    $this->registerJs("
+                                                        setTimeout(function(){
+                                                            pingHardware('" . $led->ip . "','" . $tagId . "','" . Yii::$app->homeUrl . "store/virtual/ping-hardware" . "')
+                                                    }, 3000);")
+                                                    ?>
+                                                    <?php
+                                                    foreach ($led->ledItems as $ledItem):
+                                                        ?>
+                                                        <i id="<?= $tagId ?>" class="<?= ($ledItem->status == 1) ? "fa fa-circle" : "fa fa-circle-o" ?> <?= $ledItem->getColorText($ledItem->color) ?>" style="zoom: 2;"></i>
+                                                        <?php
+                                                        $li++;
+                                                    endforeach;
+                                                    ?>
+                                                    <a href="#" class="label label-tag <?= $tagId ?>">LED : <?= $led->code ?></a>
+                                                    <a href="<?= Yii::$app->homeUrl . "store/virtual/remove-led-from-slot?id=" . $led->ledId ?>" class="btn btn-danger btn-xs" title="Remove LED from Slot" onclick="return confirm('คุณต้องการนำ LED <?= $led->code; ?> ออกจาก Slot')"><i class="glyphicon glyphicon-minus"></i></a>
+                                                <?php else: ?>
+                                                    NOT Set LED
+                                                    <!--<a href="#" class="label label-tag">LED : NOT SET</a>-->
+                                                    <a href="#" onclick="showLedList('R<?php echo $i; ?>C<?php echo $c; ?>S<?php echo $s . "','" . Yii::$app->homeUrl . "store/virtual/select-led" ?>')" class="btn btn-success btn-xs" title="Add LED to Slot"><i class="fa fa-plus"></i></a>
+                                                <?php
+                                                endif;
+                                                ?>
+                                                <span class="pull-right help-block">SLOT : R<?php echo $i; ?>C<?php echo $c; ?>S<?php echo $s; ?></span>
+                                            </td>
+                                            <?php
+                                        endif;
+                                        $c++;
+                                    endforeach;
+                                    ?>
                                 </tr>
                                 <?php
-                                $s = ++$s;
-                            }
+                                $s--;
+                            endforeach;
                             ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="panel">
-                <div class="panel-heading">
-                    <span class="panel-title">Row <?php echo $i; ?></span>
-                </div>
-                <div class="panel-body" style="padding: 4px;">
-                    <table class="table table-bordered">
-                        <thead class="bg-dark-gray">
-                            <tr>
-                                <th>#</th>
-                                <th>C4</th>
-                                <th>C5</th>
-                                <th>C6</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $s1 = 1;
-                            for ($x = 0; $x < 3; $x++) {
-                                ?>
-                                <tr>
-                                    <th scope="row" class="bg-dark-gray">S<?php echo $s1; ?></th>
-                                    <td id="R<?php echo $i; ?>C<?php echo '4'; ?>S<?php echo $s1; ?>">
-                                        <i id="R<?php echo $i; ?>C<?php echo '4'; ?>S<?php echo $s1; ?>-1" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <i id="R<?php echo $i; ?>C<?php echo '4'; ?>S<?php echo $s1; ?>-2" class="fa fa-circle-o text-default"  style="zoom: 2;"></i>
-                                        <i id="R<?php echo $i; ?>C<?php echo '4'; ?>S<?php echo $s1; ?>-3" class="fa fa-circle-o text-default"  style="zoom: 2;"></i>
-                                        <i id="R<?php echo $i; ?>C<?php echo '4'; ?>S<?php echo $s1; ?>-4" class="fa fa-circle-o text-default"  style="zoom: 2;"></i>
-                                        <i id="R<?php echo $i; ?>C<?php echo '4'; ?>S<?php echo $s1; ?>-5" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <a href="#" class="label label-tag">R<?php echo $i; ?>C<?php echo '4'; ?>S<?php echo $s1; ?></a>
-                                    </td>
-                                    <td id="R<?php echo $i; ?>C<?php echo '5'; ?>S<?php echo $s1; ?>">
-                                        <i id="R<?php echo $i; ?>C<?php echo '5'; ?>S<?php echo $s1; ?>-1" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <i id="R<?php echo $i; ?>C<?php echo '5'; ?>S<?php echo $s1; ?>-2"class="fa fa-circle-o text-default"  style="zoom: 2;"></i>
-                                        <i id="R<?php echo $i; ?>C<?php echo '5'; ?>S<?php echo $s1; ?>-3"class="fa fa-circle-o text-default"  style="zoom: 2;"></i>
-                                        <i id="R<?php echo $i; ?>C<?php echo '5'; ?>S<?php echo $s1; ?>-4"class="fa fa-circle-o text-default"  style="zoom: 2;"></i>
-                                        <i id="R<?php echo $i; ?>C<?php echo '5'; ?>S<?php echo $s1; ?>-5"class="fa fa-circle-o text-default"  style="zoom: 2;"></i>
-                                        <a href="#" class="label label-tag">R<?php echo $i; ?>C<?php echo '5'; ?>S<?php echo $s1; ?></a>
-                                    </td>
-                                    <td id="R<?php echo $i; ?>C<?php echo '6'; ?>S<?php echo $s1; ?>">
-                                        <i  id="R<?php echo $i; ?>C<?php echo '6'; ?>S<?php echo $s1; ?>-1" class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <i  id="R<?php echo $i; ?>C<?php echo '6'; ?>S<?php echo $s1; ?>-2"  class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <i  id="R<?php echo $i; ?>C<?php echo '6'; ?>S<?php echo $s1; ?>-3"  class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <i  id="R<?php echo $i; ?>C<?php echo '6'; ?>S<?php echo $s1; ?>-4"  class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <i  id="R<?php echo $i; ?>C<?php echo '6'; ?>S<?php echo $s1; ?>-5"  class="fa fa-circle-o text-default" style="zoom: 2;"></i>
-                                        <a href="#" class="label label-tag">R<?php echo $i; ?>C<?php echo '6'; ?>S<?php echo $s1; ?></a>
-                                    </td>
-                                </tr>
-                                <?php
-                                $s1 = ++$s1;
-                            }
-                            ?>
+
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
         <?php
-    }
+        $i++;
+    endforeach;
     ?>
+    <div class="divModal">
+
+    </div>
 </div>
 
 <div id="cand">

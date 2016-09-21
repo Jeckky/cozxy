@@ -56,6 +56,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     //'ledId',
+                    [
+                        'attribute' => 'qr',
+                        'format' => 'html',
+                        'value' => function($model) {
+                            return Html::img("https://chart.googleapis.com/chart?chs=450x450&cht=qr&chl=" . $model->code, ['style' => 'width:150px']);
+                        }
+                    ],
                     'code',
                     'ip',
                     'slot',
@@ -80,11 +87,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return Html::a('<span class="btn btn-xs btn-danger" style="margin-left: 5px;
             " >Delete</span>', 'led/delete?id=' . $model->ledId, ['data-confirm' => 'Are you sure?']);
                             },
-                                ],
-                            ],
                         ],
-                    ]);
-                    ?>
+                    ],
+                ],
+            ]);
+            ?>
         </div>
     </div>
 </div>

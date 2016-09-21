@@ -252,7 +252,7 @@ class ProfileController extends MasterController {
 
         $orderId = Yii::$app->request->get('OrderNo');
         $this->layout = "/content_profile";
-        $this->title = 'Cost.fit | Order Purchase ';
+        $this->title = 'Cost.fit | Order Purchase';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Order Purchase";
 
@@ -260,7 +260,8 @@ class ProfileController extends MasterController {
         if (isset($params['orderId'])) {
             $order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . $params['orderId'] . '" ')
                     ->one();
-
+            //echo '<pre>';
+            //print_r($order);
             return $this->render('@app/views/profile/purchase_order', compact('order'));
         } else {
             return $this->redirect(['profile/order']);
@@ -305,6 +306,52 @@ class ProfileController extends MasterController {
         $this->subTitle = 'tracking';
         $this->subSubTitle = 'Delivery';
         return $this->render('@app/views/history/history');
+    }
+
+    public function actionPickingPoint($hash) {
+
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
+
+        $k = base64_decode(base64_decode($hash));
+        $params = \common\models\ModelMaster::decodeParams($hash);
+        $addressId = $params['addressId'];
+
+        $this->layout = "/content_profile";
+        $this->title = 'Cost.fit | Default Shipping Assdress';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = "Default Shipping Assdress";
+
+        if ($hash != 'add') {
+            $model = \common\models\costfit\Address::find()->where("addressId ='" . $addressId . "'")->one();
+            $model->scenario = 'shipping_address';
+            $action = 'edit';
+        } else {
+            $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
+            $action = 'add';
+        }
+
+        $model->type = \common\models\costfit\Address::TYPE_PICKINGPOINT; // default Address First
+        $status_address = Yii::$app->controller->action->id;
+
+        $label = 'Save picking point';
+        //$model->isDefault = 0;
+        if (isset($_POST['Address'])) {
+
+            $model->attributes = $_POST['Address'];
+            //echo $_POST["Address"]['isDefault'];
+            if ($_POST["Address"]['isDefault']) {
+                \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_PICKINGPOINT]);
+                $model->isDefault = 1;
+            }
+            $model->userId = Yii::$app->user->id;
+            $model->createDateTime = new \yii\db\Expression("NOW()");
+            if ($model->save(FALSE)) {
+                $this->redirect(Yii::$app->homeUrl . 'profile');
+            }
+        }
+        return $this->render('@app/views/profile/picking_point', ['model' => $model, 'label' => $label, 'action' => $action]);
     }
 
 }
