@@ -8,12 +8,17 @@ use \common\models\costfit\master\PickingPointMaster;
 /**
  * This is the model class for table "picking_point".
  *
+
  * @property string $pickingId
+
  * @property string $title
  * @property string $countryId
  * @property string $provinceId
  * @property string $amphurId
  * @property integer $status
+
+ * @property integer $type
+
  * @property integer $isDefault
  * @property string $createDateTime
  * @property string $updateDateTime
@@ -28,7 +33,7 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
 
     public function rules() {
         return array_merge(parent::rules(), [
-            [ [ 'provinceId', 'amphurId', 'type', 'isDefault']
+            [['provinceId', 'amphurId', 'type', 'isDefault']
                 , 'required', 'on' => 'picking_point'],
         ]);
     }

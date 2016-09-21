@@ -24,12 +24,24 @@ use \common\models\costfit\master\OrderItemMaster;
 class OrderItem extends \common\models\costfit\master\OrderItemMaster
 {
 
+    const DATE_GAP_TO_PICKING = 2;
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return array_merge(parent::rules(), []);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributes()
+    {
+        return array_merge(parent::attributes(), [
+            'maxDate'
+        ]);
     }
 
     /**
@@ -48,6 +60,34 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster
     public function getShippingType()
     {
         return $this->hasOne(ShippingType::className(), ['shippingTypeId' => 'sendDate']);
+    }
+
+    public static function findSlowestDate($orderId)
+    {
+        $model = OrderItem::find()
+        ->select("MAX(st.date) as maxDate")
+        ->join("LEFT JOIN", 'shipping_type st', 'st.shippingTypeId = order_item.sendDate')
+        ->where('order_item.orderId=' . $orderId)
+        ->one();
+
+        return isset($model->maxDate) ? $model->maxDate : NULL;
+    }
+
+    public static function countPickingItemsArray($orderId)
+    {
+        $res = [];
+        $query = \common\models\costfit\OrderItem::find()
+        ->where("DATE(DATE_SUB(sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() and orderId=" . $orderId)
+        ->all();
+
+        $res['countItems'] = count($query);
+        $sumQuantity = 0;
+        foreach ($query as $item) {
+            $sumQuantity+=$item->quantity;
+        }
+        $res['sumQuantity'] = $sumQuantity;
+
+        return $res;
     }
 
 }

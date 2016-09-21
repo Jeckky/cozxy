@@ -1,13 +1,13 @@
 <?php
 $form = yii\bootstrap\ActiveForm::begin([
-    'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
-    'fieldConfig' => [
-        'template' => '{label}<div class="col-sm-9">{input}</div>',
-        'labelOptions' => [
-            'class' => 'col-sm-3 control-label'
-        ]
-    ]
-]);
+            'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+            'fieldConfig' => [
+                'template' => '{label}<div class="col-sm-9">{input}</div>',
+                'labelOptions' => [
+                    'class' => 'col-sm-3 control-label'
+                ]
+            ]
+        ]);
 ?>
 
 <div class="panel-heading">
@@ -21,7 +21,7 @@ $form = yii\bootstrap\ActiveForm::begin([
         <tbody>
             <tr>
                 <th>Barcode : </th>
-                <td><?= \yii\helpers\Html::textInput('StoreProduct[isbn]', NULL, ['class' => 'input-lg', 'autofocus' => 'autofocus']); ?></td>
+                <td><?= \yii\helpers\Html::textInput('StoreProduct[isbn]', NULL, ['class' => 'input-lg', 'autofocus' => 'autofocus']); ?><?= isset($ms) ? ' <code> ' . $ms . '</code>' : '' ?></td>
             </tr>
 <!--            <tr>
                 <th>Quantity : </th>

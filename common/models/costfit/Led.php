@@ -30,6 +30,16 @@ class Led extends \common\models\costfit\master\LedMaster
     /**
      * @inheritdoc
      */
+    public function attributes()
+    {
+        return array_merge(parent::attributes(), [
+            'start', 'end'
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [
