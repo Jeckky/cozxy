@@ -22,7 +22,7 @@ class PickingPointItemsController extends PickingMasterController {
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                //'delete' => ['POST'],
                 ],
             ],
         ];
@@ -33,8 +33,9 @@ class PickingPointItemsController extends PickingMasterController {
      * @return mixed
      */
     public function actionIndex() {
+
         $dataProvider = new ActiveDataProvider([
-            'query' => PickingPointItems::find(),
+            'query' => PickingPointItems::find()->where("pickingId = " . Yii::$app->request->get('pickingId')),
         ]);
 
         return $this->render('index', [
@@ -61,13 +62,29 @@ class PickingPointItemsController extends PickingMasterController {
     public function actionCreate() {
         $model = new PickingPointItems();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->pickingItemsId]);
-        } else {
-            return $this->render('create', [
-                        'model' => $model,
-            ]);
+        /*
+          if ($model->load(Yii::$app->request->post()) && $model->save()) {
+          return $this->redirect(['view', 'id' => $model->pickingItemsId]);
+          } else {
+          return $this->render('create', [
+          'model' => $model,
+          ]);
+          } */
+        if (isset($_GET['pickingId'])) {
+            $model->pickingId = Yii::$app->request->get('pickingId');
         }
+        if (isset($_POST["PickingPointItems"])) {
+            $model->attributes = $_POST["PickingPointItems"];
+            $model->pickingId = $model->pickingId;
+            $model->createDateTime = new \yii\db\Expression('NOW()');
+            if ($model->save(FALSE)) {
+                //return $this->redirect(['index']);
+                return $this->redirect(['view', 'id' => $model->pickingItemsId]);
+            }
+        }
+        return $this->render('create', [
+                    'model' => $model,
+        ]);
     }
 
     /**
@@ -95,9 +112,11 @@ class PickingPointItemsController extends PickingMasterController {
      * @return mixed
      */
     public function actionDelete($id) {
+
+        $pickingId = Yii::$app->request->get('pickingId');
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index?pickingId=' . $pickingId]);
     }
 
     /**

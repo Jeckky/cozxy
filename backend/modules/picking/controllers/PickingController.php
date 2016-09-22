@@ -60,14 +60,26 @@ class PickingController extends PickingMasterController {
      */
     public function actionCreate() {
         $model = new PickingPoint();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->pickingId]);
-        } else {
-            return $this->render('create', [
-                        'model' => $model,
-            ]);
+        /*
+          if ($model->load(Yii::$app->request->post()) && $model->save()) {
+          // return $this->redirect(['view', 'id' => $model->pickingId]);
+          } else {
+          return $this->render('create', [
+          'model' => $model,
+          ]);
+          //echo 'test 2';
+          } */
+        if (isset($_POST["PickingPoint"])) {
+            $model->attributes = $_POST["PickingPoint"];
+            $model->createDateTime = new \yii\db\Expression('NOW()');
+            if ($model->save(FALSE)) {
+                //return $this->redirect(['index']);
+                return $this->redirect(['view', 'id' => $model->pickingId]);
+            }
         }
+        return $this->render('create', [
+                    'model' => $model,
+        ]);
     }
 
     /**

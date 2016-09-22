@@ -9,6 +9,7 @@ use Yii;
 *
     * @property string $orderId
     * @property string $userId
+    * @property string $pickingId
     * @property string $token
     * @property string $orderNo
     * @property string $invoiceNo
@@ -73,7 +74,7 @@ return 'order';
 public function rules()
 {
 return [
-            [['userId', 'billingProvinceId', 'billingAmphurId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'couponId', 'checkStep', 'isSlowest', 'status'], 'integer'],
+            [['userId', 'pickingId', 'billingProvinceId', 'billingAmphurId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'couponId', 'checkStep', 'isSlowest', 'status'], 'integer'],
             [['token', 'billingAddress', 'shippingAddress', 'note'], 'string'],
             [['totalExVat', 'vat', 'total', 'discount', 'grandTotal', 'shippingRate', 'summary'], 'number'],
             [['sendDate', 'paymentDateTime', 'createDateTime', 'updateDateTime'], 'safe'],
@@ -95,6 +96,7 @@ public function attributeLabels()
 return [
     'orderId' => Yii::t('order', 'Order ID'),
     'userId' => Yii::t('order', 'User ID'),
+    'pickingId' => Yii::t('order', 'Picking ID'),
     'token' => Yii::t('order', 'Token'),
     'orderNo' => Yii::t('order', 'Order No'),
     'invoiceNo' => Yii::t('order', 'Invoice No'),

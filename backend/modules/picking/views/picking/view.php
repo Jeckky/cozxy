@@ -16,21 +16,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->pickingId], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->pickingId], [
+        <?=
+        Html::a('Delete', ['delete', 'id' => $model->pickingId], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ])
+        ?>
+        <?= Html::a('Back', ['index', 'pickingId' => $model->pickingId], ['class' => 'btn btn-warning']) ?>
     </p>
 
-    <?= DetailView::widget([
+    <?=
+    DetailView::widget([
         'model' => $model,
         'attributes' => [
             'pickingId',
-            'userId',
-            'pickingItemsId',
             'title',
             'description',
             'countryId',
@@ -38,10 +40,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'amphurId',
             'status',
             'type',
-            'isDefault',
             'createDateTime',
             'updateDateTime',
         ],
-    ]) ?>
+    ])
+    ?>
 
 </div>

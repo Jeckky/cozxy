@@ -95,8 +95,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 'options' => ['class' => 'space-bottom'],
     ]);
 
-    // Top most parent
-
+    // Top most parent 
     echo $form->field($model, 'provinceId')->widget(kartik\select2\Select2::classname(), [
         'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'stateName'),
         'pluginOptions' => [
@@ -140,7 +139,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <?php echo $form->field($model, 'isDefault')->radioList([1 => 'Yes', 0 => 'No'], ['itemOptions' => ['class' => 'radio']])->label('Default address') ?>
     <?php
     //($model->isDefault = '1') ? 1 : 0;
-    ?> 
+    ?>
     <?php echo Html::submitButton(($label != '') ? $label : '', ['class' => 'btn btn-primary', 'name' => 'btn-shipping-address']) ?>
     <?php ActiveForm::end(); ?>
 </div>

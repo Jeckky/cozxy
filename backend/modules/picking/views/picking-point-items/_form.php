@@ -9,15 +9,29 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="picking-point-items-form">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-6"><h4><?= $this->title ?></h4></div>
+                <div class="col-md-6">
+                    <div class="btn-group pull-right">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <?php $form = ActiveForm::begin(); ?>
 
-    <?php $form = ActiveForm::begin(); ?> 
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            <div class="form-group">
+                <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                <?= Html::a('Back', ['index', 'pickingId' => $model->pickingId], ['class' => 'btn btn-warning']) ?>
+            </div>
 
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <?php ActiveForm::end(); ?>
+
+        </div>
+
     </div>
-
-    <?php ActiveForm::end(); ?>
-
 </div>

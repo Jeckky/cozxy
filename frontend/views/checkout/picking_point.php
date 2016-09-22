@@ -2,9 +2,11 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
+use yii\grid\GridView;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use kartik\select2\Select2;
 use kartik\depdrop\DepDrop;
 
 $form = ActiveForm::begin([
@@ -44,7 +46,7 @@ $districtId = rand(0, 9999);
 
 <div class="form-group col-lg-6 col-md-6 col-sm-6">
     <?php
-    // Child level 1
+// Child level 1
 
     echo $form->field($address, 'provinceId')->widget(kartik\select2\Select2::classname(), [
         'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'stateName'),
