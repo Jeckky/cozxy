@@ -17,13 +17,13 @@ use common\models\costfit\Region;
 
     <?php
     $form = ActiveForm::begin([
-        'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
-        'fieldConfig' => [
-            'template' => '{label}<div class="col-sm-9">{input}</div>',
-            'labelOptions' => [
-                'class' => 'col-sm-3 control-label'
-            ]
-        ]
+                'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+                'fieldConfig' => [
+                    'template' => '{label}<div class="col-sm-9">{input}</div>',
+                    'labelOptions' => [
+                        'class' => 'col-sm-3 control-label'
+                    ]
+                ]
     ]);
     ?>
 
@@ -38,14 +38,14 @@ use common\models\costfit\Region;
 
         <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
 
-<?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
+        <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
 
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
-<?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>
         </div>
     </div>
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
 
 </div>

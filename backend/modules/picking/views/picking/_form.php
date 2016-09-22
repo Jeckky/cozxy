@@ -40,7 +40,7 @@ use kartik\widgets\Select2;
 
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'description')->textInput(['maxlength' => true])->widget(\yii\redactor\widgets\Redactor::className()) ?>
 
             <?//= $form->field($model, 'countryId')->textInput(['maxlength' => true]) ?>
             <?php

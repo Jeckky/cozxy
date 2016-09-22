@@ -45,11 +45,11 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function getCities() {
+    public function getCitie() {
         return $this->hasOne(\common\models\dbworld\Cities::className(), ['cityId' => 'amphurId']);
     }
 
-    public function getCountries() {
+    public function getCountrie() {
         return $this->hasOne(\common\models\dbworld\Countries::className(), ['countryId' => 'countryId']);
     }
 
@@ -57,7 +57,7 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
         return $this->hasOne(\common\models\dbworld\District::className(), ['districtId' => 'districtId']);
     }
 
-    public function getStates() {
+    public function getState() {
         return $this->hasOne(\common\models\dbworld\States::className(), ['stateId' => 'provinceId']);
     }
 

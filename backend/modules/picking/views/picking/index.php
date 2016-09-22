@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => 'Country',
                     'format' => 'html',
                     'value' => function($model, $key, $index, $column) {
-                        return 'ประเทศ' . $model->countries->localName;
+                        return isset($model->countrie) ? 'ประเทศ' . $model->countrie->localName : NULL;
                     }
                 ],
                 //'provinceId',
@@ -48,7 +48,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => 'Province',
                     'format' => 'html',
                     'value' => function($model, $key, $index, $column) {
-                        return $model->states->localName;
+                        //return $model->state->localName;
+                        return isset($model->state) ? 'ประเทศ' . $model->state->localName : NULL;
                     }
                 ],
                 //'amphurId',
@@ -56,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => 'Amphur',
                     'format' => 'html',
                     'value' => function($model, $key, $index, $column) {
-                        return $model->cities->localName;
+                        return isset($model->citie) ? $model->citie->localName : NULL;
                     }
                 ],
                 // 'status',
