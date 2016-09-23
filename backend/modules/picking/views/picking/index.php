@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format' => 'html',
                     'value' => function($model, $key, $index, $column) {
                         //return $model->state->localName;
-                        return isset($model->state) ? 'ประเทศ' . $model->state->localName : NULL;
+                        return isset($model->state) ? $model->state->localName : NULL;
                     }
                 ],
                 //'amphurId',

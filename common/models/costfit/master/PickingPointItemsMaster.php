@@ -9,6 +9,7 @@ use Yii;
 *
     * @property string $pickingItemsId
     * @property string $pickingId
+    * @property string $code
     * @property string $name
     * @property string $status
     * @property string $createDateTime
@@ -30,10 +31,10 @@ return 'picking_point_items';
 public function rules()
 {
 return [
-            [['pickingItemsId', 'pickingId', 'name'], 'required'],
-            [['pickingItemsId', 'pickingId'], 'integer'],
+            [['pickingId', 'code', 'name'], 'required'],
+            [['pickingId'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['name', 'status'], 'string', 'max' => 45],
+            [['code', 'name', 'status'], 'string', 'max' => 45],
         ];
 }
 
@@ -45,6 +46,7 @@ public function attributeLabels()
 return [
     'pickingItemsId' => Yii::t('picking_point_items', 'Picking Items ID'),
     'pickingId' => Yii::t('picking_point_items', 'Picking ID'),
+    'code' => Yii::t('picking_point_items', 'Code'),
     'name' => Yii::t('picking_point_items', 'Name'),
     'status' => Yii::t('picking_point_items', 'Status'),
     'createDateTime' => Yii::t('picking_point_items', 'Create Date Time'),

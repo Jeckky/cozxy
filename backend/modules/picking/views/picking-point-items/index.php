@@ -33,8 +33,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProvider,
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
-                'pickingItemsId',
-                'pickingId',
+                //'pickingItemsId',
+                //'pickingId',
+                'code',
                 'name',
                 ['class' => 'yii\grid\ActionColumn',
                     'header' => 'Actions',

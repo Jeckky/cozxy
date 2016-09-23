@@ -35,7 +35,7 @@ return 'picking_point';
 public function rules()
 {
 return [
-            [['title', 'code', 'description', 'createDateTime'], 'required'],
+            [['title', 'code', 'description', 'provinceId', 'amphurId', 'createDateTime'], 'required'],
             [['provinceId', 'amphurId', 'status', 'type'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title', 'description', 'countryId'], 'string', 'max' => 45],

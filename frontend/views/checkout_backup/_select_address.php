@@ -70,7 +70,6 @@ use kartik\depdrop\DepDrop;
                                             </div>
                                         </a>
                                     </div>
-
                                 </div>
                             </div>
                             <?php

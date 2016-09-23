@@ -70,6 +70,7 @@ class PickingController extends PickingMasterController {
           //echo 'test 2';
           } */
         if (isset($_POST["PickingPoint"])) {
+
             $model->attributes = $_POST["PickingPoint"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save(FALSE)) {
