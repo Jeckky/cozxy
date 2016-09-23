@@ -83,12 +83,12 @@ class Product extends ProductModel
 
     public static function bestSellers()
     {
-        return \common\models\costfit\search\Product::find()->where("RAND()")->all();
+        return \common\models\costfit\search\Product::find()->where("RAND()")->limit(6)->all();
     }
 
     public static function itemOnSales()
     {
-        return \common\models\costfit\search\Product::find()->where("RAND()")->all();
+        return \common\models\costfit\search\Product::find()->where("RAND()")->limit(6)->all();
     }
 
     public static function hotProducts()
