@@ -18,10 +18,17 @@ $this->params['pageHeader'] = Html::encode($this->title);
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="row">
-            <div class="col-md-6"><?= $this->title ?></div>
-            <div class="col-md-6">
-                <div class="btn-group pull-right">
+            <div class="col-md-7"><?= $this->title ?></div>
+            <div class="col-md-5">
+                <div class="btn-group">
                     Led Color : <input type="text" style="background-color: <?= $color ?>;" disabled="true"/>
+                </div>
+                <div class="btn-group pull-right">
+                    <?=
+                    Html::a('<i class="fa fa-print" aria-hidden="true"></i> Print Order', ['print-order',
+                        'order' => $allOrderId
+                            ], ['class' => 'btn btn-sm btn-success']);
+                    ?>
                 </div>
             </div>
         </div>
@@ -57,7 +64,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 if ($slot == 'a') {
                     echo 'ไม่มีข้อมูล';
                 } else {
-                    echo $allSlot->getSlotName($slot);
+                    echo "<font color='$color'><b>" . $allSlot->getSlotName($slot) . '</b></font>';
                 }
                 ?></h4>
             <table class="table table-condensed" style="text-align: center;">

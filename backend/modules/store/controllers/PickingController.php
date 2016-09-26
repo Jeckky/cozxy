@@ -11,6 +11,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use common\models\costfit\StorePicking;
+use kartik\mpdf\Pdf;
 
 class PickingController extends StoreMasterController {
 
@@ -244,6 +245,10 @@ class PickingController extends StoreMasterController {
     public function actionView() {
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         return $this->render('view');
+    }
+
+    public function actionPrintOrder($order) {
+
     }
 
     static function checkQuantity($allOrder) {//allslots are barcodd
