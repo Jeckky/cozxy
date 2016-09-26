@@ -93,9 +93,7 @@ class CheckoutController extends MasterController {
                         ->orderBy('isDefault desc ')
                         ->all();
 
-                $picking_list = \common\models\costfit\Pickings::find()->where('userId=' . \Yii::$app->user->id . '')
-                        ->orderBy('isDefault desc ')
-                        ->all();
+
 
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 1  ')
                         ->orderBy('isDefault desc  ')
@@ -141,7 +139,7 @@ class CheckoutController extends MasterController {
 
             //$pickingPoint = \common\models\costfit\PickingPoint::find()->one();
             $pickingPoint = \common\models\costfit\PickingPoint::find()->one();
-            return $this->render('checkout', compact('address', 'user', 'paymentMethods', 'address_shipping', 'address_billing', 'model', 'pickingPoint', 'picking_list'));
+            return $this->render('checkout', compact('address', 'user', 'paymentMethods', 'address_shipping', 'address_billing', 'model', 'pickingPoint'));
         }
     }
 
