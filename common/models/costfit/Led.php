@@ -16,22 +16,19 @@ use \common\models\costfit\master\LedMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class Led extends \common\models\costfit\master\LedMaster
-{
+class Led extends \common\models\costfit\master\LedMaster {
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributes()
-    {
+    public function attributes() {
         return array_merge(parent::attributes(), [
             'start', 'end'
         ]);
@@ -40,19 +37,16 @@ class Led extends \common\models\costfit\master\LedMaster
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
         ]);
     }
 
-    public function getLedItems()
-    {
+    public function getLedItems() {
         return $this->hasMany(LedItem::className(), ['ledId' => 'ledId'])->orderBy("led_item.sortOrder ASC");
     }
 
-    public function createLedItems($ledId)
-    {
+    public function createLedItems($ledId) {
         for ($i = 1; $i < 6; $i++):
             $ledItems = new LedItem();
             $ledItems->ledId = $ledId;
@@ -61,6 +55,30 @@ class Led extends \common\models\costfit\master\LedMaster
             $ledItems->status = 0;
             $ledItems->save(false);
         endfor;
+    }
+
+    public static function variableColor($slot) {
+        $led = Led::find()->where("slot='" . $slot . "' and status=1")->one();
+        $variableColor = LedColor::find()->where("status=0")->one();
+        if (isset($led)) {
+            if (isset($variableColor)) {
+                $colorItem = LedItem::find()->where("ledId=" . $led->ledId . " and color=" . $variableColor->ledColor . " and status=0 order by sortOrder ASC")->one(); //หาไฟดวงที่ว่างอยู่ (status = 0)
+                $ledColor = $variableColor->ledColor;
+                while (!isset($colorItem)) {
+                    $ledColor++;
+                    if ($ledColor == 5) {
+                        $ledColor = 1;
+                    }
+                    $colorItem = LedItem::find()->where("ledId=" . $led->ledId . " and color=" . $ledColor . " and status=0 order by sortOrder ASC")->one();
+                }
+            }
+            //throw new \yii\base\Exception($variableColor->ledColor);
+            $variableColor->status = 1;
+            $colorItem->status = 1;
+            $colorItem->save();
+            $variableColor->save();
+            return $variableColor;
+        }
     }
 
 }

@@ -248,4 +248,13 @@ class Product extends \common\models\costfit\master\ProductMaster {
         }
     }
 
+    static public function findProductName($productId) {
+        $product = Product::find()->where("productId=" . $productId)->one();
+        if (isset($product)) {
+            return $product->code;
+        } else {
+            return '';
+        }
+    }
+
 }

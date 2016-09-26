@@ -8,8 +8,12 @@ use Yii;
 * This is the model class for table "picking_point_items".
 *
     * @property string $pickingItemsId
-    * @property integer $pickingId
+    * @property string $pickingId
+    * @property string $code
     * @property string $name
+    * @property string $status
+    * @property string $createDateTime
+    * @property string $updateDateTime
 */
 class PickingPointItemsMaster extends \common\models\ModelMaster
 {
@@ -27,9 +31,10 @@ return 'picking_point_items';
 public function rules()
 {
 return [
-            [['pickingId'], 'required'],
+            [['pickingId', 'code', 'name'], 'required'],
             [['pickingId'], 'integer'],
-            [['name'], 'string', 'max' => 45],
+            [['createDateTime', 'updateDateTime'], 'safe'],
+            [['code', 'name', 'status'], 'string', 'max' => 45],
         ];
 }
 
@@ -41,7 +46,11 @@ public function attributeLabels()
 return [
     'pickingItemsId' => Yii::t('picking_point_items', 'Picking Items ID'),
     'pickingId' => Yii::t('picking_point_items', 'Picking ID'),
+    'code' => Yii::t('picking_point_items', 'Code'),
     'name' => Yii::t('picking_point_items', 'Name'),
+    'status' => Yii::t('picking_point_items', 'Status'),
+    'createDateTime' => Yii::t('picking_point_items', 'Create Date Time'),
+    'updateDateTime' => Yii::t('picking_point_items', 'Update Date Time'),
 ];
 }
 }

@@ -53,6 +53,8 @@ class Order extends \common\models\costfit\master\OrderMaster {
     const ORDER_STATUS_FINANCE_REJECT = 8;
     const ORDER_STATUS_SHIPPING = 9;
     const ORDER_STATUS_SHIPPED = 10;
+    const ORDER_STATUS_PICKING = 11;
+    const ORDER_STATUS_PICKED = 12;
 //
     const CHECKOUT_STEP_WAIT_CHECKOUT = 0;
     const CHECKOUT_STEP_ADDRESS = 1;
@@ -393,6 +395,8 @@ class Order extends \common\models\costfit\master\OrderMaster {
             self::ORDER_STATUS_FINANCE_REJECT => 'การเงินส่งกลับ',
             self::ORDER_STATUS_SHIPPING => 'กำลังจัดส่ง',
             self::ORDER_STATUS_SHIPPED => 'จัดส่งแล้ว',
+            self::ORDER_STATUS_PICKING => 'กำลังหยิบ',
+            self::ORDER_STATUS_PICKED => 'ยังไม่หยิบ'
         ];
     }
 
@@ -522,6 +526,23 @@ class Order extends \common\models\costfit\master\OrderMaster {
 
     public static function findSlowestDate($orderId) {
 
+    }
+
+    static public function findOrderNo($orderId) {
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        if (isset($order)) {
+            return $order->orderNo;
+        } else {
+            return '
+
+
+
+
+
+
+
+        ';
+        }
     }
 
 }

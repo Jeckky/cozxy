@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -27,6 +28,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
             </div>
         </div>
         <div class="panel-body">
+            <?php
+            $form = ActiveForm::begin([
+                        'method' => 'GET',
+                        'action' => ['picking/index'],
+            ]);
+            ?>
             <?=
             GridView::widget([
                 'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
@@ -41,27 +48,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     [
                         'class' => 'yii\grid\CheckboxColumn',
                         'checkboxOptions' => [
-                            'class' => 'input-lg'
+                            'class' => 'input-lg',
                         ]
                     // you may configure additional properties here
                     ],
                     ['class' => 'yii\grid\SerialColumn'],
                     'orderNo',
-//                    'invoiceNo',
-//                    [
-//                        'attribute' => 'userId',
-//                        'value' => function($model) {
-//                            return isset($model->user) ? $model->user->firstname . " " . $model->user->lastname : NULL;
-//                        }
-//                    ],
-//                    'token:ntext',
-                    // 'totalExVat',
-                    // 'vat',
-                    // 'total',
-                    // 'discount',
-                    // 'grandTotal',
-                    // 'shippingRate',
-//                    'summary',
                     [
                         'attribute' => 'countItem',
                         'format' => 'html',
@@ -70,72 +62,33 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             return $countItemsArray['countItems'] . " รายการ<br>" . $countItemsArray['sumQuantity'] . " ชิ้น";
                         }
                     ],
-                    // 'sendDate',
-                    // 'billingCompany',
-                    // 'billingTax',
-                    // 'billingAddress:ntext',
-                    // 'billingCountryId',
-                    // 'billingProvinceId',
-                    // 'billingAmphurId',
-                    // 'billingZipcode',
-                    // 'billingTel',
-                    // 'shippingCompany',
-                    // 'shippingTax',
-                    // 'shippingAddress:ntext',
-                    // 'shippingCountryId',
-                    // 'shippingProvinceId',
-                    // 'shippingAmphurId',
-                    // 'shippingZipcode',
-                    // 'shippingTel',
-                    // 'paymentType',
-                    // 'couponId',
-                    // 'checkStep',
-                    // 'note:ntext',
-//                    'paymentDateTime',
-//                    [
-//                        'attribute' => 'paymentType',
-//                        'value' => function($model) {
-//                            return ($model->paymentType == 1) ? 'โอนผ่านธนาคาร' : 'จ่ายผ่านบัตรเครดิต';
-//                        }
+                    [
+                        'attribute' => 'สถานะ',
+                        'value' => function($model) {
+                            return $model->getStatusText($model->status);
+                        }
+                    ]
+//                    ['class' => 'yii\grid\ActionColumn',
+//                        'header' => 'สถานะ',
+//                        'template' => '{view}',
+//                        'buttons' => [
+//                            'view' => function($url, $model) {
+//                                return Html::a('<i class="fa fa-eye" aria-hidden="true"></i>View', Yii::$app->homeUrl . "order/order/view/" . $model->encodeParams(['id' => $model->orderId]), [
+//                                            'title' => Yii::t('app', ' View Order No :' . $model->orderId), 'class' => 'btn btn-info']);
+//                            },
+//                                    'pick' => function($url, $model) {
+//                               return Html::a('<u><i class="fa fa-check" aria-hidden="true"></i>Pick</u>', ['payment-history', 'orderId' => $model->orderId], [
+//                                            'title' => Yii::t('app', 'history\'s lists'), 'class' => 'btn btn-warning']);
+//                            },
+//                        ]
 //                    ],
-//                    [
-//                        'attribute' => 'paymentDateTime',
-//                        'value' => function($model) {
-//                            return (isset($model->paymentDateTime) && !empty($model->paymentDateTime)) ? $this->context->dateThai($model->paymentDateTime, 2, true) : NULL;
-//                        }
-//                    ],
-//                    'status',
-//                    [
-//                        'attribute' => 'status',
-//                        'value' => function($model) {
-//                            return $model->getStatusText($model->status);
-//                        }
-//                    ],
-                    // 'createDateTime',
-//                    [
-//                        'attribute' => 'updateDateTime',
-//                        'value' => function($model) {
-//                            return (isset($model->updateDateTime) && !empty($model->updateDateTime)) ? $this->context->dateThai($model->updateDateTime, 2, true) : NULL;
-//                        }
-//                    ],
-                    ['class' => 'yii\grid\ActionColumn',
-                        'header' => 'Actions',
-                        'template' => '{view}',
-                        'buttons' => [
-                            'view' => function($url, $model) {
-                                return Html::a('<i class="fa fa-eye" aria-hidden="true"></i>View', Yii::$app->homeUrl . "order/order/view/" . $model->encodeParams(['id' => $model->orderId]), [
-                                    'title' => Yii::t('app', ' View Order No :' . $model->orderId), 'class' => 'btn btn-info']);
-                            },
-                            'pick' => function($url, $model) {
-                                return Html::a('<u><i class="fa fa-check" aria-hidden="true"></i>Pick</u>', ['payment-history', 'orderId' => $model->orderId], [
-                                    'title' => Yii::t('app', 'history\'s lists'), 'class' => 'btn btn-warning']);
-                            },]
-                    ],
                 ],
             ]);
             ?>
-            <?= Html::a("Pick", NULL, ['class' => 'btn btn-success btn-lg']) ?>
+            <?= Html::submitButton("Pick", ['class' => 'btn btn-success btn-lg']) ?>
         </div>
     </div>
+
+    <?php ActiveForm::end(); ?>
     <?php Pjax::end(); ?>
 </div>

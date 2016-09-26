@@ -19,6 +19,8 @@ use Yii;
     * @property string $total
     * @property integer $sendDate
     * @property string $sendDateTime
+    * @property integer $pickerId
+    * @property integer $color
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -43,7 +45,7 @@ public function rules()
 {
 return [
             [['orderId', 'productId', 'priceOnePiece', 'quantity', 'price', 'createDateTime'], 'required'],
-            [['orderId', 'productId', 'productGroupId', 'brandId', 'categoryId', 'sendDate', 'status'], 'integer'],
+            [['orderId', 'productId', 'productGroupId', 'brandId', 'categoryId', 'sendDate', 'pickerId', 'color', 'status'], 'integer'],
             [['priceOnePiece', 'quantity', 'price', 'total'], 'number'],
             [['sendDateTime', 'createDateTime', 'updateDateTime'], 'safe'],
             [['orderId'], 'exist', 'skipOnError' => true, 'targetClass' => OrderMaster::className(), 'targetAttribute' => ['orderId' => 'orderId']],
@@ -69,6 +71,8 @@ return [
     'total' => Yii::t('order_item', 'Total'),
     'sendDate' => Yii::t('order_item', 'Send Date'),
     'sendDateTime' => Yii::t('order_item', 'Send Date Time'),
+    'pickerId' => Yii::t('order_item', 'Picker ID'),
+    'color' => Yii::t('order_item', 'Color'),
     'status' => Yii::t('order_item', 'Status'),
     'createDateTime' => Yii::t('order_item', 'Create Date Time'),
     'updateDateTime' => Yii::t('order_item', 'Update Date Time'),
