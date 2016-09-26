@@ -57,8 +57,12 @@ class MasterController extends MasterCommonController {
 
         // - SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
         if ((!Yii::$app->user->isGuest) && $this->id == "profile") {
-            $dataProvider_shipping = new \yii\data\ActiveDataProvider([
+            $dataProvider_shipping_bk = new \yii\data\ActiveDataProvider([
                 'query' => \common\models\costfit\Address::find()->where("userId ='" . Yii::$app->user->id . "' and type = 3 ")->orderBy('addressId DESC'),
+                'pagination' => false,
+            ]);
+            $dataProvider_picking_point = new \yii\data\ActiveDataProvider([
+                'query' => \common\models\costfit\PickingPoint::find()->where("userId ='" . Yii::$app->user->id . "' and type = 1 ")->orderBy('pickingId DESC'),
                 'pagination' => false,
             ]);
             // $this->view->params['cart']
@@ -68,7 +72,7 @@ class MasterController extends MasterCommonController {
                 'query' => \common\models\costfit\Address::find()->where("userId ='" . Yii::$app->user->id . "' and type = 1 ")->orderBy('addressId DESC'),
                 'pagination' => false,
             ]);
-            $this->view->params['listDataProvider']['shipping'] = $dataProvider_shipping;
+            $this->view->params['listDataProvider']['shipping'] = $dataProvider_picking_point;
             $this->view->params['listDataProvider']['billing'] = $dataProvider_billing;
         }
     }
@@ -548,6 +552,97 @@ class MasterController extends MasterCommonController {
         }
 
         return $res;
+    }
+
+    public function actionChildAmphurAddressPickingPoint() {
+        $out = [];
+
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = ($_POST['depdrop_parents']);
+
+            if ($parents != null) {
+                $cat_id = $parents[0];
+                $param1 = null;
+                $param2 = null;
+                if (!empty($_POST['depdrop_params'])) {
+                    $params = $_POST['depdrop_params'];
+                    $param1 = $params[0]; // get the value of input-type-1
+                    $param2 = $params[1]; // get the value of input-type-2
+                }
+
+                $list = \common\models\dbworld\Cities::find()->andWhere(['stateId' => $cat_id])->asArray()->all();
+
+                $selected = null;
+                if ($cat_id != null && count($list) > 0) {
+                    $selected = '';
+                    foreach ($list as $i => $account) {
+                        $out[] = ['id' => $account['cityId'], 'name' => $account['localName']];
+                        $param1 = ($param1 != '') ? $param1 : $account['cityId'];
+                        if ($i == 0) {
+                            $selected = $param1; //$account['stateId'];
+                        } else {
+                            $selected = $param1;
+                        }
+                    }
+
+                    // Shows how you can preselect a value
+                    echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
+                    return;
+                }
+            }
+
+            //echo 'no';
+        }
+
+        echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
+    }
+
+    public function actionChildPickingPoint() {
+        $out = [];
+
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = ($_POST['depdrop_parents']);
+            //echo '<pre>';
+            //print_r($parents);
+            if ($parents != null) {
+                $cat_id = $parents[0];
+                $param1 = null;
+                $param2 = null;
+                if (!empty($_POST['depdrop_params'])) {
+                    $params = $_POST['depdrop_params'];
+                    $param1 = $params[0]; // get the value of input-type-1
+                    $param2 = $params[1]; // get the value of input-type-2
+                }
+
+                //echo '<pre>';
+                //print_r($params);
+
+                $list = \common\models\costfit\PickingPoint::find()->andWhere(['amphurId' => $cat_id])->asArray()->all();
+                //echo '<pre>';
+                //print_r($list);
+                $selected = null;
+                if ($cat_id != null && count($list) > 0) {
+                    $selected = '';
+                    foreach ($list as $i => $account) {
+                        $out[] = ['id' => $account['pickingId'], 'name' => $account['title']];
+                        $param1 = ($param1 != '') ? $param1 : $account['pickingId'];
+                        if ($i == 0) {
+                            $selected = $param1; //$account['stateId'];
+                        } else {
+                            $selected = $param1;
+                        }
+                    }
+
+                    // Shows how you can preselect a value
+                    echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
+                    return;
+                }
+            }
+
+            //echo 'no';
+        }
+
+        echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
     }
 
 }

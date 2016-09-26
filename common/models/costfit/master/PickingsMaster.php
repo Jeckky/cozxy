@@ -7,8 +7,8 @@ use Yii;
 /**
 * This is the model class for table "pickings".
 *
-    * @property integer $pickingsId
-    * @property integer $pickingId
+    * @property string $pickingsId
+    * @property string $pickingId
     * @property string $userId
     * @property string $status
     * @property string $isDefault

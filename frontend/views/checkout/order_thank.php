@@ -1,4 +1,4 @@
-<?php
+-<?php
 /* @var $this yii\web\View HowCostFitWorks */
 
 use yii\helpers\Html;

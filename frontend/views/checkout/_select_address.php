@@ -25,16 +25,16 @@ use kartik\depdrop\DepDrop;
     if (count($user->addresses) > 0):
         ?>
         <a class="panel-toggle active action" href="#costfit-select-<?= ($type == 1) ? "Billing" : "Shipping" ?>-address" style="margin-left: 10px;"><i></i>Select <?= ($type == 1) ? "Billing Address" : "Picking Point" ?> </a>
-        <div class="row" style="background-color: rgba(249, 249, 249, 0.32); width: 98%; margin-left: 2%;">
+        <div class="row" style="background-color: rgba(249, 249, 249, 0.32); width: 98%; margin-left: 2%; ">
             <div class="col-lg-12">
-                <div class="hidden-panel expanded main-shipping-address" id="costfit-select-<?= ($type == 1) ? "Billing" : "Shipping" ?>-address" style="color: #292c2e;">
+                <div class="hidden-panel expanded " id="costfit-select-<?= ($type == 1) ? "Billing" : "Shipping" ?>-address" style="color: #292c2e;">
                     <?php
                     if ($type == 1) {
                         ?>
                         <?php
                         foreach ($addresses as $value) {
                             ?>
-                            <div class="col-lg-4 col-md-4 col-sm-4" >
+                            <div class="col-lg-4 col-md-4 col-sm-4 main-shipping-address" >
                                 <div class="tile address text-center" style=" <?= ($value->isDefault == 1) ? "background-color: rgba(31, 30, 30, 0.03)" : '' ?>">
                                     <div class="main-title">
                                         <?php
@@ -70,6 +70,7 @@ use kartik\depdrop\DepDrop;
                                             </div>
                                         </a>
                                     </div>
+
                                 </div>
                             </div>
                             <?php

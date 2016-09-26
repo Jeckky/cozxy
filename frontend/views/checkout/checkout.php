@@ -26,17 +26,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="container">
         <!--Expandable Panels-->
         <div class="row">
-            <?php
-            /* $form = ActiveForm::begin([
-              'options' => ['enctype' => 'multipart/form-data', 'id' => 'checkout-form'],
-              'fieldConfig' => [
-              //        'template' => '{label}<div class="col-sm-9">{input}</div>',
-              'labelOptions' => [
-              //            'class' => 'col-sm-3 control-label'
-              ]
-              ]
-              ]); */
-            ?>
             <!--Left Column-->
             <div class="col-lg-8 col-md-8 col-sm-8">
                 <div class="row">
@@ -121,7 +110,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 </h3>
                             </label>
                         </div>
-                        <?php echo $this->render('_address', ['type' => 2, 'address' => $address, 'addresses' => $address_shipping, 'user' => $user]); ?>
+
+                        <div class="form-group col-lg-12 col-md-12 col-xs-12" style="margin-bottom: 10px;  background-color: #ffffff; padding: 5px;">
+                            <?php
+                            //echo '<pre>';
+                            //print_r($pickingPoint);
+                            echo $this->render('picking_point', ['pickingPoint' => $pickingPoint, 'address' => $address]);
+                            ?>
+                        </div>
+
                         <div class="form-group" style="margin-bottom: 10px;  background-color: #f5f5f5; padding: 5px;">
                             <label class="ship-to-dif-adress" style="margin-bottom:0px;">
                                 <h3 style="margin-bottom: 8px;">
@@ -129,8 +126,74 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 </h3>
                             </label>
                         </div>
-                        <div class="shippingArea">
-                            <?php echo $this->render('_address', ['type' => 1, 'address' => $address, 'addresses' => $address_billing, 'user' => $user]); ?>
+                        <div class="shippingArea">test's 2
+                            <?php if (!Yii::$app->user->isGuest): ?>
+                                <?php
+                                if (count($user->addresses) > 0):
+                                    ?>
+                                    <a class="panel-toggle active action" href="#costfit-select-Billing-address" style="margin-left: 10px;"><i></i>Select Billing Address </a>
+                                    <div class="row" style="background-color: rgba(249, 249, 249, 0.32); width: 98%; margin-left: 2%; ">
+                                        <div class="col-lg-12">
+                                            <div class="hidden-panel expanded " id="costfit-select-Billing-address" style="color: #292c2e;">
+                                                <?php
+                                                foreach ($address_billing as $value) {
+                                                    ?>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 main-shipping-address" >
+                                                        <div class="tile address text-center" style=" <?= ($value->isDefault == 1) ? "background-color: rgba(31, 30, 30, 0.03)" : '' ?>; padding: 10px; font-size: 12px;">
+                                                            <div class="main-title">
+                                                                <?php
+                                                                echo ($value->firstname != null) ? $value->firstname : $user->firstname;
+                                                                echo '&nbsp;&nbsp;';
+                                                                echo ($value->lastname != '') ? $value->lastname : $user->lastname;
+                                                                ?><br>
+                                                                <?php echo ($value->company) ? $value->company : $value->company . ' ,'; ?><br>
+                                                                <?php echo ($value->address) ? $value->address : '' . ' ,'; ?><br>
+                                                                <?php echo ($value->district['localName']) ? $value->district['localName'] : '' . ' ,'; ?>
+                                                                <?php echo ($value->cities['cityName']) ? $value->cities['cityName'] : '' . ' ,'; ?>
+                                                                <?php echo ($value->states['stateName']) ? $value->states['stateName'] : '' . ' ,'; ?>
+                                                                <?php echo '<br>' . ($value->countries['localName']) ? $value->countries['localName'] : '' . ' ,'; ?>
+                                                                <?php echo '<br>Zipcode ' . $value->zipcode; ?>
+                                                            </div>
+                                                            <div class="footer-cost-fit">
+                                                                <a class="panel-toggle" href="#NewShipping"><!--address1-->
+                                                                    <div class="radio light">
+                                                                        <div class="btn-group" data-toggle="buttons">
+                                                                            <label class="btn btn-sm btn-info checkout_select_address<?= ($value->type == 1) ? "_billing" : "_shipping" ?>">
+                                                                                <input type="radio" name="checkout_select_address<?= ($value->type == 1) ? "_billing" : "_shipping" ?>" id="checkout_select_address<?= ($value->type == 1) ? "_billing" : "_shipping" ?>"
+                                                                                <?php
+                                                                                //if ($type == 2) {
+                                                                                echo ($value->isDefault == 1) ? 'checked' : '';
+                                                                                //}
+                                                                                ?> value="<?php echo $value->addressId; ?>"> เลือก
+                                                                            </label>
+                                                                            <label class="btn btn-sm btn-black edit_select checkout_update_address<?= ($value->type == 1) ? "_billing" : "_shipping" ?>" style="width: 40%;">
+                                                                                <input type="hidden" id="edit-form-biiling-checkout" name="edit-form-biiling-checkout" value="<?php echo $value->addressId; ?>">
+                                                                                <!--<input type="radio" id="edit-form-biiling-checkout" name="edit-form-biiling-checkout" value="<?//php echo $value->addressId; ?>">-->แก้ไข<span class="pp-label"></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </div>
+                                            <div class="col-lg-12 actionFormEdit<?= ($value->type == 1) ? "Billing" : "Shipping" ?>">
+                                                <?php echo $this->render('form_billing', ['address' => $address, 'type' => $value->type, 'isUpdate' => true]); ?>
+                                            </div>
+                                            <div class="row hide " id="<?= ($value->type == 1) ? "billing" : "shipping" ?>Update">
+                                                <div class="col-lg-12">
+                                                    <?php //echo $this->render('form_billing', ['address' => $address, 'type' => $type, 'isUpdate' => true]);     ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            <?php endif;
+                            ?>
+                            <?php //echo $this->render('_address', ['type' => 1, 'address' => $address, 'addresses' => $address_billing, 'user' => $user, 'pickingPoint', $pickingPoint]);  ?>
                         </div>
                         <h3>Order notes</h3>
                         <div class="form-group">
@@ -162,9 +225,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     endforeach;
                     ?>
                 </div>
-                <!--
-                <input class="btn btn-black btn-block" type="submit"onclick="$('#checkout-form').submit();" name="place-order" value="Place order">
-                -->
+
                 <?php
                 if (count($this->params['cart']['orderId'])) {
                     $orderId = $this->params['cart']['orderId'];
@@ -178,7 +239,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <input class="btn btn-black btn-block" type="submit" name="place-order" id="place-order" value="Place order">
             </div>
             <!--</form>-->
-            <?php //ActiveForm::end();  ?>
+            <?php //ActiveForm::end();     ?>
         </div>
     </div>
 </section>

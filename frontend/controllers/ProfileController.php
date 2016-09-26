@@ -324,15 +324,15 @@ class ProfileController extends MasterController {
         $this->subSubTitle = "Default Shipping Assdress";
 
         if ($hash != 'add') {
-            $model = \common\models\costfit\Address::find()->where("addressId ='" . $addressId . "'")->one();
-            $model->scenario = 'shipping_address';
+            $model = \common\models\costfit\PickingPoint::find()->where("pickingId ='" . $addressId . "'")->one();
+            $model->scenario = 'picking_point';
             $action = 'edit';
         } else {
-            $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
+            $model = new \common\models\costfit\PickingPoint(['scenario' => 'picking_point']);
             $action = 'add';
         }
 
-        $model->type = \common\models\costfit\Address::TYPE_PICKINGPOINT; // default Address First
+        $model->type = \common\models\costfit\PickingPoint::TYPE_PICKINGPOINT; // default Address First
         $status_address = Yii::$app->controller->action->id;
 
         $label = 'Save picking point';
@@ -342,7 +342,7 @@ class ProfileController extends MasterController {
             $model->attributes = $_POST['Address'];
             //echo $_POST["Address"]['isDefault'];
             if ($_POST["Address"]['isDefault']) {
-                \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_PICKINGPOINT]);
+                \common\models\costfit\PickingPoint::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\PickingPoint::TYPE_PICKINGPOINT]);
                 $model->isDefault = 1;
             }
             $model->userId = Yii::$app->user->id;
@@ -351,6 +351,7 @@ class ProfileController extends MasterController {
                 $this->redirect(Yii::$app->homeUrl . 'profile');
             }
         }
+
         return $this->render('@app/views/profile/picking_point', ['model' => $model, 'label' => $label, 'action' => $action]);
     }
 
