@@ -257,4 +257,14 @@ class Product extends \common\models\costfit\master\ProductMaster {
         }
     }
 
+    static public function findUnit($productId) {
+        $product = Product::find()->where("productId=" . $productId)->one();
+        if (isset($product)) {
+            $unit = Unit::find()->where("unitId=" . $product->unit)->one();
+            return $unit->title;
+        } else {
+            return '';
+        }
+    }
+
 }

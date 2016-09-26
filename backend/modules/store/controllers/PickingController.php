@@ -247,8 +247,23 @@ class PickingController extends StoreMasterController {
         return $this->render('view');
     }
 
-    public function actionPrintOrder($order) {
-
+    public function actionPrintOrder() {
+        // $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        //throw new \yii\base\Exception($baseUrl);
+        $orderId = '';
+        foreach ($_GET['order'] as $order):
+            $orderId = $orderId . $order . ",";
+        endforeach;
+        $id = substr($orderId, 0, -1);
+        //throw new \yii\base\Exception($id);
+        $order = \common\models\costfit\Order::find()->where("orderId in ($id)")->all();
+        $header = $this->renderPartial('header', [
+            'orders' => $order
+        ]);
+        $content = $this->renderPartial('content', [
+            'orders' => $order
+        ]);
+        $this->printPdf($content, $header);
     }
 
     static function checkQuantity($allOrder) {//allslots are barcodd
@@ -422,6 +437,47 @@ class PickingController extends StoreMasterController {
             $order->updateDateTime = new \yii\db\Expression('NOW()');
             $order->save(false);
         }
+    }
+
+    static function printPdf($content, $header) {
+        $pdf = new Pdf([
+            // set to use core fonts only
+            'mode' => Pdf::MODE_UTF8,
+            // A4 paper format
+            'format' => Pdf::FORMAT_A4,
+            // portrait orientation
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            // stream to browser inline
+            'destination' => Pdf::DEST_BROWSER,
+            // your html content input
+            'content' => $content,
+            // format content from your own css file if needed or use the
+            // enhanced bootstrap css built by Krajee for mPDF formatting
+            'cssFile' => '@backend/web/css/pdf.css',
+            // any css to be embedded if required
+            'cssInline' => '.kv-heading-1{font-size:14px}',
+            //'cssInline' => 'body{font-size:9px}',
+            // set mPDF properties on the fly
+            // 'defaultFontSize' => 3,
+            // 'marginLeft' => 10,
+            // 'marginRight' => 10,
+            'marginTop' => 10,
+            // 'marginBottom' => 11,
+            //'marginHeader' => 6,
+            //'marginFooter' => 6,
+            // 'options' => ['title' => 'Cost.fit Print '],
+            // call mPDF methods on the fly
+            'methods' => [
+                'SetHeader' => [$header], //Krajee Report Header
+                // 'SetFooter' => ['{PAGENO}'],
+                // 'SetHeader' => FALSE, //Krajee Report Header
+                'SetFooter' => ['{PAGENO} / {nbpg}'],
+            ]
+        ]);
+
+
+        // return the pdf output as per the destination setting
+        return $pdf->render();
     }
 
 }
