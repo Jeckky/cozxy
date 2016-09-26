@@ -262,6 +262,7 @@ class ProfileController extends MasterController {
                     ->one();
             //echo '<pre>';
             //print_r($order);
+            //exit();
             return $this->render('@app/views/profile/purchase_order', compact('order'));
         } else {
             return $this->redirect(['profile/order']);
