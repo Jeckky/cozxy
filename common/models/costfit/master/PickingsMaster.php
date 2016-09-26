@@ -16,6 +16,7 @@ use Yii;
     * @property string $updateDateTime
     * @property string $countryId
     * @property string $provinceId
+    * @property string $pickingscol
     * @property string $amphurId
 */
 class PickingsMaster extends \common\models\ModelMaster
@@ -34,8 +35,8 @@ return 'pickings';
 public function rules()
 {
 return [
-            [['pickingId', 'userId'], 'required'],
-            [['pickingId', 'userId', 'provinceId', 'amphurId'], 'integer'],
+            [['pickingsId', 'pickingId', 'userId', 'provinceId', 'pickingscol', 'amphurId'], 'required'],
+            [['pickingsId', 'pickingId', 'userId', 'provinceId', 'pickingscol', 'amphurId'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['status', 'isDefault', 'countryId'], 'string', 'max' => 45],
         ];
@@ -56,6 +57,7 @@ return [
     'updateDateTime' => Yii::t('pickings', 'Update Date Time'),
     'countryId' => Yii::t('pickings', 'Country ID'),
     'provinceId' => Yii::t('pickings', 'Province ID'),
+    'pickingscol' => Yii::t('pickings', 'Pickingscol'),
     'amphurId' => Yii::t('pickings', 'Amphur ID'),
 ];
 }
