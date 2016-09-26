@@ -48,7 +48,7 @@ $pickingId = rand(0, 9999);
 // echo Html::hiddenInput('input-type-1', $pickingPoint->provinceId, ['id' => 'input-type-1']);
 // echo Html::hiddenInput('input-type-2', $pickingPoint->provinceId, ['id' => 'input-type-2']);
     echo $form->field($pickingPoint, 'provinceId')->widget(kartik\select2\Select2::classname(), [
-        'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\states::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'stateName'),
+        'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'stateName'),
         'pluginOptions' => [
             'placeholder' => 'Select...',
             'loadingText' => 'Loading states ...',
