@@ -602,8 +602,7 @@ class MasterController extends MasterCommonController {
 
         if (isset($_POST['depdrop_parents'])) {
             $parents = ($_POST['depdrop_parents']);
-            //echo '<pre>';
-            //print_r($parents);
+
             if ($parents != null) {
                 $cat_id = $parents[0];
                 $param1 = null;
@@ -614,12 +613,8 @@ class MasterController extends MasterCommonController {
                     $param2 = $params[1]; // get the value of input-type-2
                 }
 
-                //echo '<pre>';
-                //print_r($params);
-
                 $list = \common\models\costfit\PickingPoint::find()->andWhere(['amphurId' => $cat_id])->asArray()->all();
-                //echo '<pre>';
-                //print_r($list);
+
                 $selected = null;
                 if ($cat_id != null && count($list) > 0) {
                     $selected = '';

@@ -45,27 +45,33 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                             <tr>
                                 <td style="line-height: 20px;">
                                     <?php
-                                    //echo isset($order->attributes['shippingCompany']) ? 'บริษัท' . $order->attributes['shippingCompany'] : 'คุณ' . $order->user->firstname . " " . $order->user->lastname . '<br>';
-                                    //echo isset($order->attributes['shippingAddress']) ? $order->attributes['shippingAddress'] : '';
-                                    //echo '<br>';
-                                    //$District = \common\models\dbworld\District::find()->where("districtId = '" . $order->attributes['shippingDistrictId'] . "' ")->one();
-                                    //echo isset($District->attributes['localName']) ? $District->attributes['localName'] : '';
-                                    //echo '&nbsp;';
-                                    $Cities = \common\models\dbworld\Cities::find()->where("cityId = '" . $order->attributes['shippingAmphurId'] . "' ")->one();
-                                    echo isset($Cities->attributes['localName']) ? $Cities->attributes['localName'] : '';
-                                    echo '&nbsp;';
-                                    $States = \common\models\dbworld\States::find()->where("stateId = '" . $order->attributes['shippingProvinceId'] . "' ")->one();
-                                    echo isset($States->attributes['localName']) ? $States->attributes['localName'] : '';
-                                    echo '&nbsp;';
-                                    $Countries = \common\models\dbworld\Countries::find()->where("countryId = '" . $order->attributes['shippingCountryId'] . "' ")->one();
-                                    echo isset($Countries->attributes['localName']) ? 'ประเทศ' . $Countries->attributes['localName'] : 'ประเทศ' . 'ไม่ระบุ';
-                                    //echo '123<pre>';
-                                    //print_r($Countries);
-                                    //echo '<br> รหัสไปรษณีย์';
-                                    //echo isset($order->attributes['shippingZipcode']) ? $order->attributes['shippingZipcode'] : '';
-                                    //echo '<br> โทร ';
-                                    //echo isset($order->attributes['shippingTel']) ? $order->attributes['shippingTel'] : '';
-                                    // echo '<br>';
+                                    if ($order->attributes['pickingId'] != '') {
+                                        //echo isset($order->attributes['shippingCompany']) ? 'บริษัท' . $order->attributes['shippingCompany'] : 'คุณ' . $order->user->firstname . " " . $order->user->lastname . '<br>';
+                                        //echo isset($order->attributes['shippingAddress']) ? $order->attributes['shippingAddress'] : '';
+                                        //echo '<br>';
+                                        //$District = \common\models\dbworld\District::find()->where("districtId = '" . $order->attributes['shippingDistrictId'] . "' ")->one();
+                                        //echo isset($District->attributes['localName']) ? $District->attributes['localName'] : '';
+                                        //echo '&nbsp;';
+                                        $Cities = \common\models\dbworld\Cities::find()->where("cityId = '" . $order->pickingpoint->amphurId . "' ")->one();
+                                        echo isset($Cities->attributes['localName']) ? $Cities->attributes['localName'] : '';
+                                        echo '&nbsp;';
+                                        $States = \common\models\dbworld\States::find()->where("stateId = '" . $order->pickingpoint->provinceId . "' ")->one();
+                                        echo isset($States->attributes['localName']) ? $States->attributes['localName'] : '';
+                                        echo '&nbsp;';
+                                        $Countries = \common\models\dbworld\Countries::find()->where("countryId = '" . $order->pickingpoint->countryId . "' ")->one();
+                                        echo isset($Countries->attributes['localName']) ? 'ประเทศ' . $Countries->attributes['localName'] : 'ประเทศ' . 'ไม่ระบุ';
+                                        echo "<br>";
+                                        echo isset($order->pickingpoint->title) ? 'จุดรับสินค้า : ' . $order->pickingpoint->title : '';
+                                        //echo '123<pre>';
+                                        //print_r($Countries);
+                                        //echo '<br> รหัสไปรษณีย์';
+                                        //echo isset($order->attributes['shippingZipcode']) ? $order->attributes['shippingZipcode'] : '';
+                                        //echo '<br> โทร ';
+                                        //echo isset($order->attributes['shippingTel']) ? $order->attributes['shippingTel'] : '';
+                                        // echo '<br>';
+                                    } else {
+                                        echo 'ไม่พบข้อมูล';
+                                    }
                                     ?>
                                 </td>
                         </tbody>

@@ -20,7 +20,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         font-size: 1em;
         line-height: 1.42857143;
         color: #292c2e;
-        /*white-space: pre-wrap;*/ 
+        /*white-space: pre-wrap;*/
     }
 
 </style>
@@ -57,17 +57,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     </div>
 </div>
 
-<!--Tab3 (Reviews)-->
+<!--Tab3 (Reviews)
 <div class="tab-pane fade" id="term">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12" id="Term-Condition">
-                <?php
-                if (isset($term) && !empty($term)) {
-                    echo $term->description;
-                }
-                ?>
+<?php
+//if (isset($term) && !empty($term)) {
+//echo $term->description;
+//}
+?>
             </div>
         </div>
     </div>
-</div>
+</div>-->

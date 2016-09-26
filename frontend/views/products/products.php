@@ -90,10 +90,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <ul class="nav nav-tabs">
         <li class="active"><a href="#descr" data-toggle="tab">Description</a></li>
         <li><a href="#specs" data-toggle="tab">Specs</a></li>
-        <li><a href="#term" data-toggle="tab">Term & Condition</a></li>
+        <!--<li><a href="#term" data-toggle="tab">Term & Condition</a></li>-->
     </ul>
     <div class="tab-content" id="productTabs">
-        <?php echo $this->render('product_tabs_widget', ['model' => $model,
+        <?php
+        echo $this->render('product_tabs_widget', ['model' => $model,
             'term' => isset($term) ? $term : '']);
         ?>
     </div>
@@ -101,7 +102,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <!--Special Offer-->
 <section class="special-offer">
-<?php echo $this->render('product_special_offer'); ?>
+    <?//php echo $this->render('product_special_offer'); ?>
 </section><!--Special Offer Close-->
 
 <!--Brands Carousel Widget-->

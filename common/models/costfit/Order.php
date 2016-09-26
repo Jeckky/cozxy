@@ -442,7 +442,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
 
     public function search($params) {
 
-        $query = \common\models\costfit\Order::find()->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . " and orderNo  is not null");
+        $query = \common\models\costfit\Order::find()->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . " and orderNo  is not null order by orderId desc");
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -535,6 +535,14 @@ class Order extends \common\models\costfit\master\OrderMaster {
         } else {
             return '';
         }
+    }
+
+    public function getPickingpoint() {
+        return $this->hasOne(\common\models\costfit\PickingPoint::className(), ['pickingId' => 'pickingId']);
+    }
+
+    public function getPickingpointitems() {
+        return $this->hasOne(\common\models\costfit\PickingPointItems::className(), ['pickingId' => 'pickingId']);
     }
 
 }
