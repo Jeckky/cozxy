@@ -81,9 +81,7 @@ class CheckoutController extends MasterController {
                         ->orderBy('isDefault desc ')
                         ->all();
 
-                $picking_list = \common\models\costfit\Pickings::find()->where('userId=' . 0 . '')
-                        ->orderBy('isDefault desc ')
-                        ->all();
+
 
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . 0 . ' and type = 1  ')
                         ->orderBy('isDefault desc  ')
