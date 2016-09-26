@@ -171,6 +171,7 @@ class CheckoutController extends MasterController {
             $shipping = Yii::$app->request->post('shipping');
             $billing = Yii::$app->request->post('billing');
             $payment01 = Yii::$app->request->post('payment01');
+            $pickingId = Yii::$app->request->post('pickingId');
             $placeUserId = (Yii::$app->request->post('placeUserId') != '') ? Yii::$app->request->post('placeUserId') : \Yii::$app->user->id;
             $notes = Yii::$app->request->post('notes');
             $placeOrderId = Yii::$app->request->post('placeOrderId');
@@ -181,13 +182,13 @@ class CheckoutController extends MasterController {
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . $placeUserId . ' and addressId =' . $billing)
                         ->orderBy('addressId desc')
                         ->one();
-                $address_shipping = \common\models\costfit\Address::find()->where('userId=' . $placeUserId . ' and addressId = ' . $shipping)
-                        ->orderBy('addressId desc')
-                        ->one();
+                //$address_shipping = \common\models\costfit\Address::find()->where('userId=' . $placeUserId . ' and addressId = ' . $shipping)
+                // ->orderBy('addressId desc')
+                // ->one();
             } else {
-                $address_shipping = \common\models\costfit\Address::find()->where('userId=' . $placeUserId . ' and addressId = ' . $shipping)
-                        ->orderBy('addressId desc')
-                        ->one();
+                //$address_shipping = \common\models\costfit\Address::find()->where('userId=' . $placeUserId . ' and addressId = ' . $shipping)
+                //->orderBy('addressId desc')
+                //->one();
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . $placeUserId . ' and addressId = ' . $shipping)
                         ->orderBy('addressId desc')
                         ->one();
@@ -200,6 +201,7 @@ class CheckoutController extends MasterController {
             //print_r($order->orderNo);
             // exit();
             $order->paymentType = $payment01;
+            $order->pickingId = $pickingId;
             $order->status = Order::ORDER_STATUS_CHECKOUTS;
             $order->userId = $placeUserId;
             $order->updateDateTime = new \yii\db\Expression("NOW()");
@@ -214,15 +216,15 @@ class CheckoutController extends MasterController {
             $order->billingZipcode = ($address_billing['zipcode'] != '') ? $address_billing['zipcode'] : '';
             $order->billingTel = ($address_billing['tel'] != '') ? $address_billing['tel'] : '';
             // Shipping //
-            $order->shippingCompany = ($address_shipping['company'] != '') ? $address_shipping['company'] : '';
-            $order->shippingTax = ($address_shipping['tax'] != '') ? $address_shipping['tax'] : '';
-            $order->shippingAddress = ($address_shipping['address'] != '') ? $address_shipping['address'] : '';
-            $order->shippingCountryId = ($address_shipping['countryId'] != '') ? $address_shipping['countryId'] : '';
-            $order->shippingProvinceId = ($address_shipping['provinceId'] != '') ? $address_shipping['provinceId'] : '';
-            $order->shippingDistrictId = ($address_shipping['districtId'] != '') ? $address_shipping['districtId'] : '';
-            $order->shippingAmphurId = ($address_shipping['amphurId'] != '') ? $address_shipping['amphurId'] : '';
-            $order->shippingZipcode = ($address_shipping['zipcode'] != '') ? $address_shipping['zipcode'] : '';
-            $order->shippingTel = ($address_shipping['tel'] != '') ? $address_shipping['tel'] : '';
+            //$order->shippingCompany = ($address_shipping['company'] != '') ? $address_shipping['company'] : '';
+            //$order->shippingTax = ($address_shipping['tax'] != '') ? $address_shipping['tax'] : '';
+            //$order->shippingAddress = ($address_shipping['address'] != '') ? $address_shipping['address'] : '';
+            //$order->shippingCountryId = ($address_shipping['countryId'] != '') ? $address_shipping['countryId'] : '';
+            //$order->shippingProvinceId = ($address_shipping['provinceId'] != '') ? $address_shipping['provinceId'] : '';
+            //$order->shippingDistrictId = ($address_shipping['districtId'] != '') ? $address_shipping['districtId'] : '';
+            //$order->shippingAmphurId = ($address_shipping['amphurId'] != '') ? $address_shipping['amphurId'] : '';
+            //$order->shippingZipcode = ($address_shipping['zipcode'] != '') ? $address_shipping['zipcode'] : '';
+            //$order->shippingTel = ($address_shipping['tel'] != '') ? $address_shipping['tel'] : '';
 
             if ($order->paymentType == 2) {
                 $order->status = \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_DRAFT;
