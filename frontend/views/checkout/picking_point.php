@@ -53,7 +53,7 @@ $pickingId = rand(0, 9999);
             'placeholder' => 'Select...',
             'loadingText' => 'Loading states ...',
         ],
-        'options' => ['placeholder' => 'Select states ...'],
+        'options' => ['placeholder' => 'Select states ...']
     ])->label('เลือกจังหวัด');
     ?>
     <?php
