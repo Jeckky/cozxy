@@ -533,16 +533,16 @@ class Order extends \common\models\costfit\master\OrderMaster {
         if (isset($order)) {
             return $order->orderNo;
         } else {
-            return '
-
-
-
-
-
-
-
-        ';
+            return ' ';
         }
+    }
+
+    public function getPickingpoint() {
+        return $this->hasOne(\common\models\costfit\PickingPoint::className(), ['pickingId' => 'pickingId']);
+    }
+
+    public function getPickingpointitems() {
+        return $this->hasOne(\common\models\costfit\PickingPointItems::className(), ['pickingId' => 'pickingId']);
     }
 
 }
