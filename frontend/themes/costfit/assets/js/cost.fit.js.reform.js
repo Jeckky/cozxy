@@ -396,41 +396,88 @@ $("#place-order").on('click', function () {
         $("#modal-cart-not-item").modal('show');
     }
 
+    // Increate 26/9/2016 By Taninut.BM
+    //var provinceid = $('input[id=pickingpoint-provinceid]').val();
+    //var amphurid = $('input[id=pickingpoint-amphurid]').val();
+    //var pickingid = $('input[id=pickingpoint-pickingid]').val();
+    var eProvinceid = document.getElementById("pickingpoint-provinceid");
+    var provinceid = eProvinceid.options[eProvinceid.selectedIndex].value;
+
+    var eAmphurid = document.getElementById("pickingpoint-amphurid");
+    var amphurid = eAmphurid.options[eAmphurid.selectedIndex].value;
+
+    var ePickingid = document.getElementById("pickingpoint-pickingid");
+    var pickingid = ePickingid.options[ePickingid.selectedIndex].value;
+
+    // pickingpoint amphurid //
+    var eAmphurid = document.getElementById("pickingpoint-amphurid");
+    var amphurid = eAmphurid.options[eAmphurid.selectedIndex].value;
+    if (amphurid > 0) {
+        var pickingid = ePickingid.options[ePickingid.selectedIndex].value;
+        //console.log(amphurid);
+    } else {
+        //console.log('Please select a pickingpoint amphurid list');
+        $('.field-pickingpoint-amphurid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+    }
+    // pickingpoint provinceid //
+    var eProvinceid = document.getElementById("pickingpoint-provinceid");
+    var provinceid = eProvinceid.options[eProvinceid.selectedIndex].value;
+    if (provinceid > 0) {
+        var pickingid = ePickingid.options[ePickingid.selectedIndex].value;
+        //console.log(provinceid);
+    } else {
+        //console.log('Please select a pickingpoint provinceid list');
+        $('.field-pickingpoint-provinceid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+    }
+    // pickingpoint pickingid //
+    var ePickingid = document.getElementById("pickingpoint-pickingid");
+    var pickingid = ePickingid.options[ePickingid.selectedIndex].value;
+    if (pickingid > 0) {
+        var pickingid = ePickingid.options[ePickingid.selectedIndex].value;
+        //console.log(pickingid);
+    } else {
+        //console.log('Please select a pickingpoint pickingid list');
+        $('.field-pickingpoint-pickingid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+        exit();
+    }
+
     if (_countItems == '') {
-//alert('สินค้าในตะกร้า 0 รายการ');
+        //alert('สินค้าในตะกร้า 0 รายการ');
         $("#modal-cart-not-item").modal('show');
         //window.location = 'site';
 
     } else {
-        if (_shipping === undefined) {
-//alert('Please Select Shipping Address');
-            $("#modal-cart-not-shipping").modal('show');
-        } else {
-            if (_billing === undefined) {
-                $.post("checkout/burn-checkouts", {
-                    shipping: _shipping,
-                    payment01: _payment01,
-                    placeUserId: _placeUserId,
-                    notes: _notes,
-                    placeOrderId: _placeOrderId
-                }, function (data, status) {
-//alert("Data: " + data + "\nStatus: " + status);
-// window.location = 'checkout/order-thank';
-                });
-            } else if (_billing != undefined) {
-                $.post("checkout/burn-checkouts", {
-                    shipping: _shipping,
-                    billing: _billing,
-                    payment01: _payment01,
-                    placeUserId: _placeUserId,
-                    notes: _notes,
-                    placeOrderId: _placeOrderId
-                }, function (data, status) {
-//alert("Data: " + data + "\nStatus: " + status);
-// window.location = 'checkout/order-thank';
-                });
-            }
+        //if (_shipping === undefined) {
+        //alert('Please Select Shipping Address');
+        //$("#modal-cart-not-shipping").modal('show');
+        //} else {
+        if (_billing === undefined) {
+            $.post("checkout/burn-checkouts", {
+                shipping: _shipping,
+                payment01: _payment01,
+                placeUserId: _placeUserId,
+                notes: _notes,
+                placeOrderId: _placeOrderId,
+                pickingId: pickingid
+            }, function (data, status) {
+                //alert("Data: " + data + "\nStatus: " + status);
+                // window.location = 'checkout/order-thank';
+            });
+        } else if (_billing != undefined) {
+            $.post("checkout/burn-checkouts", {
+                shipping: _shipping,
+                billing: _billing,
+                payment01: _payment01,
+                placeUserId: _placeUserId,
+                notes: _notes,
+                placeOrderId: _placeOrderId,
+                pickingId: pickingid
+            }, function (data, status) {
+                //alert("Data: " + data + "\nStatus: " + status);
+                // window.location = 'checkout/order-thank';
+            });
         }
+        //}
     }
 
 // $this->redirect(['order-thank']);

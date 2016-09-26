@@ -40,10 +40,12 @@ class Address extends \common\models\costfit\master\AddressMaster {
     public function rules() {
 
         return array_merge(parent::rules(), [//, 'countryId'
-            [ ['firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'zipcode', 'type', 'isDefault', 'status', 'tel']
+            [['firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'zipcode', 'type', 'isDefault', 'status', 'tel']
                 , 'required', 'on' => 'shipping_address'],
             ['tel', 'number'],
             ['zipcode', 'number'],
+            [['countryId', 'firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'districtId', 'zipcode', 'email']
+                , 'required', 'on' => 'checkout-billing-address'],
         ]);
     }
 

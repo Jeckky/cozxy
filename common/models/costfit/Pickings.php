@@ -34,4 +34,24 @@ class Pickings extends \common\models\costfit\master\PickingsMaster {
         return array_merge(parent::attributeLabels(), []);
     }
 
+    public function getpickingPoint() {
+        return $this->hasOne(\common\models\costfit\PickingPoint::className(), ['pickingId' => 'pickingId']);
+    }
+
+    public function getCitie() {
+        return $this->hasOne(\common\models\dbworld\Cities::className(), ['cityId' => 'amphurId']);
+    }
+
+    public function getCountrie() {
+        return $this->hasOne(\common\models\dbworld\Countries::className(), ['countryId' => 'countryId']);
+    }
+
+    public function getDistrict() {
+        return $this->hasOne(\common\models\dbworld\District::className(), ['districtId' => 'districtId']);
+    }
+
+    public function getState() {
+        return $this->hasOne(\common\models\dbworld\States::className(), ['stateId' => 'provinceId']);
+    }
+
 }

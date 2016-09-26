@@ -95,7 +95,7 @@ $MenuCategory = $this->context->actionMenuCategory();
                             $MenuCategorySubParentId = $this->context->actionMenuCategorySubParentId($items_sub->categoryId);
                             ?>
                             <a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub->createTitle() ?>/<?= $params ?>" style="color: #000; font-weight: 900 ; width:50%; border-bottom :1px #dfdfdf solid;">
-                                <?php echo $items_sub->title; ?> <span style="color:#6c6c6c; font-size: 10px;">(<?php echo count($MenuCategorySubParentId); ?>)</span></a>
+                                <?php echo $items_sub->title; ?> <span style="color:#6c6c6c; font-size: 10px;"><!--(<?//php echo count($MenuCategorySubParentId); ?>)--></span></a>
                                 <?php
                                 foreach ($MenuCategorySubParentId as $items_sub_parent) {
                                     $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items_sub_parent->categoryId]);

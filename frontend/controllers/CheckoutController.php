@@ -55,7 +55,7 @@ class CheckoutController extends MasterController {
         $addressId = Yii::$app->request->post('addressId');
         $addressEdit = Yii::$app->request->post('addressEdit');
         $address = new \common\models\costfit\Address();
-        $address->scenario = 'shipping_address';
+
 
         if (isset($addressId)) { // ตรวจสอบว่า มี hidden addressId ให้ update ในเทเบิล address
             if (isset($_POST['Address'])) {
@@ -81,6 +81,10 @@ class CheckoutController extends MasterController {
                         ->orderBy('isDefault desc ')
                         ->all();
 
+                $picking_list = \common\models\costfit\Pickings::find()->where('userId=' . 0 . '')
+                        ->orderBy('isDefault desc ')
+                        ->all();
+
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . 0 . ' and type = 1  ')
                         ->orderBy('isDefault desc  ')
                         ->all();
@@ -89,9 +93,14 @@ class CheckoutController extends MasterController {
                         ->orderBy('isDefault desc ')
                         ->all();
 
+                $picking_list = \common\models\costfit\Pickings::find()->where('userId=' . \Yii::$app->user->id . '')
+                        ->orderBy('isDefault desc ')
+                        ->all();
+
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 1  ')
                         ->orderBy('isDefault desc  ')
                         ->all();
+                //$address_billing['scenario'] = 'shipping_address';
             }
 
             $paymentMethods = \common\models\costfit\PaymentMethod::find()->where("status = 1")->all();
@@ -101,8 +110,6 @@ class CheckoutController extends MasterController {
             }
 
             if (isset($_POST['Address'])) {
-                // print_r($_POST['Address']);
-                //exit();
 
                 if ($_POST['Address']['typeForm'] == 'formShipping') {
                     //$model_ = new \common\models\costfit\Address();
@@ -114,8 +121,11 @@ class CheckoutController extends MasterController {
                 }
 
                 if ($_POST['Address']['typeForm'] == 'formBilling') {
+                    //$address->scenario = 'checkout-billing-address';
+                    $address->scenarios('checkout-billing-address');
                     \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_BILLING]);
                     //$model = new \common\models\costfit\Address();
+
                     $address->type = \common\models\costfit\Address::TYPE_BILLING; //- BILLING = 1; // ที่อยู่จัดส่งเอกสาร
                     $address->isDefault = 1; // default Address First
                     $address->createDateTime = new \yii\db\Expression("NOW()");
@@ -124,11 +134,14 @@ class CheckoutController extends MasterController {
 
                 if ($address->save(FALSE)) {
                     $this->redirect(Yii::$app->homeUrl . 'checkout');
+                    //print_r($_POST['Address']);
+                    //exit();
                 }
             }
 
+            //$pickingPoint = \common\models\costfit\PickingPoint::find()->one();
             $pickingPoint = \common\models\costfit\PickingPoint::find()->one();
-            return $this->render('checkout', compact('address', 'user', 'paymentMethods', 'address_shipping', 'address_billing', 'model', 'pickingPoint'));
+            return $this->render('checkout', compact('address', 'user', 'paymentMethods', 'address_shipping', 'address_billing', 'model', 'pickingPoint', 'picking_list'));
         }
     }
 

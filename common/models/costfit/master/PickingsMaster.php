@@ -14,6 +14,9 @@ use Yii;
     * @property string $isDefault
     * @property string $createDateTime
     * @property string $updateDateTime
+    * @property string $countryId
+    * @property string $provinceId
+    * @property string $amphurId
 */
 class PickingsMaster extends \common\models\ModelMaster
 {
@@ -32,9 +35,9 @@ public function rules()
 {
 return [
             [['pickingId', 'userId'], 'required'],
-            [['pickingId', 'userId'], 'integer'],
+            [['pickingId', 'userId', 'provinceId', 'amphurId'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['status', 'isDefault'], 'string', 'max' => 45],
+            [['status', 'isDefault', 'countryId'], 'string', 'max' => 45],
         ];
 }
 
@@ -51,6 +54,9 @@ return [
     'isDefault' => Yii::t('pickings', 'Is Default'),
     'createDateTime' => Yii::t('pickings', 'Create Date Time'),
     'updateDateTime' => Yii::t('pickings', 'Update Date Time'),
+    'countryId' => Yii::t('pickings', 'Country ID'),
+    'provinceId' => Yii::t('pickings', 'Province ID'),
+    'amphurId' => Yii::t('pickings', 'Amphur ID'),
 ];
 }
 }

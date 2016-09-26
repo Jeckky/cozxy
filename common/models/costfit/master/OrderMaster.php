@@ -49,6 +49,8 @@ use Yii;
     * @property string $note
     * @property string $paymentDateTime
     * @property integer $isSlowest
+    * @property string $color
+    * @property string $pickerId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -74,7 +76,7 @@ return 'order';
 public function rules()
 {
 return [
-            [['userId', 'pickingId', 'billingProvinceId', 'billingAmphurId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'couponId', 'checkStep', 'isSlowest', 'status'], 'integer'],
+            [['userId', 'pickingId', 'billingProvinceId', 'billingAmphurId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'couponId', 'checkStep', 'isSlowest', 'color', 'pickerId', 'status'], 'integer'],
             [['token', 'billingAddress', 'shippingAddress', 'note'], 'string'],
             [['totalExVat', 'vat', 'total', 'discount', 'grandTotal', 'shippingRate', 'summary'], 'number'],
             [['sendDate', 'paymentDateTime', 'createDateTime', 'updateDateTime'], 'safe'],
@@ -136,6 +138,8 @@ return [
     'note' => Yii::t('order', 'Note'),
     'paymentDateTime' => Yii::t('order', 'Payment Date Time'),
     'isSlowest' => Yii::t('order', 'Is Slowest'),
+    'color' => Yii::t('order', 'Color'),
+    'pickerId' => Yii::t('order', 'Picker ID'),
     'status' => Yii::t('order', 'Status'),
     'createDateTime' => Yii::t('order', 'Create Date Time'),
     'updateDateTime' => Yii::t('order', 'Update Date Time'),
