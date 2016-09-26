@@ -136,7 +136,7 @@ class CheckoutController extends MasterController {
             }
 
             //$pickingPoint = \common\models\costfit\PickingPoint::find()->one();
-            $pickingPoint = \common\models\costfit\pickingPoint::find()->one();
+            $pickingPoint = \common\models\costfit\PickingPoint::find()->one();
             return $this->render('checkout', compact('address', 'user', 'paymentMethods', 'address_shipping', 'address_billing', 'model', 'pickingPoint'));
         }
     }
