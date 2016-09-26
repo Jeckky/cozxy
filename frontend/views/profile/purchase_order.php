@@ -60,8 +60,8 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                                         echo '&nbsp;';
                                         $Countries = \common\models\dbworld\Countries::find()->where("countryId = '" . $order->pickingpoint->countryId . "' ")->one();
                                         echo isset($Countries->attributes['localName']) ? 'ประเทศ' . $Countries->attributes['localName'] : 'ประเทศ' . 'ไม่ระบุ';
-                                        //echo "<br>";
-                                        // echo 'จุดรับสินค้า : ' . isset($order->pickingpointitems) ? $order->pickingpointitems->name : '';
+                                        echo "<br>";
+                                        echo isset($order->pickingpoint->title) ? 'จุดรับสินค้า : ' . $order->pickingpoint->title : '';
                                         //echo '123<pre>';
                                         //print_r($Countries);
                                         //echo '<br> รหัสไปรษณีย์';
