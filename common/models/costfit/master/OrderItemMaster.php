@@ -21,6 +21,7 @@ use Yii;
     * @property string $sendDateTime
     * @property string $pickerId
     * @property string $color
+    * @property string $bagNo
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -48,6 +49,7 @@ return [
             [['orderId', 'productId', 'productGroupId', 'brandId', 'categoryId', 'sendDate', 'pickerId', 'color', 'status'], 'integer'],
             [['priceOnePiece', 'quantity', 'price', 'total'], 'number'],
             [['sendDateTime', 'createDateTime', 'updateDateTime'], 'safe'],
+            [['bagNo'], 'string', 'max' => 20],
             [['orderId'], 'exist', 'skipOnError' => true, 'targetClass' => OrderMaster::className(), 'targetAttribute' => ['orderId' => 'orderId']],
             [['productId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductMaster::className(), 'targetAttribute' => ['productId' => 'productId']],
         ];
@@ -73,6 +75,7 @@ return [
     'sendDateTime' => Yii::t('order_item', 'Send Date Time'),
     'pickerId' => Yii::t('order_item', 'Picker ID'),
     'color' => Yii::t('order_item', 'Color'),
+    'bagNo' => Yii::t('order_item', 'Bag No'),
     'status' => Yii::t('order_item', 'Status'),
     'createDateTime' => Yii::t('order_item', 'Create Date Time'),
     'updateDateTime' => Yii::t('order_item', 'Update Date Time'),
