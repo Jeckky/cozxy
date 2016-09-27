@@ -83,17 +83,22 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/virtual"><span class="mm-text">Virtual</span></a>
                     </li>
                     <li>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/store-product-group"><span class="mm-text">Import Product</span></a>
+                    </li>
+                    <li>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/store-product/arrange"><span class="mm-text">จัดเรียง</span></a>
+                    </li>
+                    <li>
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/picking"><span class="mm-text">Picking</span></a>
                     </li>
                     <li>
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/packing"><span class="mm-text">Packing</span></a>
                     </li>
                     <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/store-product/arrange"><span class="mm-text">จัดเรียง</span></a>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/shipping"><span class="mm-text">Shipping</span></a>
                     </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/store-product-group"><span class="mm-text">Import Product</span></a>
-                    </li>
+
+
                     <li class="mm-dropdown">
                         <a tabindex="-1" href="#"><span class="mm-text">Location</span><span class="label label-warning">1</span></a>
                         <ul>
@@ -102,6 +107,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                             </li>
                         </ul>
                     </li>
+
                 </ul>
             </li>
             <li class="mm-dropdown">
