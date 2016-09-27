@@ -73,7 +73,7 @@ class PickingController extends StoreMasterController {
                                 $slots[0] = 'a';
                             }
                         } else {
-                            $slot = \common\models\costfit\StoreProductArrange::find()->where("productId = " . $item->productId . " and quantity !=0")->one(); //หา slot  ที่ product วางอยู่ และ ไม่เท่ากับ 0
+                            $slot = \common\models\costfit\StoreProductArrange::find()->where("productId = " . $item->productId . " and status=4 and quantity !=0")->one(); //หา slot  ที่ product วางอยู่ และ ไม่เท่ากับ 0
                             if (isset($slot)) {
                                 $flag = $this->checkSlot($slots, $slot->slotId);
                                 if ($flag) {
@@ -135,7 +135,7 @@ class PickingController extends StoreMasterController {
                                 $slots[0] = 'a';
                             }
                         } else {
-                            $slot = \common\models\costfit\StoreProductArrange::find()->where("productId = " . $item->productId . " and quantity !=0")->one(); //หา slot  ที่ product วางอยู่ และ ไม่เท่ากับ 0
+                            $slot = \common\models\costfit\StoreProductArrange::find()->where("productId = " . $item->productId . " and status=4 and quantity !=0")->one(); //หา slot  ที่ product วางอยู่ และ ไม่เท่ากับ 0
                             if (isset($slot)) {
                                 $flag = $this->checkSlot($slots, $slot->slotId);
                                 if ($flag) {
@@ -277,10 +277,10 @@ class PickingController extends StoreMasterController {
             $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
             if (isset($orderItems) && !empty($orderItems)) {
                 foreach ($orderItems as $item):
-                    $arranges = \common\models\costfit\StoreProductArrange::find()->where("productId=" . $item->productId)->all();
+                    $arranges = \common\models\costfit\StoreProductArrange::find()->where("productId=" . $item->productId . " and status=4")->all();
                     if (isset($arranges) && !empty($arranges)) {
                         foreach ($arranges as $arrange):
-                            $arrangTotal+=$arrange->quantity;
+                            $arrangTotal+=$arrange->result;
                         endforeach;
                         $result = $arrangTotal - $item->quantity;
                         if ($result <= $oldResult) {//ถ้าของใน arrange store ไม่พอ
@@ -341,6 +341,45 @@ class PickingController extends StoreMasterController {
         endforeach;
     }
 
+    /* static function updateQuantity($allOrderId) {
+      $different = 0;
+      $userId = '1234';
+      foreach ($allOrderId as $orderId):
+      $orderItmes = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and status!=4 and status!=5")->all();
+      if (isset($orderItmes) && !empty($orderItmes)) {
+      foreach ($orderItmes as $item):
+      $arranges = \common\models\costfit\StoreProductArrange::find()->where("productId=" . $item->productId)->all();
+      if (isset($arranges) && !empty($arranges)) {
+      foreach ($arranges as $arrange):
+      if ($arrange->quantity < $item->quantity) {
+      $different = $item->quantity - $arrange->quantity; //ถ้าของไม่พอใน 1 slot.......
+      $arrange->quantity = 0;
+      } else {
+      $arrange->quantity = $arrange->quantity - $item->quantity;
+      }
+      $arrange->save();
+      break;
+      endforeach;
+      }
+      if ($item->status != 5) {//ป้องกันการ refresh
+      $item->status = 4; //เปลี่ยนสถานะเป็นกำลัง หยิบ
+      } else {
+      $item->status = 5;
+      }
+      $item->save(false);
+      endforeach;
+      $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
+      if ($order->status != 12) {
+      $order->status = 11; //กำลังหยิบ
+      $order->pickerId = $userId;
+      } else {
+      $order->status = 12; //เสร็จแล้ว
+      }
+      $order->save(false);
+      }
+      endforeach;
+      } */
+
     static function updateQuantity($allOrderId) {
         $different = 0;
         $userId = '1234';
@@ -348,17 +387,34 @@ class PickingController extends StoreMasterController {
             $orderItmes = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and status!=4 and status!=5")->all();
             if (isset($orderItmes) && !empty($orderItmes)) {
                 foreach ($orderItmes as $item):
-                    $arranges = \common\models\costfit\StoreProductArrange::find()->where("productId=" . $item->productId)->all();
+                    $arranges = \common\models\costfit\StoreProductArrange::find()->where("productId=" . $item->productId . " and status=4")->all();
+                    $nextSlotResult = $item->quantity;
                     if (isset($arranges) && !empty($arranges)) {
                         foreach ($arranges as $arrange):
-                            if ($arrange->quantity < $item->quantity) {
-                                $different = $item->quantity - $arrange->quantity; //ถ้าของไม่พอใน 1 slot.......
-                                $arrange->quantity = 0;
-                            } else {
-                                $arrange->quantity = $arrange->quantity - $item->quantity;
+                            $different = $arrange->quantity - $nextSlotResult; //อัพเดทยอดที่เหลือ เพื่อไปหาใน slot ถัดไป
+                            $createState = new \common\models\costfit\StoreProductArrange();
+                            if ($different >= 0) {//slot นี้มีของพอ
+                                $createState->quantity = -($nextSlotResult);
+                                $arrange->result = $arrange->quantity - $item->quantity;
+                            } else {//เมื่อ มีของไม่พอใน slot ให้ไปหา slot ถัดไป
+                                $createState->quantity = -($arrange->quantity);
+                                $nextSlotResult = $item->quantity - $arrange->quantity;
+                                $arrange->result = 0;
                             }
+                            $createState->storeProductId = $arrange->storeProductId;
+                            $createState->productId = $arrange->productId;
+                            $createState->slotId = $arrange->slotId;
+                            $createState->parentId = $arrange->storeProductArrangeId;
+                            $createState->orderId = $item->orderId;
+                            $createState->status = 99;
+                            $createState->createDateTime = new \yii\db\Expression('NOW()');
+                            $createState->updateDateTime = new \yii\db\Expression('NOW()');
+                            $createState->save(false);
                             $arrange->save();
-                            break;
+                            if ($different >= 0) {
+                                break;
+                            }
+
                         endforeach;
                     }
                     if ($item->status != 5) {//ป้องกันการ refresh

@@ -9,7 +9,7 @@ use Yii;
 *
     * @property string $orderId
     * @property string $userId
-    * @property string $pickingId
+    * @property integer $pickingId
     * @property string $token
     * @property string $orderNo
     * @property string $invoiceNo
@@ -44,13 +44,13 @@ use Yii;
     * @property string $shippingZipcode
     * @property string $shippingTel
     * @property integer $paymentType
-    * @property string $couponId
+    * @property integer $couponId
     * @property integer $checkStep
     * @property string $note
     * @property string $paymentDateTime
     * @property integer $isSlowest
-    * @property string $color
-    * @property string $pickerId
+    * @property integer $color
+    * @property integer $pickerId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime

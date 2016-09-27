@@ -34,7 +34,7 @@ class StoreProductArrange extends \common\models\costfit\master\StoreProductArra
 
     public static function findItems($slot) {
         if ($slot != 'a') {
-            $productId = StoreProductArrange::find()->where("slotId=" . $slot)->all();
+            $productId = StoreProductArrange::find()->where("slotId=" . $slot . " and status=4")->all();
             if (isset($productId)) {
                 return $productId;
             } else {

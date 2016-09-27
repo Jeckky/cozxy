@@ -12,11 +12,11 @@ use Yii;
     * @property string $storeId
     * @property string $productId
     * @property string $paletNo
-    * @property string $quantity
+    * @property integer $quantity
     * @property string $price
     * @property string $total
     * @property integer $shippingFromType
-    * @property string $importQuantity
+    * @property integer $importQuantity
     * @property string $remark
     * @property integer $status
     * @property string $createDateTime

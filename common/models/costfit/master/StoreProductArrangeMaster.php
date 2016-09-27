@@ -12,6 +12,9 @@ use Yii;
     * @property string $productId
     * @property string $slotId
     * @property string $quantity
+    * @property integer $orderId
+    * @property integer $parentId
+    * @property integer $result
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -33,7 +36,7 @@ public function rules()
 {
 return [
             [['storeProductId', 'productId', 'slotId', 'quantity', 'createDateTime'], 'required'],
-            [['storeProductId', 'productId', 'slotId', 'status'], 'integer'],
+            [['storeProductId', 'productId', 'slotId', 'orderId', 'parentId', 'result', 'status'], 'integer'],
             [['quantity'], 'number'],
             [['createDateTime', 'updateDateTime'], 'safe'],
         ];
@@ -50,6 +53,9 @@ return [
     'productId' => Yii::t('store_product_arrange', 'Product ID'),
     'slotId' => Yii::t('store_product_arrange', 'Slot ID'),
     'quantity' => Yii::t('store_product_arrange', 'Quantity'),
+    'orderId' => Yii::t('store_product_arrange', 'Order ID'),
+    'parentId' => Yii::t('store_product_arrange', 'Parent ID'),
+    'result' => Yii::t('store_product_arrange', 'Result'),
     'status' => Yii::t('store_product_arrange', 'Status'),
     'createDateTime' => Yii::t('store_product_arrange', 'Create Date Time'),
     'updateDateTime' => Yii::t('store_product_arrange', 'Update Date Time'),

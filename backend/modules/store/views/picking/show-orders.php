@@ -27,7 +27,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <?=
                     Html::a('<i class="fa fa-print" aria-hidden="true"></i> Print Order', ['print-order',
                         'order' => $allOrderId
-                            ], ['class' => 'btn btn-sm btn-success']);
+                            ], ['class' => 'btn btn-sm btn-success', 'target' => '_blank']);
                     ?>
                 </div>
             </div>
