@@ -48,15 +48,21 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    //'pickingId',
                     'orderId',
-                    //'quantity',
-                    //'bagNo',
+                    'orderNo',
+                    'bagNo',
                     //'status',
                     [
-                        'attribute' => 'สถานะ',
+                        'attribute' => 'status',
                         'value' => function($model) {
-                            return 'หยิบเสร็จแล้ว';
+                            return isset($model->status) ? 'แพ็คใส่ถุงแล้ว' : ''; // status items 6 : แพ็คใส่ถุงแล้ว
+                        }
+                    ],
+                    //'pickingId',
+                    [
+                        'attribute' => 'pickingId',
+                        'value' => function($model) {
+                            return 'จุดรับของที่' . $model->pickingpoint->title . ' , ' . $model->pickingpoint->citie->localName . ' , ' . $model->pickingpoint->state->localName . ' , ' . 'ประเทศ' . $model->pickingpoint->countrie->localName; // status items 6 : แพ็คใส่ถุงแล้ว
                         }
                     ],
                     // 'type',

@@ -77,10 +77,11 @@ class Order extends \common\models\costfit\master\OrderMaster {
         return array_merge(parent::attributes(), [
             'month',
             'maxCode',
-                //'orderItemId',
-                //'orderId',
-                //'bagNo',
-                //'status'
+            'orderItemId',
+            'orderId',
+            'bagNo',
+            'status',
+            'pickingId'
         ]);
     }
 

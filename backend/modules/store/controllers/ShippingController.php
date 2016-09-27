@@ -5,6 +5,7 @@ namespace backend\modules\store\controllers;
 use Yii;
 use common\models\costfit\Store;
 use common\models\costfit\Order;
+use common\models\costfit\PickingPoint;
 use yii\data\ActiveDataProvider;
 use backend\controllers\BackendMasterController;
 use yii\web\NotFoundHttpException;
@@ -27,9 +28,10 @@ class ShippingController extends StoreMasterController {
           ->where(['order_item.status' => 6, 'orderNo' => Yii::$app->request->get('orderNo')]);
          */
         $query = \common\models\costfit\Order::find()
-                ->joinWith(['orderItems'], false)
-                ->select('order.orderId,order.orderNo,order.status,order_item.status,order_item.BagNo,')
-                ->where(['order_item.status' => 6, 'orderNo' => Yii::$app->request->get('orderNo')]);
+                ->select('*')
+                ->joinWith(['orderItems'])
+                ->where(['order_item.status' => 6, 'order.orderNo' => Yii::$app->request->get('orderNo')]);
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
