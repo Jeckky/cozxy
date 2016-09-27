@@ -177,7 +177,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     }
                 }
                 ?>
-                <a href="<?php echo Yii::$app->homeUrl; ?>search-cost-fit?search_hd=cost.fit">cost.fit</a>
+                <a href="<?php echo Yii::$app->homeUrl; ?>search-cost-fit?search_hd=cost.fit">cozxy</a>
             </div>
         </div>
     </div>
