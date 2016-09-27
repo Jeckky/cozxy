@@ -48,7 +48,8 @@ $pickingId = rand(0, 9999);
 // echo Html::hiddenInput('input-type-1', $pickingPoint->provinceId, ['id' => 'input-type-1']);
 // echo Html::hiddenInput('input-type-2', $pickingPoint->provinceId, ['id' => 'input-type-2']);
     echo $form->field($pickingPoint, 'provinceId')->widget(kartik\select2\Select2::classname(), [
-        'name' => 'PickingPoint[provinceId]',
+        'model' => $pickingId,
+        'attribute' => 'provinceId',
         'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'stateName'),
         'pluginOptions' => [
             'placeholder' => 'Select...',
@@ -69,7 +70,8 @@ $pickingId = rand(0, 9999);
 //echo Html::hiddenInput('input-type-22', $pickingPoint->amphurId, ['id' => 'input-type-22']);
     echo $form->field($pickingPoint, 'amphurId')->widget(kartik\depdrop\DepDrop::classname(), [
         //'data' => [9 => 'Savings'],
-        'name' => 'PickingPoint[amphurId]',
+        'model' => $pickingId,
+        'attribute' => 'amphurId',
         'options' => ['placeholder' => 'Select ...'],
         'type' => DepDrop::TYPE_SELECT2,
         'select2Options' => ['pluginOptions' => ['allowClear' => true]],
@@ -95,7 +97,8 @@ $pickingId = rand(0, 9999);
     echo Html::hiddenInput('input-type-23', $pickingPoint->amphurId, ['id' => 'input-type-23']);
     echo $form->field($pickingPoint, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
         //'data' => [9 => 'Savings'],
-        'name' => 'PickingPoint[pickingId]',
+        'model' => $pickingId,
+        'attribute' => 'pickingId',
         'options' => ['placeholder' => 'Select ...'],
         'type' => DepDrop::TYPE_SELECT2,
         //'options' => ['multiple' => true],
