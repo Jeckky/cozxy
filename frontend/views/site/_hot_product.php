@@ -14,7 +14,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <img src="<?= (isset($model->productImages[0])) ? Yii::$app->homeUrl . $model->productImages[0]->image : Yii::$app->homeUrl . "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1"/>
             <span class="tile-overlay"></span>
 
-            <div class="footer" id="products-popular-footer" style="max-height: 320px">
+            <div class="footer" id="products-popular-footer" style="max-height: 320px;min-height: 80px;">
                 <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId]) ?>"><?= $model->title; ?></a>
                 <span>
                     <small>in <?php echo $model->category->title; ?></small>
