@@ -81,7 +81,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <div class="copyright">
             <div class="row">
                 <div class="col-lg-7 col-md-7 col-sm-7">
-                    <p>&copy; 2016 www.cost.fit All Rights Reserved. <!--Designed by <a href="http://8guild.com/" target="_blank">8Guild</a>-->
+                    <p>&copy; 2017 www.cozxy.com All Rights Reserved. <!--Designed by <a href="http://8guild.com/" target="_blank">8Guild</a>-->
                     </p>
                 </div>
                 <div class="col-lg-5 col-md-5 col-sm-5">
