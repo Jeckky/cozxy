@@ -54,7 +54,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--Hero HotiTem-->
 <section class="cat-tiles">
     <div class="container">
-        <h2>Hot Products</h2>
+        <h2 class="dark-color">HOT PRODUCTS</h2>
         <div class="row">
             <!--Category-->
             <?php
@@ -80,7 +80,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--Hero Slider Close-->
 <section class="cat-tiles">
     <div class="container">
-        <h2>SAVE ON EVERYDAY ESSENTIALS</h2>
+        <h2 class="dark-color">SAVE ON EVERYDAY ESSENTIALS</h2>
         <div class="row" id="save-main-limit">
             <!--SAVE ON EVERYDAY ESSENTIALS-->
             <?php
