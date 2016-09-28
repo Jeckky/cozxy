@@ -78,7 +78,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </section><!--Categories Close-->
 
 <!--Hero Slider Close-->
-<section class="cat-tiles">
+<section class="cat-tiles" style="background-color: #f1efef;">
     <div class="container">
         <h2>SAVE ON EVERYDAY ESSENTIALS</h2>
         <div class="row" id="save-main-limit">
@@ -97,7 +97,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             ?>
         </div>
         <div class="row" id="save-main-limit"></div>
-        <div class="row see-more-x col-md-12 text-right">
+        <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
             <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
         </div>
     </div>
