@@ -8,8 +8,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     .cat-tiles h2 {
         font-size: 1.75em;
         color: #000000;
-        /*font-weight: normal;*/
-        margin-bottom: 24px;
+        font-weight: 100;
+        margin-bottom: 44px;
     }
     .see-more{
         cursor: hand;
