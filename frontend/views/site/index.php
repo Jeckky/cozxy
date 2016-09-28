@@ -36,7 +36,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         ?>
                         <p  style="width: 456px; left: 110px; top: 210px;"  class="dark-color ms-layer col-md-7 " data-effect="back(500)" data-duration="700" data-delay="500" data-ease="easeOutQuad"><?= $desc; ?></p>
                         <?php if (isset($banner->linkTitle) && !empty($banner->linkTitle)): ?>
-                            <p  style="width: 456px; left: 20px; top: 100px;" class="dark-color col-md-7">
+                            <p  style="width: 456px; left: 20px; top: 170px;" class="dark-color col-md-7">
                                 <a class="btn btn-primary" href="<?= $banner->link; ?>"><?= $banner->linkTitle ?></a>
                             </p>
                         <?php endif; ?>
