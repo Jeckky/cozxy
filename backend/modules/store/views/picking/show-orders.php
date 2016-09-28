@@ -47,7 +47,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
         <h4>   Slot QR code : <input type="text" name="qrSlot" autofocus="true" id="qrSlot"></h4>
 
         <?= $this->registerJS("
-                            $('.qrSlot').blur(function(event){
+                            $('#qrSlot').blur(function(event){
                                 if(event.which == 13 || event.keyCode == 13)
                                 {
                                    $('#form').submit();

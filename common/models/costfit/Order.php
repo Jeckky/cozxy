@@ -533,6 +533,16 @@ class Order extends \common\models\costfit\master\OrderMaster {
 
     }
 
+    public static function getItems($orderId) {
+        //throw new \yii\base\Exception($orderId);
+        $item = OrderItem::find()->where("orderId=" . $orderId)->all();
+        if (isset($item)) {
+            return $item;
+        } else {
+            return '';
+        }
+    }
+
     static public function findOrderNo($orderId) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (isset($order)) {

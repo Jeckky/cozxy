@@ -267,4 +267,27 @@ class Product extends \common\models\costfit\master\ProductMaster {
         }
     }
 
+    static public function findProductId($barcode) {
+        $product = Product::find()->where("isbn='" . $barcode . "'")->one();
+        if (isset($product) && !empty($product)) {
+            return $product->productId;
+        } else {
+            return '';
+        }
+    }
+
+    static public function findProductInPack($orderItemId) {// 28/09/2016  หน้า show product  ที่เอาลงถุงแล้ว
+        $orderItem = OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
+        if (isset($orderItem) && !empty($orderItem)) {
+            $product = Product::find()->where("productId=" . $orderItem->productId)->one();
+            if (isset($orderItem) && !empty($orderItem)) {
+                return $product->code;
+            } else {
+                return '';
+            }
+        } else {
+            return '';
+        }
+    }
+
 }
