@@ -6,7 +6,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <style type="text/css">
     .cat-tiles h2 {
-        font-size: 1.5em;
+        font-size: 1.75em;
         color: #000000;
         /*font-weight: normal;*/
         margin-bottom: 24px;
