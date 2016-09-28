@@ -129,6 +129,10 @@ return [
             'class' => 'yii\image\ImageDriver',
             'driver' => 'GD', //GD or Imagick
         ],
+    //'params' => [
+    // list of parameters
+    //'shippingScanTrayOnly' => TRUE,
+    //],
     ],
     'params' => $params,
 ];

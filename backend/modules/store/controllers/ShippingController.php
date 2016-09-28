@@ -23,19 +23,23 @@ class ShippingController extends StoreMasterController {
 
     public function actionIndex() {
 
-        /* $query = \common\models\costfit\Order::find()
-          ->leftJoin('order_item', 'order_item.orderId = order.orderId')
-          ->where(['order_item.status' => 6, 'orderNo' => Yii::$app->request->get('orderNo')]);
-         */
+        //'params : ' . \Yii::$app->params['shippingScanTrayOnly']; // มีค่าเท่ากับเริ่มต้น true
+        $orderNo = Yii::$app->request->get('orderNo');
+
         $query = \common\models\costfit\Order::find()
                 ->select('*')
                 ->joinWith(['orderItems'])
-                ->where(['order_item.status' => 6, 'order.orderNo' => Yii::$app->request->get('orderNo')]);
+                ->where(['order_item.status' => 6, 'order.orderNo' => $orderNo]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
+        if (\Yii::$app->params['shippingScanTrayOnly'] == true) {
+            /* shippingScanTrayOnly = true เข้าเงื่อนไขที่ 1 ต้อง Scan ที่ละ OrderId */
+        } else {
+            /* shippingScanTrayOnly = false เข้าเงื่อนไขที่ 2 ต้อง Scan ที่ละถุง */
+        }
         //print_r($query);
         return $this->render('index', [
                     'dataProvider' => $dataProvider,

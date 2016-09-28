@@ -7,8 +7,8 @@ use Yii;
 /**
 * This is the model class for table "led_color".
 *
-    * @property integer $ledColorId
-    * @property integer $ledColor
+    * @property string $ledColorId
+    * @property string $ledColor
     * @property string $htmlCode
     * @property integer $status
     * @property string $createDateTime
