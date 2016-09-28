@@ -256,7 +256,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     ?>
                     <div class="tabs-pane <?= ($i == 1) ? 'current' : '' ?>" id="tab<?= $i ?>">
                         <!--<div class="tabs-pane current" id="tab-1">-->
-                        <h2 class="<?= ($i == 1) ? 'title-head' : '' ?>">
+                        <h2 class="title-head">
                             <?php echo $content->title; ?>
                         </h2>
                         <p class="p-style3"><?php echo $content->description; ?></p>
