@@ -560,4 +560,8 @@ class Order extends \common\models\costfit\master\OrderMaster {
         return $this->hasOne(\common\models\costfit\PickingPointItems::className(), ['pickingId' => 'pickingId']);
     }
 
+    public function getShipOrderItems($orderItemId) {
+        return $this->hasMany(OrderItemPacking::className(), ['orderItemId' => 'orderItemId']);
+    }
+
 }
