@@ -6,9 +6,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <style type="text/css">
     .cat-tiles h2 {
-        font-size: 1.125em;
+        font-size: 1.5em;
         color: #000000;
-        font-weight: normal;
+        /*font-weight: normal;*/
         margin-bottom: 24px;
     }
     .see-more{
@@ -16,7 +16,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     }
 </style>
 <!--Hero Slider-->
-<section class="hero-slider">
+<section class="hero-slider" style="background-color: #f1efef;margin-top: -10px">
     <div class="master-slider" id="hero-slider">
         <?php
         foreach ($bannerGroup->contents as $banner) {
