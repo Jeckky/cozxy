@@ -66,7 +66,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'attribute' => 'status',
                         'value' => function($model) {
                             if ($model->status == 6) {
-                                $txt = 'แพ็คใส่ถุงแล้ว';
+                                $txt = 'กำลังแพ็คใส่ถุงแล้ว';
                             } else if ($model->status == 14) {
                                 $txt = 'กำลังจะส่ง';
                             }

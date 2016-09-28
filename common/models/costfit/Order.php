@@ -55,6 +55,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
     const ORDER_STATUS_SHIPPED = 10;
     const ORDER_STATUS_PICKING = 11;
     const ORDER_STATUS_PICKED = 12;
+    const ORDER_STATUS_SENDING_SHIPPING = 14;
 //
     const CHECKOUT_STEP_WAIT_CHECKOUT = 0;
     const CHECKOUT_STEP_ADDRESS = 1;

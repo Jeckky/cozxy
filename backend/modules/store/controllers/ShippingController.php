@@ -35,7 +35,7 @@ class ShippingController extends StoreMasterController {
             $query = \common\models\costfit\Order::find()
                     ->select('*')
                     ->joinWith(['orderItems'])
-                    ->where(['order_item.status' => 14]);
+                    ->where(['order_item.status' => \common\models\costfit\Order::ORDER_STATUS_SENDING_SHIPPING]);
         }
 
         $dataProvider = new ActiveDataProvider([
@@ -62,7 +62,7 @@ class ShippingController extends StoreMasterController {
                             $packing->save();
                             $queryItemStatus = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $packing->orderItemId . ' and status = 6')->all();
                             foreach ($queryItemStatus as $shipStatus) {
-                                $shipStatus->status = 14;
+                                $shipStatus->status = \common\models\costfit\Order::ORDER_STATUS_SENDING_SHIPPING; // orderItemId : status = 14
                                 $shipStatus->save();
                             }
                         }
