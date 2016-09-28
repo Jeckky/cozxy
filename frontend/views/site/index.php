@@ -52,7 +52,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </section><!--Hero Slider Close-->
 
 <!--Hero HotiTem-->
-<section class="cat-tiles">
+<section class="catalog-grid">
     <div class="container">
         <h2>HOT PRODUCTS</h2>
         <div class="row">

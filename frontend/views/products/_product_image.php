@@ -21,7 +21,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     echo "<img  class=\"ms-thumb\"  src=\"" . Yii::$app->homeUrl . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive img-thumbnail\"/>";
                 }
             } else {
-                throw new \yii\base\Exception(111);
+//                throw new \yii\base\Exception(111);
                 ?>
                 <img class="ms-thumb" src="<?php echo Yii::$app->homeUrl . "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
             <?php } ?>
