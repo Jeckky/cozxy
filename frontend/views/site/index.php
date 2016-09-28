@@ -30,7 +30,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <h2  style="width: 456px; left: 110px; top: 110px;"  class="dark-color ms-layer" data-effect="top(50,true)" data-duration="700" data-delay="250" data-ease="easeOutQuad">
                             <span style="color: #03a9f4;"><?= $banner->headTitle ?></span><br><?= $banner->title ?>
                         </h2>
-                        <p  style="width: 456px; left: 110px; top: 210px;"  class="dark-color ms-layer col-md-7 " data-effect="back(500)" data-duration="700" data-delay="500" data-ease="easeOutQuad"><?= strip_tags($banner->description); ?></p>
+                        <?php
+                        $desc = str_replace("<p>", " ", str_replace("</p>", " ", str_replace("</p><p>", "<br>", $banner->description)));
+//                        throw new \yii\base\Exception($banner->description . "----" . $desc);
+                        ?>
+                        <p  style="width: 456px; left: 110px; top: 210px;"  class="dark-color ms-layer col-md-7 " data-effect="back(500)" data-duration="700" data-delay="500" data-ease="easeOutQuad"><?= $desc; ?></p>
                         <?php if (isset($banner->linkTitle) && !empty($banner->linkTitle)): ?>
                             <p  style="width: 456px; left: 20px; top: 100px;" class="dark-color col-md-7">
                                 <a class="btn btn-primary" href="<?= $banner->link; ?>"><?= $banner->linkTitle ?></a>
