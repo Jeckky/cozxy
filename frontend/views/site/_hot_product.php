@@ -7,7 +7,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="tile">
             <div class="badges" >
-                <span class="sale" style="background-color: red !important;">HOTS</span>
+                <span class="sale" style="background-color: red !important;"><i class="fa fa-star"></i> HOT <i class="fa fa-star"></i></span>
             </div>
             <div class="price-label" ><?= number_format($model->calProductPrice($model->productId, 1, 0, 1), 2) ?> ฿</div>
 
