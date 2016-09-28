@@ -16,7 +16,8 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class CostfitAsset extends AssetBundle {
+class CostfitAsset extends AssetBundle
+{
 
     public $sourcePath = '@app/themes/costfit/assets';
     public $css = [
