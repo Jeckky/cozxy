@@ -44,39 +44,43 @@ class ShippingController extends StoreMasterController {
 
         if ($orderNo != '') {
             if (\Yii::$app->params['shippingScanTrayOnly'] == true) {
-                /* shippingScanTrayOnly = true เข้าเงื่อนไขที่ 1 ต้อง Scan ที่ละ OrderId */
+                /* shippingScanTrayOnly = true เข้าเงื่อนไขที่ 1 ต้อง Scan ทีละ OrderId */
                 //$query = \common\models\costfit\OrderItemPacking::find()->where('status =4')->all();
 
                 $queryList = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "' ")->one();
-                $queryItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $queryList->orderId . ' and status = 6')->all();
+                $queryItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $queryList->orderId . ' and status =' . \common\models\costfit\OrderItem::ORDERITEM_PICKED_BAGNO)->all(); // status : 6 pack ใส่ลงถุง
                 //$queryItem->status = 14;
                 //$queryItem->save();
                 foreach ($queryItem as $items) {
-                    $orderItemPackings = OrderItemPacking::find()->where("orderItemId =" . $items->orderItemId . ' and status = 4')->all();
-                    //echo '<pre>';
+                    $orderItemPackings = OrderItemPacking::find()->where("orderItemId =" . $items->orderItemId . ' and status = ' . OrderItemPacking::ORDER_STATUS_CLOSE_BAG)->all(); // status 4 : ปิดถุงแล้ว
+                    // echo '<pre>';
                     //print_r($orderItemPackings);
-                    //exit();
+                    // exit();
                     if (isset($orderItemPackings)) {
                         foreach ($orderItemPackings as $packing) {
-                            $packing->status = 5;
-                            $packing->save();
-                            $queryItemStatus = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $packing->orderItemId . ' and status = 6')->all();
+                            $packing->status = OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING;
+                            $packing->save(FALSE);
+                            $queryItemStatus = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $packing->orderItemId . ' and status = ' . \common\models\costfit\OrderItem::ORDERITEM_PICKED_BAGNO)->all();
                             foreach ($queryItemStatus as $shipStatus) {
-                                $shipStatus->status = \common\models\costfit\Order::ORDER_STATUS_SENDING_SHIPPING; // orderItemId : status = 14
+                                $shipStatus->status = \common\models\costfit\OrderItem::ORDER_STATUS_SENDING_SHIPPING; // orderItemId : status = 14
                                 $shipStatus->save();
+                                $queryList->status = \common\models\costfit\Order::ORDER_STATUS_SENDING_SHIPPING; // orderItemId : status = 14
+                                $queryList->save();
                             }
+                            //\common\models\costfit\OrderItem::updateAll(['status' => \common\models\costfit\OrderItem::ORDER_STATUS_SENDING_SHIPPING], ['orderItemId' => $packing->orderItemId, 'status' => 6]);
+                            //echo '<pre>';
+                            //print_r($packing);
                         }
-
-                        //$model = \common\models\costfit\OrderItem::updateAll(['orderItemId' => $items->orderItemId]);
-                        // $model->status = 14;
                     }
                 }
+                //$this->redirect(Yii::$app->homeUrl . 'store/shipping/index?orderNo=OD201608-0000066');
                 // $queryItem->status = 14;
                 // $queryItem->save();
             } else {
-                /* shippingScanTrayOnly = false เข้าเงื่อนไขที่ 2 ต้อง Scan ที่ละถุง */
+                /* shippingScanTrayOnly = false เข้าเงื่อนไขที่ 2 ต้อง Scan ทีละถุง */
             }
         }
+
 
 
         //print_r($query);
@@ -85,6 +89,42 @@ class ShippingController extends StoreMasterController {
         ]);
 
         //return $this->render('index');
+    }
+
+    public function actionScanbag() {
+        //'params : ' . \Yii::$app->params['shippingScanTrayOnly']; // มีค่าเท่ากับเริ่มต้น false
+        $bagNo = Yii::$app->request->get('bagNo');
+        $orderNo = Yii::$app->request->get('orderNo');
+
+        if ($orderNo != '') {
+            $query = \common\models\costfit\OrderItemPacking::find()
+                    ->select('*')
+                    //->joinWith(['orderItems'])
+                    ->where(['status' => 5]); //5 : กำลังจัดส่ง
+        } else {
+            $query = \common\models\costfit\OrderItemPacking::find()
+                    ->select('*')
+                    //->joinWith(['orderItems'])
+                    ->where(['status' => 4]); // 4: ปิดถุงแล้ว
+        }
+
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        if ($bagNo != '') {
+            $queryList = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "' ")->one();
+            $query = \common\models\costfit\OrderItem::find()->where("orderId=" . $queryList->orderId . ' and status = 6')->one();
+            \common\models\costfit\OrderItemPacking::updateAll(['status' => 5], ['bagNo' => $bagNo, 'orderItemId' => $query->orderItemId]);
+            \common\models\costfit\Order::updateAll(['status' => 14], [ 'orderId' => $queryList->orderId]);
+            \common\models\costfit\OrderItem::updateAll(['status' => 14], [ 'orderItemId' => $query->orderItemId]);
+        }
+
+        //print_r($query);
+        return $this->render('scanbag', [
+                    'dataProvider' => $dataProvider, 'orderNo' => $orderNo
+        ]);
     }
 
 }
