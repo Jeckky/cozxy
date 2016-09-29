@@ -74,24 +74,41 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'header' => 'Actions',
                         'template' => '{view} {update} {delete} {product} {qc} {arrange}',
                         'buttons' => [
-                            'product' => function($url, $model) {
+                            'view' => function ($url, $model) {
+                                return Html::a('<i class="fa fa-eye"></i>', $url, [
+                                            'title' => Yii::t('yii', 'view'),
+                                ]);
+                            },
+                                    'update' => function ($url, $model) {
+                                return Html::a('<i class="fa fa-pencil"></i>', $url, [
+                                            'title' => Yii::t('yii', 'update'),
+                                ]);
+                            },
+                                    'delete' => function ($url, $model) {
+                                return Html::a('<i class="fa fa-trash-o"></i>', $url, [
+                                            'title' => Yii::t('yii', 'Delete'),
+                                            'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+                                            'data-method' => 'post',
+                                ]);
+                            },
+                                    'product' => function($url, $model) {
                                 return Html::a('<br><u>Product</u>', ['/store/store-product', 'storeProductGroupId' => $model->storeProductGroupId], [
-                                    'title' => Yii::t('app', 'Change today\'s lists'),]);
+                                            'title' => Yii::t('app', 'Change today\'s lists'),]);
                             },
-                            'qc' => function($url, $model) {
+                                    'qc' => function($url, $model) {
                                 return Html::a('<br><u>ตรวจรับ</u>', ['/store/store-product/check', 'storeProductGroupId' => $model->storeProductGroupId], [
-                                    'title' => Yii::t('app', 'check\'s lists'),]);
+                                            'title' => Yii::t('app', 'check\'s lists'),]);
                             },
-                            'arrange' => function($url, $model) {
+                                    'arrange' => function($url, $model) {
                                 return Html::a('<br><u>จัดเรียง</u>', ['/store/store-product/arrange', 'storeProductGroupId' => $model->storeProductGroupId], [
-                                    'title' => Yii::t('app', 'check\'s lists'),]);
+                                            'title' => Yii::t('app', 'check\'s lists'),]);
                             },
-                        ]
-                    ],
-                ],
-            ]);
-            ?>
-        </div>
-    </div>
-    <?php Pjax::end(); ?>
+                                ]
+                            ],
+                        ],
+                    ]);
+                    ?>
+                </div>
+            </div>
+            <?php Pjax::end(); ?>
 </div>

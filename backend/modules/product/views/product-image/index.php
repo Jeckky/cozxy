@@ -52,24 +52,41 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'value' => function($model) {
                             return isset($model->image) ? yii\bootstrap\Html::img(Yii::$app->homeUrl . $model->image, ['style' => 'width:150px']) : NULL;
                         }
-                    ],
-                    'description:ntext',
-                    // 'status',
-                    // 'createDateTime',
-                    // 'updateDateTime',
-                    ['class' => 'yii\grid\ActionColumn',
-                        'header' => 'Actions',
-                        'template' => '{view} {update} {delete} {product}',
-                        'buttons' => [
-                            'product' => function($url, $model) {
-                                return Html::a('<br><u>Product</u>', ['/product/manage', 'productImageId' => $model->productImageId], [
-                                    'title' => Yii::t('app', 'Change today\'s lists'),]);
-                            },]
-                    ],
-                ],
-            ]);
-            ?>
-        </div>
-    </div>
-    <?php Pjax::end(); ?>
+                            ],
+                            'description:ntext',
+                            // 'status',
+                            // 'createDateTime',
+                            // 'updateDateTime',
+                            ['class' => 'yii\grid\ActionColumn',
+                                'header' => 'Actions',
+                                'template' => '{view} {update} {delete} {product}',
+                                'buttons' => [
+                                    'view' => function ($url, $model) {
+                                        return Html::a('<i class="fa fa-eye"></i>', $url, [
+                                                    'title' => Yii::t('yii', 'view'),
+                                        ]);
+                                    },
+                                            'update' => function ($url, $model) {
+                                        return Html::a('<i class="fa fa-pencil"></i>', $url, [
+                                                    'title' => Yii::t('yii', 'update'),
+                                        ]);
+                                    },
+                                            'delete' => function ($url, $model) {
+                                        return Html::a('<i class="fa fa-trash-o"></i>', $url, [
+                                                    'title' => Yii::t('yii', 'Delete'),
+                                                    'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+                                                    'data-method' => 'post',
+                                        ]);
+                                    },
+                                            'product' => function($url, $model) {
+                                        return Html::a('<br><u>Product</u>', ['/product/manage', 'productImageId' => $model->productImageId], [
+                                                    'title' => Yii::t('app', 'Change today\'s lists'),]);
+                                    },]
+                                    ],
+                                ],
+                            ]);
+                            ?>
+                        </div>
+                    </div>
+                    <?php Pjax::end(); ?>
 </div>

@@ -73,12 +73,17 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'header' => 'Actions',
                         'template' => '{view} {update} {delete}',
                         'buttons' => [
-                            'update' => function($url, $model, $id) {
-                                return Html::a("<span class='glyphicon glyphicon-pencil'></span>", ['update', 'id' => $id, 'storeProductGroupId' => $model->storeProductGroupId], [
+                            'view' => function ($url, $model) {
+                                return Html::a('<i class="fa fa-eye"></i>', $url, [
+                                            'title' => Yii::t('yii', 'view'),
+                                ]);
+                            },
+                                    'update' => function($url, $model, $id) {
+                                return Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $id, 'storeProductGroupId' => $model->storeProductGroupId], [
                                             'title' => Yii::t('app', 'Edit'),]);
                             },
                                     'delete' => function($url, $model, $id) {
-                                return Html::a("<span class='glyphicon glyphicon-trash'></span>", ['delete', 'id' => $id, 'storeProductGroupId' => $model->storeProductGroupId], [
+                                return Html::a('<i class="fa fa-trash-o"></i>', ['delete', 'id' => $id, 'storeProductGroupId' => $model->storeProductGroupId], [
                                             'title' => Yii::t('app', 'Delete'), 'data-confirm' => 'Are you sure to delete']);
                             },]
                             ],
