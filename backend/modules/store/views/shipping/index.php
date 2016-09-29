@@ -30,9 +30,11 @@ $this->params['pageHeader'] = Html::encode($this->title);
     <div class="panel-heading">
         <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> Scan Qr code Order No :</span>
     </div>
-    <div class="panel-body">
-        <input type="text" name="orderNo" autofocus="true" id="orderNo" class="form-control" placeholder="Search or Scan Qr code"> 
-        <div id="character-limit-input-label" class="limiter-label form-group-margin"><!--Characters left: <span class="limiter-count">20</span>--></div>
+    <div class="panel-body ">
+        <div class="col-sm-5">
+            <input type="text" name="orderNo" autofocus="true" id="orderNo" class="form-control" placeholder="Search or Scan Qr code">
+           <div id="character-limit-input-label" class="limiter-label form-group-margin"><!--Characters left: <span class="limiter-count">20</span>--></div>
+        </div>
     </div>
     <?= $this->registerJS("
                 $('#orderNo').blur(function(event){
