@@ -61,4 +61,8 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
         return $this->hasOne(\common\models\dbworld\States::className(), ['stateId' => 'provinceId']);
     }
 
+    public function getPickingPointItems() {
+        return $this->hasMany(\common\models\costfit\PickingPointItems::className(), ['pickingId' => 'pickingId']);
+    }
+
 }
