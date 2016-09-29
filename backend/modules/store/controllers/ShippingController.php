@@ -81,8 +81,6 @@ class ShippingController extends StoreMasterController {
             }
         }
 
-
-
         //print_r($query);
         return $this->render('index', [
                     'dataProvider' => $dataProvider,
