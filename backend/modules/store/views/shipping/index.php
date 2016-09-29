@@ -91,7 +91,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     [
                         'attribute' => 'pickingId',
                         'value' => function($model) {
-                            return 'จุดรับของ { ' . $model->pickingpointitems->name . ' ,ที่' . $model->pickingpoint->title . ' , ' . $model->pickingpoint->citie->localName . ' , ' . $model->pickingpoint->state->localName . ' , ' . 'ประเทศ' . $model->pickingpoint->countrie->localName . '}'; // status items 6 : แพ็คใส่ถุงแล้ว
+                            $name = isset($model->pickingpointitems->name) ? $model->pickingpointitems->name : '';
+                            $code = isset($model->pickingpointitems->code) ? $model->pickingpointitems->code : '';
+                            $title = isset($model->pickingpoint->title) ? $model->pickingpoint->title : '';
+                            $localNamecitie = isset($model->pickingpoint->citie->localName) ? $model->pickingpoint->citie->localName : '';
+                            $localNamestate = isset($model->pickingpoint->state->localName) ? $model->pickingpoint->state->localName : '';
+                            $localNamecountrie = isset($model->pickingpoint->countrie->localName) ? $model->pickingpoint->countrie->localName : '';
+
+                            return 'จุดรับของ { ' . $name . '(code : ' . $code . ')' . ' ,ที่' . $title . ' , ' . $localNamecitie . ' , ' . $localNamestate . ' , ' . 'ประเทศ' . $localNamecountrie . '}'; // status items 6 : แพ็คใส่ถุงแล้ว
                         }
                     ],
                     // 'type',
