@@ -75,7 +75,19 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             ['class' => 'yii\grid\SerialColumn'],
                             //'orderId',
                             'orderItemId',
-                            'orderNo',
+                            //'orderNo',
+                            [
+                                'attribute' => 'orderNo',
+                                'value' => function($model) {
+                                    //if ($model->status == 6) {
+                                    //$txt = 'แพ็คใส่ถุงแล้ว';
+                                    //} else if ($model->status == 14) {
+                                    //$txt = 'กำลังจะส่ง';
+                                    //}
+                                    //return $model->orderNo . ' ,มี' . count($model->orderItemId) . 'รายการ';
+                                    return $model->orderNo . ', มี ' . \common\models\costfit\Order::CountOrderItems($model->orderId) . ' รายการ';
+                                }
+                            ],
                             //'bagNo',
                             //'status',
                             [

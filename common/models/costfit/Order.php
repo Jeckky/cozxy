@@ -591,4 +591,9 @@ class Order extends \common\models\costfit\master\OrderMaster {
         return $this->hasMany(OrderItemPacking::className(), ['orderItemId' => 'orderItemId']);
     }
 
+    static public function CountOrderItems($orderId) {
+        $result = OrderItem::find()->where(['orderId' => $orderId, 'status' => 6])->count();
+        return $result;
+    }
+
 }

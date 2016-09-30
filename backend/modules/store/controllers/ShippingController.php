@@ -35,9 +35,9 @@ class ShippingController extends StoreMasterController {
         } else {
 
             $query = \common\models\costfit\Order::find()
-//                    ->select("`order`.*,oi.*")
-//                    ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-//                    ->where("oi.status = 6 OR oi.status = 14");
+                    //->select("`order`.*,oi.*")
+                    //->join("RIGHT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
+                    //->where("oi.status = 6 OR oi.status = 14");
                     ->select('*')
                     ->joinWith(['orderItems'])
                     ->where("order_item.status = 6 or order_item.status = 14");
