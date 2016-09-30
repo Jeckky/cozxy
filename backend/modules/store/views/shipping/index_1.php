@@ -99,7 +99,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             $localNamestate = isset($model->pickingpoint->state->localName) ? $model->pickingpoint->state->localName : '';
                             $localNamecountrie = isset($model->pickingpoint->countrie->localName) ? $model->pickingpoint->countrie->localName : '';
 
-                            return ' สถานที่วางของที่ : ' . $title . ' , ' . $localNamecitie . ' , ' . $localNamestate . ' , ' . 'ประเทศ' . $localNamecountrie . ' '; // status items 6 : แพ็คใส่ถุงแล้ว
+                            return ' สถานที่วางของ' . $title . ' , ' . $localNamecitie . ' , ' . $localNamestate . ' , ' . 'ประเทศ' . $localNamecountrie . '}'; // status items 6 : แพ็คใส่ถุงแล้ว
                         }
                     ],
                     // 'type',
@@ -109,13 +109,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'template' => ' {items} ',
                         'buttons' => [
                             'items' => function($url, $model) {
-                                if (\common\models\costfit\OrderItemPacking::shipPacking($model->orderItemId) > 0) {
-                                    return Html::a('lockers', Yii::$app->homeUrl . "store/lockers/index?orderItemId=" . $model->orderItemId, [
-                                                'title' => Yii::t('app', 'picking point'),]);
-                                } else {
-                                    return Html::a('รอปิดถุงแล้ว', '', [
-                                                'title' => Yii::t('app', 'picking point'),]);
-                                }
+                                return Html::a('lockers', Yii::$app->homeUrl . "store/lockers/index?loggerId=" . $model->pickingId, [
+                                            'title' => Yii::t('app', 'picking point'),]);
                             }
                                 ],
                             ],
