@@ -68,39 +68,56 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'value' => function($model) {
                             return Html::img("https://chart.googleapis.com/chart?chs=450x450&cht=qr&chl=" . $model->barcode, ['style' => 'width:150px']);
                         }
-                    ],
-                    'code',
-                    'title',
-                    'description:ntext',
-                    // 'width',
-                    // 'height',
-                    // 'depth',
-                    // 'weight',
-                    // 'maxWeight',
-                    // 'status',
-                    // 'createDateTime',
-                    // 'updateDateTime',
-                    ['class' => 'yii\grid\ActionColumn',
-                        'header' => 'Actions',
-                        'template' => '{view} {update} {delete} {column} {slot}',
-                        'buttons' => [
-                            'column' => function($url, $model) {
-                                if ($model->level == 1)
-                                    return Html::a('<br><u>Column</u>', ['/store/store-slot', 'parentId' => $model->storeSlotId, 'level' => 2], [
-                                        'title' => Yii::t('app', 'Change today\'s lists'),]);
-                            },
-                            'slot' => function($url, $model) {
-                                if ($model->level == 2)
-                                    return Html::a('<br><u>Slot</u>', ['/store/store-slot', 'parentId' => $model->storeSlotId, 'level' => 3], [
-                                        'title' => Yii::t('app', 'Change today\'s lists'),]);
-                            },
-                        ]
-                    ],
-                ],
-            ]);
-            ?>
-        </div>
-    </div>
-    <?php Pjax::end(); ?>
-</div>
-<?php ?>
+                            ],
+                            'code',
+                            'title',
+                            'description:ntext',
+                            // 'width',
+                            // 'height',
+                            // 'depth',
+                            // 'weight',
+                            // 'maxWeight',
+                            // 'status',
+                            // 'createDateTime',
+                            // 'updateDateTime',
+                            ['class' => 'yii\grid\ActionColumn',
+                                'header' => 'Actions',
+                                'template' => '{view} {update} {delete} {column} {slot}',
+                                'buttons' => [
+                                    'view' => function ($url, $model) {
+                                        return Html::a('<i class="fa fa-eye"></i>', $url, [
+                                                    'title' => Yii::t('yii', 'view'),
+                                        ]);
+                                    },
+                                            'update' => function ($url, $model) {
+                                        return Html::a('<i class="fa fa-pencil"></i>', $url, [
+                                                    'title' => Yii::t('yii', 'update'),
+                                        ]);
+                                    },
+                                            'delete' => function ($url, $model) {
+                                        return Html::a('<i class="fa fa-trash-o"></i>', $url, [
+                                                    'title' => Yii::t('yii', 'Delete'),
+                                                    'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+                                                    'data-method' => 'post',
+                                        ]);
+                                    },
+                                            'column' => function($url, $model) {
+                                        if ($model->level == 1)
+                                            return Html::a('<br><u>Column</u>', ['/store/store-slot', 'parentId' => $model->storeSlotId, 'level' => 2], [
+                                                        'title' => Yii::t('app', 'Change today\'s lists'),]);
+                                    },
+                                            'slot' => function($url, $model) {
+                                        if ($model->level == 2)
+                                            return Html::a('<br><u>Slot</u>', ['/store/store-slot', 'parentId' => $model->storeSlotId, 'level' => 3], [
+                                                        'title' => Yii::t('app', 'Change today\'s lists'),]);
+                                    },
+                                        ]
+                                    ],
+                                ],
+                            ]);
+                            ?>
+                        </div>
+                    </div>
+                    <?php Pjax::end(); ?>
+                </div>
+                <?php ?>

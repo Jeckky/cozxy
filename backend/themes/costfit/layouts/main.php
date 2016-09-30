@@ -33,6 +33,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
 
+
     </head>
     <body class="theme-default main-menu-animated">
 

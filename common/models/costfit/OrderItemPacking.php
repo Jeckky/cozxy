@@ -19,9 +19,13 @@ use \common\models\costfit\master\OrderItemPackingMaster;
  */
 class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMaster {
 
+    const ORDER_STATUS_CLOSE_BAG = 4; //กำลังจัดส่ง
+    const ORDER_STATUS_SENDING_PACKING_SHIPPING = 5; //กำลังจัดส่ง
+
     /**
      * @inheritdoc
      */
+
     public function rules() {
         return array_merge(parent::rules(), []);
     }
@@ -73,6 +77,7 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
 
     static public function shipPacking($orderItemId) {
         $result = OrderItemPacking::find()->where(['orderItemId' => $orderItemId, 'status' => 5])->count();
+        //throw new \yii\base\Exception($orderItemId);
         return $result;
     }
 
@@ -85,6 +90,10 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
         } else {
             return '';
         }
+    }
+
+    public function getOrderItems() {
+        return $this->hasMany(OrderItem::className(), ['orderItemId' => 'orderItemId']); //[Order :: ปลายทาง ,  OrderItem :: ต้นทาง]
     }
 
 }

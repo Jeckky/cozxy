@@ -14,7 +14,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <div class="order-index">
 
-
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-default">
         <div class="panel-heading">

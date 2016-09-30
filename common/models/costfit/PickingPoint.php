@@ -80,4 +80,8 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
         }
     }
 
+    public function getPickingPointItems() {
+        return $this->hasMany(\common\models\costfit\PickingPointItems::className(), ['pickingId' => 'pickingId']);
+    }
+
 }

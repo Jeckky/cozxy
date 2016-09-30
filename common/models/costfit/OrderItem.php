@@ -26,6 +26,8 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster {
     const DATE_GAP_TO_PICKING = 2;
     const ORDERITEM_PICKING = 4;
     const ORDERITEM_PICKED = 5;
+    const ORDERITEM_PICKED_BAGNO = 6;
+    const ORDER_STATUS_SENDING_SHIPPING = 14;
 
     /**
      * @inheritdoc
