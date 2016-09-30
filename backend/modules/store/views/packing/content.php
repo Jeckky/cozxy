@@ -8,7 +8,7 @@ use common\models\costfit\Product;
 
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?><?php
-$id = Order::findOrderId($orderId);
+//$id = Order::findOrderId($orderId);
 ?>
 <br><br><br><br><br>
 <table class="table table_bordered" width="100%"  cellpadding="3" cellspacing="0" style="border: 0px;">
@@ -16,7 +16,7 @@ $id = Order::findOrderId($orderId);
         <td><h3><?= $bagNo ?></h3></td><td style="text-align: right;"><img src="https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=<?= $bagNo ?>"></td>
     </tr>
     <tr>
-        <td colspan="2"><h4>ชื่อ - นามสกุล ผู้รับ : <?= Order::findReciever($id) ?></h4></td>
+        <td colspan="2"><h4>ชื่อ - นามสกุล ผู้รับ : <?= Order::findReciever($orderId) ?></h4></td>
     </tr><tr>
         <td colspan="2"><h4>สถานที่ส่ง : <?= PickingPoint::findPickingPoitItem($orderId) ?></h4></td>
     </tr>
@@ -36,7 +36,7 @@ $id = Order::findOrderId($orderId);
     <?php
     $i = 1;
     $orderItems = OrderItemPacking::findItemInBag($bagNo);
-//throw new Exception(print_r($orderItems, true));
+//    throw new Exception(print_r($orderItems, true));
     if (isset($orderItems) && !empty($orderItems)) {
         foreach ($orderItems as $orderItem):
             $item = Product::findProducts($orderItem->orderItemId);

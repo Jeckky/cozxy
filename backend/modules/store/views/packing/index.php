@@ -22,7 +22,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <div class="col-md-6"><?= $this->title ?></div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
-                        <?//= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Order', ['create'], ['class' => 'btn btn-success btn-xs']) ?>
+                        <?php if (isset($bagNo)): ?>
+                            <?= Html::a('Print Bag Label', ['print-bag-label?orderId=' . $orderId . "&bagNo=" . $bagNo], ['class' => 'btn btn-success btn-xs ', 'target' => '_blank', 'id' => 'printBagLabel']) ?>
+                            <?php echo $this->registerJs(" window.open($('#printBagLabel').attr('href'),'_blank');", \yii\web\View::POS_LOAD) ?>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -30,8 +33,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
         <div class="panel-body">
             <?php
             $form = ActiveForm::begin([
-                        'method' => 'GET',
-                        'action' => ['packing/index'],
+                'method' => 'GET',
+                'action' => ['packing/index'],
             ]);
             ?>
 
@@ -54,6 +57,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     'options' => [
                         'class' => 'table-light'
                     ],
+                    'rowOptions' => function ($model, $index, $widget, $grid) {
+                        if ($model->status == common\models\costfit\Order::ORDER_STATUS_PACKED)
+                            return ['class' => 'success'];
+                    },
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
                         'orderNo',
@@ -63,6 +70,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             'value' => function($model) {
                                 $countItemsArray = common\models\costfit\OrderItem::countPickingItemsArray($model->orderId);
                                 return $countItemsArray['countItems'] . " รายการ<br>" . $countItemsArray['sumQuantity'] . " ชิ้น";
+                            }
+                        ],
+                        [
+                            'attribute' => 'status',
+                            'value' => function($model) {
+                                return $model->getStatusText($model->status);
                             }
                         ],
 //                        ['class' => 'yii\grid\ActionColumn',
