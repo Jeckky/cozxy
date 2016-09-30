@@ -83,23 +83,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
     </div>
 </section><!--Catalog Single Item Close-->
-
-<!--Tabs Widget-->
-<section class="tabs-widget">
-    <!-- Nav tabs -->
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#descr" data-toggle="tab">Description</a></li>
-        <li><a href="#specs" data-toggle="tab">Specs</a></li>
-        <!--<li><a href="#term" data-toggle="tab">Term & Condition</a></li>-->
-    </ul>
-    <div class="tab-content" id="productTabs">
-        <?php
-        echo $this->render('product_tabs_widget_all', ['model' => $model,
-            'term' => isset($term) ? $term : '']);
-        ?>
-    </div>
-</section><!--Tabs Widget Close-->
-
 <!--Special Offer-->
 <section class="special-offer">
     <?//php echo $this->render('product_special_offer'); ?>

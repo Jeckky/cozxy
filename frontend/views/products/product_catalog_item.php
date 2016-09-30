@@ -167,6 +167,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-7">
+            <h3 style="text-decoration: underline">Description</h3>
+            <?= $model->description; ?>
+            <h3 style="text-decoration: underline">Specification</h3>
+            <?= $model->specification; ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-7">
             <h3>Tags</h3>
             <div class="tags">&nbsp;
                 <?php
