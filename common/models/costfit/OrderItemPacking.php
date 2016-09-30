@@ -35,14 +35,17 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
 
     static public function orderInPacking($orderId) {
         $orderItems = OrderItem::find()->where("orderId=" . $orderId)->all();
+        //throw new \yii\base\Exception(print_r($orderItems, true));
         $itemItemId = '';
         foreach ($orderItems as $orderItem):
             $itemItemId = $itemItemId . $orderItem->orderItemId . ",";
         endforeach;
-        if (!empty($itemItemId)) {
+        if (!empty($itemItemId) && isset($itemItemId)) {
             $itemItemId = substr($itemItemId, 0, -1);
-            $orderItemPackings = OrderItemPacking::find()->where("orderItemId in ('" . $itemItemId . "') and status !=4")->all();
+            //throw new \yii\base\Exception($itemItemId);
+            $orderItemPackings = OrderItemPacking::find()->where("orderItemId in ($itemItemId) and status =99")->all();
             if (isset($orderItemPackings) && !empty($orderItemPackings)) {
+                //throw new \yii\base\Exception(print_r($itemItemId, true));
                 return $orderItemPackings;
             } else {
                 return '';
@@ -71,6 +74,17 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     static public function shipPacking($orderItemId) {
         $result = OrderItemPacking::find()->where(['orderItemId' => $orderItemId, 'status' => 5])->count();
         return $result;
+    }
+
+    static public function findItemInBag($bagNo) {
+        $orderItems = OrderItemPacking::find()->where("bagNo='" . $bagNo . "' and status=4")->all();
+
+        if (isset($orderItems) && !empty($orderItems)) {
+            //throw new \yii\base\Exception($bagNo);
+            return $orderItems;
+        } else {
+            return '';
+        }
     }
 
 }

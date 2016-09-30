@@ -290,4 +290,18 @@ class Product extends \common\models\costfit\master\ProductMaster {
         }
     }
 
+    public static function findProducts($orderItemId) {
+        $orderItems = OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
+        if (isset($orderItems) && !empty($orderItems)) {
+            $product = Product::find()->where("productId=" . $orderItems->productId)->one();
+            if (isset($product) && !empty($product)) {
+                return $product;
+            } else {
+                return '';
+            }
+        } else {
+            return '';
+        }
+    }
+
 }

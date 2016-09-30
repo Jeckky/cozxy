@@ -10,14 +10,12 @@ use common\models\costfit\Product as ProductModel;
 /**
  * Product represents the model behind the search form about `\common\models\costfit\Product`.
  */
-class Product extends ProductModel
-{
+class Product extends ProductModel {
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['productId', 'userId', 'productGroupId', 'categoryId', 'status'], 'integer'],
             [['code', 'title', 'description', 'createDateTime', 'updateDateTime'], 'safe'],
@@ -28,8 +26,7 @@ class Product extends ProductModel
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -41,8 +38,7 @@ class Product extends ProductModel
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = ProductModel::find();
 
         // add conditions that should always apply here
@@ -75,24 +71,21 @@ class Product extends ProductModel
         ]);
 
         $query->andFilterWhere(['like', 'code', $this->code])
-        ->andFilterWhere(['like', 'title', $this->title])
-        ->andFilterWhere(['like', 'description', $this->description]);
+                ->andFilterWhere(['like', 'title', $this->title])
+                ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }
 
-    public static function bestSellers()
-    {
+    public static function bestSellers() {
         return \common\models\costfit\search\Product::find()->where("RAND()")->limit(6)->all();
     }
 
-    public static function itemOnSales()
-    {
+    public static function itemOnSales() {
         return \common\models\costfit\search\Product::find()->where("RAND()")->limit(6)->all();
     }
 
-    public static function hotProducts()
-    {
+    public static function hotProducts() {
         return \common\models\costfit\search\Product::find()->where("RAND()")->all();
     }
 

@@ -30,7 +30,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
         ]);
         ?>
         <h3> Scan Product Code </h3><br>
-        <h4>   Product code :  <input type="text" name="item" autofocus="true" id="item"></h4>
+        <h4>   Product code :  <input type="text" name="item" autofocus="true" id="item" required="true"></h4>
 
         <?= $this->registerJS("
                             $('#qrSlot').blur(function(event){
@@ -52,6 +52,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <th><center>No.</center></th>
             <th><center>Products</center></th>
             <th><center>Status</center></th>
+            <th><center>ลดจำนวน</center></th>
             </tr>
             </thead>
             <tbody>
@@ -64,10 +65,23 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         echo '<td>' . $i . '</td>';
                         echo '<td>' . Product::findProductInPack($item->orderItemId) . '</td>';
                         echo '<td> ใส่ถุงแล้ว ' . $item->quantity . ' / ' . common\models\costfit\OrderItemPacking::createStatus($item->orderItemId) . '</td>';
+                        if ($item->quantity > 1) {//ลดจำนวนลง 1
+                            echo '<td>' . Html::a('<i class="fa fa-minus" aria-hidden="true"></i> 1', ['minus',
+                                'packingId' => $item->orderItemPackingId,
+                                'orderId' => $orderId,
+                                'ms' => isset($ms) ? $ms : ''
+                                    ], ['class' => 'btn btn-sm btn-warning']) . '</td>';
+                        } else if ($item->quantity == 1) {//ลบออก
+                            echo '<td>' . Html::a('<i class="fa fa-minus" aria-hidden="true"></i>', ['remove',
+                                'packingId' => $item->orderItemPackingId,
+                                'orderId' => $orderId,
+                                'ms' => isset($ms) ? $ms : ''
+                                    ], ['class' => 'btn btn-sm btn-danger']) . '</td>';
+                        }
                         echo '</tr>';
                         $i++;
                     endforeach;
-                }else {
+                } else {
                     echo '<td colspan="3"> ยังไม่มีสินค้าในถุง </td>';
                 }
                 //throw new \yii\base\Exception(print_r($order, true));
@@ -82,7 +96,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
             ?>
         </div>
         <div class="pull-right">
-            <?= Html::submitButton("  ปิดถุง", ['class' => 'btn btn-success btn-lg fa fa-check-square-o']) ?></div>
+            <?php
+            if (isset($items) && !empty($items)) {
+                echo Html::a('<i class="fa fa-check-square-o" aria-hidden="true"></i> ปิดถุง', ['close-bag',
+                    'orderId' => $orderId
+                        ], ['class' => 'btn btn-lg btn-success']);
+            }
+            ?>
+        </div>
 
     </div>
 </div>

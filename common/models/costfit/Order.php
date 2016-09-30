@@ -553,6 +553,29 @@ class Order extends \common\models\costfit\master\OrderMaster {
         }
     }
 
+    static public function findOrderId($orderId) {
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        if (isset($order)) {
+            return $order->orderId;
+        } else {
+            return '';
+        }
+    }
+
+    static public function findReciever($orderId) {
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        if (isset($order)) {
+            $user = User::find()->where("userId=" . $order->userId)->one();
+            if (isset($user)) {
+                return $user->firstname . " " . $user->lastname;
+            } else {
+                return 'ไม่พบข้อมูลผู้รับ';
+            }
+        } else {
+            return '';
+        }
+    }
+
     public function getPickingpoint() {
         return $this->hasOne(\common\models\costfit\PickingPoint::className(), ['pickingId' => 'pickingId']);
     }

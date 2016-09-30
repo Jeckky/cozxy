@@ -61,4 +61,23 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
         return $this->hasOne(\common\models\dbworld\States::className(), ['stateId' => 'provinceId']);
     }
 
+    static public function findPickingPoitItem($orderId) {
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        if (isset($order)) {
+            $pickingPoint = PickingPoint::find()->where("pickingId=" . $order->pickingId)->one();
+            if (isset($pickingPoint)) {
+                $pickingSlot = PickingPointItems::find()->where("pickingId=" . $pickingPoint->pickingId . " and status=1 order by pickingItemsId ASC")->one();
+                if (isset($pickingSlot)) {
+                    return $pickingPoint->title . ",  ช่องที่  " . $pickingSlot->code;
+                } else {
+                    return 'ไม่มีช่องว่างที่จุดนี้';
+                }
+            } else {
+                return 'ไม่พบจุดส่งสินค้า';
+            }
+        } else {
+            return 'ไม่พบรายการ Order';
+        }
+    }
+
 }

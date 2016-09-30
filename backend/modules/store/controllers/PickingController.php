@@ -341,45 +341,6 @@ class PickingController extends StoreMasterController {
         endforeach;
     }
 
-    /* static function updateQuantity($allOrderId) {
-      $different = 0;
-      $userId = '1234';
-      foreach ($allOrderId as $orderId):
-      $orderItmes = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and status!=4 and status!=5")->all();
-      if (isset($orderItmes) && !empty($orderItmes)) {
-      foreach ($orderItmes as $item):
-      $arranges = \common\models\costfit\StoreProductArrange::find()->where("productId=" . $item->productId)->all();
-      if (isset($arranges) && !empty($arranges)) {
-      foreach ($arranges as $arrange):
-      if ($arrange->quantity < $item->quantity) {
-      $different = $item->quantity - $arrange->quantity; //ถ้าของไม่พอใน 1 slot.......
-      $arrange->quantity = 0;
-      } else {
-      $arrange->quantity = $arrange->quantity - $item->quantity;
-      }
-      $arrange->save();
-      break;
-      endforeach;
-      }
-      if ($item->status != 5) {//ป้องกันการ refresh
-      $item->status = 4; //เปลี่ยนสถานะเป็นกำลัง หยิบ
-      } else {
-      $item->status = 5;
-      }
-      $item->save(false);
-      endforeach;
-      $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
-      if ($order->status != 12) {
-      $order->status = 11; //กำลังหยิบ
-      $order->pickerId = $userId;
-      } else {
-      $order->status = 12; //เสร็จแล้ว
-      }
-      $order->save(false);
-      }
-      endforeach;
-      } */
-
     static function updateQuantity($allOrderId) {
         $different = 0;
         $userId = '1234';

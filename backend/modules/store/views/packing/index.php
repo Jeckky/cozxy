@@ -35,7 +35,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
             ]);
             ?>
 
-            <h4>   Order No QR code : <input type="text" name="orderNo" autofocus="true" id="orderNo"></h4>
+            <h4>   Order No QR code : <input type="text" name="orderNo" autofocus="true" id="orderNo" required="true"></h4>
                 <?= $this->registerJS("
                             $('#orderNo').blur(function(event){
                                 if(event.which == 13 || event.keyCode == 13)
