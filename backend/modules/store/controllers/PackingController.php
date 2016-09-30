@@ -108,7 +108,6 @@ class PackingController extends StoreMasterController
             if (!empty($itemInBag)) {
                 $inBags = \common\models\costfit\OrderItemPacking::find()->where("orderItemId in($itemInBag) and status=99")->all();
 
-
                 if (count($inBags) > 0) {
                     $bagNo = $this->genBagNo();
                 } else {
