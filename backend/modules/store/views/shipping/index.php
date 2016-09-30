@@ -73,8 +73,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 },
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
-                            //'orderId',
-                            'orderItemId',
+                            'orderId',
+                            //'orderItemId',
                             //'orderNo',
                             [
                                 'attribute' => 'orderNo',
