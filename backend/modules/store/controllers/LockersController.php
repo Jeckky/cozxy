@@ -23,13 +23,13 @@ class LockersController extends StoreMasterController {
         if ($orderItemId != '') {
             $query = \common\models\costfit\OrderItemPacking::find()
                     ->select('*')
-                    //->joinWith(['orderItems'])
-                    ->where([ 'orderItemId' => $orderItemId])
+//->joinWith(['orderItems'])
+                    ->where(['orderItemId' => $orderItemId])
                     ->andWhere(['>', 'status', 4]);
         } else if ($bagNo != '') {
             $query = \common\models\costfit\OrderItemPacking::find()
                     ->select('*')
-                    //->joinWith(['orderItems'])
+//->joinWith(['orderItems'])
                     ->where(['status' => 5, 'bagNo' => $bagNo]);
         }
 
@@ -48,16 +48,18 @@ class LockersController extends StoreMasterController {
 
         if ($lockersNo != '') {
             $query = \common\models\costfit\PickingPointItems::find()
-                            //->joinWith(['orderItems'])
+//->joinWith(['orderItems'])
                             ->where(['code' => $lockersNo])->one();
-            //echo '<pre>';
-            //print_r($query);
+//echo '<pre>';
+//print_r($query);
             if (count($query) > 0) {
-                //echo 'มีรหัส lockers No นี้';
+//echo 'มีรหัส lockers No นี้';
                 $lockersCode = TRUE;
-                //echo $query->pickingItemsId;
-                $OrderItemPacking = \common\models\costfit\OrderItemPacking::find()->where("bagNo = '" . $bagNo . "' ")->one();
-                if (isset($OrderItemPacking)) {
+//echo $query->pickingItemsId;
+                $useSlot = \common\models\costfit\OrderItemPacking::find()->where(" pickingItemsId = " . $query->pickingItemsId . " and status = 7")->one(); //มีใช้แล้วหรือเปล่า
+                if (!isset($useSlot)) {
+                    $OrderItemPacking = \common\models\costfit\OrderItemPacking::find()->where(" bagNo = '" . $bagNo . "'")->one();
+
                     \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $query->pickingItemsId], ['bagNo' => $bagNo]);
                     //echo '<pre>';
                     //print_r($OrderItemPacking);

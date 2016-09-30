@@ -64,64 +64,71 @@ $this->params['pageHeader'] = Html::encode($this->title);
             <?=
             GridView::widget([
                 'dataProvider' => $dataProvider,
-                'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-                    //'orderId',
-                    'orderItemId',
-                    'orderNo',
-                    //'bagNo',
-                    //'status',
-                    [
-                        'attribute' => 'status',
-                        'value' => function($model) {
-                            if ($model->status == 6) {
-                                $txt = 'กำลังแพ็คใส่ถุงแล้ว';
-                            } else if ($model->status == 14) {
-                                $txt = 'กำลังจะส่ง';
-                            }
-                            return isset($txt) ? $txt : ''; // status items 6 : แพ็คใส่ถุงแล้ว
-                        }
-                    ],
-                    [
-                        'attribute' => 'จำนวน bagNo',
-                        'value' => function($model) {
-                            return \common\models\costfit\OrderItemPacking::shipPacking($model->orderItemId) . "  ถุง";
-                        }
-                    ],
-                    //'pickingId',
-                    [
-                        'attribute' => 'pickingId',
-                        'value' => function($model) {
-                            $name = isset($model->pickingpointitems->name) ? $model->pickingpointitems->name : '';
-                            $code = isset($model->pickingpointitems->code) ? $model->pickingpointitems->code : '';
-                            $title = isset($model->pickingpoint->title) ? $model->pickingpoint->title : '';
-                            $localNamecitie = isset($model->pickingpoint->citie->localName) ? $model->pickingpoint->citie->localName : '';
-                            $localNamestate = isset($model->pickingpoint->state->localName) ? $model->pickingpoint->state->localName : '';
-                            $localNamecountrie = isset($model->pickingpoint->countrie->localName) ? $model->pickingpoint->countrie->localName : '';
-
-                            return ' สถานที่วางของที่ : ' . $title . ' , ' . $localNamecitie . ' , ' . $localNamestate . ' , ' . 'ประเทศ' . $localNamecountrie . ' '; // status items 6 : แพ็คใส่ถุงแล้ว
-                        }
-                    ],
-                    // 'type',
-                    // 'createDateTime',
-                    // 'updateDateTime',
-                    ['class' => 'yii\grid\ActionColumn',
-                        'template' => ' {items} ',
-                        'buttons' => [
-                            'items' => function($url, $model) {
-                                if (\common\models\costfit\OrderItemPacking::shipPacking($model->orderItemId) > 0) {
-                                    return Html::a('lockers', Yii::$app->homeUrl . "store/lockers/index?orderItemId=" . $model->orderItemId, [
-                                                'title' => Yii::t('app', 'picking point'),]);
-                                } else {
-                                    return Html::a('รอปิดถุงแล้ว', '', [
-                                                'title' => Yii::t('app', 'picking point'),]);
+                'rowOptions' => function($model) {
+                    if ($model->status == 14) {
+                        return ['class' => 'warning'];
+                    } else if ($model->status == 15) {
+                        return ['class' => 'success'];
+                    }
+                },
+                        'columns' => [
+                            ['class' => 'yii\grid\SerialColumn'],
+                            //'orderId',
+                            'orderItemId',
+                            'orderNo',
+                            //'bagNo',
+                            //'status',
+                            [
+                                'attribute' => 'status',
+                                'value' => function($model) {
+                                    if ($model->status == 6) {
+                                        $txt = 'แพ็คใส่ถุงแล้ว';
+                                    } else if ($model->status == 14) {
+                                        $txt = 'กำลังจะส่ง';
+                                    }
+                                    return isset($txt) ? $txt : ''; // status items 6 : แพ็คใส่ถุงแล้ว
                                 }
-                            }
-                                ],
                             ],
-                        ],
-                    ]);
-                    ?>
+                            [
+                                'attribute' => 'จำนวน bagNo',
+                                'value' => function($model) {
+                                    return \common\models\costfit\OrderItemPacking::shipPacking($model->orderItemId) . "  ถุง";
+                                }
+                            ],
+                            //'pickingId',
+                            [
+                                'attribute' => 'pickingId',
+                                'value' => function($model) {
+                                    $name = isset($model->pickingpointitems->name) ? $model->pickingpointitems->name : '';
+                                    $code = isset($model->pickingpointitems->code) ? $model->pickingpointitems->code : '';
+                                    $title = isset($model->pickingpoint->title) ? $model->pickingpoint->title : '';
+                                    $localNamecitie = isset($model->pickingpoint->citie->localName) ? $model->pickingpoint->citie->localName : '';
+                                    $localNamestate = isset($model->pickingpoint->state->localName) ? $model->pickingpoint->state->localName : '';
+                                    $localNamecountrie = isset($model->pickingpoint->countrie->localName) ? $model->pickingpoint->countrie->localName : '';
+
+                                    return ' สถานที่วางของที่ : ' . $title . ' , ' . $localNamecitie . ' , ' . $localNamestate . ' , ' . 'ประเทศ' . $localNamecountrie . ' '; // status items 6 : แพ็คใส่ถุงแล้ว
+                                }
+                            ],
+                            // 'type',
+                            // 'createDateTime',
+                            // 'updateDateTime',
+                            ['class' => 'yii\grid\ActionColumn',
+                                'template' => ' {items} ',
+                                'buttons' => [
+                                    'items' => function($url, $model) {
+                                        if ($model->status == 14) {
+                                            return Html::a('นำใส่ lockers', Yii::$app->homeUrl . "store/lockers/index?orderItemId=" . $model->orderItemId, [
+                                                        'title' => Yii::t('app', 'picking point'),]);
+                                        } else {
+//                                    return Html::a('รอปิดถุงแล้ว', '', [
+//                                                'title' => Yii::t('app', 'picking point'),]);
+                                        }
+                                    }
+                                        ],
+                                    ],
+                                ],
+                            ]);
+                            ?>
         </div>
     </div>
 

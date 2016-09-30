@@ -30,17 +30,22 @@ class ShippingController extends StoreMasterController {
             $query = \common\models\costfit\Order::find()
                     ->select('*')
                     ->joinWith(['orderItems'])
-                    ->where(['order_item.status' => 6, 'order.orderNo' => $orderNo]);
+                    //->where("(order_item.status = 6 or order_item.status = 14) and order.orderNo = '" . $orderNo . "'"); //['order_item.status' => 6, 'order.orderNo' => $orderNo]
+                    ->where("(order_item.status = 6 or order_item.status = 14) "); //['order_item.status' => 6, 'order.orderNo' => $orderNo]
         } else {
             $query = \common\models\costfit\Order::find()
                     ->select('*')
                     ->joinWith(['orderItems'])
-                    ->where(['order_item.status' => \common\models\costfit\Order::ORDER_STATUS_SENDING_SHIPPING]);
+                    ->where("(order_item.status = 6 or order_item.status = 14)");
         }
+
+        // echo '<pre>';
+        // print_r($query);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
 
         if ($orderNo != '') {
             if (\Yii::$app->params['shippingScanTrayOnly'] == true) {
@@ -73,12 +78,14 @@ class ShippingController extends StoreMasterController {
                         }
                     }
                 }
+
                 //$this->redirect(Yii::$app->homeUrl . 'store/shipping/index?orderNo=OD201608-0000066');
                 // $queryItem->status = 14;
                 // $queryItem->save();
             } else {
                 /* shippingScanTrayOnly = false เข้าเงื่อนไขที่ 2 ต้อง Scan ทีละถุง */
             }
+            //$this->redirect(Yii::$app->homeUrl . 'store/shipping/');
         }
 
         //print_r($query);

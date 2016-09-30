@@ -76,7 +76,13 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     }
 
     static public function shipPacking($orderItemId) {
-        $result = OrderItemPacking::find()->where(['orderItemId' => $orderItemId, 'status' => 5])->count();
+        $orderItem = OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
+        if ($orderItem->order->status == 12) {
+            $status = 4;
+        } else {
+            $status = 5;
+        }
+        $result = OrderItemPacking::find()->where(['orderItemId' => $orderItemId, 'status' => $status])->count();
         //throw new \yii\base\Exception($orderItemId);
         return $result;
     }
