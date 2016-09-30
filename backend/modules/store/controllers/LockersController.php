@@ -48,14 +48,14 @@ class LockersController extends StoreMasterController {
 
         if ($lockersNo != '') {
             $query = \common\models\costfit\PickingPointItems::find()
-//->joinWith(['orderItems'])
+                            //->joinWith(['orderItems'])
                             ->where(['code' => $lockersNo])->one();
-//echo '<pre>';
-//print_r($query);
+            //echo '<pre>';
+            //print_r($query);
             if (count($query) > 0) {
-//echo 'มีรหัส lockers No นี้';
+                //echo 'มีรหัส lockers No นี้';
                 $lockersCode = TRUE;
-//echo $query->pickingItemsId;
+                //echo $query->pickingItemsId;
                 $useSlot = \common\models\costfit\OrderItemPacking::find()->where(" pickingItemsId = " . $query->pickingItemsId . " and status = 7")->one(); //มีใช้แล้วหรือเปล่า
                 if (!isset($useSlot)) {
                     $OrderItemPacking = \common\models\costfit\OrderItemPacking::find()->where(" bagNo = '" . $bagNo . "'")->one();
@@ -74,6 +74,7 @@ class LockersController extends StoreMasterController {
                         ->select('*')
                         //->joinWith(['orderItems'])
                         ->where(['bagNo' => $bagNo]);
+                $this->redirect(Yii::$app->homeUrl . 'store/shipping');
             } else {
                 //echo 'ไม่พบ lockers No นี';
                 $lockersCode = FALSE;

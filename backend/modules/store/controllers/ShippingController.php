@@ -33,18 +33,25 @@ class ShippingController extends StoreMasterController {
                     //->where("(order_item.status = 6 or order_item.status = 14) and order.orderNo = '" . $orderNo . "'"); //['order_item.status' => 6, 'order.orderNo' => $orderNo]
                     ->where("(order_item.status = 6 or order_item.status = 14) "); //['order_item.status' => 6, 'order.orderNo' => $orderNo]
         } else {
+
             $query = \common\models\costfit\Order::find()
+//                    ->select("`order`.*,oi.*")
+//                    ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
+//                    ->where("oi.status = 6 OR oi.status = 14");
                     ->select('*')
                     ->joinWith(['orderItems'])
-                    ->where("(order_item.status = 6 or order_item.status = 14)");
+                    ->where("order_item.status = 6 or order_item.status = 14");
         }
 
-        // echo '<pre>';
-        // print_r($query);
+
+        //echo '<pre>';
+        //print_r($query);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        //throw new \yii\base\Exception($dataProvider->getTotalCount());
 
 
         if ($orderNo != '') {
