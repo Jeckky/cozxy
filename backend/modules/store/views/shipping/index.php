@@ -45,6 +45,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 });
     ") ?>
     <?php ActiveForm::end(); ?>
+
 </div>
 
 <div class="order-index">
