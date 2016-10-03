@@ -44,9 +44,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             if (isset($item) && !empty($item)) {
                 //throw new Exception($item->code);
                 echo '<tr>';
-                echo '<td>' . $i . '</td>';
-                echo '<td>' . $item->code . '</td>';
-                echo '<td>' . $orderItem->quantity . '</td>';
+                echo '<td><center>' . $i . '</center></td>';
+                echo '<td><center>' . $item->code . '</center></td>';
+                echo '<td><center>' . $orderItem->quantity . '</center></td>';
                 echo '</tr>';
                 $i++;
             } else {
