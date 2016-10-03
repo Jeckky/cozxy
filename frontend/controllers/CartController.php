@@ -232,7 +232,8 @@ class CartController extends MasterController
                 $oi->price = $price["price"];
                 $oi->quantity = $_POST["quantity"];
                 $oi->priceOnePiece = $oi->product->calProductPrice($_POST["productId"], 1);
-                $oi->total = $oi->price * $_POST["quantity"];
+
+                $oi->total = ($oi->price * $_POST["quantity"]) - $price["discountValue"];
                 $oi->save();
                 $cart = \common\models\costfit\Order::findCartArray();
                 $res["status"] = TRUE;
@@ -240,7 +241,7 @@ class CartController extends MasterController
                 $res["priceText"] = $price["priceText"];
                 $res["priceOnePiece"] = $oi->priceOnePiece;
                 $res["priceOnePieceText"] = number_format($oi->priceOnePiece, 2);
-                $res["saving"] = $oi->priceOnePiece - $price["price"];
+                $res["saving"] = $price["discountValue"];
                 $res["orderItemId"] = $oi->orderItemId;
                 $res["cart"] = $cart;
                 $res["discountType"] = $price["discountType"];
