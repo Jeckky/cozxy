@@ -288,7 +288,7 @@ class CheckoutController extends MasterController {
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Order Thank';
         $res = [];
-        throw new \yii\base\Exception(print_r($_REQUEST, TRUE));
+        //throw new \yii\base\Exception(print_r($_REQUEST, TRUE));
         if (isset($_REQUEST) && $_REQUEST != array()) {
             $order = Order::find()->where("orderNo='" . $_REQUEST["req_reference_number"] . "'")->one();
             if ($_REQUEST["decision"] == "ACCEPT") {
