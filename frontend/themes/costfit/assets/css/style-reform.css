@@ -263,11 +263,3 @@
     padding: 10px 12px; color: #fff; border-width: 1px;
     border-radius: 4px 4px 0 0; -webkit-box-shadow: none; box-shadow: none;
 }
-
-/**
-Feature-tabs
-*/
-
-.feature-tabs .tab {
-    width: 170px;
-}

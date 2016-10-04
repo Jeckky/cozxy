@@ -7,7 +7,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <!--Brands Carousel Widget-->
 <section class="brand-carousel">
-    <div class="container-fluid">
+    <div class="container">
         <h2>Brands in our shop</h2>
         <div class="inner">
             <?php

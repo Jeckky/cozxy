@@ -11,16 +11,7 @@ $logo = common\models\costfit\ContentGroup::find()->where("lower(title)='logoima
 <?= $this->render('_modal_login') ?>
 <?= $this->render('_header', compact('logo')) ?>
 <div class="page-content">
-    <div class="content-fluid">
-        <div class="row">
-            <div class="col-md-10">
-                <?php echo $content; ?>
-            </div>
-	        <div class="col-md-2">
-                right side bar
-            </div>
-        </div>
-    </div>
+    <?php echo $content; ?>
 </div>
 <?php
 $logoImage = common\models\costfit\ContentGroup::find()->where("lower(title)='logoImage'")->one();
