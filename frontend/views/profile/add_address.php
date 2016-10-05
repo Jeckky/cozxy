@@ -116,55 +116,113 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     // Additional input fields passed as params to the child dropdown's pluginOptions
     echo Html::hiddenInput('input-type-1', $model->provinceId, ['id' => 'input-type-1']);
     echo Html::hiddenInput('input-type-2', $model->provinceId, ['id' => 'input-type-2']);
-    echo $form->field($model, 'provinceId')->widget(DepDrop::classname(), [
-        'data' => [$model->provinceId => $model->provinceId],
-        'options' => ['placeholder' => 'Select ...'],
-        //'options' => ['id' => 'address-provinceidxxx'],
-        'type' => DepDrop::TYPE_SELECT2,
-        'select2Options' => ['pluginOptions' => ['allowClear' => true]],
-        'pluginOptions' => [
-            //'initialize' => true,
-            'depends' => ['address-countryid'],
-            'url' => Url::to(['child-states-address']),
-            'loadingText' => 'Loading province ...',
-            'params' => ['input-type-1', 'input-type-2']
-        ]
-    ])->label('States');
+    echo Html::hiddenInput('input-type-3', $hash, ['id' => 'input-type-3']);
+    //echo $hash;
+    if ($hash != 'add') {
+        echo $form->field($model, 'provinceId')->widget(DepDrop::classname(), [
+            'data' => [$model->provinceId => $model->provinceId],
+            'options' => ['placeholder' => 'Select ...'],
+            //'options' => ['id' => 'address-provinceidxxx'],
+            'type' => DepDrop::TYPE_SELECT2,
+            'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+            'pluginOptions' => [
+                'initialize' => true,
+                'depends' => ['address-countryid'],
+                'url' => Url::to(['child-states-address']),
+                'loadingText' => 'Loading province ...',
+                'params' => ['input-type-1', 'input-type-2', 'input-type-3']
+            ]
+        ])->label('States');
 
 // Child level 2
-    echo Html::hiddenInput('input-type-11', $model->amphurId, ['id' => 'input-type-11']);
-    echo Html::hiddenInput('input-type-22', $model->amphurId, ['id' => 'input-type-22']);
-    echo $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
-        //'data' => [9 => 'Savings'],
-        'options' => ['placeholder' => 'Select ...'],
-        'type' => DepDrop::TYPE_SELECT2,
-        'select2Options' => ['pluginOptions' => ['allowClear' => true]],
-        'pluginOptions' => [
-            //'initialize' => true,
-            'depends' => ['address-provinceid'],
-            'url' => Url::to(['child-amphur-address']),
-            'loadingText' => 'Loading amphur ...',
-            'params' => ['input-type-11', 'input-type-22']
-        ]
-    ])->label('Cities');
+        echo Html::hiddenInput('input-type-11', $model->amphurId, ['id' => 'input-type-11']);
+        echo Html::hiddenInput('input-type-22', $model->amphurId, ['id' => 'input-type-22']);
+        echo Html::hiddenInput('input-type-33', $hash, ['id' => 'input-type-33']);
+        echo $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
+            //'data' => [9 => 'Savings'],
+            'options' => ['placeholder' => 'Select ...'],
+            'type' => DepDrop::TYPE_SELECT2,
+            'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+            'pluginOptions' => [
+                'initialize' => true,
+                'depends' => ['address-provinceid'],
+                'url' => Url::to(['child-amphur-address']),
+                'loadingText' => 'Loading amphur ...',
+                'params' => ['input-type-11', 'input-type-22', 'input-type-33']
+            ]
+        ])->label('Cities');
 
 // Child level 3
-    echo Html::hiddenInput('input-type-13', $model->districtId, ['id' => 'input-type-13']);
-    echo Html::hiddenInput('input-type-23', $model->districtId, ['id' => 'input-type-23']);
-    echo $form->field($model, 'districtId')->widget(DepDrop::classname(), [
-        //'data' => [12 => 'Savings A/C 2'],
-        'options' => ['placeholder' => 'Select ...'],
-        'type' => DepDrop::TYPE_SELECT2,
-        'select2Options' => ['pluginOptions' => ['allowClear' => true]],
-        'pluginOptions' => [
-            'depends' => ['address-amphurid'],
-            //'initialize' => true,
-            //'initDepends' => ['address-countryid'],
-            'url' => Url::to(['child-district-address']),
-            'loadingText' => 'Loading district ...',
-            'params' => ['input-type-13', 'input-type-23']
-        ]
-    ])->label('District');
+        echo Html::hiddenInput('input-type-13', $model->districtId, ['id' => 'input-type-13']);
+        echo Html::hiddenInput('input-type-23', $model->districtId, ['id' => 'input-type-23']);
+        echo Html::hiddenInput('input-type-34', $hash, ['id' => 'input-type-34']);
+        echo $form->field($model, 'districtId')->widget(DepDrop::classname(), [
+            //'data' => [12 => 'Savings A/C 2'],
+            'options' => ['placeholder' => 'Select ...'],
+            'type' => DepDrop::TYPE_SELECT2,
+            'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+            'pluginOptions' => [
+                'depends' => ['address-amphurid'],
+                'initialize' => true,
+                //'initDepends' => ['address-countryid'],
+                'url' => Url::to(['child-district-address']),
+                'loadingText' => 'Loading district ...',
+                'params' => ['input-type-13', 'input-type-23', 'input-type-34']
+            ]
+        ])->label('District');
+    } else {
+        echo $form->field($model, 'provinceId')->widget(DepDrop::classname(), [
+            'data' => [$model->provinceId => $model->provinceId],
+            'options' => ['placeholder' => 'Select ...'],
+            //'options' => ['id' => 'address-provinceidxxx'],
+            'type' => DepDrop::TYPE_SELECT2,
+            'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+            'pluginOptions' => [
+                //'initialize' => true,
+                'depends' => ['address-countryid'],
+                'url' => Url::to(['child-states-address']),
+                'loadingText' => 'Loading province ...',
+                'params' => ['input-type-1', 'input-type-2', 'input-type-3']
+            ]
+        ])->label('States');
+
+// Child level 2
+        echo Html::hiddenInput('input-type-11', $model->amphurId, ['id' => 'input-type-11']);
+        echo Html::hiddenInput('input-type-22', $model->amphurId, ['id' => 'input-type-22']);
+        echo Html::hiddenInput('input-type-33', $hash, ['id' => 'input-type-33']);
+        echo $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
+            //'data' => [9 => 'Savings'],
+            'options' => ['placeholder' => 'Select ...'],
+            'type' => DepDrop::TYPE_SELECT2,
+            'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+            'pluginOptions' => [
+                // 'initialize' => true,
+                'depends' => ['address-provinceid'],
+                'url' => Url::to(['child-amphur-address']),
+                'loadingText' => 'Loading amphur ...',
+                'params' => ['input-type-11', 'input-type-22', 'input-type-33']
+            ]
+        ])->label('Cities');
+
+// Child level 3
+        echo Html::hiddenInput('input-type-13', $model->districtId, ['id' => 'input-type-13']);
+        echo Html::hiddenInput('input-type-23', $model->districtId, ['id' => 'input-type-23']);
+        echo Html::hiddenInput('input-type-34', $hash, ['id' => 'input-type-34']);
+        echo $form->field($model, 'districtId')->widget(DepDrop::classname(), [
+            //'data' => [12 => 'Savings A/C 2'],
+            'options' => ['placeholder' => 'Select ...'],
+            'type' => DepDrop::TYPE_SELECT2,
+            'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+            'pluginOptions' => [
+                'depends' => ['address-amphurid'],
+                //'initialize' => true,
+                //'initDepends' => ['address-countryid'],
+                'url' => Url::to(['child-district-address']),
+                'loadingText' => 'Loading district ...',
+                'params' => ['input-type-13', 'input-type-23', 'input-type-34']
+            ]
+        ])->label('District');
+    }
     ?>
     <?php echo $form->field($model, 'tax'); ?>
     <?php echo $form->field($model, 'zipcode'); ?>

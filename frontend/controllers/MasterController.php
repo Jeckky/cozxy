@@ -402,11 +402,14 @@ class MasterController extends MasterCommonController {
                 $cat_id = $parents[0];
                 $param1 = null;
                 $param2 = null;
+                $param3 = null;
                 if (!empty($_POST['depdrop_params'])) {
                     $params = $_POST['depdrop_params'];
                     $param1 = $params[0]; // get the value of input-type-1
                     $param2 = $params[1]; // get the value of input-type-2
+                    $param3 = $params[2]; // get the value of input-type-3
                 }
+                //echo $param3;
                 $list = \common\models\dbworld\States::find()->andWhere(['countryId' => $cat_id])->asArray()->all();
                 $selected = null;
                 if ($cat_id != null && count($list) > 0) {
@@ -415,11 +418,21 @@ class MasterController extends MasterCommonController {
                         $out[] = ['id' => $account['stateId'], 'name' => $account['localName']];
                         $param1 = ($param1 != '') ? $param1 : $account['stateId'];
                         if ($i == 0) {
-                            $selected = 'Select ...';
-                            $selected .= $param1; //$account['stateId'];
+                            if ($param3 != 'add') {
+
+                                $selected = $param1; //$account['stateId'];
+                            } else {
+                                $selected = 'Select ...';
+                                $selected .= $param1; //$account['stateId'];
+                            }
                         } else {
-                            $selected = 'Select ...';
-                            $selected .= $param1;
+                            if ($param3 != 'add') {
+
+                                $selected = $param1; //$account['stateId'];
+                            } else {
+                                $selected = 'Select ...';
+                                $selected .= $param1; //$account['stateId'];
+                            }
                         }
                     }
 
@@ -443,10 +456,12 @@ class MasterController extends MasterCommonController {
                 $cat_id = $parents[0];
                 $param1 = null;
                 $param2 = null;
+                $param3 = null;
                 if (!empty($_POST['depdrop_params'])) {
                     $params = $_POST['depdrop_params'];
                     $param1 = $params[0]; // get the value of input-type-1
                     $param2 = $params[1]; // get the value of input-type-2
+                    $param3 = $params[2]; // get the value of input-type-3
                 }
 
                 $list = \common\models\dbworld\Cities::find()->andWhere(['stateId' => $cat_id])->asArray()->all();
@@ -457,11 +472,21 @@ class MasterController extends MasterCommonController {
                         $out[] = ['id' => $account['cityId'], 'name' => $account['localName']];
                         $param1 = ($param1 != '') ? $param1 : $account['cityId'];
                         if ($i == 0) {
-                            $selected = 'Select ...';
-                            $selected .= $param1; //$account['stateId'];
+                            if ($param3 != 'add') {
+
+                                $selected = $param1; //$account['stateId'];
+                            } else {
+                                $selected = 'Select ...';
+                                $selected .= $param1; //$account['stateId'];
+                            }
                         } else {
-                            $selected = 'Select ...';
-                            $selected .= $param1;
+                            if ($param3 != 'add') {
+
+                                $selected = $param1;
+                            } else {
+                                $selected = 'Select ...';
+                                $selected .= $param1;
+                            }
                         }
                     }
 
@@ -486,10 +511,12 @@ class MasterController extends MasterCommonController {
                 $cat_id = $parents[0];
                 $param1 = null;
                 $param2 = null;
+                $param3 = null;
                 if (!empty($_POST['depdrop_params'])) {
                     $params = $_POST['depdrop_params'];
                     $param1 = $params[0]; // get the value of input-type-1
                     $param2 = $params[1]; // get the value of input-type-2
+                    $param3 = $params[2]; // get the value of input-type-3
                 }
 
                 $list = \common\models\dbworld\District::find()->andWhere(['cityId' => $cat_id])->asArray()->all();
@@ -500,11 +527,21 @@ class MasterController extends MasterCommonController {
                         $out[] = ['id' => $account['districtId'], 'name' => $account['localName']];
                         $param1 = ($param1 != '') ? $param1 : $account['districtId'];
                         if ($i == 0) {
-                            $selected = 'Select ...';
-                            $selected .= $param1; //$account['stateId'];
+                            if ($param3 != 'add') {
+
+                                $selected = $param1; //$account['stateId'];
+                            } else {
+                                $selected = 'Select ...';
+                                $selected .= $param1; //$account['stateId'];
+                            }
                         } else {
-                            $selected = 'Select ...';
-                            $selected .= $param1;
+                            if ($param3 != 'add') {
+
+                                $selected = $param1;
+                            } else {
+                                $selected = 'Select ...';
+                                $selected .= $param1;
+                            }
                         }
                     }
 

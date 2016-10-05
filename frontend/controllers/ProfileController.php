@@ -182,7 +182,7 @@ class ProfileController extends MasterController {
                 $this->redirect(Yii::$app->homeUrl . 'profile');
             }
         }
-        return $this->render('@app/views/profile/add_address', ['model' => $model, 'label' => $label]);
+        return $this->render('@app/views/profile/add_address', ['model' => $model, 'label' => $label, 'hash' => $hash]);
     }
 
     public function actionAddPaymentMethod() {
