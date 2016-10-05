@@ -123,7 +123,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         'type' => DepDrop::TYPE_SELECT2,
         'select2Options' => ['pluginOptions' => ['allowClear' => true]],
         'pluginOptions' => [
-            'initialize' => true,
+            //'initialize' => true,
             'depends' => ['address-countryid'],
             'url' => Url::to(['child-states-address']),
             'loadingText' => 'Loading province ...',
@@ -140,7 +140,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         'type' => DepDrop::TYPE_SELECT2,
         'select2Options' => ['pluginOptions' => ['allowClear' => true]],
         'pluginOptions' => [
-            'initialize' => true,
+            //'initialize' => true,
             'depends' => ['address-provinceid'],
             'url' => Url::to(['child-amphur-address']),
             'loadingText' => 'Loading amphur ...',

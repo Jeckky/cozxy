@@ -145,11 +145,11 @@ class MasterController extends MasterCommonController {
         ]);
     }
 
-// CONTROLLER 15/07/2016 Create By Taninut
+    // CONTROLLER 15/07/2016 Create By Taninut
     public function actionChildStates() {
         $out = [];
-//echo $_POST['depdrop_parents'];
-//exit();
+        //echo $_POST['depdrop_parents'];
+        //exit();
         if (isset($_POST['depdrop_parents'])) {
             $id = end($_POST['depdrop_parents']);
             //echo '<pre>';
@@ -173,7 +173,7 @@ class MasterController extends MasterCommonController {
         echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
     }
 
-// CONTROLLER 15/07/2016 Create By Taninut
+    // CONTROLLER 15/07/2016 Create By Taninut
     public function actionChildAmphur() {
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
@@ -415,9 +415,11 @@ class MasterController extends MasterCommonController {
                         $out[] = ['id' => $account['stateId'], 'name' => $account['localName']];
                         $param1 = ($param1 != '') ? $param1 : $account['stateId'];
                         if ($i == 0) {
-                            $selected = $param1; //$account['stateId'];
+                            $selected = 'Select ...';
+                            $selected .= $param1; //$account['stateId'];
                         } else {
-                            $selected = $param1;
+                            $selected = 'Select ...';
+                            $selected .= $param1;
                         }
                     }
 
@@ -455,9 +457,11 @@ class MasterController extends MasterCommonController {
                         $out[] = ['id' => $account['cityId'], 'name' => $account['localName']];
                         $param1 = ($param1 != '') ? $param1 : $account['cityId'];
                         if ($i == 0) {
-                            $selected = $param1; //$account['stateId'];
+                            $selected = 'Select ...';
+                            $selected .= $param1; //$account['stateId'];
                         } else {
-                            $selected = $param1;
+                            $selected = 'Select ...';
+                            $selected .= $param1;
                         }
                     }
 
@@ -496,9 +500,11 @@ class MasterController extends MasterCommonController {
                         $out[] = ['id' => $account['districtId'], 'name' => $account['localName']];
                         $param1 = ($param1 != '') ? $param1 : $account['districtId'];
                         if ($i == 0) {
-                            $selected = $param1; //$account['stateId'];
+                            $selected = 'Select ...';
+                            $selected .= $param1; //$account['stateId'];
                         } else {
-                            $selected = $param1;
+                            $selected = 'Select ...';
+                            $selected .= $param1;
                         }
                     }
 
