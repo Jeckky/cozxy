@@ -60,19 +60,23 @@ class ShippingController extends StoreMasterController {
                 //$query = \common\models\costfit\OrderItemPacking::find()->where('status =4')->all();
 
                 $queryList = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "' ")->one();
-                $queryItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $queryList->orderId . ' and status =' . \common\models\costfit\OrderItem::ORDERITEM_PICKED_BAGNO)->all(); // status : 6 pack ใส่ลงถุง
+                //throw new \yii\base\Exception(print_r($queryList, TRUE));
+                $queryItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $queryList->orderId . ' and status =13')->all(); // status : 6 pack ใส่ลงถุง
                 //$queryItem->status = 14;
                 //$queryItem->save();
+                //echo '<pre>';
+                // print_r($queryItem);
+                //throw new \yii\base\Exception(print_r($queryItem, TRUE));
                 foreach ($queryItem as $items) {
                     $orderItemPackings = OrderItemPacking::find()->where("orderItemId =" . $items->orderItemId . ' and status = ' . OrderItemPacking::ORDER_STATUS_CLOSE_BAG)->all(); // status 4 : ปิดถุงแล้ว
                     // echo '<pre>';
-                    //print_r($orderItemPackings);
+                    //throw new \yii\base\Exception(print_r($orderItemPackings, TRUE));
                     // exit();
                     if (isset($orderItemPackings)) {
                         foreach ($orderItemPackings as $packing) {
                             $packing->status = OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING;
                             $packing->save(FALSE);
-                            $queryItemStatus = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $packing->orderItemId . ' and status = ' . \common\models\costfit\OrderItem::ORDERITEM_PICKED_BAGNO)->all();
+                            $queryItemStatus = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $packing->orderItemId . ' and status = 13')->all();
                             foreach ($queryItemStatus as $shipStatus) {
                                 $shipStatus->status = \common\models\costfit\OrderItem::ORDER_STATUS_SENDING_SHIPPING; // orderItemId : status = 14
                                 $shipStatus->save();

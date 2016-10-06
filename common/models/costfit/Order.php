@@ -593,7 +593,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
     }
 
     static public function CountOrderItems($orderId) {
-        $result = OrderItem::find()->where(['orderId' => $orderId, 'status' => 6])->count();
+        $result = OrderItem::find()->where(['orderId' => $orderId, 'status' => 14])->count();
         return $result;
     }
 

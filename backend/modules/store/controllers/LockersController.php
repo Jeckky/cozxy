@@ -19,20 +19,22 @@ class LockersController extends StoreMasterController {
     public function actionIndex() {
 
         $orderItemId = Yii::$app->request->get('orderItemId');
+        $orderId = Yii::$app->request->get('orderId');
         $bagNo = Yii::$app->request->get('bagNo');
-        if ($orderItemId != '') {
+        if ($orderId != '') {
             $query = \common\models\costfit\OrderItemPacking::find()
-                    ->select('*')
-//->joinWith(['orderItems'])
-                    ->where(['orderItemId' => $orderItemId])
-                    ->andWhere(['>', 'status', 4]);
+                    ->select('*,order_item_packing.bagNo,order_item_packing.status')
+                    ->joinWith(['orderItems'])
+                    ->where(['order_item.orderId' => $orderId])
+                    ->andWhere(['>', 'order_item_packing.status', 4]);
         } else if ($bagNo != '') {
             $query = \common\models\costfit\OrderItemPacking::find()
                     ->select('*')
-//->joinWith(['orderItems'])
-                    ->where(['status' => 5, 'bagNo' => $bagNo]);
+                    ->joinWith(['orderItems'])
+                    ->where(['order_item.orderId' => $orderId])
+                    ->where(['order_item_packing.status' => 5, 'order_item_packing.bagNo' => $bagNo]);
         }
-
+        //print_r($query);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);

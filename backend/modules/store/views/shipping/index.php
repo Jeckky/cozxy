@@ -129,7 +129,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 'buttons' => [
                                     'items' => function($url, $model) {
                                         if ($model->status == 14) {
-                                            return Html::a('นำใส่ lockers', Yii::$app->homeUrl . "store/lockers/index?orderItemId=" . $model->orderItemId, [
+                                            return Html::a('นำใส่ lockers', Yii::$app->homeUrl . "store/lockers/index?orderId=" . $model->orderId, [
                                                         'title' => Yii::t('app', 'picking point'),]);
                                         } else {
 //                                    return Html::a('รอปิดถุงแล้ว', '', [

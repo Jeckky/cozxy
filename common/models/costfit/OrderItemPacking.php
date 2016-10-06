@@ -27,14 +27,26 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
      */
 
     public function rules() {
-        return array_merge(parent::rules(), []);
+        return array_merge(parent::rules(), [
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributes() {
+        return array_merge(parent::attributes(), [
+            'bagNo',
+            'status',
+        ]);
     }
 
     /**
      * @inheritdoc
      */
     public function attributeLabels() {
-        return array_merge(parent::attributeLabels(), []);
+        return array_merge(parent::attributeLabels(), [
+        ]);
     }
 
     static public function orderInPacking($orderId) {
@@ -86,7 +98,7 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
         }
 
         $result = OrderItemPacking::find()
-                ->distinct('order_item_packing.bagNo')
+                //->distinct('order_item_packing.bagNo')
                 ->join('LEFT JOIN', 'order_item oi', 'oi.orderItemId = order_item_packing.orderItemId')
                 ->where(['oi.orderId' => $orderItem->orderId, 'order_item_packing.status' => $status])
                 ->count();
