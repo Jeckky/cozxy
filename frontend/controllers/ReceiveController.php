@@ -53,7 +53,8 @@ class ReceiveController extends MasterController {
                     }
                     return $this->render('detail', [
                                 'user' => $user,
-                                'tel' => $tel
+                                'tel' => $tel,
+                                'orderId' => $order->orderId
                     ]);
                 } else {
                     $ms = 'ไม่พบรายชื่อของท่าน';
