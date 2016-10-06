@@ -40,8 +40,7 @@ use yii\data\ActiveDataProvider;
  * @property User $user
  * @property StoreProductOrderItem[] $storeProductOrderItems
  */
-class Order extends \common\models\costfit\master\OrderMaster
-{
+class Order extends \common\models\costfit\master\OrderMaster {
 
     const ORDER_STATUS_DRAFT = 0;
     const ORDER_STATUS_REGISTER_USER = 1;
@@ -69,16 +68,14 @@ class Order extends \common\models\costfit\master\OrderMaster
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributes()
-    {
+    public function attributes() {
         return array_merge(parent::attributes(), [
             'month',
             'maxCode',
@@ -94,8 +91,7 @@ class Order extends \common\models\costfit\master\OrderMaster
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
             'paymentDateTime' => 'วันที่ชำระเงิน',
             'status' => 'สถานะ',
@@ -106,8 +102,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         ]);
     }
 
-    public static function findCartArray()
-    {
+    public static function findCartArray() {
         $res = [];
         $order = Order::getOrder();
         $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
@@ -212,13 +207,11 @@ class Order extends \common\models\costfit\master\OrderMaster
         return $res;
     }
 
-    public function getCoupon()
-    {
+    public function getCoupon() {
         return $this->hasOne(Coupon::className(), ['couponId' => 'couponId']);
     }
 
-    public function beforeSave($insert)
-    {
+    public function beforeSave($insert) {
         parent::beforeSave($insert);
         $total = 0;
         foreach ($this->orderItems as $item) {
@@ -245,13 +238,11 @@ class Order extends \common\models\costfit\master\OrderMaster
         return TRUE;
     }
 
-    public static function calculateShippingRate()
-    {
+    public static function calculateShippingRate() {
         return 0;
     }
 
-    public function findCheckoutStepArray()
-    {
+    public function findCheckoutStepArray() {
         return [
             self::CHECKOUT_STEP_WAIT_CHECKOUT => "รอ Checkout",
             self::CHECKOUT_STEP_ADDRESS => "ระบุที่อยู่",
@@ -260,8 +251,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         ];
     }
 
-    public function getCheckoutStepText($step)
-    {
+    public function getCheckoutStepText($step) {
         $res = $this->findCheckoutStepArray();
         if (isset($res[$step])) {
             return $res[$step];
@@ -270,8 +260,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         }
     }
 
-    public static function mergeDraftOrder()
-    {
+    public static function mergeDraftOrder() {
 
         $cookies = Yii::$app->request->cookies;
         if (isset($cookies['orderToken'])) {
@@ -341,8 +330,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         }
     }
 
-    public static function getOrder()
-    {
+    public static function getOrder() {
         if (\Yii::$app->user->isGuest) {
             $cookies = Yii::$app->request->cookies;
             if (isset($cookies['orderToken'])) {
@@ -355,8 +343,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         }
     }
 
-    public static function findAllYearCirculationWithYear($year)
-    {
+    public static function findAllYearCirculationWithYear($year) {
         $res = [];
         $orders = Order::find()->select('sum(summary) as summary , month(paymentDateTime) as month')->where('year(paymentDateTime) =' . $year . " AND status >2")->groupBy('month(paymentDateTime)')->all();
 
@@ -370,8 +357,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         return $res;
     }
 
-    public static function genInvNo($model)
-    {
+    public static function genInvNo($model) {
 //      $prefix = "IV" . UserCompany::model()->getPrefixBySupplierId($model->supplierId);
         $prefix = "IV";
         $max_code = intval(\common\models\costfit\Order::findMaxInvoiceNo($prefix));
@@ -379,8 +365,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         return $prefix . date("Ym") . str_pad($max_code, 7, "0", STR_PAD_LEFT);
     }
 
-    public static function genOrderNo($supplierId = null)
-    {
+    public static function genOrderNo($supplierId = null) {
         $prefix = 'OD'; //$supplierModel->prefix;
 
         $max_code = intval(\common\models\costfit\Order::findMaxOrderNo($prefix));
@@ -388,8 +373,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         return $prefix . date("Ym") . "-" . str_pad($max_code, 7, "0", STR_PAD_LEFT);
     }
 
-    public static function findMaxOrderNo($prefix = NULL)
-    {
+    public static function findMaxOrderNo($prefix = NULL) {
         $order = Order::findBySql("SELECT MAX(RIGHT(orderNo,7)) as maxCode from `order` WHERE substr(orderNo,1,2)='$prefix' order by orderNo DESC ")->one();
 //        $order = Order::find()->select("MAX(RIGHT(orderNo,7)) as maxCode")
 //        ->where("substr(orderNo,1,2)='$prefix' ")
@@ -400,8 +384,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         return isset($order) ? $order->maxCode : 0;
     }
 
-    public static function findMaxInvoiceNo($prefix = NULL)
-    {
+    public static function findMaxInvoiceNo($prefix = NULL) {
 // Warning: Please modify the following code to remove attributes that
 // should not be searched.
 
@@ -409,8 +392,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         return isset($order) ? $order->maxCode : 0;
     }
 
-    public function findAllStatusArray()
-    {
+    public function findAllStatusArray() {
         return [
             self::ORDER_STATUS_DRAFT => "ตระกร้าสินค้า",
             self::ORDER_STATUS_REGISTER_USER => "ลงทะเบียนผู้ใช้แล้ว",
@@ -423,13 +405,12 @@ class Order extends \common\models\costfit\master\OrderMaster
             self::ORDER_STATUS_SHIPPING => 'กำลังจัดส่ง',
             self::ORDER_STATUS_SHIPPED => 'จัดส่งแล้ว',
             self::ORDER_STATUS_PICKING => 'กำลังหยิบ',
-            self::ORDER_STATUS_PICKED => 'ยังไม่หยิบ',
+            self::ORDER_STATUS_PICKED => 'หยิบแล้ว เตรียมแพ็ค',
             self::ORDER_STATUS_PACKED => 'ใส่ถุงแล้ว'
         ];
     }
 
-    public function getStatusText($status)
-    {
+    public function getStatusText($status) {
         $res = $this->findAllStatusArray($status);
         if (isset($res[$status])) {
             return $res[$status];
@@ -438,8 +419,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         }
     }
 
-    public static function findAllTodayOrder()
-    {
+    public static function findAllTodayOrder() {
         $res = [];
         $res["all"] = 0;
         $res["checkout"] = 0;
@@ -470,8 +450,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         return $res;
     }
 
-    public function search($params)
-    {
+    public function search($params) {
 
         $query = \common\models\costfit\Order::find()->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . " and orderNo  is not null order by orderId desc");
 
@@ -488,7 +467,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         }
 
         $query->andFilterWhere(['like', 'createDateTime', $this->createDateTime])
-        ->andFilterWhere(['like', 'orderNo', $this->orderNo]);
+                ->andFilterWhere(['like', 'orderNo', $this->orderNo]);
 
         return $dataProvider;
     }
@@ -496,63 +475,51 @@ class Order extends \common\models\costfit\master\OrderMaster
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOrderItems()
-    {
+    public function getOrderItems() {
         return $this->hasMany(OrderItem::className(), ['orderId' => 'orderId']); //[Order :: ปลายทาง ,  OrderItem :: ต้นทาง]
     }
 
-    public function getUser()
-    {
+    public function getUser() {
         return $this->hasOne(User::className(), ['userId' => 'userId']);
     }
 
-    public function getAddress()
-    {
+    public function getAddress() {
         return $this->hasOne(address::className(), ['addressId' => 'addressId']);
     }
 
-    public function getBillingProvince()
-    {
+    public function getBillingProvince() {
         return $this->hasOne(\common\models\dbworld\States::className(), ['stateId' => 'billingProvinceId']);
     }
 
-    public function getBillingCities()
-    {
+    public function getBillingCities() {
         return $this->hasOne(\common\models\dbworld\Cities::className(), ['cityId' => 'billingAmphurId']);
     }
 
-    public function getbillingDistrict()
-    {
+    public function getbillingDistrict() {
         return $this->hasOne(\common\models\dbworld\District::className(), ['cityId' => 'billingAmphurId']);
     }
 
-    public function getBillingCountry()
-    {
+    public function getBillingCountry() {
         return $this->hasOne(\common\models\dbworld\Countries::className(), ['countryId' => 'billingCountryId']);
     }
 
-    public function getShippingProvince()
-    {
+    public function getShippingProvince() {
         return $this->hasOne(\common\models\dbworld\States::className(), ['stateId' => 'shippingProvinceId']);
     }
 
-    public function getShippingCities()
-    {
+    public function getShippingCities() {
         return $this->hasOne(\common\models\dbworld\Cities::className(), ['cityId' => 'shippingAmphurId']);
     }
 
-    public function getShippingDistrict()
-    {
+    public function getShippingDistrict() {
         return $this->hasOne(\common\models\dbworld\District::className(), ['cityId' => 'shippingAmphurId']);
     }
 
-    public function getShippingCountry()
-    {
+    public function getShippingCountry() {
         return $this->hasOne(\common\models\dbworld\Countries::className(), ['countryId' => 'shippingCountryId']);
     }
 
-    public static function saveOrderPaymentHistory($order, $decision, $reasonCode, $userIp)
-    {
+    public static function saveOrderPaymentHistory($order, $decision, $reasonCode, $userIp) {
         $history = new OrderPaymentHistory();
         $history->orderId = $order->orderId;
         $history->decision = $decision;
@@ -567,13 +534,11 @@ class Order extends \common\models\costfit\master\OrderMaster
         }
     }
 
-    public static function findSlowestDate($orderId)
-    {
+    public static function findSlowestDate($orderId) {
 
     }
 
-    public static function getItems($orderId)
-    {
+    public static function getItems($orderId) {
         //throw new \yii\base\Exception($orderId);
         $item = OrderItem::find()->where("orderId=" . $orderId)->all();
         if (isset($item)) {
@@ -583,8 +548,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         }
     }
 
-    static public function findOrderNo($orderId)
-    {
+    static public function findOrderNo($orderId) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (isset($order)) {
             return $order->orderNo;
@@ -593,8 +557,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         }
     }
 
-    static public function findOrderId($orderId)
-    {
+    static public function findOrderId($orderId) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (isset($order)) {
             return $order->orderId;
@@ -603,8 +566,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         }
     }
 
-    static public function findReciever($orderId)
-    {
+    static public function findReciever($orderId) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (isset($order)) {
             $user = User::find()->where("userId=" . $order->userId)->one();
@@ -618,23 +580,19 @@ class Order extends \common\models\costfit\master\OrderMaster
         }
     }
 
-    public function getPickingpoint()
-    {
+    public function getPickingpoint() {
         return $this->hasOne(\common\models\costfit\PickingPoint::className(), ['pickingId' => 'pickingId']);
     }
 
-    public function getPickingpointitems()
-    {
+    public function getPickingpointitems() {
         return $this->hasOne(\common\models\costfit\PickingPointItems::className(), ['pickingId' => 'pickingId']);
     }
 
-    public function getShipOrderItems($orderItemId)
-    {
+    public function getShipOrderItems($orderItemId) {
         return $this->hasMany(OrderItemPacking::className(), ['orderItemId' => 'orderItemId']);
     }
 
-    static public function CountOrderItems($orderId)
-    {
+    static public function CountOrderItems($orderId) {
         $result = OrderItem::find()->where(['orderId' => $orderId, 'status' => 6])->count();
         return $result;
     }
