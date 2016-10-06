@@ -123,15 +123,9 @@ class PackingController extends StoreMasterController {
                     if ($fully == false) {//ถ้ายังไม่ครบทุก item
                         $full++;
                     } else {
-//throw new \yii\base\Exception($inBag->orderItemId);
                         $this->updateOrderItem($inBag->orderItemId); //ถ้าครบทุก item update orderItem
                     }
                 endforeach;
-
-//                echo "<script>window.open('" . Yii::$app->homeUrl . "store/packing/print-bag-label?orderId=" . $_GET['orderId'] . "&bagNo=" . $bagNo . "', '_blank');
-//                        window.focus();</script>";
-
-
                 if ($full > 0) {//ถ้ายังไม่ครบทุก item กลับไปหน้าสแกนโปรดักใส่ถุง (เปิดถุงใหม่)
                     return $this->render('show-orders', [
                                 'orderId' => $_GET['orderId'],
@@ -276,6 +270,8 @@ class PackingController extends StoreMasterController {
                     if ($total != $item->quantity) {
                         $check++;
                     }
+                } else {
+                    $check++;
                 }
             endforeach;
             if ($check == 0) {// ครบทุก orderItem แล้ว
