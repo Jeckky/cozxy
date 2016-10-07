@@ -106,7 +106,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             [
                                 'attribute' => 'จำนวน bagNo',
                                 'value' => function($model) {
-                                    return \common\models\costfit\OrderItemPacking::shipPacking($model->orderItemId) . "  ถุง";
+                                    return 'นำจ่ายอีก ' . \common\models\costfit\OrderItemPacking::shipPacking($model->orderItemId) . "  ถุง";
                                 }
                             ],
                             //'pickingId',
@@ -130,7 +130,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 'template' => ' {items} ',
                                 'buttons' => [
                                     'items' => function($url, $model) {
-                                        if ($model->status == 14) {
+
+                                        if ($model->status >= 14) {
                                             return Html::a('นำใส่ lockers', Yii::$app->homeUrl . "store/lockers/index?orderId=" . $model->orderId, [
                                                         'title' => Yii::t('app', 'picking point'),]);
                                         } else {
