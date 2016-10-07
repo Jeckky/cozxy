@@ -28,7 +28,7 @@ class ShippingController extends StoreMasterController {
         $orderNo = Yii::$app->request->get('orderNo');
         if ($orderNo != '') {
             $query = \common\models\costfit\Order::find()
-                    ->select('*,order_item.status as status_item ,order.status_order')
+                    ->select('*')
                     ->joinWith(['orderItems'])
                     //->where("(order_item.status = 6 or order_item.status = 14) and order.orderNo = '" . $orderNo . "'"); //['order_item.status' => 6, 'order.orderNo' => $orderNo]
                     ->where("(order_item.status = 6 or order_item.status >= 14) "); //['order_item.status' => 6, 'order.orderNo' => $orderNo]

@@ -97,7 +97,9 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     <li>
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/shipping"><span class="mm-text">Shipping</span></a>
                     </li>
-
+                    <li>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/shippings"><span class="mm-text">Shipping Demo</span></a>
+                    </li>
 
                     <li class="mm-dropdown">
                         <a tabindex="-1" href="#"><span class="mm-text">Location</span><span class="label label-warning">1</span></a>

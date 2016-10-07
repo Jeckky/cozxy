@@ -33,7 +33,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
     <div class="panel-body ">
         <div class="col-sm-5">
             <input type="text" name="orderNo" autofocus="true" id="orderNo" class="form-control" placeholder="Search or Scan Qr code">
-           <div id="character-limit-input-label" class="limiter-label form-group-margin"><!--Characters left: <span class="limiter-count">20</span>--></div>
+            <div id="character-limit-input-label" class="limiter-label form-group-margin">หมายเหตุ : <span class="limiter-count">Scan Qr Code Order No ทุกครั้งก่อนนำใส่ lockers</span></div>
         </div>
     </div>
     <?= $this->registerJS("
@@ -99,6 +99,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         $txt = 'กำลังจะส่ง';
                                     } else if ($model->status == 15) {
                                         $txt = 'สินค้ายังอยู่ใน lockers';
+                                    } else if ($model->status == 13) {
+                                        $txt = 'แพ็คเสร็จแล้ว';
                                     }
                                     return isset($txt) ? $txt : ''; // status items 6 : แพ็คใส่ถุงแล้ว
                                 }
