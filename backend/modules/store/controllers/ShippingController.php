@@ -31,7 +31,7 @@ class ShippingController extends StoreMasterController {
                     ->select('*')
                     ->joinWith(['orderItems'])
                     //->where("(order_item.status = 6 or order_item.status = 14) and order.orderNo = '" . $orderNo . "'"); //['order_item.status' => 6, 'order.orderNo' => $orderNo]
-                    ->where("(order_item.status = 6 or order_item.status = 14) "); //['order_item.status' => 6, 'order.orderNo' => $orderNo]
+                    ->where("(order_item.status = 6 or order_item.status >= 14) "); //['order_item.status' => 6, 'order.orderNo' => $orderNo]
         } else {
 
             $query = \common\models\costfit\Order::find()
@@ -40,7 +40,7 @@ class ShippingController extends StoreMasterController {
                     //->where("oi.status = 6 OR oi.status = 14");
                     ->select('*')
                     ->joinWith(['orderItems'])
-                    ->where("order_item.status = 6 or order_item.status = 14");
+                    ->where("order_item.status = 6 or order_item.status >= 14");
         }
 
 

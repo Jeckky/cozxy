@@ -23,7 +23,7 @@ class LockersController extends StoreMasterController {
         $bagNo = Yii::$app->request->get('bagNo');
         if ($orderId != '') {
             $query = \common\models\costfit\OrderItemPacking::find()
-                    ->select('*,order_item_packing.bagNo,order_item_packing.status')
+                    ->select('*,order_item_packing.bagNo,order_item_packing.status,order_item_packing.quantity')
                     ->joinWith(['orderItems'])
                     ->where(['order_item.orderId' => $orderId])
                     ->andWhere(['>', 'order_item_packing.status', 4]);
@@ -60,16 +60,31 @@ class LockersController extends StoreMasterController {
                 //echo $query->pickingItemsId;
                 $useSlot = \common\models\costfit\OrderItemPacking::find()->where(" pickingItemsId = " . $query->pickingItemsId . " and status = 7")->one(); //มีใช้แล้วหรือเปล่า
                 if (!isset($useSlot)) {
+
                     $OrderItemPacking = \common\models\costfit\OrderItemPacking::find()->where(" bagNo = '" . $bagNo . "'")->one();
 
-                    \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $query->pickingItemsId], ['bagNo' => $bagNo]);
-                    //echo '<pre>';
-                    //print_r($OrderItemPacking);
-                    \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderItemId' => $OrderItemPacking->orderItemId]);
-                    $Order = \common\models\costfit\OrderItem::find()->where("orderItemId = '" . $OrderItemPacking->orderItemId . "' ")->one();
-                    \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $Order->orderId]);
-                } else {
+                    $OrderItems = \common\models\costfit\OrderItemPacking::find()->where(" orderItemId = '" . $OrderItemPacking->orderItemId . "' and status = 5")->count();
 
+                    if ($OrderItems > 1) {
+                        \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $query->pickingItemsId], ['bagNo' => $bagNo]);
+                        //echo '<pre>';
+                        //print_r($OrderItemPacking);
+
+                        \common\models\costfit\OrderItem::updateAll(['status' => 14], ['orderItemId' => $OrderItemPacking->orderItemId]);
+                        $Order = \common\models\costfit\OrderItem::find()->where("orderItemId = '" . $OrderItemPacking->orderItemId . "' ")->one();
+                        \common\models\costfit\Order::updateAll(['status' => 14], ['orderId' => $Order->orderId]);
+                    } elseif ($OrderItems == 1) {
+                        \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $query->pickingItemsId], ['bagNo' => $bagNo]);
+                        //echo '<pre>';
+                        //print_r($OrderItemPacking);
+
+                        \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderItemId' => $OrderItemPacking->orderItemId]);
+                        $Order = \common\models\costfit\OrderItem::find()->where("orderItemId = '" . $OrderItemPacking->orderItemId . "' ")->one();
+                        \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $Order->orderId]);
+                    }
+                    //$orderItemId = $OrderItemPacking->orderItemId;
+                } else {
+                    echo 'xx';
                 }
 
                 $query = \common\models\costfit\OrderItemPacking::find()

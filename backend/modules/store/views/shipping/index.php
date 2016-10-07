@@ -97,6 +97,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         $txt = 'แพ็คใส่ถุงแล้ว';
                                     } else if ($model->status == 14) {
                                         $txt = 'กำลังจะส่ง';
+                                    } else if ($model->status == 15) {
+                                        $txt = 'ของอยู่ใน lockers แล้ว';
                                     }
                                     return isset($txt) ? $txt : ''; // status items 6 : แพ็คใส่ถุงแล้ว
                                 }
