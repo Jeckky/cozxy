@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-md-4"> </div>
         <div class="col-md-4 text-center">
-            <?= Html::submitButton('รับรหัสรับของ', ['class' => 'btn btn-warning btn-lg col-md-12']) ?>
+            <?= Html::submitButton('ยืนยัน', ['class' => 'btn btn-primary btn-lg col-md-12']) ?>
         </div>
         <div class="col-md-4"></div>
 

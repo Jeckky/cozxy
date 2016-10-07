@@ -5,7 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
-use common\models\costfit\receive;
+use common\models\costfit\Receive;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -131,12 +131,128 @@ class ReceiveController extends MasterController {
         return $this->redirect(['index']);
     }
 
-    public function actionSendEmail() {
-        throw new \yii\base\Exception('yes');
+    public function actionSendSms() {
+        $ms = '';
+        $tel = $_POST['tel'];
+        if (isset($_POST['orderId'])) {
+            $order = Order::find()->where("orderId=" . $_POST['orderId'])->one();
+            if (isset($order) && !empty($order)) {
+                $user = User::find()->where("userId=" . $order->userId)->one();
+                if (isset($user) && !empty($user)) {
+                    $otp = $this->genOtp();
+                    $order->otp = $otp;
+                    $order->updateDateTime = new \yii\db\Expression('NOW()');
+                    $order->save(false);
+                    $receive = Receive::find()->where("orderId=" . $order->orderId)->one();
+                    if (!isset($receive)) {
+                        $receive = new Receive();
+                    }
+                    $receive->orderId = $_POST['orderId'];
+                    $receive->userId = $user->userId;
+                    $receive->password = $order->password;
+                    $receive->pickingId = $order->pickingId;
+                    $receive->otp = $otp;
+                    $receive->isUse = 0;
+                    $receive->status = 1;
+                    $receive->createDateTime = new \yii\db\Expression('NOW()');
+                    $receive->updateDateTime = new \yii\db\Expression('NOW()');
+                    if ($receive->save(false)) {
+                        return $this->render('receive', [
+                                    'userId' => $user->userId,
+                                    'tel' => $tel,
+                                    'password' => $order->password,
+                                    'orderId' => $order->orderId
+                        ]);
+                    }
+                } else {
+                    $ms = 'ไม่พบผู้ใช้งาน';
+                }
+            } else {
+                $ms = 'ไม่พบรายการพัสดุ';
+            }
+        }
+
+        //throw new \yii\base\Exception($_POST['tel']);
     }
 
-    public function actionSendSms($orderId) {
+    public function actionReceived() {
+        $ms = '';
+        $allLocker = '';
+        $orderItem = '';
+        $check = [];
+        $i = 0;
+        $receive = Receive::find()->where("otp='" . $_POST['otp'] . "' and orderId=" . $_POST['orderId'] . " and userId=" . $_POST['userId'] . " and password='" . $_POST['password'] . "'")->one();
+        if (isset($receive) && !empty($receive)) {
+            $order = Order::find()->where("orderId=" . $_POST['orderId'])->one(); //หา locker
+            if (isset($order) && !empty($order)) {
+                //ยังไม่ได้เชค ว่า picking point ถูกต้องหรือไม่ ถ้าไม่ถูกให้บอกที่ถูก
+                $pickingPoint = $order->pickingId;
+                $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId)->all();
+                if (isset($orderItems) && !empty($orderItems)) {
+                    foreach ($orderItems as $item):
+                        $orderItem = $orderItem . $item->orderItemId . ",";
+                    endforeach;
+                    $orderItem = substr($orderItem, 0, -1);
+                    $lockers = \common\models\costfit\OrderItemPacking::find()->where("orderItemId in($orderItem) and status=7")->all();
+                    if (isset($lockers) && !empty($lockers)) {
+                        foreach ($lockers as $locker):
+                            $pickingLocker = \common\models\costfit\PickingPointItems::find()->where("pickingItemsId=" . $locker->pickingItemsId . " and pickingId=" . $pickingPoint)->one();
+                            if (isset($pickingLocker)) {
+                                $flag = false;
+                                $flag = $this->check($check, $pickingLocker->pickingItemsId);
+                                $check[$i] = $pickingLocker->pickingItemsId;
 
+                                if ($flag == true) {
+                                    $total = count(\common\models\costfit\OrderItemPacking::find()->where("pickingItemsId=" . $pickingLocker->pickingItemsId)->all());
+                                    $allLocker = $allLocker . $pickingLocker->name . " จำนวน " . $total . " ถุง" . "<br>";
+                                }
+                                $i++;
+                            }
+                        endforeach;
+                        //throw new \yii\base\Exception(print_r($check, true));
+                        $allLocker = substr($allLocker, 0, -1);
+                        return $this->render('thank', [
+                                    'userId' => $_POST['userId'],
+                                    'tel' => $_POST['tel'],
+                                    'password' => $_POST['password'],
+                                    'orderId' => $_POST['orderId'],
+                                    'locker' => $allLocker,
+                                    'ms' => $ms
+                        ]);
+                    } else {
+                        $ms = 'ยังไม่มีรายการพัสดุของคุณใน locker ใดเลย';
+                    }
+                } else {
+                    $ms = 'ไม่เจอรายการสินค้า2';
+                }
+            } else {
+                $ms = 'ไม่เจอรายการสินค้า1';
+            }
+        } else {
+            $ms = 'รหัสผ่านไม่ถูกต้อง';
+            return $this->render('receive', [
+                        'userId' => $_POST['userId'],
+                        'tel' => $_POST['tel'],
+                        'password' => $_POST['password'],
+                        'orderId' => $_POST['orderId'],
+                        'ms' => $ms
+            ]);
+        }
+    }
+
+    protected function check($alls, $new) {
+        $a = 0;
+        //throw new \yii\base\Exception(print_r($alls, true));
+        foreach ($alls as $all):
+            if ($all == $new) {
+                $a++;
+            }
+        endforeach;
+        if ($a == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -152,6 +268,20 @@ class ReceiveController extends MasterController {
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    protected function genOtp() {
+        $flag = false;
+        $otp = rand('000000', '999999');
+        while ($flag == false) {
+            $order = Order::find()->where("otp='" . $otp . "' and status=100")->one();
+            if (isset($order) && !empty($order)) {
+                $otp = rand('000000', '999999');
+            } else {
+                $flag = true;
+            }
+        }
+        return $otp;
     }
 
 }
