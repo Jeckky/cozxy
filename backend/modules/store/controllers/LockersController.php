@@ -74,6 +74,7 @@ class LockersController extends StoreMasterController {
                         $Order = \common\models\costfit\OrderItem::find()->where("orderItemId = '" . $OrderItemPacking->orderItemId . "' ")->one();
                         \common\models\costfit\Order::updateAll(['status' => 14], ['orderId' => $Order->orderId]);
                     } elseif ($OrderItems == 1) {
+
                         \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $query->pickingItemsId], ['bagNo' => $bagNo]);
                         //echo '<pre>';
                         //print_r($OrderItemPacking);

@@ -98,7 +98,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     } else if ($model->status == 14) {
                                         $txt = 'กำลังจะส่ง';
                                     } else if ($model->status == 15) {
-                                        $txt = 'ของอยู่ใน lockers แล้ว';
+                                        $txt = 'สินค้ายังอยู่ใน lockers';
                                     }
                                     return isset($txt) ? $txt : ''; // status items 6 : แพ็คใส่ถุงแล้ว
                                 }
@@ -130,13 +130,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 'template' => ' {items} ',
                                 'buttons' => [
                                     'items' => function($url, $model) {
-
-                                        if ($model->status >= 14) {
+                                        if (\common\models\costfit\OrderItemPacking::shipPacking($model->orderItemId) > 0) {
                                             return Html::a('นำใส่ lockers', Yii::$app->homeUrl . "store/lockers/index?orderId=" . $model->orderId, [
                                                         'title' => Yii::t('app', 'picking point'),]);
                                         } else {
-//                                    return Html::a('รอปิดถุงแล้ว', '', [
-//                                                'title' => Yii::t('app', 'picking point'),]);
+                                            return Html::a('<i class="fa fa-eye"></i> ', Yii::$app->homeUrl . "store/lockers/index?orderId=" . $model->orderId, [
+                                                        'title' => Yii::t('app', 'picking point'),]);
                                         }
                                     }
                                         ],

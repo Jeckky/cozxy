@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['class' => 'yii\grid\SerialColumn'],
                 //'orderItemPackingId',
                 //'orderItemId',
-                //'pickingItemsId',
+                'pickingItemsId',
                 'bagNo',
                 'quantity',
                 [
