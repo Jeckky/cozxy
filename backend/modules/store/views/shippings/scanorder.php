@@ -10,7 +10,7 @@ $this->title = 'แสดงข้อมูลของ Order No.';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
-<h1>Shippings / Picking Points Items / เลือก  <?php echo $listPointItems->code; ?></h1>
+<h1>Shippings</h1>
 <div class="panel panel-info panel-dark widget-profile">
     <div class="panel-heading">
         <div class="widget-profile-bg-icon"><i class="fa fa-twitter"></i></div>
@@ -26,7 +26,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
     </div>
     <input type="text" placeholder="Code Lockers  : <?php echo $listPoint->code; ?>" class="form-control input-lg widget-profile-input">
     <div class="widget-profile-text">
-        Code Channels : <?php echo $listPointItems->code; ?>
+
     </div>
 </div>
 <div class="order-index col-md-12">

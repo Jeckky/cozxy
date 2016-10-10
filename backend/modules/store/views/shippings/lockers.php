@@ -104,7 +104,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 if (\common\models\costfit\PickingPointItems::PickingPointDistinct($model->pickingItemsId) == 1) {
                                     return '<span class="text-danger">Channels เต็มแล้ว</span>';
                                 } elseif (\common\models\costfit\PickingPointItems::PickingPointDistinct($model->pickingItemsId) == 0) {
-                                    return Html::a('<button class="btn btn-rounded btn-xs text-success"> เปิด Channels นี้ </button>', Yii::$app->homeUrl . "store/shippings/channels?code=" . $model->code . '&boxcode=' . $model->pickingId, [
+                                    return Html::a('<button class="btn btn-rounded btn-xs text-success"> เปิด Channels นี้ </button>', Yii::$app->homeUrl . "store/shippings/channels?code=" . $model->code . '&boxcode=' . $model->pickingId . '&model=1', [
                                                 'title' => Yii::t('app', 'เปิด Channels นี้  :' . $model->code),]);
                                 }
                                 //return '<button class="btn btn-rounded btn-xs"> เปิด Channels นี้ </button>';
@@ -125,7 +125,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 if (\Yii::$app->params['shippingScanTrayOnly'] == true) {
                     $form = ActiveForm::begin([
                                 'method' => 'GET',
-                                'action' => ['shippings/channels?boxcode=' . $listPoint->pickingId],
+                                'action' => ['shippings/channels?boxcode=' . $listPoint->pickingId . '&model=2'],
                     ]);
                 } else if (\Yii::$app->params['shippingScanTrayOnly'] == False) {
                     $form = ActiveForm::begin([
