@@ -31,25 +31,23 @@ $this->params['pageHeader'] = Html::encode($this->title);
 </div>
 <div class="order-index col-md-12">
     <div class="panel colourable">
+
         <?php
-        if ($model == 1) {
-            ?>
-            <?php
-            $form = ActiveForm::begin([
-                        'method' => 'GET',
-                        'action' => ['shippings/scan-order?boxcode=' . $listPoint->pickingId],
-            ]);
-            ?>
-            <div class="panel-heading">
-                <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> Scan Qr Code Order No.</span>
+        $form = ActiveForm::begin([
+                    'method' => 'GET',
+                    'action' => ['shippings/scan-order?boxcode=' . $listPoint->pickingId],
+        ]);
+        ?>
+        <div class="panel-heading">
+            <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> Scan Qr Code Order No.</span>
+        </div>
+        <div class="panel-body ">
+            <div class="col-sm-12">
+                <input type="text" name="order" autofocus="true" id="order" class="form-control" placeholder="Search or Scan Qr code">
+                <div id="character-limit-input-label" class="limiter-label form-group-margin">หมายเหตุ : <span class="limiter-count">Scan Qr Code Order No.</span></div>
             </div>
-            <div class="panel-body ">
-                <div class="col-sm-12">
-                    <input type="text" name="order" autofocus="true" id="order" class="form-control" placeholder="Search or Scan Qr code">
-                    <div id="character-limit-input-label" class="limiter-label form-group-margin">หมายเหตุ : <span class="limiter-count">Scan Qr Code Order No.</span></div>
-                </div>
-            </div>
-            <?= $this->registerJS("
+        </div>
+        <?= $this->registerJS("
                                     $('#orderNo').blur(function(event){
                                         if(event.which == 13 || event.keyCode == 13)
                                         {
@@ -57,36 +55,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         }
                                     });
                         ") ?>
-            <?php ActiveForm::end(); ?>
-            <?php
-        } else {
+        <?php ActiveForm::end(); ?>
 
-            $form = ActiveForm::begin([
-                        'method' => 'POST',
-                        'action' => ['shippings/order'],
-            ]);
-            ?>
-            <div class="panel-heading">
-                <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i>  Scan Qr code Bag No. :</span>
-            </div>
-            <div class="panel-body ">
-                <div class="col-sm-12">
-                    <input type="text" name="BagNo" autofocus="true" id="BagNo" class="form-control" placeholder="Search or Scan Bag No">
-                    <div id="character-limit-input-label" class="limiter-label form-group-margin">หมายเหตุ : <span class="limiter-count">Scan Qr Code Bag No.</span></div>
-                </div>
-            </div>
-            <?= $this->registerJS("
-                $('#orderNo').blur(function(event){
-                    if(event.which == 13 || event.keyCode == 13)
-                    {
-                       $('#form').submit();
-                    }
-                });
-    ") ?>
-            <?php
-            ActiveForm::end();
-        }
-        ?>
 
     </div>
     <div class="panel colourable">
