@@ -83,6 +83,13 @@ class ShippingsController extends StoreMasterController {
         if ($pickingId != '') {
             $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $pickingId . "'")->one();
             $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $pickingId . "' and  code = '" . $channel . "' ")->one();
+            // echo count($listPointItems);
+            /* if (count($listPointItems) > 0) {
+              echo $listPointItems = $listPointItems;
+              } else {
+              echo $listPointItems = '1';
+              } */
+            //exit();
             $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
             $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
             $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
