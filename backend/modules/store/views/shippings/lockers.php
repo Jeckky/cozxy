@@ -22,7 +22,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
     </h4>
 
 </div>-->
-<div class="panel panel-info panel-dark widget-profile">
+<div class="panel panel-info panel-dark widget-profile ">
     <div class="panel-heading">
         <div class="widget-profile-bg-icon"><i class="fa fa-twitter"></i></div>
         <div class="widget-profile-header">

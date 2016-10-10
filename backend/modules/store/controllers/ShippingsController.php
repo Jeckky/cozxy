@@ -48,7 +48,10 @@ class ShippingsController extends StoreMasterController {
             $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
             $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
             $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
-            $query = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $pickingId . "'");
+            $query = \common\models\costfit\PickingPointItems::find()
+                    ->join('inner JOIN', 'order', 'order.pickingId =picking_point_items.pickingId')
+                    ->where("picking_point_items.pickingId = '" . $pickingId . "'")
+                    ->distinct('picking_point_items.pickingId', TRUE);
 
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
