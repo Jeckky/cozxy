@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <h1>Shippings / Picking Points Items / เลือกใช้งานตามความต้องการ</h1>
-<div class="note note-success ">
+<!--<div class="note note-success ">
     <h3>สถานที่ตั้ง Lockers </h3>
     <h4 style="color: #003147">
         Code Lockers  : <?php echo $listPoint->code; ?>
@@ -20,6 +20,25 @@ $this->params['pageHeader'] = Html::encode($this->title);
         ,<?php echo $state->localName; ?>
         ,<?php echo $countrie->localName; ?>
     </h4>
+
+</div>-->
+<div class="panel panel-info panel-dark widget-profile">
+    <div class="panel-heading">
+        <div class="widget-profile-bg-icon"><i class="fa fa-twitter"></i></div>
+        <div class="widget-profile-header">
+            <span>สถานที่ตั้งของ Lockers</span><br>
+        </div>
+    </div> <!-- / .panel-heading -->
+    <div class="widget-profile-counters">
+        <div class="col-xs-3"><span><?php echo $listPoint->title; ?></span></div>
+        <div class="col-xs-3"><span><?php echo $citie->localName; ?></span></div>
+        <div class="col-xs-3"><span><?php echo $state->localName; ?></span></div>
+        <div class="col-xs-3"><span><?php echo $countrie->localName; ?></span></div>
+    </div>
+    <input type="text" placeholder="Code Lockers  : <?php echo $listPoint->code; ?>" class="form-control input-lg widget-profile-input">
+    <div class="widget-profile-text">
+        Lorem ipsum dolor sit amet
+    </div>
 </div>
 <div class="order-index col-md-6">
     <div class="panel panel-warning panel-dark">
@@ -94,12 +113,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <?php
                 if (\Yii::$app->params['shippingScanTrayOnly'] == true) {
                     $form = ActiveForm::begin([
-                                'method' => 'POST',
-                                'action' => ['shippings/channels'],
+                                'method' => 'GET',
+                                'action' => ['shippings/channels?boxcode=' . $listPoint->pickingId],
                     ]);
                 } else if (\Yii::$app->params['shippingScanTrayOnly'] == False) {
                     $form = ActiveForm::begin([
-                                'method' => 'POST',
+                                'method' => 'GET',
                                 'action' => ['shippings/channels'],
                     ]);
                 }
