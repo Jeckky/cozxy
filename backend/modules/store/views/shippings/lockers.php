@@ -30,14 +30,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
         </div>
     </div> <!-- / .panel-heading -->
     <div class="widget-profile-counters">
-        <div class="col-xs-3"><span><?php echo $listPoint->title; ?></span></div>
+        <div class="col-xs-3"><span>ที่ <?php echo $listPoint->title; ?></span></div>
         <div class="col-xs-3"><span><?php echo $citie->localName; ?></span></div>
         <div class="col-xs-3"><span><?php echo $state->localName; ?></span></div>
         <div class="col-xs-3"><span><?php echo $countrie->localName; ?></span></div>
     </div>
     <input type="text" placeholder="Code Lockers  : <?php echo $listPoint->code; ?>" class="form-control input-lg widget-profile-input">
     <div class="widget-profile-text">
-        Lorem ipsum dolor sit amet
+        &nbsp;
     </div>
 </div>
 <div class="order-index col-md-6">

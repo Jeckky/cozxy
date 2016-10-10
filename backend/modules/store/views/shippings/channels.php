@@ -19,7 +19,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
         </div>
     </div> <!-- / .panel-heading -->
     <div class="widget-profile-counters">
-        <div class="col-xs-3"><span><?php echo $listPoint->title; ?></span></div>
+        <div class="col-xs-3"><span>ที่ <?php echo $listPoint->title; ?></span></div>
         <div class="col-xs-3"><span><?php echo $citie->localName; ?></span></div>
         <div class="col-xs-3"><span><?php echo $state->localName; ?></span></div>
         <div class="col-xs-3"><span><?php echo $countrie->localName; ?></span></div>
