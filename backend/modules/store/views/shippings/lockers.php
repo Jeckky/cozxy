@@ -6,35 +6,42 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
 
-$this->title = 'Qr Code Picking Points List';
+$this->title = 'ช่องของ Lockers';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
-<h1>Shippings/Picking Points Items</h1>
-
-
+<h1>Shippings / Picking Points Items / เลือกใช้งานตามความต้องการ</h1>
+<div class="note note-success ">
+    <h3>สถานที่ตั้ง Lockers </h3>
+    <h4 style="color: #003147">
+        Code Lockers  : <?php echo $listPoint->code; ?>
+        ,ที่<?php echo $listPoint->title; ?>
+        ,<?php echo $citie->localName; ?>
+        ,<?php echo $state->localName; ?>
+        ,<?php echo $countrie->localName; ?>
+    </h4>
+</div>
 <div class="order-index col-md-6">
-    <div class="panel">
+    <div class="panel panel-warning panel-dark">
 
         <div class="panel-heading">
-            <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> Scan Qr code Order No :</span>
+            <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> เลือกใช้งานแบบที่ 1 กดปุ่มจาก ช่องของ Lockers</span>
         </div>
         <div class="panel-body ">
-            <div class="col-sm-5">
-
-
+            <div class="col-sm-12">
+                <div class="form-control" style="border: 0px;"></div>
+                <div id="character-limit-input-label" class="limiter-label form-group-margin">&nbsp;&nbsp;</div>
             </div>
         </div>
 
-
     </div>
-    <div class="panel panel-default">
+    <div class="panel panel-warning">
         <div class="panel-heading">
             <div class="row">
                 <div class="col-md-6"><?= $this->title ?></div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
-                        &nbsp;
+                        &nbsp;<span class="limiter-count">&nbsp;</span>
                     </div>
                 </div>
             </div>
@@ -46,52 +53,67 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    'pickingItemsId',
-                    'pickingId',
-                    'code',
+                    //'pickingItemsId',
+                    // 'pickingId',
+                    [
+                        'attribute' => 'Code Lockers',
+                        'value' => function($model) {
+                            return $model->pickingPoint->code;
+                        }
+                    ],
+                    //'code',
+                    [
+                        'attribute' => 'Code Channels',
+                        'value' => function($model) {
+                            return $model->code;
+                        }
+                    ],
                     'name',
                     /* ['class' => 'yii\grid\ActionColumn'], */
                     ['class' => 'yii\grid\ActionColumn',
+                        'header' => 'Actions',
                         'template' => ' {items} ',
                         'buttons' => [
                             'items' => function($url, $model) {
-                                return 'เลือก Lockers นี้';
+                                //return '<button class="btn btn-rounded btn-xs"> เปิด Channels นี้ </button>';
+                                return Html::a('<button class="btn btn-rounded btn-xs"> เปิด Channels นี้ </button>', Yii::$app->homeUrl . "store/shippings/channels?code=" . $model->code . '&boxcode=' . $model->pickingId, [
+                                            'title' => Yii::t('app', 'เปิด Channels นี้  :' . $model->code),]);
                             }
+                                ],
+                            ],
                         ],
-                    ],
-                ],
-            ]);
-            ?>
-        </div>
-    </div>
-
-</div>
-
-<div class="order-index col-md-6">
-    <div class="panel">
-        <?php
-        if (\Yii::$app->params['shippingScanTrayOnly'] == true) {
-            $form = ActiveForm::begin([
-                        'method' => 'POST',
-                        'action' => ['shippings/index'],
-            ]);
-        } else if (\Yii::$app->params['shippingScanTrayOnly'] == False) {
-            $form = ActiveForm::begin([
-                        'method' => 'POST',
-                        'action' => ['shippings/'],
-            ]);
-        }
-        ?>
-        <div class="panel-heading">
-            <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> Scan Qr code Order No :</span>
-        </div>
-        <div class="panel-body ">
-            <div class="col-sm-12">
-                <input type="text" name="codes" autofocus="true" id="codes" class="form-control" placeholder="Search or Scan Qr code">
-                <div id="character-limit-input-label" class="limiter-label form-group-margin">หมายเหตุ : <span class="limiter-count">Scan Qr Code Picking Points ทุกครั้ง เพื่อตรวจความถูกต้องของสถานที่ของตู้.</span></div>
+                    ]);
+                    ?>
+                </div>
             </div>
+
         </div>
-        <?= $this->registerJS("
+
+        <div class="order-index col-md-6">
+            <div class="panel panel-info panel-dark">
+                <?php
+                if (\Yii::$app->params['shippingScanTrayOnly'] == true) {
+                    $form = ActiveForm::begin([
+                                'method' => 'POST',
+                                'action' => ['shippings/channels'],
+                    ]);
+                } else if (\Yii::$app->params['shippingScanTrayOnly'] == False) {
+                    $form = ActiveForm::begin([
+                                'method' => 'POST',
+                                'action' => ['shippings/channels'],
+                    ]);
+                }
+                ?>
+                <div class="panel-heading">
+                    <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> เลือกใช้งานแบบที่ 2  Scan Qr code จาก ช่อง :</span>
+                </div>
+                <div class="panel-body ">
+                    <div class="col-sm-12">
+                        <input type="text" name="code" autofocus="true" id="code" class="form-control" placeholder="Search or Scan Qr code">
+                        <div id="character-limit-input-label" class="limiter-label form-group-margin">หมายเหตุ : <span class="limiter-count">Scan Qr Code ทุกครั้ง เพื่อตรวจความถูกต้องของช่องใน Lockers.</span></div>
+                    </div>
+                </div>
+                <?= $this->registerJS("
                 $('#orderNo').blur(function(event){
                     if(event.which == 13 || event.keyCode == 13)
                     {
@@ -99,42 +121,53 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     }
                 });
     ") ?>
-        <?php ActiveForm::end(); ?>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <div class="row">
-                <div class="col-md-6"><?= $this->title ?></div>
-                <div class="col-md-6">
-                    <div class="btn-group pull-right">
-                        &nbsp;
+                <?php ActiveForm::end(); ?>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-6"><?= $this->title ?></div>
+                        <div class="col-md-6">
+                            <div class="btn-group pull-right">
+                                &nbsp;
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="panel-body">
+                <div class="panel-body">
 
-            <?=
-            GridView::widget([
-                'dataProvider' => $dataProvider,
-                'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-                    'pickingItemsId',
-                    'pickingId',
-                    'code',
-                    'name',
-                    /* ['class' => 'yii\grid\ActionColumn'], */
-                    ['class' => 'yii\grid\ActionColumn',
-                        'template' => ' {items} ',
-                        'buttons' => [
-                            'items' => function($url, $model) {
-                                return 'เลือก Lockers นี้';
-                            }
+                    <?=
+                    GridView::widget([
+                        'dataProvider' => $dataProvider,
+                        'columns' => [
+                            ['class' => 'yii\grid\SerialColumn'],
+                            //'pickingItemsId',
+                            [
+                                'attribute' => 'Code Lockers',
+                                'value' => function($model) {
+                                    return $model->pickingPoint->code;
+                                }
+                            ],
+                            //'code',
+                            [
+                                'attribute' => 'Code Channels',
+                                'value' => function($model) {
+                                    return $model->code;
+                                }
+                            ],
+                            'name',
+                        /* ['class' => 'yii\grid\ActionColumn'],
+                          ['class' => 'yii\grid\ActionColumn',
+                          'template' => ' {items} ',
+                          'buttons' => [
+                          'items' => function($url, $model) {
+                          return 'เลือก Channels นี้';
+                          }
+                          ],
+                          ], */
                         ],
-                    ],
-                ],
-            ]);
-            ?>
+                    ]);
+                    ?>
         </div>
     </div>
 

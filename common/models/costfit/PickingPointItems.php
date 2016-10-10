@@ -30,4 +30,8 @@ class PickingPointItems extends \common\models\costfit\master\PickingPointItemsM
         return array_merge(parent::attributeLabels(), []);
     }
 
+    public function getPickingPoint() {
+        return $this->hasOne(PickingPoint::className(), ['pickingId' => 'pickingId']);
+    }
+
 }

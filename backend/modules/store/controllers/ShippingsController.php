@@ -43,17 +43,52 @@ class ShippingsController extends StoreMasterController {
 
         $pickingId = Yii::$app->request->get('boxcode');
         if ($pickingId != '') {
+
+            $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $pickingId . "'")->one();
+            $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
+            $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
+            $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
             $query = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $pickingId . "'");
+
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
             ]);
 
             return $this->render('lockers', [
-                        'dataProvider' => $dataProvider,
+                        'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
+                        'citie' => $localNamecitie,
+                        'countrie' => $localNamecountrie,
+                        'state' => $localNamestate
             ]);
         }
 
         //return $this->render('lockers', ['txt' => $txt, 'codes' => $codes, 'data' => $data]);
+    }
+
+    public function actionChannels() {
+        $pickingId = Yii::$app->request->get('boxcode');
+        $channel = Yii::$app->request->get('code');
+        $orderId = Yii::$app->request->get('orderId');
+        if ($pickingId != '') {
+            $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $pickingId . "'")->one();
+            $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $pickingId . "' and  code = '" . $channel . "' ")->one();
+            $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
+            $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
+            $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
+            $query = \common\models\costfit\Order::find()->where("orderId = '" . $orderId . "'");
+
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
+
+            return $this->render('channels', [
+                        'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
+                        'citie' => $localNamecitie,
+                        'countrie' => $localNamecountrie,
+                        'state' => $localNamestate,
+                        'listPointItems' => $listPointItems,
+            ]);
+        }
     }
 
 }
