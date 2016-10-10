@@ -10,7 +10,7 @@ $this->title = 'ช่องของ Lockers';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
-<h1>Shippings / Picking Points Items / เลือกใช้งานตามความต้องการ</h1>
+<h1>Shippings / Picking Points / เลือกใช้งานตามความต้องการ</h1>
 <!--<div class="note note-success ">
     <h3>สถานที่ตั้ง Lockers </h3>
     <h4 style="color: #003147">
@@ -57,7 +57,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
     <div class="panel panel-warning">
         <div class="panel-heading">
             <div class="row">
-                <div class="col-md-6"><?= $this->title ?></div>
+                <div class="col-md-6">ข้อมูลของแบบที่ 1  ช่องของ Lockers </div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
                         &nbsp;<span class="limiter-count">&nbsp;</span>
@@ -87,16 +87,27 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             return $model->code;
                         }
                     ],
-                    'name',
+                    [
+                        'attribute' => 'name',
+                        'value' => function($model) {
+                            return $model->name . ', มีทั้งหมด ' . \common\models\costfit\PickingPointItems::PickingPointDistinctCount($model->pickingItemsId, $model->pickingId) . ' ถุง';
+                        }
+                    ],
                     /* ['class' => 'yii\grid\ActionColumn'], */
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
                         'template' => ' {items} ',
                         'buttons' => [
                             'items' => function($url, $model) {
+                                //echo $model->pickingItemsId . '<br>';
+                                //echo \common\models\costfit\PickingPointItems::PickingPointDistinct($model->pickingItemsId);
+                                if (\common\models\costfit\PickingPointItems::PickingPointDistinct($model->pickingItemsId) == 1) {
+                                    return '<span class="text-danger">Channels เต็มแล้ว</span>';
+                                } elseif (\common\models\costfit\PickingPointItems::PickingPointDistinct($model->pickingItemsId) == 0) {
+                                    return Html::a('<button class="btn btn-rounded btn-xs text-success"> เปิด Channels นี้ </button>', Yii::$app->homeUrl . "store/shippings/channels?code=" . $model->code . '&boxcode=' . $model->pickingId, [
+                                                'title' => Yii::t('app', 'เปิด Channels นี้  :' . $model->code),]);
+                                }
                                 //return '<button class="btn btn-rounded btn-xs"> เปิด Channels นี้ </button>';
-                                return Html::a('<button class="btn btn-rounded btn-xs"> เปิด Channels นี้ </button>', Yii::$app->homeUrl . "store/shippings/channels?code=" . $model->code . '&boxcode=' . $model->pickingId, [
-                                            'title' => Yii::t('app', 'เปิด Channels นี้  :' . $model->code),]);
                             }
                                 ],
                             ],
@@ -124,7 +135,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 }
                 ?>
                 <div class="panel-heading">
-                    <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> เลือกใช้งานแบบที่ 2  Scan Qr code จาก ช่อง :</span>
+                    <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> เลือกใช้งานแบบที่ 2  Scan Qr code จากช่องของ Lockers</span>
                 </div>
                 <div class="panel-body ">
                     <div class="col-sm-12">
@@ -145,7 +156,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-md-6"><?= $this->title ?></div>
+                        <div class="col-md-6">ข้อมูลของแบบที่ 2 ช่องของ Lockers </div>
                         <div class="col-md-6">
                             <div class="btn-group pull-right">
                                 &nbsp;
@@ -174,16 +185,29 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     return $model->code;
                                 }
                             ],
-                            'name',
-                        /* ['class' => 'yii\grid\ActionColumn'],
-                          ['class' => 'yii\grid\ActionColumn',
-                          'template' => ' {items} ',
-                          'buttons' => [
-                          'items' => function($url, $model) {
-                          return 'เลือก Channels นี้';
-                          }
-                          ],
-                          ], */
+                            //'name',
+                            [
+                                'attribute' => 'name',
+                                'value' => function($model) {
+                                    return $model->name . ', มีทั้งหมด ' . \common\models\costfit\PickingPointItems::PickingPointDistinctCount($model->pickingItemsId, $model->pickingId) . ' ถุง';
+                                }
+                            ],
+                            ['class' => 'yii\grid\ActionColumn',
+                                'header' => 'Actions',
+                                'template' => ' {items} ',
+                                'buttons' => [
+                                    'items' => function($url, $model) {
+                                        //echo $model->pickingItemsId . '<br>';
+                                        //echo \common\models\costfit\PickingPointItems::PickingPointDistinct($model->pickingItemsId);
+                                        if (\common\models\costfit\PickingPointItems::PickingPointDistinct($model->pickingItemsId) == 1) {
+                                            return '<span class="text-danger">Channels เต็มแล้ว</span>';
+                                        } elseif (\common\models\costfit\PickingPointItems::PickingPointDistinct($model->pickingItemsId) == 0) {
+                                            return '<span class="text-success">Channels ว่าง </span>';
+                                        }
+                                        //return '<button class = "btn btn-rounded btn-xs"> เปิด Channels นี้ </button>';
+                                    }
+                                ],
+                            ],
                         ],
                     ]);
                     ?>

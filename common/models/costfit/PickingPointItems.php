@@ -34,4 +34,21 @@ class PickingPointItems extends \common\models\costfit\master\PickingPointItemsM
         return $this->hasOne(PickingPoint::className(), ['pickingId' => 'pickingId']);
     }
 
+    static function PickingPointDistinct($pickingItemId) {
+        $result = OrderItemPacking::find()->where("pickingItemsId  =" . $pickingItemId)->one();
+
+        if (count($result) > 0) {
+            $result = TRUE; // มี pickingItemId แล้ว
+        } else {
+            $result = FALSE; // มี pickingItemId แล้ว
+        }
+        return $result;
+    }
+
+    static function PickingPointDistinctCount($pickingItemId) {
+        $result = OrderItemPacking::find()->where("pickingItemsId  =" . $pickingItemId)->count();
+
+        return $result;
+    }
+
 }
