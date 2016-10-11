@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\jui\DatePicker;
 use yii\widgets\ActiveForm;
 
-$this->title = 'รายงานยอดขาย';
+$this->title = 'รายงานจุดส่งสินค้ายอดนิยม';
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <div class="order-index">
@@ -61,8 +61,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <thead>
                     <tr style="background-color: #ccffcc;text-align: center;font-weight: bold;vertical-align: central;">
                         <td>ลำดับ</td>
-                        <td>สินค้า</td>
-                        <td>จำนวนผู้เข้าชม (ครั้ง)</td>
+                        <td>Picking Point</td>
+                        <td>จำนวน (ครั้ง)</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,8 +73,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         ?>
                         <tr style="text-align: center;">
                             <td><?= $i ?></td>
-                            <td style="text-align: left"><?= $pView->product->title ?></td>
-                            <td><?= $pView->sumViews ?></td>
+                            <td style="text-align: left"><?= isset($pView->pickingpoint) ? $pView->pickingpoint->title : "-" ?></td>
+                            <td><?= $pView->sumPicking ?></td>
                         </tr>
                         <?php
 //                        $total+=$order->summary;

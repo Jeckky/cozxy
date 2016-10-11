@@ -23,7 +23,8 @@ use \common\models\costfit\master\PickingPointMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
+class PickingPoint extends \common\models\costfit\master\PickingPointMaster
+{
 
     const TYPE_PICKINGPOINT = 1; // point
 
@@ -31,7 +32,8 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
      * @inheritdoc
      */
 
-    public function rules() {
+    public function rules()
+    {
         return array_merge(parent::rules(), [
             [['provinceId', 'amphurId', 'type', 'isDefault']
                 , 'required', 'on' => 'picking_point'],
@@ -41,27 +43,42 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributes()
+    {
+        return array_merge(parent::attributes(), [
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function getCitie() {
+    public function getCitie()
+    {
         return $this->hasOne(\common\models\dbworld\Cities::className(), ['cityId' => 'amphurId']);
     }
 
-    public function getCountrie() {
+    public function getCountrie()
+    {
         return $this->hasOne(\common\models\dbworld\Countries::className(), ['countryId' => 'countryId']);
     }
 
-    public function getDistrict() {
+    public function getDistrict()
+    {
         return $this->hasOne(\common\models\dbworld\District::className(), ['districtId' => 'districtId']);
     }
 
-    public function getState() {
+    public function getState()
+    {
         return $this->hasOne(\common\models\dbworld\States::className(), ['stateId' => 'provinceId']);
     }
 
-    static public function findPickingPoitItem($orderId) {
+    static public function findPickingPoitItem($orderId)
+    {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (isset($order)) {
             $pickingPoint = PickingPoint::find()->where("pickingId=" . $order->pickingId)->one();
@@ -80,7 +97,8 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
         }
     }
 
-    public function getPickingPointItems() {
+    public function getPickingPointItems()
+    {
         return $this->hasMany(\common\models\costfit\PickingPointItems::className(), ['pickingId' => 'pickingId']);
     }
 
