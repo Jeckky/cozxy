@@ -5,14 +5,17 @@ use yii\jui\DatePicker;
 //use kartik\widgets\DatePicker;
 use yii\widgets\ActiveForm;
 
-$this->title = 'รายงานยอดขาย';
+//$this->title = 'รายงานยอดขาย';
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+$this->title = 'Orders';
+$this->params['breadcrumbs'][] = $this->title;
+$this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <div class="order-index">
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
-                <div class="col-md-6"><h4><?= $this->title ?></h4></div>
+                <div class="col-md-6"><h4>รายงานยอดขาย</h4></div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
                     </div>
@@ -30,6 +33,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="col-lg-3">
                     <?php
                     echo DatePicker::widget(['name' => 'fromDate',
+                        'dateFormat' => 'yyyy-MM-dd',
+                        'value' => isset($_GET['fromDate']) ? $_GET['fromDate'] : NULL,
                         'options' => ['placeholder' => 'From Date',
                             'class' => 'form-control',
                             'style' => 'border-color: #66CCFF;height: 40px;',
@@ -42,10 +47,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="col-lg-3">
                     <?=
                     DatePicker::widget(['name' => 'toDate',
+                        'dateFormat' => 'yyyy-MM-dd',
+                        'value' => isset($_GET['toDate']) ? $_GET['toDate'] : NULL,
                         'options' => ['placeholder' => 'To Date',
                             'class' => 'form-control',
                             'style' => 'border-color: #66CCFF;height: 40px;',
-                            'dateFormat' => 'yyyy-MM-dd',
                             'language' => 'en',
                         ]
                     ])
@@ -72,26 +78,32 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <?php
                     $i = 1;
                     $total = 0;
-                    foreach ($model as $order):
+                    if (isset($model) && !empty($model)) {
+                        foreach ($model as $order):
+                            ?>
+                            <tr style="text-align: center;">
+                                <td><?= $i ?></td>
+                                <td><?= $order->orderNo ?></td>
+                                <td><?= $order->invoiceNo ?></td>
+                                <td><?= $order->paymentDateTime ?></td>
+                                <td style="text-align: right;"><?= number_format($order->summary, 2) ?></td>
+                                <td> <?= Html::a('<i class="fa fa-eye" aria-hidden="true"> รายละเอียด</i>', Yii::$app->homeUrl . "order/order/view/" . $order->encodeParams(['id' => $order->orderId]), ['class' => 'btn btn-success btn-sm']) ?></td>
+                            </tr>
+                            <?php
+                            $total+=$order->summary;
+                            $i++;
+                        endforeach;
                         ?>
-                        <tr style="text-align: center;">
-                            <td><?= $i ?></td>
-                            <td><?= $order->orderNo ?></td>
-                            <td><?= $order->invoiceNo ?></td>
-                            <td><?= $order->paymentDateTime ?></td>
-                            <td style="text-align: right;"><?= $order->summary ?></td>
-                            <td> <?= Html::a('<i class="fa fa-eye" aria-hidden="true"> รายละเอียด</i>', $baseUrl . '/view', ['class' => 'btn btn-success btn-sm']) ?></td>
+                        <tr>
+                            <td colspan="4" style="text-align: right;"><b>TOTAL </b></td>
+                            <td style="text-align: right;"><b><?= number_format($total, 2) ?></b></td>
+                            <td></td>
                         </tr>
                         <?php
-                        $total+=$order->summary;
-                        $i++;
-                    endforeach;
+                    }else {
+                        echo '<tr><td colspan="6" style="text-align:center;"><i> ไม่มีข้อมูล </i></td></tr>';
+                    }
                     ?>
-                    <tr>
-                        <td colspan="4" style="text-align: right;"><b>TOTAL </b></td>
-                        <td style="text-align: right;"><b><?= number_format($total, 2) ?></b></td>
-                        <td></td>
-                    </tr>
                 </tbody>
             </table>
         </div>
