@@ -9,7 +9,7 @@ use Yii;
 *
     * @property string $orderId
     * @property string $userId
-    * @property string $pickingId
+    * @property integer $pickingId
     * @property string $token
     * @property string $orderNo
     * @property string $invoiceNo
@@ -44,13 +44,15 @@ use Yii;
     * @property string $shippingZipcode
     * @property string $shippingTel
     * @property integer $paymentType
-    * @property string $couponId
+    * @property integer $couponId
     * @property integer $checkStep
     * @property string $note
     * @property string $paymentDateTime
     * @property integer $isSlowest
-    * @property string $color
-    * @property string $pickerId
+    * @property integer $color
+    * @property integer $pickerId
+    * @property string $password
+    * @property string $otp
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -85,6 +87,7 @@ return [
             [['billingFirstname', 'billingLastname', 'billingCompany', 'shippingFirstname', 'shippingLastname', 'shippingCompany'], 'string', 'max' => 200],
             [['billingCountryId', 'shippingCountryId'], 'string', 'max' => 3],
             [['billingZipcode', 'shippingZipcode'], 'string', 'max' => 10],
+            [['password', 'otp'], 'string', 'max' => 255],
             [['email'], 'string', 'max' => 100],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => UserMaster::className(), 'targetAttribute' => ['userId' => 'userId']],
         ];
@@ -140,6 +143,8 @@ return [
     'isSlowest' => Yii::t('order', 'Is Slowest'),
     'color' => Yii::t('order', 'Color'),
     'pickerId' => Yii::t('order', 'Picker ID'),
+    'password' => Yii::t('order', 'Password'),
+    'otp' => Yii::t('order', 'Otp'),
     'status' => Yii::t('order', 'Status'),
     'createDateTime' => Yii::t('order', 'Create Date Time'),
     'updateDateTime' => Yii::t('order', 'Update Date Time'),

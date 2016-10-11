@@ -19,8 +19,8 @@ use Yii;
     * @property string $total
     * @property integer $sendDate
     * @property string $sendDateTime
-    * @property string $pickerId
-    * @property string $color
+    * @property integer $pickerId
+    * @property integer $color
     * @property string $bagNo
     * @property integer $status
     * @property string $createDateTime

@@ -7,10 +7,10 @@ use Yii;
 /**
 * This is the model class for table "product_supplier".
 *
-    * @property string $productSupplierId
-    * @property string $productId
-    * @property string $supplierId
-    * @property string $leaseTime
+    * @property integer $productSupplierId
+    * @property integer $productId
+    * @property integer $supplierId
+    * @property integer $leaseTime
     * @property string $maxQuantity
     * @property integer $status
     * @property string $createDateTime

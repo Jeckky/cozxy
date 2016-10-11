@@ -153,7 +153,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product-group"><span class="mm-text">Product Group</span></a>
                     </li>
                     <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product-group"><span class="mm-text">Product Price Group</span></a>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product-price-match-group"><span class="mm-text">Product Price Match</span></a>
                     </li>
                     <li>
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product"><span class="mm-text">Product</span></a>
