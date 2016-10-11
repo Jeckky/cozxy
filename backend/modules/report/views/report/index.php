@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\jui\DatePicker;
+//use kartik\widgets\DatePicker;
 use yii\widgets\ActiveForm;
 
 $this->title = 'รายงานยอดขาย';
@@ -27,16 +28,16 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 ]);
                 ?>
                 <div class="col-lg-3">
-                    <?=
-                    DatePicker::widget(['name' => 'fromDate',
+                    <?php
+                    echo DatePicker::widget(['name' => 'fromDate',
                         'options' => ['placeholder' => 'From Date',
                             'class' => 'form-control',
                             'style' => 'border-color: #66CCFF;height: 40px;',
-                            'dateFormat' => 'yyyy-MM-dd',
                             'language' => 'en',
                         ]
                     ])
                     ?>
+
                 </div>
                 <div class="col-lg-3">
                     <?=
