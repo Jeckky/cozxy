@@ -84,7 +84,9 @@ class Order extends \common\models\costfit\master\OrderMaster {
             'bagNo',
             'status',
             'pickingId',
-            'itemStatus'
+            'itemStatus',
+            'fromDate',
+            'toDate'
         ]);
     }
 

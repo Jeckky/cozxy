@@ -60,6 +60,9 @@ return [
         'user' => [
             'class' => 'backend\modules\user\User',
         ],
+        'report' => [
+            'class' => 'backend\modules\report\Report',
+        ],
         'redactor' => [
             'class' => 'yii\redactor\RedactorModule',
             'uploadDir' => '@web/images',
