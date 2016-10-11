@@ -329,4 +329,28 @@ class Product extends \common\models\costfit\master\ProductMaster
         }
     }
 
+    public static function isSmartItem($productId)
+    {
+        $flag = FALSE;
+        $cart = Order::findCartArray();
+        if (isset($cart['items']) && count($cart['items']) > 0) {
+            foreach ($cart['items'] as $orderItemId => $item) {
+                $smartItems = ProductPriceMatchGroup::find()
+                ->join("LEFT JOIN", 'product_price_match pm', 'pm.productPriceMatchGroupId=product_price_match_group.productPriceMatchGroupId')
+                ->where("pm.productid =" . $item['productId'])
+                ->one();
+                if (isset($smartItems)) {
+                    foreach ($smartItems->productPriceMatchs as $ppm) {
+                        if ($ppm->productId == $productId) {
+                            $flag = TRUE;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $flag;
+    }
+
 }

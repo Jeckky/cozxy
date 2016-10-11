@@ -11,6 +11,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <div class="tile">
             <div class="badges">
                 <span class="sale">Sale</span>
+                <?php if (common\models\costfit\Product::isSmartItem($model->productId)): ?>
+                    <br><span class="sale" style="background-color: #d2d042 !important;">SMART</span>
+                <?php endif; ?>
             </div>
             <div class="price-label"><?= isset($model->productOnePrice) ? $model->productOnePrice->price : "Not Set"; ?> ฿</div>
             <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $model->productId]) ?>" style="/*min-height: 210px; max-height: 210px;*/">

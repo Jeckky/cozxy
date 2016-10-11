@@ -72,7 +72,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 </style>
 <div class="col-lg-6 col-md-6 text-left">
-    <h1><?= $model->title; ?></h1>
+    <h1><?= $model->title; ?>
+        <div class="badges">
+            <?php if (common\models\costfit\Product::isSmartItem($model->productId)): ?>
+                <span class="sale" style="background-color: #d2d042 !important;color: white;font-size: 20px;padding: 5px 10px 5px 10px">SMART</span>
+            <?php endif; ?>
+        </div>
+    </h1>
     <?= Html::hiddenInput("productId", $model->productId, ['id' => 'productId']); ?>
     <?= Html::hiddenInput("fastId", $fastId = Product::getShippingTypeId($model->productId), ['id' => 'fastId']); ?>
     <div class="form-group">
@@ -88,11 +94,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </div>
         <?php endif; ?>
     </div>
-
     <div class="buttons group products-buttons-group">
         <div class="old-price"><?= (isset($model->price) && !empty($model->price)) ? number_format($model->price, 2) . " ฿" : "815,00 $" ?></div>
         <div class="price"><?= number_format($model->calProductPrice($model->productId, 1), 2) . " ฿" ?></div>
     </div>
+
     <div class="buttons group products-buttons-group" style="margin-top: -18px;">
         <div class="form-group" style="word-wrap: break-word;">
             <label for="shopping-dollar" class="col-sm-1 " style="float: left; padding-right: 0px; padding-left: 0px; margin-bottom: 0px;">
