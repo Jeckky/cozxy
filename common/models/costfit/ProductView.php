@@ -42,8 +42,8 @@ class ProductView extends \common\models\costfit\master\ProductViewMaster
 
         $route = Yii::$app->requestedRoute;
         $routeArray = explode("/", $route);
-        if ($routeArray[0] == "products" && $routeArray[1] == "index") {
-
+        if ($routeArray[0] == "products" && ($routeArray[1] == "index" || $routeArray[1] == "change-option")) {
+//            throw new \yii\base\Exception;
             $model = new ProductView();
             $model->productId = $productId;
             $strAnd = " ";
@@ -71,12 +71,12 @@ class ProductView extends \common\models\costfit\master\ProductViewMaster
             if (count($productViewAll) > 0) {
                 $recentView = ProductView::find()->where("TIMESTAMPDIFF(MINUTE,createDateTime,NOW()) < " . self::TIME_OF_NEW_RECORD . " and productId= $productId $strAnd")->all();
                 if (count($recentView) == 0) {
-                    if (isset($pproductId) && $productId == $pproductId) {
+                    if ((isset($pproductId) && $productId == $pproductId) || $routeArray[1] == "change-option") {
                         $model->save();
                     }
                 }
             } else {
-                if (isset($pproductId) && $productId == $pproductId) {
+                if ((isset($pproductId) && $productId == $pproductId) || $routeArray[1] == "change-option") {
                     $model->save();
                 }
             }
