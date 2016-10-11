@@ -23,7 +23,7 @@ class PickingPointReportController extends ReportMasterController
             $filterArray[] = ['>=', 'date(`order`.updateDateTime)', $_GET['fromDate']];
         }
         if (isset($_GET['toDate'])) {
-            $filterArray[] = ['<=', 'date(`order`.updateDateTime)', $_GET['fromDate']];
+            $filterArray[] = ['<=', 'date(`order`.updateDateTime)', $_GET['toDate']];
         }
         $model->andFilterWhere($filterArray);
 
