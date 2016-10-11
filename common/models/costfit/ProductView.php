@@ -29,6 +29,14 @@ class ProductView extends \common\models\costfit\master\ProductViewMaster
         return array_merge(parent::rules(), []);
     }
 
+    public function attributes()
+    {
+        // add related fields to searchable attributes
+        return array_merge(parent::attributes(), [
+            'sumViews'
+        ]);
+    }
+
     /**
      * @inheritdoc
      */
@@ -81,6 +89,11 @@ class ProductView extends \common\models\costfit\master\ProductViewMaster
                 }
             }
         }
+    }
+
+    public function getProduct()
+    {
+        return $this->hasOne(Product::className(), ['productId' => 'productId']);
     }
 
 }

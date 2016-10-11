@@ -63,7 +63,9 @@ class Product extends \common\models\costfit\master\ProductMaster
     public function attributes()
     {
         // add related fields to searchable attributes
-        return array_merge(parent::attributes(), ['storeProductId']);
+        return array_merge(parent::attributes(), [
+            'storeProductId', 'sumViews'
+        ]);
     }
 
     public function getProductOnePrice()
