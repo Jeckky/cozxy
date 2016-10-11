@@ -44,6 +44,14 @@ class Product extends \common\models\costfit\master\ProductMaster
         ]);
     }
 
+    public function afterFind()
+    {
+        parent::afterFind();
+        if (!$this->isNewRecord) {
+            ProductView::saveProductView($this->productId);
+        }
+    }
+
     /**
      * @inheritdoc
      */
