@@ -13,25 +13,17 @@ class BestSellerReportController extends ReportMasterController
 
     public function actionIndex()
     {
-//        if (isset($_GET)) {
-//            throw new \yii\base\Exception(print_r($_GET, true));
-//        }
-//        $str = "";
-//        if (isset($_GET['fromDate']) || isset($_GET['toDate'])) {
-//            if (isset($_GET['fromDate'])) {
-//
-//            }
-//            if (isset($_GET['toDate'])) {
-//
-//            }
-//        }
-        $model = \common\models\costfit\ProductView::find()->select("*,sum(1) as sumViews")->groupBy("productId");
+        $model = \common\models\costfit\OrderItem::find()->select("order_item.*,sum(quantity) as sumQuantity")
+        ->join('LEFT JOIN', '`order` o', 'o.orderId = order_item.orderId')
+        ->where("o.status > " . Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " AND o.status <>" . Order::ORDER_STATUS_FINANCE_APPROVE)
+        ->orderBy("sumQuantity DESC")
+        ->groupBy("productId");
         $filterArray[] = 'and';
         if (isset($_GET['fromDate'])) {
-            $filterArray[] = ['>=', 'date(createDateTime)', $_GET['fromDate']];
+            $filterArray[] = ['>=', 'date(o.paymentDateTime)', $_GET['fromDate']];
         }
         if (isset($_GET['toDate'])) {
-            $filterArray[] = ['<=', 'date(createDateTime)', $_GET['fromDate']];
+            $filterArray[] = ['<=', 'date(o.paymentDateTime)', $_GET['toDate']];
         }
         $model->andFilterWhere($filterArray);
 

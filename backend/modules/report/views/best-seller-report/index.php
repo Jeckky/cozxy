@@ -62,7 +62,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <tr style="background-color: #ccffcc;text-align: center;font-weight: bold;vertical-align: central;">
                         <td>ลำดับ</td>
                         <td>สินค้า</td>
-                        <td>จำนวนผู้เข้าชม (ครั้ง)</td>
+                        <td>จำนวนชิ้นที่ขาย</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,7 +74,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <tr style="text-align: center;">
                             <td><?= $i ?></td>
                             <td style="text-align: left"><?= $pView->product->title ?></td>
-                            <td><?= $pView->sumViews ?></td>
+                            <td><?= $pView->sumQuantity ?></td>
                         </tr>
                         <?php
 //                        $total+=$order->summary;
