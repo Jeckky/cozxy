@@ -7,32 +7,28 @@ use backend\controllers\BackendMasterController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\costfit\Order;
+use common\models\costfit\User;
 
-class BirthdayReportController extends ReportMasterController
-{
+class BirthdayReportController extends ReportMasterController {
 
-    public function actionIndex()
-    {
-//        if (isset($_GET)) {
-//            throw new \yii\base\Exception(print_r($_GET, true));
-//        }
-//        $str = "";
-//        if (isset($_GET['fromDate']) || isset($_GET['toDate'])) {
-//            if (isset($_GET['fromDate'])) {
-//
-//            }
-//            if (isset($_GET['toDate'])) {
-//
-//            }
-//        }
-        $model = \common\models\costfit\ProductView::find()->select("*,sum(1) as sumViews")->groupBy("productId");
+    public function actionIndex() {
+        $thisMonth = substr(date('Y-m-d'), 5, -3);
+        $model = User::find()->where("type=1 and status=1 and birthDate!=''");
         $filterArray[] = 'and';
         if (isset($_GET['fromDate'])) {
-            $filterArray[] = ['>=', 'date(createDateTime)', $_GET['fromDate']];
+            $model = User::find()->where("type=1 and status=1 and birthDate!=''");
+            $filterArray[] = ['>=', 'date(birthDate)', $_GET['fromDate']];
+            if (isset($_GET['toDate'])) {
+                $filterArray[] = ['<=', 'date(birthDate)', $_GET['toDate']];
+            }
+        } else {
+            if (isset($_GET['toDate'])) {
+                $filterArray[] = ['<=', 'date(birthDate)', $_GET['toDate']];
+            } else {
+                $model = User::find()->where("type=1 and status=1 and birthDate!='' and month(birthDate)='" . $thisMonth . "'");
+            }
         }
-        if (isset($_GET['toDate'])) {
-            $filterArray[] = ['<=', 'date(createDateTime)', $_GET['fromDate']];
-        }
+
         $model->andFilterWhere($filterArray);
 
         $provider = new ActiveDataProvider([
@@ -40,17 +36,15 @@ class BirthdayReportController extends ReportMasterController
         ]);
         $models = $provider->getModels();
         return $this->render('index', [
-            'model' => $models
+                    'model' => $models
         ]);
     }
 
-    public function actionCreate()
-    {
+    public function actionCreate() {
         return $this->render('create');
     }
 
-    public function actionDelete()
-    {
+    public function actionDelete() {
         return $this->render('delete');
     }
 

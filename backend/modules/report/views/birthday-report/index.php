@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\jui\DatePicker;
 use yii\widgets\ActiveForm;
 
-$this->title = 'รายงานยอดขาย';
+$this->title = 'รายงานวันเกิดลูกค้า';
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <div class="order-index">
@@ -22,7 +22,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="row">
                 <?php
                 $form = ActiveForm::begin([
-                    'method' => 'GET',
+                            'method' => 'GET',
                 ]);
                 ?>
                 <div class="col-lg-3">
@@ -59,33 +59,27 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <br>
             <table class="table table-list-order" style="width: 70%">
                 <thead>
-                    <tr style="background-color: #ccffcc;text-align: center;font-weight: bold;vertical-align: central;">
+                    <tr style="background-color: #ccffcc;text-align: center;font-weight: bold;">
                         <td>ลำดับ</td>
-                        <td>สินค้า</td>
-                        <td>จำนวนผู้เข้าชม (ครั้ง)</td>
+                        <td>ชื่อ - นามสกุล</td>
+                        <td>วันเกิด (ปี / เดือน /วัน)</td>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     $i = 1;
                     $total = 0;
-                    foreach ($model as $pView):
+                    foreach ($model as $user):
                         ?>
                         <tr style="text-align: center;">
                             <td><?= $i ?></td>
-                            <td style="text-align: left"><?= $pView->product->title ?></td>
-                            <td><?= $pView->sumViews ?></td>
+                            <td style="text-align: left"><?= $user->firstname . " " . $user->lastname ?></td>
+                            <td><?= substr($user->birthDate, 0, -9) ?></td>
                         </tr>
                         <?php
-//                        $total+=$order->summary;
                         $i++;
                     endforeach;
                     ?>
-<!--                    <tr>
-<td colspan="4" style="text-align: right;"><b>TOTAL </b></td>
-<td style="text-align: right;"><b><?//= number_format($total, 2) ?></b></td>
-<td></td>
-</tr>-->
                 </tbody>
             </table>
         </div>
