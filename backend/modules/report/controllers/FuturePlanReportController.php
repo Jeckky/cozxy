@@ -13,25 +13,16 @@ class FuturePlanReportController extends ReportMasterController
 
     public function actionIndex()
     {
-//        if (isset($_GET)) {
-//            throw new \yii\base\Exception(print_r($_GET, true));
-//        }
-//        $str = "";
-//        if (isset($_GET['fromDate']) || isset($_GET['toDate'])) {
-//            if (isset($_GET['fromDate'])) {
-//
-//            }
-//            if (isset($_GET['toDate'])) {
-//
-//            }
-//        }
-        $model = \common\models\costfit\ProductView::find()->select("*,sum(1) as sumViews")->groupBy("productId");
+        $model = \common\models\costfit\OrderItem::find()->select("*,sum(quantity) as sumQuantity  , DATEDIFF(sendDateTime,date(NOW())) as remainDay")
+        ->where(" sendDateTime is not null AND DATEDIFF(sendDateTime,date(NOW())) >= " . \common\models\costfit\OrderItem::FUTURE_DAY_TO_SHOW)
+        ->orderBy("remainDay ASC")
+        ->groupBy("productId");
         $filterArray[] = 'and';
         if (isset($_GET['fromDate'])) {
             $filterArray[] = ['>=', 'date(createDateTime)', $_GET['fromDate']];
         }
         if (isset($_GET['toDate'])) {
-            $filterArray[] = ['<=', 'date(createDateTime)', $_GET['fromDate']];
+            $filterArray[] = ['<=', 'date(createDateTime)', $_GET['toDate']];
         }
         $model->andFilterWhere($filterArray);
 

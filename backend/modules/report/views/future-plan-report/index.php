@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\jui\DatePicker;
 use yii\widgets\ActiveForm;
 
-$this->title = 'รายงานยอดขาย';
+$this->title = 'รายงานสินค้าที่ต้องส่งล่วงหน้า 7 วัน';
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <div class="order-index">
@@ -23,6 +23,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <?php
                 $form = ActiveForm::begin([
                     'method' => 'GET',
+                    'options' => [
+                        'class' => 'hide'
+                    ]
                 ]);
                 ?>
                 <div class="col-lg-3">
@@ -62,24 +65,36 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <tr style="background-color: #ccffcc;text-align: center;font-weight: bold;vertical-align: central;">
                         <td>ลำดับ</td>
                         <td>สินค้า</td>
-                        <td>จำนวนผู้เข้าชม (ครั้ง)</td>
+                        <td>จำนวน</td>
+                        <td>วันจะส่ง</td>
+                        <td>วันคงเหลือที่จะส่ง</td>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     $i = 1;
                     $total = 0;
-                    foreach ($model as $pView):
-                        ?>
-                        <tr style="text-align: center;">
-                            <td><?= $i ?></td>
-                            <td style="text-align: left"><?= $pView->product->title ?></td>
-                            <td><?= $pView->sumViews ?></td>
-                        </tr>
-                        <?php
+                    if (isset($model) && count($model) > 0):
+                        foreach ($model as $pView):
+                            ?>
+                            <tr style="text-align: center;" class="<?= ($pView->remainDay <= 3) ? " danger" : (($pView->remainDay <= 5) ? " warning" : "") ?>">
+                                <td><?= $i ?></td>
+                                <td style="text-align: left"><?= $pView->product->title ?></td>
+                                <td><?= $pView->sumQuantity ?></td>
+                                <td><?= $this->context->dateThai($pView->sendDateTime, 1) ?></td>
+                                <td><?= $pView->remainDay ?> วัน</td>
+                            </tr>
+                            <?php
 //                        $total+=$order->summary;
-                        $i++;
-                    endforeach;
+                            $i++;
+                        endforeach;
+                    else:
+                        ?>
+                        <tr style="border: 1px gray solid;text-align: center">
+                            <td colspan="5">ไม่มีรายการ</td>
+                        </tr>
+                    <?php
+                    endif;
                     ?>
 <!--                    <tr>
 <td colspan="4" style="text-align: right;"><b>TOTAL </b></td>
