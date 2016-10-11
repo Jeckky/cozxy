@@ -8,17 +8,22 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\costfit\Order;
 
-class TopCustomerReportController extends ReportMasterController {
+class TopCustomerReportController extends ReportMasterController
+{
 
-    public function actionIndex() {
+    public function actionIndex()
+    {
 
-        $model = \common\models\costfit\ProductView::find()->select("*,sum(1) as sumViews")->groupBy("productId");
+        $model = \common\models\costfit\Order::find()->select("*,sum(summary) as sumSummary")
+        ->where("status > " . Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " AND status <>" . Order::ORDER_STATUS_FINANCE_APPROVE)
+        ->orderBy("sumSummary DESC")
+        ->groupBy("userId");
         $filterArray[] = 'and';
         if (isset($_GET['fromDate'])) {
-            $filterArray[] = ['>=', 'date(createDateTime)', $_GET['fromDate']];
+            $filterArray[] = ['>=', 'date(paymentDateTime)', $_GET['fromDate']];
         }
         if (isset($_GET['toDate'])) {
-            $filterArray[] = ['<=', 'date(createDateTime)', $_GET['fromDate']];
+            $filterArray[] = ['<=', 'date(paymentDateTime)', $_GET['toDate']];
         }
         $model->andFilterWhere($filterArray);
 
@@ -27,15 +32,17 @@ class TopCustomerReportController extends ReportMasterController {
         ]);
         $models = $provider->getModels();
         return $this->render('index', [
-                    'model' => $models
+            'model' => $models
         ]);
     }
 
-    public function actionCreate() {
+    public function actionCreate()
+    {
         return $this->render('create');
     }
 
-    public function actionDelete() {
+    public function actionDelete()
+    {
         return $this->render('delete');
     }
 

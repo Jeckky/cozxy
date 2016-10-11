@@ -90,7 +90,8 @@ class Order extends \common\models\costfit\master\OrderMaster
             'itemStatus',
             'fromDate',
             'toDate',
-            'sumPicking'
+            'sumPicking',
+            'sumSummary'
         ]);
     }
 

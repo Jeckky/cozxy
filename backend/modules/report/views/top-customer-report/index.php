@@ -61,20 +61,20 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <thead>
                     <tr style="background-color: #ccffcc;text-align: center;font-weight: bold;vertical-align: central;">
                         <td>ลำดับ</td>
-                        <td>สินค้า</td>
-                        <td>จำนวนผู้เข้าชม (ครั้ง)</td>
+                        <td>ลูกค้า</td>
+                        <td>ยอดซื้อสะสม</td>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     $i = 1;
                     $total = 0;
-                    foreach ($model as $pView):
+                    foreach ($model as $index => $pView):
                         ?>
                         <tr style="text-align: center;">
-                            <td><?= $i ?></td>
-                            <td style="text-align: left"><?= $pView->product->title ?></td>
-                            <td><?= $pView->sumViews ?></td>
+                            <td><span class="<?= ($index == 0) ? "label label-danger" : (($index == 1) ? "label label-success" : (($index == 2) ? "label label-info" : "")) ?>"><?= $i ?></span></td>
+                            <td style="text-align: left"><?= isset($pView->user) ? $pView->user->firstname . " " . $pView->user->lastname . "<br>email : " . $pView->user->email : "" ?></td>
+                            <td style="text-align: right"><?= number_format($pView->sumSummary, 2) ?></td>
                         </tr>
                         <?php
 //                        $total+=$order->summary;
