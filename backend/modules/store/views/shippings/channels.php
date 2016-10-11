@@ -10,6 +10,7 @@ $this->title = 'แสดงข้อมูลของ Order No.';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
+//echo $listPointItems->orderItemPackingId;
 if (isset($listPointItems)) {
     ?>
     <h1>Shippings / Picking Points Items / เลือก  <?php echo $listPointItems->code; ?></h1>
@@ -43,7 +44,7 @@ if (isset($listPointItems)) {
                 <?php
                 $form = ActiveForm::begin([
                             'method' => 'GET',
-                            'action' => ['shippings/scan-order?boxcode=' . $listPoint->pickingId],
+                            'action' => ['shippings/channels?model=' . $model . '&code=' . $channel . '&boxcode=' . $listPoint->pickingId . '&pickingItemsId=' . $listPointItems->pickingItemsId],
                 ]);
                 ?>
                 <div class="panel-heading">
@@ -51,7 +52,7 @@ if (isset($listPointItems)) {
                 </div>
                 <div class="panel-body ">
                     <div class="col-sm-12">
-                        <input type="text" name="order" autofocus="true" id="order" class="form-control" placeholder="Search or Scan Qr code">
+                        <input type="text" name="orderNo" autofocus="true" id="orderNo" class="form-control" placeholder="Search or Scan Qr code">
                         <div id="character-limit-input-label" class="limiter-label form-group-margin">หมายเหตุ : <span class="limiter-count">Scan Qr Code Order No.</span></div>
                     </div>
                 </div>
@@ -149,12 +150,13 @@ if (isset($listPointItems)) {
                                     ['class' => 'yii\grid\ActionColumn',
                                         'template' => ' {items} ',
                                         'buttons' => [
-                                            'items' => function($url, $model) {
+                                            'items' => function($url, $model ) {
+
                                                 if (\common\models\costfit\OrderItemPacking::shipPacking($model->orderItemId) > 0) {
-                                                    return Html::a('นำใส่ lockers', Yii::$app->homeUrl . "store/lockers/index?orderId=" . $model->orderId, [
+                                                    return Html::a('สแกนถุง', Yii::$app->homeUrl . "store/shippings/scan-bag?pickingItemsId=" . Yii::$app->request->get('pickingItemsId') . "&boxcode=" . Yii::$app->request->get('boxcode') . "&model=" . Yii::$app->request->get('model') . "&code=" . Yii::$app->request->get('code') . "&orderId=" . $model->orderId, [
                                                                 'title' => Yii::t('app', 'picking point'),]);
                                                 } else {
-                                                    return Html::a('<i class="fa fa-eye"></i> ', Yii::$app->homeUrl . "store/lockers/index?orderId=" . $model->orderId, [
+                                                    return Html::a('<i class="fa fa-eye"></i> ', Yii::$app->homeUrl . "store/shippings/scan-bag?orderId=" . $model->orderId, [
                                                                 'title' => Yii::t('app', 'picking point'),]);
                                                 }
                                             }
@@ -176,7 +178,7 @@ if (isset($listPointItems)) {
                             <button type="button" class="close" data-dismiss="alert">×</button>
                             <strong>ไม่พบข้อมูล</strong> ชื่อช่องนี้ ลองใหม่อีกครั้ง...&nbsp; <img src="<?php echo Yii::$app->homeUrl; ?>/images/icon/default-loader.gif" height="30" >
                         </div>
-                        <meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php echo $pickingId; ?>">
+                        <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                     ?>">-->
                     </div>
                     <?php
                 }

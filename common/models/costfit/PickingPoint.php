@@ -102,4 +102,42 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster
         return $this->hasMany(\common\models\costfit\PickingPointItems::className(), ['pickingId' => 'pickingId']);
     }
 
+    static function ordersending($orderNo) {
+        if ($orderNo != '') {
+            if (\Yii::$app->params['shippingScanTrayOnly'] == true) {
+                /* shippingScanTrayOnly = true เข้าเงื่อนไขที่ 1 ต้อง Scan ทีละ OrderId */
+                //$query = \common\models\costfit\OrderItemPacking::find()->where('status =4')->all();
+
+                $queryList = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "' ")->one();
+                //throw new \yii\base\Exception(print_r($queryList, TRUE));
+                $queryItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $queryList->orderId . ' and status =13')->all(); // status : 6 pack ใส่ลงถุง
+
+                foreach ($queryItem as $items) {
+                    $orderItemPackings = OrderItemPacking::find()->where("orderItemId =" . $items->orderItemId . ' and status = ' . OrderItemPacking::ORDER_STATUS_CLOSE_BAG)->all(); // status 4 : ปิดถุงแล้ว
+                    // echo '<pre>';
+                    //throw new \yii\base\Exception(print_r($orderItemPackings, TRUE));
+                    // exit();
+                    if (isset($orderItemPackings)) {
+                        foreach ($orderItemPackings as $packing) {
+                            $packing->status = OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING; // 5
+                            $packing->save(FALSE);
+                            $queryItemStatus = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $packing->orderItemId . ' and status = 13')->all();
+                            foreach ($queryItemStatus as $shipStatus) {
+                                $shipStatus->status = \common\models\costfit\OrderItem::ORDER_STATUS_SENDING_SHIPPING; // orderItemId : status = 14
+                                $shipStatus->save();
+                                $queryList->status = \common\models\costfit\Order::ORDER_STATUS_SENDING_SHIPPING; // orderItemId : status = 14
+                                $queryList->save();
+                            }
+                            //\common\models\costfit\OrderItem::updateAll(['status' => \common\models\costfit\OrderItem::ORDER_STATUS_SENDING_SHIPPING], ['orderItemId' => $packing->orderItemId, 'status' => 6]);
+                            //echo '<pre>';
+                            //print_r($packing);
+                        }
+                    }
+                }
+            } else {
+                /* shippingScanTrayOnly = false เข้าเงื่อนไขที่ 2 ต้อง Scan ทีละถุง */
+            }
+        }
+    }
+
 }

@@ -62,7 +62,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <tr style="background-color: #ccffcc;text-align: center;font-weight: bold;">
                         <td>ลำดับ</td>
                         <td>ชื่อ - นามสกุล</td>
-                        <td>วันเกิด (ปี / เดือน /วัน)</td>
+                        <td>วันเกิด (วัน / เดือน /ปี)</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,7 +74,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <tr style="text-align: center;">
                             <td><?= $i ?></td>
                             <td style="text-align: left"><?= $user->firstname . " " . $user->lastname ?></td>
-                            <td><?= substr($user->birthDate, 0, -9) ?></td>
+                            <td><?= $this->context->dateThai(substr($user->birthDate, 0, -9), 1) ?></td>
                         </tr>
                         <?php
                         $i++;
