@@ -13,7 +13,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 //echo $listPointItems->orderItemPackingId;
 if (isset($listPointItems)) {
     ?>
-    <h1>Shippings / Picking Points Items / เลือก  <?php echo $listPointItems->code; ?></h1>
+    <h1>Shippings / Picking Points Items / เปิด  <?php echo $listPointItems->code; ?></h1>
     <?php if ($listPointItems == '1') { ?>
         <div class="alert alert-danger">
             <button type="button" class="close" data-dismiss="alert">×</button>
@@ -178,7 +178,7 @@ if (isset($listPointItems)) {
                             <button type="button" class="close" data-dismiss="alert">×</button>
                             <strong>ไม่พบข้อมูล</strong> ชื่อช่องนี้ ลองใหม่อีกครั้ง...&nbsp; <img src="<?php echo Yii::$app->homeUrl; ?>/images/icon/default-loader.gif" height="30" >
                         </div>
-                        <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                     ?>">-->
+                        <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                      ?>">-->
                     </div>
                     <?php
                 }
