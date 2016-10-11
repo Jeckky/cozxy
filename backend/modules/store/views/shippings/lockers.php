@@ -73,7 +73,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    //'pickingItemsId',
+                    'pickingItemsId',
                     // 'pickingId',
                     [
                         'attribute' => 'Code Lockers',
@@ -105,7 +105,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 if (\common\models\costfit\PickingPointItems::PickingPointDistinct($model->pickingItemsId) == 1) {
                                     return '<span class="text-danger">Channels เต็มแล้ว</span>';
                                 } elseif (\common\models\costfit\PickingPointItems::PickingPointDistinct($model->pickingItemsId) == 0) {
-                                    return Html::a('<button class="btn btn-rounded btn-xs text-success"> เปิด Channels นี้ </button>', Yii::$app->homeUrl . "store/shippings/channels?code=" . $model->code . '&boxcode=' . $model->pickingId . '&model=1', [
+                                    return Html::a('<button class="btn btn-rounded btn-xs text-success"> เปิด Channels นี้ </button>', Yii::$app->homeUrl . "store/shippings/channels?pickingItemsId=" . $model->pickingItemsId . "&code=" . $model->code . '&boxcode=' . $model->pickingId . '&model=1', [
                                                 'title' => Yii::t('app', 'เปิด Channels นี้  :' . $model->code),]);
                                 }
                                 //return '<button class="btn btn-rounded btn-xs"> เปิด Channels นี้ </button>';
@@ -168,12 +168,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 </div>
                 <div class="panel-body">
 
+
                     <?=
                     GridView::widget([
                         'dataProvider' => $dataProvider,
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
-                            //'pickingItemsId',
+                            'pickingItemsId',
+                            // 'pickingId',
                             [
                                 'attribute' => 'Code Lockers',
                                 'value' => function($model) {
@@ -187,13 +189,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     return $model->code;
                                 }
                             ],
-                            //'name',
+                            //name
                             [
                                 'attribute' => 'name',
                                 'value' => function($model) {
                                     return $model->name . ', มีทั้งหมด ' . \common\models\costfit\PickingPointItems::PickingPointDistinctCount($model->pickingItemsId, $model->pickingId) . ' ถุง';
                                 }
                             ],
+                            /* ['class' => 'yii\grid\ActionColumn'], */
                             ['class' => 'yii\grid\ActionColumn',
                                 'header' => 'Actions',
                                 'template' => ' {items} ',
@@ -204,15 +207,17 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         if (\common\models\costfit\PickingPointItems::PickingPointDistinct($model->pickingItemsId) == 1) {
                                             return '<span class="text-danger">Channels เต็มแล้ว</span>';
                                         } elseif (\common\models\costfit\PickingPointItems::PickingPointDistinct($model->pickingItemsId) == 0) {
-                                            return '<span class="text-success">Channels ว่าง </span>';
+                                            return '<span class="text-success">Channels ว่าง</span>';
                                         }
-                                        //return '<button class = "btn btn-rounded btn-xs"> เปิด Channels นี้ </button>';
+                                        //return '<button class="btn btn-rounded btn-xs"> เปิด Channels นี้ </button>';
                                     }
                                 ],
                             ],
                         ],
                     ]);
                     ?>
+
+
         </div>
     </div>
 

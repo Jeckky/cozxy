@@ -51,20 +51,20 @@ class ShippingsController extends StoreMasterController {
 
             //$test = \common\models\costfit\OrderItemPacking::find()->where()->one();
 
-
-            $orderNo = \common\models\costfit\Order::find()
-                    //->select("`order`.*,oi.*")
-                    //->join("RIGHT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-                    //->where("oi.status = 6 OR oi.status = 14");
-                    ->select('*')
-                    ->joinWith(['orderItems'])
-                    ->where("order_item.status = 6 or order_item.status >= 14");
-
+            /*
+              $orderNo = \common\models\costfit\Order::find()
+              //->select("`order`.*,oi.*")
+              //->join("RIGHT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
+              //->where("oi.status = 6 OR oi.status = 14");
+              ->select('*')
+              ->joinWith(['orderItems'])
+              ->where("order_item.status = 6 or order_item.status >= 14");
+             */
 
 
 
             $query = \common\models\costfit\PickingPointItems::find()
-                    //->join('inner JOIN', 'order', 'order.pickingId =picking_point_items.pickingId')
+                    //->join('RIGHT JOIN', 'order_item_packing', 'order_item_packing.pickingItemsId =picking_point_items.pickingItemsId')
                     ->where("picking_point_items.pickingId = '" . $pickingId . "'")
             ;
 
@@ -84,32 +84,32 @@ class ShippingsController extends StoreMasterController {
     }
 
     public function actionChannels() {
-        $pickingId = Yii::$app->request->get('boxcode');
+
+        $boxcode = Yii::$app->request->get('boxcode');
         $channel = Yii::$app->request->get('code');
         $orderId = Yii::$app->request->get('orderId');
         $model = Yii::$app->request->get('model');
         $orderNo = Yii::$app->request->get('orderNo');
 
-        if ($pickingId != '') {
-            $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $pickingId . "'")->one();
-            $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $pickingId . "' and  code = '" . $channel . "' ")->one();
-            // echo count($listPointItems);
-            /* if (count($listPointItems) > 0) {
-              echo $listPointItems = $listPointItems;
-              } else {
-              echo $listPointItems = '1';
-              } */
-            //exit();
+        if ($boxcode != '') {
+            $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $boxcode . "'")->one();
+            $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channel . "' ")->one();
+
             $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
             $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
             $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
-            $query = \common\models\costfit\Order::find()->where("orderId = '" . $orderId . "'");
+            //$query = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "'");
             // echo $this->orders($orderNo, $listPoint, $localNamecitie, $localNamecountrie, $localNamestate, $listPointItems, $model);
+            $query = \common\models\costfit\Order::find()
+                    ->select('*')
+                    ->joinWith(['orderItems'])
+                    ->where("order_item.status = 6 or order_item.status >= 14 and order.pickingId = " . $boxcode);
 
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
             ]);
 
+            $ordersending = \common\models\costfit\PickingPoint::ordersending($orderNo);
             return $this->render('channels', [
                         'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
                         'citie' => $localNamecitie,
@@ -117,7 +117,8 @@ class ShippingsController extends StoreMasterController {
                         'state' => $localNamestate,
                         'listPointItems' => $listPointItems,
                         'model' => $model,
-                        'pickingId' => $pickingId,
+                        'boxcode' => $boxcode,
+                        'channel' => $channel,
             ]);
         }
     }
@@ -134,131 +135,141 @@ class ShippingsController extends StoreMasterController {
             $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
             $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
             $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
-            //$query = \common\models\costfit\Order::find()->where("orderId = '" . $orderId . "'");
+            $query = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "'");
             //echo $this->orders($orderNo, $listPoint, $localNamecitie, $localNamecountrie, $localNamestate, $listPointItems, $model);
-            /*
-              $dataProvider = new ActiveDataProvider([
-              'query' => $query,
-              ]);
 
-              return $this->render('scanorder', [
-              'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
-              'citie' => $localNamecitie,
-              'countrie' => $localNamecountrie,
-              'state' => $localNamestate,
-              'listPointItems' => $listPointItems,
-              'model' => $model,
-              ]);
-             * */
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
+
+            return $this->render('scanorder', [
+                        'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
+                        'citie' => $localNamecitie,
+                        'countrie' => $localNamecountrie,
+                        'state' => $localNamestate,
+                        'listPointItems' => $listPointItems,
+                        'model' => $model,
+            ]);
         }
         //echo$this->order();
         //return $this->render('index');
     }
 
-    public function actionScanbag() {
-        //'params : ' . \Yii::$app->params['shippingScanTrayOnly']; // มีค่าเท่ากับเริ่มต้น false
-        $bagNo = Yii::$app->request->get('bagNo');
+    public function actionScanBag() {
+
+        $request = Yii::$app->request;
+
+        if ($request->isGet) { /* the request method is GET */
+            $orderId = Yii::$app->request->get('orderId');
+        }
+        if ($request->isPost) { /* the request method is POST */
+            $orderId = Yii::$app->request->post('orderId');
+        }
+        $boxcode = Yii::$app->request->get('boxcode');
+        $channel = Yii::$app->request->get('code');
+        $orderId = Yii::$app->request->get('orderId');
+        $model = Yii::$app->request->get('model');
         $orderNo = Yii::$app->request->get('orderNo');
 
-        if ($orderNo != '') {
-            $query = \common\models\costfit\OrderItemPacking::find()
-                    ->select('*')
-                    //->joinWith(['orderItems'])
-                    ->where(['status' => 5]); //5 : กำลังจัดส่ง
-        } else {
-            $query = \common\models\costfit\OrderItemPacking::find()
-                    ->select('*')
-                    //->joinWith(['orderItems'])
-                    ->where(['status' => 4]); // 4: ปิดถุงแล้ว
-        }
+        $orderItemId = Yii::$app->request->get('orderItemId');
+        $bagNo = Yii::$app->request->get('bagNo');
+        $pickingItemsId = Yii::$app->request->get('pickingItemsId');
 
+        $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $boxcode . "'")->one();
+        $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channel . "' ")->one();
+
+        $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
+        $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
+        $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
+
+        /*
+          if ($bagNo != '') {
+          $query = \common\models\costfit\PickingPointItems::find()
+          ->where(['code' => $lockersNo])->one();
+          } */
+        $query = \common\models\costfit\OrderItemPacking::find()
+                ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId,order_item_packing.bagNo,order_item_packing.status')
+                ->joinWith(['orderItems'])
+                ->where(['order_item.orderId' => $orderId])
+                ->where(['order_item_packing.status' => 5, 'order_item_packing.bagNo' => $bagNo]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        if ($bagNo != '') {
-            $queryList = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "' ")->one();
-            $query = \common\models\costfit\OrderItem::find()->where("orderId=" . $queryList->orderId . ' and status = 6')->one();
-            \common\models\costfit\OrderItemPacking::updateAll(['status' => 5], ['bagNo' => $bagNo, 'orderItemId' => $query->orderItemId]);
-            \common\models\costfit\Order::updateAll(['status' => 14], [ 'orderId' => $queryList->orderId]);
-            \common\models\costfit\OrderItem::updateAll(['status' => 14], [ 'orderItemId' => $query->orderItemId]);
-        }
-
-        //print_r($query);
         return $this->render('scanbag', [
-                    'dataProvider' => $dataProvider, 'orderNo' => $orderNo
-        ]);
-    }
-
-    public function orders($orderNo, $listPoint, $localNamecitie, $localNamecountrie, $localNamestate, $listPointItems, $model) {
-        //'params : ' . \Yii::$app->params['shippingScanTrayOnly']; // มีค่าเท่ากับเริ่มต้น true
-        if ($orderNo != '') {
-            $query = \common\models\costfit\Order::find()
-                    ->select('*')
-                    ->joinWith(['orderItems'])
-                    //->where("(order_item.status = 6 or order_item.status = 14) and order.orderNo = '" . $orderNo . "'"); //['order_item.status' => 6, 'order.orderNo' => $orderNo]
-                    ->where("(order_item.status = 6 or order_item.status >= 14) "); //['order_item.status' => 6, 'order.orderNo' => $orderNo]
-        } else {
-
-            $query = \common\models\costfit\Order::find()
-                    //->select("`order`.*,oi.*")
-                    //->join("RIGHT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-                    //->where("oi.status = 6 OR oi.status = 14");
-                    ->select('*')
-                    ->joinWith(['orderItems'])
-                    ->where("order_item.status = 6 or order_item.status >= 14");
-        }
-
-        if ($orderNo != '') {
-            if (\Yii::$app->params['shippingScanTrayOnly'] == true) {
-                /* shippingScanTrayOnly = true เข้าเงื่อนไขที่ 1 ต้อง Scan ทีละ OrderId */
-                //$query = \common\models\costfit\OrderItemPacking::find()->where('status =4')->all();
-
-                $queryList = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "' ")->one();
-                //throw new \yii\base\Exception(print_r($queryList, TRUE));
-                $queryItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $queryList->orderId . ' and status =13')->all(); // status : 6 pack ใส่ลงถุง
-
-                foreach ($queryItem as $items) {
-                    $orderItemPackings = OrderItemPacking::find()->where("orderItemId =" . $items->orderItemId . ' and status = ' . OrderItemPacking::ORDER_STATUS_CLOSE_BAG)->all(); // status 4 : ปิดถุงแล้ว
-                    // echo '<pre>';
-                    //throw new \yii\base\Exception(print_r($orderItemPackings, TRUE));
-                    // exit();
-                    if (isset($orderItemPackings)) {
-                        foreach ($orderItemPackings as $packing) {
-                            $packing->status = OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING;
-                            $packing->save(FALSE);
-                            $queryItemStatus = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $packing->orderItemId . ' and status = 13')->all();
-                            foreach ($queryItemStatus as $shipStatus) {
-                                $shipStatus->status = \common\models\costfit\OrderItem::ORDER_STATUS_SENDING_SHIPPING; // orderItemId : status = 14
-                                $shipStatus->save();
-                                $queryList->status = \common\models\costfit\Order::ORDER_STATUS_SENDING_SHIPPING; // orderItemId : status = 14
-                                $queryList->save();
-                            }
-                        }
-                    }
-                }
-            } else {
-                /* shippingScanTrayOnly = false เข้าเงื่อนไขที่ 2 ต้อง Scan ทีละถุง */
-            }
-            //$this->redirect(Yii::$app->homeUrl . 'store/shipping/');
-        }
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-        if ($model == 1) {
-            $file = 'channels';
-        } else if ($model == 2) {
-            $file = 'scanorder';
-        }
-        return $this->render($file, [
                     'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
                     'citie' => $localNamecitie,
                     'countrie' => $localNamecountrie,
                     'state' => $localNamestate,
                     'listPointItems' => $listPointItems,
                     'model' => $model,
+                    'boxcode' => $boxcode,
+                    'channel' => $channel,
+                    'pickingItemsId' => $pickingItemsId,
+                    'bagNo' => $bagNo
         ]);
+    }
+
+    public function actionScanChannels() {
+        $bagNo = Yii::$app->request->get('bagNo');
+        $boxcode = Yii::$app->request->get('boxcode');
+        $channel = Yii::$app->request->get('code');
+        $orderItemId = Yii::$app->request->get('orderItemId');
+        $pickingItemsId = Yii::$app->request->get('pickingItemsId');
+        $model = Yii::$app->request->get('model');
+
+        if ($pickingItemsId != '') {
+            $query = \common\models\costfit\PickingPointItems::find()
+                            //->joinWith(['orderItems'])
+                            ->where(['pickingItemsId' => $pickingItemsId])->one();
+            // echo '<pre>';
+            // print_r($query);
+            // exit();
+            if (count($query) > 0) {
+                //echo 'มีรหัส lockers No นี้';
+                $lockersCode = TRUE;
+                //echo $query->pickingItemsId;
+                $useSlot = \common\models\costfit\OrderItemPacking::find()->where(" pickingItemsId = " . $query->pickingItemsId . " and status = 7")->one(); //มีใช้แล้วหรือเปล่า
+                if (!isset($useSlot)) {
+
+                    $OrderItemPacking = \common\models\costfit\OrderItemPacking::find()->where(" bagNo = '" . $bagNo . "'")->one();
+
+                    $OrderItems = \common\models\costfit\OrderItemPacking::find()->where(" orderItemId = '" . $OrderItemPacking->orderItemId . "' and status = 5")->count();
+
+                    if ($OrderItems > 1) {
+                        \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $query->pickingItemsId], ['bagNo' => $bagNo]);
+                        \common\models\costfit\OrderItem::updateAll(['status' => 14], ['orderItemId' => $OrderItemPacking->orderItemId]);
+                        $Order = \common\models\costfit\OrderItem::find()->where("orderItemId = '" . $OrderItemPacking->orderItemId . "' ")->one();
+                        \common\models\costfit\Order::updateAll(['status' => 14], ['orderId' => $Order->orderId]);
+                        $warning = 'duplicate';
+                        $this->redirect(Yii::$app->homeUrl . 'scan-channels?model=' . $model . '&code=' . $channel . '&boxcode=' . $boxcode . '&pickingItemsId=' . $pickingItemsId . '&bagNo=' . $bagNo);
+                    } elseif ($OrderItems == 1) {
+
+                        \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $query->pickingItemsId], ['bagNo' => $bagNo]);
+                        \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderItemId' => $OrderItemPacking->orderItemId]);
+                        $Order = \common\models\costfit\OrderItem::find()->where("orderItemId = '" . $OrderItemPacking->orderItemId . "' ")->one();
+                        \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $Order->orderId]);
+                        $warning = 'roundone';
+                    }
+                    //$orderItemId = $OrderItemPacking->orderItemId;
+                } else {
+                    echo 'xx';
+                }
+            } else {
+
+            }
+        } else {
+
+        }
+        // echo '<pre>';
+        //print_r($query);
+        //exit();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        return $this->render('location', [ 'dataProvider' => $dataProvider, 'bagNo' => $bagNo, 'boxcode' => $boxcode, 'warning' => $warning]);
     }
 
 }

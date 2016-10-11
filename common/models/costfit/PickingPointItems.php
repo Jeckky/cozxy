@@ -35,7 +35,7 @@ class PickingPointItems extends \common\models\costfit\master\PickingPointItemsM
     }
 
     static function PickingPointDistinct($pickingItemId) {
-        $result = OrderItemPacking::find()->where("pickingItemsId  =" . $pickingItemId)->one();
+        $result = OrderItemPacking::find()->where("pickingItemsId  =" . $pickingItemId . '  ')->one();
 
         if (count($result) > 0) {
             $result = TRUE; // มี pickingItemId แล้ว
