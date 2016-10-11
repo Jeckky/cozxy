@@ -13,7 +13,7 @@ class BirthdayReportController extends ReportMasterController {
 
     public function actionIndex() {
         $thisMonth = substr(date('Y-m-d'), 5, -3);
-        $model = User::find()->where("type=1 and status=1 and birthDate!=''");
+        $model = User::find()->where("type=1 and status=1 and birthDate!='' order by birthDate Asc");
         $filterArray[] = 'and';
         if (isset($_GET['fromDate'])) {
             $model = User::find()->where("type=1 and status=1 and birthDate!=''");

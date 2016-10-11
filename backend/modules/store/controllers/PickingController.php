@@ -38,14 +38,21 @@ class PickingController extends StoreMasterController {
             endforeach;
         endif;
         $enoughId = $this->checkQuantity($allId); //ได้ orderId ที่มีของพอ
-        if (!empty($enoughId)) {
+        // throw new \yii\base\Exception($enoughId);
+        if ($enoughId != '') {
+            throw new \yii\base\Exception('aaaa');
             $query = \common\models\costfit\Order::find()
                     ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
                     ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " and order.orderId in(" . $enoughId . ")");
-        } else {
+        } else {//ถ้า มีของใน order ไม่ครบ
             $query = \common\models\costfit\Order::find()
-                    ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-                    ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS);
+                    ->where("orderId=0");
+
+            //$query = '';
+//            throw new \yii\base\Exception('bbbb');
+//            $query = \common\models\costfit\Order::find()
+//                    ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
+//                    ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS);
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -272,6 +279,7 @@ class PickingController extends StoreMasterController {
         $arrangTotal = 0;
         $result = 0;
         $oldResult = 0;
+        //throw new \yii\base\Exception(print_r($allOrder, true));
         foreach ($allOrder as $orderId)://หาว่าใน order ที่เลือกมา มี Product อะไรบ้าง
             $i = 0;
             $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
@@ -288,12 +296,13 @@ class PickingController extends StoreMasterController {
                         } else {
                             $oldResult = $result;
                         }
+                    } else {//ถ้าไม่มีใน StoreProductArrange
+                        $i++;
                     }
 
                 endforeach;
-                if ($i == 0) {
-                    $returnId.=$orderId . ",";
-                }
+            }if ($i == 0) {
+                $returnId.=$orderId . ",";
             }
         endforeach;
         $returnId = substr($returnId, 0, -1);
