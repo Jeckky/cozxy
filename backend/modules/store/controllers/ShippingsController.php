@@ -117,6 +117,7 @@ class ShippingsController extends StoreMasterController {
                         'state' => $localNamestate,
                         'listPointItems' => $listPointItems,
                         'model' => $model,
+                        'pickingId' => $pickingId,
             ]);
         }
     }
