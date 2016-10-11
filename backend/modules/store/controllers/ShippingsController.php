@@ -51,11 +51,21 @@ class ShippingsController extends StoreMasterController {
 
             //$test = \common\models\costfit\OrderItemPacking::find()->where()->one();
 
+
+            $orderNo = \common\models\costfit\Order::find()
+                    //->select("`order`.*,oi.*")
+                    //->join("RIGHT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
+                    //->where("oi.status = 6 OR oi.status = 14");
+                    ->select('*')
+                    ->joinWith(['orderItems'])
+                    ->where("order_item.status = 6 or order_item.status >= 14");
+
+
+
+
             $query = \common\models\costfit\PickingPointItems::find()
                     //->join('inner JOIN', 'order', 'order.pickingId =picking_point_items.pickingId')
                     ->where("picking_point_items.pickingId = '" . $pickingId . "'")
-            //->andWhere('order.status=16')
-            //->distinct('picking_point_items.pickingId', TRUE)
             ;
 
             $dataProvider = new ActiveDataProvider([
@@ -66,7 +76,7 @@ class ShippingsController extends StoreMasterController {
                         'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
                         'citie' => $localNamecitie,
                         'countrie' => $localNamecountrie,
-                        'state' => $localNamestate
+                        'state' => $localNamestate,
             ]);
         }
 

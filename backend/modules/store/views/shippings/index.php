@@ -30,7 +30,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
         <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> Scan Qr code Order No :</span>
     </div>
     <div class="panel-body ">
-        <div class="col-sm-5">
+        <div class="col-sm-12">
             <input type="text" name="codes" autofocus="true" id="codes" class="form-control" placeholder="Search or Scan Qr code">
             <div id="character-limit-input-label" class="limiter-label form-group-margin">หมายเหตุ : <span class="limiter-count">Scan Qr Code Picking Points ทุกครั้ง เพื่อตรวจความถูกต้องของสถานที่ของตู้.</span></div>
         </div>

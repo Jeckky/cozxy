@@ -41,6 +41,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
     </div>
 </div>
 <div class="order-index col-md-6">
+
     <div class="panel panel-warning panel-dark">
 
         <div class="panel-heading">
@@ -120,6 +121,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
         </div>
 
         <div class="order-index col-md-6">
+
             <div class="panel panel-info panel-dark">
                 <?php
                 if (\Yii::$app->params['shippingScanTrayOnly'] == true) {
@@ -211,7 +213,82 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         ],
                     ]);
                     ?>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <div class="order-index-list col-md-12">
+            <div class="panel panel-info panel-dark">
+                <?php
+                if (\Yii::$app->params['shippingScanTrayOnly'] == true) {
+                    $form = ActiveForm::begin([
+                                'method' => 'GET',
+                                'action' => ['shippings/channels?boxcode=' . $listPoint->pickingId . '&model=2'],
+                    ]);
+                } else if (\Yii::$app->params['shippingScanTrayOnly'] == False) {
+                    $form = ActiveForm::begin([
+                                'method' => 'GET',
+                                'action' => ['shippings/channels'],
+                    ]);
+                }
+                ?>
+                <div class="panel-heading">
+                    <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> เลือกใช้งานแบบที่ 2  Scan Qr code จากช่องของ Lockers</span>
+                </div>
+                <div class="panel-body ">
+                    <div class="col-sm-12">
+                        <input type="text" name="code" autofocus="true" id="code" class="form-control" placeholder="Search or Scan Qr code">
+                        <div id="character-limit-input-label" class="limiter-label form-group-margin">หมายเหตุ : <span class="limiter-count">Scan Qr Code ทุกครั้ง เพื่อตรวจความถูกต้องของช่องใน Lockers.</span></div>
+                    </div>
+                </div>
+                <?= $this->registerJS("
+                $('#orderNo').blur(function(event){
+                    if(event.which == 13 || event.keyCode == 13)
+                    {
+                       $('#form').submit();
+                    }
+                });
+    ") ?>
+                <?php ActiveForm::end(); ?>
+    </div>
+    <div class="panel">
+        <div class="panel-heading">
+            <span class="panel-title">แสดงรายการของใบรายการสั่งซื้อสินค้า</span>
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Username</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-
 </div>
