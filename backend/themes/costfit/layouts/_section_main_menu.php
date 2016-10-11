@@ -200,9 +200,13 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/report"><span class="mm-text">รายงานยอดขาย</span><span class="label label-warning">2</span></a>
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/popular-report"><span class="mm-text">รายงานสินค้ายอดนิยม</span><span class="label label-warning">2</span></a>
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/birthday-report"><span class="mm-text">รายงานวันเกิด</span><span class="label label-warning">2</span></a>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/picking-point-report"><span class="mm-text">รายงานจุดส่งสินค้ายอดนิยม</span><span class="label label-warning">2</span></a>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/top-customer-report"><span class="mm-text">รายงานลูกค้าดีเด่น</span><span class="label label-warning">2</span></a>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/best-seller-report"><span class="mm-text">รายงานสินค้าขายดี</span><span class="label label-warning">2</span></a>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/future-plan-report"><span class="mm-text">รายงานสินค้าที่ต้องสั่งล่วงหน้า</span><span class="label label-warning">2</span></a>
                         <!--                        <ul>
                                                     <li>
-                                                        <a tabindex="-1" href="<?php //echo $baseUrl;        ?>/report/report"><span class="mm-text">รายงานยอดขาย</span></a>
+                                                        <a tabindex="-1" href="<?php //echo $baseUrl;                   ?>/report/report"><span class="mm-text">รายงานยอดขาย</span></a>
                                                     </li>
                                                 </ul>-->
                     </li>
