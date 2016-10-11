@@ -199,9 +199,10 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     <li class="mm-dropdown">
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/report"><span class="mm-text">รายงานยอดขาย</span><span class="label label-warning">2</span></a>
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/popular-report"><span class="mm-text">รายงานสินค้ายอดนิยม</span><span class="label label-warning">2</span></a>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/birthday-report"><span class="mm-text">รายงานวันเกิด</span><span class="label label-warning">2</span></a>
                         <!--                        <ul>
                                                     <li>
-                                                        <a tabindex="-1" href="<?php //echo $baseUrl;    ?>/report/report"><span class="mm-text">รายงานยอดขาย</span></a>
+                                                        <a tabindex="-1" href="<?php //echo $baseUrl;        ?>/report/report"><span class="mm-text">รายงานยอดขาย</span></a>
                                                     </li>
                                                 </ul>-->
                     </li>
