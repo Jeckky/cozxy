@@ -156,8 +156,8 @@ if (isset($listPointItems)) {
                                                     return Html::a('สแกนถุง', Yii::$app->homeUrl . "store/shippings/scan-bag?pickingItemsId=" . Yii::$app->request->get('pickingItemsId') . "&boxcode=" . Yii::$app->request->get('boxcode') . "&model=" . Yii::$app->request->get('model') . "&code=" . Yii::$app->request->get('code') . "&orderId=" . $model->orderId, [
                                                                 'title' => Yii::t('app', 'picking point'),]);
                                                 } else {
-                                                    return Html::a('<i class="fa fa-eye"></i> ', Yii::$app->homeUrl . "store/shippings/scan-bag?orderId=" . $model->orderId, [
-                                                                'title' => Yii::t('app', 'picking point'),]);
+                                                    //return Html::a('<i class="fa fa-eye"></i> ', Yii::$app->homeUrl . "store/shippings/scan-bag?pickingItemsId=" . Yii::$app->request->get('pickingItemsId') . "&boxcode=" . Yii::$app->request->get('boxcode') . "&model=" . Yii::$app->request->get('model') . "&code=" . Yii::$app->request->get('code') . "&orderId=" . $model->orderId, [
+                                                    //'title' => Yii::t('app', 'picking point'),]);
                                                 }
                                             }
                                                 ],
@@ -178,7 +178,7 @@ if (isset($listPointItems)) {
                             <button type="button" class="close" data-dismiss="alert">×</button>
                             <strong>ไม่พบข้อมูล</strong> ชื่อช่องนี้ ลองใหม่อีกครั้ง...&nbsp; <img src="<?php echo Yii::$app->homeUrl; ?>/images/icon/default-loader.gif" height="30" >
                         </div>
-                        <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                      ?>">-->
+                        <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                        ?>">-->
                     </div>
                     <?php
                 }
