@@ -211,6 +211,9 @@ class ReceiveController extends MasterController {
                         endforeach;
                         //throw new \yii\base\Exception(print_r($check, true));
                         $allLocker = substr($allLocker, 0, -1);
+                        // รอ อัพเดทสถานะ เป็นลูกค้ารับของแล้ว order orderItem orderItemPacking
+                        //$order->status=16;
+                        //$order->save();//รับของแล้ว
                         return $this->render('thank', [
                                     'userId' => $_POST['userId'],
                                     'tel' => $_POST['tel'],
@@ -274,7 +277,7 @@ class ReceiveController extends MasterController {
         $flag = false;
         $otp = rand('000000', '999999');
         while ($flag == false) {
-            $order = Order::find()->where("otp='" . $otp . "' and status=100")->one();
+            $order = Order::find()->where("otp='" . $otp . "' and status=100")->one(); //Gen OTP จนกว่าจะได้เลขไม่ซ้ำ
             if (isset($order) && !empty($order)) {
                 $otp = rand('000000', '999999');
             } else {
