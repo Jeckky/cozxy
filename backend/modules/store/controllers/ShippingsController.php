@@ -62,7 +62,7 @@ class ShippingsController extends StoreMasterController {
              */
 
             /*
-             * API OPEN CAHNNELS LOCKERS
+             * API OPEN CAHNNELS LOCKERS To Hardware
              */
             // Codeding..
             /*
