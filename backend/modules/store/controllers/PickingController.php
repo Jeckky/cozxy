@@ -38,13 +38,13 @@ class PickingController extends StoreMasterController {
             endforeach;
         endif;
         $enoughId = $this->checkQuantity($allId); //ได้ orderId ที่มีของพอ
-        // throw new \yii\base\Exception($enoughId);
         if ($enoughId != '') {
-            throw new \yii\base\Exception('aaaa');
+            //throw new \yii\base\Exception('aaaa');
             $query = \common\models\costfit\Order::find()
                     ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
                     ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " and order.orderId in(" . $enoughId . ")");
         } else {//ถ้า มีของใน order ไม่ครบ
+            // throw new \yii\base\Exception('aa');
             $query = \common\models\costfit\Order::find()
                     ->where("orderId=0");
 
@@ -57,7 +57,7 @@ class PickingController extends StoreMasterController {
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $allOrderId = '';
         if (isset($_GET["selection"])) {//checkbox return มาเป็น orderId
             $allOrderId = $_GET["selection"];
@@ -246,7 +246,7 @@ class PickingController extends StoreMasterController {
                         'selection' => $_GET["selection"]
             ]);
         }
-        //throw new \yii\base\Exception("slot => " . $_GET['slot'] . " productId => " . $_GET['productId'] . " orderId => " . $_GET['orderId'] . " orderItemId => " . $_GET['orderItemId'] . " ledId => " . $_GET['colorId']);
+//throw new \yii\base\Exception("slot => " . $_GET['slot'] . " productId => " . $_GET['productId'] . " orderId => " . $_GET['orderId'] . " orderItemId => " . $_GET['orderItemId'] . " ledId => " . $_GET['colorId']);
     }
 
     public function actionView() {
@@ -255,14 +255,14 @@ class PickingController extends StoreMasterController {
     }
 
     public function actionPrintOrder() {
-        // $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
-        //throw new \yii\base\Exception($baseUrl);
+// $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+//throw new \yii\base\Exception($baseUrl);
         $orderId = '';
         foreach ($_GET['order'] as $order):
             $orderId = $orderId . $order . ",";
         endforeach;
         $id = substr($orderId, 0, -1);
-        //throw new \yii\base\Exception($id);
+//throw new \yii\base\Exception($id);
         $order = \common\models\costfit\Order::find()->where("orderId in ($id)")->all();
         $header = $this->renderPartial('header', [
             'orders' => $order
@@ -502,7 +502,7 @@ class PickingController extends StoreMasterController {
         ]);
 
 
-        // return the pdf output as per the destination setting
+// return the pdf output as per the destination setting
         return $pdf->render();
     }
 
