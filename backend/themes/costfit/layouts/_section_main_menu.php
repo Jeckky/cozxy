@@ -98,7 +98,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/shipping"><span class="mm-text">Shipping</span></a>
                     </li>
                     <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/shippings"><span class="mm-text">Shipping Demo</span></a>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/lockers/lockers"><span class="mm-text">Lockers Demo</span></a>
                     </li>
 
                     <li class="mm-dropdown">
@@ -206,7 +206,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/future-plan-report"><span class="mm-text">รายงานสินค้าที่ต้องสั่งล่วงหน้า</span><span class="label label-warning">2</span></a>
                         <!--                        <ul>
                                                     <li>
-                                                        <a tabindex="-1" href="<?php //echo $baseUrl;                   ?>/report/report"><span class="mm-text">รายงานยอดขาย</span></a>
+                                                        <a tabindex="-1" href="<?php //echo $baseUrl;                        ?>/report/report"><span class="mm-text">รายงานยอดขาย</span></a>
                                                     </li>
                                                 </ul>-->
                     </li>

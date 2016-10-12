@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\store\controllers;
+namespace backend\modules\lockers\controllers;
 
 use Yii;
 use common\models\costfit\Store;
@@ -13,7 +13,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
 
-class ShippingsController extends StoreMasterController {
+class LockersController extends LockersMasterController {
 
     public function actionIndex() {
 
@@ -101,39 +101,41 @@ class ShippingsController extends StoreMasterController {
         if ($boxcode != '') {
             $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $boxcode . "'")->one();
             $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channel . "' ")->one();
-
+            if (count($listPointItems) > 0) {
+                $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
+                $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
+                $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
+            } else {
+                $localNamecitie = null;
+                $localNamestate = null;
+                $localNamecountrie = null;
+            }
             // แสดงสถานที่ Locker นั่น
-            $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
-            $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
-            $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
-            //$query = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "'");
-            // echo $this->orders($orderNo, $listPoint, $localNamecitie, $localNamecountrie, $localNamestate, $listPointItems, $model);
-            $query = \common\models\costfit\Order::find()
-                    ->select('*')
-                    ->joinWith(['orderItems'])
-                    ->where("order_item.status = 6 or order_item.status >= 14 and order.pickingId = " . $boxcode);
+
+            $checkOrderId = \common\models\costfit\Order::find()->where("orderNo  = '" . $orderNo . "' and pickingId ='" . $boxcode . "'")->one();
+
+            if (count($checkOrderId) > 0) {
+                $orderId = $checkOrderId->orderId;
+                $pickingId = $checkOrderId->pickingId;
+                $query = \common\models\costfit\Order::find()
+                        ->select('*')
+                        ->joinWith(['orderItems'])
+                        ->where("order_item.status >= 14 and order.pickingId = '" . $boxcode . "' and orderNo   ='" . $orderNo . "'");
+                //$ordersending = \common\models\costfit\PickingPoint::ordersending($orderNo, $boxcode);
+                $warning = 'yes';
+            } else {
+                $orderId = '';
+                $query = \common\models\costfit\Order::find()
+                        ->select('*')
+                        ->joinWith(['orderItems'])
+                        ->where("order_item.status >= 14 and order.pickingId = '" . $boxcode . "'  and orderNo   ='" . $orderNo . "'");
+                //$this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $boxcode);
+                $warning = 'no';
+            }
 
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
             ]);
-            /*
-             * Check Update status
-             * OrderItemPacking : status = 5, กำลังจัดส่ง
-             * OrderItem  : status = 14 , กำลังจะส่ง
-             * Order  : status = 14 , กำลังจะส่ง
-             */
-            if ($orderNo != '') {
-                $checkOrderId = \common\models\costfit\Order::find()->where("orderNo  = '" . $orderNo . "' and pickingId ='" . $boxcode . "'")->one();
-                if (count($checkOrderId) > 0) {
-                    $orderId = $checkOrderId->orderId;
-                    $pickingId = $checkOrderId->pickingId;
-                    $ordersending = \common\models\costfit\PickingPoint::ordersending($orderNo, $boxcode);
-                } else {
-
-                    $this->redirect(Yii::$app->homeUrl . 'store/shippings/lockers?boxcode=' . $boxcode);
-                }
-            }
-
             return $this->render('channels', [
                         'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
                         'citie' => $localNamecitie,
@@ -143,7 +145,13 @@ class ShippingsController extends StoreMasterController {
                         'model' => $model,
                         'boxcode' => $boxcode,
                         'channel' => $channel,
+                        'warning' => $warning,
+                        'orderId' => $orderId
             ]);
+            //$query = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "'");
+            // echo $this->orders($orderNo, $listPoint, $localNamecitie, $localNamecountrie, $localNamestate, $listPointItems, $model);
+        } else {
+
         }
     }
 
@@ -167,9 +175,13 @@ class ShippingsController extends StoreMasterController {
         $bagNo = Yii::$app->request->get('bagNo');
         $pickingItemsId = Yii::$app->request->get('pickingItemsId');
 
+        $channels = Yii::$app->request->get('channels');
+
+        /*
+         * แสดงข้อมูลของสถานที่
+         */
         $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $boxcode . "'")->one();
         $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channel . "' ")->one();
-
         $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
         $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
         $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
@@ -179,11 +191,45 @@ class ShippingsController extends StoreMasterController {
           $query = \common\models\costfit\PickingPointItems::find()
           ->where(['code' => $lockersNo])->one();
           } */
-        $query = \common\models\costfit\OrderItemPacking::find()
-                ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId,order_item_packing.bagNo,order_item_packing.status')
-                ->joinWith(['orderItems'])
-                ->where(['order_item.orderId' => $orderId])
-                ->where(['order_item_packing.status' => 5, 'order_item_packing.bagNo' => $bagNo]);
+        // $queryPickingItemsId = \common\models\costfit\OrderItemPacking::find()->where('pickingItemsId=' . $pickingItemsId)->count();
+        //if (count($queryPickingItemsId) > 0) {
+        if ($bagNo != '') {
+            $query = \common\models\costfit\OrderItemPacking::find()
+                    ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId,order_item_packing.bagNo,order_item_packing.status')
+                    ->joinWith(['orderItems'])
+                    ->where(['order_item.orderId' => $orderId])
+                    ->where(['order_item_packing.status' => 5, 'order_item_packing.bagNo' => $bagNo]);
+        } else {
+            $queryx = \common\models\costfit\OrderItemPacking::find()
+                    ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId,order_item_packing.bagNo,order_item_packing.status')
+                    //->joinWith(['orderItems'])
+                    ->join('INNER JOIN', 'order_item', 'order_item.orderItemId =order_item_packing.orderItemId')
+                    ->join('INNER JOIN', 'order', 'order.orderId =order_item.orderId')
+                    ->where("order.orderId= '" . $orderId . "' and order_item_packing.status 5 ")
+                    //->where(['order_item_packing.status' => 5, 'order_item_packing.bagNo' => $bagNo])
+                    ->count();
+            // echo $queryx;
+            if ($queryx == 0) {
+                $queryz = \common\models\costfit\OrderItemPacking::find()
+                                ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId,order_item_packing.bagNo,order_item_packing.status')
+                                ->joinWith(['orderItems'])
+                                ->where(['order_item.orderId' => $orderId])
+                                ->where(['order_item_packing.status' => 5, 'order_item_packing.bagNo' => $bagNo])->one();
+                $orderItemPackingId = $queryz->orderItemPackingId;
+                $orderItemId = $queryz->orderItemId;
+                //$queryList = \common\models\costfit\Order::find()->where("orderId = '" . $orderId . "' ")->one();
+                //$query = \common\models\costfit\OrderItem::find()->where("orderId=" . $queryList->orderId)->one();
+                //\common\models\costfit\OrderItemPacking::updateAll(['status' => 8], ['bagNo' => $bagNo, 'orderItemId' => $orderItemId]);
+                //\common\models\costfit\Order::updateAll(['status' => 18], [ 'orderId' => $orderId]);
+                //\common\models\costfit\OrderItem::updateAll(['status' => 18], [ 'orderItemId' => $orderItemId]);
+            }
+            $query = \common\models\costfit\OrderItemPacking::find()
+                    ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId,order_item_packing.bagNo,order_item_packing.status')
+                    ->join('INNER JOIN', 'order_item', 'order_item.orderItemId =order_item_packing.orderItemId')
+                    ->join('INNER JOIN', 'order', 'order.orderId =order_item.orderId')
+                    ->where("order.orderId= '" . $orderId . "' and order_item_packing.status 5 ");
+        }
+
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -199,8 +245,10 @@ class ShippingsController extends StoreMasterController {
                     'boxcode' => $boxcode,
                     'channel' => $channel,
                     'pickingItemsId' => $pickingItemsId,
-                    'bagNo' => $bagNo
+                    'bagNo' => $bagNo,
+                    'orderId' => $orderId
         ]);
+        //}
     }
 
     public function actionScanChannels() {
@@ -213,15 +261,12 @@ class ShippingsController extends StoreMasterController {
 
         if ($pickingItemsId != '') {
             $query = \common\models\costfit\PickingPointItems::find()
-//->joinWith(['orderItems'])
                             ->where(['pickingItemsId' => $pickingItemsId])->one();
-// echo '<pre>';
-// print_r($query);
-// exit();
+
             if (count($query) > 0) {
-//echo 'มีรหัส lockers No นี้';
+                //echo 'มีรหัส lockers No นี้';
                 $lockersCode = TRUE;
-//echo $query->pickingItemsId;
+                //echo $query->pickingItemsId;
                 $useSlot = \common\models\costfit\OrderItemPacking::find()->where(" pickingItemsId = " . $query->pickingItemsId . " and status = 7")->one(); //มีใช้แล้วหรือเปล่า
                 if (!isset($useSlot)) {
 
@@ -230,7 +275,7 @@ class ShippingsController extends StoreMasterController {
                     $OrderItems = \common\models\costfit\OrderItemPacking::find()->where(" orderItemId = '" . $OrderItemPacking->orderItemId . "' and status = 5")->count();
 
                     if ($OrderItems > 1) {
-                        \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $query->pickingItemsId], ['bagNo' => $bagNo]);
+                        \common\models\costfit\OrderItemPacking::updateAll(['status' => 5, 'pickingItemsId' => $query->pickingItemsId], ['bagNo' => $bagNo]);
                         \common\models\costfit\OrderItem::updateAll(['status' => 14], ['orderItemId' => $OrderItemPacking->orderItemId]);
                         $Order = \common\models\costfit\OrderItem::find()->where("orderItemId = '" . $OrderItemPacking->orderItemId . "' ")->one();
                         \common\models\costfit\Order::updateAll(['status' => 14], ['orderId' => $Order->orderId]);
@@ -238,13 +283,13 @@ class ShippingsController extends StoreMasterController {
                         $this->redirect(Yii::$app->homeUrl . 'scan-channels?model=' . $model . '&code=' . $channel . '&boxcode=' . $boxcode . '&pickingItemsId=' . $pickingItemsId . '&bagNo=' . $bagNo);
                     } elseif ($OrderItems == 1) {
 
-                        \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $query->pickingItemsId], ['bagNo' => $bagNo]);
+                        \common\models\costfit\OrderItemPacking::updateAll(['status' => 5, 'pickingItemsId' => $query->pickingItemsId], ['bagNo' => $bagNo]);
                         \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderItemId' => $OrderItemPacking->orderItemId]);
                         $Order = \common\models\costfit\OrderItem::find()->where("orderItemId = '" . $OrderItemPacking->orderItemId . "' ")->one();
                         \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $Order->orderId]);
                         $warning = 'roundone';
                     }
-//$orderItemId = $OrderItemPacking->orderItemId;
+                    //$orderItemId = $OrderItemPacking->orderItemId;
                 } else {
                     echo 'xx';
                 }

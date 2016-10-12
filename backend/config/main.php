@@ -72,6 +72,9 @@ return [
         'picking' => [
             'class' => 'backend\modules\picking\Picking',
         ],
+        'lockers' => [
+            'class' => 'backend\modules\lockers\Lockers',
+        ],
     ],
     'components' => [
         'user' => [
