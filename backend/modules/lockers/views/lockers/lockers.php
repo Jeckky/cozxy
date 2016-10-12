@@ -135,7 +135,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <div class="panel-body ">
                     <div class="col-sm-12">
                         <input type="text" name="code" autofocus="true" id="code" class="form-control" placeholder="Search or Scan Qr code">
-                        <div id="character-limit-input-label" class="limiter-label form-group-margin">หมายเหตุ : <span class="limiter-count">Scan Qr Code ทุกครั้ง เพื่อตรวจความถูกต้องของช่องใน Lockers.</span></div>
+                        <div id="character-limit-input-label" class="limiter-label form-group-margin">หมายเหตุ : <span class="limiter-count">Scan Qr Code ทุกครั้ง เพื่อตรวจความถูกต้องของ"ช่อง"ใน Lockers.</span></div>
                     </div>
                 </div>
                 <?= $this->registerJS("

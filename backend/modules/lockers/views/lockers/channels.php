@@ -194,10 +194,10 @@ if (isset($listPointItems)) {
             ?> <h1>Lockers / Picking Points Items / </h1>
             <div class="panel-body">
                 <div class="alert alert-danger">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <button type="button" class="close" data-dismiss="alert"></button>
                     <strong>ไม่พบข้อมูล</strong> ลองใหม่อีกครั้ง...&nbsp; <img src="<?php echo Yii::$app->homeUrl; ?>/images/icon/default-loader.gif" height="30" >
                 </div>
-                <meta http-equiv="refresh" content="1; url=/lockers/lockers/lockers?boxcode=<?php echo $boxcode; ?>" >                                                                          ?>">-->
+                <meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php echo $boxcode; ?>" >                                                                          ?>">-->
             </div>
             <?php
         }
