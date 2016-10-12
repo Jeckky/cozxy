@@ -35,13 +35,30 @@ class PickingPointItems extends \common\models\costfit\master\PickingPointItemsM
     }
 
     static function PickingPointDistinct($pickingItemId) {
-        $result = OrderItemPacking::find()->where("pickingItemsId  =" . $pickingItemId . '  ')->one();
-
+        $result = OrderItemPacking::find()->where("pickingItemsId  =" . $pickingItemId . ' and status = 8 ')->one();
         if (count($result) > 0) {
-            $result = TRUE; // มี pickingItemId แล้ว
-        } else {
             $result = FALSE; // มี pickingItemId แล้ว
+        } else {
+            $result = OrderItemPacking::find()->where("pickingItemsId  =" . $pickingItemId . ' and status < 8 ')->one();
+            if (count($result) > 0) {
+                $result = TRUE; // มี pickingItemId แล้ว
+            } else {
+                $result = FALSE; // มี pickingItemId แล้ว
+            }
+            //$result = TRUE; // มี pickingItemId แล้ว
         }
+        // if ($result['status'] == 8) {
+        //$result = TRUE; // มี pickingItemId แล้ว
+        //} else {
+        //$result = FALSE; // มี pickingItemId แล้ว
+        // }
+        /*
+          if (count($result) > 0) {
+          $result = TRUE; // มี pickingItemId แล้ว
+          } else {
+          $result = FALSE; // มี pickingItemId แล้ว
+          }
+         * */
         return $result;
     }
 

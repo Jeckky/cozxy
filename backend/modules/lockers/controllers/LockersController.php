@@ -139,7 +139,7 @@ class LockersController extends LockersMasterController {
                 $query = \common\models\costfit\Order::find()
                         ->select('*')
                         ->joinWith(['orderItems'])
-                        ->where("order_item.status >= 14 and order.pickingId = '" . $boxcode . "'  and orderNo   ='" . $orderNo . "'");
+                        ->where("order_item.status >= 14 and order.pickingId = '" . $boxcode . "'  and orderNo   ='" . $orderNo . "'"); // check orderNo and pickingId
                 //$this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $boxcode);
                 $warning = 'no';
             }
