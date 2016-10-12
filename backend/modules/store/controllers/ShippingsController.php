@@ -49,7 +49,7 @@ class ShippingsController extends StoreMasterController {
             $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
             $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
 
-            //$test = \common\models\costfit\OrderItemPacking::find()->where()->one();
+//$test = \common\models\costfit\OrderItemPacking::find()->where()->one();
 
             /*
               $orderNo = \common\models\costfit\Order::find()
@@ -64,14 +64,14 @@ class ShippingsController extends StoreMasterController {
             /*
              * API OPEN CAHNNELS LOCKERS To Hardware
              */
-            // Codeding..
+// Codeding..
             /*
              * END API OPEN CAHNNELS LOCKERS
              */
 
 
             $query = \common\models\costfit\PickingPointItems::find()
-                    //->join('RIGHT JOIN', 'order_item_packing', 'order_item_packing.pickingItemsId =picking_point_items.pickingItemsId')
+//->join('RIGHT JOIN', 'order_item_packing', 'order_item_packing.pickingItemsId =picking_point_items.pickingItemsId')
                     ->where("picking_point_items.pickingId = '" . $pickingId . "'")
             ;
 
@@ -87,7 +87,7 @@ class ShippingsController extends StoreMasterController {
             ]);
         }
 
-        //return $this->render('lockers', ['txt' => $txt, 'codes' => $codes, 'data' => $data]);
+//return $this->render('lockers', ['txt' => $txt, 'codes' => $codes, 'data' => $data]);
     }
 
     public function actionChannels() {
@@ -98,52 +98,51 @@ class ShippingsController extends StoreMasterController {
         $model = Yii::$app->request->get('model');
         $orderNo = Yii::$app->request->get('orderNo');
 
-        $checkOrderId = \common\models\costfit\Order::find()->where("orderNo  = '" . $orderNo . "' and pickingId ='" . $boxcode . "'")->one();
-        if (count($checkOrderId) > 0) {
-            $orderId = $checkOrderId->orderId;
-            $pickingId = $checkOrderId->pickingId;
+        if ($boxcode != '') {
+            $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $boxcode . "'")->one();
+            $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channel . "' ")->one();
 
-            if ($boxcode != '') {
-                $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $boxcode . "'")->one();
-                $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channel . "' ")->one();
+            // แสดงสถานที่ Locker นั่น
+            $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
+            $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
+            $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
+            //$query = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "'");
+            // echo $this->orders($orderNo, $listPoint, $localNamecitie, $localNamecountrie, $localNamestate, $listPointItems, $model);
+            $query = \common\models\costfit\Order::find()
+                    ->select('*')
+                    ->joinWith(['orderItems'])
+                    ->where("order_item.status = 6 or order_item.status >= 14 and order.pickingId = " . $boxcode);
 
-                // แสดงสถานที่ Locker นั่น
-                $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
-                $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
-                $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
-                //$query = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "'");
-                // echo $this->orders($orderNo, $listPoint, $localNamecitie, $localNamecountrie, $localNamestate, $listPointItems, $model);
-                $query = \common\models\costfit\Order::find()
-                        ->select('*')
-                        ->joinWith(['orderItems'])
-                        ->where("order_item.status = 6 or order_item.status >= 14 and order.pickingId = " . $boxcode);
-
-                $dataProvider = new ActiveDataProvider([
-                    'query' => $query,
-                ]);
-                /*
-                 * Check Update status
-                 * OrderItemPacking : status = 5, กำลังจัดส่ง
-                 * OrderItem  : status = 14 , กำลังจะส่ง
-                 * Order  : status = 14 , กำลังจะส่ง
-                 */
-                if ($orderNo != '') {
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
+            /*
+             * Check Update status
+             * OrderItemPacking : status = 5, กำลังจัดส่ง
+             * OrderItem  : status = 14 , กำลังจะส่ง
+             * Order  : status = 14 , กำลังจะส่ง
+             */
+            if ($orderNo != '') {
+                $checkOrderId = \common\models\costfit\Order::find()->where("orderNo  = '" . $orderNo . "' and pickingId ='" . $boxcode . "'")->one();
+                if (count($checkOrderId) > 0) {
                     $ordersending = \common\models\costfit\PickingPoint::ordersending($orderNo, $boxcode);
+                } else {
+                    $orderId = $checkOrderId->orderId;
+                    $pickingId = $checkOrderId->pickingId;
+                    $this->redirect(Yii::$app->homeUrl . 'store/shippings/lockers?boxcode=' . $boxcode);
                 }
-
-                return $this->render('channels', [
-                            'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
-                            'citie' => $localNamecitie,
-                            'countrie' => $localNamecountrie,
-                            'state' => $localNamestate,
-                            'listPointItems' => $listPointItems,
-                            'model' => $model,
-                            'boxcode' => $boxcode,
-                            'channel' => $channel,
-                ]);
             }
-        } else {
-            $this->redirect(Yii::$app->homeUrl . 'lockers?boxcode=' . $boxcode);
+
+            return $this->render('channels', [
+                        'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
+                        'citie' => $localNamecitie,
+                        'countrie' => $localNamecountrie,
+                        'state' => $localNamestate,
+                        'listPointItems' => $listPointItems,
+                        'model' => $model,
+                        'boxcode' => $boxcode,
+                        'channel' => $channel,
+            ]);
         }
     }
 
@@ -213,15 +212,15 @@ class ShippingsController extends StoreMasterController {
 
         if ($pickingItemsId != '') {
             $query = \common\models\costfit\PickingPointItems::find()
-                            //->joinWith(['orderItems'])
+//->joinWith(['orderItems'])
                             ->where(['pickingItemsId' => $pickingItemsId])->one();
-            // echo '<pre>';
-            // print_r($query);
-            // exit();
+// echo '<pre>';
+// print_r($query);
+// exit();
             if (count($query) > 0) {
-                //echo 'มีรหัส lockers No นี้';
+//echo 'มีรหัส lockers No นี้';
                 $lockersCode = TRUE;
-                //echo $query->pickingItemsId;
+//echo $query->pickingItemsId;
                 $useSlot = \common\models\costfit\OrderItemPacking::find()->where(" pickingItemsId = " . $query->pickingItemsId . " and status = 7")->one(); //มีใช้แล้วหรือเปล่า
                 if (!isset($useSlot)) {
 
@@ -244,7 +243,7 @@ class ShippingsController extends StoreMasterController {
                         \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $Order->orderId]);
                         $warning = 'roundone';
                     }
-                    //$orderItemId = $OrderItemPacking->orderItemId;
+//$orderItemId = $OrderItemPacking->orderItemId;
                 } else {
                     echo 'xx';
                 }
@@ -254,14 +253,14 @@ class ShippingsController extends StoreMasterController {
         } else {
 
         }
-        // echo '<pre>';
-        //print_r($query);
-        //exit();
+// echo '<pre>';
+//print_r($query);
+//exit();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        return $this->render('location', [ 'dataProvider' => $dataProvider, 'bagNo' => $bagNo, 'boxcode' => $boxcode, 'warning' => $warning]);
+        return $this->render('location', ['dataProvider' => $dataProvider, 'bagNo' => $bagNo, 'boxcode' => $boxcode, 'warning' => $warning]);
     }
 
     public function actionScanOrder() {
@@ -277,7 +276,7 @@ class ShippingsController extends StoreMasterController {
             $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
             $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
             $query = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "'");
-            //echo $this->orders($orderNo, $listPoint, $localNamecitie, $localNamecountrie, $localNamestate, $listPointItems, $model);
+//echo $this->orders($orderNo, $listPoint, $localNamecitie, $localNamecountrie, $localNamestate, $listPointItems, $model);
 
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
@@ -292,8 +291,8 @@ class ShippingsController extends StoreMasterController {
                         'model' => $model,
             ]);
         }
-        //echo$this->order();
-        //return $this->render('index');
+//echo$this->order();
+//return $this->render('index');
     }
 
 }
