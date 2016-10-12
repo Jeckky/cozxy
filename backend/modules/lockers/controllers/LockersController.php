@@ -49,18 +49,6 @@ class LockersController extends LockersMasterController {
             $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
             $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
 
-//$test = \common\models\costfit\OrderItemPacking::find()->where()->one();
-
-            /*
-              $orderNo = \common\models\costfit\Order::find()
-              //->select("`order`.*,oi.*")
-              //->join("RIGHT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-              //->where("oi.status = 6 OR oi.status = 14");
-              ->select('*')
-              ->joinWith(['orderItems'])
-              ->where("order_item.status = 6 or order_item.status >= 14");
-             */
-
             /*
              * API OPEN CAHNNELS LOCKERS To Hardware
              */
@@ -68,7 +56,6 @@ class LockersController extends LockersMasterController {
             /*
              * END API OPEN CAHNNELS LOCKERS
              */
-
 
             $query = \common\models\costfit\PickingPointItems::find()
                     //->join('RIGHT JOIN', 'order_item_packing', 'order_item_packing.pickingItemsId =picking_point_items.pickingItemsId')
