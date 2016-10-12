@@ -138,38 +138,6 @@ class ShippingsController extends StoreMasterController {
         }
     }
 
-    public function actionScanOrder() {
-        $pickingId = Yii::$app->request->get('boxcode');
-        $orderNo = Yii::$app->request->get('orderNo');
-        $channel = Yii::$app->request->get('code');
-        $orderId = Yii::$app->request->get('orderId');
-        $model = Yii::$app->request->get('model');
-        if ($pickingId != '' and $orderNo != '') {
-            $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $pickingId . "'")->one();
-            $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $pickingId . "'  ")->one();
-            $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
-            $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
-            $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
-            $query = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "'");
-            //echo $this->orders($orderNo, $listPoint, $localNamecitie, $localNamecountrie, $localNamestate, $listPointItems, $model);
-
-            $dataProvider = new ActiveDataProvider([
-                'query' => $query,
-            ]);
-
-            return $this->render('scanorder', [
-                        'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
-                        'citie' => $localNamecitie,
-                        'countrie' => $localNamecountrie,
-                        'state' => $localNamestate,
-                        'listPointItems' => $listPointItems,
-                        'model' => $model,
-            ]);
-        }
-        //echo$this->order();
-        //return $this->render('index');
-    }
-
     public function actionScanBag() {
 
         $request = Yii::$app->request;
@@ -285,6 +253,38 @@ class ShippingsController extends StoreMasterController {
         ]);
 
         return $this->render('location', [ 'dataProvider' => $dataProvider, 'bagNo' => $bagNo, 'boxcode' => $boxcode, 'warning' => $warning]);
+    }
+
+    public function actionScanOrder() {
+        $pickingId = Yii::$app->request->get('boxcode');
+        $orderNo = Yii::$app->request->get('orderNo');
+        $channel = Yii::$app->request->get('code');
+        $orderId = Yii::$app->request->get('orderId');
+        $model = Yii::$app->request->get('model');
+        if ($pickingId != '' and $orderNo != '') {
+            $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $pickingId . "'")->one();
+            $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $pickingId . "'  ")->one();
+            $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
+            $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
+            $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
+            $query = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "'");
+            //echo $this->orders($orderNo, $listPoint, $localNamecitie, $localNamecountrie, $localNamestate, $listPointItems, $model);
+
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
+
+            return $this->render('scanorder', [
+                        'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
+                        'citie' => $localNamecitie,
+                        'countrie' => $localNamecountrie,
+                        'state' => $localNamestate,
+                        'listPointItems' => $listPointItems,
+                        'model' => $model,
+            ]);
+        }
+        //echo$this->order();
+        //return $this->render('index');
     }
 
 }
