@@ -45,6 +45,12 @@ class ReceiveController extends MasterController {
         if (isset($_POST['Receive']['password']) && !empty($_POST['Receive']['password'])) {
             $order = Order::find()->where("password='" . $_POST['Receive']['password'] . "'")->one();
             if (isset($order) && !empty($order)) {
+                if ($order->status == 16) {
+                    $ms = 'รายการนี้ได้รับสินค้าไปแล้ว';
+                    return $this->render('error', [
+                                'ms' => $ms
+                    ]);
+                }
                 $user = User::find()->where("userId='" . $order->userId . "'")->one();
                 if (isset($user) && !empty($user)) {
                     $address = Address::find()->where("userId='" . $user->userId . "' and isDefault=1")->one();
@@ -185,7 +191,7 @@ class ReceiveController extends MasterController {
         $receive = Receive::find()->where("otp='" . $_POST['otp'] . "' and orderId=" . $_POST['orderId'] . " and userId=" . $_POST['userId'] . " and password='" . $_POST['password'] . "'")->one();
         if (isset($receive) && !empty($receive)) {
             $time = $this->checkTime($receive->updateDateTime);
-            if ($time == true) {
+            if ($time == true) {//ถ้าเวลา ไม่เกิน 5 นาที
                 $order = Order::find()->where("orderId=" . $_POST['orderId'])->one(); //หา locker
                 if (isset($order) && !empty($order)) {
                     //ยังไม่ได้เชค ว่า picking point ถูกต้องหรือไม่ ถ้าไม่ถูกให้บอกที่ถูก
@@ -217,6 +223,7 @@ class ReceiveController extends MasterController {
                             // รอ อัพเดทสถานะ เป็นลูกค้ารับของแล้ว order orderItem orderItemPacking
                             //$order->status=16;
                             //$order->save();//รับของแล้ว
+                            $this->updateOrder($order->orderId);
                             return $this->render('thank', [
                                         'userId' => $_POST['userId'],
                                         'tel' => $_POST['tel'],
@@ -305,6 +312,33 @@ class ReceiveController extends MasterController {
             }
         }
         return $otp;
+    }
+
+    protected function updateOrder($orderId) {
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        if (isset($order) && !empty($order)) {
+            $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId)->all();
+            foreach ($orderItems as $orderItem):
+                $orderItem->status = 16; //update orderItem
+                $orderItem->updateDateTime = new \yii\db\Expression('NOW()');
+                $orderItem->save(false);
+                $packings = \common\models\costfit\OrderItemPacking::find()->where("orderItemId=" . $orderItem->orderItemId)->all();
+                foreach ($packings as $packing)://update orderItemPacking
+                    $packing->status = 8;
+                    $packing->updateDateTime = new \yii\db\Expression('NOW()');
+                    $packing->save(false);
+                    $locker = \common\models\costfit\PickingPointItems::find()->where("pickingItemsId=" . $packing->pickingItemsId)->one();
+                    $locker->status = 1;
+                    $locker->save(false);
+                endforeach;
+            endforeach;
+            $order->status = 16;
+            $order->updateDateTime = new \yii\db\Expression('NOW()');
+            $order->save(false);
+            $receive = Receive::find()->where("orderId=" . $order->orderId)->one();
+            $receive->status = 2;
+            $receive->save();
+        }
     }
 
 }
