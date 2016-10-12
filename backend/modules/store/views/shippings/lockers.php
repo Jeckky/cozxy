@@ -105,8 +105,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 if (\common\models\costfit\PickingPointItems::PickingPointDistinct($model->pickingItemsId) == 1) {
                                     return '<span class="text-danger">Channels เต็มแล้ว</span>';
                                 } elseif (\common\models\costfit\PickingPointItems::PickingPointDistinct($model->pickingItemsId) == 0) {
-                                    return Html::a('<button class="btn btn-rounded btn-xs text-success"> เปิด Channels นี้ </button>', Yii::$app->homeUrl . "store/shippings/channels?pickingItemsId=" . $model->pickingItemsId . "&code=" . $model->code . '&boxcode=' . $model->pickingId . '&model=1', [
-                                                'title' => Yii::t('app', 'เปิด Channels นี้  :' . $model->code),]);
+                                    return Html::a('<button class="btn btn-rounded btn-xs text-success"> Channels ว่าง  </button>', Yii::$app->homeUrl . "store/shippings/channels?pickingItemsId=" . $model->pickingItemsId . "&code=" . $model->code . '&boxcode=' . $model->pickingId . '&model=1', [
+                                                'title' => Yii::t('app', ' Channels ว่าง :' . $model->code),]);
                                 }
                                 //return '<button class="btn btn-rounded btn-xs"> เปิด Channels นี้ </button>';
                             }
