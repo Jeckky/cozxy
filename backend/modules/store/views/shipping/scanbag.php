@@ -33,7 +33,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
     <div class="panel-body">
         <div class="col-sm-5">
             <input type="text" name="bagNo" autofocus="true" id="bagNo" class="form-control" placeholder="Search or Scan Qr code">
-            <input type="hidden" id="orderNo" name="orderNo" value="<?php echo $orderNo; ?>">
+            <?= $ms != '' ? '<code>' . $ms . '</code>' : '' ?>
+            <input type="hidden" id="orderNo" name="orderNo" value="<?= $orderNo; ?>">
             <div id="character-limit-input-label" class="limiter-label form-group-margin"><!--Characters left: <span class="limiter-count">20</span>--></div>
         </div>
 

@@ -33,7 +33,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
     <div class="panel-body ">
         <div class="col-sm-5">
             <input type="text" name="orderNo" autofocus="true" id="orderNo" class="form-control" placeholder="Search or Scan Qr code">
-            <div id="character-limit-input-label" class="limiter-label form-group-margin">หมายเหตุ : <span class="limiter-count">Scan Qr Code Order No ทุกครั้งก่อนนำใส่ lockers</span></div>
+            <div id="character-limit-input-label" class="limiter-label form-group-margin">หมายเหตุ : <span class="limiter-count">Scan Qr Code Order No ทุกครั้งก่อนนำส่ง</span><?= $ms != '' ? '<code>' . $ms . '</code>' : '' ?></div>
         </div>
     </div>
     <?= $this->registerJS("
@@ -47,7 +47,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
     <?php ActiveForm::end(); ?>
 
 </div>
-
 <div class="order-index">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -61,6 +60,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
             </div>
         </div>
         <div class="panel-body">
+
             <?=
             GridView::widget([
                 'dataProvider' => $dataProvider,
@@ -73,7 +73,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 },
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
-                            'orderId',
+                            //'orderId',
                             //'orderItemId',
                             //'orderNo',
                             [
@@ -96,7 +96,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     if ($model->status == 6) {
                                         $txt = 'แพ็คใส่ถุงแล้ว';
                                     } else if ($model->status == 14) {
-                                        $txt = 'กำลังจะส่ง';
+                                        $txt = 'กำลังจัดส่ง';
                                     } else if ($model->status == 15) {
                                         $txt = 'สินค้ายังอยู่ใน lockers';
                                     } else if ($model->status == 13) {
@@ -125,26 +125,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     return ' สถานที่ส่งของ : ' . $title . ' , ' . $localNamecitie . ' , ' . $localNamestate . ' , ' . 'ประเทศ' . $localNamecountrie . ' '; // status items 6 : แพ็คใส่ถุงแล้ว
                                 }
                             ],
-                            // 'type',
-                            // 'createDateTime',
-                            // 'updateDateTime',
-                            ['class' => 'yii\grid\ActionColumn',
-                                'template' => ' {items} ',
-                                'buttons' => [
-                                    'items' => function($url, $model) {
-                                        if (\common\models\costfit\OrderItemPacking::shipPacking($model->orderItemId) > 0) {
-                                            return Html::a('นำใส่ lockers', Yii::$app->homeUrl . "store/lockers/index?orderId=" . $model->orderId, [
-                                                        'title' => Yii::t('app', 'picking point'),]);
-                                        } else {
-                                            return Html::a('<i class="fa fa-eye"></i> ', Yii::$app->homeUrl . "store/lockers/index?orderId=" . $model->orderId, [
-                                                        'title' => Yii::t('app', 'picking point'),]);
-                                        }
-                                    }
-                                        ],
-                                    ],
-                                ],
-                            ]);
-                            ?>
+                        // 'type',
+                        // 'createDateTime',
+                        // 'updateDateTime',
+                        ],
+                    ]);
+                    ?>
+
         </div>
     </div>
 

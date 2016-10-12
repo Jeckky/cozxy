@@ -66,7 +66,6 @@ class PickingController extends StoreMasterController {
             $this->updateQuantity($allOrderId); //ตัดสต๊อก
             $this->saveSelection($allOrderId, $userId); //บัน
 //$ms = '';
-
             foreach ($allOrderId as $orderId):
                 $items = \common\models\costfit\OrderItem::find()->where("orderId = " . $orderId)->all();
                 if (isset($items) && !empty($items)) {
