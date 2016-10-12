@@ -61,6 +61,13 @@ class ShippingsController extends StoreMasterController {
               ->where("order_item.status = 6 or order_item.status >= 14");
              */
 
+            /*
+             * API OPEN CAHNNELS LOCKERS
+             */
+            // Codeding..
+            /*
+             * END API OPEN CAHNNELS LOCKERS
+             */
 
 
             $query = \common\models\costfit\PickingPointItems::find()
