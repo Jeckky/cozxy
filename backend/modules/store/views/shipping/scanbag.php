@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
+use common\models\costfit\OrderItemPacking;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -33,7 +34,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
     <div class="panel-body">
         <div class="col-sm-5">
             <input type="text" name="bagNo" autofocus="true" id="bagNo" class="form-control" placeholder="Search or Scan Qr code">
-            <?= $ms != '' ? '<code>' . $ms . '</code>' : '' ?>
+<?= $ms != '' ? '<code>' . $ms . '</code>' : '' ?>
             <input type="hidden" id="orderNo" name="orderNo" value="<?= $orderNo; ?>">
             <div id="character-limit-input-label" class="limiter-label form-group-margin"><!--Characters left: <span class="limiter-count">20</span>--></div>
         </div>
@@ -47,7 +48,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     }
                 });
     ") ?>
-    <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
 </div>
 
 <div class="order-index">
@@ -69,7 +70,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'bagNo',
-                    'orderItemId',
+                    ['attribute' => 'product',
+                        'value' => function($model) {
+                            $item = OrderItemPacking::itemInBag($model->bagNo);
+                            return $item;
+                        }],
+                    //'orderItemId',
                     //'orderNo',
                     //'bagNo',
                     //'status',
@@ -77,31 +83,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'attribute' => 'status',
                         'value' => function($model) {
                             if ($model->status == 4) {
-                                $txt = ' ปิดถุงแล้ว';
+                                $txt = ' ปิดถุงแล้ว รอจัดส่ง';
                             } else if ($model->status == 5) {
                                 $txt = 'กำลังจัดส่ง';
                             }
                             return isset($txt) ? $txt : ''; // status items 6 : แพ็คใส่ถุงแล้ว
                         }
-                    ],
-                    //'pickingId',
-                    /* [
-                      'attribute' => 'pickingId',
-                      'value' => function($model) {
-                      return 'จุดรับของที่' . $model->pickingpoint->title . ' , ' . $model->pickingpoint->citie->localName . ' , ' . $model->pickingpoint->state->localName . ' , ' . 'ประเทศ' . $model->pickingpoint->countrie->localName; // status items 6 : แพ็คใส่ถุงแล้ว
-                      }
-                      ], */
-                    // 'type',
-                    // 'createDateTime',
-                    // 'updateDateTime',
-                    ['class' => 'yii\grid\ActionColumn',
-                        'template' => '  ',
-                        'buttons' => [
-                        /* 'items' => function($url, $model) {
-                          return Html::a('รอ Picking Points ', Yii::$app->homeUrl . "picking/picking/index?pickingId=" . $model->pickingId, [
-                          'title' => Yii::t('app', 'picking point'),]);
-                          } */
-                        ],
                     ],
                 ],
             ]);

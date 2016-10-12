@@ -71,6 +71,31 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
         }
     }
 
+    static public function itemInBag($bagNo) {
+        $items = '';
+        $bags = OrderItemPacking::find()->where("bagNo='" . $bagNo . "'")->all();
+        if (isset($bags) && !empty($bags)) {
+            foreach ($bags as $bag):
+                $itemsInBag = OrderItemPacking::find()->where("bagNo='" . $bag->bagNo . "'")->all();
+                if (isset($itemsInBag) && !empty($itemsInBag)) {
+                    foreach ($itemsInBag as $itemInBag):
+                        $orderItem = OrderItem::find()->where("orderItemId=" . $itemInBag->orderItemId)->one();
+                        if (isset($orderItem) && !empty($orderItem)) {
+                            $product = Product::find()->where("productId=" . $orderItem->productId)->one();
+                            if (isset($product) && !empty($product)) {
+                                $items = $items . $product->code . " (" . $bag->quantity . ")" . ",";
+                            }
+                        }
+                    endforeach;
+                }
+            endforeach;
+            $items = substr($items, 0, -1);
+            return $items;
+        } else {
+            return '';
+        }
+    }
+
     static public function createStatus($orderItemId) {
         $result = 0;
         $totalInPacking = 0;
