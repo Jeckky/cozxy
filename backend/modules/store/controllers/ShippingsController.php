@@ -98,43 +98,52 @@ class ShippingsController extends StoreMasterController {
         $model = Yii::$app->request->get('model');
         $orderNo = Yii::$app->request->get('orderNo');
 
-        if ($boxcode != '') {
-            $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $boxcode . "'")->one();
-            $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channel . "' ")->one();
+        $checkOrderId = \common\models\costfit\Order::find()->where("orderNo  = '" . $orderNo . "' and pickingId ='" . $boxcode . "'")->one();
+        if (count($checkOrderId) > 0) {
+            $orderId = $checkOrderId->orderId;
+            $pickingId = $checkOrderId->pickingId;
 
-            $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
-            $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
-            $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
-            //$query = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "'");
-            // echo $this->orders($orderNo, $listPoint, $localNamecitie, $localNamecountrie, $localNamestate, $listPointItems, $model);
-            $query = \common\models\costfit\Order::find()
-                    ->select('*')
-                    ->joinWith(['orderItems'])
-                    ->where("order_item.status = 6 or order_item.status >= 14 and order.pickingId = " . $boxcode);
+            if ($boxcode != '') {
+                $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $boxcode . "'")->one();
+                $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channel . "' ")->one();
 
-            $dataProvider = new ActiveDataProvider([
-                'query' => $query,
-            ]);
-            /*
-             * Check Update status
-             * OrderItemPacking : status = 5, กำลังจัดส่ง
-             * OrderItem  : status = 14 , กำลังจะส่ง
-             * Order  : status = 14 , กำลังจะส่ง
-             */
-            if ($orderNo != '') {
-                $ordersending = \common\models\costfit\PickingPoint::ordersending($orderNo, $boxcode);
+                // แสดงสถานที่ Locker นั่น
+                $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
+                $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
+                $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
+                //$query = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "'");
+                // echo $this->orders($orderNo, $listPoint, $localNamecitie, $localNamecountrie, $localNamestate, $listPointItems, $model);
+                $query = \common\models\costfit\Order::find()
+                        ->select('*')
+                        ->joinWith(['orderItems'])
+                        ->where("order_item.status = 6 or order_item.status >= 14 and order.pickingId = " . $boxcode);
+
+                $dataProvider = new ActiveDataProvider([
+                    'query' => $query,
+                ]);
+                /*
+                 * Check Update status
+                 * OrderItemPacking : status = 5, กำลังจัดส่ง
+                 * OrderItem  : status = 14 , กำลังจะส่ง
+                 * Order  : status = 14 , กำลังจะส่ง
+                 */
+                if ($orderNo != '') {
+                    $ordersending = \common\models\costfit\PickingPoint::ordersending($orderNo, $boxcode);
+                }
+
+                return $this->render('channels', [
+                            'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
+                            'citie' => $localNamecitie,
+                            'countrie' => $localNamecountrie,
+                            'state' => $localNamestate,
+                            'listPointItems' => $listPointItems,
+                            'model' => $model,
+                            'boxcode' => $boxcode,
+                            'channel' => $channel,
+                ]);
             }
-
-            return $this->render('channels', [
-                        'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
-                        'citie' => $localNamecitie,
-                        'countrie' => $localNamecountrie,
-                        'state' => $localNamestate,
-                        'listPointItems' => $listPointItems,
-                        'model' => $model,
-                        'boxcode' => $boxcode,
-                        'channel' => $channel,
-            ]);
+        } else {
+            $this->redirect(Yii::$app->homeUrl . 'lockers?boxcode=' . $boxcode);
         }
     }
 
