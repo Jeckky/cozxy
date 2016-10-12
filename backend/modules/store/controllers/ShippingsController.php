@@ -116,6 +116,7 @@ class ShippingsController extends StoreMasterController {
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
             ]);
+
             /*
              * Check Update status
              * OrderItemPacking : status = 5, กำลังจัดส่ง
