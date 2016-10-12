@@ -74,22 +74,27 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     static public function itemInBag($bagNo) {
         $items = '';
         $bags = OrderItemPacking::find()->where("bagNo='" . $bagNo . "'")->all();
+        $oldBag = '';
         if (isset($bags) && !empty($bags)) {
             foreach ($bags as $bag):
-                $itemsInBag = OrderItemPacking::find()->where("bagNo='" . $bag->bagNo . "'")->all();
-                if (isset($itemsInBag) && !empty($itemsInBag)) {
-                    foreach ($itemsInBag as $itemInBag):
-                        $orderItem = OrderItem::find()->where("orderItemId=" . $itemInBag->orderItemId)->one();
-                        if (isset($orderItem) && !empty($orderItem)) {
-                            $product = Product::find()->where("productId=" . $orderItem->productId)->one();
-                            if (isset($product) && !empty($product)) {
-                                $items = $items . $product->code . " (" . $bag->quantity . ")" . ",";
+                if ($bag->bagNo != $oldBag) {
+                    $itemsInBag = OrderItemPacking::find()->where("bagNo='" . $bag->bagNo . "'")->all();
+                    if (isset($itemsInBag) && !empty($itemsInBag)) {
+                        foreach ($itemsInBag as $itemInBag):
+                            $orderItem = OrderItem::find()->where("orderItemId=" . $itemInBag->orderItemId)->one();
+                            if (isset($orderItem) && !empty($orderItem)) {
+                                $product = Product::find()->where("productId=" . $orderItem->productId)->one();
+                                if (isset($product) && !empty($product)) {
+                                    $items = $items . $product->code . " (" . $bag->quantity . ")" . ", ";
+                                }
                             }
-                        }
-                    endforeach;
+                        endforeach;
+                    }
+                    $oldBag = $bag->bagNo;
                 }
             endforeach;
-            $items = substr($items, 0, -1);
+            //throw new \yii\base\Exception($items);
+            $items = substr($items, 0, -2);
             return $items;
         } else {
             return '';
