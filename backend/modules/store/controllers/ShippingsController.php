@@ -121,7 +121,10 @@ class ShippingsController extends StoreMasterController {
              * OrderItem  : status = 14 , กำลังจะส่ง
              * Order  : status = 14 , กำลังจะส่ง
              */
-            $ordersending = \common\models\costfit\PickingPoint::ordersending($orderNo, $boxcode);
+            if ($orderNo != '') {
+                $ordersending = \common\models\costfit\PickingPoint::ordersending($orderNo, $boxcode);
+            }
+
             return $this->render('channels', [
                         'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
                         'citie' => $localNamecitie,
