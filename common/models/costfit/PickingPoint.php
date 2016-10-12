@@ -23,8 +23,7 @@ use \common\models\costfit\master\PickingPointMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class PickingPoint extends \common\models\costfit\master\PickingPointMaster
-{
+class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
 
     const TYPE_PICKINGPOINT = 1; // point
 
@@ -32,8 +31,7 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster
      * @inheritdoc
      */
 
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), [
             [['provinceId', 'amphurId', 'type', 'isDefault']
                 , 'required', 'on' => 'picking_point'],
@@ -43,8 +41,7 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster
     /**
      * @inheritdoc
      */
-    public function attributes()
-    {
+    public function attributes() {
         return array_merge(parent::attributes(), [
         ]);
     }
@@ -52,33 +49,27 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function getCitie()
-    {
+    public function getCitie() {
         return $this->hasOne(\common\models\dbworld\Cities::className(), ['cityId' => 'amphurId']);
     }
 
-    public function getCountrie()
-    {
+    public function getCountrie() {
         return $this->hasOne(\common\models\dbworld\Countries::className(), ['countryId' => 'countryId']);
     }
 
-    public function getDistrict()
-    {
+    public function getDistrict() {
         return $this->hasOne(\common\models\dbworld\District::className(), ['districtId' => 'districtId']);
     }
 
-    public function getState()
-    {
+    public function getState() {
         return $this->hasOne(\common\models\dbworld\States::className(), ['stateId' => 'provinceId']);
     }
 
-    static public function findPickingPoitItem($orderId)
-    {
+    static public function findPickingPoitItem($orderId) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (isset($order)) {
             $pickingPoint = PickingPoint::find()->where("pickingId=" . $order->pickingId)->one();
@@ -97,18 +88,17 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster
         }
     }
 
-    public function getPickingPointItems()
-    {
+    public function getPickingPointItems() {
         return $this->hasMany(\common\models\costfit\PickingPointItems::className(), ['pickingId' => 'pickingId']);
     }
 
-    static function ordersending($orderNo) {
+    static function ordersending($orderNo, $boxcode) {
         if ($orderNo != '') {
             if (\Yii::$app->params['shippingScanTrayOnly'] == true) {
                 /* shippingScanTrayOnly = true เข้าเงื่อนไขที่ 1 ต้อง Scan ทีละ OrderId */
                 //$query = \common\models\costfit\OrderItemPacking::find()->where('status =4')->all();
 
-                $queryList = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "' ")->one();
+                $queryList = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "' and pickingId = '" . $boxcode . "' ")->one();
                 //throw new \yii\base\Exception(print_r($queryList, TRUE));
                 $queryItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $queryList->orderId . ' and status =13')->all(); // status : 6 pack ใส่ลงถุง
 
