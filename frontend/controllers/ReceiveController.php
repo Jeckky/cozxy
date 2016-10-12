@@ -181,55 +181,64 @@ class ReceiveController extends MasterController {
         $orderItem = '';
         $check = [];
         $i = 0;
+        $time = false;
         $receive = Receive::find()->where("otp='" . $_POST['otp'] . "' and orderId=" . $_POST['orderId'] . " and userId=" . $_POST['userId'] . " and password='" . $_POST['password'] . "'")->one();
         if (isset($receive) && !empty($receive)) {
-            $order = Order::find()->where("orderId=" . $_POST['orderId'])->one(); //หา locker
-            if (isset($order) && !empty($order)) {
-                //ยังไม่ได้เชค ว่า picking point ถูกต้องหรือไม่ ถ้าไม่ถูกให้บอกที่ถูก
-                $pickingPoint = $order->pickingId;
-                $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId)->all();
-                if (isset($orderItems) && !empty($orderItems)) {
-                    foreach ($orderItems as $item):
-                        $orderItem = $orderItem . $item->orderItemId . ",";
-                    endforeach;
-                    $orderItem = substr($orderItem, 0, -1);
-                    $lockers = \common\models\costfit\OrderItemPacking::find()->where("orderItemId in($orderItem) and status=7")->all();
-                    if (isset($lockers) && !empty($lockers)) {
-                        foreach ($lockers as $locker):
-                            $pickingLocker = \common\models\costfit\PickingPointItems::find()->where("pickingItemsId=" . $locker->pickingItemsId . " and pickingId=" . $pickingPoint)->one();
-                            if (isset($pickingLocker)) {
-                                $flag = false;
-                                $flag = $this->check($check, $pickingLocker->pickingItemsId);
-                                $check[$i] = $pickingLocker->pickingItemsId;
-
-                                if ($flag == true) {
-                                    $total = count(\common\models\costfit\OrderItemPacking::find()->where("pickingItemsId=" . $pickingLocker->pickingItemsId)->all());
-                                    $allLocker = $allLocker . $pickingLocker->name . " จำนวน " . $total . " ถุง" . "<br>";
-                                }
-                                $i++;
-                            }
+            $time = $this->checkTime($receive->updateDateTime);
+            if ($time == true) {
+                $order = Order::find()->where("orderId=" . $_POST['orderId'])->one(); //หา locker
+                if (isset($order) && !empty($order)) {
+                    //ยังไม่ได้เชค ว่า picking point ถูกต้องหรือไม่ ถ้าไม่ถูกให้บอกที่ถูก
+                    $pickingPoint = $order->pickingId;
+                    $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId)->all();
+                    if (isset($orderItems) && !empty($orderItems)) {
+                        foreach ($orderItems as $item):
+                            $orderItem = $orderItem . $item->orderItemId . ",";
                         endforeach;
-                        //throw new \yii\base\Exception(print_r($check, true));
-                        $allLocker = substr($allLocker, 0, -1);
-                        // รอ อัพเดทสถานะ เป็นลูกค้ารับของแล้ว order orderItem orderItemPacking
-                        //$order->status=16;
-                        //$order->save();//รับของแล้ว
-                        return $this->render('thank', [
-                                    'userId' => $_POST['userId'],
-                                    'tel' => $_POST['tel'],
-                                    'password' => $_POST['password'],
-                                    'orderId' => $_POST['orderId'],
-                                    'locker' => $allLocker,
-                                    'ms' => $ms
-                        ]);
+                        $orderItem = substr($orderItem, 0, -1);
+                        $lockers = \common\models\costfit\OrderItemPacking::find()->where("orderItemId in($orderItem) and status=7")->all();
+                        if (isset($lockers) && !empty($lockers)) {
+                            foreach ($lockers as $locker):
+                                $pickingLocker = \common\models\costfit\PickingPointItems::find()->where("pickingItemsId=" . $locker->pickingItemsId . " and pickingId=" . $pickingPoint)->one();
+                                if (isset($pickingLocker)) {
+                                    $flag = false;
+                                    $flag = $this->check($check, $pickingLocker->pickingItemsId);
+                                    $check[$i] = $pickingLocker->pickingItemsId;
+
+                                    if ($flag == true) {
+                                        $total = count(\common\models\costfit\OrderItemPacking::find()->where("pickingItemsId=" . $pickingLocker->pickingItemsId)->all());
+                                        $allLocker = $allLocker . $pickingLocker->name . " จำนวน " . $total . " ถุง" . "<br>";
+                                    }
+                                    $i++;
+                                }
+                            endforeach;
+                            //throw new \yii\base\Exception(print_r($check, true));
+                            $allLocker = substr($allLocker, 0, -1);
+                            // รอ อัพเดทสถานะ เป็นลูกค้ารับของแล้ว order orderItem orderItemPacking
+                            //$order->status=16;
+                            //$order->save();//รับของแล้ว
+                            return $this->render('thank', [
+                                        'userId' => $_POST['userId'],
+                                        'tel' => $_POST['tel'],
+                                        'password' => $_POST['password'],
+                                        'orderId' => $_POST['orderId'],
+                                        'locker' => $allLocker,
+                                        'ms' => $ms
+                            ]);
+                        } else {
+                            $ms = 'ยังไม่มีรายการพัสดุของคุณใน locker ใดเลย';
+                        }
                     } else {
-                        $ms = 'ยังไม่มีรายการพัสดุของคุณใน locker ใดเลย';
+                        $ms = 'ไม่เจอรายการสินค้า2';
                     }
                 } else {
-                    $ms = 'ไม่เจอรายการสินค้า2';
+                    $ms = 'ไม่เจอรายการสินค้า1';
                 }
             } else {
-                $ms = 'ไม่เจอรายการสินค้า1';
+                $ms = 'รหัสผ่านหมดเวลาการใช้งาน กรุณากดรับรหัสใหม่';
+                return $this->render('error', [
+                            'ms' => $ms
+                ]);
             }
         } else {
             $ms = 'รหัสผ่านไม่ถูกต้อง';
@@ -240,6 +249,17 @@ class ReceiveController extends MasterController {
                         'orderId' => $_POST['orderId'],
                         'ms' => $ms
             ]);
+        }
+    }
+
+    protected function checkTime($time) {
+        $now = date('Y-m-d H:i:s');
+        $time_diff = strtotime($now) - strtotime($time);
+        $time_diff_m = floor(($time_diff % 3600) / 60);
+        if ($time_diff_m > 5) {
+            return false;
+        } else {
+            return true;
         }
     }
 
