@@ -115,7 +115,12 @@ class ShippingsController extends StoreMasterController {
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
             ]);
-
+            /*
+             * Check Update status
+             * OrderItemPacking : status = 5, กำลังจัดส่ง
+             * OrderItem  : status = 14 , กำลังจะส่ง
+             * Order  : status = 14 , กำลังจะส่ง
+             */
             $ordersending = \common\models\costfit\PickingPoint::ordersending($orderNo);
             return $this->render('channels', [
                         'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
