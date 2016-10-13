@@ -12,6 +12,7 @@ use backend\controllers\BackendMasterController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
+use backend\controllers\EmailSend;
 
 class LockersController extends LockersMasterController {
 
@@ -220,7 +221,9 @@ class LockersController extends LockersMasterController {
                 \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderId' => $orderId]);
                 //$Order = \common\models\costfit\OrderItem::find()->where("orderItemId = '" . $OrderItemPacking->orderItemId . "' ")->one();
                 \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $orderId]);
-
+//ส่ง Email
+                $this->generatePassword($orderId);
+                $this->sendEmail($orderId);
                 //return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $boxcode);
                 return $this->render('location', [
                             'warning' => 'roundone',
@@ -237,9 +240,6 @@ class LockersController extends LockersMasterController {
                     ->joinWith(['orderItems'])
                     ->where("order_item.orderId = '" . $orderId . "' and order_item_packing.status = 5");
         }
-
-
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -259,6 +259,39 @@ class LockersController extends LockersMasterController {
                     'orderItemPackingId' => $orderItemPackingId
         ]);
         //}
+    }
+
+    static public function generatePassword($orderId) {
+        $flag = false;
+        $password = rand('00000000', '99999999');
+        while ($flag == false) {
+            $order = Order::find()->where("password='" . $password . "' and status!=16")->one(); //Gen OTP จนกว่าจะได้เลขไม่ซ้ำ
+            if (isset($order) && !empty($order)) {
+                $password = rand('00000000', '99999999');
+            } else {
+                $flag = true;
+                $orders = Order::find()->where("orderId=" . $orderId)->one();
+                $orders->password = $password;
+                $orders->updateDateTime = new \yii\db\Expression('NOW()');
+                $orders->save(false);
+            }
+        }
+    }
+
+    static public function sendEmail($orderId) {
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        if (isset($order) && !empty($order)) {
+            $user = \common\models\costfit\User::find()->where("userId=" . $order->userId)->one();
+            if (isset($user) && !empty($user)) {
+                $email = new EmailSend();
+                $toMail = $user->email;
+                $userName = $user->firstname . " " . $user->lastname;
+                $password = $order->password;
+                $picking = PickingPoint::find()->where("pickingId=" . $order->pickingId)->one();
+                $location = $picking->title;
+                $email->mailSendPassword($toMail, $userName, $password, $location);
+            }
+        }
     }
 
 }

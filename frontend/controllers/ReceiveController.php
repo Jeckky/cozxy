@@ -304,7 +304,7 @@ class ReceiveController extends MasterController {
         $flag = false;
         $otp = rand('000000', '999999');
         while ($flag == false) {
-            $order = Order::find()->where("otp='" . $otp . "' and status=100")->one(); //Gen OTP จนกว่าจะได้เลขไม่ซ้ำ
+            $order = Order::find()->where("otp='" . $otp . "' and status!=16")->one(); //Gen OTP จนกว่าจะได้เลขไม่ซ้ำ
             if (isset($order) && !empty($order)) {
                 $otp = rand('000000', '999999');
             } else {
