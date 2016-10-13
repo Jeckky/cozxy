@@ -107,16 +107,17 @@ Pjax::begin(['id' => 'employee-grid-view']);
 </div>
 <?php Pjax::end(); ?>
 <script>
+
     function show(id)
     {
-        // alert(id);
+        //alert(id);
         $('#all' + id).show();
         $('#notAll' + id).show();
 
     }
     function hide(id)
     {
-        // alert(id);
+        //alert(id);
         $('#all' + id).hide();
         $('#notAll' + id).hide();
 

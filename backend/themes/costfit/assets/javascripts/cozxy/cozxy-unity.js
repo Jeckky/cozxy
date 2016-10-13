@@ -110,3 +110,18 @@ function saveModal(url)
 }
 
 
+function show(id)
+{
+    //alert(id);
+    $('#all' + id).show();
+    $('#notAll' + id).show();
+
+}
+function hide(id)
+{
+    //alert(id);
+    $('#all' + id).hide();
+    $('#notAll' + id).hide();
+
+}
+
