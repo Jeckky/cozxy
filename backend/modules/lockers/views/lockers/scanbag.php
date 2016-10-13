@@ -47,16 +47,35 @@ if (isset($listPointItems)) {
                 ]);
                 ?>
                 <div class="panel-heading">
-                    <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> Scan Qr Code <?php echo isset($bagNo) ? 'ปิดช่องล็อคเกอร์.' : 'ถุงใส่ช่องล็อคเกอร์.' ?></span>
+                    <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> Scan Qr Code <?php echo isset($bagNo) ? 'ช่องล็อคเกอร์.' : 'ถุงใส่ช่องล็อคเกอร์.' ?></span>
                 </div>
                 <div class="panel-body ">
                     <div class="col-sm-12">
                         <?php if ($bagNo != '') { ?>
                             <input type="text" name="channels" autofocus="true" id="channels" class="form-control" placeholder="Search or Scan Qr code">
-                            <div id="character-limit-input-label" class="limiter-label form-group-margin">หมายเหตุ : <span class="limiter-count">Scan Qr Code Channels.</span></div>
+                            <div id="character-limit-input-label" class="limiter-label form-group-margin">หมายเหตุ :
+                                <span class="limiter-count">
+                                    <?php
+                                    if (isset($c)) {
+                                        echo '<span class="text-danger">ไม่พบ Scan Qr Code Channels. ลองใหม่อีกครั้ง</span>';
+                                    } else {
+                                        echo 'Scan Qr Code Channels.';
+                                    }
+                                    ?>
+                                </span>
+                            </div>
                         <?php } else { ?>
                             <input type="text" name="bagNo" autofocus="true" id="bagNo" class="form-control" placeholder="Search or Scan Qr code">
-                            <div id="character-limit-input-label" class="limiter-label form-group-margin">หมายเหตุ : <span class="limiter-count">Scan Qr Code bag No.</span></div>
+                            <div id="character-limit-input-label" class="limiter-label form-group-margin">
+                                หมายเหตุ : <span class="limiter-count">
+                                    <?php
+                                    if (isset($c)) {
+                                        echo '<span class="text-danger">ไม่พบ Scan Qr Code bag No. ลองใหม่อีกครั้ง</span>';
+                                    } else {
+                                        echo 'Scan Qr Code bag No.';
+                                    }
+                                    ?></span>
+                            </div>
                         <?php } ?>
 
                     </div>
@@ -70,10 +89,6 @@ if (isset($listPointItems)) {
                                     });
                         ") ?>
                 <?php ActiveForm::end(); ?>
-
-
-
-
             </div>
             <div class="panel colourable">
                 <div class="panel-heading">
@@ -145,7 +160,7 @@ if (isset($listPointItems)) {
             <button type="button" class="close" data-dismiss="alert">×</button>
             <strong>ไม่พบข้อมูล</strong> ชื่อช่องนี้ ลองใหม่อีกครั้ง...&nbsp; <img src="<?php echo Yii::$app->homeUrl; ?>/images/icon/default-loader.gif" height="30" >
         </div>
-        <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                           ?>">-->
+        <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                                         ?>">-->
     </div>
     <?php
 }

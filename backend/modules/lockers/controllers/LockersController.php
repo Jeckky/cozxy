@@ -169,7 +169,7 @@ class LockersController extends LockersMasterController {
         $orderId = Yii::$app->request->get('orderId');
         $model = Yii::$app->request->get('model');
         $orderNo = Yii::$app->request->get('orderNo');
-
+        $c = Yii::$app->request->get('c');
         $orderItemId = Yii::$app->request->get('orderItemId');
         $bagNo = Yii::$app->request->get('bagNo');
         $pickingItemsId = Yii::$app->request->get('pickingItemsId');
@@ -192,16 +192,23 @@ class LockersController extends LockersMasterController {
             //echo '<pre>';
             //print_r($queryOrderItemPackingId);
             // exit();
+            //echo count($queryOrderItemPackingId);
+            //exit();
+            if (count($queryOrderItemPackingId) == 0) {
+
+                //return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?pickingItemsId=28&boxcode=10&model=1&code=Channels-00010&orderId=119');
+                return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?pickingItemsId=' . $pickingItemsId . '&boxcode=' . $boxcode . '&model=' . $model . '&code=' . $channel . '&orderId=' . $orderId . '&c=e');
+            }
             $orderItemPackingId = $queryOrderItemPackingId->orderItemPackingId;
             $query = \common\models\costfit\OrderItemPacking::find()
-                    ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId,order_item_packing.bagNo,order_item_packing.status')
+                    ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, order_item_packing.status')
                     ->joinWith(['orderItems'])
                     ->where("order_item.orderId = '" . $orderId . "' and order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "' ");
         } else if ($channels != '') {
             // OrderItemPacking  มากกว่า 1 รายการ
 
             $countBag = \common\models\costfit\OrderItemPacking::find()
-                            ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId,order_item_packing.bagNo,order_item_packing.status')
+                            ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, order_item_packing.status')
                             ->joinWith(['orderItems'])
                             ->where("order_item.orderId = '" . $orderId . "' and order_item_packing.status = 5")->count();
 
@@ -210,25 +217,55 @@ class LockersController extends LockersMasterController {
             // echo $OrderItemPacking->orderItemId;
             // exit();
             if ($countBag > 1) {
-                \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $listPointItems->pickingItemsId], ['orderItemPackingId' => $orderItemPackingId]);
-                \common\models\costfit\OrderItem::updateAll(['status' => 14], ['orderItemId' => $OrderItemPacking->orderItemId]);
-                //$Order = \common\models\costfit\OrderItem::find()->where("orderItemId = '" . $OrderItemPacking->orderItemId . "' ")->one();
-                \common\models\costfit\Order::updateAll(['status' => 14], ['orderId' => $orderId]);
-                return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?pickingItemsId=' . $pickingItemsId . '&boxcode=' . $boxcode . '&model=' . $model . '&code=' . $channels . '&orderId=' . $orderId . '');
+                $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channels . "' and pickingItemsId  = '" . $pickingItemsId . "' ")->one();
+                if (count($listPointItems) > 0) {
+                    \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $listPointItems->pickingItemsId], ['orderItemPackingId' => $orderItemPackingId]);
+                    \common\models\costfit\OrderItem::updateAll(['status' => 14], ['orderItemId' => $OrderItemPacking->orderItemId]);
+                    //$Order = \common\models\costfit\OrderItem::find()->where("orderItemId = '" . $OrderItemPacking->orderItemId . "' ")->one();
+                    \common\models\costfit\Order::updateAll(['status' => 14], ['orderId' => $orderId]);
+                    return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?pickingItemsId=' . $pickingItemsId . '&boxcode=' . $boxcode . '&model=' . $model . '&code=' . $channels . '&orderId=' . $orderId . '');
+                } else {
+                    //return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?model=' . $model . '&code=' . $channels . '&boxcode=' . $boxcode . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId . '&bagNo=' . $bagNo . '');
+                    echo '/scan-bag?model=1&code=Channels-0006&boxcode=10&pickingItemsId=24&orderId=119&orderItemPackingId=&bagNo=BG20161013-0000017';
+                    // scan-bag?model=1&code=Channels-0006&boxcode=10&pickingItemsId=24&orderId=119&orderItemPackingId=&bagNo=BG20161013-0000017
+                    //return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?pickingItemsId=' . $pickingItemsId . '&boxcode=' . $boxcode . '&model=' . $model . '&code=' . $channel . '&orderId=' . $orderId . '&c=e');
+                    exit();
+                }
             } else if ($countBag == 1) {
-
-                \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $listPointItems->pickingItemsId], ['orderItemPackingId' => $orderItemPackingId]);
-                \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderId' => $orderId]);
-                //$Order = \common\models\costfit\OrderItem::find()->where("orderItemId = '" . $OrderItemPacking->orderItemId . "' ")->one();
-                \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $orderId]);
-//ส่ง Email
-                $this->generatePassword($orderId);
-                $this->sendEmail($orderId);
-                //return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $boxcode);
-                return $this->render('location', [
-                            'warning' => 'roundone',
-                            'boxcode' => $boxcode,
-                ]);
+                $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channels . "' and pickingItemsId  = '" . $pickingItemsId . "' ")->one();
+                if (count($listPointItems) > 0) {
+                    \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $listPointItems->pickingItemsId], ['orderItemPackingId' => $orderItemPackingId]);
+                    \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderId' => $orderId]);
+                    //$Order = \common\models\costfit\OrderItem::find()->where("orderItemId = '" . $OrderItemPacking->orderItemId . "' ")->one();
+                    \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $orderId]);
+                    //ส่ง Email
+                    $this->generatePassword($orderId);
+                    $this->sendEmail($orderId);
+                    //return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode = ' . $boxcode);
+                    return $this->render('location', [
+                                'warning' => 'roundone',
+                                'boxcode' => $boxcode,
+                    ]);
+                } else {
+                    //echo '/scan-bag?model=1&code=Channels-0006&boxcode=10&pickingItemsId=24&orderId=119&orderItemPackingId=' . $orderItemPackingId . '&bagNo=' . $bagNo;
+                    //echo '<br>' . $OrderItemPacking->bagNo;
+                    //exit();
+                    //echo '<br>';
+                    //return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?model=' . $model . '&code=' . $channels . '&boxcode=' . $boxcode . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId . '&bagNo=' . $bagNo . '');
+                    //return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?model = ' . $model . '&code = ' . $channels . '&boxcode = ' . $boxcode . '&pickingItemsId = ' . $pickingItemsId . '&orderId = ' . $orderId . '&orderItemPackingId = ' . $orderItemPackingId . '&bagNo = ' . $bagNo . '');
+                    //return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?pickingItemsId = ' . $pickingItemsId . '&boxcode = ' . $boxcode . '&model = ' . $model . '&code = ' . $channel . '&orderId = ' . $orderId . '&c = b');
+                    return $this->render('location', [
+                                'warning' => 'bagerror',
+                                'model' => $model,
+                                'code' => $channel,
+                                'boxcode' => $boxcode,
+                                'pickingItemsId' => $pickingItemsId,
+                                'orderId' => $orderId,
+                                'orderItemPackingId' => $orderItemPackingId,
+                                'bagNo' => $OrderItemPacking->bagNo,
+                    ]);
+                    exit();
+                }
             } else {
 
             }
@@ -256,7 +293,8 @@ class LockersController extends LockersMasterController {
                     'pickingItemsId' => $pickingItemsId,
                     'bagNo' => $bagNo,
                     'orderId' => $orderId,
-                    'orderItemPackingId' => $orderItemPackingId
+                    'orderItemPackingId' => $orderItemPackingId,
+                    'c' => $c
         ]);
         //}
     }
@@ -272,7 +310,15 @@ class LockersController extends LockersMasterController {
                 $flag = true;
                 $orders = Order::find()->where("orderId=" . $orderId)->one();
                 $orders->password = $password;
-                $orders->updateDateTime = new \yii\db\Expression('NOW()');
+                $orders->updateDateTime = new \yii\db\Expression('NOW()
+
+
+
+
+
+
+
+                    ');
                 $orders->save(false);
             }
         }
