@@ -48,7 +48,9 @@ if (isset($listPointItems)) {
                 ?>
                 <div class="panel-heading">
                     <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> Scan Qr Code <?php echo isset($bagNo) ? 'ช่องล็อคเกอร์.' : 'ถุงใส่ช่องล็อคเกอร์.' ?></span>
+
                 </div>
+
                 <div class="panel-body ">
                     <div class="col-sm-12">
                         <?php if ($bagNo != '') { ?>
@@ -89,6 +91,9 @@ if (isset($listPointItems)) {
                                     });
                         ") ?>
                 <?php ActiveForm::end(); ?>
+            </div>
+            <div class="panel-body">
+                <a href="lockers?boxcode=<?php echo $boxcode; ?>" class="btn btn-primary btn-rounded">ต้องการเปลียนช่องของ Lockers</a>
             </div>
             <div class="panel colourable">
                 <div class="panel-heading">
@@ -160,7 +165,7 @@ if (isset($listPointItems)) {
             <button type="button" class="close" data-dismiss="alert">×</button>
             <strong>ไม่พบข้อมูล</strong> ชื่อช่องนี้ ลองใหม่อีกครั้ง...&nbsp; <img src="<?php echo Yii::$app->homeUrl; ?>/images/icon/default-loader.gif" height="30" >
         </div>
-        <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                                         ?>">-->
+        <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                                                         ?>">-->
     </div>
     <?php
 }

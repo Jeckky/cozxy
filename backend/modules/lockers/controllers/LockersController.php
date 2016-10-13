@@ -225,11 +225,16 @@ class LockersController extends LockersMasterController {
                     \common\models\costfit\Order::updateAll(['status' => 14], ['orderId' => $orderId]);
                     return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?pickingItemsId=' . $pickingItemsId . '&boxcode=' . $boxcode . '&model=' . $model . '&code=' . $channels . '&orderId=' . $orderId . '');
                 } else {
-                    //return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?model=' . $model . '&code=' . $channels . '&boxcode=' . $boxcode . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId . '&bagNo=' . $bagNo . '');
-                    echo '/scan-bag?model=1&code=Channels-0006&boxcode=10&pickingItemsId=24&orderId=119&orderItemPackingId=&bagNo=BG20161013-0000017';
-                    // scan-bag?model=1&code=Channels-0006&boxcode=10&pickingItemsId=24&orderId=119&orderItemPackingId=&bagNo=BG20161013-0000017
-                    //return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?pickingItemsId=' . $pickingItemsId . '&boxcode=' . $boxcode . '&model=' . $model . '&code=' . $channel . '&orderId=' . $orderId . '&c=e');
-                    exit();
+                    return $this->render('location', [
+                                'warning' => 'bagerror',
+                                'model' => $model,
+                                'code' => $channel,
+                                'boxcode' => $boxcode,
+                                'pickingItemsId' => $pickingItemsId,
+                                'orderId' => $orderId,
+                                'orderItemPackingId' => $orderItemPackingId,
+                                'bagNo' => $OrderItemPacking->bagNo,
+                    ]);
                 }
             } else if ($countBag == 1) {
                 $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channels . "' and pickingItemsId  = '" . $pickingItemsId . "' ")->one();
@@ -264,7 +269,7 @@ class LockersController extends LockersMasterController {
                                 'orderItemPackingId' => $orderItemPackingId,
                                 'bagNo' => $OrderItemPacking->bagNo,
                     ]);
-                    exit();
+                    // exit();
                 }
             } else {
 
