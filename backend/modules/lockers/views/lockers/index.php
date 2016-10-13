@@ -12,14 +12,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <h1>Lockers/Picking Points</h1>
 
-<div class="panel">
+<div class="panel   panel-success">
     <?php
     $form = ActiveForm::begin([
                 'method' => 'POST',
                 'action' => ['lockers/index'],
     ]);
     ?>
-    <div class="panel-heading">
+    <div class="panel-heading ">
         <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> Scan Qr code Order No :</span>
     </div>
     <div class="panel-body ">

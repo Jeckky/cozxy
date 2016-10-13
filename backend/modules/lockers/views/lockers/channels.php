@@ -39,7 +39,7 @@ if (isset($listPointItems)) {
             </div>
         </div>
         <div class="order-index col-md-12">
-            <div class="panel colourable">
+            <div class="panel colourable panel-success">
 
                 <?php
                 $form = ActiveForm::begin([

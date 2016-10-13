@@ -38,7 +38,7 @@ if (isset($listPointItems)) {
             </div>
         </div>
         <div class="order-index col-md-12">
-            <div class="panel colourable">
+            <div class="panel colourable panel-success">
 
                 <?php
                 $form = ActiveForm::begin([
@@ -165,7 +165,7 @@ if (isset($listPointItems)) {
             <button type="button" class="close" data-dismiss="alert">×</button>
             <strong>ไม่พบข้อมูล</strong> ชื่อช่องนี้ ลองใหม่อีกครั้ง...&nbsp; <img src="<?php echo Yii::$app->homeUrl; ?>/images/icon/default-loader.gif" height="30" >
         </div>
-        <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                                                         ?>">-->
+        <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                                                          ?>">-->
     </div>
     <?php
 }
