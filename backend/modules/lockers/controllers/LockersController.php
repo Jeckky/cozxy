@@ -93,7 +93,7 @@ class LockersController extends LockersMasterController {
                 $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
                 $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
                 $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
-                $duplicate = $result = OrderItemPacking::find()->where("pickingItemsId  =" . $listPointItems->pickingItemsId . ' and status < 8  ')->one();
+                $duplicate = OrderItemPacking::find()->where("pickingItemsId  =" . $listPointItems->pickingItemsId . ' and status < 8  ')->one();
 
                 if (count($duplicate) > 0) {
                     return $this->render('location', [
