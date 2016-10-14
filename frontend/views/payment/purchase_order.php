@@ -78,9 +78,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <td style="font-size: 12px;"><?php echo isset($value->product->code) ? $value->product->code : '-'; ?></td>
                     <td style="font-size: 12px;"><?php echo isset($value->product->title) ? $value->product->title : ''; ?></td>
                     <td style="font-size: 12px;"><?php echo isset($value->product->units) ? $value->product->units->title : ''; ?></td>
-                    <td style="font-size: 12px; text-align: right;"><?php echo isset($value->price) ? $value->price : ''; ?></td>
+                    <td style="font-size: 12px; text-align: right;"><?php echo isset($value->price) ? number_format($value->price) : ''; ?></td>
                     <td style="font-size: 12px; text-align: right;"><?php echo isset($value->quantity) ? $value->quantity : '' ?></td>
-                    <td style="font-size: 12px; text-align: right;"><?php echo isset($value->total) ? $value->total : ''; ?></td>
+                    <td style="font-size: 12px; text-align: right;"><?php echo isset($value->total) ? number_format($value->total) : ''; ?></td>
                 </tr>
                 <?php
                 $i = $i++;
@@ -99,15 +99,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </tr>
         <tr>
             <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้าไม่รวมภาษี/Sub Total exclude VAT :</td>
-            <td class="bg-purchase-order"><?php echo $order->totalExVat; ?></td>
+            <td class="bg-purchase-order"><?php echo number_format($order->totalExVat); ?></td>
         </tr>
         <tr>
             <td colspan="6" class="text-right" class="foorter-purchase-order">ภาษีมูลค่าเพิ่ม/VAT 7 % :</td>
-            <td class="bg-purchase-order"><?php echo $order->vat; ?></td>
+            <td class="bg-purchase-order"><?php echo number_format($order->vat); ?></td>
         </tr>
         <tr>
             <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้ารวมภาษีมูลค่าเพิ่ม / sub Total Include VAT :</td>
-            <td class="bg-purchase-order"><?php echo $order->total; ?></td>
+            <td class="bg-purchase-order"><?php echo number_format($order->total); ?></td>
         </tr>
         <!--
         <tr>
@@ -117,7 +117,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         -->
         <tr >
             <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้าที่ต้องชำระเงินรวมภาษีมูลค่าเพิ่ม/Total Include VAT :</td>
-            <td class="bg-purchase-order"><?php echo $order->summary; ?></td>
+            <td class="bg-purchase-order"><?php echo number_format($order->summary); ?></td>
         </tr>
 
     </tbody>

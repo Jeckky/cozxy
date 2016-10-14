@@ -52,7 +52,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         if (!isset($model->invoiceNo) && empty($model->invoiceNo)) {
                             return 'Order No : ' . $model->orderNo . '<br><span style ="font-size: 12px;"> ยอดรวม : ' . $model->summary . ' THB</span>';
                         } else {
-                            return '<span style="font-weught:bold;">Invoice No : ' . $model->invoiceNo . '</span><br><span style ="font-size: 12px;"> ยอดรวม : ' . $model->summary . ' THB</span>';
+                            return '<span style="font-weught:bold;">Invoice No : ' . $model->invoiceNo . '</span><br><span style ="font-size: 12px;"> ยอดรวม : ' . number_format($model->summary) . ' THB</span>';
                         }
                         //or: return Html::encode($model->some_attribute)
                     } else {
