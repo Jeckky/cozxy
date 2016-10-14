@@ -19,20 +19,20 @@ echo Html::hiddenInput("access_key", $ePayment->ePaymentAccessKey);
 echo Html::hiddenInput("profile_id", $ePayment->ePaymentProfileId);
 echo Html::hiddenInput("transaction_uuid", uniqid());
 echo Html::hiddenInput("signed_field_names", "access_key,profile_id,transaction_uuid,signed_field_names,unsigned_field_names,signed_date_time,locale,transaction_type,reference_number,amount"
- . ",currency"
+        . ",currency"
 //. ", override_custom_receipt_page"
 //. ", item_0_name, item_1_name"
 );
 //Product Parameter
 $unsignedField = ""
- . "bill_to_address_city,bill_to_address_country,bill_to_address_line1,bill_to_address_postal_code"
- . ",bill_to_address_state,bill_to_email,bill_to_forename,bill_to_phone,bill_to_surname,bill_to_address_country"
- . ",device_fingerprint_id,customer_ip_address,consumer_id"
- . ",ship_to_address_city,ship_to_address_country,ship_to_address_line1,ship_to_address_postal_code"
- . ",ship_to_address_state,ship_to_forename,ship_to_phone,ship_to_surname,shipping_method"
+        . "bill_to_address_city,bill_to_address_country,bill_to_address_line1,bill_to_address_postal_code"
+        . ",bill_to_address_state,bill_to_email,bill_to_forename,bill_to_phone,bill_to_surname,bill_to_address_country"
+        . ",device_fingerprint_id,customer_ip_address,consumer_id"
+        . ",ship_to_address_city,ship_to_address_country,ship_to_address_line1,ship_to_address_postal_code"
+        . ",ship_to_address_state,ship_to_forename,ship_to_phone,ship_to_surname,shipping_method"
 //	. ", item_0_name, item_1_name"
- . ",merchant_defined_data1,merchant_defined_data2,merchant_defined_data3,merchant_defined_data4,merchant_defined_data5,merchant_defined_data6,merchant_defined_data7,merchant_defined_data8,merchant_defined_data9"
- . ",merchant_defined_data10,merchant_defined_data11,line_item_count";
+        . ",merchant_defined_data1,merchant_defined_data2,merchant_defined_data3,merchant_defined_data4,merchant_defined_data5,merchant_defined_data6,merchant_defined_data7,merchant_defined_data8,merchant_defined_data9"
+        . ",merchant_defined_data10,merchant_defined_data11,line_item_count";
 
 //throw new \yii\base\Exception(gmdate("Y-m-d\TH:i:s\Z"));
 echo Html::hiddenInput("transaction_type", "sale");
@@ -84,6 +84,7 @@ echo Html::hiddenInput("shipping_method", "other");
 echo Html::hiddenInput("customer_ip_address", Yii::$app->request->userIP);
 echo Html::hiddenInput("consumer_id", (isset($model->userId) && $model->userId > 0) ? $model->userId : 1);
 echo Html::hiddenInput("device_fingerprint_id", $session_id);
+//throw new yii\base\Exception($session_id);
 //Customer Parameter
 //
 //Merchant Parameter

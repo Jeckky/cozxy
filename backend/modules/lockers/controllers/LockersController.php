@@ -245,6 +245,7 @@ class LockersController extends LockersMasterController {
                     \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderId' => $orderId]);
                     //$Order = \common\models\costfit\OrderItem::find()->where("orderItemId = '" . $OrderItemPacking->orderItemId . "' ")->one();
                     \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $orderId]);
+                    \common\models\costfit\PickingPointItems::updateAll(['status' => 0], ['pickingItemsId' => $listPointItems->pickingItemsId]);
                     //ส่ง Email
                     $this->generatePassword($orderId);
                     $this->sendEmail($orderId);
