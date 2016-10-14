@@ -60,6 +60,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         return isset($model->citie) ? $model->citie->localName : NULL;
                     }
                 ],
+                'ip',
+                'macAddress',
+                'authCode',
                 // 'status',
                 // 'type',
                 // 'createDateTime',

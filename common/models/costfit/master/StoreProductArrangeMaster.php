@@ -12,9 +12,9 @@ use Yii;
     * @property string $productId
     * @property string $slotId
     * @property string $quantity
-    * @property integer $orderId
-    * @property integer $parentId
-    * @property integer $result
+    * @property string $orderId
+    * @property string $parentId
+    * @property string $result
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime

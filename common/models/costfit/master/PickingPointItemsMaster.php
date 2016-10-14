@@ -11,6 +11,7 @@ use Yii;
     * @property string $pickingId
     * @property string $code
     * @property string $name
+    * @property string $portIndex
     * @property string $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -34,7 +35,7 @@ return [
             [['pickingId', 'code', 'name'], 'required'],
             [['pickingId'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['code', 'name', 'status'], 'string', 'max' => 45],
+            [['code', 'name', 'portIndex', 'status'], 'string', 'max' => 45],
         ];
 }
 
@@ -48,6 +49,7 @@ return [
     'pickingId' => Yii::t('picking_point_items', 'Picking ID'),
     'code' => Yii::t('picking_point_items', 'Code'),
     'name' => Yii::t('picking_point_items', 'Name'),
+    'portIndex' => Yii::t('picking_point_items', 'Port Index'),
     'status' => Yii::t('picking_point_items', 'Status'),
     'createDateTime' => Yii::t('picking_point_items', 'Create Date Time'),
     'updateDateTime' => Yii::t('picking_point_items', 'Update Date Time'),

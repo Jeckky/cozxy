@@ -37,6 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'pickingId',
                 'code',
                 'name',
+                'portIndex',
                 ['class' => 'yii\grid\ActionColumn',
                     'header' => 'Actions',
                     'template' => '{view} {update} {delete} {items} ',

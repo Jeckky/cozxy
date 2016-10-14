@@ -71,6 +71,9 @@ use kartik\widgets\Select2;
             <?//= $form->field($model, 'createDateTime')->textInput() ?>
 
             <?//= $form->field($model, 'updateDateTime')->textInput() ?>
+            <?= $form->field($model, 'ip')->textInput(['maxlength' => 100]) ?>
+            <?= $form->field($model, 'macAddress')->textInput(['maxlength' => 100]) ?>
+            <?= $form->field($model, 'authCode')->textInput(['maxlength' => 100]) ?>
 
             <div class="form-group">
                 <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

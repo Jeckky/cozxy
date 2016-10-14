@@ -25,7 +25,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
 
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
+            <?= $form->field($model, 'portIndex')->textInput(['maxlength' => 100]) ?>
             <div class="form-group">
                 <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                 <?= Html::a('Back', ['index', 'pickingId' => $model->pickingId], ['class' => 'btn btn-warning']) ?>
