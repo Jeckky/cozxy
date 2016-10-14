@@ -59,6 +59,7 @@ class EPayment extends \common\models\costfit\master\EPaymentMaster
     const REJECT_CARD_TYPE_INVALID = 240;
     const REJECT_CUSTOMER_NOT_AUTHENTICATED = 476;
     const REJECT_PAYER_AUTHENTICATION = 475;
+    const REJECT_FROM_BANK_TEST_REVIEW_STUP = 480;
     //ERROR trans.
     const ERROR_GENERAL_SYS_ERR = 150;
     const ERROR_SRV_TIMEOUT_OCCUR = 151;
@@ -239,6 +240,9 @@ order status in the Business Center.";
                 return "250 : Error: The request was received, but a time-out occurred with the payment processor.
 Possible action: To avoid duplicating the transaction, do not resend the request until you have
 reviewed the transaction status in the Business Center.";
+                break;
+            default :
+                return $reasonCode . " ไม่มี Reason Code ใน ระบบ กรุณาตรวจสอบกับ ธนาคาร";
                 break;
         }
     }

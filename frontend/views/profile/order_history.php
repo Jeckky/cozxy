@@ -35,12 +35,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         ],
         'rowOptions' => function ($model, $index, $widget, $grid) {
 
-    if ($model->status >= \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS) {
-        return ['class' => 'alert alert success'];
-    } else {
-        return [];
-    }
-},
+            if ($model->status == \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS) {
+                return ['class' => 'alert alert-success'];
+            } elseif ($model->status == \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_PENDING) {
+                return ['class' => 'alert alert-warning'];
+            } elseif ($model->status == \common\models\costfit\Order::ORDER_STATUS_FINANCE_REJECT) {
+                return ['class' => 'alert alert-danger'];
+            }
+        },
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             // Simple columns defined by the data contained in $dataProvider.
@@ -86,7 +88,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             [
                 'attribute' => 'สถานะ',
                 'value' => function($model) {
-                    return ($model->status < \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS) ? '<span style="color: #ac2925">ยังไม่ชำระเงิน</span>' : '<span style="color: #006600">ชำระเงินแล้ว</span>';
+                    return $model->getStatusText($model->status);
                 },
                 'format' => 'raw',
             ],
@@ -98,23 +100,23 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     'Order' => function($url, $model, $baseUrl) {
                         if ($model->status < \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS) { // ชำระเงินแล้ว
                             return Html::a('ดูเพิ่มเติม', Yii::$app->homeUrl . "profile/purchase-order/" . $model->encodeParams(['orderId' => $model->orderId]), ['class' => 'btn btn-primary btn-xs'], [
-                                        'title' => Yii::t('app', ' '),]);
+                                'title' => Yii::t('app', ' '),]);
                         } else {
                             return Html::a('<i class="fa fa-print" aria-hidden="true"></i> ดูเพิ่มเติม', Yii::$app->homeUrl . "payment/print-receipt/" . $model->encodeParams(['orderId' => $model->orderId]) . '/' . $model->orderNo, ['class' => 'btn btn-black btn-xs', 'target' => '_blank'
-                                        , 'title' => Yii::t('app', ' ')]);
+                                , 'title' => Yii::t('app', ' ')]);
                         }
                     },
-                        ]
-                    ],
-                ], 'layout' => "{pager}\n{items}\n",
-                    /* 'pager' => [
-                      'firstPageLabel' => 'first',
-                      'lastPageLabel' => 'last',
-                      'nextPageLabel' => 'next',
-                      'prevPageLabel' => 'previous',
-                      'maxButtonCount' => 3,
-                      ], */
-            ]);
-            ?>
+                ]
+            ],
+        ], 'layout' => "{pager}\n{items}\n",
+    /* 'pager' => [
+      'firstPageLabel' => 'first',
+      'lastPageLabel' => 'last',
+      'nextPageLabel' => 'next',
+      'prevPageLabel' => 'previous',
+      'maxButtonCount' => 3,
+      ], */
+    ]);
+    ?>
 </div>
 
