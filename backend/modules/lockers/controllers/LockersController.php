@@ -18,6 +18,8 @@ class LockersController extends LockersMasterController {
 
     public function actionIndex() {
 
+
+
         $codes = Yii::$app->request->post('codes');
         if ($codes != '') {
             $query = \common\models\costfit\PickingPoint::find()->where("code = '" . $codes . "'")->one();
@@ -36,7 +38,7 @@ class LockersController extends LockersMasterController {
             $codes = 'no';
             $data = '';
         }
-
+        // PickingPoint::openAllChannel($ip, $portIndexs, $macAddress) เรียกเปิดทุกช่อง
         return $this->render('index', ['txt' => $txt, 'codes' => $codes, 'data' => $data]);
     }
 

@@ -132,4 +132,19 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
         }
     }
 
+    /**
+     * @inheritdoc
+     * receive ip address , array of portIndex , MacAddress if have
+     * return bool open status
+     */
+    public static function openAllChannel($ip, $portIndexs, $macAddress = NULL) {
+        // port
+        return TRUE;
+    }
+
+    public static function openChannel($ip, $portIndex, $macAddress = NULL) {
+        // port
+        return TRUE;
+    }
+
 }
