@@ -232,7 +232,7 @@ class StoreProductController extends StoreMasterController {
         if (isset($_POST["StoreProduct"]['isbn'])) {
 
             $product = \common\models\costfit\Product::find()->select("product.*,sp.*")->where("isbn ='" . $_POST["StoreProduct"]['isbn'] . "'")
-                    ->join("LEFT JOIN", 'store_product sp', 'product.productId=sp.productId and sp.status=3')
+                    ->join("LEFT JOIN", 'store_product sp', 'product.productId=sp.productId and (sp.status=3)')
                     ->orderBy('sp.createDateTime ASC')
                     ->one();
             // throw new \yii\base\Exception(print_r($product->attributes, true));

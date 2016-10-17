@@ -171,6 +171,7 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
                     $storeProduct->status = 4;
                     $model->updateDateTime = new \yii\db\Expression('NOW()');
                     $model->quantity = $quantity;
+                    $model->result = $quantity;
                 }
             }
         } else {//มีของอยู่แล้ว เอามาใส่เพิ่ม
