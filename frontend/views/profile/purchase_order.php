@@ -118,8 +118,10 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         <a href="<?php echo Yii::$app->homeUrl; ?>profile/transfer-confirm/<?php echo $orderIdParams; ?>" class="btn btn-primary btn-xs" target="_blank">
                             <i class="fa fa-check" aria-hidden="true"></i> แจ้งชำระเงิน</a>
                         -->
-                        <a href="<?php echo Yii::$app->homeUrl; ?>checkout/confirm-checkout/<?php echo $orderIdParams; ?>" class="btn btn-primary btn-xs" target="_blank">
-                            <i class="fa fa-dollar" aria-hidden="true"></i> ชำระอีกครั้ง</a>
+                        <?php if ($order->status != \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_PENDING): ?>
+                            <a href="<?php echo Yii::$app->homeUrl; ?>checkout/confirm-checkout/<?php echo $orderIdParams; ?>" class="btn btn-primary btn-xs" target="_blank">
+                                <i class="fa fa-dollar" aria-hidden="true"></i> ชำระอีกครั้ง</a>
+                        <?php endif; ?>
                     <?php else: ?>
                         <?php if (Yii::$app->controller->id != 'checkout'): ?>
                             <a href="<?php echo Yii::$app->homeUrl; ?>order/order/print-purchase-order/<?php echo $orderIdParams; ?>/<?php echo $order->orderNo; ?>" class="btn btn-primary btn-xs" target="_blank">

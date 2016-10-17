@@ -80,7 +80,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                 </a>
             </div>
             <div class="col-lg-2">
-                <a href="<?= Yii::$app->homeUrl . "picking-point/virtual" ?>" class="btn btn-lg btn-warning text-left" style="font-size: 14px;width: 100%;text-align: left">
+                <a href="<?= Yii::$app->homeUrl . "picking/picking/virtual" ?>" class="btn btn-lg btn-warning text-left" style="font-size: 14px;width: 100%;text-align: left">
                     <p><i class="fa fa-archive" style="font-size:30px;"></i>
                         <span class="pull-right" style="font-size: 14px;font-weight: bold">Virtual PP</span><br>
                         <!--<span class="pull-right" style="font-size: 7px;font-weight: bold;margin-top: -15px">Picking Point</span><br>-->

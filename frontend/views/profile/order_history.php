@@ -98,7 +98,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 'template' => ' {Order} ',
                 'buttons' => [
                     'Order' => function($url, $model, $baseUrl) {
-                        if ($model->status < \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS) { // ชำระเงินแล้ว
+                        if ($model->status < \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS || $model->status == \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_PENDING) { // ชำระเงินแล้ว
                             return Html::a('ดูเพิ่มเติม', Yii::$app->homeUrl . "profile/purchase-order/" . $model->encodeParams(['orderId' => $model->orderId]), ['class' => 'btn btn-primary btn-xs'], [
                                 'title' => Yii::t('app', ' '),]);
                         } else {
