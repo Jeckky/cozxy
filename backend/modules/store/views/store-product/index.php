@@ -52,6 +52,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             return isset($model->product) ? $model->product->title : NULL;
                         }
                     ],
+                    'isbn',
                     'paletNo',
                     'quantity',
                     [
