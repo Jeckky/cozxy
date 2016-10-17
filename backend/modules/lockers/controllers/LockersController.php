@@ -319,15 +319,7 @@ class LockersController extends LockersMasterController {
                 $flag = true;
                 $orders = Order::find()->where("orderId=" . $orderId)->one();
                 $orders->password = $password;
-                $orders->updateDateTime = new \yii\db\Expression('NOW()
-
-
-
-
-
-
-
-                    ');
+                $orders->updateDateTime = new \yii\db\Expression('NOW()  ');
                 $orders->save(false);
             }
         }
