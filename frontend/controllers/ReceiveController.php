@@ -213,7 +213,7 @@ class ReceiveController extends MasterController {
 
                                     if ($flag == true) {
                                         $total = count(\common\models\costfit\OrderItemPacking::find()->where("pickingItemsId=" . $pickingLocker->pickingItemsId)->all());
-                                        $allLocker = $allLocker . $pickingLocker->name . " จำนวน " . $total . " ถุง" . "<br>";
+                                        $allLocker = "ช่อง " . $allLocker . $pickingLocker->name . " จำนวน " . $total . " ถุง" . "<br>";
                                     }
                                     $i++;
                                 }
