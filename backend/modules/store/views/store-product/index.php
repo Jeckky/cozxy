@@ -52,7 +52,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             return isset($model->product) ? $model->product->title : NULL;
                         }
                     ],
-                    'isbn',
+                    ['attribute' => 'isbn',
+                        'value' => function($model) {
+                            return isset($model->isbn) ? $model->isbn : NULL;
+                        }],
                     'paletNo',
                     'quantity',
                     [

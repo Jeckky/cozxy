@@ -96,6 +96,13 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
         return $this->hasOne(Store::className(), ['storeId' => 'storeId']);
     }
 
+    public function getIsbn() {
+        $products = Product::find()->where("productId=" . $this->productId)->one();
+        if (isset($products) && !empty($products)) {
+            return $products->isbn;
+        }
+    }
+
     public function getProducts() {
         return $this->hasOne(Product::className(), ['productId' => 'productId']);
     }
