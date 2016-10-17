@@ -230,12 +230,14 @@ class StoreProductController extends StoreMasterController {
     public function actionArrange() {
 
         if (isset($_POST["StoreProduct"]['isbn'])) {
+
             $product = \common\models\costfit\Product::find()->select("product.*,sp.*")->where("isbn ='" . $_POST["StoreProduct"]['isbn'] . "'")
                     ->join("LEFT JOIN", 'store_product sp', 'product.productId=sp.productId and sp.status=3')
                     ->orderBy('sp.createDateTime ASC')
                     ->one();
             // throw new \yii\base\Exception(print_r($product->attributes, true));
             if (isset($product->productId)) {
+                //throw new \yii\base\Exception($_POST["StoreProduct"]['isbn']);
                 return $this->render('arrange', ['model' => $product]);
             } else {
                 $ms = ' Imported products not found.';
@@ -244,7 +246,7 @@ class StoreProductController extends StoreMasterController {
         }
 
         if (isset($_POST['quantity']) && isset($_POST['slot'])) {
-            //throw new \yii\base\Exception($_POST['slot']);
+
             $slot = \common\models\costfit\StoreSlot::find()->where("barcode='" . $_POST["slot"] . "'")->one();
             //throw new \yii\base\Exception(print_r($slot, true));
             // StoreProduct::arrangeProductToSlot($product->storeProductId, $slot->slotId, $_POST['quantity']);

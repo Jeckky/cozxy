@@ -11,7 +11,7 @@ $form = yii\bootstrap\ActiveForm::begin([
 ?>
 
 <div class="panel-heading">
-    <span class="panel-title">ค้นหาสินค้าเพื่อจัดเรียง</span>
+    <span class="panel-title">สแกนสินค้าเพื่อจัดเรียง</span>
 </div>
 
 <div class="panel-body">
