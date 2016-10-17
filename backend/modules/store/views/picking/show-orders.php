@@ -27,7 +27,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <?=
                     Html::a('<i class="fa fa-print" aria-hidden="true"></i> Print Order', ['print-order',
                         'order' => $allOrderId
-                    ], ['class' => 'btn btn-sm btn-success', 'target' => '_blank']);
+                            ], ['class' => 'btn btn-sm btn-success', 'target' => '_blank']);
                     ?>
                 </div>
             </div>
@@ -36,8 +36,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
     <div class="panel-body">
         <?php
         $form = ActiveForm::begin([
-            'method' => 'GET',
-            'action' => ['picking/index'],
+                    'method' => 'GET',
+                    'action' => ['picking/index'],
         ]);
         foreach ($selection as $select):
             echo '<input type="hidden" name="selection[]" value="' . $select . '">';
@@ -94,19 +94,19 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         <td><?php echo Order::findOrderNo($item->orderId); ?></td>
                                         <td><?=
                                             ($item->status != 5) ?
-                                            Html::a('<i aria-hidden="true"></i> หยิบ', ['pick-item',
-                                                'orderId' => $item->orderId,
-                                                'orderItemId' => $item->orderItemId,
-                                                'productId' => $item->productId,
-                                                'orderQuantity' => $item->quantity,
-                                                'slot' => $slot,
-                                                'arraySlots' => $slots,
-                                                'colorId' => $colorId,
-                                                'color' => $color,
-                                                'allOrderId' => $allOrderId,
-                                                'selection' => $selection
-                                            ], ['class' => 'btn btn-warning']) : Html::a('<i class="fa fa-check" aria-hidden="true"></i> หยิบแล้ว', ['pick-item'
-                                            ], ['class' => 'btn btn-defult', 'disabled' => true]);
+                                                    Html::a('<i aria-hidden="true"></i> หยิบ', ['pick-item',
+                                                        'orderId' => $item->orderId,
+                                                        'orderItemId' => $item->orderItemId,
+                                                        'productId' => $item->productId,
+                                                        'orderQuantity' => $item->quantity,
+                                                        'slot' => $slot,
+                                                        'arraySlots' => $slots,
+                                                        'colorId' => $colorId,
+                                                        'color' => $color,
+                                                        'allOrderId' => $allOrderId,
+                                                        'selection' => $selection
+                                                            ], ['class' => 'btn btn-warning']) : Html::a('<i class="fa fa-check" aria-hidden="true"></i> หยิบแล้ว', ['pick-item'
+                                                            ], ['class' => 'btn btn-defult', 'disabled' => true]);
                                             // throw new \yii\base\Exception($item->orderItemId);
                                             ?></td>
                                     </tr>
@@ -122,14 +122,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     <td><b><?php echo $total; ?></b></td>
                                     <td><b></b></td>
                                     <td><b></b></td>
-                                <?php } else {
-                                    ?>
-                                    <td colspan="2" class="text-right"><b>Total ( <?php echo Product::findProductName($productId->productId); ?> )</b></td>
-                                    <td><b><?php echo $total; ?></b></td>
-                                    <td><b></b></td>
-                                    <td><b></b></td>
-                                    <?php
-                                }
+                                <?php }
                                 ?>
                             </tr><?php
                         endforeach;
