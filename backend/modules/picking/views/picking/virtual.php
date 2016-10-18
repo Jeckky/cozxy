@@ -42,7 +42,7 @@ use yii\bootstrap\ActiveForm;
                         ?>
                         <tr>
                             <?php foreach ($cols as $colIndex => $col): ?>
-                                <td>
+                                <td style="width:33%">
                                     <table class="table">
                                         <?php
                                         $rows = common\models\costfit\PickingPointItems::find()
