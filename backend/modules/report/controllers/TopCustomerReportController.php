@@ -15,7 +15,7 @@ class TopCustomerReportController extends ReportMasterController
     {
 
         $model = \common\models\costfit\Order::find()->select("*,sum(summary) as sumSummary")
-        ->where("status > " . Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " AND status <>" . Order::ORDER_STATUS_FINANCE_APPROVE)
+        ->where("status >= " . Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " AND status <>" . Order::ORDER_STATUS_FINANCE_REJECT)
         ->orderBy("sumSummary DESC")
         ->groupBy("userId");
         $filterArray[] = 'and';
