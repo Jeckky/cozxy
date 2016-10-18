@@ -71,7 +71,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 // 'token:ntext',
                 // 'type',
                 // 'auth_key:ntext',
-                'auth_type',
+                ['attribute' => 'auth_type',
+                    'value' => function($model) {
+                        return isset($model->auth_type) ? $model->auth_type : "web";
+                    }],
                 ['attribute' => 'status',
                     'value' => function($model) {
                         return $model->getStatusText($model->status);
@@ -86,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             return Html::a('<span class="btn btn-xs btn-danger" style="margin-left: 5px;
             " >Delete</span>', '../user/delete?id=' . $model->userId, ['data-confirm' => 'Are you sure?']);
                         },
-                                'block' => function ($url, $model) {
+                        'block' => function ($url, $model) {
                             if ($model->status != 99) {
                                 return Html::a('<span class="btn btn-xs btn-warning" style="margin-left: 5px;
             " >Block</span>', '../user/block?id=' . $model->userId);
@@ -95,14 +98,14 @@ $this->params['breadcrumbs'][] = $this->title;
             " >Unblock</span>', '../user/un-block?id=' . $model->userId);
                             }
                         },
-                                'update' => function ($url, $model) {
+                        'update' => function ($url, $model) {
                             return Html::a('<span class="btn btn-xs btn-success" style="margin-left: 5px;
             " >Edit</span>', 'user/update?id=' . $model->userId);
                         },
-                            ],
-                        ],
                     ],
-                ]);
-                ?>
+                ],
+            ],
+        ]);
+        ?>
     </div>
 </div>
