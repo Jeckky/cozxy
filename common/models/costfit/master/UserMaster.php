@@ -19,6 +19,8 @@ use Yii;
     * @property string $auth_key
     * @property string $auth_type
     * @property string $birthDate
+    * @property integer $gender
+    * @property string $tel
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -44,10 +46,11 @@ public function rules()
 return [
             [['username', 'createDateTime'], 'required'],
             [['password_hash', 'token', 'auth_key'], 'string'],
-            [['type', 'status'], 'integer'],
+            [['type', 'gender', 'status'], 'integer'],
             [['birthDate', 'createDateTime', 'updateDateTime'], 'safe'],
             [['username', 'firstname', 'password', 'lastname', 'email'], 'string', 'max' => 200],
             [['auth_type'], 'string', 'max' => 255],
+            [['tel'], 'string', 'max' => 20],
         ];
 }
 
@@ -69,6 +72,8 @@ return [
     'auth_key' => Yii::t('user', 'Auth Key'),
     'auth_type' => Yii::t('user', 'Auth Type'),
     'birthDate' => Yii::t('user', 'Birth Date'),
+    'gender' => Yii::t('user', 'Gender'),
+    'tel' => Yii::t('user', 'Tel'),
     'status' => Yii::t('user', 'Status'),
     'createDateTime' => Yii::t('user', 'Create Date Time'),
     'updateDateTime' => Yii::t('user', 'Update Date Time'),

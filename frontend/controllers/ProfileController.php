@@ -208,6 +208,7 @@ class ProfileController extends MasterController {
         $this->subSubTitle = "Contact Information";
 
         $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
+        $model->scenario = 'editinfo';
         if (isset($_POST["User"])) {
             $model->attributes = $_POST['User'];
 
