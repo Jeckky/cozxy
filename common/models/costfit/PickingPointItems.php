@@ -68,4 +68,35 @@ class PickingPointItems extends \common\models\costfit\master\PickingPointItemsM
         return $result;
     }
 
+    public static function OrderId($pickingItemId) {
+        $orderItemPacking = OrderItemPacking::find()->where("pickingItemsId=" . $pickingItemId . " and status=7")->one();
+        if (isset($orderItemPacking) && !empty($orderItemPacking)) {
+            $orderItem = OrderItem::find()->where("orderItemId=" . $orderItemPacking->orderItemId)->one();
+            if (isset($orderItem) && !empty($orderItem)) {
+                $order = Order::find()->where("orderId=" . $orderItem->orderId)->one();
+                if (isset($order) && !empty($order)) {
+                    return $order->orderNo;
+                } else {
+                    return '';
+                }
+            } else {
+                return '';
+            }
+        } else {
+            return '';
+        }
+    }
+
+    public static function bagNo($pickingItemId) {
+        $bagNo = '';
+        $orderItemPacking = OrderItemPacking::find()->where("pickingItemsId=" . $pickingItemId . " and status=7")->all(); //เชค สถานะนำจ่าย(ลูกค้ายังไม่รับของ)
+        if (isset($orderItemPacking) && !empty($orderItemPacking)) {
+            foreach ($orderItemPacking as $item):
+                $bagNo = $bagNo . $item->bagNo . ", ";
+            endforeach;
+            $bagNo = substr($bagNo, 0, -2);
+        }
+        return $bagNo;
+    }
+
 }

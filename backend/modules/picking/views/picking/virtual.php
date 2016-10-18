@@ -68,7 +68,14 @@ use yii\bootstrap\ActiveForm;
                                                     <?php if ($colIndex == 1 && $rowIndex == 1): ?>
                                                         <span style="font-size: 20px;font-weight: bold"><?= "Controller" ?></span>
                                                     <?php else: ?>
-                                                        <?= $row->name; ?>
+                                                        <h4><?= $row->name; ?></h4>
+                                                        <?php
+                                                        $items = common\models\costfit\PickingPointItems::OrderId($row->pickingItemsId);
+                                                        $bagNo = common\models\costfit\PickingPointItems::bagNo($row->pickingItemsId);
+                                                        if ($items != '' && $bagNo != '') {
+                                                            echo '<h4>OrderNo : ' . $items . '<br><br>BagNo : ' . $bagNo . '</h4>';
+                                                        }
+                                                        ?>
                                                     <?php endif; ?>
                                                 </td>
                                             </tr>
