@@ -33,18 +33,21 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
         <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup">
             <p class="col-lg-6 col-md-6 col-sm-6 text-left" style="padding-left: 0px;">Contact Information</p>
             <p class="col-lg-6 col-md-6 col-sm-6 text-right">
-                <span class="profile-title"><a href="<?php echo Yii::$app->homeUrl ?>profile/edit-info">Edit</a></span>
+                <span class="profile-title"><a href="<?php echo Yii::$app->homeUrl ?>profile/edit-info" class="btn btn-black">Edit</a></span>
             </p>
-            <p>Name : <?php echo Yii::$app->user->identity->firstname . '&nbsp;' . Yii::$app->user->identity->lastname ?></p>
-            <p>Email : <?php echo Yii::$app->user->identity->email; ?></p>
+            <p>Name : <?php echo (isset($model->firstname) && isset($model->lastname)) ? $model->firstname . '&nbsp;' . $model->lastname : "<span style='color:red'>Please update you name</span>" ?></p>
+            <p>Email : <?php echo $model->email; ?></p>
+            <p>Gender : <?php echo isset($model->gender) ? $model->getGenderText($model->gender) : "<span style='color:red'>Please update you gender</span>"; ?></p>
+            <p>Birth Date : <?php echo isset($model->birthDate) ? $this->context->dateThai($model->birthDate, 2) : "<span style='color:red'>Please update you Birth Date</span>"; ?></p>
+            <p>Tel. : <?php echo isset($model->tel) ? $model->tel : "<span style='color:red'>Please update you Tel</span>"; ?></p>
             <hr>
             <h5>
                 <span class="profile-title-head">Password</span>
             </h5>
             <?php
             $form = ActiveForm::begin([
-                        'id' => 'password-form',
-                        'options' => ['class' => 'password-form']
+                'id' => 'password-form',
+                'options' => ['class' => 'password-form']
             ]);
             ?>
             <?=

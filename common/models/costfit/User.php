@@ -35,6 +35,8 @@ class User extends \common\models\costfit\master\UserMaster {
     const USER_REGISTER = 0;
     const USER_CONFIRM_EMAIL = 1;
     const USER_BLOCK = 99;
+    const USER_STATUS_GENDER_Female = 0;
+    const USER_STATUS_GENDER_Male = 1;
 
     //const USER_STATUS_CHECKOUTS = 2;
     //const USER_STATUS_E_PAYMENT_DRAFT = 3;
@@ -47,6 +49,7 @@ class User extends \common\models\costfit\master\UserMaster {
     public function rules() {
         return array_merge(parent::rules(), [
             ['email', 'unique'],
+            'tel' => [['tel'], 'integer'],
 //            ['email', 'uniqueEmail'],
             ['email', 'email'],
 //            ['email', 'exist', 'targetAttribute' => 'username', 'targetClass' => '\common\models\cosfit\User'],
@@ -54,7 +57,10 @@ class User extends \common\models\costfit\master\UserMaster {
 //            ['email', 'unique', 'targetClass' => '\common\models\costfit\User', 'message' => 'this email address has already been taken'],
             ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"],
 //            ['email', 'exist']
-            [['firstname', 'lastname', 'acceptTerm'], 'required', 'on' => 'editinfo'],
+            [
+
+                ['firstname', 'lastname', 'gender', 'tel', 'birthDate', 'acceptTerm'],
+                'required', 'on' => 'editinfo'],
             // [['currentPassword', 'newPassword', 'rePassword'], 'required'],
             [['currentPassword', 'newPassword', 'rePassword'], 'required', 'on' => 'profile'],
             // ['currentPassword', 'findPasswords'],
@@ -92,7 +98,7 @@ class User extends \common\models\costfit\master\UserMaster {
         return array_merge(parent::attributeLabels(), [
             'username' => 'Email',
             'firstname' => 'Name',
-            'orderHistory' => 'Order History',
+            'USER_STATUS_GENDER_Female' => 'Order History',
             'orderSummary' => 'Order Summary'
         ]);
     }
@@ -107,6 +113,23 @@ class User extends \common\models\costfit\master\UserMaster {
 
     public function getStatusText($status) {
         $res = $this->findAllStatusArray($status);
+        if (isset($res[$status])) {
+            return $res[$status];
+        } else {
+            return NULL;
+        }
+    }
+
+    public function findAllGenderArray() {
+        return [
+
+            self::USER_STATUS_GENDER_Female => "เพศหญิง",
+            self::USER_STATUS_GENDER_Male => "เพศชาย",
+        ];
+    }
+
+    public function getGenderText($status) {
+        $res = $this->findAllGenderArray($status);
         if (isset($res[$status])) {
             return $res[$status];
         } else {

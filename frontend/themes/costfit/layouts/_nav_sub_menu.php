@@ -120,8 +120,8 @@ $MenuCategory = $this->context->actionMenuCategory();
         <ul class="submenu" id="submenu-sorting-account" style="margin-top: -1px;">
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
-            <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/tracking">Tracking</a></li>
-            <!--<li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/payment">Payment Methods</a></li>
+            <!--<li><a href="<?php echo Yii::$app->homeUrl; ?>profile/tracking">Tracking</a></li>
+            <li class="pill-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/payment">Payment Methods</a></li>
             <li class="pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>history">Easy Re-Order</a></li>-->
         </ul>
     </li>

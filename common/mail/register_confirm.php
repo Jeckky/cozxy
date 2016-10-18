@@ -55,7 +55,7 @@
                 </div>
                 <div class="content">
                     <center>
-                        <table background="https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-9/13627169_1304244949603614_4827214866156693546_n.jpg?oh=7f153e886b70ba02a5139fd2821c1c5f&oe=583185F8"  width="100%" height="260" text-align="center" style=" height:260px; width:100% ;  text-align: center;  ">
+                        <table background="https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-9/13627169_1304244949603614_4827214866156693546_n.jpg?oh=7f153e886b70ba02a5139fd2821c1c5f&oe=583185F8s"  width="100%" height="260" text-align="center" style=" height:260px; width:100% ;  text-align: center;  ">
                             <tr>
                                 <td>
                                     <p style="color: #ff9016; font-size: 20px;"><strong>ขอบคุณที่ลงทะเบียนกับ COST.FIT</strong></p>
