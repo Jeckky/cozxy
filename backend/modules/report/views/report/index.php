@@ -26,8 +26,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
             <div class="row">
                 <?php
                 $form = ActiveForm::begin([
-                            'method' => 'GET',
-                            'action' => ['report/index'],
+                    'method' => 'GET',
+                    'action' => ['report/index'],
                 ]);
                 ?>
                 <div class="col-lg-3">
@@ -85,7 +85,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 <td><?= $i ?></td>
                                 <td><?= $order->orderNo ?></td>
                                 <td><?= $order->invoiceNo ?></td>
-                                <td><?= $order->paymentDateTime ?></td>
+                                <td><?= isset($order->paymentDateTime) ? $this->context->dateThai($order->paymentDateTime, 2) : NULL; ?></td>
                                 <td style="text-align: right;"><?= number_format($order->summary, 2) ?></td>
                                 <td> <?= Html::a('<i class="fa fa-eye" aria-hidden="true"> รายละเอียด</i>', Yii::$app->homeUrl . "order/order/view/" . $order->encodeParams(['id' => $order->orderId]), ['class' => 'btn btn-success btn-sm']) ?></td>
                             </tr>
