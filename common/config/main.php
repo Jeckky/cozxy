@@ -46,8 +46,18 @@ return [
                 '*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'basePath' => '@common/messages'
-                ]
+                ],
+            /* 'frontend*' => [
+              'class' => 'yii\i18n\PhpMessageSource',
+              'basePath' => '@common/messages',
+              ],
+              'backend*' => [
+              'class' => 'yii\i18n\PhpMessageSource',
+              'basePath' => '@common/messages',
+              ], */
             ]
         ],
     ],
+    'language' => 'TH',
+    'sourceLanguage' => 'US',
 ];
