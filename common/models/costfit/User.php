@@ -49,7 +49,7 @@ class User extends \common\models\costfit\master\UserMaster {
     public function rules() {
         return array_merge(parent::rules(), [
             ['email', 'unique'],
-            'tel' => [['tel'], 'number'],
+            'tel' => [['tel'], 'integer'],
 //            ['email', 'uniqueEmail'],
             ['email', 'email'],
 //            ['email', 'exist', 'targetAttribute' => 'username', 'targetClass' => '\common\models\cosfit\User'],
