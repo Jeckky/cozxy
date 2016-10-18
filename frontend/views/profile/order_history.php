@@ -9,6 +9,8 @@ use kartik\date\DatePicker;
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+
+//KYOCERA TEST
 ?>
 <style>
     .table-light{
