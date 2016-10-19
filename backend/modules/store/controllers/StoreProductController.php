@@ -228,31 +228,50 @@ class StoreProductController extends StoreMasterController {
     }
 
     public function actionArrange() {
-
-        if (isset($_POST["StoreProduct"]['isbn'])) {
-
+        $ms = '';
+        $allPo = StoreProductGroup::find()->where("status=2 order by receiveDate")->all();
+        if (isset($_POST["StoreProductGroup"]['poNo']) && !empty($_POST["StoreProductGroup"]['poNo'])) {
+            $storeProductGroup = StoreProductGroup::find()->where("poNo='" . $_POST["StoreProductGroup"]['poNo'] . "' and status=2")->one(); // เชค ที่สถานะเท่ากับตรวจรับแล้วเท่านั้น
+            if (isset($storeProductGroup) && !empty($storeProductGroup)) {
+                $storeProducts = \common\models\costfit\StoreProduct::find()->where("storeProductGroupId=" . $storeProductGroup->storeProductGroupId)->all();
+                if (isset($storeProducts) && !empty($storeProducts)) {
+                    return $this->render('arrange_index', [
+                                'ms' => $ms,
+                                'storeProductGroupId' => $storeProductGroup->storeProductGroupId,
+                                'storeProducts' => $storeProducts
+                    ]);
+                } else {
+                    $ms = 'ไม่พบสินค้าใน PO นี้';
+                }
+            } else {
+                $ms = 'ไม่พบ PO';
+            }
+        }
+        if (isset($_POST["StoreProduct"]['isbn'])) {//สแกน บาร์โค้ดสินค้าเพื่อจัดเรียง
             $product = \common\models\costfit\Product::find()->select("product.*,sp.*")->where("isbn ='" . $_POST["StoreProduct"]['isbn'] . "'")
                     ->join("LEFT JOIN", 'store_product sp', 'product.productId=sp.productId and (sp.status=3)')
                     ->orderBy('sp.createDateTime ASC')
                     ->one();
-            // throw new \yii\base\Exception(print_r($product->attributes, true));
             if (isset($product->productId)) {
-                //throw new \yii\base\Exception($_POST["StoreProduct"]['isbn']);
                 return $this->render('arrange', ['model' => $product]);
             } else {
                 $ms = ' Imported products not found.';
-                return $this->render('arrange_index', ['ms' => $ms]);
+                return $this->render('arrange_index', ['ms' => $ms,
+                            'storeProductGroupId' => $_POST['storeProductGroupId']
+                ]);
             }
         }
 
-        if (isset($_POST['quantity']) && isset($_POST['slot'])) {
-
+        if (isset($_POST['quantity']) && isset($_POST['slot'])) {//จัดเรียง
             $slot = \common\models\costfit\StoreSlot::find()->where("barcode='" . $_POST["slot"] . "'")->one();
             //throw new \yii\base\Exception(print_r($slot, true));
             // StoreProduct::arrangeProductToSlot($product->storeProductId, $slot->slotId, $_POST['quantity']);
             StoreProduct::arrangeProductToSlot($_POST['storeProductId'], $slot->storeSlotId, $_POST['quantity']);
         }
-        return $this->render('arrange_index');
+        return $this->render('scan_order', [
+                    'allPo' => $allPo,
+                    'ms' => $ms
+        ]);
     }
 
 }

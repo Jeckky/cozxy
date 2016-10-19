@@ -76,7 +76,7 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
     public function findAllStatusArray() {
         return [
             self::STATUS_IMPORT => "นำข้อมูลเข้า",
-            self::STATUS_QC => "ตรวจและนับแล้ว",
+            self::STATUS_QC => "ตรวจและนับแล้ว", //import แล้ว
             self::STATUS_ARRANGED_SOME => "เรียงบางส่วนแล้ว",
             self::STATUS_ARRANGED => "เรียงทั้งหมดแล้ว",
         ];
@@ -92,7 +92,6 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
     }
 
     public function getStores() {
-
         return $this->hasOne(Store::className(), ['storeId' => 'storeId']);
     }
 
@@ -108,7 +107,6 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
     }
 
     public static function arrangeProductToSlot($storeProductId, $slotId, $quantity) {
-
         $model = StoreProductArrange::find()->where('storeProductId =' . $storeProductId . ' AND slotId=' . $slotId . "")->one();
         $storeProduct = StoreProduct::find()->where("storeProductId =" . $storeProductId)->one();
         $check = '';

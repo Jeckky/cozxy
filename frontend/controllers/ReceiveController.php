@@ -212,14 +212,14 @@ class ReceiveController extends MasterController {
                                     $check[$i] = $pickingLocker->pickingItemsId;
 
                                     if ($flag == true) {
-                                        $total = count(\common\models\costfit\OrderItemPacking::find()->where("pickingItemsId=" . $pickingLocker->pickingItemsId)->all());
+                                        $total = count(\common\models\costfit\OrderItemPacking::find()->where("pickingItemsId=" . $pickingLocker->pickingItemsId . " and status=7")->all());
                                         $allLocker = "ช่อง " . $allLocker . $pickingLocker->name . " จำนวน " . $total . " ถุง" . "<br>";
                                     }
                                     $i++;
                                 }
                             endforeach;
                             //throw new \yii\base\Exception(print_r($check, true));
-                            $allLocker = substr($allLocker, 0, -1);
+                            //$allLocker = substr($allLocker, 0, -1);
                             // รอ อัพเดทสถานะ เป็นลูกค้ารับของแล้ว order orderItem orderItemPacking
                             //$order->status=16;
                             //$order->save();//รับของแล้ว
