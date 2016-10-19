@@ -28,6 +28,7 @@ class ProfileController extends MasterController {
      * @return mixed
      */
     public function actionIndex() {
+
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }

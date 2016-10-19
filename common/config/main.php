@@ -46,12 +46,12 @@ return [
                 '*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'basePath' => '@common/messages'
-                ],
-            /* 'frontend*' => [
+                ], /*
+              'frontend*' => [
               'class' => 'yii\i18n\PhpMessageSource',
-              'basePath' => '@common/messages',
+              'basePath' => '@frontend/messages',
               ],
-              'backend*' => [
+              /* 'backend*' => [
               'class' => 'yii\i18n\PhpMessageSource',
               'basePath' => '@common/messages',
               ], */

@@ -7,7 +7,12 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log',
+        [
+            'class' => 'common\components\LanguageSelector',
+            'supportedLanguages' => ['en-US', 'th-TH'], //กำหนดรายการภาษาที่ support หรือใช้ได้
+        ]
+    ],
     'controllerNamespace' => 'frontend\controllers',
     'modules' => [
         'gridview' => [

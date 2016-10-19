@@ -7,6 +7,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use common\controllers\MasterController;
 use common\models\ModelMaster;
+use yii\helpers\Url;
 
 $MenuCategory = $this->context->actionMenuCategory();
 ?>
@@ -75,7 +76,7 @@ $MenuCategory = $this->context->actionMenuCategory();
 
 <!-- Show For Desktop -->
 <ul class="catalog hidden-xs hidden-sm " id="catalog_new" style="width: 100%;">
-    <li class="has-submenu pull-left"><a href="#">Categories<i class="fa fa-chevron-down open"></i></a>
+    <li class="has-submenu pull-left"><a href="#"><?= Yii::t('app', 'Categories') ?><i class="fa fa-chevron-down open"></i></a>
         <ul class="submenu">
             <?php
             // $list_menu_category = $this->Me
@@ -116,7 +117,7 @@ $MenuCategory = $this->context->actionMenuCategory();
 <?php if (!Yii::$app->user->isGuest): ?>
     <li class="has-submenu  ">
         <span class="sorting" id="sortingAccount" style="padding: 1px 1px 1px 1px;">
-            <a href="#" class="sorting" style="padding: 1px 1px 1px 5px;">Account</a></span>
+            <a href="#" class="sorting" style="padding: 1px 1px 1px 5px;"><?= Yii::t('app', 'Account') ?></a></span>
         <ul class="submenu" id="submenu-sorting-account" style="margin-top: -1px;">
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
@@ -126,6 +127,8 @@ $MenuCategory = $this->context->actionMenuCategory();
         </ul>
     </li>
 <?php endif; ?>
-<li class="has-submenu pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works">How Works</a></li>
-<li class="has-submenu pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>coupon">Super special offers</a></li><!--ข้อเสนอพิเศษจากพาร์ทเนอร์-->
+<li class="has-submenu pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works"><?= Yii::t('app', 'How Works') ?></a></li>
+<li class="has-submenu pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>coupon"><?= Yii::t('app', 'Super special offers') ?></a></li><!--ข้อเสนอพิเศษจากพาร์ทเนอร์-->
+
+
 </ul>
