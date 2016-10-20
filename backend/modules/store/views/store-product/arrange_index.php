@@ -10,6 +10,7 @@ $form = yii\bootstrap\ActiveForm::begin([
         ]);
 ?>
 <input type="hidden" name="storeProductGroupId" value="<?= $storeProductGroupId ?>">
+<input type="hidden" name="StoreProductGroup2[poNo]" value="<?= \common\models\costfit\StoreProductGroup::findPoNo($storeProductGroupId) ?>">
 <div class="panel-heading" style="background-color: #ccffcc;">
     <span class="panel-title"><h3>สแกนสินค้าเพื่อจัดเรียง</h3></span>
 </div>
@@ -45,7 +46,7 @@ $form = yii\bootstrap\ActiveForm::begin([
                     <td style="vertical-align: middle;text-align: center;width: 5%;"><?= $i ?></td>
                     <td style="vertical-align: middle;text-align: center;width: 35%;"><?= \common\models\costfit\Product::findProductName($storeProduct->productId) ?></td>
                     <td style="vertical-align: middle;text-align: center;width: 20%;"><?= $storeProduct->importQuantity ?></td>
-                    <td style="vertical-align: middle;text-align: center;width: 20%;"><?= $storeProduct->status ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 20%;"><?= $model->getStatusText($storeProduct->status) ?></td>
                 </tr>
                 <?php
                 $i++;

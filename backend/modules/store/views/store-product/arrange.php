@@ -9,38 +9,33 @@ $form = yii\bootstrap\ActiveForm::begin([
             ]
         ]);
 ?>
-<div class="panel-heading">
-    <span class="panel-title">ค้นหาสินค้าเพื่อจัดเรียง</span>
+<div class="panel-heading" style="background-color: #ccffcc;vertical-align: middle;">
+    <span class="panel-title"><h3>จัดเรียงสินค้า</h3></span>
 </div>
-
+<input type="hidden" name="isbn" value="<?= $isbn ?>">
+<input type="hidden" name="arrange" value="arrange">
+<input type="hidden" name="storeProductId" value="<?= $model->storeProductId ?>">
 <div class="panel-body">
     <?php
-    //throw new \yii\base\Exception(print_r($model, true));
     if (isset($model)):
-        //throw new \yii\base\Exception(print_r($model, true));
         ?>
-        <div class="row">
-            <!--            <div class="col-lg-2">
-                            <img src="<?= Yii::$app->homeUrl . $model->productImages[0]->image; ?>" style="width: 100%">
-                        </div>-->
-            <div class="col-lg-12">
-    <!--                <h4><?= $model->code; ?></h4>
-                <h4><?= $model->title; ?></h4>-->
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <th>Slot : </th>
-                            <td><?= \yii\helpers\Html::textInput('slot', NULL, ['class' => 'input-lg slot', 'autofocus' => 'autofocus']); ?></td>
-                        </tr>
-                        <tr>
-                            <th>Quantity : </th>
 
-                    <input type="hidden" value="<?= $model->storeProductId ?>" name="storeProductId" />
-                    <td><?= \yii\helpers\Html::textInput('quantity', NULL, ['class' => 'input-lg quantity']); ?></td>
+        <div class="col-lg-12">
+            <h4>สินค้า : <?= $model->title ?></h4>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th style="vertical-align: middle;">Slot : </th>
+                        <th><?= \yii\helpers\Html::textInput('slot', NULL, ['class' => 'input-lg slot', 'autofocus' => 'autofocus']); ?> * scan slot <?= isset($ms) && $ms != '' ? '<code>' . $ms . '</code>' : '' ?></th>
                     </tr>
                     <tr>
-                        <td colspan="2" class="text-center">
-                            <?= \yii\helpers\Html::a("กลับ", ['arrange'], ['class' => 'btn btn-info btn-lg ']) ?>
+                        <th style="vertical-align: middle;">Quantity : </th>
+
+                        <th><?= \yii\helpers\Html::textInput('quantity', NULL, ['class' => 'input-lg quantity']); ?> * จำนวนทั้งหมดในรายการนี้ <?= $model->importQuantity ?> ชิ้น จัดเรียงแล้ว 50 ชิ้น ยังไม่จัดเรียง 50 ชิ้น</th>
+                    </tr>
+                    <tr>
+                        <td class="text-center"></td>
+                        <td class="text-left">
                             <?= \yii\helpers\Html::submitButton("จัดเรียง", ['class' => 'btn btn-success btn-lg']) ?></td>
                     </tr>
                     <?= $this->registerJS("
@@ -52,25 +47,20 @@ $form = yii\bootstrap\ActiveForm::begin([
                                 }
                             });
                 ") ?>
-                    </tbody>
-                </table>
-            </div>
-            <!--            <div class="col-lg-2">
-
-                        </div>-->
+                </tbody>
+            </table>
         </div>
-    <?php else: ?>
-        <div class="row">
-            <div class="col-lg-12">
-                <h2>ไม่พบรายการรอจัดเรียง</h2>
-                <?= $this->registerJS("setTimeout(function () {
+    </div>
+<?php else: ?>
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>ไม่พบรายการรอจัดเรียง</h2>
+            <?= $this->registerJS("setTimeout(function () {
                     window.location.href = '" . Yii::$app->homeUrl . "store/store-product/arrange" . "'; //will redirect to your blog page (an ex: blog.html)
                  }, 1500); //will call the function afte
 
-                ") ?>
-                <?//= \yii\helpers\Html::a("กลับ", ['arrange', 'storeProductGroupId' => $_GET["storeProductGroupId"]], ['class' => 'btn btn-info']) ?>
-            </div>
-        </div>
-    <?php endif; ?>
+                ") ?></div>
+    </div>
+<?php endif; ?>
 </div>
 <?php yii\bootstrap\ActiveForm::end(); ?>

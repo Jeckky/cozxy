@@ -19,7 +19,7 @@ $form = yii\bootstrap\ActiveForm::begin([
         <tbody>
             <tr>
                 <th style="vertical-align: middle;text-align: center;"><h4><b>Scan PO Barcode : </b></h4></th>
-                <td><?= \yii\helpers\Html::textInput('StoreProductGroup[poNo]', NULL, ['class' => 'input-lg', 'autofocus' => 'autofocus']); ?><?= isset($ms) ? ' <code> ' . $ms . '</code>' : '' ?></td>
+                <td><?= \yii\helpers\Html::textInput('StoreProductGroup[poNo]', NULL, ['class' => 'input-lg', 'autofocus' => 'autofocus']); ?><?= isset($ms) && $ms != '' ? ' <code> ' . $ms . '</code>' : '' ?></td>
             </tr>
         </tbody>
     </table>

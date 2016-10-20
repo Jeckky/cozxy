@@ -77,8 +77,8 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
         return [
             self::STATUS_IMPORT => "นำข้อมูลเข้า",
             self::STATUS_QC => "ตรวจและนับแล้ว", //import แล้ว
-            self::STATUS_ARRANGED_SOME => "เรียงบางส่วนแล้ว",
-            self::STATUS_ARRANGED => "เรียงทั้งหมดแล้ว",
+            self::STATUS_ARRANGED_SOME => "จัดเรียงบางส่วนแล้ว",
+            self::STATUS_ARRANGED => "จัดเรียงทั้งหมดแล้ว",
         ];
     }
 
@@ -148,22 +148,25 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
                 //throw new \yii\base\Exception($someQuan . "=" . $quantity . "-" . $pushQuan . "import==>" . $storeProduct->quantity);
             } else if ($quantity < $storeProduct->importQuantity) {//ของที่นำมาจัดเรียง น้อยกว่าของที่ ตรวจรับ
                 $check = StoreProduct::checkSum($storeProductId, $quantity);
+                //throw new \yii\base\Exception($check);
                 if ($check == 'less' || $check == '') {//ไม่ครบถ้าครบ
                     $model->quantity = $quantity;
                     $model->result = $quantity;
                     $model->updateDateTime = new \yii\db\Expression('NOW()');
                     $model->status = 3; //set status เป็นจัดเรียงแล้วบ้างส่วน
+                    $storeProduct->status = 3;
                 } else {
                     $model->status = 4; //set status เป็นจัดเรียงแล้วทั้งหมด
                     $model->updateDateTime = new \yii\db\Expression('NOW()');
                     $model->quantity = $quantity;
                     $model->result = $quantity;
+                    $storeProduct->status = 4;
                 }
                 // throw new \yii\base\Exception($check);
             } else {//ของที่น้ำมาจัดเรียง เท่ากับของที่ รับเข้า
                 $check = StoreProduct::checkSum($storeProductId, $quantity);
                 if ($check == 'more') {
-                    $a = StoreProduct::updateMore($storeProductId, $model, $quantity, $slotId);
+                    // $a = StoreProduct::updateMore($storeProductId, $model, $quantity, $slotId);
                 } else {
                     $model->status = 4; //set status เป็นจัดเรียงแล้วทั้งหมด
                     $storeProduct->status = 4;
@@ -185,11 +188,14 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
             } else if (($model->quantity + $quantity) < $storeProduct->importQuantity) {//ของที่นำมาจัดเรียง + ของที่มีอยู่แล้ว น้อยกว่า จำนวนที่รับเข้า
                 $pushQuan = $model->quantity + $quantity; //จำนวนที่จัดเรียง = ของที่มีอยู่แล้ว + ของที่นำมาจัดเรียง
                 $model->quantity = $pushQuan;
+                $model->result = $pushQuan;
                 $model->updateDateTime = new \yii\db\Expression('NOW()');
                 $model->status = 3; //set status เป็น รับเข้าแล้วบางส่วน
+                $storeProduct->status = 3;
             } else { //ถ้าของที่น้ำมาจัดเรียง + ของที่มีอยู่แล้ว เท่ากับ จำนวนที่รับมา
                 $pushQuan = $model->quantity + $quantity; //จำนวนที่บันทึก เท่ากับ  ของที่มีอยู่แล้ว + ของที่เอามาจัดเรียง
                 $model->quantity = $pushQuan;
+                $model->result = $pushQuan;
                 $model->status = 4;
                 $storeProduct->status = 4;
             }
@@ -206,14 +212,14 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
             //throw new \yii\base\Exception($someQuan);
             while ($someQuan > 0) { //ถ้าส่วนที่เกินจาก ที่รับเข้า ยังมากกว่า 0 ทำ
                 $otherStoreProduct = StoreProduct::find()->where("productId =" . $storeProduct->productId . " and status=3")->orderBy("createDateTime ASC")->one(); // หาจาก store_product ที่ productId จากตัวที่ เวลาสร้างน้อยสุด(ตรวจรบครบแล้วแแต่ยังไม่มีการดึงมาจัดเรียง)
-                $modelNew = new StoreProductArrange();
-                $modelNew->storeProductId = $storeProductId;
-                $modelNew->slotId = $slotId;
-                $modelNew->productId = $storeProduct->productId;
-                $modelNew->createDateTime = new yii\db\Expression("NOW()");
-                $modelNew->status = 99; //set status เป็นของเกิน
+//                $modelNew = new StoreProductArrange();
+//                $modelNew->storeProductId = $storeProductId;
+//                $modelNew->slotId = $slotId;
+//                $modelNew->productId = $storeProduct->productId;
+//                $modelNew->createDateTime = new yii\db\Expression("NOW()");
+//                $modelNew->status = 99; //set status เป็นของเกิน
                 if (isset($otherStoreProduct)) {
-                    $modelNew->quantity = $someQuan;
+                    //  $modelNew->quantity = $someQuan;
                     if (($someQuan) > $otherStoreProduct->importQuantity) {//ถ้า ส่วนที่เกิน มากกว่า ส่วนที่ไปหามาใหม่
                         //throw new \yii\base\Exception('aaa');
                         $pushQuanNew = $otherStoreProduct->importQuantity;
@@ -230,11 +236,11 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
                     $otherStoreProduct->createDateTime = new yii\db\Expression("NOW()");
                     $otherStoreProduct->save();
                 } else {
-                    $modelNew->quantity = $someQuan;
-                    $modelNew->save(false);
+                    //  $modelNew->quantity = $someQuan;
+                    // $modelNew->save(false);
                     break;
                 }
-                $modelNew->save(false);
+                // $modelNew->save(false);
             }
         }
         $model->createDateTime = new yii\db\Expression("NOW()");
@@ -245,7 +251,7 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
         $total = 0;
         $storeProducts = StoreProduct::find()->where("storeProductId=" . $storeProductId)->one();
         if (isset($storeProducts) && !empty($storeProducts)) {
-            $arranges = StoreProductArrange::find()->where("productId=" . $storeProducts->productId)->all();
+            $arranges = StoreProductArrange::find()->where("productId=" . $storeProducts->productId . " and storeProductId=" . $storeProductId)->all();
             if (isset($arranges) && !empty($arranges)) {
                 foreach ($arranges as $arrange):
                     $total+=$arrange->quantity;
@@ -290,20 +296,20 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
                 endforeach;
                 if (($total + $quantity) > $storeProducts->importQuantity) {
                     $result = ($total + $quantity) - $storeProducts->importQuantity;
-                    $model->status = 4;
-                    $model->quantity = $storeProducts->importQuantity - $total;
-                    $model->result = $storeProducts->importQuantity - $total;
-                    $new = new StoreProductArrange(); //ส่วนที่เหลือ
-                    $new->status = 99;
-                    $new->storeProductId = $storeProductId;
-                    $new->productId = $storeProducts->productId;
-                    $new->slotId = $slotId;
-                    $new->quantity = $result;
-                    $new->updateDateTime = new \yii\db\Expression('NOW()');
-                    $new->save(false);
-                    $storeProducts->status = 4;
-                    $storeProducts->updateDateTime = new \yii\db\Expression('NOW()');
-                    $storeProducts->save(false);
+//                    $model->status = 4;
+//                    $model->quantity = $storeProducts->importQuantity - $total;
+//                    $model->result = $storeProducts->importQuantity - $total;
+//                    $new = new StoreProductArrange(); //ส่วนที่เหลือ
+//                    $new->status = 99;
+//                    $new->storeProductId = $storeProductId;
+//                    $new->productId = $storeProducts->productId;
+//                    $new->slotId = $slotId;
+//                    $new->quantity = $result;
+//                    $new->updateDateTime = new \yii\db\Expression('NOW()');
+//                    $new->save(false);
+//                    $storeProducts->status = 4;
+//                    $storeProducts->updateDateTime = new \yii\db\Expression('NOW()');
+//                    $storeProducts->save(false);
                 } else {
                     //throw new \yii\base\Exception($storeProducts->importQuantity . " - " . $total);
                     $result = $quantity;
