@@ -24,7 +24,7 @@ if (window.location.host == 'localhost') {
 function proceed(data) {
     var shop_data = data;
     if (shop_data == 'apply_coupon') {
-//window.location = '';
+        //window.location = '';
         couponCode = $(".coupon").find("#coupon-code").val();
         $.ajax({
             type: "POST",

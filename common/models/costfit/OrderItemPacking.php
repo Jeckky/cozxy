@@ -38,6 +38,9 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
         return array_merge(parent::attributes(), [
             'bagNo',
             'status',
+            'orderId',
+            'NumberOfBagNo',
+            'orderNo'
         ]);
     }
 
@@ -149,6 +152,17 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
 
     public function getOrderItems() {
         return $this->hasMany(OrderItem::className(), ['orderItemId' => 'orderItemId']); //[Order :: ปลายทาง ,  OrderItem :: ต้นทาง]
+    }
+
+    static public function countBagNo($bagNo) {
+
+        $result = OrderItemPacking::find()
+                //->distinct('order_item_packing.bagNo')
+                //->join('LEFT JOIN', 'order_item oi', 'oi.orderItemId = order_item_packing.orderItemId')
+                ->where([ 'order_item_packing.bagNo' => $bagNo])
+                ->count();
+        //throw new \yii\base\Exception($orderItemId);
+        return $result;
     }
 
 }

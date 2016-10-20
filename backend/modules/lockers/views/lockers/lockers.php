@@ -10,7 +10,7 @@ $this->title = 'ช่องของ Lockers';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
-<h1>Shippings / Picking Points / เลือกใช้งานตามความต้องการ</h1>
+<h1>Shippings / Picking Points </h1>
 <!--<div class="note note-success ">
     <h3>สถานที่ตั้ง Lockers </h3>
     <h4 style="color: #003147">
@@ -40,182 +40,71 @@ $this->params['pageHeader'] = Html::encode($this->title);
         &nbsp;
     </div>
 </div>
-<div class="order-index col-md-6">
-
+<div class="order-index col-md-12">
     <div class="panel panel-warning panel-dark">
-
         <div class="panel-heading">
-            <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> เลือกใช้งานแบบที่ 1 กดปุ่มจาก ช่องของ Lockers</span>
+            <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> กดปุ่มจาก ช่องของ Lockers</span>
         </div>
         <div class="panel-body ">
             <div class="col-sm-12">
-                <div class="form-control" style="border: 0px;"></div>
-                <div id="character-limit-input-label" class="limiter-label form-group-margin">&nbsp;&nbsp;</div>
+                <h3><?= $point->title; ?></h3>
+                <table class="table table-bordered">
+                    <tbody>
+                        <?php
+                        $cols = common\models\costfit\PickingPointItems::find()
+                                ->where(["pickingId" => $point->pickingId])
+                                ->groupBy(["LEFT(portIndex,1)"])
+                                ->all();
+                        ?>
+                        <tr>
+                            <?php foreach ($cols as $colIndex => $col): ?>
+                                <td style="width:33%">
+                                    <table class="table">
+                                        <?php
+                                        $rows = common\models\costfit\PickingPointItems::find()
+                                                ->where(["pickingId" => $point->pickingId, 'LEFT(portIndex,1)' => substr($col->portIndex, 0, 1)])
+                                                // ->groupBy(["RIGHT(portIndex,1)"])
+                                                ->all();
+                                        foreach ($rows as $rowIndex => $row):
+                                            $height = "70px";
+                                            switch ($row->height) {
+                                                case 20 ://User
+                                                    $height = "70px";
+                                                    break;
+                                                case 40 ://User
+                                                    $height = "140px";
+                                                    break;
+                                                case 60 ://User
+                                                    $height = "210px";
+                                                    break;
+                                            }
+                                            ?>
+                                            <tr>
+                                                <td style="border:2px black solid ;text-align:center;vertical-align: middle; height: <?= $height ?>" class="<?= ($row->status == 1) ? "alert-success" : "alert-danger" ?>">
+                                                    <?php if ($colIndex == 1 && $rowIndex == 1): ?>
+                                                        <span style="font-size: 20px;font-weight: bold"><?= "Controller" ?></span>
+                                                    <?php else: ?>
+                                                        <h4><a class="btn" href="<?php echo Yii::$app->homeUrl; ?>lockers/lockers/scan-bag?pickingItemsId=<?php echo $row->pickingItemsId; ?>&code=<?php echo $row->code ?>&boxcode=<?php echo $row->pickingId; ?>&model=1">เปิดช่อง : <?= $row->name; ?></a></h4>
+                                                        <?php
+                                                        $items = common\models\costfit\PickingPointItems::OrderId($row->pickingItemsId);
+                                                        $bagNo = common\models\costfit\PickingPointItems::bagNo($row->pickingItemsId);
+                                                        if ($items != '' && $bagNo != '') {
+                                                            echo '<h4>OrderNo : ' . $items . '<br><br>BagNo : ' . $bagNo . '</h4>';
+                                                        }
+                                                        ?>
+                                                    <?php endif; ?>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </table>
+                                </td>
+                            <?php endforeach; ?>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </div>
-
-    </div>
-    <div class="panel panel-warning">
-        <div class="panel-heading">
-            <div class="row">
-                <div class="col-md-6">ข้อมูลของแบบที่ 1  ช่องของ Lockers </div>
-                <div class="col-md-6">
-                    <div class="btn-group pull-right">
-                        &nbsp;<span class="limiter-count">&nbsp;</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="panel-body">
-
-            <?=
-            GridView::widget([
-                'dataProvider' => $dataProvider,
-                'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-                    'pickingItemsId',
-                    // 'pickingId',
-                    [
-                        'attribute' => 'Code Lockers',
-                        'value' => function($model) {
-                            return $model->pickingPoint->code;
-                        }
-                    ],
-                    //'code',
-                    [
-                        'attribute' => 'Code Channels',
-                        'value' => function($model) {
-                            return $model->code;
-                        }
-                    ],
-                    [
-                        'attribute' => 'name',
-                        'value' => function($model) {
-                            return $model->name . ', มีทั้งหมด ' . \common\models\costfit\PickingPointItems::PickingPointDistinctCount($model->pickingItemsId, $model->pickingId) . ' ถุง';
-                        }
-                    ],
-                    /* ['class' => 'yii\grid\ActionColumn'], */
-                    ['class' => 'yii\grid\ActionColumn',
-                        'header' => 'Actions',
-                        'template' => ' {items} ',
-                        'buttons' => [
-                            'items' => function($url, $model) {
-                                //echo $model->pickingItemsId . '<br>';
-                                //echo \common\models\costfit\PickingPointItems::PickingPointDistinct($model->pickingItemsId);
-                                if (\common\models\costfit\PickingPointItems::PickingPointDistinct($model->pickingItemsId) == 1) {
-                                    return '<span class="text-danger">Channels เต็มแล้ว</span>';
-                                } elseif (\common\models\costfit\PickingPointItems::PickingPointDistinct($model->pickingItemsId) == 0) {
-                                    return Html::a('<button class="btn btn-rounded btn-xs text-success"> Channels ว่าง  </button>', Yii::$app->homeUrl . "lockers/lockers/channels?pickingItemsId=" . $model->pickingItemsId . "&code=" . $model->code . '&boxcode=' . $model->pickingId . '&model=1', [
-                                                'title' => Yii::t('app', ' Channels ว่าง :' . $model->code),]);
-                                }
-                                //return '<button class="btn btn-rounded btn-xs"> เปิด Channels นี้ </button>';
-                            }
-                                ],
-                            ],
-                        ],
-                    ]);
-                    ?>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="order-index col-md-6">
-
-            <div class="panel panel-info panel-dark">
-                <?php
-                $form = ActiveForm::begin([
-                            'method' => 'GET',
-                            'action' => ['/lockers/lockers/channels?boxcode=' . $listPoint->pickingId . '&model=2'],
-                ]);
-                ?>
-                <div class="panel-heading">
-                    <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> เลือกใช้งานแบบที่ 2  Scan Qr code จากช่องของ Lockers</span>
-                </div>
-                <div class="panel-body ">
-                    <div class="col-sm-12">
-                        <input type="text" name="code" autofocus="true" id="code" class="form-control" placeholder="Search or Scan Qr code">
-                        <div id="character-limit-input-label" class="limiter-label form-group-margin">หมายเหตุ : <span class="limiter-count">Scan Qr Code ทุกครั้ง เพื่อตรวจความถูกต้องของ"ช่อง"ใน Lockers.</span></div>
-                    </div>
-                </div>
-                <?= $this->registerJS("
-                $('#orderNo').blur(function(event){
-                    if(event.which == 13 || event.keyCode == 13)
-                    {
-                       $('#form').submit();
-                    }
-                });
-    ") ?>
-                <?php ActiveForm::end(); ?>
-            </div>
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-md-6">ข้อมูลของแบบที่ 2 ช่องของ Lockers </div>
-                        <div class="col-md-6">
-                            <div class="btn-group pull-right">
-                                &nbsp;
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-body">
-
-
-                    <?=
-                    GridView::widget([
-                        'dataProvider' => $dataProvider,
-                        'columns' => [
-                            ['class' => 'yii\grid\SerialColumn'],
-                            'pickingItemsId',
-                            // 'pickingId',
-                            [
-                                'attribute' => 'Code Lockers',
-                                'value' => function($model) {
-                                    return $model->pickingPoint->code;
-                                }
-                            ],
-                            //'code',
-                            [
-                                'attribute' => 'Code Channels',
-                                'value' => function($model) {
-                                    return $model->code;
-                                }
-                            ],
-                            //name
-                            [
-                                'attribute' => 'name',
-                                'value' => function($model) {
-                                    return $model->name . ', มีทั้งหมด ' . \common\models\costfit\PickingPointItems::PickingPointDistinctCount($model->pickingItemsId, $model->pickingId) . ' ถุง';
-                                }
-                            ],
-                            /* ['class' => 'yii\grid\ActionColumn'], */
-                            ['class' => 'yii\grid\ActionColumn',
-                                'header' => 'Actions',
-                                'template' => ' {items} ',
-                                'buttons' => [
-                                    'items' => function($url, $model) {
-                                        //echo $model->pickingItemsId . '<br>';
-                                        //echo \common\models\costfit\PickingPointItems::PickingPointDistinct($model->pickingItemsId);
-                                        if (\common\models\costfit\PickingPointItems::PickingPointDistinct($model->pickingItemsId) == 1) {
-                                            return '<span class="text-danger">Channels เต็มแล้ว</span>';
-                                        } elseif (\common\models\costfit\PickingPointItems::PickingPointDistinct($model->pickingItemsId) == 0) {
-                                            return '<span class="text-success">Channels ว่าง</span>';
-                                        }
-                                        //return '<button class="btn btn-rounded btn-xs"> เปิด Channels นี้ </button>';
-                                    }
-                                ],
-                            ],
-                        ],
-                    ]);
-                    ?>
-
-
         </div>
     </div>
-
 </div>
-
-
 
 

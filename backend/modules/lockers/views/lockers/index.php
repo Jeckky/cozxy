@@ -20,12 +20,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
     ]);
     ?>
     <div class="panel-heading ">
-        <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> Scan Qr code Order No :</span>
+        <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> Scan Qr Lockers : สแกน QR Code ของล็อกเกอร์</span>
     </div>
     <div class="panel-body ">
         <div class="col-sm-12">
             <input type="text" name="codes" autofocus="true" id="codes" class="form-control" placeholder="Search or Scan Qr code">
-            <div id="character-limit-input-label" class="limiter-label form-group-margin">หมายเหตุ : <span class="limiter-count">Scan Qr Code Picking Points ทุกครั้ง เพื่อตรวจความถูกต้องของสถานที่ของตู้.</span></div>
+            <div id="character-limit-input-label" class="limiter-label form-group-margin">หมายเหตุ : <span class="limiter-count">สแกน QR Code ของล็อกเกอร์ทุกครั้ง เพื่อตรวจความถูกต้องของสถานที่ของตู้.</span></div>
         </div>
     </div>
     <?= $this->registerJS("

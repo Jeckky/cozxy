@@ -187,55 +187,38 @@ class LockersController extends LockersMasterController {
 
         if ($bagNo != '') {
             $queryOrderItemPackingId = \common\models\costfit\OrderItemPacking::find()
-                            ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
-                                    . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo , order.orderNo, order.orderId')
+                            ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo , order.orderNo, order.orderId')
                             ->joinWith(['orderItems'])
-                            ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
+                            ->join('LEFT JOIN', 'order', 'order_item.orderId =order.orderId')
                             ->where("order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "' ")
                             ->groupBy(['order_item_packing.bagNo'])->one();
 
+            $orderId = $queryOrderItemPackingId->orderId; // ได้ OrderId มาเพื่อหา ????
+            $orderItemId = $queryOrderItemPackingId->orderItemId; // ได้ OrderId มาเพื่อหา ????
             if (count($queryOrderItemPackingId) == 0) {
                 return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?pickingItemsId=' . $pickingItemsId . '&boxcode=' . $boxcode . '&model=' . $model . '&code=' . $channel . '&orderId=' . $orderId . '&c=e');
             }
-
-            $orderId = $queryOrderItemPackingId->orderId; // ได้ OrderId มาเพื่อหา ????
-            $orderItemId = $queryOrderItemPackingId->orderItemId; // ได้ OrderId มาเพื่อหา ????
             $orderItemPackingId = $queryOrderItemPackingId->orderItemPackingId;
-
+            /*
+              $query = \common\models\costfit\OrderItemPacking::find()
+              ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, order_item_packing.status')
+              ->joinWith(['orderItems'])
+              ->where("order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "' "); */
             $query = \common\models\costfit\OrderItemPacking::find()
-                    ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
-                            . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo , order.orderNo, '
-                            . 'order.orderId,order_item_packing.quantity')
+                    ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo , order.orderNo, order.orderId,order_item_packing.quantity')
                     ->joinWith(['orderItems'])
-                    ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
+                    ->join('LEFT JOIN', 'order', 'order_item.orderId =order.orderId')
                     ->where("order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "' ")
                     ->groupBy(['order_item_packing.bagNo']);
 
             //->where("order_item.orderId = '" . $orderId . "' and order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "' ");
-            /*
-              Query ส่วนของแสดง Order ของถุงนี้ที่ ใส่เข้าช่องของ Lockers นี้แล้ว
-             */
             $query1 = \common\models\costfit\OrderItemPacking::find()
                     ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, '
-                            . 'order_item_packing.bagNo, order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo , order.orderNo, '
-                            . 'order.orderId ,order_item_packing.quantity')
+                            . 'order_item_packing.bagNo, order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo , order.orderNo, order.orderId ,order_item_packing.quantity')
                     ->joinWith(['orderItems'])
-                    ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-                    //->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-                    //->where("order_item_packing.status in (7,8) and  order.orderId ='" . $orderId . "' or order_item_packing.status in (7,8) and  order_item_packing.bagNo ='" . $bagNo . "' ")
-                    ->where("order_item_packing.status in (7,8) and  order_item.orderItemId ='" . $orderItemId . "' or order_item_packing.status in (7,8) and  order_item_packing.bagNo ='" . $bagNo . "' ")
-                    //->where("order_item_packing.status in (7,8) and  order_item_packing.bagNo ='" . $bagNo . "' ")
+                    ->join('LEFT JOIN', 'order', 'order_item.orderId =order.orderId')
+                    ->where("order_item_packing.status in (7,8) and  order_item_packing.orderItemId ='" . $orderItemId . "'")
                     //->where("order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "' ")
-                    ->groupBy(['order_item_packing.bagNo']);
-
-            // แสดงจำนวนถุงของ Order นี้ทั้งหมด
-            $queryAllOrder = \common\models\costfit\OrderItemPacking::find()
-                    ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
-                            . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo , order.orderNo, '
-                            . 'order.orderId,order_item_packing.quantity')
-                    ->joinWith(['orderItems'])
-                    ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-                    ->where("order_item_packing.status = 5 and order.orderId ='" . $orderId . "' ")
                     ->groupBy(['order_item_packing.bagNo']);
         } else if ($channels != '') {
             // OrderItemPacking  มากกว่า 1 รายการ
@@ -302,38 +285,13 @@ class LockersController extends LockersMasterController {
             }
             //exit();
         } else {
-            //echo 'xx'; แสดง BagNo ที่ Scan Qr code
-            $query1 = \common\models\costfit\OrderItemPacking::find()
-                    ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, '
-                            . 'order_item_packing.bagNo, order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo , order.orderNo, '
-                            . 'order.orderId ,order_item_packing.quantity')
-                    ->joinWith(['orderItems'])
-                    ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-                    ->where("order_item_packing.status in (7,8) and  order_item_packing.orderItemId ='" . $orderItemId . "'")
-                    //->where("order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "' ")
-                    ->groupBy(['order_item_packing.bagNo']);
-
+            //echo 'xx';
+            $query1 = '';
             $query = \common\models\costfit\OrderItemPacking::find()
                     ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, order_item_packing.status')
                     ->joinWith(['orderItems'])
                     ->where("order_item.orderId = '" . $orderId . "' and order_item_packing.status = 5");
-
-            // แสดงจำนวนถุงของ Order นี้ทั้งหมด
-            $queryAllOrder = \common\models\costfit\OrderItemPacking::find()
-                    ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
-                            . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo , order.orderNo, '
-                            . 'order.orderId,order_item_packing.quantity')
-                    ->joinWith(['orderItems'])
-                    ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-                    ->where("order_item_packing.status = 5 and order.orderId ='" . $orderId . "' ")
-                    ->groupBy(['order_item_packing.bagNo']);
         }
-
-        // echo $queryCountBag->NumberOfBagNo;
-
-        $dataProviderAllOrder = new ActiveDataProvider([
-            'query' => $queryAllOrder,
-        ]);
 
         $dataProviderBag = new ActiveDataProvider([
             'query' => $query1,
@@ -344,7 +302,6 @@ class LockersController extends LockersMasterController {
         ]);
 
         return $this->render('scanbag', [
-                    'dataProviderAllOrder' => $dataProviderAllOrder,
                     'dataProviderBag' => $dataProviderBag,
                     'dataProvider' => $dataProvider,
                     'listPoint' => $listPoint,
@@ -363,118 +320,6 @@ class LockersController extends LockersMasterController {
                     'orderId' => $orderId,
         ]);
         //}
-    }
-
-    public function actionCloseChannel() {
-        $request = Yii::$app->request;
-
-        if ($request->isGet) { /* the request method is GET */
-            $orderId = Yii::$app->request->get('
-
-        orderId');
-        }
-        if ($request->isPost) { /* the request method is POST */
-            $orderId = Yii::$app->request->post('orderId');
-        }
-        $boxcode = Yii::$app->request->get('boxcode');
-        $channel = Yii::$app->request->get('code');
-        $orderId = Yii::$app->request->get('orderId');
-        $model = Yii::$app->request->get('model');
-        $orderNo = Yii::$app->request->get('orderNo');
-        $c = Yii::$app->request->get('c');
-        $orderItemId = Yii::$app->request->get('orderItemId');
-        $bagNo = Yii::$app->request->get('bagNo');
-        $pickingItemsId = Yii::$app->request->get('pickingItemsId');
-        $orderItemPackingId = Yii::$app->request->get('orderItemPackingId');
-        $channels = Yii::$app->request->get('channels');
-        echo 'ทดสอบ ปิดช่อง';
-
-        // OrderItemPacking  มากกว่า 1 รายการ
-        $countBag = \common\models\costfit\OrderItemPacking::find()
-                        ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, order_item_packing.status')
-                        ->joinWith(['orderItems'])
-                        ->where("order_item.orderId = '" . $orderId . "' and order_item_packing.status = 5")->count();
-
-        $OrderItemPacking = \common\models\costfit\OrderItemPacking::find()->where(" orderItemPackingId = '" . $orderItemPackingId . "'")->one();
-
-        //echo '<pre>';
-        //print_r($OrderItemPacking);
-
-        echo $countBag;
-
-        exit();
-
-        if ($countBag > 1) {
-            $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channels . "' and pickingItemsId  = '" . $pickingItemsId . "' ")->one();
-            if (count($listPointItems) > 0) {
-                \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $listPointItems->pickingItemsId], ['orderItemPackingId' => $orderItemPackingId]);
-                \common\models\costfit\OrderItem::updateAll(['status' => 14], ['orderItemId' => $OrderItemPacking->orderItemId]);
-                //$Order = \common\models\costfit\OrderItem::find()->where("orderItemId = '" . $OrderItemPacking->orderItemId . "' ")->one();
-                \common\models\costfit\Order::updateAll(['status' => 14], ['orderId' => $orderId]);
-                \common\models\costfit\PickingPointItems::updateAll(['status' => 0], ['pickingItemsId' => $listPointItems->pickingItemsId]);
-                return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?pickingItemsId=' . $pickingItemsId . '&boxcode=' . $boxcode . '&model=' . $model . '&code=' . $channels . '&orderId=' . $orderId . '');
-            } else {
-                return $this->render('location', [
-                            'warning' => 'bagerror',
-                            'model' => $model,
-                            'code' => $channel,
-                            'boxcode' => $boxcode,
-                            'pickingItemsId' => $pickingItemsId,
-                            'orderId' => $orderId,
-                            'orderItemPackingId' => $orderItemPackingId,
-                            'bagNo' => $OrderItemPacking->bagNo,
-                ]);
-            }
-        } else if ($countBag == 1) {
-            $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channels . "' and pickingItemsId  = '" . $pickingItemsId . "' ")->one();
-            if (count($listPointItems) > 0) {
-                \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $listPointItems->pickingItemsId], ['orderItemPackingId' => $orderItemPackingId]);
-                \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderId' => $orderId]);
-                //$Order = \common\models\costfit\OrderItem::find()->where("orderItemId = '" . $OrderItemPacking->orderItemId . "' ")->one();
-                \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $orderId]);
-                \common\models\costfit\PickingPointItems::updateAll(['status' => 0], ['pickingItemsId' => $listPointItems->pickingItemsId]);
-                //ส่ง Email
-                $this->generatePassword($orderId);
-                $this->sendEmail($orderId);
-                //return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode = ' . $boxcode);
-                return $this->render('location', [
-                            'warning' => 'roundone',
-                            'boxcode' => $boxcode,
-                ]);
-            } else {
-
-                return $this->render('location', [
-                            'warning' => 'bagerror',
-                            'model' => $model,
-                            'code' => $channel,
-                            'boxcode' => $boxcode,
-                            'pickingItemsId' => $pickingItemsId,
-                            'orderId' => $orderId,
-                            'orderItemPackingId' => $orderItemPackingId,
-                            'bagNo' => $OrderItemPacking->bagNo,
-                ]);
-                // exit();
-            }
-        } else {
-
-        }
-    }
-
-    public function actionReturnBag() {
-        //return
-        $model = Yii::$app->request->get('model');
-        $code = Yii::$app->request->get('code');
-        $boxcode = Yii::$app->request->get('boxcode');
-        $pickingItemsId = Yii::$app->request->get('pickingItemsId');
-        $orderId = Yii::$app->request->get('orderId');
-        $orderItemPackingId = Yii::$app->request->get('orderItemPackingId');
-        $bagNo = Yii::$app->request->get('bagNo');
-
-        //echo $orderItemPackingId;
-        //exit();
-        \common\models\costfit\OrderItemPacking::updateAll(['status' => 5, 'pickingItemsId' => NULL], ['bagNo' => $bagNo]);
-        ///scan-bag?model=1&code=aa-009&boxcode=10&pickingItemsId=111&orderId=&orderItemPackingId=&bagNo=BG20161019-0000008
-        return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?model=' . $model . '&code=' . $code . '&boxcode=' . $boxcode . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId . '&bagNo=' . $bagNo . '');
     }
 
     static public function generatePassword($orderId) {
