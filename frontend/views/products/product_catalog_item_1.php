@@ -218,7 +218,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     }
                 }
                 ?>
-                <a href="<?php $baseUrl ?>/search-cost-fit?search_hd=cost.fit">cost.fit</a>
+                <a href="<?php $baseUrl ?>/search-cost-fit?search_hd=Cozxy.com">Cozxy.com</a>
             </div>
         </div>
     </div>

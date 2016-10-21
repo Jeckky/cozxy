@@ -27,7 +27,7 @@ class CouponController extends MasterController {
      */
     public function actionIndex() {
 
-        $this->title = 'Cost.fit | Coupon';
+        $this->title = 'Cozxy.com | Coupon';
         $this->subTitle = 'ชื่อ Coupon';
         return $this->render('@app/views/coupon/super_coupon');
     }

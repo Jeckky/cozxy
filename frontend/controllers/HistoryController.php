@@ -28,7 +28,7 @@ class HistoryController extends MasterController {
     public function actionIndex() {
 
         $this->layout = "/content_right";
-        $this->title = 'Cost.fit | history';
+        $this->title = 'Cozxy.com | history';
         $this->subTitle = 'Shop - filters left 3 cols ';
         $this->subSubTitle = 'Shop - single item v1';
         return $this->render('history');

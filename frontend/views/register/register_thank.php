@@ -20,7 +20,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <div class="row">
             <div class="col-lg-12 col-md-12">
                 <div class="col-lg-4 col-md-4">
-                    <a class="logo" href="<?php echo $baseUrl; ?>"><img class="col-md-8" src="<?php echo Yii::$app->homeUrl; ?>images/logo/costfit.png" alt="cost.fit"></a>
+                    <a class="logo" href="<?php echo $baseUrl; ?>"><img class="col-md-8" src="<?php echo Yii::$app->homeUrl; ?>images/logo/costfit.png" alt="Cozxy.com"></a>
                     <br><br>
                 </div>
             </div>
@@ -29,7 +29,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 &nbsp;
             </div>
             <div class="col-lg-6 col-md-6">
-                <h2 class="title">ขอบคุณที่ลงทะเบียนกับ COST.FIT</h2>
+                <h2 class="title">ขอบคุณที่ลงทะเบียนกับ Cozxy.com</h2>
                 <div class="row space-top">
                     <div class="clo-lg-12 col-md-12 col-sm-12 space-bottom">
                         <h4 class="light-weight uppercase">

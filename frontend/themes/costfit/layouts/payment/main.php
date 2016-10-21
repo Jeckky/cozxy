@@ -19,7 +19,7 @@ AppAsset::register($this);
         <meta charset="<?= Yii::$app->charset ?>"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <?= Html::csrfMetaTags() ?>
-        <title><?= Html::encode(isset($this->context->title) ? $this->context->title : "My Cost.fit") ?></title>
+        <title><?= Html::encode(isset($this->context->title) ? $this->context->title : "My Cozxy.com") ?></title>
         <?php $this->head() ?>
     </head>
     <body class="">

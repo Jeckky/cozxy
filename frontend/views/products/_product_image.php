@@ -6,7 +6,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
     <?php
 //    throw new \yii\base\Exception(count($model->productImages));
     foreach ($model->productImages as $image) {
-        // รูปภาพ default : /cost.fit/assets/img/catalog/product-gallery/th_1.jpg
+        // รูปภาพ default : /Cozxy.com/assets/img/catalog/product-gallery/th_1.jpg
         ?>
         <div class="ms-slide">
             <img src="<?php echo Yii::$app->homeUrl . $image->image; ?>" data-src="<?php echo Yii::$app->homeUrl . $image->image; ?>" alt="<?= $image->title ?>" class="img-responsive img-thumbnail"/>

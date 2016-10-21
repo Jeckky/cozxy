@@ -23,7 +23,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="modal-body" >
                 <span class="text-center">
                     <center>
-                       <!-- <img src="<?php echo $baseUrl; ?>/images/icon/Fast-Deliver-1.png" alt="cost.fit" style="zoom:5;">-->
+                       <!-- <img src="<?php echo $baseUrl; ?>/images/icon/Fast-Deliver-1.png" alt="Cozxy.com" style="zoom:5;">-->
                     </center>
                 </span><br><center><code> Select Shipping Address Please</code></center>
                 <p class="large text-center">

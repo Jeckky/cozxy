@@ -27,7 +27,7 @@ class RegisterController extends MasterController {
      */
     public function actionIndex() {
 //return Yii::$app->getResponse()->redirect('register/login');
-        $this->title = 'Cost.fit | Register Login';
+        $this->title = 'Cozxy.com | Register Login';
         $this->subTitle = 'Register Login';
         return $this->render('register/Login');
     }
@@ -42,7 +42,7 @@ class RegisterController extends MasterController {
         } else {
 //            throw new \yii\base\Exception(print_r($loginForm->errors, true));
         }
-        $this->title = 'Cost.fit | Register Login';
+        $this->title = 'Cozxy.com | Register Login';
         $this->subTitle = 'Register Login';
         return $this->render('register', ['model' => $model, 'loginForm' => $loginForm, 'term' => $term]);
     }
@@ -85,21 +85,21 @@ class RegisterController extends MasterController {
     }
 
     public function actionThank() {
-        $this->title = 'Cost.fit | Register Thank';
+        $this->title = 'Cozxy.com | Register Thank';
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Register Thank';
         return $this->render('register_thank');
     }
 
     public function actionForgot() {
-        $this->title = 'Cost.fit | Forgot password?';
+        $this->title = 'Cozxy.com | Forgot password?';
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Forgot password?';
         return $this->render('register_forgot');
     }
 
     public function actionConfirm() {
-        $this->title = 'Cost.fit | Register Thank';
+        $this->title = 'Cozxy.com | Register Thank';
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Register Thank';
 

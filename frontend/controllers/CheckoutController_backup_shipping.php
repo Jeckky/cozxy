@@ -45,7 +45,7 @@ class CheckoutController extends MasterController
             //return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         }
         $this->layout = "/content_right";
-        $this->title = 'Cost.fit | checkout';
+        $this->title = 'Cozxy.com | checkout';
         $this->subTitle = 'Checkout';
         $this->subSubTitle = "";
 
@@ -138,7 +138,7 @@ class CheckoutController extends MasterController
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         }
-        $this->title = 'Cost.fit | Order Thank';
+        $this->title = 'Cozxy.com | Order Thank';
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Order Thank';
         return $this->render('order_thank');
@@ -279,7 +279,7 @@ class CheckoutController extends MasterController
 
     public function actionResult()
     {
-        $this->title = 'Cost.fit | Order Thank';
+        $this->title = 'Cozxy.com | Order Thank';
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Order Thank';
         $res = [];

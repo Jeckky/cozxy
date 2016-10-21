@@ -4,7 +4,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 //echo '<pre>';
 ?>
 <!--
-<link href="/cost.fit-frontend/assets/243cd55c/masterslider/style/masterslider.css" rel="stylesheet">
+<link href="/Cozxy.com-frontend/assets/243cd55c/masterslider/style/masterslider.css" rel="stylesheet">
 -->
 <div class="col-lg-12 col-md-12" id="productImage" style="position: relative;  padding-right: 0px; padding-left: 0px;">
     <div class="prod-gal master-slider ms-wk" id="prod-gal" style="margin: 0px; visibility: visible; opacity: 1;">
@@ -16,7 +16,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <?php
                         $num = 0;
                         foreach ($model->productImages as $image) {
-                            // รูปภาพ default : /cost.fit/assets/img/catalog/product-gallery/th_1.jpg
+                            // รูปภาพ default : /Cozxy.com/assets/img/catalog/product-gallery/th_1.jpg
                             ?>
                             <div class="ms-slide <?php if ($num == 0) { ?>ms-sl-selected <?php } ?> " style="width: 550px; height: 484px; <?php if ($num == 0) { ?>opacity: 1 <?php } else { ?> opacity: 0 <?php } ?>;  <?php if ($num != 0) { ?> visibility: hidden; <?php } ?>">
                                 <div class="ms-slide-bgcont" style="height: 100%; opacity: 1;">
@@ -61,7 +61,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </div>
 <!--
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="/cost.fit-frontend/assets/243cd55c/js/plugins/masterslider.min.js"></script>
+<script src="/Cozxy.com-frontend/assets/243cd55c/js/plugins/masterslider.min.js"></script>
 -->
 
 

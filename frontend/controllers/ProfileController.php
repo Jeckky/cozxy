@@ -34,7 +34,7 @@ class ProfileController extends MasterController {
         }
 
         $this->layout = "/content_profile";
-        $this->title = 'Cost.fit | My Profile';
+        $this->title = 'Cozxy.com | My Profile';
         $this->subTitle = 'Home';
         $this->subSubTitle = "My Profile";
 
@@ -57,7 +57,7 @@ class ProfileController extends MasterController {
         }
         echo $this->iSLogin();
         $this->layout = "/content_profile";
-        $this->title = 'Cost.fit | ช่องทางการชำระเงิน';
+        $this->title = 'Cozxy.com | ช่องทางการชำระเงิน';
         $this->subTitle = 'Home';
         $this->subSubTitle = "ช่องทางการชำระเงิน";
         return $this->render('@app/views/payment/payment');
@@ -68,7 +68,7 @@ class ProfileController extends MasterController {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
         $this->layout = "/content_profile";
-        $this->title = 'Cost.fit | Order History';
+        $this->title = 'Cozxy.com | Order History';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Order History";
 
@@ -80,7 +80,7 @@ class ProfileController extends MasterController {
 
     public function actionDataAddress() {
         $this->layout = "/content_profile";
-        $this->title = 'Cost.fit | Default Shipping Assdress';
+        $this->title = 'Cozxy.com | Default Shipping Assdress';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Default Shipping Assdress";
         $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
@@ -110,7 +110,7 @@ class ProfileController extends MasterController {
         $addressId = $params['addressId'];
 
         $this->layout = "/content_profile";
-        $this->title = 'Cost.fit | Default Shipping Assdress';
+        $this->title = 'Cozxy.com | Default Shipping Assdress';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Default Shipping Assdress";
 
@@ -156,7 +156,7 @@ class ProfileController extends MasterController {
         $addressId = $params['addressId'];
 
         $this->layout = "/content_profile";
-        $this->title = 'Cost.fit | Default Shipping Assdress';
+        $this->title = 'Cozxy.com | Default Shipping Assdress';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Default Shipping Assdress";
         if ($hash != 'add') {
@@ -191,7 +191,7 @@ class ProfileController extends MasterController {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
         $this->layout = "/content_profile";
-        $this->title = 'Cost.fit | Default Payment Method';
+        $this->title = 'Cozxy.com | Default Payment Method';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Default Payment Method";
         return $this->render('@app/views/profile/add_payment_method');
@@ -204,7 +204,7 @@ class ProfileController extends MasterController {
         }
 
         $this->layout = "/content_profile";
-        $this->title = 'Cost.fit | Contact Information';
+        $this->title = 'Cozxy.com | Contact Information';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Contact Information";
 
@@ -254,7 +254,7 @@ class ProfileController extends MasterController {
 
         $orderId = Yii::$app->request->get('OrderNo');
         $this->layout = "/content_profile";
-        $this->title = 'Cost.fit | Order Purchase';
+        $this->title = 'Cozxy.com | Order Purchase';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Order Purchase";
 
@@ -280,7 +280,7 @@ class ProfileController extends MasterController {
         $orderId = $params['orderId'];
 
         $this->layout = "/content_profile";
-        $this->title = 'Cost.fit | Order transfer confirm';
+        $this->title = 'Cozxy.com | Order transfer confirm';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Order transfer confirm";
         return $this->render('@app/views/profile/transfer_confirm');
@@ -298,14 +298,14 @@ class ProfileController extends MasterController {
     }
 
     public function actionTracking() {
-        $this->title = 'Cost.fit | tracking';
+        $this->title = 'Cozxy.com | tracking';
         $this->subTitle = 'tracking';
         $this->subSubTitle = 'Delivery';
         return $this->render('@app/views/tracking/tracking');
     }
 
     public function actionReOrder() {
-        $this->title = 'Cost.fit | tracking';
+        $this->title = 'Cozxy.com | tracking';
         $this->subTitle = 'tracking';
         $this->subSubTitle = 'Delivery';
         return $this->render('@app/views/history/history');
@@ -322,7 +322,7 @@ class ProfileController extends MasterController {
         $addressId = $params['addressId'];
 
         $this->layout = "/content_profile";
-        $this->title = 'Cost.fit | Default Shipping Assdress';
+        $this->title = 'Cozxy.com | Default Shipping Assdress';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Default Shipping Assdress";
 

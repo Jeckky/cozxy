@@ -16,14 +16,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="modal-header" style="border-bottom-color:#fff;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
                 <span class="text-left">
-                    <!--<a class="logo col-md-3" href="<?php //echo Yii::$app->homeUrl;          ?>"><img src="<?php //echo Yii::$app->homeUrl;          ?>images/logo/costfit.png" alt="cost.fit" style="zoom:.2;" class="img-responsive"></a>-->
+                    <!--<a class="logo col-md-3" href="<?php //echo Yii::$app->homeUrl;          ?>"><img src="<?php //echo Yii::$app->homeUrl;          ?>images/logo/costfit.png" alt="Cozxy.com" style="zoom:.2;" class="img-responsive"></a>-->
                 </span>
             </div>
             <br>
             <div class="modal-body" >
                 <span class="text-center">
                     <center>
-                        <img class="img-responsive img-circle-thumbnail" id="img_logo" src="<?php echo $baseUrl; ?>/images/modal/cost.fit.png" style="zoom:.8;">
+                        <img class="img-responsive img-circle-thumbnail" id="img_logo" src="<?php echo $baseUrl; ?>/images/modal/Cozxy.com.png" style="zoom:.8;">
                     </center>
                 </span><br>
                 <p class="large text-center">

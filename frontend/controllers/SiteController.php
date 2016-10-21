@@ -78,7 +78,7 @@ class SiteController extends MasterController {
      */
     public function actionIndex() {
 //        throw new \yii\base\Exception(print_r(\Yii::$app->user->identity, true));
-        $this->title = 'My Cost.fit';
+        $this->title = 'My Cozxy.com';
         $bannerGroup = ContentGroup::find()->where("lower(title) = 'banner' and status=1")->one();
         $topOne = ContentGroup::find()->where("lower(title)='topOne'")->one();
         $topOneContent = Content::find()->where("contentGroupId='" . $topOne->contentGroupId . "' order by contentId DESC limit 0,1")->one();
@@ -255,7 +255,7 @@ class SiteController extends MasterController {
             if (!empty($user)) {
                 $login = new LoginForm();
                 if ($user->status == 0) {
-                    // กรณี status = 0 http://localhost/cost.fit-frontend/register/thank
+                    // กรณี status = 0 http://localhost/Cozxy.com-frontend/register/thank
                     $status = 1;
                     $this->redirect(['register/thank', 'status' => $status]);
                 } else {

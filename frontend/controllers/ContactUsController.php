@@ -27,7 +27,7 @@ class ContactUsController extends MasterController {
      */
     public function actionIndex() {
 
-        $this->title = 'Cost.fit | contact us';
+        $this->title = 'Cozxy.com | contact us';
         $this->subTitle = 'contact us';
         $this->subSubTitle = 'Delivery';
         if (isset($_POST['email'])) {

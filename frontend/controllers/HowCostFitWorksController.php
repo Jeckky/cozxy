@@ -22,7 +22,7 @@ class HowCostFitWorksController extends MasterController {
      * @return mixed
      */
     public function actionIndex() {
-        $this->title = 'Cost.fit | How Cost Fit Works';
+        $this->title = 'Cozxy.com | How Cost Fit Works';
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Support';
         $top = ContentGroup::find()->where("lower(title)='howwork'")->one();

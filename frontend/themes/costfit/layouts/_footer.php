@@ -40,7 +40,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <div class="row">
             <div class="col-lg-5 col-md-5 col-sm-5">
                 <div class="info">
-                    <a class="logo" href="<?php echo $baseUrl; ?>"><img src="<?php echo Yii::$app->homeUrl . $logoImage->image; ?>" alt="cost.fit"></a>
+                    <a class="logo" href="<?php echo $baseUrl; ?>"><img src="<?php echo Yii::$app->homeUrl . $logoImage->image; ?>" alt="Cozxy.com"></a>
                     <p><?php echo $logoImage->contents[0]->description; ?></p>
                     <div class="social">
                         <a href="#" target="_blank"><i class="fa fa-instagram"></i></a>

@@ -19,7 +19,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <section class="tracking">
     <div class="container">
         <div class="row" style="text-align: center;">
-            <h2 class="title">Cost.fit ได้รับข้อความจากคุณแล้ว </h2>
+            <h2 class="title">Cozxy.com ได้รับข้อความจากคุณแล้ว </h2>
             <div class="row space-top">
                 <div class="clo-lg-12 col-md-12 col-sm-12 space-bottom">
 

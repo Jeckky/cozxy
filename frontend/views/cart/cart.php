@@ -225,7 +225,7 @@ use common\models\ModelMaster;
                             </a>
                             <div class="footer">
                                 <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product[$index]->encodeParams(['productId' => $product[$index]->productId]) ?>"><?= $product[$index]->title ?></a>
-                                <span>by cost.fit</span>
+                                <span>by Cozxy.com</span>
                                 <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product[$index]->encodeParams(['productId' => $product[$index]->productId]) ?>"><button class="btn btn-primary">View</button></a>
                             </div>
                         </div>

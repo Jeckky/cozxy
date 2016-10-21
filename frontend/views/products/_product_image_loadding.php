@@ -14,7 +14,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <?php
                 $num = 0;
                 foreach ($model->productImages as $image) {
-                    // รูปภาพ default : /cost.fit/assets/img/catalog/product-gallery/th_1.jpg
+                    // รูปภาพ default : /Cozxy.com/assets/img/catalog/product-gallery/th_1.jpg
                     if (isset($image->imageThumbnail2)) {
                         $imageThumb = $image->imageThumbnail2;
                     } else {

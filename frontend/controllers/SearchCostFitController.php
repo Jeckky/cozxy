@@ -28,7 +28,7 @@ class SearchCostFitController extends MasterController {
      */
     public function actionIndex() {
 
-        $this->title = 'Cost.fit | Search Cost.fit';
+        $this->title = 'Cozxy.com | Search Cozxy.com';
         $this->subTitle = 'Home';
         $this->subSubTitle = 'search';
 

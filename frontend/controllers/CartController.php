@@ -36,7 +36,7 @@ class CartController extends MasterController
     public function actionIndex()
     {
         $this->layout = "/content_right";
-        $this->title = 'Cost.fit | cart';
+        $this->title = 'Cozxy.com | cart';
         $this->subTitle = 'Shopping Cart';
         $product = \common\models\costfit\search\Product::find()->where("categoryId='3'")->all();
         $this->subSubTitle = '';

@@ -29,7 +29,7 @@ class WishlistController extends MasterController {
         //return Yii::$app->getResponse()->redirect('register/login');
 
         $this->layout = 'content_right';
-        $this->title = 'Cost.fit | wishlist';
+        $this->title = 'Cozxy.com | wishlist';
         $this->subTitle = 'Wishlist';
         $this->subSubTitle = '';
         $wishlists = \common\models\costfit\Wishlist::find()->where("userId=" . \Yii::$app->user->id)->all();

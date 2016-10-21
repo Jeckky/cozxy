@@ -387,7 +387,7 @@ class MasterController extends MasterCommonController
             // 'marginBottom' => 11,
             //'marginHeader' => 6,
             //'marginFooter' => 6,
-            'options' => ['title' => 'Cost.fit Print ' . $title],
+            'options' => ['title' => 'Cozxy.com Print ' . $title],
             // call mPDF methods on the fly
             'methods' => [
                 'SetHeader' => [$header], //Krajee Report Header

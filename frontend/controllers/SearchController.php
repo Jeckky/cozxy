@@ -35,7 +35,7 @@ class SearchController extends MasterController {
         $this->view->params['categoryId'] = $params['categoryId'];
         $this->view->params['title'] = $title;
         $this->layout = "/content_left";
-        $this->title = 'Cost.fit | Products';
+        $this->title = 'Cozxy.com | Products';
         $this->subTitle = 'ชื่อ search';
 //        throw new \yii\base\Exception(print_r($_POST, true));
         $whereArray = [];
@@ -71,7 +71,7 @@ class SearchController extends MasterController {
     public function actionPop($category) {
         //throw new \yii\base\Exception($category);
         $this->layout = "/content_left";
-        $this->title = 'Cost.fit | Products';
+        $this->title = 'Cozxy.com | Products';
         $this->subTitle = 'ชื่อ search';
         $allCategory = \common\models\costfit\Category::find()->where("parentId='" . $category . "'")->all();
         $categoryId = $category;
@@ -97,7 +97,7 @@ class SearchController extends MasterController {
 
     public function actionSearchBrands() {
         $this->layout = "/content_left";
-        $this->title = 'Cost.fit | Products';
+        $this->title = 'Cozxy.com | Products';
         $this->subTitle = 'ชื่อ search';
         $categoryId = $_POST['categoryId'];
         $cat = \common\models\costfit\Category::find()->where("categoryId=" . $categoryId)->one();

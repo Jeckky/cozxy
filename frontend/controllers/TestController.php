@@ -25,7 +25,7 @@ class TestController extends MasterController {
      */
     public function actionIndex() {
 
-        $this->title = 'Cost.fit | test case';
+        $this->title = 'Cozxy.com | test case';
         $this->subTitle = 'test case ';
         $this->subSubTitle = 'test case';
         $searchModel = new \common\models\costfit\Order();

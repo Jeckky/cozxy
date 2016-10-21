@@ -63,7 +63,7 @@ class ProductsController extends MasterController
         if ($productId != '') {
             $model = \common\models\costfit\Product::find()->where("productId =" . $productId)->one();
             if (count($model) > 0) {
-                $this->title = 'Cost.fit | Products';
+                $this->title = 'Cozxy.com | Products';
                 $this->subTitle = $model->attributes['title'];
                 $this->subSubTitle = '';
 
@@ -91,7 +91,7 @@ class ProductsController extends MasterController
         $res["productImage"] = $this->renderPartial('_product_image_loadding', ['model' => $model]);
         //echo count($model->productImages);
         foreach ($model->productImages as $image) {
-            //$xx = '<div class="ms-slide-bgcont" style="height: 100%; opacity: 1;"><img src="/cost.fit-frontend//images/ProductImage/6FegsyR3cy.png" alt="e" style="height: 484px; width: 618.444px; margin-top: 0px; margin-left: -34px;"></div>';
+            //$xx = '<div class="ms-slide-bgcont" style="height: 100%; opacity: 1;"><img src="/Cozxy.com-frontend//images/ProductImage/6FegsyR3cy.png" alt="e" style="height: 484px; width: 618.444px; margin-top: 0px; margin-left: -34px;"></div>';
             $productImagex[] = '<img src="' . Yii::$app->homeUrl . $image->image . '" data-src="' . Yii::$app->homeUrl . $image->image . '" alt="' . $image->title . '"/>'
             ;
         }

@@ -259,7 +259,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             <div class="tabs-content col-lg-6 col-md-6">
                                 <div class="tabs-pane current" id="tab-1">
                                     <h2 class="title-head">
-                                        How Cost.Fit Works
+                                        How Cozxy.com Works
                                     </h2>
                                     <p class="p-style3">Outline the main advantages a one can get by purchasing a product from your store. Have you got expensive items and at the same time a flexible return policy? Make a customer aware of that! </p>
                                 </div>

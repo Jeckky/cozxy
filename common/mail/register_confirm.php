@@ -51,7 +51,7 @@
         <div class="main">
             <div class="main-leyouts">
                 <div class="head title" style=" background-color: #03a9f4; color: #ffffff; padding: 20px;">
-                    COST.FIT
+                    COZXY.COM
                 </div>
                 <div class="content">
                     <center>

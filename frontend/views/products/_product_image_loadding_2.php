@@ -4,7 +4,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 //echo '<pre>';
 ?>
 
-<link href="/cost.fit-frontend/assets/243cd55c/masterslider/style/masterslider.css" rel="stylesheet">
+<link href="/Cozxy.com-frontend/assets/243cd55c/masterslider/style/masterslider.css" rel="stylesheet">
 <div class="col-lg-12 col-md-12" id="productImage" style="position: relative;  padding-right: 0px; padding-left: 0px;">
     <div class="prod-gal master-slider ms-wk" id="prod-gal" style="margin: 0px; visibility: visible; opacity: 1;">
         <div class="ms-display-template">
@@ -16,7 +16,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <?php
                         $num = 0;
                         foreach ($model->productImages as $image) {
-                            // รูปภาพ default : /cost.fit/assets/img/catalog/product-gallery/th_1.jpg
+                            // รูปภาพ default : /Cozxy.com/assets/img/catalog/product-gallery/th_1.jpg
                             if (isset($image->imageThumbnail2)) {
                                 $imageThumb = $image->imageThumbnail2;
                             } else {
@@ -38,7 +38,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <?php
                         $num = 0;
                         foreach ($model->productImages as $image) {
-                            // รูปภาพ default : /cost.fit/assets/img/catalog/product-gallery/th_1.jpg
+                            // รูปภาพ default : /Cozxy.com/assets/img/catalog/product-gallery/th_1.jpg
                             ?>
                             <div class="ms-slide" style="background-color: #000;">
                                 <img class="ms-thumb" src="<?php echo Yii::$app->homeUrl . $image->image; ?>" data-src="<?php echo Yii::$app->homeUrl . $image->image; ?>" alt="1" width="137" height="130">
@@ -53,7 +53,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
 
         <!-- Master Slider -->
-        <script src="/cost.fit-frontend/assets/243cd55c/js/plugins/masterslider.min.js"></script>
+        <script src="/Cozxy.com-frontend/assets/243cd55c/js/plugins/masterslider.min.js"></script>
         <script type="text/javascript">
 
             var slider = new MasterSlider();

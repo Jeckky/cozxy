@@ -23,11 +23,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <title><?= Html::encode(isset($this->context->getTitleProduct()->attributes['title']) ? $this->context->getTitleProduct()->attributes['title'] . ' : COZXY.COM LOWEST PRICE PRODUCTS' : "COZXY.COM LOWEST PRICE PRODUCTS") ?></title>
         <meta http-equiv="Cache-Control" content="no-store">
         <meta http-equiv="Pragma" content="no-cache">
-        <meta name="description" content="<?= Html::encode(isset($this->context->getTitleProduct()->attributes['title']) ? $this->context->getTitleProduct()->attributes['title'] . ' : Cost.fit' : "My Cost.fit") ?>">
-        <meta name="KeyWords" content="<?= Html::encode(isset($this->context->getTitleProduct()->attributes['tags']) ? $this->context->getTitleProduct()->attributes['tags'] . ' : Cost.fit' : "My Cost.fit") ?>">
-        <meta name="author" content="Cost.fit">
-        <meta itemprop="name" content="Cost.fit">
-        <meta itemprop="description" content="<?= Html::encode(isset($this->context->getTitleProduct()->attributes['title']) ? $this->context->getTitleProduct()->attributes['title'] . ' : Cost.fit' : "My Cost.fit") ?>">
+        <meta name="description" content="<?= Html::encode(isset($this->context->getTitleProduct()->attributes['title']) ? $this->context->getTitleProduct()->attributes['title'] . ' : cozxy.com' : "My cozxy.com") ?>">
+        <meta name="KeyWords" content="<?= Html::encode(isset($this->context->getTitleProduct()->attributes['tags']) ? $this->context->getTitleProduct()->attributes['tags'] . ' : cozxy.com' : "My cozxy.com") ?>">
+        <meta name="author" content="cozxy.com">
+        <meta itemprop="name" content="cozxy.com">
+        <meta itemprop="description" content="<?= Html::encode(isset($this->context->getTitleProduct()->attributes['title']) ? $this->context->getTitleProduct()->attributes['title'] . ' : cozxy.com' : "My cozxy.com") ?>">
         <meta itemprop="image" content="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png">
         <link rel="image_src" type="image/jpeg" href="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png">
         <?php $this->head() ?>
