@@ -18,7 +18,7 @@
         <td class="savings align-r"><?= number_format($this->params['cart']['totalItemDiscount'], 2) ?> ฿</td>
     </tr>
     <tr>
-        <td class="total">Subtotal</td>
+        <td style="color: #000;">Subtotal</td>
         <td class="total align-r"><?= number_format($this->params['cart']['total'], 2) ?> ฿</td>
     </tr>
 <!--    <tr>
