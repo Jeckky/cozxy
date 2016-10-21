@@ -120,7 +120,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <td class="bg-purchase-order"><?php echo number_format($order->summary); ?></td>
         </tr>
 
-    </tbody>
+    </tbody> 
 </table>
 
 
