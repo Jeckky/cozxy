@@ -89,12 +89,18 @@ class PickingPointItems extends \common\models\costfit\master\PickingPointItemsM
 
     public static function bagNo($pickingItemId) {
         $bagNo = '';
-        $orderItemPacking = OrderItemPacking::find()->where("pickingItemsId=" . $pickingItemId . " and status=7")->all(); //เชค สถานะนำจ่าย(ลูกค้ายังไม่รับของ)
-        if (isset($orderItemPacking) && !empty($orderItemPacking)) {
+        $bagNox = '';
+        $orderItemPacking = OrderItemPacking::find()
+                ->select('order_item_packing.bagNo, count(order_item_packing.bagNo) AS NumberOfBagNo ,order_item_packing.pickingItemsId')
+                ->where("pickingItemsId=" . $pickingItemId . " and status=7")
+                ->groupBy(['order_item_packing.bagNo'])
+                ->all(); //เชค สถานะนำจ่าย(ลูกค้ายังไม่รับของ)
+        if (count($orderItemPacking) > 0) {
             foreach ($orderItemPacking as $item):
-                $bagNo = $bagNo . $item->bagNo . ", ";
+                //$bagNo = substr($item->bagNo, 0, -2);
+                $bagNo .= $item->bagNo . ' (' . $item->NumberOfBagNo . ' ถุง )' . ",";
+                //$bagNox = $bagNo . $item->bagNo;
             endforeach;
-            $bagNo = substr($bagNo, 0, -2);
         }
         return $bagNo;
     }

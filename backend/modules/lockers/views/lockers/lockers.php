@@ -99,7 +99,22 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                         $items = common\models\costfit\PickingPointItems::OrderId($row->pickingItemsId);
                                                         $bagNo = common\models\costfit\PickingPointItems::bagNo($row->pickingItemsId);
                                                         if ($items != '' && $bagNo != '') {
-                                                            echo '<div class="search-content">OrderNo : ' . $items . '<br><br>BagNo : ' . $bagNo . '</div>';
+                                                            $BagNos = explode(",", $bagNo);
+                                                            ?>
+                                                            <div class="list-group search-content">
+                                                                <span href="#" class="list-group-item">
+                                                                    OrderNo : <?php echo $items; ?>
+                                                                </span>
+                                                                <span href="#" class="list-group-item">
+                                                                    <?php
+                                                                    for ($index = 1; $index < count($BagNos); $index++) {
+                                                                        echo $BagNos[$index] . '<br>';
+                                                                    }
+                                                                    ?>
+                                                                </span>
+                                                            </div>
+                                                            <?php
+                                                            //echo '<div class="search-content">OrderNo : ' . $items . '<br><br>BagNo : ' . $bagNo . '</div>';
                                                         }
                                                         ?>
                                                     <?php endif; ?>

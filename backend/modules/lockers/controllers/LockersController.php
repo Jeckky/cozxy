@@ -79,82 +79,6 @@ class LockersController extends LockersMasterController {
         //return $this->render('lockers', ['txt' => $txt, 'codes' => $codes, 'data' => $data]);
     }
 
-    public function actionChannels() {
-
-        $boxcode = Yii::$app->request->get('boxcode');
-        $channel = Yii::$app->request->get('code');
-        $orderId = Yii::$app->request->get('orderId');
-        $model = Yii::$app->request->get('model');
-        $orderNo = Yii::$app->request->get('orderNo');
-
-        if ($boxcode != '') {
-            $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $boxcode . "'")->one();
-            $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channel . "' ")->one();
-            if (count($listPointItems) > 0) {
-                $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
-                $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
-                $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
-                $duplicate = OrderItemPacking::find()->where("pickingItemsId  =" . $listPointItems->pickingItemsId . ' and status < 8  ')->one();
-
-                if (count($duplicate) > 0) {
-                    return $this->render('location', [
-                                'warning' => 'duplicate',
-                                'boxcode' => $boxcode,
-                    ]);
-                }
-                //echo'<pre>';
-                //print_r($duplicate);
-                //exit();
-            } else {
-                $localNamecitie = null;
-                $localNamestate = null;
-                $localNamecountrie = null;
-            }
-            // แสดงสถานที่ Locker นั่น
-
-            $checkOrderId = \common\models\costfit\Order::find()->where("orderNo  = '" . $orderNo . "' and pickingId ='" . $boxcode . "'")->one();
-            // echo count($checkOrderId);
-            if (count($checkOrderId) > 0) {
-                $orderId = $checkOrderId->orderId;
-                $pickingId = $checkOrderId->pickingId;
-                $query = \common\models\costfit\Order::find()
-                        ->select('*')
-                        ->joinWith(['orderItems'])
-                        ->where("order_item.status >= 14 and order.pickingId = '" . $boxcode . "' and orderNo   ='" . $orderNo . "'");
-                //$ordersending = \common\models\costfit\PickingPoint::ordersending($orderNo, $boxcode);
-                $warning = 'yes';
-            } else {
-                $orderId = '';
-                $query = \common\models\costfit\Order::find()
-                        ->select('*')
-                        ->joinWith(['orderItems'])
-                        ->where("order_item.status >= 14 and order.pickingId = '" . $boxcode . "'  and orderNo   ='" . $orderNo . "'"); // check orderNo and pickingId
-                //$this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $boxcode);
-                $warning = 'no';
-            }
-
-            $dataProvider = new ActiveDataProvider([
-                'query' => $query,
-            ]);
-            return $this->render('channels', [
-                        'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
-                        'citie' => $localNamecitie,
-                        'countrie' => $localNamecountrie,
-                        'state' => $localNamestate,
-                        'listPointItems' => $listPointItems,
-                        'model' => $model,
-                        'boxcode' => $boxcode,
-                        'channel' => $channel,
-                        'warning' => $warning,
-                        'orderId' => $orderId
-            ]);
-            //$query = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "'");
-            // echo $this->orders($orderNo, $listPoint, $localNamecitie, $localNamecountrie, $localNamestate, $listPointItems, $model);
-        } else {
-
-        }
-    }
-
     public function actionScanBag() {
 
         $request = Yii::$app->request;
@@ -455,6 +379,82 @@ class LockersController extends LockersMasterController {
                 $location = $picking->title;
                 $email->mailSendPassword($toMail, $userName, $password, $location);
             }
+        }
+    }
+
+    public function actionChannels() {
+
+        $boxcode = Yii::$app->request->get('boxcode');
+        $channel = Yii::$app->request->get('code');
+        $orderId = Yii::$app->request->get('orderId');
+        $model = Yii::$app->request->get('model');
+        $orderNo = Yii::$app->request->get('orderNo');
+
+        if ($boxcode != '') {
+            $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $boxcode . "'")->one();
+            $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channel . "' ")->one();
+            if (count($listPointItems) > 0) {
+                $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
+                $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
+                $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
+                $duplicate = OrderItemPacking::find()->where("pickingItemsId  =" . $listPointItems->pickingItemsId . ' and status < 8  ')->one();
+
+                if (count($duplicate) > 0) {
+                    return $this->render('location', [
+                                'warning' => 'duplicate',
+                                'boxcode' => $boxcode,
+                    ]);
+                }
+                //echo'<pre>';
+                //print_r($duplicate);
+                //exit();
+            } else {
+                $localNamecitie = null;
+                $localNamestate = null;
+                $localNamecountrie = null;
+            }
+            // แสดงสถานที่ Locker นั่น
+
+            $checkOrderId = \common\models\costfit\Order::find()->where("orderNo  = '" . $orderNo . "' and pickingId ='" . $boxcode . "'")->one();
+            // echo count($checkOrderId);
+            if (count($checkOrderId) > 0) {
+                $orderId = $checkOrderId->orderId;
+                $pickingId = $checkOrderId->pickingId;
+                $query = \common\models\costfit\Order::find()
+                        ->select('*')
+                        ->joinWith(['orderItems'])
+                        ->where("order_item.status >= 14 and order.pickingId = '" . $boxcode . "' and orderNo   ='" . $orderNo . "'");
+                //$ordersending = \common\models\costfit\PickingPoint::ordersending($orderNo, $boxcode);
+                $warning = 'yes';
+            } else {
+                $orderId = '';
+                $query = \common\models\costfit\Order::find()
+                        ->select('*')
+                        ->joinWith(['orderItems'])
+                        ->where("order_item.status >= 14 and order.pickingId = '" . $boxcode . "'  and orderNo   ='" . $orderNo . "'"); // check orderNo and pickingId
+                //$this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $boxcode);
+                $warning = 'no';
+            }
+
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
+            return $this->render('channels', [
+                        'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
+                        'citie' => $localNamecitie,
+                        'countrie' => $localNamecountrie,
+                        'state' => $localNamestate,
+                        'listPointItems' => $listPointItems,
+                        'model' => $model,
+                        'boxcode' => $boxcode,
+                        'channel' => $channel,
+                        'warning' => $warning,
+                        'orderId' => $orderId
+            ]);
+            //$query = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "'");
+            // echo $this->orders($orderNo, $listPoint, $localNamecitie, $localNamecountrie, $localNamestate, $listPointItems, $model);
+        } else {
+
         }
     }
 
