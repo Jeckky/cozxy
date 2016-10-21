@@ -13,18 +13,10 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <div class="order-index">
-
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <div class="row">
-                <div class="col-md-6"><?= $this->title ?></div>
-                <div class="col-md-6">
-                    <div class="btn-group pull-right">
-                        <?//= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Order', ['create'], ['class' => 'btn btn-success btn-xs']) ?>
-                    </div>
-                </div>
-            </div>
+        <div class="panel-heading"  style="background-color: #ccffcc;vertical-align: middle;">
+            <span class="panel-title"><h3><?= $this->title ?></h3></span>
         </div>
 
         <div class="panel-body">
@@ -33,9 +25,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'method' => 'GET',
                         'action' => ['picking/index'],
             ]);
-            //throw new Exception(print_r($querys, true));
-            foreach ($querys as $query):
-                ///echo '<input type="hidden" name="selection[]" value="' . $query . '">';
+            foreach ($selects as $select):
+                echo '<input type="hidden" name="selection[]" value="' . $select->orderId . '">';
             endforeach;
             ?>
 
@@ -50,9 +41,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     'class' => 'table-light'
                 ],
                 'columns' => [
-                    [
-                        'class' => 'yii\grid\CheckboxColumn',
-                    ],
                     ['class' => 'yii\grid\SerialColumn'],
                     'orderNo',
                     [

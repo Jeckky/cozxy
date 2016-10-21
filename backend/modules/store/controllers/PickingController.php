@@ -42,13 +42,22 @@ class PickingController extends StoreMasterController {
             //throw new \yii\base\Exception('aaaa');
             $query = \common\models\costfit\Order::find()
                     ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-                    ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " and order.orderId in(" . $enoughId . ") limit 0,6");
+                    ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " and order.orderId in(" . $enoughId . ") order by oi.sendDateTime")
+                    ->limit(6);
+            $select = \common\models\costfit\Order::find()
+                    ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
+                    ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " and order.orderId in(" . $enoughId . ")")
+                    ->limit(6)
+                    ->all();
         } else {//ถ้า มีของใน order ไม่ครบ
             $query = \common\models\costfit\Order::find()
                     ->where("orderId=0");
+            $select = \common\models\costfit\Order::find()
+                            ->where("orderId=0")->all();
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => false
         ]);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $allOrderId = '';
@@ -57,7 +66,7 @@ class PickingController extends StoreMasterController {
             $slots = [];
             $i = 0;
             $this->updateQuantity($allOrderId); //ตัดสต๊อก
-            $this->saveSelection($allOrderId, $userId); //บัน
+            $this->saveSelection($allOrderId, $userId); //บันทึก
 //$ms = '';
             foreach ($allOrderId as $orderId):
                 $items = \common\models\costfit\OrderItem::find()->where("orderId = " . $orderId)->all();
@@ -181,7 +190,7 @@ class PickingController extends StoreMasterController {
         } else {
             return $this->render('index', [
                         'dataProvider' => $dataProvider,
-                        'querys' => $query
+                        'selects' => $select
             ]);
         }
     }
