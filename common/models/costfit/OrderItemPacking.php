@@ -40,7 +40,8 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
             'status',
             'orderId',
             'NumberOfBagNo',
-            'orderNo'
+            'orderNo',
+            'NumberOfQuantity'
         ]);
     }
 
@@ -155,12 +156,21 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     }
 
     static public function countBagNo($bagNo) {
-
         $result = OrderItemPacking::find()
                 //->distinct('order_item_packing.bagNo')
                 //->join('LEFT JOIN', 'order_item oi', 'oi.orderItemId = order_item_packing.orderItemId')
                 ->where([ 'order_item_packing.bagNo' => $bagNo])
                 ->count();
+        //throw new \yii\base\Exception($orderItemId);
+        return $result;
+    }
+
+    static public function countQuantity($bagNo) {
+
+        $result = OrderItemPacking::find()
+                ->where(['order_item_packing.bagNo' => $bagNo])
+                ->sum('order_item_packing.quantity');
+
         //throw new \yii\base\Exception($orderItemId);
         return $result;
     }

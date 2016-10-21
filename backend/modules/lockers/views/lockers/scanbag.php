@@ -10,6 +10,7 @@ $this->title = 'แสดงข้อมูลของถุง ที่ต้
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
+
 if (isset($listPointItems)) {
     ?>
     <h1>Shippings / Picking Points Items / เลือก  <?php echo $listPointItems->code; ?></h1>
@@ -57,12 +58,20 @@ if (isset($listPointItems)) {
                             'bagNo',
                             //'pickingItemsId',
                             //'orderItemId',
-                            //'bagNo',
-                            'quantity',
+                            //'bagNo',NumberOfQuantity
+                            //'quantity',
+                            [
+                                'attribute' => 'quantity',
+                                'value' => function($model) {
+                                    //return $model->quantity;
+                                    return 'จำนวน ' . \common\models\costfit\OrderItemPacking::countQuantity($model->bagNo) . "  ชิ้น";
+                                    //return isset($model->NumberOfBagNo) ? 'จำนวน ' . $model->NumberOfBagNo . ' ถุง' : ''; // status items 6 : แพ็คใส่ถุงแล้ว
+                                }
+                            ],
                             [
                                 'attribute' => 'bagNo',
                                 'value' => function($model) {
-                                    return 'จำนวน ' . \common\models\costfit\OrderItemPacking::countBagNo($model->bagNo) . "  ชิ้น";
+                                    return 'จำนวน ' . \common\models\costfit\OrderItemPacking::countBagNo($model->bagNo) . "  ถุง";
                                     //return isset($model->NumberOfBagNo) ? 'จำนวน ' . $model->NumberOfBagNo . ' ถุง' : ''; // status items 6 : แพ็คใส่ถุงแล้ว
                                 }
                             ],
@@ -93,7 +102,7 @@ if (isset($listPointItems)) {
                                     'items' => function($url, $model) {
                                         //return Html::a('รอ Picking Points ', Yii::$app->homeUrl . "picking/picking/index?pickingId=" . $model->pickingId, [
                                         //'title' => Yii::t('app', 'picking point'),]);
-                                        return Html::a('ต้องการหยิบออกจากช่องนี้ ', Yii::$app->homeUrl . 'lockers/lockers/return-bag?model=' . Yii::$app->request->get('model') . '&code=' . Yii::$app->request->get('code') . '&boxcode=' . Yii::$app->request->get('boxcode') . '&pickingItemsId=' . Yii::$app->request->get('pickingItemsId') . '&orderId=&orderItemPackingId=' . $model->orderItemPackingId . '&bagNo=' . $model->bagNo, [
+                                        return Html::a('ต้องการหยิบออกจากช่องนี้ ', Yii::$app->homeUrl . 'lockers/lockers/return-bag?model=' . Yii::$app->request->get('model') . '&code=' . Yii::$app->request->get('code') . '&boxcode=' . Yii::$app->request->get('boxcode') . '&pickingItemsId=' . Yii::$app->request->get('pickingItemsId') . '&orderId=' . Yii::$app->request->get('orderId') . '&orderItemPackingId=' . $model->orderItemPackingId . '&bagNo=' . $model->bagNo, [
                                                     'title' => Yii::t('app', 'ต้องการหยิบออกจากช่องนี้'),]);
                                     }
                                         ],
@@ -104,7 +113,26 @@ if (isset($listPointItems)) {
                         </div>
                     </div>
                 </div>
+                <?php //if ($VarBagDuplicate > 0) { ?>
+                <!--
+                <div class="col-sm-12">
 
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <span class="panel-title">ตรวจสอบ</span>
+                        </div>
+                        <div class="panel-body">
+
+                            <div class="alert alert-danger">
+                                มีอยู่ใน "ช่อง" อื่นแล้ว กรุณาตรวจสอบอีกครั้ง...
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                -->
+                <?php //} else { ?>
 
                 <div class="order-index col-md-12">
 
@@ -148,7 +176,7 @@ if (isset($listPointItems)) {
                             <?php
                             if ($bagNo != '') {
                                 ?>
-                                <a href="close-channel?model=<?php echo $model; ?>&code=<?php echo $channel; ?>&boxcode=<?php echo $listPoint->pickingId; ?>&pickingItemsId=<?php echo $pickingItemsId; ?>&orderId=<?php echo $orderId; ?>&orderItemPackingId=<?php echo $orderItemPackingId; ?>" class="btn btn-danger"><i class="fa fa-hand-o-up"></i> หยิบใส่ช่อง <?php echo $channel; ?> , ถุง : <?php echo $bagNo; ?></a>
+                                <a href="close-channel?bagNo=<?php echo $bagNo; ?>&model=<?php echo $model; ?>&code=<?php echo $channel; ?>&boxcode=<?php echo $listPoint->pickingId; ?>&pickingItemsId=<?php echo $pickingItemsId; ?>&orderId=<?php echo $orderId; ?>&orderItemPackingId=<?php echo $orderItemPackingId; ?>" class="btn btn-danger"><i class="fa fa-hand-o-up"></i> หยิบใส่ช่อง <?php echo $channel; ?> , ถุง : <?php echo $bagNo; ?></a>
                             <?php } ?>
                         </center>
                     </div>
@@ -177,11 +205,19 @@ if (isset($listPointItems)) {
                                     //'orderNo',
                                     //'bagNo',
                                     //'status',
-                                    'quantity',
+                                    //'quantity',
+                                    [
+                                        'attribute' => 'quantity',
+                                        'value' => function($model) {
+                                            //return $model->quantity;
+                                            return 'จำนวน ' . \common\models\costfit\OrderItemPacking::countQuantity($model->bagNo) . "  ชิ้น";
+                                            //return isset($model->NumberOfBagNo) ? 'จำนวน ' . $model->NumberOfBagNo . ' ถุง' : ''; // status items 6 : แพ็คใส่ถุงแล้ว
+                                        }
+                                    ],
                                     [
                                         'attribute' => 'bagNo',
                                         'value' => function($model) {
-                                            return 'จำนวน ' . \common\models\costfit\OrderItemPacking::countBagNo($model->bagNo) . "  ชิ้น";
+                                            return 'จำนวน ' . \common\models\costfit\OrderItemPacking::countBagNo($model->bagNo) . "  ถุง";
                                             //return  ;//isset($model->NumberOfBagNo) ? 'จำนวน ' . $model->NumberOfBagNo . ' ถุง' : ''; // status items 6 : แพ็คใส่ถุงแล้ว
                                         }
                                     ],
@@ -223,11 +259,8 @@ if (isset($listPointItems)) {
 
                 </div>
 
-
                 <div class="order-index col-md-12">
                     <div class="panel colourable panel-danger">
-
-
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-md-6"> แสดงรายการ Order ตามจำนวนถุงที่ยังคงเหลือ</div>
@@ -252,11 +285,19 @@ if (isset($listPointItems)) {
                                     //'orderNo',
                                     //'bagNo',
                                     //'status',
-                                    'quantity',
+                                    //'quantity',
+                                    [
+                                        'attribute' => 'quantity',
+                                        'value' => function($model) {
+                                            //return $model->quantity;
+                                            return 'จำนวน ' . \common\models\costfit\OrderItemPacking::countQuantity($model->bagNo) . "  ชิ้น";
+                                            //return isset($model->NumberOfBagNo) ? 'จำนวน ' . $model->NumberOfBagNo . ' ถุง' : ''; // status items 6 : แพ็คใส่ถุงแล้ว
+                                        }
+                                    ],
                                     [
                                         'attribute' => 'bagNo',
                                         'value' => function($model) {
-                                            return 'จำนวน ' . \common\models\costfit\OrderItemPacking::countBagNo($model->bagNo) . "  ชิ้น";
+                                            return 'จำนวน ' . \common\models\costfit\OrderItemPacking::countBagNo($model->bagNo) . "  ถุง";
                                             //return  ;//isset($model->NumberOfBagNo) ? 'จำนวน ' . $model->NumberOfBagNo . ' ถุง' : ''; // status items 6 : แพ็คใส่ถุงแล้ว
                                         }
                                     ],
@@ -297,6 +338,7 @@ if (isset($listPointItems)) {
                     </div>
 
                 </div>
+                <?php //} ?>
                 <?php
             }
         } else {
@@ -306,8 +348,9 @@ if (isset($listPointItems)) {
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>ไม่พบข้อมูล</strong> ชื่อช่องนี้ ลองใหม่อีกครั้ง...&nbsp; <img src="<?php echo Yii::$app->homeUrl; ?>/images/icon/default-loader.gif" height="30" >
                 </div>
-                <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                                                                                                                                                                                                                                                                        ?>">-->
+                <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                                                                                                                                                                                                                                                                                                                                                                    ?>">-->
             </div>
             <?php
         }
         ?>
+

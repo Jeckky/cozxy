@@ -83,16 +83,29 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 <td style="border:2px black solid ;text-align:center;vertical-align: middle; height: <?= $height ?>" class="<?= ($row->status == 1) ? "alert-success" : "alert-danger" ?>">
                                                     <?php if ($colIndex == 1 && $rowIndex == 1): ?>
                                                         <span style="font-size: 20px;font-weight: bold"><?= "Controller" ?></span>
-                                                    <?php else: ?>
-                                                        <h4><a class="btn" href="<?php echo Yii::$app->homeUrl; ?>lockers/lockers/scan-bag?pickingItemsId=<?php echo $row->pickingItemsId; ?>&code=<?php echo $row->code ?>&boxcode=<?php echo $row->pickingId; ?>&model=1">เปิดช่อง : <?= $row->name; ?></a></h4>
+                                                    <?php else: ?><h4>
+                                                            <?php
+                                                            if ($row->status == 0) {
+                                                                ?>
+                                                                ปิดช่องนี้แล้ว..
+                                                                <?php
+                                                            } else {
+                                                                ?>
+                                                                <a class="btn" href="<?php echo Yii::$app->homeUrl; ?>lockers/lockers/scan-bag?pickingItemsId=<?php echo $row->pickingItemsId; ?>&code=<?php echo $row->code ?>&boxcode=<?php echo $row->pickingId; ?>&model=1">เปิดช่อง : <?= $row->name; ?></a>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                        </h4>
+
                                                         <?php
                                                         $items = common\models\costfit\PickingPointItems::OrderId($row->pickingItemsId);
                                                         $bagNo = common\models\costfit\PickingPointItems::bagNo($row->pickingItemsId);
                                                         if ($items != '' && $bagNo != '') {
-                                                            echo '<h4>OrderNo : ' . $items . '<br><br>BagNo : ' . $bagNo . '</h4>';
+                                                            echo '<div class="search-content">OrderNo : ' . $items . '<br><br>BagNo : ' . $bagNo . '</div>';
                                                         }
                                                         ?>
                                                     <?php endif; ?>
+
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
