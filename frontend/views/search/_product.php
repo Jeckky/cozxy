@@ -32,7 +32,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <span class="tile-overlay"></span>
             </a>
             <div class="footer search-category-footer">
-                <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId]) ?>"><?= $model->title; ?></a>
+                <div class="" style="max-height: 50px; min-height: 50px;">
+                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId]) ?>">
+                        <?=
+                        substr($model->title, 0, 40);
+                        ?></a>
+                </div>
                 <span><?//= $model->shortDescription; ?></span>
                 <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId]) ?>"><button class="btn btn-primary" id="addItemToCart"><i class="fa fa-search"></i>View</button></a>
             </div>

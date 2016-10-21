@@ -165,9 +165,9 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                                     <td style="font-size: 12px;"><?php echo ($value->product->code != '') ? $value->product->code : '-'; ?></td>
                                     <td style="font-size: 12px;"><?php echo $value->product->title; ?></td>
                                     <td style="font-size: 12px;"><?php echo isset($value->product->units) ? $value->product->units->title : "-"; ?></td>
-                                    <td style="font-size: 12px;"><?php echo $value->price; ?></td>
+                                    <td style="font-size: 12px;"><?php echo number_format($value->price, 2); ?></td>
                                     <td style="font-size: 12px;"><?php echo $value->quantity ?></td>
-                                    <td style="font-size: 12px;width: 15%;" ><?php echo $value->total; ?></td>
+                                    <td style="font-size: 12px;width: 15%;" ><?php echo number_format($value->total, 2); ?></td>
                                 </tr>
                                 <?php
                                 $i = $i++;
@@ -186,7 +186,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         </tr>
                         <tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้ารวมภาษีมูลค่าเพิ่ม / sub Total Included VAT :</td>
-                            <td class="bg-purchase-order"><?php echo $order->summary; ?></td>
+                            <td class="bg-purchase-order"><?php echo number_format($order->summary, 2); ?></td>
                         </tr>
                         <!--
                         <tr>
@@ -196,15 +196,15 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         -->
                         <tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">ภาษีมูลค่าเพิ่ม/VAT 7 % :</td>
-                            <td class="bg-purchase-order"><?php echo $order->vat; ?></td>
+                            <td class="bg-purchase-order"><?php echo number_format($order->vat, 2); ?></td>
                         </tr>
                         <tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้าไม่รวมภาษี/Sub Total excluded VAT :</td>
-                            <td class="bg-purchase-order"><?php echo $order->totalExVat; ?></td>
+                            <td class="bg-purchase-order"><?php echo number_format($order->totalExVat, 2); ?></td>
                         </tr>
                         <tr >
                             <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้าที่ต้องชำระเงินรวมภาษีมูลค่าเพิ่ม/Total excluded VAT :</td>
-                            <td class="bg-purchase-order"><?php echo $order->summary; ?></td>
+                            <td class="bg-purchase-order"><?php echo number_format($order->summary, 2); ?></td>
                         </tr>
 
                     </tbody>

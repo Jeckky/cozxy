@@ -181,6 +181,21 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     </div>
 
     <div class="row">
+        <!--
+        <div class="col-lg-8 col-md-8 col-sm-7">
+            <h3>Tags</h3>
+            <div class="tags">&nbsp;
+
+            </div>
+        </div>
+        -->
+    </div>
+</div>
+
+<!--Product Gallery-->
+<div class="col-lg-6 col-md-6" id="productImage">
+    <?php echo $this->render('_product_image', ['model' => $model]); ?>
+    <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-7">
             <h3>Tags</h3>
             <div class="tags">&nbsp;
@@ -196,11 +211,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </div>
         </div>
     </div>
-</div>
-
-<!--Product Gallery-->
-<div class="col-lg-6 col-md-6" id="productImage">
-    <?php echo $this->render('_product_image', ['model' => $model]); ?>
 </div>
 
 <?php
