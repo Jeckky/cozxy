@@ -26,13 +26,19 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 </div>
             </div>
         </div>
+
         <div class="panel-body">
             <?php
             $form = ActiveForm::begin([
                         'method' => 'GET',
                         'action' => ['picking/index'],
             ]);
+            //throw new Exception(print_r($querys, true));
+            foreach ($querys as $query):
+                ///echo '<input type="hidden" name="selection[]" value="' . $query . '">';
+            endforeach;
             ?>
+
             <?=
             GridView::widget([
                 'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
@@ -46,10 +52,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 'columns' => [
                     [
                         'class' => 'yii\grid\CheckboxColumn',
-                        'checkboxOptions' => [
-                            'class' => 'input-lg',
-                        ]
-                    // you may configure additional properties here
                     ],
                     ['class' => 'yii\grid\SerialColumn'],
                     'orderNo',
@@ -67,20 +69,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             return $model->getStatusText($model->status);
                         }
                     ]
-//                    ['class' => 'yii\grid\ActionColumn',
-//                        'header' => 'สถานะ',
-//                        'template' => '{view}',
-//                        'buttons' => [
-//                            'view' => function($url, $model) {
-//                                return Html::a('<i class="fa fa-eye" aria-hidden="true"></i>View', Yii::$app->homeUrl . "order/order/view/" . $model->encodeParams(['id' => $model->orderId]), [
-//                                            'title' => Yii::t('app', ' View Order No :' . $model->orderId), 'class' => 'btn btn-info']);
-//                            },
-//                                    'pick' => function($url, $model) {
-//                               return Html::a('<u><i class="fa fa-check" aria-hidden="true"></i>Pick</u>', ['payment-history', 'orderId' => $model->orderId], [
-//                                            'title' => Yii::t('app', 'history\'s lists'), 'class' => 'btn btn-warning']);
-//                            },
-//                        ]
-//                    ],
                 ],
             ]);
             ?>

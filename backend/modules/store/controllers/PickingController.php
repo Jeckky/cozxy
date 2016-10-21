@@ -42,17 +42,10 @@ class PickingController extends StoreMasterController {
             //throw new \yii\base\Exception('aaaa');
             $query = \common\models\costfit\Order::find()
                     ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-                    ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " and order.orderId in(" . $enoughId . ")");
+                    ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " and order.orderId in(" . $enoughId . ") limit 0,6");
         } else {//ถ้า มีของใน order ไม่ครบ
-            // throw new \yii\base\Exception('aa');
             $query = \common\models\costfit\Order::find()
                     ->where("orderId=0");
-
-            //$query = '';
-//            throw new \yii\base\Exception('bbbb');
-//            $query = \common\models\costfit\Order::find()
-//                    ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-//                    ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS);
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -188,7 +181,7 @@ class PickingController extends StoreMasterController {
         } else {
             return $this->render('index', [
                         'dataProvider' => $dataProvider,
-                            // 'ms' => $ms
+                        'querys' => $query
             ]);
         }
     }
