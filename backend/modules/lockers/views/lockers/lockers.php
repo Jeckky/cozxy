@@ -86,9 +86,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     <?php else: ?><h4>
                                                             <?php
                                                             if ($row->status == 0) {
-                                                                ?>
-                                                                ปิดช่องนี้แล้ว..
-                                                                <?php
+                                                                echo ' ปิดช่องนี้แล้ว..';
                                                             } else {
                                                                 ?>
                                                                 <a class="btn" href="<?php echo Yii::$app->homeUrl; ?>lockers/lockers/scan-bag?pickingItemsId=<?php echo $row->pickingItemsId; ?>&code=<?php echo $row->code ?>&boxcode=<?php echo $row->pickingId; ?>&model=1">เปิดช่อง : <?= $row->name; ?></a>
