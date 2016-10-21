@@ -15,6 +15,7 @@ use Yii;
     * @property string $orderId
     * @property string $parentId
     * @property string $result
+    * @property string $pickerId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -36,7 +37,7 @@ public function rules()
 {
 return [
             [['storeProductId', 'productId', 'slotId', 'quantity', 'createDateTime'], 'required'],
-            [['storeProductId', 'productId', 'slotId', 'orderId', 'parentId', 'result', 'status'], 'integer'],
+            [['storeProductId', 'productId', 'slotId', 'orderId', 'parentId', 'result', 'pickerId', 'status'], 'integer'],
             [['quantity'], 'number'],
             [['createDateTime', 'updateDateTime'], 'safe'],
         ];
@@ -56,6 +57,7 @@ return [
     'orderId' => Yii::t('store_product_arrange', 'Order ID'),
     'parentId' => Yii::t('store_product_arrange', 'Parent ID'),
     'result' => Yii::t('store_product_arrange', 'Result'),
+    'pickerId' => Yii::t('store_product_arrange', 'Picker ID'),
     'status' => Yii::t('store_product_arrange', 'Status'),
     'createDateTime' => Yii::t('store_product_arrange', 'Create Date Time'),
     'updateDateTime' => Yii::t('store_product_arrange', 'Update Date Time'),

@@ -32,9 +32,15 @@ class StoreProductArrange extends \common\models\costfit\master\StoreProductArra
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public static function findItems($slot) {
+    public static function findItems($slot, $allOrderId) {
+        $orderId = '';
+        foreach ($allOrderId as $id):
+            $orderId = $orderId . $id . ",";
+        endforeach;
+        $orderId = substr($orderId, 0, -1);
+        $userId = '1234';
         if ($slot != 'a') {
-            $productId = StoreProductArrange::find()->where("slotId=" . $slot . " and status=4")->all();
+            $productId = StoreProductArrange::find()->where("slotId=" . $slot . " and status=99 and pickerId='" . $userId . "' and orderId in (" . $orderId . ")")->all();
             if (isset($productId)) {
                 return $productId;
             } else {
