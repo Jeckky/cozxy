@@ -96,14 +96,20 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                         </h4>
 
                                                         <?php
-                                                        $items = common\models\costfit\PickingPointItems::OrderId($row->pickingItemsId);
+                                                        //echo $row->pickingItemsId;
+                                                        $items = common\models\costfit\PickingPointItems::OrderNoChannels($row->pickingItemsId);
                                                         $bagNo = common\models\costfit\PickingPointItems::bagNo($row->pickingItemsId);
                                                         if ($items != '' && $bagNo != '') {
+                                                            //if ($bagNo != '') {
                                                             $BagNos = explode(",", $bagNo);
+                                                            $orderNos = explode(",", $items);
                                                             ?>
                                                             <div class="list-group search-content">
                                                                 <span href="#" class="list-group-item">
-                                                                    OrderNo : <?php echo $items; ?>
+                                                                    <?php
+                                                                    $itemsOrderNo = common\models\costfit\PickingPointItems::OrderNoList(" $items ");
+                                                                    echo 'OrderNo : ' . $itemsOrderNo;
+                                                                    ?>
                                                                 </span>
                                                                 <span href="#" class="list-group-item">
                                                                     <?php
@@ -114,7 +120,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                 </span>
                                                             </div>
                                                             <?php
-                                                            //echo '<div class="search-content">OrderNo : ' . $items . '<br><br>BagNo : ' . $bagNo . '</div>';
                                                         }
                                                         ?>
                                                     <?php endif; ?>
