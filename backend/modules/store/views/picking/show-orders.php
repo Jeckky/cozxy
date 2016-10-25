@@ -59,6 +59,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
         <?php
         foreach ($slots as $slot):
             $i = 1;
+            $array = [];
             ?>
             <h4>Slot : <?php
                 if ($slot == 'a') {
@@ -81,10 +82,11 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <?php
                     $product = common\models\costfit\StoreProductArrange::findItems($slot, $allOrderId);
                     $couuntProduct = 0;
+                    $a = 0;
+                    $array = [];
+                    $total = 0;
                     if (isset($product) && !empty($product)) {
                         foreach ($product as $productId):
-                            $total = 0;
-                            //foreach ($allOrderId as $orderId):
                             $item = common\models\costfit\OrderItem::findOrderItems($productId->orderId, $productId->productId);
                             if (isset($item) && !empty($item)) {
                                 ?><tr>
@@ -112,21 +114,27 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 </tr>
 
                                 <?php
+                                $checkId = \common\models\costfit\StoreProductArrange::checkProductId($array, $productId->productId);
+                                $array[$a] = $productId->productId;
+                                $a++;
+                                if ($checkId == false) {
+                                    $total = \common\models\costfit\StoreProductArrange::findProductInSlot($slot, $allOrderId, $productId->productId);
+                                    ?>
+                                    <tr>
+                                        <?php if (isset($item) && !empty($item)) { ?>
+                                            <td colspan="2" class="text-right"><b>Total ( <?php echo Product::findProductName($item->productId); ?> )</b></td>
+                                            <td><b><?php echo $total; ?></b></td>
+                                            <td><b></b></td>
+                                            <td><b></b></td>
+                                        <?php }
+                                        ?>
+                                    </tr>
+                                    <?php
+                                }
                                 $i++;
-                                $total+=$item->quantity;
                             }
                         endforeach;
-                        ?>
-                        <tr>
-        <?php if (isset($item) && !empty($item)) { ?>
-                                <td colspan="2" class="text-right"><b>Total ( <?php echo Product::findProductName($item->productId); ?> )</b></td>
-                                <td><b><?php echo $total; ?></b></td>
-                                <td><b></b></td>
-                                <td><b></b></td>
-                            <?php }
-                            ?>
-                        </tr>
-                    <?php }
+                    }
                     ?>
                 </tbody>
             </table>
