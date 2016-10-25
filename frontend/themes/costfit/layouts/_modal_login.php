@@ -44,7 +44,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" align="center">
-                <img class="img-responsive img-circle-thumbnail" id="img_logo" src="<?php echo $baseUrl; ?>/images/modal/Cozxy.com.png" style="zoom:.8;">
+                <img class="img-responsive img-circle-thumbnail" id="img_logo" src="<?php echo $baseUrl; ?>/images/modal/cost.fit.png" style="zoom:.8;">
             </div>
 
             <!-- Begin # DIV Form -->
