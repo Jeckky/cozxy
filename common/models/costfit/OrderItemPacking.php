@@ -176,14 +176,18 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     }
 
     static public function checkBagNo($bagNo) {
+        /*
+          $queryOrderItemPackingId = \common\models\costfit\OrderItemPacking::find()
+          ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
+          . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity , order.orderNo, order.orderId')
+          ->joinWith(['orderItems'])
+          ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
+          ->where("order_item_packing.statusc = 7 and order_item_packing.bagNo ='" . $bagNo . "'   and pickingItemsId is not null")
+          ->groupBy(['order_item_packing.bagNo'])->one();
+         */
         $queryOrderItemPackingId = \common\models\costfit\OrderItemPacking::find()
-                        ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
-                                . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity , order.orderNo, order.orderId')
-                        ->joinWith(['orderItems'])
-                        ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-                        ->where("order_item_packing.status >= 5 and order_item_packing.bagNo ='" . $bagNo . "'   and pickingItemsId is  null")
+                        ->where("order_item_packing.cstatus = 7 and order_item_packing.bagNo ='" . $bagNo . "'   and order_item_packing.pickingItemsId is not null")
                         ->groupBy(['order_item_packing.bagNo'])->one();
-
         if (count($queryOrderItemPackingId) == 0) {
             return 0; // yes
         } else {

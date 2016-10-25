@@ -102,14 +102,14 @@ if (isset($listPointItems)) {
                                     'items' => function($url, $model) {
                                         //return Html::a('รอ Picking Points ', Yii::$app->homeUrl . "picking/picking/index?pickingId=" . $model->pickingId, [
                                         //'title' => Yii::t('app', 'picking point'),]);
-                                        if (\common\models\costfit\OrderItemPacking::checkBagNo($model->bagNo) == 0) {
-                                            return Html::a('อยู่ช่องอื่น', '', [
-                                                        'title' => Yii::t('app', 'ต้องการหยิบออกจากช่องนี้'),]);
-                                        } else {
+                                        //if (\common\models\costfit\OrderItemPacking::checkBagNo(Yii::$app->request->get('bagNo')) == 0) {
+                                        // return Html::a('หยิบใส่ช่องแล้ว', '', [
+                                        // 'title' => Yii::t('app', 'ต้องการหยิบออกจากช่องนี้'),]);
+                                        //} else {
 
-                                            return Html::a('ต้องการหยิบออกจากช่องนี้ ', Yii::$app->homeUrl . 'lockers/lockers/return-bag?model=' . Yii::$app->request->get('model') . '&code=' . Yii::$app->request->get('code') . '&boxcode=' . Yii::$app->request->get('boxcode') . '&pickingItemsId=' . Yii::$app->request->get('pickingItemsId') . '&orderId=' . Yii::$app->request->get('orderId') . '&orderItemPackingId=' . $model->orderItemPackingId . '&bagNo=' . $model->bagNo, [
-                                                        'title' => Yii::t('app', 'ต้องการหยิบออกจากช่องนี้'),]);
-                                        }
+                                        return Html::a('ต้องการหยิบออกจากช่องนี้ ', Yii::$app->homeUrl . 'lockers/lockers/return-bag?model=' . Yii::$app->request->get('model') . '&code=' . Yii::$app->request->get('code') . '&boxcode=' . Yii::$app->request->get('boxcode') . '&pickingItemsId=' . Yii::$app->request->get('pickingItemsId') . '&orderId=' . Yii::$app->request->get('orderId') . '&orderItemPackingId=' . $model->orderItemPackingId . '&bagNo=' . $model->bagNo, [
+                                                    'title' => Yii::t('app', 'ต้องการหยิบออกจากช่องนี้'),]);
+                                        //}
                                     }
                                         ],
                                     ],
@@ -357,7 +357,7 @@ if (isset($listPointItems)) {
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>ไม่พบข้อมูล</strong> ชื่อช่องนี้ ลองใหม่อีกครั้ง...&nbsp; <img src="<?php echo Yii::$app->homeUrl; ?>/images/icon/default-loader.gif" height="30" >
                 </div>
-                <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                                                                                                                                                                                                                                                                                                                                                                                                ?>">-->
+                <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                                                                                                                                                                                                                                                                                                                                                                                                      ?>">-->
             </div>
             <?php
         }
