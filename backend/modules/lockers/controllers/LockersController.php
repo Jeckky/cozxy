@@ -255,7 +255,7 @@ class LockersController extends LockersMasterController {
         $orderItemPackingId = Yii::$app->request->get('orderItemPackingId');
         $channels = Yii::$app->request->get('channels');
         $status = Yii::$app->request->get('status');
-        $close = '';
+        $close = Yii::$app->request->get('close');
         // echo 'ทดสอบ ปิดช่อง';
         // OrderItemPacking  มากกว่า 1 รายการ
         $countBag = \common\models\costfit\OrderItemPacking::find()
@@ -308,17 +308,26 @@ class LockersController extends LockersMasterController {
             $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channel . "' and pickingItemsId  = '" . $pickingItemsId . "' ")->one();
 
             if (count($listPointItems) > 0) {
-                \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $listPointItems->pickingItemsId], ['bagNo' => $bagNo]);
-                \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderId' => $orderId]);
-                \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $orderId]);
-                \common\models\costfit\PickingPointItems::updateAll(['status' => 0], ['pickingItemsId' => $listPointItems->pickingItemsId]);
-                //ส่ง Email
-                $this->generatePassword($orderId);
-                $this->sendEmail($orderId);
-
+                if ($close == 'yes') {
+                    \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $listPointItems->pickingItemsId], ['bagNo' => $bagNo]);
+                    \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderId' => $orderId]);
+                    \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $orderId]);
+                    \common\models\costfit\PickingPointItems::updateAll(['status' => 0], ['pickingItemsId' => $listPointItems->pickingItemsId]);
+                    //ส่ง Email
+                    $this->generatePassword($orderId);
+                    $this->sendEmail($orderId);
+                    return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $boxcode);
+                }
                 return $this->render('location', [
                             'warning' => 'roundone',
                             'boxcode' => $boxcode,
+                            'model' => $model,
+                            'code' => $channel,
+                            'boxcode' => $boxcode,
+                            'pickingItemsId' => $pickingItemsId,
+                            'orderId' => $orderId,
+                            'orderItemPackingId' => $orderItemPackingId,
+                            'bagNo' => $OrderItemPacking->bagNo,
                             'close' => 'yes',
                 ]);
             } else {

@@ -23,10 +23,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <div class="modal-header">
                         <i class="fa fa-check-circle"></i>
                     </div>
-                    <div class="modal-title">ปิดช่องเรียบร้อยแล้ว</div>
+                    <div class="modal-title">ปิดช่อง กดปุ่ม Ok</div>
                     <div class="modal-body">กดปุ่ม Ok เพื่อกลับหน้าหลัก..</div>
                     <div class="modal-footer">
-                        <a class="btn btn-success" href="lockers?boxcode=<?php echo $boxcode; ?>" >OK</a>
+                        <a class="btn btn-success" href="close-channel?close=yes&bagNo=<?php echo $bagNo; ?>&model=<?php echo $model; ?>&code=<?php echo $code; ?>&boxcode=<?php echo $boxcode; ?>&pickingItemsId=<?php echo $pickingItemsId; ?>&orderId=<?php echo $orderId; ?>&orderItemPackingId=<?php echo $orderItemPackingId; ?>" >OK</a>
+                        <a class="btn btn-success" href="lockers?boxcode=<?php echo $boxcode; ?>" >No</a>
                     </div>
                 </div> <!-- / .modal-content -->
             </div> <!-- / .modal-dialog -->
