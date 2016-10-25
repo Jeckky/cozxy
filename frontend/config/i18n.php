@@ -15,7 +15,7 @@ return [
     'interactive' => true,
     'sourcePath' => '@yii',
     'messagePath' => '@yii/messages',
-    'languages' => ['th'],
+    'languages' => ['en'],
     'translator' => 'Yii::t',
     'sort' => false,
     'overwrite' => true,
