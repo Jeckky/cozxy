@@ -336,7 +336,7 @@ class LockersController extends LockersMasterController {
                 // exit();
             }
         } else {
-
+            return $this->redirect(Yii::$app->homeUrl . '/lockers/lockers/lockers?boxcode=' . $boxcode);
         }
     }
 
