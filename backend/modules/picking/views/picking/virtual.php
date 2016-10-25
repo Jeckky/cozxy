@@ -70,10 +70,36 @@ use yii\bootstrap\ActiveForm;
                                                     <?php else: ?>
                                                         <h4><?= $row->name; ?></h4>
                                                         <?php
-                                                        $items = common\models\costfit\PickingPointItems::OrderId($row->pickingItemsId);
+                                                        // $items = common\models\costfit\PickingPointItems::OrderId($row->pickingItemsId);
+                                                        // $bagNo = common\models\costfit\PickingPointItems::bagNo($row->pickingItemsId);
+                                                        // if ($items != '' && $bagNo != '') {
+                                                        // echo '<h4>OrderNo : ' . $items . '<br><br>BagNo : ' . $bagNo . '</h4>';
+                                                        //}
+                                                        ?>
+                                                        <?php
+                                                        //echo $row->pickingItemsId;
+                                                        $items = common\models\costfit\PickingPointItems::OrderNoChannels($row->pickingItemsId);
                                                         $bagNo = common\models\costfit\PickingPointItems::bagNo($row->pickingItemsId);
                                                         if ($items != '' && $bagNo != '') {
-                                                            echo '<h4>OrderNo : ' . $items . '<br><br>BagNo : ' . $bagNo . '</h4>';
+                                                            $BagNos = explode(",", $bagNo);
+                                                            $orderNos = explode(",", $items);
+                                                            ?>
+                                                            <div class="list-group search-content">
+                                                                <span href="#" class="list-group-item">
+                                                                    <?php
+                                                                    $itemsOrderNo = common\models\costfit\PickingPointItems::OrderNoList(" $items ");
+                                                                    echo 'OrderNo : ' . $itemsOrderNo;
+                                                                    ?>
+                                                                </span>
+                                                                <span href="#" class="list-group-item">
+                                                                    <?php
+                                                                    for ($index = 1; $index < count($BagNos); $index++) {
+                                                                        echo $BagNos[$index] . '<br>';
+                                                                    }
+                                                                    ?>
+                                                                </span>
+                                                            </div>
+                                                            <?php
                                                         }
                                                         ?>
                                                     <?php endif; ?>
