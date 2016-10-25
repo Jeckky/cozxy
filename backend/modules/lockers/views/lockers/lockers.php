@@ -101,6 +101,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                         $bagNo = common\models\costfit\PickingPointItems::bagNo($row->pickingItemsId);
                                                         if ($items != '' && $bagNo != '') {
 
+
                                                             $BagNos = explode(",", $bagNo);
                                                             $orderNos = explode(",", $items);
                                                             ?>
