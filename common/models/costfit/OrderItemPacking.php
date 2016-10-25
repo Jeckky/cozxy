@@ -181,7 +181,7 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
                                 . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity , order.orderNo, order.orderId')
                         ->joinWith(['orderItems'])
                         ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-                        ->where("order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "'  ")
+                        ->where("order_item_packing.status >= 5 and order_item_packing.bagNo ='" . $bagNo . "'   and pickingItemsId is  null")
                         ->groupBy(['order_item_packing.bagNo'])->one();
 
         if (count($queryOrderItemPackingId) == 0) {
