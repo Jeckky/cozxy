@@ -254,7 +254,7 @@ class LockersController extends LockersMasterController {
         $pickingItemsId = Yii::$app->request->get('pickingItemsId');
         $orderItemPackingId = Yii::$app->request->get('orderItemPackingId');
         $channels = Yii::$app->request->get('channels');
-        $channels = Yii::$app->request->get('channels');
+        $status = Yii::$app->request->get('status');
         $close = '';
         // echo 'ทดสอบ ปิดช่อง';
         // OrderItemPacking  มากกว่า 1 รายการ
