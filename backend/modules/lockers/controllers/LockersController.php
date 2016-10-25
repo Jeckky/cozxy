@@ -144,7 +144,7 @@ class LockersController extends LockersMasterController {
               Query ส่วนของแสดง Order ของถุงนี้ที่ ใส่เข้าช่องของ Lockers นี้แล้ว
              */
             $query1 = \common\models\costfit\OrderItemPacking::find()
-                    ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, '
+                    ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.pickingItemsId, '
                             . 'order_item_packing.bagNo, order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, order.orderNo, '
                             . 'order.orderId ,order_item_packing.quantity')
                     ->joinWith(['orderItems'])
@@ -168,7 +168,7 @@ class LockersController extends LockersMasterController {
         } else {
             //echo 'xx'; แสดง BagNo ที่ Scan Qr code
             $query1 = \common\models\costfit\OrderItemPacking::find()
-                    ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, '
+                    ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId,  order_item_packing.pickingItemsId,'
                             . 'order_item_packing.bagNo, order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, order.orderNo, '
                             . 'order.orderId ,order_item_packing.quantity')
                     ->joinWith(['orderItems'])

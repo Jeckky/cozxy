@@ -175,7 +175,7 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
         return $result;
     }
 
-    static public function checkBagNo($bagNo) {
+    static public function checkBagNo($pickingItemsId) {
         /*
           $queryOrderItemPackingId = \common\models\costfit\OrderItemPacking::find()
           ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
@@ -184,14 +184,17 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
           ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
           ->where("order_item_packing.statusc = 7 and order_item_packing.bagNo ='" . $bagNo . "'   and pickingItemsId is not null")
           ->groupBy(['order_item_packing.bagNo'])->one();
-         */
-        $queryOrderItemPackingId = \common\models\costfit\OrderItemPacking::find()
-                        ->where("order_item_packing.cstatus = 7 and order_item_packing.bagNo ='" . $bagNo . "'   and order_item_packing.pickingItemsId is not null")
-                        ->groupBy(['order_item_packing.bagNo'])->one();
+
+          $queryOrderItemPackingId = \common\models\costfit\OrderItemPacking::find()
+          ->where("order_item_packing.status = 7 and order_item_packing.bagNo ='" . $bagNo . "' and pickingItemsId= '" . $pickingItemsId . "' ")
+          ->groupBy(['order_item_packing.bagNo'])->one(); */
+
+        $queryOrderItemPackingId = \common\models\costfit\PickingPointItems::find()
+                        ->where("pickingItemsId= '" . $pickingItemsId . "' ")->one();
         if (count($queryOrderItemPackingId) == 0) {
-            return 0; // yes
+            return $queryOrderItemPackingId['pickingItemsId']; // yes
         } else {
-            return 1; // no
+            return $queryOrderItemPackingId['pickingItemsId']; // no
         }
     }
 
