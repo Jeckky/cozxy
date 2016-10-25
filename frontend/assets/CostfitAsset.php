@@ -16,8 +16,7 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class CostfitAsset extends AssetBundle
-{
+class CostfitAsset extends AssetBundle {
 
     public $sourcePath = '@app/themes/costfit/assets';
     public $css = [
@@ -45,8 +44,8 @@ class CostfitAsset extends AssetBundle
         'js/plugins/jquery.nouislider.min.js',
         'mailer/mailer.js',
         'js/scripts.js',
-        'js/Cozxy.com.js.reform.js',
-        'js/Cozxy.com.unity.js',
+        'js/cost.fit.js.reform.js',
+        'js/cost.fit.unity.js',
         'js/404.js',
         'js/plugins/smoothscroll.js',
         'js/plugins/jquery.placeholder.js',
