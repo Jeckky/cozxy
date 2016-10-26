@@ -321,7 +321,14 @@ class LockersController extends LockersMasterController {
                     \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $listPointItems->pickingItemsId], ['bagNo' => $bagNo]);
                     \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderId' => $orderId]);
                     \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $orderId]);
-                    \common\models\costfit\PickingPointItems::updateAll(['status' => 0], ['pickingItemsId' => $listPointItems->pickingItemsId]);
+                    if ($status == 'now') {
+                        \common\models\costfit\PickingPointItems::updateAll(['status' => 0], ['pickingItemsId' => $listPointItems->pickingItemsId]);
+                    } elseif ($status == 'latter') {
+                        \common\models\costfit\PickingPointItems::updateAll(['status' => 1], ['pickingItemsId' => $listPointItems->pickingItemsId]);
+                    } else {
+                        \common\models\costfit\PickingPointItems::updateAll(['status' => 1], ['pickingItemsId' => $listPointItems->pickingItemsId]);
+                    }
+
                     //ส่ง Email
                     $this->generatePassword($orderId);
                     $this->sendEmail($orderId);
