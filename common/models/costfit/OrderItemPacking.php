@@ -41,7 +41,8 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
             'orderId',
             'NumberOfBagNo',
             'orderNo',
-            'NumberOfQuantity'
+            'NumberOfQuantity',
+            'pickingId'
         ]);
     }
 
