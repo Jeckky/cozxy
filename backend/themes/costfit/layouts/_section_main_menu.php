@@ -26,7 +26,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
   ]); */
 ?>
 <div id="main-menu" role="navigation">
-    <div id="main-menu-inner"> 
+    <div id="main-menu-inner">
         <div class="menu-content top" id="menu-content-demo">
             <div>
                 <div class="text-bg"><span class="text-slim">Welcome,</span> <span class="text-semibold"><?php echo Yii::$app->session['firstname']; ?></span></div>
@@ -86,7 +86,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/store-product-group"><span class="mm-text">Import Product</span></a>
                     </li>
                     <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/store-product/arrange"><span class="mm-text">จัดเรียง</span></a>
+                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/store-product/choose-po"><span class="mm-text">จัดเรียง</span></a>
                     </li>
                     <li>
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/picking"><span class="mm-text">Picking</span></a>
@@ -206,7 +206,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/future-plan-report"><span class="mm-text">รายงานสินค้าที่ต้องสั่งล่วงหน้า</span><span class="label label-warning">2</span></a>
                         <!--                        <ul>
                                                     <li>
-                                                        <a tabindex="-1" href="<?php //echo $baseUrl;                               ?>/report/report"><span class="mm-text">รายงานยอดขาย</span></a>
+                                                        <a tabindex="-1" href="<?php //echo $baseUrl;                                ?>/report/report"><span class="mm-text">รายงานยอดขาย</span></a>
                                                     </li>
                                                 </ul>-->
                     </li>

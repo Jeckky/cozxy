@@ -207,6 +207,32 @@ class StoreProductController extends StoreMasterController {
         ]);
     }
 
+    public function actionChoosePo() {
+        $ms = '';
+        $userId = '1234';
+        $model = new StoreProduct();
+        if (isset($_POST["StoreProductGroup"]['poNo']) && !empty($_POST["StoreProductGroup"]['poNo'])) {
+            $storeProductGroup = StoreProductGroup::find()->where("poNo='" . $_POST["StoreProductGroup"]['poNo'] . "' and status=2")->one(); // เชค ที่สถานะเท่ากับตรวจรับแล้วเท่านั้น
+            if (isset($storeProductGroup) && !empty($storeProductGroup)) {
+                $storeProducts = \common\models\costfit\StoreProduct::find()->where("storeProductGroupId=" . $storeProductGroup->storeProductGroupId)->all();
+                if (isset($storeProducts) && !empty($storeProducts)) {
+                    $this->saveChooesPo($userId, $storeProductGroup->storeProductGroupId);
+                } else {
+                    $ms = 'ไม่พบสินค้าใน PO นี้';
+                }
+            } else {
+                $ms = 'ไม่พบ PO';
+            }
+        }
+        $chooseId = StoreProductGroup::find()->where("staus=5 and arranger=" . $userId)->all();
+        return $this->render('choose_po', [
+                    'model' => $model,
+                    'ms' => $ms,
+                    'chooseId' => $chooseId
+                        ]
+        );
+    }
+
     public function updateStoreProductGroupSummary($productStoreGroupId) {
         $summary = 0;
         $stg = StoreProductGroup::find()->where("storeProductGroupId =" . $productStoreGroupId)->one();
@@ -224,6 +250,16 @@ class StoreProductController extends StoreMasterController {
             $changePoStatus->status = 2;
             $changePoStatus->save(FALSE);
             return $this->redirect(['store-product-group/index']);
+        }
+    }
+
+    public function saveChooesPo($userId, $storeProductGroupId) {
+        $storeProductGroup = StoreProductGroup::find()->where("storeProductGroupId=" . $storeProductGroupId)->one();
+        if (isset($storeProductGroup) && !empty($storeProductGroup)) {
+            $storeProductGroup->status = 5;
+            $storeProductGroup->arranger = $userId;
+            $storeProductGroup->updateDateTime = new \yii\db\Expression('NOW()');
+            $storeProductGroup->save(false);
         }
     }
 
