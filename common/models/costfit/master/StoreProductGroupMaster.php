@@ -13,6 +13,7 @@ use Yii;
     * @property string $summary
     * @property string $receiveDate
     * @property string $receiveBy
+    * @property string $arranger
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -36,7 +37,7 @@ return 'store_product_group';
 public function rules()
 {
 return [
-            [['supplierId', 'receiveBy', 'status'], 'integer'],
+            [['supplierId', 'receiveBy', 'arranger', 'status'], 'integer'],
             [['summary'], 'number'],
             [['receiveDate', 'createDateTime', 'updateDateTime'], 'safe'],
             [['createDateTime'], 'required'],
@@ -57,6 +58,7 @@ return [
     'summary' => Yii::t('store_product_group', 'Summary'),
     'receiveDate' => Yii::t('store_product_group', 'Receive Date'),
     'receiveBy' => Yii::t('store_product_group', 'Receive By'),
+    'arranger' => Yii::t('store_product_group', 'Arranger'),
     'status' => Yii::t('store_product_group', 'Status'),
     'createDateTime' => Yii::t('store_product_group', 'Create Date Time'),
     'updateDateTime' => Yii::t('store_product_group', 'Update Date Time'),

@@ -1,4 +1,10 @@
 <?php
+
+use yii\helpers\Html;
+use yii\grid\GridView;
+use yii\widgets\Pjax;
+use yii\widgets\ActiveForm;
+
 $form = yii\bootstrap\ActiveForm::begin([
             'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
             'fieldConfig' => [
@@ -24,20 +30,47 @@ $form = yii\bootstrap\ActiveForm::begin([
     </table>
 </div>
 <?php yii\bootstrap\ActiveForm::end(); ?>
-<div class="panel-heading" style="background-color: #ccffff;">
-    <span class="panel-title"><h3>รายการ PO ที่ต้องการนำไปจัดเรียง</h3></span>
-</div>
-<div class="panel-body">
-    <table class="table table-bordered">
+<?php
+if (isset($chooseId) && !empty($chooseId)) {
+    $i = 1;
+    ?>
+    <div class="panel-heading" style="background-color: #ccffff;">
+        <span class="panel-title"><h3>รายการ PO ที่ต้องการนำไปจัดเรียง</h3></span>
+    </div>
+    <div class="panel-body">
 
-        <tr style="height: 50px;background-color: #F0FFFF;">
-            <th style="vertical-align: middle;text-align: center;width: 5%;">ลำดับที่</th>
-            <th style="vertical-align: middle;text-align: center;width: 30%;">PO NO.</th>
-            <th style="vertical-align: middle;text-align: center;width: 15%;">จำนวนรายการ</th>
-            <th style="vertical-align: middle;text-align: center;width: 20%;">สถานะ</th>
-            <th style="vertical-align: middle;text-align: center;width: 15%;">ผู้จัดเรียง</th>
-            <th style="vertical-align: middle;text-align: center;width: 15%;">ผู้ตรวจรับ</th>
-        </tr>
+        <table class="table table-bordered">
 
-    </table>
+            <tr style="height: 50px;background-color: #F0FFFF;">
+                <th style="vertical-align: middle;text-align: center;width: 5%;">ลำดับที่</th>
+                <th style="vertical-align: middle;text-align: center;width: 30%;">PO NO.</th>
+                <th style="vertical-align: middle;text-align: center;width: 15%;">จำนวนรายการ</th>
+                <th style="vertical-align: middle;text-align: center;width: 15%;">สถานะ</th>
+                <th style="vertical-align: middle;text-align: center;width: 15%;">ผู้จัดเรียง</th>
+                <th style="vertical-align: middle;text-align: center;width: 15%;">ผู้ตรวจรับ</th>
+                <th style="vertical-align: middle;text-align: center;width: 5%;">ลบ</th>
+            </tr>
+            <?php foreach ($chooseId as $id): ?>
+                <tr style="height: 35px;">
+                    <td style="vertical-align: middle;text-align: center;width: 5%;"><?= $i ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 30%;"><?= $id->poNo ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 15%;"><?= \common\models\costfit\StoreProductGroup::countProducts($id->storeProductGroupId) ?> รายการ</td>
+                    <td style="vertical-align: middle;text-align: center;width: 15%;"><?= \common\models\costfit\StoreProductGroup::getStatusText($id->status) ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 15%;"><?= \common\models\costfit\User::userName($id->arranger) ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 15%;"><?= 'สุรศักดิ์ นาคงาม' ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 5%;"><?=
+                        Html::a('<i class="fa fa-times" aria-hidden="true"></i>', ['delete-choose-po',
+                            'id' => $id->storeProductGroupId
+                                ], ['class' => 'btn btn-xs btn-danger'])
+                        ?></td>
+                </tr>
+        <?php endforeach;
+        ?>
+        </table>
+        <?php
+        if (isset($chooseId) && !empty($chooseId)) {
+            echo '<div class="pull-right">' . Html::a('<i class="fa fa-check-square-o" aria-hidden="true"></i> นำไปจัดเรียง', ['choose-po'], ['class' => 'btn btn-lg btn-success']) . '</div>';
+        }
+    }
+    ?>
 </div>
