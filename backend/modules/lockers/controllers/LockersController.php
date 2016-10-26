@@ -120,7 +120,8 @@ class LockersController extends LockersMasterController {
                                     . 'count(order_item_packing.quantity) AS NumberOfQuantity , order.orderNo, order.orderId , order.pickingId')
                             ->joinWith(['orderItems'])
                             ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-                            ->where("order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "' and order.pickingId = '" . $boxcode . "' or order_item_packing.status = 7 and order_item_packing.bagNo ='" . $bagNo . "' and order.pickingId = '" . $boxcode . "'")
+                            ->where("order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "' and order.pickingId = '" . $boxcode . "' "
+                                    . "or order_item_packing.status = 7 and order_item_packing.bagNo ='" . $bagNo . "' and order.pickingId = '" . $boxcode . "'")
                             ->groupBy(['order_item_packing.bagNo'])->one();
 
             if (count($queryOrderItemPackingId) == 0) {
@@ -132,7 +133,8 @@ class LockersController extends LockersMasterController {
 
             $query = \common\models\costfit\OrderItemPacking::find()
                     ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
-                            . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, order.orderNo, '
+                            . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, '
+                            . 'order.orderNo, '
                             . 'order.orderId,order_item_packing.quantity')
                     ->joinWith(['orderItems'])
                     ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
@@ -145,13 +147,15 @@ class LockersController extends LockersMasterController {
              */
             $query1 = \common\models\costfit\OrderItemPacking::find()
                     ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.pickingItemsId, '
-                            . 'order_item_packing.bagNo, order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, order.orderNo, '
+                            . 'order_item_packing.bagNo, order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,'
+                            . 'count(order_item_packing.quantity) AS NumberOfQuantity, order.orderNo, '
                             . 'order.orderId ,order_item_packing.quantity')
                     ->joinWith(['orderItems'])
                     ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
                     //->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
                     //->where("order_item_packing.status in (7,8) and  order.orderId ='" . $orderId . "' or order_item_packing.status in (7,8) and  order_item_packing.bagNo ='" . $bagNo . "' ")
-                    ->where("order_item_packing.status in (7,8) and  order_item.orderItemId ='" . $orderItemId . "' or order_item_packing.status in (7,8) and  order_item_packing.bagNo ='" . $bagNo . "' ")
+                    ->where("order_item_packing.status in (7,8) and  order_item.orderItemId ='" . $orderItemId . "' or order_item_packing.status in (7,8) "
+                            . "and  order_item_packing.bagNo ='" . $bagNo . "' ")
                     //->where("order_item_packing.status in (7,8) and  order_item_packing.bagNo ='" . $bagNo . "' ")
                     //->where("order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "' ")
                     ->groupBy(['order_item_packing.bagNo']);
@@ -159,7 +163,8 @@ class LockersController extends LockersMasterController {
             // แสดงจำนวนถุงของ Order นี้ทั้งหมด
             $queryAllOrder = \common\models\costfit\OrderItemPacking::find()
                     ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
-                            . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, order.orderNo, '
+                            . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, '
+                            . 'order.orderNo, '
                             . 'order.orderId,order_item_packing.quantity')
                     ->joinWith(['orderItems'])
                     ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
@@ -169,7 +174,8 @@ class LockersController extends LockersMasterController {
             //echo 'xx'; แสดง BagNo ที่ Scan Qr code
             $query1 = \common\models\costfit\OrderItemPacking::find()
                     ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId,  order_item_packing.pickingItemsId,'
-                            . 'order_item_packing.bagNo, order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, order.orderNo, '
+                            . 'order_item_packing.bagNo, order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,'
+                            . 'count(order_item_packing.quantity) AS NumberOfQuantity, order.orderNo, '
                             . 'order.orderId ,order_item_packing.quantity')
                     ->joinWith(['orderItems'])
                     ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
@@ -185,7 +191,8 @@ class LockersController extends LockersMasterController {
             // แสดงจำนวนถุงของ Order นี้ทั้งหมด
             $queryAllOrder = \common\models\costfit\OrderItemPacking::find()
                     ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
-                            . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, order.orderNo, '
+                            . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, '
+                            . 'order.orderNo, '
                             . 'order.orderId,order_item_packing.quantity')
                     ->joinWith(['orderItems'])
                     ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
