@@ -89,7 +89,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                 echo ' ปิดช่องนี้แล้ว..';
                                                             } else {
                                                                 ?>
-                                                                เปิดช่อง : <?= $row->name; ?> 
+                                                                เปิดช่อง : <?= $row->name; ?>
                                                                 <?php
                                                             }
                                                             ?>
@@ -113,11 +113,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                     ?>
                                                                 </span>
                                                                 <span href="#" class="list-group-item">
-                                                                    <?php
-                                                                    for ($index = 0; $index < count($BagNos); $index++) {
-                                                                        echo $BagNos[$index] . '<br>';
-                                                                    }
-                                                                    ?>
+                                                                    แจ้งปัญหา
+
                                                                 </span>
                                                             </div>
                                                             <?php
