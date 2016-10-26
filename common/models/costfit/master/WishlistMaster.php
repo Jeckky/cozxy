@@ -9,7 +9,7 @@ use Yii;
 *
     * @property string $wishlistId
     * @property string $userId
-    * @property string $productId
+    * @property integer $productId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
