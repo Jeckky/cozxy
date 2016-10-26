@@ -570,8 +570,8 @@ $(".incr-btn-cart").on("click", function (e) {
 //                $('#pp' + oldValue).removeClass("priceActive");
 //                $('#pp' + newVal).addClass("priceActive");
                 $button.parent().parent().find(".total").html(data.subTotalText + " ฿");
-                $button.parent().find("input").val(newVal);
-                $('.cart-dropdown table').find('tbody').find("#item" + data.orderItemId).find(".qty").find("#qty").val(newVal);
+                $button.parent().find("input").val(newVal.toFixed(2));
+                $('.cart-dropdown table').find('tbody').find("#item" + data.orderItemId).find(".qty").find("#qty").val(newVal.toFixed(2));
                 $('.cart-dropdown table').find('tbody').find("#item" + data.orderItemId).find(".price").html(data.priceText);
                 $('.cart-btn a span').text(data.cart.qty);
                 $('.cart-btn a').find("#cartTotal").html(data.cart.summaryFormatText);
@@ -579,15 +579,24 @@ $(".incr-btn-cart").on("click", function (e) {
                 $('.shopping-cart').find(".cart-sidebar").find(".subtotal").html(data.cart.totalWithoutDiscountText + " ฿");
                 $('.shopping-cart').find(".cart-sidebar").find(".total").html(data.cart.totalFormatText + " ฿");
                 $('.shopping-cart').find(".cart-sidebar").find(".savings").html("-" + data.cart.totalItemDiscountText + " ฿");
+                $('.shopping-cart').find(".cart-sidebar").find(".shipSavings").html("-" + data.cart.shippingDiscountValueText + " ฿");
                 $('.shopping-cart').find(".cart-sidebar").find(".discount").html(data.cart.discountFormatText + " ฿");
                 $('.shopping-cart').find(".cart-sidebar").find(".summary").html(data.cart.summaryFormatText + " ฿");
                 if (parseInt(data.saving) > 0)
                 {
-                    $('.shopping-cart').find(".items-list").find("#item" + data.orderItemId).find(".savings").html("You Saved -" + data.savingText + " ฿");
+                    $('.shopping-cart').find(".items-list").find("#item" + data.orderItemId).find(".savings").html("You Saved " + data.savingText + " ฿");
                     $('.shopping-cart').find(".items-list").find("#item" + data.orderItemId).find(".savings").removeClass("hide");
                 } else
                 {
                     $('.shopping-cart').find(".items-list").find("#item" + data.orderItemId).find(".savings").addClass("hide");
+                }
+                if (parseInt(data.shippingDiscountValue) > 0)
+                {
+                    $('.shopping-cart').find(".items-list").find("#item" + data.orderItemId).find(".shipSavings").html("Shipping Saved " + data.shippingDiscountValueText + " ฿");
+                    $('.shopping-cart').find(".items-list").find("#item" + data.orderItemId).find(".shipSavings").removeClass("hide");
+                } else
+                {
+                    $('.shopping-cart').find(".items-list").find("#item" + data.orderItemId).find(".shipSavings").addClass("hide");
                 }
             } else
             {
@@ -597,7 +606,7 @@ $(".incr-btn-cart").on("click", function (e) {
                     alert("ไม่สามารถสั่งซื้อเกินจำนวนที่กำหนดได้");
 //                    $('.incr-btn').popover('show');
                 }
-                $button.parent().find("input").val(newVal);
+                $button.parent().find("input").val(newVal.toFixed(2));
             }
         }
     });
@@ -814,6 +823,7 @@ $('#slowest').on('ifChecked', function (event) {
         data: {'orderId': orderId, 'type': 1},
         success: function (data)
         {
+            location.reload();
         }
     });
 });
@@ -827,7 +837,7 @@ $('#slowest').on('ifUnchecked', function (event) {
         data: {'orderId': orderId, 'type': 2},
         success: function (data)
         {
-
+            location.reload();
         }
     });
 });

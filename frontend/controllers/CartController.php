@@ -73,7 +73,13 @@ class CartController extends MasterController
         $orderItem->price = $productPrice["price"];
         $orderItem->subTotal = $orderItem->quantity * $orderItem->price;
         $orderItem->discountValue = isset($productPrice["discountValue"]) ? $productPrice["discountValue"] : 0;
-        $orderItem->total = ($orderItem->quantity * $orderItem->price) - $orderItem->discountValue;
+        if (isset($productPrice["shippingDiscountValue"])) {
+            $orderItem->shippingDiscountValue = $productPrice["shippingDiscountValue"];
+            $orderItem->total = ($orderItem->quantity * $orderItem->price) - $orderItem->discountValue - $productPrice["shippingDiscountValue"];
+        } else {
+            $orderItem->total = ($orderItem->quantity * $orderItem->price) - $orderItem->discountValue;
+        }
+
         $orderItem->createDateTime = new \yii\db\Expression("NOW()");
         if ($orderItem->save()) {
             if (Yii::$app->db->lastInsertID > 0) {
@@ -226,7 +232,7 @@ class CartController extends MasterController
         $res = [];
         $product = new \common\models\costfit\Product();
         $price = $product->calProductPrice($_POST["productId"], $_POST["quantity"], 1);
-
+//        throw new \yii\base\Exception(print_r($price, true));
         $maxQuantity = $product->findMaxQuantity($_POST["productId"], 0);
 //        throw new \yii\base\Exception("max quantity=" . $maxQuantity);
         if ($_POST["quantity"] <= $maxQuantity) {
@@ -238,7 +244,13 @@ class CartController extends MasterController
                 $oi->priceOnePiece = $oi->product->calProductPrice($_POST["productId"], 1);
                 $oi->subTotal = $oi->price * $_POST["quantity"];
                 $oi->discountValue = $price["discountValue"];
-                $oi->total = ($oi->price * $_POST["quantity"]) - $price["discountValue"];
+                if (isset($price["shippingDiscountValue"])) {
+                    $oi->shippingDiscountValue = $price["shippingDiscountValue"];
+                    $oi->total = ($oi->quantity * $oi->price) - $oi->discountValue - $price["shippingDiscountValue"];
+                } else {
+                    $oi->total = ($oi->quantity * $oi->price) - $oi->discountValue;
+                }
+//                $oi->total = ($oi->price * $_POST["quantity"]) - $price["discountValue"];
                 $oi->save();
                 $cart = \common\models\costfit\Order::findCartArray();
                 $res["status"] = TRUE;
@@ -252,6 +264,8 @@ class CartController extends MasterController
                 $res["cart"] = $cart;
                 $res["discountType"] = $price["discountType"];
                 $res["discountValue"] = $price["discountValue"];
+                $res["shippingDiscountValue"] = isset($price["shippingDiscountValue"]) ? $price["shippingDiscountValue"] : 0;
+                $res["shippingDiscountValueText"] = isset($price["shippingDiscountValue"]) ? number_format($price["shippingDiscountValue"], 2) : number_format(0, 2);
                 $res["total"] = $oi->total;
                 $res["totalText"] = number_format($oi->total, 2);
                 $res["subTotal"] = $oi->subTotal;
@@ -278,7 +292,23 @@ class CartController extends MasterController
                 } else {
                     $order->isSlowest = 0;
                 }
-                $order->save(false);
+                $order->save(false); // For save Is Slowest before update order item price
+                foreach ($order->orderItems as $oi) {
+                    $product = new \common\models\costfit\Product();
+                    $price = $product->calProductPrice($oi->productId, $oi->quantity, 1);
+                    $oi->price = $price["price"];
+                    $oi->priceOnePiece = $oi->product->calProductPrice($oi->productId, 1);
+                    $oi->subTotal = $oi->price * $oi->quantity;
+                    $oi->discountValue = $price["discountValue"];
+                    if (isset($price["shippingDiscountValue"])) {
+                        $oi->shippingDiscountValue = $price["shippingDiscountValue"];
+                        $oi->total = ($oi->quantity * $oi->price) - $oi->discountValue - $price["shippingDiscountValue"];
+                    } else {
+                        $oi->total = ($oi->quantity * $oi->price) - $oi->discountValue;
+                    }
+                    $oi->save();
+                }
+                $order->save(false); // For update total discount and summary
             }
         }
         echo $_POST['orderId'];
