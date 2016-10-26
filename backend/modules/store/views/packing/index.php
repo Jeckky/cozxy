@@ -8,37 +8,38 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Picking List';
+$this->title = 'Packing List';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <div class="order-index">
-
-
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <div class="row">
-                <div class="col-md-6"><?= $this->title ?></div>
-                <div class="col-md-6">
-                    <div class="btn-group pull-right">
-                        <?php if (isset($bagNo)): ?>
-                            <?= Html::a('Print Bag Label', ['print-bag-label?orderId=' . $orderId . "&bagNo=" . $bagNo], ['class' => 'btn btn-success btn-xs ', 'target' => '_blank', 'id' => 'printBagLabel']) ?>
-                            <?php echo $this->registerJs(" window.open($('#printBagLabel').attr('href'),'_blank');", \yii\web\View::POS_LOAD) ?>
-                        <?php endif; ?>
-                    </div>
-                </div>
+        <div class="panel-heading"  style="background-color: #ccffcc;vertical-align: middle;">
+            <div class="btn-group pull-right" style="margin-top: 30px;">
+                <?php if (isset($bagNo)): ?>
+                    <?=
+                    Html::a('<i class="fa fa-print" aria-hidden="true"></i> Print Bag Label', ['print-bag-label',
+                        'orderId' => $orderId,
+                        'bagNo' => $bagNo], [
+                        'target' => '_blank',
+                        'class' => 'btn btn-warning btn-xs '
+                    ])
+                    ?>
+                <?php endif; ?>
             </div>
+            <span class="panel-title"><h3><?= $this->title ?></h3></span>
         </div>
         <div class="panel-body">
+
             <?php
             $form = ActiveForm::begin([
-                'method' => 'GET',
-                'action' => ['packing/index'],
+                        'method' => 'GET',
+                        'action' => ['packing/index'],
             ]);
             ?>
 
-            <h4>   Order No QR code : <input type="text" name="orderNo" autofocus="true" id="orderNo" required="true"></h4>
+            <h3>   Order No QR code : <input class="input-lg"type="text" name="orderNo" autofocus="true" id="orderNo" required="true"></h3>
                 <?= $this->registerJS("
                             $('#orderNo').blur(function(event){
                                 if(event.which == 13 || event.keyCode == 13)
@@ -58,9 +59,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'class' => 'table-light'
                     ],
                     'rowOptions' => function ($model, $index, $widget, $grid) {
-                        if ($model->status == common\models\costfit\Order::ORDER_STATUS_PACKED)
-                            return ['class' => 'success'];
-                    },
+                if ($model->status == common\models\costfit\Order::ORDER_STATUS_PACKED)
+                    return ['class' => 'success'];
+            },
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
                         'orderNo',
@@ -93,6 +94,23 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 ?>
         </div>
     </div>
+    <!--    <div id="printableArea">
+            <h1>Print me</h1>
+        </div>-->
+
     <?php ActiveForm::end(); ?>
     <?php Pjax::end(); ?>
 </div>
+<!--<input type="button" onclick="printDiv('printableArea')" value="print a div!" />
+<script>
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
+</script>-->

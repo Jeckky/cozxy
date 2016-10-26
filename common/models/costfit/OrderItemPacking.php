@@ -142,9 +142,7 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
 
     static public function findItemInBag($bagNo) {
         $orderItems = OrderItemPacking::find()->where("bagNo='" . $bagNo . "' and status=4")->all();
-
         if (isset($orderItems) && !empty($orderItems)) {
-            //throw new \yii\base\Exception($bagNo);
             return $orderItems;
         } else {
             return '';
@@ -161,17 +159,13 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
                 //->join('LEFT JOIN', 'order_item oi', 'oi.orderItemId = order_item_packing.orderItemId')
                 ->where([ 'order_item_packing.bagNo' => $bagNo])
                 ->count();
-        //throw new \yii\base\Exception($orderItemId);
         return $result;
     }
 
     static public function countQuantity($bagNo) {
-
         $result = OrderItemPacking::find()
                 ->where(['order_item_packing.bagNo' => $bagNo])
                 ->sum('order_item_packing.quantity');
-
-        //throw new \yii\base\Exception($orderItemId);
         return $result;
     }
 

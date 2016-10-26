@@ -108,7 +108,6 @@ class PackingController extends StoreMasterController {
 //throw new \yii\base\Exception($itemInBag);
             if (!empty($itemInBag)) {
                 $inBags = \common\models\costfit\OrderItemPacking::find()->where("orderItemId in($itemInBag) and status=99")->all();
-
                 if (count($inBags) > 0) {
                     $bagNo = $this->genBagNo();
                 } else {
@@ -126,6 +125,13 @@ class PackingController extends StoreMasterController {
                         $this->updateOrderItem($inBag->orderItemId); //ถ้าครบทุก item update orderItem
                     }
                 endforeach;
+//print bag label
+                $header = $this->renderPartial('header');
+                $content = $this->renderPartial('content', [
+                    'orderId' => $_GET['orderId'],
+                    'bagNo' => $bagNo
+                ]);
+                $this->printPdf($content, $header);
                 if ($full > 0) {//ถ้ายังไม่ครบทุก item กลับไปหน้าสแกนโปรดักใส่ถุง (เปิดถุงใหม่)
                     return $this->render('show-orders', [
                                 'orderId' => $_GET['orderId'],
@@ -139,12 +145,11 @@ class PackingController extends StoreMasterController {
 
                         $query = \common\models\costfit\Order::find()
                                 ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-                                ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_PICKED);
+                                ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND(`order`.status = " . \common\models\costfit\Order::ORDER_STATUS_PACKED . " or `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_PICKED . ") order by `order`.status");
 
                         $dataProvider = new ActiveDataProvider([
                             'query' => $query,
                         ]);
-
                         return $this->render('index', [
                                     'dataProvider' => $dataProvider,
                                     'bagNo' => $bagNo,
@@ -154,7 +159,7 @@ class PackingController extends StoreMasterController {
                         return $this->render('show-orders', [
                                     'orderId' => $_GET['orderId'],
                                     'ms' => $ms,
-                                    'bagNo' => $bagNo
+                                    'bagNo' => $bagNo], ['target' => '_blank'
                         ]);
                     }
                 }
@@ -342,12 +347,12 @@ class PackingController extends StoreMasterController {
     }
 
     public function actionPrintBagLabel() {
+        //throw new \yii\base\Exception('aaa');
         $header = $this->renderPartial('header');
         $content = $this->renderPartial('content', [
             'orderId' => $_GET['orderId'],
             'bagNo' => $_GET['bagNo']
         ]);
-//                throw new \yii\base\Exception(111);
         $this->printPdf($content, $header);
     }
 

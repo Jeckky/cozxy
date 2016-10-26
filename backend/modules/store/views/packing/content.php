@@ -36,13 +36,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <?php
     $i = 1;
     $orderItems = OrderItemPacking::findItemInBag($bagNo);
-//    throw new Exception(print_r($orderItems, true));
     if (isset($orderItems) && !empty($orderItems)) {
         foreach ($orderItems as $orderItem):
             $item = Product::findProducts($orderItem->orderItemId);
-            //throw new Exception(print_r($item, true));
             if (isset($item) && !empty($item)) {
-                //throw new Exception($item->code);
                 echo '<tr>';
                 echo '<td><center>' . $i . '</center></td>';
                 echo '<td><center>' . $item->code . '</center></td>';
