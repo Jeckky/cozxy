@@ -43,7 +43,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 <div class="order-index col-md-12">
     <div class="panel panel-warning panel-dark">
         <div class="panel-heading">
-            <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> แสดงช่องของ Lockers เพื่อเปิดช่องและแจ้งปัญหา</span>
+            <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> กดปุ่มจาก ช่องของ Lockers</span>
         </div>
         <div class="panel-body ">
             <div class="col-sm-12">
@@ -88,16 +88,21 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                             if ($row->status == 0) {
                                                                 echo ' ปิดช่องนี้แล้ว..';
                                                             } else {
-                                                                echo 'เปิดช่อง';
+                                                                ?>
+                                                                เปิดช่อง : <?= $row->name; ?>
+                                                                <?php
                                                             }
                                                             ?>
                                                         </h4>
+
                                                         <?php
                                                         //echo $row->pickingItemsId;
                                                         $items = common\models\costfit\PickingPointItems::OrderNoChannels($row->pickingItemsId);
                                                         $bagNo = common\models\costfit\PickingPointItems::bagNo($row->pickingItemsId);
                                                         if ($items != '' && $bagNo != '') {
                                                             $BagNos = explode(",", $bagNo);
+                                                            //echo '<pre>';
+                                                            //print_r($BagNos);
                                                             $orderNos = explode(",", $items);
                                                             ?>
                                                             <div class="list-group search-content">
@@ -109,9 +114,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                 </span>
                                                                 <span href="#" class="list-group-item">
                                                                     <?php
-                                                                    for ($index = 1; $index < count($BagNos); $index++) {
-                                                                        echo $BagNos[$index] . '<br>';
-                                                                    }
+                                                                    //for ($index = 0; $index < count($BagNos); $index++) {
+                                                                    //echo $BagNos[$index] . '<br>';
+                                                                    //}
                                                                     ?>
                                                                 </span>
                                                             </div>
