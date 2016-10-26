@@ -362,6 +362,7 @@ class LockersController extends LockersMasterController {
         //echo $orderItemPackingId;
         //exit();
         \common\models\costfit\OrderItemPacking::updateAll(['status' => 5, 'pickingItemsId' => NULL], ['bagNo' => $bagNo]);
+        \common\models\costfit\PickingPointItems::updateAll(['status' => 1], ['pickingItemsId' => $pickingItemsId]);
         ///scan-bag?model=1&code=aa-009&boxcode=10&pickingItemsId=111&orderId=&orderItemPackingId=&bagNo=BG20161019-0000008
         return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?model=' . $model . '&code=' . $code . '&boxcode=' . $boxcode . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId . '&bagNo=' . $bagNo . '');
     }
