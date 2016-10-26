@@ -128,8 +128,14 @@ class Order extends \common\models\costfit\master\OrderMaster
                 $total+=$item->total;
                 $quantity+=$item->quantity;
                 $totalWithoutDiacount +=$item->quantity * $item->priceOnePiece;
-                $productPrice = ProductPrice::find()->where("productId = $item->productId AND quantity = $item->quantity")->one();
-                $totalItemDiscount+=$productPrice->discountValue;
+//                $productPrice = ProductPrice::find()->where("productId = $item->productId AND quantity = $item->quantity")->one();
+                if (isset($item->discountValue) && $item->discountValue > 0) {
+                    $totalItemDiscount+=$item->discountValue;
+                }
+
+                if (isset($item->shippingDiscountValue)) {
+                    $totalItemDiscount+=$item->shippingDiscountValue;
+                }
                 $items[$item->orderItemId] = [
                     'orderItemId' => $item->orderItemId,
                     'productId' => $item->productId,
@@ -144,13 +150,17 @@ class Order extends \common\models\costfit\master\OrderMaster
                     'sendDate' => $item->sendDate,
                     'sendDateNoDate' => isset($item->shippingType) ? $item->shippingType->date : NULL,
                     'subTotal' => $item->subTotal,
+                    'shipDate' => $item->sendDate,
                     'discountValue' => $item->discountValue,
+                    'shippingDiscountValue' => isset($item->shippingDiscountValue) ? $item->shippingDiscountValue : 0,
+                    'shippingDiscountValueText' => isset($item->shippingDiscountValue) ? number_format($item->shippingDiscountValue, 2) : number_format(0, 2),
                     'total' => $item->total,
                     'image' => isset($item->product->productImages[0]) ? \Yii::$app->homeUrl . $item->product->productImages[0]->image : $directoryAsset . "/img/catalog/shopping-cart-thumb.jpg",
                 ];
             }
             $order->save(); // For Update Total;
             $res['orderId'] = $order->orderId;
+            $res['isSlowest'] = $order->isSlowest;
             $res["totalExVat"] = $order->totalExVat;
             $res["totalExVatFormatText"] = number_format($order->totalExVat, 2);
             $res["vat"] = $order->vat;

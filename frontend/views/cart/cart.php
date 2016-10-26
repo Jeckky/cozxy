@@ -127,7 +127,8 @@ use common\models\ModelMaster;
                                 <span class="price" style="font-weight: bold;"><?= number_format($item["priceOnePiece"], 2) . " ฿" ?></span> <br>
                                 <span class="savings <?= ($item["discountValue"] == 0) ? " hide" : " " ?>" style="color: red;font-size: 13px;">You Saved <?= number_format($item["discountValue"], 2) ?> ฿</span><br>
                                 <?php if (isset($item["sendDateNoDate"])): ?>
-                                    <span style="font-size: 13px;">จัดส่งภายใน <?= $item["sendDateNoDate"] ?>  วัน </span>
+                                    <span style="font-size: 13px;">จัดส่งภายใน <?= $item["sendDateNoDate"] ?>  วัน </span><br>
+                                    <span class="shipSavings <?= ($item["shippingDiscountValue"] == 0) ? " hide" : " " ?>" style="color: red;font-size: 13px;">Shipping Saved <?= number_format($item["shippingDiscountValue"], 2) ?> ฿</span><br>
                                 <?php endif; ?>
                             </td>
                             <td class="qnt-count">
@@ -146,7 +147,7 @@ use common\models\ModelMaster;
                 <?php if (isset($this->params['cart']['items']) && !empty($this->params['cart']['items'])) { ?>
                     <div class="checkbox " id="showSlow">
                         <label style="color:#03a9f4">
-                            <input type="checkbox" id="slowest" name="slowest">  ต้องการส่งสินค้าช้าที่สุดเพื่อประหยัดค่าใช้จ่าย
+                            <input type="checkbox" id="slowest" name="slowest" <?= (isset($this->params['cart']) && $this->params['cart']['isSlowest']) ? " checked" : "" ?>>  ต้องการส่งสินค้าช้าที่สุดเพื่อประหยัดค่าใช้จ่าย
                         </label>
                     </div>
                 <?php } ?>

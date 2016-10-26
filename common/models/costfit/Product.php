@@ -75,37 +75,30 @@ class Product extends \common\models\costfit\master\ProductMaster
 
     public function calProductPrice($productId, $quantity, $returnArray = 0, $shippingStep = 1)
     {
-
+        $res = [];
         $product = Product::find()->where("productId = $productId")->one();
         $productPrice = ProductPrice::find()->where("productId = $productId AND quantity = $quantity")->one();
 //        throw new \yii\base\Exception($productId . " " . $quantity . " " . $productPrice->price);
-        $shippingDisCount = ProductShippingPrice::find()->where("productId=" . $productId)->orderBy("date ASC")->all();
         if (isset($productPrice)) {
-            if (isset($shippingDisCount) && count($shippingDisCount) > 0) {
-                if ($shippingDisCount[$shippingStep - 1]->type == 1) {
-                    $price = $productPrice->price - $shippingDisCount[$shippingStep - 1]->discount;
-                } else {
-                    $price = $productPrice->price * ((100 - $shippingDisCount[$shippingStep - 1]->discount) / 100);
-                }
-            } else {
-                $price = $productPrice->price;
-            }
+            $price = $productPrice->price;
         } else {
-            if (isset($shippingDisCount) && count($shippingDisCount) > 0) {
-                if ($shippingDisCount[$shippingStep - 1]->type == 1) {
-                    $price = $product->price - $shippingDisCount[$shippingStep - 1]->discount;
-                } else {
-                    $price = $product->price * ((100 - $shippingDisCount[$shippingStep - 1]->discount) / 100);
-                }
+            $price = $product->price;
+        }
+        $shippingPrice = ProductShippingPrice::calProductShippingPrice($productId);
+        if (isset($shippingPrice)) {
+            if ($shippingPrice["type"] == 1) {
+//                $price = $price - $shippingPrice["discount"];
+                $res["shippingDiscountValue"] = $shippingPrice["discount"];
             } else {
-                $price = $product->price;
+//                $price = $price * ((100 - $shippingPrice["discount"]) / 100);
+                $res["shippingDiscountValue"] = $price * (($shippingPrice["discount"]) / 100);
             }
         }
         if (!$returnArray) {
             return $price;
 //            throw new \yii\base\Exception;
         } else {
-            $res = [];
+
             $res["discountType"] = isset($productPrice->discountType) ? $productPrice->discountType : NULL;
             $res["discountValue"] = isset($productPrice->discountValue) ? $productPrice->discountValue : NULL;
             $res["discountValueText"] = isset($productPrice->discountValue) ? number_format($productPrice->discountValue, 2) : NULL;
