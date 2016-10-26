@@ -81,7 +81,7 @@ use yii\bootstrap\ActiveForm;
                                                         $items = common\models\costfit\PickingPointItems::OrderNoChannels($row->pickingItemsId);
                                                         $bagNo = common\models\costfit\PickingPointItems::bagNo($row->pickingItemsId);
                                                         if ($items != '' && $bagNo != '') {
-                                                            $BagNos = explode(",", $bagNo);
+                                                            //$BagNos = explode(",", $bagNo);
                                                             $orderNos = explode(",", $items);
                                                             ?>
                                                             <div class="list-group search-content">
@@ -93,9 +93,9 @@ use yii\bootstrap\ActiveForm;
                                                                 </span>
                                                                 <span href="#" class="list-group-item">
                                                                     <?php
-                                                                    for ($index = 1; $index < count($BagNos); $index++) {
-                                                                        echo $BagNos[$index] . '<br>';
-                                                                    }
+                                                                    //for ($index = 1; $index < count($BagNos); $index++) {
+                                                                    echo $bagNo . '<br>';
+                                                                    //}
                                                                     ?>
                                                                 </span>
                                                             </div>

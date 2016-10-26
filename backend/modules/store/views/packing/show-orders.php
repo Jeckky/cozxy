@@ -100,8 +100,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
             if (isset($items) && !empty($items)) {
                 echo Html::a('<i class="fa fa-check-square-o" aria-hidden="true"></i> ปิดถุง', ['close-bag',
                     'orderId' => $orderId
-                        ], ['class' => 'btn btn-lg btn-success',
-                    'target' => '_blank']);
+                        ], ['class' => 'btn btn-lg btn-success']);
             }
             ?>
         </div>
