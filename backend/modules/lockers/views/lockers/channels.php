@@ -106,13 +106,15 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                     <span href="#" class="list-group-item">
                                                                         <?php
                                                                         $itemsOrderNo = common\models\costfit\PickingPointItems::OrderNoList8(" $items ");
-                                                                        echo 'OrderNo : ' . $itemsOrderNo . '( ลูกค้ามารับสินค้าแล้ว.)<br> ** ok : เรียบร้อย , no : แจ้งปัญหา';
+                                                                        echo 'OrderNo : ' . $itemsOrderNo . '( ลูกค้ามารับสินค้าแล้ว.)<br><br><code> ** ok : เรียบร้อย , no : แจ้งปัญหา</code>';
                                                                         ?><br><br>
-                                                                        <button class="btn btn-success">Ok</button>
-                                                                        <button class="btn btn-default remart">No</button>
+                                                                        <span class="remart-reset">
+                                                                            <button class="btn btn-success ">Ok</button>
+                                                                        </span>
+                                                                        <button class="btn btn-default remart-chanels">No</button>
                                                                         <br>
                                                                     </span>
-                                                                    <span href="#" class="list-group-item">
+                                                                    <span href="#" class="list-group-item remart-chanels-form" style="display: none; text-align: left;">
                                                                         แจ้งปัญหา
                                                                         <textarea class="form-control" rows="5" placeholder="Message"></textarea><br>
                                                                         <button class="btn btn-success btn-xs btn-outline">submit</button>

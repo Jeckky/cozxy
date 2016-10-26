@@ -42,22 +42,23 @@ $form = yii\bootstrap\ActiveForm::begin([
         if (isset($allPo) && !empty($allPo)) {
             $i = 1;
             foreach ($allPo as $po):
-                ?>
-                <tr>
-                    <td style="vertical-align: middle;text-align: center;width: 5%;"><?= $i ?></td>
-                    <td style="vertical-align: middle;text-align: center;width: 35%;"><?= $po->poNo ?></td>
-                    <td style="vertical-align: middle;text-align: center;width: 20%;"><?= \common\models\costfit\StoreProductGroup::countProducts($po->storeProductGroupId) ?> รายการ</td>
-                    <td style="vertical-align: middle;text-align: center;width: 20%;"><?= \common\models\costfit\StoreProductGroup::getStatusText($po->status) ?></td>
-                    <td style="vertical-align: middle;text-align: center;width: 20%;"><?= 'สุรศักดิ์ นาคงาม' ?></td>
-                </tr>
-                <?php
-                $i++;
+            ?>
+            <tr>
+                <td style="vertical-align: middle;text-align: center;width: 5%;"><?= $i ?></td>
+                <td style="vertical-align: middle;text-align: center;width: 35%;"><?= $po->poNo ?></td>
+                <td style="vertical-align: middle;text-align: center;width: 20%;"><?= \common\models\costfit\StoreProductGroup::countProducts($po->storeProductGroupId) ?> รายการ</td>
+                <td style="vertical-align: middle;text-align: center;width: 20%;"><?= \common\models\costfit\StoreProductGroup::getStatusText($po->status) ?></td>
+                <td style="vertical-align: middle;text-align: center;width: 20%;"><?= 'สุรศักดิ์ นาคงาม' ?></td>
+            </tr>
+            <?php
+            //ผู้ตรวจรับ ดึงจาก storeProductGroup->receiveBy
+            $i++;
             endforeach;
-        }else {
+            } else {
             ?>
             <tr>
                 <th style="vertical-align: middle;text-align: center;width: 5%;background-color:#cccccc;" colspan="5"><i><h4>ไม่รายการ PO ที่ยังไม่จัดเก็บ</h4></i></th>
             </tr>
-        <?php } ?>
+<?php } ?>
     </table>
 </div>

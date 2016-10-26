@@ -182,4 +182,13 @@ class User extends \common\models\costfit\master\UserMaster {
         return $summary;
     }
 
+    public static function userName($id) {
+        $user = User::find()->where("userId=" . $id)->one();
+        if (isset($user) && !empty($user)) {
+            return $user->firstname . " " . $user->lastname;
+        } else {
+            return '';
+        }
+    }
+
 }

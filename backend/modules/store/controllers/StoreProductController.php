@@ -209,7 +209,7 @@ class StoreProductController extends StoreMasterController {
 
     public function actionChoosePo() {
         $ms = '';
-        $userId = '1234';
+        $userId = '1234'; //login
         $model = new StoreProduct();
         if (isset($_POST["StoreProductGroup"]['poNo']) && !empty($_POST["StoreProductGroup"]['poNo'])) {
             $storeProductGroup = StoreProductGroup::find()->where("poNo='" . $_POST["StoreProductGroup"]['poNo'] . "' and status=2")->one(); // เชค ที่สถานะเท่ากับตรวจรับแล้วเท่านั้น
@@ -223,14 +223,21 @@ class StoreProductController extends StoreMasterController {
             } else {
                 $ms = 'ไม่พบ PO';
             }
+        } else {
+            $ms = '';
         }
-        $chooseId = StoreProductGroup::find()->where("staus=5 and arranger=" . $userId)->all();
+        $chooseId = StoreProductGroup::find()->where("status=5 and arranger=" . $userId)->all();
         return $this->render('choose_po', [
                     'model' => $model,
                     'ms' => $ms,
                     'chooseId' => $chooseId
                         ]
         );
+    }
+
+    public function actionDeleteChoosePo() {
+        $id = $_GET['id'];
+        $delete = StoreProductGroup::find()->where("storeProductGroupId=" . $id)->one();
     }
 
     public function updateStoreProductGroupSummary($productStoreGroupId) {
