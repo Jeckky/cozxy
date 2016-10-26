@@ -101,6 +101,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                         $bagNo = common\models\costfit\PickingPointItems::bagNo($row->pickingItemsId);
                                                         if ($items != '' && $bagNo != '') {
                                                             $BagNos = explode(",", $bagNo);
+                                                            //echo '<pre>';
+                                                            //print_r($BagNos);
                                                             $orderNos = explode(",", $items);
                                                             ?>
                                                             <div class="list-group search-content">
@@ -112,7 +114,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                 </span>
                                                                 <span href="#" class="list-group-item">
                                                                     <?php
-                                                                    for ($index = 1; $index < count($BagNos); $index++) {
+                                                                    for ($index = 0; $index < count($BagNos); $index++) {
                                                                         echo $BagNos[$index] . '<br>';
                                                                     }
                                                                     ?>
