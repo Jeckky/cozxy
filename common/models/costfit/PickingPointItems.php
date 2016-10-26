@@ -97,10 +97,8 @@ class PickingPointItems extends \common\models\costfit\master\PickingPointItemsM
                 ->all(); //เชค สถานะนำจ่าย(ลูกค้ายังไม่รับของ)
         if (count($orderItemPacking) > 0) {
             foreach ($orderItemPacking as $item):
-                //$bagNo = substr($item->bagNo, 0, -2);
-                $bagNo .= $item->bagNo . "<br>";
                 if ($item->bagNo != '') {
-                    $bagNo .= $item->bagNo . ' (' . $item->NumberOfBagNo . ' ถุง )' . ",";
+                    $bagNo .= $item->bagNo . "<br>";
                 }$bagNox = $bagNo . $item->bagNo;
             endforeach;
         }
