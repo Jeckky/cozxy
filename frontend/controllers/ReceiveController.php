@@ -205,6 +205,7 @@ class ReceiveController extends MasterController {
                         $lockers = \common\models\costfit\OrderItemPacking::find()->where("orderItemId in($orderItem) and status=7")->all();
                         if (isset($lockers) && !empty($lockers)) {
                             foreach ($lockers as $locker):
+                                $total = 0;
                                 $pickingLocker = \common\models\costfit\PickingPointItems::find()->where("pickingItemsId=" . $locker->pickingItemsId . " and pickingId=" . $pickingPoint)->one();
                                 if (isset($pickingLocker)) {
                                     $flag = false;

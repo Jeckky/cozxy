@@ -126,12 +126,12 @@ class PackingController extends StoreMasterController {
                     }
                 endforeach;
 //print bag label
-                $header = $this->renderPartial('header');
-                $content = $this->renderPartial('content', [
-                    'orderId' => $_GET['orderId'],
-                    'bagNo' => $bagNo
-                ]);
-                $this->printPdf($content, $header);
+//                $header = $this->renderPartial('header');
+//                $content = $this->renderPartial('content', [
+//                    'orderId' => $_GET['orderId'],
+//                    'bagNo' => $bagNo
+//                ]);
+//                $this->printPdf($content, $header);
                 if ($full > 0) {//ถ้ายังไม่ครบทุก item กลับไปหน้าสแกนโปรดักใส่ถุง (เปิดถุงใหม่)
                     return $this->render('show-orders', [
                                 'orderId' => $_GET['orderId'],
