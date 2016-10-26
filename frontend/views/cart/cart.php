@@ -118,6 +118,7 @@ use common\models\ModelMaster;
                         ?>
                         <tr class="item first" id="item<?= $item['orderItemId'] ?>">
                             <?= Html::hiddenInput("productId", $item["productId"], ['id' => 'productId']); ?>
+                            <?= Html::hiddenInput("sendDate", $item["sendDate"], ['id' => 'sendDate']); ?>
                             <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products/<?php echo ModelMaster::encodeParams(['productId' => $item["productId"]]); ?>"><img src="<?php echo $item["image"]; ?>" alt="Lorem ipsum" width="152" height="119"/></a></td>
                             <td class="name" style="width:30%">
                                 <a href="<?php echo Yii::$app->homeUrl; ?>products/<?php echo ModelMaster::encodeParams(['productId' => $item["productId"]]); ?>" style="font-size:14px;word-wrap: break-word; "><?= $item["title"] ?></a>

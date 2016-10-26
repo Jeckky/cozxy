@@ -238,7 +238,7 @@ class CartController extends MasterController
         if ($_POST["quantity"] <= $maxQuantity) {
             if (isset($price)) {
                 $cart = \common\models\costfit\Order::findCartArray();
-                $oi = \common\models\costfit\OrderItem::find()->where("productId = " . $_POST["productId"] . " AND orderId=" . $cart["orderId"])->one();
+                $oi = \common\models\costfit\OrderItem::find()->where("productId = " . $_POST["productId"] . " AND orderId=" . $cart["orderId"] . " AND sendDate =" . $_POST["sendDate"])->one();
                 $oi->price = $price["price"];
                 $oi->quantity = $_POST["quantity"];
                 $oi->priceOnePiece = $oi->product->calProductPrice($_POST["productId"], 1);
