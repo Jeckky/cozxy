@@ -317,35 +317,34 @@ class LockersController extends LockersMasterController {
             $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channel . "' and pickingItemsId  = '" . $pickingItemsId . "' ")->one();
 
             if (count($listPointItems) > 0) {
-                if ($close == 'yes') {
-                    \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $listPointItems->pickingItemsId], ['bagNo' => $bagNo]);
-                    \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderId' => $orderId]);
-                    \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $orderId]);
-                    if ($status == 'now') {
-                        \common\models\costfit\PickingPointItems::updateAll(['status' => 0], ['pickingItemsId' => $listPointItems->pickingItemsId]);
-                    } elseif ($status == 'latter') {
-                        \common\models\costfit\PickingPointItems::updateAll(['status' => 1], ['pickingItemsId' => $listPointItems->pickingItemsId]);
-                    } else {
-                        \common\models\costfit\PickingPointItems::updateAll(['status' => 1], ['pickingItemsId' => $listPointItems->pickingItemsId]);
-                    }
+                // if ($close == 'yes') {
+                \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $listPointItems->pickingItemsId], ['bagNo' => $bagNo]);
+                \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderId' => $orderId]);
+                \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $orderId]);
+                if ($status == 'now') {
+                    \common\models\costfit\PickingPointItems::updateAll(['status' => 0], ['pickingItemsId' => $listPointItems->pickingItemsId]);
 
-                    //ส่ง Email
-                    $this->generatePassword($orderId);
-                    $this->sendEmail($orderId);
                     return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $boxcode);
+                    /* return $this->render('location', [
+                      'warning' => 'roundone',
+                      'boxcode' => $boxcode,
+                      'model' => $model,
+                      'code' => $channel,
+                      'boxcode' => $boxcode,
+                      'pickingItemsId' => $pickingItemsId,
+                      'orderId' => $orderId,
+                      'orderItemPackingId' => $orderItemPackingId,
+                      'bagNo' => $OrderItemPacking->bagNo,
+                      'close' => 'yes',
+                      ]); */
+                } elseif ($status == 'latter') {
+                    \common\models\costfit\PickingPointItems::updateAll(['status' => 1], ['pickingItemsId' => $listPointItems->pickingItemsId]);
+                    return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?close=no&model=' . $model . '&code=' . $channel . '&boxcode=' . $boxcode . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId . '&bagNo=' . $bagNo . '');
+                } else {
+                    \common\models\costfit\PickingPointItems::updateAll(['status' => 1], ['pickingItemsId' => $listPointItems->pickingItemsId]);
+                    return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?close=no&model=' . $model . '&code=' . $channel . '&boxcode=' . $boxcode . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId . '&bagNo=' . $bagNo . '');
                 }
-                return $this->render('location', [
-                            'warning' => 'roundone',
-                            'boxcode' => $boxcode,
-                            'model' => $model,
-                            'code' => $channel,
-                            'boxcode' => $boxcode,
-                            'pickingItemsId' => $pickingItemsId,
-                            'orderId' => $orderId,
-                            'orderItemPackingId' => $orderItemPackingId,
-                            'bagNo' => $OrderItemPacking->bagNo,
-                            'close' => 'yes',
-                ]);
+                // }
             } else {
 
                 return $this->render('location', [
