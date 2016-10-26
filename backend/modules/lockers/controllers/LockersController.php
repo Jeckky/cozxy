@@ -121,7 +121,7 @@ class LockersController extends LockersMasterController {
                             ->joinWith(['orderItems'])
                             ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
                             ->where("order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "' and order.pickingId = '" . $boxcode . "' "
-                                    . "or order_item_packing.status = 7 and order_item_packing.bagNo ='" . $bagNo . "' and order.pickingId = '" . $boxcode . "'")
+                                    . "or order_item_packing.status = 7 and order_item_packing.bagNo ='" . $bagNo . "' and order.pickingId = '" . $boxcode . "' ")
                             ->groupBy(['order_item_packing.bagNo'])->one();
 
             if (count($queryOrderItemPackingId) == 0) {
@@ -230,8 +230,8 @@ class LockersController extends LockersMasterController {
                     ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
                     //->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
                     //->where("order_item_packing.status in (7,8) and  order.orderId ='" . $orderId . "' or order_item_packing.status in (7,8) and  order_item_packing.bagNo ='" . $bagNo . "' ")
-                    ->where("order_item_packing.status in (7,8) and  order_item.orderItemId ='" . $orderItemId . "' or order_item_packing.status in (7,8) "
-                            . "and  order_item_packing.bagNo ='" . $bagNo . "' ")
+                    ->where("order_item_packing.status in (7,8) and  order_item.orderItemId ='" . $orderItemId . "' and order_item_packing.pickingItemsId = '" . $pickingItemsId . "'or order_item_packing.status in (7,8) "
+                            . "and  order_item_packing.bagNo ='" . $bagNo . "' and order_item_packing.pickingItemsId = '" . $pickingItemsId . "' ")
                     //->where("order_item_packing.status in (7,8) and  order_item_packing.bagNo ='" . $bagNo . "' ")
                     //->where("order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "' ")
                     ->groupBy(['order_item_packing.bagNo']);
