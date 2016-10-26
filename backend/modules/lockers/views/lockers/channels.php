@@ -83,41 +83,38 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 <td style="border:2px black solid ;text-align:center;vertical-align: middle; height: <?= $height ?>" class="<?= ($row->status == 1) ? "alert-success" : "alert-danger" ?>">
                                                     <?php if ($colIndex == 1 && $rowIndex == 1): ?>
                                                         <span style="font-size: 20px;font-weight: bold"><?= "Controller" ?></span>
-                                                    <?php else: ?><h4>
+                                                    <?php else: ?>
+                                                        <?php
+                                                        if ($row->status == 0) {
+                                                            echo '<h4>ปิดช่องนี้แล้ว..</h4>';
+                                                        } else {
+                                                            ?>
+                                                            <h4> เปิดช่อง : <?= $row->name; ?></h4>
                                                             <?php
-                                                            if ($row->status == 0) {
-                                                                echo ' ปิดช่องนี้แล้ว..';
-                                                            } else {
+                                                            //echo $row->pickingItemsId;
+                                                            $items = common\models\costfit\PickingPointItems::OrderNoChannels8($row->pickingItemsId);
+                                                            $bagNo = common\models\costfit\PickingPointItems::bagNo8($row->pickingItemsId);
+                                                            if ($items != '' && $bagNo != '') {
+                                                                $BagNos = explode(",", $bagNo);
+                                                                //echo '<pre>';
+                                                                //print_r($BagNos);
+                                                                $orderNos = explode(",", $items);
                                                                 ?>
-                                                                เปิดช่อง : <?= $row->name; ?>
+                                                                <div class="list-group search-content">
+                                                                    <span href="#" class="list-group-item">
+                                                                        <?php
+                                                                        $itemsOrderNo = common\models\costfit\PickingPointItems::OrderNoList8(" $items ");
+                                                                        echo 'OrderNo : ' . $itemsOrderNo;
+                                                                        ?>
+                                                                    </span>
+                                                                    <span href="#" class="list-group-item">
+                                                                        แจ้งปัญหา
+                                                                        <textarea class="form-control" rows="5" placeholder="Message"></textarea><br>
+                                                                        <button class="btn btn-success btn-xs btn-outline">submit</button>
+                                                                    </span>
+                                                                </div>
                                                                 <?php
                                                             }
-                                                            ?>
-                                                        </h4>
-
-                                                        <?php
-                                                        //echo $row->pickingItemsId;
-                                                        $items = common\models\costfit\PickingPointItems::OrderNoChannels($row->pickingItemsId);
-                                                        $bagNo = common\models\costfit\PickingPointItems::bagNo($row->pickingItemsId);
-                                                        if ($items != '' && $bagNo != '') {
-                                                            $BagNos = explode(",", $bagNo);
-                                                            //echo '<pre>';
-                                                            //print_r($BagNos);
-                                                            $orderNos = explode(",", $items);
-                                                            ?>
-                                                            <div class="list-group search-content">
-                                                                <span href="#" class="list-group-item">
-                                                                    <?php
-                                                                    $itemsOrderNo = common\models\costfit\PickingPointItems::OrderNoList(" $items ");
-                                                                    echo 'OrderNo : ' . $itemsOrderNo;
-                                                                    ?>
-                                                                </span>
-                                                                <span href="#" class="list-group-item">
-                                                                    แจ้งปัญหา
-
-                                                                </span>
-                                                            </div>
-                                                            <?php
                                                         }
                                                         ?>
                                                     <?php endif; ?>
