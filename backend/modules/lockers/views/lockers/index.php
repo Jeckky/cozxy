@@ -56,7 +56,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <button type="button" class="close" data-dismiss="alert"> </button>
                     <strong>Code Picking Points :</strong> <?php echo $txt; ?>.&nbsp; <img src="<?php echo Yii::$app->homeUrl; ?>/images/icon/default-loader.gif" height="30" >
                 </div>
-                <meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php echo $data; ?>">
+                <meta http-equiv="refresh" content="1; url=channels?boxcode=<?php echo $data; ?>">
 
             <?php } elseif ($codes == 'false') { ?>
                 <div class="alert alert-danger">

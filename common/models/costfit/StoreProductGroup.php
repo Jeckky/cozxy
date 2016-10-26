@@ -32,11 +32,13 @@ class StoreProductGroup extends \common\models\costfit\master\StoreProductGroupM
     const STATUS_QC = 2; //QC
     const STATUS_ARRANGED_SOME = 3;
     const STATUS_ARRANGED = 4;
+    const STATUS_ARRANGING = 5;
 
     public static function findAllStatusArray() {
         return [
             self::STATUS_IMPORT_DATA => "นำข้อมูลเข้า",
             self::STATUS_QC => "ตรวจรับแล้ว", //import แล้ว
+            self::STATUS_ARRANGING => "กำลังนำไปจัดเรียง",
             self::STATUS_ARRANGED_SOME => "เรียงบางส่วนแล้ว",
             self::STATUS_ARRANGED => "เรียงทั้งหมดแล้ว",
         ];

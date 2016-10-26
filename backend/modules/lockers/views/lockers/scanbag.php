@@ -180,16 +180,14 @@ if (isset($listPointItems)) {
                         <center>
                             <?php
                             if ($bagNo != '') {
-                                ?>
-                                <a href="close-channel?status=latter&bagNo=<?php echo $bagNo; ?>&model=<?php echo $model; ?>&code=<?php echo $channel; ?>&boxcode=<?php echo $listPoint->pickingId; ?>&pickingItemsId=<?php echo $pickingItemsId; ?>&orderId=<?php echo $orderId; ?>&orderItemPackingId=<?php echo $orderItemPackingId; ?>" class="btn btn-info"><i class="fa fa-hand-o-up"></i> 1.หยิบใส่ช่อง <?php echo $channel; ?> , ถุง : <?php echo $bagNo; ?></a>
-                                หรือ
-                                <a href="close-channel?status=now&bagNo=<?php echo $bagNo; ?>&model=<?php echo $model; ?>&code=<?php echo $channel; ?>&boxcode=<?php echo $listPoint->pickingId; ?>&pickingItemsId=<?php echo $pickingItemsId; ?>&orderId=<?php echo $orderId; ?>&orderItemPackingId=<?php echo $orderItemPackingId; ?>" class="btn btn-warning"><i class="fa fa-hand-o-up"></i> 2.ต้องการปิดช่องนี้ทันที่ : หยิบใส่ช่อง <?php echo $channel; ?> , ถุง : <?php echo $bagNo; ?></a>
-
+                                ?>  <!--<a href="close-channel?status=latter&bagNo=<?php echo $bagNo; ?>&model=<?php echo $model; ?>&code=<?php echo $channel; ?>&boxcode=<?php echo $listPoint->pickingId; ?>&pickingItemsId=<?php echo $pickingItemsId; ?>&orderId=<?php echo $orderId; ?>&orderItemPackingId=<?php echo $orderItemPackingId; ?>" class="btn btn-info"><i class="fa fa-hand-o-up"></i> 1.หยิบใส่ช่อง <?php echo $channel; ?> , ถุง : <?php echo $bagNo; ?></a>
+                                      หรือ-->
+                                <a href="close-channel?status=now&bagNo=<?php echo $bagNo; ?>&model=<?php echo $model; ?>&code=<?php echo $channel; ?>&boxcode=<?php echo $listPoint->pickingId; ?>&pickingItemsId=<?php echo $pickingItemsId; ?>&orderId=<?php echo $orderId; ?>&orderItemPackingId=<?php echo $orderItemPackingId; ?>" class="btn btn-warning"><i class="fa fa-hand-o-up"></i> ต้องการปิดช่องนี้ทันที่ : หยิบใส่ช่อง <?php echo $channel; ?> , ถุง : <?php echo $bagNo; ?></a>
                             <?php } ?>
                         </center>
                     </div>
                     <div class="panel colourable panel-warning">
-                        <div class="panel-heading">
+                        <!--<div class="panel-heading">
                             <div class="row">
                                 <div class="col-md-6"><?= $this->title ?></div>
                                 <div class="col-md-6">
@@ -200,7 +198,7 @@ if (isset($listPointItems)) {
                             </div>
                         </div>
                         <div class="panel-body">
-                            <?=
+                            <?//=
                             GridView::widget([
                                 'dataProvider' => $dataProvider,
                                 'columns' => [
@@ -263,102 +261,102 @@ if (isset($listPointItems)) {
                             ]);
                             ?>
                         </div>
+                    </div>-->
+
                     </div>
 
-                </div>
-
-                <div class="order-index col-md-12">
-                    <div class="panel colourable panel-danger">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-md-6"> แสดงรายการ Order ตามจำนวนถุงที่ยังคงเหลือ</div>
-                                <div class="col-md-6">
-                                    <div class="btn-group pull-right">
-                                        &nbsp;<span class="limiter-count">&nbsp;</span>
+                    <div class="order-index col-md-12">
+                        <div class="panel colourable panel-danger">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-md-6"> แสดงรายการ Order ตามจำนวนถุงที่ยังคงเหลือ</div>
+                                    <div class="col-md-6">
+                                        <div class="btn-group pull-right">
+                                            &nbsp;<span class="limiter-count">&nbsp;</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="panel-body">
-                            <?=
-                            GridView::widget([
-                                'dataProvider' => $dataProviderAllOrder,
-                                'columns' => [
-                                    ['class' => 'yii\grid\SerialColumn'],
-                                    'orderItemPackingId',
-                                    'orderNo',
-                                    'bagNo',
-                                    //'pickingItemsId',
-                                    //'orderItemId',
-                                    //'orderNo',
-                                    //'bagNo',
-                                    //'status',
-                                    //'quantity',
-                                    [
-                                        'attribute' => 'quantity',
-                                        'value' => function($model) {
-                                            //return $model->quantity;
-                                            return 'จำนวน ' . \common\models\costfit\OrderItemPacking::countQuantity($model->bagNo) . "  ชิ้น";
-                                            //return isset($model->NumberOfBagNo) ? 'จำนวน ' . $model->NumberOfBagNo . ' ถุง' : ''; // status items 6 : แพ็คใส่ถุงแล้ว
-                                        }
-                                    ],
-                                    [
-                                        'attribute' => 'bagNo',
-                                        'value' => function($model) {
-                                            return 'จำนวน ' . \common\models\costfit\OrderItemPacking::countBagNo($model->bagNo) . "  ถุง";
-                                            //return  ;//isset($model->NumberOfBagNo) ? 'จำนวน ' . $model->NumberOfBagNo . ' ถุง' : ''; // status items 6 : แพ็คใส่ถุงแล้ว
-                                        }
-                                    ],
-                                    [
-                                        'attribute' => 'status',
-                                        'value' => function($model) {
-                                            if ($model->status == 4) {
-                                                $txt = ' ปิดถุงแล้ว';
-                                            } else if ($model->status == 5) {
-                                                $txt = 'กำลังจะใส่ในช่อง';
+                            <div class="panel-body">
+                                <?=
+                                GridView::widget([
+                                    'dataProvider' => $dataProviderAllOrder,
+                                    'columns' => [
+                                        ['class' => 'yii\grid\SerialColumn'],
+                                        'orderItemPackingId',
+                                        'orderNo',
+                                        'bagNo',
+                                        //'pickingItemsId',
+                                        //'orderItemId',
+                                        //'orderNo',
+                                        //'bagNo',
+                                        //'status',
+                                        //'quantity',
+                                        [
+                                            'attribute' => 'quantity',
+                                            'value' => function($model) {
+                                                //return $model->quantity;
+                                                return 'จำนวน ' . \common\models\costfit\OrderItemPacking::countQuantity($model->bagNo) . "  ชิ้น";
+                                                //return isset($model->NumberOfBagNo) ? 'จำนวน ' . $model->NumberOfBagNo . ' ถุง' : ''; // status items 6 : แพ็คใส่ถุงแล้ว
                                             }
-                                            return 'รอหยิบใส่ช่อง..'; //isset($txt) ? $txt : ''; // status items 6 : แพ็คใส่ถุงแล้ว
-                                        }
+                                        ],
+                                        [
+                                            'attribute' => 'bagNo',
+                                            'value' => function($model) {
+                                                return 'จำนวน ' . \common\models\costfit\OrderItemPacking::countBagNo($model->bagNo) . "  ถุง";
+                                                //return  ;//isset($model->NumberOfBagNo) ? 'จำนวน ' . $model->NumberOfBagNo . ' ถุง' : ''; // status items 6 : แพ็คใส่ถุงแล้ว
+                                            }
+                                        ],
+                                        [
+                                            'attribute' => 'status',
+                                            'value' => function($model) {
+                                                if ($model->status == 4) {
+                                                    $txt = ' ปิดถุงแล้ว';
+                                                } else if ($model->status == 5) {
+                                                    $txt = 'กำลังจะใส่ในช่อง';
+                                                }
+                                                return 'รอหยิบใส่ช่อง..'; //isset($txt) ? $txt : ''; // status items 6 : แพ็คใส่ถุงแล้ว
+                                            }
+                                        ],
+                                    //'pickingId',
+                                    /* [
+                                      'attribute' => 'pickingId',
+                                      'value' => function($model) {
+                                      return 'จุดรับของที่' . $model->pickingpoint->title . ' , ' . $model->pickingpoint->citie->localName . ' , ' . $model->pickingpoint->state->localName . ' , ' . 'ประเทศ' . $model->pickingpoint->countrie->localName; // status items 6 : แพ็คใส่ถุงแล้ว
+                                      }
+                                      ], */
+                                    // 'type',
+                                    // 'createDateTime',
+                                    // 'updateDateTime',
+                                    /* ['class' => 'yii\grid\ActionColumn',
+                                      'template' => '  ',
+                                      'buttons' => [
+                                      'items' => function($url, $model) {
+                                      return Html::a('รอ Picking Points ', Yii::$app->homeUrl . "picking/picking/index?pickingId=" . $model->pickingId, [
+                                      'title' => Yii::t('app', 'picking point'),]);
+                                      }
+                                      ],
+                                      ], */
                                     ],
-                                //'pickingId',
-                                /* [
-                                  'attribute' => 'pickingId',
-                                  'value' => function($model) {
-                                  return 'จุดรับของที่' . $model->pickingpoint->title . ' , ' . $model->pickingpoint->citie->localName . ' , ' . $model->pickingpoint->state->localName . ' , ' . 'ประเทศ' . $model->pickingpoint->countrie->localName; // status items 6 : แพ็คใส่ถุงแล้ว
-                                  }
-                                  ], */
-                                // 'type',
-                                // 'createDateTime',
-                                // 'updateDateTime',
-                                /* ['class' => 'yii\grid\ActionColumn',
-                                  'template' => '  ',
-                                  'buttons' => [
-                                  'items' => function($url, $model) {
-                                  return Html::a('รอ Picking Points ', Yii::$app->homeUrl . "picking/picking/index?pickingId=" . $model->pickingId, [
-                                  'title' => Yii::t('app', 'picking point'),]);
-                                  }
-                                  ],
-                                  ], */
-                                ],
-                            ]);
-                            ?>
+                                ]);
+                                ?>
+                            </div>
                         </div>
-                    </div>
 
+                    </div>
+                    <?php //}   ?>
+                    <?php
+                }
+            } else {
+                ?> <h1>Shippings / Picking Points Items / </h1>
+                <div class="panel-body">
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>ไม่พบข้อมูล</strong> ชื่อช่องนี้ ลองใหม่อีกครั้ง...&nbsp; <img src="<?php echo Yii::$app->homeUrl; ?>/images/icon/default-loader.gif" height="30" >
+                    </div>
+                    <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ?>">-->
                 </div>
-                <?php //}  ?>
                 <?php
             }
-        } else {
-            ?> <h1>Shippings / Picking Points Items / </h1>
-            <div class="panel-body">
-                <div class="alert alert-danger">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>ไม่พบข้อมูล</strong> ชื่อช่องนี้ ลองใหม่อีกครั้ง...&nbsp; <img src="<?php echo Yii::$app->homeUrl; ?>/images/icon/default-loader.gif" height="30" >
-                </div>
-                <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                                                                                                                                                                                                                                                                                                                                                                                                                        ?>">-->
-            </div>
-            <?php
-        }
-        ?>
+            ?>
 
