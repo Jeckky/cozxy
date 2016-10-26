@@ -99,7 +99,9 @@ class PickingPointItems extends \common\models\costfit\master\PickingPointItemsM
             foreach ($orderItemPacking as $item):
                 //$bagNo = substr($item->bagNo, 0, -2);
                 $bagNo .= $item->bagNo . "<br>";
-                //$bagNox = $bagNo .  $item->bagNo;
+                if ($item->bagNo != '') {
+                    $bagNo .= $item->bagNo . ' (' . $item->NumberOfBagNo . ' ถุง )' . ",";
+                }$bagNox = $bagNo . $item->bagNo;
             endforeach;
         }
         return substr($bagNo, 0, -4);

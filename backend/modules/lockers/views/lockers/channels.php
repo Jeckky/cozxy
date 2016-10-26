@@ -6,199 +6,132 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
 
-$this->title = 'แสดงข้อมูลของ Order No.';
+$this->title = 'ช่องของ Lockers';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
-//echo $listPointItems->orderItemPackingId;
-if (isset($listPointItems)) {
-    ?>
-    <h1>Shippings / Picking Points Items / เปิด  <?php echo $listPointItems->code; ?></h1>
-    <?php if ($listPointItems == '1') { ?>
-        <div class="alert alert-danger">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>Oh snap!</strong> Change a few things up and try submitting again.
+?>
+<h1>Shippings / Picking Points </h1>
+<!--<div class="note note-success ">
+    <h3>สถานที่ตั้ง Lockers </h3>
+    <h4 style="color: #003147">
+        Code Lockers  : <?php echo $listPoint->code; ?>
+        ,ที่<?php echo $listPoint->title; ?>
+        ,<?php echo $citie->localName; ?>
+        ,<?php echo $state->localName; ?>
+        ,<?php echo $countrie->localName; ?>
+    </h4>
+
+</div>-->
+<div class="panel panel-info panel-dark widget-profile ">
+    <div class="panel-heading">
+        <div class="widget-profile-bg-icon"><i class="fa fa-twitter"></i></div>
+        <div class="widget-profile-header">
+            <span>สถานที่ตั้งของ Lockers</span><br>
         </div>
-    <?php } else { ?>
-        <div class="panel panel-info panel-dark widget-profile">
-            <div class="panel-heading">
-                <div class="widget-profile-bg-icon"><i class="fa fa-twitter"></i></div>
-                <div class="widget-profile-header">
-                    <span>สถานที่ตั้งของ Lockers</span><br>
-                </div>
-            </div> <!-- / .panel-heading -->
-            <div class="widget-profile-counters">
-                <div class="col-xs-3"><span>ที่ <?php echo $listPoint->title; ?></span></div>
-                <div class="col-xs-3"><span><?php echo $citie->localName; ?></span></div>
-                <div class="col-xs-3"><span><?php echo $state->localName; ?></span></div>
-                <div class="col-xs-3"><span><?php echo $countrie->localName; ?></span></div>
-            </div>
-            <input type="text" placeholder="Code Lockers  : <?php echo $listPoint->code; ?>" class="form-control input-lg widget-profile-input">
-            <div class="widget-profile-text">
-                Code Channels : <?php echo $listPointItems->code; ?>
+    </div> <!-- / .panel-heading -->
+    <div class="widget-profile-counters">
+        <div class="col-xs-3"><span>ที่ <?php echo $listPoint->title; ?></span></div>
+        <div class="col-xs-3"><span><?php echo $citie->localName; ?></span></div>
+        <div class="col-xs-3"><span><?php echo $state->localName; ?></span></div>
+        <div class="col-xs-3"><span><?php echo $countrie->localName; ?></span></div>
+    </div>
+    <input type="text" placeholder="Code Lockers  : <?php echo ($listPoint->code != '') ? $listPoint->code : ''; ?>" class="form-control input-lg widget-profile-input">
+    <div class="widget-profile-text">
+        &nbsp;
+    </div>
+</div>
+<div class="order-index col-md-12">
+    <div class="panel panel-warning panel-dark">
+        <div class="panel-heading">
+            <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> แสดงช่องของ Lockers เพื่อเปิดช่องและแจ้งปัญหา</span>
+        </div>
+        <div class="panel-body ">
+            <div class="col-sm-12">
+                <h3><?= $point->title; ?></h3>
+                <table class="table table-bordered">
+                    <tbody>
+                        <?php
+                        $cols = common\models\costfit\PickingPointItems::find()
+                                ->where(["pickingId" => $point->pickingId])
+                                ->groupBy(["LEFT(portIndex,1)"])
+                                ->all();
+                        ?>
+                        <tr>
+                            <?php foreach ($cols as $colIndex => $col): ?>
+                                <td style="width:33%">
+                                    <table class="table">
+                                        <?php
+                                        $rows = common\models\costfit\PickingPointItems::find()
+                                                ->where(["pickingId" => $point->pickingId, 'LEFT(portIndex,1)' => substr($col->portIndex, 0, 1)])
+                                                // ->groupBy(["RIGHT(portIndex,1)"])
+                                                ->all();
+                                        foreach ($rows as $rowIndex => $row):
+                                            $height = "70px";
+                                            switch ($row->height) {
+                                                case 20 ://User
+                                                    $height = "70px";
+                                                    break;
+                                                case 40 ://User
+                                                    $height = "140px";
+                                                    break;
+                                                case 60 ://User
+                                                    $height = "210px";
+                                                    break;
+                                            }
+                                            ?>
+                                            <tr>
+                                                <td style="border:2px black solid ;text-align:center;vertical-align: middle; height: <?= $height ?>" class="<?= ($row->status == 1) ? "alert-success" : "alert-danger" ?>">
+                                                    <?php if ($colIndex == 1 && $rowIndex == 1): ?>
+                                                        <span style="font-size: 20px;font-weight: bold"><?= "Controller" ?></span>
+                                                    <?php else: ?><h4>
+                                                            <?php
+                                                            if ($row->status == 0) {
+                                                                echo ' ปิดช่องนี้แล้ว..';
+                                                            } else {
+                                                                echo 'เปิดช่อง';
+                                                            }
+                                                            ?>
+                                                        </h4>
+                                                        <?php
+                                                        //echo $row->pickingItemsId;
+                                                        $items = common\models\costfit\PickingPointItems::OrderNoChannels($row->pickingItemsId);
+                                                        $bagNo = common\models\costfit\PickingPointItems::bagNo($row->pickingItemsId);
+                                                        if ($items != '' && $bagNo != '') {
+                                                            $BagNos = explode(",", $bagNo);
+                                                            $orderNos = explode(",", $items);
+                                                            ?>
+                                                            <div class="list-group search-content">
+                                                                <span href="#" class="list-group-item">
+                                                                    <?php
+                                                                    $itemsOrderNo = common\models\costfit\PickingPointItems::OrderNoList(" $items ");
+                                                                    echo 'OrderNo : ' . $itemsOrderNo;
+                                                                    ?>
+                                                                </span>
+                                                                <span href="#" class="list-group-item">
+                                                                    <?php
+                                                                    for ($index = 1; $index < count($BagNos); $index++) {
+                                                                        echo $BagNos[$index] . '<br>';
+                                                                    }
+                                                                    ?>
+                                                                </span>
+                                                            </div>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                    <?php endif; ?>
+
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </table>
+                                </td>
+                            <?php endforeach; ?>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="order-index col-md-12">
-            <div class="panel colourable panel-success">
-
-                <?php
-                $form = ActiveForm::begin([
-                            'method' => 'GET',
-                            'action' => ['lockers/channels?model=' . $model . '&code=' . $channel . '&boxcode=' . $listPoint->pickingId . '&pickingItemsId=' . $listPointItems->pickingItemsId],
-                ]);
-                ?>
-                <div class="panel-heading">
-                    <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> Scan Qr Code Order No.</span>
-                </div>
-                <div class="panel-body ">
-                    <div class="col-sm-12">
-                        <input type="text" name="orderNo" autofocus="true" id="orderNo" class="form-control" placeholder="Search or Scan Qr code">
-                        <div id="character-limit-input-label" class="limiter-label form-group-margin">หมายเหตุ : <span class="limiter-count">Scan Qr Code Order No.</span></div>
-                    </div>
-                </div>
-                <?= $this->registerJS("
-                                    $('#orderNo').blur(function(event){
-                                        if(event.which == 13 || event.keyCode == 13)
-                                        {
-                                           $('#form').submit();
-                                        }
-                                    });
-                        ") ?>
-                <?php ActiveForm::end(); ?>
+    </div>
+</div>
 
 
-            </div>
-            <div class="panel colourable">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-md-6"><?= $this->title ?></div>
-                        <div class="col-md-6">
-                            <div class="btn-group pull-right">
-                                &nbsp;<span class="limiter-count">&nbsp;</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <?php
-                    if ($warning == 'no') {
-                        ?>
-                        <div class="alert alert-danger text-center">
-                            <button type="button" class="close" data-dismiss="alert"></button>
-                            ไม่พบข้อมูล
-                        </div>
-                        <?php
-                    } else {
-                        ?>
-                        <div class="alert alert-success text-center">
-                            <button type="button" class="close" data-dismiss="alert"></button>
-                            ข้อมูลถูกต้อง กรุณารอสักครู่ ..
-
-                            <meta http-equiv="refresh" content="1; url=scan-bag?pickingItemsId=<?php echo $listPointItems->pickingItemsId; ?>&boxcode=<?php echo $boxcode; ?>&model=<?php echo $model; ?>&code=<?php echo $channel; ?>&orderId=<?php echo $orderId; ?>" >
-
-                        </div>
-                        <?php
-                        echo GridView::widget([
-                            'dataProvider' => $dataProvider,
-                            'rowOptions' => function($model) {
-                                if ($model->status == 14) {
-                                    return ['class' => 'warning'];
-                                } else if ($model->status == 15) {
-                                    return ['class' => 'success'];
-                                }
-                            },
-                                    'columns' => [
-                                        ['class' => 'yii\grid\SerialColumn'],
-                                        'orderId',
-                                        //'orderItemId',
-                                        //'orderNo',
-                                        [
-                                            'attribute' => 'orderNo',
-                                            'value' => function($model) {
-                                                // if ($model->status == 6) {
-                                                // $txt = 'แพ็คใส่ถุงแล้ว';
-                                                // } else if ($model->status == 14) {
-                                                //$txt = 'กำลังจะส่ง';
-                                                //}
-                                                //return $model->orderNo . ' ,มี' . count($model->orderItemId) . 'รายการ';
-                                                return $model->orderNo . ', มี ' . \common\models\costfit\Order::CountOrderItems($model->orderId) . ' รายการ';
-                                            }
-                                        ],
-                                        //'bagNo',
-                                        //'status',
-                                        [
-                                            'attribute' => 'status',
-                                            'value' => function($model) {
-                                                if ($model->status == 6) {
-                                                    $txt = 'แพ็คใส่ถุงแล้ว';
-                                                } else if ($model->status == 14) {
-                                                    $txt = 'กำลังจะส่ง';
-                                                } else if ($model->status == 15) {
-                                                    $txt = 'สินค้ายังอยู่ใน lockers';
-                                                } else if ($model->status == 13) {
-                                                    $txt = 'แพ็คเสร็จแล้ว';
-                                                }
-                                                return isset($txt) ? $txt : ''; // status items 6 : แพ็คใส่ถุงแล้ว
-                                            }
-                                        ],
-                                        [
-                                            'attribute' => 'จำนวน bagNo',
-                                            'value' => function($model) {
-                                                return 'ต้องใส่ช่องจำนวน ' . \common\models\costfit\OrderItemPacking::shipPacking($model->orderItemId) . "  ถุง";
-                                            }
-                                        ],
-                                        //'pickingId',
-                                        [
-                                            'attribute' => 'pickingId',
-                                            'value' => function($model) {
-                                                $name = isset($model->pickingpointitems->name) ? $model->pickingpointitems->name : '';
-                                                $code = isset($model->pickingpointitems->code) ? $model->pickingpointitems->code : '';
-                                                $title = isset($model->pickingpoint->title) ? $model->pickingpoint->title : '';
-                                                $localNamecitie = isset($model->pickingpoint->citie->localName) ? $model->pickingpoint->citie->localName : '';
-                                                $localNamestate = isset($model->pickingpoint->state->localName) ? $model->pickingpoint->state->localName : '';
-                                                $localNamecountrie = isset($model->pickingpoint->countrie->localName) ? $model->pickingpoint->countrie->localName : '';
-
-                                                return ' สถานที่ส่งของ : ' . $title . ' , ' . $localNamecitie . ' , ' . $localNamestate . ' , ' . 'ประเทศ' . $localNamecountrie . ' '; // status items 6 : แพ็คใส่ถุงแล้ว
-                                            }
-                                        ],
-                                        // 'type',
-                                        // 'createDateTime',
-                                        // 'updateDateTime',
-                                        ['class' => 'yii\grid\ActionColumn',
-                                            'template' => ' {items} ',
-                                            'buttons' => [
-                                                'items' => function($url, $model ) {
-
-                                                    if (\common\models\costfit\OrderItemPacking::shipPacking($model->orderItemId) > 0) {
-                                                        //return Html::a('สแกนถุง', Yii::$app->homeUrl . "store/shippings/scan-bag?pickingItemsId=" . Yii::$app->request->get('pickingItemsId') . "&boxcode=" . Yii::$app->request->get('boxcode') . "&model=" . Yii::$app->request->get('model') . "&code=" . Yii::$app->request->get('code') . "&orderId=" . $model->orderId, [
-                                                        // 'title' => Yii::t('app', 'picking point'),]);
-                                                    } else {
-                                                        //return Html::a('<i class="fa fa-eye"></i> ', Yii::$app->homeUrl . "store/shippings/scan-bag?pickingItemsId=" . Yii::$app->request->get('pickingItemsId') . "&boxcode=" . Yii::$app->request->get('boxcode') . "&model=" . Yii::$app->request->get('model') . "&code=" . Yii::$app->request->get('code') . "&orderId=" . $model->orderId, [
-                                                        //'title' => Yii::t('app', 'picking point'),]);
-                                                    }
-                                                }
-                                            ],
-                                        ],
-                                    ],
-                                ]);
-                            }
-                            ?>
-
-                        </div>
-                    </div>
-
-                </div>
-                <?php
-            }
-        } else {
-            ?> <h1>Lockers / Picking Points Items / </h1>
-            <div class="panel-body">
-                <div class="alert alert-danger">
-                    <button type="button" class="close" data-dismiss="alert"></button>
-                    <strong>ไม่พบข้อมูล</strong> ลองใหม่อีกครั้ง...&nbsp; <img src="<?php echo Yii::$app->homeUrl; ?>/images/icon/default-loader.gif" height="30" >
-                </div>
-                <meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php echo $boxcode; ?>" >                                                                          ?>">-->
-            </div>
-            <?php
-        }
-        ?>
