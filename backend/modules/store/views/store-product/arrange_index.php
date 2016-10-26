@@ -1,4 +1,7 @@
 <?php
+
+use yii\helpers\Html;
+
 $form = yii\bootstrap\ActiveForm::begin([
             'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
             'fieldConfig' => [
@@ -26,6 +29,9 @@ $form = yii\bootstrap\ActiveForm::begin([
 </div>
 <?php yii\bootstrap\ActiveForm::end(); ?>
 <div class="panel-heading" style="background-color: #ffffcc;">
+    <div class="pull-right" style="margin-top: 10px;"><?=
+        Html::a('<i class="fa fa-hand-lizard-o" aria-hidden="true"></i> เลือก PO อื่น', ['arrange'], ['class' => 'btn btn-md btn-primary'])
+        ?></div>
     <span class="panel-title"><h3>รายการ สินค้าใน PO : <?= \common\models\costfit\StoreProductGroup::findPoNo($storeProductGroupId) ?></h3></span>
 </div>
 <div class="panel-body">
@@ -34,6 +40,7 @@ $form = yii\bootstrap\ActiveForm::begin([
         <tr style="height: 50px;background-color: #FFFFE0;">
             <th style="vertical-align: middle;text-align: center;width: 5%;">ลำดับที่</th>
             <th style="vertical-align: middle;text-align: center;width: 35%;">สินค้า</th>
+            <th style="vertical-align: middle;text-align: center;width: 20%;">Bar code</th>
             <th style="vertical-align: middle;text-align: center;width: 20%;">จำนวน</th>
             <th style="vertical-align: middle;text-align: center;width: 20%;">สถานะ</th>
         </tr>
@@ -45,6 +52,7 @@ $form = yii\bootstrap\ActiveForm::begin([
                 <tr>
                     <td style="vertical-align: middle;text-align: center;width: 5%;"><?= $i ?></td>
                     <td style="vertical-align: middle;text-align: center;width: 35%;"><?= \common\models\costfit\Product::findProductName($storeProduct->productId) ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 20%;"><?= \common\models\costfit\Product::findProductIsbn($storeProduct->productId) ?></td>
                     <td style="vertical-align: middle;text-align: center;width: 20%;"><?= $storeProduct->importQuantity ?></td>
                     <td style="vertical-align: middle;text-align: center;width: 20%;"><?= $model->getStatusText($storeProduct->status) ?></td>
                 </tr>

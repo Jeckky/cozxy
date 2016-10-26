@@ -34,6 +34,7 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
     const STATUS_QC = 2;
     const STATUS_ARRANGED_SOME = 3;
     const STATUS_ARRANGED = 4;
+    const STATUS_ARRANGING = 5;
 
     /**
      * @inheritdoc
@@ -79,6 +80,7 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
             self::STATUS_QC => "ตรวจและนับแล้ว", //import แล้ว
             self::STATUS_ARRANGED_SOME => "จัดเรียงบางส่วนแล้ว",
             self::STATUS_ARRANGED => "จัดเรียงทั้งหมดแล้ว",
+            self::STATUS_ARRANGING => "กำลังนำไปจัดเรียง",
         ];
     }
 
