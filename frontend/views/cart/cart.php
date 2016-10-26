@@ -113,6 +113,7 @@ use common\models\ModelMaster;
                     </tr>
                     <!--Item-->
                     <?php
+//                    throw new \yii\base\Exception(print_r($this->params['cart']['items'], true));
                     foreach ($this->params['cart']['items'] as $item) {
                         ?>
                         <tr class="item first" id="item<?= $item['orderItemId'] ?>">
@@ -122,9 +123,9 @@ use common\models\ModelMaster;
                                 <a href="<?php echo Yii::$app->homeUrl; ?>products/<?php echo ModelMaster::encodeParams(['productId' => $item["productId"]]); ?>" style="font-size:14px;word-wrap: break-word; "><?= $item["title"] ?></a>
                             </td>
                             <td>
-                                <span style="text-decoration: line-through; color:#ccc; font-weight: bold;"> <?= $item["priceOnePiece"] ?> ฿</span> <br>
-                                <span class="price" style="font-weight: bold;"><?= $item["price"] . " ฿" ?></span> <br>
-                                <span class="savings <?= ($item["priceOnePiece"] - $item["price"] == 0) ? " hide" : " " ?>" style="color: red;font-size: 13px;">You Saved -<?= number_format($item["priceOnePiece"] - $item["price"]) ?> ฿</span><br>
+                                <span style="text-decoration: line-through; color:#ccc; font-weight: bold;"> <?= number_format($item["priceMarket"], 2) ?> ฿</span> <br>
+                                <span class="price" style="font-weight: bold;"><?= number_format($item["priceOnePiece"], 2) . " ฿" ?></span> <br>
+                                <span class="savings <?= ($item["discountValue"] == 0) ? " hide" : " " ?>" style="color: red;font-size: 13px;">You Saved <?= number_format($item["discountValue"], 2) ?> ฿</span><br>
                                 <?php if (isset($item["sendDateNoDate"])): ?>
                                     <span style="font-size: 13px;">จัดส่งภายใน <?= $item["sendDateNoDate"] ?>  วัน </span>
                                 <?php endif; ?>
@@ -134,7 +135,7 @@ use common\models\ModelMaster;
                                 <input class="quantity form-control" style="font-size: 14px" type="text" value="<?= $item["qty"] ?>" readonly="true">
                                 <a class="incr-btn-cart" href="#">+</a>
                             </td>
-                            <td class="total"><?= $item["qty"] * $item["price"] . " ฿" ?></td>
+                            <td class="total"><?= number_format($item["subTotal"], 2) . " ฿" ?></td>
                             <td class="delete"><i class="icon-delete"></i><?= yii\helpers\Html::hiddenInput("orderItemId", $item['orderItemId'], ['id' => 'orderItemId']); ?></td>
                         </tr>
                         <?= Html::hiddenInput("orderId", $this->params['cart']['orderId'], ['id' => 'orderId']); ?>

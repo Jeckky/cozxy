@@ -64,12 +64,16 @@ class CartController extends MasterController
         } else {
             $orderItem->quantity = $orderItem->quantity + $_POST["quantity"];
         }
+        $product = new \common\models\costfit\Product();
+        $productPrice = $product->calProductPrice($id, $orderItem->quantity, 1);
         $orderItem->orderId = $order->orderId;
         $orderItem->productId = $id;
         $orderItem->sendDate = $_POST["fastId"];
         $orderItem->priceOnePiece = $orderItem->product->calProductPrice($id, 1);
-        $orderItem->price = $orderItem->product->calProductPrice($id, $orderItem->quantity);
-        $orderItem->total = $orderItem->quantity * $orderItem->price;
+        $orderItem->price = $productPrice["price"];
+        $orderItem->subTotal = $orderItem->quantity * $orderItem->price;
+        $orderItem->discountValue = isset($productPrice["discountValue"]) ? $productPrice["discountValue"] : 0;
+        $orderItem->total = ($orderItem->quantity * $orderItem->price) - $orderItem->discountValue;
         $orderItem->createDateTime = new \yii\db\Expression("NOW()");
         if ($orderItem->save()) {
             if (Yii::$app->db->lastInsertID > 0) {
@@ -232,7 +236,8 @@ class CartController extends MasterController
                 $oi->price = $price["price"];
                 $oi->quantity = $_POST["quantity"];
                 $oi->priceOnePiece = $oi->product->calProductPrice($_POST["productId"], 1);
-
+                $oi->subTotal = $oi->price * $_POST["quantity"];
+                $oi->discountValue = $price["discountValue"];
                 $oi->total = ($oi->price * $_POST["quantity"]) - $price["discountValue"];
                 $oi->save();
                 $cart = \common\models\costfit\Order::findCartArray();
@@ -242,10 +247,15 @@ class CartController extends MasterController
                 $res["priceOnePiece"] = $oi->priceOnePiece;
                 $res["priceOnePieceText"] = number_format($oi->priceOnePiece, 2);
                 $res["saving"] = $price["discountValue"];
+                $res["savingText"] = number_format($price["discountValue"], 2);
                 $res["orderItemId"] = $oi->orderItemId;
                 $res["cart"] = $cart;
                 $res["discountType"] = $price["discountType"];
                 $res["discountValue"] = $price["discountValue"];
+                $res["total"] = $oi->total;
+                $res["totalText"] = number_format($oi->total, 2);
+                $res["subTotal"] = $oi->subTotal;
+                $res["subTotalText"] = number_format($oi->subTotal, 2);
             } else {
                 $res["status"] = FALSE;
                 $res['errorCode'] = 2;

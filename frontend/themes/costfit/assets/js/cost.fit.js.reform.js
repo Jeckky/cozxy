@@ -37,10 +37,11 @@ function proceed(data) {
                 {
 //                    alert($('.shopping-cart .cart-sidebar .cart-totals .cartTotalRight').html());
                     $('.shopping-cart .cart-sidebar .cart-totals .cartTotalRight').append(
-                            '<tr class="alert alert-info"><td>Discount Coupon :' + data.cart.couponCode + '</td>' +
-                            '<td class="">' + data.cart.discount + '</td>' +
+                            '<tr class="alert alert-warning" ><td style="font-size:12px"><b>Coupon</b> ' + data.cart.couponCode + '</td>' +
+                            '<td class="discount align-r">' + data.cart.discountFormatText + '</td>' +
                             '</tr>'
                             );
+                    $('.shopping-cart .cart-sidebar .cart-totals .summary').text(data.cart.summaryFormatText + " ฿");
                 } else
                 {
                     alert(data.message);
@@ -558,7 +559,7 @@ $(".incr-btn-cart").on("click", function (e) {
         {
             if (data.status)
             {
-                $button.parent().parent().find(".price").html(data.price);
+                $button.parent().parent().find(".price").html(data.priceText);
 //                if (data.discountValue != "null")
 //                {
 //                    $('.discountPrice').html(data.discountValue + " ฿ extra offyour order");
@@ -568,20 +569,21 @@ $(".incr-btn-cart").on("click", function (e) {
 //                }
 //                $('#pp' + oldValue).removeClass("priceActive");
 //                $('#pp' + newVal).addClass("priceActive");
-                $button.parent().parent().find(".total").html((newVal * data.price).toFixed(2) + " ฿");
+                $button.parent().parent().find(".total").html(data.subTotalText + " ฿");
                 $button.parent().find("input").val(newVal);
                 $('.cart-dropdown table').find('tbody').find("#item" + data.orderItemId).find(".qty").find("#qty").val(newVal);
-                $('.cart-dropdown table').find('tbody').find("#item" + data.orderItemId).find(".price").html(data.price);
+                $('.cart-dropdown table').find('tbody').find("#item" + data.orderItemId).find(".price").html(data.priceText);
                 $('.cart-btn a span').text(data.cart.qty);
                 $('.cart-btn a').find("#cartTotal").html(data.cart.summaryFormatText);
                 $('.cart-dropdown').find(".footer").find('.total').html(data.cart.summaryFormatText);
                 $('.shopping-cart').find(".cart-sidebar").find(".subtotal").html(data.cart.totalWithoutDiscountText + " ฿");
                 $('.shopping-cart').find(".cart-sidebar").find(".total").html(data.cart.totalFormatText + " ฿");
-                $('.shopping-cart').find(".cart-sidebar").find(".savings").html(data.cart.totalItemDiscountText + " ฿");
+                $('.shopping-cart').find(".cart-sidebar").find(".savings").html("-" + data.cart.totalItemDiscountText + " ฿");
+                $('.shopping-cart').find(".cart-sidebar").find(".discount").html(data.cart.discountFormatText + " ฿");
                 $('.shopping-cart').find(".cart-sidebar").find(".summary").html(data.cart.summaryFormatText + " ฿");
                 if (parseInt(data.saving) > 0)
                 {
-                    $('.shopping-cart').find(".items-list").find("#item" + data.orderItemId).find(".savings").html("You Saved -" + data.saving + " ฿");
+                    $('.shopping-cart').find(".items-list").find("#item" + data.orderItemId).find(".savings").html("You Saved -" + data.savingText + " ฿");
                     $('.shopping-cart').find(".items-list").find("#item" + data.orderItemId).find(".savings").removeClass("hide");
                 } else
                 {

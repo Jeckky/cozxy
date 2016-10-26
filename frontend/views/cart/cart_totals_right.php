@@ -3,19 +3,14 @@
         <td>Cart subtotal</td>
         <td class="total align-r// number_format($this->params['cart']['total'], 2) ?></td>
     </tr>-->
-    <?php if (isset($this->params['cart']['discount'])): ?>
-        <tr>
-            <td>Discount Code  <?= $this->params['cart']['couponCode'] ?></td>
-            <td class="discount align-r"><?= number_format($this->params['cart']['discount'], 2) ?></td>
-        </tr>
-    <?php endif; ?>
+
     <tr>
         <td>Starting Subtotal</td>
         <td class="subtotal align-r"><?= number_format($this->params['cart']['totalWithoutDiscount'], 2) ?> ฿</td>
     </tr>
     <tr style="color: red;">
         <td>Extra Savings</td>
-        <td class="savings align-r"><?= number_format($this->params['cart']['totalItemDiscount'], 2) ?> ฿</td>
+        <td class="savings align-r">-<?= number_format($this->params['cart']['totalItemDiscount'], 2) ?> ฿</td>
     </tr>
     <tr>
         <td style="color: #000;">Subtotal</td>
@@ -34,11 +29,16 @@
         <td>Shipping Fee</td>
         <td class="shipping align-r"><?= (isset($this->params['cart']['shippingRate']) && $this->params['cart']['shippingRate'] == 0) ? "Free Shipping" : number_format($this->params['cart']['shippingRate'], 2) ?></td>
     </tr>
-
+    <?php if (isset($this->params['cart']['discount'])): ?>
+        <tr class="alert alert-warning">
+            <td style="font-size:12px"><b>Coupon</b>  <?= $this->params['cart']['couponCode'] ?></td>
+            <td class="discount align-r"><?= number_format($this->params['cart']['discount'], 2) . " ฿" ?></td>
+        </tr>
+    <?php endif; ?>
 </table>
 <table>
     <tr>
         <td>Summary</td>
-        <td class="summary align-r" style="font-weight: bold"><?= number_format($this->params ['cart']['summary'], 2) ?></td>
+        <td class="summary align-r" style="font-weight: bold"><?= number_format($this->params ['cart']['summary'], 2) . " ฿" ?></td>
     </tr>
 </table>
