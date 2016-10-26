@@ -14,9 +14,7 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-    *
-            * @property Content[] $contents
-    */
+*/
 class ContentGroupMaster extends \common\models\ModelMaster
 {
 /**
@@ -57,12 +55,4 @@ return [
     'updateDateTime' => Yii::t('content_group', 'Update Date Time'),
 ];
 }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getContents()
-    {
-    return $this->hasMany(ContentMaster::className(), ['contentGroupId' => 'contentGroupId']);
-    }
 }

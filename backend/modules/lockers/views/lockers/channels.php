@@ -82,7 +82,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             <tr>
                                                 <td style="border:2px black solid ;text-align:center;vertical-align: middle; height: <?= $height ?>" class="<?= ($row->status == 1) ? "alert-success" : "alert-danger" ?>">
                                                     <?php if ($colIndex == 1 && $rowIndex == 1): ?>
-                                                        <span style="font-size: 20px;font-weight: bold"><?= "Controller" ?></span>
+                                                        <button class="btn">
+                                                            <a href="lockers?boxcode=<?php echo $row->pickingId; ?>" style="font-size: 20px;font-weight: bold"><?= "Controller" ?></a>
+                                                        </button>
                                                     <?php else: ?>
                                                         <?php
                                                         if ($row->status == 0) {
@@ -104,8 +106,11 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                     <span href="#" class="list-group-item">
                                                                         <?php
                                                                         $itemsOrderNo = common\models\costfit\PickingPointItems::OrderNoList8(" $items ");
-                                                                        echo 'OrderNo : ' . $itemsOrderNo;
-                                                                        ?>
+                                                                        echo 'OrderNo : ' . $itemsOrderNo . '( ลูกค้ามารับสินค้าแล้ว.)<br> ** ok : เรียบร้อย , no : แจ้งปัญหา';
+                                                                        ?><br><br>
+                                                                        <button class="btn btn-success">Ok</button>
+                                                                        <button class="btn btn-default remart">No</button>
+                                                                        <br>
                                                                     </span>
                                                                     <span href="#" class="list-group-item">
                                                                         แจ้งปัญหา

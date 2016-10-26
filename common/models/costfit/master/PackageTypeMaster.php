@@ -13,9 +13,7 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-    *
-            * @property Package[] $packages
-    */
+*/
 class PackageTypeMaster extends \common\models\ModelMaster
 {
 /**
@@ -54,12 +52,4 @@ return [
     'updateDateTime' => Yii::t('package_type', 'Update Date Time'),
 ];
 }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getPackages()
-    {
-    return $this->hasMany(PackageMaster::className(), ['packageTypeId' => 'packageTypeId']);
-    }
 }

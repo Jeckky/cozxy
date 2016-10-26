@@ -28,9 +28,7 @@ use Yii;
     * @property string $longitude
     * @property string $latitude
     * @property string $email
-    *
-            * @property User $user
-    */
+*/
 class AddressMaster extends \common\models\ModelMaster
 {
 /**
@@ -57,7 +55,6 @@ return [
             [['zipcode'], 'string', 'max' => 10],
             [['longitude', 'latitude'], 'string', 'max' => 150],
             [['email'], 'string', 'max' => 100],
-            [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => UserMaster::className(), 'targetAttribute' => ['userId' => 'userId']],
         ];
 }
 
@@ -90,12 +87,4 @@ return [
     'email' => Yii::t('address', 'Email'),
 ];
 }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getUser()
-    {
-    return $this->hasOne(UserMaster::className(), ['userId' => 'userId']);
-    }
 }
