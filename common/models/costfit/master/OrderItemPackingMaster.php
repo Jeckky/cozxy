@@ -7,12 +7,14 @@ use Yii;
 /**
 * This is the model class for table "order_item_packing".
 *
-    * @property integer $orderItemPackingId
-    * @property integer $orderItemId
-    * @property integer $pickingItemsId
+    * @property string $orderItemPackingId
+    * @property string $orderItemId
+    * @property string $pickingItemsId
     * @property string $bagNo
-    * @property integer $quantity
+    * @property string $quantity
     * @property integer $status
+    * @property string $shipDate
+    * @property string $remart
     * @property string $createDateTime
     * @property string $updateDateTime
 */
@@ -34,8 +36,9 @@ public function rules()
 return [
             [['orderItemId', 'quantity'], 'required'],
             [['orderItemId', 'pickingItemsId', 'quantity', 'status'], 'integer'],
-            [['createDateTime', 'updateDateTime'], 'safe'],
+            [['shipDate', 'createDateTime', 'updateDateTime'], 'safe'],
             [['bagNo'], 'string', 'max' => 255],
+            [['remart'], 'string', 'max' => 150],
         ];
 }
 
@@ -51,6 +54,8 @@ return [
     'bagNo' => Yii::t('order_item_packing', 'Bag No'),
     'quantity' => Yii::t('order_item_packing', 'Quantity'),
     'status' => Yii::t('order_item_packing', 'Status'),
+    'shipDate' => Yii::t('order_item_packing', 'Ship Date'),
+    'remart' => Yii::t('order_item_packing', 'Remart'),
     'createDateTime' => Yii::t('order_item_packing', 'Create Date Time'),
     'updateDateTime' => Yii::t('order_item_packing', 'Update Date Time'),
 ];

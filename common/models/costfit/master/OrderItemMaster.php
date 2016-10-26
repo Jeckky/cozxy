@@ -18,11 +18,12 @@ use Yii;
     * @property string $price
     * @property string $subTotal
     * @property string $discountValue
+    * @property string $shippintDiscountValue
     * @property string $total
     * @property integer $sendDate
     * @property string $sendDateTime
-    * @property integer $pickerId
-    * @property integer $color
+    * @property string $pickerId
+    * @property string $color
     * @property string $bagNo
     * @property integer $status
     * @property string $createDateTime
@@ -49,7 +50,7 @@ public function rules()
 return [
             [['orderId', 'productId', 'priceOnePiece', 'quantity', 'price', 'createDateTime'], 'required'],
             [['orderId', 'productId', 'productGroupId', 'brandId', 'categoryId', 'sendDate', 'pickerId', 'color', 'status'], 'integer'],
-            [['priceOnePiece', 'quantity', 'price', 'subTotal', 'discountValue', 'total'], 'number'],
+            [['priceOnePiece', 'quantity', 'price', 'subTotal', 'discountValue', 'shippintDiscountValue', 'total'], 'number'],
             [['sendDateTime', 'createDateTime', 'updateDateTime'], 'safe'],
             [['bagNo'], 'string', 'max' => 20],
             [['orderId'], 'exist', 'skipOnError' => true, 'targetClass' => OrderMaster::className(), 'targetAttribute' => ['orderId' => 'orderId']],
@@ -74,6 +75,7 @@ return [
     'price' => Yii::t('order_item', 'Price'),
     'subTotal' => Yii::t('order_item', 'Sub Total'),
     'discountValue' => Yii::t('order_item', 'Discount Value'),
+    'shippintDiscountValue' => Yii::t('order_item', 'Shippint Discount Value'),
     'total' => Yii::t('order_item', 'Total'),
     'sendDate' => Yii::t('order_item', 'Send Date'),
     'sendDateTime' => Yii::t('order_item', 'Send Date Time'),
