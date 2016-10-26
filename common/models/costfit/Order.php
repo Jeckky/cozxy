@@ -198,6 +198,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         } else {
             $res = [
                 'total' => $total,
+                'isSlowest' => FALSE,
                 'totalFormatText' => number_format($total, 2),
                 'shippingRate' => $shipping,
                 'shippingRateFormatText' => number_format($shipping, 2),
