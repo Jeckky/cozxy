@@ -211,7 +211,7 @@ use common\models\ModelMaster;
                     ?>
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="tile">
-                            <div class="price-label"><?php echo $product[$index]->price; ?></div>
+                            <div class="price-label"><?php echo number_format($product[$index]->price, 2); ?></div>
                             <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product[$index]->encodeParams(['productId' => $product[$index]->productId]) ?>">
                                 <?php
                                 if (isset($product[$index]->productImages[$index]->imageThumbnail1)) {

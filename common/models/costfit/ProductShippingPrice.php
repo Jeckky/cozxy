@@ -62,19 +62,26 @@ class ProductShippingPrice extends \common\models\costfit\master\ProductShipping
         return $type;
     }
 
-    public static function calProductShippingPrice($productId)
+    public static function calProductShippingPrice($productId, $fastId = NULL)
     {
         $res = [];
         $cart = Order::findCartArray();
+//        throw new \yii\base\Exception(print_r($cart, true));
         $shippingTypeId = 0;
-        foreach ($cart["items"] as $item) {
-            if ($item["productId"] == $productId) {
-                $shippingTypeId = $item["sendDate"];
-                break;
+        if (!isset($fastId)) {
+            foreach ($cart["items"] as $item) {
+                if ($item["productId"] == $productId) {
+                    $shippingTypeId = $item["sendDate"];
+                    break;
+                }
             }
+        } else {
+//            throw new \yii\base\Exception;
+            $shippingTypeId = $fastId;
         }
         $shippingDisCount = ProductShippingPrice::find()->where("productId=" . $productId . " AND shippingTypeId = " . $shippingTypeId)->one();
-//        throw new \yii\base\Exception(print_r($shippingDisCount->attributes, true));
+
+//        throw new \yii\base\Exception($productId . " " . $shippingTypeId);
         if (isset($cart) && $cart['isSlowest'] == 0) {
             if (isset($shippingDisCount)) {
                 $res["type"] = $shippingDisCount->type;

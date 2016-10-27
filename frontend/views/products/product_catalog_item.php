@@ -115,7 +115,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <img  src="<?php echo Yii::$app->homeUrl; ?>images/icon/1.png" alt="thumb" class="img-responsive" width="38" height="38"/>
             </label>
             <div id="choose" class="col-sm-11 text-left " style="float: left; padding: 0px; margin-left: 0px; margin-top: 15px;">
-                &nbsp;ส่งสินค้าภายใน <?php echo Product::getShippingDate($model->productId, 1); ?> วัน
+                &nbsp;ส่งสินค้าภายใน <?php echo Product::getShippingDate($model->productId, 1); ?> วัน 
             </div>
             <div id="unchoose" class="col-sm-11 text-left " style="padding: 0px; margin-left: 0px; margin-top: 18px;text-decoration: line-through;color:#bbb;display: none;">
                 &nbsp;ส่งสินค้าภายใน <?php echo Product::getShippingDate($model->productId, 1); ?> วัน
@@ -124,7 +124,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="checkbox">
                     <label style="color: red;">
                         <input type="checkbox" id="lateShippingCheck" name="lateShippingCheck">  ต้องการส่งสินค้าราคาประหยัดอีก
-                        <?php echo $model->calProductPrice($model->productId, 1, 0, 1) - $model->calProductPrice($model->productId, 1, 0, 2) ?>  บาท (ส่งภายใน <?php echo Product::getShippingDate($model->productId, 2); ?> วัน)
+                        <?php
+                        $productPrice = $model->calProductPrice($model->productId, 1, 1, 2);
+//                        throw new \yii\base\Exception(print_r($productPrice, true));
+                        echo $productPrice["shippingDiscountValue"];
+                        ?>  บาท (ส่งภายใน <?php echo Product::getShippingDate($model->productId, 2); ?> วัน)
                     </label>
                 </div>
             </div>

@@ -65,10 +65,10 @@ class CartController extends MasterController
             $orderItem->quantity = $orderItem->quantity + $_POST["quantity"];
         }
         $product = new \common\models\costfit\Product();
-        $productPrice = $product->calProductPrice($id, $orderItem->quantity, 1);
+        $orderItem->sendDate = $_POST["fastId"];
+        $productPrice = $product->calProductPrice($id, $orderItem->quantity, 1, $_POST["fastId"]);
         $orderItem->orderId = $order->orderId;
         $orderItem->productId = $id;
-        $orderItem->sendDate = $_POST["fastId"];
         $orderItem->priceOnePiece = $orderItem->product->calProductPrice($id, 1);
         $orderItem->price = $productPrice["price"];
         $orderItem->subTotal = $orderItem->quantity * $orderItem->price;

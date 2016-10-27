@@ -20,7 +20,7 @@ $(document).ready(function (e) {
 
     var $addToCartBtn = $('#addItemToCartUnity');
     var $baseUrl = window.location.protocol + "//" + window.location.host;
-    if (window.location.host == 'localhost') {
+    if (window.location.host == 'localhost' || window.location.host == 'dev') {
         $baseUrl = window.location.protocol + "//" + window.location.host + '/cost.fit-frontend/';
     } else if (window.location.host == '192.168.100.8') {
         //console.log($baseUrl);
