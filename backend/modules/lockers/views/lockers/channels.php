@@ -98,8 +98,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                             $bagNo = common\models\costfit\PickingPointItems::bagNo8($row->pickingItemsId);
                                                             if ($items != '' && $bagNo != '') {
                                                                 $BagNos = explode(",", $bagNo);
-                                                                //echo '<pre>';
-                                                                //print_r($BagNos);
                                                                 $orderNos = explode(",", $items);
                                                                 ?>
                                                                 <div class="list-group search-content">
