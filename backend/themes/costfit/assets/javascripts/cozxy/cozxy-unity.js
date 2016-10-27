@@ -127,3 +127,18 @@ function hide(id)
 
 }
 
+
+// remart-chanels
+
+$('.remart-chanels').on('click', function () {
+    $(".remart-chanels-form").addClass("show");
+    $(".remart-reset").html('<button class="btn btn-success " id="remart-ok">Reset</button>');
+});
+
+
+$('.remart-reset').on('click', function () {
+    // alert('test');
+    $(".remart-chanels-form").removeClass("show");
+    $(".remart-reset").html('<button class="btn btn-success ">Ok</button>');
+});
+

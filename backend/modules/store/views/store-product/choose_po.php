@@ -64,12 +64,12 @@ if (isset($chooseId) && !empty($chooseId)) {
                                 ], ['class' => 'btn btn-xs btn-danger'])
                         ?></td>
                 </tr>
-        <?php endforeach;
-        ?>
+            <?php endforeach;
+            ?>
         </table>
         <?php
         if (isset($chooseId) && !empty($chooseId)) {
-            echo '<div class="pull-right">' . Html::a('<i class="fa fa-check-square-o" aria-hidden="true"></i> นำไปจัดเรียง', ['choose-po'], ['class' => 'btn btn-lg btn-success']) . '</div>';
+            echo '<div class="pull-right">' . Html::a('<i class="fa fa-check-square-o" aria-hidden="true"></i> นำไปจัดเรียง', ['arrange'], ['class' => 'btn btn-lg btn-success']) . '</div>';
         }
     }
     ?>

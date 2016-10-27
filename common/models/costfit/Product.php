@@ -277,6 +277,16 @@ class Product extends \common\models\costfit\master\ProductMaster
         }
     }
 
+    static public function findProductIsbn($id)
+    {
+        $product = Product::find()->where("productId='" . $id . "'")->one();
+        if (isset($product) && !empty($product)) {
+            return $product->isbn;
+        } else {
+            return '';
+        }
+    }
+
     static public function findProductInPack($orderItemId)
     {// 28/09/2016  หน้า show product  ที่เอาลงถุงแล้ว
         $orderItem = OrderItem::find()->where("orderItemId=" . $orderItemId)->one();

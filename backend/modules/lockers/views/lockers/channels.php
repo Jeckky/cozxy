@@ -82,7 +82,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             <tr>
                                                 <td style="border:2px black solid ;text-align:center;vertical-align: middle; height: <?= $height ?>" class="<?= ($row->status == 1) ? "alert-success" : "alert-danger" ?>">
                                                     <?php if ($colIndex == 1 && $rowIndex == 1): ?>
-                                                        <span style="font-size: 20px;font-weight: bold"><?= "Controller" ?></span>
+                                                        <button class="btn">
+                                                            <a href="lockers?boxcode=<?php echo $row->pickingId; ?>" style="font-size: 20px;font-weight: bold"><?= "Controller" ?></a>
+                                                        </button>
                                                     <?php else: ?>
                                                         <?php
                                                         if ($row->status == 0) {
@@ -96,18 +98,21 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                             $bagNo = common\models\costfit\PickingPointItems::bagNo8($row->pickingItemsId);
                                                             if ($items != '' && $bagNo != '') {
                                                                 $BagNos = explode(",", $bagNo);
-                                                                //echo '<pre>';
-                                                                //print_r($BagNos);
                                                                 $orderNos = explode(",", $items);
                                                                 ?>
                                                                 <div class="list-group search-content">
                                                                     <span href="#" class="list-group-item">
                                                                         <?php
                                                                         $itemsOrderNo = common\models\costfit\PickingPointItems::OrderNoList8(" $items ");
-                                                                        echo 'OrderNo : ' . $itemsOrderNo;
-                                                                        ?>
+                                                                        echo 'OrderNo : ' . $itemsOrderNo . '( ลูกค้ามารับสินค้าแล้ว.)<br><br><code> ** ok : เรียบร้อย , no : แจ้งปัญหา</code>';
+                                                                        ?><br><br>
+                                                                        <span class="remart-reset">
+                                                                            <button class="btn btn-success ">Ok</button>
+                                                                        </span>
+                                                                        <button class="btn btn-default remart-chanels">No</button>
+                                                                        <br>
                                                                     </span>
-                                                                    <span href="#" class="list-group-item">
+                                                                    <span href="#" class="list-group-item remart-chanels-form" style="display: none; text-align: left;">
                                                                         แจ้งปัญหา
                                                                         <textarea class="form-control" rows="5" placeholder="Message"></textarea><br>
                                                                         <button class="btn btn-success btn-xs btn-outline">submit</button>
