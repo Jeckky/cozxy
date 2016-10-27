@@ -88,7 +88,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     <?php else: ?>
                                                         <?php
                                                         if ($row->status == 0) {
-                                                            echo '<h4>ลูกค้ายังไม่มารับสินค้า</h4>';
+                                                            echo '<h4>ช่อง : ' . $row->name . '<br> ลูกค้ายังไม่มารับสินค้า</h4>';
                                                         } else {
                                                             ?>
                                                             <h4> ช่อง : <?= $row->name; ?></h4>
