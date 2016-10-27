@@ -106,7 +106,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                         <?php
                                                                         $itemsOrderNo = common\models\costfit\PickingPointItems::OrderNoList8(" $items ");
                                                                         if ($itemsOrderNo->status == 8) {
-                                                                            echo 'OrderNo : ' . $itemsOrderNo->orderNo . '( ลูกค้ามารับสินค้าแล้ว.)<br><code> ** ok : เรียบร้อย , no : แจ้งปัญหา</code>';
+                                                                            echo 'OrderNo : ' . $itemsOrderNo->orderNo . '( ลูกค้ามารับสินค้าแล้ว.)<br>';
                                                                             echo '<br>';
                                                                             for ($index = 0; $index < count($BagNos); $index++) {
                                                                                 echo $BagNos[$index] . '<br>';
@@ -116,6 +116,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                             <button class="btn btn-success remark-chanels-ok" data-bind="<?php echo $row->pickingItemsId; ?>">
                                                                                 <span class="reset-<?php echo $row->pickingItemsId; ?> ">Ok</span></button>
                                                                             <button class="btn btn-default remark-chanels" data-bind="<?php echo $row->pickingItemsId; ?>">No</button>
+                                                                            <br><code> หมายเหตุ<br> ok : เรียบร้อย , no : แจ้งปัญหา</code>
                                                                             <br>
                                                                         <?php } ?>
                                                                     </span>
