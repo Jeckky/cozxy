@@ -107,7 +107,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                         $itemsOrderNo = common\models\costfit\PickingPointItems::OrderNoList8(" $items ");
                                                                         if ($itemsOrderNo->status == 8) {
                                                                             echo 'OrderNo : ' . $itemsOrderNo->orderNo . ' (ลูกค้ามารับสินค้าแล้ว.)<br>';
-                                                                            echo '<br>';
+                                                                            //echo '<br>';
                                                                             for ($index = 0; $index < count($BagNos); $index++) {
                                                                                 echo $BagNos[$index] . '<br>';
                                                                             }
