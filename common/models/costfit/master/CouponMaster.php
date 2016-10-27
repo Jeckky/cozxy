@@ -21,7 +21,9 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-*/
+    *
+            * @property CouponOwner $couponOwner
+    */
 class CouponMaster extends \common\models\ModelMaster
 {
 /**
@@ -44,6 +46,7 @@ return [
             [['startDate', 'endDate', 'createDateTime', 'updateDateTime'], 'safe'],
             [['code'], 'string', 'max' => 50],
             [['image'], 'string', 'max' => 255],
+            [['couponOwnerId'], 'exist', 'skipOnError' => true, 'targetClass' => CouponOwnerMaster::className(), 'targetAttribute' => ['couponOwnerId' => 'couponOwnerId']],
         ];
 }
 
@@ -69,4 +72,12 @@ return [
     'updateDateTime' => Yii::t('coupon', 'Update Date Time'),
 ];
 }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getCouponOwner()
+    {
+    return $this->hasOne(CouponOwnerMaster::className(), ['couponOwnerId' => 'couponOwnerId']);
+    }
 }

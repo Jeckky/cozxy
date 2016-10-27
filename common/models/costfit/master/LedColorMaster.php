@@ -30,10 +30,10 @@ return 'led_color';
 public function rules()
 {
 return [
-            [['ledColorId', 'ledColor', 'htmlCode'], 'required'],
-            [['ledColorId', 'ledColor', 'status'], 'integer'],
+            [['ledColor', 'htmlCode'], 'required'],
+            [['status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['htmlCode'], 'string', 'max' => 45],
+            [['ledColor', 'htmlCode'], 'string', 'max' => 45],
         ];
 }
 

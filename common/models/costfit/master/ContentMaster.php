@@ -20,7 +20,9 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-*/
+    *
+            * @property ContentGroup $contentGroup
+    */
 class ContentMaster extends \common\models\ModelMaster
 {
 /**
@@ -43,6 +45,7 @@ return [
             [['startDate', 'endDate', 'createDateTime', 'updateDateTime'], 'safe'],
             [['headTitle', 'title', 'linkTitle', 'link'], 'string', 'max' => 200],
             [['image'], 'string', 'max' => 255],
+            [['contentGroupId'], 'exist', 'skipOnError' => true, 'targetClass' => ContentGroupMaster::className(), 'targetAttribute' => ['contentGroupId' => 'contentGroupId']],
         ];
 }
 
@@ -67,4 +70,12 @@ return [
     'updateDateTime' => Yii::t('content', 'Update Date Time'),
 ];
 }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getContentGroup()
+    {
+    return $this->hasOne(ContentGroupMaster::className(), ['contentGroupId' => 'contentGroupId']);
+    }
 }
