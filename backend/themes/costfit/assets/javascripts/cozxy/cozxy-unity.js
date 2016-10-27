@@ -146,4 +146,32 @@ $('.remart-reset').on('click', function () {
     //$(".remart-reset").html('<button class="btn btn-success" data-bind=' + dataBind + '>Ok</button>');
     $(".reset-" + dataBind).html('Ok');
 });
- 
+/*
+ $(document).ready(function () {
+ $('.remart-submit').on('click', function () {
+
+ var hidden = document.getElementById("remartDescHidden").value;
+ var desc = document.getElementById("remartDesc-" + hidden).value;
+ if (desc != '' && hidden != '') {
+ alert('OK');
+
+ $.ajax({
+ url: 'remark-channels',
+ //                data: {"pickingItemsId": hidden, "remartDesc": desc},
+ type: 'post',
+ success: function (result) {
+ alert(result);
+ },
+ error: function (XMLHttpRequest, textStatus, errorThrown) {
+ //debugger;
+ alert(errorThrown);
+ }
+ });
+
+ } else {
+ alert('ระบุปัญหาที่เจอทุกครั้ง ก่อน Submit')
+ }
+
+ });
+ });*/
+

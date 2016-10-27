@@ -101,7 +101,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                 $orderNos = explode(",", $items);
                                                                 ?>
                                                                 <div class="list-group search-content">
-                                                                    <span href="#" class="list-group-item">
+                                                                    <span class="list-group-item">
                                                                         <?php
                                                                         $itemsOrderNo = common\models\costfit\PickingPointItems::OrderNoList8(" $items ");
                                                                         echo 'OrderNo : ' . $itemsOrderNo . '( ลูกค้ามารับสินค้าแล้ว.)<br><code> ** ok : เรียบร้อย , no : แจ้งปัญหา</code>';
@@ -116,10 +116,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                         <button class="btn btn-default remart-chanels" data-bind="<?php echo $row->pickingItemsId; ?>">No</button>
                                                                         <br>
                                                                     </span>
-                                                                    <span href="#" class="list-group-item remart-chanels-form-<?php echo $row->pickingItemsId; ?>" data-bind="<?php echo $row->pickingItemsId; ?>" style="display: none; text-align: left;">
-                                                                        แจ้งปัญหา
-                                                                        <textarea class="form-control" rows="5" placeholder="Message"></textarea><br>
-                                                                        <button class="btn btn-success btn-xs btn-outline">submit</button>
+                                                                    <span class="list-group-item remart-chanels-form-<?php echo $row->pickingItemsId; ?>"  style="display: none; text-align: left;">
+                                                                        <textarea class="form-control" rows="5" placeholder="แจ้งปัญหา" name="remartdesc" id="remartDesc-<?php echo $row->pickingItemsId; ?>"></textarea><br>
+                                                                        <input id="remartDescHidden" type="hidden" value="<?php echo $row->pickingItemsId; ?>">
+                                                                        <button class="btn btn-success btn-xs btn-outline remart-submit">submit</button>
                                                                     </span>
                                                                 </div>
                                                                 <?php
@@ -141,5 +141,36 @@ $this->params['pageHeader'] = Html::encode($this->title);
         </div>
     </div>
 </div>
+
+<?php $this->registerJs("
+    $(document).ready(function () {
+            $('.remart-submit').on('click', function () {
+
+            var hidden = document.getElementById('remartDescHidden').value;
+            var desc = document.getElementById('remartDesc-' + hidden).value;
+            if (desc != '' && hidden != '') {
+            alert('OK');
+
+            $.ajax({
+            url: 'remark-channels',
+            //                data: {'pickingItemsId': hidden, 'remartDesc': desc},
+            type: 'post',
+            success: function (result) {
+            alert(result);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //debugger;
+            alert(errorThrown);
+            }
+            });
+
+            } else {
+            alert('ระบุปัญหาที่เจอทุกครั้ง ก่อน Submit')
+            }
+
+            });
+ });
+", \yii\web\View::POS_END); ?>
+ 
 
 
