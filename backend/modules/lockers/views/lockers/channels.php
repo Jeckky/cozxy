@@ -83,7 +83,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 <td style="border:2px black solid ;text-align:center;vertical-align: middle; height: <?= $height ?>" class="<?= ($row->status == 1) ? "alert-success" : "alert-danger" ?>">
                                                     <?php if ($colIndex == 1 && $rowIndex == 1): ?>
                                                         <button class="btn">
-                                                            <a href="lockers?boxcode=<?php echo $row->pickingId; ?>" style="font-size: 20px;font-weight: bold"><?= "Controller" ?></a>
+                                                            <a href="lockers?boxcode=<?php echo $row->pickingId; ?>" style="font-size: 20px;font-weight: bold"><?= "เปิด Controller" ?></a>
                                                         </button>
                                                     <?php else: ?>
                                                         <?php
@@ -91,36 +91,55 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                             echo '<h4>ลูกค้ายังไม่มารับ Order</h4>';
                                                         } else {
                                                             ?>
-                                                            <h4> เปิดช่อง : <?= $row->name; ?></h4>
+                                                            <h4> ช่อง : <?= $row->name; ?></h4>
                                                             <?php
                                                             //echo $row->pickingItemsId;
                                                             $items = common\models\costfit\PickingPointItems::OrderNoChannels8($row->pickingItemsId);
                                                             $bagNo = common\models\costfit\PickingPointItems::bagNo8($row->pickingItemsId);
+
                                                             if ($items != '' && $bagNo != '') {
                                                                 $BagNos = explode(",", $bagNo);
                                                                 $orderNos = explode(",", $items);
                                                                 ?>
-                                                                <div class="list-group search-content">
-                                                                    <span class="list-group-item">
+                                                                <div class="list-group search-content search-content-new-<?php echo $row->pickingItemsId; ?>">
+                                                                    <span class="list-group-item" style="color: #000;">
                                                                         <?php
                                                                         $itemsOrderNo = common\models\costfit\PickingPointItems::OrderNoList8(" $items ");
-                                                                        echo 'OrderNo : ' . $itemsOrderNo . '( ลูกค้ามารับสินค้าแล้ว.)<br><code> ** ok : เรียบร้อย , no : แจ้งปัญหา</code>';
-                                                                        echo '<br>';
-                                                                        for ($index = 0; $index < count($BagNos); $index++) {
-                                                                            echo $BagNos[$index] . '<br>';
-                                                                        }
-                                                                        ?>
-                                                                        <span class="remark-reset" data-bind="<?php echo $row->pickingItemsId; ?>">
-                                                                            <button class="btn btn-success" data-bind="<?php echo $row->pickingItemsId; ?>"><span class="reset-<?php echo $row->pickingItemsId; ?>">Ok</span></button>
+                                                                        if ($itemsOrderNo->status == 8) {
+                                                                            echo 'OrderNo : ' . $itemsOrderNo->orderNo . '( ลูกค้ามารับสินค้าแล้ว.)<br><code> ** ok : เรียบร้อย , no : แจ้งปัญหา</code>';
+                                                                            echo '<br><br>';
+                                                                            for ($index = 0; $index < count($BagNos); $index++) {
+                                                                                echo $BagNos[$index] . '<br>';
+                                                                            }
+                                                                            ?>
+                                                                            <button class="btn btn-success remark-chanels-ok" data-bind="<?php echo $row->pickingItemsId; ?>"><span class="reset-<?php echo $row->pickingItemsId; ?> ">Ok</span></button>
+
+                                                                            <button class="btn btn-default remark-chanels" data-bind="<?php echo $row->pickingItemsId; ?>">No</button>
+                                                                            <br>
+                                                                        <?php } ?>
+                                                                    </span>
+                                                                    <?php if ($itemsOrderNo->status == 8) { ?>
+                                                                        <span class="list-group-item remark-chanels-form-<?php echo $row->pickingItemsId; ?>"  style="display: none; text-align: left;">
+                                                                            <textarea class="form-control" rows="5" placeholder="แจ้งปัญหา" name="remarkdesc" id="remarkDesc-<?php echo $row->pickingItemsId; ?>"></textarea><br>
+                                                                            <input id="pickingItemsIdHidden" type="hidden" value="<?php echo $row->pickingItemsId; ?>">
+                                                                            <button class="btn btn-warning btn-xs remark-submit">submit</button>
+                                                                            <button class="btn btn-default btn-xs remark-cancel" data-bind="<?php echo $row->pickingItemsId; ?>">cancel</button>
                                                                         </span>
-                                                                        <button class="btn btn-default remark-chanels" data-bind="<?php echo $row->pickingItemsId; ?>">No</button>
-                                                                        <br>
-                                                                    </span>
-                                                                    <span class="list-group-item remark-chanels-form-<?php echo $row->pickingItemsId; ?>"  style="display: none; text-align: left;">
-                                                                        <textarea class="form-control" rows="5" placeholder="แจ้งปัญหา" name="remarkdesc" id="remarkDesc-<?php echo $row->pickingItemsId; ?>"></textarea><br>
-                                                                        <input id="pickingItemsIdHidden" type="hidden" value="<?php echo $row->pickingItemsId; ?>">
-                                                                        <button class="btn btn-warning btn-xs remark-submit">submit</button>
-                                                                    </span>
+                                                                    <?php } elseif ($itemsOrderNo->status == 9) { ?>
+                                                                        <span class="list-group-item remark-chanels-form-<?php echo $row->pickingItemsId; ?>"  style="  text-align: center;">
+                                                                            <?php
+                                                                            echo '<h4>ตรวจสอบเรียบร้อย</h4>';
+                                                                            ?>
+                                                                        </span>
+                                                                    <?php } elseif ($itemsOrderNo->status == 10) { ?>
+                                                                        <span class="list-group-item remark-chanels-form-<?php echo $row->pickingItemsId; ?>"  style="  text-align: center;">
+                                                                            <?php
+                                                                            echo '<h4>' . $itemsOrderNo->remark . '</h4>';
+                                                                            ?>
+                                                                        </span>
+                                                                    <?php } else { ?>
+
+                                                                    <?php } ?>
                                                                 </div>
                                                                 <?php
                                                             }

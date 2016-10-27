@@ -91,10 +91,10 @@ class PickingPointItems extends \common\models\costfit\master\PickingPointItemsM
         $bagNo = '';
         $bagNox = '';
         $orderItemPacking = OrderItemPacking::find()
-                ->select('order_item_packing.bagNo, count(order_item_packing.bagNo) AS NumberOfBagNo ,order_item_packing.pickingItemsId')
-                ->where("pickingItemsId=" . $pickingItemId . " and status=7")
-                ->groupBy(['order_item_packing.bagNo'])
-                ->all(); //เชค สถานะนำจ่าย(ลูกค้ายังไม่รับของ)
+        ->select('order_item_packing.bagNo, count(order_item_packing.bagNo) AS NumberOfBagNo ,order_item_packing.pickingItemsId')
+        ->where("pickingItemsId=" . $pickingItemId . " and status=7")
+        ->groupBy(['order_item_packing.bagNo'])
+        ->all(); //เชค สถานะนำจ่าย(ลูกค้ายังไม่รับของ)
         if (count($orderItemPacking) > 0) {
             foreach ($orderItemPacking as $item):
                 if ($item->bagNo != '') {
@@ -108,10 +108,10 @@ class PickingPointItems extends \common\models\costfit\master\PickingPointItemsM
     public static function OrderNoChannels($pickingItemsId) {
         $OrderNo = '';
         $orderItemPacking = OrderItemPacking::find()
-                ->select('order_item_packing.bagNo, count(order_item_packing.bagNo) AS NumberOfBagNo ,order_item_packing.pickingItemsId')
-                ->where("pickingItemsId=" . $pickingItemsId . " and status=7")
-                ->groupBy(['order_item_packing.bagNo'])
-                ->all(); //เชค สถานะนำจ่าย(ลูกค้ายังไม่รับของ)
+        ->select('order_item_packing.bagNo, count(order_item_packing.bagNo) AS NumberOfBagNo ,order_item_packing.pickingItemsId')
+        ->where("pickingItemsId=" . $pickingItemsId . " and status=7")
+        ->groupBy(['order_item_packing.bagNo'])
+        ->all(); //เชค สถานะนำจ่าย(ลูกค้ายังไม่รับของ)
         if (count($orderItemPacking) > 0) {
             foreach ($orderItemPacking as $item):
                 //$bagNo = substr($item->bagNo, 0, -2);
@@ -125,12 +125,12 @@ class PickingPointItems extends \common\models\costfit\master\PickingPointItemsM
 
     public static function OrderNoList($bagNo) {
         $queryOrderItemPackingId = \common\models\costfit\OrderItemPacking::find()
-                        ->select('`order_item_packing`.`orderItemPackingId`, `order_item_packing`.`orderItemId`,'
-                                . '`order_item_packing`.`bagNo`, `order_item_packing`.`status`,`order`.`orderNo`, `order`.`orderId` ,`order`.`orderNo` ')
-                        ->joinWith(['orderItems'])
-                        ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-                        ->where("order_item_packing.status = 7 and order_item_packing.bagNo in (" . $bagNo . ")")
-                        ->groupBy(['`order`.`orderNo` '])->one();
+        ->select('`order_item_packing`.`orderItemPackingId`, `order_item_packing`.`orderItemId`,'
+        . '`order_item_packing`.`bagNo`, `order_item_packing`.`status`,`order`.`orderNo`, `order`.`orderId` ,`order`.`orderNo` ')
+        ->joinWith(['orderItems'])
+        ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
+        ->where("order_item_packing.status = 7 and order_item_packing.bagNo in (" . $bagNo . ")")
+        ->groupBy(['`order`.`orderNo` '])->one();
         if (count($queryOrderItemPackingId) > 0) {
             return $queryOrderItemPackingId->orderNo;
         } else {
@@ -143,10 +143,10 @@ class PickingPointItems extends \common\models\costfit\master\PickingPointItemsM
         $bagNo = '';
         $bagNox = '';
         $orderItemPacking = OrderItemPacking::find()
-                ->select('order_item_packing.bagNo, count(order_item_packing.bagNo) AS NumberOfBagNo ,order_item_packing.pickingItemsId')
-                ->where("pickingItemsId=" . $pickingItemId . " and status=8")
-                ->groupBy(['order_item_packing.bagNo'])
-                ->all(); //เชค สถานะนำจ่าย(ลูกค้ายังไม่รับของ)
+        ->select('order_item_packing.bagNo, count(order_item_packing.bagNo) AS NumberOfBagNo ,order_item_packing.pickingItemsId')
+        ->where("pickingItemsId=" . $pickingItemId . " and status >= 8")
+        ->groupBy(['order_item_packing.bagNo'])
+        ->all(); //เชค สถานะนำจ่าย(ลูกค้ายังไม่รับของ)
         if (count($orderItemPacking) > 0) {
             foreach ($orderItemPacking as $item):
                 if ($item->bagNo != '') {
@@ -160,10 +160,10 @@ class PickingPointItems extends \common\models\costfit\master\PickingPointItemsM
     public static function OrderNoChannels8($pickingItemsId) {
         $OrderNo = '';
         $orderItemPacking = OrderItemPacking::find()
-                ->select('order_item_packing.bagNo, count(order_item_packing.bagNo) AS NumberOfBagNo ,order_item_packing.pickingItemsId')
-                ->where("pickingItemsId=" . $pickingItemsId . " and status=8")
-                ->groupBy(['order_item_packing.bagNo'])
-                ->all(); //เชค สถานะนำจ่าย(ลูกค้ายังไม่รับของ)
+        ->select('order_item_packing.bagNo, count(order_item_packing.bagNo) AS NumberOfBagNo ,order_item_packing.pickingItemsId')
+        ->where("pickingItemsId=" . $pickingItemsId . " and status >= 8")
+        ->groupBy(['order_item_packing.bagNo'])
+        ->all(); //เชค สถานะนำจ่าย(ลูกค้ายังไม่รับของ)
         if (count($orderItemPacking) > 0) {
             foreach ($orderItemPacking as $item):
                 //$bagNo = substr($item->bagNo, 0, -2);
@@ -177,14 +177,14 @@ class PickingPointItems extends \common\models\costfit\master\PickingPointItemsM
 
     public static function OrderNoList8($bagNo) {
         $queryOrderItemPackingId = \common\models\costfit\OrderItemPacking::find()
-                        ->select('`order_item_packing`.`orderItemPackingId`, `order_item_packing`.`orderItemId`,'
-                                . '`order_item_packing`.`bagNo`, `order_item_packing`.`status`,`order`.`orderNo`, `order`.`orderId` ,`order`.`orderNo` ')
-                        ->joinWith(['orderItems'])
-                        ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-                        ->where("order_item_packing.status = 8 and order_item_packing.bagNo in (" . $bagNo . ")")
-                        ->groupBy(['`order`.`orderNo` '])->one();
+        ->select('`order_item_packing`.`orderItemPackingId`, `order_item_packing`.`orderItemId`, `order_item_packing`.`status`,`order_item_packing`.`remark`,'
+        . '`order_item_packing`.`bagNo`, `order_item_packing`.`status`,`order`.`orderNo`, `order`.`orderId` ,`order`.`orderNo` ')
+        ->joinWith(['orderItems'])
+        ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
+        ->where("order_item_packing.status >= 8 and order_item_packing.bagNo in (" . $bagNo . ")")
+        ->groupBy(['`order`.`orderNo` '])->one();
         if (count($queryOrderItemPackingId) > 0) {
-            return $queryOrderItemPackingId->orderNo;
+            return $queryOrderItemPackingId; //$queryOrderItemPackingId->orderNo;
         } else {
             return '';
         }

@@ -127,19 +127,39 @@ function hide(id)
 
 }
 
-
 // remark-chanels
 $('.remark-chanels').on('click', function () {
     var dataBind = this.getAttribute('data-bind');
     // alert(dataBind);
     $(".remark-chanels-form-" + dataBind).addClass("show");
-    $(".reset-" + dataBind).html('Reset');
 });
 
-$('.remark-reset').on('click', function () {
+$('.remark-chanels-ok').on('click', function () {
+    var dataBind = this.getAttribute('data-bind');
+    if (dataBind != '') {
+        $.ajax({
+            url: 'remark-channels',
+            data: {"pickingItemsId": dataBind, "status": 'ok'},
+            type: 'post',
+            success: function (result) {
+                var JSONObject2 = JSON.parse(result);
+                //alert(JSONObject2.pickingItemsId);
+                //alert(JSONObject2.status);
+                $(".search-content-new-" + JSONObject2.pickingItemsId).html('<h4>ตรวจสอบแล้วเรียบร้อย</h4>');
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //debugger;
+                alert(errorThrown);
+            }
+        });
+    } else {
+        alert('ระบุปัญหาที่เจอทุกครั้ง ก่อน Submit')
+    }
+});
+
+$('.remark-cancel').on('click', function () {
     var dataBind = this.getAttribute('data-bind');
     $(".remark-chanels-form-" + dataBind).removeClass("show");
-    $(".reset-" + dataBind).html('Ok');
 });
 
 $('.remark-submit').on('click', function () {
@@ -149,10 +169,11 @@ $('.remark-submit').on('click', function () {
         // alert('OK');
         $.ajax({
             url: 'remark-channels',
-            data: {"pickingItemsId": pickingItemsId, "remarkDesc": desc},
+            data: {"pickingItemsId": pickingItemsId, "remarkDesc": desc, 'status': 'no'},
             type: 'post',
             success: function (result) {
-                alert(result);
+                var JSONObject2 = JSON.parse(result);
+                $(".search-content-new-" + JSONObject2.pickingItemsId).html('<h4>' + JSONObject2.remark + '</h4>');
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 //debugger;

@@ -500,8 +500,25 @@ class LockersController extends LockersMasterController {
         //pickingItemsId
         //remartDesc
         $pickingItemsId = Yii::$app->request->post('pickingItemsId');
-        $remartDesc = Yii::$app->request->post('remartDesc');
-        echo 'ok ok ok Rememart Channels';
+        $remarkDesc = Yii::$app->request->post('remarkDesc');
+        $status = Yii::$app->request->post('status');
+        if ($status == 'ok') {
+            // echo 'ok';
+            \common\models\costfit\OrderItemPacking::updateAll(['status' => 9, 'userId' => NULL], ['pickingItemsId' => $pickingItemsId]);
+            $listOrderItemPacking = \common\models\costfit\OrderItemPacking::find()
+            ->where("pickingItemsId = '" . $pickingItemsId . "' ")
+            ->groupBy(['order_item_packing.bagNo'])->one();
+            //echo '<pre>';
+            //print_r($listOrderItemPacking);
+            echo json_encode($listOrderItemPacking->attributes);
+        } elseif ($status == 'no') {
+            \common\models\costfit\OrderItemPacking::updateAll(['status' => 10, 'remark' => $remarkDesc, 'userId' => NULL], ['pickingItemsId' => $pickingItemsId]);
+            $listOrderItemPacking = \common\models\costfit\OrderItemPacking::find()
+            ->where("pickingItemsId = '" . $pickingItemsId . "' ")
+            ->groupBy(['order_item_packing.bagNo'])->one();
+            echo json_encode($listOrderItemPacking->attributes);
+        }
+        //echo 'ok ok ok Rememart Channels';
     }
 
 }
