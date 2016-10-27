@@ -52,9 +52,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <tbody>
                         <?php
                         $cols = common\models\costfit\PickingPointItems::find()
-                                ->where(["pickingId" => $point->pickingId])
-                                ->groupBy(["LEFT(portIndex,1)"])
-                                ->all();
+                        ->where(["pickingId" => $point->pickingId])
+                        ->groupBy(["LEFT(portIndex,1)"])
+                        ->all();
                         ?>
                         <tr>
                             <?php foreach ($cols as $colIndex => $col): ?>
@@ -62,9 +62,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     <table class="table">
                                         <?php
                                         $rows = common\models\costfit\PickingPointItems::find()
-                                                ->where(["pickingId" => $point->pickingId, 'LEFT(portIndex,1)' => substr($col->portIndex, 0, 1)])
-                                                // ->groupBy(["RIGHT(portIndex,1)"])
-                                                ->all();
+                                        ->where(["pickingId" => $point->pickingId, 'LEFT(portIndex,1)' => substr($col->portIndex, 0, 1)])
+                                        // ->groupBy(["RIGHT(portIndex,1)"])
+                                        ->all();
                                         foreach ($rows as $rowIndex => $row):
                                             $height = "70px";
                                             switch ($row->height) {
@@ -110,8 +110,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                             echo $BagNos[$index] . '<br>';
                                                                         }
                                                                         ?>
-                                                                        <span class="remart-reset">
-                                                                            <button class="btn btn-success" data-bind="<?php echo $row->pickingItemsId; ?>">Ok</button>
+                                                                        <span class="remart-reset" data-bind="<?php echo $row->pickingItemsId; ?>">
+                                                                            <button class="btn btn-success" data-bind="<?php echo $row->pickingItemsId; ?>"><span class="reset-<?php echo $row->pickingItemsId; ?>">Ok</span></button>
                                                                         </span>
                                                                         <button class="btn btn-default remart-chanels" data-bind="<?php echo $row->pickingItemsId; ?>">No</button>
                                                                         <br>
