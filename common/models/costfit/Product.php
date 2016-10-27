@@ -31,18 +31,21 @@ use \common\models\costfit\master\ProductMaster;
  * @property StoreProduct[] $storeProducts
  * @property StoreProductOrderItem[] $storeProductOrderItems
  */
-class Product extends \common\models\costfit\master\ProductMaster {
+class Product extends \common\models\costfit\master\ProductMaster
+{
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return array_merge(parent::rules(), [
             [['storeProductId'], 'safe'],
         ]);
     }
 
-    public function afterFind() {
+    public function afterFind()
+    {
         parent::afterFind();
         if (!$this->isNewRecord) {
             ProductView::saveProductView($this->productId);
@@ -52,22 +55,26 @@ class Product extends \common\models\costfit\master\ProductMaster {
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function attributes() {
+    public function attributes()
+    {
         // add related fields to searchable attributes
         return array_merge(parent::attributes(), [
             'storeProductId', 'sumViews', 'importQuantity', 'storeProductId', 'storeProductGroupId'
         ]);
     }
 
-    public function getProductOnePrice() {
+    public function getProductOnePrice()
+    {
         return $this->hasOne(ProductPrice::className(), ['productId' => 'productId'])->andWhere('quantity = 1');
     }
 
-    public function calProductPrice($productId, $quantity, $returnArray = 0, $shippingStep = 1) {
+    public function calProductPrice($productId, $quantity, $returnArray = 0, $fastId = NULL)
+    {
         $res = [];
         $product = Product::find()->where("productId = $productId")->one();
         $productPrice = ProductPrice::find()->where("productId = $productId AND quantity = $quantity")->one();
@@ -77,7 +84,7 @@ class Product extends \common\models\costfit\master\ProductMaster {
         } else {
             $price = $product->price;
         }
-        $shippingPrice = ProductShippingPrice::calProductShippingPrice($productId);
+        $shippingPrice = ProductShippingPrice::calProductShippingPrice($productId, $fastId);
         if (isset($shippingPrice)) {
             if ($shippingPrice["type"] == 1) {
 //                $price = $price - $shippingPrice["discount"];
@@ -106,7 +113,8 @@ class Product extends \common\models\costfit\master\ProductMaster {
         }
     }
 
-    public static function findMaxQuantity($id, $checkInCart = 1) {
+    public static function findMaxQuantity($id, $checkInCart = 1)
+    {
 //        throw new \yii\base\Exception("productId =" . $id);
         $productPrice = ProductPrice::find()->select("MAX(quantity) as maxQuantity")->where("productId = $id")->one();
         if (isset($productPrice)) {
@@ -121,7 +129,8 @@ class Product extends \common\models\costfit\master\ProductMaster {
         }
     }
 
-    public static function findQuantityInCart($id) {
+    public static function findQuantityInCart($id)
+    {
         $order = Order::findCartArray();
         $quantity = 0;
         foreach ($order["items"] as $item) {
@@ -134,23 +143,28 @@ class Product extends \common\models\costfit\master\ProductMaster {
         return $quantity;
     }
 
-    public function getProductPrices() {
+    public function getProductPrices()
+    {
         return $this->hasMany(ProductPrice::className(), ['productId' => 'productId']);
     }
 
-    public function getBestSellProduct() {
+    public function getBestSellProduct()
+    {
         //return $this->hasMany(ProductPrice::className(), ['productId' => 'productId']);
     }
 
-    public function findOutProducts() {
+    public function findOutProducts()
+    {
         //return $this->hasMany(ProductPrice::className(), ['productId' => 'productId']);
     }
 
-    public function findOnSellProducts() {
+    public function findOnSellProducts()
+    {
         //return $this->hasMany(ProductPrice::className(), ['productId' => 'productId']);
     }
 
-    public function addProductShipping($id) {
+    public function addProductShipping($id)
+    {
         $date = ShippingType::find()->where("1")->orderBy("date ASC")->all();
         for ($i = 0; $i <= 1; $i++):
             $productShippingPrice = new ProductShippingPrice();
@@ -165,15 +179,18 @@ class Product extends \common\models\costfit\master\ProductMaster {
         endfor;
     }
 
-    public function getUnits() {
+    public function getUnits()
+    {
         return $this->hasOne(Unit::className(), ['unitId' => 'unit']);
     }
 
-    public function getImages() {
+    public function getImages()
+    {
         return $this->hasOne(ProductImage::className(), ['productId' => 'productId']);
     }
 
-    public static function getShippingTypeId($productId) {
+    public static function getShippingTypeId($productId)
+    {
         $fastDate = 99;
         $productShippingDates = ProductShippingPrice::find()->where("productId =" . $productId)->all();
         foreach ($productShippingDates as $productShippingDate) {
@@ -191,7 +208,8 @@ class Product extends \common\models\costfit\master\ProductMaster {
         return $fastId;
     }
 
-    public static function getShippingDate($productId, $type) {
+    public static function getShippingDate($productId, $type)
+    {
         $fastDate = 99;
         $productShippingDates = ProductShippingPrice::find()->where("productId =" . $productId)->all();
         foreach ($productShippingDates as $productShippingDate) {
@@ -228,7 +246,8 @@ class Product extends \common\models\costfit\master\ProductMaster {
         }
     }
 
-    static public function findProductName($productId) {
+    static public function findProductName($productId)
+    {
         $product = Product::find()->where("productId=" . $productId)->one();
         if (isset($product)) {
             return $product->code;
@@ -237,7 +256,8 @@ class Product extends \common\models\costfit\master\ProductMaster {
         }
     }
 
-    static public function findUnit($productId) {
+    static public function findUnit($productId)
+    {
         $product = Product::find()->where("productId=" . $productId)->one();
         if (isset($product)) {
             $unit = Unit::find()->where("unitId=" . $product->unit)->one();
@@ -247,7 +267,8 @@ class Product extends \common\models\costfit\master\ProductMaster {
         }
     }
 
-    static public function findProductId($barcode) {
+    static public function findProductId($barcode)
+    {
         $product = Product::find()->where("isbn='" . $barcode . "'")->one();
         if (isset($product) && !empty($product)) {
             return $product->productId;
@@ -256,7 +277,8 @@ class Product extends \common\models\costfit\master\ProductMaster {
         }
     }
 
-    static public function findProductIsbn($id) {
+    static public function findProductIsbn($id)
+    {
         $product = Product::find()->where("productId='" . $id . "'")->one();
         if (isset($product) && !empty($product)) {
             return $product->isbn;
@@ -265,7 +287,8 @@ class Product extends \common\models\costfit\master\ProductMaster {
         }
     }
 
-    static public function findProductInPack($orderItemId) {// 28/09/2016  หน้า show product  ที่เอาลงถุงแล้ว
+    static public function findProductInPack($orderItemId)
+    {// 28/09/2016  หน้า show product  ที่เอาลงถุงแล้ว
         $orderItem = OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
         if (isset($orderItem) && !empty($orderItem)) {
             $product = Product::find()->where("productId=" . $orderItem->productId)->one();
@@ -279,7 +302,8 @@ class Product extends \common\models\costfit\master\ProductMaster {
         }
     }
 
-    public static function findProducts($orderItemId) {
+    public static function findProducts($orderItemId)
+    {
         $orderItems = OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
         if (isset($orderItems) && !empty($orderItems)) {
             $product = Product::find()->where("productId=" . $orderItems->productId)->one();
@@ -293,15 +317,16 @@ class Product extends \common\models\costfit\master\ProductMaster {
         }
     }
 
-    public static function isSmartItem($productId) {
+    public static function isSmartItem($productId)
+    {
         $flag = FALSE;
         $cart = Order::findCartArray();
         if (isset($cart['items']) && count($cart['items']) > 0) {
             foreach ($cart['items'] as $orderItemId => $item) {
                 $smartItems = ProductPriceMatchGroup::find()
-                        ->join("LEFT JOIN", 'product_price_match pm', 'pm.productPriceMatchGroupId=product_price_match_group.productPriceMatchGroupId')
-                        ->where("pm.productid =" . $item['productId'])
-                        ->one();
+                ->join("LEFT JOIN", 'product_price_match pm', 'pm.productPriceMatchGroupId=product_price_match_group.productPriceMatchGroupId')
+                ->where("pm.productid =" . $item['productId'])
+                ->one();
                 if (isset($smartItems)) {
                     foreach ($smartItems->productPriceMatchs as $ppm) {
                         if ($ppm->productId == $productId) {

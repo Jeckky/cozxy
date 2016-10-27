@@ -204,6 +204,8 @@ class Order extends \common\models\costfit\master\OrderMaster
                 'shippingRateFormatText' => number_format($shipping, 2),
                 'summary' => $total + $shipping,
                 'summaryFormatText' => number_format($total + $shipping, 2),
+                'totalWithoutDiscount' => $totalWithoutDiacount,
+                'totalItemDiscount' => $totalItemDiscount,
                 'qty' => $quantity,
                 'items' => [
 //                    [
