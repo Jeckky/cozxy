@@ -6,18 +6,18 @@ use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
 
 $form = yii\bootstrap\ActiveForm::begin([
-            'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
-            'fieldConfig' => [
-                'template' => '{label}<div class="col-sm-9">{input}</div>',
-                'labelOptions' => [
-                    'class' => 'col-sm-3 control-label'
-                ]
-            ]
-        ]);
+    'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+    'fieldConfig' => [
+        'template' => '{label}<div class="col-sm-9">{input}</div>',
+        'labelOptions' => [
+            'class' => 'col-sm-3 control-label'
+        ]
+    ]
+]);
 ?>
 
 <div class="panel-heading" style="background-color: #ccffcc;">
-    <span class="panel-title"><h3>เลือกรายการ PO ที่ต้องการนำไปจัดเรียง</h3></span>
+    <span class="panel-title"><h3>สแกนรายการ PO ที่ต้องการนำไปจัดเรียง</h3></span>
 </div>
 <div class="panel-body">
     <table class="table table-bordered">
@@ -61,7 +61,7 @@ if (isset($chooseId) && !empty($chooseId)) {
                     <td style="vertical-align: middle;text-align: center;width: 5%;"><?=
                         Html::a('<i class="fa fa-times" aria-hidden="true"></i>', ['delete-choose-po',
                             'id' => $id->storeProductGroupId
-                                ], ['class' => 'btn btn-xs btn-danger'])
+                        ], ['class' => 'btn btn-xs btn-danger'])
                         ?></td>
                 </tr>
             <?php endforeach;

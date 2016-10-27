@@ -82,4 +82,15 @@ class StoreProductArrange extends \common\models\costfit\master\StoreProductArra
         return $total;
     }
 
+    public static function countProductArrange($productId, $storeProductId) {
+        $storeProductArrange = StoreProductArrange::find()->where("productId=" . $productId . " and storeProductId=" . $storeProductId . " and (status=3 or status=4)")->all();
+        $total = 0;
+        if (isset($storeProductArrange) && !empty($storeProductArrange)) {
+            foreach ($storeProductArrange as $arrange):
+                $total+=$arrange->quantity;
+            endforeach;
+        }
+        return $total;
+    }
+
 }

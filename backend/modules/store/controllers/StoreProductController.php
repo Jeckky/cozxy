@@ -32,23 +32,23 @@ class StoreProductController extends StoreMasterController {
      */
     public function actionIndex() {
         $storeProductGroupId = '';
-        if (isset($_GET["storeId"])) {
-            $query = StoreProduct::find()->where("storeId=" . $_GET["storeId"]);
+        // if (isset($_GET["storeId"])) {
+        //  $query = StoreProduct::find()->where("storeId=" . $_GET["storeId"]);
+        // } else {
+        if (isset($_GET['storeProductGroupId'])) {
+            $query = StoreProduct::find()->where("storeProductGroupId=" . $_GET["storeProductGroupId"]);
+            $storeProductGroupId = $_GET['storeProductGroupId'];
         } else {
-            if (isset($_GET['storeProductGroupId'])) {
-                $query = StoreProduct::find()->where("storeProductGroupId=" . $_GET["storeProductGroupId"]);
-                $storeProductGroupId = $_GET['storeProductGroupId'];
-            } else {
-                $query = StoreProduct::find();
-            }
+            $query = StoreProduct::find();
         }
+        //  }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
-                    'storeProductGroupId' => $storeProductGroupId
+            'dataProvider' => $dataProvider,
+            'storeProductGroupId' => $storeProductGroupId
         ]);
     }
 
@@ -59,7 +59,7 @@ class StoreProductController extends StoreMasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -87,14 +87,14 @@ class StoreProductController extends StoreMasterController {
                 $this->updateStoreProductGroupSummary($model->storeProductGroupId);
 
                 return $this->redirect(['index',
-                            'storeId' => $model->storeId,
-                            'storeProductGroupId' => $storeProductGroupId
+                    'storeId' => $model->storeId,
+                    'storeProductGroupId' => $storeProductGroupId
                 ]);
             }
         }
         return $this->render('create', [
-                    'model' => $model,
-                    'storeProductGroupId' => $storeProductGroupId
+            'model' => $model,
+            'storeProductGroupId' => $storeProductGroupId
         ]);
     }
 
@@ -121,8 +121,8 @@ class StoreProductController extends StoreMasterController {
             }
         }
         return $this->render('update', [
-                    'model' => $model,
-                    'storeProductGroupId' => $storeProductGroupId
+            'model' => $model,
+            'storeProductGroupId' => $storeProductGroupId
         ]);
     }
 
@@ -202,8 +202,8 @@ class StoreProductController extends StoreMasterController {
             $model = StoreProductGroup::find()->where("storeProductGroupId='" . $_POST["storeProductGroupId"] . "'")->one();
         }
         return $this->render('check', ['model' => $model,
-                    'msError' => $msError,
-                    'errorId' => $errorId
+            'msError' => $msError,
+            'errorId' => $errorId
         ]);
     }
 
@@ -228,10 +228,10 @@ class StoreProductController extends StoreMasterController {
         }
         $chooseId = StoreProductGroup::find()->where("status=5 and arranger=" . $userId)->all();
         return $this->render('choose_po', [
-                    'model' => $model,
-                    'ms' => $ms,
-                    'chooseId' => $chooseId
-                        ]
+            'model' => $model,
+            'ms' => $ms,
+            'chooseId' => $chooseId
+        ]
         );
     }
 
@@ -246,9 +246,9 @@ class StoreProductController extends StoreMasterController {
         }
         $chooseId = StoreProductGroup::find()->where("status=5 and arranger=" . $userId)->all();
         return $this->redirect('choose-po', [
-                    'ms' => $ms,
-                    'chooseId' => $chooseId
-                        ]
+            'ms' => $ms,
+            'chooseId' => $chooseId
+        ]
         );
     }
 
@@ -300,10 +300,10 @@ class StoreProductController extends StoreMasterController {
                 $storeProducts = \common\models\costfit\StoreProduct::find()->where("storeProductGroupId=" . $storeProductGroup->storeProductGroupId)->all();
                 if (isset($storeProducts) && !empty($storeProducts)) {
                     return $this->render('arrange_index', [
-                                'ms' => $ms,
-                                'storeProductGroupId' => $storeProductGroup->storeProductGroupId,
-                                'storeProducts' => $storeProducts,
-                                'model' => $model
+                        'ms' => $ms,
+                        'storeProductGroupId' => $storeProductGroup->storeProductGroupId,
+                        'storeProducts' => $storeProducts,
+                        'model' => $model
                     ]);
                 } else {
                     $ms = 'ไม่พบสินค้าใน PO นี้';
@@ -313,47 +313,52 @@ class StoreProductController extends StoreMasterController {
             }
         }//
         if (isset($_POST["StoreProduct"]['isbn']) && !empty($_POST["StoreProduct"]['isbn'])) {//สแกน บาร์โค้ดสินค้าเพื่อจัดเรียง
-            $product = \common\models\costfit\Product::find()->select("product.*,sp.*")->where("isbn ='" . $_POST["StoreProduct"]['isbn'] . "'")
-                    ->join("LEFT JOIN", 'store_product sp', 'product.productId=sp.productId and (sp.status=5 or sp.status=3)')
-                    ->orderBy('sp.createDateTime ASC')
-                    ->one();
-            if (isset($product->productId)) {
-                return $this->render('arrange', [
-                            'model' => $product,
-                            'poNo' => $_POST["StoreProductGroup2"]['poNo'],
-                            'isbn' => $_POST["StoreProduct"]['isbn']
-                ]);
-            } else {//ถ้า ไม่เจอสินค้าหรือจัดเรียงไปแล้ว
-                $ms = 'Imported products not found.';
-                $storeProductGroup = StoreProductGroup::find()->where("poNo='" . $_POST["StoreProductGroup2"]['poNo'] . "' and status=5")->one(); // เชค ที่สถานะเท่ากับตรวจรับแล้วเท่านั้น
-                if (isset($storeProductGroup) && !empty($storeProductGroup)) {
-                    $storeProducts = \common\models\costfit\StoreProduct::find()->where("storeProductGroupId=" . $storeProductGroup->storeProductGroupId)->all();
-                    if (isset($storeProducts) && !empty($storeProducts)) {
+            $storeProductGroup = StoreProductGroup::find()->where("poNo='" . $_POST["StoreProductGroup2"]['poNo'] . "'")->one();
+            if (isset($storeProductGroup) && !empty($storeProductGroup)) {
+                $product = \common\models\costfit\Product::find()->select("product.*,sp.*")->where("isbn ='" . $_POST["StoreProduct"]['isbn'] . "'")
+                ->join("LEFT JOIN", 'store_product sp', 'product.productId=sp.productId and sp.storeProductGroupId=' . $storeProductGroup->storeProductGroupId . ' and (sp.status=5 or sp.status=3)')
+                ->orderBy('sp.createDateTime ASC')
+                ->one();
+                if (isset($product->productId)) {
+                    return $this->render('arrange', [
+                        'model' => $product,
+                        'poNo' => $_POST["StoreProductGroup2"]['poNo'],
+                        'isbn' => $_POST["StoreProduct"]['isbn']
+                    ]);
+                } else {//ถ้า ไม่เจอสินค้าหรือจัดเรียงไปแล้ว
+                    $ms = 'Imported products not found.';
+                    $storeProductGroup = StoreProductGroup::find()->where("poNo='" . $_POST["StoreProductGroup2"]['poNo'] . "' and status=5")->one(); // เชค ที่สถานะเท่ากับตรวจรับแล้วเท่านั้น
+                    if (isset($storeProductGroup) && !empty($storeProductGroup)) {
+                        $storeProducts = \common\models\costfit\StoreProduct::find()->where("storeProductGroupId=" . $storeProductGroup->storeProductGroupId)->all();
+                        if (isset($storeProducts) && !empty($storeProducts)) {
 
-                        return $this->render('arrange_index', [
-                                    'ms' => $ms,
-                                    'storeProductGroupId' => $storeProductGroup->storeProductGroupId,
-                                    'storeProducts' => $storeProducts,
-                                    'model' => $model
-                        ]);
+                            return $this->render('arrange_index', [
+                                'ms' => $ms,
+                                'storeProductGroupId' => $storeProductGroup->storeProductGroupId,
+                                'storeProducts' => $storeProducts,
+                                'model' => $model
+                            ]);
+                        } else {
+                            $ms = 'ไม่พบสินค้าใน PO นี้';
+                        }
                     } else {
-                        $ms = 'ไม่พบสินค้าใน PO นี้';
+                        $ms = 'PO not found';
                     }
-                } else {
-                    $ms = 'ไม่พบ PO';
                 }
+            } else {
+                $ms = 'PO not found.';
             }
         }
         if (isset($_POST['arrange']) && $_POST['arrange'] == 'arrange') {//มาจาหน้าจัดเรียง
             $product = \common\models\costfit\Product::find()->select("product.*,sp.*")->where("isbn ='" . $_POST['isbn'] . "'")
-                    ->join("LEFT JOIN", 'store_product sp', 'product.productId=sp.productId and (sp.status=5 or sp.status=3)')
-                    ->orderBy('sp.createDateTime ASC')
-                    ->one();
+            ->join("LEFT JOIN", 'store_product sp', 'product.productId=sp.productId and sp.storeProductGroupId=' . $_POST['storeProductGroupId'] . ' and (sp.status=5 or sp.status=3)')
+            ->orderBy('sp.createDateTime ASC')
+            ->one();
             if (isset($_POST['quantity']) && isset($_POST['slot']) && !empty($_POST['quantity']) && !empty($_POST['slot'])) {//จัดเรียง
                 $slot = \common\models\costfit\StoreSlot::find()->where("barcode='" . $_POST["slot"] . "'")->one();
                 if (isset($slot) && !empty($slot)) {
                     $canSave = false;
-                    $canSave = $this->checkOver($_POST['storeProductId'], $_POST['quantity']);
+                    $canSave = $this->checkOver($_POST['storeProductId'], $_POST['quantity'], $product->productId);
                     if ($canSave == true) {
                         StoreProduct::arrangeProductToSlot($_POST['storeProductId'], $slot->storeSlotId, $_POST['quantity']);
                         $clear = false;
@@ -362,63 +367,64 @@ class StoreProductController extends StoreMasterController {
                             $clearPo = false;
                             $clearPo = $this->checkClearPo($userId);
                             if ($clearPo == true) {
-                                return $this->render('choose_po'); // ถ้าหมด PO ที่เลือกมาแล้ว กลับไปหน้าแรก
+                                return $this->redirect('choose-po'); // ถ้าหมด PO ที่เลือกมาแล้ว กลับไปหน้าแรก
                             } else {
                                 $allPo = StoreProductGroup::find()->where("status=5 order by receiveDate")->all(); //หมด สินค้าแล้วกลับไป po ถัดไป
                                 return $this->render('scan_order', [
-                                            'allPo' => $allPo,
-                                            'ms' => $ms
+                                    'allPo' => $allPo,
+                                    'ms' => $ms
                                 ]);
                             }
                         } else {
                             $model = new StoreProduct();
                             $storeProducts = \common\models\costfit\StoreProduct::find()->where("storeProductGroupId=" . $product->storeProductGroupId)->all();
                             return $this->render('arrange_index', [
-                                        'ms' => $ms,
-                                        'storeProductGroupId' => $product->storeProductGroupId,
-                                        'storeProducts' => $storeProducts,
-                                        'model' => $model
+                                'ms' => $ms,
+                                'storeProductGroupId' => $product->storeProductGroupId,
+                                'storeProducts' => $storeProducts,
+                                'model' => $model
                             ]);
                         }
                     } else {//ถ้าใส่จำนวนเกิน ยอดที่ import ใน po นั้น
                         $ms = 'ไม่สามารถจัดเรียงได้เนื่องจากใส่จำนวนเกิน';
                         return $this->render('arrange', [
-                                    'model' => $product,
-                                    'isbn' => $_POST['isbn'],
-                                    'ms' => $ms
+                            'model' => $product,
+                            'isbn' => $_POST['isbn'],
+                            'ms' => $ms
                         ]);
                     }
                 } else {
                     $ms = 'ไม่มี Slot " ' . $_POST['slot'] . ' "';
                     return $this->render('arrange', [
-                                'model' => $product,
-                                'isbn' => $_POST['isbn'],
-                                'ms' => $ms
+                        'model' => $product,
+                        'isbn' => $_POST['isbn'],
+                        'ms' => $ms
                     ]);
                 }
             } else {
                 return $this->render('arrange', [
-                            'model' => $product,
-                            'isbn' => $_POST['isbn'],
-                            'ms' => $ms
+                    'model' => $product,
+                    'isbn' => $_POST['isbn'],
+                    'ms' => $ms
                 ]);
             }
         }
         return $this->render('scan_order', [
-                    'allPo' => $allPo,
-                    'ms' => $ms
+            'allPo' => $allPo,
+            'ms' => $ms
         ]);
     }
 
-    public static function checkOver($storeProductId, $quantity) {
+    public static function checkOver($storeProductId, $quantity, $productId) {
         $total = 0;
-        $storeProductArranges = \common\models\costfit\StoreProductArrange::find()->where("storeProductId=" . $storeProductId)->all();
+        $storeProductArranges = \common\models\costfit\StoreProductArrange::find()->where("storeProductId=" . $storeProductId . " and productId=" . $productId)->all();
         if (isset($storeProductArranges) && !empty($storeProductArranges)) {
             foreach ($storeProductArranges as $storeProductArrange):
                 $total+=$storeProductArrange->quantity;
             endforeach;
         }
-        $storeProduct = StoreProduct::find()->where("storeProductId=" . $storeProductId)->one();
+        //throw new \yii\base\Exception($storeProductId . " total " . $total . " re " . $quantity);
+        $storeProduct = StoreProduct::find()->where("storeProductId=" . $storeProductId . " and productId=" . $productId)->one();
         if (($quantity + $total) <= $storeProduct->importQuantity) {
             return true;
         } else {
@@ -439,11 +445,11 @@ class StoreProductController extends StoreMasterController {
     }
 
     public static function checkClearPo($userId) {
-        $storeProductGroup = StoreProductGroup::find()->where("userId=" . $userId . " and (status=5 or status=3)")->all();
+        $storeProductGroup = StoreProductGroup::find()->where("arranger=" . $userId . " and (status=5 or status=3)")->all();
         if (isset($storeProductGroup) && !empty($storeProductGroup)) {
-            return true;
-        } else {
             return false;
+        } else {
+            return true;
         }
     }
 

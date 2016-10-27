@@ -1,13 +1,16 @@
 <?php
+
+use common\models\costfit\StoreProductArrange;
+
 $form = yii\bootstrap\ActiveForm::begin([
-            'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
-            'fieldConfig' => [
-                'template' => '{label}<div class="col-sm-9">{input}</div>',
-                'labelOptions' => [
-                    'class' => 'col-sm-3 control-label'
-                ]
-            ]
-        ]);
+    'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+    'fieldConfig' => [
+        'template' => '{label}<div class="col-sm-9">{input}</div>',
+        'labelOptions' => [
+            'class' => 'col-sm-3 control-label'
+        ]
+    ]
+]);
 ?>
 <div class="panel-heading" style="background-color: #ccffcc;vertical-align: middle;">
     <span class="panel-title"><h3>จัดเรียงสินค้า</h3></span>
@@ -15,9 +18,11 @@ $form = yii\bootstrap\ActiveForm::begin([
 <input type="hidden" name="isbn" value="<?= $isbn ?>">
 <input type="hidden" name="arrange" value="arrange">
 <input type="hidden" name="storeProductId" value="<?= $model->storeProductId ?>">
+<input type="hidden" name="storeProductGroupId" value="<?= $model->storeProductGroupId ?>">
 <div class="panel-body">
     <?php
     if (isset($model)):
+        //throw new \yii\base\Exception($poNo);
         ?>
 
         <div class="col-lg-12">
@@ -31,7 +36,9 @@ $form = yii\bootstrap\ActiveForm::begin([
                     <tr>
                         <th style="vertical-align: middle;">Quantity : </th>
 
-                        <th><?= \yii\helpers\Html::textInput('quantity', NULL, ['class' => 'input-lg quantity']); ?> * จำนวนทั้งหมดในรายการนี้ <?= $model->importQuantity ?> ชิ้น จัดเรียงแล้ว 50 ชิ้น ยังไม่จัดเรียง 50 ชิ้น</th>
+                        <th><?= \yii\helpers\Html::textInput('quantity', NULL, ['class' => 'input-lg quantity']); ?> * จำนวนทั้งหมดในรายการนี้ <?= $model->importQuantity ?>
+                            ชิ้น จัดเรียงแล้ว <code><?= StoreProductArrange::countProductArrange($model->productId, $model->storeProductId) ?></code> ชิ้น
+                            ยังไม่จัดเรียง <code><?= $model->importQuantity - StoreProductArrange::countProductArrange($model->productId, $model->storeProductId) ?></code> ชิ้น</th>
                     </tr>
                     <tr>
                         <td class="text-center"></td>
