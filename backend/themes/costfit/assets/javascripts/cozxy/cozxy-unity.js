@@ -131,14 +131,20 @@ function hide(id)
 // remart-chanels
 
 $('.remart-chanels').on('click', function () {
-    $(".remart-chanels-form").addClass("show");
-    $(".remart-reset").html('<button class="btn btn-success " id="remart-ok">Reset</button>');
+    var dataBind = this.getAttribute('data-bind');
+    alert(dataBind);
+    $(".remart-chanels-form-" + dataBind).addClass("show");
+    $(".remart-reset").html('<button class="btn btn-success " id="remart-ok-"+ dataBind data-bind=' + dataBind + '>Reset</button>');
 });
 
 
 $('.remart-reset').on('click', function () {
     // alert('test');
-    $(".remart-chanels-form").removeClass("show");
-    $(".remart-reset").html('<button class="btn btn-success ">Ok</button>');
+    var dataBind = this.getAttribute('data-bind');
+    $(".remart-chanels-form-" + dataBind).removeClass("show");
+    $(".remart-reset").html('<button class="btn btn-success" data-bind=' + dataBind + '>Ok</button>');
 });
 
+function remark() {
+
+}

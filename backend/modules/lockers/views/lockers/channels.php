@@ -88,7 +88,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     <?php else: ?>
                                                         <?php
                                                         if ($row->status == 0) {
-                                                            echo '<h4>ปิดช่องนี้แล้ว..</h4>';
+                                                            echo '<h4>ลูกค้ายังไม่มารับ Order</h4>';
                                                         } else {
                                                             ?>
                                                             <h4> เปิดช่อง : <?= $row->name; ?></h4>
@@ -104,15 +104,19 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                     <span href="#" class="list-group-item">
                                                                         <?php
                                                                         $itemsOrderNo = common\models\costfit\PickingPointItems::OrderNoList8(" $items ");
-                                                                        echo 'OrderNo : ' . $itemsOrderNo . '( ลูกค้ามารับสินค้าแล้ว.)<br><br><code> ** ok : เรียบร้อย , no : แจ้งปัญหา</code>';
-                                                                        ?><br><br>
+                                                                        echo 'OrderNo : ' . $itemsOrderNo . '( ลูกค้ามารับสินค้าแล้ว.)<br><code> ** ok : เรียบร้อย , no : แจ้งปัญหา</code>';
+                                                                        echo '<br>';
+                                                                        for ($index = 0; $index < count($BagNos); $index++) {
+                                                                            echo $BagNos[$index] . '<br>';
+                                                                        }
+                                                                        ?>
                                                                         <span class="remart-reset">
-                                                                            <button class="btn btn-success ">Ok</button>
+                                                                            <button class="btn btn-success" data-bind="<?php echo $row->pickingItemsId; ?>">Ok</button>
                                                                         </span>
-                                                                        <button class="btn btn-default remart-chanels">No</button>
+                                                                        <button class="btn btn-default remart-chanels" data-bind="<?php echo $row->pickingItemsId; ?>">No</button>
                                                                         <br>
                                                                     </span>
-                                                                    <span href="#" class="list-group-item remart-chanels-form" style="display: none; text-align: left;">
+                                                                    <span href="#" class="list-group-item remart-chanels-form-<?php echo $row->pickingItemsId; ?>" data-bind="<?php echo $row->pickingItemsId; ?>" style="display: none; text-align: left;">
                                                                         แจ้งปัญหา
                                                                         <textarea class="form-control" rows="5" placeholder="Message"></textarea><br>
                                                                         <button class="btn btn-success btn-xs btn-outline">submit</button>
