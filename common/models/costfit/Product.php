@@ -341,4 +341,9 @@ class Product extends \common\models\costfit\master\ProductMaster
         return $flag;
     }
 
+    public function getProductImages()
+    {
+        return $this->hasMany(ProductImage::className(), ['productId' => 'productId']);
+    }
+
 }
