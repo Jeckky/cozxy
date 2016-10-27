@@ -113,8 +113,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                             }
                                                                             echo '<br>';
                                                                             ?>
-                                                                            <button class="btn btn-success remark-chanels-ok" data-bind="<?php echo $row->pickingItemsId; ?>"><span class="reset-<?php echo $row->pickingItemsId; ?> ">Ok</span></button>
-
+                                                                            <button class="btn btn-success remark-chanels-ok" data-bind="<?php echo $row->pickingItemsId; ?>">
+                                                                                <span class="reset-<?php echo $row->pickingItemsId; ?> ">Ok</span></button>
                                                                             <button class="btn btn-default remark-chanels" data-bind="<?php echo $row->pickingItemsId; ?>">No</button>
                                                                             <br>
                                                                         <?php } ?>
