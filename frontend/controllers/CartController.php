@@ -231,7 +231,7 @@ class CartController extends MasterController
 
         $res = [];
         $product = new \common\models\costfit\Product();
-        $price = $product->calProductPrice($_POST["productId"], $_POST["quantity"], 1);
+        $price = $product->calProductPrice($_POST["productId"], $_POST["quantity"], 1, $_POST["sendDate"]);
 //        throw new \yii\base\Exception(print_r($price, true));
         $maxQuantity = $product->findMaxQuantity($_POST["productId"], 0);
 //        throw new \yii\base\Exception("max quantity=" . $maxQuantity);
