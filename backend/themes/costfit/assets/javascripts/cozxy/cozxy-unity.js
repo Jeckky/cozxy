@@ -128,36 +128,34 @@ function hide(id)
 }
 
 
-// remart-chanels
+// remark-chanels
 
-$('.remart-chanels').on('click', function () {
+$('.remark-chanels').on('click', function () {
     var dataBind = this.getAttribute('data-bind');
     // alert(dataBind);
-    $(".remart-chanels-form-" + dataBind).addClass("show");
-    //$(".remart-reset").html('<button class="btn btn-success " id="remart-ok" data-bind=' + dataBind + '>Reset</button>');
+    $(".remark-chanels-form-" + dataBind).addClass("show");
     $(".reset-" + dataBind).html('Reset');
 });
 
 
-$('.remart-reset').on('click', function () {
+$('.remark-reset').on('click', function () {
     var dataBind = this.getAttribute('data-bind');
 
-    $(".remart-chanels-form-" + dataBind).removeClass("show");
-    //$(".remart-reset").html('<button class="btn btn-success" data-bind=' + dataBind + '>Ok</button>');
+    $(".remark-chanels-form-" + dataBind).removeClass("show");
     $(".reset-" + dataBind).html('Ok');
 });
 /*
  $(document).ready(function () {
- $('.remart-submit').on('click', function () {
+ $('.remark-submit').on('click', function () {
 
- var hidden = document.getElementById("remartDescHidden").value;
- var desc = document.getElementById("remartDesc-" + hidden).value;
+ var hidden = document.getElementById("remarkDescHidden").value;
+ var desc = document.getElementById("remarkDesc-" + hidden).value;
  if (desc != '' && hidden != '') {
  alert('OK');
 
  $.ajax({
  url: 'remark-channels',
- //                data: {"pickingItemsId": hidden, "remartDesc": desc},
+ //                data: {"pickingItemsId": hidden, "remarkDesc": desc},
  type: 'post',
  success: function (result) {
  alert(result);

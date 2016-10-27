@@ -476,14 +476,6 @@ class LockersController extends LockersMasterController {
             $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
             $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
 
-            /*
-             * API OPEN CAHNNELS LOCKERS To Hardware
-             */
-            // Codeding..
-            /*
-             * END API OPEN CAHNNELS LOCKERS
-             */
-
             $query = \common\models\costfit\PickingPointItems::find()
             //->join('RIGHT JOIN', 'order_item_packing', 'order_item_packing.pickingItemsId =picking_point_items.pickingItemsId')
             ->where("picking_point_items.pickingId = '" . $pickingId . "'");

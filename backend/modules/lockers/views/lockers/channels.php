@@ -110,16 +110,16 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                             echo $BagNos[$index] . '<br>';
                                                                         }
                                                                         ?>
-                                                                        <span class="remart-reset" data-bind="<?php echo $row->pickingItemsId; ?>">
+                                                                        <span class="remark-reset" data-bind="<?php echo $row->pickingItemsId; ?>">
                                                                             <button class="btn btn-success" data-bind="<?php echo $row->pickingItemsId; ?>"><span class="reset-<?php echo $row->pickingItemsId; ?>">Ok</span></button>
                                                                         </span>
-                                                                        <button class="btn btn-default remart-chanels" data-bind="<?php echo $row->pickingItemsId; ?>">No</button>
+                                                                        <button class="btn btn-default remark-chanels" data-bind="<?php echo $row->pickingItemsId; ?>">No</button>
                                                                         <br>
                                                                     </span>
-                                                                    <span class="list-group-item remart-chanels-form-<?php echo $row->pickingItemsId; ?>"  style="display: none; text-align: left;">
-                                                                        <textarea class="form-control" rows="5" placeholder="แจ้งปัญหา" name="remartdesc" id="remartDesc-<?php echo $row->pickingItemsId; ?>"></textarea><br>
-                                                                        <input id="remartDescHidden" type="hidden" value="<?php echo $row->pickingItemsId; ?>">
-                                                                        <button class="btn btn-success btn-xs btn-outline remart-submit">submit</button>
+                                                                    <span class="list-group-item remark-chanels-form-<?php echo $row->pickingItemsId; ?>"  style="display: none; text-align: left;">
+                                                                        <textarea class="form-control" rows="5" placeholder="แจ้งปัญหา" name="remarkdesc" id="remarkDesc-<?php echo $row->pickingItemsId; ?>"></textarea><br>
+                                                                        <input id="remarkDescHidden" type="hidden" value="<?php echo $row->pickingItemsId; ?>">
+                                                                        <button class="btn btn-success btn-xs btn-outline remark-submit">submit</button>
                                                                     </span>
                                                                 </div>
                                                                 <?php
@@ -144,16 +144,16 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
 <?php $this->registerJs("
     $(document).ready(function () {
-            $('.remart-submit').on('click', function () {
+            $('.remark-submit').on('click', function () {
 
-            var hidden = document.getElementById('remartDescHidden').value;
-            var desc = document.getElementById('remartDesc-' + hidden).value;
+            var hidden = document.getElementById('remarkDescHidden').value;
+            var desc = document.getElementById('remarkDesc-' + hidden).value;
             if (desc != '' && hidden != '') {
             alert('OK');
 
             $.ajax({
             url: 'remark-channels',
-            //                data: {'pickingItemsId': hidden, 'remartDesc': desc},
+            //                data: {'pickingItemsId': hidden, 'remarkDesc': desc},
             type: 'post',
             success: function (result) {
             alert(result);
@@ -171,6 +171,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
             });
  });
 ", \yii\web\View::POS_END); ?>
- 
+
 
 
