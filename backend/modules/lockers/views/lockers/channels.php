@@ -107,10 +107,11 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                         $itemsOrderNo = common\models\costfit\PickingPointItems::OrderNoList8(" $items ");
                                                                         if ($itemsOrderNo->status == 8) {
                                                                             echo 'OrderNo : ' . $itemsOrderNo->orderNo . '( ลูกค้ามารับสินค้าแล้ว.)<br><code> ** ok : เรียบร้อย , no : แจ้งปัญหา</code>';
-                                                                            echo '<br><br>';
+                                                                            echo '<br>';
                                                                             for ($index = 0; $index < count($BagNos); $index++) {
                                                                                 echo $BagNos[$index] . '<br>';
                                                                             }
+                                                                            echo '<br>';
                                                                             ?>
                                                                             <button class="btn btn-success remark-chanels-ok" data-bind="<?php echo $row->pickingItemsId; ?>"><span class="reset-<?php echo $row->pickingItemsId; ?> ">Ok</span></button>
 
