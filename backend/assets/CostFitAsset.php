@@ -7,9 +7,10 @@ use yii\web\AssetBundle;
 /**
  * Main CostFit application asset bundle.
  */
-class CostFitAsset extends AssetBundle {
+class CostFitAsset extends AssetBundle
+{
 
-    public $sourcePath = '@app/themes/costfit/assets';
+    public $sourcePath = '@backend/themes/costfit/assets';
     //public $baseUrl = '@web';
 
     public $css = [

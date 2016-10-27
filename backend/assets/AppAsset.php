@@ -7,7 +7,8 @@ use yii\web\AssetBundle;
 /**
  * Main backend application asset bundle.
  */
-class AppAsset extends AssetBundle {
+class AppAsset extends AssetBundle
+{
 
     public $basePath = '@webroot';
     public $baseUrl = '@web';
@@ -18,8 +19,8 @@ class AppAsset extends AssetBundle {
     ];
     public $depends = [
 
-        //'yii\web\YiiAsset',
-        //'yii\bootstrap\BootstrapAsset',
+        'yii\web\YiiAsset',
+//        'yii\bootstrap\BootstrapAsset',
         'backend\assets\CostFitAsset',
     ];
 
