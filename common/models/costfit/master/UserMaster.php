@@ -24,7 +24,10 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-*/
+    *
+            * @property Address[] $addresses
+            * @property Order[] $orders
+    */
 class UserMaster extends \common\models\ModelMaster
 {
 /**
@@ -46,7 +49,7 @@ return [
             [['type', 'gender', 'status'], 'integer'],
             [['birthDate', 'createDateTime', 'updateDateTime'], 'safe'],
             [['username', 'firstname', 'password', 'lastname', 'email'], 'string', 'max' => 200],
-            [['auth_type'], 'string', 'max' => 45],
+            [['auth_type'], 'string', 'max' => 255],
             [['tel'], 'string', 'max' => 20],
         ];
 }
@@ -76,4 +79,20 @@ return [
     'updateDateTime' => Yii::t('user', 'Update Date Time'),
 ];
 }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getAddresses()
+    {
+    return $this->hasMany(AddressMaster::className(), ['userId' => 'userId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getOrders()
+    {
+    return $this->hasMany(OrderMaster::className(), ['userId' => 'userId']);
+    }
 }

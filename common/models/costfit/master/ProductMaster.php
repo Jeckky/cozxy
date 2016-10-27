@@ -31,7 +31,17 @@ use Yii;
     * @property string $createDateTime
     * @property string $updateDateTime
     *
+            * @property OrderItem[] $orderItems
+            * @property Brand $brand
+            * @property Category $category
+            * @property ProductGroup $productGroup
+            * @property Unit $smallUnit0
+            * @property Unit $unit0
+            * @property ProductImage[] $productImages
+            * @property ProductPrice[] $productPrices
             * @property ProductPromotion[] $productPromotions
+            * @property StoreProduct[] $storeProducts
+            * @property StoreProductOrderItem[] $storeProductOrderItems
     */
 class ProductMaster extends \common\models\ModelMaster
 {
@@ -57,6 +67,11 @@ return [
             [['code'], 'string', 'max' => 100],
             [['title', 'optionName'], 'string', 'max' => 200],
             [['tags'], 'string', 'max' => 255],
+            [['brandId'], 'exist', 'skipOnError' => true, 'targetClass' => BrandMaster::className(), 'targetAttribute' => ['brandId' => 'brandId']],
+            [['categoryId'], 'exist', 'skipOnError' => true, 'targetClass' => CategoryMaster::className(), 'targetAttribute' => ['categoryId' => 'categoryId']],
+            [['productGroupId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductGroupMaster::className(), 'targetAttribute' => ['productGroupId' => 'productGroupId']],
+            [['smallUnit'], 'exist', 'skipOnError' => true, 'targetClass' => UnitMaster::className(), 'targetAttribute' => ['smallUnit' => 'unitId']],
+            [['unit'], 'exist', 'skipOnError' => true, 'targetClass' => UnitMaster::className(), 'targetAttribute' => ['unit' => 'unitId']],
         ];
 }
 
@@ -95,8 +110,88 @@ return [
     /**
     * @return \yii\db\ActiveQuery
     */
+    public function getOrderItems()
+    {
+    return $this->hasMany(OrderItemMaster::className(), ['productId' => 'productId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getBrand()
+    {
+    return $this->hasOne(BrandMaster::className(), ['brandId' => 'brandId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getCategory()
+    {
+    return $this->hasOne(CategoryMaster::className(), ['categoryId' => 'categoryId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getProductGroup()
+    {
+    return $this->hasOne(ProductGroupMaster::className(), ['productGroupId' => 'productGroupId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getSmallUnit0()
+    {
+    return $this->hasOne(UnitMaster::className(), ['unitId' => 'smallUnit']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getUnit0()
+    {
+    return $this->hasOne(UnitMaster::className(), ['unitId' => 'unit']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getProductImages()
+    {
+    return $this->hasMany(ProductImageMaster::className(), ['productId' => 'productId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getProductPrices()
+    {
+    return $this->hasMany(ProductPriceMaster::className(), ['productId' => 'productId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
     public function getProductPromotions()
     {
     return $this->hasMany(ProductPromotionMaster::className(), ['productId' => 'productId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getStoreProducts()
+    {
+    return $this->hasMany(StoreProductMaster::className(), ['productId' => 'productId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getStoreProductOrderItems()
+    {
+    return $this->hasMany(StoreProductOrderItemMaster::className(), ['productId' => 'productId']);
     }
 }

@@ -13,7 +13,10 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-*/
+    *
+            * @property Product[] $products
+            * @property Product[] $products0
+    */
 class UnitMaster extends \common\models\ModelMaster
 {
 /**
@@ -52,4 +55,20 @@ return [
     'updateDateTime' => Yii::t('unit', 'Update Date Time'),
 ];
 }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getProducts()
+    {
+    return $this->hasMany(ProductMaster::className(), ['smallUnit' => 'unitId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getProducts0()
+    {
+    return $this->hasMany(ProductMaster::className(), ['unit' => 'unitId']);
+    }
 }

@@ -21,7 +21,11 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-*/
+    *
+            * @property Product $product
+            * @property StoreProductGroup $storeProductGroup
+            * @property StoreProductOrderItem[] $storeProductOrderItems
+    */
 class StoreProductMaster extends \common\models\ModelMaster
 {
 /**
@@ -43,6 +47,8 @@ return [
             [['paletNo', 'price', 'total'], 'number'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['remark'], 'string', 'max' => 255],
+            [['productId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductMaster::className(), 'targetAttribute' => ['productId' => 'productId']],
+            [['storeProductGroupId'], 'exist', 'skipOnError' => true, 'targetClass' => StoreProductGroupMaster::className(), 'targetAttribute' => ['storeProductGroupId' => 'storeProductGroupId']],
         ];
 }
 
@@ -68,4 +74,28 @@ return [
     'updateDateTime' => Yii::t('store_product', 'Update Date Time'),
 ];
 }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getProduct()
+    {
+    return $this->hasOne(ProductMaster::className(), ['productId' => 'productId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getStoreProductGroup()
+    {
+    return $this->hasOne(StoreProductGroupMaster::className(), ['storeProductGroupId' => 'storeProductGroupId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getStoreProductOrderItems()
+    {
+    return $this->hasMany(StoreProductOrderItemMaster::className(), ['storeProductId' => 'storeProductId']);
+    }
 }

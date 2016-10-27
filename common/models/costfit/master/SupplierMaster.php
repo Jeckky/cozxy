@@ -17,7 +17,9 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-*/
+    *
+            * @property StoreProductGroup[] $storeProductGroups
+    */
 class SupplierMaster extends \common\models\ModelMaster
 {
 /**
@@ -61,4 +63,12 @@ return [
     'updateDateTime' => Yii::t('supplier', 'Update Date Time'),
 ];
 }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getStoreProductGroups()
+    {
+    return $this->hasMany(StoreProductGroupMaster::className(), ['supplierId' => 'supplierId']);
+    }
 }

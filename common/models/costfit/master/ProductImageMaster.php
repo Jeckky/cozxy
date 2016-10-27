@@ -17,7 +17,9 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-*/
+    *
+            * @property Product $product
+    */
 class ProductImageMaster extends \common\models\ModelMaster
 {
 /**
@@ -40,6 +42,7 @@ return [
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 200],
             [['image', 'imageThumbnail1', 'imageThumbnail2'], 'string', 'max' => 255],
+            [['productId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductMaster::className(), 'targetAttribute' => ['productId' => 'productId']],
         ];
 }
 
@@ -61,4 +64,12 @@ return [
     'updateDateTime' => Yii::t('product_image', 'Update Date Time'),
 ];
 }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getProduct()
+    {
+    return $this->hasOne(ProductMaster::className(), ['productId' => 'productId']);
+    }
 }

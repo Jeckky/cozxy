@@ -24,7 +24,11 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-*/
+    *
+            * @property StoreSlot $parent
+            * @property StoreSlot[] $storeSlots
+            * @property Store $store
+    */
 class StoreSlotMaster extends \common\models\ModelMaster
 {
 /**
@@ -41,7 +45,7 @@ return 'store_slot';
 public function rules()
 {
 return [
-            [['storeId', 'barcode', 'title', 'level', 'createDateTime'], 'required'],
+            [['storeId', 'barcode', 'code', 'title', 'level', 'createDateTime'], 'required'],
             [['storeId', 'parentId', 'level', 'status'], 'integer'],
             [['description'], 'string'],
             [['width', 'height', 'depth', 'weight', 'maxWeight'], 'number'],
@@ -49,6 +53,8 @@ return [
             [['barcode', 'code'], 'string', 'max' => 100],
             [['title'], 'string', 'max' => 200],
             [['qrCode'], 'string', 'max' => 255],
+            [['parentId'], 'exist', 'skipOnError' => true, 'targetClass' => StoreSlotMasterMaster::className(), 'targetAttribute' => ['parentId' => 'storeSlotId']],
+            [['storeId'], 'exist', 'skipOnError' => true, 'targetClass' => StoreMaster::className(), 'targetAttribute' => ['storeId' => 'storeId']],
         ];
 }
 
@@ -77,4 +83,28 @@ return [
     'updateDateTime' => Yii::t('store_slot', 'Update Date Time'),
 ];
 }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getParent()
+    {
+    return $this->hasOne(StoreSlotMaster::className(), ['storeSlotId' => 'parentId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getStoreSlots()
+    {
+    return $this->hasMany(StoreSlotMaster::className(), ['parentId' => 'storeSlotId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getStore()
+    {
+    return $this->hasOne(StoreMaster::className(), ['storeId' => 'storeId']);
+    }
 }
