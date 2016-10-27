@@ -499,8 +499,8 @@ class LockersController extends LockersMasterController {
     public function actionRemarkChannels() {
         //pickingItemsId
         //remartDesc
-//        $pickingItemsId = Yii::$app->request->post('pickingItemsId');
-//        $remartDesc = Yii::$app->request->post('remartDesc');
+        $pickingItemsId = Yii::$app->request->post('pickingItemsId');
+        $remartDesc = Yii::$app->request->post('remartDesc');
         echo 'ok ok ok Rememart Channels';
     }
 

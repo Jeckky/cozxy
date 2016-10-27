@@ -129,7 +129,6 @@ function hide(id)
 
 
 // remark-chanels
-
 $('.remark-chanels').on('click', function () {
     var dataBind = this.getAttribute('data-bind');
     // alert(dataBind);
@@ -137,39 +136,32 @@ $('.remark-chanels').on('click', function () {
     $(".reset-" + dataBind).html('Reset');
 });
 
-
 $('.remark-reset').on('click', function () {
     var dataBind = this.getAttribute('data-bind');
-
     $(".remark-chanels-form-" + dataBind).removeClass("show");
     $(".reset-" + dataBind).html('Ok');
 });
-/*
- $(document).ready(function () {
- $('.remark-submit').on('click', function () {
 
- var hidden = document.getElementById("remarkDescHidden").value;
- var desc = document.getElementById("remarkDesc-" + hidden).value;
- if (desc != '' && hidden != '') {
- alert('OK');
+$('.remark-submit').on('click', function () {
+    var pickingItemsId = document.getElementById("pickingItemsIdHidden").value;
+    var desc = document.getElementById("remarkDesc-" + pickingItemsId).value;
+    if (desc != '' && pickingItemsId != '') {
+        // alert('OK');
+        $.ajax({
+            url: 'remark-channels',
+            data: {"pickingItemsId": pickingItemsId, "remarkDesc": desc},
+            type: 'post',
+            success: function (result) {
+                alert(result);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //debugger;
+                alert(errorThrown);
+            }
+        });
+    } else {
+        alert('ระบุปัญหาที่เจอทุกครั้ง ก่อน Submit')
+    }
+});
 
- $.ajax({
- url: 'remark-channels',
- //                data: {"pickingItemsId": hidden, "remarkDesc": desc},
- type: 'post',
- success: function (result) {
- alert(result);
- },
- error: function (XMLHttpRequest, textStatus, errorThrown) {
- //debugger;
- alert(errorThrown);
- }
- });
-
- } else {
- alert('ระบุปัญหาที่เจอทุกครั้ง ก่อน Submit')
- }
-
- });
- });*/
 

@@ -15,6 +15,7 @@ use Yii;
     * @property integer $status
     * @property string $shipDate
     * @property string $remart
+    * @property integer $userId
     * @property string $createDateTime
     * @property string $updateDateTime
 */
@@ -35,7 +36,7 @@ public function rules()
 {
 return [
             [['orderItemId', 'quantity'], 'required'],
-            [['orderItemId', 'pickingItemsId', 'quantity', 'status'], 'integer'],
+            [['orderItemId', 'pickingItemsId', 'quantity', 'status', 'userId'], 'integer'],
             [['shipDate', 'createDateTime', 'updateDateTime'], 'safe'],
             [['bagNo'], 'string', 'max' => 255],
             [['remart'], 'string', 'max' => 150],
@@ -56,6 +57,7 @@ return [
     'status' => Yii::t('order_item_packing', 'Status'),
     'shipDate' => Yii::t('order_item_packing', 'Ship Date'),
     'remart' => Yii::t('order_item_packing', 'Remart'),
+    'userId' => Yii::t('order_item_packing', 'User ID'),
     'createDateTime' => Yii::t('order_item_packing', 'Create Date Time'),
     'updateDateTime' => Yii::t('order_item_packing', 'Update Date Time'),
 ];

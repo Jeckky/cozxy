@@ -118,8 +118,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                     </span>
                                                                     <span class="list-group-item remark-chanels-form-<?php echo $row->pickingItemsId; ?>"  style="display: none; text-align: left;">
                                                                         <textarea class="form-control" rows="5" placeholder="แจ้งปัญหา" name="remarkdesc" id="remarkDesc-<?php echo $row->pickingItemsId; ?>"></textarea><br>
-                                                                        <input id="remarkDescHidden" type="hidden" value="<?php echo $row->pickingItemsId; ?>">
-                                                                        <button class="btn btn-success btn-xs btn-outline remark-submit">submit</button>
+                                                                        <input id="pickingItemsIdHidden" type="hidden" value="<?php echo $row->pickingItemsId; ?>">
+                                                                        <button class="btn btn-warning btn-xs remark-submit">submit</button>
                                                                     </span>
                                                                 </div>
                                                                 <?php
@@ -143,33 +143,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 </div>
 
 <?php $this->registerJs("
-    $(document).ready(function () {
-            $('.remark-submit').on('click', function () {
 
-            var hidden = document.getElementById('remarkDescHidden').value;
-            var desc = document.getElementById('remarkDesc-' + hidden).value;
-            if (desc != '' && hidden != '') {
-            alert('OK');
-
-            $.ajax({
-            url: 'remark-channels',
-            //                data: {'pickingItemsId': hidden, 'remarkDesc': desc},
-            type: 'post',
-            success: function (result) {
-            alert(result);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-            //debugger;
-            alert(errorThrown);
-            }
-            });
-
-            } else {
-            alert('ระบุปัญหาที่เจอทุกครั้ง ก่อน Submit')
-            }
-
-            });
- });
 ", \yii\web\View::POS_END); ?>
 
 
