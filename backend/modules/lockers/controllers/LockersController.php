@@ -461,7 +461,7 @@ class LockersController extends LockersMasterController {
 
     public function actionChannels() {
         /**
-         *  ตรวจสอบ "ช่อง" ของ lockers ก่อน สแกนถุง
+         *  เจ้าหน้าต้องตรวจสอบ "ช่อง" ของ lockers ก่อนที่จะไปสแกนถุง
          */
         $pickingId = Yii::$app->request->get('boxcode');
         // ตรวจสอบว่า ถ้ามี ช่อง ไหนที่ลูกค้ามารับแล้วและตรวจสอบไม่ผ่าน เข้าเคสนี้เลย

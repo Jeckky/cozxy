@@ -10,7 +10,7 @@ $this->title = 'ช่องของ Lockers';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
-<h1>Shippings / Picking Points </h1>
+<h1>Lockers / แสดงช่องของ Lockers ทั้งหมด </h1>
 <!--<div class="note note-success ">
     <h3>สถานที่ตั้ง Lockers </h3>
     <h4 style="color: #003147">
@@ -93,11 +93,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                 echo 'ปิดช่องนี้แล้ว..';
                                                             } else {
                                                                 if ($Inspector['status'] == 10) {
-                                                                    echo '<span class="label label-warning">ช่อง' . $row->name . ' : มีปัญหา</span>';
-                                                                } else {
+                                                                    echo '<span class="label label-danger">ช่อง' . $row->name . ' : มีปัญหา</span>';
+                                                                } else if ($Inspector['status'] < 8 || $Inspector['status'] == 9) {
                                                                     ?>
-                                                                    <a class="btn" href="<?php echo Yii::$app->homeUrl; ?>lockers/lockers/scan-bag?pickingItemsId=<?php echo $row->pickingItemsId; ?>&code=<?php echo $row->code ?>&boxcode=<?php echo $row->pickingId; ?>&model=1">เปิดช่อง : <?= $row->name; ?></a>
+                                                                    <a class="btn btn-lg" href="<?php echo Yii::$app->homeUrl; ?>lockers/lockers/scan-bag?pickingItemsId=<?php echo $row->pickingItemsId; ?>&code=<?php echo $row->code ?>&boxcode=<?php echo $row->pickingId; ?>&model=1">เปิดช่อง : <?= $row->name; ?></a>
                                                                     <?php
+                                                                } else if ($Inspector['status'] == 8) {
+                                                                    echo '<span class="label label-warning">ช่อง' . $row->name . ' :รอตรวจสอบจากเจ้าหน้าที่</span>';
                                                                 }
                                                             }
                                                             ?>
