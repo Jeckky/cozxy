@@ -460,6 +460,9 @@ class LockersController extends LockersMasterController {
     }
 
     public function actionChannels() {
+        /**
+         *  ตรวจสอบ "ช่อง" ของ lockers ก่อน สแกนถุง
+         */
         $pickingId = Yii::$app->request->get('boxcode');
         // ตรวจสอบว่า ถ้ามี ช่อง ไหนที่ลูกค้ามารับแล้วและตรวจสอบไม่ผ่าน เข้าเคสนี้เลย
         $CountChannelsInspector = \common\models\costfit\PickingPointItems::NotChannelsInspector($pickingId);
@@ -492,6 +495,7 @@ class LockersController extends LockersMasterController {
     }
 
     public function actionRemarkChannels() {
+        //
         //pickingItemsId
         //remartDesc
         $pickingItemsId = Yii::$app->request->post('pickingItemsId');
