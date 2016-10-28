@@ -206,13 +206,14 @@ class PickingPointItems extends \common\models\costfit\master\PickingPointItemsM
          * */
         $CountChannelsInspector = \common\models\costfit\PickingPointItems::find()
         ->where("`picking_point_items`.pickingId = '" . $pickingId . "' "
-        . " and (select order_item_packing.status from costfit_test.order_item_packing where order_item_packing.pickingItemsId = `picking_point_items`.pickingItemsId  limit 1)  > 8")
+        . " and (select order_item_packing.status from costfit_test.order_item_packing "
+        . "where order_item_packing.pickingItemsId = `picking_point_items`.pickingItemsId  limit 1)  > 8")
         ->one();
-        if (count($CountChannelsInspector) > 0) {
-            return $CountChannelsInspector; //$queryOrderItemPackingId->orderNo;
-        } else {
-            return '';
-        }
+        //if (count($CountChannelsInspector) > 0) {
+        return $CountChannelsInspector; //$queryOrderItemPackingId->orderNo;
+        //} else {
+        // return '';
+        // }
     }
 
 }
