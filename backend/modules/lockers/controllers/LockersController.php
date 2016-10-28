@@ -464,9 +464,9 @@ class LockersController extends LockersMasterController {
          *  เจ้าหน้าต้องตรวจสอบ "ช่อง" ของ lockers ก่อนที่จะไปสแกนถุง
          */
         $pickingId = Yii::$app->request->get('boxcode');
-        // ตรวจสอบว่า ถ้ามี ช่อง ไหนที่ลูกค้ามารับแล้วและตรวจสอบไม่ผ่าน เข้าเคสนี้เลย
+        // ตรวจสอบว่า ถ้ามี ช่อง ไหนที่ลูกค้ามารับแล้วและตรวจสอบผ่าน เข้าเคสนี้เลย or
         $CountChannelsInspector = \common\models\costfit\PickingPointItems::NotChannelsInspector($pickingId);
-        if (count($CountChannelsInspector) > 0) {
+        if (count($CountChannelsInspector) == 0) { //ไม่มีข้อมูล
             if ($pickingId != '') {
                 $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $pickingId . "'")->one();
                 $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
@@ -489,7 +489,7 @@ class LockersController extends LockersMasterController {
                     'point' => $point,
                 ]);
             }
-        } else {// ตรวจสอบว่า ทุกช่อง ตรวจสอบ OK ให้ Redirect ไปหน้าสแกนถุงทันที่
+        } else { // ถ้าช่องไหนครวจสอบผ่าน มีข้อมูล
             return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $pickingId);
         }
     }
