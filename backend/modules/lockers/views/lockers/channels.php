@@ -89,7 +89,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                             echo '<h4>ช่อง : ' . $row->name . '<br> ลูกค้ายังไม่มารับสินค้า</h4>';
                                                         } else {
                                                             ?>
-                                                            <h4> ช่อง : <?= $row->name; ?></h4>
+                                                            <h4> ช่อง : <?= $row->name; ?> ว่าง</h4>
                                                             <?php
                                                             $items = common\models\costfit\PickingPointItems::OrderNoChannels8($row->pickingItemsId);
                                                             $bagNo = common\models\costfit\PickingPointItems::bagNo8($row->pickingItemsId);
