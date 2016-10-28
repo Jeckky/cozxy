@@ -461,6 +461,7 @@ class LockersController extends LockersMasterController {
 
     public function actionChannels() {
         $pickingId = Yii::$app->request->get('boxcode');
+        // ตรวจสอบว่า ถ้ามี ช่อง ไหนที่ลูกค้ามารับแล้วและตรวจสอบไม่ผ่าน เข้าเคสนี้เลย
         $CountChannelsInspector = \common\models\costfit\PickingPointItems::NotChannelsInspector($pickingId);
         if (count($CountChannelsInspector) > 0) {
             if ($pickingId != '') {
@@ -485,7 +486,7 @@ class LockersController extends LockersMasterController {
                     'point' => $point,
                 ]);
             }
-        } else {
+        } else {// ตรวจสอบว่า ทุกช่อง ตรวจสอบ OK ให้ Redirect ไปหน้าสแกนถุงทันที่
             return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $pickingId);
         }
     }
@@ -498,10 +499,11 @@ class LockersController extends LockersMasterController {
         $remarkDesc = Yii::$app->request->post('remarkDesc');
         $status = Yii::$app->request->post('status');
 
+        // ตรวจสอบว่า ถ้าช่องใน Lockker นี้ ตรวจสอบหมดแล้ว ให้ redirect ไปหน้าสแกนถุง
         $CountChannelsInspector = \common\models\costfit\PickingPointItems::ChannelsInspector($pickingId);
 
 
-        if ($status == 'ok') {
+        if ($status == 'ok') { //ตรวจสอบ OK
             // echo 'ok';
             \common\models\costfit\OrderItemPacking::updateAll(['status' => 9, 'userId' => NULL, 'remark' => NULL], ['pickingItemsId' => $pickingItemsId]);
             $listOrderItemPacking = \common\models\costfit\OrderItemPacking::find()
@@ -511,7 +513,7 @@ class LockersController extends LockersMasterController {
                 echo json_encode($listOrderItemPacking->attributes);
             }
         }
-        if ($status == 'no') {
+        if ($status == 'no') { //ตรวจสอบ No
             //echo $remarkDesc;
             \common\models\costfit\OrderItemPacking::updateAll(['status' => 10, 'remark' => $remarkDesc, 'userId' => NULL], ['pickingItemsId' => $pickingItemsId]);
             $listOrderItemPacking = \common\models\costfit\OrderItemPacking::find()
@@ -522,7 +524,7 @@ class LockersController extends LockersMasterController {
             }
         }
 
-        if (count($CountChannelsInspector) > 0) {
+        if (count($CountChannelsInspector) > 0) {// ตรวจสอบว่า ถ้าช่องใน Lockker นี้ ตรวจสอบหมดแล้ว ให้ redirect ไปหน้าสแกนถุง
             return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $pickingId);
         }
 
