@@ -154,7 +154,7 @@ class PickingPointItems extends \common\models\costfit\master\PickingPointItemsM
                 }$bagNox = $bagNo . $item->bagNo;
             endforeach;
         }
-        return substr($bagNo, 0, -4);
+        return substr($bagNo, 0, -1);
     }
 
     public static function OrderNoChannels8($pickingItemsId) {
