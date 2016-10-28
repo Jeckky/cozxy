@@ -3,14 +3,14 @@
 use yii\helpers\Html;
 
 $form = yii\bootstrap\ActiveForm::begin([
-            'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
-            'fieldConfig' => [
-                'template' => '{label}<div class="col-sm-9">{input}</div>',
-                'labelOptions' => [
-                    'class' => 'col-sm-3 control-label'
-                ]
-            ]
-        ]);
+    'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+    'fieldConfig' => [
+        'template' => '{label}<div class="col-sm-9">{input}</div>',
+        'labelOptions' => [
+            'class' => 'col-sm-3 control-label'
+        ]
+    ]
+]);
 ?>
 <input type="hidden" name="storeProductGroupId" value="<?= $storeProductGroupId ?>">
 <input type="hidden" name="StoreProductGroup2[poNo]" value="<?= \common\models\costfit\StoreProductGroup::findPoNo($storeProductGroupId) ?>">

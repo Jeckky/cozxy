@@ -53,7 +53,7 @@ if (\Yii::$app->params['shippingScanTrayOnly'] == true) {
 </div>
 <div class="panel panel-default">
     <div class="panel-heading" style="background-color: #ccffff;vertical-align: middle;">
-        <span class="panel-title"><h4><?= $this->title ?> ( Order ที่มาจาก Packing )</h4></span>
+        <span class="panel-title"><h4> Order ที่มาจาก Packing </h4></span>
     </div>
     <div class="panel-body">
 

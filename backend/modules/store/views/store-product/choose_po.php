@@ -28,6 +28,7 @@ $form = yii\bootstrap\ActiveForm::begin([
             </tr>
         </tbody>
     </table>
+    <br><h4>:: สแกน Qr Code ของใบ Po เพื่อนำสินค้าไปจัดเรียง ::</h4>
 </div>
 <?php yii\bootstrap\ActiveForm::end(); ?>
 <?php

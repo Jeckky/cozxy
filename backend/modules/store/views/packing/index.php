@@ -26,9 +26,15 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 'action' => ['packing/index'],
             ]);
             ?>
-
-            <h3>   Order No QR code : <input class="input-lg"type="text" name="orderNo" autofocus="true" id="orderNo" required="true"></h3>
-            <br><h4>:: สแกน Qr Code ของ Order เพื่อแพ๊คสินค้า ::</h4><hr>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th style="vertical-align: middle;text-align: center;"><h4><b>Order No QR code : </b></h4></th>
+                        <td><?= \yii\helpers\Html::textInput('orderNo', NULL, ['class' => 'input-lg', 'autofocus' => 'autofocus']); ?><?= isset($ms) && $ms != '' ? ' <code> ' . $ms . '</code>' : '' ?></td>
+                    </tr>
+                </tbody>
+            </table>
+            <br><h4>:: สแกน Qr Code ของ Order เพื่อแพ๊คสินค้า ::</h4>
             <?= $this->registerJS("
                             $('#orderNo').blur(function(event){
                                 if(event.which == 13 || event.keyCode == 13)
@@ -37,6 +43,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 }
                             });
                 ") ?>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" style="background-color: #ccffff;vertical-align: middle;">
+            <span class="panel-title"><h4> รายการ Order เตรียมแพ็ค / แพ็คแล้ว </h4></span>
+        </div>
+        <div class="panel-body">
             <?=
             GridView::widget([
                 'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
