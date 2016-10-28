@@ -96,7 +96,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                     echo '<span class="label label-danger">ช่อง' . $row->name . ' : มีปัญหา <br>รายละอียด : ' . $Inspector['remark'] . '</span>';
                                                                 } else if ($Inspector['status'] < 8 || $Inspector['status'] == 9) {
                                                                     ?>
-                                                                    <a class="btn btn-lg" href="<?php echo Yii::$app->homeUrl; ?>lockers/lockers/scan-bag?pickingItemsId=<?php echo $row->pickingItemsId; ?>&code=<?php echo $row->code ?>&boxcode=<?php echo $row->pickingId; ?>&model=1">เปิดช่อง : <?= $row->name; ?></a>
+                                                                    <a class="btn btn-lg   btn-info" href="<?php echo Yii::$app->homeUrl; ?>lockers/lockers/scan-bag?pickingItemsId=<?php echo $row->pickingItemsId; ?>&code=<?php echo $row->code ?>&boxcode=<?php echo $row->pickingId; ?>&model=1">เปิดช่อง : <?= $row->name; ?></a>
                                                                     <?php
                                                                 } else if ($Inspector['status'] == 8) {
                                                                     echo '<span class="label label-warning">ช่อง' . $row->name . ' :รอตรวจสอบจากเจ้าหน้าที่</span>';
