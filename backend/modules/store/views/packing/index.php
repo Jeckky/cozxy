@@ -16,31 +16,20 @@ $this->params['pageHeader'] = Html::encode($this->title);
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-default">
         <div class="panel-heading"  style="background-color: #ccffcc;vertical-align: middle;">
-            <div class="btn-group pull-right" style="margin-top: 30px;">
-                <?php if (isset($bagNo)): ?>
-                    <?=
-                    Html::a('<i class="fa fa-print" aria-hidden="true"></i> Print Bag Label', ['print-bag-label',
-                        'orderId' => $orderId,
-                        'bagNo' => $bagNo], [
-                        'target' => '_blank',
-                        'class' => 'btn btn-warning btn-xs '
-                    ])
-                    ?>
-                <?php endif; ?>
-            </div>
             <span class="panel-title"><h3><?= $this->title ?></h3></span>
         </div>
         <div class="panel-body">
 
             <?php
             $form = ActiveForm::begin([
-                        'method' => 'GET',
-                        'action' => ['packing/index'],
+                'method' => 'GET',
+                'action' => ['packing/index'],
             ]);
             ?>
 
             <h3>   Order No QR code : <input class="input-lg"type="text" name="orderNo" autofocus="true" id="orderNo" required="true"></h3>
-                <?= $this->registerJS("
+            <br><h4>:: สแกน Qr Code ของ Order เพื่อแพ๊คสินค้า ::</h4><hr>
+            <?= $this->registerJS("
                             $('#orderNo').blur(function(event){
                                 if(event.which == 13 || event.keyCode == 13)
                                 {
@@ -48,37 +37,37 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 }
                             });
                 ") ?>
-                <?=
-                GridView::widget([
-                    'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
-                    'dataProvider' => $dataProvider,
-                    'pager' => [
-                        'options' => ['class' => 'pagination pagination-xs']
+            <?=
+            GridView::widget([
+                'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
+                'dataProvider' => $dataProvider,
+                'pager' => [
+                    'options' => ['class' => 'pagination pagination-xs']
+                ],
+                'options' => [
+                    'class' => 'table-light'
+                ],
+                'rowOptions' => function ($model, $index, $widget, $grid) {
+                    if ($model->status == common\models\costfit\Order::ORDER_STATUS_PACKED)
+                        return ['class' => 'success'];
+                },
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    'orderNo',
+                    [
+                        'attribute' => 'countItem',
+                        'format' => 'html',
+                        'value' => function($model) {
+                            $countItemsArray = common\models\costfit\OrderItem::countPickingItemsArray($model->orderId);
+                            return $countItemsArray['countItems'] . " รายการ<br>" . $countItemsArray['sumQuantity'] . " ชิ้น";
+                        }
                     ],
-                    'options' => [
-                        'class' => 'table-light'
+                    [
+                        'attribute' => 'status',
+                        'value' => function($model) {
+                            return $model->getStatusText($model->status);
+                        }
                     ],
-                    'rowOptions' => function ($model, $index, $widget, $grid) {
-                if ($model->status == common\models\costfit\Order::ORDER_STATUS_PACKED)
-                    return ['class' => 'success'];
-            },
-                    'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
-                        'orderNo',
-                        [
-                            'attribute' => 'countItem',
-                            'format' => 'html',
-                            'value' => function($model) {
-                                $countItemsArray = common\models\costfit\OrderItem::countPickingItemsArray($model->orderId);
-                                return $countItemsArray['countItems'] . " รายการ<br>" . $countItemsArray['sumQuantity'] . " ชิ้น";
-                            }
-                        ],
-                        [
-                            'attribute' => 'status',
-                            'value' => function($model) {
-                                return $model->getStatusText($model->status);
-                            }
-                        ],
 //                        ['class' => 'yii\grid\ActionColumn',
 //                            'header' => 'Actions',
 //                            'template' => '',
@@ -89,9 +78,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
 //                                },
 //                                    ]
 //                                ],
-                    ],
-                ]);
-                ?>
+                ],
+            ]);
+            ?>
         </div>
     </div>
     <!--    <div id="printableArea">
