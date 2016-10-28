@@ -194,4 +194,11 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
         }
     }
 
+    static public function checkInspector($pickingItemsId) {
+        $result = OrderItemPacking::find()
+        ->where(['order_item_packing.pickingItemsId' => $pickingItemsId])
+        ->one();
+        return $result;
+    }
+
 }

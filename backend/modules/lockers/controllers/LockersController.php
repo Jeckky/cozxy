@@ -492,22 +492,9 @@ class LockersController extends LockersMasterController {
         $pickingId = Yii::$app->request->post('pickingId');
         $remarkDesc = Yii::$app->request->post('remarkDesc');
         $status = Yii::$app->request->post('status');
-        //$checkChanels = \common\models\costfit\OrderItemPacking::find()->where("pickingItemsId = '" . $pickingItemsId . "'");
-        /*
-          SELECT  picking_point_items.pickingItemsId ,picking_point_items.pickingId ,picking_point_items.code ,picking_point_items.name
-          ,(select order_item_packing.status from costfit_test.order_item_packing where order_item_packing.pickingItemsId = `picking_point_items`.pickingItemsId  limit 1) as  orderItemPackingStatus
-          ,(select order_item_packing.BagNo from costfit_test.order_item_packing where order_item_packing.pickingItemsId = `picking_point_items`.pickingItemsId  limit 1) as  orderItemPackingBagNo
-          FROM `picking_point_items`
-          where `picking_point_items`.pickingId = 10 -- and (select order_item_packing.status from costfit_test.order_item_packing where order_item_packing.pickingItemsId = `picking_point_items`.pickingItemsId  limit 1)  > 8
-          // Count ช่องที่มีการตรวจสอบแล้ว
-          SELECT count(picking_point_items.pickingItemsId)
-          FROM `picking_point_items`
-          where `picking_point_items`.pickingId = 10  and (select order_item_packing.status from costfit_test.order_item_packing where order_item_packing.pickingItemsId = `picking_point_items`.pickingItemsId  limit 1)  > 8
-         * */
-        $CountChannelsInspector = \common\models\costfit\PickingPointItems::find()
-        ->where("`picking_point_items`.pickingId = '" . $pickingId . "' "
-        . " and (select order_item_packing.status from costfit_test.order_item_packing where order_item_packing.pickingItemsId = `picking_point_items`.pickingItemsId  limit 1)  > 8")
-        ->one();
+
+        $CountChannelsInspector = \common\models\costfit\PickingPointItems::ChannelsInspector($pickingId);
+
 
         if ($status == 'ok') {
             // echo 'ok';

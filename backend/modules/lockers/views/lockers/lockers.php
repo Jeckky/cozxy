@@ -81,16 +81,24 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             ?>
                                             <tr>
                                                 <td style="border:2px black solid ;text-align:center;vertical-align: middle; height: <?= $height ?>" class="<?= ($row->status == 1) ? "alert-success" : "alert-danger" ?>">
-                                                    <?php if ($colIndex == 1 && $rowIndex == 1): ?>
+                                                    <?php
+                                                    $Inspector = common\models\costfit\OrderItemPacking::checkInspector($row->pickingItemsId);
+
+                                                    if ($colIndex == 1 && $rowIndex == 1):
+                                                        ?>
                                                         <span style="font-size: 20px;font-weight: bold"><?= "Controller" ?></span>
                                                     <?php else: ?><h4>
                                                             <?php
                                                             if ($row->status == 0) {
-                                                                echo ' ปิดช่องนี้แล้ว..';
+                                                                echo 'ปิดช่องนี้แล้ว..';
                                                             } else {
-                                                                ?>
-                                                                <a class="btn" href="<?php echo Yii::$app->homeUrl; ?>lockers/lockers/scan-bag?pickingItemsId=<?php echo $row->pickingItemsId; ?>&code=<?php echo $row->code ?>&boxcode=<?php echo $row->pickingId; ?>&model=1">เปิดช่อง : <?= $row->name; ?></a>
-                                                                <?php
+                                                                if ($Inspector['status'] == 10) {
+                                                                    echo '<span class="label label-warning">ช่อง' . $row->name . ' : มีปัญหา</span>';
+                                                                } else {
+                                                                    ?>
+                                                                    <a class="btn" href="<?php echo Yii::$app->homeUrl; ?>lockers/lockers/scan-bag?pickingItemsId=<?php echo $row->pickingItemsId; ?>&code=<?php echo $row->code ?>&boxcode=<?php echo $row->pickingId; ?>&model=1">เปิดช่อง : <?= $row->name; ?></a>
+                                                                    <?php
+                                                                }
                                                             }
                                                             ?>
                                                         </h4>
