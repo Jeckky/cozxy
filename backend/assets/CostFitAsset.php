@@ -7,8 +7,7 @@ use yii\web\AssetBundle;
 /**
  * Main CostFit application asset bundle.
  */
-class CostFitAsset extends AssetBundle
-{
+class CostFitAsset extends AssetBundle {
 
     public $sourcePath = '@backend/themes/costfit/assets';
     //public $baseUrl = '@web';
@@ -27,6 +26,7 @@ class CostFitAsset extends AssetBundle
         'javascripts/bootstrap.min.js',
         'javascripts/pixel-admin.min.js',
         'javascripts/cozxy/cozxy-unity.js',
+        'javascripts/cozxy/cozxy-printer.js',
     ];
 
 }

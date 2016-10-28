@@ -25,8 +25,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
     <div class="panel-body">
         <?php
         $form = ActiveForm::begin([
-                    'method' => 'GET',
-                    'action' => ['packing/packing'],
+            'method' => 'GET',
+            'action' => ['packing/packing'],
         ]);
         ?>
         <h3> Scan Product Code </h3><br>
@@ -42,7 +42,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 ") ?>
 
         <br>
-        <input type="hidden" name="orderId" value="<?= $orderId ?>">
+        <input type="hidden" name="orderId" id="orderId" value="<?= $orderId ?>">
         <?php ActiveForm::end(); ?>
         <?php
         ?>
@@ -70,13 +70,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 'packingId' => $item->orderItemPackingId,
                                 'orderId' => $orderId,
                                 'ms' => isset($ms) ? $ms : ''
-                                    ], ['class' => 'btn btn-sm btn-warning']) . '</td>';
+                            ], ['class' => 'btn btn-sm btn-warning']) . '</td>';
                         } else if ($item->quantity == 1) {//ลบออก
                             echo '<td>' . Html::a('<i class="fa fa-minus" aria-hidden="true"></i>', ['remove',
                                 'packingId' => $item->orderItemPackingId,
                                 'orderId' => $orderId,
                                 'ms' => isset($ms) ? $ms : ''
-                                    ], ['class' => 'btn btn-sm btn-danger']) . '</td>';
+                            ], ['class' => 'btn btn-sm btn-danger']) . '</td>';
                         }
                         echo '</tr>';
                         $i++;
@@ -100,7 +100,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
             if (isset($items) && !empty($items)) {
                 echo Html::a('<i class="fa fa-check-square-o" aria-hidden="true"></i> ปิดถุง', ['close-bag',
                     'orderId' => $orderId
-                        ], ['class' => 'btn btn-lg btn-success']);
+                ], ['class' => 'closeBag btn btn-lg btn-success']);
             }
             ?>
         </div>

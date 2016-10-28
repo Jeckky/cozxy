@@ -14,35 +14,25 @@ if (window.location.host == 'localhost') {
     $baseUrl = window.location.protocol + "//" + window.location.host + '/';
 }
 
-//$.get($baseUrl + "store/virtual/leditems", function (data, status) {
-//    var json_obj = $.parseJSON(data); //parse JSON
-//    /*
-//     * 1 :  สีเขียว
-//     2 : สีแดง
-//     3 : สีน้ำเงิน
-//     4 :สีชมพู่
-//     5 :สีเหลือง
-//     * */
-//    for (var i in json_obj)
-//    {
-//        //console.log(json_obj[i].code + ",  " + json_obj[i].slot + ' , ' + json_obj[i].color);
-//        // fa fa-circle
-//        // fa-circle-o text-default
-//        if (json_obj[i].color == 1) {
-//            var color_text = 'fa fa-circle text-success';
-//        } else if (json_obj[i].color == 2) {
-//            var color_text = 'fa fa-circle text-danger';
-//        } else if (json_obj[i].color == 3) {
-//            var color_text = 'fa fa-circle text-primary';
-//        } else if (json_obj[i].color == 4) {
-//            var color_text = 'fa fa-circle text-pink';
-//        } else if (json_obj[i].color == 5) {
-//            var color_text = 'fa fa-circle text-warning';
-//        } else {
-//            var color_text = 'fa fa-circle-o text-default';
-//        }
-//        $('#' + json_obj[i].slot + '').find('#' + json_obj[i].slot + '-' + json_obj[i].color).attr('class', '' + color_text + '');
-//        console.log(json_obj[i].slot + '-' + json_obj[i].color);
-//    }
-//});
-
+$(document).on('click', '.closeBag', function () {
+    var $orderId = $(this).parent().parent().find("#orderId").val();
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: $baseUrl + 'store/packing/print-label',
+        data: {orderId: $orderId},
+        success: function (data)
+        {
+            if (data != '') {
+                var newWin = window.open('bag-label?bag=' + data, '_blank');
+                newWin.focus();
+            } else {
+                alert(data);
+            }
+        },
+        error: function (data)
+        {
+            alert('ไม่พบ ORDER ID');
+        }
+    });
+});
