@@ -151,7 +151,7 @@ $('.remark-chanels-ok').on('click', function () {
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 //debugger;
-                alert(errorThrown);
+                // alert(errorThrown);
             }
         });
     } else {
@@ -183,7 +183,7 @@ $('.remark-submit').on('click', function () {
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 //debugger;
-                alert(errorThrown);
+                // alert(errorThrown);
             }
         });
     } else {

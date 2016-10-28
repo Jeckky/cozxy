@@ -52,9 +52,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <tbody>
                         <?php
                         $cols = common\models\costfit\PickingPointItems::find()
-                                ->where(["pickingId" => $point->pickingId])
-                                ->groupBy(["LEFT(portIndex,1)"])
-                                ->all();
+                        ->where(["pickingId" => $point->pickingId])
+                        ->groupBy(["LEFT(portIndex,1)"])
+                        ->all();
                         ?>
                         <tr>
                             <?php foreach ($cols as $colIndex => $col): ?>
@@ -62,9 +62,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     <table class="table">
                                         <?php
                                         $rows = common\models\costfit\PickingPointItems::find()
-                                                ->where(["pickingId" => $point->pickingId, 'LEFT(portIndex,1)' => substr($col->portIndex, 0, 1)])
-                                                // ->groupBy(["RIGHT(portIndex,1)"])
-                                                ->all();
+                                        ->where(["pickingId" => $point->pickingId, 'LEFT(portIndex,1)' => substr($col->portIndex, 0, 1)])
+                                        // ->groupBy(["RIGHT(portIndex,1)"])
+                                        ->all();
                                         foreach ($rows as $rowIndex => $row):
                                             $height = "70px";
                                             switch ($row->height) {
@@ -94,7 +94,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                             }
                                                             ?>
                                                         </h4>
-
                                                         <?php
                                                         //echo $row->pickingItemsId;
                                                         $items = common\models\costfit\PickingPointItems::OrderNoChannels($row->pickingItemsId);
