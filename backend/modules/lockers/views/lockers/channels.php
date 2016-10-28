@@ -85,6 +85,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                         <span style="font-size: 20px;font-weight: bold"><?= "Controller" ?></span>
                                                     <?php else: ?>
                                                         <?php
+                                                        $Inspector = common\models\costfit\OrderItemPacking::checkInspector($row->pickingItemsId);
+
                                                         if ($row->status == 0) {
                                                             echo '<h4>ช่อง : ' . $row->name . '<br> ลูกค้ายังไม่มารับสินค้า</h4>';
                                                         } else {
