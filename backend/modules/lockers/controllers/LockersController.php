@@ -346,18 +346,10 @@ class LockersController extends LockersMasterController {
         //echo $countBag;
         $OrderItemPacking = \common\models\costfit\OrderItemPacking::find()->where(" orderItemPackingId = '" . $orderItemPackingId . "'")->one();
 
-        //echo '<pre>';
-        //print_r($countBag);
-        //exit();
-
         if ($countBag == 0) {
             $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channel . "' and pickingItemsId  = '" . $pickingItemsId . "' ")->one();
-            //echo '<pre>';
-            //print_r($listPointItems);
-            //echo count($listPointItems);
-            // exit();
-            if (count($listPointItems) > 0) {
 
+            if (count($listPointItems) > 0) {
                 if ($status == 'now') {
                     \common\models\costfit\PickingPointItems::updateAll(['status' => 0], ['pickingItemsId' => $listPointItems->pickingItemsId]);
                     return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $boxcode);
@@ -368,7 +360,6 @@ class LockersController extends LockersMasterController {
                     \common\models\costfit\PickingPointItems::updateAll(['status' => 1], ['pickingItemsId' => $listPointItems->pickingItemsId]);
                     return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?close=no&model=' . $model . '&code=' . $channel . '&boxcode=' . $boxcode . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId . '&bagNo=' . $bagNo . '');
                 }
-
                 ///lockers/lockers/scan-bag?model=1&code=aa-010&boxcode=10&pickingItemsId=112&orderId=&orderItemPackingId=&bagNo=BG20161019-0000008
             } else {
                 return $this->render('location', [
@@ -475,11 +466,9 @@ class LockersController extends LockersMasterController {
             $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
             $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
             $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
-
             $query = \common\models\costfit\PickingPointItems::find()
             //->join('RIGHT JOIN', 'order_item_packing', 'order_item_packing.pickingItemsId =picking_point_items.pickingItemsId')
             ->where("picking_point_items.pickingId = '" . $pickingId . "'");
-
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
             ]);
@@ -500,11 +489,14 @@ class LockersController extends LockersMasterController {
         //pickingItemsId
         //remartDesc
         $pickingItemsId = Yii::$app->request->post('pickingItemsId');
+        $pickingId = Yii::$app->request->post('pickingId');
         $remarkDesc = Yii::$app->request->post('remarkDesc');
         $status = Yii::$app->request->post('status');
+        //$checkChanels = \common\models\costfit\OrderItemPacking::find()->where("pickingItemsId = '" . $pickingItemsId . "'");
+
         if ($status == 'ok') {
             // echo 'ok';
-            \common\models\costfit\OrderItemPacking::updateAll(['status' => 8, 'userId' => NULL], ['pickingItemsId' => $pickingItemsId]);
+            \common\models\costfit\OrderItemPacking::updateAll(['status' => 9, 'userId' => NULL], ['pickingItemsId' => $pickingItemsId]);
             $listOrderItemPacking = \common\models\costfit\OrderItemPacking::find()
             ->where("pickingItemsId = '" . $pickingItemsId . "' ")
             ->groupBy(['order_item_packing.bagNo'])->one();
@@ -512,7 +504,7 @@ class LockersController extends LockersMasterController {
             //print_r($listOrderItemPacking);
             echo json_encode($listOrderItemPacking->attributes);
         } elseif ($status == 'no') {
-            \common\models\costfit\OrderItemPacking::updateAll(['status' => 9, 'remark' => $remarkDesc, 'userId' => NULL], ['pickingItemsId' => $pickingItemsId]);
+            \common\models\costfit\OrderItemPacking::updateAll(['status' => 10, 'remark' => $remarkDesc, 'userId' => NULL], ['pickingItemsId' => $pickingItemsId]);
             $listOrderItemPacking = \common\models\costfit\OrderItemPacking::find()
             ->where("pickingItemsId = '" . $pickingItemsId . "' ")
             ->groupBy(['order_item_packing.bagNo'])->one();

@@ -98,29 +98,36 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                 $orderNos = explode(",", $items);
                                                                 ?>
                                                                 <div class="list-group search-content search-content-new-<?php echo $row->pickingItemsId; ?>">
-                                                                    <span class="list-group-item" style="color: #000;">
+                                                                    <span class="list-group-item " style="color: #000;">
                                                                         <?php
                                                                         $itemsOrderNo = common\models\costfit\PickingPointItems::OrderNoList8(" $items ");
-                                                                        if ($itemsOrderNo->status == 8) {
+                                                                        if ($itemsOrderNo->status == 8 || $itemsOrderNo->status == 10) {
                                                                             echo '<h5>OrderNo : ' . $itemsOrderNo->orderNo . '</h5><span class="text-success"> (ลูกค้ามารับสินค้าแล้ว) </span><br> <span class="text-warning">เมื่อ ' .
                                                                             $this->context->dateThai($itemsOrderNo->updateDateTime, 1, '0000-00-00 00:00:00') . '</span>'
                                                                             . '<br> ถุงที่หยิบไป : ';
                                                                             echo $bagNo;
-                                                                            echo '<br>';
+                                                                            echo '<hr>';
                                                                             ?>
-                                                                            <button class="btn btn-success remark-chanels-ok" data-bind="<?php echo $row->pickingItemsId; ?>">
+                                                                            <button class="btn btn-success remark-chanels-ok" data-bind="<?php echo $row->pickingItemsId; ?>,<?php echo $row->pickingId; ?>">
                                                                                 <span class="reset-<?php echo $row->pickingItemsId; ?> ">Ok</span></button>
-                                                                            <button class="btn btn-default remark-chanels" data-bind="<?php echo $row->pickingItemsId; ?>">No</button>
+                                                                            <button class="btn btn-default remark-chanels" data-bind="<?php echo $row->pickingItemsId; ?>,<?php echo $row->pickingId; ?>">No</button>
                                                                             <br><code> หมายเหตุ<br> ok : เรียบร้อย , no : แจ้งปัญหา</code>
                                                                             <br>
                                                                         <?php } ?>
                                                                     </span>
-                                                                    <?php if ($itemsOrderNo->status == 8) { ?>
-                                                                        <span class="list-group-item remark-chanels-form-<?php echo $row->pickingItemsId; ?>"  style="display: none; text-align: left;">
-                                                                            <textarea class="form-control" rows="5" placeholder="แจ้งปัญหา" name="remarkdesc" id="remarkDesc-<?php echo $row->pickingItemsId; ?>"></textarea><br>
+                                                                    <?php
+                                                                    if ($itemsOrderNo->status == 8 || $itemsOrderNo->status == 10) {
+                                                                        ?>
+                                                                        <span class="list-group-item remark-chanels-form-<?php echo $row->pickingItemsId; ?> <?php
+                                                                        if ($itemsOrderNo->status == 10) {
+                                                                            echo 'show';
+                                                                        }
+                                                                        ?>"  style="display: none; text-align: left;">
+                                                                            <textarea class="form-control" rows="5" placeholder="แจ้งปัญหา" name="remarkdesc" id="remarkDesc-<?php echo $row->pickingItemsId; ?>"><?= $itemsOrderNo->remark; ?></textarea><br>
                                                                             <input id="pickingItemsIdHidden" type="hidden" value="<?php echo $row->pickingItemsId; ?>">
+                                                                            <input id="pickingIdHidden" type="hidden" value="<?php echo $row->pickingId; ?>">
                                                                             <button class="btn btn-warning btn-xs remark-submit">submit</button>
-                                                                            <button class="btn btn-default btn-xs remark-cancel" data-bind="<?php echo $row->pickingItemsId; ?>">cancel</button>
+                                                                            <button class="btn btn-default btn-xs remark-cancel" data-bind="<?php echo $row->pickingItemsId; ?>,<?php echo $row->pickingId; ?>">cancel</button>
                                                                         </span>
                                                                     <?php } elseif ($itemsOrderNo->status == 9) { ?>
                                                                         <span class="list-group-item remark-chanels-form-<?php echo $row->pickingItemsId; ?>"  style="  text-align: center;">

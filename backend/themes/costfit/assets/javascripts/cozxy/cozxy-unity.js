@@ -127,16 +127,21 @@ function hide(id)
 // remark-chanels
 $('.remark-chanels').on('click', function () {
     var dataBind = this.getAttribute('data-bind');
-    // alert(dataBind);
-    $(".remark-chanels-form-" + dataBind).addClass("show");
+    var resDataBind = dataBind.split(",");
+    var pickingItemsId = resDataBind[0];
+    var pickingId = resDataBind[1];
+    $(".remark-chanels-form-" + pickingItemsId).addClass("show");
 });
 
 $('.remark-chanels-ok').on('click', function () {
     var dataBind = this.getAttribute('data-bind');
-    if (dataBind != '') {
+    var resDataBind = dataBind.split(",");
+    var pickingItemsId = resDataBind[0];
+    var pickingId = resDataBind[1];
+    if (pickingItemsId != '') {
         $.ajax({
             url: 'remark-channels',
-            data: {"pickingItemsId": dataBind, "status": 'ok'},
+            data: {"pickingItemsId": pickingItemsId, "status": 'ok', "pickingId": pickingId},
             type: 'post',
             success: function (result) {
                 var JSONObject2 = JSON.parse(result);
@@ -156,17 +161,21 @@ $('.remark-chanels-ok').on('click', function () {
 
 $('.remark-cancel').on('click', function () {
     var dataBind = this.getAttribute('data-bind');
-    $(".remark-chanels-form-" + dataBind).removeClass("show");
+    var resDataBind = dataBind.split(",");
+    var pickingItemsId = resDataBind[0];
+    var pickingId = resDataBind[1];
+    $(".remark-chanels-form-" + pickingItemsId).removeClass("show");
 });
 
 $('.remark-submit').on('click', function () {
     var pickingItemsId = document.getElementById("pickingItemsIdHidden").value;
+    var pickingId = document.getElementById("pickingIdHidden").value;
     var desc = document.getElementById("remarkDesc-" + pickingItemsId).value;
     if (desc != '' && pickingItemsId != '') {
         // alert('OK');
         $.ajax({
             url: 'remark-channels',
-            data: {"pickingItemsId": pickingItemsId, "remarkDesc": desc, 'status': 'no'},
+            data: {"pickingItemsId": pickingItemsId, "remarkDesc": desc, 'status': 'no', "pickingId": pickingId},
             type: 'post',
             success: function (result) {
                 var JSONObject2 = JSON.parse(result);
