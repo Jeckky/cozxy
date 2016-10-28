@@ -10,7 +10,7 @@ $this->title = 'ช่องของ Lockers';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
-<h1>Shippings / Picking Points </h1>
+<h1>Lockers /  ตรวจสอบช่องที่ลูกค้ารับสินค้าแล้ว </h1>
 <!--<div class="note note-success ">
     <h3>สถานที่ตั้ง Lockers </h3>
     <h4 style="color: #003147">
@@ -43,7 +43,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 <div class="order-index col-md-12">
     <div class="panel panel-warning panel-dark">
         <div class="panel-heading">
-            <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> กดปุ่มจาก ช่องของ Lockers</span>
+            <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> แสดงช่องทั้งหมดของ Lockers นี้</span>
         </div>
         <div class="panel-body ">
             <div class="col-sm-12">
