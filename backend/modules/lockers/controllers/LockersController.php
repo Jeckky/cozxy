@@ -461,27 +461,32 @@ class LockersController extends LockersMasterController {
 
     public function actionChannels() {
         $pickingId = Yii::$app->request->get('boxcode');
-        if ($pickingId != '') {
-            $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $pickingId . "'")->one();
-            $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
-            $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
-            $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
-            $query = \common\models\costfit\PickingPointItems::find()
-            //->join('RIGHT JOIN', 'order_item_packing', 'order_item_packing.pickingItemsId =picking_point_items.pickingItemsId')
-            ->where("picking_point_items.pickingId = '" . $pickingId . "'");
-            $dataProvider = new ActiveDataProvider([
-                'query' => $query,
-            ]);
+        $CountChannelsInspector = \common\models\costfit\PickingPointItems::NotChannelsInspector($pickingId);
+        if (count($CountChannelsInspector) > 0) {
+            if ($pickingId != '') {
+                $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $pickingId . "'")->one();
+                $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
+                $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
+                $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
+                $query = \common\models\costfit\PickingPointItems::find()
+                //->join('RIGHT JOIN', 'order_item_packing', 'order_item_packing.pickingItemsId =picking_point_items.pickingItemsId')
+                ->where("picking_point_items.pickingId = '" . $pickingId . "'");
+                $dataProvider = new ActiveDataProvider([
+                    'query' => $query,
+                ]);
 
-            $point = PickingPoint::find()->where("pickingId=" . $pickingId)->one();
+                $point = PickingPoint::find()->where("pickingId=" . $pickingId)->one();
 
-            return $this->render('channels', [
-                'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
-                'citie' => $localNamecitie,
-                'countrie' => $localNamecountrie,
-                'state' => $localNamestate,
-                'point' => $point,
-            ]);
+                return $this->render('channels', [
+                    'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
+                    'citie' => $localNamecitie,
+                    'countrie' => $localNamecountrie,
+                    'state' => $localNamestate,
+                    'point' => $point,
+                ]);
+            }
+        } else {
+            return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $pickingId);
         }
     }
 
@@ -498,26 +503,29 @@ class LockersController extends LockersMasterController {
 
         if ($status == 'ok') {
             // echo 'ok';
-            \common\models\costfit\OrderItemPacking::updateAll(['status' => 9, 'userId' => NULL, 'remark' => $remarkDesc,], ['pickingItemsId' => $pickingItemsId]);
+            \common\models\costfit\OrderItemPacking::updateAll(['status' => 9, 'userId' => NULL, 'remark' => NULL], ['pickingItemsId' => $pickingItemsId]);
             $listOrderItemPacking = \common\models\costfit\OrderItemPacking::find()
             ->where("pickingItemsId = '" . $pickingItemsId . "' ")
             ->groupBy(['order_item_packing.bagNo'])->one();
-            if (count($CountChannelsInspector) == 0) {
+            if (count($listOrderItemPacking) > 0) {
                 echo json_encode($listOrderItemPacking->attributes);
-            } else {
-                return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $pickingId);
             }
-        } elseif ($status == 'no') {
+        }
+        if ($status == 'no') {
+            //echo $remarkDesc;
             \common\models\costfit\OrderItemPacking::updateAll(['status' => 10, 'remark' => $remarkDesc, 'userId' => NULL], ['pickingItemsId' => $pickingItemsId]);
             $listOrderItemPacking = \common\models\costfit\OrderItemPacking::find()
             ->where("pickingItemsId = '" . $pickingItemsId . "' ")
             ->groupBy(['order_item_packing.bagNo'])->one();
-            if (count($CountChannelsInspector) == 0) {
+            if (count($listOrderItemPacking) > 0) {
                 echo json_encode($listOrderItemPacking->attributes);
-            } else {
-                return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $pickingId);
             }
         }
+
+        if (count($CountChannelsInspector) > 0) {
+            return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $pickingId);
+        }
+
 
         //echo 'ok ok ok Rememart Channels';
     }

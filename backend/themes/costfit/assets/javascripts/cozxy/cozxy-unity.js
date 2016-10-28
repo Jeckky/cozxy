@@ -168,9 +168,15 @@ $('.remark-cancel').on('click', function () {
 });
 
 $('.remark-submit').on('click', function () {
-    var pickingItemsId = document.getElementById("pickingItemsIdHidden").value;
-    var pickingId = document.getElementById("pickingIdHidden").value;
+    var dataBind = this.getAttribute('data-bind');
+    var resDataBind = dataBind.split(",");
+    var pickingItemsId = resDataBind[0];
+    var pickingId = resDataBind[1];
+    //var pickingItemsId = document.getElementById("pickingItemsIdHidden").value;
+    //var pickingId = document.getElementById("pickingIdHidden").value;
     var desc = document.getElementById("remarkDesc-" + pickingItemsId).value;
+    // alert(desc);
+    // alert(pickingItemsId);
     if (desc != '' && pickingItemsId != '') {
         // alert('OK');
         $.ajax({

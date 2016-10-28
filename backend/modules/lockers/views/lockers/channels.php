@@ -123,10 +123,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                             echo 'show';
                                                                         }
                                                                         ?>"  style="display: none; text-align: left;">
-                                                                            <textarea class="form-control" rows="5" placeholder="แจ้งปัญหา" name="remarkdesc" id="remarkDesc-<?php echo $row->pickingItemsId; ?>"><?= $itemsOrderNo->remark; ?></textarea><br>
+                                                                            <textarea class="form-control" rows="5" placeholder="แจ้งปัญหา" name="remarkDesc-<?php echo $row->pickingItemsId; ?>" id="remarkDesc-<?php echo $row->pickingItemsId; ?>"><?= $itemsOrderNo->remark; ?></textarea><br>
                                                                             <input id="pickingItemsIdHidden" type="hidden" value="<?php echo $row->pickingItemsId; ?>">
                                                                             <input id="pickingIdHidden" type="hidden" value="<?php echo $row->pickingId; ?>">
-                                                                            <button class="btn btn-warning btn-xs remark-submit">submit</button>
+                                                                            <button class="btn btn-warning btn-xs remark-submit" data-bind="<?php echo $row->pickingItemsId; ?>,<?php echo $row->pickingId; ?>">submit</button>
                                                                             <button class="btn btn-default btn-xs remark-cancel" data-bind="<?php echo $row->pickingItemsId; ?>,<?php echo $row->pickingId; ?>">cancel</button>
                                                                         </span>
                                                                     <?php } elseif ($itemsOrderNo->status == 9) { ?>
