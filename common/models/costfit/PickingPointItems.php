@@ -150,7 +150,7 @@ class PickingPointItems extends \common\models\costfit\master\PickingPointItemsM
         if (count($orderItemPacking) > 0) {
             foreach ($orderItemPacking as $item):
                 if ($item->bagNo != '') {
-                    $bagNo .= $item->bagNo . "<br>";
+                    $bagNo .= $item->bagNo . ",";
                 }$bagNox = $bagNo . $item->bagNo;
             endforeach;
         }
@@ -177,8 +177,10 @@ class PickingPointItems extends \common\models\costfit\master\PickingPointItemsM
 
     public static function OrderNoList8($bagNo) {
         $queryOrderItemPackingId = \common\models\costfit\OrderItemPacking::find()
-        ->select('`order_item_packing`.`orderItemPackingId`, `order_item_packing`.`orderItemId`, `order_item_packing`.`status`,`order_item_packing`.`remark`,'
-        . '`order_item_packing`.`bagNo`, `order_item_packing`.`status`,`order`.`orderNo`, `order`.`orderId` ,`order`.`orderNo` ')
+        ->select('`order_item_packing`.`orderItemPackingId`, `order_item_packing`.`orderItemId`,'
+        . ' `order_item_packing`.`status`,`order_item_packing`.`remark`,`order_item_packing`.`updateDateTime`,'
+        . '`order_item_packing`.`bagNo`, `order_item_packing`.`status`,`order`.`orderNo`, '
+        . '`order`.`orderId` ,`order`.`orderNo` , (curdate() - date(`order_item_packing`.shipdate)) as NumberOfDate')
         ->joinWith(['orderItems'])
         ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
         ->where("order_item_packing.status >= 8 and order_item_packing.bagNo in (" . $bagNo . ")")

@@ -93,12 +93,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                             ?>
                                                             <h4> ช่อง : <?= $row->name; ?></h4>
                                                             <?php
-                                                            //echo $row->pickingItemsId;
                                                             $items = common\models\costfit\PickingPointItems::OrderNoChannels8($row->pickingItemsId);
                                                             $bagNo = common\models\costfit\PickingPointItems::bagNo8($row->pickingItemsId);
-
                                                             if ($items != '' && $bagNo != '') {
-                                                                $BagNos = explode(",", $bagNo);
+                                                                //$BagNos = explode(",", $bagNo);
                                                                 $orderNos = explode(",", $items);
                                                                 ?>
                                                                 <div class="list-group search-content search-content-new-<?php echo $row->pickingItemsId; ?>">
@@ -106,11 +104,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                         <?php
                                                                         $itemsOrderNo = common\models\costfit\PickingPointItems::OrderNoList8(" $items ");
                                                                         if ($itemsOrderNo->status == 8) {
-                                                                            echo 'OrderNo : ' . $itemsOrderNo->orderNo . ' (ลูกค้ามารับสินค้าแล้ว.)<br>';
-                                                                            //echo '<br>';
-                                                                            for ($index = 0; $index < count($BagNos); $index++) {
-                                                                                echo $BagNos[$index] . '<br>';
-                                                                            }
+                                                                            echo '<h5>OrderNo : ' . $itemsOrderNo->orderNo . '</h5><span class="text-success"> (ลูกค้ามารับสินค้าแล้ว) </span><br> <span class="text-warning">เมื่อ ' .
+                                                                            $this->context->dateThai($itemsOrderNo->updateDateTime, 1, '0000-00-00 00:00:00') . '</span>'
+                                                                            . '<br> ถุงที่หยิบไป : ';
+                                                                            echo $bagNo;
                                                                             echo '<br>';
                                                                             ?>
                                                                             <button class="btn btn-success remark-chanels-ok" data-bind="<?php echo $row->pickingItemsId; ?>">
