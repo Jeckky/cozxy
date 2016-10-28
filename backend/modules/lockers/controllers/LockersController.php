@@ -464,9 +464,10 @@ class LockersController extends LockersMasterController {
          *  เจ้าหน้าต้องตรวจสอบ "ช่อง" ของ lockers ก่อนที่จะไปสแกนถุง
          */
         $pickingId = Yii::$app->request->get('boxcode');
-        // ตรวจสอบว่า ถ้ามี ช่อง ไหนที่ลูกค้ามารับแล้วและตรวจสอบผ่าน เข้าเคสนี้เลย or
+        // ตรวจสอบว่า ถ้ามี ช่อง ไหนที่ลูกค้ามารับแล้วและตรวจสอบผ่าน เข้าเคสนี้เลย
         $CountChannelsInspector = \common\models\costfit\PickingPointItems::NotChannelsInspector($pickingId);
-        if (count($CountChannelsInspector) == 0) { //ไม่มีข้อมูล
+        //echo count($CountChannelsInspector);
+        if (count($CountChannelsInspector) > 0) { //ไม่มีข้อมูล
             if ($pickingId != '') {
                 $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $pickingId . "'")->one();
                 $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
