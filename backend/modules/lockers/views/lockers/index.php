@@ -15,8 +15,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
 <div class="panel   panel-success">
     <?php
     $form = ActiveForm::begin([
-                'method' => 'POST',
-                'action' => ['lockers/index'],
+        'method' => 'POST',
+        'action' => ['lockers/index'],
     ]);
     ?>
     <div class="panel-heading ">
@@ -29,7 +29,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
         </div>
     </div>
     <?= $this->registerJS("
-                $('#orderNo').blur(function(event){
+                $('#codes').blur(function(event){
                     if(event.which == 13 || event.keyCode == 13)
                     {
                        $('#form').submit();
