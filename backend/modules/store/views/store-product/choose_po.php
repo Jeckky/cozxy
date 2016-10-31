@@ -72,6 +72,7 @@ if (isset($chooseId) && !empty($chooseId)) {
         if (isset($chooseId) && !empty($chooseId)) {
             echo '<div class="pull-right">' . Html::a('<i class="fa fa-check-square-o" aria-hidden="true"></i> นำไปจัดเรียง', ['arrange'], ['class' => 'btn btn-lg btn-success']) . '</div>';
         }
+        $i++;
     }
     ?>
 </div>

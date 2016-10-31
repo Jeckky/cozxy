@@ -245,7 +245,7 @@ class StoreProductController extends StoreMasterController {
             $delete->save(false);
         }
         $chooseId = StoreProductGroup::find()->where("status=5 and arranger=" . $userId)->all();
-        return $this->redirect('choose-po', [
+        return $this->redirect(['choose-po',
             'ms' => $ms,
             'chooseId' => $chooseId
         ]
