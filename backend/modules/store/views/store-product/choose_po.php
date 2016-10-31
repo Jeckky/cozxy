@@ -36,7 +36,7 @@ if (isset($chooseId) && !empty($chooseId)) {
     $i = 1;
     ?>
     <div class="panel-heading" style="background-color: #ccffff;">
-        <span class="panel-title"><h3>รายการ PO ที่ต้องการนำไปจัดเรียง</h3></span>
+        <span class="panel-title"><h4>รายการ PO ที่ต้องการนำไปจัดเรียง</h4></span>
     </div>
     <div class="panel-body">
 

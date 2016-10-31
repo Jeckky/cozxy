@@ -58,16 +58,19 @@ class SiteController extends \backend\controllers\BackendMasterController {
     }
 
     public function actionLogin() {
+        //throw new \yii\base\Exception('aaaa');
         if (!Yii::$app->user->isGuest) {
+            throw new \yii\base\Exception('aaaa');
             return $this->goHome();
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            throw new \yii\base\Exception('bbbbb');
             return $this->goBack();
         } else {
-            return $this->render('login', [
-                        'model' => $model,
+            return $this->redirect('../auth', [
+                'model' => $model,
             ]);
         }
     }

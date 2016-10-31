@@ -89,13 +89,13 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
         <div class="signin-form">
 
             <!-- Form -->
-            <form  id="signin-form_id" method="post">
+            <form  id="signin-form_id" method="post" action="site/login">
                 <div class="signin-text">
                     <span>Sign In to your account</span>
                 </div> <!-- / .signin-text -->
 
                 <div class="form-group w-icon">
-                    <input type="text" name="LoginForm[username]" id="username_id" class="form-control input-lg" placeholder="Username or email">
+                    <input type="text" name="LoginForm[email]" id="username_id" class="form-control input-lg" placeholder="Username or email">
                     <span class="fa fa-user signin-form-icon"></span>
                 </div> <!-- / Username -->
 

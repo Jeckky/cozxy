@@ -81,7 +81,8 @@ if (\Yii::$app->params['shippingScanTrayOnly'] == true) {
                         //$txt = 'กำลังจะส่ง';
                         //}
                         //return $model->orderNo . ' ,มี' . count($model->orderItemId) . 'รายการ';
-                        return $model->orderNo . ', มีสินค้า ' . \common\models\costfit\Order::CountOrderItems($model->orderId) . ' รายการ';
+                        return $model->orderNo;
+                        // return $model->orderNo . ', มีสินค้า ' . \common\models\costfit\Order::CountOrderItems($model->orderId) . ' รายการ';
                     }
                 ],
                 //'bagNo',
@@ -118,7 +119,7 @@ if (\Yii::$app->params['shippingScanTrayOnly'] == true) {
                         $localNamestate = isset($model->pickingpoint->state->localName) ? $model->pickingpoint->state->localName : '';
                         $localNamecountrie = isset($model->pickingpoint->countrie->localName) ? $model->pickingpoint->countrie->localName : '';
 
-                        return ' สถานที่ส่งของ : ' . $title . ' , ' . $localNamecitie . ' , ' . $localNamestate . ' , ' . 'ประเทศ' . $localNamecountrie . ' '; // status items 6 : แพ็คใส่ถุงแล้ว
+                        return ' สถานที่ส่งของ : ' . $title . ', ' . $localNamecitie . ', ' . $localNamestate; // status items 6 : แพ็คใส่ถุงแล้ว
                     }
                 ],
             // 'type',
