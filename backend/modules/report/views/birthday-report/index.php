@@ -22,7 +22,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="row">
                 <?php
                 $form = ActiveForm::begin([
-                            'method' => 'GET',
+                    'method' => 'GET',
                 ]);
                 ?>
                 <div class="col-lg-3">
@@ -74,7 +74,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <tr style="text-align: center;">
                             <td><?= $i ?></td>
                             <td style="text-align: left"><?= $user->firstname . " " . $user->lastname ?></td>
-                            <td><?= $this->context->dateThai(substr($user->birthDate, 0, -9), 1) ?></td>
+                            <td><?= isset($user->birthDate) ? $this->context->dateThai($user->birthDate, 1) : "-" ?></td>
                         </tr>
                         <?php
                         $i++;
