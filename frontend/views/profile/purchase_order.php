@@ -167,7 +167,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                                     <td style="font-size: 12px;"><?php echo isset($value->product->units) ? $value->product->units->title : "-"; ?></td>
                                     <td style="font-size: 12px;"><?php echo number_format($value->price, 2); ?></td>
                                     <td style="font-size: 12px;"><?php echo $value->quantity ?></td>
-                                    <td style="font-size: 12px;width: 15%;" ><?php echo number_format($value->total, 2); ?></td>
+                                    <td style="font-size: 12px;width: 15%;text-align: right" ><?php echo number_format($value->total, 2); ?></td>
                                 </tr>
                                 <?php
                                 $i = $i++;
@@ -185,9 +185,10 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                             <td >&nbsp;</td>
                         </tr>
                         <tr>
-                            <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้ารวมภาษีมูลค่าเพิ่ม / sub Total Included VAT :</td>
-                            <td class="bg-purchase-order"><?php echo number_format($order->summary, 2); ?></td>
+                            <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้าไม่รวมภาษี/Sub Total excluded VAT :</td>
+                            <td class="bg-purchase-order text-right"><?php echo number_format($order->totalExVat, 2); ?></td>
                         </tr>
+
                         <!--
                         <tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">ส่วนลด/Discount(3.00%) :</td>
@@ -196,15 +197,23 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         -->
                         <tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">ภาษีมูลค่าเพิ่ม/VAT 7 % :</td>
-                            <td class="bg-purchase-order"><?php echo number_format($order->vat, 2); ?></td>
+                            <td class="bg-purchase-order text-right"><?php echo number_format($order->vat, 2); ?></td>
                         </tr>
                         <tr>
-                            <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้าไม่รวมภาษี/Sub Total excluded VAT :</td>
-                            <td class="bg-purchase-order"><?php echo number_format($order->totalExVat, 2); ?></td>
+                            <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้ารวมภาษีมูลค่าเพิ่ม / sub Total Included VAT :</td>
+                            <td class="bg-purchase-order text-right"><?php echo number_format($order->total, 2); ?></td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" class="text-right" class="foorter-purchase-order">ส่วนลดพิเศษ / Extra Saving :</td>
+                            <td class="bg-purchase-order text-right"><?php echo number_format($order->discount, 2); ?></td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" class="text-right" class="foorter-purchase-order">ค่าจัดส่ง / Shipping :</td>
+                            <td class="bg-purchase-order text-right"><?php echo ($order->shippingRate > 0) ? number_format($order->shippingRate, 2) : "Free"; ?></td>
                         </tr>
                         <tr >
                             <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้าที่ต้องชำระเงินรวมภาษีมูลค่าเพิ่ม/Total excluded VAT :</td>
-                            <td class="bg-purchase-order"><?php echo number_format($order->summary, 2); ?></td>
+                            <td class="bg-purchase-order text-right"><?php echo number_format($order->summary, 2); ?></td>
                         </tr>
 
                     </tbody>

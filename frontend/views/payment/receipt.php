@@ -102,6 +102,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้ารวมภาษีมูลค่าเพิ่ม / sub Total Include VAT :</td>
             <td class="bg-purchase-order"><?php echo number_format($order->total, 2); ?></td>
         </tr>
+        <tr>
+            <td colspan="6" class="text-right" class="foorter-purchase-order">ส่วนลดพิเศษ / Extra Saving :</td>
+            <td class="bg-purchase-order"><?php echo number_format($order->discount, 2); ?></td>
+        </tr>
+        <tr>
+            <td colspan="6" class="text-right" class="foorter-purchase-order">ค่าจัดส่ง / Shipping :</td>
+            <td class="bg-purchase-order"><?php echo ($order->shippingRate > 0) ? number_format($order->shippingRate, 2) : "Free"; ?></td>
+        </tr>
         <!--
         <tr>
             <td colspan="6" class="text-right" class="foorter-purchase-order">ส่วนลด/Discount(3.00%) :</td>
