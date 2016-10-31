@@ -21,15 +21,15 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 <!--[if gt IE 9]><!--> <html class="gt-ie8 gt-ie9 not-ie" lang="<?= Yii::$app->language ?>"> <!--<![endif]-->
     <head>
         <meta charset="<?= Yii::$app->charset ?>"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-
+        <?= Html::csrfMetaTags() ?>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <!-- Open Sans font from Google CDN -->
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin" rel="stylesheet" type="text/css">
 
         <meta name="description" content="">
         <meta name="author" content="">
-        <?= Html::csrfMetaTags() ?>
+
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
 
@@ -39,7 +39,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 
         <script>var init = [];</script>
         <!-- Demo script -->
-        <!--<script src="<?php // echo $directoryAsset;  ?>/demo/demo.js"></script>-->
+        <!--<script src="<?php // echo $directoryAsset;    ?>/demo/demo.js"></script>-->
         <!-- / Demo script -->
 
         <?php $this->beginBody() ?>
