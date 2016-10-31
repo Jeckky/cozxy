@@ -24,11 +24,11 @@ class PickingController extends StoreMasterController {
     }
 
     public function actionIndex() {
-        $userId = '1234';
+        $userId = Yii::$app->user->identity->userId;
         $oldUser = $this->checkOldPicker($userId); // ถ้าเป็นคนหยิบของที่หยิบของในออเดอร์ที่เลือกมายังไม่เสร็จ บังคับให้กลับบมาหน้าหยิบให้เสร็จ
         $findEnough = \common\models\costfit\Order::find()
-                        ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-                        ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS)->all();
+        ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
+        ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS)->all();
         $allId = [];
         $e = 0;
         if (isset($findEnough)):
@@ -41,19 +41,19 @@ class PickingController extends StoreMasterController {
         if ($enoughId != '') {
 //throw new \yii\base\Exception('aaaa');
             $query = \common\models\costfit\Order::find()
-                    ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-                    ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " and order.orderId in(" . $enoughId . ") order by oi.sendDateTime")
-                    ->limit(6);
+            ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
+            ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " and order.orderId in(" . $enoughId . ") order by oi.sendDateTime")
+            ->limit(6);
             $select = \common\models\costfit\Order::find()
-                    ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-                    ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " and order.orderId in(" . $enoughId . ")")
-                    ->limit(6)
-                    ->all();
+            ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
+            ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " and order.orderId in(" . $enoughId . ")")
+            ->limit(6)
+            ->all();
         } else {//ถ้า มีของใน order ไม่ครบ
             $query = \common\models\costfit\Order::find()
-                    ->where("orderId=0");
+            ->where("orderId=0");
             $select = \common\models\costfit\Order::find()
-                            ->where("orderId=0")->all();
+            ->where("orderId=0")->all();
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -128,12 +128,12 @@ class PickingController extends StoreMasterController {
                     $color = '';
                 }
                 return $this->render('show-orders', [
-                            'slots' => $slots,
-                            'allSlot' => $allSlot,
-                            'colorId' => $colorId,
-                            'color' => $color,
-                            'allOrderId' => $allOrderId,
-                            'selection' => $_GET["selection"]
+                    'slots' => $slots,
+                    'allSlot' => $allSlot,
+                    'colorId' => $colorId,
+                    'color' => $color,
+                    'allOrderId' => $allOrderId,
+                    'selection' => $_GET["selection"]
                 ]);
             }
         } else if ($oldUser) {//ถ้าเป็นคนหยิบเก่าที่ยังหยิบของใน order ที่เลือกมายังไม่เสร็จ
@@ -190,18 +190,18 @@ class PickingController extends StoreMasterController {
                     $color = '';
                 }
                 return $this->render('show-orders', [
-                            'slots' => $slots,
-                            'allSlot' => $allSlot,
-                            'colorId' => $colorId,
-                            'color' => $color,
-                            'allOrderId' => $allOrderId,
-                            'selection' => $allOrderId
+                    'slots' => $slots,
+                    'allSlot' => $allSlot,
+                    'colorId' => $colorId,
+                    'color' => $color,
+                    'allOrderId' => $allOrderId,
+                    'selection' => $allOrderId
                 ]);
             }
         } else {
             return $this->render('index', [
-                        'dataProvider' => $dataProvider,
-                        'selects' => $select
+                'dataProvider' => $dataProvider,
+                'selects' => $select
             ]);
         }
     }
@@ -211,10 +211,10 @@ class PickingController extends StoreMasterController {
         $allSlot = new \common\models\costfit\StoreSlot();
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         $countSlot = 0;
-        $userId = '1234';
+        $userId = Yii::$app->user->identity->userId;
         if (isset($orderItem)) {
             $orderItem->status = 5;
-            $orderItem->pickerId = '1234'; //รอ login
+            $orderItem->pickerId = $userId; //รอ login
             $orderItem->updateDateTime = new \yii\db\Expression('NOW()');
             $orderItem->save(); //set pinked product in orderItem to  5  (หยิบแล้ว)
             $this->checkOrder($orderItem->orderId);
@@ -250,12 +250,12 @@ class PickingController extends StoreMasterController {
 //throw new \yii\base\Exception('ปิดไฟสี ' . $_GET['color'] . 'ที่ ' . $led->slot);
             }
             return $this->render('show-orders', [
-                        'slots' => $_GET['arraySlots'],
-                        'allSlot' => $allSlot,
-                        'colorId' => $_GET['colorId'],
-                        'color' => $_GET['color'],
-                        'allOrderId' => $_GET['allOrderId'],
-                        'selection' => $_GET["selection"]
+                'slots' => $_GET['arraySlots'],
+                'allSlot' => $allSlot,
+                'colorId' => $_GET['colorId'],
+                'color' => $_GET['color'],
+                'allOrderId' => $_GET['allOrderId'],
+                'selection' => $_GET["selection"]
             ]);
         }
 //throw new \yii\base\Exception("slot => " . $_GET['slot'] . " productId => " . $_GET['productId'] . " orderId => " . $_GET['orderId'] . " orderItemId => " . $_GET['orderItemId'] . " ledId => " . $_GET['colorId']);
@@ -493,7 +493,7 @@ class PickingController extends StoreMasterController {
     }
 
     static function updateSlot($slotId, $productId, $quantity, $orderId) {
-        $userId = '1234';
+        $userId = Yii::$app->user->identity->userId;
         $productArrange = \common\models\costfit\StoreProductArrange::find()->where("slotId=" . $slotId . " and productId=" . $productId . " order by createDateTime")->one();
         $orderItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and productId=" . $productId)->one();
         $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();

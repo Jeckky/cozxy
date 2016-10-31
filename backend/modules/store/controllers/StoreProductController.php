@@ -209,7 +209,7 @@ class StoreProductController extends StoreMasterController {
 
     public function actionChoosePo() {
         $ms = '';
-        $userId = '1234'; //login
+        $userId = Yii::$app->user->identity->userId; //login
         $model = new StoreProduct();
         if (isset($_POST["StoreProductGroup"]['poNo']) && !empty($_POST["StoreProductGroup"]['poNo'])) {
             $storeProductGroup = StoreProductGroup::find()->where("poNo='" . $_POST["StoreProductGroup"]['poNo'] . "' and status=2")->one(); // เชค ที่สถานะเท่ากับตรวจรับแล้วเท่านั้น
@@ -236,7 +236,7 @@ class StoreProductController extends StoreMasterController {
     }
 
     public function actionDeleteChoosePo() {
-        $userId = '1234';
+        $userId = Yii::$app->user->identity->userId;
         $id = $_GET['id'];
         $ms = '';
         $delete = StoreProductGroup::find()->where("storeProductGroupId=" . $id)->one();
@@ -291,7 +291,7 @@ class StoreProductController extends StoreMasterController {
 
     public function actionArrange() {
         $ms = '';
-        $userId = '1234';
+        $userId = Yii::$app->user->identity->userId;
         $model = new StoreProduct();
         $allPo = StoreProductGroup::find()->where("status=5 and arranger=" . $userId . " order by receiveDate")->all();
         if (isset($_POST["StoreProductGroup"]['poNo']) && !empty($_POST["StoreProductGroup"]['poNo'])) {
