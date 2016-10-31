@@ -58,17 +58,18 @@ class SiteController extends \backend\controllers\BackendMasterController {
     }
 
     public function actionLogin() {
-        //throw new \yii\base\Exception('aaaa');
-        if (!Yii::$app->user->isGuest) {
-            throw new \yii\base\Exception('aaaa');
-            return $this->goHome();
-        }
-
+        // throw new \yii\base\Exception('cc');
+        /* if (!Yii::$app->user->isGuest) {
+          throw new \yii\base\Exception('cc');
+          return $this->goHome();
+          } */
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            throw new \yii\base\Exception('bbbbb');
-            return $this->goBack();
+            //throw new \yii\base\Exception('bbbbb');
+            return $this->redirect(Yii::$app->homeUrl . 'dashboard');
+            //return $this->goBack();
         } else {
+            // throw new \yii\base\Exception('ccaa');
             return $this->redirect('../auth', [
                 'model' => $model,
             ]);
@@ -77,8 +78,7 @@ class SiteController extends \backend\controllers\BackendMasterController {
 
     public function actionLogout() {
         Yii::$app->user->logout();
-
-        return $this->goHome();
+        return $this->redirect(Yii::$app->homeUrl . '/dashboard');
     }
 
     public function actionProduct($id) {
@@ -86,7 +86,6 @@ class SiteController extends \backend\controllers\BackendMasterController {
         $dataProvider = new \yii\data\ActiveDataProvider([
             'query' => $product,
         ]);
-
         return $this->render('_index_product', compact('dataProvider'));
     }
 

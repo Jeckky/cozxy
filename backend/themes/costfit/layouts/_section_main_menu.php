@@ -29,7 +29,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
     <div id="main-menu-inner">
         <div class="menu-content top" id="menu-content-demo">
             <div>
-                <div class="text-bg"><span class="text-slim">Welcome,</span> <span class="text-semibold"><?php echo Yii::$app->session['firstname']; ?></span></div>
+                <div class="text-bg"><span class="text-slim">Welcome,</span> <span class="text-semibold"><?= isset(Yii::$app->user->identity->email) ? Yii::$app->user->identity->firstname : 'Guest' ?></span></div>
                 <img src="<?= $directoryAsset; ?>/demo/avatars/1.jpg" alt="" class="">
                 <div class="btn-group">
                     <a href="#" class="btn btn-xs btn-primary btn-outline dark"><i class="fa fa-envelope"></i></a>
@@ -206,7 +206,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/future-plan-report"><span class="mm-text">รายงานสินค้าที่ต้องสั่งล่วงหน้า</span><span class="label label-warning">2</span></a>
                         <!--                        <ul>
                                                     <li>
-                                                        <a tabindex="-1" href="<?php //echo $baseUrl;                                ?>/report/report"><span class="mm-text">รายงานยอดขาย</span></a>
+                                                        <a tabindex="-1" href="<?php //echo $baseUrl;                                 ?>/report/report"><span class="mm-text">รายงานยอดขาย</span></a>
                                                     </li>
                                                 </ul>-->
                     </li>

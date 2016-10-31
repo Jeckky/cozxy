@@ -89,26 +89,27 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
         <div class="signin-form">
 
             <!-- Form -->
-            <form  id="signin-form_id" method="post" action="site/login">
-                <div class="signin-text">
-                    <span>Sign In to your account</span>
-                </div> <!-- / .signin-text -->
+            <?php $form = yii\bootstrap\ActiveForm::begin(['id' => 'signin-form_id', 'action' => $baseUrl . '/site/login', 'options' => ['class' => 'login-form']]); ?>
 
-                <div class="form-group w-icon">
-                    <input type="text" name="LoginForm[email]" id="username_id" class="form-control input-lg" placeholder="Username or email">
-                    <span class="fa fa-user signin-form-icon"></span>
-                </div> <!-- / Username -->
+            <div class="signin-text">
+                <span>Sign In to your account</span>
+            </div> <!-- / .signin-text -->
 
-                <div class="form-group w-icon">
-                    <input type="password" name="LoginForm[password]" id="password_id" class="form-control input-lg" placeholder="Password">
-                    <span class="fa fa-lock signin-form-icon"></span>
-                </div> <!-- / Password -->
+            <div class="form-group w-icon">
+                <input type="text" name="LoginForm[email]" id="username_id" class="form-control input-lg" placeholder="Username or email">
+                <span class="fa fa-user signin-form-icon"></span>
+            </div> <!-- / Username -->
 
-                <div class="form-actions">
-                    <input type="submit" value="SIGN IN" class="signin-btn bg-primary">
-                    <a href="#" class="forgot-password" id="forgot-password-link">Forgot your password?</a>
-                </div> <!-- / .form-actions -->
-            </form>
+            <div class="form-group w-icon">
+                <input type="password" name="LoginForm[password]" id="password_id" class="form-control input-lg" placeholder="Password">
+                <span class="fa fa-lock signin-form-icon"></span>
+            </div> <!-- / Password -->
+
+            <div class="form-actions">
+                <input type="submit" value="SIGN IN" class="signin-btn bg-primary">
+                <a href="#" class="forgot-password" id="forgot-password-link">Forgot your password?</a>
+            </div> <!-- / .form-actions -->
+            <?php yii\bootstrap\ActiveForm::end(); ?>
             <!-- / Form -->
 
             <!-- "Sign In with" block -->

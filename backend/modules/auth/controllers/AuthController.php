@@ -46,11 +46,11 @@ class AuthController extends AuthMasterController {
                 if (isset($model->username) && isset($model->password)) {
                     $query = User::find();
                     $user = $query
-                            ->where('email =  "' . $model->username . '"   ')
-                            ->andWhere('password =  "' . md5($model->username . $model->password) . '"   ')
-                            ->orderBy('createDateTime desc')
-                            ->limit(1)
-                            ->one();
+                    ->where('email =  "' . $model->username . '"   ')
+                    ->andWhere('password =  "' . md5($model->username . $model->password) . '"   ')
+                    ->orderBy('createDateTime desc')
+                    ->limit(1)
+                    ->one();
 
                     if (isset($user->email) && (isset($user->password))) {
                         $session['firstname'] = $user->firstname;
@@ -89,7 +89,7 @@ class AuthController extends AuthMasterController {
     public function actionLogout() {
         Yii::$app->user->logout();
         Yii::$app->session->destroy();
-        $this->redirect(Yii::$app->getUrlManager()->getBaseUrl());
+        return $this->redirect(Yii::$app->homeUrl . 'dashboard');
     }
 
 }
