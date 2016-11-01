@@ -116,7 +116,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <?php
                 $form = ActiveForm::begin([
                     'method' => 'GET',
-                    'action' => ['report/index'],
+                    'action' => ['index'],
                 ]);
                 ?>
                 <div class="col-lg-3">

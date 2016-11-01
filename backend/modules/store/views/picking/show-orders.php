@@ -27,7 +27,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <?=
                     Html::a('<i class="fa fa-print" aria-hidden="true"></i> Print Order', ['print-order',
                         'order' => $allOrderId
-                            ], ['class' => 'btn btn-sm btn-success', 'target' => '_blank']);
+                    ], ['class' => 'btn btn-sm btn-success', 'target' => '_blank']);
                     ?>
                 </div>
             </div>
@@ -36,8 +36,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
     <div class="panel-body">
         <?php
         $form = ActiveForm::begin([
-                    'method' => 'GET',
-                    'action' => ['picking/index'],
+            'method' => 'GET',
+            'action' => ['picking/index'],
         ]);
         foreach ($selection as $select):
             echo '<input type="hidden" name="selection[]" value="' . $select . '">';
@@ -83,8 +83,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     $product = common\models\costfit\StoreProductArrange::findItems($slot, $allOrderId);
                     $couuntProduct = 0;
                     $a = 0;
-                    $array = [];
                     $total = 0;
+                    $array[0] = '';
                     if (isset($product) && !empty($product)) {
                         foreach ($product as $productId):
                             $item = common\models\costfit\OrderItem::findOrderItems($productId->orderId, $productId->productId);
@@ -95,20 +95,21 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     <td><?php echo -($productId->quantity); ?></td>
                                     <td><?php echo Order::findOrderNo($productId->orderId); ?></td>
                                     <td><?=
-                                        ($item->status != 5) ?
-                                                Html::a('<i aria-hidden="true"></i> หยิบ', ['pick-item',
-                                                    'orderId' => $item->orderId,
-                                                    'orderItemId' => $item->orderItemId,
-                                                    'productId' => $item->productId,
-                                                    'orderQuantity' => $item->quantity,
-                                                    'slot' => $slot,
-                                                    'arraySlots' => $slots,
-                                                    'colorId' => $colorId,
-                                                    'color' => $color,
-                                                    'allOrderId' => $allOrderId,
-                                                    'selection' => $selection
-                                                        ], ['class' => 'btn btn-warning']) : Html::a('<i class="fa fa-check" aria-hidden="true"></i> หยิบแล้ว', ['pick-item'
-                                                        ], ['class' => 'btn btn-defult', 'disabled' => true]);
+                                        ($productId->status == 99) ?
+                                        Html::a('<i aria-hidden="true"></i> หยิบ', ['pick-item',
+                                            'arrangeId' => $productId->storeProductArrangeId,
+                                            'orderId' => $item->orderId,
+                                            'orderItemId' => $item->orderItemId,
+                                            'productId' => $item->productId,
+                                            'orderQuantity' => -($productId->quantity),
+                                            'slot' => $slot,
+                                            'arraySlots' => $slots,
+                                            'colorId' => $colorId,
+                                            'color' => $color,
+                                            'allOrderId' => $allOrderId,
+                                            'selection' => $selection
+                                        ], ['class' => 'btn btn-warning']) : Html::a('<i class="fa fa-check" aria-hidden="true"></i> หยิบแล้ว', ['pick-item'
+                                        ], ['class' => 'btn btn-defult', 'disabled' => true]);
                                         // throw new \yii\base\Exception($item->orderItemId);
                                         ?></td>
                                 </tr>
@@ -117,23 +118,22 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 $checkId = \common\models\costfit\StoreProductArrange::checkProductId($array, $productId->productId);
                                 $array[$a] = $productId->productId;
                                 $a++;
-                                if ($checkId == false) {
+                                if ($checkId) {
                                     $total = \common\models\costfit\StoreProductArrange::findProductInSlot($slot, $allOrderId, $productId->productId);
                                     ?>
                                     <tr>
-                                        <?php if (isset($item) && !empty($item)) { ?>
-                                            <td colspan="2" class="text-right"><b>Total ( <?php echo Product::findProductName($item->productId); ?> )</b></td>
-                                            <td><b><?php echo $total; ?></b></td>
-                                            <td><b></b></td>
-                                            <td><b></b></td>
-                                        <?php }
-                                        ?>
+                                        <td colspan="2" class="text-right"><b>Total ( <?php echo Product::findProductName($item->productId); ?> )</b></td>
+                                        <td><b><?php echo $total; ?></b></td>
+                                        <td><b></b></td>
+                                        <td><b></b></td>
+
                                     </tr>
                                     <?php
                                 }
                                 $i++;
                             }
                         endforeach;
+                        // throw new \yii\base\Exception(print_r($array, true));
                     }
                     ?>
                 </tbody>

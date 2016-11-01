@@ -28,7 +28,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 window.print();
                 setTimeout(function () {
                     window.open('', '_self', '');
-                    window.close();
+                    //window.close();
                 }, 0);
             }
 

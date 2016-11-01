@@ -33,18 +33,18 @@ class StoreProductGroupController extends StoreMasterController {
         $query = StoreProductGroup::find()->where("status=1");
         $passQc = StoreProductGroup::find()->where("status!=1 order by receiveDate DESC")->all();
         if (isset($_GET['fromDate']) && $_GET['fromDate'] != '') {
-            throw new \yii\base\Exception('aaa');
+            //throw new \yii\base\Exception('aaa');
             if (isset($_GET['toDate']) && $_GET['toDate'] != '') {
-                $passQc = StoreProductGroup::find()->where("receiveDate BETWEEN '" . $_GET['fromDate'] . "' and '" . $_GET['toDate'] . "' and status!=1 order by paymentDateTime DESC")->all();
+                $passQc = StoreProductGroup::find()->where("receiveDate BETWEEN '" . $_GET['fromDate'] . "' and '" . $_GET['toDate'] . "' and status!=1 order by receiveDate DESC")->all();
             } else {
-                $passQc = StoreProductGroup::find()->where("receiveDate>='" . $_GET['fromDate'] . "' and status!=1 order by paymentDateTime DESC")->all();
+                $passQc = StoreProductGroup::find()->where("receiveDate>='" . $_GET['fromDate'] . "' and status!=1 order by receiveDate DESC")->all();
             }
         } else {
             // throw new \yii\base\Exception('bbbb');
             if (isset($_GET['toDate']) && $_GET['toDate'] != '') {
-                $passQc = StoreProductGroup::find()->where("receiveDate<='" . $_GET['toDate'] . "' and status!=1 order by paymentDateTime DESC")->all();
+                $passQc = StoreProductGroup::find()->where("receiveDate<='" . $_GET['toDate'] . "' and status!=1 order by receiveDate DESC")->all();
             } else {
-                $passQc = StoreProductGroup::find()->where("status>=5 order by receiveDate DESC")->all();
+                $passQc = StoreProductGroup::find()->where("status!=1 order by receiveDate DESC")->all();
             }
         }
         //throw new \yii\base\Exception('cccc');
