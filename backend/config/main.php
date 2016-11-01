@@ -23,7 +23,7 @@ return [
             'defaultRoute' => 'profile',
         ],
         'management' => [
-            'class' => 'backend\modules\management\settings',
+            'class' => 'backend\modules\management\management',
             'defaultRoute' => 'settings',
         ],
         'auth' => [
