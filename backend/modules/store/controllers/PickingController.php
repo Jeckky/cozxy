@@ -82,7 +82,7 @@ class PickingController extends StoreMasterController {
                             }
                         } else {
                             $result = $item->quantity;
-                            $slot = \common\models\costfit\StoreProductArrange::find()->where("productId = " . $item->productId . " and status=4 and quantity !=0 order by createDateTime")->all(); //หา slot ทั้งหมดที่ product วางอยู่ และ ไม่เท่ากับ 0
+                            $slot = \common\models\costfit\StoreProductArrange::find()->where("productId = " . $item->productId . " and status=4 and result !=0 order by createDateTime")->all(); //หา slot ทั้งหมดที่ product วางอยู่ และ ไม่เท่ากับ 0
                             if (isset($slot) && !empty($slot)) {
                                 $enoughItemInSlot = false;
                                 foreach ($slot as $eSlot):
@@ -493,8 +493,9 @@ class PickingController extends StoreMasterController {
     }
 
     static function updateSlot($slotId, $productId, $quantity, $orderId) {
+        //throw new \yii\base\Exception($quantity);
         $userId = Yii::$app->user->identity->userId;
-        $productArrange = \common\models\costfit\StoreProductArrange::find()->where("slotId=" . $slotId . " and productId=" . $productId . " order by createDateTime")->one();
+        $productArrange = \common\models\costfit\StoreProductArrange::find()->where("slotId=" . $slotId . " and productId=" . $productId . " and status=4 order by createDateTime")->one();
         $orderItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and productId=" . $productId)->one();
         $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
         if (($orderItem->status != 4) && (($orderItem->status != 5))) {

@@ -3,11 +3,12 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use common\models\costfit\StoreProductGroup;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Store Product Groups';
+$this->title = 'สร้างใบ PO';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
@@ -16,15 +17,11 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <div class="row">
-                <div class="col-md-6"><?= $this->title ?></div>
-                <div class="col-md-6">
-                    <div class="btn-group pull-right">
-                        <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Store Product Group', ['create'], ['class' => 'btn btn-success btn-xs']) ?>
-                    </div>
-                </div>
-            </div>
+        <div class="panel-heading"  style="background-color: #ccffcc;vertical-align: middle;">
+            <div class="pull-right" style="margin-top: 10px;"><?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> สร้างใบ PO', ['create'], ['class' => 'btn btn-primary btn-lg pull-right']) ?></div>
+            <span class="panel-title" style="vertical-align: middle;"><h3><?= $this->title ?>
+
+                </h3></span>
         </div>
         <div class="panel-body">
             <?=
@@ -76,39 +73,87 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-eye"></i>', $url, [
-                                            'title' => Yii::t('yii', 'view'),
+                                    'title' => Yii::t('yii', 'view'),
                                 ]);
                             },
-                                    'update' => function ($url, $model) {
+                            'update' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-pencil"></i>', $url, [
-                                            'title' => Yii::t('yii', 'update'),
+                                    'title' => Yii::t('yii', 'update'),
                                 ]);
                             },
-                                    'delete' => function ($url, $model) {
+                            'delete' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-trash-o"></i>', $url, [
-                                            'title' => Yii::t('yii', 'Delete'),
-                                            'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
-                                            'data-method' => 'post',
+                                    'title' => Yii::t('yii', 'Delete'),
+                                    'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+                                    'data-method' => 'post',
                                 ]);
                             },
-                                    'product' => function($url, $model) {
+                            'product' => function($url, $model) {
                                 return Html::a('<br><u>Product</u>', ['/store/store-product', 'storeProductGroupId' => $model->storeProductGroupId], [
-                                            'title' => Yii::t('app', 'Change today\'s lists'),]);
+                                    'title' => Yii::t('app', 'Change today\'s lists'),]);
                             },
-                                    'qc' => function($url, $model) {
+                            'qc' => function($url, $model) {
                                 return Html::a('<br><u>ตรวจรับ</u>', ['/store/store-product/check', 'storeProductGroupId' => $model->storeProductGroupId], [
-                                            'title' => Yii::t('app', 'check\'s lists'),]);
+                                    'title' => Yii::t('app', 'check\'s lists'),]);
                             },
-                                    'arrange' => function($url, $model) {
+                            'arrange' => function($url, $model) {
                                 return Html::a('<br><u>จัดเรียง</u>', ['/store/store-product/arrange', 'storeProductGroupId' => $model->storeProductGroupId], [
-                                            'title' => Yii::t('app', 'check\'s lists'),]);
+                                    'title' => Yii::t('app', 'check\'s lists'),]);
                             },
-                                ]
-                            ],
-                        ],
-                    ]);
+                        ]
+                    ],
+                ],
+            ]);
+            ?>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" style="background-color: #ccffff;">
+            <span class="panel-title"><h3>รายการ PO ที่ตรวจรับ / จัดเรียงแล้ว</h3></span>
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered">
+
+                <tr style="height: 50px;background-color: #F0FFFF;">
+                    <th style="vertical-align: middle;text-align: center;width: 5%;">Supplier</th>
+                    <th style="vertical-align: middle;text-align: center;width: 25%;">Po No</th>
+                    <th style="vertical-align: middle;text-align: center;width: 20%;">Receive Date</th>
+                    <th style="vertical-align: middle;text-align: center;width: 20%;">No. of product(s)</th>
+                    <th style="vertical-align: middle;text-align: center;width: 20%;">Summary</th>
+                    <th style="vertical-align: middle;text-align: center;width: 10%;">Status</th>
+                </tr>
+                <?php
+                if (isset($passQc) && !empty($passQc)) {
+                    $i = 1;
+                    foreach ($passQc as $qc):
+                        if ($qc->status == 2) {
+                            $bg = '#FFFAFA';
+                        } else if ($qc->status == 3) {
+                            $bg = '#FAEBD7';
+                        } else if ($qc->status == 4) {
+                            $bg = '#F0FFF0';
+                        } else if ($qc->status == 5) {
+                            $bg = '#FFFACD';
+                        }
+                        ?>
+                        <tr style="background-color: <?= $bg ?>">
+                            <td style="vertical-align: middle;text-align: center;width: 5%;"><?= $i ?></td>
+                            <td style="vertical-align: middle;text-align: center;width: 25%;"><?= $qc->poNo ?></td>
+                            <td style="vertical-align: middle;text-align: center;width: 20%;"><?= $this->context->dateThai($qc->receiveDate, 2) ?></td>
+                            <td style="vertical-align: middle;text-align: center;width: 20%;"><?= StoreProductGroup::countProducts($qc->storeProductGroupId) ?></td>
+                            <td style="vertical-align: middle;text-align: right;width: 20%;"><?= $qc->summary ?></td>
+                            <td style="vertical-align: middle;text-align: center;width: 10%;"><?= StoreProductGroup::getStatusText($qc->status) ?></td>
+                        </tr>
+                        <?php
+                        $i++;
+                    endforeach;
+                } else {
                     ?>
-                </div>
-            </div>
-            <?php Pjax::end(); ?>
-</div>
+                    <tr>
+                        <th style="vertical-align: middle;text-align: center;width: 5%;background-color:#cccccc;" colspan="4"><i><h4>ไม่มีรายการ PO</h4></i></th>
+                    </tr>
+                <?php } ?>
+            </table>
+        </div>
+        <?php Pjax::end(); ?>
+    </div>

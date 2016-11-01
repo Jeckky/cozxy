@@ -33,9 +33,10 @@ class StoreProductGroupController extends StoreMasterController {
         $dataProvider = new ActiveDataProvider([
             'query' => StoreProductGroup::find()->where("status=1"),
         ]);
-
+        $passQc = StoreProductGroup::find()->where("status!=1 order by receiveDate")->all();
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider,
+            'passQc' => $passQc
         ]);
     }
 
@@ -46,7 +47,7 @@ class StoreProductGroupController extends StoreMasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -65,7 +66,7 @@ class StoreProductGroupController extends StoreMasterController {
             }
         }
         return $this->render('create', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -88,7 +89,7 @@ class StoreProductGroupController extends StoreMasterController {
             }
         }
         return $this->render('update', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 

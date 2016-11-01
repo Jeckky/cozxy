@@ -39,8 +39,8 @@ class StoreProductGroup extends \common\models\costfit\master\StoreProductGroupM
             self::STATUS_IMPORT_DATA => "นำข้อมูลเข้า",
             self::STATUS_QC => "ตรวจรับแล้ว", //import แล้ว
             self::STATUS_ARRANGING => "กำลังนำไปจัดเรียง",
-            self::STATUS_ARRANGED_SOME => "เรียงบางส่วนแล้ว",
-            self::STATUS_ARRANGED => "เรียงทั้งหมดแล้ว",
+            self::STATUS_ARRANGED_SOME => "จัดเรียงบางส่วนแล้ว",
+            self::STATUS_ARRANGED => "จัดเรียงทั้งหมดแล้ว",
         ];
     }
 
