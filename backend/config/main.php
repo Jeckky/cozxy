@@ -24,7 +24,7 @@ return [
         ],
         'management' => [
             'class' => 'backend\modules\management\management',
-            'defaultRoute' => 'management',
+            'defaultRoute' => 'settings',
         ],
         'auth' => [
             'class' => 'backend\modules\auth\Auth',
