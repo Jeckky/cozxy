@@ -13,9 +13,12 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <div class="store-product-group-index">
-
-
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
+    <div class="panel panel-default">
+        <div class="panel-heading" style="background-color: #ccffff;">
+            <span class="panel-title"><h3>รายการ PO ที่ตรวจรับ / จัดเรียงแล้ว</h3></span>
+        </div>
+    </div>
     <div class="panel panel-default">
         <div class="panel-heading"  style="background-color: #ccffcc;vertical-align: middle;">
             <div class="pull-right" style="margin-top: 10px;"><?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> สร้างใบ PO', ['create'], ['class' => 'btn btn-primary btn-lg pull-right']) ?></div>
@@ -157,3 +160,4 @@ $this->params['pageHeader'] = Html::encode($this->title);
         </div>
         <?php Pjax::end(); ?>
     </div>
+</div>

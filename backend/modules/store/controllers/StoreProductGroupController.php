@@ -33,7 +33,7 @@ class StoreProductGroupController extends StoreMasterController {
         $dataProvider = new ActiveDataProvider([
             'query' => StoreProductGroup::find()->where("status=1"),
         ]);
-        $passQc = StoreProductGroup::find()->where("status!=1 order by receiveDate")->all();
+        $passQc = StoreProductGroup::find()->where("status!=1 order by receiveDate DESC")->all();
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'passQc' => $passQc
