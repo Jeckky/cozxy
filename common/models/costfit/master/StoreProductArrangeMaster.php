@@ -36,8 +36,8 @@ return 'store_product_arrange';
 public function rules()
 {
 return [
-            [['storeProductArrangeId', 'storeProductId', 'productId', 'slotId', 'quantity', 'createDateTime'], 'required'],
-            [['storeProductArrangeId', 'storeProductId', 'productId', 'slotId', 'orderId', 'parentId', 'result', 'pickerId', 'status'], 'integer'],
+            [['storeProductId', 'productId', 'slotId', 'quantity', 'createDateTime'], 'required'],
+            [['storeProductId', 'productId', 'slotId', 'orderId', 'parentId', 'result', 'pickerId', 'status'], 'integer'],
             [['quantity'], 'number'],
             [['createDateTime', 'updateDateTime'], 'safe'],
         ];

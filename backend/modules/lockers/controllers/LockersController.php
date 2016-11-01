@@ -315,9 +315,7 @@ class LockersController extends LockersMasterController {
         $request = Yii::$app->request;
 
         if ($request->isGet) { /* the request method is GET */
-            $orderId = Yii::$app->request->get('
-
-        orderId');
+            $orderId = Yii::$app->request->get('orderId');
         }
         if ($request->isPost) { /* the request method is POST */
             $orderId = Yii::$app->request->post('orderId');
