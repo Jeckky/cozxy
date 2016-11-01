@@ -18,23 +18,23 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             }
         </script>
         <script language="JavaScript">
-            function NoDialogBox()
-                    //ใช้ปิด window โดยไม่ขึ้น confirm dialog box
-                    {
-                        //window.open('', '_self');
-                        //self.close();
-                    }
-//            function print_window() {
-//                window.print();
-//                setTimeout(function () {
-//                    window.open('', '_self', '');
-//                    //window.close();
-//                }, 0);
-//            }
+//            function NoDialogBox()
+//                    //ใช้ปิด window โดยไม่ขึ้น confirm dialog box
+//                    {
+//                        //window.open('', '_self');
+//                        //self.close();
+//                    }
+            function print_window() {
+                window.print();
+                setTimeout(function () {
+                    window.open('', '_self', '');
+                    //window.close();
+                }, 0);
+            }
 
         </script>
     </head>
-    <body onload="" align="center">
+    <body onload="print_window();" align="center">
         <!--<body onLoad="window.print();NoDialogBox();">-->
         <table width ="750"  cellpadding="2" cellspacing="0" style="border: 0px; text-align: center;">
             <tr style="height: 160px;">

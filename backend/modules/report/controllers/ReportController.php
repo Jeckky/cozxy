@@ -15,7 +15,6 @@ class ReportController extends ReportMasterController {
             if (isset($_GET['toDate']) && !empty($_GET['toDate'])) {
                 $model = Order::find()->where("paymentDateTime BETWEEN '" . $_GET['fromDate'] . "' and '" . $_GET['toDate'] . "' and status>=5 order by paymentDateTime DESC")->all();
             } else {
-                ;
                 $model = Order::find()->where("paymentDateTime>='" . $_GET['fromDate'] . "' and status>=5 order by paymentDateTime DESC")->all();
             }
         } else {
@@ -26,7 +25,7 @@ class ReportController extends ReportMasterController {
             }
         }
         return $this->render('index', [
-                    'model' => $model
+            'model' => $model
         ]);
     }
 

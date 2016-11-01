@@ -40,7 +40,7 @@ class StoreProductArrange extends \common\models\costfit\master\StoreProductArra
         $orderId = substr($orderId, 0, -1);
         $userId = Yii::$app->user->identity->userId;
         if ($slot != 'a') {
-            $productId = StoreProductArrange::find()->where("slotId=" . $slot . " and status=99 and pickerId='" . $userId . "' and orderId in (" . $orderId . ") order by productId")->all();
+            $productId = StoreProductArrange::find()->where("slotId=" . $slot . " and status in (99,100) and pickerId='" . $userId . "' and orderId in (" . $orderId . ") order by productId")->all();
             if (isset($productId)) {
                 return $productId;
             } else {
@@ -58,6 +58,7 @@ class StoreProductArrange extends \common\models\costfit\master\StoreProductArra
                 $i++;
             }
         endforeach;
+        // throw new \yii\base\Exception($i . " " . $productId);
         if ($i == 0) {
             return true;
         } else {

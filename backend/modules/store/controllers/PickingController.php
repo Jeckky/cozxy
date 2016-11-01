@@ -82,22 +82,26 @@ class PickingController extends StoreMasterController {
                             }
                         } else {
                             $result = $item->quantity;
-                            $slot = \common\models\costfit\StoreProductArrange::find()->where("productId = " . $item->productId . " and status=4 and result !=0 order by createDateTime")->all(); //หา slot ทั้งหมดที่ product วางอยู่ และ ไม่เท่ากับ 0
+                            $slot = \common\models\costfit\StoreProductArrange::find()->where("productId = " . $item->productId . " and status=4 and result!=0 order by createDateTime")->all(); //หา slot ทั้งหมดที่ product วางอยู่ และ ไม่เท่ากับ 0
                             if (isset($slot) && !empty($slot)) {
+                                //throw new \yii\base\Exception(print_r($slot, true));
                                 $enoughItemInSlot = false;
                                 foreach ($slot as $eSlot):
+                                    $flag = false;
                                     $enoughItemInSlot = $this->checkEnoughItemInSlot($eSlot->slotId, $item->productId, $result); //เชคว่าในสล็อตนั้นมีของครบเปล่า/ถ้าครบ เบรค ไปโปรดักถัดไป
-                                    $this->updateSlot($eSlot->slotId, $item->productId, $result, $item->orderId);
                                     $flag = $this->checkSlot($slots, $eSlot->slotId); //check ว่า เป็น slot  เดียวกันมั๊ย ถ้า slot  เดียวกันเอาแค่ อันเดียว
                                     if ($flag) {
                                         $slots[$i] = $eSlot->slotId;
                                         $i++;
                                     }
                                     if ($enoughItemInSlot == true) {
-//throw new \yii\base\Exception(print_r($slots, true));
+                                        $this->updateSlot($eSlot->slotId, $item->productId, $result, $item->orderId);
                                         break;
                                     } else {
+                                        $pick = $result;
                                         $result = $result - $eSlot->result;
+                                        // throw new \yii\base\Exception($result);
+                                        $this->updateSlot($eSlot->slotId, $item->productId, $pick, $item->orderId);
                                     }
                                 endforeach;
                             } else {
@@ -212,21 +216,27 @@ class PickingController extends StoreMasterController {
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         $countSlot = 0;
         $userId = Yii::$app->user->identity->userId;
+        $this->updateArrange($_GET['arrangeId']);
+        $count = count(\common\models\costfit\StoreProductArrange::find()->where("orderId=" . $_GET['orderId'] . " and productId=" . $_GET['productId'] . " and status=99")->all());
         if (isset($orderItem)) {
-            $orderItem->status = 5;
-            $orderItem->pickerId = $userId; //รอ login
-            $orderItem->updateDateTime = new \yii\db\Expression('NOW()');
-            $orderItem->save(); //set pinked product in orderItem to  5  (หยิบแล้ว)
+            if ($count == 0) {//หยิบไอเทมนั้นในออเดอร์ หมดทุก slot แล้ว?
+                $orderItem->status = 5;
+                $orderItem->pickerId = $userId; //รอ login
+                $orderItem->updateDateTime = new \yii\db\Expression('NOW()');
+                $orderItem->save(); //set pinked product in orderItem to  5  (หยิบแล้ว)
+            }
             $this->checkOrder($orderItem->orderId);
-            $arrange = \common\models\costfit\StoreProductArrange::find()->where("slotId = " . $_GET['slot'])->all();
-            foreach ($arrange as $arProduct):
-                foreach ($_GET['allOrderId'] as $orderId):
-                    $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $orderId . " and productId = " . $arProduct->productId . " and status = 4")->all();
-                    if (isset($orderItem) && !empty($orderItem)) {
-                        $countSlot++;
-                    }
-                endforeach;
-            endforeach;
+//            $arrange = \common\models\costfit\StoreProductArrange::find()->where("slotId = " . $_GET['slot'] . " and productId=" . $_GET['productId'])->all();
+//            foreach ($arrange as $arProduct):
+//                foreach ($_GET['allOrderId'] as $orderId):
+//                    $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $orderId . " and productId = " . $arProduct->productId . " and status = 4")->all();
+//                    if (isset($orderItem) && !empty($orderItem)) {
+//                        $countSlot++;
+//                    }
+//                endforeach;
+//            endforeach;
+            $arrange = \common\models\costfit\StoreProductArrange::find()->where("slotId = " . $_GET['slot'] . " and pickerId=" . $userId . " and status=99")->all(); //slot หยิบไอเทมของตัวเองหมดหรือยัง
+            $countSlot = count($arrange);
             if ($countSlot == 0) {//เมื่อ หยิบครบทุก Item ใน slot นั้น ==> ปิดไฟ(set status=0)
                 $slot = \common\models\costfit\StoreSlot::find()->where("storeSlotId = " . $_GET['slot'])->one();
                 $led = \common\models\costfit\Led::find()->where("slot = '" . $slot->barcode . "'")->one();
@@ -283,6 +293,12 @@ class PickingController extends StoreMasterController {
             'orders' => $order
         ]);
         $this->printPdf($content, $header);
+    }
+
+    static function updateArrange($id) {
+        $arrange = \common\models\costfit\StoreProductArrange::find()->where("storeProductArrangeId=" . $id)->one();
+        $arrange->status = 100;
+        $arrange->save();
     }
 
     static function checkQuantity($allOrder) {//allslots are barcodd
@@ -479,10 +495,10 @@ class PickingController extends StoreMasterController {
 
     static function checkEnoughItemInSlot($slotId, $productId, $quantity) {
         $total = 0;
-        $productArranges = \common\models\costfit\StoreProductArrange::find()->where("slotId=" . $slotId . " and productId=" . $productId)->all();
+        $productArranges = \common\models\costfit\StoreProductArrange::find()->where("slotId=" . $slotId . " and productId=" . $productId . " and status=4")->all();
         if (isset($productArranges) && !empty($productArranges)) {
             foreach ($productArranges as $productArrange):
-                $total+=$productArrange->quantity;
+                $total+=$productArrange->result;
             endforeach;
             if ($total >= $quantity) {
                 return true;
@@ -495,7 +511,7 @@ class PickingController extends StoreMasterController {
     static function updateSlot($slotId, $productId, $quantity, $orderId) {
         //throw new \yii\base\Exception($quantity);
         $userId = Yii::$app->user->identity->userId;
-        $productArrange = \common\models\costfit\StoreProductArrange::find()->where("slotId=" . $slotId . " and productId=" . $productId . " and status=4 order by createDateTime")->one();
+        $productArrange = \common\models\costfit\StoreProductArrange::find()->where("slotId=" . $slotId . " and productId=" . $productId . " and status=4 and result!=0 order by createDateTime")->one();
         $orderItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and productId=" . $productId)->one();
         $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
         if (($orderItem->status != 4) && (($orderItem->status != 5))) {
@@ -503,9 +519,11 @@ class PickingController extends StoreMasterController {
                 if ($productArrange->result >= $quantity) {
                     $result = $productArrange->result - $quantity;
                     $pick = $quantity;
+                    $orderItem->status = 4;
                 } else {
                     $result = 0;
                     $pick = $productArrange->result;
+                    $orderItem->status = 1;
                 }
                 $productArrange->result = $result;
                 $productArrange->updateDateTime = new \yii\db\Expression('NOW()');
@@ -522,7 +540,6 @@ class PickingController extends StoreMasterController {
                 $createState->updateDateTime = new \yii\db\Expression('NOW()');
                 $createState->save(false);
                 $productArrange->save();
-                $orderItem->status = 4;
                 $orderItem->pickerId = $userId;
                 $orderItem->updateDateTime = new \yii\db\Expression('NOW()');
                 $orderItem->save();

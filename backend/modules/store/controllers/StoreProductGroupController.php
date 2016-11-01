@@ -30,10 +30,27 @@ class StoreProductGroupController extends StoreMasterController {
      * @return mixed
      */
     public function actionIndex() {
-        $dataProvider = new ActiveDataProvider([
-            'query' => StoreProductGroup::find()->where("status=1"),
-        ]);
+        $query = StoreProductGroup::find()->where("status=1");
         $passQc = StoreProductGroup::find()->where("status!=1 order by receiveDate DESC")->all();
+        if (isset($_GET['fromDate']) && $_GET['fromDate'] != '') {
+            //throw new \yii\base\Exception('aaa');
+            if (isset($_GET['toDate']) && $_GET['toDate'] != '') {
+                $passQc = StoreProductGroup::find()->where("receiveDate BETWEEN '" . $_GET['fromDate'] . "' and '" . $_GET['toDate'] . "' and status!=1 order by receiveDate DESC")->all();
+            } else {
+                $passQc = StoreProductGroup::find()->where("receiveDate>='" . $_GET['fromDate'] . "' and status!=1 order by receiveDate DESC")->all();
+            }
+        } else {
+            // throw new \yii\base\Exception('bbbb');
+            if (isset($_GET['toDate']) && $_GET['toDate'] != '') {
+                $passQc = StoreProductGroup::find()->where("receiveDate<='" . $_GET['toDate'] . "' and status!=1 order by receiveDate DESC")->all();
+            } else {
+                $passQc = StoreProductGroup::find()->where("status!=1 order by receiveDate DESC")->all();
+            }
+        }
+        //throw new \yii\base\Exception('cccc');
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'passQc' => $passQc
