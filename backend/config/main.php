@@ -19,11 +19,11 @@ return [
             'defaultRoute' => 'notification'
         ],
         'profile' => [
-            'class' => 'backend\modules\profile\profile',
+            'class' => 'backend\modules\profile\Profile',
             'defaultRoute' => 'profile',
         ],
         'management' => [
-            'class' => 'backend\modules\management\management',
+            'class' => 'backend\modules\management\Management',
             'defaultRoute' => 'management',
         ],
         'auth' => [
@@ -37,7 +37,7 @@ return [
             'class' => 'backend\modules\store\Store',
         ],
         'led' => [
-            'class' => 'backend\modules\led\led',
+            'class' => 'backend\modules\led\Led',
         ],
         'supplier' => [
             'class' => 'backend\modules\supplier\Supplier',

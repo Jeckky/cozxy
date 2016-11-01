@@ -58,8 +58,23 @@ class MenuController extends ManagementMasterController {
     public function actionCreate() {
         $model = new Menu();
         if (isset($_POST["Menu"])) {
+            $getLevelId =  $_POST["Menu"]['levelId']; 
+            $LevelId    =   '';
+            if(count($getLevelId)>0){
+                foreach ($getLevelId as $value) { 
+                $LevelId .= $value.',' ;
+            }
+            $LevelId  = substr($LevelId, 0, -1);
+        }else{
+            $LevelId  = '';
+        }
+            
+          //  echo $LevelId;
             $model->attributes = $_POST["Menu"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
+            $model->levelId = $LevelId;
+            //echo '<pre>';
+            //print_r($model->attributes );
             if ($model->save()) {
                 return $this->redirect(['index']);
             }

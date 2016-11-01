@@ -30,18 +30,27 @@ class Menu extends \common\models\costfit\master\MenuMaster {
     /**
      * @inheritdoc
      */
+    public function attributes() {
+        return array_merge(parent::attributes(), [
+            'parents',
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function getMenuDropdown() {
-        $listMenu = Menu::find()
-        //->where(['is_subcategory' => 'Yes'])
-        //->andWhere(['status' => 'active', 'approved' => 'active'])
-        ->all();
-        $list = \yii\helpers\ArrayHelper::map($listMenu, 'menuId', 'name');
-
-        return $list;
+    //parentMennu
+    static public function getparentMenus($parent) {
+        $items = Menu::find()->where("menuId =" . $parent)->one();
+        if (isset($items)) {
+            return $items;
+        } else {
+            return '';
+        }
     }
 
 }

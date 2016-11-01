@@ -24,7 +24,8 @@ class CostFitAsset extends AssetBundle {
         'javascripts/jquery-2.1.3.min.js',
         'javascripts/ie.min.js',
         'javascripts/bootstrap.min.js',
-        'javascripts/pixel-admin.min.js',
+        //'javascripts/pixel-admin.min.js',
+        'javascripts/cozxy/cozxy-pixel-admin.min.js',
         'javascripts/cozxy/cozxy-unity.js',
         'javascripts/cozxy/cozxy-printer.js',
     ];

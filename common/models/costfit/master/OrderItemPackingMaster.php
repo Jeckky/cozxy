@@ -14,7 +14,7 @@ use Yii;
     * @property string $quantity
     * @property integer $status
     * @property string $shipDate
-    * @property string $remart
+    * @property string $remark
     * @property integer $userId
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -39,7 +39,7 @@ return [
             [['orderItemId', 'pickingItemsId', 'quantity', 'status', 'userId'], 'integer'],
             [['shipDate', 'createDateTime', 'updateDateTime'], 'safe'],
             [['bagNo'], 'string', 'max' => 255],
-            [['remart'], 'string', 'max' => 150],
+            [['remark'], 'string', 'max' => 150],
         ];
 }
 
@@ -56,7 +56,7 @@ return [
     'quantity' => Yii::t('order_item_packing', 'Quantity'),
     'status' => Yii::t('order_item_packing', 'Status'),
     'shipDate' => Yii::t('order_item_packing', 'Ship Date'),
-    'remart' => Yii::t('order_item_packing', 'Remart'),
+    'remark' => Yii::t('order_item_packing', 'Remark'),
     'userId' => Yii::t('order_item_packing', 'User ID'),
     'createDateTime' => Yii::t('order_item_packing', 'Create Date Time'),
     'updateDateTime' => Yii::t('order_item_packing', 'Update Date Time'),

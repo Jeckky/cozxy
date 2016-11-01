@@ -3,7 +3,7 @@
 namespace backend\modules\management\controllers;
 
 use Yii;
-use common\models\costfit\MemuBackend;
+use common\models\costfit\Memu;
 use yii\data\ActiveDataProvider;
 use backend\controllers\BackendMasterController;
 use yii\web\NotFoundHttpException;
