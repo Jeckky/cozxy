@@ -8,7 +8,7 @@ use common\models\costfit\StoreProductGroup;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'สร้างใบ PO';
+$this->title = 'ใบ PO ที่ยังไม่ตรวจรับ / จัดเรียง';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>

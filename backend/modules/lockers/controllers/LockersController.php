@@ -352,6 +352,8 @@ class LockersController extends LockersMasterController {
             if (count($listPointItems) > 0) {
                 if ($status == 'now') {
                     \common\models\costfit\PickingPointItems::updateAll(['status' => 0], ['pickingItemsId' => $listPointItems->pickingItemsId]);
+                    $this->generatePassword($orderId);
+                    $this->sendEmail($orderId);
                     return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $boxcode);
                 } elseif ($status == 'latter') {
                     \common\models\costfit\PickingPointItems::updateAll(['status' => 1], ['pickingItemsId' => $listPointItems->pickingItemsId]);
@@ -380,6 +382,8 @@ class LockersController extends LockersMasterController {
 
                 if ($status == 'now') {
                     \common\models\costfit\PickingPointItems::updateAll(['status' => 0], ['pickingItemsId' => $listPointItems->pickingItemsId]);
+                    $this->generatePassword($orderId);
+                    $this->sendEmail($orderId);
                     return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $boxcode);
                 } elseif ($status == 'latter') {
                     \common\models\costfit\PickingPointItems::updateAll(['status' => 1], ['pickingItemsId' => $listPointItems->pickingItemsId]);
@@ -467,7 +471,7 @@ class LockersController extends LockersMasterController {
         // ตรวจสอบว่า ถ้ามี ช่อง ไหนที่ลูกค้ามารับแล้วและตรวจสอบผ่าน เข้าเคสนี้เลย
         $CountChannelsInspector = \common\models\costfit\PickingPointItems::NotChannelsInspector($pickingId);
         // echo count($CountChannelsInspector);
-        if (count($CountChannelsInspector) > 0) { // ยังมีข้อมูลที่ยังไม่ตรวสอบ คือ 8  
+        if (count($CountChannelsInspector) > 0) { // ยังมีข้อมูลที่ยังไม่ตรวสอบ คือ 8
             if ($pickingId != '') { //รอตรวจสอบจากเจ้าหน้าที่ : ตรวจสอบช่องที่ลูกค้ารับสินค้าแล้ว
                 $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $pickingId . "'")->one();
                 $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
