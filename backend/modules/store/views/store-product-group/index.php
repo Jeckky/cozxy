@@ -132,7 +132,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     ])
                     ?>
 
-                </div>
+                </div> -
                 <div class="col-lg-3">
                     <?=
                     DatePicker::widget(['name' => 'toDate',
@@ -151,7 +151,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 </div>
                 <?php ActiveForm::end(); ?>
             </div>
-
+            <br>
             <table class="table table-bordered">
 
                 <tr style="height: 50px;background-color: #F0FFFF;">

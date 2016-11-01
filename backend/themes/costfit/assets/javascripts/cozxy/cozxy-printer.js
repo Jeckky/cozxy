@@ -25,7 +25,7 @@ $(document).on('click', '.closeBag', function () {
         {
             if (data != '') {
                 var newWin = window.open('bag-label?bag=' + data, '_blank');
-                newWin.focus();
+                //newWin.focus();
             } else {
                 alert(data);
             }
