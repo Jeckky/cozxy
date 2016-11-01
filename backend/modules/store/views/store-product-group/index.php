@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use common\models\costfit\StoreProductGroup;
+use yii\widgets\ActiveForm;
 use yii\jui\DatePicker;
 
 /* @var $this yii\web\View */
@@ -111,6 +112,46 @@ $this->params['pageHeader'] = Html::encode($this->title);
             <span class="panel-title"><h3>รายการ PO ที่ตรวจรับ / จัดเรียงแล้ว</h3></span>
         </div>
         <div class="panel-body">
+            <div class="row">
+                <?php
+                $form = ActiveForm::begin([
+                    'method' => 'GET',
+                    'action' => ['report/index'],
+                ]);
+                ?>
+                <div class="col-lg-3">
+                    <?php
+                    echo DatePicker::widget(['name' => 'fromDate',
+                        'dateFormat' => 'yyyy-MM-dd',
+                        'value' => isset($_GET['fromDate']) ? $_GET['fromDate'] : NULL,
+                        'options' => ['placeholder' => 'From Date',
+                            'class' => 'form-control',
+                            'style' => 'border-color: #66CCFF;height: 40px;',
+                            'language' => 'en',
+                        ]
+                    ])
+                    ?>
+
+                </div>
+                <div class="col-lg-3">
+                    <?=
+                    DatePicker::widget(['name' => 'toDate',
+                        'dateFormat' => 'yyyy-MM-dd',
+                        'value' => isset($_GET['toDate']) ? $_GET['toDate'] : NULL,
+                        'options' => ['placeholder' => 'To Date',
+                            'class' => 'form-control',
+                            'style' => 'border-color: #66CCFF;height: 40px;',
+                            'language' => 'en',
+                        ]
+                    ])
+                    ?>
+                </div>
+                <div class="col-lg-2">
+                    <?= Html::submitButton('<i class="fa fa-search" aria-hidden="true">  ค้นหา</i>', ['class' => 'btn btn-primary btn-lg']) ?>
+                </div>
+                <?php ActiveForm::end(); ?>
+            </div>
+
             <table class="table table-bordered">
 
                 <tr style="height: 50px;background-color: #F0FFFF;">
