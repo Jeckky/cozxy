@@ -382,7 +382,7 @@ class Order extends \common\models\costfit\master\OrderMaster
     public static function findAllYearCirculationWithYear($year)
     {
         $res = [];
-        $orders = Order::find()->select('sum(summary) as summary , month(paymentDateTime) as month')->where('year(paymentDateTime) =' . $year . " AND status >2")->groupBy('month(paymentDateTime)')->all();
+        $orders = Order::find()->select('sum(summary) as summary , month(paymentDateTime) as month')->where('year(paymentDateTime) =' . $year . " AND status >" . Order::ORDER_STATUS_E_PAYMENT_SUCCESS)->groupBy('month(paymentDateTime)')->all();
 
         for ($i = 1; $i <= 12; $i++) {
             if (isset($orders[$i - 1]->month)) {
