@@ -22,12 +22,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
         <div class="panel-body">
             <?php
             $form = ActiveForm::begin([
-                        'method' => 'GET',
-                        'action' => ['picking/index'],
+                'method' => 'GET',
+                'action' => ['picking/index'],
             ]);
             foreach ($selects as $select):
                 echo '<input type="hidden" name="selection[]" value="' . $select->orderId . '">';
             endforeach;
+            // throw new \yii\base\Exception(print_r($selects, true));
             ?>
 
             <?=

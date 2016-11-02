@@ -24,6 +24,10 @@ class PickingController extends StoreMasterController {
     }
 
     public function actionIndex() {
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        if (!isset(Yii::$app->user->identity->userId)) {
+            return $this->redirect($baseUrl . '/auth');
+        }
         $userId = Yii::$app->user->identity->userId;
         $oldUser = $this->checkOldPicker($userId); // ถ้าเป็นคนหยิบของที่หยิบของในออเดอร์ที่เลือกมายังไม่เสร็จ บังคับให้กลับบมาหน้าหยิบให้เสร็จ
         $findEnough = \common\models\costfit\Order::find()

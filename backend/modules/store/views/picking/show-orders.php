@@ -59,7 +59,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
         <?php
         foreach ($slots as $slot):
             $i = 1;
-            $array = [];
             ?>
             <h4>Slot : <?php
                 if ($slot == 'a') {
@@ -80,11 +79,11 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 </thead>
                 <tbody>
                     <?php
+                    // throw new \yii\base\Exception(print_r($allOrderId, true));
                     $product = common\models\costfit\StoreProductArrange::findItems($slot, $allOrderId);
                     $couuntProduct = 0;
                     $a = 0;
                     $total = 0;
-                    $array[0] = '';
                     if (isset($product) && !empty($product)) {
                         foreach ($product as $productId):
                             $item = common\models\costfit\OrderItem::findOrderItems($productId->orderId, $productId->productId);
@@ -115,13 +114,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 </tr>
 
                                 <?php
-                                $checkId = \common\models\costfit\StoreProductArrange::checkProductId($array, $productId->productId);
-                                $array[$a] = $productId->productId;
-                                $a++;
+                                $checkId = \common\models\costfit\StoreProductArrange::checkProductId($a, $allOrderId, $slot);
+                                // $array[$a] = $productId->productId;
+                                // $a++;
                                 if ($checkId) {
+
                                     $total = \common\models\costfit\StoreProductArrange::findProductInSlot($slot, $allOrderId, $productId->productId);
                                     ?>
-                                    <tr>
+                                    <tr style="background-color: #F5F5F5;">
                                         <td colspan="2" class="text-right"><b>Total ( <?php echo Product::findProductName($item->productId); ?> )</b></td>
                                         <td><b><?php echo $total; ?></b></td>
                                         <td><b></b></td>
@@ -130,6 +130,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     </tr>
                                     <?php
                                 }
+                                $a++;
                                 $i++;
                             }
                         endforeach;
