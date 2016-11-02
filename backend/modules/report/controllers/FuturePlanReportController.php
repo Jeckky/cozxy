@@ -16,7 +16,7 @@ class FuturePlanReportController extends ReportMasterController
         $model = \common\models\costfit\OrderItem::find()->select("*,sum(quantity) as sumQuantity  , DATEDIFF(sendDateTime,date(NOW())) as remainDay")
         ->where(" sendDateTime is not null AND DATEDIFF(sendDateTime,date(NOW())) <= " . \common\models\costfit\OrderItem::FUTURE_DAY_TO_SHOW)
         ->orderBy("remainDay ASC")
-        ->groupBy("productId");
+        ->groupBy("productId , sendDateTime");
         $filterArray[] = 'and';
         if (isset($_GET['fromDate'])) {
             $filterArray[] = ['>=', 'date(createDateTime)', $_GET['fromDate']];
