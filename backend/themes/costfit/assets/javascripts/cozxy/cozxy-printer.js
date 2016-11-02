@@ -24,7 +24,7 @@ $(document).on('click', '.closeBag', function () {
         success: function (data)
         {
             if (data != '') {
-                var newWin = window.open('bag-label?bag=' + data, '_blank');
+                var newWin = window.open($baseUrl + 'store/packing/bag-label?bag=' + data, '_blank');
                 //newWin.focus();
             } else {
                 alert(data);
