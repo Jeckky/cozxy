@@ -53,6 +53,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     ],
                     'leaseTime',
                     'maxQuantity',
+                    'price',
                     // 'status',
                     // 'createDateTime',
                     // 'updateDateTime',

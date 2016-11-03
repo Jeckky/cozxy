@@ -32,10 +32,9 @@ public function rules()
 {
 return [
             [['ordering', 'status'], 'integer'],
-            [['rules'], 'required'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 100],
-            [['rules'], 'string', 'max' => 5120],
+            [['rules'], 'string', 'max' => 200],
         ];
 }
 

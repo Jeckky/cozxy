@@ -48,7 +48,7 @@ class SupplierProduct extends \common\models\costfit\master\SupplierProductMaste
 
     public static function getAllSupplierWhereProductId($productId)
     {
-        return SupplierProduct::find()->where("productId = " . $productId)->groupBy("supplierId")->all();
+        return SupplierProduct::find()->where("productId = " . $productId)->orderBy("price ASC")->groupBy("supplierId")->all();
     }
 
 }

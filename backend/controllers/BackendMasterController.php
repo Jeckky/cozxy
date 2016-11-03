@@ -14,18 +14,21 @@ use kartik\mpdf\Pdf;
 /**
  * Site controller
  */
-class BackendMasterController extends MasterController {
+class BackendMasterController extends MasterController
+{
 
     public $breadcrumbs = [];
     public $layout = '/content';
 
-    public function writeToFile($fileName, $string, $mode = 'w+') {
+    public function writeToFile($fileName, $string, $mode = 'w+')
+    {
         $handle = fopen($fileName, $mode);
         fwrite($handle, $string);
         fclose($handle);
     }
 
-    public function saveModelLang($mainModel, $langModel) {
+    public function saveModelLang($mainModel, $langModel)
+    {
         $result = [];
         $langClassName = (new \ReflectionClass($langModel))->getShortName();
         $mainModelClassName = (new \ReflectionClass($mainModel))->getShortName();
@@ -99,7 +102,8 @@ class BackendMasterController extends MasterController {
         return $result;
     }
 
-    public static function dateThai($date, $format, $showTime = false) {
+    public static function dateThai($date, $format, $showTime = false)
+    {
         // Full month array
         $monthFormat1 = array(
             "01" => "มกราคม",
@@ -194,7 +198,8 @@ class BackendMasterController extends MasterController {
     }
 
     // Privacy statement output demo
-    public function actionMpdfDocument($content) {
+    public function actionMpdfDocument($content, $setHeader = FALSE, $setFooter = FALSE, $marginTop = FALSE)
+    {
         //$orderId = Yii::$app->request->get('OrderNo');
         // $orderId = $params['orderId'];
         // get your HTML raw content without any layouts or scripts
@@ -220,13 +225,14 @@ class BackendMasterController extends MasterController {
             'cssInline' => '.kv-heading-1{font-size:18px}',
             //'cssInline' => 'body{font-size:9px}',
             // set mPDF properties on the fly
-            'options' => ['title' => 'Cost.fit Print Purchase Order'],
+            'options' => ['title' => 'Cost.fit Print Purchase Order',],
             // call mPDF methods on the fly
+            'marginTop' => 35,
             'methods' => [
                 //'SetHeader' => ['Cost.fit Print Purchase Order'], //Krajee Report Header
                 //'SetFooter' => ['{PAGENO}'],
-                'SetHeader' => FALSE, //Krajee Report Header
-                'SetFooter' => FALSE,
+                'SetHeader' => $setHeader, //Krajee Report Header
+                'SetFooter' => $setFooter,
             ]
         ]);
 
@@ -235,7 +241,8 @@ class BackendMasterController extends MasterController {
         return $pdf->render();
     }
 
-    public function actionChildStatesAddress() {
+    public function actionChildStatesAddress()
+    {
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
             $parents = ($_POST['depdrop_parents']);
@@ -273,7 +280,8 @@ class BackendMasterController extends MasterController {
         echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
     }
 
-    public function actionChildAmphurAddress() {
+    public function actionChildAmphurAddress()
+    {
         $out = [];
 
         if (isset($_POST['depdrop_parents'])) {
@@ -314,7 +322,8 @@ class BackendMasterController extends MasterController {
         echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
     }
 
-    public function actionChildDistrictAddress() {
+    public function actionChildDistrictAddress()
+    {
         $out = [];
 
         if (isset($_POST['depdrop_parents'])) {

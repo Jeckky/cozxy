@@ -43,6 +43,8 @@ use common\models\costfit\Product;
 
         <?= $form->field($model, 'maxQuantity', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
 
+        <?= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
+
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
                 <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
