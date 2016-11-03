@@ -23,12 +23,8 @@ $(document).on('click', '.closeBag', function () {
         data: {orderId: $orderId},
         success: function (data)
         {
-            if (data != '') {
-                var newWin = window.open('bag-label?bag=' + data, '_blank');
-                //newWin.focus();
-            } else {
-                alert(data);
-            }
+            window.open($baseUrl + 'store/packing/bag-label?bag=' + data, '_blank');
+            // window.open('//www.google.com', '_blank');
         },
         error: function (data)
         {

@@ -24,6 +24,10 @@ class PickingController extends StoreMasterController {
     }
 
     public function actionIndex() {
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        if (!isset(Yii::$app->user->identity->userId)) {
+            return $this->redirect($baseUrl . '/auth');
+        }
         $userId = Yii::$app->user->identity->userId;
         $oldUser = $this->checkOldPicker($userId); // ถ้าเป็นคนหยิบของที่หยิบของในออเดอร์ที่เลือกมายังไม่เสร็จ บังคับให้กลับบมาหน้าหยิบให้เสร็จ
         $findEnough = \common\models\costfit\Order::find()
@@ -85,8 +89,8 @@ class PickingController extends StoreMasterController {
                             $slot = \common\models\costfit\StoreProductArrange::find()->where("productId = " . $item->productId . " and status=4 and result!=0 order by createDateTime")->all(); //หา slot ทั้งหมดที่ product วางอยู่ และ ไม่เท่ากับ 0
                             if (isset($slot) && !empty($slot)) {
                                 //throw new \yii\base\Exception(print_r($slot, true));
-                                $enoughItemInSlot = false;
                                 foreach ($slot as $eSlot):
+                                    $enoughItemInSlot = false;
                                     $flag = false;
                                     $enoughItemInSlot = $this->checkEnoughItemInSlot($eSlot->slotId, $item->productId, $result); //เชคว่าในสล็อตนั้นมีของครบเปล่า/ถ้าครบ เบรค ไปโปรดักถัดไป
                                     $flag = $this->checkSlot($slots, $eSlot->slotId); //check ว่า เป็น slot  เดียวกันมั๊ย ถ้า slot  เดียวกันเอาแค่ อันเดียว
@@ -512,7 +516,7 @@ class PickingController extends StoreMasterController {
         //throw new \yii\base\Exception($quantity);
         $userId = Yii::$app->user->identity->userId;
         $productArrange = \common\models\costfit\StoreProductArrange::find()->where("slotId=" . $slotId . " and productId=" . $productId . " and status=4 and result!=0 order by createDateTime")->one();
-        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and productId=" . $productId)->one();
+        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and productId=" . $productId . " and status=1")->one();
         $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
         if (($orderItem->status != 4) && (($orderItem->status != 5))) {
             if (isset($productArrange) && !empty($productArrange)) {

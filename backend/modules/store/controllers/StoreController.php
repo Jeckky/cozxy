@@ -30,12 +30,16 @@ class StoreController extends StoreMasterController {
      * @return mixed
      */
     public function actionIndex() {
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        if (!isset(Yii::$app->user->identity->userId)) {
+            return $this->redirect($baseUrl . '/auth');
+        }
         $dataProvider = new ActiveDataProvider([
             'query' => Store::find(),
         ]);
 
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -46,7 +50,7 @@ class StoreController extends StoreMasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -65,7 +69,7 @@ class StoreController extends StoreMasterController {
             }
         }
         return $this->render('create', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -88,7 +92,7 @@ class StoreController extends StoreMasterController {
             }
         }
         return $this->render('update', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 

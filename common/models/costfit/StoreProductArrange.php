@@ -51,15 +51,36 @@ class StoreProductArrange extends \common\models\costfit\master\StoreProductArra
         }
     }
 
-    public static function checkProductId($arrays, $productId) {
+    public static function checkProductId($index, $allOrderId, $slotId) {
+        //throw new \yii\base\Exception(print_r($allOrderId, true));
+        $orderId = '';
         $i = 0;
-        foreach ($arrays as $array):
-            if ($productId == $array) {
-                $i++;
+        $textChange = [];
+        $a = 0;
+        $old = '';
+        $check = 0;
+        foreach ($allOrderId as $id):
+            $orderId = $orderId . $id . ",";
+        endforeach;
+        $orderId = substr($orderId, 0, -1);
+        $first = StoreProductArrange::find()->where("slotId=" . $slotId . " and orderId in (" . $orderId . ") order by productId")->one(); //หาตัวแรก
+        $old = $first->productId;
+        $changes = StoreProductArrange::find()->where("slotId=" . $slotId . " and orderId in (" . $orderId . ") order by productId")->all();
+        foreach ($changes as $change) {
+            if ($change->productId != $old) {
+                $textChange[$a] = $i;
+                $a++;
+            }
+            $old = $change->productId;
+            $i++;
+        }
+        $textChange[$a] = $i;
+        foreach ($textChange as $indexChange):
+            if (($indexChange - 1) == $index) {
+                $check++;
             }
         endforeach;
-        // throw new \yii\base\Exception($i . " " . $productId);
-        if ($i == 0) {
+        if ($check > 0) {
             return true;
         } else {
             return false;
@@ -79,7 +100,7 @@ class StoreProductArrange extends \common\models\costfit\master\StoreProductArra
                 $total = $total + ($product->quantity * (-1));
             endforeach;
         }
-
+        //throw new \yii\base\Exception(print_r($allOrderId, true));
         return $total;
     }
 

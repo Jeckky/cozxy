@@ -23,24 +23,30 @@ class PackingController extends StoreMasterController {
     }
 
     public function actionIndex() {
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        if (!isset(Yii::$app->user->identity->userId)) {
+            return $this->redirect($baseUrl . '/auth');
+        }
         $query = \common\models\costfit\Order::find()
         ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
         ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND (`order`.status = " . \common\models\costfit\Order::ORDER_STATUS_PICKED . " OR `order`.status =" . \common\models\costfit\Order::ORDER_STATUS_PACKED . " )")
         ->orderBy("`order`.status ASC");
 
-
+        $ms = '';
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
         if (isset($_GET['orderNo']) && !empty($_GET['orderNo'])) {
-            $order = \common\models\costfit\Order::find()->where("orderNo='" . $_GET['orderNo'] . "'")->one();
+            $order = \common\models\costfit\Order::find()->where("orderNo='" . $_GET['orderNo'] . "' and status=12")->one();
             if (isset($order) && !empty($order)) {
                 return $this->render('show-orders', [
                     'orderId' => $order->orderId,
                 ]);
             } else {
+                $ms = 'ไม่พบออร์เดอร์นี้ หรือ ออร์เดอร์นี้ถูกแพ็คแล้ว';
                 return $this->render('index', [
                     'dataProvider' => $dataProvider,
+                    'ms' => $ms
                 ]);
             }
         } else {

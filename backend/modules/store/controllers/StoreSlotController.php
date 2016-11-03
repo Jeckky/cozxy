@@ -30,6 +30,10 @@ class StoreSlotController extends StoreMasterController {
      * @return mixed
      */
     public function actionIndex() {
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        if (!isset(Yii::$app->user->identity->userId)) {
+            return $this->redirect($baseUrl . '/auth');
+        }
         if (isset($_GET['storeId'])) {
             $query = StoreSlot::find()->where("storeId =" . $_GET["storeId"] . " AND level = 1");
         }
@@ -49,7 +53,7 @@ class StoreSlotController extends StoreMasterController {
         ]);
 
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -60,7 +64,7 @@ class StoreSlotController extends StoreMasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -105,7 +109,7 @@ class StoreSlotController extends StoreMasterController {
             }
         }
         return $this->render('create', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -127,7 +131,7 @@ class StoreSlotController extends StoreMasterController {
             }
         }
         return $this->render('update', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 

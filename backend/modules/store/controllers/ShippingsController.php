@@ -16,7 +16,10 @@ use yii\helpers\Json;
 class ShippingsController extends StoreMasterController {
 
     public function actionIndex() {
-
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        if (!isset(Yii::$app->user->identity->userId)) {
+            return $this->redirect($baseUrl . '/auth');
+        }
         $codes = Yii::$app->request->post('codes');
         if ($codes != '') {
             $query = \common\models\costfit\PickingPoint::find()->where("code = '" . $codes . "'")->one();
@@ -72,7 +75,7 @@ class ShippingsController extends StoreMasterController {
 
             $query = \common\models\costfit\PickingPointItems::find()
 //->join('RIGHT JOIN', 'order_item_packing', 'order_item_packing.pickingItemsId =picking_point_items.pickingItemsId')
-                    ->where("picking_point_items.pickingId = '" . $pickingId . "'")
+            ->where("picking_point_items.pickingId = '" . $pickingId . "'")
             ;
 
             $dataProvider = new ActiveDataProvider([
@@ -80,10 +83,10 @@ class ShippingsController extends StoreMasterController {
             ]);
 
             return $this->render('lockers', [
-                        'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
-                        'citie' => $localNamecitie,
-                        'countrie' => $localNamecountrie,
-                        'state' => $localNamestate,
+                'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
+                'citie' => $localNamecitie,
+                'countrie' => $localNamecountrie,
+                'state' => $localNamestate,
             ]);
         }
 
@@ -109,9 +112,9 @@ class ShippingsController extends StoreMasterController {
             //$query = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "'");
             // echo $this->orders($orderNo, $listPoint, $localNamecitie, $localNamecountrie, $localNamestate, $listPointItems, $model);
             $query = \common\models\costfit\Order::find()
-                    ->select('*')
-                    ->joinWith(['orderItems'])
-                    ->where("order_item.status = 6 or order_item.status >= 14 and order.pickingId = " . $boxcode);
+            ->select('*')
+            ->joinWith(['orderItems'])
+            ->where("order_item.status = 6 or order_item.status >= 14 and order.pickingId = " . $boxcode);
 
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
@@ -135,14 +138,14 @@ class ShippingsController extends StoreMasterController {
             }
 
             return $this->render('channels', [
-                        'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
-                        'citie' => $localNamecitie,
-                        'countrie' => $localNamecountrie,
-                        'state' => $localNamestate,
-                        'listPointItems' => $listPointItems,
-                        'model' => $model,
-                        'boxcode' => $boxcode,
-                        'channel' => $channel,
+                'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
+                'citie' => $localNamecitie,
+                'countrie' => $localNamecountrie,
+                'state' => $localNamestate,
+                'listPointItems' => $listPointItems,
+                'model' => $model,
+                'boxcode' => $boxcode,
+                'channel' => $channel,
             ]);
         }
     }
@@ -180,26 +183,26 @@ class ShippingsController extends StoreMasterController {
           ->where(['code' => $lockersNo])->one();
           } */
         $query = \common\models\costfit\OrderItemPacking::find()
-                ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId,order_item_packing.bagNo,order_item_packing.status')
-                ->joinWith(['orderItems'])
-                ->where(['order_item.orderId' => $orderId])
-                ->where(['order_item_packing.status' => 5, 'order_item_packing.bagNo' => $bagNo]);
+        ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId,order_item_packing.bagNo,order_item_packing.status')
+        ->joinWith(['orderItems'])
+        ->where(['order_item.orderId' => $orderId])
+        ->where(['order_item_packing.status' => 5, 'order_item_packing.bagNo' => $bagNo]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
         return $this->render('scanbag', [
-                    'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
-                    'citie' => $localNamecitie,
-                    'countrie' => $localNamecountrie,
-                    'state' => $localNamestate,
-                    'listPointItems' => $listPointItems,
-                    'model' => $model,
-                    'boxcode' => $boxcode,
-                    'channel' => $channel,
-                    'pickingItemsId' => $pickingItemsId,
-                    'bagNo' => $bagNo
+            'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
+            'citie' => $localNamecitie,
+            'countrie' => $localNamecountrie,
+            'state' => $localNamestate,
+            'listPointItems' => $listPointItems,
+            'model' => $model,
+            'boxcode' => $boxcode,
+            'channel' => $channel,
+            'pickingItemsId' => $pickingItemsId,
+            'bagNo' => $bagNo
         ]);
     }
 
@@ -214,7 +217,7 @@ class ShippingsController extends StoreMasterController {
         if ($pickingItemsId != '') {
             $query = \common\models\costfit\PickingPointItems::find()
 //->joinWith(['orderItems'])
-                            ->where(['pickingItemsId' => $pickingItemsId])->one();
+            ->where(['pickingItemsId' => $pickingItemsId])->one();
 // echo '<pre>';
 // print_r($query);
 // exit();
@@ -284,12 +287,12 @@ class ShippingsController extends StoreMasterController {
             ]);
 
             return $this->render('scanorder', [
-                        'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
-                        'citie' => $localNamecitie,
-                        'countrie' => $localNamecountrie,
-                        'state' => $localNamestate,
-                        'listPointItems' => $listPointItems,
-                        'model' => $model,
+                'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
+                'citie' => $localNamecitie,
+                'countrie' => $localNamecountrie,
+                'state' => $localNamestate,
+                'listPointItems' => $listPointItems,
+                'model' => $model,
             ]);
         }
 //echo$this->order();

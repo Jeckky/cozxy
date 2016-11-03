@@ -73,7 +73,7 @@ class Product extends \common\models\costfit\master\ProductMaster
         return $this->hasOne(ProductPrice::className(), ['productId' => 'productId'])->andWhere('quantity = 1');
     }
 
-    public function calProductPrice($productId, $quantity, $returnArray = 0, $fastId = NULL)
+    public function calProductPrice($productId, $quantity, $returnArray = 0, $fastId = NULL, $orderItemId = NULL)
     {
         $res = [];
         $product = Product::find()->where("productId = $productId")->one();
@@ -84,7 +84,7 @@ class Product extends \common\models\costfit\master\ProductMaster
         } else {
             $price = $product->price;
         }
-        $shippingPrice = ProductShippingPrice::calProductShippingPrice($productId, $fastId);
+        $shippingPrice = ProductShippingPrice::calProductShippingPrice($productId, $fastId, $orderItemId);
         if (isset($shippingPrice)) {
             if ($shippingPrice["type"] == 1) {
 //                $price = $price - $shippingPrice["discount"];

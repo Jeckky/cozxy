@@ -23,7 +23,8 @@ use \common\models\costfit\master\StoreProductGroupMaster;
  * @property StoreProduct[] $storeProducts
  * @property Supplier $supplier
  */
-class StoreProductGroup extends \common\models\costfit\master\StoreProductGroupMaster {
+class StoreProductGroup extends \common\models\costfit\master\StoreProductGroupMaster
+{
 
     /**
      * @inheritdoc
@@ -34,7 +35,8 @@ class StoreProductGroup extends \common\models\costfit\master\StoreProductGroupM
     const STATUS_ARRANGED = 4;
     const STATUS_ARRANGING = 5;
 
-    public static function findAllStatusArray() {
+    public static function findAllStatusArray()
+    {
         return [
             self::STATUS_IMPORT_DATA => "นำข้อมูลเข้า",
             self::STATUS_QC => "ตรวจรับแล้ว", //import แล้ว
@@ -44,7 +46,8 @@ class StoreProductGroup extends \common\models\costfit\master\StoreProductGroupM
         ];
     }
 
-    public static function getStatusText($status) {
+    public static function getStatusText($status)
+    {
         $res = StoreProductGroup::findAllStatusArray();
         if (isset($res[$status])) {
             return $res[$status];
@@ -53,7 +56,8 @@ class StoreProductGroup extends \common\models\costfit\master\StoreProductGroupM
         }
     }
 
-    public static function findPoNo($storeProductGroupId) {
+    public static function findPoNo($storeProductGroupId)
+    {
         $po = StoreProductGroup::find()->where("storeProductGroupId=" . $storeProductGroupId)->one();
         if (isset($po) && !empty($po)) {
             return $po->poNo;
@@ -62,44 +66,73 @@ class StoreProductGroup extends \common\models\costfit\master\StoreProductGroupM
         }
     }
 
-    public function rules() {
+    public function rules()
+    {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributes() {
+    public function attributes()
+    {
         return array_merge(parent::attributes(), [
-            'isbn'
+            'isbn',
+            'maxCode'
         ]);
     }
 
     /**
      * @inheritdoc
      */
-    public static function countProducts($storeProgroupId) {
+    public static function countProducts($storeProgroupId)
+    {
         $storeProduct = count(StoreProduct::find()->where("storeProductGroupId=" . $storeProgroupId)->all());
         return $storeProduct;
     }
 
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function getSupplierName() {
+    public function getSupplierName()
+    {
         return $this->hasOne(Supplier::className(), ['supplierId' => 'supplierId']);
     }
 
-    public function getStoreProducts() {
+    public function getStoreProducts()
+    {
         return $this->hasMany(StoreProduct::className(), ['storeProductGroupId' => 'storeProductGroupId'])->orderBy("status");
     }
 
-    public function checkPo($id) {
+    public function checkPo($id)
+    {
         $checkPo = StoreProductGroup::find()->where("storeProductGroupId='" . $id . "' and status!=3")->all();
         if (count($checkPo) == 0) {
             $this->redirect(['store-product-group/index']);
         }
+    }
+
+    public static function genPoNo($supplierId = null)
+    {
+        $prefix = 'PO'; //$supplierModel->prefix;
+
+        $max_code = intval(\common\models\costfit\StoreProductGroup::findMaxPoNo($prefix));
+        $max_code += 1;
+        return $prefix . date("Ym") . "-" . str_pad($max_code, 4, "0", STR_PAD_LEFT);
+    }
+
+    public static function findMaxPoNo($prefix = NULL)
+    {
+        $order = Order::findBySql("SELECT MAX(RIGHT(poNo,7)) as maxCode from `store_product_group` WHERE substr(poNo,1,2)='$prefix' order by poNo DESC ")->one();
+//        $order = Order::find()->select("MAX(RIGHT(orderNo,7)) as maxCode")
+//        ->where("substr(orderNo,1,2)='$prefix' ")
+//        ->orderBy('orderNo DESC ')
+//        ->max("maxCode");
+//        ->one();
+
+        return isset($order) ? $order->maxCode : 0;
     }
 
 }

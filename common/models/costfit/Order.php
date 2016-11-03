@@ -148,6 +148,7 @@ class Order extends \common\models\costfit\master\OrderMaster
                     'priceOnePieceText' => number_format($item->priceOnePiece, 2),
                     'priceMarket' => $item->product->price,
                     'sendDate' => $item->sendDate,
+                    'firstTimeSendDate' => $item->firstTimeSendDate,
                     'sendDateNoDate' => isset($item->shippingType) ? $item->shippingType->date : NULL,
                     'subTotal' => $item->subTotal,
                     'shipDate' => $item->sendDate,
@@ -382,7 +383,7 @@ class Order extends \common\models\costfit\master\OrderMaster
     public static function findAllYearCirculationWithYear($year)
     {
         $res = [];
-        $orders = Order::find()->select('sum(summary) as summary , month(paymentDateTime) as month')->where('year(paymentDateTime) =' . $year . " AND status >2")->groupBy('month(paymentDateTime)')->all();
+        $orders = Order::find()->select('sum(summary) as summary , month(paymentDateTime) as month')->where('year(paymentDateTime) =' . $year . " AND status >" . Order::ORDER_STATUS_E_PAYMENT_SUCCESS)->groupBy('month(paymentDateTime)')->all();
 
         for ($i = 1; $i <= 12; $i++) {
             if (isset($orders[$i - 1]->month)) {
