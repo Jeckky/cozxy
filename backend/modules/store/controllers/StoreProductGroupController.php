@@ -81,6 +81,7 @@ class StoreProductGroupController extends StoreMasterController {
         $model = new StoreProductGroup();
         if (isset($_POST["StoreProductGroup"])) {
             $model->attributes = $_POST["StoreProductGroup"];
+            $model->poNo = StoreProductGroup::genPoNo();
             $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
                 return $this->redirect(['index']);

@@ -62,18 +62,40 @@ class ProductShippingPrice extends \common\models\costfit\master\ProductShipping
         return $type;
     }
 
-    public static function calProductShippingPrice($productId, $fastId = NULL)
+    public static function calProductShippingPrice($productId, $fastId = NULL, $orderItemId = NULL)
     {
         $res = [];
         $cart = Order::findCartArray();
 //        throw new \yii\base\Exception(print_r($cart, true));
         $shippingTypeId = 0;
         if (!isset($fastId)) {
-            foreach ($cart["items"] as $item) {
-                if ($item["productId"] == $productId) {
-                    $shippingTypeId = $item["sendDate"];
-                    break;
+            if (isset($cart) && $cart['isSlowest'] == 1) {
+                foreach ($cart["items"] as $item) {
+                    if ($item["productId"] == $productId) {
+                        $shippingTypeId = $item["sendDate"];
+                        break;
+                    }
                 }
+            } else {
+                if (isset($orderItemId)) {
+                    foreach ($cart["items"] as $item) {
+                        if ($item["productId"] == $productId && $item["orderItemId"] == $orderItemId) {
+                            $shippingTypeId = $item["firstTimeSendDate"];
+                            break;
+                        }
+                    }
+                } else {
+                    foreach ($cart["items"] as $item) {
+                        if ($item["productId"] == $productId) {
+                            $shippingTypeId = $item["sendDate"];
+                            break;
+                        }
+                    }
+                }
+
+//                if ($orderItemId == 476) {
+//                    throw new \yii\base\Exception($shippingTypeId);
+//                }
             }
         } else {
 //            throw new \yii\base\Exception;
@@ -83,6 +105,7 @@ class ProductShippingPrice extends \common\models\costfit\master\ProductShipping
 
 //        throw new \yii\base\Exception($productId . " " . $shippingTypeId);
         if (isset($cart) && $cart['isSlowest'] == 0) {
+
             if (isset($shippingDisCount)) {
                 $res["type"] = $shippingDisCount->type;
                 $res["discount"] = $shippingDisCount->discount;

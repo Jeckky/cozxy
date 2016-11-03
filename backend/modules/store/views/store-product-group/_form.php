@@ -36,7 +36,7 @@ use common\models\costfit\Supplier;
 
         <?= $form->field($model, 'supplierId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(Supplier::find()->all(), 'supplierId', 'name'), ['prompt' => '-- Select Supplier --']) ?>
 
-        <?= $form->field($model, 'poNo', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 45]) ?>
+        <?//= $form->field($model, 'poNo', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 45]) ?>
 
         <?//= $form->field($model, 'summary', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
 
