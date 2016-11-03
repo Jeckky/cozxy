@@ -89,8 +89,8 @@ class PickingController extends StoreMasterController {
                             $slot = \common\models\costfit\StoreProductArrange::find()->where("productId = " . $item->productId . " and status=4 and result!=0 order by createDateTime")->all(); //หา slot ทั้งหมดที่ product วางอยู่ และ ไม่เท่ากับ 0
                             if (isset($slot) && !empty($slot)) {
                                 //throw new \yii\base\Exception(print_r($slot, true));
-                                $enoughItemInSlot = false;
                                 foreach ($slot as $eSlot):
+                                    $enoughItemInSlot = false;
                                     $flag = false;
                                     $enoughItemInSlot = $this->checkEnoughItemInSlot($eSlot->slotId, $item->productId, $result); //เชคว่าในสล็อตนั้นมีของครบเปล่า/ถ้าครบ เบรค ไปโปรดักถัดไป
                                     $flag = $this->checkSlot($slots, $eSlot->slotId); //check ว่า เป็น slot  เดียวกันมั๊ย ถ้า slot  เดียวกันเอาแค่ อันเดียว

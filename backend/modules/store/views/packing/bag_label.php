@@ -118,7 +118,7 @@ printer_draw_text($handle, iconv("UTF-8", "tis-620", Order::findReciever($orderI
 printer_draw_text($handle, iconv("UTF-8", "tis-620", "สถานที่ส่ง :"), 400, 1600);
 printer_draw_text($handle, iconv("UTF-8", "tis-620", PickingPoint::findPickingPoitItem($orderId)), 1150, 1600);
 printer_draw_line($handle, 3600, 1200, 3600, 2000);
-printer_draw_bmp($handle, Yii::$app->getBasePath() . '\web\images\logo\costfit.bmp', 3700, 1250, 800, 800);
+printer_draw_bmp($handle, Yii::$app->getBasePath() . '\web\images\order-qr\\' . $bagNo . '.bmp', 3700, 1250, 800, 800);
 printer_draw_line($handle, 4600, 1200, 4600, 2000);
 printer_draw_line($handle, 300, 2000, 4600, 2000);
 /////////////////////////////////////////////////////////// END USER DETAIL ///////////////////////////////////////////////////
