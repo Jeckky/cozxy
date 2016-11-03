@@ -60,14 +60,27 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <?php ActiveForm::end(); ?>
             </div>
             <br>
+            <?php
+            $form = ActiveForm::begin([
+                'method' => 'POST',
+                'options' => [
+                    'id' => 'sp-form'
+                ]
+            ]);
+            ?>
+            <?php if (isset($message)): ?>
+                <h4 style="color:red"><?= $message ?></h4>
+            <?php endif; ?>
             <table class="table table-list-order" style="width: 70%">
                 <thead>
                     <tr style="background-color: #ccffcc;text-align: center;font-weight: bold;vertical-align: central;">
                         <td>ลำดับ</td>
+                        <td>Supplier</td>
                         <td>สินค้า</td>
                         <td>จำนวน</td>
                         <td>วันจะส่ง</td>
                         <td>วันคงเหลือที่จะส่ง</td>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -76,17 +89,29 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     $total = 0;
                     if (isset($model) && count($model) > 0):
                         foreach ($model as $pView):
-                            ?>
-                            <tr style="text-align: center;" class="<?= ($pView->remainDay <= 3) ? " danger" : (($pView->remainDay <= 5) ? " warning" : "") ?>">
-                                <td><?= $i ?></td>
-                                <td style="text-align: left"><?= $pView->product->title ?></td>
-                                <td><?= $pView->sumQuantity ?></td>
-                                <td><?= $this->context->dateThai($pView->sendDateTime, 1) ?></td>
-                                <td><?= $pView->remainDay ?> วัน</td>
-                            </tr>
-                            <?php
+                            if (!isset($pView->storeProductId)) {
+                                ?>
+                                <tr style="text-align: center;" class="<?= ($pView->remainDay <= 3) ? " danger" : (($pView->remainDay <= 5) ? " warning" : "") ?>">
+                                    <td><?= $i . " " . $pView->storeProductId ?></td>
+                                    <td>
+                                        <?=
+                                        Html::dropDownList("supplier[$pView->orderItemId][$pView->productId][$pView->sumQuantity]", NULL, yii\helpers\ArrayHelper::map(common\models\costfit\SupplierProduct::getAllSupplierWhereProductId($pView->productId), function($model) {
+                                            return $model->supplierId;
+                                        }, function($model) {
+                                            return $model->supplier->name . " เวลาจัดส่ง " . $model->leaseTime . " วัน จำนวนมากสุด " . $model->maxQuantity . " ชิ้น";
+                                        }), ['prompt' => '-- เลือก Supplier --', 'class' => 'form-control'])
+                                        ?>
+                                    </td>
+                                    <td style="text-align: left"><?= $pView->product->title ?></td>
+                                    <td><?= $pView->sumQuantity ?></td>
+                                    <td><?= $this->context->dateThai($pView->sendDateTime, 1) ?></td>
+                                    <td><?= $pView->remainDay ?> วัน</td>
+
+                                </tr>
+                                <?php
 //                        $total+=$order->summary;
-                            $i++;
+                                $i++;
+                            }
                         endforeach;
                     else:
                         ?>
@@ -101,8 +126,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <td style="text-align: right;"><b><?//= number_format($total, 2) ?></b></td>
 <td></td>
 </tr>-->
+                    <tr>
+                        <td></td>
+                        <td colspan="5"><?= Html::submitButton("สั่งซื้อ", ['class' => 'btn btn-success']) ?>
+                            <span style="color:red">***กรุณาเลือก Supplier ต้านบนเพื่อ เปิด PO สั่งซื้อ</span>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
+            <?php ActiveForm::end(); ?>
         </div>
     </div>
 </div>

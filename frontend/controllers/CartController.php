@@ -66,6 +66,7 @@ class CartController extends MasterController
         }
         $product = new \common\models\costfit\Product();
         $orderItem->sendDate = $_POST["fastId"];
+        $orderItem->firstTimeSendDate = $_POST["fastId"];
         $productPrice = $product->calProductPrice($id, $orderItem->quantity, 1, $_POST["fastId"]);
         $orderItem->orderId = $order->orderId;
         $orderItem->productId = $id;
@@ -295,7 +296,10 @@ class CartController extends MasterController
                 $order->save(false); // For save Is Slowest before update order item price
                 foreach ($order->orderItems as $oi) {
                     $product = new \common\models\costfit\Product();
-                    $price = $product->calProductPrice($oi->productId, $oi->quantity, 1);
+                    if ($_POST['type'] == 2) {
+                        $oi->sendDate = $oi->firstTimeSendDate;
+                    }
+                    $price = $product->calProductPrice($oi->productId, $oi->quantity, 1, NULL, $oi->orderItemId);
                     $oi->price = $price["price"];
                     $oi->priceOnePiece = $oi->product->calProductPrice($oi->productId, 1);
                     $oi->subTotal = $oi->price * $oi->quantity;

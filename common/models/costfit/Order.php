@@ -148,6 +148,7 @@ class Order extends \common\models\costfit\master\OrderMaster
                     'priceOnePieceText' => number_format($item->priceOnePiece, 2),
                     'priceMarket' => $item->product->price,
                     'sendDate' => $item->sendDate,
+                    'firstTimeSendDate' => $item->firstTimeSendDate,
                     'sendDateNoDate' => isset($item->shippingType) ? $item->shippingType->date : NULL,
                     'subTotal' => $item->subTotal,
                     'shipDate' => $item->sendDate,

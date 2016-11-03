@@ -39,10 +39,19 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 ],
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    'supplierProductId',
-                    'supplierId',
-                    'productId',
-                    'leaseTime:datetime',
+                    [
+                        'attribute' => 'supplierId',
+                        'value' => function($model) {
+                            return $model->supplier->name;
+                        }
+                    ],
+                    [
+                        'attribute' => 'productId',
+                        'value' => function($model) {
+                            return $model->product->title;
+                        }
+                    ],
+                    'leaseTime',
                     'maxQuantity',
                     // 'status',
                     // 'createDateTime',
@@ -53,27 +62,27 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-eye"></i>', $url, [
-                                            'title' => Yii::t('yii', 'view'),
+                                    'title' => Yii::t('yii', 'view'),
                                 ]);
                             },
-                                    'update' => function ($url, $model) {
+                            'update' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-pencil"></i>', $url, [
-                                            'title' => Yii::t('yii', 'update'),
+                                    'title' => Yii::t('yii', 'update'),
                                 ]);
                             },
-                                    'delete' => function ($url, $model) {
+                            'delete' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-trash-o"></i>', $url, [
-                                            'title' => Yii::t('yii', 'Delete'),
-                                            'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
-                                            'data-method' => 'post',
+                                    'title' => Yii::t('yii', 'Delete'),
+                                    'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+                                    'data-method' => 'post',
                                 ]);
                             },
-                                ]
-                            ],
-                        ],
-                    ]);
-                    ?>
-                </div>
-            </div>
-            <?php Pjax::end(); ?>
+                        ]
+                    ],
+                ],
+            ]);
+            ?>
+        </div>
+    </div>
+    <?php Pjax::end(); ?>
 </div>
