@@ -28,8 +28,16 @@ class SettingsController extends ManagementMasterController {
     }
 
     public function actionIndex() {
-
-        return $this->render('index');
+        $listViewLevels = new ActiveDataProvider([
+            'query' => \common\models\costfit\ViewLevels::find(),
+        ]);
+        $listUserGroups = new ActiveDataProvider([
+            'query' => \common\models\costfit\UserGroups::find(),
+        ]);
+        return $this->render('index', [
+            'listViewLevels' => $listViewLevels, 'listUserGroups' => $listUserGroups
+        ]);
+        //return $this->render('index');
     }
 
     public function actionMenu() {

@@ -18,6 +18,7 @@ use Yii;
     * @property integer $shippingFromType
     * @property string $importQuantity
     * @property string $remark
+    * @property string $orderItemId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -43,7 +44,7 @@ public function rules()
 {
 return [
             [['storeProductGroupId', 'productId', 'shippingFromType', 'createDateTime'], 'required'],
-            [['storeProductGroupId', 'storeId', 'productId', 'quantity', 'shippingFromType', 'importQuantity', 'status'], 'integer'],
+            [['storeProductGroupId', 'storeId', 'productId', 'quantity', 'shippingFromType', 'importQuantity', 'orderItemId', 'status'], 'integer'],
             [['paletNo', 'price', 'total'], 'number'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['remark'], 'string', 'max' => 255],
@@ -69,6 +70,7 @@ return [
     'shippingFromType' => Yii::t('store_product', 'Shipping From Type'),
     'importQuantity' => Yii::t('store_product', 'Import Quantity'),
     'remark' => Yii::t('store_product', 'Remark'),
+    'orderItemId' => Yii::t('store_product', 'Order Item ID'),
     'status' => Yii::t('store_product', 'Status'),
     'createDateTime' => Yii::t('store_product', 'Create Date Time'),
     'updateDateTime' => Yii::t('store_product', 'Update Date Time'),

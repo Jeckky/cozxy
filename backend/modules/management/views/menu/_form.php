@@ -72,15 +72,20 @@ use kartik\widgets\Select2;
         ];
         if (isset($_GET['id'])) {
             $datas = \common\models\costfit\Menu::find()->where('menuId=' . $_GET['id'])->one();
-            $data = \common\models\costfit\Level::find()->select('GROUP_CONCAT(name) as name')->where('levelId in (' . $datas['levelId'] . ')')->one();
-
+            //$data = \common\models\costfit\Level::find()->select('GROUP_CONCAT(name) as name')->where('levelId in (' . $datas['levelId'] . ')')->all();
+            $dataZ = yii\helpers\ArrayHelper::map(\common\models\costfit\Level::find()->where('levelId in (' . $datas['levelId'] . ')')->asArray()->all(), 'levelId', 'name');
             $datax = yii\helpers\ArrayHelper::map(\common\models\costfit\Level::find()->asArray()->all(), 'levelId', 'name');
         } else {
             $datax = yii\helpers\ArrayHelper::map(\common\models\costfit\Level::find()->asArray()->all(), 'levelId', 'name');
+            $dataZ = '';
         }
+        // echo '<pre>';
+        // print_r($dataZ);
+        // echo '<pre>';
+        // print_r($datax);
 
         echo $form->field($model, 'levelId')->widget(Select2::classname(), [
-            'value' => ['admin', ''], // initial value
+            'value' => $dataZ, // initial value (will be ordered accordingly and pushed to the top)
             'data' => $datax,
             'maintainOrder' => true,
             'pluginOptions' => [

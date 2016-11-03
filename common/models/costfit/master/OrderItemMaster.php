@@ -22,6 +22,7 @@ use Yii;
     * @property string $total
     * @property integer $sendDate
     * @property string $sendDateTime
+    * @property integer $firstTimeSendDate
     * @property string $pickerId
     * @property string $color
     * @property string $bagNo
@@ -49,7 +50,7 @@ public function rules()
 {
 return [
             [['orderId', 'productId', 'priceOnePiece', 'quantity', 'price', 'createDateTime'], 'required'],
-            [['orderId', 'productId', 'productGroupId', 'brandId', 'categoryId', 'sendDate', 'pickerId', 'color', 'status'], 'integer'],
+            [['orderId', 'productId', 'productGroupId', 'brandId', 'categoryId', 'sendDate', 'firstTimeSendDate', 'pickerId', 'color', 'status'], 'integer'],
             [['priceOnePiece', 'quantity', 'price', 'subTotal', 'discountValue', 'shippingDiscountValue', 'total'], 'number'],
             [['sendDateTime', 'createDateTime', 'updateDateTime'], 'safe'],
             [['bagNo'], 'string', 'max' => 20],
@@ -79,6 +80,7 @@ return [
     'total' => Yii::t('order_item', 'Total'),
     'sendDate' => Yii::t('order_item', 'Send Date'),
     'sendDateTime' => Yii::t('order_item', 'Send Date Time'),
+    'firstTimeSendDate' => Yii::t('order_item', 'First Time Send Date'),
     'pickerId' => Yii::t('order_item', 'Picker ID'),
     'color' => Yii::t('order_item', 'Color'),
     'bagNo' => Yii::t('order_item', 'Bag No'),

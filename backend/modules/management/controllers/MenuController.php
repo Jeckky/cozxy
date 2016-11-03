@@ -58,18 +58,18 @@ class MenuController extends ManagementMasterController {
     public function actionCreate() {
         $model = new Menu();
         if (isset($_POST["Menu"])) {
-            $getLevelId =  $_POST["Menu"]['levelId']; 
-            $LevelId    =   '';
-            if(count($getLevelId)>0){
-                foreach ($getLevelId as $value) { 
-                $LevelId .= $value.',' ;
+            $getLevelId = $_POST["Menu"]['levelId'];
+            $LevelId = '';
+            if (count($getLevelId) > 0) {
+                foreach ($getLevelId as $value) {
+                    $LevelId .= $value . ',';
+                }
+                $LevelId = substr($LevelId, 0, -1);
+            } else {
+                $LevelId = '';
             }
-            $LevelId  = substr($LevelId, 0, -1);
-        }else{
-            $LevelId  = '';
-        }
-            
-          //  echo $LevelId;
+
+            //  echo $LevelId;
             $model->attributes = $_POST["Menu"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $model->levelId = $LevelId;
@@ -92,24 +92,36 @@ class MenuController extends ManagementMasterController {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
+        $menuId = $_GET['id'];
+        $getMenu = \common\models\costfit\Menu::find()->where('menuId =' . $menuId)->one();
+        $getLevel = \common\models\costfit\Level::find()->select('levelId,name')->where('levelId in (' . $getMenu['levelId'] . ')')->all();
+        $list = \yii\helpers\ArrayHelper::map($getLevel, 'levelId', 'name');
+        //find($id)->select('id,name as full')->asArray()->all();
+        //$data = ArrayHelper::toArray($getLevel);
+        // $datav = '';
+        $data = \yii\helpers\ArrayHelper::map(\common\models\costfit\Level::find()->where('levelId in (' . $getMenu['levelId'] . ')')->asArray()->all(), 'levelId', 'name');
+
+
+        // echo '<pre>';
+        // print_r($datav);
+        // echo $datav;
         if (isset($_POST["Menu"])) {
             $model->attributes = $_POST["Menu"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-
-
-
             if ($model->save()) {
                 return $this->redirect(['index']);
             }
         }
         return $this->render('update', [
-            'model' => $model,
+            'model' => $model
         ]);
     }
 
     /**
      * Deletes an existing Menu model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * If deletion is successful, the browser will be redirected to the 'index
+
+      ' page.
      * @param string $id
      * @return mixed
      */
@@ -128,9 +140,13 @@ class MenuController extends ManagementMasterController {
      */
     protected function findModel($id) {
         if (($model = Menu::findOne($id)) !== null) {
+            //echo '<pre>';
+            //print_r($model);
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('
+
+        The requested page does not exist.');
         }
     }
 
