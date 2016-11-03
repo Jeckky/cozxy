@@ -30,6 +30,10 @@ class StoreProductGroupController extends StoreMasterController {
      * @return mixed
      */
     public function actionIndex() {
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        if (!isset(Yii::$app->user->identity->userId)) {
+            return $this->redirect($baseUrl . '/auth');
+        }
         $query = StoreProductGroup::find()->where("status=1");
         $passQc = StoreProductGroup::find()->where("status!=1 order by receiveDate DESC")->all();
         if (isset($_GET['fromDate']) && $_GET['fromDate'] != '') {

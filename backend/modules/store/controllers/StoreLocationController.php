@@ -12,11 +12,9 @@ use yii\filters\VerbFilter;
 /**
  * StoreLocationController implements the CRUD actions for StoreLocation model.
  */
-class StoreLocationController extends StoreMasterController
-{
+class StoreLocationController extends StoreMasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -31,8 +29,11 @@ class StoreLocationController extends StoreMasterController
      * Lists all StoreLocation models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        if (!isset(Yii::$app->user->identity->userId)) {
+            return $this->redirect($baseUrl . '/auth');
+        }
         $dataProvider = new ActiveDataProvider([
             'query' => StoreLocation::find(),
         ]);
@@ -47,8 +48,7 @@ class StoreLocationController extends StoreMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -59,8 +59,7 @@ class StoreLocationController extends StoreMasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new StoreLocation();
         if (isset($_POST["StoreLocation"])) {
             $model->attributes = $_POST["StoreLocation"];
@@ -80,8 +79,7 @@ class StoreLocationController extends StoreMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
         if (isset($_POST["StoreLocation"])) {
             $model->attributes = $_POST["StoreLocation"];
@@ -104,8 +102,7 @@ class StoreLocationController extends StoreMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -118,8 +115,7 @@ class StoreLocationController extends StoreMasterController
      * @return StoreLocation the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = StoreLocation::findOne($id)) !== null) {
             return $model;
         } else {

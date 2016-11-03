@@ -31,6 +31,10 @@ class StoreProductController extends StoreMasterController {
      * @return mixed
      */
     public function actionIndex() {
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        if (!isset(Yii::$app->user->identity->userId)) {
+            return $this->redirect($baseUrl . '/auth');
+        }
         $storeProductGroupId = '';
         // if (isset($_GET["storeId"])) {
         //  $query = StoreProduct::find()->where("storeId=" . $_GET["storeId"]);

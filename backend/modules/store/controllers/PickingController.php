@@ -516,7 +516,7 @@ class PickingController extends StoreMasterController {
         //throw new \yii\base\Exception($quantity);
         $userId = Yii::$app->user->identity->userId;
         $productArrange = \common\models\costfit\StoreProductArrange::find()->where("slotId=" . $slotId . " and productId=" . $productId . " and status=4 and result!=0 order by createDateTime")->one();
-        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and productId=" . $productId)->one();
+        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and productId=" . $productId . " and status=1")->one();
         $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
         if (($orderItem->status != 4) && (($orderItem->status != 5))) {
             if (isset($productArrange) && !empty($productArrange)) {

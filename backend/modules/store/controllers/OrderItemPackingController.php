@@ -12,13 +12,12 @@ use yii\filters\VerbFilter;
 /**
  * OrderItemPackingController implements the CRUD actions for OrderItemPacking model.
  */
-class OrderItemPackingController extends Controller
-{
+class OrderItemPackingController extends Controller {
+
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -33,8 +32,11 @@ class OrderItemPackingController extends Controller
      * Lists all OrderItemPacking models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        if (!isset(Yii::$app->user->identity->userId)) {
+            return $this->redirect($baseUrl . '/auth');
+        }
         $dataProvider = new ActiveDataProvider([
             'query' => OrderItemPacking::find(),
         ]);
@@ -49,8 +51,7 @@ class OrderItemPackingController extends Controller
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -61,8 +62,7 @@ class OrderItemPackingController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new OrderItemPacking();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -80,8 +80,7 @@ class OrderItemPackingController extends Controller
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -99,8 +98,7 @@ class OrderItemPackingController extends Controller
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -113,12 +111,12 @@ class OrderItemPackingController extends Controller
      * @return OrderItemPacking the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = OrderItemPacking::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }
