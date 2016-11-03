@@ -25,7 +25,8 @@ use \common\models\costfit\master\StoreProductMaster;
  * @property Store $store
  * @property StoreProductOrderItem[] $storeProductOrderItems
  */
-class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
+class StoreProduct extends \common\models\costfit\master\StoreProductMaster
+{
 
     const SHIPPING_FROM_TYPE_COSTFIT = 1;
     const SHIPPING_FROM_TYPE_SUPPLIER_TO_COSTFIT = 2;
@@ -39,14 +40,16 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), [
             'quantity' => 'จำนวน',
             'price' => 'ราคา',
@@ -57,7 +60,8 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
         ]);
     }
 
-    public function findAllShippingFromTypeArray() {
+    public function findAllShippingFromTypeArray()
+    {
         return [
             self::SHIPPING_FROM_TYPE_COSTFIT => "ส่งจาก costfit",
             self::SHIPPING_FROM_TYPE_SUPPLIER_TO_COSTFIT => "รับจาก Supplier ส่งจาก costfit",
@@ -65,7 +69,8 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
         ];
     }
 
-    public function getShippingFromTypeText($type) {
+    public function getShippingFromTypeText($type)
+    {
         $res = $this->findAllShippingTypeFromArray();
         if (isset($res[$type])) {
             return $res[$type];
@@ -74,7 +79,8 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
         }
     }
 
-    public function findAllStatusArray() {
+    public function findAllStatusArray()
+    {
         return [
             self::STATUS_IMPORT => "นำข้อมูลเข้า",
             self::STATUS_QC => "ตรวจและนับแล้ว", //import แล้ว
@@ -84,7 +90,8 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
         ];
     }
 
-    public function getStatusText($status) {
+    public function getStatusText($status)
+    {
         $res = $this->findAllStatusArray();
         if (isset($res[$status])) {
             return $res[$status];
@@ -93,22 +100,26 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
         }
     }
 
-    public function getStores() {
+    public function getStores()
+    {
         return $this->hasOne(Store::className(), ['storeId' => 'storeId']);
     }
 
-    public function getIsbn() {
+    public function getIsbn()
+    {
         $products = Product::find()->where("productId=" . $this->productId)->one();
         if (isset($products) && !empty($products)) {
             return $products->isbn;
         }
     }
 
-    public function getProducts() {
+    public function getProducts()
+    {
         return $this->hasOne(Product::className(), ['productId' => 'productId']);
     }
 
-    public static function arrangeProductToSlot($storeProductId, $slotId, $quantity) {
+    public static function arrangeProductToSlot($storeProductId, $slotId, $quantity)
+    {
         $model = StoreProductArrange::find()->where('storeProductId =' . $storeProductId . ' AND slotId=' . $slotId . "")->one();
         $storeProduct = StoreProduct::find()->where("storeProductId =" . $storeProductId)->one();
         $check = '';
@@ -249,7 +260,8 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
         $model->save(false);
     }
 
-    public static function checkSum($storeProductId, $quantity) {
+    public static function checkSum($storeProductId, $quantity)
+    {
         $total = 0;
         $storeProducts = StoreProduct::find()->where("storeProductId=" . $storeProductId)->one();
         if (isset($storeProducts) && !empty($storeProducts)) {
@@ -287,7 +299,8 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
         }
     }
 
-    public static function updateMore($storeProductId, $model, $quantity, $slotId) {
+    public static function updateMore($storeProductId, $model, $quantity, $slotId)
+    {
         $total = 0;
         $storeProducts = StoreProduct::find()->where("storeProductId=" . $storeProductId)->one();
         if (isset($storeProducts) && !empty($storeProducts)) {
@@ -332,6 +345,11 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
                 $model->save(false);
             }
         }
+    }
+
+    public function getOrderItem()
+    {
+        return $this->hasOne(OrderItem::className(), ['orderItemId' => 'orderItemId']);
     }
 
 }

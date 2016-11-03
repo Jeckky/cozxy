@@ -29,15 +29,19 @@ class StoreProductGroup extends \common\models\costfit\master\StoreProductGroupM
     /**
      * @inheritdoc
      */
+    const STATUS_DRAFT = 0; // แบบร่าง
     const STATUS_IMPORT_DATA = 1;
     const STATUS_QC = 2; //QC
     const STATUS_ARRANGED_SOME = 3;
     const STATUS_ARRANGED = 4;
     const STATUS_ARRANGING = 5;
+    const STATUS_PURCHASING = 6; // ส่งสั่งซื้อ
 
     public static function findAllStatusArray()
     {
         return [
+            self::STATUS_DRAFT => "สร้าง",
+            self::STATUS_PURCHASING => 'กำลังสั่งซื้อ',
             self::STATUS_IMPORT_DATA => "นำข้อมูลเข้า",
             self::STATUS_QC => "ตรวจรับแล้ว", //import แล้ว
             self::STATUS_ARRANGING => "กำลังนำไปจัดเรียง",
@@ -120,12 +124,12 @@ class StoreProductGroup extends \common\models\costfit\master\StoreProductGroupM
 
         $max_code = intval(\common\models\costfit\StoreProductGroup::findMaxPoNo($prefix));
         $max_code += 1;
-        return $prefix . date("Ym") . "-" . str_pad($max_code, 4, "0", STR_PAD_LEFT);
+        return $prefix . date("Ym") . "-" . str_pad($max_code, 6, "0", STR_PAD_LEFT);
     }
 
     public static function findMaxPoNo($prefix = NULL)
     {
-        $order = Order::findBySql("SELECT MAX(RIGHT(poNo,7)) as maxCode from `store_product_group` WHERE substr(poNo,1,2)='$prefix' order by poNo DESC ")->one();
+        $order = Order::findBySql("SELECT MAX(RIGHT(poNo,6)) as maxCode from `store_product_group` WHERE substr(poNo,1,2)='$prefix' order by poNo DESC ")->one();
 //        $order = Order::find()->select("MAX(RIGHT(orderNo,7)) as maxCode")
 //        ->where("substr(orderNo,1,2)='$prefix' ")
 //        ->orderBy('orderNo DESC ')
