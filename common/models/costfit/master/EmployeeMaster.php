@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "employee".
 *
-    * @property integer $employeeId
+    * @property string $employeeId
     * @property string $employeeCode
     * @property integer $status
     * @property string $createDateTime
@@ -34,7 +34,7 @@ use Yii;
     * @property integer $companyId
     * @property string $companyValue
     * @property integer $branchId
-    * @property integer $branchValue
+    * @property string $branchValue
     * @property integer $companyDivisionId
     * @property string $managerId
     * @property string $startDate

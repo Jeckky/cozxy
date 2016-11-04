@@ -59,7 +59,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     // 'birthDate',
                     // 'gender',
                     // 'tel',
-                    'status',
+                    //'status',ยืนยันใช้งาน
+                    ['attribute' => 'ยืนยันใช้งาน',
+                        'value' => function($model) {
+                            return $model->getStatusText($model->status);
+                        }
+                    ],
                     'createDateTime',
                     'updateDateTime',
                     ['class' => 'yii\grid\ActionColumn',

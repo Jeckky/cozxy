@@ -45,7 +45,7 @@ use leandrogehlen\treegrid\TreeGrid;
         <div class="col-lg-12">
             <div class="col-sm-2 ">&nbsp;</div>
             <div class="col-sm-7 " for="viewlevels-rules" style="font-weight: bold;">
-                User Groups Having Viewing Access
+                เลือกกลุ่มที่เข้าใช้งาน
             </div>
             <div class="col-lg-12"><br></div>
             <div class="col-sm-3 ">&nbsp;</div>
@@ -61,7 +61,7 @@ use leandrogehlen\treegrid\TreeGrid;
                     ],
                     'columns' => [
                         [
-                            'attribute' => 'user_group_Id',
+                            'attribute' => 'ชื่อกลุ่ม',
                             'format' => 'raw',
                             'value' => function($data) {
                                 return '<input type="checkbox" name="ViewLevels[user_group_Id][]" value="' . $data->user_group_Id . '" /> &nbsp;' . $data->name;

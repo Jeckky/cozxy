@@ -33,20 +33,23 @@ use yii\jui\DatePicker;
     <div class="panel-body">
         <?= $form->errorSummary($model) ?>
 
-        <?= $form->field($model, 'name', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 45]) ?>
+        <?= $form->field($model, 'name', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 45])->label('ชื่อกลุ่ม') ?>
 
         <?//= $form->field($model, 'parent_id', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 10]) ?>
         <?php
         echo $form->field($model, 'parent_id')->widget(kartik\select2\Select2::classname(), [
+            //'value' => ['0'], // initial value
             'data' => yii\helpers\ArrayHelper::map(\common\models\costfit\UserGroups::find()->all(), 'user_group_Id', 'name'),
             'pluginOptions' => [
                 'loadingText' => '-- Select Parent --',
             ],
             'options' => [
                 'id' => 'parent_id',
-                'class' => 'required'
+                'class' => 'required',
+                'placeholder' => 'ค่าเริ่มต้น',
+            //'value' => 2, // value to initialize
             ],
-        ])->label('Group Parent');
+        ])->label('กลุ่มหลัก');
         ?>
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
