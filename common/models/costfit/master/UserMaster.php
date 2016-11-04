@@ -45,7 +45,7 @@ return 'user';
 public function rules()
 {
 return [
-            [['username', 'user_group_Id', 'createDateTime'], 'required'],
+            [['username', 'createDateTime'], 'required'],
             [['password_hash', 'token', 'auth_key'], 'string'],
             [['type', 'gender', 'status'], 'integer'],
             [['birthDate', 'createDateTime', 'updateDateTime'], 'safe'],

@@ -48,7 +48,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             return $data->title;
                         },
                     ],
-                    //'ordering',
+                    'desc',
                     //'rules',
                     [
                         'attribute' => 'เลือกกลุ่มที่เข้าใช้งาน',

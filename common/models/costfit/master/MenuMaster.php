@@ -11,11 +11,12 @@ use Yii;
     * @property string $levelId
     * @property string $name
     * @property string $link
-    * @property integer $parents
+    * @property string $parents
     * @property integer $sort
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
+    * @property string $userId
 */
 class MenuMaster extends \common\models\ModelMaster
 {
@@ -38,6 +39,7 @@ return [
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['levelId', 'link'], 'string', 'max' => 100],
             [['name'], 'string', 'max' => 50],
+            [['userId'], 'string', 'max' => 200],
         ];
 }
 
@@ -56,6 +58,7 @@ return [
     'status' => Yii::t('menu', 'Status'),
     'createDateTime' => Yii::t('menu', 'Create Date Time'),
     'updateDateTime' => Yii::t('menu', 'Update Date Time'),
+    'userId' => Yii::t('menu', 'User ID'),
 ];
 }
 }

@@ -63,14 +63,20 @@ class UserController extends ManagementMasterController {
             $result = NULL;
         }
 
-        //echo '<pre>';
-        //print_r($result);
         $query = '';
         $listViewLevels = new ActiveDataProvider([
             'query' => \common\models\costfit\UserGroups::find(),
         ]);
+
+        $listMenu = new ActiveDataProvider([
+            'query' => \common\models\costfit\Menu::find(),
+        ]);
+
+        //echo '<pre>';
+        // print_r($listMenu);
+
         return $this->render('view', [
-            'model' => $this->findModel($id), 'listViewLevels' => $listViewLevels
+            'model' => $this->findModel($id), 'listViewLevels' => $listViewLevels, 'listMenu' => $listMenu
         ]);
     }
 

@@ -57,74 +57,50 @@ use kartik\widgets\Select2;
                 'class' => 'required'
             ],
         ])->label('Parent');
+        /*
+          //http://demos.krajee.com/widget-details/select2
+          $datav = [
+          "red" => "red",
+          "green" => "green",
+          "blue" => "blue",
+          "orange" => "orange",
+          "white" => "white",
+          "black" => "black",
+          "purple" => "purple",
+          "cyan" => "cyan",
+          "teal" => "teal"
+          ];
+          if (isset($_GET['id'])) {
+          $datas = \common\models\costfit\Menu::find()->where('menuId=' . $_GET['id'])->one();
+          //$data = \common\models\costfit\Level::find()->select('GROUP_CONCAT(name) as name')->where('levelId in (' . $datas['levelId'] . ')')->all();
+          $dataZ = yii\helpers\ArrayHelper::map(\common\models\costfit\Level::find()->where('levelId in (' . $datas['levelId'] . ')')->asArray()->all(), 'levelId', 'name');
+          $datax = yii\helpers\ArrayHelper::map(\common\models\costfit\Level::find()->asArray()->all(), 'levelId', 'name');
+          } else {
+          $datax = yii\helpers\ArrayHelper::map(\common\models\costfit\Level::find()->asArray()->all(), 'levelId', 'name');
+          $dataZ = '';
+          }
 
-        //http://demos.krajee.com/widget-details/select2
-        $datav = [
-            "red" => "red",
-            "green" => "green",
-            "blue" => "blue",
-            "orange" => "orange",
-            "white" => "white",
-            "black" => "black",
-            "purple" => "purple",
-            "cyan" => "cyan",
-            "teal" => "teal"
-        ];
-        if (isset($_GET['id'])) {
-            $datas = \common\models\costfit\Menu::find()->where('menuId=' . $_GET['id'])->one();
-            //$data = \common\models\costfit\Level::find()->select('GROUP_CONCAT(name) as name')->where('levelId in (' . $datas['levelId'] . ')')->all();
-            $dataZ = yii\helpers\ArrayHelper::map(\common\models\costfit\Level::find()->where('levelId in (' . $datas['levelId'] . ')')->asArray()->all(), 'levelId', 'name');
-            $datax = yii\helpers\ArrayHelper::map(\common\models\costfit\Level::find()->asArray()->all(), 'levelId', 'name');
-        } else {
-            $datax = yii\helpers\ArrayHelper::map(\common\models\costfit\Level::find()->asArray()->all(), 'levelId', 'name');
-            $dataZ = '';
-        }
-        // echo '<pre>';
-        // print_r($dataZ);
-        // echo '<pre>';
-        // print_r($datax);
 
-        echo $form->field($model, 'levelId')->widget(Select2::classname(), [
-            'value' => $dataZ, // initial value (will be ordered accordingly and pushed to the top)
-            'data' => $datax,
-            'maintainOrder' => true,
-            'pluginOptions' => [
-                'loadingText' => 'Loading level ...',
-                'tags' => true,
-                'maximumInputLength' => 10
-            ],
-            'options' => [
-                //'placeholder' => 'Select level ...',
-                'id' => 'level',
-                'class' => 'required',
-                'multiple' => true
-            ],
-        ])->label('Level');
+          echo $form->field($model, 'levelId')->widget(Select2::classname(), [
+          'value' => $dataZ, // initial value (will be ordered accordingly and pushed to the top)
+          'data' => $datax,
+          'maintainOrder' => true,
+          'pluginOptions' => [
+          'loadingText' => 'Loading level ...',
+          'tags' => true,
+          'maximumInputLength' => 10
+          ],
+          'options' => [
+          //'placeholder' => 'Select level ...',
+          'id' => 'level',
+          'class' => 'required',
+          'multiple' => true
+          ],
+          ])->label('Level');
 
-        $data = [
-            "red" => "red",
-            "green" => "green",
-            "blue" => "blue",
-            "orange" => "orange",
-            "white" => "white",
-            "black" => "black",
-            "purple" => "purple",
-            "cyan" => "cyan",
-            "teal" => "teal"
-        ];
-        echo '<label class="control-label">Test Tag Multiple</label>';
-        echo Select2::widget([
-            'name' => 'color_2a',
-            'value' => ['teal', 'green', 'red'], // initial value (will be ordered accordingly and pushed to the top)
-            'data' => $data,
-            'maintainOrder' => true,
-            'options' => ['placeholder' => 'Select a color ...', 'multiple' => true],
-            'pluginOptions' => [
-                'tags' => true,
-                'maximumInputLength' => 10
-            ],
-        ]);
+         */
         ?>
+
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
                 <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
