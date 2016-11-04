@@ -65,4 +65,19 @@ class UserGroups extends \common\models\costfit\master\UserGroupsMaster {
         return $result;
     }
 
+    public static function getHierarchy() {
+        $options = [];
+
+        $parents = self::find()->where("parent_id=0")->all();
+        foreach ($parents as $id => $p) {
+            $children = self::find()->where("parent_id=:parent_id", [":parent_id" => $p->user_group_Id])->all();
+            $child_options = [];
+            foreach ($children as $child) {
+                $child_options[$child->user_group_Id] = $child->name;
+            }
+            $options[$p->name] = $child_options;
+        }
+        return $options;
+    }
+
 }

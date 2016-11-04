@@ -57,6 +57,7 @@ class UserGroupsController extends ManagementMasterController {
      */
     public function actionCreate() {
         $model = new UserGroups();
+
         if (isset($_POST["UserGroups"])) {
             $model->attributes = $_POST["UserGroups"];
             if ($_POST["UserGroups"]['parent_id'] == '') {

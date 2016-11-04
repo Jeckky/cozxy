@@ -36,7 +36,7 @@ use leandrogehlen\treegrid\TreeGrid;
     <div class="panel-body">
         <?= $form->errorSummary($model) ?>
 
-        <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 100]) ?>
+        <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 100])->label('ชื่อระดับการเข้าถึง') ?>
 
         <?//= $form->field($model, 'ordering', ['options' => ['class' => 'row form-group']])->textInput() ?>
 

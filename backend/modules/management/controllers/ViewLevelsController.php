@@ -72,6 +72,14 @@ class ViewLevelsController extends ManagementMasterController {
         $model = new ViewLevels();
         if (isset($_POST["ViewLevels"])) {
             $model->attributes = $_POST["ViewLevels"];
+            $rules = '';
+            foreach ($_POST["ViewLevels"]['user_group_Id'] as $value) {
+                $rules .= $value . ',';
+            }
+            $listRules = substr($rules, 0, -1);
+            $getRules = '[' . $listRules . ']';
+
+            $model->rules = $getRules;
             $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
                 return $this->redirect(['index']);
