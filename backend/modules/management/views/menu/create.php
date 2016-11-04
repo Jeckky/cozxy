@@ -16,6 +16,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
     <?=
     $this->render('_form', [
         'model' => $model,
+        'listViewLevels' => $listViewLevels,
         'title' => Html::encode($this->title)
     ])
     ?>

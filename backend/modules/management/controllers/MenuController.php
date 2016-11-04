@@ -58,29 +58,31 @@ class MenuController extends ManagementMasterController {
     public function actionCreate() {
         $model = new Menu();
         if (isset($_POST["Menu"])) {
-            $getLevelId = $_POST["Menu"]['levelId'];
-            $LevelId = '';
-            if (count($getLevelId) > 0) {
-                foreach ($getLevelId as $value) {
-                    $LevelId .= $value . ',';
-                }
-                $LevelId = substr($LevelId, 0, -1);
-            } else {
-                $LevelId = '';
-            }
-
-            //  echo $LevelId;
             $model->attributes = $_POST["Menu"];
+            if (isset($_POST["Menu"]['user_group_Id'])) {
+                $rules = '';
+                foreach ($_POST["Menu"]['user_group_Id'] as $value) {
+                    $rules .= $value . ',';
+                }
+                $listRules = substr($rules, 0, -1);
+                $getRules = '[' . $listRules . ']';
+            } else {
+                $getRules = '[]';
+            }
+            $model->user_group_Id = $getRules;
             $model->createDateTime = new \yii\db\Expression('NOW()');
-            $model->levelId = $LevelId;
+
             //echo '<pre>';
             //print_r($model->attributes );
             if ($model->save()) {
                 return $this->redirect(['index']);
             }
         }
+        $listViewLevels = new ActiveDataProvider([
+            'query' => \common\models\costfit\UserGroups::find(),
+        ]);
         return $this->render('create', [
-            'model' => $model,
+            'model' => $model, 'listViewLevels' => $listViewLevels
         ]);
     }
 

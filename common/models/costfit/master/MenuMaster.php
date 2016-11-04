@@ -9,6 +9,8 @@ use Yii;
 *
     * @property string $menuId
     * @property string $levelId
+    * @property string $user_group_Id
+    * @property string $parent_id
     * @property string $name
     * @property string $link
     * @property string $parents
@@ -16,7 +18,6 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-    * @property string $userId
 */
 class MenuMaster extends \common\models\ModelMaster
 {
@@ -34,12 +35,12 @@ return 'menu';
 public function rules()
 {
 return [
-            [['levelId', 'name', 'link'], 'required'],
-            [['parents', 'sort', 'status'], 'integer'],
+            [['parent_id', 'parents', 'sort', 'status'], 'integer'],
+            [['name', 'link'], 'required'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['levelId', 'link'], 'string', 'max' => 100],
+            [['user_group_Id'], 'string', 'max' => 200],
             [['name'], 'string', 'max' => 50],
-            [['userId'], 'string', 'max' => 200],
         ];
 }
 
@@ -51,6 +52,8 @@ public function attributeLabels()
 return [
     'menuId' => Yii::t('menu', 'Menu ID'),
     'levelId' => Yii::t('menu', 'Level ID'),
+    'user_group_Id' => Yii::t('menu', 'User Group  ID'),
+    'parent_id' => Yii::t('menu', 'Parent ID'),
     'name' => Yii::t('menu', 'Name'),
     'link' => Yii::t('menu', 'Link'),
     'parents' => Yii::t('menu', 'Parents'),
@@ -58,7 +61,6 @@ return [
     'status' => Yii::t('menu', 'Status'),
     'createDateTime' => Yii::t('menu', 'Create Date Time'),
     'updateDateTime' => Yii::t('menu', 'Update Date Time'),
-    'userId' => Yii::t('menu', 'User ID'),
 ];
 }
 }

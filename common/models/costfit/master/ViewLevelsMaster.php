@@ -9,6 +9,7 @@ use Yii;
 *
     * @property string $viewLevelsId
     * @property string $title
+    * @property string $desc
     * @property integer $ordering
     * @property string $rules
     * @property integer $status
@@ -34,7 +35,7 @@ return [
             [['ordering', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 100],
-            [['rules'], 'string', 'max' => 200],
+            [['desc', 'rules'], 'string', 'max' => 200],
         ];
 }
 
@@ -46,6 +47,7 @@ public function attributeLabels()
 return [
     'viewLevelsId' => Yii::t('view_levels', 'View Levels ID'),
     'title' => Yii::t('view_levels', 'Title'),
+    'desc' => Yii::t('view_levels', 'Desc'),
     'ordering' => Yii::t('view_levels', 'Ordering'),
     'rules' => Yii::t('view_levels', 'Rules'),
     'status' => Yii::t('view_levels', 'Status'),
