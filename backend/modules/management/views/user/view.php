@@ -66,7 +66,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                 'format' => 'raw',
                                                 'value' => $model->auth_type
                                             ],
-                                            'birthDate:date',
+                                            //'birthDate:date',
+                                            [
+                                                'attribute' => 'วันเกิด',
+                                                'format' => 'raw',
+                                                'value' => Yii::$app->formatter->asDate($model->birthDate)
+                                            ],
                                             //'gender',
                                             [
                                                 'attribute' => 'เพศ',
