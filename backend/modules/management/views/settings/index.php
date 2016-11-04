@@ -38,7 +38,8 @@ use leandrogehlen\treegrid\TreeGrid;
                         <div class="panel-heading">
                             <!--<img src="assets/demo/avatars/1.jpg" alt="" class="widget-profile-avatar">-->
                             <div class="widget-profile-header">
-                                <a href="<?php echo Yii::$app->homeUrl; ?>management/user-groups"  class="btn"  style="color: #000;"> <i class="fa fa-tasks list-group-icon text-danger"></i> Settings User Groups </a><br>
+                                <a href="<?php echo Yii::$app->homeUrl; ?>management/user-groups"  class="btn"  style="color: #000;">
+                                    <i class="fa fa-tasks list-group-icon text-danger"></i> Settings Groups </a><br>
                             </div>
                         </div> <!-- / .panel-heading -->
                         <div class="panel-body text-left">
@@ -54,7 +55,8 @@ use leandrogehlen\treegrid\TreeGrid;
                         <div class="panel-heading">
                             <!--<img src="assets/demo/avatars/1.jpg" alt="" class="widget-profile-avatar">-->
                             <div class="widget-profile-header">
-                                <a href="<?php echo Yii::$app->homeUrl; ?>management/view-levels"  class="btn"  style="color: #000;"> <i class="fa fa-tasks list-group-icon text-danger"></i> Settings Levels </a><br>
+                                <a href="<?php echo Yii::$app->homeUrl; ?>management/view-levels"  class="btn"  style="color: #000;">
+                                    <i class="fa fa-tasks list-group-icon text-danger"></i> Settings Levels </a><br>
 
                             </div>
                         </div> <!-- / .panel-heading -->
@@ -71,7 +73,8 @@ use leandrogehlen\treegrid\TreeGrid;
                         <div class="panel-heading">
 
                             <div class="widget-profile-header ">
-                                <a href="<?php echo Yii::$app->homeUrl; ?>management/menu"  class="btn"  style="color: #000;"> <i class="fa fa-tasks list-group-icon text-danger"></i> Settings Menu</a><br>
+                                <a href="<?php echo Yii::$app->homeUrl; ?>management/menu"  class="btn"  style="color: #000;">
+                                    <i class="fa fa-tasks list-group-icon text-danger"></i> Settings Menu</a><br>
 
                             </div>
                         </div> <!-- / .panel-heading -->
