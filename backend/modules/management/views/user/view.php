@@ -172,6 +172,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                         ?>> <span class="lbl">Backend</span>
                                                     </label>
                                                 </div>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="radio" name="jq-validation-radios" class="px" value="3" <?php
+                                                        if ($model->type == 3) {
+                                                            echo "checked";
+                                                        }
+                                                        ?>> <span class="lbl">Frontend and Backend</span>
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                         <?php
