@@ -43,7 +43,7 @@ class UserGroups extends \common\models\costfit\master\UserGroupsMaster {
     static public function checkUserGroup($userGroup) {
         $CheckuserGroup = str_replace('[', '', str_replace(']', '', $userGroup));
         if ($CheckuserGroup != '') {
-            echo $userGroup;
+            //echo $userGroup;
             $userGroupx = str_replace('[', '(', str_replace(']', ')', $userGroup));
             // echo $userGroupx;
             $result = UserGroups::find()

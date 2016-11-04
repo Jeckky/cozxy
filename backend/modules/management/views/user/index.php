@@ -58,7 +58,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'attribute' => 'กลุ่มทำงาน',
                         'format' => 'raw',
                         'value' => function($model) {
-                            return $model->user_group_Id;
+                            //return $model->user_group_Id;
+                            $getUserGroup = common\models\costfit\UserGroups::checkUserGroup($model->user_group_Id);
+                            return $getUserGroup['name'];
                         },
                     ],
                     // 'auth_key:ntext',

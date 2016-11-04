@@ -38,10 +38,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="bs-tabdrop-pill1">
-                                <p><?php
-                                    //echo '<pre>';
-                                    //print_r($model);
-                                    ?>
+                                <p>
                                     <?=
                                     DetailView::widget([
                                         'model' => $model,
@@ -57,7 +54,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             [
                                                 'attribute' => 'กลุ่มทำงาน',
                                                 'format' => 'raw',
-                                                'value' => $model->type,
+                                                'value' => $model->getTypeText($model->type),
                                             ],
                                             //'auth_key:ntext',
                                             //'auth_type',
@@ -107,7 +104,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 <?php
                                 $form = ActiveForm::begin([
                                     'id' => 'default-shipping-address',
-                                    'action' => $baseUrl . '/management/user/group',
+                                    'action' => $baseUrl . '/management/user/group?id=' . $_GET['id'],
                                     'options' => ['class' => 'space-bottom'],
                                 ]);
                                 ?>
@@ -136,8 +133,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 ]);
                                 ?>
                                 <?php
-                                echo Html::hiddenInput('user-group-userId', $model->userId, ['id' => 'user-group-userId']);
-                                echo Html::submitButton('submit', ['class' => 'btn btn-primary', 'name' => 'btn-shipping-address'])
+                                echo Html::hiddenInput('user-group-userId', $model->userId, [ 'id' => 'user-group-userId']);
+                                echo Html::submitButton('submit', [ 'class' => 'btn btn-primary', 'name' => 'btn-shipping-address'])
                                 ?>
                                 <?php
                                 ActiveForm::end();
@@ -166,10 +163,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                 <div class="checkbox">
                                                     <label>
                                                         <input type="radio"  name="Access[jq-validation-radios]" class="px" value="1" <?php
-                                                        if ($model->type == 1) {
-                                                            echo "checked";
-                                                        }
-                                                        ?>> <span class="lbl">Frontend</span>
+                                        if ($model->type == 1) {
+                                            echo "checked";
+                                        }
+                                        ?>> <span class="lbl">Frontend</span>
                                                     </label>
                                                 </div>
                                                 <div class="checkbox">
@@ -178,7 +175,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                         if ($model->type == 2) {
                                                             echo "checked";
                                                         }
-                                                        ?>> <span class="lbl">Backend</span>
+                                        ?>> <span class="lbl">Backend</span>
                                                     </label>
                                                 </div>
                                                 <div class="checkbox">
@@ -187,7 +184,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                         if ($model->type == 3) {
                                                             echo "checked";
                                                         }
-                                                        ?>> <span class="lbl">Frontend and Backend</span>
+                                        ?>> <span class="lbl">Frontend and Backend</span>
                                                     </label>
                                                 </div>
                                             </div>
