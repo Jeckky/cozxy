@@ -51,7 +51,11 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'attribute' => 'กลุ่มทำงาน',
                         'format' => 'raw',
                         'value' => function($data) {
-                            return $data->type;
+                            if ($data->type == 1) {
+                                return 'เว็บไซต์เท่านั่น';
+                            } else {
+                                return 'เว็บไซต์ ,' . $data->type;
+                            }
                         },
                     ],
                     // 'auth_key:ntext',
@@ -65,8 +69,22 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             return $model->getStatusText($model->status);
                         }
                     ],
-                    'createDateTime',
-                    'updateDateTime',
+                    //'createDateTime',
+                    //'updateDateTime',
+                    [
+                        'attribute' => 'createDateTime',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            return Yii::$app->formatter->asDate($model->createDateTime) . ' ' . Yii::$app->formatter->asTime($model->createDateTime);
+                        }
+                    ],
+                    [
+                        'attribute' => 'updateDateTime',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            return Yii::$app->formatter->asDate($model->updateDateTime) . ' ' . Yii::$app->formatter->asTime($model->updateDateTime);
+                        }
+                    ],
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
                         'template' => '{view}   ',

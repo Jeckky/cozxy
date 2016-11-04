@@ -60,10 +60,11 @@ class UserGroupsController extends ManagementMasterController {
 
         if (isset($_POST["UserGroups"])) {
             $model->attributes = $_POST["UserGroups"];
-            if ($_POST["UserGroups"]['parent_id'] == '') {
-                $model->parent_id = 0;
-            } else {
+            if (isset($_POST["UserGroups"]['parent_id'])) {
+
                 $model->parent_id = $_POST["UserGroups"]['parent_id'];
+            } else {
+                $model->parent_id = 0;
             }
 
             $model->createDateTime = new \yii\db\Expression('NOW()');
@@ -86,10 +87,10 @@ class UserGroupsController extends ManagementMasterController {
         $model = $this->findModel($id);
         if (isset($_POST["UserGroups"])) {
             $model->attributes = $_POST["UserGroups"];
-            if ($_POST["UserGroups"]['parent_id'] == '') {
-                $model->parent_id = 0;
-            } else {
+            if (isset($_POST["UserGroups"]['parent_id'])) {
                 $model->parent_id = $_POST["UserGroups"]['parent_id'];
+            } else {
+                $model->parent_id = 0;
             }
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
