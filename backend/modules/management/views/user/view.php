@@ -66,7 +66,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                 'format' => 'raw',
                                                 'value' => $model->auth_type
                                             ],
-                                            'birthDate:datetime',
+                                            'birthDate:date',
                                             //'gender',
                                             [
                                                 'attribute' => 'เพศ',
@@ -76,7 +76,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             'tel',
                                             //'status',
                                             [
-                                                'attribute' => 'กลุ่มทำงาน',
+                                                'attribute' => 'สถานะ',
                                                 'format' => 'raw',
                                                 'value' => $model->getStatusText($model->status)
                                             ],
@@ -120,7 +120,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             'attribute' => 'เลือกกลุ่มที่เข้าใช้งาน',
                                             'format' => 'raw',
                                             'value' => function($data) {
-                                                return '<input type="checkbox" name="ViewLevels[user_group_Id][]" value="' . $data->user_group_Id . '" /> &nbsp;' . $data->name;
+                                                return '<input type="checkbox" name="ViewLevels[user_group_Id][]" class"px" value="' . $data->user_group_Id . '" /> &nbsp;' . $data->name;
                                             },
                                         ],
                                     // 'name',
@@ -136,12 +136,16 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 ?>
                                 <?php
                                 ActiveForm::end();
-                                ?>
+                                ?><br>
+                                <div class="note note-info padding-xs-vr">
+                                    <strong>อธิบาย</strong><br>
+                                    - กำหนดสิทธ์เข้าใช้งานของแต่ละเมนู
+                                </div>
                             </div>
                             <div class="tab-pane" id="bs-tabdrop-pill3">
                                 <div class="panel">
                                     <div class="panel-heading">
-                                        <span class="panel-title">jQuery Validation</span>
+                                        <span class="panel-title">สิทธิ์การเข้าใช้งาน Cozxy.com</span>
                                     </div>
                                     <div class="panel-body">
                                         <?php
@@ -152,8 +156,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         ]);
                                         ?>
                                         <div class="form-group">
-                                            <div class="col-sm-3">สิทธิ์การเข้าใช้งาน Cozxy.com</div><br><br>
-                                            <div class="col-sm-9">
+
+                                            <div class="col-sm-12">
                                                 <div class="checkbox">
                                                     <label>
                                                         <input type="radio"  name="jq-validation-radios" class="px" value="1" <?php
