@@ -16,6 +16,7 @@ use Yii;
     * @property string $email
     * @property string $token
     * @property integer $type
+    * @property string $user_group_Id
     * @property string $auth_key
     * @property string $auth_type
     * @property string $birthDate
@@ -44,11 +45,11 @@ return 'user';
 public function rules()
 {
 return [
-            [['username', 'createDateTime'], 'required'],
+            [['username', 'user_group_Id', 'createDateTime'], 'required'],
             [['password_hash', 'token', 'auth_key'], 'string'],
             [['type', 'gender', 'status'], 'integer'],
             [['birthDate', 'createDateTime', 'updateDateTime'], 'safe'],
-            [['username', 'firstname', 'password', 'lastname', 'email'], 'string', 'max' => 200],
+            [['username', 'firstname', 'password', 'lastname', 'email', 'user_group_Id'], 'string', 'max' => 200],
             [['auth_type'], 'string', 'max' => 255],
             [['tel'], 'string', 'max' => 20],
         ];
@@ -69,6 +70,7 @@ return [
     'email' => Yii::t('user', 'Email'),
     'token' => Yii::t('user', 'Token'),
     'type' => Yii::t('user', 'Type'),
+    'user_group_Id' => Yii::t('user', 'User Group  ID'),
     'auth_key' => Yii::t('user', 'Auth Key'),
     'auth_type' => Yii::t('user', 'Auth Type'),
     'birthDate' => Yii::t('user', 'Birth Date'),

@@ -64,7 +64,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             [
                                                 'attribute' => 'สมัครสมาชิกผ่านช่องทางของ',
                                                 'format' => 'raw',
-                                                'value' => $model->auth_type
+                                                'value' => isset($model->auth_type) ? $model->auth_type : "web",
                                             ],
                                             //'birthDate:date',
                                             [
@@ -156,7 +156,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         <?php
                                         $form = ActiveForm::begin([
                                             'id' => 'default-shipping-address',
-                                            'action' => $baseUrl . '/management/user/access',
+                                            'action' => $baseUrl . '/management/user/access?id=' . $_GET['id'],
                                             'options' => ['class' => 'space-bottom'],
                                         ]);
                                         ?>
@@ -165,7 +165,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             <div class="col-sm-12">
                                                 <div class="checkbox">
                                                     <label>
-                                                        <input type="radio"  name="jq-validation-radios" class="px" value="1" <?php
+                                                        <input type="radio"  name="Access[jq-validation-radios]" class="px" value="1" <?php
                                                         if ($model->type == 1) {
                                                             echo "checked";
                                                         }
@@ -174,7 +174,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                 </div>
                                                 <div class="checkbox">
                                                     <label>
-                                                        <input type="radio" name="jq-validation-radios" class="px" value="2" <?php
+                                                        <input type="radio" name="Access[jq-validation-radios]" class="px" value="2" <?php
                                                         if ($model->type == 2) {
                                                             echo "checked";
                                                         }
@@ -183,7 +183,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                 </div>
                                                 <div class="checkbox">
                                                     <label>
-                                                        <input type="radio" name="jq-validation-radios" class="px" value="3" <?php
+                                                        <input type="radio" name="Access[jq-validation-radios]" class="px" value="3" <?php
                                                         if ($model->type == 3) {
                                                             echo "checked";
                                                         }

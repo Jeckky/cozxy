@@ -37,6 +37,10 @@ class User extends \common\models\costfit\master\UserMaster {
     const USER_BLOCK = 99;
     const USER_STATUS_GENDER_Female = 0;
     const USER_STATUS_GENDER_Male = 1;
+    // const user type //
+    const USER_TYPE_FRONTEND = 1;
+    const USER_TYPE_BACKEND = 2;
+    const USER_TYPE_FRONTEND_BACKEND = 3;
 
     //const USER_STATUS_CHECKOUTS = 2;
     //const USER_STATUS_E_PAYMENT_DRAFT = 3;
@@ -105,9 +109,9 @@ class User extends \common\models\costfit\master\UserMaster {
 
     public function findAllStatusArray() {
         return [
-            self::USER_REGISTER => "ยังไม่ยืนยันผ่านอีเมลล์",
-            self::USER_CONFIRM_EMAIL => "ยืนยันผ่านแล้ว",
-            self::USER_BLOCK => "ถูกระงับ",
+            self::USER_REGISTER => "<span class='text-warning'>ยังไม่ยืนยันผ่านอีเมลล์</span>",
+            self::USER_CONFIRM_EMAIL => "<span class='text-success'>ยืนยันผ่านแล้ว</span>",
+            self::USER_BLOCK => "<span class='text-danger'>ถูกระงับ</span>",
         ];
     }
 
@@ -130,6 +134,27 @@ class User extends \common\models\costfit\master\UserMaster {
 
     public function getGenderText($status) {
         $res = $this->findAllGenderArray($status);
+        if (isset($res[$status])) {
+            return $res[$status];
+        } else {
+            return NULL;
+        }
+    }
+
+    // USER TYPE
+    public function findAllTypeArray() {
+        return [
+            //const USER_TYPE_FRONTEND = 1;
+            //const USER_TYPE_BACKEND = 2;
+            //const USER_TYPE_FRONTEND_BACKEND = 3;
+            self::USER_TYPE_FRONTEND => "<span class='text-primary'>frontend</span>",
+            self::USER_TYPE_BACKEND => "<span class='text-success'>backend</span>",
+            self::USER_TYPE_FRONTEND_BACKEND => "<span class='text-warning'>frontend and backend</span>",
+        ];
+    }
+
+    public function getTypeText($status) {
+        $res = $this->findAllTypeArray($status);
         if (isset($res[$status])) {
             return $res[$status];
         } else {

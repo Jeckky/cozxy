@@ -48,14 +48,17 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     // 'email:email',
                     // 'token:ntext',
                     [
+                        'attribute' => 'สิทธิ์การเข้าใช้งาน',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            return $model->getTypeText($model->type);
+                        },
+                    ],
+                    [
                         'attribute' => 'กลุ่มทำงาน',
                         'format' => 'raw',
-                        'value' => function($data) {
-                            if ($data->type == 1) {
-                                return 'เว็บไซต์เท่านั่น';
-                            } else {
-                                return 'เว็บไซต์ ,' . $data->type;
-                            }
+                        'value' => function($model) {
+                            return $model->user_group_Id;
                         },
                     ],
                     // 'auth_key:ntext',
@@ -65,6 +68,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     // 'tel',
                     //'status',ยืนยันใช้งาน
                     ['attribute' => 'ยืนยันใช้งาน',
+                        'format' => 'raw',
                         'value' => function($model) {
                             return $model->getStatusText($model->status);
                         }
@@ -76,13 +80,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'format' => 'raw',
                         'value' => function($model) {
                             return Yii::$app->formatter->asDate($model->createDateTime) . ' ' . Yii::$app->formatter->asTime($model->createDateTime);
-                        }
-                    ],
-                    [
-                        'attribute' => 'updateDateTime',
-                        'format' => 'raw',
-                        'value' => function($model) {
-                            return Yii::$app->formatter->asDate($model->updateDateTime) . ' ' . Yii::$app->formatter->asTime($model->updateDateTime);
                         }
                     ],
                     ['class' => 'yii\grid\ActionColumn',

@@ -83,9 +83,6 @@ class UserController extends ManagementMasterController {
         if (isset($_POST["User"])) {
             $model->attributes = $_POST["User"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-
-
-
             if ($model->save()) {
                 return $this->redirect(['index']);
             }
@@ -103,6 +100,26 @@ class UserController extends ManagementMasterController {
      */
     public function actionDelete($id) {
         $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Deletes an existing User model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionAccess($id) {
+        $model = $this->findModel($id);
+        if (isset($_POST["Access"])) {
+            $model->attributes = $_POST["Access"];
+            $model->type = $_POST["Access"]['jq-validation-radios'];
+            $model->updateDateTime = new \yii\db\Expression('NOW()');
+            if ($model->save()) {
+                return $this->redirect(['index']);
+            }
+        }
 
         return $this->redirect(['index']);
     }
