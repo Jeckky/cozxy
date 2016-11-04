@@ -84,36 +84,43 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     $couuntProduct = 0;
                     $a = 0;
                     $total = 0;
+                    $oldProductId = '';
+                    $oldOrderId = '';
                     if (isset($product) && !empty($product)) {
                         foreach ($product as $productId):
                             $item = common\models\costfit\OrderItem::findOrderItems($productId->orderId, $productId->productId);
-                            if (isset($item) && !empty($item)) {
-                                ?><tr>
-                                    <td><?php echo $i; ?></td>
-                                    <td><?php echo Product::findProductName($productId->productId); ?></td>
-                                    <td><?php echo -($productId->quantity); ?></td>
-                                    <td><?php echo Order::findOrderNo($productId->orderId); ?></td>
-                                    <td><?=
-                                        ($productId->status == 99) ?
-                                        Html::a('<i aria-hidden="true"></i> หยิบ', ['pick-item',
-                                            'arrangeId' => $productId->storeProductArrangeId,
-                                            'orderId' => $item->orderId,
-                                            'orderItemId' => $item->orderItemId,
-                                            'productId' => $item->productId,
-                                            'orderQuantity' => -($productId->quantity),
-                                            'slot' => $slot,
-                                            'arraySlots' => $slots,
-                                            'colorId' => $colorId,
-                                            'color' => $color,
-                                            'allOrderId' => $allOrderId,
-                                            'selection' => $selection
-                                        ], ['class' => 'btn btn-warning']) : Html::a('<i class="fa fa-check" aria-hidden="true"></i> หยิบแล้ว', ['pick-item'
-                                        ], ['class' => 'btn btn-defult', 'disabled' => true]);
-                                        // throw new \yii\base\Exception($item->orderItemId);
-                                        ?></td>
-                                </tr>
 
-                                <?php
+                            if (isset($item) && !empty($item)) {
+                                if (($oldProductId != $productId->productId) || ($oldOrderId != $productId->orderId)) {
+                                    ?><tr>
+                                        <td><?php echo $i; ?></td>
+                                        <td><?php echo Product::findProductName($productId->productId); ?></td>
+                                        <td><?php echo common\models\costfit\StoreProductArrange::sumQuantitiy($productId->productId, $productId->orderId); ?></td>
+                                        <td><?php echo Order::findOrderNo($productId->orderId); ?></td>
+                                        <td><?=
+                                            ($productId->status == 99) ?
+                                            Html::a('<i aria-hidden="true"></i> หยิบ', ['pick-item',
+                                                'arrangeId' => $productId->storeProductArrangeId,
+                                                'orderId' => $item->orderId,
+                                                'orderItemId' => $item->orderItemId,
+                                                'productId' => $item->productId,
+                                                'orderQuantity' => -($productId->quantity),
+                                                'slot' => $slot,
+                                                'arraySlots' => $slots,
+                                                'colorId' => $colorId,
+                                                'color' => $color,
+                                                'allOrderId' => $allOrderId,
+                                                'selection' => $selection
+                                            ], ['class' => 'btn btn-warning']) : Html::a('<i class="fa fa-check" aria-hidden="true"></i> หยิบแล้ว', ['pick-item'
+                                            ], ['class' => 'btn btn-defult', 'disabled' => true]);
+                                            // throw new \yii\base\Exception($item->orderItemId);
+                                            ?></td>
+                                    </tr>
+
+                                    <?php
+                                }
+                                $oldProductId = $productId->productId;
+                                $oldOrderId = $productId->orderId;
                                 $checkId = \common\models\costfit\StoreProductArrange::checkProductId($a, $allOrderId, $slot);
                                 // $array[$a] = $productId->productId;
                                 // $a++;

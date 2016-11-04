@@ -100,11 +100,14 @@ class PickingController extends StoreMasterController {
                                     }
                                     if ($enoughItemInSlot == true) {
                                         $this->updateSlot($eSlot->slotId, $item->productId, $result, $item->orderId);
-                                        break;
+                                        $orderItemCheck = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and orderItemId=" . $item->orderItemId)->one();
+                                        if ($orderItemCheck->status == 4) {
+                                            break;
+                                        }
+                                        $result = $result - $eSlot->result;
                                     } else {
                                         $pick = $result;
                                         $result = $result - $eSlot->result;
-                                        // throw new \yii\base\Exception($result);
                                         $this->updateSlot($eSlot->slotId, $item->productId, $pick, $item->orderId);
                                     }
                                 endforeach;
@@ -215,21 +218,24 @@ class PickingController extends StoreMasterController {
     }
 
     public function actionPickItem() {
-        $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId = " . $_GET['orderItemId'])->one();
+        $orderItems = \common\models\costfit\OrderItem::find()->where("orderId = " . $_GET['orderId'] . " and productId=" . $_GET['productId'])->all();
         $allSlot = new \common\models\costfit\StoreSlot();
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         $countSlot = 0;
         $userId = Yii::$app->user->identity->userId;
-        $this->updateArrange($_GET['arrangeId']);
+        $this->updateArrange($_GET['orderId'], $_GET['productId'], $_GET['slot']);
         $count = count(\common\models\costfit\StoreProductArrange::find()->where("orderId=" . $_GET['orderId'] . " and productId=" . $_GET['productId'] . " and status=99")->all());
-        if (isset($orderItem)) {
+        if (isset($orderItems)) {
             if ($count == 0) {//หยิบไอเทมนั้นในออเดอร์ หมดทุก slot แล้ว?
-                $orderItem->status = 5;
-                $orderItem->pickerId = $userId; //รอ login
-                $orderItem->updateDateTime = new \yii\db\Expression('NOW()');
-                $orderItem->save(); //set pinked product in orderItem to  5  (หยิบแล้ว)
+                foreach ($orderItems as $orderItem):
+                    $orderItem->status = 5;
+                    $orderItem->pickerId = $userId; //รอ login
+                    $orderItem->updateDateTime = new \yii\db\Expression('NOW()');
+                    $orderItem->save();
+                endforeach;
+                //set pinked product in orderItem to  5  (หยิบแล้ว)
             }
-            $this->checkOrder($orderItem->orderId);
+            $this->checkOrder($_GET['orderId']);
 //            $arrange = \common\models\costfit\StoreProductArrange::find()->where("slotId = " . $_GET['slot'] . " and productId=" . $_GET['productId'])->all();
 //            foreach ($arrange as $arProduct):
 //                foreach ($_GET['allOrderId'] as $orderId):
@@ -299,10 +305,12 @@ class PickingController extends StoreMasterController {
         $this->printPdf($content, $header);
     }
 
-    static function updateArrange($id) {
-        $arrange = \common\models\costfit\StoreProductArrange::find()->where("storeProductArrangeId=" . $id)->one();
-        $arrange->status = 100;
-        $arrange->save();
+    static function updateArrange($orderId, $productId, $slot) {
+        $arrange = \common\models\costfit\StoreProductArrange::find()->where("slotId=" . $slot . " and orderId=" . $orderId . " and productId=" . $productId)->all();
+        foreach ($arrange as $arr):
+            $arr->status = 100;
+            $arr->save(false);
+        endforeach;
     }
 
     static function checkQuantity($allOrder) {//allslots are barcodd
@@ -489,11 +497,22 @@ class PickingController extends StoreMasterController {
     }
 
     static function checkOrder($orderId) {
+        $i = 0;
         if (isset($orderId) && !empty($orderId)) {
-            $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
-            $order->status = 12;
-            $order->updateDateTime = new \yii\db\Expression('NOW()');
-            $order->save(false);
+            $orders = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
+            if (isset($orders) && !empty($orders)) {
+                foreach ($orders as $order):
+                    if ($order->status == 4) {
+                        $i++;
+                    }
+                endforeach;
+                if ($i == 0) {
+                    $a = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
+                    $a->status = 12;
+                    $a->updateDateTime = new \yii\db\Expression('NOW()');
+                    $a->save(false);
+                }
+            }
         }
     }
 
@@ -518,39 +537,41 @@ class PickingController extends StoreMasterController {
         $productArrange = \common\models\costfit\StoreProductArrange::find()->where("slotId=" . $slotId . " and productId=" . $productId . " and status=4 and result!=0 order by createDateTime")->one();
         $orderItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and productId=" . $productId . " and status=1")->one();
         $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
-        if (($orderItem->status != 4) && (($orderItem->status != 5))) {
-            if (isset($productArrange) && !empty($productArrange)) {
-                if ($productArrange->result >= $quantity) {
-                    $result = $productArrange->result - $quantity;
-                    $pick = $quantity;
-                    $orderItem->status = 4;
-                } else {
-                    $result = 0;
-                    $pick = $productArrange->result;
-                    $orderItem->status = 1;
+        if (isset($orderItem) && !empty($orderItem)) {
+            if (($orderItem->status != 4) && (($orderItem->status != 5))) {
+                if (isset($productArrange) && !empty($productArrange)) {
+                    if ($productArrange->result >= $quantity) {
+                        $result = $productArrange->result - $quantity;
+                        $pick = $quantity;
+                        $orderItem->status = 4;
+                    } else {
+                        $result = 0;
+                        $pick = $productArrange->result;
+                        $orderItem->status = 1;
+                    }
+                    $productArrange->result = $result;
+                    $productArrange->updateDateTime = new \yii\db\Expression('NOW()');
+                    $createState = new \common\models\costfit\StoreProductArrange();
+                    $createState->storeProductId = $productArrange->storeProductId;
+                    $createState->productId = $productArrange->productId;
+                    $createState->slotId = $productArrange->slotId;
+                    $createState->parentId = $productArrange->storeProductArrangeId;
+                    $createState->orderId = $orderId;
+                    $createState->quantity = -($pick);
+                    $createState->pickerId = $userId;
+                    $createState->status = 99;
+                    $createState->createDateTime = new \yii\db\Expression('NOW()');
+                    $createState->updateDateTime = new \yii\db\Expression('NOW()');
+                    $createState->save(false);
+                    $productArrange->save();
+                    $orderItem->pickerId = $userId;
+                    $orderItem->updateDateTime = new \yii\db\Expression('NOW()');
+                    $orderItem->save();
+                    $order->status = 11;
+                    $order->pickerId = $userId;
+                    $order->updateDateTime = new \yii\db\Expression('NOW()');
+                    $order->save();
                 }
-                $productArrange->result = $result;
-                $productArrange->updateDateTime = new \yii\db\Expression('NOW()');
-                $createState = new \common\models\costfit\StoreProductArrange();
-                $createState->storeProductId = $productArrange->storeProductId;
-                $createState->productId = $productArrange->productId;
-                $createState->slotId = $productArrange->slotId;
-                $createState->parentId = $productArrange->storeProductArrangeId;
-                $createState->orderId = $orderId;
-                $createState->quantity = -($pick);
-                $createState->pickerId = $userId;
-                $createState->status = 99;
-                $createState->createDateTime = new \yii\db\Expression('NOW()');
-                $createState->updateDateTime = new \yii\db\Expression('NOW()');
-                $createState->save(false);
-                $productArrange->save();
-                $orderItem->pickerId = $userId;
-                $orderItem->updateDateTime = new \yii\db\Expression('NOW()');
-                $orderItem->save();
-                $order->status = 11;
-                $order->pickerId = $userId;
-                $order->updateDateTime = new \yii\db\Expression('NOW()');
-                $order->save();
             }
         }
     }
