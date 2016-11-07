@@ -69,7 +69,13 @@ class MenuController extends ManagementMasterController {
             } else {
                 $getRules = '[]';
             }
+            if (isset($_POST["Menu"]['parent_id']) && empty($_POST["Menu"]['parent_id'])) {
+                $model->parent_id = $_POST["Menu"]['parent_id'];
+            } else {
+                $model->parent_id = 0;
+            }
             $model->user_group_Id = $getRules;
+
             $model->createDateTime = new \yii\db\Expression('NOW()');
 
             //echo '<pre>';

@@ -53,6 +53,7 @@ use kartik\widgets\Select2;
                 'loadingText' => '-- Select Parent --',
             ],
             'options' => [
+                'placeholder' => 'Select parent ...',
                 'id' => 'parents',
                 'class' => 'required'
             ],

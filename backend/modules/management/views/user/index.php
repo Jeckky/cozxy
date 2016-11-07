@@ -48,14 +48,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     // 'email:email',
                     // 'token:ntext',
                     [
-                        'attribute' => 'สิทธิ์การเข้าใช้งาน',
+                        'attribute' => 'type',
                         'format' => 'raw',
                         'value' => function($model) {
                             return $model->getTypeText($model->type);
                         },
                     ],
                     [
-                        'attribute' => 'กลุ่มทำงาน',
+                        'attribute' => 'group',
                         'format' => 'raw',
                         'value' => function($model) {
                             //return $model->user_group_Id;
@@ -69,7 +69,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     // 'gender',
                     // 'tel',
                     //'status',ยืนยันใช้งาน
-                    ['attribute' => 'ยืนยันใช้งาน',
+                    ['attribute' => 'status',
                         'format' => 'raw',
                         'value' => function($model) {
                             return $model->getStatusText($model->status);
