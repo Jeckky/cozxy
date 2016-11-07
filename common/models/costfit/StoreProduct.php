@@ -48,6 +48,16 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster
     /**
      * @inheritdoc
      */
+    public function attributes()
+    {
+        return array_merge(parent::attributes(), [
+            'sumQuantity',
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [

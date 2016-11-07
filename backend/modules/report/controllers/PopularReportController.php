@@ -13,7 +13,7 @@ class PopularReportController extends ReportMasterController
 
     public function actionIndex()
     {
-        $model = \common\models\costfit\ProductView::find()->select("*,sum(1) as sumViews")->groupBy("productId");
+        $model = \common\models\costfit\ProductView::find()->select("*,sum(1) as sumViews")->orderBy("sumViews DESC")->groupBy("productId");
         $filterArray[] = 'and';
         if (isset($_GET['fromDate']) && !empty($_GET['fromDate'])) {
             $filterArray[] = ['>=', 'date(createDateTime)', $_GET['fromDate']];
