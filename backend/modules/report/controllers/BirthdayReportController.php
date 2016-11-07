@@ -13,30 +13,35 @@ class BirthdayReportController extends ReportMasterController {
 
     public function actionIndex() {
         $thisMonth = substr(date('Y-m-d'), 5, -3);
-        $model = User::find()->where("type=1 and status=1 and birthDate!='' order by birthDate Asc");
+        $model = User::find()->where("type=1 and status=1 and birthDate!=''");
         $filterArray[] = 'and';
-        if (isset($_GET['fromDate'])) {
+        //throw new \yii\base\Exception($_GET['fromDate']);
+        if (isset($_GET['fromDate']) && !empty($_GET['fromDate'])) {
+            $fromeDate = $_GET['fromDate'] + 1;
             $model = User::find()->where("type=1 and status=1 and birthDate!=''");
-            $filterArray[] = ['>=', 'date(birthDate)', $_GET['fromDate']];
-            if (isset($_GET['toDate'])) {
-                $filterArray[] = ['<=', 'date(birthDate)', $_GET['toDate']];
+            $filterArray[] = ['>=', 'month(birthDate)', $fromeDate];
+            if (isset($_GET['toDate']) && !empty($_GET['toDate'])) {
+                $toDate = $_GET['toDate'] + 1;
+                $filterArray[] = ['<=', 'month(birthDate)', $toDate];
             }
         } else {
-            if (isset($_GET['toDate'])) {
-                $filterArray[] = ['<=', 'date(birthDate)', $_GET['toDate']];
+            if (isset($_GET['toDate']) && !empty($_GET['toDate'])) {
+                $toDate = $_GET['toDate'] + 1;
+                $filterArray[] = ['<=', 'month(birthDate)', $toDate];
             } else {
                 $model = User::find()->where("type=1 and status=1 and birthDate!='' and month(birthDate)='" . $thisMonth . "'");
             }
         }
 
         $model->andFilterWhere($filterArray);
-
+        $model->orderBy('birthDate');
         $provider = new ActiveDataProvider([
             'query' => $model,
         ]);
         $models = $provider->getModels();
         return $this->render('index', [
-                    'model' => $models
+            'model' => $models,
+            'thisMonth' => $thisMonth
         ]);
     }
 
