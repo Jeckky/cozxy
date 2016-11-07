@@ -110,7 +110,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             if (isset($model) && count($model) > 0):
                                 $pName = "";
                                 foreach ($model as $pView):
-                                    if (!isset($pView->storeProductId)) {
+                                    $sp = common\models\costfit\StoreProduct::find()->select("sum(quantity) as sumQuantity")->where("productId = $pView->productId AND DATEDIFF(createDateTime,date(NOW())) <=" . \common\models\costfit\OrderItem::FUTURE_DAY_TO_SHOW . " AND status = 1")->groupBy("productId")->one();
+                                    if (isset($sp)) {
+                                        $orderQuantity = $pView->stockQuantity + $sp->sumQuantity;
+                                    } else {
+                                        $orderQuantity = $pView->stockQuantity;
+                                    }
+
+                                    if ($orderQuantity < $pView->sumQuantity) {
                                         ?>
                                         <?php
                                         if ($pName != $pView->product->title):

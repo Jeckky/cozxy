@@ -52,7 +52,8 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster
             'maxDate',
             'sumQuantity',
             'remainDay',
-            'storeProductId'
+            'storeProductId',
+            'stockQuantity'
         ]);
     }
 

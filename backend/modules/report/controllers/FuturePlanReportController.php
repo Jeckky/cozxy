@@ -13,11 +13,13 @@ class FuturePlanReportController extends ReportMasterController
 
     public function actionIndex()
     {
-        $model = \common\models\costfit\OrderItem::find()->select("order_item.*,sum(order_item.quantity) as sumQuantity  , DATEDIFF(order_item.sendDateTime,date(NOW())) as remainDay")
-//        ->join("LEFT JOIN")
+        $model = \common\models\costfit\OrderItem::find()->select("order_item.*,sum(order_item.quantity) as sumQuantity  , DATEDIFF(order_item.sendDateTime,date(NOW())) as remainDay,spa.quantity as stockQuantity")
+        ->join("LEFT JOIN", 'store_product_arrange spa', 'spa.productId = order_item.productId ')
+//        ->join("RIGHT JOIN", 'store_product sp', 'sp.productId = order_item.productId ')
         ->where(" order_item.sendDateTime is not null AND DATEDIFF(order_item.sendDateTime,date(NOW())) <= " . \common\models\costfit\OrderItem::FUTURE_DAY_TO_SHOW)
-        ->orderBy("productId ASC")
-        ->groupBy("productId");
+        ->andWhere("spa.status = 4")
+        ->orderBy("order_item.productId ASC")
+        ->groupBy("order_item.productId");
 //        ->groupBy("order_item.orderItemId");
         $filterArray[] = 'and';
         if (isset($_GET['fromDate'])) {
