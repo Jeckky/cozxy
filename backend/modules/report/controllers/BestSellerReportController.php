@@ -8,14 +8,12 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\costfit\Order;
 
-class BestSellerReportController extends ReportMasterController
-{
+class BestSellerReportController extends ReportMasterController {
 
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $model = \common\models\costfit\OrderItem::find()->select("order_item.*,sum(quantity) as sumQuantity")
         ->join('LEFT JOIN', '`order` o', 'o.orderId = order_item.orderId')
-        ->where("o.status > " . Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " AND o.status <>" . Order::ORDER_STATUS_FINANCE_APPROVE)
+        ->where("o.status >= " . Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " AND o.status <>" . Order::ORDER_STATUS_FINANCE_APPROVE)
         ->orderBy("sumQuantity DESC")
         ->groupBy("productId");
         $filterArray[] = 'and';
@@ -36,13 +34,11 @@ class BestSellerReportController extends ReportMasterController
         ]);
     }
 
-    public function actionCreate()
-    {
+    public function actionCreate() {
         return $this->render('create');
     }
 
-    public function actionDelete()
-    {
+    public function actionDelete() {
         return $this->render('delete');
     }
 

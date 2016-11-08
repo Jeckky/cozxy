@@ -13,13 +13,14 @@ class ReportController extends ReportMasterController {
     public function actionIndex() {
         if (isset($_GET['fromDate']) && !empty($_GET['fromDate'])) {
             if (isset($_GET['toDate']) && !empty($_GET['toDate'])) {
-                $model = Order::find()->where("paymentDateTime BETWEEN '" . $_GET['fromDate'] . "' and '" . $_GET['toDate'] . "' and status>=5 order by paymentDateTime DESC")->all();
+                // throw new \yii\base\Exception($_GET['toDate']);
+                $model = Order::find()->where("date(paymentDateTime)>='" . $_GET['fromDate'] . "' and date(paymentDateTime)<='" . $_GET['toDate'] . "' and status>=5 order by paymentDateTime DESC")->all();
             } else {
-                $model = Order::find()->where("paymentDateTime>='" . $_GET['fromDate'] . "' and status>=5 order by paymentDateTime DESC")->all();
+                $model = Order::find()->where("date(paymentDateTime)>='" . $_GET['fromDate'] . "' and status>=5 order by paymentDateTime DESC")->all();
             }
         } else {
             if (isset($_GET['toDate']) && !empty($_GET['toDate'])) {
-                $model = Order::find()->where("paymentDateTime<='" . $_GET['toDate'] . "' and status>=5 order by paymentDateTime DESC")->all();
+                $model = Order::find()->where("date(paymentDateTime)<='" . $_GET['toDate'] . "' and status>=5 order by paymentDateTime DESC")->all();
             } else {
                 $model = Order::find()->where("status>=5 order by paymentDateTime DESC")->all();
             }
