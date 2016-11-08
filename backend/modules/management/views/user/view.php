@@ -27,14 +27,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <div class="panel">
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-sm-12">
-
+                    <div class="col-sm-12"> 
                         <!-- Pills -->
                         <ul class="nav nav-pills bs-tabdrop-example">
                             <li class="active"><a href="#bs-tabdrop-pill1" data-toggle="tab">รายละเอียด</a></li>
                             <li><a href="#bs-tabdrop-pill2" data-toggle="tab">เข้าอยู่ในกลุ่ม</a></li>
                             <li><a href="#bs-tabdrop-pill3" data-toggle="tab">ตั้งค่าพื้นฐาน</a></li>
-                            <li><a href="#bs-tabdrop-pill4" data-toggle="tab">ตั้งค่าเมนู Backend</a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="bs-tabdrop-pill1">
@@ -197,51 +195,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 </div>
 
                             </div>
-                            <div class="tab-pane" id="bs-tabdrop-pill4">
-                                <?php
-                                $form = ActiveForm::begin([
-                                    'id' => 'default-shipping-address',
-                                    'action' => $baseUrl . '/management/user/menu?id=' . $_GET['id'],
-                                    'options' => ['class' => 'space-bottom'],
-                                ]);
-                                ?>
-                                <?//=
-                                TreeGrid::widget([
-                                'dataProvider' => $listMenu,
-                                'keyColumnName' => 'menuId',
-                                'parentColumnName' => 'parents',
-                                'parentRootValue' => '0', //first parentId value
-                                'pluginOptions' => [
-                                //'initialState' => 'collapsed',
-                                ],
-                                'columns' => [
 
-                                [
-                                'attribute' => 'ชื่อเมนู',
-                                'format' => 'raw',
-                                'value' => function($data) {
-                                return '<input type="checkbox" name="listMenu[menuId][]" class"px" value="' . $data->menuId . '" /> &nbsp;' . $data->name;
-                                },
-                                ],
-                                // 'name',
-                                //'user_group_Id',
-                                //'parent_id',
-                                //['class' => 'yii\grid\ActionColumn']
-                                ]
-                                ]);
-                                ?>
-                                <?php
-                                //echo Html::hiddenInput('user-group-userId', $model->userId, [ 'id' => 'user-group-userId']);
-                                //echo Html::submitButton('submit', [ 'class' => 'btn btn-primary', 'name' => 'btn-shipping-address'])
-                                ?>
-                                <?php
-                                ActiveForm::end();
-                                ?><br>
-                                <div class="note note-info padding-xs-vr">
-                                    <strong>อธิบาย</strong><br>
-                                    - กำหนดสิทธ์เข้าใช้งานของแต่ละเมนู
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

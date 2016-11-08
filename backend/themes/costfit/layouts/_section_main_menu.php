@@ -1,30 +1,14 @@
 <?php
 
+use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
+use leandrogehlen\treegrid\TreeGrid;
 
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 //throw new \yii\base\Exception($baseUrl);
-?>
-<?php
-echo 'test !!';
-//menu test nav widget
-/* echo Nav::widget([
-  'options' => ['class' => 'sidebar-menu treeview'],
-  'items' => [
-
-  ['label' => 'Menu 1', 'url' => ['/a/index']],
-  ['label' => 'Menu 2', 'url' => ['/custom-perks/index']],
-  ['label' => 'Submenu', 'items' => [
-  ['label' => 'Action', 'url' => '#'],
-  ['label' => 'Another action', 'url' => '#'],
-  ['label' => 'Something else here', 'url' => '#'],
-  ],
-  ],
-  ],
-  ]); */
 ?>
 <div id="main-menu" role="navigation">
     <div id="main-menu-inner">
@@ -43,209 +27,100 @@ echo 'test !!';
         </div>
 
         <ul class="navigation">
+            <?php
+            //$this->view->params['listDataProviderMenu']['menuBackend']
+            //$this->params['listDataProviderMenu']['menuBackend']
+            if (isset($this->params['listDataProviderMenu']['menuBackend'])) {
+                $menuBackend = $this->params['listDataProviderMenu']['menuBackend'];
+                foreach ($menuBackend as $key => $value) {
+                    //$ListMenuGroup = str_replace('[', '', str_replace(']', '', $value->user_group_Id));
+                    //$test = explode(',', $ListMenuGroup);
+                    //$Type = Yii::$app->user->identity->type;
+                    //$TypeListMenuGroup = str_replace('[', '', str_replace(']', '', $Type));
+                    //$Typetest = explode(',', $TypeListMenuGroup);
+                    //if (in_array($Typetest, $test)) {
+                    //echo '(checked)' . '::' . $value->user_group_Id;
+                    //} else {
+                    //echo '(No)   ';
+                    //}
+                    //echo $value->user_group_Id . '<br>';
+                    if ($value->parent_id == 0) {
+                        $subMenuCount = \common\models\costfit\Menu::find()->where('parent_id =' . $value->menuId)->count();
+                        //echo 'subMenuCount :' . $subMenuCount;
+                        if ($subMenuCount == 0) {
+                            ?>
+                            <li>
+                                <a href="<?php echo $baseUrl; ?>/<?php echo $value->link; ?>">
+                                    <i class="menu-icon fa fa-dashboard"></i><span class="mm-text"><?php echo $value->name; ?> </span></a>
+                            </li>
+                            <?php
+                        } else {
+                            ?>
+                            <li class="mm-dropdown">
+                                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text"><?php echo $value->name; ?></span></a>
+                                <?php
+                                $subMenu = \common\models\costfit\Menu::find()->where('parent_id =' . $value->menuId)->all();
+                                foreach ($subMenu as $key => $value1) {
+                                    ?>
+                                    <ul>
+                                        <?php
+                                        $subSubMenuCount = \common\models\costfit\Menu::find()->where('parent_id =' . $value1['menuId'])->count();
+                                        if ($subSubMenuCount == 0) {
+                                            ?>
+                                            <li>
+                                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/<?php echo $value1['link']; ?>">
+                                                    <i class="fa fa-square"></i> <span class="mm-text"><?php echo $value1['name']; ?></span></a>
+                                            </li>
+                                            <?php
+                                        } elseif ($subSubMenuCount == 1) {
+                                            ?>
+                                            <li class="mm-dropdown">
+                                                <a tabindex="-1" href="#"><i class="fa fa-square"></i> <span class="mm-text"><?php echo $value1['name']; ?></span></a>
+                                                <?php
+                                                $subSubSubMenu = \common\models\costfit\Menu::find()->where('parent_id =' . $value1['menuId'])->all();
+                                                foreach ($subSubSubMenu as $key => $value2) {
+                                                    ?>
+                                                    <ul>
+                                                        <li>
+                                                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/<?php echo $value2['link']; ?>"><span class="mm-text"><?php echo $value2['name']; ?></span></a>
+                                                        </li>
+                                                    </ul>
+                                                <?php } ?>
+                                            </li>
+                                            <?php
+                                        }
+                                        ?>
+                                    </ul>
+                                    <?php
+                                }
+                                //echo 'zzzz';
+                                ?>
+                            </li>
+                            <?php
+                        }
+                    } else {
+                        ?>
+                        <!--<li>
+                            <a href="<?php //echo $baseUrl;                                                               ?>/<?php //echo $value->link;                                                               ?>"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text"><?php //echo $value->name;                                                                                             ?></span></a>
+                        </li>-->
+                        <?php
+                    }
+                }
+            }
+            ?>
+            <!--
             <li>
-                <a href="<?php echo $baseUrl; ?>/dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
+                <a href="<?php //echo $baseUrl;                                                                ?>/dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
             </li>
-            <!-- <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูลหลัก</span><span class="label label-warning">Updated</span></a>
-                <ul>
-                    <li>
-                        <a tabindex="-1" href="#"><i class="fa fa-square"></i> <span class="mm-text">ตั้งค่า</span></a>
-                    </li>
 
-                </ul>
-            </li>-->
             <li class="mm-dropdown">
                 <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูล User</span><span class="label label-warning">Updated</span></a>
                 <ul>
                     <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/user/user"><i class="fa fa-square"></i> <span class="mm-text">สมาชิก</span></a>
+                        <a tabindex="-1" href="<?php //echo $baseUrl;                                                                                                 ?>/user/user"><i class="fa fa-square"></i> <span class="mm-text">สมาชิก</span></a>
                     </li>
                 </ul>
-            </li>
-
-            <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการรายการสั่งซื้อสินค้า  </span></a>
-                <ul>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/order/order"><span class="mm-text">Order</span></a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Store</span><span class="label label-warning">Store</span></a>
-                <ul>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/store"><span class="mm-text">Store</span></a>
-
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/virtual"><span class="mm-text">Virtual</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/store-product-group"><span class="mm-text">Import Product</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/store-product/choose-po"><span class="mm-text">จัดเรียง</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/picking"><span class="mm-text">Picking</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/packing"><span class="mm-text">Packing</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/shipping"><span class="mm-text">Shipping</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/lockers/lockers"><span class="mm-text">Lockers Demo</span></a>
-                    </li>
-
-                    <li class="mm-dropdown">
-                        <a tabindex="-1" href="#"><span class="mm-text">Location</span><span class="label label-warning">1</span></a>
-                        <ul>
-                            <li>
-                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/store/region"><span class="mm-text">Region</span></a>
-                            </li>
-                        </ul>
-                    </li>
-
-                </ul>
-            </li>
-            <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">LED Control</span><span class="label label-warning">Updated</span></a>
-                <ul>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/led/led"><i class="fa fa-square"></i> <span class="mm-text">LED</span></a>
-                    </li>
-                </ul>
-            </li>
-            <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Picking Points</span></a>
-                <ul>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/picking/picking"><i class="fa fa-square"></i> <span class="mm-text">Picking</span></a>
-                    </li>
-                </ul>
-            </li>
-            <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Supplier </span><span class="label label-danger">new</span></a>
-                <ul>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/supplier/supplier"><span class="mm-text">Supplier</span></a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Product  </span><span class="label label-danger">new</span></a>
-                <ul>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/brand"><span class="mm-text">Brand</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/show-category/show-category"><span class="mm-text">Show Category</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/category"><span class="mm-text">Category</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product-group"><span class="mm-text">Product Group</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product-price-match-group"><span class="mm-text">Product Price Match</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product"><span class="mm-text">Product</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/coupon-owner"><span class="mm-text">Coupon</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/unit"><span class="mm-text">Unit</span></a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Hots Product  </span><span class="label label-danger">new</span><span class="badge badge-primary">1</span></a>
-                <ul>
-
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product-hot"><span class="mm-text">Hots Product</span></a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Shipping </span><span class="label label-danger">new</span><span class="badge badge-primary">1</span></a>
-                <ul>
-                    <li class="mm-dropdown">
-                        <a tabindex="-1" href="#"><span class="mm-text">Package</span><span class="label label-warning">2</span></a>
-                        <ul>
-                            <li>
-                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/shipping/package"><span class="mm-text">Package</span></a>
-                            </li>
-                            <li>
-                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/shipping/package-type"><span class="mm-text">Package Type</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Report </span><span class="label label-danger">new</span><span class="badge badge-primary">1</span></a>
-                <ul>
-                    <li class="mm-dropdown">
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/report"><span class="mm-text">รายงานยอดขาย</span><span class="label label-warning">2</span></a>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/popular-report"><span class="mm-text">รายงานสินค้ายอดนิยม</span><span class="label label-warning">2</span></a>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/birthday-report"><span class="mm-text">รายงานวันเกิด</span><span class="label label-warning">2</span></a>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/picking-point-report"><span class="mm-text">รายงานจุดส่งสินค้ายอดนิยม</span><span class="label label-warning">2</span></a>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/top-customer-report"><span class="mm-text">รายงานลูกค้าดีเด่น</span><span class="label label-warning">2</span></a>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/best-seller-report"><span class="mm-text">รายงานสินค้าขายดี</span><span class="label label-warning">2</span></a>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/future-plan-report"><span class="mm-text">รายงานสินค้าที่ต้องสั่งล่วงหน้า</span><span class="label label-warning">2</span></a>
-                        <!--                        <ul>
-                                                    <li>
-                                                        <a tabindex="-1" href="<?php //echo $baseUrl;                                  ?>/report/report"><span class="mm-text">รายงานยอดขาย</span></a>
-                                                    </li>
-                                                </ul>-->
-                    </li>
-                </ul>
-            </li>
-            <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูลหลัก  </span><span class="label label-danger">new</span><span class="badge badge-primary">1</span></a>
-                <ul>
-
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/content/content-group"><span class="mm-text">Content</span></a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Payment  </span><span class="label label-danger">new</span><span class="badge badge-primary">1</span></a>
-                <ul>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/payment/payment-method"><span class="mm-text">Payment Method</span></a>
-                    </li>
-                    <li>
-                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/payment/bank"><span class="mm-text">Bank</span></a>
-                    </li>
-                    <!--                    <li class="mm-dropdown">
-                                            <a tabindex="-1" href="#"><span class="mm-text">Content</span><span class="label label-warning">2</span></a>
-                                            <ul>
-                                                <li>
-                                                    <a tabindex="-1" href="<?php echo $baseUrl; ?>/content/content-group"><span class="mm-text">Package</span></a>
-                                                </li>
-                                                <li>
-                                                    <a tabindex="-1" href="<?php echo $baseUrl; ?>/shipping/package-type"><span class="mm-text">Package Type</span></a>
-                                                </li>
-                                            </ul>
-                                        </li>-->
-                </ul>
-            </li>
-
+            </li>-->
             <li class="mm-dropdown">
                 <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Flow Chart  </span><span class="label label-danger">new</span><span class="badge badge-primary">1</span></a>
                 <ul>

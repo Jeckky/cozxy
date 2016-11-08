@@ -78,6 +78,17 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     //'createDateTime',
                     //'updateDateTime',
                     [
+                        'attribute' => 'เข้าใช้งานล่าสุด',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            if ($model->lastvisitDate == '0000-00-00 00:00:00') {
+                                return '';
+                            } else {
+                                return Yii::$app->formatter->asDate($model->lastvisitDate) . ' ' . Yii::$app->formatter->asTime($model->lastvisitDate);
+                            }
+                        }
+                    ],
+                    [
                         'attribute' => 'createDateTime',
                         'format' => 'raw',
                         'value' => function($model) {
