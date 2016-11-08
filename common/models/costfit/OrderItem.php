@@ -96,7 +96,7 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster {
     }
 
     public static function findOrderItems($orderId, $productId) {
-        $items = OrderItem::find()->where("orderId=" . $orderId . " and productId=" . $productId)->one();
+        $items = OrderItem::find()->where("orderId=" . $orderId . " and productId=" . $productId . " and status<=5")->one();
         if (isset($items)) {
             return $items;
         } else {
@@ -121,7 +121,7 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster {
                 $total2+=$item2->quantity;
             endforeach;
         }
-        $text = 'หยิบแล้ว ' . $picked . ' รายการ ' . $totalPicked . ' ชิ้น<br> ยังไม่หยิบ ' . $ready . ' รายการ ' . $total2 . ' ชิ้น';
+        $text = 'ส่งแล้ว ' . $picked . ' รายการ ' . $totalPicked . ' ชิ้น<br> ยังไม่หยิบ ' . $ready . ' รายการ ' . $total2 . ' ชิ้น';
         return $text;
     }
 

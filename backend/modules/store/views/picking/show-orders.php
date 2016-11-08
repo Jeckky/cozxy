@@ -57,6 +57,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
         <?php ActiveForm::end(); ?>
         <br>
         <?php
+        //throw new \yii\base\Exception(print_r($slots, true));
         foreach ($slots as $slot):
             $i = 1;
             ?>

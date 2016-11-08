@@ -121,12 +121,13 @@ class PickingController extends StoreMasterController {
                 if ($slots[0] == 'a') {
                     $color = '';
                 } else {
-                    $old = $this->checkOldUser($allOrderId); //ถ้ายังทำรายการไม่เสร็จ ยังไม่เปลี่ยนหรือ ปิดไฟ
+                    $old = $this->checkOldUser($allOrderId); //ถ้ายังทำรายการไม่เสร็จ ยังไม่เปลี่ยนหรือ ปิดไฟ//หรือ กด refresh
                     if ($old == 'no') {
                         $colors = \common\models\costfit\Led::variableColor($allSlot->getSlotName($slots[0]));
                         $this->turnOnLedSlot($slots, $colors->ledColor, $allOrderId);
                     } else {
                         $colors = \common\models\costfit\LedColor::find()->where("ledColor = " . $old)->one();
+                        //$this->turnOnLedSlot($slots, $colors->ledColor, $allOrderId);
                     }
                 }
                 if (isset($colors) && $colors != '') {
@@ -188,7 +189,9 @@ class PickingController extends StoreMasterController {
                         $colors = \common\models\costfit\Led::variableColor($allSlot->getSlotName($slots[0]));
                         $this->turnOnLedSlot($slots, $colors->ledColor, $allOrderId);
                     } else {
+
                         $colors = \common\models\costfit\LedColor::find()->where("ledColor = " . $old)->one();
+                        //$this->turnOnLedSlot($slots, $colors->ledColor, $allOrderId);
                     }
                 }
                 if (isset($colors) && $colors != '') {
@@ -467,6 +470,7 @@ class PickingController extends StoreMasterController {
     static function checkOldUser($allOrderId) {
         $i = 0;
         $color = 0;
+        $new = 0;
         foreach ($allOrderId as $orderId):
             $orders = \common\models\costfit\Order::find()->where("orderId = " . $orderId)->all();
             if (isset($orders) && !empty($orders)) {
@@ -474,10 +478,17 @@ class PickingController extends StoreMasterController {
                     if (($order->color != null) && ($order->color != 0)) {
                         $i++;
                         $color = $order->color;
+                        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId . " and (color='' or color=0) and DATE(DATE_SUB(sendDateTime, INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE()")->all();
+                        if (isset($orderItem) && !empty($orderItem)) {
+                            $new++;
+                        }
                     }
                 endforeach;
             }
         endforeach;
+        if ($new > 0) {
+            $i = 0;
+        }
         if ($i == 0) {
             return 'no';
         } else {
