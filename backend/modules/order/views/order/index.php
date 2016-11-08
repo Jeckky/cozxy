@@ -98,8 +98,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
 //                    'status',
                     [
                         'attribute' => 'status',
+                        'format' => 'raw',
                         'value' => function($model) {
-                            return $model->getStatusText($model->status);
+                            if ($model->status >= 5) {
+                                return $model->createStatus($model->orderId);
+                            } else {
+                                return $model->getStatusText($model->status);
+                            }
                         }
                     ],
                     // 'createDateTime',
@@ -115,20 +120,20 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'buttons' => [
                             'view' => function($url, $model) {
                                 return Html::a('<i class="fa fa-eye" aria-hidden="true"></i>', Yii::$app->homeUrl . "order/order/view/" . $model->encodeParams(['id' => $model->orderId]), [
-                                            'title' => Yii::t('app', ' View Order No :' . $model->orderId),]);
+                                    'title' => Yii::t('app', ' View Order No :' . $model->orderId),]);
                             },
-                                    'history' => function($url, $model) {
+                            'history' => function($url, $model) {
                                 $paymentHistory = \common\models\costfit\OrderPaymentHistory::find()->where("orderId=" . $model->orderId)->one();
                                 if (isset($paymentHistory)) {
                                     return Html::a('<br><u>Payment History</u>', ['payment-history', 'orderId' => $model->orderId], [
-                                                'title' => Yii::t('app', 'history\'s lists'),]);
+                                        'title' => Yii::t('app', 'history\'s lists'),]);
                                 }
                             },]
-                            ],
-                        ],
-                    ]);
-                    ?>
-                </div>
-            </div>
-            <?php Pjax::end(); ?>
+                    ],
+                ],
+            ]);
+            ?>
+        </div>
+    </div>
+    <?php Pjax::end(); ?>
 </div>
