@@ -86,13 +86,16 @@ use leandrogehlen\treegrid\TreeGrid;
                         </div>
                     </div> <!-- / .panel -->
                 </div>
-                <code>
-                    *** การกำหนด Group และ Level นั้น จะทำให้เราสามารถควบคุมการใช้งานของสมาชิกในการเข้าถึงบทความ หรือลิ้งค์ต่าง ๆ ได้
-                </code>
+
             </div>
         </div>
 
         <div class="note note-info padding-xs-vr">
+            <p>
+                - การกำหนด Group และ Level นั้น จะทำให้เราสามารถควบคุมการใช้งานของสมาชิกในการเข้าถึงบทความ หรือลิ้งค์ต่าง ๆ ได้
+            </p>
+
+
             <!--
             <strong>การแบ่งระดับของสมาชิกของ Cozxy.com!</strong><br>
 

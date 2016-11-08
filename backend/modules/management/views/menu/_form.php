@@ -39,10 +39,11 @@ use kartik\widgets\Select2;
     <div class="panel-body">
         <?= $form->errorSummary($model) ?>
 
-        <?= $form->field($model, 'name', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 50]) ?>
+        <?= $form->field($model, 'name', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 50])->label('ชื่อเมนู') ?>
 
         <?= $form->field($model, 'link', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 100]) ?>
 
+        <?= $form->field($model, 'desc', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6', 'maxlength' => 200])->label('คำอธิบาย') ?>
 
         <?//= $form->field($model, 'parent', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(Menu::find()->all(), 'menuId', 'name'), ['prompt' => '-- Select Parent --']) ?>
 
@@ -69,29 +70,64 @@ use kartik\widgets\Select2;
         <div class="col-lg-12"><br></div>
         <div class="col-sm-3 ">&nbsp;</div>
         <div class="col-sm-5 ">
-            <?=
-            TreeGrid::widget([
-                'dataProvider' => $listViewLevels,
-                'keyColumnName' => 'user_group_Id',
-                'parentColumnName' => 'parent_id',
-                'parentRootValue' => '0', //first parentId value
-                'pluginOptions' => [
-                //'initialState' => 'collapsed',
-                ],
-                'columns' => [
-                    [
-                        'attribute' => 'เลือกกลุ่มที่เข้าใช้งาน',
-                        'format' => 'raw',
-                        'value' => function($data) {
-                            return '<input type="checkbox" name="Menu[user_group_Id][]" class"px" value="' . $data->user_group_Id . '" /> &nbsp;' . $data->name;
-                        },
+            <?php
+            //echo $actions;
+            //exit();
+            if ($actions == 'update') {
+                echo TreeGrid::widget([
+                    'dataProvider' => $listViewLevels,
+                    'keyColumnName' => 'user_group_Id',
+                    'parentColumnName' => 'parent_id',
+                    'parentRootValue' => '0', //first parentId value
+                    'pluginOptions' => [
+                    //'initialState' => 'collapsed',
                     ],
-                // 'name',
-                //'user_group_Id',
-                //'parent_id',
-                //['class' => 'yii\grid\ActionColumn']
-                ]
-            ]);
+                    'columns' => [
+                        [
+                            'attribute' => 'Name',
+                            'format' => 'raw',
+                            'value' => function($data, $key, $index, $column) {
+                                $getUserGroup = common\models\costfit\Menu::find()->select('user_group_Id')->where('menuId =' . $_GET['id'])->one();
+                                $ListMenuGroup = str_replace('[', '', str_replace(']', '', $getUserGroup->user_group_Id));
+                                $test = explode(',', $ListMenuGroup);
+                                if (in_array($data->user_group_Id, $test)) {
+                                    $checked = 'checked';
+                                } else {
+                                    $checked = ' ';
+                                }
+                                return '<input type="checkbox" id="user_group_Id[]" name="Menu[user_group_Id][]" class"px" value="' . $data->user_group_Id . '" ' . $checked . '/> &nbsp;' . $data->name;
+                            },
+                        ],
+                    // 'name',
+                    //'user_group_Id',
+                    //'parent_id',
+                    //['class' => 'yii\grid\ActionColumn']
+                    ]
+                ]);
+            } else {
+                echo TreeGrid::widget([
+                    'dataProvider' => $listViewLevels,
+                    'keyColumnName' => 'user_group_Id',
+                    'parentColumnName' => 'parent_id',
+                    'parentRootValue' => '0', //first parentId value
+                    'pluginOptions' => [
+                    //'initialState' => 'collapsed',
+                    ],
+                    'columns' => [
+                        [
+                            'attribute' => 'Name',
+                            'format' => 'raw',
+                            'value' => function($data, $key, $index, $column) {
+                                return '<input type="checkbox" id="user_group_Id[]" name="Menu[user_group_Id][]" class"px" value="' . $data->user_group_Id . '" /> &nbsp;' . $data->name;
+                            },
+                        ],
+                    // 'name',
+                    //'user_group_Id',
+                    //'parent_id',
+                    //['class' => 'yii\grid\ActionColumn']
+                    ]
+                ]);
+            }
             ?>
         </div>
     </div>
@@ -104,4 +140,3 @@ use kartik\widgets\Select2;
 </div>
 <?php ActiveForm::end(); ?>
 
-</div>

@@ -80,4 +80,21 @@ class UserGroups extends \common\models\costfit\master\UserGroupsMaster {
         return $options;
     }
 
+    static public function checkUserGroupTest($userGroup, $menuId) {
+        $CheckuserGroup = str_replace('[', '', str_replace(']', '', $userGroup));
+        if ($CheckuserGroup != '') {
+            //echo $userGroup;
+            $userGroupx = str_replace('[', '(', str_replace(']', ')', $userGroup));
+            // echo $userGroupx;
+            $result = UserGroups::find()
+            ->select('group_concat(user_group_Id) as user_group_Id ,(select menu.user_group_Id from costfit_dev.menu where menuId = ' . $menuId . ') as MenuGoup')
+            ->where("user_group_Id in " . $userGroupx . "  ")
+            ->one();
+        } else {
+            $result = NULL;
+        }
+
+        return $result;
+    }
+
 }

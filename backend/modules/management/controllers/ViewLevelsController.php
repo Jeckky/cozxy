@@ -70,6 +70,7 @@ class ViewLevelsController extends ManagementMasterController {
     public function actionCreate() {
         //$listViewLevels = \common\models\costfit\ViewLevels::find()->all();
         $model = new ViewLevels();
+        $actions = 'create';
         if (isset($_POST["ViewLevels"])) {
             $model->attributes = $_POST["ViewLevels"];
             if (isset($_POST["ViewLevels"]['user_group_Id'])) {
@@ -98,7 +99,7 @@ class ViewLevelsController extends ManagementMasterController {
         //print_r($listViewLevels);
         //exit();
         return $this->render('create', [
-            'model' => $model, 'listViewLevels' => $listViewLevels
+            'model' => $model, 'listViewLevels' => $listViewLevels, 'actions' => $actions
         ]);
     }
 
@@ -111,6 +112,8 @@ class ViewLevelsController extends ManagementMasterController {
     public function actionUpdate($id) {
 
         $model = $this->findModel($id);
+        $actions = 'update';
+
         if (isset($_POST["ViewLevels"])) {
 
             $model->attributes = $_POST["ViewLevels"];
@@ -135,7 +138,7 @@ class ViewLevelsController extends ManagementMasterController {
             'query' => \common\models\costfit\UserGroups::find(),
         ]);
         return $this->render('update', [
-            'model' => $model, 'listViewLevels' => $listViewLevels
+            'model' => $model, 'listViewLevels' => $listViewLevels, 'actions' => $actions
         ]);
     }
 

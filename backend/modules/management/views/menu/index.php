@@ -30,6 +30,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
         <div class="panel-body">
             <?=
             TreeGrid::widget([
+
                 'dataProvider' => $dataProvider,
                 'keyColumnName' => 'menuId',
                 'parentColumnName' => 'parent_id',
@@ -46,6 +47,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'value' => function($data) {
                             $getUserGroup = common\models\costfit\UserGroups::checkUserGroup($data->user_group_Id);
                             return $getUserGroup['name'];
+                        },
+                    ],
+                    [
+                        'attribute' => 'คำอธิบาย',
+                        'format' => 'raw',
+                        'value' => function($data) {
+                            return $data->desc;
                         },
                     ],
                     'menuId',
@@ -75,7 +83,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     ],
                 ]
             ]);
-            ?> 
+            ?>
         </div>
     </div>
     <?php Pjax::end(); ?>

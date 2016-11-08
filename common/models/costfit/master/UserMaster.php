@@ -25,6 +25,7 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
+    * @property string $lastvisitDate
     *
             * @property Address[] $addresses
             * @property Order[] $orders
@@ -48,7 +49,7 @@ return [
             [['username', 'createDateTime'], 'required'],
             [['password_hash', 'token', 'auth_key'], 'string'],
             [['type', 'gender', 'status'], 'integer'],
-            [['birthDate', 'createDateTime', 'updateDateTime'], 'safe'],
+            [['birthDate', 'createDateTime', 'updateDateTime', 'lastvisitDate'], 'safe'],
             [['username', 'firstname', 'password', 'lastname', 'email', 'user_group_Id'], 'string', 'max' => 200],
             [['auth_type'], 'string', 'max' => 255],
             [['tel'], 'string', 'max' => 20],
@@ -79,6 +80,7 @@ return [
     'status' => Yii::t('user', 'Status'),
     'createDateTime' => Yii::t('user', 'Create Date Time'),
     'updateDateTime' => Yii::t('user', 'Update Date Time'),
+    'lastvisitDate' => Yii::t('user', 'Lastvisit Date'),
 ];
 }
 

@@ -32,6 +32,9 @@ class MenuController extends ManagementMasterController {
     public function actionIndex() {
         $dataProvider = new ActiveDataProvider([
             'query' => Menu::find(),
+            'pagination' => [
+                'pageSize' => 250,
+            ],
         ]);
 
         return $this->render('index', [
@@ -57,6 +60,7 @@ class MenuController extends ManagementMasterController {
      */
     public function actionCreate() {
         $model = new Menu();
+        $actions = 'create';
         if (isset($_POST["Menu"])) {
             $model->attributes = $_POST["Menu"];
             if (isset($_POST["Menu"]['user_group_Id'])) {
@@ -69,13 +73,14 @@ class MenuController extends ManagementMasterController {
             } else {
                 $getRules = '[]';
             }
-            if (isset($_POST["Menu"]['parent_id']) && empty($_POST["Menu"]['parent_id'])) {
-                $model->parent_id = $_POST["Menu"]['parent_id'];
-            } else {
-                $model->parent_id = 0;
-            }
-            $model->user_group_Id = $getRules;
 
+            if (isset($_POST["Menu"]['parent_id']) || empty($_POST["Menu"]['parent_id'])) {
+                $model->parent_id = ($_POST["Menu"]['parent_id'] != '') ? $_POST["Menu"]['parent_id'] : 0;
+            } else {
+                $model->parent_id = $_POST["Menu"]['parent_id'];
+            }
+
+            $model->user_group_Id = $getRules;
             $model->createDateTime = new \yii\db\Expression('NOW()');
 
             //echo '<pre>';
@@ -88,7 +93,7 @@ class MenuController extends ManagementMasterController {
             'query' => \common\models\costfit\UserGroups::find(),
         ]);
         return $this->render('create', [
-            'model' => $model, 'listViewLevels' => $listViewLevels
+            'model' => $model, 'listViewLevels' => $listViewLevels, 'actions' => $actions
         ]);
     }
 
@@ -101,27 +106,40 @@ class MenuController extends ManagementMasterController {
     public function actionUpdate($id) {
         $model = $this->findModel($id);
         $menuId = $_GET['id'];
-        $getMenu = \common\models\costfit\Menu::find()->where('menuId =' . $menuId)->one();
-        $getLevel = \common\models\costfit\Level::find()->select('levelId,name')->where('levelId in (' . $getMenu['levelId'] . ')')->all();
-        $list = \yii\helpers\ArrayHelper::map($getLevel, 'levelId', 'name');
-        //find($id)->select('id,name as full')->asArray()->all();
-        //$data = ArrayHelper::toArray($getLevel);
-        // $datav = '';
-        $data = \yii\helpers\ArrayHelper::map(\common\models\costfit\Level::find()->where('levelId in (' . $getMenu['levelId'] . ')')->asArray()->all(), 'levelId', 'name');
-
-
-        // echo '<pre>';
-        // print_r($datav);
-        // echo $datav;
+        $actions = 'update';
+        //$getMenu = \common\models\costfit\Menu::find()->where('menuId =' . $menuId)->one();
+        //echo $getMenu->user_group_Id;
+        //$test = \common\models\costfit\UserGroups::checkUserGroupTest($getMenu->user_group_Id, $id);
+        //echo '<pre>';
+        //print_r($test);
+        //exit();
+        //$CheckuserGroup = str_replace('[', '', str_replace(']', '', $getMenu->user_group_Id));
+        //echo $CheckuserGroup;
         if (isset($_POST["Menu"])) {
             $model->attributes = $_POST["Menu"];
+            if (isset($_POST["Menu"]['user_group_Id'])) {
+                $rules = '';
+                foreach ($_POST["Menu"]['user_group_Id'] as $value) {
+                    $rules .= $value . ',';
+                }
+                $listRules = substr($rules, 0, -1);
+                $getRules = '[' . $listRules . ']';
+            } else {
+                $getRules = '[]';
+            }
+            $model->user_group_Id = $getRules;
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
                 return $this->redirect(['index']);
             }
         }
+        $listViewLevels = new ActiveDataProvider([
+            'query' => \common\models\costfit\UserGroups::find()
+        //->select('(select menu.user_group_Id from costfit_dev.menu where menuId = ' . $id . '  limit 1) as MenuGroup'),
+        //\common\models\costfit\UserGroups::find(),
+        ]);
         return $this->render('update', [
-            'model' => $model
+            'model' => $model, 'listViewLevels' => $listViewLevels, 'actions' => $actions
         ]);
     }
 

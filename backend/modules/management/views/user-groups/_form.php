@@ -6,6 +6,8 @@ use yii\helpers\ArrayHelper;
 use yii\widgets\MaskedInput;
 use common\models\areawow;
 use yii\jui\DatePicker;
+use yii\helpers\Url;
+use kartik\depdrop\DepDrop;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\UserGroups */
@@ -36,6 +38,7 @@ use yii\jui\DatePicker;
         <?= $form->field($model, 'name', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 45])->label('ชื่อกลุ่ม') ?>
 
         <?//= $form->field($model, 'parent_id', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 10]) ?>
+
         <?php
         echo $form->field($model, 'parent_id')->widget(kartik\select2\Select2::classname(), [
             //'value' => ['0'], // initial value
@@ -51,6 +54,12 @@ use yii\jui\DatePicker;
             ],
         ])->label('กลุ่มหลัก');
         ?>
+
+        <?php
+        // Child level 1
+        //echo $form->field($model, 'parent_id')->dropDownList('', ['id' => 'cat-id']);
+        ?>
+
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
                 <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -37,6 +37,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     'menuId',
                     'levelId',
                     'name',
+                    'desc',
                     'link',
                     'parent_id',
                     'sort',

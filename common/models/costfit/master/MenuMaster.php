@@ -12,6 +12,7 @@ use Yii;
     * @property string $user_group_Id
     * @property string $parent_id
     * @property string $name
+    * @property string $desc
     * @property string $link
     * @property string $parents
     * @property integer $sort
@@ -39,7 +40,7 @@ return [
             [['name', 'link'], 'required'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['levelId', 'link'], 'string', 'max' => 100],
-            [['user_group_Id'], 'string', 'max' => 200],
+            [['user_group_Id', 'desc'], 'string', 'max' => 200],
             [['name'], 'string', 'max' => 50],
         ];
 }
@@ -55,6 +56,7 @@ return [
     'user_group_Id' => Yii::t('menu', 'User Group  ID'),
     'parent_id' => Yii::t('menu', 'Parent ID'),
     'name' => Yii::t('menu', 'Name'),
+    'desc' => Yii::t('menu', 'Desc'),
     'link' => Yii::t('menu', 'Link'),
     'parents' => Yii::t('menu', 'Parents'),
     'sort' => Yii::t('menu', 'Sort'),
