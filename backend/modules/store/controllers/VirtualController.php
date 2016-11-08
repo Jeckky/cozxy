@@ -11,11 +11,28 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
 
-class VirtualController extends StoreMasterController
-{
+class VirtualController extends StoreMasterController {
 
-    public function beforeAction($action)
-    {
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    public function beforeAction($action) {
         if ($action->id == 'ping-hardware' || $action->id == 'select-led' || $action->id == 'add-led-to-slot') {
             $this->enableCsrfValidation = false;
         }
@@ -23,22 +40,19 @@ class VirtualController extends StoreMasterController
         return parent::beforeAction($action);
     }
 
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $storeSlots = \common\models\costfit\StoreSlot::find()->where("status=1 and level =1")->all();
         return $this->render('index', compact('storeSlots'));
     }
 
-    public function actionLeditems()
-    {
+    public function actionLeditems() {
 
         $ledItems = new LedItem();
         // print_r($ledItems->leds);
         print_r(Json::encode($ledItems->getLeds()));
     }
 
-    public function actionPingHardware()
-    {
+    public function actionPingHardware() {
         $res = [];
         exec("ping -c 4 " . $_POST['ip'], $output, $result);
         if ($result == 0) {
@@ -50,8 +64,7 @@ class VirtualController extends StoreMasterController
         echo \yii\helpers\Json::encode($res);
     }
 
-    public function actionRemoveLedFromSlot($id)
-    {
+    public function actionRemoveLedFromSlot($id) {
         $led = \common\models\costfit\Led::find()->where("ledId=$id")->one();
         $led->slot = NULL;
         $led->save();
@@ -59,15 +72,13 @@ class VirtualController extends StoreMasterController
         $this->redirect(['index']);
     }
 
-    public function actionSelectLed()
-    {
+    public function actionSelectLed() {
         $leds = \common\models\costfit\Led::find()->where("slot is null")->all();
 
         return $this->renderPartial('led_list', compact('leds'));
     }
 
-    public function actionAddLedToSlot()
-    {
+    public function actionAddLedToSlot() {
         $led = \common\models\costfit\Led::find()->where("ledId=" . $_POST['id'])->one();
         $led->slot = $_POST['slotCode'];
         $led->save();

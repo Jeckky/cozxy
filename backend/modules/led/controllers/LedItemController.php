@@ -19,6 +19,20 @@ class LedItemController extends LedItemMasterController {
      */
     public function behaviors() {
         return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -46,9 +60,9 @@ class LedItemController extends LedItemMasterController {
         ]);
 
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
-                    'model' => $model,
-                    'count' => $count
+            'dataProvider' => $dataProvider,
+            'model' => $model,
+            'count' => $count
         ]);
     }
 
@@ -59,7 +73,7 @@ class LedItemController extends LedItemMasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -117,10 +131,10 @@ class LedItemController extends LedItemMasterController {
             }
         } else {
             return $this->render('create', [
-                        'model' => $model,
-                        'defultColor' => $defultColor,
-                        'oldColor' => $oldColor,
-                        'sort' => $sort
+                'model' => $model,
+                'defultColor' => $defultColor,
+                'oldColor' => $oldColor,
+                'sort' => $sort
             ]);
         }
     }
@@ -167,10 +181,10 @@ class LedItemController extends LedItemMasterController {
             }
         } else {
             return $this->render('update', [
-                        'model' => $model,
-                        'defultColor' => $defultColor,
-                        'oldColor' => $oldColor,
-                        'sort' => $sort
+                'model' => $model,
+                'defultColor' => $defultColor,
+                'oldColor' => $oldColor,
+                'sort' => $sort
             ]);
         }
     }

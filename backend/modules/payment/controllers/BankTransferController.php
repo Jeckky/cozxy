@@ -12,12 +12,24 @@ use yii\filters\VerbFilter;
 /**
  * BankTransferController implements the CRUD actions for BankTransfer model.
  */
-class BankTransferController extends PaymentMasterController
-{
+class BankTransferController extends PaymentMasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -31,8 +43,7 @@ class BankTransferController extends PaymentMasterController
      * Lists all BankTransfer models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         if (isset($_GET["paymentMethodId"])) {
             $query = BankTransfer::find()->where('paymentMethodId=' . $_GET["paymentMethodId"]);
         } else {
@@ -52,8 +63,7 @@ class BankTransferController extends PaymentMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -64,8 +74,7 @@ class BankTransferController extends PaymentMasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new BankTransfer();
         if (isset($_GET["paymentMethodId"])) {
             $model->paymentMethodId = $_GET["paymentMethodId"];
@@ -88,8 +97,7 @@ class BankTransferController extends PaymentMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
         if (isset($_POST["BankTransfer"])) {
             $model->attributes = $_POST["BankTransfer"];
@@ -112,8 +120,7 @@ class BankTransferController extends PaymentMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -126,8 +133,7 @@ class BankTransferController extends PaymentMasterController
      * @return BankTransfer the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = BankTransfer::findOne($id)) !== null) {
             return $model;
         } else {

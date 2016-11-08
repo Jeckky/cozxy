@@ -8,11 +8,31 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\costfit\Order;
 
-class PopularReportController extends ReportMasterController
-{
+class PopularReportController extends ReportMasterController {
 
-    public function actionIndex()
-    {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    public function actionIndex() {
         $model = \common\models\costfit\ProductView::find()->select("*,sum(1) as sumViews")->orderBy("sumViews DESC")->groupBy("productId");
         $filterArray[] = 'and';
         if (isset($_GET['fromDate']) && !empty($_GET['fromDate'])) {
@@ -32,13 +52,11 @@ class PopularReportController extends ReportMasterController
         ]);
     }
 
-    public function actionCreate()
-    {
+    public function actionCreate() {
         return $this->render('create');
     }
 
-    public function actionDelete()
-    {
+    public function actionDelete() {
         return $this->render('delete');
     }
 

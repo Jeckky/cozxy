@@ -22,6 +22,20 @@ class ProductPriceOtherWebController extends ProductMasterController {
      */
     public function behaviors() {
         return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -42,7 +56,7 @@ class ProductPriceOtherWebController extends ProductMasterController {
         ]);
 
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -53,7 +67,7 @@ class ProductPriceOtherWebController extends ProductMasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -85,16 +99,16 @@ class ProductPriceOtherWebController extends ProductMasterController {
                 return $this->redirect(['product-price/index', 'productId' => $id]);
             } else {
                 return $this->render('create', [
-                            'model' => $model,
-                            'productName' => $productName->title,
-                            'website' => $website
+                    'model' => $model,
+                    'productName' => $productName->title,
+                    'website' => $website
                 ]);
             }
         } else {
             return $this->render('create', [
-                        'model' => $model,
-                        'productName' => $productName->title,
-                        'website' => $website
+                'model' => $model,
+                'productName' => $productName->title,
+                'website' => $website
             ]);
         }
     }
@@ -122,16 +136,16 @@ class ProductPriceOtherWebController extends ProductMasterController {
                 return $this->redirect(['product-price/index', 'productId' => $model->productId]);
             } else {
                 return $this->render('update', [
-                            'model' => $model,
-                            'productName' => $product->title,
-                            'website' => $website
+                    'model' => $model,
+                    'productName' => $product->title,
+                    'website' => $website
                 ]);
             }
         } else {
             return $this->render('update', [
-                        'model' => $model,
-                        'productName' => $product->title,
-                        'website' => $website
+                'model' => $model,
+                'productName' => $product->title,
+                'website' => $website
             ]);
         }
     }

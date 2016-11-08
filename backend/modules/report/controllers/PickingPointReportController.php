@@ -8,11 +8,31 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\costfit\Order;
 
-class PickingPointReportController extends ReportMasterController
-{
+class PickingPointReportController extends ReportMasterController {
 
-    public function actionIndex()
-    {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    public function actionIndex() {
         $model = \common\models\costfit\Order::find()
         ->select("`order`.*,sum(1) as sumPicking")
         ->join("LEFT JOIN", '`picking_point` p', '`order`.pickingId=p.pickingId')
@@ -36,13 +56,11 @@ class PickingPointReportController extends ReportMasterController
         ]);
     }
 
-    public function actionCreate()
-    {
+    public function actionCreate() {
         return $this->render('create');
     }
 
-    public function actionDelete()
-    {
+    public function actionDelete() {
         return $this->render('delete');
     }
 

@@ -15,6 +15,25 @@ use yii\helpers\Json;
 
 class ShippingsController extends StoreMasterController {
 
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex() {
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         if (!isset(Yii::$app->user->identity->userId)) {

@@ -17,6 +17,20 @@ class OrderController extends OrderMasterController {
 
     public function behaviors() {
         return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -36,7 +50,7 @@ class OrderController extends OrderMasterController {
         ]);
 
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -49,7 +63,7 @@ class OrderController extends OrderMasterController {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
         $order = \common\models\costfit\Order::find()->where('orderId = "' . $params['id'] . '" ')
-                ->one();
+        ->one();
         return $this->render('@frontend/views/profile/purchase_order', compact('order'));
     }
 
@@ -68,7 +82,7 @@ class OrderController extends OrderMasterController {
             }
         }
         return $this->render('create', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -91,7 +105,7 @@ class OrderController extends OrderMasterController {
             }
         }
         return $this->render('update', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -142,7 +156,7 @@ class OrderController extends OrderMasterController {
         //echo $orderId;
         if (isset($params['orderId'])) {
             $order = \common\models\costfit\Order::find()->where('orderId = "' . $params['orderId'] . '" ')
-                    ->one();
+            ->one();
         } else {
             return $this->redirect(['profile/order']);
         }
@@ -174,8 +188,8 @@ class OrderController extends OrderMasterController {
             ]);
 
             return $this->render('payment', [
-                        'dataProvider' => $dataProvider,
-                        'order' => $order
+                'dataProvider' => $dataProvider,
+                'order' => $order
             ]);
         } else {
             return $this->render('@app/views/error/error');

@@ -20,6 +20,20 @@ class ProductShippingPriceController extends ProductMasterController {
      */
     public function behaviors() {
         return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -39,7 +53,7 @@ class ProductShippingPriceController extends ProductMasterController {
         ]);
 
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -50,7 +64,7 @@ class ProductShippingPriceController extends ProductMasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -76,10 +90,10 @@ class ProductShippingPriceController extends ProductMasterController {
             return $this->redirect(['product-price/index', 'productId' => $productName->productId]);
         } else {
             return $this->render('create', [
-                        'model' => $model,
-                        'shippingType' => $shippingType,
-                        'discountType' => $discountType,
-                        'productName' => $productName->title
+                'model' => $model,
+                'shippingType' => $shippingType,
+                'discountType' => $discountType,
+                'productName' => $productName->title
             ]);
         }
     }
@@ -104,10 +118,10 @@ class ProductShippingPriceController extends ProductMasterController {
             return $this->redirect(['product-price/index', 'productId' => $model->productId]);
         } else {
             return $this->render('update', [
-                        'model' => $model,
-                        'shippingType' => $shippingType,
-                        'discountType' => $discountType,
-                        'productName' => $productName->title
+                'model' => $model,
+                'shippingType' => $shippingType,
+                'discountType' => $discountType,
+                'productName' => $productName->title
             ]);
         }
     }

@@ -16,6 +16,25 @@ use yii\helpers\Json;
 
 class LockersController extends StoreMasterController {
 
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex() {
 
         $orderItemId = Yii::$app->request->get('orderItemId');
@@ -23,23 +42,23 @@ class LockersController extends StoreMasterController {
         $bagNo = Yii::$app->request->get('bagNo');
         if ($orderId != '') {
             $query = \common\models\costfit\OrderItemPacking::find()
-                    ->select('*,order_item_packing.bagNo,order_item_packing.status,order_item_packing.quantity')
-                    ->joinWith(['orderItems'])
-                    ->where(['order_item.orderId' => $orderId])
-                    ->andWhere(['>', 'order_item_packing.status', 4]);
+            ->select('*,order_item_packing.bagNo,order_item_packing.status,order_item_packing.quantity')
+            ->joinWith(['orderItems'])
+            ->where(['order_item.orderId' => $orderId])
+            ->andWhere(['>', 'order_item_packing.status', 4]);
         } else if ($bagNo != '') {
             $query = \common\models\costfit\OrderItemPacking::find()
-                    ->select('*')
-                    ->joinWith(['orderItems'])
-                    ->where(['order_item.orderId' => $orderId])
-                    ->where(['order_item_packing.status' => 5, 'order_item_packing.bagNo' => $bagNo]);
+            ->select('*')
+            ->joinWith(['orderItems'])
+            ->where(['order_item.orderId' => $orderId])
+            ->where(['order_item_packing.status' => 5, 'order_item_packing.bagNo' => $bagNo]);
         }
         //print_r($query);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
         return $this->render('index', [
-                    'dataProvider' => $dataProvider, 'bagNo' => $bagNo
+            'dataProvider' => $dataProvider, 'bagNo' => $bagNo
         ]);
     }
 
@@ -50,8 +69,8 @@ class LockersController extends StoreMasterController {
 
         if ($lockersNo != '') {
             $query = \common\models\costfit\PickingPointItems::find()
-                            //->joinWith(['orderItems'])
-                            ->where(['code' => $lockersNo])->one();
+            //->joinWith(['orderItems'])
+            ->where(['code' => $lockersNo])->one();
             //echo '<pre>';
             //print_r($query);
             if (count($query) > 0) {
@@ -89,23 +108,23 @@ class LockersController extends StoreMasterController {
                 }
 
                 $query = \common\models\costfit\OrderItemPacking::find()
-                        ->select('*')
-                        //->joinWith(['orderItems'])
-                        ->where(['bagNo' => $bagNo]);
+                ->select('*')
+                //->joinWith(['orderItems'])
+                ->where(['bagNo' => $bagNo]);
                 $this->redirect(Yii::$app->homeUrl . 'store/shipping');
             } else {
                 //echo 'ไม่พบ lockers No นี';
                 $lockersCode = FALSE;
                 $query = \common\models\costfit\OrderItemPacking::find()
-                        ->select('*')
-                        //->joinWith(['orderItems'])
-                        ->where(['bagNo' => $bagNo]);
+                ->select('*')
+                //->joinWith(['orderItems'])
+                ->where(['bagNo' => $bagNo]);
             }
         } else {
             $query = \common\models\costfit\OrderItemPacking::find()
-                    ->select('*')
-                    //->joinWith(['orderItems'])
-                    ->where(['bagNo' => $bagNo]);
+            ->select('*')
+            //->joinWith(['orderItems'])
+            ->where(['bagNo' => $bagNo]);
         }
         // echo '<pre>';
         //print_r($query);

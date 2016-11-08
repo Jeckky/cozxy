@@ -8,11 +8,31 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\costfit\Order;
 
-class FuturePlanReportController extends ReportMasterController
-{
+class FuturePlanReportController extends ReportMasterController {
 
-    public function actionIndex()
-    {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    public function actionIndex() {
         $model = \common\models\costfit\OrderItem::find()->select("order_item.*,sum(order_item.quantity) as sumQuantity  , DATEDIFF(order_item.sendDateTime,date(NOW())) as remainDay,spa.result as stockQuantity")
         ->join("LEFT JOIN", 'store_product_arrange spa', 'spa.productId = order_item.productId ')
 //        ->join("RIGHT JOIN", 'store_product sp', 'sp.productId = order_item.productId ')
@@ -139,8 +159,7 @@ class FuturePlanReportController extends ReportMasterController
         ]);
     }
 
-    public function actionIndexFromOrder()
-    {
+    public function actionIndexFromOrder() {
         $model = \common\models\costfit\OrderItem::find()->select("order_item.*,sum(order_item.quantity) as sumQuantity  , DATEDIFF(order_item.sendDateTime,date(NOW())) as remainDay , sp.storeProductId")
         ->join("LEFT OUTER JOIN", "store_product sp", "sp.orderItemId=order_item.orderItemId")
         ->where(" order_item.sendDateTime is not null AND DATEDIFF(order_item.sendDateTime,date(NOW())) <= " . \common\models\costfit\OrderItem::FUTURE_DAY_TO_SHOW)
@@ -265,32 +284,27 @@ class FuturePlanReportController extends ReportMasterController
         ]);
     }
 
-    public function actionCreate()
-    {
+    public function actionCreate() {
         return $this->render('create');
     }
 
-    public function actionDelete()
-    {
+    public function actionDelete() {
         return $this->render('delete');
     }
 
-    public function actionPurchasing($id)
-    {
+    public function actionPurchasing($id) {
         $model = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId=" . $id)->one();
         $model->status = \common\models\costfit\StoreProductGroup::STATUS_PURCHASING;
         $model->save();
         return $this->redirect(['print-po', 'id' => $id]);
     }
 
-    public function actionPrintPo($id)
-    {
+    public function actionPrintPo($id) {
         $model = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId=" . $id)->one();
         return $this->render("po", compact('model'));
     }
 
-    public function actionPrintPoToPdf($id)
-    {
+    public function actionPrintPoToPdf($id) {
         $model = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId=" . $id)->one();
         $content = $this->renderPartial('po', compact('model'));
         $header = $this->renderPartial('@backend/modules/store/views/picking/header', ['title' => "ใบสั่งซื้อ / Purchase Order"]);

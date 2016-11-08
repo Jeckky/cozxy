@@ -11,6 +11,28 @@ use common\models\costfit\User;
 
 class BirthdayReportController extends ReportMasterController {
 
+    /**
+     * @inheritdoc
+     */
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex() {
         $thisMonth = substr(date('Y-m-d'), 5, -3);
         $model = User::find()->where("type=1 and status=1 and birthDate!=''");

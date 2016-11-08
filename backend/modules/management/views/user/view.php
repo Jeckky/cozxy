@@ -27,7 +27,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <div class="panel">
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-sm-12"> 
+                    <div class="col-sm-12">
                         <!-- Pills -->
                         <ul class="nav nav-pills bs-tabdrop-example">
                             <li class="active"><a href="#bs-tabdrop-pill1" data-toggle="tab">รายละเอียด</a></li>
@@ -118,8 +118,16 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         [
                                             'attribute' => 'เลือกกลุ่มที่เข้าใช้งาน',
                                             'format' => 'raw',
-                                            'value' => function($data) {
-                                                return '<input type="checkbox" name="ViewLevels[user_group_Id][]" class"px" value="' . $data->user_group_Id . '" /> &nbsp;' . $data->name;
+                                            'value' => function($data, $key, $index, $column) {
+                                                $getUserGroup = common\models\costfit\User::find()->select('user_group_Id')->where('userId =' . $_GET['id'])->one();
+                                                $ListMenuGroup = str_replace('[', '', str_replace(']', '', $getUserGroup->user_group_Id));
+                                                $test = explode(',', $ListMenuGroup);
+                                                if (in_array($data->user_group_Id, $test)) {
+                                                    $checked = 'checked';
+                                                } else {
+                                                    $checked = ' ';
+                                                }
+                                                return '<input type="checkbox" name="ViewLevels[user_group_Id][]" class"px" value="' . $data->user_group_Id . '" ' . $checked . '/> &nbsp;' . $data->name;
                                             },
                                         ],
                                     // 'name',

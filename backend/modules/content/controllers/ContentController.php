@@ -16,6 +16,20 @@ class ContentController extends ContentMasterController {
 
     public function behaviors() {
         return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -40,8 +54,8 @@ class ContentController extends ContentMasterController {
         ]);
 
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
-                    'contentGroupId' => $_GET["contentGroupId"]
+            'dataProvider' => $dataProvider,
+            'contentGroupId' => $_GET["contentGroupId"]
         ]);
     }
 
@@ -52,7 +66,7 @@ class ContentController extends ContentMasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -90,13 +104,13 @@ class ContentController extends ContentMasterController {
                     //Do Some Thing
                 }
                 return $this->redirect(['index',
-                            'contentGroupId' => $_GET["contentGroupId"]
+                    'contentGroupId' => $_GET["contentGroupId"]
                 ]);
             }
         }
         return $this->render('create', [
-                    'model' => $model,
-                    'contentGroup' => $contentGroup
+            'model' => $model,
+            'contentGroup' => $contentGroup
         ]);
     }
 
@@ -137,13 +151,13 @@ class ContentController extends ContentMasterController {
                     //Do Some Thing
                 }
                 return $this->redirect(['index',
-                            'contentGroupId' => $model->contentGroupId
+                    'contentGroupId' => $model->contentGroupId
                 ]);
             }
         }
         return $this->render('update', [
-                    'model' => $model,
-                    'contentGroup' => $contentGroup
+            'model' => $model,
+            'contentGroup' => $contentGroup
         ]);
     }
 

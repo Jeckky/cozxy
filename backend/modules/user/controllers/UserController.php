@@ -19,6 +19,20 @@ class UserController extends UserMasterController {
      */
     public function behaviors() {
         return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -43,8 +57,8 @@ class UserController extends UserMasterController {
             'query' => $query,
         ]);
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
-                    'model' => $model,
+            'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
 
@@ -55,7 +69,7 @@ class UserController extends UserMasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -71,7 +85,7 @@ class UserController extends UserMasterController {
             return $this->redirect(['view', 'id' => $model->userId]);
         } else {
             return $this->render('create', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -89,7 +103,7 @@ class UserController extends UserMasterController {
             return $this->redirect(['index', 'id' => $model->userId]);
         } else {
             return $this->render('update', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -148,8 +162,8 @@ class UserController extends UserMasterController {
         $user = User::find()->where("userId=" . $userId)->one();
         $model = \common\models\costfit\Order::find()->where("userId=" . $userId . " order by createDateTime DESC")->all();
         return $this->render('order', [
-                    'model' => $model,
-                    'userName' => $user->firstname . " " . $user->lastname
+            'model' => $model,
+            'userName' => $user->firstname . " " . $user->lastname
         ]);
     }
 

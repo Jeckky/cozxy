@@ -13,15 +13,27 @@ use yii\helpers\ArrayHelper;
 /**
  * ProductSupplierController implements the CRUD actions for productSupplier model.
  */
-class ProductSupplierController extends ProductMasterController
-{
+class ProductSupplierController extends ProductMasterController {
 
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -35,8 +47,7 @@ class ProductSupplierController extends ProductMasterController
      * Lists all productSupplier models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
 
         $dataProvider = new ActiveDataProvider([
             'query' => ProductSupplier::find()->where("productId='" . $_GET['productId'] . "'"),
@@ -52,8 +63,7 @@ class ProductSupplierController extends ProductMasterController
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -64,8 +74,7 @@ class ProductSupplierController extends ProductMasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new ProductSupplier();
         $supplier = ArrayHelper::map(\common\models\costfit\search\Supplier::find()->all(), 'supplierId', 'name');
         if (isset($_GET["productId"])) {
@@ -93,8 +102,7 @@ class ProductSupplierController extends ProductMasterController
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
         $supplier = ArrayHelper::map(\common\models\costfit\search\Supplier::find()->all(), 'supplierId', 'name');
         $productName = \common\models\costfit\Product::find()->where("productId='" . $model->productId . "'")->one();
@@ -118,8 +126,7 @@ class ProductSupplierController extends ProductMasterController
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -132,8 +139,7 @@ class ProductSupplierController extends ProductMasterController
      * @return productSupplier the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = ProductSupplier::findOne($id)) !== null) {
             return $model;
         } else {

@@ -12,12 +12,24 @@ use yii\filters\VerbFilter;
 /**
  * ProductHotController implements the CRUD actions for ProductHot model.
  */
-class ProductHotController extends ProductMasterController
-{
+class ProductHotController extends ProductMasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -31,8 +43,7 @@ class ProductHotController extends ProductMasterController
      * Lists all ProductHot models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $dataProvider = new ActiveDataProvider([
             'query' => ProductHot::find(),
         ]);
@@ -47,8 +58,7 @@ class ProductHotController extends ProductMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -59,8 +69,7 @@ class ProductHotController extends ProductMasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new ProductHot();
         if (isset($_POST["ProductHot"])) {
             $model->attributes = $_POST["ProductHot"];
@@ -80,8 +89,7 @@ class ProductHotController extends ProductMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
         if (isset($_POST["ProductHot"])) {
             $model->attributes = $_POST["ProductHot"];
@@ -104,8 +112,7 @@ class ProductHotController extends ProductMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -118,8 +125,7 @@ class ProductHotController extends ProductMasterController
      * @return ProductHot the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = ProductHot::findOne($id)) !== null) {
             return $model;
         } else {

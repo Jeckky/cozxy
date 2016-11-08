@@ -42,6 +42,8 @@ class BackendMasterController extends MasterController {
             //echo 'test menu backend isGuest';
         } else {
             //echo 'test menu backend  Guest';
+            //$this->redirect(Yii::$app->getUrlManager()->getBaseUrl() . '/auth');
+            //$this->redirect(Yii::$app->homeUrl . 'auth');
         }
 
         //$this->view->params['cart'] = \common\models\costfit\Order::findCartArray();

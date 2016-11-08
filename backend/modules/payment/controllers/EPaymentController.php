@@ -12,12 +12,24 @@ use yii\filters\VerbFilter;
 /**
  * EPaymentController implements the CRUD actions for EPayment model.
  */
-class EPaymentController extends PaymentMasterController
-{
+class EPaymentController extends PaymentMasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -31,8 +43,7 @@ class EPaymentController extends PaymentMasterController
      * Lists all EPayment models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         if (isset($_GET["paymentMethodId"])) {
             $query = EPayment::find()->where('paymentMethodId=' . $_GET["paymentMethodId"]);
         } else {
@@ -52,8 +63,7 @@ class EPaymentController extends PaymentMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -64,8 +74,7 @@ class EPaymentController extends PaymentMasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new EPayment();
         if (isset($_GET["paymentMethodId"])) {
             $model->paymentMethodId = $_GET["paymentMethodId"];
@@ -104,8 +113,7 @@ class EPaymentController extends PaymentMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
         if (isset($_POST["EPayment"])) {
             $model->attributes = $_POST["EPayment"];
@@ -148,8 +156,7 @@ class EPaymentController extends PaymentMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -162,8 +169,7 @@ class EPaymentController extends PaymentMasterController
      * @return EPayment the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = EPayment::findOne($id)) !== null) {
             return $model;
         } else {

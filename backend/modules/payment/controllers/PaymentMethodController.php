@@ -12,12 +12,24 @@ use yii\filters\VerbFilter;
 /**
  * PaymentMethodController implements the CRUD actions for PaymentMethod model.
  */
-class PaymentMethodController extends PaymentMasterController
-{
+class PaymentMethodController extends PaymentMasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -31,8 +43,7 @@ class PaymentMethodController extends PaymentMasterController
      * Lists all PaymentMethod models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $dataProvider = new ActiveDataProvider([
             'query' => PaymentMethod::find(),
         ]);
@@ -47,8 +58,7 @@ class PaymentMethodController extends PaymentMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -59,8 +69,7 @@ class PaymentMethodController extends PaymentMasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new PaymentMethod();
         if (isset($_POST["PaymentMethod"])) {
             $model->attributes = $_POST["PaymentMethod"];
@@ -96,8 +105,7 @@ class PaymentMethodController extends PaymentMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
         if (isset($_POST["PaymentMethod"])) {
             $model->attributes = $_POST["PaymentMethod"];
@@ -140,8 +148,7 @@ class PaymentMethodController extends PaymentMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -154,8 +161,7 @@ class PaymentMethodController extends PaymentMasterController
      * @return PaymentMethod the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = PaymentMethod::findOne($id)) !== null) {
             return $model;
         } else {

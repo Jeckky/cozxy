@@ -8,11 +8,31 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\costfit\Order;
 
-class TopCustomerReportController extends ReportMasterController
-{
+class TopCustomerReportController extends ReportMasterController {
 
-    public function actionIndex()
-    {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    public function actionIndex() {
 
         $model = \common\models\costfit\Order::find()->select("*,sum(summary) as sumSummary")
         ->where("status >= " . Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " AND status <>" . Order::ORDER_STATUS_FINANCE_REJECT)
@@ -36,13 +56,11 @@ class TopCustomerReportController extends ReportMasterController
         ]);
     }
 
-    public function actionCreate()
-    {
+    public function actionCreate() {
         return $this->render('create');
     }
 
-    public function actionDelete()
-    {
+    public function actionDelete() {
         return $this->render('delete');
     }
 

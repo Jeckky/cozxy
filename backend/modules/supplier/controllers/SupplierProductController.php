@@ -12,12 +12,24 @@ use yii\filters\VerbFilter;
 /**
  * SupplierProductController implements the CRUD actions for SupplierProduct model.
  */
-class SupplierProductController extends SupplierMasterController
-{
+class SupplierProductController extends SupplierMasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -31,8 +43,7 @@ class SupplierProductController extends SupplierMasterController
      * Lists all SupplierProduct models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
 
         if (isset($_GET["supplierId"])) {
             $query = SupplierProduct::find()->where("supplierId=" . $_GET["supplierId"]);
@@ -54,8 +65,7 @@ class SupplierProductController extends SupplierMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -66,8 +76,7 @@ class SupplierProductController extends SupplierMasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new SupplierProduct();
         if (isset($_POST["SupplierProduct"])) {
             $model->attributes = $_POST["SupplierProduct"];
@@ -87,8 +96,7 @@ class SupplierProductController extends SupplierMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
         if (isset($_POST["SupplierProduct"])) {
             $model->attributes = $_POST["SupplierProduct"];
@@ -111,8 +119,7 @@ class SupplierProductController extends SupplierMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -125,8 +132,7 @@ class SupplierProductController extends SupplierMasterController
      * @return SupplierProduct the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = SupplierProduct::findOne($id)) !== null) {
             return $model;
         } else {

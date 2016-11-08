@@ -10,6 +10,28 @@ use common\models\costfit\Order;
 
 class ReportController extends ReportMasterController {
 
+    /**
+     * @inheritdoc
+     */
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex() {
         if (isset($_GET['fromDate']) && !empty($_GET['fromDate'])) {
             if (isset($_GET['toDate']) && !empty($_GET['toDate'])) {

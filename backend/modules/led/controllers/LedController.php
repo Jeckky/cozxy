@@ -19,6 +19,20 @@ class LedController extends LedMasterController {
      */
     public function behaviors() {
         return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -79,8 +93,8 @@ class LedController extends LedMasterController {
         ]);
 
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
-                    'model' => $model
+            'dataProvider' => $dataProvider,
+            'model' => $model
         ]);
     }
 
@@ -91,7 +105,7 @@ class LedController extends LedMasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -115,7 +129,7 @@ class LedController extends LedMasterController {
             }
         } else {
             return $this->render('create', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -133,7 +147,7 @@ class LedController extends LedMasterController {
             return $this->redirect($baseUrl . '/led/led');
         } else {
             return $this->render('update', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
