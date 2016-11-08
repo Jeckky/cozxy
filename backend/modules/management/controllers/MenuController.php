@@ -33,7 +33,7 @@ class MenuController extends ManagementMasterController {
         $dataProvider = new ActiveDataProvider([
             'query' => Menu::find(),
             'pagination' => [
-                'pageSize' => 250,
+                'pageSize' => 550,
             ],
         ]);
 
@@ -128,6 +128,13 @@ class MenuController extends ManagementMasterController {
                 $getRules = '[]';
             }
             $model->user_group_Id = $getRules;
+            if (isset($_POST["Menu"]['parent_id'])) {
+                //echo 'isset';
+                $model->parent_id = ($_POST["Menu"]['parent_id'] == '') ? 0 : $_POST["Menu"]['parent_id'];
+            } else {
+                $model->parent_id = 0;
+                //echo 'not isset';
+            }
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
                 return $this->redirect(['index']);

@@ -9,6 +9,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 //throw new \yii\base\Exception($baseUrl);
 ?>
 <?php
+echo 'test !!';
 //menu test nav widget
 /* echo Nav::widget([
   'options' => ['class' => 'sidebar-menu treeview'],
@@ -206,7 +207,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <a tabindex="-1" href="<?php echo $baseUrl; ?>/report/future-plan-report"><span class="mm-text">รายงานสินค้าที่ต้องสั่งล่วงหน้า</span><span class="label label-warning">2</span></a>
                         <!--                        <ul>
                                                     <li>
-                                                        <a tabindex="-1" href="<?php //echo $baseUrl;                                 ?>/report/report"><span class="mm-text">รายงานยอดขาย</span></a>
+                                                        <a tabindex="-1" href="<?php //echo $baseUrl;                                  ?>/report/report"><span class="mm-text">รายงานยอดขาย</span></a>
                                                     </li>
                                                 </ul>-->
                     </li>

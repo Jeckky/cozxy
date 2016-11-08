@@ -65,36 +65,36 @@ class UserGroups extends \common\models\costfit\master\UserGroupsMaster {
         return $result;
     }
 
-    public static function getHierarchy() {
-        $options = [];
+    /*
+      public static function getHierarchy() {
+      $options = [];
 
-        $parents = self::find()->where("parent_id=0")->all();
-        foreach ($parents as $id => $p) {
-            $children = self::find()->where("parent_id=:parent_id", [":parent_id" => $p->user_group_Id])->all();
-            $child_options = [];
-            foreach ($children as $child) {
-                $child_options[$child->user_group_Id] = $child->name;
-            }
-            $options[$p->name] = $child_options;
-        }
-        return $options;
-    }
+      $parents = self::find()->where("parent_id=0")->all();
+      foreach ($parents as $id => $p) {
+      $children = self::find()->where("parent_id=:parent_id", [":parent_id" => $p->user_group_Id])->all();
+      $child_options = [];
+      foreach ($children as $child) {
+      $child_options[$child->user_group_Id] = $child->name;
+      }
+      $options[$p->name] = $child_options;
+      }
+      return $options;
+      }
 
-    static public function checkUserGroupTest($userGroup, $menuId) {
-        $CheckuserGroup = str_replace('[', '', str_replace(']', '', $userGroup));
-        if ($CheckuserGroup != '') {
-            //echo $userGroup;
-            $userGroupx = str_replace('[', '(', str_replace(']', ')', $userGroup));
-            // echo $userGroupx;
-            $result = UserGroups::find()
-            ->select('group_concat(user_group_Id) as user_group_Id ,(select menu.user_group_Id from costfit_dev.menu where menuId = ' . $menuId . ') as MenuGoup')
-            ->where("user_group_Id in " . $userGroupx . "  ")
-            ->one();
-        } else {
-            $result = NULL;
-        }
+      static public function checkUserGroupTest($userGroup, $menuId) {
+      $CheckuserGroup = str_replace('[', '', str_replace(']', '', $userGroup));
+      if ($CheckuserGroup != '') {
+      //echo $userGroup;
+      $userGroupx = str_replace('[', '(', str_replace(']', ')', $userGroup));
+      // echo $userGroupx;
+      $result = UserGroups::find()
+      ->select('group_concat(user_group_Id) as user_group_Id ,(select menu.user_group_Id from costfit_dev.menu where menuId = ' . $menuId . ') as MenuGoup')
+      ->where("user_group_Id in " . $userGroupx . "  ")
+      ->one();
+      } else {
+      $result = NULL;
+      }
 
-        return $result;
-    }
-
+      return $result;
+      } */
 }

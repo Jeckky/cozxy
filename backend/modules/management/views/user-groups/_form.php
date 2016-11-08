@@ -56,8 +56,10 @@ use kartik\depdrop\DepDrop;
         ?>
 
         <?php
+        //$catList = ArrayHelper::map(\common\models\costfit\UserGroups::find()->all(), 'user_group_Id', 'name');
+        //echo $form->field($model, 'parent_id')->dropDownList($catList, ['user_group_Id' => 'name']);
         // Child level 1
-        //echo $form->field($model, 'parent_id')->dropDownList('', ['id' => 'cat-id']);
+        //echo $form->field($model, 'parent_id')->dropDownList(common\models\costfit\UserGroups::buildTreeDropdown(), ['id' => 'cat-id']);
         ?>
 
         <div class="form-group">
