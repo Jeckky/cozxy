@@ -64,7 +64,7 @@ class PackingController extends StoreMasterController {
             $productId = \common\models\costfit\Product::findProductId($_GET['item']);
             if (isset($order)) {
                 if (isset($productId) && !empty($productId)) {
-                    $items = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId . " and productId=" . $productId)->one();
+                    $items = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId . " and productId=" . $productId . " and status=5")->one();
                     if (isset($items) && !empty($items)) {
                         $packingItems = \common\models\costfit\OrderItemPacking::find()->where("orderItemId=" . $items->orderItemId . " and status=99")->one();
                         if (isset($packingItems)) {
@@ -111,15 +111,18 @@ class PackingController extends StoreMasterController {
         $full = 0;
         if (isset($_GET['orderId']) && !empty($_GET['orderId'])) {
             $itemInBag = $this->findItemInBag($_GET['orderId']);
-//throw new \yii\base\Exception($itemInBag);
             if (!empty($itemInBag)) {
                 $inBags = \common\models\costfit\OrderItemPacking::find()->where("orderItemId in($itemInBag) and status=99")->all();
-                foreach ($inBags as $inBag):
-                    $fully = $this->checkFully($inBag->orderItemId); //เชคว่า item ครบตาม order หรือมั๊ย
-                    if ($fully == false) {//ถ้ายังไม่ครบทุก item
-                        $full++;
-                    }
-                endforeach;
+                if (isset($inBags) && !empty($inBags)) {
+                    foreach ($inBags as $inBag):
+                        $fully = $this->checkFully($inBag->orderItemId); //เชคว่า item ครบตาม order หรือมั๊ย
+                        if ($fully == false) {//ถ้ายังไม่ครบทุก item
+                            $full++;
+                        } else {
+                            $this->updateOrderItem($inBag->orderItemId);
+                        }
+                    endforeach;
+                }
                 if ($full > 0) {//ถ้ายังไม่ครบทุก item กลับไปหน้าสแกนโปรดักใส่ถุง (เปิดถุงใหม่)
                     return $this->render('show-orders', [
                         'orderId' => $_GET['orderId'],
@@ -128,7 +131,6 @@ class PackingController extends StoreMasterController {
                 } else {//กลับไปหน้า index เพื่อ เลือก order ถัดไป
                     $checkOrder = $this->checkSuccessOrder($_GET['orderId']);
                     if ($checkOrder == true) {
-                        $this->updateOrder($_GET['orderId']);
                         return $this->redirect('index');
                     } else {
                         return $this->render('show-orders', [
@@ -173,7 +175,7 @@ class PackingController extends StoreMasterController {
                         if ($fully == false) {//ถ้ายังไม่ครบทุก item
                             $full++;
                         } else {
-                            $this->updateOrderItem($inBag->orderItemId); //ถ้าครบทุก item update orderItem
+                            $this->updateOrderItem($inBag->orderItemId);
                         }
                     endforeach;
                     if ($full == 0) {//กลับไปหน้า index เพื่อ เลือก order ถัดไป
@@ -238,7 +240,7 @@ class PackingController extends StoreMasterController {
     }
 
     static function findItemInBag($orderId) {
-        $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
+        $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and status=5")->all();
         $items = '';
         if (isset($orderItems) && !empty($orderItems)) {
             foreach ($orderItems as $orderItem):
@@ -281,7 +283,7 @@ class PackingController extends StoreMasterController {
     }
 
     static function checkSuccessOrder($orderId) {
-        $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
+        $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and DATE(DATE_SUB(sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE()")->all();
         $check = 0;
         if (isset($orderItems) && !empty($orderItems)) {
             foreach ($orderItems as $item):
@@ -299,7 +301,6 @@ class PackingController extends StoreMasterController {
                 }
             endforeach;
             if ($check == 0) {// ครบทุก orderItem แล้ว
-                //throw new \yii\base\Exception('yess');
                 return true;
             } else {
                 return false;
