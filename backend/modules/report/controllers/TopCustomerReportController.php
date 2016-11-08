@@ -10,28 +10,6 @@ use common\models\costfit\Order;
 
 class TopCustomerReportController extends ReportMasterController {
 
-    /**
-     * @inheritdoc
-     */
-    public function behaviors() {
-        return [
-            'access' => [
-                'class' => \yii\filters\AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['login', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-        ];
-    }
-
     public function actionIndex() {
 
         $model = \common\models\costfit\Order::find()->select("*,sum(summary) as sumSummary")
