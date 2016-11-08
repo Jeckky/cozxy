@@ -56,14 +56,14 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         $subMenuCount = \common\models\costfit\Menu::find()->where('parent_id =' . $value->menuId)->count();
                         //echo 'subMenuCount :' . $subMenuCount;
                         if ($subMenuCount == 0) {
-                            //if ($checked == 'checked') {
-                            ?>
-                            <li>
-                                <a href="<?php echo $baseUrl; ?>/<?php echo $value->link; ?>">
-                                    <i class="menu-icon fa fa-dashboard"></i><span class="mm-text"><?php echo $value->name; ?> </span></a>
-                            </li>
-                            <?php
-                            //}
+                            if ($checked == 'checked') {
+                                ?>
+                                <li>
+                                    <a href="<?php echo $baseUrl; ?>/<?php echo $value->link; ?>">
+                                        <i class="menu-icon fa fa-dashboard"></i><span class="mm-text"><?php echo $value->name; ?> </span></a>
+                                </li>
+                                <?php
+                            }
                         } else {
                             ?>
                             <li class="mm-dropdown">
@@ -137,7 +137,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     } else {
                         ?>
                         <!--<li>
-                            <a href="<?php //echo $baseUrl;                                                                                                                           ?>/<?php //echo $value->link;                                                                                                                           ?>"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text"><?php //echo $value->name;                                                                                                                                                         ?></span></a>
+                            <a href="<?php //echo $baseUrl;                                                                                                                            ?>/<?php //echo $value->link;                                                                                                                            ?>"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text"><?php //echo $value->name;                                                                                                                                                          ?></span></a>
                         </li>-->
                         <?php
                     }
@@ -146,14 +146,14 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             ?>
             <!--
             <li>
-                <a href="<?php //echo $baseUrl;                                                                                                                             ?>/dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
+                <a href="<?php //echo $baseUrl;                                                                                                                              ?>/dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
             </li>
 
             <li class="mm-dropdown">
                 <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูล User</span><span class="label label-warning">Updated</span></a>
                 <ul>
                     <li>
-                        <a tabindex="-1" href="<?php //echo $baseUrl;                                                                                                                                                              ?>/user/user"><i class="fa fa-square"></i> <span class="mm-text">สมาชิก</span></a>
+                        <a tabindex="-1" href="<?php //echo $baseUrl;                                                                                                                                                               ?>/user/user"><i class="fa fa-square"></i> <span class="mm-text">สมาชิก</span></a>
                     </li>
                 </ul>
             </li>-->
