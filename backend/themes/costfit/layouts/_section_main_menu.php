@@ -33,31 +33,43 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             if (isset($this->params['listDataProviderMenu']['menuBackend'])) {
                 $menuBackend = $this->params['listDataProviderMenu']['menuBackend'];
                 foreach ($menuBackend as $key => $value) {
-                    //$ListMenuGroup = str_replace('[', '', str_replace(']', '', $value->user_group_Id));
-                    //$test = explode(',', $ListMenuGroup);
-                    //$Type = Yii::$app->user->identity->type;
-                    //$TypeListMenuGroup = str_replace('[', '', str_replace(']', '', $Type));
-                    //$Typetest = explode(',', $TypeListMenuGroup);
-                    //if (in_array($Typetest, $test)) {
-                    //echo '(checked)' . '::' . $value->user_group_Id;
-                    //} else {
-                    //echo '(No)   ';
-                    //}
+                    //echo 'menu :: ' . $value1->user_group_Id;
+                    //echo '<===>';
+                    //echo 'user ::' . Yii::$app->user->identity->user_group_Id;
+                    //echo '<br>';
+                    $menuRe = str_replace('[', '', str_replace(']', '', $value->user_group_Id));
+                    $memuEx = explode(',', $menuRe);
+                    // :::::: //
+                    $user_group_Id = Yii::$app->user->identity->user_group_Id;
+                    $userRe = str_replace('[', '', str_replace(']', '', $user_group_Id));
+                    $userEx = explode(',', $userRe);
+                    // :: in_array :: //
+                    if (array_intersect($userEx, $memuEx)) {
+                        //echo '(checked)' . '::' . $value->user_group_Id;
+                        $checked = 'checked';
+                    } else {
+                        //echo '(No)   ';
+                        $checked = '';
+                    }
                     //echo $value->user_group_Id . '<br>';
                     if ($value->parent_id == 0) {
                         $subMenuCount = \common\models\costfit\Menu::find()->where('parent_id =' . $value->menuId)->count();
                         //echo 'subMenuCount :' . $subMenuCount;
                         if ($subMenuCount == 0) {
+                            //if ($checked == 'checked') {
                             ?>
                             <li>
                                 <a href="<?php echo $baseUrl; ?>/<?php echo $value->link; ?>">
                                     <i class="menu-icon fa fa-dashboard"></i><span class="mm-text"><?php echo $value->name; ?> </span></a>
                             </li>
                             <?php
+                            //}
                         } else {
                             ?>
                             <li class="mm-dropdown">
-                                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text"><?php echo $value->name; ?></span></a>
+                                <?php if ($checked == 'checked') { ?>
+                                    <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text"><?php echo $value->name; ?></span></a>
+                                <?php } ?>
                                 <?php
                                 $subMenu = \common\models\costfit\Menu::find()->where('parent_id =' . $value->menuId)->all();
                                 foreach ($subMenu as $key => $value1) {
@@ -65,12 +77,32 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                                     <ul>
                                         <?php
                                         $subSubMenuCount = \common\models\costfit\Menu::find()->where('parent_id =' . $value1['menuId'])->count();
+                                        //echo 'menu :: ' . $value1->user_group_Id;
+                                        //echo '<===>';
+                                        //echo 'user ::' . Yii::$app->user->identity->user_group_Id;
+                                        //echo '<br>';
+                                        $menuRe = str_replace('[', '', str_replace(']', '', $value1->user_group_Id));
+                                        $memuEx = explode(',', $menuRe);
+                                        // :::::: //
+                                        $user_group_Id = Yii::$app->user->identity->user_group_Id;
+                                        $userRe = str_replace('[', '', str_replace(']', '', $user_group_Id));
+                                        $userEx = explode(',', $userRe);
+                                        // :: in_array :: //
+                                        if (array_intersect($userEx, $memuEx)) {
+                                            //echo '(checked)' . '::' . $value->user_group_Id;
+                                            $checked = 'checked';
+                                        } else {
+                                            //echo '(No)   ';
+                                            $checked = '';
+                                        }
                                         if ($subSubMenuCount == 0) {
                                             ?>
-                                            <li>
-                                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/<?php echo $value1['link']; ?>">
-                                                    <i class="fa fa-square"></i> <span class="mm-text"><?php echo $value1['name']; ?></span></a>
-                                            </li>
+                                            <?php if ($checked == 'checked') { ?>
+                                                <li>
+                                                    <a tabindex="-1" href="<?php echo $baseUrl; ?>/<?php echo $value1['link']; ?>">
+                                                        <i class="fa fa-square"></i> <span class="mm-text"><?php echo $value1['name']; ?></span></a>
+                                                </li>
+                                            <?php } ?>
                                             <?php
                                         } elseif ($subSubMenuCount == 1) {
                                             ?>
@@ -79,13 +111,17 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                                                 <?php
                                                 $subSubSubMenu = \common\models\costfit\Menu::find()->where('parent_id =' . $value1['menuId'])->all();
                                                 foreach ($subSubSubMenu as $key => $value2) {
-                                                    ?>
-                                                    <ul>
-                                                        <li>
-                                                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/<?php echo $value2['link']; ?>"><span class="mm-text"><?php echo $value2['name']; ?></span></a>
-                                                        </li>
-                                                    </ul>
-                                                <?php } ?>
+                                                    if ($checked == 'checked') {
+                                                        ?>
+                                                        <ul>
+                                                            <li>
+                                                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/<?php echo $value2['link']; ?>"><span class="mm-text"><?php echo $value2['name']; ?></span></a>
+                                                            </li>
+                                                        </ul>
+                                                        <?php
+                                                    }
+                                                }
+                                                ?>
                                             </li>
                                             <?php
                                         }
@@ -101,7 +137,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     } else {
                         ?>
                         <!--<li>
-                            <a href="<?php //echo $baseUrl;                                                               ?>/<?php //echo $value->link;                                                               ?>"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text"><?php //echo $value->name;                                                                                             ?></span></a>
+                            <a href="<?php //echo $baseUrl;                                                                                                                           ?>/<?php //echo $value->link;                                                                                                                           ?>"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text"><?php //echo $value->name;                                                                                                                                                         ?></span></a>
                         </li>-->
                         <?php
                     }
@@ -110,14 +146,14 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             ?>
             <!--
             <li>
-                <a href="<?php //echo $baseUrl;                                                                ?>/dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
+                <a href="<?php //echo $baseUrl;                                                                                                                             ?>/dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
             </li>
 
             <li class="mm-dropdown">
                 <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูล User</span><span class="label label-warning">Updated</span></a>
                 <ul>
                     <li>
-                        <a tabindex="-1" href="<?php //echo $baseUrl;                                                                                                 ?>/user/user"><i class="fa fa-square"></i> <span class="mm-text">สมาชิก</span></a>
+                        <a tabindex="-1" href="<?php //echo $baseUrl;                                                                                                                                                              ?>/user/user"><i class="fa fa-square"></i> <span class="mm-text">สมาชิก</span></a>
                     </li>
                 </ul>
             </li>-->
