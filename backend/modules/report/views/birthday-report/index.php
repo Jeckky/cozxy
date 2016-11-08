@@ -24,30 +24,22 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 $form = ActiveForm::begin([
                     'method' => 'GET',
                 ]);
+
+                $month = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"]
                 ?>
                 <div class="col-lg-3">
                     <?=
-                    DatePicker::widget(['name' => 'fromDate',
-                        'dateFormat' => 'yyyy-MM-dd',
-                        'options' => ['placeholder' => 'From Date',
-                            'class' => 'form-control',
-                            'style' => 'border-color: #66CCFF;height: 40px;',
-                            'language' => 'en',
-                        ],
-                        'value' => isset($_GET['fromDate']) ? $_GET['fromDate'] : NULL
+                    Html::dropDownList('fromDate', isset($_GET['fromDate']) ? $_GET['fromDate'] : $thisMonth - 1, $month, ['class' => 'form-control',
+                        'value' => isset($_GET['fromDate']) ? $_GET['fromDate'] : $thisMonth - 1,
+                        'style' => 'border-color: #66CCFF;height: 40px;',
                     ])
                     ?>
                 </div>
                 <div class="col-lg-3">
                     <?=
-                    DatePicker::widget(['name' => 'toDate',
-                        'dateFormat' => 'yyyy-MM-dd',
-                        'options' => ['placeholder' => 'To Date',
-                            'class' => 'form-control',
-                            'style' => 'border-color: #66CCFF;height: 40px;',
-                            'language' => 'en',
-                        ],
-                        'value' => isset($_GET['toDate']) ? $_GET['toDate'] : NULL
+                    Html::dropDownList('toDate', isset($_GET['toDate']) ? $_GET['toDate'] : $thisMonth - 1, $month, ['class' => 'form-control',
+                        'value' => isset($_GET['toDate']) ? $_GET['toDate'] : $thisMonth - 1,
+                        'style' => 'border-color: #66CCFF;height: 40px;',
                     ])
                     ?>
                 </div>

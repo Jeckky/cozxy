@@ -54,8 +54,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     ],
                     [
                         'attribute' => 'สถานะ',
+                        'format' => 'html',
                         'value' => function($model) {
-                            return $model->getStatusText($model->status);
+                            return \common\models\costfit\OrderItem::creteStatus($model->orderId);
                         }
                     ]
                 ],

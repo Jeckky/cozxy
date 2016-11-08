@@ -90,10 +90,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </thead>
                     <tbody>
                         <?php
+                        $itemPerPage = 20;
+                        $page = 1;
                         $i = 0;
                         if (count($model->storeProducts) > 0) {
                             $num = 0;
-                            foreach ($model->storeProducts as $value) {
+                            $storeProducts = common\models\costfit\StoreProduct::find()->select("*,SUM(quantity) as sumQuantity")->where("storeProductGroupId=" . $model->storeProductGroupId)->groupBy("productId")->all();
+                            foreach ($storeProducts as $value) {
                                 $bg_even_number = '#fff';  // เลขคู่
                                 $bg_odd_number = '#f5f5f5';  // เลขคี่
                                 if ($num % 2 == 0) {
@@ -107,12 +110,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     <td style="font-size: 12px;"><?php echo ($value->product->code != '') ? $value->product->code : '-'; ?></td>
                                     <td style="font-size: 12px;"><?php echo $value->product->title; ?></td>
                                     <td style="font-size: 12px;"><?php echo isset($value->product->units) ? $value->product->units->title : "-"; ?></td>
-                                    <td style="font-size: 12px;"><?php echo number_format($value->price, 2); ?></td>
-                                    <td style="font-size: 12px;"><?php echo $value->quantity ?></td>
-                                    <td style="font-size: 12px;width: 15%;text-align: right" ><?php echo number_format($value->total, 2); ?></td>
+                                    <td style="font-size: 12px;text-align: right"><?php echo number_format($value->price, 2); ?></td>
+                                    <td style="font-size: 12px;text-align: right"><?php echo $value->sumQuantity ?></td>
+                                    <td style="font-size: 12px;width: 15%;text-align: right" ><?php echo number_format($value->price * $value->sumQuantity, 2); ?></td>
                                 </tr>
                                 <?php
                                 $i = $i++;
+                                ?>
+                                <?php
                             }
                         } else {
                             ?>
@@ -122,13 +127,41 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             <?php
                         }
                         ?>
-                        <tr>
-                            <td colspan="6">&nbsp;</td>
-                            <td >&nbsp;</td>
-                        </tr>
+                        <?php
+                        if ($i <= $itemPerPage):
+                            for ($j = $i; $j <= $itemPerPage; $j++):
+                                $bg_even_number = '#fff';  // เลขคู่
+                                $bg_odd_number = '#f5f5f5';  // เลขคี่
+                                if ($j % 2 == 0) {
+                                    $bg = $bg_even_number;
+                                } else if ($j % 2 == 1) {
+                                    $bg = $bg_odd_number;
+                                }
+                                ?>
+                                <tr style="padding: 5px; background-color: <?php echo $bg; ?>;" >
+                                    <td style="font-size: 12px;">&nbsp;</td>
+                                    <td style="font-size: 12px;"></td>
+                                    <td style="font-size: 12px;"></td>
+                                    <td style="font-size: 12px;"></td>
+                                    <td style="font-size: 12px;"></td>
+                                    <td style="font-size: 12px;"></td>
+                                    <td style="font-size: 12px;width: 15%;text-align: right" ></td>
+                                </tr>
+
+                                <?php
+                            endfor;
+                            ?>
+                            <?php
+                        endif;
+                        ?>
 <!--                        <tr>
+<td colspan="6">&nbsp;</td>
+<td >&nbsp;</td>
+</tr>-->
+                        <tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้าไม่รวมภาษี/Sub Total excluded VAT :</td>
-                            <td class="bg-purchase-order text-right"><?php // echo number_format($model->totalExVat, 2);                                                                                                                    ?></td>-->
+                            <td class="bg-purchase-order text-right"><?php echo number_format($model->summary * 0.93, 2); ?></td>
+                        </tr>
                         </tr>
 
                         <!--
@@ -137,25 +170,25 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             <td class="bg-purchase-order"> - </td>
                         </tr>
                         -->
-<!--                        <tr>
-                            <td colspan="6" class="text-right" class="foorter-purchase-order">ภาษีมูลค่าเพิ่ม/VAT 7 % :</td>
-                            <td class="bg-purchase-order text-right"><?php // echo number_format($model->vat, 2);                                                                                                                      ?></td>
-                        </tr>-->
                         <tr>
-                            <td colspan="6" class="text-right" class="foorter-purchase-order">รวม / Total :</td>
+                            <td colspan="6" class="text-right" class="foorter-purchase-order">ภาษีมูลค่าเพิ่ม/VAT 7 % :</td>
+                            <td class="bg-purchase-order text-right"><?php echo number_format($model->summary * 0.07, 2); ?></td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" class="text-right" class="foorter-purchase-order">รวมทั้งสิ้น / Total :</td>
                             <td class="bg-purchase-order text-right"><?php echo number_format($model->summary, 2); ?></td>
                         </tr>
-<!--                        <tr>
+    <!--                        <tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">ส่วนลดพิเศษ / Extra Saving :</td>
-                            <td class="bg-purchase-order text-right"><?php // echo number_format($model->discount, 2);                                                                                                                      ?></td>
+                            <td class="bg-purchase-order text-right"><?php // echo number_format($model->discount, 2);                                                                                                                                                                      ?></td>
                         </tr>
                         <tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">ค่าจัดส่ง / Shipping :</td>
-                            <td class="bg-purchase-order text-right"><?php // echo ($model->shippingRate > 0) ? number_format($model->shippingRate, 2) : "Free";                                                                                                                      ?></td>
+                            <td class="bg-purchase-order text-right"><?php // echo ($model->shippingRate > 0) ? number_format($model->shippingRate, 2) : "Free";                                                                                                                                                                      ?></td>
                         </tr>
                         <tr >
                             <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้าที่ต้องชำระเงินรวมภาษีมูลค่าเพิ่ม/Total excluded VAT :</td>
-                            <td class="bg-purchase-order text-right"><?php // echo number_format($model->summary, 2);                                                                                                                      ?></td>
+                            <td class="bg-purchase-order text-right"><?php // echo number_format($model->summary, 2);                                                                                                                                                                      ?></td>
                         </tr>-->
 
                     </tbody>

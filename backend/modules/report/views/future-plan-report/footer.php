@@ -45,4 +45,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </td>
     </tr>
 </table>
+<table style="width:100%;font-size: 8px">
+    <tr>
+        <td style="text-align:right" >|Page {PAGENO}|</td>
+    </tr>
+</table>
 

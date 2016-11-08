@@ -32,7 +32,7 @@ class PickingController extends StoreMasterController {
         $oldUser = $this->checkOldPicker($userId); // ถ้าเป็นคนหยิบของที่หยิบของในออเดอร์ที่เลือกมายังไม่เสร็จ บังคับให้กลับบมาหน้าหยิบให้เสร็จ
         $findEnough = \common\models\costfit\Order::find()
         ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-        ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS)->all();
+        ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status >= " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " and oi.status=1")->all();
         $allId = [];
         $e = 0;
         if (isset($findEnough)):
@@ -46,18 +46,18 @@ class PickingController extends StoreMasterController {
 //throw new \yii\base\Exception('aaaa');
             $query = \common\models\costfit\Order::find()
             ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-            ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " and order.orderId in(" . $enoughId . ") order by oi.sendDateTime")
+            ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status >= " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " and order.orderId in(" . $enoughId . ") and oi.status=1 order by oi.sendDateTime")
             ->limit(6);
             $select = \common\models\costfit\Order::find()
             ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-            ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status = " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " and order.orderId in(" . $enoughId . ")")
+            ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status >= " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " and order.orderId in(" . $enoughId . ") and oi.status=1")
             ->limit(6)
             ->all();
         } else {//ถ้า มีของใน order ไม่ครบ
             $query = \common\models\costfit\Order::find()
-            ->where("orderId=0");
+            ->where("orderId = 0");
             $select = \common\models\costfit\Order::find()
-            ->where("orderId=0")->all();
+            ->where("orderId = 0")->all();
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -69,11 +69,9 @@ class PickingController extends StoreMasterController {
             $allOrderId = $_GET["selection"];
             $slots = [];
             $i = 0;
-//$this->updateQuantity($allOrderId); //ตัดสต๊อก
             $this->saveSelection($allOrderId, $userId); //บันทึกใครหยิบ ออร์เดอร์ไหนบ้าง
-//$ms = '';
             foreach ($allOrderId as $orderId):
-                $items = \common\models\costfit\OrderItem::find()->where("orderId = " . $orderId)->all();
+                $items = \common\models\costfit\OrderItem::find()->where("orderId = " . $orderId . " and status in (1,4,5) and DATE(DATE_SUB(sendDateTime, INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE()")->all();
                 if (isset($items) && !empty($items)) {
                     foreach ($items as $item):
                         $flag = false;
@@ -86,9 +84,9 @@ class PickingController extends StoreMasterController {
                             }
                         } else {
                             $result = $item->quantity;
-                            $slot = \common\models\costfit\StoreProductArrange::find()->where("productId = " . $item->productId . " and status=4 and result!=0 order by createDateTime")->all(); //หา slot ทั้งหมดที่ product วางอยู่ และ ไม่เท่ากับ 0
+                            $slot = \common\models\costfit\StoreProductArrange::find()->where("productId = " . $item->productId . " and status = 4 and result!=0 order by createDateTime")->all(); //หา slot ทั้งหมดที่ product วางอยู่ และ ไม่เท่ากับ 0
                             if (isset($slot) && !empty($slot)) {
-                                //throw new \yii\base\Exception(print_r($slot, true));
+//throw new \yii\base\Exception(print_r($slot, true));
                                 foreach ($slot as $eSlot):
                                     $enoughItemInSlot = false;
                                     $flag = false;
@@ -100,7 +98,7 @@ class PickingController extends StoreMasterController {
                                     }
                                     if ($enoughItemInSlot == true) {
                                         $this->updateSlot($eSlot->slotId, $item->productId, $result, $item->orderId);
-                                        $orderItemCheck = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and orderItemId=" . $item->orderItemId)->one();
+                                        $orderItemCheck = \common\models\costfit\OrderItem::find()->where("orderId = " . $orderId . " and orderItemId = " . $item->orderItemId)->one();
                                         if ($orderItemCheck->status == 4) {
                                             break;
                                         }
@@ -128,7 +126,7 @@ class PickingController extends StoreMasterController {
                         $colors = \common\models\costfit\Led::variableColor($allSlot->getSlotName($slots[0]));
                         $this->turnOnLedSlot($slots, $colors->ledColor, $allOrderId);
                     } else {
-                        $colors = \common\models\costfit\LedColor::find()->where("ledColor=" . $old)->one();
+                        $colors = \common\models\costfit\LedColor::find()->where("ledColor = " . $old)->one();
                     }
                 }
                 if (isset($colors) && $colors != '') {
@@ -148,12 +146,12 @@ class PickingController extends StoreMasterController {
                 ]);
             }
         } else if ($oldUser) {//ถ้าเป็นคนหยิบเก่าที่ยังหยิบของใน order ที่เลือกมายังไม่เสร็จ
-            $storePicking = StorePicking::find()->where("pickerId='" . $userId . "' and status=4")->one();
+            $storePicking = StorePicking::find()->where("pickerId = '" . $userId . "' and status = 4")->one();
             $allOrderId = explode(",", $storePicking->orderId);
             $slots = [];
             $i = 0;
             foreach ($allOrderId as $orderId):
-                $items = \common\models\costfit\OrderItem::find()->where("orderId = " . $orderId)->all();
+                $items = \common\models\costfit\OrderItem::find()->where("orderId = " . $orderId . " and DATE(DATE_SUB(sendDateTime, INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE()")->all();
                 if (isset($items) && !empty($items)) {
                     foreach ($items as $item):
                         $flag = false;
@@ -165,7 +163,7 @@ class PickingController extends StoreMasterController {
                                 $slots[0] = 'a';
                             }
                         } else {
-                            $slot = \common\models\costfit\StoreProductArrange::find()->where("productId = " . $item->productId . " and status=4 and quantity !=0")->one(); //หา slot  ที่ product วางอยู่ และ ไม่เท่ากับ 0
+                            $slot = \common\models\costfit\StoreProductArrange::find()->where("productId = " . $item->productId . " and status = 4 and quantity !=0")->one(); //หา slot  ที่ product วางอยู่ และ ไม่เท่ากับ 0
                             if (isset($slot)) {
                                 $flag = $this->checkSlot($slots, $slot->slotId);
                                 if ($flag) {
@@ -190,7 +188,7 @@ class PickingController extends StoreMasterController {
                         $colors = \common\models\costfit\Led::variableColor($allSlot->getSlotName($slots[0]));
                         $this->turnOnLedSlot($slots, $colors->ledColor, $allOrderId);
                     } else {
-                        $colors = \common\models\costfit\LedColor::find()->where("ledColor=" . $old)->one();
+                        $colors = \common\models\costfit\LedColor::find()->where("ledColor = " . $old)->one();
                     }
                 }
                 if (isset($colors) && $colors != '') {
@@ -218,13 +216,13 @@ class PickingController extends StoreMasterController {
     }
 
     public function actionPickItem() {
-        $orderItems = \common\models\costfit\OrderItem::find()->where("orderId = " . $_GET['orderId'] . " and productId=" . $_GET['productId'])->all();
+        $orderItems = \common\models\costfit\OrderItem::find()->where("orderId = " . $_GET['orderId'] . " and productId = " . $_GET['productId'])->all();
         $allSlot = new \common\models\costfit\StoreSlot();
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         $countSlot = 0;
         $userId = Yii::$app->user->identity->userId;
         $this->updateArrange($_GET['orderId'], $_GET['productId'], $_GET['slot']);
-        $count = count(\common\models\costfit\StoreProductArrange::find()->where("orderId=" . $_GET['orderId'] . " and productId=" . $_GET['productId'] . " and status=99")->all());
+        $count = count(\common\models\costfit\StoreProductArrange::find()->where("orderId = " . $_GET['orderId'] . " and productId = " . $_GET['productId'] . " and status = 99")->all());
         if (isset($orderItems)) {
             if ($count == 0) {//หยิบไอเทมนั้นในออเดอร์ หมดทุก slot แล้ว?
                 foreach ($orderItems as $orderItem):
@@ -236,7 +234,7 @@ class PickingController extends StoreMasterController {
                 //set pinked product in orderItem to  5  (หยิบแล้ว)
             }
             $this->checkOrder($_GET['orderId']);
-//            $arrange = \common\models\costfit\StoreProductArrange::find()->where("slotId = " . $_GET['slot'] . " and productId=" . $_GET['productId'])->all();
+//            $arrange = \common\models\costfit\StoreProductArrange::find()->where("slotId = " . $_GET['slot'] . " and productId = " . $_GET['productId'])->all();
 //            foreach ($arrange as $arProduct):
 //                foreach ($_GET['allOrderId'] as $orderId):
 //                    $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $orderId . " and productId = " . $arProduct->productId . " and status = 4")->all();
@@ -245,7 +243,7 @@ class PickingController extends StoreMasterController {
 //                    }
 //                endforeach;
 //            endforeach;
-            $arrange = \common\models\costfit\StoreProductArrange::find()->where("slotId = " . $_GET['slot'] . " and pickerId=" . $userId . " and status=99")->all(); //slot หยิบไอเทมของตัวเองหมดหรือยัง
+            $arrange = \common\models\costfit\StoreProductArrange::find()->where("slotId = " . $_GET['slot'] . " and pickerId = " . $userId . " and status = 99")->all(); //slot หยิบไอเทมของตัวเองหมดหรือยัง
             $countSlot = count($arrange);
             if ($countSlot == 0) {//เมื่อ หยิบครบทุก Item ใน slot นั้น ==> ปิดไฟ(set status=0)
                 $slot = \common\models\costfit\StoreSlot::find()->where("storeSlotId = " . $_GET['slot'])->one();
@@ -258,7 +256,7 @@ class PickingController extends StoreMasterController {
                     $ledColor = \common\models\costfit\LedColor::find()->where("ledColor = " . $_GET['colorId'])->one(); //set ไฟ สีนั้นให้ว่าง
                     $ledColor->status = 0;
                     $ledColor->save();
-                    $picker = StorePicking::find()->where("pickerId='" . $userId . "' and status=4")->one();
+                    $picker = StorePicking::find()->where("pickerId = '" . $userId . "' and status = 4")->one();
                     if (isset($picker)) {
                         $picker->status = 5;
                         $picker->updateDateTime = new \yii\db\Expression('NOW()');
@@ -291,7 +289,7 @@ class PickingController extends StoreMasterController {
 //throw new \yii\base\Exception($baseUrl);
         $orderId = '';
         foreach ($_GET['order'] as $order):
-            $orderId = $orderId . $order . ",";
+            $orderId = $orderId . $order . ", ";
         endforeach;
         $id = substr($orderId, 0, -1);
 //throw new \yii\base\Exception($id);
@@ -306,7 +304,7 @@ class PickingController extends StoreMasterController {
     }
 
     static function updateArrange($orderId, $productId, $slot) {
-        $arrange = \common\models\costfit\StoreProductArrange::find()->where("slotId=" . $slot . " and orderId=" . $orderId . " and productId=" . $productId)->all();
+        $arrange = \common\models\costfit\StoreProductArrange::find()->where("slotId = " . $slot . " and orderId = " . $orderId . " and productId = " . $productId)->all();
         foreach ($arrange as $arr):
             $arr->status = 100;
             $arr->save(false);
@@ -322,10 +320,10 @@ class PickingController extends StoreMasterController {
 //throw new \yii\base\Exception(print_r($allOrder, true));
         foreach ($allOrder as $orderId)://หาว่าใน order ที่เลือกมา มี Product อะไรบ้าง
             $i = 0;
-            $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
+            $orderItems = \common\models\costfit\OrderItem::find()->where("orderId = " . $orderId . " and DATE(DATE_SUB(sendDateTime, INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE()")->all();
             if (isset($orderItems) && !empty($orderItems)) {
                 foreach ($orderItems as $item):
-                    $arranges = \common\models\costfit\StoreProductArrange::find()->where("productId=" . $item->productId . " and status=4")->all();
+                    $arranges = \common\models\costfit\StoreProductArrange::find()->where("productId = " . $item->productId . " and status = 4")->all();
                     if (isset($arranges) && !empty($arranges)) {
                         foreach ($arranges as $arrange):
                             $arrangTotal+=$arrange->result;
@@ -377,14 +375,14 @@ class PickingController extends StoreMasterController {
             $ledItem->save();
         endforeach;
         foreach ($allOrderId as $orderId):
-            $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
+            $orderItems = \common\models\costfit\OrderItem::find()->where("orderId = " . $orderId . " and DATE(DATE_SUB(sendDateTime, INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE()")->all();
             if (isset($orderItems) && !empty($orderItems)) {
                 foreach ($orderItems as $item):
                     $item->color = $color;
                     $item->save(false);
                 endforeach;
             }
-            $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
+            $order = \common\models\costfit\Order::find()->where("orderId = " . $orderId)->one();
             $order->color = $color;
             $order->save(false);
         endforeach;
@@ -394,10 +392,10 @@ class PickingController extends StoreMasterController {
       $different = 0;
       $userId = '1234';
       foreach ($allOrderId as $orderId):
-      $orderItmes = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and status!=4 and status!=5")->all();
+      $orderItmes = \common\models\costfit\OrderItem::find()->where("orderId = " . $orderId . " and status!=4 and status!=5")->all();
       if (isset($orderItmes) && !empty($orderItmes)) {
       foreach ($orderItmes as $item):
-      $arranges = \common\models\costfit\StoreProductArrange::find()->where("productId=" . $item->productId . " and status=4")->all();
+      $arranges = \common\models\costfit\StoreProductArrange::find()->where("productId = " . $item->productId . " and status = 4")->all();
       $nextSlotResult = $item->quantity;
       if (isset($arranges) && !empty($arranges)) {
       foreach ($arranges as $arrange):
@@ -434,7 +432,7 @@ class PickingController extends StoreMasterController {
       }
       $item->save(false);
       endforeach;
-      $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
+      $order = \common\models\costfit\Order::find()->where("orderId = " . $orderId)->one();
       if ($order->status != 12) {
       $order->status = 11; //กำลังหยิบ
       $order->pickerId = $userId;
@@ -453,7 +451,7 @@ class PickingController extends StoreMasterController {
                 $strId = $strId . $id . ",";
             endforeach;
             $str = substr($strId, 0, -1);
-            $old = StorePicking::find()->where("pickerId='" . $userId . "' and status=4")->one();
+            $old = StorePicking::find()->where("pickerId = '" . $userId . "' and status = 4")->one();
             if (count($old) == 0) {
                 $picking = new StorePicking();
                 $picking->pickerId = $userId;
@@ -470,7 +468,7 @@ class PickingController extends StoreMasterController {
         $i = 0;
         $color = 0;
         foreach ($allOrderId as $orderId):
-            $orders = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->all();
+            $orders = \common\models\costfit\Order::find()->where("orderId = " . $orderId)->all();
             if (isset($orders) && !empty($orders)) {
                 foreach ($orders as $order):
                     if (($order->color != null) && ($order->color != 0)) {
@@ -488,7 +486,7 @@ class PickingController extends StoreMasterController {
     }
 
     static function checkOldPicker($userId) {
-        $orders = \common\models\costfit\Order::find()->where("pickerId=" . $userId . " and status=11")->all();
+        $orders = \common\models\costfit\Order::find()->where("pickerId = " . $userId . " and status = 11")->all();
         if (count($orders) > 0) {
             return true;
         } else {
@@ -499,7 +497,7 @@ class PickingController extends StoreMasterController {
     static function checkOrder($orderId) {
         $i = 0;
         if (isset($orderId) && !empty($orderId)) {
-            $orders = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
+            $orders = \common\models\costfit\OrderItem::find()->where("orderId = " . $orderId)->all();
             if (isset($orders) && !empty($orders)) {
                 foreach ($orders as $order):
                     if ($order->status == 4) {
@@ -507,7 +505,7 @@ class PickingController extends StoreMasterController {
                     }
                 endforeach;
                 if ($i == 0) {
-                    $a = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
+                    $a = \common\models\costfit\Order::find()->where("orderId = " . $orderId)->one();
                     $a->status = 12;
                     $a->updateDateTime = new \yii\db\Expression('NOW()');
                     $a->save(false);
@@ -518,7 +516,7 @@ class PickingController extends StoreMasterController {
 
     static function checkEnoughItemInSlot($slotId, $productId, $quantity) {
         $total = 0;
-        $productArranges = \common\models\costfit\StoreProductArrange::find()->where("slotId=" . $slotId . " and productId=" . $productId . " and status=4")->all();
+        $productArranges = \common\models\costfit\StoreProductArrange::find()->where("slotId = " . $slotId . " and productId = " . $productId . " and status = 4")->all();
         if (isset($productArranges) && !empty($productArranges)) {
             foreach ($productArranges as $productArrange):
                 $total+=$productArrange->result;
@@ -534,9 +532,9 @@ class PickingController extends StoreMasterController {
     static function updateSlot($slotId, $productId, $quantity, $orderId) {
         //throw new \yii\base\Exception($quantity);
         $userId = Yii::$app->user->identity->userId;
-        $productArrange = \common\models\costfit\StoreProductArrange::find()->where("slotId=" . $slotId . " and productId=" . $productId . " and status=4 and result!=0 order by createDateTime")->one();
-        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and productId=" . $productId . " and status=1")->one();
-        $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
+        $productArrange = \common\models\costfit\StoreProductArrange::find()->where("slotId = " . $slotId . " and productId = " . $productId . " and status = 4 and result!=0 order by createDateTime")->one();
+        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $orderId . " and productId = " . $productId . " and status = 1 and DATE(DATE_SUB(sendDateTime, INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE()")->one();
+        $order = \common\models\costfit\Order::find()->where("orderId = " . $orderId)->one();
         if (isset($orderItem) && !empty($orderItem)) {
             if (($orderItem->status != 4) && (($orderItem->status != 5))) {
                 if (isset($productArrange) && !empty($productArrange)) {
