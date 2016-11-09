@@ -65,7 +65,7 @@ class DashboardController extends DashboardMasterController {
         //echo 'xx:' . $userCount;
         $userVisit = \common\models\costfit\UserVisit::find()->select('count(user_visit.visitId) as countVisit ,user_visit.userId ,`oi`.firstname , `oi`.lastname, `oi`.email')
         ->join('LEFT JOIN', 'user oi', 'oi.userId = user_visit.userId')
-        ->where(' user_visit.lastvisitDate >= now() - INTERVAL 1 DAY group by user_visit.userId HAVING COUNT(user_visit.visitId) > 1 limit 5')->all();
+        ->where(' user_visit.lastvisitDate >= now() - INTERVAL 1 DAY group by user_visit.userId HAVING COUNT(user_visit.visitId) > 1  order by  COUNT(user_visit.visitId) desc limit 5')->all();
         return $this->render('index', compact('userVisit', 'circulations', 'orderToday', 'todaySummary', 'earnToday', 'newUser', 'newOrder', 'userCount', 'userlastvisitDate', 'orderLast'));
     }
 
