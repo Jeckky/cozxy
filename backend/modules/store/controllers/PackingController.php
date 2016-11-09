@@ -136,7 +136,7 @@ class PackingController extends StoreMasterController {
                         if ($fully == false) {//ถ้ายังไม่ครบทุก item
                             $full++;
                         } else {
-                            $this->updateOrderItem($inBag->orderItemId);
+                            //$this->updateOrderItem($inBag->orderItemId);
                         }
                     endforeach;
                 }
