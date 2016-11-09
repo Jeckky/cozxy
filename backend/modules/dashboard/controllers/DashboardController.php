@@ -59,7 +59,11 @@ class DashboardController extends DashboardMasterController {
         //$newOrderSumToday = \common\models\costfit\Order::find()
         //->where('createDateTime >= now() - INTERVAL 1 DAY')->sum('summary');
 
-        return $this->render('index', compact('circulations', 'orderToday', 'todaySummary', 'earnToday', 'newUser', 'newOrder'));
+        $userCount = \common\models\costfit\User::find()->count();
+        $userlastvisitDate = \common\models\costfit\User::find()->where('lastvisitDate >= now() - INTERVAL 1 DAY')->count();
+        $orderLast = \common\models\costfit\Order::find()->where('status = 3 ')->count(); //and createDateTime >= now() - INTERVAL 1 DAY
+        //echo 'xx:' . $userCount;
+        return $this->render('index', compact('circulations', 'orderToday', 'todaySummary', 'earnToday', 'newUser', 'newOrder', 'userCount', 'userlastvisitDate', 'orderLast'));
     }
 
     public function actionFlowchart($id) {

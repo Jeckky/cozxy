@@ -264,10 +264,38 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 
                 <div class="stat-panel">
                     <div class="stat-row">
-
+                        <!-- Purple background, small padding -->
+                        <div class="stat-cell bg-pa-purple padding-sm">
+                            <!-- Extra small text -->
+                            <div class="text-xs" style="margin-bottom: 5px;"><!--RETWEETS GRAPH--></div>
+                            <div class="stats-sparklines-x" id="stats-sparklines-3-x" style="width: 100%"></div>
+                        </div>
                     </div> <!-- /.stat-row -->
                     <div class="stat-row">
-
+                        <!-- Bordered, without top border, horizontally centered text -->
+                        <div class="stat-counters bordered no-border-t text-center">
+                            <!-- Small padding, without horizontal padding -->
+                            <div class="stat-cell col-xs-4 padding-sm no-padding-hr">
+                                <!-- Big text -->
+                                <span class="text-bg"><strong><?php echo $userCount; ?></strong></span><br>
+                                <!-- Extra small text -->
+                                <span class="text-xs text-muted">สมาชิกทั้งหมด</span>
+                            </div>
+                            <!-- Small padding, without horizontal padding -->
+                            <div class="stat-cell col-xs-4 padding-sm no-padding-hr">
+                                <!-- Big text -->
+                                <span class="text-bg"><strong><?php echo $userlastvisitDate; ?></strong></span><br>
+                                <!-- Extra small text -->
+                                <span class="text-xs text-muted">จำนวนสมาชิกที่ Login วันนี้</span>
+                            </div>
+                            <!-- Small padding, without horizontal padding -->
+                            <div class="stat-cell col-xs-4 padding-sm no-padding-hr">
+                                <!-- Big text -->
+                                <span class="text-bg"><strong><?php echo $orderLast; ?></strong></span><br>
+                                <!-- Extra small text -->
+                                <span class="text-xs text-muted">จำนวน Order ที่ชำระบัตรเครดิตไม่สำเร็จ</span>
+                            </div>
+                        </div> <!-- /.stat-counters -->
                     </div> <!-- /.stat-row -->
                 </div> <!-- /.stat-panel -->
             </div>
