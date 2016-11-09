@@ -286,7 +286,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                                 <!-- Big text -->
                                 <span class="text-bg"><strong><?php echo $userlastvisitDate; ?></strong></span><br>
                                 <!-- Extra small text -->
-                                <span class="text-xs text-muted">จำนวนสมาชิกที่ Login วันนี้</span>
+                                <span class="text-xs text-muted">จำนวนสมาชิก<br>ที่ Login วันนี้</span>
                             </div>
                             <!-- Small padding, without horizontal padding -->
                             <div class="stat-cell col-xs-4 padding-sm no-padding-hr">
