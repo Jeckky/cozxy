@@ -440,6 +440,45 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 
     </div>
     <!-- /11. $RECENT_ACTIVITY -->
+
+    <div class="col-md-6">
+        <!-- 18. $FOLLOWERS ========  Followers=========== -->
+        <div class="panel widget-followers">
+            <div class="panel-heading">
+                <span class="panel-title"><i class="panel-title-icon fa fa-check"></i>สมาชิก Login Top 5</span>
+            </div> <!-- / .panel-heading -->
+            <div class="panel-body">
+                <?php
+                foreach ($userVisit as $key => $valueV) {
+                    ?>
+                    <div class="follower">
+                        <?php
+                        //echo 'gender :: ' . Yii::$app->user->identity->gender;
+                        if (Yii::$app->user->identity->gender == 0) {
+                            ?>
+                            <img src="<?php echo $directoryAsset ?>/demo/avatars/female.jpg" alt="" class="follower-avatar">
+                        <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
+                            <img src="<?php echo $directoryAsset ?>/demo/avatars/silhouette.jpg" alt="" class="follower-avatar">
+                        <?php } ?>
+                        <div class="body">
+                            <div class="follower-controls">
+                                <span class="label label-success pull-right">จำนวน <?php echo $valueV->countVisit; ?>&nbsp;ครั้ง</span>
+                            </div>
+                            <a href="#" class="follower-name"><?php echo isset($valueV->firstname) ? $valueV->firstname : 'ยังไม่ระบุ'; ?>&nbsp;
+                                <?php echo isset($valueV->lastname) ? $valueV->lastname : 'ยังไม่ระบุ'; ?></a><br>
+                            <a href="#" class="follower-username"><?php echo $valueV->email; ?></a>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+
+            </div> <!-- / .panel-body -->
+        </div> <!-- / .panel -->
+        <!-- /18. $FOLLOWERS -->
+
+    </div>
+
 </div>
 
 <!-- Page wide horizontal line -->
@@ -471,3 +510,4 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
     <!-- /13. $RECENT_TASKS -->
 
 </div>
+

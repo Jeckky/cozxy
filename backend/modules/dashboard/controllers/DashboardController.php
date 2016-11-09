@@ -63,7 +63,10 @@ class DashboardController extends DashboardMasterController {
         $userlastvisitDate = \common\models\costfit\User::find()->where('lastvisitDate >= now() - INTERVAL 1 DAY')->count();
         $orderLast = \common\models\costfit\Order::find()->where('status = 3 and createDateTime >= now() - INTERVAL 1 DAY')->count(); //and createDateTime >= now() - INTERVAL 1 DAY
         //echo 'xx:' . $userCount;
-        return $this->render('index', compact('circulations', 'orderToday', 'todaySummary', 'earnToday', 'newUser', 'newOrder', 'userCount', 'userlastvisitDate', 'orderLast'));
+        $userVisit = \common\models\costfit\UserVisit::find()->select('count(user_visit.visitId) as countVisit ,user_visit.userId ,`oi`.firstname , `oi`.lastname, `oi`.email')
+        ->join('LEFT JOIN', 'user oi', 'oi.userId = user_visit.userId')
+        ->where(' user_visit.lastvisitDate >= now() - INTERVAL 1 DAY group by user_visit.userId HAVING COUNT(user_visit.visitId) > 1 limit 5')->all();
+        return $this->render('index', compact('userVisit', 'circulations', 'orderToday', 'todaySummary', 'earnToday', 'newUser', 'newOrder', 'userCount', 'userlastvisitDate', 'orderLast'));
     }
 
     public function actionFlowchart($id) {
