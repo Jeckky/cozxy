@@ -309,7 +309,7 @@ class PickingController extends StoreMasterController {
 //throw new \yii\base\Exception($baseUrl);
         $orderId = '';
         foreach ($_GET['order'] as $order):
-            $orderId = $orderId . $order . ", ";
+            $orderId = $orderId . $order . ",";
         endforeach;
         $id = substr($orderId, 0, -1);
 //throw new \yii\base\Exception($id);

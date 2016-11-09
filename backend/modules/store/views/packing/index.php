@@ -34,7 +34,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     </tr>
                 </tbody>
             </table>
-            <br><h4>:: สแกน Qr Code ของ Order เพื่อแพ๊คสินค้า ::</h4>
+            <br><h4>:: สแกน Qr Code ของ Order เพื่อแพ็คสินค้า ::</h4>
             <?= $this->registerJS("
                             $('#orderNo').blur(function(event){
                                 if(event.which == 13 || event.keyCode == 13)
