@@ -311,7 +311,7 @@ class PickingController extends StoreMasterController {
         foreach ($_GET['order'] as $order):
             $orderId = $orderId . $order . ",";
         endforeach;
-        $id = substr($orderId, 0, -1);
+        $id = trim(substr($orderId, 0, -1));
 //throw new \yii\base\Exception($id);
         $order = \common\models\costfit\Order::find()->where("orderId in ($id)")->all();
         $header = $this->renderPartial('header', [
