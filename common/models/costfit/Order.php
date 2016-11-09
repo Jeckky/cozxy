@@ -90,7 +90,9 @@ class Order extends \common\models\costfit\master\OrderMaster {
             'fromDate',
             'toDate',
             'sumPicking',
-            'sumSummary'
+            'sumSummary',
+            'firstname',
+            'lastname'
         ]);
     }
 

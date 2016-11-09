@@ -183,7 +183,63 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
         </script>
         <!-- / Javascript -->
 
-
+        <div class="row">
+            <div class="col-xs-4">
+                <!-- Centered text -->
+                <div class="stat-panel text-center">
+                    <div class="stat-row">
+                        <!-- Dark gray background, small padding, extra small text, semibold text -->
+                        <div class="stat-cell bg-dark-gray padding-sm text-xs text-semibold">
+                            <i class="fa fa-globe"></i>&nbsp;&nbsp;BANDWIDTH
+                        </div>
+                    </div> <!-- /.stat-row -->
+                    <div class="stat-row">
+                        <!-- Bordered, without top border, without horizontal padding -->
+                        <div class="stat-cell bordered no-border-t no-padding-hr">
+                            <div class="pie-chart" data-percent="43" id="easy-pie-chart-1">
+                                <div class="pie-chart-label">12.3TB</div>
+                            </div>
+                        </div>
+                    </div> <!-- /.stat-row -->
+                </div> <!-- /.stat-panel -->
+            </div>
+            <div class="col-xs-4">
+                <div class="stat-panel text-center">
+                    <div class="stat-row">
+                        <!-- Dark gray background, small padding, extra small text, semibold text -->
+                        <div class="stat-cell bg-dark-gray padding-sm text-xs text-semibold">
+                            <i class="fa fa-flash"></i>&nbsp;&nbsp;PICK LOAD
+                        </div>
+                    </div> <!-- /.stat-row -->
+                    <div class="stat-row">
+                        <!-- Bordered, without top border, without horizontal padding -->
+                        <div class="stat-cell bordered no-border-t no-padding-hr">
+                            <div class="pie-chart" data-percent="93" id="easy-pie-chart-2">
+                                <div class="pie-chart-label">93%</div>
+                            </div>
+                        </div>
+                    </div> <!-- /.stat-row -->
+                </div> <!-- /.stat-panel -->
+            </div>
+            <div class="col-xs-4">
+                <div class="stat-panel text-center">
+                    <div class="stat-row">
+                        <!-- Dark gray background, small padding, extra small text, semibold text -->
+                        <div class="stat-cell bg-dark-gray padding-sm text-xs text-semibold">
+                            <i class="fa fa-cloud"></i>&nbsp;&nbsp;USED RAM
+                        </div>
+                    </div> <!-- /.stat-row -->
+                    <div class="stat-row">
+                        <!-- Bordered, without top border, without horizontal padding -->
+                        <div class="stat-cell bordered no-border-t no-padding-hr">
+                            <div class="pie-chart" data-percent="75" id="easy-pie-chart-3">
+                                <div class="pie-chart-label">12GB <?//= memory_get_peak_usage() / 1000000000; ?></div>
+                            </div>
+                        </div>
+                    </div> <!-- /.stat-row -->
+                </div> <!-- /.stat-panel -->
+            </div>
+        </div>
     </div>
     <!-- /6. $EASY_PIE_CHARTS -->
 
@@ -236,8 +292,40 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                 <!-- / Javascript -->
 
                 <div class="stat-panel">
-
-
+                    <div class="stat-row">
+                        <!-- Purple background, small padding -->
+                        <div class="stat-cell bg-pa-purple padding-sm">
+                            <!-- Extra small text -->
+                            <div class="text-xs" style="margin-bottom: 5px;">RETWEETS GRAPH</div>
+                            <div class="stats-sparklines" id="stats-sparklines-3" style="width: 100%"></div>
+                        </div>
+                    </div> <!-- /.stat-row -->
+                    <div class="stat-row">
+                        <!-- Bordered, without top border, horizontally centered text -->
+                        <div class="stat-counters bordered no-border-t text-center">
+                            <!-- Small padding, without horizontal padding -->
+                            <div class="stat-cell col-xs-4 padding-sm no-padding-hr">
+                                <!-- Big text -->
+                                <span class="text-bg"><strong>312</strong></span><br>
+                                <!-- Extra small text -->
+                                <span class="text-xs text-muted">TWEETS</span>
+                            </div>
+                            <!-- Small padding, without horizontal padding -->
+                            <div class="stat-cell col-xs-4 padding-sm no-padding-hr">
+                                <!-- Big text -->
+                                <span class="text-bg"><strong>1000</strong></span><br>
+                                <!-- Extra small text -->
+                                <span class="text-xs text-muted">FOLLOWERS</span>
+                            </div>
+                            <!-- Small padding, without horizontal padding -->
+                            <div class="stat-cell col-xs-4 padding-sm no-padding-hr">
+                                <!-- Big text -->
+                                <span class="text-bg"><strong>523</strong></span><br>
+                                <!-- Extra small text -->
+                                <span class="text-xs text-muted">FOLLOWING</span>
+                            </div>
+                        </div> <!-- /.stat-counters -->
+                    </div> <!-- /.stat-row -->
                 </div> <!-- /.stat-panel -->
             </div>
             <!-- /8. $RETWEETS_GRAPH_STAT_PANEL -->
@@ -264,10 +352,19 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 
                 <div class="stat-panel">
                     <div class="stat-row">
-
+                        <!-- Warning background -->
+                        <div class="stat-cell bg-warning">
+                            <!-- Big text -->
+                            <span class="text-bg">11% more</span><br>
+                            <!-- Small text -->
+                            <span class="text-sm">Unique visitors today</span>
+                        </div>
                     </div> <!-- /.stat-row -->
                     <div class="stat-row">
-
+                        <!-- Warning background, small padding, without top padding, horizontally centered text -->
+                        <div class="stat-cell bg-warning padding-sm no-padding-t text-center">
+                            <div id="stats-sparklines-2" class="stats-sparklines" style="width: 100%"></div>
+                        </div>
                     </div> <!-- /.stat-row -->
                 </div> <!-- /.stat-panel -->
             </div>
@@ -303,36 +400,132 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             <div class="panel-body tab-content-padding">
                 <!-- Panel padding, without vertical padding -->
                 <div class="panel-padding no-padding-vr">
-                    <?php
-                    $num = 1;
-                    /*
-                      status 2 :'รอการชำระเงิน',
-                      status 3 : 'ชำระบัตรเครดิตไม่สำเร็จ',
-                      status 4 : 'ยืนยันชำระเงิน',
-                      status 5 : 'ชำระบัตรเครดิตสำเร็จ',
-                     *  */
-                    foreach ($newOrder as $valueO) {
-                        if ($valueO->status == 2) {
-                            $status = 'Pending';
-                        } elseif ($valueO->status == 3) {
-                            $status = 'Rejected';
-                        } elseif ($valueO->status == 4) {
-                            $status = 'In progress';
-                        } elseif ($valueO->status == 5) {
-                            $status = 'Completed';
-                        }
-                        ?>
-                        <div class="ticket">
-                            <span class="label label-success ticket-label"><?php echo $status; ?></span>
-                            <a href="#" title="" class="ticket-title">OrderNo<span>[#<?php echo $valueO->orderNo; ?>]</span></a>
-                            <span class="ticket-info">
-                                Opened by <a href="#" title=""><?php echo $valueO->firstname ?> <?php echo $valueO->lastname ?></a> today
-                            </span>
-                        </div> <!-- / .ticket -->
-                        <?php
-                        $num = $num++;
-                    }
-                    ?>
+
+                    <div class="ticket">
+                        <span class="label label-success ticket-label">Completed</span>
+                        <a href="#" title="" class="ticket-title">Server unavaible<span>[#201798]</span></a>
+                        <span class="ticket-info">
+                            Opened by <a href="#" title="">Timothy Owens</a> today
+                        </span>
+                    </div> <!-- / .ticket -->
+
+                    <div class="ticket">
+                        <span class="label label-warning ticket-label">Pending</span>
+                        <a href="#" title="" class="ticket-title">Mobile App Problem<span>[#201797]</span></a>
+                        <span class="ticket-info">
+                            Opened by <a href="#">Denise Steiner</a> 2 days ago
+                        </span>
+                    </div> <!-- / .ticket -->
+
+                    <div class="ticket">
+                        <span class="label label-info ticket-label">In progress</span>
+                        <a href="#" title="" class="ticket-title">
+                            <i class="fa fa-warning text-danger"></i>PayPal issue<span>[#201796]</span>
+                        </a>
+                        <span class="ticket-info">
+                            Opened by <a href="#">Robert Jang</a> 3 days ago
+                        </span>
+                    </div> <!-- / .ticket -->
+
+                    <div class="ticket">
+                        <span class="label label-danger ticket-label">Rejected</span>
+                        <a href="#" title="" class="ticket-title">IE8 problem<span>[#201795]</span></a>
+                        <span class="ticket-info">
+                            Opened by <a href="#">Robert Jang</a> 4 days ago
+                        </span>
+                    </div> <!-- / .ticket -->
+
+                    <div class="ticket">
+                        <span class="label label-success ticket-label">Completed</span>
+                        <a href="#" title="" class="ticket-title">Server unavaible<span>[#201794]</span></a>
+                        <span class="ticket-info">
+                            Opened by <a href="#">Timothy Owens</a> 5 days ago
+                        </span>
+                    </div> <!-- / .ticket -->
+
+                    <div class="ticket">
+                        <span class="label label-success ticket-label">Completed</span>
+                        <a href="#" title="" class="ticket-title">Server unavaible<span>[#201798]</span></a>
+                        <span class="ticket-info">
+                            Opened by <a href="#" title="">Timothy Owens</a> today
+                        </span>
+                    </div> <!-- / .ticket -->
+
+                    <div class="ticket">
+                        <span class="label label-warning ticket-label">Pending</span>
+                        <a href="#" title="" class="ticket-title">Mobile App Problem<span>[#201797]</span></a>
+                        <span class="ticket-info">
+                            Opened by <a href="#">Denise Steiner</a> 2 days ago
+                        </span>
+                    </div> <!-- / .ticket -->
+
+                    <div class="ticket">
+                        <span class="label label-info ticket-label">In progress</span>
+                        <a href="#" title="" class="ticket-title">
+                            <i class="fa fa-warning text-danger"></i>PayPal issue<span>[#201796]</span>
+                        </a>
+                        <span class="ticket-info">
+                            Opened by <a href="#">Robert Jang</a> 3 days ago
+                        </span>
+                    </div> <!-- / .ticket -->
+
+                    <div class="ticket">
+                        <span class="label label-danger ticket-label">Rejected</span>
+                        <a href="#" title="" class="ticket-title">IE8 problem<span>[#201795]</span></a>
+                        <span class="ticket-info">
+                            Opened by <a href="#">Robert Jang</a> 4 days ago
+                        </span>
+                    </div> <!-- / .ticket -->
+
+                    <div class="ticket">
+                        <span class="label label-success ticket-label">Completed</span>
+                        <a href="#" title="" class="ticket-title">Server unavaible<span>[#201794]</span></a>
+                        <span class="ticket-info">
+                            Opened by <a href="#">Timothy Owens</a> 5 days ago
+                        </span>
+                    </div> <!-- / .ticket -->
+
+                    <div class="ticket">
+                        <span class="label label-success ticket-label">Completed</span>
+                        <a href="#" title="" class="ticket-title">Server unavaible<span>[#201798]</span></a>
+                        <span class="ticket-info">
+                            Opened by <a href="#" title="">Timothy Owens</a> today
+                        </span>
+                    </div> <!-- / .ticket -->
+
+                    <div class="ticket">
+                        <span class="label label-warning ticket-label">Pending</span>
+                        <a href="#" title="" class="ticket-title">Mobile App Problem<span>[#201797]</span></a>
+                        <span class="ticket-info">
+                            Opened by <a href="#">Denise Steiner</a> 2 days ago
+                        </span>
+                    </div> <!-- / .ticket -->
+
+                    <div class="ticket">
+                        <span class="label label-info ticket-label">In progress</span>
+                        <a href="#" title="" class="ticket-title">
+                            <i class="fa fa-warning text-danger"></i>PayPal issue<span>[#201796]</span>
+                        </a>
+                        <span class="ticket-info">
+                            Opened by <a href="#">Robert Jang</a> 3 days ago
+                        </span>
+                    </div> <!-- / .ticket -->
+
+                    <div class="ticket">
+                        <span class="label label-danger ticket-label">Rejected</span>
+                        <a href="#" title="" class="ticket-title">IE8 problem<span>[#201795]</span></a>
+                        <span class="ticket-info">
+                            Opened by <a href="#">Robert Jang</a> 4 days ago
+                        </span>
+                    </div> <!-- / .ticket -->
+
+                    <div class="ticket">
+                        <span class="label label-success ticket-label">Completed</span>
+                        <a href="#" title="" class="ticket-title">Server unavaible<span>[#201794]</span></a>
+                        <span class="ticket-info">
+                            Opened by <a href="#">Timothy Owens</a> 5 days ago
+                        </span>
+                    </div> <!-- / .ticket -->
                 </div>
             </div> <!-- / .panel-body -->
         </div> <!-- / .panel -->
@@ -376,25 +569,69 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     </tr>
                 </thead>
                 <tbody class="valign-middle">
-                    <?php
-                    $num = 1;
-                    foreach ($newUser as $valueU) {
-                        ?>
-                        <tr>
-                            <td><?php echo $num; ?></td>
-                            <td>
-                                <img src="<?php echo $directoryAsset; ?>/demo/avatars/2.jpg" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;
-                                <a href="#" title=""><?php echo $valueU->email ?></a>
-                            </td>
-                            <td><?php echo isset($valueU->firstname) ? $valueU->firstname : 'ยังไม่ระบุ'; ?>&nbsp;
-                                <?php echo isset($valueU->lastname) ? $valueU->lastname : 'ยังไม่ระบุ'; ?></td>
-                            <td><?php echo $valueU->email ?></td>
-                            <td></td>
-                        </tr>
-                        <?php
-                        $num = $num++;
-                    }
-                    ?>
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            <img src="<?php echo $directoryAsset; ?>/demo/avatars/2.jpg" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;<a href="#" title="">@rjang</a>
+                        </td>
+                        <td>Robert Jang</td>
+                        <td>rjang@example.com</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>
+                            <img src="<?php echo $directoryAsset; ?>/demo/avatars/3.jpg" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;<a href="#" title="">@mbortz</a>
+                        </td>
+                        <td>Michelle Bortz</td>
+                        <td>mbortz@example.com</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>
+                            <img src="<?php echo $directoryAsset; ?>/demo/avatars/4.jpg" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;<a href="#" title="">@towens</a>
+                        </td>
+                        <td>Timothy Owens</td>
+                        <td>towens@example.com</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>
+                            <img src="<?php echo $directoryAsset; ?>/demo/avatars/5.jpg" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;<a href="#" title="">@dsteiner</a>
+                        </td>
+                        <td>Denise Steiner</td>
+                        <td>dsteiner@example.com</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>
+                            <img src="<?php echo $directoryAsset; ?>/demo/avatars/2.jpg" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;<a href="#" title="">@rjang</a>
+                        </td>
+                        <td>Robert Jang</td>
+                        <td>rjang@example.com</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>
+                            <img src="<?php echo $directoryAsset; ?>/demo/avatars/3.jpg" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;<a href="#" title="">@mbortz</a>
+                        </td>
+                        <td>Michelle Bortz</td>
+                        <td>mbortz@example.com</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>
+                            <img src="<?php echo $directoryAsset; ?>/demo/avatars/4.jpg" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;<a href="#" title="">@towens</a>
+                        </td>
+                        <td>Timothy Owens</td>
+                        <td>towens@example.com</td>
+                        <td></td>
+                    </tr>
                 </tbody>
             </table>
         </div> <!-- / .panel -->
