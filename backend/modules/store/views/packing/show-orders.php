@@ -47,8 +47,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
         if (Yii::$app->controller->action->id == "close-bag"):
             if (!isset($_GET["printed"])) {
                 $redirect = "
-                    window.open(" . Yii::$app->homeUrl . " + 'store/packing/bag-label?bag=' + data, '_blank');
-                    window.location =" . Yii::$app->homeUrl . "+'store/packing/close-bag?orderId='+orderId+'&printed=1';
+                    window.open('" . Yii::$app->homeUrl . "' + 'store/packing/bag-label?bag=' + data, '_blank');
+                    window.location ='" . Yii::$app->homeUrl . "'+'store/packing/close-bag?orderId='+orderId+'&printed=1';
                 ";
             } else {
                 $redirect = "";
