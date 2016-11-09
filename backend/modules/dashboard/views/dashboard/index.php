@@ -342,16 +342,20 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     foreach ($newOrder as $valueO) {
                         if ($valueO->status == 2) {
                             $status = 'Pending';
+                            $text = 'รอการชำระเงิน';
                         } elseif ($valueO->status == 3) {
                             $status = 'Rejected';
+                            $text = 'ชำระบัตรเครดิตไม่สำเร็จ';
                         } elseif ($valueO->status == 4) {
                             $status = 'In progress';
+                            $text = 'ยืนยันชำระเงิน';
                         } elseif ($valueO->status == 5) {
                             $status = 'Completed';
+                            $text = 'ชำระบัตรเครดิตสำเร็จ';
                         }
                         ?>
                         <div class="ticket">
-                            <span class="label label-success ticket-label"><?php echo $status; ?></span>
+                            <span class="label label-success ticket-label" title="<?php echo $text; ?>"><?php echo $status; ?></span>
                             <a href="#" title="" class="ticket-title">OrderNo<span>[#<?php echo $valueO->orderNo; ?>]</span></a>
                             <span class="ticket-info">
                                 Opened by <a href="#" title=""><?php echo $valueO->firstname ?> <?php echo $valueO->lastname ?></a> today
