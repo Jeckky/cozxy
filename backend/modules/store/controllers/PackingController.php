@@ -157,11 +157,12 @@ class PackingController extends StoreMasterController {
                     }
                 }
             } else {
-                $ms = 'ไม่มีสินค้าในถุง';
-                return $this->render('show-orders', [
-                    'orderId' => $_GET['orderId'],
-                    'ms' => $ms
-                ]);
+                return $this->redirect('index');
+//                $ms = 'ไม่มีสินค้าในถุง';
+//                return $this->render('show-orders', [
+//                    'orderId' => $_GET['orderId'],
+//                    'ms' => $ms
+//                ]);
             }
         } else {
             return $this->render('show-orders', [
