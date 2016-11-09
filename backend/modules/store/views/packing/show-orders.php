@@ -60,7 +60,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
         $.ajax({
         type: 'POST',
         dataType: 'JSON',
-        url: " . Yii::$app->homeUrl . " + 'store/packing/print-label',
+        url: '" . Yii::$app->homeUrl . "' + 'store/packing/print-label',
         data: {orderId: orderId},
         success: function (data)
         {
