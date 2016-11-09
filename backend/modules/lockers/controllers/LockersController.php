@@ -532,7 +532,7 @@ class LockersController extends LockersMasterController {
 
         if ($status == 'ok') { //ตรวจสอบ OK
             // echo 'ok';
-            \common\models\costfit\OrderItemPacking::updateAll(['status' => 9, 'userId' => NULL, 'remark' => NULL], ['pickingItemsId' => $pickingItemsId]);
+            \common\models\costfit\OrderItemPacking::updateAll(['status' => 9, 'userId' => Yii::$app->user->identity->userId, 'remark' => NULL], ['pickingItemsId' => $pickingItemsId]);
             $listOrderItemPacking = \common\models\costfit\OrderItemPacking::find()
             ->where("pickingItemsId = '" . $pickingItemsId . "' ")
             ->groupBy(['order_item_packing.bagNo'])->one();
@@ -542,7 +542,7 @@ class LockersController extends LockersMasterController {
         }
         if ($status == 'no') { //ตรวจสอบ No
             //echo $remarkDesc;
-            \common\models\costfit\OrderItemPacking::updateAll(['status' => 10, 'remark' => $remarkDesc, 'userId' => NULL], ['pickingItemsId' => $pickingItemsId]);
+            \common\models\costfit\OrderItemPacking::updateAll(['status' => 10, 'remark' => $remarkDesc, 'userId' => Yii::$app->user->identity->userId], ['pickingItemsId' => $pickingItemsId]);
             $listOrderItemPacking = \common\models\costfit\OrderItemPacking::find()
             ->where("pickingItemsId = '" . $pickingItemsId . "' ")
             ->groupBy(['order_item_packing.bagNo'])->one();
