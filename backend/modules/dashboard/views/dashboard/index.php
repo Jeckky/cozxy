@@ -267,7 +267,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <!-- Purple background, small padding -->
                         <div class="stat-cell bg-pa-purple padding-sm">
                             <!-- Extra small text -->
-                            <div class="text-xs" style="margin-bottom: 5px;"><!--RETWEETS GRAPH-->รายงานความเคลื่อนไหวต่างๆ</div>
+                            <div class="text-xs" style="margin-bottom: 5px;"><!--RETWEETS GRAPH-->รายงานความเคลื่อนไหวต่างๆ/วัน</div>
                             <div class="stats-sparklines-x" id="stats-sparklines-3-x" style="width: 100%"></div>
                         </div>
                     </div> <!-- /.stat-row -->
