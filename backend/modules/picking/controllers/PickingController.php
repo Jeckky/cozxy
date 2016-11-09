@@ -21,7 +21,7 @@ class PickingController extends PickingMasterController {
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['index', 'create', 'update', 'view'],
+                'only' => ['index', 'create', 'update', 'view', 'virtual'],
                 'rules' => [
                     // allow authenticated users
                     [
