@@ -12,11 +12,9 @@ use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use kartik\mpdf\Pdf;
 
-class PackingController extends StoreMasterController
-{
+class PackingController extends StoreMasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
@@ -33,8 +31,7 @@ class PackingController extends StoreMasterController
         ];
     }
 
-    public function beforeAction($action)
-    {
+    public function beforeAction($action) {
         if ($action->id == 'ping-hardware' || $action->id == 'select-led' || $action->id == 'add-led-to-slot' || $action->id == 'print-label') {
             $this->enableCsrfValidation = false;
         }
@@ -42,8 +39,7 @@ class PackingController extends StoreMasterController
         return parent::beforeAction($action);
     }
 
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         if (!isset(Yii::$app->user->identity->userId)) {
             return $this->redirect($baseUrl . '/auth');
@@ -77,8 +73,7 @@ class PackingController extends StoreMasterController
         }
     }
 
-    public function actionPacking()
-    {
+    public function actionPacking() {
         $ms = '';
         $save = false;
         if (isset($_GET['item'])) {
@@ -128,8 +123,7 @@ class PackingController extends StoreMasterController
         }
     }
 
-    public function actionCloseBag()
-    {
+    public function actionCloseBag() {
         $ms = '';
         $full = 0;
         if (isset($_GET['orderId']) && !empty($_GET['orderId'])) {
@@ -156,7 +150,11 @@ class PackingController extends StoreMasterController
                 } else {//กลับไปหน้า index เพื่อ เลือก order ถัดไป
                     $checkOrder = $this->checkSuccessOrder($_GET['orderId']);
                     if ($checkOrder == true) {
-                        return $this->redirect('index');
+                        return $this->render('show-orders', [
+                            'orderId' => $_GET['orderId'],
+                            'ms' => $ms,
+                            'success' => 'yes'
+                        ]);
                     } else {
                         return $this->render('show-orders', [
                             'orderId' => $_GET['orderId'],
@@ -180,8 +178,7 @@ class PackingController extends StoreMasterController
         }
     }
 
-    public function actionPrintLabel()
-    {
+    public function actionPrintLabel() {
         $ms = '';
         $full = 0;
         if (isset($_POST['orderId']) && !empty($_POST['orderId'])) {
@@ -217,8 +214,7 @@ class PackingController extends StoreMasterController
         }
     }
 
-    public function actionRemove()
-    {
+    public function actionRemove() {
         if (isset($_GET['packingId'])) {
             $itemPacking = \common\models\costfit\OrderItemPacking::find()->where("orderItemPackingId=" . $_GET['packingId'])->one();
             $itemPacking->delete();
@@ -229,8 +225,7 @@ class PackingController extends StoreMasterController
         }
     }
 
-    public function actionBagLabel($bag)
-    {
+    public function actionBagLabel($bag) {
         $orderItem = \common\models\costfit\OrderItemPacking::find()->where("bagNo='" . $bag . "'")->one();
         $order = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $orderItem->orderItemId)->one();
         return $this->renderPartial('bag_label', [
@@ -239,8 +234,7 @@ class PackingController extends StoreMasterController
         ]);
     }
 
-    public function actionMinus()
-    {
+    public function actionMinus() {
         if (isset($_GET['packingId'])) {
             $itemPacking = \common\models\costfit\OrderItemPacking::find()->where("orderItemPackingId=" . $_GET['packingId'])->one();
             $itemPacking->quantity = $itemPacking->quantity - 1;
@@ -252,8 +246,7 @@ class PackingController extends StoreMasterController
         }
     }
 
-    static function checkSum($orderItemId, $orderQuantity)
-    {
+    static function checkSum($orderItemId, $orderQuantity) {
         $orderInPacks = \common\models\costfit\OrderItemPacking::find()->where("orderItemId=" . $orderItemId)->all();
         $total = 0;
         if (isset($orderInPacks) && !empty($orderInPacks)) {
@@ -270,8 +263,7 @@ class PackingController extends StoreMasterController
         }
     }
 
-    static function findItemInBag($orderId)
-    {
+    static function findItemInBag($orderId) {
         $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and status=5")->all();
         $items = '';
         if (isset($orderItems) && !empty($orderItems)) {
@@ -283,8 +275,7 @@ class PackingController extends StoreMasterController
         return $items;
     }
 
-    static function genBagNo($getLast = FALSE)
-    {
+    static function genBagNo($getLast = FALSE) {
         $prefix = 'BG'; //$supplierModel->prefix;
         $order = \common\models\costfit\OrderItemPacking::find()->where("substr(bagNo,1,2)='" . $prefix . "' order by bagNo DESC ")->one();
 //throw new \yii\base\Exception($order->bagNo);
@@ -296,8 +287,7 @@ class PackingController extends StoreMasterController
         return $prefix . date("Ymd") . "-" . str_pad($max_code, 7, "0", STR_PAD_LEFT);
     }
 
-    static function checkFully($orderItemId)
-    {
+    static function checkFully($orderItemId) {
         $itemInBag = 0;
         $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
         if (isset($orderItem)) {
@@ -316,8 +306,7 @@ class PackingController extends StoreMasterController
         }
     }
 
-    static function checkSuccessOrder($orderId)
-    {
+    static function checkSuccessOrder($orderId) {
         $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and DATE(DATE_SUB(sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE()")->all();
         $check = 0;
         if (isset($orderItems) && !empty($orderItems)) {
@@ -345,8 +334,7 @@ class PackingController extends StoreMasterController
         }
     }
 
-    static function updateOrderItem($orderItemId)
-    {
+    static function updateOrderItem($orderItemId) {
         $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
         $orderItem->status = 13;
 //throw new \yii\base\Exception($orderItem->orderItemId);
@@ -354,16 +342,14 @@ class PackingController extends StoreMasterController
         $orderItem->save(false);
     }
 
-    static function updateOrder($orderId)
-    {
+    static function updateOrder($orderId) {
         $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
         $order->status = 13;
         $order->updateDateTime = new \yii\db\Expression('NOW()');
         $order->save(false);
     }
 
-    static function printPdf($content, $header)
-    {
+    static function printPdf($content, $header) {
         $pdf = new Pdf([
 // set to use core fonts only
             'mode' => Pdf::MODE_UTF8,
@@ -404,8 +390,7 @@ class PackingController extends StoreMasterController
         return $pdf->render();
     }
 
-    public function actionPrintBagLabel()
-    {
+    public function actionPrintBagLabel() {
         //throw new \yii\base\Exception('aaa');
         $header = $this->renderPartial('header');
         $content = $this->renderPartial('content', [

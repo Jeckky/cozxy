@@ -45,26 +45,41 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
         <?php
         if (Yii::$app->controller->action->id == "close-bag"):
+            if (!isset($_GET["printed"])) {
+                $redirect = "
+                    window.open(" . Yii::$app->homeUrl . " + 'store/packing/bag-label?bag=' + data, '_blank');
+                    window.location =" . Yii::$app->homeUrl . "+'store/packing/close-bag?orderId='+orderId+'&printed=1';
+                ";
+            } else {
+                $redirect = "";
+            }
             ?>
-            <?= $this->registerJs("var orderId = $('#orderId').val();
-    alert(orderId);
-    $.ajax({
+            <?= $this->registerJs("
+
+        var orderId = $('#orderId').val();
+        $.ajax({
         type: 'POST',
         dataType: 'JSON',
         url: " . Yii::$app->homeUrl . " + 'store/packing/print-label',
         data: {orderId: orderId},
         success: function (data)
         {
-            alert(data);
-            window.open(" . Yii::$app->homeUrl . " + 'store/packing/bag-label?bag=' + data, '_blank');
-            // window.open('//www.google.com', '_blank');
+
+        " . $redirect . "
         },
         error: function (data)
         {
-            alert('ไม่พบ ORDER ID');
+        alert('ไม่พบ ORDER ID');
         }
-    });", yii\web\View::POS_LOAD) ?>
-        <?php endif; ?>
+        });
+        ", yii\web\View::POS_LOAD) ?>
+            <?php
+        endif;
+        if (isset($successOrder)) {
+            ?>
+            <?= $this->redirect(['index']); ?>
+        <?php }
+        ?>
         <input type="hidden" name="orderId" id="orderId" value="<?= $orderId ?>">
         <?php ActiveForm::end(); ?>
         <?php ?>
@@ -106,7 +121,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 } else {
                     echo '<td colspan="3"> ยังไม่มีสินค้าในถุง </td>';
                 }
-                //throw new \yii\base\Exception(print_r($order, true));
+//throw new \yii\base\Exception(print_r($order, true));
                 ?>
             </tbody>
         </table>
@@ -122,10 +137,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
             if (isset($items) && !empty($items)) {
                 echo Html::a('<i class="fa fa-check-square-o" aria-hidden="true"></i> ปิดถุง', ['close-bag',
                     'orderId' => $orderId
-                ], ['class' => 'closeBag btn btn-lg btn-success']);
+                ], ['class' => 'closeBag btn btn-lg btn-success',
+                    'onClick' => 'return confirm("คุณต้องการปิดถุง ?")'
+                ]);
             }
             ?>
         </div>
-        <?php // ActiveForm::end(); ?>
+        <?php // ActiveForm::end();      ?>
     </div>
 </div>
