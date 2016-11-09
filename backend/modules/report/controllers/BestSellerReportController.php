@@ -10,6 +10,23 @@ use common\models\costfit\Order;
 
 class BestSellerReportController extends ReportMasterController {
 
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['index', 'create', 'update', 'view'],
+                'rules' => [
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                // everything else is denied
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex() {
         $model = \common\models\costfit\OrderItem::find()->select("order_item.*,sum(quantity) as sumQuantity")
         ->join('LEFT JOIN', '`order` o', 'o.orderId = order_item.orderId')

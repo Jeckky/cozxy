@@ -10,6 +10,23 @@ use common\models\costfit\Order;
 
 class FuturePlanReportController extends ReportMasterController {
 
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['index', 'create', 'update', 'view'],
+                'rules' => [
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                // everything else is denied
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex() {
         $model = \common\models\costfit\OrderItem::find()->select("order_item.*,sum(order_item.quantity) as sumQuantity  , DATEDIFF(order_item.sendDateTime,date(NOW())) as remainDay,spa.result as stockQuantity")
         ->join("LEFT JOIN", 'store_product_arrange spa', 'spa.productId = order_item.productId ')

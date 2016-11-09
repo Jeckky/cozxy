@@ -16,6 +16,23 @@ use yii\helpers\Json;
 
 class LockersController extends StoreMasterController {
 
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['index', 'create', 'update', 'view'],
+                'rules' => [
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                // everything else is denied
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex() {
 
         $orderItemId = Yii::$app->request->get('orderItemId');

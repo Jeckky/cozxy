@@ -10,6 +10,23 @@ use common\models\costfit\Order;
 
 class PopularReportController extends ReportMasterController {
 
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['index', 'create', 'update', 'view'],
+                'rules' => [
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                // everything else is denied
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex() {
         $model = \common\models\costfit\ProductView::find()->select("*,sum(1) as sumViews")->orderBy("sumViews DESC")->groupBy("productId");
         $filterArray[] = 'and';

@@ -89,7 +89,7 @@ class AuthController extends AuthMasterController {
     public function actionLogout() {
         Yii::$app->user->logout();
         Yii::$app->session->destroy();
-        return $this->redirect(Yii::$app->homeUrl . 'dashboard');
+        return $this->redirect(Yii::$app->homeUrl . 'auth');
     }
 
 }
