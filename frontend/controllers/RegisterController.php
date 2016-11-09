@@ -37,6 +37,11 @@ class RegisterController extends MasterController {
         $term = \common\models\costfit\ContentGroup::find()->where("lower(title)='term'")->one();
         $loginForm = new \common\models\LoginForm();
         if ($loginForm->load(Yii::$app->request->post()) && $loginForm->login()) {
+            $article = new \common\models\costfit\UserVisit(); //Create an article and link it to the author
+            $article->userId = Yii::$app->user->identity->userId;
+            $article->lastvisitDate = new \yii\db\Expression('NOW()');
+            $article->save(FALSE);
+            //exit();
             //return $this->redirect(['site/index']);
             return $this->redirect(Yii::$app->homeUrl);
         } else {

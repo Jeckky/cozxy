@@ -68,6 +68,7 @@ class SiteController extends \backend\controllers\BackendMasterController {
             //throw new \yii\base\Exception(Yii::$app->user->identity->userId);
             if (Yii::$app->user->identity->type == 2) {
                 \common\models\costfit\User::updateAll(['lastvisitDate' => new \yii\db\Expression("NOW()")], ['userId' => Yii::$app->user->identity->userId]);
+
                 return $this->redirect(Yii::$app->homeUrl . 'dashboard');
             } else if (Yii::$app->user->identity->type == 3) {
                 \common\models\costfit\User::updateAll(['lastvisitDate' => new \yii\db\Expression("NOW()")], ['userId' => Yii::$app->user->identity->userId]);
