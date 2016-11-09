@@ -20,13 +20,20 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         Profile
         -->
         <div class="profile-full-name">
-            <span class="text-semibold">Denise Steiner</span>'s profile
+            <span class="text-semibold"><?php echo isset(Yii::$app->user->identity->firstname) ? Yii::$app->user->identity->firstname : 'ไม่ได้ระบุ'; ?>&nbsp;<?php echo isset(Yii::$app->user->identity->lastname) ? Yii::$app->user->identity->lastname : 'ไม่ได้ระบุ'; ?></span>'s profile
         </div>
         <div class="profile-row">
             <div class="left-col">
                 <div class="profile-block">
                     <div class="panel profile-photo">
-                        <img src="<?php echo $directoryAsset ?>/demo/avatars/5.jpg" alt="">
+                        <?php
+                        //echo 'gender :: ' . Yii::$app->user->identity->gender;
+                        if (Yii::$app->user->identity->gender == 0) {
+                            ?>
+                            <img src="<?php echo $directoryAsset ?>/demo/avatars/female.jpg" alt="">
+                        <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
+                            <img src="<?php echo $directoryAsset ?>/demo/avatars/silhouette.jpg" alt="">
+                        <?php } ?>
                     </div><br>
                     <a href="#" class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Following</a>&nbsp;&nbsp;
                     <a href="#" class="btn"><i class="fa fa-comment"></i></a>

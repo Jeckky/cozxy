@@ -243,9 +243,16 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         </li>-->
 
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle user-menu" data-toggle="dropdown">
-                                <img src="<?= $directoryAsset; ?>/demo/avatars/silhouette.jpg" alt="">
-                                <!--<span> <?php //echo Yii::$app->session['firstname'];         ?></span>-->
+                            <a href="#" class="dropdown-toggle user-menu" data-toggle="dropdown"> 
+                                <?php
+                                //echo 'gender :: ' . Yii::$app->user->identity->gender;
+                                if (Yii::$app->user->identity->gender == 0) {
+                                    ?>
+                                    <img src="<?php echo $directoryAsset ?>/demo/avatars/female.jpg" alt="">
+                                <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
+                                    <img src="<?php echo $directoryAsset ?>/demo/avatars/silhouette.jpg" alt="">
+                                <?php } ?>
+                            <!--<span> <?php //echo Yii::$app->session['firstname'];            ?></span>-->
                                 <span> <?= isset(Yii::$app->user->identity->email) ? Yii::$app->user->identity->firstname : 'Guest' ?></span>
                             </a>
                             <ul class="dropdown-menu">

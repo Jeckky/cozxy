@@ -415,7 +415,14 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <tr>
                             <td><?php echo $num; ?></td>
                             <td>
-                                <img src="<?php echo $directoryAsset; ?>/demo/avatars/silhouette.jpg" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;
+                                <?php
+                                //echo 'gender :: ' . Yii::$app->user->identity->gender;
+                                if (Yii::$app->user->identity->gender == 0) {
+                                    ?>
+                                    <img src="<?php echo $directoryAsset ?>/demo/avatars/female.jpg" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;
+                                <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
+                                    <img src="<?php echo $directoryAsset; ?>/demo/avatars/silhouette.jpg" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;
+                                <?php } ?>
                                 <a href="#" title=""><?php echo $valueU->email ?></a>
                             </td>
                             <td><?php echo isset($valueU->firstname) ? $valueU->firstname : 'ยังไม่ระบุ'; ?>&nbsp;
