@@ -45,20 +45,21 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             return $data->name;
                         },
                     ],
-                    [
-                        'attribute' => 'สมาชิกที่เปิดใช้งาน',
-                        'format' => 'raw',
-                        'value' => function($data) {
-                            return '<a class="badge " href=""> 0</a>';
-                        },
-                    ],
-                    [
-                        'attribute' => 'สมาชิกที่ถูกระงับ',
-                        'format' => 'raw',
-                        'value' => function($data) {
-                            return '<a class="badge " href=""> 0</a>';
-                        },
-                    ],
+                    /*
+                      [
+                      'attribute' => 'สมาชิกที่เปิดใช้งาน',
+                      'format' => 'raw',
+                      'value' => function($data) {
+                      return '<a class="badge " href=""> 0</a>';
+                      },
+                      ],
+                      [
+                      'attribute' => 'สมาชิกที่ถูกระงับ',
+                      'format' => 'raw',
+                      'value' => function($data) {
+                      return '<a class="badge " href=""> 0</a>';
+                      },
+                      ], */
                     //'user_group_Id',
                     //'name',
                     //'parent_id',
