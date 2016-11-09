@@ -84,7 +84,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             if ($model->lastvisitDate == '0000-00-00 00:00:00') {
                                 return '';
                             } else {
-                                return Yii::$app->formatter->asDate($model->lastvisitDate) . ' ' . Yii::$app->formatter->asTime($model->lastvisitDate);
+                                return $this->context->dateThai($model->lastvisitDate, 1, TRUE);
                             }
                         }
                     ],
@@ -92,7 +92,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'attribute' => 'createDateTime',
                         'format' => 'raw',
                         'value' => function($model) {
-                            return Yii::$app->formatter->asDate($model->createDateTime) . ' ' . Yii::$app->formatter->asTime($model->createDateTime);
+                            return $this->context->dateThai($model->createDateTime, 1, TRUE);
                         }
                     ],
                     ['class' => 'yii\grid\ActionColumn',

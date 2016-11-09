@@ -65,7 +65,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             [
                                                 'attribute' => 'วันเกิด',
                                                 'format' => 'raw',
-                                                'value' => Yii::$app->formatter->asDate($model->birthDate)
+                                                'value' => $this->context->dateThai($model->birthDate, 1)
                                             ],
                                             //'gender',
                                             [
@@ -84,12 +84,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             [
                                                 'attribute' => 'createDateTime',
                                                 'format' => 'raw',
-                                                'value' => Yii::$app->formatter->asDate($model->createDateTime) . ' ' . Yii::$app->formatter->asTime($model->createDateTime)
+                                                'value' => $this->context->dateThai($model->createDateTime, 1, TRUE)
                                             ],
                                             [
                                                 'attribute' => 'updateDateTime',
                                                 'format' => 'raw',
-                                                'value' => Yii::$app->formatter->asDate($model->updateDateTime) . ' ' . Yii::$app->formatter->asTime($model->updateDateTime)
+                                                'value' => $this->context->dateThai($model->updateDateTime, 1, TRUE)
                                             ],
                                         //'updateDateTime',
                                         ],
