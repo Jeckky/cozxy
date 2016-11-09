@@ -42,10 +42,32 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 ") ?>
 
         <br>
+
+        <?php
+        if (Yii::$app->controller->action->id == "close-bag"):
+            ?>
+            <?= $this->registerJs("var orderId = $('#orderId').val();
+    alert(orderId);
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: " . Yii::$app->homeUrl . " + 'store/packing/print-label',
+        data: {orderId: orderId},
+        success: function (data)
+        {
+            alert(data);
+            window.open(" . Yii::$app->homeUrl . " + 'store/packing/bag-label?bag=' + data, '_blank');
+            // window.open('//www.google.com', '_blank');
+        },
+        error: function (data)
+        {
+            alert('ไม่พบ ORDER ID');
+        }
+    });", yii\web\View::POS_LOAD) ?>
+        <?php endif; ?>
         <input type="hidden" name="orderId" id="orderId" value="<?= $orderId ?>">
         <?php ActiveForm::end(); ?>
-        <?php
-        ?>
+        <?php ?>
         <table class="table table-condensed" style="text-align: center;">
             <thead>
                 <tr >
@@ -104,6 +126,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
             }
             ?>
         </div>
-
+        <?php // ActiveForm::end(); ?>
     </div>
 </div>

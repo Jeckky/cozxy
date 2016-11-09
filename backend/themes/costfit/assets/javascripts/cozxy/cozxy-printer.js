@@ -15,20 +15,6 @@ if (window.location.host == 'localhost') {
 }
 
 $(document).on('click', '.closeBag', function () {
-    var $orderId = $(this).parent().parent().find("#orderId").val();
-    $.ajax({
-        type: "POST",
-        dataType: "JSON",
-        url: $baseUrl + 'store/packing/print-label',
-        data: {orderId: $orderId},
-        success: function (data)
-        {
-            window.open($baseUrl + 'store/packing/bag-label?bag=' + data, '_blank');
-            // window.open('//www.google.com', '_blank');
-        },
-        error: function (data)
-        {
-            alert('ไม่พบ ORDER ID');
-        }
-    });
+
+
 });
