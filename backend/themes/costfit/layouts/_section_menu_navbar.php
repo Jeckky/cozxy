@@ -25,20 +25,20 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 
         <div id="main-navbar-collapse" class="collapse navbar-collapse main-navbar-collapse">
             <div>
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">Home</a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">First item</a></li>
-                            <li><a href="#">Second item</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Third item</a></li>
-                        </ul>
-                    </li>
-                </ul> <!-- / .navbar-nav -->
+                <!-- <ul class="nav navbar-nav">
+                     <li>
+                         <a href="#">Home</a>
+                     </li>
+                     <li class="dropdown">
+                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown</a>
+                         <ul class="dropdown-menu">
+                             <li><a href="#">First item</a></li>
+                             <li><a href="#">Second item</a></li>
+                             <li class="divider"></li>
+                             <li><a href="#">Third item</a></li>
+                         </ul>
+                     </li>
+                 </ul>--> <!-- / .navbar-nav -->
 
                 <div class="right clearfix">
                     <ul class="nav navbar-nav pull-right right-navbar-nav">
@@ -236,16 +236,16 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         </li>
                         <!-- /3. $END_NAVBAR_ICON_BUTTONS -->
 
-                        <li>
+                        <!--<li>
                             <form class="navbar-form pull-left">
                                 <input type="text" class="form-control" placeholder="Search">
                             </form>
-                        </li>
+                        </li>-->
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle user-menu" data-toggle="dropdown">
                                 <img src="<?= $directoryAsset; ?>/demo/avatars/1.jpg" alt="">
-                                <!--<span> <?php //echo Yii::$app->session['firstname'];      ?></span>-->
+                                <!--<span> <?php //echo Yii::$app->session['firstname'];        ?></span>-->
                                 <span> <?= isset(Yii::$app->user->identity->email) ? Yii::$app->user->identity->firstname : 'Guest' ?></span>
                             </a>
                             <ul class="dropdown-menu">
