@@ -247,7 +247,7 @@ class PickingController extends StoreMasterController {
             if ($count == 0) {//หยิบไอเทมนั้นในออเดอร์ หมดทุก slot แล้ว?
                 foreach ($orderItems as $orderItem):
                     $orderItem->status = 5;
-                    $orderItem->pickerId = $userId; //รอ login
+                    $orderItem->pickerId = $userId;
                     $orderItem->updateDateTime = new \yii\db\Expression('NOW()');
                     $orderItem->save();
                 endforeach;
@@ -263,7 +263,7 @@ class PickingController extends StoreMasterController {
 //                    }
 //                endforeach;
 //            endforeach;
-            $arrange = \common\models\costfit\StoreProductArrange::find()->where("slotId = " . $_GET['slot'] . " and pickerId = " . $userId . " and status = 99")->all(); //slot หยิบไอเทมของตัวเองหมดหรือยัง
+            $arrange = \common\models\costfit\StoreProductArrange::find()->where("orderId = " . $_GET['orderId'] . " and productId = " . $_GET['productId'] . " and slotId = " . $_GET['slot'] . " and pickerId = " . $userId . " and status = 99")->all(); //slot หยิบไอเทมของตัวเองหมดหรือยัง
             $countSlot = count($arrange);
             if ($countSlot == 0) {//เมื่อ หยิบครบทุก Item ใน slot นั้น ==> ปิดไฟ(set status=0)
                 $slot = \common\models\costfit\StoreSlot::find()->where("storeSlotId = " . $_GET['slot'])->one();
