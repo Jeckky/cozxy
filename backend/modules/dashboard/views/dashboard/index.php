@@ -293,7 +293,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                                 <!-- Big text -->
                                 <span class="text-bg"><strong><?php echo $orderLast; ?></strong></span><br>
                                 <!-- Extra small text -->
-                                <span class="text-xs text-muted">จำนวน Order <br>ที่ชำระบัตรเครดิตไม่สำเร็จ</span>
+                                <span class="text-xs text-muted">จำนวน Order <br>ที่ชำระบัตรเครดิตไม่สำเร็จในวันนี้</span>
                             </div>
                         </div> <!-- /.stat-counters -->
                     </div> <!-- /.stat-row -->
@@ -400,7 +400,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <th>Username</th>
                         <th>Full Name</th>
                         <th>E-mail</th>
-                        <th></th>
+                        <th>สมัครผ่าน</th>
                     </tr>
                 </thead>
                 <tbody class="valign-middle">
@@ -416,8 +416,8 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                             </td>
                             <td><?php echo isset($valueU->firstname) ? $valueU->firstname : 'ยังไม่ระบุ'; ?>&nbsp;
                                 <?php echo isset($valueU->lastname) ? $valueU->lastname : 'ยังไม่ระบุ'; ?></td>
-                            <td><?php echo $valueU->email ?></td>
-                            <td></td>
+                            <td><?php echo $valueU->email; ?></td>
+                            <td><?php echo isset($valueU->auth_type) ? $valueU->auth_type : ($valueU->auth_type != '') ? $valueU->auth_type : 'web'; ?></td>
                         </tr>
                         <?php
                         $num = $num++;
