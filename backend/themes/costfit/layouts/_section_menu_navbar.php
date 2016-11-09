@@ -244,8 +244,8 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle user-menu" data-toggle="dropdown">
-                                <img src="<?= $directoryAsset; ?>/demo/avatars/1.jpg" alt="">
-                                <!--<span> <?php //echo Yii::$app->session['firstname'];        ?></span>-->
+                                <img src="<?= $directoryAsset; ?>/demo/avatars/silhouette.jpg" alt="">
+                                <!--<span> <?php //echo Yii::$app->session['firstname'];         ?></span>-->
                                 <span> <?= isset(Yii::$app->user->identity->email) ? Yii::$app->user->identity->firstname : 'Guest' ?></span>
                             </a>
                             <ul class="dropdown-menu">

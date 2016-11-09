@@ -383,7 +383,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <tr>
                             <td><?php echo $num; ?></td>
                             <td>
-                                <img src="<?php echo $directoryAsset; ?>/demo/avatars/2.jpg" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;
+                                <img src="<?php echo $directoryAsset; ?>/demo/avatars/silhouette.jpg" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;
                                 <a href="#" title=""><?php echo $valueU->email ?></a>
                             </td>
                             <td><?php echo isset($valueU->firstname) ? $valueU->firstname : 'ยังไม่ระบุ'; ?>&nbsp;
