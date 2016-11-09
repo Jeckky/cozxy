@@ -267,7 +267,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <!-- Purple background, small padding -->
                         <div class="stat-cell bg-pa-purple padding-sm">
                             <!-- Extra small text -->
-                            <div class="text-xs" style="margin-bottom: 5px;"><!--RETWEETS GRAPH-->รายงานความเคลื่อนไหวต่างๆ</div>  
+                            <div class="text-xs" style="margin-bottom: 5px;"><!--RETWEETS GRAPH-->รายงานความเคลื่อนไหวต่างๆ</div>
                             <div class="stats-sparklines-x" id="stats-sparklines-3-x" style="width: 100%"></div>
                         </div>
                     </div> <!-- /.stat-row -->
@@ -293,7 +293,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                                 <!-- Big text -->
                                 <span class="text-bg"><strong><?php echo $orderLast; ?></strong></span><br>
                                 <!-- Extra small text -->
-                                <span class="text-xs text-muted">จำนวน Order ที่ชำระบัตรเครดิตไม่สำเร็จ</span>
+                                <span class="text-xs text-muted">จำนวน Order <br>ที่ชำระบัตรเครดิตไม่สำเร็จ</span>
                             </div>
                         </div> <!-- /.stat-counters -->
                     </div> <!-- /.stat-row -->
