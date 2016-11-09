@@ -65,7 +65,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             [
                                                 'attribute' => 'วันเกิด',
                                                 'format' => 'raw',
-                                                'value' => $this->context->dateThai($model->birthDate, 1)
+                                                'value' => ($model->birthDate != '0000-00-00 00:00:00') ? $this->context->dateThai($model->birthDate, 1) : ''
                                             ],
                                             //'gender',
                                             [
