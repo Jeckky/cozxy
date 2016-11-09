@@ -43,7 +43,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 </td>
                 <td colspan="3" style="padding: 5px; vertical-align: text-top; text-align: center;border: 0.5px slategray solid;border-right: 0px;">
                     <h2>
-                        บริษัท เอเทค เอ็นเตอร์ไพรส์ จำกัด
+                        บริษัท คอซซี่ ดอท คอม
                     </h2>
                     เลขประจำตัวผู้เสียภาษี : 0105546109903 <br>
                     สำนักงานใหญ่ เลขที่ 1 ซ.ลาดพร้าว 19 ถ.ลาดพร้าว <br>แขวงจอมพล เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900

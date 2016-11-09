@@ -32,7 +32,7 @@ class PackingController extends StoreMasterController {
     }
 
     public function beforeAction($action) {
-        if ($action->id == 'ping-hardware' || $action->id == 'select-led' || $action->id == 'add-led-to-slot') {
+        if ($action->id == 'ping-hardware' || $action->id == 'select-led' || $action->id == 'add-led-to-slot' || $action->id == 'print-label') {
             $this->enableCsrfValidation = false;
         }
 
