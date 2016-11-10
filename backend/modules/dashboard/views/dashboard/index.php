@@ -70,57 +70,61 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             });
         </script>
         <!-- / Javascript -->
-        <div class="row" style="margin-bottom: 20px">
-            <div class="col-lg-2">
-                <a href="<?= Yii::$app->homeUrl . "store/virtual" ?>" class="btn btn-lg btn-success text-left" style="font-size: 14px;width: 100%;text-align: left">
-                    <p><i class="fa fa-archive" style="font-size:30px;"></i>
-                        <span class="pull-right" style="font-size: 14px;font-weight: bold">Virtual Store</span><br>
-                        <span class="pull-right" style="text-decoration: underline">View >></span>
-                    </p>
-                </a>
-            </div>
-            <div class="col-lg-2">
-                <a href="<?= Yii::$app->homeUrl . "picking/picking/virtual" ?>" class="btn btn-lg btn-warning text-left" style="font-size: 14px;width: 100%;text-align: left">
-                    <p><i class="fa fa-archive" style="font-size:30px;"></i>
-                        <span class="pull-right" style="font-size: 14px;font-weight: bold">Virtual PP</span><br>
-                        <!--<span class="pull-right" style="font-size: 7px;font-weight: bold;margin-top: -15px">Picking Point</span><br>-->
-                        <span class="pull-right" style="text-decoration: underline">View >></span>
-                    </p>
-                </a>
-            </div>
-            <div class="col-lg-2">
-                <a href="<?= Yii::$app->homeUrl . "project" ?>" class="btn btn-lg btn-danger text-left" style="font-size: 14px;width: 100%;text-align: left">
-                    <p><i class="fa fa-archive" style="font-size:30px;"></i>
-                        <span class="pull-right" style="font-size: 16px;font-weight: bold"><?= count(1) ?> โครงการ</span><br>
-                        <span class="pull-right" style="text-decoration: underline">View >></span>
-                    </p>
-                </a>
-            </div>
-            <div class="col-lg-2">
-                <a href="<?= Yii::$app->homeUrl . "project" ?>" class="btn btn-lg btn-info text-left" style="font-size: 14px;width: 100%;text-align: left">
-                    <p><i class="fa fa-archive" style="font-size:30px;"></i>
-                        <span class="pull-right" style="font-size: 16px;font-weight: bold"><?= count(1) ?> โครงการ</span><br>
-                        <span class="pull-right" style="text-decoration: underline">View >></span>
-                    </p>
-                </a>
-            </div>
-            <div class="col-lg-2">
-                <a href="<?= Yii::$app->homeUrl . "project" ?>" class="btn btn-lg btn-default text-left" style="font-size: 14px;width: 100%;text-align: left">
-                    <p><i class="fa fa-archive" style="font-size:30px;"></i>
-                        <span class="pull-right" style="font-size: 16px;font-weight: bold"><?= count(1) ?> โครงการ</span><br>
-                        <span class="pull-right" style="text-decoration: underline">View >></span>
-                    </p>
-                </a>
-            </div>
-            <div class="col-lg-2">
-                <a href="<?= Yii::$app->homeUrl . "project" ?>" class="btn btn-lg btn-success text-left" style="font-size: 14px;width: 100%;text-align: left">
-                    <p><i class="fa fa-archive" style="font-size:30px;"></i>
-                        <span class="pull-right" style="font-size: 16px;font-weight: bold"><?= count(1) ?> โครงการ</span><br>
-                        <span class="pull-right" style="text-decoration: underline">View >></span>
-                    </p>
-                </a>
+        <div class="col-md-12">
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-lg-2">
+                    <a href="<?= Yii::$app->homeUrl . "store/virtual" ?>" class="btn btn-lg btn-success text-left" style="font-size: 14px;width: 100%;text-align: left">
+                        <p><i class="fa fa-archive" style="font-size:30px;"></i>
+                            <span class="pull-right" style="font-size: 14px;font-weight: bold">Virtual Store</span><br>
+                            <span class="pull-right" style="text-decoration: underline">View >></span>
+                        </p>
+                    </a>
+                </div>
+                <div class="col-lg-2">
+                    <a href="<?= Yii::$app->homeUrl . "picking/picking/virtual" ?>" class="btn btn-lg btn-warning text-left" style="font-size: 14px;width: 100%;text-align: left">
+                        <p><i class="fa fa-archive" style="font-size:30px;"></i>
+                            <span class="pull-right" style="font-size: 14px;font-weight: bold">Virtual PP</span><br>
+                            <!--<span class="pull-right" style="font-size: 7px;font-weight: bold;margin-top: -15px">Picking Point</span><br>-->
+                            <span class="pull-right" style="text-decoration: underline">View >></span>
+                        </p>
+                    </a>
+                </div>
+                <div class="col-lg-2">
+                    <a href="<?= Yii::$app->homeUrl . "project" ?>" class="btn btn-lg btn-danger text-left" style="font-size: 14px;width: 100%;text-align: left">
+                        <p><i class="fa fa-archive" style="font-size:30px;"></i>
+                            <span class="pull-right" style="font-size: 16px;font-weight: bold"><?= count(1) ?> โครงการ</span><br>
+                            <span class="pull-right" style="text-decoration: underline">View >></span>
+                        </p>
+                    </a>
+                </div>
+                <div class="col-lg-2">
+                    <a href="<?= Yii::$app->homeUrl . "project" ?>" class="btn btn-lg btn-info text-left" style="font-size: 14px;width: 100%;text-align: left">
+                        <p><i class="fa fa-archive" style="font-size:30px;"></i>
+                            <span class="pull-right" style="font-size: 16px;font-weight: bold"><?= count(1) ?> โครงการ</span><br>
+                            <span class="pull-right" style="text-decoration: underline">View >></span>
+                        </p>
+                    </a>
+                </div>
+                <div class="col-lg-2">
+                    <a href="<?= Yii::$app->homeUrl . "project" ?>" class="btn btn-lg btn-default text-left" style="font-size: 14px;width: 100%;text-align: left">
+                        <p><i class="fa fa-archive" style="font-size:30px;"></i>
+                            <span class="pull-right" style="font-size: 16px;font-weight: bold"><?= count(1) ?> โครงการ</span><br>
+                            <span class="pull-right" style="text-decoration: underline">View >></span>
+                        </p>
+                    </a>
+                </div>
+                <div class="col-lg-2">
+                    <a href="<?= Yii::$app->homeUrl . "project" ?>" class="btn btn-lg btn-success text-left" style="font-size: 14px;width: 100%;text-align: left">
+                        <p><i class="fa fa-archive" style="font-size:30px;"></i>
+                            <span class="pull-right" style="font-size: 16px;font-weight: bold"><?= count(1) ?> โครงการ</span><br>
+                            <span class="pull-right" style="text-decoration: underline">View >></span>
+                        </p>
+                    </a>
+                </div>
             </div>
         </div>
+
+
 
         <div class="stat-panel">
             <div class="stat-row">
@@ -300,6 +304,9 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                 </div> <!-- /.stat-panel -->
             </div>
         </div>
+
+
+
     </div>
 </div>
 <!-- /9. $UNIQUE_VISITORS_STAT_PANEL -->

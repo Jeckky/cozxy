@@ -9,6 +9,7 @@ $this->params['breadcrumbs'][] = $this->title; // auth/index
 
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
+$logo = common\models\costfit\ContentGroup::find()->where("lower(title)='logoimage'")->one();
 ?>
 <div class="theme-default page-signin">
     <!-- $DEMO ==== Remove this section on production ======= -->
@@ -70,7 +71,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
         <!-- Left side -->
         <div class="signin-info">
             <a href="#" class="logo">
-                <img src="<?php echo $baseUrl; ?>/images/logo/costfit.png" alt="" style="margin-top: -5px;" class="img-responsive">&nbsp;
+                <img src="<?php echo Yii::$app->homeUrl . $logo->image; ?>" alt=" " style="margin-top: -5px;" class="img-responsive"/> &nbsp;
                 <!--DaiiBuy Admin-->
             </a> <!-- / .logo -->
             <div class="slogan">
