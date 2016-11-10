@@ -140,7 +140,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                     <?php } elseif ($itemsOrderNo->status == 10) { ?>
                                                                         <span class="list-group-item remark-chanels-form-<?php echo $row->pickingItemsId; ?>"  style="  text-align: center;">
                                                                             <?php
-                                                                            echo '<h4>' . $itemsOrderNo->remark . '</h4>';
+                                                                            echo '<h4><code>' . $itemsOrderNo->remark . '</code></h4>';
                                                                             ?>
                                                                         </span>
                                                                     <?php } else { ?>

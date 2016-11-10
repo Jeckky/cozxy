@@ -187,7 +187,7 @@ $('.remark-submit').on('click', function () {
             success: function (result) {
                 //alert(result);
                 var JSONObject2 = JSON.parse(result);
-                $(".search-content-new-" + JSONObject2.pickingItemsId).html('<h4>' + JSONObject2.remark + '</h4>');
+                $(".search-content-new-" + JSONObject2.pickingItemsId).html('<h4><code>' + JSONObject2.remark + '<code></h4>');
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 //debugger;
