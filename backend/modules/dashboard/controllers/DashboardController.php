@@ -26,7 +26,7 @@ class DashboardController extends DashboardMasterController {
         $orderToday = \common\models\costfit\Order::findAllTodayOrder();
         $todaySummary = \common\models\costfit\Order::find()->where("status = " . \common\models\costfit\Order::ORDER_STATUS_FINANCE_APPROVE)->sum("summary");
 
-        $newUser = \common\models\costfit\User::find()->where('createDateTime >= DATE_SUB(NOW(), interval 24 hour)')->all();
+        $newUser = \common\models\costfit\User::find()->where('date(createDateTime)>=date_add(curdate(),interval  0 day)')->all();
         /*
           status 0 : "ตระกร้าสินค้า",
           status 1 :  "ลงทะเบียนผู้ใช้แล้ว",
@@ -53,19 +53,19 @@ class DashboardController extends DashboardMasterController {
                 `order`.`orderNo`, `order`.`userId`, `order`.`totalExVat`, `order`.`total`, `order`.`summary`,
                 `order`.`status`, `order`.`paymentDateTime`, `order`.`createDateTime` ')
         ->join('LEFT JOIN', 'user oi', 'oi.userId = order.userId')
-        ->where('order.status in (2,3,4,5)  and order.createDateTime >= DATE_SUB(NOW(), interval 24 hour)')->all();
+        ->where('order.status in (2,3,4,5)  and date(order.createDateTime)>=date_add(curdate(),interval  0 day) ')->all();
 
 
         //$newOrderSumToday = \common\models\costfit\Order::find()
         //->where('createDateTime >= now() - INTERVAL 1 DAY')->sum('summary');
 
         $userCount = \common\models\costfit\User::find()->count();
-        $userlastvisitDate = \common\models\costfit\User::find()->where('lastvisitDate >= DATE_SUB(NOW(), interval 24 hour)')->count();
-        $orderLast = \common\models\costfit\Order::find()->where('status = 3 and createDateTime > DATE_SUB(NOW(), INTERVAL 24 HOUR)')->count(); //and createDateTime >= now() - INTERVAL 1 DAY
+        $userlastvisitDate = \common\models\costfit\User::find()->where('date(lastvisitDate)>=date_add(curdate(),interval  0 day)')->count();
+        $orderLast = \common\models\costfit\Order::find()->where('status = 3 and date(order.createDateTime)>=date_add(curdate(),interval  0 day) ')->count(); //and createDateTime >= now() - INTERVAL 1 DAY
         //echo 'xx:' . $userCount;
         $userVisit = \common\models\costfit\UserVisit::find()->select('count(user_visit.visitId) as countVisit ,user_visit.userId ,`oi`.firstname , `oi`.lastname, `oi`.email')
         ->join('LEFT JOIN', 'user oi', 'oi.userId = user_visit.userId')
-        ->where(' user_visit.lastvisitDate >= DATE_SUB(NOW(), interval 24 hour) group by user_visit.userId  order by  COUNT(user_visit.visitId) desc limit 5')->all();
+        ->where(' date(user_visit.lastvisitDate)>=date_add(curdate(),interval  0 day)  group by user_visit.userId  order by  COUNT(user_visit.visitId) desc limit 5')->all();
         return $this->render('index', compact('userVisit', 'circulations', 'orderToday', 'todaySummary', 'earnToday', 'newUser', 'newOrder', 'userCount', 'userlastvisitDate', 'orderLast'));
     }
 
