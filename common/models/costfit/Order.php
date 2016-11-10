@@ -495,7 +495,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
         $waitpack = count(OrderItem::find()->where("orderId=" . $orderId . " and status=5")->all());
         $packed = count(OrderItem::find()->where("orderId=" . $orderId . " and status>=13")->all());
         $notPick = count(OrderItem::find()->where("orderId=" . $orderId . " and status<5")->all());
-        $text = 'เตรียมแพ็ค ' . $waitpack . ' รายการ<br>แพ็ค/ส่ง แล้ว ' . $packed . ' รายการ<br> ยังไม่หยิบ ' . $notPick . ' รายการ<br>';
+        $text = 'เตรียมแพ็ค ' . $waitpack . ' รายการ<br>แพ็คแล้ว ' . $packed . ' รายการ(เตรียมส่ง)<br> ยังไม่หยิบ ' . $notPick . ' รายการ(ยังไม่ถึงกำหนดส่ง)<br>';
         return $text;
     }
 
