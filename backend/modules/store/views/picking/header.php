@@ -12,7 +12,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <table class="table table_bordered" width="100%"  cellpadding="2" cellspacing="0" >
     <tr>
         <td colspan="2" style="text-align: center; vertical-align: middle;">
-            <img src="<?php echo $baseUrl; ?>/images/logo/costfit.png" alt="Cost Fit" width="93" height="48" broder ="0">
+            <img src="<?php echo $baseUrl; ?>/images/logo/cozxy.png" alt="cozxy.com" width="93" height="48" broder ="0">
         </td>
         <td colspan="3" style="padding: 5px; vertical-align: text-top; text-align: center;">
             <h2>
