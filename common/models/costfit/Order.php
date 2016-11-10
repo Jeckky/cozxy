@@ -490,6 +490,15 @@ class Order extends \common\models\costfit\master\OrderMaster {
         return $text;
     }
 
+    public function createStatus2($orderId) {
+        $text = '';
+        $waitpack = count(OrderItem::find()->where("orderId=" . $orderId . " and status=5")->all());
+        $packed = count(OrderItem::find()->where("orderId=" . $orderId . " and status>=13")->all());
+        $notPick = count(OrderItem::find()->where("orderId=" . $orderId . " and status<5")->all());
+        $text = 'เตรียมแพ็ค ' . $waitpack . ' รายการ<br>แพ็ค/ส่ง แล้ว ' . $packed . ' รายการ<br> ยังไม่หยิบ ' . $notPick . ' รายการ<br>';
+        return $text;
+    }
+
     public function checkStatus($arrStatus, $new) {
         $i = 0;
         foreach ($arrStatus as $arr):

@@ -77,8 +77,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     ],
                     [
                         'attribute' => 'status',
+                        'format' => 'html',
                         'value' => function($model) {
-                            return $model->getStatusText($model->status);
+                            return $model->createStatus2($model->orderId);
                         }
                     ],
 //                        ['class' => 'yii\grid\ActionColumn',
