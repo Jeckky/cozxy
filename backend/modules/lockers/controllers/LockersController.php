@@ -528,6 +528,9 @@ class LockersController extends LockersMasterController {
 
         // ตรวจสอบว่า ถ้าช่องใน Lockker นี้ ตรวจสอบหมดแล้ว ให้ redirect ไปหน้าสแกนถุง
         $CountChannelsInspector = \common\models\costfit\PickingPointItems::ChannelsInspector($pickingId);
+        //echo $CountChannelsInspector;
+        //echo 'count :: ' . $CountChannelsInspector;
+
 
 
         if ($status == 'ok') { //ตรวจสอบ OK
@@ -537,6 +540,12 @@ class LockersController extends LockersMasterController {
             ->where("pickingItemsId = '" . $pickingItemsId . "' ")
             ->groupBy(['order_item_packing.bagNo'])->one();
             if (count($listOrderItemPacking) > 0) {
+                //$e->name = "sachin";
+                //$e->hobbies = "sports";
+                //$listOrderItemPacking->pickingItemsId = $pickingItemsId;
+                //$listOrderItemPacking->status = $CountChannelsInspector;
+                //$xx = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
+                //$arr = array('a' => $pickingItemsId, 'b' => $CountChannelsInspector);
                 echo json_encode($listOrderItemPacking->attributes);
             }
         }
@@ -551,10 +560,12 @@ class LockersController extends LockersMasterController {
             }
         }
 
-        if (count($CountChannelsInspector) > 0) {// ตรวจสอบว่า ถ้าช่องใน Lockker นี้ ตรวจสอบหมดแล้ว ให้ redirect ไปหน้าสแกนถุง
+
+        if ($CountChannelsInspector == 1) {// ตรวจสอบว่า ถ้าช่องใน Lockker นี้ ตรวจสอบหมดแล้ว ให้ redirect ไปหน้าสแกนถุง
+            return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $pickingId);
+        } elseif ($CountChannelsInspector == 0) {
             return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $pickingId);
         }
-
 
         //echo 'ok ok ok Rememart Channels';
     }

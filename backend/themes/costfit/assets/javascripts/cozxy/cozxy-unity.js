@@ -144,9 +144,10 @@ $('.remark-chanels-ok').on('click', function () {
             data: {"pickingItemsId": pickingItemsId, "status": 'ok', "pickingId": pickingId},
             type: 'post',
             success: function (result) {
+                //alert(result);
                 var JSONObject2 = JSON.parse(result);
                 //alert(JSONObject2.pickingItemsId);
-                //alert(JSONObject2.status);
+                //alert(JSONObject2.b);
                 $(".search-content-new-" + JSONObject2.pickingItemsId).html('<h4>ตรวจสอบแล้วเรียบร้อย</h4>');
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -184,6 +185,7 @@ $('.remark-submit').on('click', function () {
             data: {"pickingItemsId": pickingItemsId, "remarkDesc": desc, 'status': 'no', "pickingId": pickingId},
             type: 'post',
             success: function (result) {
+                //alert(result);
                 var JSONObject2 = JSON.parse(result);
                 $(".search-content-new-" + JSONObject2.pickingItemsId).html('<h4>' + JSONObject2.remark + '</h4>');
             },
