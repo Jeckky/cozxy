@@ -218,7 +218,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <!-- Bordered, without top border, without horizontal padding -->
                         <div class="stat-cell bordered no-border-t no-padding-hr">
                             <div class="pie-chartx"   id="easy-pie-chart-2x">
-                                <div class="pie-chart-label-x"><?php echo isset($orderLastWeek) ? $orderLastWeek : '0'; ?> บาท</div>
+                                <div class="pie-chart-label-x"><?php echo isset($orderLastWeek) ? number_format($orderLastWeek, 2) : '0'; ?> บาท</div>
                             </div>
                         </div>
                     </div> <!-- /.stat-row -->
@@ -236,7 +236,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <!-- Bordered, without top border, without horizontal padding -->
                         <div class="stat-cell bordered no-border-t no-padding-hr">
                             <div class="pie-chartx"   id="easy-pie-chart-3x">
-                                <div class="pie-chart-label-x"><?php echo isset($orderLastMONTH) ? $orderLastMONTH : '0'; ?> บาท</div>
+                                <div class="pie-chart-label-x"><?php echo isset($orderLastMONTH) ? number_format($orderLastMONTH, 2) : '0'; ?> บาท</div>
                             </div>
                         </div>
                     </div> <!-- /.stat-row -->
@@ -259,7 +259,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <!-- Stat panel bg icon -->
                         <i class="fa fa-trophy bg-icon"></i>
                         <!-- Extra large text -->
-                        <span class="text-xlg"><span class="text-lg text-slim">฿</span> <strong><?= ($todaySummary > 0) ? $todaySummary : 0 ?></strong></span><br>
+                        <span class="text-xlg"><span class="text-lg text-slim">฿</span> <strong><?= ($todaySummary > 0) ? number_format($todaySummary, 2) : 0 ?></strong></span><br>
                         <!-- Big text -->
                         <span class="text-bg">Earned today</span><br>
                         <!-- Small text -->
