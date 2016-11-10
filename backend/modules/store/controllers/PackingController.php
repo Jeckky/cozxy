@@ -81,7 +81,7 @@ class PackingController extends StoreMasterController {
             $productId = \common\models\costfit\Product::findProductId($_GET['item']);
             if (isset($order)) {
                 if (isset($productId) && !empty($productId)) {
-                    $items = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId . " and productId=" . $productId . " and status=5")->one();
+                    $items = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId . " and productId=" . $productId . " and status=" . \common\models\costfit\OrderItem::ORDERITEM_PICKED)->one();
                     if (isset($items) && !empty($items)) {
                         $packingItems = \common\models\costfit\OrderItemPacking::find()->where("orderItemId=" . $items->orderItemId . " and status=99")->one();
                         if (isset($packingItems)) {

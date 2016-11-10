@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'กรุณากรอกรหัสที่ได้รับทาง SMS หรือ Email';
+$this->title = 'กรุณากรอกรหัสที่ได้รับทาง Email';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="receive-index">
@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?=
             $form->field($model, 'password')->textInput(['maxlength' => true,
                 'autofocus' => true,
-                'placeholder' => "ข้อความทาง SMS หรือ Email"
+                'placeholder' => "ข้อความทาง Email"
             ])->label('')
             ?>
         </div>
