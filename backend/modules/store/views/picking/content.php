@@ -26,8 +26,8 @@ foreach ($orders as $order) {
     </thead>
     <tbody>
         <?php
-        foreach ($order->orderItems as $item):
-
+        $items = \common\models\costfit\Order::orderItems($order->orderId);
+        foreach ($items as $item):
             echo '<tr>';
             echo '<td><center>' . $i . '</center></td>';
             echo '<td><center>' . common\models\costfit\Product::findProductName($item->productId) . '</center></td>';

@@ -559,6 +559,15 @@ class Order extends \common\models\costfit\master\OrderMaster {
         return $dataProvider;
     }
 
+    public static function orderItems($orderId) {
+        $items = OrderItem::find()->where("orderId=" . $orderId . " and status in (4,5)")->all();
+        if (isset($items) && !empty($items)) {
+            return $items;
+        } else {
+            return '';
+        }
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
