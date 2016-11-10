@@ -229,7 +229,11 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     <div class="stat-row">
                         <!-- Dark gray background, small padding, extra small text, semibold text -->
                         <div class="stat-cell bg-dark-gray padding-sm text-xs text-semibold">
-                            <i class="fa fa-bitcoin"></i>&nbsp;&nbsp;รายได้รวมของเดือนนี้
+                            <i class="fa fa-bitcoin"></i>&nbsp;&nbsp;รายได้เดือน
+                            <?php
+                            $month = explode(' ', $this->context->dateThai(date("Y-m-d"), 1));
+                            echo $month[1];
+                            ?>
                         </div>
                     </div> <!-- /.stat-row -->
                     <div class="stat-row">
