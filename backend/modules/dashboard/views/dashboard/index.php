@@ -331,7 +331,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <!-- Purple background, small padding -->
                         <div class="stat-cell bg-pa-purple padding-sm">
                             <!-- Extra small text -->
-                            <div class="text-xs" style="margin-bottom: 5px;"><!--RETWEETS GRAPH-->รายงานความเคลื่อนไหวต่างๆ/วัน</div>
+                            <div class="text-xs" style="margin-bottom: 5px;"><!--RETWEETS GRAPH-->รายงานความเคลื่อนไหวของสมาชิก/วัน</div>
                             <div class="stats-sparklines-x" id="stats-sparklines-3-x" style="width: 100%"></div>
                         </div>
                     </div> <!-- /.stat-row -->
@@ -353,11 +353,57 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                                 <span class="text-xs text-muted">จำนวนสมาชิก<br>ที่ Login วันนี้</span>
                             </div>
                             <!-- Small padding, without horizontal padding -->
+
+                        </div> <!-- /.stat-counters -->
+                    </div> <!-- /.stat-row -->
+                </div> <!-- /.stat-panel -->
+            </div>
+
+
+            <div class="col-sm-4 col-md-12">
+                <!-- Javascript -->
+                <script>
+                    init.push(function () {
+                        $("#stats-sparklines-2").pixelSparkline(
+                                [275, 490, 397, 487, 339, 403, 402, 312, 300, 294, 411, 367, 319, 416, 355, 416, 371, 479, 279, 361, 312, 269, 402, 327, 474, 422, 375, 283, 384, 372], {
+                            type: 'bar',
+                            height: '36px',
+                            width: '100%',
+                            barSpacing: 2,
+                            zeroAxis: false,
+                            barColor: '#ffffff'
+                        });
+                    });
+                </script>
+                <!-- / Javascript -->
+
+                <div class="stat-panel">
+                    <div class="stat-row">
+                        <!-- Purple background, small padding -->
+                        <div class="stat-cell bg-pa-purple padding-sm">
+                            <!-- Extra small text -->
+                            <div class="text-xs" style="margin-bottom: 5px;"><!--RETWEETS GRAPH-->รายงานความเคลื่อนไหวของการชำระเงิน/วัน</div>
+                            <div class="stats-sparklines-x" id="stats-sparklines-3-x" style="width: 100%"></div>
+                        </div>
+                    </div> <!-- /.stat-row -->
+                    <div class="stat-row">
+                        <!-- Bordered, without top border, horizontally centered text -->
+                        <div class="stat-counters bordered no-border-t text-center">
+                            <!-- Small padding, without horizontal padding -->
+
+                            <!-- Small padding, without horizontal padding -->
+                            <div class="stat-cell col-xs-4 padding-sm no-padding-hr">
+                                <!-- Big text -->
+                                <span class="text-bg"><strong><?php echo $orderLastYes; ?></strong></span><br>
+                                <!-- Extra small text -->
+                                <span class="text-xs text-success">จำนวน Order <br>ที่ชำระบัตรเครดิตสำเร็จในวันนี้</span>
+                            </div>
+                            <!-- Small padding, without horizontal padding -->
                             <div class="stat-cell col-xs-4 padding-sm no-padding-hr">
                                 <!-- Big text -->
                                 <span class="text-bg"><strong><?php echo $orderLast; ?></strong></span><br>
                                 <!-- Extra small text -->
-                                <span class="text-xs text-muted">จำนวน Order <br>ที่ชำระบัตรเครดิตไม่สำเร็จในวันนี้</span>
+                                <span class="text-xs text-danger">จำนวน Order <br>ที่ชำระบัตรเครดิตไม่สำเร็จในวันนี้</span>
                             </div>
                         </div> <!-- /.stat-counters -->
                     </div> <!-- /.stat-row -->

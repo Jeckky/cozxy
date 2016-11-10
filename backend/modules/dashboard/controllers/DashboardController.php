@@ -60,8 +60,11 @@ class DashboardController extends DashboardMasterController {
         //->where('createDateTime >= now() - INTERVAL 1 DAY')->sum('summary');
 
         $userCount = \common\models\costfit\User::find()->count();
+        // User //
         $userlastvisitDate = \common\models\costfit\User::find()->where('date(lastvisitDate)>=date_add(curdate(),interval  0 day)')->count();
+        // บัตรเครดิต //
         $orderLast = \common\models\costfit\Order::find()->where('status = 3 and date(order.createDateTime)>=date_add(curdate(),interval  0 day) ')->count(); //and createDateTime >= now() - INTERVAL 1 DAY
+        $orderLastYes = \common\models\costfit\Order::find()->where('status >= 5 and date(order.createDateTime)>=date_add(curdate(),interval  0 day) ')->count();
         //echo 'xx:' . $userCount;
         $userVisit = \common\models\costfit\UserVisit::find()->select('count(user_visit.visitId) as countVisit ,user_visit.userId ,`oi`.firstname , `oi`.lastname, `oi`.email')
         ->join('LEFT JOIN', 'user oi', 'oi.userId = user_visit.userId')
@@ -77,7 +80,7 @@ class DashboardController extends DashboardMasterController {
         $orderLastMONTH = \common\models\costfit\Order::find()
         ->where(' `order`.status >= 5 and MONTH(date_add(curdate(),interval  0 day))-1 <= MONTH(date_add(curdate(),interval  1 MONTH))')->sum('summary');
 
-        return $this->render('index', compact('orderLastDay', 'orderLastWeek', 'orderLastMONTH', 'userVisit', 'circulations', 'orderToday', 'todaySummary', 'earnToday', 'newUser', 'newOrder', 'userCount', 'userlastvisitDate', 'orderLast'));
+        return $this->render('index', compact('orderLastYes', 'orderLastDay', 'orderLastWeek', 'orderLastMONTH', 'userVisit', 'circulations', 'orderToday', 'todaySummary', 'earnToday', 'newUser', 'newOrder', 'userCount', 'userlastvisitDate', 'orderLast'));
     }
 
     public function actionFlowchart($id) {
