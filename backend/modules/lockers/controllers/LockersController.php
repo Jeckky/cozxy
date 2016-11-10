@@ -208,7 +208,7 @@ class LockersController extends LockersMasterController {
                     if (count($listPointItems) > 0) {
                         // if ($close == 'yes') {
                         \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $listPointItems->pickingItemsId, 'shipDate' => new \yii\db\Expression("NOW()")], ['bagNo' => $bagNo]);
-                        \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderId' => $orderId]);
+                        \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderItemId' => $OrderItemPacking->orderItemId]);
                         \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $orderId]);
 
                         return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?close=no&model=' . $model . '&code=' . $channel . '&boxcode=' . $boxcode . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId . '&bagNo=' . $bagNo . '');
