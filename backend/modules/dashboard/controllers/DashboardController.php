@@ -66,7 +66,18 @@ class DashboardController extends DashboardMasterController {
         $userVisit = \common\models\costfit\UserVisit::find()->select('count(user_visit.visitId) as countVisit ,user_visit.userId ,`oi`.firstname , `oi`.lastname, `oi`.email')
         ->join('LEFT JOIN', 'user oi', 'oi.userId = user_visit.userId')
         ->where(' date(user_visit.lastvisitDate)>=date_add(curdate(),interval  0 day)  group by user_visit.userId  order by  COUNT(user_visit.visitId) desc limit 5')->all();
-        return $this->render('index', compact('userVisit', 'circulations', 'orderToday', 'todaySummary', 'earnToday', 'newUser', 'newOrder', 'userCount', 'userlastvisitDate', 'orderLast'));
+
+        //' SELECT sum(summary) FROM costfit_test.`order`  where status >= 5 and date(`order`.`createDateTime`)>= date_add(curdate(),interval  0 day)';
+        $orderLastDay = \common\models\costfit\Order::find()
+        ->where('`order`.status >= 5 and date(`order`.`createDateTime`)>= date_add(curdate(),interval  0 day)')->sum('summary');
+        //'SELECT sum(summary) fROM costfit_test.`order` where status => 5 and date(createDateTime)>=date_add(curdate(),interval -1 week)  ';
+        $orderLastWeek = \common\models\costfit\Order::find()
+        ->where('`order`.status >= 5 and date(createDateTime)>=date_add(curdate(),interval -1 week)')->sum('summary');
+        //'SELECT sum(summary)  FROM costfit_test.`order`  where status => 5 and MONTH(date_add(curdate(),interval  0 day))-1 <= MONTH(date_add(curdate(),interval  1 MONTH))';
+        $orderLastMONTH = \common\models\costfit\Order::find()
+        ->where(' `order`.status >= 5 and MONTH(date_add(curdate(),interval  0 day))-1 <= MONTH(date_add(curdate(),interval  1 MONTH))')->sum('summary');
+
+        return $this->render('index', compact('orderLastDay', 'orderLastWeek', 'orderLastMONTH', 'userVisit', 'circulations', 'orderToday', 'todaySummary', 'earnToday', 'newUser', 'newOrder', 'userCount', 'userlastvisitDate', 'orderLast'));
     }
 
     public function actionFlowchart($id) {

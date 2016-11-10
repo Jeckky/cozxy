@@ -186,7 +186,63 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             });
         </script>
         <!-- / Javascript -->
-
+        <div class="row">
+            <div class="col-xs-4">
+                <!-- Centered text -->
+                <div class="stat-panel text-center">
+                    <div class="stat-row">
+                        <!-- Dark gray background, small padding, extra small text, semibold text -->
+                        <div class="stat-cell bg-dark-gray padding-sm text-xs text-semibold">
+                            <i class="fa fa-globe"></i>&nbsp;&nbsp;รายได้รวมล่าสุดของวันนี้
+                        </div>
+                    </div> <!-- /.stat-row -->
+                    <div class="stat-row">
+                        <!-- Bordered, without top border, without horizontal padding -->
+                        <div class="stat-cell bordered no-border-t no-padding-hr">
+                            <div class="pie-chartx" data-percent="43" id="easy-pie-chart-1x">
+                                <div class="pie-chart-label-x"><?php echo isset($orderLastDay) ? $orderLastDay : '0'; ?> บาท</div>
+                            </div>
+                        </div>
+                    </div> <!-- /.stat-row -->
+                </div> <!-- /.stat-panel -->
+            </div>
+            <div class="col-xs-4">
+                <div class="stat-panel text-center">
+                    <div class="stat-row">
+                        <!-- Dark gray background, small padding, extra small text, semibold text -->
+                        <div class="stat-cell bg-dark-gray padding-sm text-xs text-semibold">
+                            <i class="fa fa-flash"></i>&nbsp;&nbsp;รายได้รวมของอาทิตย์นี้
+                        </div>
+                    </div> <!-- /.stat-row -->
+                    <div class="stat-row">
+                        <!-- Bordered, without top border, without horizontal padding -->
+                        <div class="stat-cell bordered no-border-t no-padding-hr">
+                            <div class="pie-chartx"   id="easy-pie-chart-2x">
+                                <div class="pie-chart-label-x"><?php echo isset($orderLastWeek) ? $orderLastWeek : '0'; ?> บาท</div>
+                            </div>
+                        </div>
+                    </div> <!-- /.stat-row -->
+                </div> <!-- /.stat-panel -->
+            </div>
+            <div class="col-xs-4">
+                <div class="stat-panel text-center">
+                    <div class="stat-row">
+                        <!-- Dark gray background, small padding, extra small text, semibold text -->
+                        <div class="stat-cell bg-dark-gray padding-sm text-xs text-semibold">
+                            <i class="fa fa-cloud"></i>&nbsp;&nbsp;รายได้รวมของเดือนนี้
+                        </div>
+                    </div> <!-- /.stat-row -->
+                    <div class="stat-row">
+                        <!-- Bordered, without top border, without horizontal padding -->
+                        <div class="stat-cell bordered no-border-t no-padding-hr">
+                            <div class="pie-chartx"   id="easy-pie-chart-3x">
+                                <div class="pie-chart-label-x"><?php echo isset($orderLastMONTH) ? $orderLastMONTH : '0'; ?> บาท</div>
+                            </div>
+                        </div>
+                    </div> <!-- /.stat-row -->
+                </div> <!-- /.stat-panel -->
+            </div>
+        </div>
 
     </div>
     <!-- /6. $EASY_PIE_CHARTS -->
