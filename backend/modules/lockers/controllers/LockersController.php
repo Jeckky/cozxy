@@ -185,7 +185,7 @@ class LockersController extends LockersMasterController {
                 $OrderItemPacking = \common\models\costfit\OrderItemPacking::find()->where(" orderItemPackingId = '" . $orderItemPackingId . "'")->one();
                 if ($countBag > 1) {
                     if (count($listPointItems) > 0) {
-                        \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $listPointItems->pickingItemsId, 'shipDate' => new \yii\db\Expression("NOW()")], ['bagNo' => $bagNo]);
+                        \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'userId' => Yii::$app->user->identity->userId, 'pickingItemsId' => $listPointItems->pickingItemsId, 'shipDate' => new \yii\db\Expression("NOW()")], ['bagNo' => $bagNo]);
                         \common\models\costfit\OrderItem::updateAll(['status' => 14], ['orderItemId' => $OrderItemPacking->orderItemId]);
                         //$Order = \common\models\costfit\OrderItem::find()->where("orderItemId = '" . $OrderItemPacking->orderItemId . "' ")->one();
                         \common\models\costfit\Order::updateAll(['status' => 14], ['orderId' => $orderId]);
@@ -208,7 +208,7 @@ class LockersController extends LockersMasterController {
 
                     if (count($listPointItems) > 0) {
                         // if ($close == 'yes') {
-                        \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'pickingItemsId' => $listPointItems->pickingItemsId, 'shipDate' => new \yii\db\Expression("NOW()")], ['bagNo' => $bagNo]);
+                        \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'userId' => Yii::$app->user->identity->userId, 'pickingItemsId' => $listPointItems->pickingItemsId, 'shipDate' => new \yii\db\Expression("NOW()")], ['bagNo' => $bagNo]);
                         \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderItemId' => $OrderItemPacking->orderItemId]);
                         \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $orderId]);
 
@@ -451,7 +451,7 @@ class LockersController extends LockersMasterController {
 
         //echo $orderItemPackingId;
         //exit();
-        \common\models\costfit\OrderItemPacking::updateAll(['status' => 5, 'pickingItemsId' => 0], ['bagNo' => $bagNo]);
+        \common\models\costfit\OrderItemPacking::updateAll(['status' => 5, 'userId' => Yii::$app->user->identity->userId, 'pickingItemsId' => 0], ['bagNo' => $bagNo]);
         return $this->redirect(Yii::$app->homeUrl . '/lockers/lockers/lockers?boxcode=' . $boxcode);
         //\common\models\costfit\PickingPointItems::updateAll(['status' => 1], ['pickingItemsId' => $pickingItemsId]);
         ///scan-bag?model=1&code=aa-009&boxcode=10&pickingItemsId=111&orderId=&orderItemPackingId=&bagNo=BG20161019-0000008
