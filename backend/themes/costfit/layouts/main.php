@@ -9,7 +9,7 @@ use backend\widgets\Alert;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
-$this->title = 'Cost.Fit Admin';
+$this->title = 'Cozxy.com Admin';
 AppAsset::register($this);
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
@@ -39,7 +39,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 
         <script>var init = [];</script>
         <!-- Demo script -->
-        <!--<script src="<?php // cho $directoryAsset;  ?>/demo/demo.js"></script>
+        <!--<script src="<?php // cho $directoryAsset;    ?>/demo/demo.js"></script>
         -->  <!-- / Demo script -->
 
         <?php $this->beginBody() ?>
