@@ -15,7 +15,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="row">
         <div class="col-md-4"> </div>
         <div class="col-md-4 text-center">
-            <?= Html::a('กลับ', $baseUrl . '/receive', ['class' => 'btn btn-warning btn-lg col-md-12']) ?>
+            <?= Html::a('กลับ', $baseUrl . '/receive/index', ['class' => 'btn btn-warning btn-lg col-md-12']) ?>
         </div>
         <div class="col-md-4"></div>
 
