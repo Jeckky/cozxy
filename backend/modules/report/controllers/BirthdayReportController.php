@@ -33,16 +33,16 @@ class BirthdayReportController extends ReportMasterController {
         $model = User::find()->where("status=1 and birthDate!=''");
         $filterArray[] = 'and';
         //throw new \yii\base\Exception($_GET['fromDate']);
-        if (isset($_GET['fromDate']) && !empty($_GET['fromDate'])) {
+        if (isset($_GET['fromDate'])) {
             $fromeDate = $_GET['fromDate'] + 1;
             $model = User::find()->where("status=1 and birthDate!=''");
             $filterArray[] = ['>=', 'month(birthDate)', $fromeDate];
-            if (isset($_GET['toDate']) && !empty($_GET['toDate'])) {
+            if (isset($_GET['toDate'])) {
                 $toDate = $_GET['toDate'] + 1;
                 $filterArray[] = ['<=', 'month(birthDate)', $toDate];
             }
         } else {
-            if (isset($_GET['toDate']) && !empty($_GET['toDate'])) {
+            if (isset($_GET['toDate'])) {
                 $toDate = $_GET['toDate'] + 1;
                 $filterArray[] = ['<=', 'month(birthDate)', $toDate];
             } else {
