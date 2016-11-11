@@ -39,7 +39,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <table width ="750"  cellpadding="2" cellspacing="0" style="border: 0px; text-align: center;">
             <tr style="height: 160px;">
                 <td colspan="2" style="text-align: left; vertical-align: text-top;border: 0.5px slategray solid;border-right: 0px;">
-                    <img src="<?php echo $baseUrl; ?>/images/logo/cozxy.png" alt="cozxy.com" width="93" height="48">
+                    <img src="<?php echo $baseUrl; ?>/images/logo/cozxy.png" alt="cozxy.com" width="110" height="65">
                 </td>
                 <td colspan="3" style="padding: 5px; vertical-align: text-top; text-align: center;border: 0.5px slategray solid;border-right: 0px;">
                     <h2>
