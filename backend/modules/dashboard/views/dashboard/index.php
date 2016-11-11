@@ -565,7 +565,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
         <!-- 18. $FOLLOWERS ========  Followers=========== -->
         <div class="panel widget-followers">
             <div class="panel-heading">
-                <span class="panel-title"><i class="panel-title-icon fa fa-check"></i>สมาชิก Login Top 5 ในวันนี้</span>
+                <span class="panel-title"><i class="fa fa-group"></i> สมาชิก Login Top 5 ในวันนี้</span>
             </div> <!-- / .panel-heading -->
             <div class="panel-body">
                 <?php
