@@ -145,7 +145,7 @@ class OrderController extends OrderMasterController {
 
         $orderId = Yii::$app->request->get('OrderNo');
         $this->layout = "payment/content";
-        $this->title = 'Cost.fit | Order Purchase ';
+        $this->title = 'Cozxy.com  | Order Purchase ';
         $this->subTitle = 'Home';
 //        $this->subSubTitle = "Order Purchase";
         $orderId = $params['orderId'];
@@ -170,7 +170,7 @@ class OrderController extends OrderMasterController {
         }
 
         $this->layout_payment = "/content";
-        $this->title = 'Cost.fit | My Profile';
+        $this->title = 'Cozxy.com | My Profile';
         $this->subTitle = 'Home';
         $this->subSubTitle = "My Profile";
 

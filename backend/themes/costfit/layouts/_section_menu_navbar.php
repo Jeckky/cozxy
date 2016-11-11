@@ -15,7 +15,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             <!-- Logo -->
             <a href="<?php echo $baseUrl; ?>/dashboard" class="navbar-brand">
                 <div><img alt="Pixel Admin" src="<?php echo $directoryAsset; ?>/images/pixel-admin/main-navbar-logo.png"></div>
-                Cost.Fit Admin
+                Cozxy.com Admin
             </a>
 
             <!-- Main navbar toggle -->
@@ -243,7 +243,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         </li>-->
 
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle user-menu" data-toggle="dropdown"> 
+                            <a href="#" class="dropdown-toggle user-menu" data-toggle="dropdown">
                                 <?php
                                 //echo 'gender :: ' . Yii::$app->user->identity->gender;
                                 if (Yii::$app->user->identity->gender == 0) {
@@ -252,7 +252,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                                 <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
                                     <img src="<?php echo $directoryAsset ?>/demo/avatars/silhouette.jpg" alt="">
                                 <?php } ?>
-                            <!--<span> <?php //echo Yii::$app->session['firstname'];            ?></span>-->
+                        <!--<span> <?php //echo Yii::$app->session['firstname'];             ?></span>-->
                                 <span> <?= isset(Yii::$app->user->identity->email) ? Yii::$app->user->identity->firstname : 'Guest' ?></span>
                             </a>
                             <ul class="dropdown-menu">

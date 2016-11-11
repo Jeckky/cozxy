@@ -256,11 +256,11 @@ class BackendMasterController extends MasterController {
             'cssInline' => '.kv-heading-1{font-size:18px}',
             //'cssInline' => 'body{font-size:9px}',
             // set mPDF properties on the fly
-            'options' => ['title' => 'Cost.fit Print Purchase Order',],
+            'options' => ['title' => 'Cozxy.com Print Purchase Order',],
             // call mPDF methods on the fly
             'marginTop' => 35,
             'methods' => [
-                //'SetHeader' => ['Cost.fit Print Purchase Order'], //Krajee Report Header
+                //'SetHeader' => ['Cozxy.com Print Purchase Order'], //Krajee Report Header
                 //'SetFooter' => ['{PAGENO}'],
                 'SetHeader' => $setHeader, //Krajee Report Header
                 'SetFooter' => $setFooter,
