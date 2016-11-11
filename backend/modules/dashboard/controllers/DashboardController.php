@@ -78,7 +78,7 @@ class DashboardController extends DashboardMasterController {
         ->where('`order`.status >= 5 and date(createDateTime)>=date_add(curdate(),interval -1 week)')->sum('summary');
         //'SELECT sum(summary)  FROM costfit_test.`order`  where status => 5 and MONTH(date_add(curdate(),interval  0 day))-1 <= MONTH(date_add(curdate(),interval  1 MONTH))';
         $orderLastMONTH = \common\models\costfit\Order::find()
-        ->where(' `order`.status >= 5 and MONTH(date_add(curdate(),interval  0 day))-1 <= MONTH(date_add(curdate(),interval  1 MONTH))')->sum('summary');
+        ->where(' `order`.status >= 5   and  MONTH(curdate()) = MONTH(createDateTime) and year(createDateTime) = year(curdate()) ')->sum('summary');
 
         return $this->render('index', compact('orderLastYes', 'orderLastDay', 'orderLastWeek', 'orderLastMONTH', 'userVisit', 'circulations', 'orderToday', 'todaySummary', 'earnToday', 'newUser', 'newOrder', 'userCount', 'userlastvisitDate', 'orderLast'));
     }
