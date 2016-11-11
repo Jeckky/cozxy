@@ -30,12 +30,12 @@ class BirthdayReportController extends ReportMasterController {
 
     public function actionIndex() {
         $thisMonth = substr(date('Y-m-d'), 5, -3);
-        $model = User::find()->where("type=1 and status=1 and birthDate!=''");
+        $model = User::find()->where("status=1 and birthDate!=''");
         $filterArray[] = 'and';
         //throw new \yii\base\Exception($_GET['fromDate']);
         if (isset($_GET['fromDate']) && !empty($_GET['fromDate'])) {
             $fromeDate = $_GET['fromDate'] + 1;
-            $model = User::find()->where("type=1 and status=1 and birthDate!=''");
+            $model = User::find()->where("status=1 and birthDate!=''");
             $filterArray[] = ['>=', 'month(birthDate)', $fromeDate];
             if (isset($_GET['toDate']) && !empty($_GET['toDate'])) {
                 $toDate = $_GET['toDate'] + 1;
@@ -46,7 +46,7 @@ class BirthdayReportController extends ReportMasterController {
                 $toDate = $_GET['toDate'] + 1;
                 $filterArray[] = ['<=', 'month(birthDate)', $toDate];
             } else {
-                $model = User::find()->where("type=1 and status=1 and birthDate!='' and month(birthDate)='" . $thisMonth . "'");
+                $model = User::find()->where("status=1 and birthDate!='' and month(birthDate)='" . $thisMonth . "'");
             }
         }
 
