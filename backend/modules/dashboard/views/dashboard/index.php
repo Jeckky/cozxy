@@ -480,7 +480,14 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     ?>
                 </div>
             </div> <!-- / .panel-body -->
+            <hr>
+            <h5><strong>อธิบาย</strong></h5>
+            <p>สถานะ (<span class="label label-success  " title="Pending">Pending</span>):'รอการชำระเงิน'</p>
+            <p>สถานะ (<span class="label label-success  " title="Rejected">Rejected</span>): 'ชำระบัตรเครดิตไม่สำเร็จ'</p>
+            <p>สถานะ (<span class="label label-success  " title="In progress">In progress</span>): 'ยืนยันชำระเงิน'</p>
+            <p>สถานะ (<span class="label label-success " title="Pending">Completed</span>): 'ชำระบัตรเครดิตสำเร็จ'</p>
         </div> <!-- / .panel -->
+
     </div>
     <!-- /10. $SUPPORT_TICKETS -->
 
