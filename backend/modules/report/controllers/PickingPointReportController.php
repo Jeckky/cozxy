@@ -35,10 +35,10 @@ class PickingPointReportController extends ReportMasterController {
         ->groupBy("`order`.pickingId");
         $filterArray[] = 'and';
         if (isset($_GET['fromDate'])) {
-            $filterArray[] = ['>=', 'date(`order`.updateDateTime)', $_GET['fromDate']];
+            $filterArray[] = ['>=', 'date(`order`.paymentDateTime)', $_GET['fromDate']];
         }
         if (isset($_GET['toDate'])) {
-            $filterArray[] = ['<=', 'date(`order`.updateDateTime)', $_GET['toDate']];
+            $filterArray[] = ['<=', 'date(`order`.paymentDateTime)', $_GET['toDate']];
         }
         $model->andFilterWhere($filterArray);
 
