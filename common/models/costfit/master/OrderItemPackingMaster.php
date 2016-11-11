@@ -13,11 +13,13 @@ use Yii;
     * @property string $bagNo
     * @property string $quantity
     * @property integer $status
+    * @property integer $type
     * @property string $shipDate
     * @property string $remark
     * @property integer $userId
     * @property string $createDateTime
     * @property string $updateDateTime
+    * @property string $lastvisitDate
 */
 class OrderItemPackingMaster extends \common\models\ModelMaster
 {
@@ -36,8 +38,8 @@ public function rules()
 {
 return [
             [['orderItemId', 'quantity'], 'required'],
-            [['orderItemId', 'pickingItemsId', 'quantity', 'status', 'userId'], 'integer'],
-            [['shipDate', 'createDateTime', 'updateDateTime'], 'safe'],
+            [['orderItemId', 'pickingItemsId', 'quantity', 'status', 'type', 'userId'], 'integer'],
+            [['shipDate', 'createDateTime', 'updateDateTime', 'lastvisitDate'], 'safe'],
             [['bagNo'], 'string', 'max' => 255],
             [['remark'], 'string', 'max' => 150],
         ];
@@ -55,11 +57,13 @@ return [
     'bagNo' => Yii::t('order_item_packing', 'Bag No'),
     'quantity' => Yii::t('order_item_packing', 'Quantity'),
     'status' => Yii::t('order_item_packing', 'Status'),
+    'type' => Yii::t('order_item_packing', 'Type'),
     'shipDate' => Yii::t('order_item_packing', 'Ship Date'),
     'remark' => Yii::t('order_item_packing', 'Remark'),
     'userId' => Yii::t('order_item_packing', 'User ID'),
     'createDateTime' => Yii::t('order_item_packing', 'Create Date Time'),
     'updateDateTime' => Yii::t('order_item_packing', 'Update Date Time'),
+    'lastvisitDate' => Yii::t('order_item_packing', 'Lastvisit Date'),
 ];
 }
 }

@@ -198,7 +198,7 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
 
     static public function checkInspector($pickingItemsId) {
         $result = OrderItemPacking::find()
-        ->select('curdate(),date(shipdate) , (curdate() - date(shipdate)) AS DateOfPut , (date(updateDateTime) - date(shipdate)) AS DateOfReceive  , status ,remark')
+        ->select('curdate(),date(shipdate) , (curdate() - date(shipdate)) AS DateOfPut , (date(updateDateTime) - date(shipdate)) AS DateOfReceive  , status ,remark ')
         ->where(['order_item_packing.pickingItemsId' => $pickingItemsId])
         ->one();
         return $result;

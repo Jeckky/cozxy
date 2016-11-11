@@ -21,6 +21,7 @@ use Yii;
     * @property string $authCode
     * @property string $createDateTime
     * @property string $updateDateTime
+    * @property string $lastvisitDate
 */
 class PickingPointMaster extends \common\models\ModelMaster
 {
@@ -40,7 +41,7 @@ public function rules()
 return [
             [['title', 'code', 'description', 'provinceId', 'amphurId', 'createDateTime'], 'required'],
             [['provinceId', 'amphurId', 'status', 'type'], 'integer'],
-            [['createDateTime', 'updateDateTime'], 'safe'],
+            [['createDateTime', 'updateDateTime', 'lastvisitDate'], 'safe'],
             [['title', 'description', 'countryId'], 'string', 'max' => 45],
             [['code'], 'string', 'max' => 30],
             [['ip', 'macAddress', 'authCode'], 'string', 'max' => 100],
@@ -67,6 +68,7 @@ return [
     'authCode' => Yii::t('picking_point', 'Auth Code'),
     'createDateTime' => Yii::t('picking_point', 'Create Date Time'),
     'updateDateTime' => Yii::t('picking_point', 'Update Date Time'),
+    'lastvisitDate' => Yii::t('picking_point', 'Lastvisit Date'),
 ];
 }
 }

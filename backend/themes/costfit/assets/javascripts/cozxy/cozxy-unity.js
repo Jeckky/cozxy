@@ -145,10 +145,17 @@ $('.remark-chanels-ok').on('click', function () {
             type: 'post',
             success: function (result) {
                 //alert(result);
+                alert('ตรวจเช็คช่องแล้ว');
                 var JSONObject2 = JSON.parse(result);
                 //alert(JSONObject2.pickingItemsId);
-                //alert(JSONObject2.b);
+                alert(JSONObject2.CountChannelsInspector);
                 $(".search-content-new-" + JSONObject2.pickingItemsId).html('<h4>ตรวจสอบแล้วเรียบร้อย</h4>');
+                if (JSONObject2.CountChannelsInspector == 1) {
+                    alert('redirect!!');
+                    window.location = $baseUrl + 'lockers/lockers/lockers?boxcode=' + JSONObject2.pickingId;
+                } else if (JSONObject2.CountChannelsInspector == 0) {
+                    window.location = $baseUrl + 'lockers/lockers/lockers?boxcode=' + JSONObject2.pickingId;
+                }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 //debugger;
@@ -169,6 +176,8 @@ $('.remark-cancel').on('click', function () {
 });
 
 $('.remark-submit').on('click', function () {
+
+
     var dataBind = this.getAttribute('data-bind');
     var resDataBind = dataBind.split(",");
     var pickingItemsId = resDataBind[0];
@@ -176,18 +185,31 @@ $('.remark-submit').on('click', function () {
     //var pickingItemsId = document.getElementById("pickingItemsIdHidden").value;
     //var pickingId = document.getElementById("pickingIdHidden").value;
     var desc = document.getElementById("remarkDesc-" + pickingItemsId).value;
+    var type = $('input:radio[name=type-' + pickingItemsId + ']:checked').val();
+    // console.log(type);
     // alert(desc);
     // alert(pickingItemsId);
+    if (!type) {
+        alert("Please select your type.");
+        return false;
+    }
     if (desc != '' && pickingItemsId != '') {
         // alert('OK');
         $.ajax({
             url: 'remark-channels',
-            data: {"pickingItemsId": pickingItemsId, "remarkDesc": desc, 'status': 'no', "pickingId": pickingId},
+            data: {"pickingItemsId": pickingItemsId, "remarkDesc": desc, 'status': 'no', "pickingId": pickingId, 'type': type},
             type: 'post',
             success: function (result) {
-                //alert(result);
+                alert('ตรวจเช็คช่องแล้ว');
                 var JSONObject2 = JSON.parse(result);
+                alert(JSONObject2.CountChannelsInspector);
                 $(".search-content-new-" + JSONObject2.pickingItemsId).html('<h4><code>' + JSONObject2.remark + '<code></h4>');
+                if (JSONObject2.CountChannelsInspector == 1) {
+                    alert('redirect!!');
+                    window.location = $baseUrl + 'lockers/lockers/lockers?boxcode=' + JSONObject2.pickingId;
+                } else if (JSONObject2.CountChannelsInspector == 0) {
+                    window.location = $baseUrl + 'lockers/lockers/lockers?boxcode=' + JSONObject2.pickingId;
+                }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 //debugger;

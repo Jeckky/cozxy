@@ -180,7 +180,8 @@ class PickingPointItems extends \common\models\costfit\master\PickingPointItemsM
         ->select('`order_item_packing`.`orderItemPackingId`, `order_item_packing`.`orderItemId`,'
         . ' `order_item_packing`.`status`,`order_item_packing`.`remark`,`order_item_packing`.`updateDateTime`,'
         . '`order_item_packing`.`bagNo`, `order_item_packing`.`status`,`order`.`orderNo`, '
-        . '`order`.`orderId` ,`order`.`orderNo` , (curdate() - date(`order_item_packing`.shipdate)) as NumberOfDate')
+        . '`order`.`orderId` ,`order`.`orderNo` , (curdate() - date(`order_item_packing`.shipdate)) as NumberOfDate , '
+        . '`order_item_packing`.`type` ,`order_item_packing`.lastvisitDate')
         ->joinWith(['orderItems'])
         ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
         ->where("order_item_packing.status >= 8 and order_item_packing.bagNo in (" . $bagNo . ")")

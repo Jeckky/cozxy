@@ -23,7 +23,7 @@ class LockersController extends LockersMasterController {
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['index', 'create', 'update', 'view'],
+                'only' => ['index', 'create', 'update', 'view', 'lockers'],
                 'rules' => [
                     // allow authenticated users
                     [
@@ -535,17 +535,16 @@ class LockersController extends LockersMasterController {
         $pickingId = Yii::$app->request->post('pickingId');
         $remarkDesc = Yii::$app->request->post('remarkDesc');
         $status = Yii::$app->request->post('status');
+        $type = Yii::$app->request->post('type');
 
         // ตรวจสอบว่า ถ้าช่องใน Lockker นี้ ตรวจสอบหมดแล้ว ให้ redirect ไปหน้าสแกนถุง
         $CountChannelsInspector = \common\models\costfit\PickingPointItems::ChannelsInspector($pickingId);
         //echo $CountChannelsInspector;
         //echo 'count :: ' . $CountChannelsInspector;
 
-
-
         if ($status == 'ok') { //ตรวจสอบ OK
             // echo 'ok';
-            \common\models\costfit\OrderItemPacking::updateAll(['status' => 9, 'userId' => Yii::$app->user->identity->userId, 'remark' => NULL], ['pickingItemsId' => $pickingItemsId]);
+            \common\models\costfit\OrderItemPacking::updateAll(['lastvisitDate' => new \yii\db\Expression("NOW()"), 'status' => 9, 'userId' => Yii::$app->user->identity->userId, 'remark' => NULL,], ['pickingItemsId' => $pickingItemsId]);
             $listOrderItemPacking = \common\models\costfit\OrderItemPacking::find()
             ->where("pickingItemsId = '" . $pickingItemsId . "' ")
             ->groupBy(['order_item_packing.bagNo'])->one();
@@ -556,27 +555,42 @@ class LockersController extends LockersMasterController {
                 //$listOrderItemPacking->status = $CountChannelsInspector;
                 //$xx = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
                 //$arr = array('a' => $pickingItemsId, 'b' => $CountChannelsInspector);
-                echo json_encode($listOrderItemPacking->attributes);
+                $arr = array('pickingItemsId' => $pickingItemsId, 'remark' => $remarkDesc, 'CountChannelsInspector' => $CountChannelsInspector, 'pickingId' => $pickingId);
+                echo json_encode($arr);
             }
+            /*
+              if ($CountChannelsInspector == 1) {// ตรวจสอบว่า ถ้าช่องใน Lockker นี้ ตรวจสอบหมดแล้ว ให้ redirect ไปหน้าสแกนถุง
+              return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $pickingId);
+              } elseif ($CountChannelsInspector == 0) {
+              return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $pickingId);
+              } */
         }
         if ($status == 'no') { //ตรวจสอบ No
             //echo $remarkDesc;
-            \common\models\costfit\OrderItemPacking::updateAll(['status' => 10, 'remark' => $remarkDesc, 'userId' => Yii::$app->user->identity->userId], ['pickingItemsId' => $pickingItemsId]);
+            \common\models\costfit\OrderItemPacking::updateAll(['status' => 10, 'type' => $type, 'remark' => $remarkDesc, 'userId' => Yii::$app->user->identity->userId, 'lastvisitDate' => new \yii\db\Expression("NOW()")], ['pickingItemsId' => $pickingItemsId]);
             $listOrderItemPacking = \common\models\costfit\OrderItemPacking::find()
             ->where("pickingItemsId = '" . $pickingItemsId . "' ")
             ->groupBy(['order_item_packing.bagNo'])->one();
+
+            // เก็บ Log แจ้งเตือนช่องของ Locker ต่างๆ //
+            $remark = new \common\models\costfit\OrderItemPackingItems(); //Create an article and link it to the author
+            $remark->orderItemPackingId = $pickingItemsId;
+            $remark->desc = $remarkDesc;
+            $remark->createDateTime = new \yii\db\Expression('NOW()');
+            $remark->lastvisitDate = new \yii\db\Expression('NOW()');
+            $remark->save(FALSE);
+            $arr = array('pickingItemsId' => $pickingItemsId, 'remark' => $remarkDesc, 'CountChannelsInspector' => $CountChannelsInspector, 'pickingId' => $pickingId);
             if (count($listOrderItemPacking) > 0) {
-                echo json_encode($listOrderItemPacking->attributes);
+                echo json_encode($arr);
             }
         }
-
-
-        if ($CountChannelsInspector == 1) {// ตรวจสอบว่า ถ้าช่องใน Lockker นี้ ตรวจสอบหมดแล้ว ให้ redirect ไปหน้าสแกนถุง
-            return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $pickingId);
-        } elseif ($CountChannelsInspector == 0) {
-            return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $pickingId);
-        }
-
+        /*
+          if ($CountChannelsInspector == 1) {// ตรวจสอบว่า ถ้าช่องใน Lockker นี้ ตรวจสอบหมดแล้ว ให้ redirect ไปหน้าสแกนถุง
+          return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $pickingId);
+          } elseif ($CountChannelsInspector == 0) {
+          return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $pickingId);
+          }
+         */
         //echo 'ok ok ok Rememart Channels';
     }
 
