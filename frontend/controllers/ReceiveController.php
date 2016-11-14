@@ -47,7 +47,7 @@ class ReceiveController extends MasterController {
             if (isset($order) && !empty($order)) {
                 if ($order->status == 16) {//16 = รับของแล้ว
                     $orderItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId . " and status<16")->all();
-                    if (count($orderItem) == 0) { // เชคว่า มี สินค้าที่ยังไม่ได้ รับหรือไม่
+                    if (count($orderItem) == 0) { // เชคว่า มี สินค้าที่ยังไม่ได้ รับหรือไม่ ถ้าไม่มี รับไม่ได้
                         $ms = 'รายการนี้ได้รับสินค้าไปแล้ว';
                         return $this->render('error', [
                             'ms' => $ms

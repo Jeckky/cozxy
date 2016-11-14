@@ -96,7 +96,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     ?><tr>
                                         <td><?php echo $i; ?></td>
                                         <td><?php echo Product::findProductName($productId->productId); ?></td>
-                                        <td><?php echo common\models\costfit\StoreProductArrange::sumQuantitiy($productId->productId, $productId->orderId); ?></td>
+                                        <td><?php echo common\models\costfit\StoreProductArrange::sumQuantitiy($productId->productId, $productId->orderId, $slot); ?></td>
                                         <td><?php echo Order::findOrderNo($productId->orderId); ?></td>
                                         <td><?=
                                             ($productId->status == 99) ?

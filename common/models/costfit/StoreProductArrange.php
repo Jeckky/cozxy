@@ -51,9 +51,9 @@ class StoreProductArrange extends \common\models\costfit\master\StoreProductArra
         }
     }
 
-    public static function sumQuantitiy($productId, $orderId) {
+    public static function sumQuantitiy($productId, $orderId, $slot) {
         $total = 0;
-        $quantity = StoreProductArrange::find()->where("productId=" . $productId . " and orderId=" . $orderId . " and status in(99,100)")->all();
+        $quantity = StoreProductArrange::find()->where("productId=" . $productId . " and orderId=" . $orderId . " and status in(99,100) and slotId=" . $slot)->all();
         if (isset($quantity) && !empty($quantity)) {
             foreach ($quantity as $sum):
                 $total = $total + (-($sum->quantity));
