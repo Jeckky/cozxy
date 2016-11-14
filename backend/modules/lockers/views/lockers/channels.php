@@ -247,7 +247,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 <style>
     .clockStyle {
         background-color:#000;
-        border:#999 2px inset;
+        /*border:#999 2px inset;*/
         padding:6px;
         color:#0FF;
         font-family:"Arial Black", Gadget, sans-serif;
