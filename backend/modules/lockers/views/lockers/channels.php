@@ -174,7 +174,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                                 echo '<div id="test-test" class="text-left col-sm-5 test-test"  data-bind="' . $row->pickingItemsId . ',' . $row->pickingId . ',' . $itemsOrderNo->orderItemPackingId . '" style="cursor: hand;">มีปัญหา<code>' . count($orderItemPackingItems) . '</code>ครั้ง (ดูเพิ่มเติม)</div>';
                                                                             }
                                                                             if ($itemsOrderNo->status != 8) {
-                                                                                echo isset($itemsOrderNo->lastvisitDate) ? ' <div  class="text-right col-sm-7 ">เมื่อ:' . $this->context->dateThai($itemsOrderNo->lastvisitDate, 1, TRUE) . '</div>' : '&nbsp;วันที่แจ้งปัญหา : 0000-00-00 00:00:00';
+                                                                                echo isset($itemsOrderNo->lastvisitDate) ? ' <div  class="text-right col-sm-7 ">ล่าสุด:' . $this->context->dateThai($itemsOrderNo->lastvisitDate, 1, TRUE) . '</div>' : '&nbsp;วันที่แจ้งปัญหา : 0000-00-00 00:00:00';
                                                                                 //echo '<hr>';
                                                                             }
                                                                             if ($itemsOrderNo->status == 10) {
