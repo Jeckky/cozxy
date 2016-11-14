@@ -533,6 +533,7 @@ class LockersController extends LockersMasterController {
         //remartDesc
         $pickingItemsId = Yii::$app->request->post('pickingItemsId');
         $pickingId = Yii::$app->request->post('pickingId');
+        $orderItemPackingId = Yii::$app->request->post('orderItemPackingId');
         $remarkDesc = Yii::$app->request->post('remarkDesc');
         $status = Yii::$app->request->post('status');
         $type = Yii::$app->request->post('type');
@@ -544,7 +545,7 @@ class LockersController extends LockersMasterController {
 
         if ($status == 'ok') { //ตรวจสอบ OK
             // echo 'ok';
-            \common\models\costfit\OrderItemPacking::updateAll(['lastvisitDate' => new \yii\db\Expression("NOW()"), 'status' => 9, 'userId' => Yii::$app->user->identity->userId, 'remark' => NULL,], ['pickingItemsId' => $pickingItemsId]);
+            \common\models\costfit\OrderItemPacking::updateAll(['lastvisitDate' => new \yii\db\Expression("NOW()"), 'status' => 9, 'userId' => Yii::$app->user->identity->userId, 'remark' => NULL,], ['pickingItemsId' => $pickingItemsId, 'orderItemPackingId' => $orderItemPackingId]);
             $listOrderItemPacking = \common\models\costfit\OrderItemPacking::find()
             ->where("pickingItemsId = '" . $pickingItemsId . "' ")
             ->groupBy(['order_item_packing.bagNo'])->one();
@@ -567,14 +568,15 @@ class LockersController extends LockersMasterController {
         }
         if ($status == 'no') { //ตรวจสอบ No
             //echo $remarkDesc;
-            \common\models\costfit\OrderItemPacking::updateAll(['status' => 10, 'type' => $type, 'remark' => $remarkDesc, 'userId' => Yii::$app->user->identity->userId, 'lastvisitDate' => new \yii\db\Expression("NOW()")], ['pickingItemsId' => $pickingItemsId]);
+            \common\models\costfit\OrderItemPacking::updateAll(['status' => 10, 'type' => $type, 'remark' => $remarkDesc, 'userId' => Yii::$app->user->identity->userId, 'lastvisitDate' => new \yii\db\Expression("NOW()")], ['pickingItemsId' => $pickingItemsId, 'orderItemPackingId' => $orderItemPackingId]);
             $listOrderItemPacking = \common\models\costfit\OrderItemPacking::find()
             ->where("pickingItemsId = '" . $pickingItemsId . "' ")
             ->groupBy(['order_item_packing.bagNo'])->one();
 
             // เก็บ Log แจ้งเตือนช่องของ Locker ต่างๆ //
             $remark = new \common\models\costfit\OrderItemPackingItems(); //Create an article and link it to the author
-            $remark->orderItemPackingId = $pickingItemsId;
+            $remark->orderItemPackingId = $orderItemPackingId;
+            $remark->pickingItemsId = $pickingItemsId;
             $remark->desc = $remarkDesc;
             $remark->createDateTime = new \yii\db\Expression('NOW()');
             $remark->lastvisitDate = new \yii\db\Expression('NOW()');
@@ -592,6 +594,20 @@ class LockersController extends LockersMasterController {
           }
          */
         //echo 'ok ok ok Rememart Channels';
+    }
+
+    public function actionChannelsPackingItems() {
+        $pickingItemsId = Yii::$app->request->post('pickingItemsId');
+        $pickingId = Yii::$app->request->post('pickingId');
+        $orderItemPackingId = Yii::$app->request->post('orderItemPackingId');
+        $html = '';
+        $Items = \common\models\costfit\OrderItemPackingItems::find()->where('pickingItemsId=' . $pickingItemsId . ' and orderItemPackingId=' . $orderItemPackingId)->all();
+        $num = 0;
+        foreach ($Items as $value) {
+            $html .= ++$num . '). ' . $value->desc . ' (เมื่อ :' . $this->dateThai($value->lastvisitDate, 1, TRUE) . ')<br>';
+        }
+
+        return json_encode($html);
     }
 
 }

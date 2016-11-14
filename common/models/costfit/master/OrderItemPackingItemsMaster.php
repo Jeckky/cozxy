@@ -8,6 +8,7 @@ use Yii;
 * This is the model class for table "order_item_packing_items".
 *
     * @property string $remarkId
+    * @property string $pickingItemsId
     * @property string $orderItemPackingId
     * @property string $desc
     * @property integer $status
@@ -31,8 +32,8 @@ return 'order_item_packing_items';
 public function rules()
 {
 return [
-            [['orderItemPackingId'], 'required'],
-            [['orderItemPackingId', 'status'], 'integer'],
+            [['pickingItemsId', 'orderItemPackingId'], 'required'],
+            [['pickingItemsId', 'orderItemPackingId', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime', 'lastvisitDate'], 'safe'],
             [['desc'], 'string', 'max' => 250],
         ];
@@ -45,6 +46,7 @@ public function attributeLabels()
 {
 return [
     'remarkId' => Yii::t('order_item_packing_items', 'Remark ID'),
+    'pickingItemsId' => Yii::t('order_item_packing_items', 'Picking Items ID'),
     'orderItemPackingId' => Yii::t('order_item_packing_items', 'Order Item Packing ID'),
     'desc' => Yii::t('order_item_packing_items', 'Desc'),
     'status' => Yii::t('order_item_packing_items', 'Status'),

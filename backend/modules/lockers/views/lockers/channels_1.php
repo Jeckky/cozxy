@@ -122,16 +122,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                             echo '<hr>';
                                                                             ?>
 
-                                                                            <button class="btn btn-success remark-chanels-ok" data-bind="<?php echo $row->pickingItemsId; ?>,<?php echo $row->pickingId; ?>,<?php echo $itemsOrderNo->orderItemPackingId; ?>">
+                                                                            <button class="btn btn-success remark-chanels-ok" data-bind="<?php echo $row->pickingItemsId; ?>,<?php echo $row->pickingId; ?>">
                                                                                 <span class="reset-<?php echo $row->pickingItemsId; ?> ">Ok</span></button>
-                                                                            <button class="btn btn-default remark-chanels" data-bind="<?php echo $row->pickingItemsId; ?>,<?php echo $row->pickingId; ?>,<?php echo $itemsOrderNo->orderItemPackingId; ?>">No</button>
+                                                                            <button class="btn btn-default remark-chanels" data-bind="<?php echo $row->pickingItemsId; ?>,<?php echo $row->pickingId; ?>">No</button>
                                                                             <div class="form-group text-left text-muted">
                                                                                 อธิบาย<br> ปุ่ม Ok : กดปุ่มกรณีช่องเรียบร้อยเท่านั่น , ปุ่ม No : กดแจ้งปัญหาทุกกรณี
                                                                             </div> <!-- / .form-group -->
                                                                         <?php } ?>
-
                                                                     </span>
-
                                                                     <?php
                                                                     if ($itemsOrderNo->status == 8 || $itemsOrderNo->status == 10) {
                                                                         // isset($itemsOrderNo->remark) ? 'แจ้เงตือนอีกครั้ง' : 'submit'
@@ -171,15 +169,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                                 //echo $itemsOrderNo->orderItemPackingId;
                                                                                 $orderItemPackingItems = \common\models\costfit\OrderItemPackingItems::find()->where('orderItemPackingId=' . $itemsOrderNo->orderItemPackingId . ' and pickingItemsId =' . $row->pickingItemsId)->all();
                                                                                 //echo 'count ::' . count($orderItemPackingItems);
-                                                                                echo '<div id="test-test" class="text-left col-sm-5 test-test"  data-bind="' . $row->pickingItemsId . ',' . $row->pickingId . ',' . $itemsOrderNo->orderItemPackingId . '" style="cursor: hand;">มีปัญหา<code>' . count($orderItemPackingItems) . '</code>ครั้ง (ดูเพิ่มเติม)</div>';
+                                                                                echo '<div class="text-left col-sm-5"  data-toggle="modal" data-target="#uidemo-modals-alerts-info" data-bind="' . $row->pickingItemsId . ',' . $row->pickingId . ',' . $itemsOrderNo->orderItemPackingId . '" style="cursor: hand;">ปัญหา<code>' . count($orderItemPackingItems) . '</code>ครั้ง (ดูเพิ่มเติม)</div>';
                                                                             }
                                                                             if ($itemsOrderNo->status != 8) {
                                                                                 echo isset($itemsOrderNo->lastvisitDate) ? ' <div  class="text-right col-sm-7 ">เมื่อ:' . $this->context->dateThai($itemsOrderNo->lastvisitDate, 1, TRUE) . '</div>' : '&nbsp;วันที่แจ้งปัญหา : 0000-00-00 00:00:00';
                                                                                 //echo '<hr>';
                                                                             }
-                                                                            if ($itemsOrderNo->status == 10) {
-                                                                                echo '<div class="text-left col-sm-12" >&nbsp;</div>';
-                                                                            }
+
                                                                             //echo '<div class="text-left col-sm-5"  data-toggle="modal" data-target="#uidemo-modals-alerts-info" data-bind="' . $row->pickingItemsId . ',' . $row->pickingId . ',' . $itemsOrderNo->orderItemPackingId . '" style="cursor: hand;">(ดูเพิ่มเติม)</div>';
                                                                             ?>
                                                                             <textarea class="form-control" rows="5" placeholder="แจ้งปัญหา" name="remarkDesc-<?php echo $row->pickingItemsId; ?>" id="remarkDesc-<?php echo $row->pickingItemsId; ?>" ><?= $itemsOrderNo->remark; ?></textarea><br>
@@ -223,26 +219,23 @@ $this->params['pageHeader'] = Html::encode($this->title);
         </div>
     </div>
 </div>
-
-<?php $this->registerJs("
-
-", \yii\web\View::POS_END); ?>
-
-<div id="uidemo-modals-alerts-info" class="modal fade" tabindex="-1" role="dialog" style="display: none;">
-    <!--<div id="uidemo-modals-alerts-info" class="modal modal-alert modal-info fade">-->
-    <div class="modal-dialog modal-lg">
+<div id="uidemo-modals-alerts-info" class="modal modal-alert modal-info fade">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                รายงานแจ้งปัญหา.
+                <i class="fa fa-info-circle"></i>
             </div>
-            <div class="modal-body col-md-12 text-left" style="font-size: 12px; white-space: wrap;">
-                <div class="tes-test col-md-12 text-left"></div>
-            </div>
+            <div class="modal-title">Some alert title</div>
+            <div class="modal-body">Some alert text</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-info" data-dismiss="modal">OK</button>
             </div>
         </div> <!-- / .modal-content -->
     </div> <!-- / .modal-dialog -->
 </div> <!-- / .modal -->
+<?php $this->registerJs("
+
+", \yii\web\View::POS_END); ?>
+
 
 

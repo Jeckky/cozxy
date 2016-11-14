@@ -138,20 +138,21 @@ $('.remark-chanels-ok').on('click', function () {
     var resDataBind = dataBind.split(",");
     var pickingItemsId = resDataBind[0];
     var pickingId = resDataBind[1];
+    var orderItemPackingId = resDataBind[2];
     if (pickingItemsId != '') {
         $.ajax({
             url: 'remark-channels',
-            data: {"pickingItemsId": pickingItemsId, "status": 'ok', "pickingId": pickingId},
+            data: {"pickingItemsId": pickingItemsId, "status": 'ok', "pickingId": pickingId, 'orderItemPackingId': orderItemPackingId},
             type: 'post',
             success: function (result) {
                 //alert(result);
                 alert('ตรวจเช็คช่องแล้ว');
                 var JSONObject2 = JSON.parse(result);
                 //alert(JSONObject2.pickingItemsId);
-                alert(JSONObject2.CountChannelsInspector);
+                //alert(JSONObject2.CountChannelsInspector);
                 $(".search-content-new-" + JSONObject2.pickingItemsId).html('<h4>ตรวจสอบแล้วเรียบร้อย</h4>');
                 if (JSONObject2.CountChannelsInspector == 1) {
-                    alert('redirect!!');
+                    //alert('redirect!!');
                     window.location = $baseUrl + 'lockers/lockers/lockers?boxcode=' + JSONObject2.pickingId;
                 } else if (JSONObject2.CountChannelsInspector == 0) {
                     window.location = $baseUrl + 'lockers/lockers/lockers?boxcode=' + JSONObject2.pickingId;
@@ -176,12 +177,11 @@ $('.remark-cancel').on('click', function () {
 });
 
 $('.remark-submit').on('click', function () {
-
-
     var dataBind = this.getAttribute('data-bind');
     var resDataBind = dataBind.split(",");
     var pickingItemsId = resDataBind[0];
     var pickingId = resDataBind[1];
+    var orderItemPackingId = resDataBind[2];
     //var pickingItemsId = document.getElementById("pickingItemsIdHidden").value;
     //var pickingId = document.getElementById("pickingIdHidden").value;
     var desc = document.getElementById("remarkDesc-" + pickingItemsId).value;
@@ -197,15 +197,15 @@ $('.remark-submit').on('click', function () {
         // alert('OK');
         $.ajax({
             url: 'remark-channels',
-            data: {"pickingItemsId": pickingItemsId, "remarkDesc": desc, 'status': 'no', "pickingId": pickingId, 'type': type},
+            data: {"pickingItemsId": pickingItemsId, "remarkDesc": desc, 'status': 'no', "pickingId": pickingId, 'type': type, 'orderItemPackingId': orderItemPackingId},
             type: 'post',
             success: function (result) {
                 alert('ตรวจเช็คช่องแล้ว');
                 var JSONObject2 = JSON.parse(result);
-                alert(JSONObject2.CountChannelsInspector);
+                //alert(JSONObject2.CountChannelsInspector);
                 $(".search-content-new-" + JSONObject2.pickingItemsId).html('<h4><code>' + JSONObject2.remark + '<code></h4>');
                 if (JSONObject2.CountChannelsInspector == 1) {
-                    alert('redirect!!');
+                    //alert('redirect!!');
                     window.location = $baseUrl + 'lockers/lockers/lockers?boxcode=' + JSONObject2.pickingId;
                 } else if (JSONObject2.CountChannelsInspector == 0) {
                     window.location = $baseUrl + 'lockers/lockers/lockers?boxcode=' + JSONObject2.pickingId;
@@ -219,6 +219,31 @@ $('.remark-submit').on('click', function () {
     } else {
         alert('ระบุปัญหาที่เจอทุกครั้ง ก่อน Submit')
     }
+});
+
+$('.test-test').on('click', function () {
+    var dataBind = this.getAttribute('data-bind');
+    var resDataBind = dataBind.split(",");
+    var pickingItemsId = resDataBind[0];
+    var pickingId = resDataBind[1];
+    var orderItemPackingId = resDataBind[2];
+    //alert(pickingItemsId + ',' + pickingId + ',' + orderItemPackingId);
+    $.ajax({
+        url: 'channels-packing-items',
+        data: {"pickingItemsId": pickingItemsId, "pickingId": pickingId, 'orderItemPackingId': orderItemPackingId},
+        type: 'post',
+        success: function (result) {
+            //alert(JSONObject2);
+            var JSONObject2 = JSON.parse(result);
+            $(".tes-test").html('' + JSONObject2 + '');
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //debugger;
+            // alert(errorThrown);
+        }
+    });
+
+    $('#uidemo-modals-alerts-info').modal('show');
 });
 
 
