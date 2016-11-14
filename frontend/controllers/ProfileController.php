@@ -253,7 +253,7 @@ class ProfileController extends MasterController {
         $params = \common\models\ModelMaster::decodeParams($hash);
 
         $orderId = Yii::$app->request->get('OrderNo');
-        $this->layout = "/content_profile";
+        //$this->layout = "/content_profile";
         $this->title = 'Cozxy.com | Order Purchase';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Order Purchase";
@@ -261,7 +261,7 @@ class ProfileController extends MasterController {
         //echo htmlspecialchars($orderId);
         if (isset($params['orderId'])) {
             $order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . $params['orderId'] . '" ')
-                    ->one();
+            ->one();
             //echo '<pre>';
             //print_r($order);
             //exit();
