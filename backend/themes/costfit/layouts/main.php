@@ -39,7 +39,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 
         <script>var init = [];</script>
         <!-- Demo script -->
-        <!--<script src="<?php // cho $directoryAsset;    ?>/demo/demo.js"></script>
+        <!--<script src="<?php // cho $directoryAsset;     ?>/demo/demo.js"></script>
         -->  <!-- / Demo script -->
 
         <?php $this->beginBody() ?>
