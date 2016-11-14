@@ -456,19 +456,23 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         if ($valueO->status == 2) {
                             $status = 'Pending';
                             $text = 'รอการชำระเงิน';
+                            $class = 'label-warning';
                         } elseif ($valueO->status == 3) {
                             $status = 'Rejected';
                             $text = 'ชำระบัตรเครดิตไม่สำเร็จ';
+                            $class = 'label-dange';
                         } elseif ($valueO->status == 4) {
                             $status = 'In progress';
                             $text = 'ยืนยันชำระเงิน';
+                            $class = 'label-info';
                         } elseif ($valueO->status == 5) {
                             $status = 'Completed';
                             $text = 'ชำระบัตรเครดิตสำเร็จ';
+                            $class = 'label-success';
                         }
                         ?>
                         <div class="ticket">
-                            <span class="label label-success ticket-label" title="<?php echo $text; ?>"><?php echo $status; ?></span>
+                            <span class="label <?php echo $class; ?> ticket-label" title="<?php echo $text; ?>"><?php echo $status; ?></span>
                             <a href="#" title="" class="ticket-title">OrderNo<span>[#<?php echo $valueO->orderNo; ?>]</span></a>
                             <span class="ticket-info">
                                 Opened by <a href="#" title=""><?php echo $valueO->firstname ?> <?php echo $valueO->lastname ?></a> today
@@ -481,11 +485,13 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                 </div>
             </div> <!-- / .panel-body -->
             <hr>
-            <h5><strong>อธิบาย</strong></h5>
-            <p>สถานะ (<span class="label label-success  " title="Pending">Pending</span>):'รอการชำระเงิน'</p>
-            <p>สถานะ (<span class="label label-success  " title="Rejected">Rejected</span>): 'ชำระบัตรเครดิตไม่สำเร็จ'</p>
-            <p>สถานะ (<span class="label label-success  " title="In progress">In progress</span>): 'ยืนยันชำระเงิน'</p>
-            <p>สถานะ (<span class="label label-success " title="Pending">Completed</span>): 'ชำระบัตรเครดิตสำเร็จ'</p>
+            <div style="padding: 10px;">
+                <h5><strong>อธิบาย</strong></h5>
+                <p>สถานะ  <span class="label label-warning  " title="Pending">Pending</span> : รอการชำระเงิน </p>
+                <p>สถานะ  <span class="label label-dange" title="Rejected">Rejected</span> :  ชำระบัตรเครดิตไม่สำเร็จ </p>
+                <p>สถานะ  <span class="label label-info  " title="In progress">In progress</span> :  ยืนยันชำระเงิน </p>
+                <p>สถานะ  <span class="label label-success " title="Pending">Completed</span> :  ชำระบัตรเครดิตสำเร็จ </p>
+            </div>
         </div> <!-- / .panel -->
 
     </div>
