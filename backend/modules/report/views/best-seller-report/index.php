@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\jui\DatePicker;
 use yii\widgets\ActiveForm;
 
-$this->title = 'รายงานยอดขาย';
+$this->title = 'รายงานยอดสินค้าขายดี';
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <div class="order-index">

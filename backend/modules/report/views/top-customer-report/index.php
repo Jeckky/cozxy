@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\jui\DatePicker;
 use yii\widgets\ActiveForm;
 
-$this->title = 'ลูกค้าดีเด่น';
+$this->title = 'รายงานลูกค้าดีเด่น';
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <div class="order-index">
@@ -22,7 +22,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="row">
                 <?php
                 $form = ActiveForm::begin([
-                            'method' => 'GET',
+                    'method' => 'GET',
                 ]);
                 ?>
                 <div class="col-lg-3">
