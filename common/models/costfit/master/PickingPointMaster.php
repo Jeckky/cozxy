@@ -14,14 +14,13 @@ use Yii;
     * @property string $countryId
     * @property string $provinceId
     * @property string $amphurId
-    * @property integer $status
     * @property integer $type
     * @property string $ip
     * @property string $macAddress
     * @property string $authCode
+    * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-    * @property string $lastvisitDate
 */
 class PickingPointMaster extends \common\models\ModelMaster
 {
@@ -40,8 +39,8 @@ public function rules()
 {
 return [
             [['title', 'code', 'description', 'provinceId', 'amphurId', 'createDateTime'], 'required'],
-            [['provinceId', 'amphurId', 'status', 'type'], 'integer'],
-            [['createDateTime', 'updateDateTime', 'lastvisitDate'], 'safe'],
+            [['provinceId', 'amphurId', 'type', 'status'], 'integer'],
+            [['createDateTime', 'updateDateTime'], 'safe'],
             [['title', 'description', 'countryId'], 'string', 'max' => 45],
             [['code'], 'string', 'max' => 30],
             [['ip', 'macAddress', 'authCode'], 'string', 'max' => 100],
@@ -61,14 +60,13 @@ return [
     'countryId' => Yii::t('picking_point', 'Country ID'),
     'provinceId' => Yii::t('picking_point', 'Province ID'),
     'amphurId' => Yii::t('picking_point', 'Amphur ID'),
-    'status' => Yii::t('picking_point', 'Status'),
     'type' => Yii::t('picking_point', 'Type'),
     'ip' => Yii::t('picking_point', 'Ip'),
     'macAddress' => Yii::t('picking_point', 'Mac Address'),
     'authCode' => Yii::t('picking_point', 'Auth Code'),
+    'status' => Yii::t('picking_point', 'Status'),
     'createDateTime' => Yii::t('picking_point', 'Create Date Time'),
     'updateDateTime' => Yii::t('picking_point', 'Update Date Time'),
-    'lastvisitDate' => Yii::t('picking_point', 'Lastvisit Date'),
 ];
 }
 }

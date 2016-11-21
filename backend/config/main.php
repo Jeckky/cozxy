@@ -75,6 +75,9 @@ return [
         'lockers' => [
             'class' => 'backend\modules\lockers\Lockers',
         ],
+        'suppliers' => [
+            'class' => 'backend\modules\suppliers\Suppliers',
+        ],
     ],
     'components' => [
         'user' => [

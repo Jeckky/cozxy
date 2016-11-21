@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\widgets\ActiveField;
 use yii\helpers\ArrayHelper;
 use yii\widgets\MaskedInput;
 use common\models\areawow;
@@ -33,31 +34,29 @@ use yii\jui\DatePicker;
     <div class="panel-body">
         <?= $form->errorSummary($model) ?>
 
-        <?//= $form->field($model, 'username',['options'=>['class'=>'row form-group']])->textInput(['maxlength' => 200]) ?>
+        <?= $form->field($model, 'firstname', ['options' => ['class' => 'row form-group ']])->textInput(['maxlength' => 200])->label('ชื่อ') ?>
 
-        <?//= $form->field($model, 'password_hash',['options'=>['class'=>'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
+        <?= $form->field($model, 'lastname', ['options' => ['class' => 'row form-group ']])->textInput(['maxlength' => 200])->label('นามสกุล') ?>
 
-        <?//= $form->field($model, 'firstname',['options'=>['class'=>'row form-group']])->textInput(['maxlength' => 200]) ?>
+        <?//= $form->field($model, 'username', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200])->label('username') ?>
+        <!--<div class="row form-group  field-user-firstname required has-error">
+            <label class="col-sm-3 control-label" for="user-firstname">&nbsp;</label>
+            <div class="col-sm-9">
+                <code>หมายเหตุ</code>
+                <span class="text-muted">
+                    username ใช้ email login เท่านั่น
+                </span>
+            </div>
+        </div>-->
+        <?= $form->field($model, 'password', ['options' => ['class' => 'row form-group']])->passwordInput(['maxlength' => 200]) ?>
 
-        <?//= $form->field($model, 'password',['options'=>['class'=>'row form-group']])->passwordInput(['maxlength' => 200]) ?>
+        <?= $form->field($model, 'email', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
 
-        <?//= $form->field($model, 'lastname',['options'=>['class'=>'row form-group']])->textInput(['maxlength' => 200]) ?>
+        <?= $form->field($model, 'type')->radioList(['1' => 'Frontend', '2' => 'Backend', '3' => 'Frontend and Frontend', '4' => 'Suppliers'])->label('ประเภท') ?>
 
-        <?//= $form->field($model, 'email',['options'=>['class'=>'row form-group']])->textInput(['maxlength' => 200]) ?>
+        <?= $form->field($model, 'gender')->radioList(['1' => 'เพศชาย', '0' => 'เพศหญิง'])->label('เพศ') ?>
 
-        <?//= $form->field($model, 'token',['options'=>['class'=>'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
-
-        <?= $form->field($model, 'type', ['options' => ['class' => 'row form-group']])->textInput() ?>
-
-        <?//= $form->field($model, 'auth_key',['options'=>['class'=>'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
-
-        <?//= $form->field($model, 'auth_type',['options'=>['class'=>'row form-group']])->textInput(['maxlength' => 255]) ?>
-
-        <?//= $form->field($model, 'birthDate',['options'=>['class'=>'row form-group']])->textInput() ?>
-
-        <?//= $form->field($model, 'gender',['options'=>['class'=>'row form-group']])->textInput() ?>
-
-        <?//= $form->field($model, 'tel',['options'=>['class'=>'row form-group']])->textInput(['maxlength' => 20]) ?>
+        <?= $form->field($model, 'tel', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 20]) ?>
 
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">

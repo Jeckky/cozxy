@@ -192,6 +192,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                         ?>> <span class="lbl">Frontend and Backend</span>
                                                     </label>
                                                 </div>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="radio" name="Access[jq-validation-radios]" class="px" value="4" <?php
+                                                        if ($model->type == 4) {
+                                                            echo "checked";
+                                                        }
+                                                        ?>> <span class="lbl">Suppliers</span>
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                         <?php

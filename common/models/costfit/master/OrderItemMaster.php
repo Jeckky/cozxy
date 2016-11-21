@@ -29,10 +29,7 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-    *
-            * @property Order $order
-            * @property Product $product
-    */
+*/
 class OrderItemMaster extends \common\models\ModelMaster
 {
 /**
@@ -54,8 +51,6 @@ return [
             [['priceOnePiece', 'quantity', 'price', 'subTotal', 'discountValue', 'shippingDiscountValue', 'total'], 'number'],
             [['sendDateTime', 'createDateTime', 'updateDateTime'], 'safe'],
             [['bagNo'], 'string', 'max' => 20],
-            [['orderId'], 'exist', 'skipOnError' => true, 'targetClass' => OrderMaster::className(), 'targetAttribute' => ['orderId' => 'orderId']],
-            [['productId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductMaster::className(), 'targetAttribute' => ['productId' => 'productId']],
         ];
 }
 
@@ -89,20 +84,4 @@ return [
     'updateDateTime' => Yii::t('order_item', 'Update Date Time'),
 ];
 }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getOrder()
-    {
-    return $this->hasOne(OrderMaster::className(), ['orderId' => 'orderId']);
-    }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getProduct()
-    {
-    return $this->hasOne(ProductMaster::className(), ['productId' => 'productId']);
-    }
 }

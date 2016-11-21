@@ -50,18 +50,14 @@ use Yii;
     * @property string $paymentDateTime
     * @property integer $isSlowest
     * @property string $color
-    * @property string $pickerId
+    * @property integer $pickerId
     * @property string $password
     * @property string $otp
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
     * @property string $email
-    *
-            * @property User $user
-            * @property OrderItem[] $orderItems
-            * @property StoreProductOrderItem[] $storeProductOrderItems
-    */
+*/
 class OrderMaster extends \common\models\ModelMaster
 {
 /**
@@ -89,7 +85,6 @@ return [
             [['billingZipcode', 'shippingZipcode'], 'string', 'max' => 10],
             [['password', 'otp'], 'string', 'max' => 255],
             [['email'], 'string', 'max' => 100],
-            [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => UserMaster::className(), 'targetAttribute' => ['userId' => 'userId']],
         ];
 }
 
@@ -151,28 +146,4 @@ return [
     'email' => Yii::t('order', 'Email'),
 ];
 }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getUser()
-    {
-    return $this->hasOne(UserMaster::className(), ['userId' => 'userId']);
-    }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getOrderItems()
-    {
-    return $this->hasMany(OrderItemMaster::className(), ['orderId' => 'orderId']);
-    }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getStoreProductOrderItems()
-    {
-    return $this->hasMany(StoreProductOrderItemMaster::className(), ['orderId' => 'orderId']);
-    }
 }

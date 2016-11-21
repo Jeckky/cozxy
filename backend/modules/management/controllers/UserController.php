@@ -98,10 +98,16 @@ class UserController extends ManagementMasterController {
      * @return mixed
      */
     public function actionCreate() {
-        $model = new User();
+
+        $model = new User(['scenario' => 'user_backend']);
         if (isset($_POST["User"])) {
             $model->attributes = $_POST["User"];
-            $model->createDateTime = new \yii\db\Expression('NOW()');
+            $model->status = 1;
+            $model->auth_type = 'Backend';
+            $model->username = $_POST["User"]['email'];
+            $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
+            $model->token = Yii::$app->security->generateRandomString(10);
+            $model->createDateTime = new \yii\db\Expression("NOW()");
             if ($model->save()) {
                 return $this->redirect(['index']);
             }

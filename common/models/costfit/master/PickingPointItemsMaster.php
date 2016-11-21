@@ -16,7 +16,6 @@ use Yii;
     * @property string $status
     * @property string $createDateTime
     * @property string $updateDateTime
-    * @property string $lastvisitDate
 */
 class PickingPointItemsMaster extends \common\models\ModelMaster
 {
@@ -36,7 +35,7 @@ public function rules()
 return [
             [['pickingId', 'code', 'name'], 'required'],
             [['pickingId', 'height'], 'integer'],
-            [['createDateTime', 'updateDateTime', 'lastvisitDate'], 'safe'],
+            [['createDateTime', 'updateDateTime'], 'safe'],
             [['code', 'name', 'portIndex', 'status'], 'string', 'max' => 45],
         ];
 }
@@ -56,7 +55,6 @@ return [
     'status' => Yii::t('picking_point_items', 'Status'),
     'createDateTime' => Yii::t('picking_point_items', 'Create Date Time'),
     'updateDateTime' => Yii::t('picking_point_items', 'Update Date Time'),
-    'lastvisitDate' => Yii::t('picking_point_items', 'Lastvisit Date'),
 ];
 }
 }

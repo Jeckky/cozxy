@@ -5,7 +5,7 @@ namespace common\models\costfit\master;
 use Yii;
 
 /**
-* This is the model class for table "product".
+* This is the model class for table "product_suppliers".
 *
     * @property string $productId
     * @property string $userId
@@ -30,17 +30,15 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-    *
-            * @property ProductPromotion[] $productPromotions
-    */
-class ProductMaster extends \common\models\ModelMaster
+*/
+class ProductSuppliersMaster extends \common\models\ModelMaster
 {
 /**
 * @inheritdoc
 */
 public static function tableName()
 {
-return 'product';
+return 'product_suppliers';
 }
 
 /**
@@ -66,37 +64,29 @@ return [
 public function attributeLabels()
 {
 return [
-    'productId' => Yii::t('product', 'Product ID'),
-    'userId' => Yii::t('product', 'User ID'),
-    'productGroupId' => Yii::t('product', 'Product Group ID'),
-    'brandId' => Yii::t('product', 'Brand ID'),
-    'categoryId' => Yii::t('product', 'Category ID'),
-    'isbn' => Yii::t('product', 'Isbn'),
-    'code' => Yii::t('product', 'Code'),
-    'title' => Yii::t('product', 'Title'),
-    'optionName' => Yii::t('product', 'Option Name'),
-    'shortDescription' => Yii::t('product', 'Short Description'),
-    'description' => Yii::t('product', 'Description'),
-    'specification' => Yii::t('product', 'Specification'),
-    'width' => Yii::t('product', 'Width'),
-    'height' => Yii::t('product', 'Height'),
-    'depth' => Yii::t('product', 'Depth'),
-    'weight' => Yii::t('product', 'Weight'),
-    'price' => Yii::t('product', 'Price'),
-    'unit' => Yii::t('product', 'Unit'),
-    'smallUnit' => Yii::t('product', 'Small Unit'),
-    'tags' => Yii::t('product', 'Tags'),
-    'status' => Yii::t('product', 'Status'),
-    'createDateTime' => Yii::t('product', 'Create Date Time'),
-    'updateDateTime' => Yii::t('product', 'Update Date Time'),
+    'productId' => Yii::t('product_suppliers', 'Product ID'),
+    'userId' => Yii::t('product_suppliers', 'User ID'),
+    'productGroupId' => Yii::t('product_suppliers', 'Product Group ID'),
+    'brandId' => Yii::t('product_suppliers', 'Brand ID'),
+    'categoryId' => Yii::t('product_suppliers', 'Category ID'),
+    'isbn' => Yii::t('product_suppliers', 'Isbn'),
+    'code' => Yii::t('product_suppliers', 'Code'),
+    'title' => Yii::t('product_suppliers', 'Title'),
+    'optionName' => Yii::t('product_suppliers', 'Option Name'),
+    'shortDescription' => Yii::t('product_suppliers', 'Short Description'),
+    'description' => Yii::t('product_suppliers', 'Description'),
+    'specification' => Yii::t('product_suppliers', 'Specification'),
+    'width' => Yii::t('product_suppliers', 'Width'),
+    'height' => Yii::t('product_suppliers', 'Height'),
+    'depth' => Yii::t('product_suppliers', 'Depth'),
+    'weight' => Yii::t('product_suppliers', 'Weight'),
+    'price' => Yii::t('product_suppliers', 'Price'),
+    'unit' => Yii::t('product_suppliers', 'Unit'),
+    'smallUnit' => Yii::t('product_suppliers', 'Small Unit'),
+    'tags' => Yii::t('product_suppliers', 'Tags'),
+    'status' => Yii::t('product_suppliers', 'Status'),
+    'createDateTime' => Yii::t('product_suppliers', 'Create Date Time'),
+    'updateDateTime' => Yii::t('product_suppliers', 'Update Date Time'),
 ];
 }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getProductPromotions()
-    {
-    return $this->hasMany(ProductPromotionMaster::className(), ['productId' => 'productId']);
-    }
 }

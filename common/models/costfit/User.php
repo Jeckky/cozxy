@@ -41,6 +41,7 @@ class User extends \common\models\costfit\master\UserMaster {
     const USER_TYPE_FRONTEND = 1;
     const USER_TYPE_BACKEND = 2;
     const USER_TYPE_FRONTEND_BACKEND = 3;
+    const USER_TYPE_SUPPLIERS = 4;
 
     //const USER_STATUS_CHECKOUTS = 2;
     //const USER_STATUS_E_PAYMENT_DRAFT = 3;
@@ -62,13 +63,14 @@ class User extends \common\models\costfit\master\UserMaster {
             ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"],
 //            ['email', 'exist']
             [
-
                 ['firstname', 'lastname', 'gender', 'tel', 'birthDate', 'acceptTerm'],
                 'required', 'on' => 'editinfo'],
             // [['currentPassword', 'newPassword', 'rePassword'], 'required'],
             [['currentPassword', 'newPassword', 'rePassword'], 'required', 'on' => 'profile'],
             // ['currentPassword', 'findPasswords'],
             ['rePassword', 'compare', 'compareAttribute' => 'newPassword', 'on' => 'profile'],
+            //['username', 'email'],
+            [['firstname', 'lastname', 'password', 'email', 'type', 'gender'], 'required', 'on' => 'user_backend'],
         ]);
     }
 
@@ -150,6 +152,7 @@ class User extends \common\models\costfit\master\UserMaster {
             self::USER_TYPE_FRONTEND => "<span class='text-primary'>frontend</span>",
             self::USER_TYPE_BACKEND => "<span class='text-success'>backend</span>",
             self::USER_TYPE_FRONTEND_BACKEND => "<span class='text-warning'>frontend and backend</span>",
+            self::USER_TYPE_SUPPLIERS => "<span class='text-info'>Suppliers</span>"
         ];
     }
 

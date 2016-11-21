@@ -17,10 +17,7 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-    *
-            * @property StoreProduct[] $storeProducts
-            * @property Supplier $supplier
-    */
+*/
 class StoreProductGroupMaster extends \common\models\ModelMaster
 {
 /**
@@ -42,7 +39,6 @@ return [
             [['receiveDate', 'createDateTime', 'updateDateTime'], 'safe'],
             [['createDateTime'], 'required'],
             [['poNo'], 'string', 'max' => 45],
-            [['supplierId'], 'exist', 'skipOnError' => true, 'targetClass' => SupplierMaster::className(), 'targetAttribute' => ['supplierId' => 'supplierId']],
         ];
 }
 
@@ -64,20 +60,4 @@ return [
     'updateDateTime' => Yii::t('store_product_group', 'Update Date Time'),
 ];
 }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getStoreProducts()
-    {
-    return $this->hasMany(StoreProductMaster::className(), ['storeProductGroupId' => 'storeProductGroupId']);
-    }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getSupplier()
-    {
-    return $this->hasOne(SupplierMaster::className(), ['supplierId' => 'supplierId']);
-    }
 }

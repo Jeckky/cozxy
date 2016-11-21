@@ -14,11 +14,7 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-    *
-            * @property Region $region
-            * @property StoreLocation[] $storeLocations
-            * @property StoreSlot[] $storeSlots
-    */
+*/
 class StoreMaster extends \common\models\ModelMaster
 {
 /**
@@ -40,7 +36,6 @@ return [
             [['description'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 200],
-            [['regionId'], 'exist', 'skipOnError' => true, 'targetClass' => RegionMaster::className(), 'targetAttribute' => ['regionId' => 'regionId']],
         ];
 }
 
@@ -59,28 +54,4 @@ return [
     'updateDateTime' => Yii::t('store', 'Update Date Time'),
 ];
 }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getRegion()
-    {
-    return $this->hasOne(RegionMaster::className(), ['regionId' => 'regionId']);
-    }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getStoreLocations()
-    {
-    return $this->hasMany(StoreLocationMaster::className(), ['storeId' => 'storeId']);
-    }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getStoreSlots()
-    {
-    return $this->hasMany(StoreSlotMaster::className(), ['storeId' => 'storeId']);
-    }
 }
