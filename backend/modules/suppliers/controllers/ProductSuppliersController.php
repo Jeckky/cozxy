@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * ProductSuppliersController implements the CRUD actions for ProductSuppliers model.
@@ -18,7 +19,7 @@ class ProductSuppliersController extends SuppliersMasterController {
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['index', 'create', 'update', 'view', 'lockers'],
+                'only' => ['index', 'create', 'update', 'view', 'products'],
                 'rules' => [
                     // allow authenticated users
                     [
@@ -68,9 +69,21 @@ class ProductSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionCreate() {
+        //$model = new \common\models\costfit\ProductImage();
+        //$model->image = UploadedFile::getInstances($model, 'file');
+        //exit();
+        echo \Yii::$app->getBasePath(true);
+        echo '<br>' . \Yii::getAlias('@webroot');
         $searchProducts = \common\models\costfit\Product::find()->all();
         $model = new ProductSuppliers();
         if (isset($_POST["ProductSuppliers"])) {
+            $file = Yii::$app->request->get('file');
+            $file2 = Yii::$app->request->post('file');
+            echo '<pre>';
+            print_r($file);
+            print_r($file2);
+            exit();
+
             $model->attributes = $_POST["ProductSuppliers"];
             $model->userId = Yii::$app->user->identity->userId;
             $model->createDateTime = new \yii\db\Expression('NOW()');
@@ -131,8 +144,38 @@ class ProductSuppliersController extends SuppliersMasterController {
         }
     }
 
-    public function actionProducts() {
-        echo 'Product Test !!123';
+    public function actionUpload() {
+
+        $model = new \common\models\costfit\productImageSuppliers();
+        //$uploadPath = Yii::getAlias('@root') . '/uploads/';
+        $folderName = "ProductImageSuppliers"; //  Size 553 x 484
+        $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName;
+        if (isset($_FILES['image'])) {
+            $file = \yii\web\UploadedFile::getInstanceByName('image');
+            //echo '<pre>';
+            //print_r($file->tempName);
+            $original_name = $file->baseName;
+            $newFileName = \Yii::$app->security
+            ->generateRandomString() . '.' . $file->extension;
+            // you can write save code here before uploading.
+            //$newFileName->resize(553, 484);
+            if ($file->saveAs($uploadPath . '/' . $newFileName)) {
+                $model->image = $newFileName;
+                $model->original_name = $original_name;
+                if ($model->save(false)) {
+                    echo \yii\helpers\Json::encode($file);
+                } else {
+                    echo \yii\helpers\Json::encode($model->getErrors());
+                }
+            }
+        } else {
+            /* return $this->render('upload', [
+              'model' => $model,
+              ]); */
+            echo 'Test Upload images';
+        }
+
+        return false;
     }
 
 }

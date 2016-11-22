@@ -9,8 +9,12 @@ use backend\widgets\Alert;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
-if (Yii::$app->user->identity->type == 4) {
-    $this->title = 'Suppliers Admin';
+if (isset(Yii::$app->user->identity->type)) {
+    if (Yii::$app->user->identity->type == 4) {
+        $this->title = 'Suppliers Admin';
+    } else {
+        $this->title = 'Cozxy.com Admin';
+    }
 } else {
     $this->title = 'Cozxy.com Admin';
 }
@@ -43,7 +47,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 
         <script>var init = [];</script>
         <!-- Demo script -->
-        <!--<script src="<?php // cho $directoryAsset;        ?>/demo/demo.js"></script>
+        <!--<script src="<?php // cho $directoryAsset;          ?>/demo/demo.js"></script>
         -->  <!-- / Demo script -->
 
         <?php $this->beginBody() ?>
