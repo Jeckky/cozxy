@@ -3,17 +3,24 @@
 use yii\helpers\Html;
 
 $form = yii\bootstrap\ActiveForm::begin([
-    'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
-    'fieldConfig' => [
-        'template' => '{label}<div class="col-sm-9">{input}</div>',
-        'labelOptions' => [
-            'class' => 'col-sm-3 control-label'
-        ]
-    ]
-]);
+            'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+            'fieldConfig' => [
+                'template' => '{label}<div class="col-sm-9">{input}</div>',
+                'labelOptions' => [
+                    'class' => 'col-sm-3 control-label'
+                ]
+            ]
+        ]);
 ?>
-<input type="hidden" name="storeProductGroupId" value="<?= $storeProductGroupId ?>">
-<input type="hidden" name="StoreProductGroup2[poNo]" value="<?= \common\models\costfit\StoreProductGroup::findPoNo($storeProductGroupId) ?>">
+<input type="hidden" name="storeProductGroupId" value="<?= $chooseStoreProductGroup ?>">
+<!--<input type="hidden" name="StoreProductGroup2[poNo]" value="<?//= \common\models\costfit\StoreProductGroup::findPoNo($storeProductGroupId) ?>">-->
+<?php
+//throw new \yii\base\Exception(print_r($allProducts, true));
+foreach ($allProducts as $product):
+    ?>
+    <input type="hidden" name="allProduct[]" value="<?= $product ?>">
+<?php endforeach;
+?>
 <div class="panel-heading" style="background-color: #ccffcc;">
     <span class="panel-title"><h3>สแกนสินค้าเพื่อจัดเรียง</h3></span>
 </div>
@@ -29,10 +36,7 @@ $form = yii\bootstrap\ActiveForm::begin([
 </div>
 <?php yii\bootstrap\ActiveForm::end(); ?>
 <div class="panel-heading" style="background-color: #ffffcc;">
-    <div class="pull-right" style="margin-top: 10px;"><?=
-        Html::a('<i class="fa fa-hand-lizard-o" aria-hidden="true"></i> เลือก PO อื่น', ['arrange'], ['class' => 'btn btn-md btn-primary'])
-        ?></div>
-    <span class="panel-title"><h3>รายการ สินค้าใน PO : <?= \common\models\costfit\StoreProductGroup::findPoNo($storeProductGroupId) ?></h3></span>
+    <span class="panel-title"><h3>รายการ สินค้าทั้งหมด</h3></span>
 </div>
 <div class="panel-body">
     <table class="table table-bordered">
@@ -45,16 +49,16 @@ $form = yii\bootstrap\ActiveForm::begin([
             <th style="vertical-align: middle;text-align: center;width: 20%;">สถานะ</th>
         </tr>
         <?php
-        if (isset($storeProducts) && !empty($storeProducts)) {
+        if (isset($allProducts) && !empty($allProducts)) {
             $i = 1;
-            foreach ($storeProducts as $storeProduct):
+            foreach ($allProducts as $product):
                 ?>
                 <tr>
                     <td style="vertical-align: middle;text-align: center;width: 5%;"><?= $i ?></td>
-                    <td style="vertical-align: middle;text-align: center;width: 35%;"><?= \common\models\costfit\Product::findProductName($storeProduct->productId) ?></td>
-                    <td style="vertical-align: middle;text-align: center;width: 20%;"><?= \common\models\costfit\Product::findProductIsbn($storeProduct->productId) ?></td>
-                    <td style="vertical-align: middle;text-align: center;width: 20%;"><?= $storeProduct->importQuantity ?></td>
-                    <td style="vertical-align: middle;text-align: center;width: 20%;"><?= $model->getStatusText($storeProduct->status) ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 35%;"><?= \common\models\costfit\Product::findProductName($product) ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 20%;"><?= \common\models\costfit\Product::findProductIsbn($product) ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 20%;"><?= \common\models\costfit\StoreProduct::quantity($product, $chooseStoreProductGroup) ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 20%;"><?= \common\models\costfit\StoreProduct::createStatus($product, $chooseStoreProductGroup) ?></td>
                 </tr>
                 <?php
                 $i++;
@@ -62,7 +66,7 @@ $form = yii\bootstrap\ActiveForm::begin([
         }else {
             ?>
             <tr>
-                <th style="vertical-align: middle;text-align: center;width: 5%;background-color:#cccccc;" colspan="4"><i><h4>ไม่มีรายการ PO ที่ยังไม่จัดเก็บ</h4></i></th>
+                <th style="vertical-align: middle;text-align: center;width: 5%;background-color:#cccccc;" colspan="4"><i><h4>ไม่มีรายการ PO ที่ยังไม่จัดเรียง/h4></i></th>
             </tr>
         <?php } ?>
     </table>
