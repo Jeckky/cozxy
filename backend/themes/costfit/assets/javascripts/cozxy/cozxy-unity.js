@@ -246,4 +246,76 @@ $('.test-test').on('click', function () {
     $('#uidemo-modals-alerts-info').modal('show');
 });
 
+function suppliers(productId) {
+    $.ajax({
+        url: 'products-system',
+        data: {"productId": productId},
+        type: 'post',
+        success: function (result) {
+            //alert(JSONObject2);
+            var JSONObject2 = JSON.parse(result);
+            //alert(JSONObject2.title);
+            // $(".tes-test").html('' + JSONObject2 + '');
+            $('#categoryId').val(JSONObject2.categoryId);
+            $('#brandId').val(JSONObject2.brandId);
+
+            $('#productsuppliers-isbn').val(JSONObject2.isbn);
+            $('#productsuppliers-code').val(JSONObject2.code);
+            $('#productsuppliers-title').val(JSONObject2.title);
+            $('#productsuppliers-optionname').val(JSONObject2.optionname);
+            // summernote
+            // ---- summernote ---- //
+            //$('#productsuppliers-shortdescription').val(JSONObject2.shortdescription);
+            $('#productsuppliers-shortdescription').summernote(
+                    $("#productsuppliers-shortdescription").code(JSONObject2.shortdescription)
+                    );
+            //$('#productsuppliers-description').val(JSONObject2.description);
+            $('#productsuppliers-description').summernote(
+                    $("#productsuppliers-description").code(JSONObject2.description)
+                    );
+            //$('#productsuppliers-specification').val(JSONObject2.specification);
+            $('#productsuppliers-specification').summernote(
+                    $("#productsuppliers-specification").code(JSONObject2.specification)
+                    );
+            //$('.note-editable').val(JSONObject2.shortdescription);
+            $('#productsuppliers-width').val(JSONObject2.width);
+            $('#productsuppliers-height').val(JSONObject2.height);
+            $('#productsuppliers-depth').val(JSONObject2.depth);
+            $('#productsuppliers-weight').val(JSONObject2.weight);
+            $('#productsuppliers-price').val(JSONObject2.price);
+            //$('#unitId').val(JSONObject2.title);
+            //$('#smallUnit').val(JSONObject2.title);
+            $('#productsuppliers-tags').val(JSONObject2.tags);
+            $('.form-group').find('.product-system-hidden').html('<input type="hidden" name="productIds" id="productIds" value="' + JSONObject2.productId + '"><input type="hidden" name="approve" id="approve" value="1">');
+            $('.form-group').find('.status-system-hidden').html('<h2>สถานะ : ค้นหาจาก Product System หรือ <span class="suppliers-clear-data btn btn-primary" onclick="suppliersClearData()">ต้องการเคลียร์ข้อมูลเพื่อเพิ่มใหม่</span></h2>');
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //debugger;
+            // alert(errorThrown);
+        }
+    });
+}
+
+function suppliersClearData() {
+    $('#categoryId').val('');
+    $('#brandId').val('');
+    $('#productsuppliers-isbn').val('');
+    $('#productsuppliers-code').val('');
+    $('#productsuppliers-title').val('');
+    $('#productsuppliers-optionname').val('');
+
+    $('#productsuppliers-shortdescription').val('');
+    $('#productsuppliers-description').val('');
+    $('#productsuppliers-specification').val('');
+    $('#productsuppliers-width').val('');
+    $('#productsuppliers-height').val('');
+    $('#productsuppliers-depth').val('');
+    $('#productsuppliers-weight').val('');
+    $('#productsuppliers-price').val('');
+    //$('#unitId').val(JSONObject2.title);
+    //$('#smallUnit').val(JSONObject2.title);
+    $('#productsuppliers-tags').val('');
+    $('.form-group').find('.product-system-hidden').html('<input type="hidden" name="productIds" id="productIds" value=""><input type="hidden" name="approve" id="approve" value="2">');
+    $('.form-group').find('.status-system-hidden').html('<h2>สถานะ : เคลียร์ข้อมูลสำเร็จ</span></h2>');
+}
 

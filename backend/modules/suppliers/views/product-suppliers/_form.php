@@ -41,15 +41,15 @@ use common\models\costfit\Category;
             </div>
         </div>
         <div class="panel-body">
-            <div class="col-sm-3 text-right"><label class="control-label">Products System</label></div>
-            <div class="col-sm-9">
+            <div class="col-sm-3 text-right"><label class="control-label">ค้นหาจาก : Products System</label></div>
+            <div class="col-sm-9 productIdSystemDiv">
                 <?php
                 //echo '<label class="control-label">Provinces</label>';
                 echo kartik\select2\Select2::widget([
-                    'name' => 'Address[countryId]',
+                    'name' => 'Address[countryId] ',
                     // 'value' => ['THA'], // initial value
                     'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Product::find()->all(), 'productId', 'title'),
-                    'options' => ['placeholder' => 'Select Products System ...', 'id' => 'productIdSystem'],
+                    'options' => ['placeholder' => 'Select Products System ...', 'id' => 'productIdSystem', 'onchange' => 'suppliers(this.value)'],
                     'pluginOptions' => [
                         'tags' => true,
                         'placeholder' => 'Select...',
@@ -75,17 +75,17 @@ use common\models\costfit\Category;
 
 
     <div class="panel-heading">
-        <span class="panel-title"><?= $title ?></span>
+        <span class="panel-title">ค้นหาจาก Products System หรือ New <?= $title ?></span>
     </div>
 
     <div class="panel-body">
         <?= $form->errorSummary($model) ?>
 
-        <?//= $form->field($model, 'userId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(User::find()->all(), 'userId', 'title'), ['prompt' => '-- Select User --']) ?>
-
+        <div class="form-group col-sm-12 text-center">
+            <duv class="status-system-hidden"></duv>
+        </div>
         <?//= $form->field($model, 'productGroupId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(ProductGroup::find()->all(), 'productGroupId', 'title'), ['prompt' => '-- Select ProductGroup --']) ?>
 
-        <?//= $form->field($model, 'brandId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(Brand::find()->all(), 'brandId', 'title'), ['prompt' => '-- Select Brand --']) ?>
         <?php
         echo $form->field($model, 'categoryId')->widget(kartik\select2\Select2::classname(), [
             'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'),
@@ -119,12 +119,17 @@ use common\models\costfit\Category;
         <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
 
         <?= $form->field($model, 'optionName', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
+        <?=
+        $form->field($model, 'shortDescription')->widget(Summernote::className(), [
+            'clientOptions' => [
+            ]
+        ])
+        ?>
+        <?= $form->field($model, 'shortDescription', ['options' => ['class' => 'row form-group']]) ?>
 
-        <?//= $form->field($model, 'shortDescription', ['options' => ['class' => 'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
+        <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']]) ?>
 
-        <?//= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
-
-        <?//= $form->field($model, 'specification', ['options' => ['class' => 'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
+        <?= $form->field($model, 'specification', ['options' => ['class' => 'row form-group']]) ?>
 
         <?= $form->field($model, 'width', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
 
@@ -135,12 +140,6 @@ use common\models\costfit\Category;
         <?= $form->field($model, 'weight', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
 
         <?= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
-
-        <?= $form->field($model, 'unit', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 20]) ?>
-
-        <?= $form->field($model, 'smallUnit', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 20]) ?>
-
-        <?= $form->field($model, 'tags', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 255]) ?>
 
         <?php
         echo $form->field($model, 'unit')->widget(kartik\select2\Select2::classname(), [
@@ -153,7 +152,7 @@ use common\models\costfit\Category;
                 'id' => 'unitId',
                 'class' => 'required'
             ],
-        ])->label('Brand');
+        ])->label('Unit');
         echo $form->field($model, 'smallUnit')->widget(kartik\select2\Select2::classname(), [
             'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Unit::find()->all(), 'unitId', 'title'),
             'pluginOptions' => [
@@ -164,68 +163,66 @@ use common\models\costfit\Category;
                 'id' => 'smallUnit',
                 'class' => 'required'
             ],
-        ])->label('Brand');
+        ])->label('Small Unit');
         ?>
+        <?= $form->field($model, 'tags', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 255]) ?>
 
-        <div class="note note-info uidemo-note">
-            <h4>
-                อัพโหลดรูปภาพ..
-            </h4>
-        </div>
-        <!-- 49.1. $DROPZONEJS_EXAMPLE =====================================================================
-
-                Example
-        -->
-        <div class="row">
-            <div class="col-md-12">
-                <?php
-                echo \kato\DropZone::widget([
-                    'options' => [
-                        'url' => \yii\helpers\Url::to(['upload']),
-                        'paramName' => 'image',
-                        'maxFilesize' => '200',
-                        'clickable' => true,
-                        'addRemoveLinks' => true,
-                        'enqueueForUpload' => true,
-                        'dictDefaultMessage' => "<h1><i class='fa fa-cloud-upload'></i><br>Drop files in here<h1><br><span class='dz-text-small'>or click to pick manually</span>",
-                    ],
-                    'clientEvents' => [
-                        'sending' => "function(file, xhr, formData) {
-                                            //console.log(file);
-                                    }",
-                        'complete' => "function(file){console.log(file)}",
-                        'removedfile' => "function(file){alert(file.name + ' is removed')}"
-                    ],
-                ]);
-                ?>
-
-            </div>
-        </div>
-        <!--
-        <div class="row">
-            <a id="uidemo-dropzonejs-example" href="#uidemo-dropzonejs-example" class="header-2">Example</a>
-            <div class="col-md-12">
-                <div id="dropzonejs-example" class="dropzone-box">
-                    <div class="dz-default dz-message">
-                        <i class="fa fa-cloud-upload"></i>
-                        Drop files in here<br><span class="dz-text-small">or click to pick manually</span>
-                    </div>
-                    <form action="upload-image">
-                        <div class="fallback">
-                            <input name="file" type="file" multiple="" />
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        -->
         <br><br><br>
-        <div class="form-group">
-            <div class="col-sm-9 col-sm-offset-3">
-                <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-            </div>
+        <div class="form-group col-sm-12 text-center">
+            <duv class="product-system-hidden">
+                <input type="hidden" name="productIds" id="productIds" value="">
+                <input type="hidden" name="approve" id="approve" value="2">
+            </duv>
+        </div>
+        <div class="form-group col-sm-12 text-center">
+            <?= Html::submitButton($model->isNewRecord ? 'Next' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success btn-lg' : 'btn btn-primary btn-lg']) ?>
         </div>
     </div>
     <?php ActiveForm::end(); ?>
 
+    <script>
+        /*
+         init.push(function () {
+         if (!$('html').hasClass('ie8')) {
+
+         $('#productsuppliers-shortdescription').summernote({
+         name: 'shortdescription2016',
+         height: 200,
+         tabsize: 2,
+         codemirror: {
+         theme: 'monokai'
+         }
+         });
+         $('#productsuppliers-description').summernote({
+         height: 200,
+         tabsize: 2,
+         codemirror: {
+         theme: 'monokai'
+         }
+         });
+         $('#productsuppliers-specification').summernote({
+         height: 200,
+         tabsize: 2,
+         codemirror: {
+         theme: 'monokai'
+         }
+         });
+         }
+         $('#summernote-boxed').switcher({
+         on_state_content: '<span class="fa fa-check" style="font-size:11px;"></span>',
+         off_state_content: '<span class="fa fa-times" style="font-size:11px;"></span>'
+         });
+         $('#summernote-boxed').on($('html').hasClass('ie8') ? "propertychange" : "change", function () {
+         var $panel = $(this).parents('.panel');
+         if ($(this).is(':checked')) {
+         $panel.find('.panel-body').addClass('no-padding');
+         $panel.find('.panel-body > *').addClass('no-border');
+         } else {
+         $panel.find('.panel-body').removeClass('no-padding');
+         $panel.find('.panel-body > *').removeClass('no-border');
+         }
+         });
+         });
+         */
+    </script>
 </div>
