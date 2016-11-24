@@ -256,13 +256,21 @@ function suppliers(productId) {
             var JSONObject2 = JSON.parse(result);
             //alert(JSONObject2.title);
             // $(".tes-test").html('' + JSONObject2 + '');
-            $('#categoryId').val(JSONObject2.categoryId);
-            $('#brandId').val(JSONObject2.brandId);
-
+            // ------- kartik  -------- //
+            //$('#categoryId').val(JSONObject2.categoryId);
+            //$('#brandId').val(JSONObject2.brandId);
+            //$('#unitId').val(JSONObject2.unitId);
+            //$('#smallUnit').val(JSONObject2.smallUnit);
+            $('#categoryId').val(JSONObject2.categoryId).trigger('change');
+            $('#brandId').val(JSONObject2.brandId).trigger('change');
+            $('#unitId').val(JSONObject2.unit).trigger('change');
+            $('#smallUnit').val(JSONObject2.smallUnit).trigger('change');
+            //$('#categoryId').append('<option selected value=' + JSONObject2.categoryId + '>' + JSONObject2.categoryId + '</option>');
+            // ------ end kartik ------ //
             $('#productsuppliers-isbn').val(JSONObject2.isbn);
             $('#productsuppliers-code').val(JSONObject2.code);
             $('#productsuppliers-title').val(JSONObject2.title);
-            $('#productsuppliers-optionname').val(JSONObject2.optionname);
+            $('#productsuppliers-optionname').val(JSONObject2.optionName);
             // ---- summernote ---- //
             //$('#productsuppliers-shortdescription').val(JSONObject2.shortdescription);
             $('#productsuppliers-shortdescription').summernote(
@@ -276,7 +284,7 @@ function suppliers(productId) {
             $('#productsuppliers-specification').summernote(
                     $("#productsuppliers-specification").code(JSONObject2.specification)
                     );
-            //$('.note-editable').val(JSONObject2.shortdescription);
+            // ---- end summernote ---- //
             $('#productsuppliers-width').val(JSONObject2.width);
             $('#productsuppliers-height').val(JSONObject2.height);
             $('#productsuppliers-depth').val(JSONObject2.depth);
@@ -353,9 +361,12 @@ function suppliersCreate() {
 
     $.ajax({
         url: 'create',
-        data: {"productIds": productIds, 'approve': approve, 'categoryId': categoryId, 'brandId': brandId, 'isbn': isbn, 'code': code,
-            'title': title, 'optionname': optionname, 'shortdescription': shortdescription, 'description': description, 'specification': specification
-            , 'width': width, 'height': height, 'depth': depth, 'weight': weight, 'price': price, 'unit': unit, 'smallUnit': smallUnit, 'tags': tags,
+        data: {"productIds": productIds, 'approve': approve, 'categoryId': categoryId,
+            'brandId': brandId, 'isbn': isbn, 'code': code,
+            'title': title, 'optionname': optionname, 'shortdescription': shortdescription,
+            'description': description, 'specification': specification
+            , 'width': width, 'height': height, 'depth': depth, 'weight': weight,
+            'price': price, 'unit': unit, 'smallUnit': smallUnit, 'tags': tags,
             'ProductSuppliers': 'ProductSuppliers'
         },
         type: 'post',
