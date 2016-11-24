@@ -72,29 +72,64 @@ class ProductSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionCreate() {
-        //$model = new \common\models\costfit\ProductImage();
-        //$model->image = UploadedFile::getInstances($model, 'file');
-        //exit();
-//        /echo \Yii::$app->getBasePath(true);
-        //echo '<br>' . \Yii::getAlias('@webroot');
+
         $searchProducts = \common\models\costfit\Product::find()->all();
         $model = new ProductSuppliers();
-        if (isset($_POST["ProductSuppliers"])) {
-            $model->attributes = $_POST["ProductSuppliers"];
+        // parameter request post //
+        $ProductSuppliers = Yii::$app->request->post('ProductSuppliers');
+        $productIds = Yii::$app->request->post('productIds');
+        $approve = Yii::$app->request->post('approve');
+        $categoryId = Yii::$app->request->post('categoryId');
+        $brandId = Yii::$app->request->post('brandId');
+        $isbn = Yii::$app->request->post('isbn');
+        $code = Yii::$app->request->post('code');
+        $title = Yii::$app->request->post('title');
+        $optionname = Yii::$app->request->post('optionname');
+        $shortdescription = Yii::$app->request->post('shortdescription');
+        $description = Yii::$app->request->post('description');
+        $specification = Yii::$app->request->post('specification');
+        $width = Yii::$app->request->post('width');
+        $height = Yii::$app->request->post('height');
+        $depth = Yii::$app->request->post('depth');
+        $weight = Yii::$app->request->post('weight');
+        $price = Yii::$app->request->post('price');
+        $unit = Yii::$app->request->post('unit');
+        $smallUnit = Yii::$app->request->post('smallUnit');
+        $tags = Yii::$app->request->post('tags');
+        //if (isset($_POST["ProductSuppliers"])) {
+        if (isset($_POST['ProductSuppliers'])) {
+            //$model->attributes = $_POST["ProductSuppliers"];
             $model->userId = Yii::$app->user->identity->userId;
-            $model->approve = Yii::$app->request->post('approve');
-            $model->shortDescription = Yii::$app->request->post('productsuppliers-shortdescription');
-            $model->description = Yii::$app->request->post('productsuppliers-description');
-            $model->specification = Yii::$app->request->post('productsuppliers-specification');
+            //$model->productGroupId = $productGroupId;
+            $model->brandId = $brandId;
+            $model->categoryId = $categoryId;
+            $model->isbn = $isbn;
+            $model->code = $code;
+            $model->title = $title;
+            $model->optionName = $optionname;
+            $model->shortDescription = $shortdescription;
+            $model->description = $description;
+            $model->specification = $specification;
+            $model->width = $width;
+            $model->height = $height;
+            $model->depth = $depth;
+            $model->weight = $weight;
+            $model->price = $price;
+            $model->unit = $unit;
+            $model->smallUnit = $smallUnit;
+            $model->tags = $tags;
+            //$model->status = $status;
             $model->createDateTime = new \yii\db\Expression('NOW()');
+            $model->approve = $approve;
+            $model->productId = $productIds;
             if ($model->save()) {
-                //return $this->redirect(['image-form']);
-                return $this->redirect('image-form?id=' . $model->productId);
+                return $this->redirect('image-form?id=' . $model->productSuppId);
             }
+        } else {
+            return $this->render('create', [
+                'model' => $model
+            ]);
         }
-        return $this->render('create', [
-            'model' => $model
-        ]);
     }
 
     /**

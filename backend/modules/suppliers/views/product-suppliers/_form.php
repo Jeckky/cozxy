@@ -10,6 +10,7 @@ use common\models\costfit\User;
 use common\models\costfit\ProductGroup;
 use common\models\costfit\Brand;
 use common\models\costfit\Category;
+use yii\redactor\widgets\Redactor;
 
 //use kartik\file\FileInput;
 
@@ -63,16 +64,16 @@ use common\models\costfit\Category;
     </div> <!-- / .panel -->
     <?php
     $form = ActiveForm::begin([
+        'action' => '#',
         'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
         'fieldConfig' => [
             'template' => '{label}<div class="col-sm-9">{input}</div>',
             'labelOptions' => [
-                'class' => 'col-sm-3 control-label'
+                'class' => 'col-sm-3 control-label  '
             ]
         ]
     ]);
     ?>
-
 
     <div class="panel-heading">
         <span class="panel-title">ค้นหาจาก Products System หรือ New <?= $title ?></span>
@@ -87,10 +88,13 @@ use common\models\costfit\Category;
         <?//= $form->field($model, 'productGroupId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(ProductGroup::find()->all(), 'productGroupId', 'title'), ['prompt' => '-- Select ProductGroup --']) ?>
 
         <?php
+        //echo Html::hiddenInput('input-type-1', $model->categoryId, ['id' => 'input-type-1']);
+        //echo Html::hiddenInput('input-type-2', $model->categoryId, ['id' => 'input-type-2']);
         echo $form->field($model, 'categoryId')->widget(kartik\select2\Select2::classname(), [
             'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'),
             'pluginOptions' => [
                 'loadingText' => '-- Select Category System --',
+            //'params' => ['input-type-1', 'input-type-2']
             ],
             'options' => [
                 'placeholder' => 'Select Category System ...',
@@ -119,13 +123,10 @@ use common\models\costfit\Category;
         <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
 
         <?= $form->field($model, 'optionName', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
-        <?=
-        $form->field($model, 'shortDescription')->widget(Summernote::className(), [
-            'clientOptions' => [
-            ]
-        ])
-        ?>
+
         <?= $form->field($model, 'shortDescription', ['options' => ['class' => 'row form-group']]) ?>
+
+
 
         <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']]) ?>
 
@@ -167,62 +168,47 @@ use common\models\costfit\Category;
         ?>
         <?= $form->field($model, 'tags', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 255]) ?>
 
-        <br><br><br>
+        <br>
         <div class="form-group col-sm-12 text-center">
             <duv class="product-system-hidden">
                 <input type="hidden" name="productIds" id="productIds" value="">
-                <input type="hidden" name="approve" id="approve" value="2">
+                <input type="hidden" name="approve" id="approve" value="new">
             </duv>
         </div>
-        <div class="form-group col-sm-12 text-center">
-            <?= Html::submitButton($model->isNewRecord ? 'Next' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success btn-lg' : 'btn btn-primary btn-lg']) ?>
+        <div class="form-group col-sm-12 text-right">
+            <?= Html::submitButton($model->isNewRecord ? 'Next step' : 'Update', ['onclick' => 'suppliersCreate()', 'class' => $model->isNewRecord ? 'btn btn-success btn-lg' : 'btn btn-primary btn-lg']) ?>
         </div>
     </div>
     <?php ActiveForm::end(); ?>
 
     <script>
-        /*
-         init.push(function () {
-         if (!$('html').hasClass('ie8')) {
 
-         $('#productsuppliers-shortdescription').summernote({
-         name: 'shortdescription2016',
-         height: 200,
-         tabsize: 2,
-         codemirror: {
-         theme: 'monokai'
-         }
-         });
-         $('#productsuppliers-description').summernote({
-         height: 200,
-         tabsize: 2,
-         codemirror: {
-         theme: 'monokai'
-         }
-         });
-         $('#productsuppliers-specification').summernote({
-         height: 200,
-         tabsize: 2,
-         codemirror: {
-         theme: 'monokai'
-         }
-         });
-         }
-         $('#summernote-boxed').switcher({
-         on_state_content: '<span class="fa fa-check" style="font-size:11px;"></span>',
-         off_state_content: '<span class="fa fa-times" style="font-size:11px;"></span>'
-         });
-         $('#summernote-boxed').on($('html').hasClass('ie8') ? "propertychange" : "change", function () {
-         var $panel = $(this).parents('.panel');
-         if ($(this).is(':checked')) {
-         $panel.find('.panel-body').addClass('no-padding');
-         $panel.find('.panel-body > *').addClass('no-border');
-         } else {
-         $panel.find('.panel-body').removeClass('no-padding');
-         $panel.find('.panel-body > *').removeClass('no-border');
-         }
-         });
-         });
-         */
+        init.push(function () {
+            if (!$('html').hasClass('ie8')) {
+                $('#productsuppliers-shortdescription').summernote({
+                    height: 200,
+                    tabsize: 2,
+                    codemirror: {
+                        theme: 'monokai'
+                    }
+                });
+                $('#productsuppliers-description').summernote({
+                    height: 200,
+                    tabsize: 2,
+                    codemirror: {
+                        theme: 'monokai'
+                    }
+                });
+                $('#productsuppliers-specification').summernote({
+                    height: 200,
+                    tabsize: 2,
+                    codemirror: {
+                        theme: 'monokai'
+                    }
+                });
+            }
+
+        });
+
     </script>
 </div>

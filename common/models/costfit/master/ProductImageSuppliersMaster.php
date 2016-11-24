@@ -8,7 +8,7 @@ use Yii;
 * This is the model class for table "product_image_suppliers".
 *
     * @property string $productImageId
-    * @property string $productId
+    * @property string $productSuppId
     * @property string $title
     * @property string $description
     * @property string $original_name
@@ -35,12 +35,13 @@ return 'product_image_suppliers';
 public function rules()
 {
 return [
-            [['productId', 'title', 'createDateTime'], 'required'],
-            [['productId', 'status'], 'integer'],
+            [['productSuppId', 'title', 'createDateTime'], 'required'],
+            [['productSuppId', 'status'], 'integer'],
             [['description'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 200],
-            [['original_name', 'image', 'imageThumbnail1', 'imageThumbnail2'], 'string', 'max' => 255],
+            [['original_name'], 'string', 'max' => 500],
+            [['image', 'imageThumbnail1', 'imageThumbnail2'], 'string', 'max' => 255],
         ];
 }
 
@@ -51,7 +52,7 @@ public function attributeLabels()
 {
 return [
     'productImageId' => Yii::t('product_image_suppliers', 'Product Image ID'),
-    'productId' => Yii::t('product_image_suppliers', 'Product ID'),
+    'productSuppId' => Yii::t('product_image_suppliers', 'Product Supp ID'),
     'title' => Yii::t('product_image_suppliers', 'Title'),
     'description' => Yii::t('product_image_suppliers', 'Description'),
     'original_name' => Yii::t('product_image_suppliers', 'Original Name'),

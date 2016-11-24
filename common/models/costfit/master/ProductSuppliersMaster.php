@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "product_suppliers".
 *
-    * @property string $productId
+    * @property string $productSuppId
     * @property string $userId
     * @property string $productGroupId
     * @property string $brandId
@@ -30,6 +30,8 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
+    * @property string $approve
+    * @property string $productId
 */
 class ProductSuppliersMaster extends \common\models\ModelMaster
 {
@@ -47,7 +49,7 @@ return 'product_suppliers';
 public function rules()
 {
 return [
-            [['userId', 'productGroupId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status'], 'integer'],
+            [['userId', 'productGroupId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'productId'], 'integer'],
             [['isbn', 'shortDescription', 'description', 'specification'], 'string'],
             [['title', 'createDateTime'], 'required'],
             [['width', 'height', 'depth', 'weight', 'price'], 'number'],
@@ -55,6 +57,7 @@ return [
             [['code'], 'string', 'max' => 100],
             [['title', 'optionName'], 'string', 'max' => 200],
             [['tags'], 'string', 'max' => 255],
+            [['approve'], 'string', 'max' => 10],
         ];
 }
 
@@ -64,7 +67,7 @@ return [
 public function attributeLabels()
 {
 return [
-    'productId' => Yii::t('product_suppliers', 'Product ID'),
+    'productSuppId' => Yii::t('product_suppliers', 'Product Supp ID'),
     'userId' => Yii::t('product_suppliers', 'User ID'),
     'productGroupId' => Yii::t('product_suppliers', 'Product Group ID'),
     'brandId' => Yii::t('product_suppliers', 'Brand ID'),
@@ -87,6 +90,8 @@ return [
     'status' => Yii::t('product_suppliers', 'Status'),
     'createDateTime' => Yii::t('product_suppliers', 'Create Date Time'),
     'updateDateTime' => Yii::t('product_suppliers', 'Update Date Time'),
+    'approve' => Yii::t('product_suppliers', 'Approve'),
+    'productId' => Yii::t('product_suppliers', 'Product ID'),
 ];
 }
 }

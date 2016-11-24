@@ -263,7 +263,6 @@ function suppliers(productId) {
             $('#productsuppliers-code').val(JSONObject2.code);
             $('#productsuppliers-title').val(JSONObject2.title);
             $('#productsuppliers-optionname').val(JSONObject2.optionname);
-            // summernote
             // ---- summernote ---- //
             //$('#productsuppliers-shortdescription').val(JSONObject2.shortdescription);
             $('#productsuppliers-shortdescription').summernote(
@@ -286,8 +285,8 @@ function suppliers(productId) {
             //$('#unitId').val(JSONObject2.title);
             //$('#smallUnit').val(JSONObject2.title);
             $('#productsuppliers-tags').val(JSONObject2.tags);
-            $('.form-group').find('.product-system-hidden').html('<input type="hidden" name="productIds" id="productIds" value="' + JSONObject2.productId + '"><input type="hidden" name="approve" id="approve" value="1">');
-            $('.form-group').find('.status-system-hidden').html('<h2>สถานะ : ค้นหาจาก Product System หรือ <span class="suppliers-clear-data btn btn-primary" onclick="suppliersClearData()">ต้องการเคลียร์ข้อมูลเพื่อเพิ่มใหม่</span></h2>');
+            $('.form-group').find('.product-system-hidden').html('<input type="hidden" name="productIds" id="productIds" value="' + JSONObject2.productId + '"><input type="hidden" name="approve" id="approve" value="old">');
+            $('.form-group').find('.status-system-hidden').html('<h3><code>สถานะ :</code> ค้นหาจาก Product System <code>หรือ</code> <span class="suppliers-clear-data btn btn-primary" onclick="suppliersClearData()">กดปุ่ม "เคลียร์" ต้องการเพิ่มข้อมูลใหม่</span></h3>');
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             //debugger;
@@ -303,19 +302,72 @@ function suppliersClearData() {
     $('#productsuppliers-code').val('');
     $('#productsuppliers-title').val('');
     $('#productsuppliers-optionname').val('');
-
-    $('#productsuppliers-shortdescription').val('');
-    $('#productsuppliers-description').val('');
-    $('#productsuppliers-specification').val('');
+    /// summernote //
+    $('#productsuppliers-shortdescription').summernote(
+            $("#productsuppliers-shortdescription").code('')
+            );
+    $('#productsuppliers-description').summernote(
+            $("#productsuppliers-description").code('')
+            );
+    $('#productsuppliers-specification').summernote(
+            $("#productsuppliers-specification").code('')
+            );
+    // end summernote //
+    //$('#productsuppliers-shortdescription').val('');
+    //$('#productsuppliers-description').val('');
+    //$('#productsuppliers-specification').val('');
     $('#productsuppliers-width').val('');
     $('#productsuppliers-height').val('');
     $('#productsuppliers-depth').val('');
     $('#productsuppliers-weight').val('');
     $('#productsuppliers-price').val('');
-    //$('#unitId').val(JSONObject2.title);
-    //$('#smallUnit').val(JSONObject2.title);
+    $('#unitId').val('');
+    $('#smallUnit').val('');
     $('#productsuppliers-tags').val('');
-    $('.form-group').find('.product-system-hidden').html('<input type="hidden" name="productIds" id="productIds" value=""><input type="hidden" name="approve" id="approve" value="2">');
-    $('.form-group').find('.status-system-hidden').html('<h2>สถานะ : เคลียร์ข้อมูลสำเร็จ</span></h2>');
+    $('.form-group').find('.product-system-hidden').html('<input type="hidden" name="productIds" id="productIds" value=""><input type="hidden" name="approve" id="approve" value="new">');
+    $('.form-group').find('.status-system-hidden').html('<h3><span class="text-success">สถานะ : เคลียร์ข้อมูลสำเร็จ</span></h3>');
 }
 
+
+function suppliersCreate() {
+    var productIds = $('#productIds').val();
+    var approve = $('#approve').val();
+
+    var categoryId = $('#categoryId').val();
+    var brandId = $('#brandId').val();
+    var isbn = $('#productsuppliers-isbn').val();
+    var code = $('#productsuppliers-code').val();
+    var title = $('#productsuppliers-title').val();
+    var optionname = $('#productsuppliers-optionname').val();
+    var shortdescription = $('#productsuppliers-shortdescription').code();
+    var description = $('#productsuppliers-description').code();
+    var specification = $('#productsuppliers-specification').code();
+    var width = $('#productsuppliers-width').val();
+    var height = $('#productsuppliers-height').val();
+    var depth = $('#productsuppliers-depth').val();
+    var weight = $('#productsuppliers-weight').val();
+    var price = $('#productsuppliers-price').val();
+    var unit = $('#unitId').val();
+    var smallUnit = $('#smallUnit').val();
+    var tags = $('#productsuppliers-tags').val();
+
+    $.ajax({
+        url: 'create',
+        data: {"productIds": productIds, 'approve': approve, 'categoryId': categoryId, 'brandId': brandId, 'isbn': isbn, 'code': code,
+            'title': title, 'optionname': optionname, 'shortdescription': shortdescription, 'description': description, 'specification': specification
+            , 'width': width, 'height': height, 'depth': depth, 'weight': weight, 'price': price, 'unit': unit, 'smallUnit': smallUnit, 'tags': tags,
+            'ProductSuppliers': 'ProductSuppliers'
+        },
+        type: 'post',
+        success: function (result) {
+            //alert(JSONObject2);
+            //var JSONObject2 = JSON.parse(result);
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //debugger;
+            // alert(errorThrown);
+        }
+    });
+
+}
