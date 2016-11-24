@@ -255,13 +255,15 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                                 <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
                                     <img src="<?php echo $directoryAsset ?>/demo/avatars/silhouette.jpg" alt="">
                                 <?php } ?>
-                            <!--<span> <?php //echo Yii::$app->session['firstname'];                  ?></span>-->
+                        <!--<span> <?php //echo Yii::$app->session['firstname'];                   ?></span>-->
                                 <span> <?= isset(Yii::$app->user->identity->email) ? Yii::$app->user->identity->firstname : 'Guest' ?></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="<?php echo $baseUrl ?>/profile"><span class="label label-warning pull-right">New</span>Profile</a></li>
                                 <li><a href="<?php echo $baseUrl ?>/management/account"><span class="badge badge-primary pull-right">New</span>Account</a></li>
-                                <li><a href="<?php echo $baseUrl ?>/management/settings"><i class="dropdown-icon fa fa-cog"></i>&nbsp;&nbsp;Settings</a></li>
+                                <?php if (Yii::$app->user->identity->type != 4) { ?>
+                                    <li><a href="<?php echo $baseUrl ?>/management/settings"><i class="dropdown-icon fa fa-cog"></i>&nbsp;&nbsp;Settings</a></li>
+                                <?php } ?>
                                 <li class="divider"></li>
                                 <?php if (isset(Yii::$app->user->identity->email)) { ?>
                                     <li><a href="<?php echo $baseUrl ?>/auth/auth/logout"><i class="dropdown-icon fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>

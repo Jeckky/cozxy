@@ -71,7 +71,7 @@ use common\models\costfit\Category;
                     'options' => [
                         'url' => \yii\helpers\Url::to(['upload', 'id' => $_GET['id']]),
                         'paramName' => 'image',
-                        'maxFilesize' => '200',
+                        //'maxFilesize' => '200',
                         'clickable' => true,
                         'addRemoveLinks' => true,
                         'enqueueForUpload' => true,

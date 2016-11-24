@@ -40,16 +40,16 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     //'productId',
-                    'userId',
+                    //'userId',
                     //'productGroupId',
                     [
-                        'attribute' => 'brandId',
+                        'attribute' => 'brand',
                         'value' => function($model) {
                             return isset($model->brand) ? $model->brand->title : NULL;
                         }
                     ],
                     [
-                        'attribute' => 'categoryId',
+                        'attribute' => 'category',
                         'value' => function($model) {
                             return isset($model->category) ? $model->category->title : NULL;
                         }
@@ -99,10 +99,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         }
                     ],
                     [
-                        'attribute' => 'Smart Price',
+                        'attribute' => 'Smart',
                         'format' => 'html',
                         'value' => function($model) {
-                            return Html::a('<i class="fa fa-btc"></i> เพิ่มราคาประหยัด', Yii::$app->homeUrl . "suppliers/product-suppliers/product-price?id=" . $model->productSuppId, [
+                            return Html::a('<i class="fa fa-btc"></i> เพิ่มราคาประหยัด', Yii::$app->homeUrl . "suppliers/product-price-suppliers?id=" . $model->productSuppId, [
                                 'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
                         }
                     ],

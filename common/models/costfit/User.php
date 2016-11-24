@@ -54,7 +54,7 @@ class User extends \common\models\costfit\master\UserMaster {
     public function rules() {
         return array_merge(parent::rules(), [
             ['email', 'unique'],
-            'tel' => [['tel'], 'integer'],
+            'tel' => [['tel'], 'string'],
 //            ['email', 'uniqueEmail'],
             ['email', 'email'],
 //            ['email', 'exist', 'targetAttribute' => 'username', 'targetClass' => '\common\models\cosfit\User'],
@@ -63,7 +63,7 @@ class User extends \common\models\costfit\master\UserMaster {
             ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"],
 //            ['email', 'exist']
             [
-                ['firstname', 'lastname', 'gender', 'tel', 'birthDate', 'acceptTerm'],
+                ['firstname', 'lastname', 'gender', 'tel' => [['tel'], 'integer'], 'birthDate', 'acceptTerm'],
                 'required', 'on' => 'editinfo'],
             // [['currentPassword', 'newPassword', 'rePassword'], 'required'],
             [['currentPassword', 'newPassword', 'rePassword'], 'required', 'on' => 'profile'],

@@ -10,8 +10,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use yii\imagine\Image;
+use Imagine\Gd;
 use Imagine\Image\Box;
-use Imagine\Image\Point;
+use Imagine\Image\BoxInterface;
 
 /**
  * ProductSuppliersController implements the CRUD actions for ProductSuppliers model.
@@ -154,31 +155,58 @@ class ProductSuppliersController extends SuppliersMasterController {
         $model = new \common\models\costfit\productImageSuppliers();
         //$uploadPath = Yii::getAlias('@root') . '/uploads/';
         $folderName = "ProductImageSuppliers"; //  Size 553 x 484
+        $folderThumbnail = "thumbnail"; // Size 553 x 484
         $folderThumbnail1 = "thumbnail1"; // Size 356 x 390
         $folderThumbnail2 = "thumbnail2"; // Size 137 x 130
 
         $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName;
-        $uploadPath1 = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . '/' . $folderThumbnail1;
-        $uploadPath2 = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . '/' . $folderThumbnail2;
+        $uploadPath1 = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . '/' . $folderThumbnail;
+        $uploadPath2 = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . '/' . $folderThumbnail1;
+        $uploadPath3 = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . '/' . $folderThumbnail2;
         if (isset($_FILES['image'])) {
             $file = \yii\web\UploadedFile::getInstanceByName('image');
             $original_name = $file->baseName;
             $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
-            //$newFileName1 = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
-            //$newFileName2 = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
-            if ($file->saveAs($uploadPath . '/' . $newFileName)) {
-                //Image::thumbnail('@webroot/images/ProductImageSuppliers/' . $newFileName, 137, 130)
-                // ->resize(new Box(500, 300))
-                //->save($uploadPath . '/' . $file->baseName . '.' . $file->extension, ['quality' => 70]);
-                $model->image = $newFileName;
-                $model->productSuppId = Yii::$app->request->get('id');
-                $model->original_name = $file->name;
-                if ($model->save(FALSE)) {
-                    echo \yii\helpers\Json::encode($file);
-                } else {
-                    echo \yii\helpers\Json::encode($model->getErrors());
-                }
+
+            $file->saveAs($uploadPath . '/' . $newFileName);
+            $originalFile = $uploadPath . '/' . $newFileName;
+
+            $thumbFile0 = $uploadPath . '/' . $newFileName;
+            $thumbFile1 = $uploadPath1 . '/' . $newFileName;
+            $thumbFile2 = $uploadPath2 . '/' . $newFileName;
+            $thumbFile3 = $uploadPath3 . '/' . $newFileName;
+
+            $saveThumb0 = Image::thumbnail($originalFile, 553, 484)->save($thumbFile0, ['quality' => 80]);
+            $saveThumb1 = Image::thumbnail($originalFile, 553, 484)->save($thumbFile1, ['quality' => 80]);
+            $saveThumb2 = Image::thumbnail($originalFile, 356, 390)->save($thumbFile2, ['quality' => 80]);
+            $saveThumb3 = Image::thumbnail($originalFile, 137, 130)->save($thumbFile3, ['quality' => 80]);
+
+            //mage::getImagine()->open($originalFile)->thumbnail(new Box(553, 484))->save($thumbFile1, ['quality' => 90]);
+            //$imagineObj = new \Imagine;
+            //$imageObj = $imagineObj->open($originalFile);
+            // $imageObj->resize($imageObj->getSize()->widen(400))->save($thumbFile1);
+            //
+            //Image::crop($originalFile, 200, 200, [50, 50])
+            //->save($thumbFile1, ['quality' => 80]);
+            //$obj->crop('path\to\image.jpg', 200, 200, [5, 5]);
+            //$point = new \Imagine\Image\Point(5, 5);
+            //$obj->crop('path\to\image.jpg', 200, 200, $point);
+            //if ($file->saveAs($uploadPath . '/' . $newFileName)) {
+            //$filex = $uploadPath . '/' . $newFileName;
+            //Image::thumbnail($filex, 200, 200)->save($filex, ['quality' => 80]);
+            //Image::thumbnail('@webroot/images/ProductImageSuppliers/' . $newFileName, 553, 484)
+            //->resize(new Box(553, 484))
+            //->save($uploadPath . '/' . $file->baseName . '.' . $file->extension, ['quality' => 70]);
+            //->save($uploadPath . '/' . $newFileName . '.' . $file->extension, ['quality' => 70]);
+            $model->image = $newFileName;
+            $model->productSuppId = Yii::$app->request->get('id');
+            $model->original_name = $file->name;
+            if ($model->save(FALSE)) {
+                echo \yii\helpers\Json::encode($file);
+            } else {
+                echo \yii\helpers\Json::encode($model->getErrors());
             }
+            //}
         } else {
             /* return $this->render('upload', [
               'model' => $model,

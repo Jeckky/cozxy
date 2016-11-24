@@ -56,7 +56,7 @@ use yii\jui\DatePicker;
 
         <?= $form->field($model, 'gender')->radioList(['1' => 'เพศชาย', '0' => 'เพศหญิง'])->label('เพศ') ?>
 
-        <?= $form->field($model, 'tel', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 20]) ?>
+        <?= $form->field($model, 'tel', ['options' => [ 'class' => 'row form-group']])->textInput(['maxlength' => 20, 'placeholder' => 'Phone: (999) 999-9999']) ?>
 
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
@@ -65,5 +65,19 @@ use yii\jui\DatePicker;
         </div>
     </div>
     <?php ActiveForm::end(); ?>
+    <script>
+        init.push(function () {
+            $("#user-tel").mask("(999) 999-9999");
+            // Add phone validator
+            $.validator.addMethod(
+                    "phone_format",
+                    function (value, element) {
+                        var check = false;
+                        return this.optional(element) || /^\(\d{3}\)[ ]\d{3}\-\d{4}$/.test(value);
+                    },
+                    "Invalid phone number."
+                    );
 
+        });
+    </script>
 </div>
