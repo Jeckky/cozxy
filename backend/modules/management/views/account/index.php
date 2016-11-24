@@ -6,7 +6,6 @@
 <p>
 <div class="row">
     <div class="col-sm-12">
-
         <!-- 6. $HORIZONTAL_FORM =======     Horizontal form  ========= -->
         <form action="" class="panel form-horizontal">
             <div class="panel-heading">
