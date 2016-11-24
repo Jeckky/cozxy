@@ -47,7 +47,7 @@ class ProductSuppliersController extends SuppliersMasterController {
      */
     public function actionIndex() {
         $dataProvider = new ActiveDataProvider([
-            'query' => ProductSuppliers::find(),
+            'query' => ProductSuppliers::find()->where('userId=' . Yii::$app->user->identity->userId),
         ]);
 
         return $this->render('index', [
@@ -75,53 +75,13 @@ class ProductSuppliersController extends SuppliersMasterController {
 
         $searchProducts = \common\models\costfit\Product::find()->all();
         $model = new ProductSuppliers();
-        // parameter request post //
-        $ProductSuppliers = Yii::$app->request->post('ProductSuppliers');
-        $productIds = Yii::$app->request->post('productIds');
-        $approve = Yii::$app->request->post('approve');
-        $categoryId = Yii::$app->request->post('categoryId');
-        $brandId = Yii::$app->request->post('brandId');
-        $isbn = Yii::$app->request->post('isbn');
-        $code = Yii::$app->request->post('code');
-        $title = Yii::$app->request->post('title');
-        $optionname = Yii::$app->request->post('optionname');
-        $shortdescription = Yii::$app->request->post('shortdescription');
-        $description = Yii::$app->request->post('description');
-        $specification = Yii::$app->request->post('specification');
-        $width = Yii::$app->request->post('width');
-        $height = Yii::$app->request->post('height');
-        $depth = Yii::$app->request->post('depth');
-        $weight = Yii::$app->request->post('weight');
-        $price = Yii::$app->request->post('price');
-        $unit = Yii::$app->request->post('unit');
-        $smallUnit = Yii::$app->request->post('smallUnit');
-        $tags = Yii::$app->request->post('tags');
-        //if (isset($_POST["ProductSuppliers"])) {
+
         if (isset($_POST['ProductSuppliers'])) {
-            //$model->attributes = $_POST["ProductSuppliers"];
+            $model->attributes = $_POST["ProductSuppliers"];
             $model->userId = Yii::$app->user->identity->userId;
-            //$model->productGroupId = $productGroupId;
-            $model->brandId = $brandId;
-            $model->categoryId = $categoryId;
-            $model->isbn = $isbn;
-            $model->code = $code;
-            $model->title = $title;
-            $model->optionName = $optionname;
-            $model->shortDescription = $shortdescription;
-            $model->description = $description;
-            $model->specification = $specification;
-            $model->width = $width;
-            $model->height = $height;
-            $model->depth = $depth;
-            $model->weight = $weight;
-            $model->price = $price;
-            $model->unit = $unit;
-            $model->smallUnit = $smallUnit;
-            $model->tags = $tags;
-            //$model->status = $status;
             $model->createDateTime = new \yii\db\Expression('NOW()');
-            $model->approve = $approve;
-            $model->productId = $productIds;
+            $model->approve = Yii::$app->request->post('approve');
+            $model->productId = Yii::$app->request->post('productIds');
             if ($model->save()) {
                 return $this->redirect('image-form?id=' . $model->productSuppId);
             }
@@ -142,8 +102,10 @@ class ProductSuppliersController extends SuppliersMasterController {
         $model = $this->findModel($id);
         if (isset($_POST["ProductSuppliers"])) {
             $model->attributes = $_POST["ProductSuppliers"];
-            $model->updateDateTime = new \yii\db\Expression('NOW()');
             $model->userId = Yii::$app->user->identity->userId;
+            $model->createDateTime = new \yii\db\Expression('NOW()');
+            $model->approve = Yii::$app->request->post('approve');
+            $model->productId = Yii::$app->request->post('productIds');
             if ($model->save()) {
                 return $this->redirect(['index']);
             }

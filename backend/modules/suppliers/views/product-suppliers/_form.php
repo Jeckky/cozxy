@@ -64,7 +64,7 @@ use yii\redactor\widgets\Redactor;
     </div> <!-- / .panel -->
     <?php
     $form = ActiveForm::begin([
-        'action' => '#',
+        //'action' => '#',
         'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
         'fieldConfig' => [
             'template' => '{label}<div class="col-sm-9">{input}</div>',
@@ -124,11 +124,11 @@ use yii\redactor\widgets\Redactor;
 
         <?= $form->field($model, 'optionName', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
 
-        <?= $form->field($model, 'shortDescription', ['options' => ['class' => 'row form-group']]) ?>
+        <?= $form->field($model, 'shortDescription', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
 
-        <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']]) ?>
+        <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
 
-        <?= $form->field($model, 'specification', ['options' => ['class' => 'row form-group']]) ?>
+        <?= $form->field($model, 'specification', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
 
         <?= $form->field($model, 'width', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
 
@@ -174,7 +174,7 @@ use yii\redactor\widgets\Redactor;
             </duv>
         </div>
         <div class="form-group col-sm-12 text-right">
-            <?= Html::submitButton($model->isNewRecord ? 'Next step' : 'Update', ['onclick' => 'suppliersCreate()', 'class' => $model->isNewRecord ? 'btn btn-success btn-lg' : 'btn btn-primary btn-lg']) ?>
+            <?= Html::submitButton($model->isNewRecord ? 'Next step' : 'Update', [ 'class' => $model->isNewRecord ? 'btn btn-success btn-lg' : 'btn btn-primary btn-lg']) ?>
         </div>
     </div>
     <?php ActiveForm::end(); ?>

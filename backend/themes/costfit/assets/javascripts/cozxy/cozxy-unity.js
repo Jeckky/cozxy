@@ -269,8 +269,8 @@ function suppliers(productId) {
             // ------ end kartik ------ //
             $('#productsuppliers-isbn').val(JSONObject2.isbn);
             $('#productsuppliers-code').val(JSONObject2.code);
-            $('#productsuppliers-isbn').prop('disabled', true);
-            $('#productsuppliers-code').prop('disabled', true);
+            $('#productsuppliers-isbn').prop('readonly', true);
+            $('#productsuppliers-code').prop('readonly', true);
             $('#productsuppliers-title').val(JSONObject2.title);
             $('#productsuppliers-optionname').val(JSONObject2.optionName);
             // ---- summernote ---- //
@@ -311,8 +311,8 @@ function suppliersClearData() {
     $('#productsuppliers-isbn').val('');
     $('#productsuppliers-code').val('');
     $('#productsuppliers-title').val('');
-    $('#productsuppliers-isbn').prop('disabled', false);
-    $('#productsuppliers-code').prop('disabled', false);
+    $('#productsuppliers-isbn').prop('readonly', false);
+    $('#productsuppliers-code').prop('readonly', false);
     $('#productsuppliers-optionname').val('');
     /// summernote //
     $('#productsuppliers-shortdescription').summernote(
