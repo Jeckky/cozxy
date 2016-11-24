@@ -108,9 +108,9 @@ use common\models\costfit\Category;
         </div>
         -->
         <br><br><br>
-        <div class="form-group col-sm-12 text-center">
+        <div class="form-group col-sm-12 text-right">
             <!--<button class="btn wizard-prev-step-btn  btn-lg">Prev</button>-->
-            <?= Html::submitButton($model->isNewRecord ? 'Next' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success btn-lg' : 'btn btn-primary btn-lg']) ?>
+            <?= Html::submitButton($model->isNewRecord ? 'Next step' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success btn-lg' : 'btn btn-primary btn-lg']) ?>
             <!--<button class="btn btn-primary wizard-next-step-btn  btn-lg">Finish</button>-->
         </div>
     </div>

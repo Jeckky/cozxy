@@ -209,7 +209,7 @@ class ProductSuppliersController extends SuppliersMasterController {
                 // ->resize(new Box(500, 300))
                 //->save($uploadPath . '/' . $file->baseName . '.' . $file->extension, ['quality' => 70]);
                 $model->image = $newFileName;
-                $model->productId = Yii::$app->request->get('id');
+                $model->productSuppId = Yii::$app->request->get('id');
                 $model->original_name = $file->name;
                 if ($model->save(FALSE)) {
                     echo \yii\helpers\Json::encode($file);

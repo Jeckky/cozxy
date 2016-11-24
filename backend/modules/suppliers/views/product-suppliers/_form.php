@@ -126,8 +126,6 @@ use yii\redactor\widgets\Redactor;
 
         <?= $form->field($model, 'shortDescription', ['options' => ['class' => 'row form-group']]) ?>
 
-
-
         <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']]) ?>
 
         <?= $form->field($model, 'specification', ['options' => ['class' => 'row form-group']]) ?>
@@ -180,10 +178,8 @@ use yii\redactor\widgets\Redactor;
         </div>
     </div>
     <?php ActiveForm::end(); ?>
-
-    <script>
-
-        init.push(function () {
+    <?php $this->registerJs("
+           init.push(function () {
             if (!$('html').hasClass('ie8')) {
                 $('#productsuppliers-shortdescription').summernote({
                     height: 200,
@@ -210,5 +206,6 @@ use yii\redactor\widgets\Redactor;
 
         });
 
-    </script>
+", \yii\web\View::POS_END); ?>
+
 </div>
