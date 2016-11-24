@@ -13,6 +13,13 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <div class="order-index">
+    <?php
+    if (isset($alert)) {
+        if ($alert == 'false') {
+            echo '<script type="text/javascript">alert("มีคนหยิบไปแล้ว กรุณากด Pick(ถ้ามี)")</script>';
+        }
+    }
+    ?>
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-default">
         <div class="panel-heading"  style="background-color: #ccffcc;vertical-align: middle;">
@@ -22,8 +29,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
         <div class="panel-body">
             <?php
             $form = ActiveForm::begin([
-                'method' => 'GET',
-                'action' => ['picking/index'],
+                        'method' => 'GET',
+                        'action' => ['picking/index'],
             ]);
             foreach ($selects as $select):
                 echo '<input type="hidden" name="selection[]" value="' . $select->orderId . '">';
@@ -42,9 +49,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     'class' => 'table-light'
                 ],
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                        ['class' => 'yii\grid\SerialColumn'],
                     'orderNo',
-                    [
+                        [
                         'attribute' => 'countItem',
                         'format' => 'html',
                         'value' => function($model) {
@@ -52,7 +59,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             return $countItemsArray['countItems'] . " รายการ<br>" . $countItemsArray['sumQuantity'] . " ชิ้น";
                         }
                     ],
-                    [
+                        [
                         'attribute' => 'สถานะ',
                         'format' => 'html',
                         'value' => function($model) {

@@ -3,6 +3,7 @@ RewriteEngine on
 #Rewrite on Alias delete when production
 #RewriteBase /cost.fit-test/backend/web
 #RewriteBase /cost.fit-backend
+#RewriteBase /cozxy-backend
 #RewriteBase /cost.fit/frontend/web
 # Stashed changes
 # If a directory or a file exists, use it directly
