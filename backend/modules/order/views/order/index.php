@@ -137,28 +137,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
         </div>
     </div>
     <?php Pjax::end(); ?>
-
-    <?php
-    if (isset($status) && !empty($status)) {
-        $a = $orderId;
-    } else {
-        $a = '';
-    }
-
-//Modal::begin([
-//    'header' => '<h2>' . $a . '</h2>',
-//    'headerOptions' => ['id' => 'modalHeader'],
-//    'id' => 'cityModal',
-//    'size' => 'modal-lg',
-//    'clientOptions' => ['backdrop' => 'static', 'tabindex' => '-1']
-//]);
-    ?>
-    <!--<div id="modalContent">
-        test
-    </div>-->
-    <?php
-//Modal::end();
-    ?>
 </div>
 <div class="modal fade" tabindex="-1" role="dialog" style="display: none;">
     <!--<div id="uidemo-modals-alerts-info" class="modal modal-alert modal-info fade">-->
@@ -170,9 +148,5 @@ $this->params['pageHeader'] = Html::encode($this->title);
             <div class="modal-body col-md-12 text-left" style="font-size: 12px; white-space: wrap;">
                 <div class="item col-md-12 text-left"></div>
             </div>
-            <!--            <div class="modal-footer">
-                            <button type="button" class="btn btn-info" data-dismiss="modal">OK</button>
-                        </div>-->
-        </div> <!-- / .modal-content -->
-    </div> <!-- / .modal-dialog -->
-</div>
+        </div>
+    </div>

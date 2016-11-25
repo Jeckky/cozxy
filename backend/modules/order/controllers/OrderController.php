@@ -95,9 +95,6 @@ class OrderController extends OrderMasterController {
         if (isset($_POST["Order"])) {
             $model->attributes = $_POST["Order"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-
-
-
             if ($model->save()) {
                 return $this->redirect(['index']);
             }
@@ -209,8 +206,7 @@ class OrderController extends OrderMasterController {
                     $image = \common\models\costfit\ProductImage::find()->where("productId=" . $order->productId)->one();
                     if (isset($image) && !empty($image)) {
                         $pic = $image->image;
-
-                        $unit = \common\models\costfit\Unit::find()->where("unitId=" . $order->productId)->one();
+                        $unit = \common\models\costfit\Unit::find()->where("unitId=" . $product->unit)->one();
                         if (isset($unit) && !empty($unit)) {
                             $each = $unit->title;
                         }

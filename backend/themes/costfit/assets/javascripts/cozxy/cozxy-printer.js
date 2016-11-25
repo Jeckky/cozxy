@@ -37,8 +37,8 @@ $(document).on('click', '.links', function (e) {
             // $(".tes-test").html('' + JSONObject2 + '');
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
-            //debugger;
-            // alert(errorThrown);
+            debugger;
+            alert(errorThrown);
         }
     });
 });
