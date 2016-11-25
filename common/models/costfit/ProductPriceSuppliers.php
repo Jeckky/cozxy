@@ -53,7 +53,7 @@ class ProductPriceSuppliers extends \common\models\costfit\master\ProductPriceSu
         ]);
     }
 
-    public function getDiscountTypeArray() {
+    static public function getDiscountTypeArray() {
         return [
             self::DISCOUNT_TYPE_CASH => "CASH",
             self::DISCOUNT_TYPE_PERCENT => "PERCENT",

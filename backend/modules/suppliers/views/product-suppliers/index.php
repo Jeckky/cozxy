@@ -102,7 +102,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'attribute' => 'Smart',
                         'format' => 'html',
                         'value' => function($model) {
-                            return Html::a('<i class="fa fa-btc"></i> เพิ่มราคาประหยัด', Yii::$app->homeUrl . "suppliers/product-price-suppliers?id=" . $model->productSuppId, [
+                            return Html::a('<i class="fa fa-btc"></i> เพิ่มราคาประหยัด', Yii::$app->homeUrl . "suppliers/product-price-suppliers?productSuppId=" . $model->productSuppId, [
                                 'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
                         }
                     ],

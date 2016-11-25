@@ -48,7 +48,7 @@ use common\models\costfit\ProductSuppliers;
           'class' => 'required'
           ],
           ])->label('Product Suppliers'); */
-        echo $form->field($model, 'productSuppId')->hiddenInput(['value' => $_GET['id']])->label(false);
+        echo $form->field($model, 'productSuppId')->hiddenInput(['value' => $_GET['productSuppId']])->label(false);
         ?>
         <?= $form->field($model, 'quantity', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 5]) ?>
 

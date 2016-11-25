@@ -36,13 +36,13 @@ use common\models\costfit\ShippingType;
         <?= $form->errorSummary($model) ?>
 
         <?php
-        echo $form->field($model, 'productSuppId')->hiddenInput(['value' => $_GET['id']])->label(false);
+        echo $form->field($model, 'productSuppId')->hiddenInput(['value' => $_GET['productSuppId']])->label(false);
         ?>
         <?php
         echo $form->field($model, 'shippingTypeId')->widget(kartik\select2\Select2::classname(), [
             'data' => yii\helpers\ArrayHelper::map(common\models\costfit\ShippingType::find()->all(), 'shippingTypeId', 'title'),
             'pluginOptions' => [
-                'loadingText' => '-- Select Brand --',
+                'loadingText' => '-- Select Shipping Type --',
             ],
             'options' => [
                 'placeholder' => 'Select Brand ...',
@@ -54,8 +54,8 @@ use common\models\costfit\ShippingType;
         <?//= $form->field($model, 'date', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 20]) ?>
 
         <?= $form->field($model, 'discount', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 45]) ?>
+        <?= $form->field($model, 'type', ['options' => ['class' => 'row form-group']])->dropDownList(common\models\costfit\ProductPriceSuppliers::getDiscountTypeArray(), ['prompt' => '-- Select Type --']) ?>
 
-        <?= $form->field($model, 'type', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 45]) ?>
 
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
