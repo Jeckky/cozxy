@@ -169,18 +169,17 @@ class ProductSuppliersController extends SuppliersMasterController {
             $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
 
             $file->saveAs($uploadPath . '/' . $newFileName);
-            $originalFile = $uploadPath . '/' . $newFileName;
+            $originalFile = $uploadPath . '/' . $newFileName; // riginalFile
 
             $thumbFile0 = $uploadPath . '/' . $newFileName;
             $thumbFile1 = $uploadPath1 . '/' . $newFileName;
             $thumbFile2 = $uploadPath2 . '/' . $newFileName;
             $thumbFile3 = $uploadPath3 . '/' . $newFileName;
 
-            $saveThumb0 = Image::thumbnail($originalFile, 553, 484)->save($thumbFile0, ['quality' => 80]);
-            $saveThumb1 = Image::thumbnail($originalFile, 553, 484)->save($thumbFile1, ['quality' => 80]);
-            $saveThumb2 = Image::thumbnail($originalFile, 356, 390)->save($thumbFile2, ['quality' => 80]);
-            $saveThumb3 = Image::thumbnail($originalFile, 137, 130)->save($thumbFile3, ['quality' => 80]);
-
+            //$saveThumb0 = Image::thumbnail($originalFile, 553, 484)->save($thumbFile0, ['quality' => 80]);
+            $saveThumb1 = Image::thumbnail($originalFile, 553, 484)->save($thumbFile1, ['quality' => 80]); // thumbnail file
+            $saveThumb2 = Image::thumbnail($originalFile, 356, 390)->save($thumbFile2, ['quality' => 80]); // thumbnail file
+            $saveThumb3 = Image::thumbnail($originalFile, 137, 130)->save($thumbFile3, ['quality' => 80]); // thumbnail file
             //mage::getImagine()->open($originalFile)->thumbnail(new Box(553, 484))->save($thumbFile1, ['quality' => 90]);
             //$imagineObj = new \Imagine;
             //$imageObj = $imagineObj->open($originalFile);

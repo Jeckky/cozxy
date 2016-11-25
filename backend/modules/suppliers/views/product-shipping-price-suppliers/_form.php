@@ -38,8 +38,19 @@ use common\models\costfit\ShippingType;
         <?php
         echo $form->field($model, 'productSuppId')->hiddenInput(['value' => $_GET['id']])->label(false);
         ?>
-        <?= $form->field($model, 'shippingTypeId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(ShippingType::find()->all(), 'shippingTypeId', 'title'), ['prompt' => '-- Select ShippingType --']) ?>
-
+        <?php
+        echo $form->field($model, 'shippingTypeId')->widget(kartik\select2\Select2::classname(), [
+            'data' => yii\helpers\ArrayHelper::map(common\models\costfit\ShippingType::find()->all(), 'shippingTypeId', 'title'),
+            'pluginOptions' => [
+                'loadingText' => '-- Select Brand --',
+            ],
+            'options' => [
+                'placeholder' => 'Select Brand ...',
+                'id' => 'brandId',
+                'class' => 'required'
+            ],
+        ])->label('ShippingType');
+        ?>
         <?//= $form->field($model, 'date', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 20]) ?>
 
         <?= $form->field($model, 'discount', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 45]) ?>

@@ -47,7 +47,7 @@ use yii\redactor\widgets\Redactor;
                 <?php
                 //echo '<label class="control-label">Provinces</label>';
                 echo kartik\select2\Select2::widget([
-                    'name' => 'Address[countryId] ',
+                    'name' => 'Products[countryId] ',
                     // 'value' => ['THA'], // initial value
                     'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Product::find()->all(), 'productId', 'title'),
                     'options' => ['placeholder' => 'Select Products System ...', 'id' => 'productIdSystem', 'onchange' => 'suppliers(this.value)'],

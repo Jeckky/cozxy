@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * BrandController implements the CRUD actions for Brand model.
  */
-class BrandController extends Controller {
+class BrandController extends SuppliersMasterController {
 
     public function behaviors() {
         return [
