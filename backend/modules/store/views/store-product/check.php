@@ -106,9 +106,8 @@ Pjax::begin(['id' => 'employee-grid-view']);
     </div>
 </div>
 <?php Pjax::end(); ?>
-<script>
-
-    function show(id)
+<?php
+$this->registerJS("function show(id)
     {
         //alert(id);
         $('#all' + id).show();
@@ -121,5 +120,22 @@ Pjax::begin(['id' => 'employee-grid-view']);
         $('#all' + id).hide();
         $('#notAll' + id).hide();
 
-    }
-</script>
+    }");
+?>
+<!--<script>
+
+//    function show(id)
+//    {
+//        //alert(id);
+//        $('#all' + id).show();
+//        $('#notAll' + id).show();
+//
+//    }
+//    function hide(id)
+//    {
+//        //alert(id);
+//        $('#all' + id).hide();
+//        $('#notAll' + id).hide();
+//
+//    }
+</script>-->
