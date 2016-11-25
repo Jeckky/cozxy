@@ -29,7 +29,7 @@ class ShippingController extends StoreMasterController {
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
                     // allow authenticated users
-                    [
+                        [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -49,18 +49,18 @@ class ShippingController extends StoreMasterController {
         $orderNo = Yii::$app->request->get('orderNo');
         if ($orderNo != '') {
             $query = \common\models\costfit\Order::find()
-            ->select('*')
-            ->joinWith(['orderItems'])
-            //->where("(order_item.status = 6 or order_item.status = 14) and order.orderNo = '" . $orderNo . "'"); //['order_item.status' => 6, 'order.orderNo' => $orderNo]
-            ->where("order_item.status = 13"); //['order_item.status' => 6, 'order.orderNo' => $orderNo]
+                    ->select('*')
+                    ->joinWith(['orderItems'])
+                    //->where("(order_item.status = 6 or order_item.status = 14) and order.orderNo = '" . $orderNo . "'"); //['order_item.status' => 6, 'order.orderNo' => $orderNo]
+                    ->where("order_item.status = 13"); //['order_item.status' => 6, 'order.orderNo' => $orderNo]
         } else {
             $query = \common\models\costfit\Order::find()
-            //->select("`order`.*,oi.*")
-            //->join("RIGHT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-            //->where("oi.status = 6 OR oi.status = 14");
-            ->select('*')
-            ->joinWith(['orderItems'])
-            ->where("order_item.status = 13");
+                    //->select("`order`.*,oi.*")
+                    //->join("RIGHT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
+                    //->where("oi.status = 6 OR oi.status = 14");
+                    ->select('*')
+                    ->joinWith(['orderItems'])
+                    ->where("order_item.status = 13");
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -112,8 +112,8 @@ class ShippingController extends StoreMasterController {
 
         //print_r($query);
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'ms' => $ms
+                    'dataProvider' => $dataProvider,
+                    'ms' => $ms
         ]);
 
         //return $this->render('index');
@@ -139,26 +139,26 @@ class ShippingController extends StoreMasterController {
             } else if ($order->status == 14) {
                 $ms = 'Order นี้ สแกนแล้ว'; //ไม่เจอ order กลับไปหน้า index
                 $query = \common\models\costfit\Order::find()
-                ->select('*')
-                ->joinWith(['orderItems'])
-                ->where("order_item.status = 13");
+                        ->select('*')
+                        ->joinWith(['orderItems'])
+                        ->where("order_item.status = 13");
                 $dataProvider = new ActiveDataProvider([
                     'query' => $query,]);
                 return $this->render('index', [
-                    'dataProvider' => $dataProvider,
-                    'ms' => $ms]);
+                            'dataProvider' => $dataProvider,
+                            'ms' => $ms]);
             }
         } else {
             $ms = 'ไม่พบออเดอร์นี้'; //ไม่เจอ order กลับไปหน้า index
             $query = \common\models\costfit\Order::find()
-            ->select('*')
-            ->joinWith(['orderItems'])
-            ->where("order_item.status = 13");
+                    ->select('*')
+                    ->joinWith(['orderItems'])
+                    ->where("order_item.status = 13");
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,]);
             return $this->render('index', [
-                'dataProvider' => $dataProvider,
-                'ms' => $ms]);
+                        'dataProvider' => $dataProvider,
+                        'ms' => $ms]);
         }
         $flag = false;
         if (isset($_GET['bagNo']) && !empty($_GET['bagNo'])) {
@@ -187,9 +187,9 @@ class ShippingController extends StoreMasterController {
             $this->redirect('view');
         } else {
             return $this->render('scanbag', [
-                'dataProvider' => $dataProvider,
-                'orderNo' => $orderNo,
-                'ms' => $ms
+                        'dataProvider' => $dataProvider,
+                        'orderNo' => $orderNo,
+                        'ms' => $ms
             ]);
         }
     }

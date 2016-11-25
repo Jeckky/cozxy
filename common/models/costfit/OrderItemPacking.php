@@ -117,7 +117,7 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
             $resultInPacking = OrderItemPacking::find()->where("orderItemId=" . $orderItemId . " and status=4")->all();
             if (isset($resultInPacking) && !empty($resultInPacking)) {
                 foreach ($resultInPacking as $resultIn):
-                    $totalInPacking+=$resultIn->quantity;
+                    $totalInPacking += $resultIn->quantity;
                 endforeach;
             }
             $result = $allQuantity->quantity - $totalInPacking;
@@ -126,20 +126,21 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     }
 
     static public function shipPacking($orderItemId) {
-        $orderItem = OrderItem::find()
-        ->where("orderItemId=" . $orderItemId)->one();
 
-        if ($orderItem->order->status == 13) {
+        $orderItem = OrderItem::find()
+                        ->where("orderItemId=" . $orderItemId)->one();
+        //throw new \yii\base\Exception($orderItem->order->status);
+        if ($orderItem->status == 13) {
             $status = 4;
         } else {
             $status = 5;
         }
 
         $result = OrderItemPacking::find()
-        //->distinct('order_item_packing.bagNo')
-        ->join('LEFT JOIN', 'order_item oi', 'oi.orderItemId = order_item_packing.orderItemId')
-        ->where(['oi.orderId' => $orderItem->orderId, 'order_item_packing.status' => $status])
-        ->count();
+                //->distinct('order_item_packing.bagNo')
+                ->join('LEFT JOIN', 'order_item oi', 'oi.orderItemId = order_item_packing.orderItemId')
+                ->where(['oi.orderId' => $orderItem->orderId, 'order_item_packing.status' => $status])
+                ->count();
         //throw new \yii\base\Exception($orderItemId);
         return $result;
     }
@@ -159,17 +160,17 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
 
     static public function countBagNo($bagNo) {
         $result = OrderItemPacking::find()
-        //->distinct('order_item_packing.bagNo')
-        //->join('LEFT JOIN', 'order_item oi', 'oi.orderItemId = order_item_packing.orderItemId')
-        ->where([ 'order_item_packing.bagNo' => $bagNo])
-        ->count();
+                //->distinct('order_item_packing.bagNo')
+                //->join('LEFT JOIN', 'order_item oi', 'oi.orderItemId = order_item_packing.orderItemId')
+                ->where(['order_item_packing.bagNo' => $bagNo])
+                ->count();
         return $result;
     }
 
     static public function countQuantity($bagNo) {
         $result = OrderItemPacking::find()
-        ->where(['order_item_packing.bagNo' => $bagNo])
-        ->sum('order_item_packing.quantity');
+                ->where(['order_item_packing.bagNo' => $bagNo])
+                ->sum('order_item_packing.quantity');
         return $result;
     }
 
@@ -188,7 +189,7 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
           ->groupBy(['order_item_packing.bagNo'])->one(); */
 
         $queryOrderItemPackingId = \common\models\costfit\PickingPointItems::find()
-        ->where("pickingItemsId= '" . $pickingItemsId . "' ")->one();
+                        ->where("pickingItemsId= '" . $pickingItemsId . "' ")->one();
         if (count($queryOrderItemPackingId) == 0) {
             return $queryOrderItemPackingId['pickingItemsId']; // yes
         } else {
@@ -198,9 +199,9 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
 
     static public function checkInspector($pickingItemsId) {
         $result = OrderItemPacking::find()
-        ->select('curdate(),date(shipdate) , (curdate() - date(shipdate)) AS DateOfPut , (date(updateDateTime) - date(shipdate)) AS DateOfReceive  , status ,remark ')
-        ->where(['order_item_packing.pickingItemsId' => $pickingItemsId])
-        ->one();
+                ->select('curdate(),date(shipdate) , (curdate() - date(shipdate)) AS DateOfPut , (date(updateDateTime) - date(shipdate)) AS DateOfReceive  , status ,remark ')
+                ->where(['order_item_packing.pickingItemsId' => $pickingItemsId])
+                ->one();
         return $result;
     }
 
