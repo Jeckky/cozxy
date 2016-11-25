@@ -22,7 +22,7 @@ class OrderController extends OrderMasterController {
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
                     // allow authenticated users
-                    [
+                        [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -48,7 +48,7 @@ class OrderController extends OrderMasterController {
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -61,7 +61,7 @@ class OrderController extends OrderMasterController {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
         $order = \common\models\costfit\Order::find()->where('orderId = "' . $params['id'] . '" ')
-        ->one();
+                ->one();
         return $this->render('@frontend/views/profile/purchase_order', compact('order'));
     }
 
@@ -80,7 +80,7 @@ class OrderController extends OrderMasterController {
             }
         }
         return $this->render('create', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -103,7 +103,7 @@ class OrderController extends OrderMasterController {
             }
         }
         return $this->render('update', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -154,7 +154,7 @@ class OrderController extends OrderMasterController {
         //echo $orderId;
         if (isset($params['orderId'])) {
             $order = \common\models\costfit\Order::find()->where('orderId = "' . $params['orderId'] . '" ')
-            ->one();
+                    ->one();
         } else {
             return $this->redirect(['profile/order']);
         }
@@ -186,11 +186,41 @@ class OrderController extends OrderMasterController {
             ]);
 
             return $this->render('payment', [
-                'dataProvider' => $dataProvider,
-                'order' => $order
+                        'dataProvider' => $dataProvider,
+                        'order' => $order
             ]);
         } else {
             return $this->render('@app/views/error/error');
+        }
+    }
+
+    public function actionDetail2() {
+        $orders = \common\models\costfit\OrderItem::find()->where("orderId=" . $_POST['orderId'] . " and status=" . $_POST['status'])->all();
+        $show = '';
+        $pic = '';
+        $each = '';
+        $thead = "<table class='table'><thead><th>No.</th><th>รูปภาพ</th><th>สินค้า</th><th>จำนวน</th><th>หน่วย</th></thead><tbody>";
+        $tfoot = "</tbody></table>";
+        $i = 1;
+        if (isset($orders) && !empty($orders)) {
+            foreach ($orders as $order):
+                $product = \common\models\costfit\Product::find()->where("productId=" . $order->productId)->one();
+                if (isset($product) && !empty($product)) {
+                    $image = \common\models\costfit\ProductImage::find()->where("productId=" . $order->productId)->one();
+                    if (isset($image) && !empty($image)) {
+                        $pic = $image->image;
+
+                        $unit = \common\models\costfit\Unit::find()->where("unitId=" . $order->productId)->one();
+                        if (isset($unit) && !empty($unit)) {
+                            $each = $unit->title;
+                        }
+                    }
+                    $show = $show . "<tr><td>" . $i . "</td><td><img src='" . Yii::$app->homeUrl . $pic . "' width='100px;'/></td><td>" . $product->title . "</td><td>" . $order->quantity . "</td><td>" . $each . "</td></tr>";
+                    $i++;
+                }
+            endforeach;
+            $show = $thead . $show . $tfoot;
+            return \yii\helpers\Json::encode($show);
         }
     }
 

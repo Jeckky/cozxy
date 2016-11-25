@@ -122,16 +122,16 @@ class Order extends \common\models\costfit\master\OrderMaster {
         $items = [];
         if (isset($order)) {
             foreach ($order->orderItems as $item) {
-                $total+=$item->total;
-                $quantity+=$item->quantity;
-                $totalWithoutDiacount +=$item->quantity * $item->priceOnePiece;
+                $total += $item->total;
+                $quantity += $item->quantity;
+                $totalWithoutDiacount += $item->quantity * $item->priceOnePiece;
 //                $productPrice = ProductPrice::find()->where("productId = $item->productId AND quantity = $item->quantity")->one();
                 if (isset($item->discountValue) && $item->discountValue > 0) {
-                    $totalItemDiscount+=$item->discountValue;
+                    $totalItemDiscount += $item->discountValue;
                 }
 
                 if (isset($item->shippingDiscountValue)) {
-                    $totalItemDiscount+=$item->shippingDiscountValue;
+                    $totalItemDiscount += $item->shippingDiscountValue;
                 }
                 $items[$item->orderItemId] = [
                     'orderItemId' => $item->orderItemId,
@@ -242,7 +242,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
         parent::beforeSave($insert);
         $total = 0;
         foreach ($this->orderItems as $item) {
-            $total+=$item->total;
+            $total += $item->total;
         }
         $this->totalExVat = $total * 0.93;
         $this->vat = ($total) * 0.07;
@@ -474,6 +474,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
         $arrStatus = [];
         $i = 0;
         $text = '';
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         $orders = OrderItem::find()->where("orderId=" . $orderId . " order by status")->all();
         if (isset($orders) && !empty($orders)) {
             foreach ($orders as $order):
@@ -484,7 +485,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
                 }
             endforeach;
             foreach ($arrStatus as $status):
-                $text = $text . $this->itemStatus($status) . " " . count(OrderItem::find()->where("orderId=" . $orderId . " and status=" . $status)->all()) . ' รายการ <br>';
+                $text = $text . "<a class='links' status=$status orderId=$orderId style='cursor: pointer'> " . $this->itemStatus($status) . " " . count(OrderItem::find()->where("orderId=" . $orderId . " and status=" . $status)->all()) . ' รายการ </a><br>';
             endforeach;
         }
         return $text;
@@ -547,7 +548,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
     public function search($params) {
 
         $query = \common\models\costfit\Order::find()
-        ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "");
+                ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "");
         //  and orderNo  is not null order by orderId desc
 
         $dataProvider = new ActiveDataProvider([
@@ -563,7 +564,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
         }
 
         $query->andFilterWhere(['like', 'createDateTime', $this->createDateTime])
-        ->andFilterWhere(['like', 'orderNo', $this->orderNo]);
+                ->andFilterWhere(['like', 'orderNo', $this->orderNo]);
 
         return $dataProvider;
     }
@@ -700,6 +701,14 @@ class Order extends \common\models\costfit\master\OrderMaster {
     static public function CountOrderItems($orderId) {
         $result = OrderItem::find()->where("orderId=" . $orderId . " and (status=13 or status=14)")->count();
         return $result;
+    }
+
+    public static function calculateTotal($model) {
+        $total = 0;
+        foreach ($model as $order):
+            $total += $order->summary;
+        endforeach;
+        return $total;
     }
 
 }

@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\jui\DatePicker;
 //use kartik\widgets\DatePicker;
 use yii\widgets\ActiveForm;
+use yii\grid\GridView;
+use yii\widgets\Pjax;
 
 //$this->title = 'รายงานยอดขาย';
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
@@ -17,7 +19,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
             <div class="row">
                 <div class="col-md-6"><h4>รายงานยอดขาย</h4></div>
                 <div class="col-md-6">
-                    <div class="btn-group pull-right">
+                    <div class="btn-group pull-right"><b><h4>ยอดรวม : <?= number_format(common\models\costfit\Order::calculateTotal($model), 2); ?> บาท</h4></b>
                     </div>
                 </div>
             </div>
@@ -26,8 +28,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
             <div class="row">
                 <?php
                 $form = ActiveForm::begin([
-                    'method' => 'GET',
-                    'action' => ['report/index'],
+                            'method' => 'GET',
+                            'action' => ['report/index'],
                 ]);
                 ?>
                 <div class="col-lg-3">
@@ -63,49 +65,62 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <?php ActiveForm::end(); ?>
             </div>
             <br>
-            <table class="table table-list-order">
-                <thead>
-                    <tr style="background-color: #ccffcc;text-align: center;font-weight: bold;vertical-align: central;">
-                        <td>No.</td>
-                        <td>Order No.</td>
-                        <td>Invoice No.</td>
-                        <td>Payment DateTime</td>
-                        <td>Summary (Baht/TH)</td>
-                        <td>Detail</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $i = 1;
-                    $total = 0;
-                    if (isset($model) && !empty($model)) {
-                        foreach ($model as $order):
-                            ?>
-                            <tr style="text-align: center;">
-                                <td><?= $i ?></td>
-                                <td><?= $order->orderNo ?></td>
-                                <td><?= $order->invoiceNo ?></td>
-                                <td><?= isset($order->paymentDateTime) ? $this->context->dateThai($order->paymentDateTime, 2) : NULL; ?></td>
-                                <td style="text-align: right;"><?= number_format($order->summary, 2) ?></td>
-                                <td> <?= Html::a('<i class="fa fa-eye" aria-hidden="true"> รายละเอียด</i>', Yii::$app->homeUrl . "order/order/view/" . $order->encodeParams(['id' => $order->orderId]), ['class' => 'btn btn-success btn-sm']) ?></td>
-                            </tr>
-                            <?php
-                            $total+=$order->summary;
-                            $i++;
-                        endforeach;
-                        ?>
-                        <tr>
-                            <td colspan="4" style="text-align: right;"><b>TOTAL </b></td>
-                            <td style="text-align: right;"><b><?= number_format($total, 2) ?></b></td>
-                            <td></td>
-                        </tr>
-                        <?php
-                    }else {
-                        echo '<tr><td colspan="6" style="text-align:center;"><i> ไม่มีข้อมูล </i></td></tr>';
-                    }
-                    ?>
-                </tbody>
-            </table>
+            <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
+            <?=
+            GridView::widget([
+                'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
+                'dataProvider' => $dataProvider,
+                'pager' => [
+                    'options' => ['class' => 'pagination pagination-xs',
+                    ]
+                ],
+                'options' => [
+                    'class' => 'table-light'
+                ],
+                'columns' => [
+                        ['class' => 'yii\grid\SerialColumn',
+                        'contentOptions' => ['style' => 'text-align:center'],
+                    ],
+                        ['attribute' => 'orderNo',
+                        'contentOptions' => ['style' => 'text-align:center'],
+                        'value' => function($model) {
+                            return $model->orderNo;
+                        }
+                    ],
+                        ['attribute' => 'invoiceNo',
+                        'contentOptions' => ['style' => 'text-align:center'],
+                        'value' => function($model) {
+                            return $model->invoiceNo;
+                        }
+                    ],
+                        [
+                        'attribute' => 'paymentDateTime',
+                        'contentOptions' => ['style' => 'text-align:center'],
+                        'value' => function($model) {
+                            return (isset($model->paymentDateTime) && !empty($model->paymentDateTime)) ? $this->context->dateThai($model->paymentDateTime, 2) : NULL;
+                        }
+                    ],
+                    // 'createDateTime',
+                    ['attribute' => 'summary',
+                        'contentOptions' => ['style' => 'text-align:right'],
+                        'value' => function($model) {
+                            return number_format($model->summary, 2);
+                        }
+                    ],
+                        ['class' => 'yii\grid\ActionColumn',
+                        'header' => 'Detail',
+                        'contentOptions' => ['style' => 'text-align:center'],
+                        'template' => '{view}{history}',
+                        'buttons' => [
+                            'view' => function($url, $model) {
+                                return Html::a('<i class="fa fa-eye" aria-hidden="true"> รายละเอียด</i>', Yii::$app->homeUrl . "order/order/view/" . $model->encodeParams(['id' => $model->orderId]), [
+                                            'class' => 'btn btn-success btn-sm']);
+                            },]
+                    ],
+                ],
+            ]);
+            ?>
         </div>
     </div>
+    <?php Pjax::end(); ?>
 </div>

@@ -17,7 +17,7 @@ class ReportController extends ReportMasterController {
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
                     // allow authenticated users
-                    [
+                        [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -32,18 +32,29 @@ class ReportController extends ReportMasterController {
             if (isset($_GET['toDate']) && !empty($_GET['toDate'])) {
                 // throw new \yii\base\Exception($_GET['toDate']);
                 $model = Order::find()->where("date(paymentDateTime)>='" . $_GET['fromDate'] . "' and date(paymentDateTime)<='" . $_GET['toDate'] . "' and status>=5 order by paymentDateTime DESC")->all();
+                $query = Order::find()->where("date(paymentDateTime)>='" . $_GET['fromDate'] . "' and date(paymentDateTime)<='" . $_GET['toDate'] . "' and status>=5")->orderBy("paymentDateTime DESC");
             } else {
                 $model = Order::find()->where("date(paymentDateTime)>='" . $_GET['fromDate'] . "' and status>=5 order by paymentDateTime DESC")->all();
+                $query = Order::find()->where("date(paymentDateTime)>='" . $_GET['fromDate'] . "' and status>=5")->orderBy("paymentDateTime DESC");
             }
         } else {
             if (isset($_GET['toDate']) && !empty($_GET['toDate'])) {
                 $model = Order::find()->where("date(paymentDateTime)<='" . $_GET['toDate'] . "' and status>=5 order by paymentDateTime DESC")->all();
+                $query = Order::find()->where("date(paymentDateTime)<='" . $_GET['toDate'] . "' and status>=5")->orderBy("paymentDateTime DESC");
             } else {
                 $model = Order::find()->where("status>=5 order by paymentDateTime DESC")->all();
+                $query = Order::find()->where("status>=5")->orderBy("paymentDateTime DESC");
             }
         }
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
         return $this->render('index', [
-            'model' => $model
+                    'model' => $model,
+                    'dataProvider' => $dataProvider
         ]);
     }
 
