@@ -60,7 +60,6 @@ use yii\widgets\Pjax;
             <div class="panel panel-warning  ">
                 <div class="panel-heading">
                     <span class="panel-title"> <h4>  รายการรูปภาพ ของ <strong><?php echo $productTitle->title ?></strong> </h4></span>
-
                 </div>
 
                 <div class="panel-body">
@@ -173,7 +172,7 @@ use yii\widgets\Pjax;
             <h4>
                 อัพโหลดรูปภาพ.. <?php if (isset($_GET['productSuppId'])) { ?>
                     <code>
-                        รูปไม่แสดงให้กดปุ่ม ::
+                        รูปด้านบนไม่แสดงให้กดปุ่ม ::
                     </code><a class="btn btn-warning btn-sm" href="/suppliers/product-suppliers/image-form?productSuppId=<?php echo $_GET['productSuppId']; ?>">Refresh ดูรูป</a>
                 <?php } ?>
             </h4>
