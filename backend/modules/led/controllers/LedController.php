@@ -12,12 +12,14 @@ use yii\filters\VerbFilter;
 /**
  * LedController implements the CRUD actions for Led model.
  */
-class LedController extends LedMasterController {
+class LedController extends LedMasterController
+{
 
     /**
      * @inheritdoc
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
@@ -44,7 +46,8 @@ class LedController extends LedMasterController {
      * Lists all Led models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         $model = new Led();
         if (isset($_GET['Led']['start']) && isset($_GET['Led']['start']) && isset($_GET['Led']['start'])) {
@@ -101,7 +104,8 @@ class LedController extends LedMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -112,7 +116,8 @@ class LedController extends LedMasterController {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $model = new Led();
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         if (isset($_POST["Led"])) {
@@ -138,7 +143,8 @@ class LedController extends LedMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $model = $this->findModel($id);
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -156,7 +162,8 @@ class LedController extends LedMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         $this->findModel($id)->delete();
         $items = \common\models\costfit\LedItem::find()->where("ledId=" . $id)->all();
         foreach ($items as $item) {
@@ -173,7 +180,8 @@ class LedController extends LedMasterController {
      * @return Led the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id) {
+    protected function findModel($id)
+    {
         if (($model = Led::findOne($id)) !== null) {
             return $model;
         } else {
@@ -181,12 +189,39 @@ class LedController extends LedMasterController {
         }
     }
 
-    function chekIp($ip) {
+    function chekIp($ip)
+    {
         $led = Led::find()->where("ip='" . $ip . "'")->all();
         if (isset($led) and ! empty($led)) {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public function actionChangeStatus($id)
+    {
+        $model = Led::find()->where("ledId=$id")->one();
+        $model->status = $_GET["status"];
+        if ($model->save()) {
+            return $this->redirect('index');
+        }
+    }
+
+    public function actionSwitchLed($id, $status, $colorId)
+    {
+        $models = Led::find()->where("status=1")->all();
+        $color = \common\models\costfit\LedColor::find()->where("ledColorId=$colorId")->one();
+        $r = $color->r;
+        $g = $color->g;
+        $b = $color->b;
+//        throw new \yii\base\Exception(print_r($context, true));
+        foreach ($models as $item) {
+//            file_get_contents('http://' . $item->ip . "/", FALSE, $context);
+            file_get_contents('http://' . $item->ip . "?id=$id&status=$status&r=$r&g=$g&b=$b");
+//            throw new \yii\base\Exception("?id=$id&status=$status&r=$r&g=$g&b=$b");
+            $statusText = ($item->status) ? "Turn On " : "Turn Off ";
+            echo "LED " . $item->code . " " . $statusText . $item->ip . "<br>";
         }
     }
 

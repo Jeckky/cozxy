@@ -24,11 +24,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => isset($_GET['start']) ? $_GET['start'] : NULL])->label(false)
                     ?></div>
                 <div class="col-lg-1 text-right" style="margin-top: 5px;">Led End </div>
-                <div class="col-lg-1"><?= $form->field($model, 'end')->textInput([
+                <div class="col-lg-1"><?=
+                    $form->field($model, 'end')->textInput([
                         'value' => isset($_GET['end']) ? $_GET['end'] : NULL])->label(false)
                     ?></div>
                 <div class="col-lg-1 text-right" style="margin-top: 5px;">Start Ip :
-                </div><div class="col-lg-3"><?= $form->field($model, 'ip')->textInput([
+                </div><div class="col-lg-3"><?=
+                    $form->field($model, 'ip')->textInput([
                         'value' => isset($_GET['ip']) ? $_GET['ip'] : NULL])->label(false)
                     ?></div>
                 <div class="col-lg-2">
@@ -37,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         <?//= Html::a('Create Led', ['create'], ['class' => 'btn btn-success']) ?>                    </div>
                 </div>
-<?php ActiveForm::end(); ?>
+                <?php ActiveForm::end(); ?>
             </div>  <?php if (isset($_GET['msg']) && $_GET['msg'] != '') { ?>
                 <div class="row">
                     <div class="col-lg-2"></div>
@@ -47,12 +49,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     </div>
                 </div><?php }
-?>
+                ?>
         </div>
         <div class="panel-body">
             <?=
             GridView::widget([
                 'dataProvider' => $dataProvider,
+                'rowOptions' => function($model, $key, $index, $grid) {
+                    if ($model->status == 0) {
+
+                        return ['class' => 'danger'];
+                    } else {
+                        return ['class' => 'success'];
+                    }
+                },
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     //'ledId',
@@ -66,18 +76,22 @@ $this->params['breadcrumbs'][] = $this->title;
                     'code',
                     'ip',
                     'slot',
-                    'status',
+                    [
+                        'attribute' => 'status',
+                        'value' => function($model) {
+                            return ($model->status == 1) ? "ใช้งาน" : "ไม่ใช้งาน";
+                        }
+                    ],
                     // 'createDateTime',
                     // 'updateDateTime',
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
-                        'template' => '{led}{update}{delete}',
+                        'template' => '{led}{update}{delete}{active}{deactive}',
                         'buttons' => [
-
                             'led' => function ($url, $model) {
 
                                 return Html::a('<span class="btn btn-xs btn-warning " style="margin-left: 5px;
-            ">LED</span>', '../led/led-item?id=' . $model->ledId);
+            ">LED</span>', ['/led/led-item', 'id' => $model->ledId]);
                             },
                             'update' => function ($url, $model) {
                                 return Html::a('<span class="btn btn-xs btn-success" style="margin-left: 5px;
@@ -86,6 +100,16 @@ $this->params['breadcrumbs'][] = $this->title;
                             'delete' => function ($url, $model) {
                                 return Html::a('<span class="btn btn-xs btn-danger" style="margin-left: 5px;
             " >Delete</span>', 'led/delete?id=' . $model->ledId, ['data-confirm' => 'Are you sure?']);
+                            },
+                            'active' => function ($url, $model) {
+                                if ($model->status == 0)
+                                    return Html::a('<span class="btn btn-xs btn-primary" style="margin-left: 5px;
+            " >Active</span>', ['led/change-status', 'id' => $model->ledId, 'status' => 1]);
+                            },
+                            'deactive' => function ($url, $model) {
+                                if ($model->status == 1)
+                                    return Html::a('<span class="btn btn-xs btn-default" style="margin-left: 5px;
+            " >Deactive</span>', ['led/change-status', 'id' => $model->ledId, 'status' => 0]);
                             },
                         ],
                     ],

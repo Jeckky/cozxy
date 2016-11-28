@@ -7,9 +7,12 @@ use Yii;
 /**
 * This is the model class for table "led_color".
 *
-    * @property string $ledColorId
-    * @property string $ledColor
+    * @property integer $ledColorId
+    * @property integer $ledColor
     * @property string $htmlCode
+    * @property integer $r
+    * @property integer $g
+    * @property integer $b
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -31,7 +34,7 @@ public function rules()
 {
 return [
             [['ledColorId', 'ledColor', 'htmlCode'], 'required'],
-            [['ledColorId', 'ledColor', 'status'], 'integer'],
+            [['ledColorId', 'ledColor', 'r', 'g', 'b', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['htmlCode'], 'string', 'max' => 45],
         ];
@@ -46,6 +49,9 @@ return [
     'ledColorId' => Yii::t('led_color', 'Led Color ID'),
     'ledColor' => Yii::t('led_color', 'Led Color'),
     'htmlCode' => Yii::t('led_color', 'Html Code'),
+    'r' => Yii::t('led_color', 'R'),
+    'g' => Yii::t('led_color', 'G'),
+    'b' => Yii::t('led_color', 'B'),
     'status' => Yii::t('led_color', 'Status'),
     'createDateTime' => Yii::t('led_color', 'Create Date Time'),
     'updateDateTime' => Yii::t('led_color', 'Update Date Time'),

@@ -7,8 +7,8 @@ use Yii;
 /**
 * This is the model class for table "update_price".
 *
-    * @property string $updatePriceId
-    * @property string $productPriceOtherWebId
+    * @property integer $updatePriceId
+    * @property integer $productPriceOtherWebId
     * @property string $price
     * @property integer $status
     * @property string $createDateTime

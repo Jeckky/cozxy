@@ -669,4 +669,11 @@ class PickingController extends StoreMasterController {
         return $pdf->render();
     }
 
+    public function actionTest() {
+        $model = new \common\models\costfit\LedColor();
+        return $this->render('test', [
+                    'model' => $model
+        ]);
+    }
+
 }
