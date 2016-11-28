@@ -44,7 +44,7 @@ use common\models\areawow\ProductSupp;
 
         <?= (isset($model->image) && !empty($model->image)) ? Html::img(Yii::$app->homeUrl . $model->image, ['style' => 'width:150px', 'class' => 'col-lg-offset-3']) : ''; ?>
 
-        <?= $form->field($model, 'image', ['options' => ['class' => 'row form-group']])->fileInput() ?>  
+        <?= $form->field($model, 'image', ['options' => ['class' => 'row form-group']])->fileInput() ?>
 
         <?= (isset($model->image) && !empty($model->image)) ? Html::hiddenInput((new ReflectionClass($model))->getShortName() . '[imageOld]', $model->image) : ''; ?>
 
@@ -58,14 +58,14 @@ use common\models\areawow\ProductSupp;
 
         <?= $form->field($model, 'imageThumbnail2', ['options' => ['class' => 'row form-group']])->fileInput() ?>
 
-<?= (isset($model->imageThumbnail2) && !empty($model->imageThumbnail2)) ? Html::hiddenInput((new ReflectionClass($model))->getShortName() . '[imageOld]', $model->imageThumbnail2) : ''; ?>
+        <?= (isset($model->imageThumbnail2) && !empty($model->imageThumbnail2)) ? Html::hiddenInput((new ReflectionClass($model))->getShortName() . '[imageOld]', $model->imageThumbnail2) : ''; ?>
 
         <div class="form-group">
-            <div class="col-sm-9 col-sm-offset-3">
-<?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <div class="col-sm-9 col-sm-offset-3"> 
+                <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>
         </div>
     </div>
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
 
 </div>

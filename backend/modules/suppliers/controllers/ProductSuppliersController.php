@@ -4,6 +4,7 @@ namespace backend\modules\suppliers\controllers;
 
 use Yii;
 use common\models\costfit\ProductSuppliers;
+use common\models\costfit\Product;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -83,9 +84,23 @@ class ProductSuppliersController extends SuppliersMasterController {
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $model->approve = Yii::$app->request->post('approve');
             $model->productId = Yii::$app->request->post('productIds');
-            if ($model->save()) {
-                return $this->redirect('image-form?id=' . $model->productSuppId);
+            if ($model->save(FALSE)) {
+
             }
+            //ECHO 'approve :' . Yii::$app->request->post('approve');
+            //ECHO '<BR> productIds:' . Yii::$app->request->post('productIds');
+            if (Yii::$app->request->post('approve') == 'new' && Yii::$app->request->post('productIds') == '') {
+                $modelSys = new Product();
+                $modelSys->attributes = $_POST["ProductSuppliers"];
+                $modelSys->userId = Yii::$app->user->identity->userId;
+                $modelSys->createDateTime = new \yii\db\Expression('NOW()');
+                $modelSys->approve = Yii::$app->request->post('approve');
+                $modelSys->productSuppId = $model->productSuppId;
+                if ($modelSys->save(FALSE)) {
+                    //return $this->redirect('image-form?id=' . $model->productSuppId);
+                }
+            }
+            return $this->redirect('image-form?id=' . $model->productSuppId);
         } else {
             return $this->render('create', [
                 'model' => $model
@@ -144,9 +159,21 @@ class ProductSuppliersController extends SuppliersMasterController {
     }
 
     public function actionImageForm() {
-        $model = new \common\models\costfit\ProductImageSuppliers();
+        $productSuppId = Yii::$app->request->get('productSuppId');
+        if (isset($productSuppId)) {
+            //$model = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId =' . $id)->one();
+            $dataProvider = new ActiveDataProvider([
+                'query' => \common\models\costfit\ProductImageSuppliers:: find()
+                ->where('productSuppId =' . $productSuppId),
+            ]);
+            $productTitle = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $productSuppId)->one();
+        } else {
+            $dataProvider = new \common\models\costfit\ProductImageSuppliers();
+            $productTitle = NULL;
+        }
+
         return $this->render('/image-form/_form', [
-            'model' => $model
+            'dataProvider' => $dataProvider, 'productTitle' => $productTitle
         ]);
     }
 
@@ -171,20 +198,23 @@ class ProductSuppliersController extends SuppliersMasterController {
             $file->saveAs($uploadPath . '/' . $newFileName);
             $originalFile = $uploadPath . '/' . $newFileName; // originalFile
 
-            $thumbFile0 = $uploadPath . '/' . $newFileName;
+            $thumbFile0 = $uploadPath . '/' . $newFileName; // Size 553 x 484
             $thumbFile1 = $uploadPath1 . '/' . $newFileName;
-            $thumbFile2 = $uploadPath2 . '/' . $newFileName;
-            $thumbFile3 = $uploadPath3 . '/' . $newFileName;
+            $thumbFile2 = $uploadPath2 . '/' . $newFileName; // Size 356 x 390
+            $thumbFile3 = $uploadPath3 . '/' . $newFileName; // Size 137 x 130
 
-            //$saveThumb0 = Image::thumbnail($originalFile, 553, 484)->save($thumbFile0, ['quality' => 80]);
-            $saveThumb1 = Image::thumbnail($originalFile, 553, 484)->save($thumbFile1, ['quality' => 80]); // thumbnail file
+            $saveThumb0 = Image::thumbnail($originalFile, 553, 484)->save($thumbFile0, ['quality' => 80]);
+            //$saveThumb1 = Image::thumbnail($originalFile, 553, 484)->save($thumbFile1, ['quality' => 80]); // thumbnail file
             $saveThumb2 = Image::thumbnail($originalFile, 356, 390)->save($thumbFile2, ['quality' => 80]); // thumbnail file
             $saveThumb3 = Image::thumbnail($originalFile, 137, 130)->save($thumbFile3, ['quality' => 80]); // thumbnail file
             //mage::getImagine()->open($originalFile)->thumbnail(new Box(553, 484))->save($thumbFile1, ['quality' => 90]);
 
-            $model->image = $newFileName;
+            $model->image = 'images/' . $folderName . '/' . $newFileName; // Size 553 x 484
+            $model->imageThumbnail1 = 'images/' . $folderName . '/' . $folderThumbnail1 . '/' . $newFileName; // Size 356 x 390
+            $model->imageThumbnail2 = 'images/' . $folderName . '/' . $folderThumbnail2 . '/' . $newFileName; // Size 137 x 130
             $model->productSuppId = Yii::$app->request->get('id');
-            $model->original_name = $file->name;
+            //$model->original_name = $file->name;
+            $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save(FALSE)) {
                 echo \yii\helpers\Json::encode($file);
             } else {

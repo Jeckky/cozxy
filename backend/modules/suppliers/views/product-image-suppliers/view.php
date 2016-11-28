@@ -17,46 +17,38 @@ $this->params['pageHeader'] = Html::encode($this->title);
         <div class="panel-heading">
             <span class="panel-title">With buttons</span>
             <div class="panel-heading-controls">
-                <?= Html::a('Update', ['update', 'id' => $model->productImageId], ['class' => 'btn btn-xs btn-primary btn-outline']) ?>
-                <?= Html::a('Delete', ['delete', 'id' => $model->productImageId], [
-                'class' => 'btn btn-xs btn-outline btn-danger',
-                'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-                ],
-                ]) ?>
+                <a href="/suppliers/product-suppliers/image-form?productSuppId=<?php echo $_GET['productSuppId']; ?>">กลับหน้าหลัก</a>
             </div> <!-- / .panel-heading-controls -->
         </div> <!-- / .panel-heading -->
         <div class="panel-body">
-            <?= DetailView::widget([
-            'model' => $model,
-            'attributes' => [
-            					'productImageId',
-					'productSuppId',
-					'title',
-					'description:ntext',
-					'original_name',
-					[
-'attribute'=>'image',
-'value'=>Yii::$app->homeUrl.$model->image,
-'format' => ['image',['width'=>'100','height'=>'100']], 
-],
-					[
-'attribute'=>'imageThumbnail1',
-'value'=>Yii::$app->homeUrl.$model->imageThumbnail1,
-'format' => ['image',['width'=>'100','height'=>'100']], 
-],
-					[
-'attribute'=>'imageThumbnail2',
-'value'=>Yii::$app->homeUrl.$model->imageThumbnail2,
-'format' => ['image',['width'=>'100','height'=>'100']], 
-],
-					'status',
-					'createDateTime',
-					'updateDateTime',
-            ],
-            ]) ?>
-                    </div>
+            <?=
+            DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    //'productImageId',
+                    //'productSuppId',
+                    //'title',
+                    //'description:ntext',
+                    //'original_name',
+                    [
+                        'attribute' => 'image',
+                        'value' => Yii::$app->homeUrl . $model->image,
+                        'format' => ['image', ['width' => '553', 'height' => '484']],
+                    ],
+                    [
+                        'attribute' => 'imageThumbnail1',
+                        'value' => Yii::$app->homeUrl . $model->imageThumbnail1,
+                        'format' => ['image', ['width' => '356', 'height' => '390']],
+                    ],
+                    [
+                        'attribute' => 'imageThumbnail2',
+                        'value' => Yii::$app->homeUrl . $model->imageThumbnail2,
+                        'format' => ['image', ['width' => '137', 'height' => '130']],
+                    ],
+                ],
+            ])
+            ?>
+        </div>
     </div>
 
 </div>

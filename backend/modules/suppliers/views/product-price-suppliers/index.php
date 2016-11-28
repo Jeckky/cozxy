@@ -12,7 +12,9 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <div class="product-price-suppliers-index">
-
+    <div class="panel-heading-controls">
+        <a href="/suppliers/product-suppliers">กลับหน้าหลัก</a>
+    </div> <!-- / .panel-heading-controls -->
 
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-default">
@@ -21,6 +23,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <div class="col-md-6"><?= $this->title ?></div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
+                        <?= Html::a('<i class=\'fa fa-angle-left\'></i><i class=\'fa fa-angle-left\'></i> Back To Product Suppliers', ['/suppliers/product-suppliers'], ['class' => 'btn btn-warning btn-xs']) ?>
                         <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Product Price Suppliers', ['create?productSuppId=' . $_GET["productSuppId"]], ['class' => 'btn btn-success btn-xs']) ?>
                     </div>
                 </div>
@@ -84,6 +87,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <div class="col-md-6">Product Shipping Price Suppliers</div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
+                        <?= Html::a('<i class=\'fa fa-angle-left\'></i><i class=\'fa fa-angle-left\'></i> Back To Product Suppliers', ['/suppliers/product-suppliers'], ['class' => 'btn btn-warning btn-xs']) ?>
                         <?= Html::a('<i class = \'glyphicon glyphicon-plus\'></i> Create Product Shipping Price Suppliers', ['product-shipping-price-suppliers/create?productSuppId=' . $_GET["productSuppId"]], ['class' => 'btn btn-success btn-xs']) ?>
                     </div>
                 </div>

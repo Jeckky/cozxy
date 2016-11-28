@@ -16,6 +16,7 @@ use Yii;
     * @property string $imageThumbnail1
     * @property string $imageThumbnail2
     * @property integer $status
+    * @property integer $ordering
     * @property string $createDateTime
     * @property string $updateDateTime
 */
@@ -36,7 +37,7 @@ public function rules()
 {
 return [
             [['productSuppId', 'title', 'createDateTime'], 'required'],
-            [['productSuppId', 'status'], 'integer'],
+            [['productSuppId', 'status', 'ordering'], 'integer'],
             [['description'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 200],
@@ -60,6 +61,7 @@ return [
     'imageThumbnail1' => Yii::t('product_image_suppliers', 'Image Thumbnail1'),
     'imageThumbnail2' => Yii::t('product_image_suppliers', 'Image Thumbnail2'),
     'status' => Yii::t('product_image_suppliers', 'Status'),
+    'ordering' => Yii::t('product_image_suppliers', 'Ordering'),
     'createDateTime' => Yii::t('product_image_suppliers', 'Create Date Time'),
     'updateDateTime' => Yii::t('product_image_suppliers', 'Update Date Time'),
 ];
