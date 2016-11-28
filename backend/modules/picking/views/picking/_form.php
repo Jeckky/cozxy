@@ -40,7 +40,7 @@ use kartik\widgets\Select2;
 
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($model, 'description')->textInput(['maxlength' => true])->widget(\yii\redactor\widgets\Redactor::className()) ?>
+            <?= $form->field($model, 'description')->textInput(['maxlength' => true])->textArea(['rows' => '6']) ?>
 
             <?//= $form->field($model, 'countryId')->textInput(['maxlength' => true]) ?>
             <?php
@@ -84,3 +84,17 @@ use kartik\widgets\Select2;
         </div>
 
     </div>
+    <?php $this->registerJs("
+           init.push(function () {
+            if (!$('html').hasClass('ie8')) {
+                $('#pickingpoint-description').summernote({
+                    height: 200,
+                    tabsize: 2,
+                    codemirror: {
+                        theme: 'monokai'
+                    }
+                });
+            }
+        });
+
+", \yii\web\View::POS_END); ?>

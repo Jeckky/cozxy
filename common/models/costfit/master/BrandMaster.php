@@ -8,6 +8,7 @@ use Yii;
 * This is the model class for table "brand".
 *
     * @property string $brandId
+    * @property string $userId
     * @property string $title
     * @property string $description
     * @property string $image
@@ -32,9 +33,9 @@ return 'brand';
 public function rules()
 {
 return [
-            [['title', 'createDateTime'], 'required'],
+            [['userId', 'title', 'createDateTime'], 'required'],
+            [['userId', 'status', 'parentId'], 'integer'],
             [['description'], 'string'],
-            [['status', 'parentId'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 200],
             [['image'], 'string', 'max' => 255],
@@ -48,6 +49,7 @@ public function attributeLabels()
 {
 return [
     'brandId' => Yii::t('brand', 'Brand ID'),
+    'userId' => Yii::t('brand', 'User ID'),
     'title' => Yii::t('brand', 'Title'),
     'description' => Yii::t('brand', 'Description'),
     'image' => Yii::t('brand', 'Image'),

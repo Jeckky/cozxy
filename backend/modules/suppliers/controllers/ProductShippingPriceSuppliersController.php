@@ -60,8 +60,10 @@ class ProductShippingPriceSuppliersController extends SuppliersMasterController 
         if (isset($_POST["ProductShippingPriceSuppliers"])) {
             $model->attributes = $_POST["ProductShippingPriceSuppliers"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
+            $date = \common\models\costfit\ShippingType::find()->where("shippingTypeId=" . $_POST["ProductShippingPriceSuppliers"]["shippingTypeId"])->one();
+            $model->date = $date->date;
             if ($model->save()) {
-                return $this->redirect(['index']);
+                return $this->redirect(['product-price-suppliers/index?productSuppId=' . $_GET['productSuppId']]);
             }
         }
         return $this->render('create', [
@@ -80,11 +82,10 @@ class ProductShippingPriceSuppliersController extends SuppliersMasterController 
         if (isset($_POST["ProductShippingPriceSuppliers"])) {
             $model->attributes = $_POST["ProductShippingPriceSuppliers"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-
-
-
+            $date = \common\models\costfit\ShippingType::find()->where("shippingTypeId=" . $_POST["ProductShippingPriceSuppliers"]["shippingTypeId"])->one();
+            $model->date = isset($date->date) ? $date->date : 0;
             if ($model->save()) {
-                return $this->redirect(['index']);
+                return $this->redirect(['product-price-suppliers/index?productSuppId=' . $model->productSuppId]);
             }
         }
         return $this->render('update', [
@@ -101,7 +102,7 @@ class ProductShippingPriceSuppliersController extends SuppliersMasterController 
     public function actionDelete($id) {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['product-price-suppliers/index?productSuppId=' . $_GET['productSuppId']]);
     }
 
     /**

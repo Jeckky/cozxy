@@ -65,7 +65,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
             $model->attributes = $_POST["ProductPriceSuppliers"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
-                return $this->redirect(['index']);
+                return $this->redirect(['product-price-suppliers/index?productSuppId=' . $_GET['productSuppId']]);
             }
         }
         return $this->render('create', [
@@ -84,11 +84,8 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
         if (isset($_POST["ProductPriceSuppliers"])) {
             $model->attributes = $_POST["ProductPriceSuppliers"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-
-
-
             if ($model->save()) {
-                return $this->redirect(['index']);
+                return $this->redirect(['product-price-suppliers/index?productSuppId=' . $model->productSuppId]);
             }
         }
         return $this->render('update', [
@@ -105,7 +102,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
     public function actionDelete($id) {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['product-price-suppliers/index?productSuppId=' . $_GET['productSuppId']]);
     }
 
     /**

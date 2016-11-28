@@ -169,7 +169,7 @@ class ProductSuppliersController extends SuppliersMasterController {
             $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
 
             $file->saveAs($uploadPath . '/' . $newFileName);
-            $originalFile = $uploadPath . '/' . $newFileName; // riginalFile
+            $originalFile = $uploadPath . '/' . $newFileName; // originalFile
 
             $thumbFile0 = $uploadPath . '/' . $newFileName;
             $thumbFile1 = $uploadPath1 . '/' . $newFileName;
@@ -181,22 +181,7 @@ class ProductSuppliersController extends SuppliersMasterController {
             $saveThumb2 = Image::thumbnail($originalFile, 356, 390)->save($thumbFile2, ['quality' => 80]); // thumbnail file
             $saveThumb3 = Image::thumbnail($originalFile, 137, 130)->save($thumbFile3, ['quality' => 80]); // thumbnail file
             //mage::getImagine()->open($originalFile)->thumbnail(new Box(553, 484))->save($thumbFile1, ['quality' => 90]);
-            //$imagineObj = new \Imagine;
-            //$imageObj = $imagineObj->open($originalFile);
-            // $imageObj->resize($imageObj->getSize()->widen(400))->save($thumbFile1);
-            //
-            //Image::crop($originalFile, 200, 200, [50, 50])
-            //->save($thumbFile1, ['quality' => 80]);
-            //$obj->crop('path\to\image.jpg', 200, 200, [5, 5]);
-            //$point = new \Imagine\Image\Point(5, 5);
-            //$obj->crop('path\to\image.jpg', 200, 200, $point);
-            //if ($file->saveAs($uploadPath . '/' . $newFileName)) {
-            //$filex = $uploadPath . '/' . $newFileName;
-            //Image::thumbnail($filex, 200, 200)->save($filex, ['quality' => 80]);
-            //Image::thumbnail('@webroot/images/ProductImageSuppliers/' . $newFileName, 553, 484)
-            //->resize(new Box(553, 484))
-            //->save($uploadPath . '/' . $file->baseName . '.' . $file->extension, ['quality' => 70]);
-            //->save($uploadPath . '/' . $newFileName . '.' . $file->extension, ['quality' => 70]);
+
             $model->image = $newFileName;
             $model->productSuppId = Yii::$app->request->get('id');
             $model->original_name = $file->name;

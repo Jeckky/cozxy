@@ -21,7 +21,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <div class="col-md-6"><?= $this->title ?></div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
-                        <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Product Price Suppliers', ['create?id=' . $_GET["id"]], ['class' => 'btn btn-success btn-xs']) ?>
+                        <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Product Price Suppliers', ['create?productSuppId=' . $_GET["productSuppId"]], ['class' => 'btn btn-success btn-xs']) ?>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'productPriceId',
-                    'productId',
+                    'productSuppId',
                     'quantity',
                     'price',
                     'discountType',
@@ -52,7 +52,25 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
                         'template' => '{view} {update} {delete}',
-                        'buttons' => []
+                        'buttons' => [
+                            'view' => function ($url, $model) {
+                                return Html::a('<i class="fa fa-eye"></i>', $url . '&productSuppId=' . $_GET['productSuppId'], [
+                                    'title' => Yii::t('yii', 'view'),
+                                ]);
+                            },
+                            'update' => function ($url, $model) {
+                                return Html::a('<i class="fa fa-pencil"></i>', $url . '&productSuppId=' . $_GET['productSuppId'], [
+                                    'title' => Yii::t('yii', 'update'),
+                                ]);
+                            },
+                            'delete' => function ($url, $model) {
+                                return Html::a('<i class="fa fa-trash-o"></i>', $url . '&productSuppId=' . $_GET['productSuppId'], [
+                                    'title' => Yii::t('yii', 'Delete'),
+                                    'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+                                    'data-method' => 'post',
+                                ]);
+                            },
+                        ]
                     ],
                 ],
             ]);
@@ -66,7 +84,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <div class="col-md-6">Product Shipping Price Suppliers</div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
-                        <?= Html::a('<i class = \'glyphicon glyphicon-plus\'></i> Create Product Shipping Price Suppliers', ['product-shipping-price-suppliers/create?id=' . $_GET["id"]], ['class' => 'btn btn-success btn-xs']) ?>
+                        <?= Html::a('<i class = \'glyphicon glyphicon-plus\'></i> Create Product Shipping Price Suppliers', ['product-shipping-price-suppliers/create?productSuppId=' . $_GET["productSuppId"]], ['class' => 'btn btn-success btn-xs']) ?>
                     </div>
                 </div>
             </div>
@@ -75,7 +93,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
             <?=
             GridView::widget([
                 'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
-                'dataProvider' => $dataProvider,
+                'dataProvider' => $dataProvider1,
                 'pager' => [
                     'options' => ['class' => 'pagination pagination-xs']
                 ],
@@ -96,7 +114,25 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
                         'template' => '{view} {update} {delete}',
-                        'buttons' => []
+                        'buttons' => [
+                            'view' => function ($url, $model) {
+                                return Html::a('<i class="fa fa-eye"></i>', Yii::$app->homeUrl . 'suppliers/product-shipping-price-suppliers/create?id=' . $model->productShippingPriceId . '&productSuppId=' . $_GET['productSuppId'], [
+                                    'title' => Yii::t('yii', 'view'),
+                                ]);
+                            },
+                            'update' => function ($url, $model) {
+                                return Html::a('<i class="fa fa-pencil"></i>', Yii::$app->homeUrl . 'suppliers/product-shipping-price-suppliers/update?id=' . $model->productShippingPriceId . '&productSuppId=' . $_GET['productSuppId'], [
+                                    'title' => Yii::t('yii', 'update'),
+                                ]);
+                            },
+                            'delete' => function ($url, $model) {
+                                return Html::a('<i class="fa fa-trash-o"></i>', Yii::$app->homeUrl . 'suppliers/product-shipping-price-suppliers/delete?id=' . $model->productShippingPriceId . '&productSuppId=' . $_GET['productSuppId'], [
+                                    'title' => Yii::t('yii', 'Delete'),
+                                    'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+                                    'data-method' => 'post',
+                                ]);
+                            },
+                        ]
                     ],
                 ],
             ]);
