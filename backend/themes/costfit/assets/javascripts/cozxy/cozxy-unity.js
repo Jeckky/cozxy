@@ -56,14 +56,30 @@ function pingHardware(ip, tagId, url)
         type: 'POST',
         dataType: 'JSON',
         url: url,
+        async: true,
         data: {ip: ip},
         success: function (data) {
             if (data.status)
             {
+//                $('.' + tagId).removeClass('label-success');
                 $('.' + tagId).addClass('label-success');
+                if (typeof (data.led) != "undefined")
+                {
+                    var i = 1
+                    for (var item in data.led)
+                    {
+                        if (data.led[item])
+                        {
+//                            alert(ip + "-" + i);
+                            $('.' + tagId + "-" + i).removeClass('fa fa-circle-o');
+                            $('.' + tagId + "-" + i).addClass('fa fa-circle');
+                        }
+                        i = i + 1;
+                    }
+                }
             } else
             {
-                $('.' + tagId).removeClass('label-success');
+//                $('.' + tagId).removeClass('label-tag');
             }
         }
     });

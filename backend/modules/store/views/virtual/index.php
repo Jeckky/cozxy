@@ -1,5 +1,12 @@
 <?php
 /* @var $this yii\web\View */
+$this->registerJs("
+                var flag = false;
+                setTimeout(function(){
+                if(flag){
+                    location.reload();
+                }
+                }, 10000);")
 ?>
 
 <h1>virtual/index</h1>
@@ -22,9 +29,9 @@
                     $tagId = $row->code;
                     if (isset($led)):
                         $this->registerJs("
-                                setTimeout(function(){
-                                    pingHardware('" . $led->ip . "','" . $tagId . "','" . Yii::$app->homeUrl . "store/virtual/ping-hardware" . "')
-                            }, 1000);")
+                                //setTimeout(function(){
+                                    pingHardware('" . $led->ip . "','" . $tagId . "','" . Yii::$app->homeUrl . "store/virtual/ping-hardware" . "');
+                            //}, 500);")
                         ?>
                         <?php
                         foreach ($led->ledItems as $ledItem):
@@ -68,19 +75,20 @@
                                             ?>
                                             <td id="R<?php echo $i; ?>C<?php echo $c; ?>S<?php echo $s; ?>">
                                                 <?php
-                                                $led = common\models\costfit\Led::find()->where("slot ='" . $row->code . $col->code . $slot->code . "'")->one();
+                                                $led = common\models\costfit\Led::find()->where("slot ='" . $row->code . $col->code . $slot->code . "' AND status = 1")->one();
                                                 $li = 1;
                                                 $tagId = "R" . $i . "C" . $c . "S" . $s . "-" . $li;
                                                 if (isset($led)):
                                                     $this->registerJs("
-                                                        setTimeout(function(){
-                                                            pingHardware('" . $led->ip . "','" . $tagId . "','" . Yii::$app->homeUrl . "store/virtual/ping-hardware" . "')
-                                                    }, 1000);")
+                                                        //setTimeout(function(){
+                                                            pingHardware('" . $led->ip . "','" . $tagId . "','" . Yii::$app->homeUrl . "store/virtual/ping-hardware" . "');
+                                                    //}, 500);")
                                                     ?>
                                                     <?php
-                                                    foreach ($led->ledItems as $ledItem):
+                                                    $ledItems = common\models\costfit\LedItem::find()->where("ledId=$led->ledId")->orderBy("sortOrder ASC")->all();
+                                                    foreach ($ledItems as $index => $ledItem):
                                                         ?>
-                                                        <i id="<?= $tagId ?>" class="<?= ($ledItem->status == 1) ? "fa fa-circle" : "fa fa-circle-o" ?> " style="zoom: 2;color:<?= isset($ledItem->color) ? $ledItem->ledColor->htmlCode : "#000000"; ?>"></i>
+                                                        <i id="<?= $tagId ?>" class="<?= ($ledItem->status == 1) ? "fa fa-circle $tagId-" . ($index + 1) : "fa fa-circle-o $tagId-" . ($index + 1) ?> " style = "zoom: 2;color:<?= isset($ledItem->color) ? $ledItem->ledColor->htmlCode : "#000000"; ?>"></i>
                                                         <?php
                                                         $li++;
                                                     endforeach;
@@ -105,6 +113,9 @@
                                 <?php
                                 $s--;
                             endforeach;
+                            $this->registerJs("
+                                flag = true;
+                            ")
                             ?>
 
                         </tbody>

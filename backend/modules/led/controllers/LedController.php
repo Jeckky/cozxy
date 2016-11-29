@@ -449,6 +449,8 @@ class LedController extends LedMasterController
                     $g = $color->g;
                     $b = $color->b;
                     file_get_contents('http://' . $model->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0);
+                    $item->status = 1;
+                    $item->save();
                 } else {
                     $countOpenLed = \common\models\costfit\LedItem::find()
                     ->join("LEFT JOIN", "led l", "led_item.ledId=l.ledId")
@@ -456,6 +458,8 @@ class LedController extends LedMasterController
                     ->count();
                     if ($countOpenLed == 0) {
                         file_get_contents('http://' . $model->ip . "?id=$id&status=0", NULL, NULL, 0, 0);
+                        $item->status = 0;
+                        $item->save();
                     }
                 }
             }
