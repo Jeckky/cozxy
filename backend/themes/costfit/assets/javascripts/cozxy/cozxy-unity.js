@@ -7,7 +7,7 @@ var $baseUrl = window.location.protocol + "//" + window.location.host;
 if (window.location.host == 'localhost') {
     $baseUrl = window.location.protocol + "//" + window.location.host + '/cost.fit-backend/';
 } else if (window.location.host == '192.168.100.8') {
-    //console.log($baseUrl);
+//console.log($baseUrl);
     var str = window.location.pathname;
     var res = str.split("/");
     //console.log(window.location.pathname);
@@ -120,24 +120,21 @@ function saveModal(url)
             }
         }
     });
-
 //    alert($('led').val());
 //    alert(111);
 }
 
 function show(id)
 {
-    //alert(id);
+//alert(id);
     $('#all' + id).show();
     $('#notAll' + id).show();
-
 }
 function hide(id)
 {
-    //alert(id);
+//alert(id);
     $('#all' + id).hide();
     $('#notAll' + id).hide();
-
 }
 
 // remark-chanels
@@ -148,7 +145,6 @@ $('.remark-chanels').on('click', function () {
     var pickingId = resDataBind[1];
     $(".remark-chanels-form-" + pickingItemsId).addClass("show");
 });
-
 $('.remark-chanels-ok').on('click', function () {
     var dataBind = this.getAttribute('data-bind');
     var resDataBind = dataBind.split(",");
@@ -183,7 +179,6 @@ $('.remark-chanels-ok').on('click', function () {
         alert('ระบุปัญหาที่เจอทุกครั้ง ก่อน Submit')
     }
 });
-
 $('.remark-cancel').on('click', function () {
     var dataBind = this.getAttribute('data-bind');
     var resDataBind = dataBind.split(",");
@@ -191,7 +186,6 @@ $('.remark-cancel').on('click', function () {
     var pickingId = resDataBind[1];
     $(".remark-chanels-form-" + pickingItemsId).removeClass("show");
 });
-
 $('.remark-submit').on('click', function () {
     var dataBind = this.getAttribute('data-bind');
     var resDataBind = dataBind.split(",");
@@ -210,7 +204,7 @@ $('.remark-submit').on('click', function () {
         return false;
     }
     if (desc != '' && pickingItemsId != '') {
-        // alert('OK');
+// alert('OK');
         $.ajax({
             url: 'remark-channels',
             data: {"pickingItemsId": pickingItemsId, "remarkDesc": desc, 'status': 'no', "pickingId": pickingId, 'type': type, 'orderItemPackingId': orderItemPackingId},
@@ -236,7 +230,6 @@ $('.remark-submit').on('click', function () {
         alert('ระบุปัญหาที่เจอทุกครั้ง ก่อน Submit')
     }
 });
-
 $('.test-test').on('click', function () {
     var dataBind = this.getAttribute('data-bind');
     var resDataBind = dataBind.split(",");
@@ -258,10 +251,8 @@ $('.test-test').on('click', function () {
             // alert(errorThrown);
         }
     });
-
     $('#uidemo-modals-alerts-info').modal('show');
 });
-
 function suppliers(productId) {
     $.ajax({
         url: 'products-system',
@@ -360,7 +351,6 @@ function suppliersClearData() {
 function suppliersCreate() {
     var productIds = $('#productIds').val();
     var approve = $('#approve').val();
-
     var categoryId = $('#categoryId').val();
     var brandId = $('#brandId').val();
     var isbn = $('#productsuppliers-isbn').val();
@@ -378,7 +368,6 @@ function suppliersCreate() {
     var unit = $('#unitId').val();
     var smallUnit = $('#smallUnit').val();
     var tags = $('#productsuppliers-tags').val();
-
     $.ajax({
         url: 'create',
         data: {"productIds": productIds, 'approve': approve, 'categoryId': categoryId,
@@ -400,6 +389,55 @@ function suppliersCreate() {
             // alert(errorThrown);
         }
     });
+}
+
+
+$('.switch').on('switch-change', function () {
+    console.log("inside switchchange");
+    toggleWeather();
+});
+
+function switchers(id, type, status) {
+    // alert(id);
+    //alert(type);
+    //var dataKey = this.getAttribute('data-key');
+    //alert(dataKey);
+
+    //thisdata = $(this).attr('data-key');
+    //var tableData = $('tr[data-key]').value();
+    //console.log(tableData);
+    $.ajax({
+        url: 'approve-items',
+        data: {"productSuppId": id, "type": type, 'status': status},
+        type: 'post',
+        success: function (result) {
+            //alert(result);
+            //var JSONObject2 = JSON.parse(result);
+            //$(".tes-test").html('' + JSONObject2 + '');
+            //$("tbody tr:first-child").css({backgroundColor: 'yellow', fontWeight: 'bolder'});
+            if (result == 1) {
+                $(".suppliers tbody #productSuppId-" + id).remove();
+            } else if (result == 2) {
+                //alert($(".suppliers tbody tr:first-child").attribute('data-key'));
+                $(".system tbody #productId-" + id).remove();
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //debugger;
+            //alert(errorThrown);
+        }
+    });
+
+    init.push(function () {
+        $('#switchers-colors-square .switcher > input').on('change.switcher', function (on, off, toggle) {
+            alert('Test Yes !!');
+            //console.log(on);
+        });
+    });
+    //alert($('#switchers-colors-square').find('.switcher').find(".checked"));
+
 
 }
+
+
 
