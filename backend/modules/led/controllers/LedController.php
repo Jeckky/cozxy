@@ -205,20 +205,205 @@ class LedController extends LedMasterController {
         }
     }
 
-    public function actionSwitchLed($id, $status, $colorId) {
+    public function actionOpenAllLed() {
         $models = Led::find()->where("status=1")->all();
-        $color = \common\models\costfit\LedColor::find()->where("ledColorId=$colorId")->one();
-        $r = $color->r;
-        $g = $color->g;
-        $b = $color->b;
-//        throw new \yii\base\Exception(print_r($context, true));
+
+//        throw new \yii\base\Exception(print_r($context, true));\]
         foreach ($models as $item) {
+            foreach ($item->ledItems as $index => $led) {
+                if ($led->status == 1) {
+                    continue;
+                }
+                $color = \common\models\costfit\LedColor::find()->where("ledColorId=$led->color")->one();
+                $r = $color->r;
+                $g = $color->g;
+                $b = $color->b;
+                $id = $index + 1;
 //            file_get_contents('http://' . $item->ip . "/", FALSE, $context);
-            file_get_contents('http://' . $item->ip . "?id=$id&status=$status&r=$r&g=$g&b=$b");
+                if (file_get_contents('http://' . $item->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0) !== FALSE) {
 //            throw new \yii\base\Exception("?id=$id&status=$status&r=$r&g=$g&b=$b");
-            $statusText = ($item->status) ? "Turn On " : "Turn Off ";
-            echo "LED " . $item->code . " " . $statusText . $item->ip . "<br>";
+                    $statusText = "Turn On ";
+                    $led->status = 1;
+                    $led->save();
+//                    echo "LED " . $item->code . " " . $statusText . $item->ip . "<br>";
+                    break;
+                } else {
+                    $statusText = "Turn Off ";
+//                    echo "LED " . $item->code . " " . $statusText . $item->ip . $exc->getMessage();
+                }
+            }
         }
+    }
+
+    public function actionOpenAllLedByColor($colorId) {
+        $models = Led::find()->where("status=1")->all();
+
+//        throw new \yii\base\Exception(print_r($context, true));\]
+        foreach ($models as $item) {
+            foreach ($item->ledItems as $index => $led) {
+                if ($led->status == 1) {
+                    continue;
+                }
+                $color = \common\models\costfit\LedColor::find()->where("ledColorId=$colorId")->one();
+                if ($color->ledColorId == $led->color) {
+                    $r = $color->r;
+                    $g = $color->g;
+                    $b = $color->b;
+                    $id = $index + 1;
+//            file_get_contents('http://' . $item->ip . "/", FALSE, $context);
+                    if (file_get_contents('http://' . $item->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0) !== FALSE) {
+//            throw new \yii\base\Exception("?id=$id&status=$status&r=$r&g=$g&b=$b");
+                        $statusText = "Turn On ";
+                        $led->status = 1;
+                        $led->save();
+//                        echo "LED " . $item->code . " " . $statusText . $item->ip . "<br>";
+                        break;
+                    } else {
+                        $statusText = "Turn Off ";
+//                        echo "LED " . $item->code . " " . $statusText . $item->ip . $exc->getMessage();
+                    }
+                } else {
+                    continue;
+                }
+            }
+        }
+    }
+
+    public function actionCloseAllLed() {
+        $models = Led::find()->where("status=1")->all();
+
+//        throw new \yii\base\Exception(print_r($context, true));\]
+        foreach ($models as $item) {
+            foreach ($item->ledItems as $index => $led) {
+                if ($led->status == 0) {
+                    continue;
+                }
+                $id = $index + 1;
+//            file_get_contents('http://' . $item->ip . "/", FALSE, $context);
+                if (file_get_contents('http://' . $item->ip . "?id=$id&status=0", NULL, NULL, 0, 0) !== FALSE) {
+//            throw new \yii\base\Exception("?id=$id&status=$status&r=$r&g=$g&b=$b");
+                    $statusText = "Turn Off ";
+                    $led->status = 0;
+                    $led->save();
+//                    echo "LED " . $item->code . " " . $statusText . $item->ip . "<br>";
+                } else {
+                    $statusText = "Turn On ";
+//                    echo "LED " . $item->code . " " . $statusText . $item->ip . $exc->getMessage();
+                }
+            }
+        }
+    }
+
+    public function actionCloseAllLedByColor($colorId) {
+        $models = Led::find()->where("status=1")->all();
+
+//        throw new \yii\base\Exception(print_r($context, true));\]
+        foreach ($models as $item) {
+            foreach ($item->ledItems as $index => $led) {
+                if ($led->status == 0) {
+                    continue;
+                }
+                $color = \common\models\costfit\LedColor::find()->where("ledColorId=$colorId")->one();
+                if ($color->ledColorId == $led->color) {
+                    $r = $color->r;
+                    $g = $color->g;
+                    $b = $color->b;
+                    $id = $index + 1;
+//            file_get_contents('http://' . $item->ip . "/", FALSE, $context);
+                    if (file_get_contents('http://' . $item->ip . "?id=$id&status=0&r=$r&g=$g&b=$b", NULL, NULL, 0, 0) !== FALSE) {
+//            throw new \yii\base\Exception("?id=$id&status=$status&r=$r&g=$g&b=$b");
+                        $statusText = "Turn Off ";
+                        $led->status = 0;
+                        $led->save();
+//                        echo "LED " . $item->code . " " . $statusText . $item->ip . "<br>";
+                        break;
+                    } else {
+                        $statusText = "Turn On ";
+//                        echo "LED " . $item->code . " " . $statusText . $item->ip . $exc->getMessage();
+                    }
+                } else {
+                    continue;
+                }
+            }
+        }
+    }
+
+    public function actionOpenLed($slot, $colorId) {
+        $models = Led::find()->where("status=1 AND slot in($slot)")->all();
+
+//        throw new \yii\base\Exception(print_r($context, true));\]
+        foreach ($models as $item) {
+            foreach ($item->ledItems as $index => $led) {
+                if ($led->status == 1) {
+                    continue;
+                }
+                $color = \common\models\costfit\LedColor::find()->where("ledColorId=$colorId")->one();
+                if ($color->ledColorId == $led->color) {
+                    $r = $color->r;
+                    $g = $color->g;
+                    $b = $color->b;
+                    $id = $index + 1;
+//            file_get_contents('http://' . $item->ip . "/", FALSE, $context);
+                    if (file_get_contents('http://' . $item->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0) !== FALSE) {
+//            throw new \yii\base\Exception("?id=$id&status=$status&r=$r&g=$g&b=$b");
+                        $statusText = "Turn On ";
+                        $led->status = 1;
+                        $led->save();
+//                        echo "LED " . $item->code . " " . $statusText . $item->ip . "<br>";
+                        break;
+                    } else {
+                        $statusText = "Turn Off ";
+//                        echo "LED " . $item->code . " " . $statusText . $item->ip . $exc->getMessage();
+                    }
+                } else {
+                    continue;
+                }
+            }
+        }
+    }
+
+    public function actionCloseLed($slot, $colorId) {
+        $item = Led::find()->where("status=1 AND slot='$slot'")->one();
+
+//        throw new \yii\base\Exception(print_r($context, true));\]
+        foreach ($item->ledItems as $index => $led) {
+            if ($led->status == 0) {
+                continue;
+            }
+            $color = \common\models\costfit\LedColor::find()->where("ledColorId=$colorId")->one();
+            if ($color->ledColorId == $led->color) {
+                $r = $color->r;
+                $g = $color->g;
+                $b = $color->b;
+                $id = $index + 1;
+//            file_get_contents('http://' . $item->ip . "/", FALSE, $context);
+                if (file_get_contents('http://' . $item->ip . "?id=$id&status=0&r=$r&g=$g&b=$b", NULL, NULL, 0, 0) !== FALSE) {
+//            throw new \yii\base\Exception("?id=$id&status=$status&r=$r&g=$g&b=$b");
+                    $statusText = "Turn Off ";
+                    $led->status = 0;
+                    $led->save();
+//                        echo "LED " . $item->code . " " . $statusText . $item->ip . "<br>";
+                    break;
+                } else {
+                    $statusText = "Turn On ";
+//                        echo "LED " . $item->code . " " . $statusText . $item->ip . $exc->getMessage();
+                }
+            } else {
+                continue;
+            }
+        }
+    }
+
+    public function actionGetLastState($ip) {
+        $result = [];
+        $model = Led::find()->where("status=1 AND ip='$ip'")->one();
+        $ledItems = \common\models\costfit\LedItem::find()->where("ledId=$model->ledId")->orderBy("sortOrder ASC")->all();
+        foreach ($ledItems as $index => $led) {
+            $color = \common\models\costfit\LedColor::find()->where("ledColorId=$led->color")->one();
+            $result[] = ["id" => $index + 1, "status" => $led->status, "r" => $color->r, "g" => $color->g, "b" => $color->b];
+        }
+
+        echo json_encode($result);
     }
 
 }

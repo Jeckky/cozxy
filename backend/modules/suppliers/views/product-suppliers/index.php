@@ -94,7 +94,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'attribute' => 'image',
                         'format' => 'html',
                         'value' => function($model) {
-                            return Html::a('<i class="fa fa-picture-o"></i> เพิ่มรูปภาพ', Yii::$app->homeUrl . "suppliers/product-suppliers/image-form?id=" . $model->productSuppId, [
+                            return Html::a('<i class="fa fa-picture-o"></i> เพิ่มรูปภาพ', Yii::$app->homeUrl . "suppliers/product-suppliers/image-form?productSuppId=" . $model->productSuppId, [
                                 'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
                         }
                     ],

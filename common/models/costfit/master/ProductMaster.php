@@ -30,11 +30,10 @@ use Yii;
  * @property integer $status
  * @property string $createDateTime
  * @property string $updateDateTime
-  <<<<<<< HEAD
-  =======
+
  * @property string $approve
  * @property string $productSuppId
-  >>>>>>> origin/multi-suppliers
+
  *
  * @property ProductPromotion[] $productPromotions
  */
@@ -43,23 +42,17 @@ class ProductMaster extends \common\models\ModelMaster {
     /**
      * @inheritdoc
      */
-    public static function tableName() {
-        return 'product';
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function rules() {
         return [
-                [['userId', 'productGroupId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'approve', 'productSuppId'], 'integer'],
-                [['isbn', 'shortDescription', 'description', 'specification'], 'string'],
-                [['title', 'createDateTime'], 'required'],
-                [['width', 'height', 'depth', 'weight', 'price'], 'number'],
-                [['createDateTime', 'updateDateTime'], 'safe'],
-                [['code'], 'string', 'max' => 100],
-                [['title', 'optionName'], 'string', 'max' => 200],
-                [['tags'], 'string', 'max' => 255],
+            [['userId', 'productGroupId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'productSuppId'], 'integer'],
+            [['isbn', 'shortDescription', 'description', 'specification'], 'string'],
+            [['title', 'createDateTime'], 'required'],
+            [['width', 'height', 'depth', 'weight', 'price'], 'number'],
+            [['createDateTime', 'updateDateTime'], 'safe'],
+            [['code'], 'string', 'max' => 100],
+            [['title', 'optionName'], 'string', 'max' => 200],
+            [['tags'], 'string', 'max' => 255],
+            [['approve'], 'string', 'max' => 10],
         ];
     }
 
