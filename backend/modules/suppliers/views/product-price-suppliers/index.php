@@ -111,7 +111,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     'shippingTypeId',
                     'date',
                     'discount',
-                    // 'type',
+                    'type',
                     // 'status',
                     // 'createDateTime',
                     // 'updateDateTime',

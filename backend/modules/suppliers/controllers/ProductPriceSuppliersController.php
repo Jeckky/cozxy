@@ -31,11 +31,11 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
      */
     public function actionIndex() {
         $dataProvider = new ActiveDataProvider([
-            'query' => ProductPriceSuppliers::find(),
+            'query' => ProductPriceSuppliers::find()->where('productSuppId=' . $_GET['productSuppId']),
         ]);
 
         $dataProvider1 = new ActiveDataProvider([
-            'query' => \common\models\costfit\ProductShippingPriceSuppliers::find(),
+            'query' => \common\models\costfit\ProductShippingPriceSuppliers::find()->where('productSuppId=' . $_GET['productSuppId']),
         ]);
 
         return $this->render('index', [

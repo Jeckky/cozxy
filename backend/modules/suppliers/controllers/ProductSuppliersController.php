@@ -100,7 +100,7 @@ class ProductSuppliersController extends SuppliersMasterController {
                     //return $this->redirect('image-form?id=' . $model->productSuppId);
                 }
             }
-            return $this->redirect('image-form?id=' . $model->productSuppId);
+            return $this->redirect('image-form?productSuppId=' . $model->productSuppId);
         } else {
             return $this->render('create', [
                 'model' => $model
