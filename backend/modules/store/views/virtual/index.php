@@ -55,7 +55,7 @@
                                                     <?php
                                                     foreach ($led->ledItems as $ledItem):
                                                         ?>
-                                                        <i id="<?= $tagId ?>" class="<?= ($ledItem->status == 1) ? "fa fa-circle" : "fa fa-circle-o" ?> " style="zoom: 2;color:<?= $ledItem->getColorText($ledItem->color) ?>"></i>
+                                                        <i id="<?= $tagId ?>" class="<?= ($ledItem->status == 1) ? "fa fa-circle" : "fa fa-circle-o" ?> " style="zoom: 2;color:<?= isset($ledItem->color) ? $ledItem->ledColor->htmlCode : "#000000"; ?>"></i>
                                                         <?php
                                                         $li++;
                                                     endforeach;
