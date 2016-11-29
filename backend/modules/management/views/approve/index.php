@@ -20,7 +20,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
     </div>
 
     <div class="panel-body">
-        <div class="col-sm-12">
+        <div class="col-sm-12 suppliers">
             <?=
             GridView::widget([
                 'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
@@ -31,9 +31,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 'options' => [
                     'class' => 'table-light'
                 ],
+                'rowOptions' => function ($model, $index, $widget, $grid) {
+                    return [
+                        'id' => 'productSuppId-' . $model['productSuppId']
+                    ];
+                },
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    //'productId',
+                    //'productSuppId',
                     //'userId',
                     //'productGroupId',
                     'isbn:ntext',
@@ -43,15 +48,27 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'attribute' => 'อนุมัติ',
                         'format' => 'raw',
                         'value' => function($model) {
-                            $approve_txt = '<div id="switchers-colors-square" class="form-group-margin">';
+                            $type = 'supp';
+                            $approve_txt = '<div id="switchers-colors-square" class="form-group-margin"  onchange="switchers(' . $model->productSuppId . ',1)">';
                             if ($model->approve == 'new') {
-                                $approve_txt .= '<input type="checkbox" id="switcher_4" data-class="switcher-warning">';
+                                $approve_txt .= '<input type="checkbox" data-class="switcher-warning" >';
                             } else {
-                                $approve_txt .= '<input type="checkbox" id="switcher_4" data-class="switcher-warning" checked="checked>';
+                                $approve_txt .= '<input type="checkbox" data-class="switcher-warning"   checked="checked" >';
                             }
                             $approve_txt .= '</div>';
                             return $approve_txt;
                         }
+                    ],
+                    ['class' => 'yii\grid\ActionColumn',
+                        'header' => 'Actions',
+                        'template' => '{view}',
+                        'buttons' => [
+                            'view' => function ($url, $model) {
+                                return Html::a('<i class="fa fa-eye"></i>', $url, [
+                                    'title' => Yii::t('yii', 'view'),
+                                ]);
+                            }
+                        ]
                     ],
                 ],
             ]);
@@ -66,7 +83,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
     </div>
 
     <div class="panel-body">
-        <div class="col-sm-12">
+        <div class="col-sm-12 system">
             <?=
             GridView::widget([
                 'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
@@ -77,6 +94,11 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 'options' => [
                     'class' => 'table-light'
                 ],
+                'rowOptions' => function ($model, $index, $widget, $grid) {
+                    return [
+                        'id' => 'productId-' . $model['productId']
+                    ];
+                },
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     //'productId',
@@ -89,15 +111,27 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'attribute' => 'อนุมัติ',
                         'format' => 'raw',
                         'value' => function($model) {
-                            $approve_txt = '<div id="switchers-colors-square" class="form-group-margin">';
+                            $type = 'supp';
+                            $approve_txt = '<div id="switchers-colors-square" class="form-group-margin"  onchange="switchers(' . $model->productId . ',2)">';
                             if ($model->approve == 'new') {
-                                $approve_txt .= '<input type="checkbox" name="productSys[approve]" data-class="switcher-warning" valus="approve">';
+                                $approve_txt .= '<input type="checkbox" data-class="switcher-warning" >';
                             } else {
-                                $approve_txt .= '<input type="checkbox" name="productSys[approve]"  data-class="switcher-warning" checked="checked" valus="approve">';
+                                $approve_txt .= '<input type="checkbox" data-class="switcher-warning"   checked="checked" >';
                             }
                             $approve_txt .= '</div>';
                             return $approve_txt;
                         }
+                    ],
+                    ['class' => 'yii\grid\ActionColumn',
+                        'header' => 'Actions',
+                        'template' => '{view}',
+                        'buttons' => [
+                            'view' => function ($url, $model) {
+                                return Html::a('<i class="fa fa-eye"></i>', $url, [
+                                    'title' => Yii::t('yii', 'view'),
+                                ]);
+                            }
+                        ]
                     ],
                 ],
             ]);
@@ -110,49 +144,44 @@ $this->params['pageHeader'] = Html::encode($this->title);
 <!-- Javascript -->
 <script>
     init.push(function () {
+        /*
+         // Colors
+         //$('#switchers-colors-default > input').switcher();
+         $('#switchers-colors-square > input').switcher({
+         theme: 'square',
+         });
+         //$('#switchers-colors-modern > input').switcher({theme: 'modern'});
 
-        // Colors
-        //$('#switchers-colors-default > input').switcher();
-        $('#switchers-colors-square > input').switcher({
-            theme: 'square',
-            onTurnOff: function () {
-                alert('Switcher: Turn OFF');
-            },
-            onTurnOn: function () {
-                alert('Switcher: Turn ON');
-            }
-        });
-        //$('#switchers-colors-modern > input').switcher({theme: 'modern'});
+         // Sizes
+         //$('#switchers-sizes .switcher-example-default').switcher();
+         $('#switchers-sizes .switcher-example-square').switcher({theme: 'square'});
+         //$('#switchers-sizes .switcher-example-modern').switcher({theme: 'modern'});
 
-        // Sizes
-        //$('#switchers-sizes .switcher-example-default').switcher();
-        $('#switchers-sizes .switcher-example-square').switcher({theme: 'square'});
-        //$('#switchers-sizes .switcher-example-modern').switcher({theme: 'modern'});
+         // Disabled state
+         //$('#switcher-disabled-default').switcher();
+         $('#switcher-disabled-square').switcher({theme: 'square'});
+         //$('#switcher-disabled-modern').switcher({theme: 'modern'});
 
-        // Disabled state
-        //$('#switcher-disabled-default').switcher();
-        $('#switcher-disabled-square').switcher({theme: 'square'});
-        //$('#switcher-disabled-modern').switcher({theme: 'modern'});
+         $('#switcher-enable-all').click(function () {
+         $('#switchers-disabled input').switcher('enable');
 
-        $('#switcher-enable-all').click(function () {
-            $('#switchers-disabled input').switcher('enable');
+         });
 
-        });
-
-        $('#switcher-disable-all').click(function () {
-            $('#switchers-disabled input').switcher('disable');
-        });
+         $('#switcher-disable-all').click(function () {
+         $('#switchers-disabled input').switcher('disable');
+         });
 
 
-        $('#switcher_4').switcher({
-            onTurnOff: function () {
-                alert('Switcher: Turn OFF');
-            },
-            onTurnOn: function () {
-                alert('Switcher: Turn ON');
-            }
+         */
+        $('#switchers-colors-square > input').switcher(function (e, data) {
+            alert('Test Yes !!');
         });
 
+        //alert(switcherEl.switcher('setValue', true));
+        //console.log($('#switchers-colors-square').switcher({}));
     });
+
+
+
 </script>
 <!-- / Javascript -->

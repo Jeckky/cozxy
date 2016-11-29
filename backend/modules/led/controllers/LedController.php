@@ -477,6 +477,11 @@ class LedController extends LedMasterController {
                 }
             }
         }
+        $slotArray = explode(",", $slot);
+        foreach ($slotArray as $s) {
+            $s = str_replace("'", "", $s);
+            $this->checkShelfLed($s, $colorId, 1);
+        }
     }
 
     public function actionCloseLed($slot, $colorId) {
@@ -509,6 +514,7 @@ class LedController extends LedMasterController {
                 continue;
             }
         }
+        $this->checkShelfLed($slot, $colorId, 0);
     }
 
     public function actionGetLastState($ip) {
@@ -521,6 +527,41 @@ class LedController extends LedMasterController {
         }
 
         echo json_encode($result);
+    }
+
+    public function checkShelfLed($slot, $colorId, $status) {
+        if (strlen($slot) == 2) {
+            $code = $slot;
+        } else {
+            $code = substr($slot, 0, 2);
+        }
+        $model = Led::find()->where("status=1 AND slot='$code'")->one();
+        foreach ($model->ledItems as $index => $item) {
+            $id = $index + 1;
+            if ($colorId != $item->color) {
+                continue;
+            } else {
+                if ($status) {
+                    $color = \common\models\costfit\LedColor::find()->where("ledColorId=$colorId")->one();
+                    $r = $color->r;
+                    $g = $color->g;
+                    $b = $color->b;
+                    file_get_contents('http://' . $model->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0);
+                    $item->status = 1;
+                    $item->save();
+                } else {
+                    $countOpenLed = \common\models\costfit\LedItem::find()
+                            ->join("LEFT JOIN", "led l", "led_item.ledId=l.ledId")
+                            ->where("l.slot LIKE '$code%' AND l.slot != '$code' AND led_item.status = 1")
+                            ->count();
+                    if ($countOpenLed == 0) {
+                        file_get_contents('http://' . $model->ip . "?id=$id&status=0", NULL, NULL, 0, 0);
+                        $item->status = 0;
+                        $item->save();
+                    }
+                }
+            }
+        }
     }
 
 }

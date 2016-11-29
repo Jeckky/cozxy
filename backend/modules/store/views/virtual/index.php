@@ -1,5 +1,12 @@
 <?php
 /* @var $this yii\web\View */
+$this->registerJs("
+                var flag = false;
+                setTimeout(function(){
+                if(flag){
+                    location.reload();
+                }
+                }, 10000);")
 ?>
 
 <h1>virtual/index</h1>
@@ -17,6 +24,31 @@
             <div class="panel">
                 <div class="panel-heading">
                     <span class="panel-title">ROW :<?php echo $row->code; ?></span>
+                    <?php
+                    $led = common\models\costfit\Led::find()->where("slot ='" . $row->code . "' AND status = 1")->one();
+                    $tagId = $row->code;
+                    if (isset($led)):
+                        $this->registerJs("
+                                //setTimeout(function(){
+                                    pingHardware('" . $led->ip . "','" . $tagId . "','" . Yii::$app->homeUrl . "store/virtual/ping-hardware" . "');
+                            //}, 500);")
+                        ?>
+                        <?php
+                        foreach ($led->ledItems as $ledItem):
+                            ?>
+                            <i id="<?= $tagId ?>" class="<?= ($ledItem->status == 1) ? "fa fa-circle" : "fa fa-circle-o" ?> " style="zoom: 2;color:<?= isset($ledItem->color) ? $ledItem->ledColor->htmlCode : "#000000"; ?>"></i>
+                            <?php
+                        endforeach;
+                        ?>
+                        <a href="#" class="label label-tag <?= $tagId ?>">LED : <?= $led->code ?></a>
+                        <a href="<?= Yii::$app->homeUrl . "store/virtual/remove-led-from-slot?id=" . $led->ledId ?>" class="btn btn-danger btn-xs" title="Remove LED from Slot" onclick="return confirm('คุณต้องการนำ LED <?= $led->code; ?> ออกจาก Slot')"><i class="glyphicon glyphicon-minus"></i></a>
+                    <?php else: ?>
+                        NOT Set LED
+                        <!--<a href="#" class="label label-tag">LED : NOT SET</a>-->
+                        <a href="#" onclick="showLedList('R<?php echo $i . "','" . Yii::$app->homeUrl . "store/virtual/select-led" ?>')" class="btn btn-success btn-xs" title="Add LED to Slot"><i class="fa fa-plus"></i></a>
+                    <?php
+                    endif;
+                    ?>
                 </div>
                 <div class="panel-body"  style="padding: 4px;">
                     <table class="table table-bordered">
@@ -43,19 +75,20 @@
                                             ?>
                                             <td id="R<?php echo $i; ?>C<?php echo $c; ?>S<?php echo $s; ?>">
                                                 <?php
-                                                $led = common\models\costfit\Led::find()->where("slot ='" . $row->code . $col->code . $slot->code . "'")->one();
+                                                $led = common\models\costfit\Led::find()->where("slot ='" . $row->code . $col->code . $slot->code . "' AND status = 1")->one();
                                                 $li = 1;
                                                 $tagId = "R" . $i . "C" . $c . "S" . $s . "-" . $li;
                                                 if (isset($led)):
                                                     $this->registerJs("
-                                                        setTimeout(function(){
-                                                            pingHardware('" . $led->ip . "','" . $tagId . "','" . Yii::$app->homeUrl . "store/virtual/ping-hardware" . "')
-                                                    }, 3000);")
+                                                        //setTimeout(function(){
+                                                            pingHardware('" . $led->ip . "','" . $tagId . "','" . Yii::$app->homeUrl . "store/virtual/ping-hardware" . "');
+                                                    //}, 500);")
                                                     ?>
                                                     <?php
-                                                    foreach ($led->ledItems as $ledItem):
+                                                    $ledItems = common\models\costfit\LedItem::find()->where("ledId=$led->ledId")->orderBy("sortOrder ASC")->all();
+                                                    foreach ($ledItems as $index => $ledItem):
                                                         ?>
-                                                        <i id="<?= $tagId ?>" class="<?= ($ledItem->status == 1) ? "fa fa-circle" : "fa fa-circle-o" ?> <?= $ledItem->getColorText($ledItem->color) ?>" style="zoom: 2;"></i>
+                                                        <i id="<?= $tagId ?>" class="<?= ($ledItem->status == 1) ? "fa fa-circle $tagId-" . ($index + 1) : "fa fa-circle-o $tagId-" . ($index + 1) ?> " style = "zoom: 2;color:<?= isset($ledItem->color) ? $ledItem->ledColor->htmlCode : "#000000"; ?>"></i>
                                                         <?php
                                                         $li++;
                                                     endforeach;
@@ -80,6 +113,9 @@
                                 <?php
                                 $s--;
                             endforeach;
+                            $this->registerJs("
+                                flag = true;
+                            ")
                             ?>
 
                         </tbody>
