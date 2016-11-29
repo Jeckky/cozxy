@@ -27,18 +27,16 @@ $(document).on('click', '.links', function (e) {
             var JSONObject2 = JSON.parse(data);
             $(".item").html('' + JSONObject2 + '');
             $('.modal').modal('show');
-            // window.open(url2 + '/detail?item=' + data, '_blank');
-            //window.location = url2 + "/?item='ok'&&orderId=" + orderId + "&&status=" + status;
-            // window.close();
-            //window.location = url2;
-
-            //alert(data);
-            //var JSONObject2 = JSON.parse(result);
-            // $(".tes-test").html('' + JSONObject2 + '');
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             debugger;
             alert(errorThrown);
         }
     });
+});
+$(document).on('keydown', '#ledcolor-r', function (e) {
+    var id = $(this).val();
+    if (event.keyCode < 48 || event.keyCode > 57) {
+        event.returnValue = false;
+    }
 });

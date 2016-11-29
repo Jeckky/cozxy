@@ -47,14 +47,20 @@ class Led extends \common\models\costfit\master\LedMaster {
     }
 
     public function createLedItems($ledId) {
-        for ($i = 1; $i < 6; $i++):
+        $allColor = LedColor::find()->all();
+        $i = 1;
+        foreach ($allColor as $color):
             $ledItems = new LedItem();
             $ledItems->ledId = $ledId;
-            $ledItems->color = $i;
+            $ledItems->color = $color->ledColor;
             $ledItems->sortOrder = $i;
             $ledItems->status = 0;
             $ledItems->save(false);
-        endfor;
+            $i++;
+        endforeach;
+//        for ($i = 1; $i < 6; $i++):
+//
+//        endfor;
     }
 
     public static function variableColor($slot) {

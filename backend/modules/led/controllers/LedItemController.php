@@ -24,7 +24,7 @@ class LedItemController extends LedItemMasterController {
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
                     // allow authenticated users
-                    [
+                        [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -45,7 +45,7 @@ class LedItemController extends LedItemMasterController {
      * @return mixed
      */
     public function actionIndex() {
-        $model = new LedItem();
+        // $model = new LedItem();
         $query = LedItem::find();
         $count = 0;
         if (isset($_GET['id'])) {
@@ -58,9 +58,9 @@ class LedItemController extends LedItemMasterController {
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'model' => $model,
-            'count' => $count
+                    'dataProvider' => $dataProvider,
+                    //'model' => $model,
+                    'count' => $count
         ]);
     }
 
@@ -71,7 +71,7 @@ class LedItemController extends LedItemMasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -84,7 +84,7 @@ class LedItemController extends LedItemMasterController {
 
         $model = new LedItem();
         $defultColor = ['1', '2', '3', '4', '5'];
-
+        $allColor = \common\models\costfit\LedColor::find()->all();
         $oldColor = [];
         $sort = [];
         $i = 0;
@@ -129,10 +129,11 @@ class LedItemController extends LedItemMasterController {
             }
         } else {
             return $this->render('create', [
-                'model' => $model,
-                'defultColor' => $defultColor,
-                'oldColor' => $oldColor,
-                'sort' => $sort
+                        'model' => $model,
+                        //'defultColor' => $defultColor,
+                        'oldColor' => $oldColor,
+                        'sort' => $sort,
+                        'allColor' => $allColor
             ]);
         }
     }
@@ -144,8 +145,13 @@ class LedItemController extends LedItemMasterController {
      * @return mixed
      */
     public function actionUpdate($id) {
-
-        $defultColor = ['1', '2', '3', '4', '5'];
+        $allColor = \common\models\costfit\LedColor::find()->all();
+        $c = 0;
+//        foreach ($allColor as $color):
+//            $defultColor[$c] = $color->ledColorId;
+//            $c++;
+//        endforeach;
+        //$defultColor = ['1', '2', '3', '4', '5'];
         $oldColor = [];
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         $j = 1;
@@ -168,7 +174,6 @@ class LedItemController extends LedItemMasterController {
             }
         }
         if (isset($_POST["LedItem"])) {
-            //throw new \yii\base\Exception('aaa');
             $model->color = isset($_POST['color']) ? $_POST['color'] : $model->color;
             $model->ledId = $led->ledId;
             $model->sortOrder = $_POST['LedItem']['sortOrder'];
@@ -179,10 +184,11 @@ class LedItemController extends LedItemMasterController {
             }
         } else {
             return $this->render('update', [
-                'model' => $model,
-                'defultColor' => $defultColor,
-                'oldColor' => $oldColor,
-                'sort' => $sort
+                        'model' => $model,
+                        // 'defultColor' => $defultColor,
+                        'oldColor' => $oldColor,
+                        'sort' => $sort,
+                        'allColor' => $allColor
             ]);
         }
     }

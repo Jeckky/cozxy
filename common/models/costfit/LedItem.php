@@ -16,8 +16,7 @@ use \common\models\costfit\master\LedItemMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class LedItem extends \common\models\costfit\master\LedItemMaster
-{
+class LedItem extends \common\models\costfit\master\LedItemMaster {
 
     /**
      * @inheritdoc
@@ -28,23 +27,20 @@ class LedItem extends \common\models\costfit\master\LedItemMaster
     const COLOR_PINK = 4;
     const COLOR_YELLOW = 5;
 
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
             'sortOrder' => 'ลำดับการแสดงผล',
         ]);
     }
 
-    public function getColorArray()
-    {
+    public function getColorArray() {
         return[
             self::COLOR_GREEN => ' text-success',
             self::COLOR_RED => ' text-danger',
@@ -54,8 +50,7 @@ class LedItem extends \common\models\costfit\master\LedItemMaster
         ];
     }
 
-    public function getColorText($color)
-    {
+    public function getColorText($color) {
         $res = $this->getColorArray();
         if (isset($res[$color])) {
             return $res[$color];
@@ -64,21 +59,29 @@ class LedItem extends \common\models\costfit\master\LedItemMaster
         }
     }
 
-    public function getLeds()
-    {
+    public function getLeds() {
 
         $query = new \yii\db\Query();
         $query->select('*')
-        ->from('led_item')
-        ->join('INNER JOIN', 'led', 'led.ledId = led_item.ledId')
-        ->where(['led.status' => 1])
-        ->orderBy('`led`.`ledId` asc  ,led_item.sortOrder asc ');
+                ->from('led_item')
+                ->join('INNER JOIN', 'led', 'led.ledId = led_item.ledId')
+                ->where(['led.status' => 1])
+                ->orderBy('`led`.`ledId` asc  ,led_item.sortOrder asc ');
 
         $command = $query->createCommand();
         $data = $command->queryAll();
         return $data;
 
         //return $this->hasOne(Led::className(), ['ledId' => 'ledId']);
+    }
+
+    public static function allColor($ledId) {
+        $show = '';
+        $color = LedColor::find()->where("ledColor=" . $ledId)->one();
+        if (isset($color)) {
+            $show = $color->htmlCode;
+        }
+        return $show;
     }
 
 }

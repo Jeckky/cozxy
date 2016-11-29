@@ -24,27 +24,28 @@ use yii\helpers\ArrayHelper;
         <div class="panel-body">
             <?php
             $form = ActiveForm::begin();
-            foreach ($defultColor as $defult) {
+            foreach ($allColor as $defult) {
                 $flag = true;
                 foreach ($oldColor as $old) {
-                    if ($defult == $old) {
+                    if ($defult->ledColor == $old) {
                         $flag = false;
                     }
                 }
                 if ($flag == true) {
-                    if ($defult == 1) {
-                        $showColor = '#00cc66';
-                    } else if ($defult == 2) {
-                        $showColor = '#F00';
-                    } else if ($defult == 3) {
-                        $showColor = '#003eff';
-                    } else if ($defult == 4) {
-                        $showColor = '#ff99ff';
-                    } else if ($defult == 5) {
-                        $showColor = '#ffff00';
-                    }
+                    $showColor = $defult->htmlCode;
+//                    if ($defult == 1) {
+//                        $showColor = '#00cc66';
+//                    } else if ($defult == 2) {
+//                        $showColor = '#F00';
+//                    } else if ($defult == 3) {
+//                        $showColor = '#003eff';
+//                    } else if ($defult == 4) {
+//                        $showColor = '#ff99ff';
+//                    } else if ($defult == 5) {
+//                        $showColor = '#ffff00';
+//                    }
                     ?>
-                    <div  style="background-color: <?= $showColor ?>;height: 50px;width: 300px;"><input type="radio" value="<?= $defult ?>" name="color"/></div><br>
+                    <div  style="background-color: <?= $showColor ?>;height: 50px;width: 300px;"><input type="radio" value="<?= $defult->ledColor ?>" name="color"/></div><br>
                     <?php
                 }
             }

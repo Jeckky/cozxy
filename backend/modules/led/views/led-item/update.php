@@ -14,9 +14,10 @@ $this->params['breadcrumbs'][] = 'Update';
     <?=
     $this->render('_form', [
         'model' => $model,
-        'defultColor' => $defultColor,
+        //'defultColor' => $defultColor,
         'oldColor' => $oldColor,
-        'sort' => $sort
+        'sort' => $sort,
+        'allColor' => $allColor
     ])
     ?>
 

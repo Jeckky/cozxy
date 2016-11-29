@@ -27,27 +27,30 @@ $this->params['breadcrumbs'][] = $this->title;
             GridView::widget([
                 'dataProvider' => $dataProvider,
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                        ['class' => 'yii\grid\SerialColumn'],
                     // 'ledItemId',
                     'ledId',
-                    ['attribute' => 'color',
+                        ['attribute' => 'color',
                         'format' => 'raw',
                         'value' => function($model) {
-                            if ($model->color == 1) {
-                                $show = '#00cc66';
-                            } else if ($model->color == 2) {
-                                $show = '#F00';
-                            } else if ($model->color == 3) {
-                                $show = '#003eff';
-                            } else if ($model->color == 4) {
-                                $show = '#ff99ff';
-                            } else if ($model->color == 5) {
-                                $show = '#ffff00';
-                            }
+                            //throw new Exception($model->color);
+                            $show = common\models\costfit\LedItem::allColor($model->color);
+//                            if ($model->color == 1) {
+//                                $show = '#00cc66';
+//                            } else if ($model->color == 2) {
+//                                $show = '#F00';
+//                            } else if ($model->color == 3) {
+//                                $show = '#003eff';
+//                            } else if ($model->color == 4) {
+//                                $show = '#ff99ff';
+//                            } else if ($model->color == 5) {
+//                                $show = '#ffff00';
+//                            }
+
                             return '<input type="text" style="background-color:' . $show . '" disabled="true">';
                         }
                     ],
-                    ['attribute' => 'sortOrder',
+                        ['attribute' => 'sortOrder',
                         'value' => function($model) {
                             return $model->sortOrder;
                         }
@@ -59,7 +62,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'header' => 'Actions',
                         'template' => '{update}{delete}{change}',
                         'buttons' => [
-
                             'update' => function ($url, $model) {
                                 return Html::a('<span class="btn btn-xs btn-success" style="margin-left: 5px;
             " >Edit</span>', 'led-item/update?id=' . $model->ledItemId);
@@ -68,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return Html::a('<span class="btn btn-xs btn-danger" style="margin-left: 5px;
             " >Delete</span>', 'led-item/delete?id=' . $model->ledItemId, ['data-confirm' => 'Are you sure?']);
                             },
-                                    'change' => function ($url, $model) {
+                            'change' => function ($url, $model) {
                                 if ($model->status == 0) {
                                     return Html::a('<span class="btn btn-xs btn-warning" style="margin-left: 5px;
             " >Turn on</span>', 'led-item/change?id=' . $model->ledItemId . '&&type=on');
@@ -77,11 +79,11 @@ $this->params['breadcrumbs'][] = $this->title;
             " >Turn off</span>', 'led-item/change?id=' . $model->ledItemId . '&&type=off');
                                 }
                             },
-                                ],
-                            ],
                         ],
-                    ]);
-                    ?>
+                    ],
+                ],
+            ]);
+            ?>
         </div>
     </div>
 </div>
