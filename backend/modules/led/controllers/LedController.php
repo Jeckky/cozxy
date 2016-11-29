@@ -132,11 +132,66 @@ class LedController extends LedMasterController {
         }
     }
 
+    public function actionIndexColor() {
+        $model = \common\models\costfit\LedColor::find()->all();
+        return $this->render('index_color', [
+                    'model' => $model,
+        ]);
+    }
+
     public function actionCreateColor() {
         $model = new \common\models\costfit\LedColor();
+        $r = 0;
+        $b = 0;
+        $g = 0;
+        if (isset($_POST['LedColor'])) {
+            // throw new \yii\base\Exception('a');
+            if (isset($_POST['LedColor']['r']) && !empty($_POST['LedColor']['r'])) {
+                $r = $_POST['LedColor']['r'];
+            }if (isset($_POST['LedColor']['b']) && !empty($_POST['LedColor']['b'])) {
+                $b = $_POST['LedColor']['b'];
+            }if (isset($_POST['LedColor']['g']) && !empty($_POST['LedColor']['g'])) {
+                $g = $_POST['LedColor']['g'];
+            }
+            //throw new \yii\base\Exception($b);
+            $rgb = array($r, $g, $b);
+            $hex = $this->rgb2hex($rgb);
+            $oldColor = \common\models\costfit\LedColor::find()->where("1 order by ledColor DESC")->one();
+            if (isset($oldColor)) {
+                $ledColorId = $oldColor->ledColor + 1;
+            } else {
+                $ledColorId = 1;
+            }
+            $model->ledColor = $ledColorId;
+            $model->htmlCode = $hex;
+            $model->r = $r;
+            $model->g = $g;
+            $model->b = $b;
+            $model->status = 1;
+            $model->createDateTime = new \yii\db\Expression('NOW()');
+            if ($model->save(false)) {
+                return $this->redirect('index-color');
+            } else {
+                return $this->render('create_color', [
+                            'r' => $r,
+                            'g' => $g,
+                            'b' => $b,
+                            'model' => $model,
+                ]);
+            }
+        }
         return $this->render('create_color', [
                     'model' => $model,
         ]);
+    }
+
+    public static function rgb2hex($rgb) {
+        $hex = "#";
+        $hex .= str_pad(dechex($rgb[0]), 2, "0", STR_PAD_LEFT);
+        $hex .= str_pad(dechex($rgb[1]), 2, "0", STR_PAD_LEFT);
+        $hex .= str_pad(dechex($rgb[2]), 2, "0", STR_PAD_LEFT);
+
+        return $hex;
     }
 
     /**
@@ -145,6 +200,59 @@ class LedController extends LedMasterController {
      * @param string $id
      * @return mixed
      */
+    public function actionUpdateColor($id) {
+        $model = \common\models\costfit\LedColor::find()->where("ledColorId=" . $id)->one();
+        $r = 0;
+        $b = 0;
+        $g = 0;
+        if (isset($model)) {
+            if (isset($_POST['LedColor'])) {
+                // throw new \yii\base\Exception('a');
+                if (isset($_POST['LedColor']['r']) && !empty($_POST['LedColor']['r'])) {
+                    $r = $_POST['LedColor']['r'];
+                }if (isset($_POST['LedColor']['b']) && !empty($_POST['LedColor']['b'])) {
+                    $b = $_POST['LedColor']['b'];
+                }if (isset($_POST['LedColor']['g']) && !empty($_POST['LedColor']['g'])) {
+                    $g = $_POST['LedColor']['g'];
+                }
+                //throw new \yii\base\Exception($b);
+                $rgb = array($r, $g, $b);
+                $hex = $this->rgb2hex($rgb);
+                $oldColor = \common\models\costfit\LedColor::find()->where("1 order by ledColor DESC")->one();
+                if (isset($oldColor)) {
+                    $ledColorId = $oldColor->ledColor + 1;
+                } else {
+                    $ledColorId = 1;
+                }
+                $model->ledColor = $ledColorId;
+                $model->htmlCode = $hex;
+                $model->r = $r;
+                $model->g = $g;
+                $model->b = $b;
+                $model->status = 1;
+                $model->createDateTime = new \yii\db\Expression('NOW()');
+                if ($model->save(false)) {
+                    return $this->redirect('index-color');
+                } else {
+                    return $this->render('create_color', [
+                                'r' => $r,
+                                'g' => $g,
+                                'b' => $b,
+                                'model' => $model,
+                    ]);
+                }
+            } else {
+                return $this->render('create_color', [
+                            'model' => $model,
+                ]);
+            }
+        } else {
+            return $this->render('index_color', [
+                        'model' => $model,
+            ]);
+        }
+    }
+
     public function actionUpdate($id) {
         $model = $this->findModel($id);
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
@@ -171,6 +279,15 @@ class LedController extends LedMasterController {
         }
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         return $this->redirect($baseUrl . '/led/led');
+    }
+
+    public function actionDeleteColor($id) {
+        $items = \common\models\costfit\LedColor::find()->where("ledColorId=" . $id)->one();
+        if (isset($items)) {
+            $items->delete();
+        }
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        return $this->redirect($baseUrl . '/led/led/index-color');
     }
 
     /**
