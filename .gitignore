@@ -33,3 +33,4 @@ phpunit.phar
 /.vagrant
 
 frontend/web/.htaccess
+backend/web/.htaccess
