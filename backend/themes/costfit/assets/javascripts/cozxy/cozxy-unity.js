@@ -407,7 +407,7 @@ function switchers(id, type, status) {
     //var tableData = $('tr[data-key]').value();
     //console.log(tableData);
     $.ajax({
-        url: 'approve-items',
+        url: 'approve/approve-items',
         data: {"productSuppId": id, "type": type, 'status': status},
         type: 'post',
         success: function (result) {
