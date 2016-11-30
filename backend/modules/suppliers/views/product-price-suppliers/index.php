@@ -17,8 +17,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
     <h3>
         Title :  <?php echo isset($productSupp->title) ? $productSupp->title : ''; ?>
     </h3>
+    <br>
     <div class="panel panel-default">
-
         <div class="panel-heading">
             <div class="row">
                 <div class="col-md-6"><?= $this->title ?> : ราคาขายสินค้า</div>
@@ -43,7 +43,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 ],
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    'productPriceId',
+                    //'productPriceId',
                     //'productSuppId',
                     'quantity',
                     'price',
