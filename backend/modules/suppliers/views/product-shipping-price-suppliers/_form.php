@@ -45,8 +45,8 @@ use common\models\costfit\ShippingType;
                 'loadingText' => '-- Select Shipping Type --',
             ],
             'options' => [
-                'placeholder' => 'Select Brand ...',
-                'id' => 'brandId',
+                //'placeholder' => 'Select Shipping Type ...',
+                'id' => 'shippingTypeId',
                 'class' => 'required'
             ],
         ])->label('ShippingType');
@@ -54,7 +54,7 @@ use common\models\costfit\ShippingType;
         <?//= $form->field($model, 'date', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 20]) ?>
 
         <?= $form->field($model, 'discount', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 45]) ?>
-        <?= $form->field($model, 'type', ['options' => ['class' => 'row form-group']])->dropDownList(common\models\costfit\ProductPriceSuppliers::getDiscountTypeArray(), ['prompt' => '-- Select Type --']) ?>
+        <?= $form->field($model, 'type', ['options' => ['class' => 'row form-group']])->dropDownList(common\models\costfit\ProductPriceSuppliers::getDiscountTypeArray()) ?>
 
 
         <div class="form-group">
