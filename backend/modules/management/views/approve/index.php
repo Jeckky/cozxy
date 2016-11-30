@@ -48,7 +48,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'attribute' => 'ตรวจสอบข้อมูล',
                         'format' => 'raw',
                         'value' => function($model) {
-                            return '<button class="btn btn-warning  btn-xs" data-toggle="modal" data-target="#myModal">ตรวจสอบ ProductID : <code>' . $model->productSuppId . '</code></button>';
+                            return '<button class="btn btn-warning  btn-xs" data-toggle="modal" data-bind="' . $model->productSuppId . ',1" data-target="#myModal">ตรวจสอบ ProductID : <code>' . $model->productSuppId . '</code></button>';
                         }
                     ],
                     [
@@ -118,7 +118,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'attribute' => 'ตรวจสอบข้อมูล',
                         'format' => 'raw',
                         'value' => function($model) {
-                            return '<button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal">ตรวจสอบ ProductID : <code>' . $model->productId . '</code></button>';
+                            return '<button class="btn btn-warning btn-xs" data-toggle="modal" data-bind="' . $model->productId . ',2" data-target="#myModal">ตรวจสอบ ProductID : <code>' . $model->productId . '</code></button>';
                         }
                     ],
                     [
@@ -233,7 +233,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
                 <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
             </div> <!-- / .modal-body -->
-            <div class="modal-footer"> 
+            <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <!--<button type="button" class="btn btn-primary">Save changes</button>-->
             </div>
