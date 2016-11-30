@@ -33,6 +33,7 @@ use Yii;
     * @property string $approve
     * @property string $productId
     * @property string $approveCreateBy
+    * @property string $approvecreateDateTime
 */
 class ProductSuppliersMaster extends \common\models\ModelMaster
 {
@@ -52,9 +53,9 @@ public function rules()
 return [
             [['userId', 'productGroupId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'productId', 'approveCreateBy'], 'integer'],
             [['isbn', 'shortDescription', 'description', 'specification'], 'string'],
-            [['title', 'createDateTime'], 'required'],
+            [['title', 'createDateTime', 'approvecreateDateTime'], 'required'],
             [['width', 'height', 'depth', 'weight', 'price'], 'number'],
-            [['createDateTime', 'updateDateTime'], 'safe'],
+            [['createDateTime', 'updateDateTime', 'approvecreateDateTime'], 'safe'],
             [['code'], 'string', 'max' => 100],
             [['title', 'optionName'], 'string', 'max' => 200],
             [['tags'], 'string', 'max' => 255],
@@ -94,6 +95,7 @@ return [
     'approve' => Yii::t('product_suppliers', 'Approve'),
     'productId' => Yii::t('product_suppliers', 'Product ID'),
     'approveCreateBy' => Yii::t('product_suppliers', 'Approve Create By'),
+    'approvecreateDateTime' => Yii::t('product_suppliers', 'Approvecreate Date Time'),
 ];
 }
 }

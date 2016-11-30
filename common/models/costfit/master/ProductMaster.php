@@ -33,6 +33,7 @@ use Yii;
     * @property string $approve
     * @property string $productSuppId
     * @property string $approveCreateBy
+    * @property string $approvecreateDateTime
     *
             * @property ProductPromotion[] $productPromotions
     */
@@ -54,9 +55,9 @@ public function rules()
 return [
             [['userId', 'productGroupId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'productSuppId', 'approveCreateBy'], 'integer'],
             [['isbn', 'shortDescription', 'description', 'specification'], 'string'],
-            [['title', 'createDateTime'], 'required'],
+            [['title', 'createDateTime', 'approvecreateDateTime'], 'required'],
             [['width', 'height', 'depth', 'weight', 'price'], 'number'],
-            [['createDateTime', 'updateDateTime'], 'safe'],
+            [['createDateTime', 'updateDateTime', 'approvecreateDateTime'], 'safe'],
             [['code'], 'string', 'max' => 100],
             [['title', 'optionName'], 'string', 'max' => 200],
             [['tags'], 'string', 'max' => 255],
@@ -96,6 +97,7 @@ return [
     'approve' => Yii::t('product', 'Approve'),
     'productSuppId' => Yii::t('product', 'Product Supp ID'),
     'approveCreateBy' => Yii::t('product', 'Approve Create By'),
+    'approvecreateDateTime' => Yii::t('product', 'Approvecreate Date Time'),
 ];
 }
 

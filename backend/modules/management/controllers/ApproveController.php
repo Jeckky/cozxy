@@ -36,6 +36,7 @@ class ApproveController extends ManagementMasterController {
             $ps = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $productId . ' and approve = "new"')->one();
             $ps->approve = 'approve';
             $ps->approveCreateBy = Yii::$app->user->identity->userId;
+            $ps->approvecreateDateTime = new \yii\db\Expression('NOW()');
             if ($ps->save(FALSE)) {
                 //return $this->redirect(['index']);
             }
@@ -43,6 +44,7 @@ class ApproveController extends ManagementMasterController {
             $pss = \common\models\costfit\Product::find()->where('productId =' . $productId . ' and approve = "new"')->one();
             $pss->approve = 'approve';
             $pss->approveCreateBy = Yii::$app->user->identity->userId;
+            $pss->approvecreateDateTime = new \yii\db\Expression('NOW()');
             if ($pss->save(FALSE)) {
                 //return $this->redirect(['index']);
             }
