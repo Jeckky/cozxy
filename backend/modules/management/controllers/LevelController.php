@@ -72,7 +72,7 @@ class LevelController extends ManagementMasterController {
         if (isset($_POST["Level"])) {
             $model->attributes = $_POST["Level"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
-            if ($model->save()) {
+            if ($model->save(FALSE)) {
                 return $this->redirect(['index']);
             }
         }
@@ -95,7 +95,7 @@ class LevelController extends ManagementMasterController {
 
 
 
-            if ($model->save()) {
+            if ($model->save(FALSE)) {
                 return $this->redirect(['index']);
             }
         }

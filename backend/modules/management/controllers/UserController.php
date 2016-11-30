@@ -109,7 +109,7 @@ class UserController extends ManagementMasterController {
             $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
             $model->token = Yii::$app->security->generateRandomString(10);
             $model->createDateTime = new \yii\db\Expression("NOW()");
-            if ($model->save()) {
+            if ($model->save(FALSE)) {
                 return $this->redirect(['index']);
             }
         }
@@ -130,7 +130,7 @@ class UserController extends ManagementMasterController {
         if (isset($_POST["User"])) {
             $model->attributes = $_POST["User"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-            if ($model->save()) {
+            if ($model->save(FALSE)) {
                 return $this->redirect(['index']);
             }
         }
@@ -174,7 +174,7 @@ class UserController extends ManagementMasterController {
             $model->user_group_Id = $getRules;
             $model->updateDateTime = new \yii\db\Expression('NOW()');
 
-            if ($model->save()) {
+            if ($model->save(FALSE)) {
                 return $this->redirect(['index']);
             }
         }
@@ -194,7 +194,7 @@ class UserController extends ManagementMasterController {
             $model->attributes = $_POST["Access"];
             $model->type = $_POST["Access"]['jq-validation-radios'];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-            if ($model->save()) {
+            if ($model->save(FALSE)) {
                 return $this->redirect(['index']);
             }
         }
