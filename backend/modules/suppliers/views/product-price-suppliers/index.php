@@ -11,16 +11,17 @@ $this->title = 'Product Price Suppliers';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
-<div class="product-price-suppliers-index">
-    <div class="panel-heading-controls">
-        <a href="/suppliers/product-suppliers">กลับหน้าหลัก</a>
-    </div> <!-- / .panel-heading-controls -->
 
+<div class="product-price-suppliers-index">
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
+    <h3>
+        Title :  <?php echo isset($productSupp->title) ? $productSupp->title : ''; ?>
+    </h3>
     <div class="panel panel-default">
+
         <div class="panel-heading">
             <div class="row">
-                <div class="col-md-6"><?= $this->title ?></div>
+                <div class="col-md-6"><?= $this->title ?> : ราคาขายสินค้า</div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
                         <?= Html::a('<i class=\'fa fa-angle-left\'></i><i class=\'fa fa-angle-left\'></i> Back To Product Suppliers', ['/suppliers/product-suppliers'], ['class' => 'btn btn-warning btn-xs']) ?>
@@ -43,11 +44,17 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'productPriceId',
-                    'productSuppId',
+                    //'productSuppId',
                     'quantity',
                     'price',
-                    'discountType',
-                    // 'discountValue',
+                    //'discountType',
+                    [
+                        'attribute' => 'discountType',
+                        'value' => function($model) {
+                            return $model->getDiscountTypeText($model->discountType);
+                        }
+                    ],
+                    'discountValue',
                     // 'description:ntext',
                     // 'status',
                     // 'createDateTime',
@@ -84,7 +91,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
-                <div class="col-md-6">Product Shipping Price Suppliers</div>
+                <div class="col-md-6">Product Shipping Price Suppliers : ราคาค่าจัดส่งสินค้า</div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
                         <?= Html::a('<i class=\'fa fa-angle-left\'></i><i class=\'fa fa-angle-left\'></i> Back To Product Suppliers', ['/suppliers/product-suppliers'], ['class' => 'btn btn-warning btn-xs']) ?>
@@ -106,14 +113,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 ],
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    'productShippingPriceId',
+                    //'productShippingPriceId',
                     //'productSuppId',
-                    [
-                        'attribute' => 'productSuppId',
-                        'value' => function($model) {
-                            return isset($model->productsupp) ? $model->productsupp->title : NULL;
-                        }
-                    ],
+                    /* [
+                      'attribute' => 'productSuppId',
+                      'value' => function($model) {
+                      return isset($model->productsupp) ? $model->productsupp->title : NULL;
+                      }
+                      ], */
                     //'shippingTypeId',
                     ['attribute' => 'shippingTypeId',
                         'value' => function($model) {

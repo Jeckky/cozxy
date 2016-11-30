@@ -45,11 +45,11 @@ class ProductPriceSuppliers extends \common\models\costfit\master\ProductPriceSu
      */
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
-        // 'quantity' => 'จำนวน',
-        // 'price' => 'ราคา',
-        // 'discountType' => 'ประเภทส่วนลด',
-        // 'discountValue' => 'ราคาส่วนลด',
-        // 'description' => 'รายละเอียด'
+            'quantity' => 'จำนวน',
+            'price' => 'ราคา',
+            'discountType' => 'ประเภทส่วนลด',
+            'discountValue' => 'ราคาส่วนลด',
+            'description' => 'รายละเอียด'
         ]);
     }
 
