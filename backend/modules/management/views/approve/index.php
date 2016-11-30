@@ -45,6 +45,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     'code',
                     'title',
                     [
+                        'attribute' => 'ตรวจสอบข้อมูล',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            return '<button class="btn btn-warning  btn-xs" data-toggle="modal" data-target="#myModal">ตรวจสอบ ProductID : <code>' . $model->productSuppId . '</code></button>';
+                        }
+                    ],
+                    [
                         'attribute' => 'อนุมัติ',
                         'format' => 'raw',
                         'value' => function($model) {
@@ -59,17 +66,17 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             return $approve_txt;
                         }
                     ],
-                    ['class' => 'yii\grid\ActionColumn',
-                        'header' => 'Actions',
-                        'template' => '{view}',
-                        'buttons' => [
-                            'view' => function ($url, $model) {
-                                return Html::a('<i class="fa fa-eye"></i>', $url, [
-                                    'title' => Yii::t('yii', 'view'),
-                                ]);
-                            }
-                        ]
-                    ],
+                /* ['class' => 'yii\grid\ActionColumn',
+                  'header' => 'Actions',
+                  'template' => '{view}',
+                  'buttons' => [
+                  'view' => function ($url, $model) {
+                  return Html::a('<i class="fa fa-eye"></i>', $url, [
+                  'title' => Yii::t('yii', 'view'),
+                  ]);
+                  }
+                  ]
+                  ], */
                 ],
             ]);
             ?>
@@ -79,7 +86,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
 <div class="panel colourable">
     <div class="panel-heading">
-        <span class="panel-title"> <h4>  รายการสินค้าที่ต้อง Approve ของ <code>System</code> </h4></span>
+        <span class="panel-title"> <h4>  รายการสินค้าที่ต้อง Approve ของ<code>Cozxy.com</code> </h4></span>
     </div>
 
     <div class="panel-body">
@@ -108,6 +115,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     'code',
                     'title',
                     [
+                        'attribute' => 'ตรวจสอบข้อมูล',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            return '<button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal">ตรวจสอบ ProductID : <code>' . $model->productSuppId . '</code></button>';
+                        }
+                    ],
+                    [
                         'attribute' => 'อนุมัติ',
                         'format' => 'raw',
                         'value' => function($model) {
@@ -122,17 +136,17 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             return $approve_txt;
                         }
                     ],
-                    ['class' => 'yii\grid\ActionColumn',
-                        'header' => 'Actions',
-                        'template' => '{view}',
-                        'buttons' => [
-                            'view' => function ($url, $model) {
-                                return Html::a('<i class="fa fa-eye"></i>', $url, [
-                                    'title' => Yii::t('yii', 'view'),
-                                ]);
-                            }
-                        ]
-                    ],
+                /* ['class' => 'yii\grid\ActionColumn',
+                  'header' => 'Actions',
+                  'template' => '{view}',
+                  'buttons' => [
+                  'view' => function ($url, $model) {
+                  return Html::a('<i class="fa fa-eye"></i>', $url, [
+                  'title' => Yii::t('yii', 'view'),
+                  ]);
+                  }
+                  ]
+                  ], */
                 ],
             ]);
             ?>
@@ -174,7 +188,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
          */
         $('#switchers-colors-square > input').switcher(function (e, data) {
-            alert('Test Yes !!');
+
         });
 
         //alert(switcherEl.switcher('setValue', true));
@@ -185,3 +199,44 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
 </script>
 <!-- / Javascript -->
+
+<!-- 5. $DEFAULT_MODAL ===================Default modal============================= -->
+<!-- Modal -->
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">Modal Heading</h4>
+            </div>
+            <div class="modal-body">
+                <h4>Text in a modal</h4>
+                <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+
+                <h4>Popover in a modal</h4>
+                <p>This <a href="#" role="button" class="btn btn-default popover-test" title="" data-content="And here's some amazing content. It's very engaging. right?" data-original-title="A Title">button</a> should trigger a popover on click.</p>
+
+                <h4>Tooltips in a modal</h4>
+                <p><a href="#" class="tooltip-test" title="" data-original-title="Tooltip">This link</a> and <a href="#" class="tooltip-test" title="" data-original-title="Tooltip">that link</a> should have tooltips on hover.</p>
+
+                <hr>
+
+                <h4>Overflowing text to show scroll behavior</h4>
+                <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+            </div> <!-- / .modal-body -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div> <!-- / .modal-content -->
+    </div> <!-- / .modal-dialog -->
+</div> <!-- /.modal -->
+<!-- / Modal -->
