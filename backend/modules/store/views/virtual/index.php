@@ -40,7 +40,7 @@ $this->registerJs("
                             <?php
                         endforeach;
                         ?>
-                        <a href="#" class="label label-tag <?= $tagId ?>">LED : <?= $led->code ?></a>
+                        <a href="#" class="label label-tag <?= $tagId ?>">LED : <?= $led->ip ?></a>
                         <a href="<?= Yii::$app->homeUrl . "store/virtual/remove-led-from-slot?id=" . $led->ledId ?>" class="btn btn-danger btn-xs" title="Remove LED from Slot" onclick="return confirm('คุณต้องการนำ LED <?= $led->code; ?> ออกจาก Slot')"><i class="glyphicon glyphicon-minus"></i></a>
                     <?php else: ?>
                         NOT Set LED
@@ -93,7 +93,7 @@ $this->registerJs("
                                                         $li++;
                                                     endforeach;
                                                     ?>
-                                                    <a href="#" class="label label-tag <?= $tagId ?>">LED : <?= $led->code ?></a>
+                                                    <a href="#" class="label label-tag <?= $tagId ?>">LED : <?= $led->ip ?></a>
                                                     <a href="<?= Yii::$app->homeUrl . "store/virtual/remove-led-from-slot?id=" . $led->ledId ?>" class="btn btn-danger btn-xs" title="Remove LED from Slot" onclick="return confirm('คุณต้องการนำ LED <?= $led->code; ?> ออกจาก Slot')"><i class="glyphicon glyphicon-minus"></i></a>
                                                 <?php else: ?>
                                                     NOT Set LED
