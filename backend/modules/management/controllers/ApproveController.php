@@ -35,12 +35,14 @@ class ApproveController extends ManagementMasterController {
         if ($type == 1) { // Product Suppliers
             $ps = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $productId . ' and approve = "new"')->one();
             $ps->approve = 'approve';
+            $ps->approveCreateBy = Yii::$app->user->identity->userId;
             if ($ps->save(FALSE)) {
                 //return $this->redirect(['index']);
             }
         } elseif ($type == 2) {// Product Sys
             $pss = \common\models\costfit\Product::find()->where('productId =' . $productId . ' and approve = "new"')->one();
             $pss->approve = 'approve';
+            $pss->approveCreateBy = Yii::$app->user->identity->userId;
             if ($pss->save(FALSE)) {
                 //return $this->redirect(['index']);
             }
