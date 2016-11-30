@@ -5,14 +5,12 @@ use yii\widgets\ActiveForm;
 use yii\widgets\ActiveField;
 use yii\helpers\ArrayHelper;
 use yii\widgets\MaskedInput;
-use common\models\costfit;
 use yii\jui\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\User */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
 <div class="user-form">
 
     <?php

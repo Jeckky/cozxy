@@ -42,11 +42,15 @@ class User extends \common\models\costfit\master\UserMaster {
     const USER_TYPE_BACKEND = 2;
     const USER_TYPE_FRONTEND_BACKEND = 3;
     const USER_TYPE_SUPPLIERS = 4;
-
     //const USER_STATUS_CHECKOUTS = 2;
     //const USER_STATUS_E_PAYMENT_DRAFT = 3;
     //const USER_STATUS_COMFIRM_PAYMENT = 4;
     // const USER_STATUS_E_PAYMENT_SUCCESS = 5;
+
+    const COZXY_REGIS = 'register';
+    const COZXY_PROFILE = 'profile';
+    const COZXY_USER_BACKEND = 'user_backend';
+    const COZXY_EDIT_PROFILE = 'editinfo';
 
     /**
      * @inheritdoc
@@ -72,6 +76,15 @@ class User extends \common\models\costfit\master\UserMaster {
             //['username', 'email'],
             [['firstname', 'lastname', 'password', 'email', 'type', 'gender'], 'required', 'on' => 'user_backend'],
         ]);
+    }
+
+    public function scenarios() {
+        return [
+            self::COZXY_REGIS => ['email', 'password', 'confirmPassword', 'acceptTerm', ['currentPassword', 'newPassword', 'rePassword']],
+            self::COZXY_PROFILE => ['currentPassword', 'newPassword', 'rePassword'],
+            self::COZXY_USER_BACKEND => ['firstname', 'lastname', 'password', 'email', 'type', 'gender'],
+            self::COZXY_EDIT_PROFILE => ['firstname', 'lastname', 'gender', 'tel' => [['tel'], 'integer'], 'birthDate', 'acceptTerm']
+        ];
     }
 
     public function uniqueEmail($attribute, $email) {
