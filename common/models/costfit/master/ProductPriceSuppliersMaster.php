@@ -34,9 +34,9 @@ return 'product_price_suppliers';
 public function rules()
 {
 return [
-            [['productSuppId', 'createDateTime'], 'required'],
-            [['productSuppId', 'discountType', 'status'], 'integer'],
-            [['quantity', 'price', 'discountValue'], 'number'],
+            [['productPriceId', 'productSuppId', 'createDateTime'], 'required'],
+            [['productPriceId', 'productSuppId', 'quantity', 'discountType', 'discountValue', 'status'], 'integer'],
+            [['price'], 'number'],
             [['description'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
         ];

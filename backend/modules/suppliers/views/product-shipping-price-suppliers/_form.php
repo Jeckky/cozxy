@@ -27,7 +27,7 @@ use common\models\costfit\ShippingType;
         ]
     ]);
     ?>
-
+    <?php //$form = ActiveForm::begin(); ?>
     <div class="panel-heading">
         <span class="panel-title"><?= $title ?></span>
     </div>

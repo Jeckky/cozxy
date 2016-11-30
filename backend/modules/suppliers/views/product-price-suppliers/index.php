@@ -107,11 +107,27 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'productShippingPriceId',
-                    'productSuppId',
-                    'shippingTypeId',
-                    'date',
+                    //'productSuppId',
+                    [
+                        'attribute' => 'productSuppId',
+                        'value' => function($model) {
+                            return isset($model->productsupp) ? $model->productsupp->title : NULL;
+                        }
+                    ],
+                    //'shippingTypeId',
+                    ['attribute' => 'shippingTypeId',
+                        'value' => function($model) {
+                            return $model->shippingType->title;
+                        }
+                    ],
+                    //'date',
                     'discount',
-                    'type',
+                    //'type',
+                    ['attribute' => 'type',
+                        'value' => function($model) {
+                            return $model->getDiscountTypeText($model->type);
+                        }
+                    ],
                     // 'status',
                     // 'createDateTime',
                     // 'updateDateTime',

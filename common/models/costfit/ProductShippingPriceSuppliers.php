@@ -20,6 +20,9 @@ use \common\models\costfit\master\ProductShippingPriceSuppliersMaster;
  */
 class ProductShippingPriceSuppliers extends \common\models\costfit\master\ProductShippingPriceSuppliersMaster {
 
+    const DISCOUNT_TYPE_CASH = 1;
+    const DISCOUNT_TYPE_PERCENT = 2;
+
     /**
      * @inheritdoc
      */
@@ -38,6 +41,13 @@ class ProductShippingPriceSuppliers extends \common\models\costfit\master\Produc
         ]);
     }
 
+    public function getDiscountTypeArray() {
+        return [
+            self::DISCOUNT_TYPE_CASH => "CASH",
+            self::DISCOUNT_TYPE_PERCENT => "PERCENT",
+        ];
+    }
+
     public function getDiscountTypeText($type) {
         $res = $this->getDiscountTypeArray();
         if (isset($res[$type])) {
@@ -45,6 +55,14 @@ class ProductShippingPriceSuppliers extends \common\models\costfit\master\Produc
         } else {
             return NULL;
         }
+    }
+
+    public function getShippingType() {
+        return $this->hasOne(\common\models\costfit\ShippingType::className(), ['shippingTypeId' => 'shippingTypeId']);
+    }
+
+    public function getProductsupp() {
+        return $this->hasOne(ProductSuppliers::className(), ['productSuppId' => 'productSuppId']);
     }
 
 }

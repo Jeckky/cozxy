@@ -3,6 +3,7 @@
 namespace backend\modules\suppliers\controllers;
 
 use Yii;
+use common\models\costfit\ProductShippingPriceSuppliers;
 use common\models\costfit\ProductSuppliers;
 use common\models\costfit\Product;
 use yii\data\ActiveDataProvider;
