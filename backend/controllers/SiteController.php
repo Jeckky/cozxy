@@ -81,9 +81,10 @@ class SiteController extends \backend\controllers\BackendMasterController {
             //return $this->goBack();
         } else {
             // throw new \yii\base\Exception('ccaa');
-            return $this->redirect('../auth', [
-                'model' => $model,
-            ]);
+            /* return $this->redirect('../auth', [
+              'model' => $model,
+              ]); */
+            return $this->redirect(Yii::$app->homeUrl . 'auth');
         }
     }
 
