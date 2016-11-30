@@ -68,4 +68,16 @@ class ApproveController extends ManagementMasterController {
         }
     }
 
+    public function actionInvestigateApproveItems() {
+        $productId = Yii::$app->request->post('productId');
+        $typeId = Yii::$app->request->post('type');
+
+        if ($typeId == 1) { // cozxy.com
+            $suppliers = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $productId)->one();
+        } else if ($typeId == 2) { // suppliers
+            $suppliers = \common\models\costfit\Product::find()->where('productId =' . $productId)->one();
+        }
+        echo json_encode($suppliers->attributes);
+    }
+
 }

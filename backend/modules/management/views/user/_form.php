@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\widgets\ActiveField;
 use yii\helpers\ArrayHelper;
 use yii\widgets\MaskedInput;
-use common\models\areawow;
+use common\models\costfit;
 use yii\jui\DatePicker;
 
 /* @var $this yii\web\View */
@@ -38,16 +38,6 @@ use yii\jui\DatePicker;
 
         <?= $form->field($model, 'lastname', ['options' => ['class' => 'row form-group ']])->textInput(['maxlength' => 200])->label('นามสกุล') ?>
 
-        <?//= $form->field($model, 'username', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200])->label('username') ?>
-        <!--<div class="row form-group  field-user-firstname required has-error">
-            <label class="col-sm-3 control-label" for="user-firstname">&nbsp;</label>
-            <div class="col-sm-9">
-                <code>หมายเหตุ</code>
-                <span class="text-muted">
-                    username ใช้ email login เท่านั่น
-                </span>
-            </div>
-        </div>-->
         <?= $form->field($model, 'password', ['options' => ['class' => 'row form-group']])->passwordInput(['maxlength' => 200]) ?>
 
         <?= $form->field($model, 'email', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>

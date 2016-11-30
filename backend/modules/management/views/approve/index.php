@@ -48,7 +48,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'attribute' => 'ตรวจสอบข้อมูล',
                         'format' => 'raw',
                         'value' => function($model) {
-                            return '<button class="btn btn-warning  btn-xs" data-toggle="modal" data-bind="' . $model->productSuppId . ',1" data-target="#myModal">ตรวจสอบ ProductID : <code>' . $model->productSuppId . '</code></button>';
+                            return '<button class="btn btn-warning  btn-xs investigate-approve" data-toggle="modal" data-bind="' . $model->productSuppId . ',1"  >ตรวจสอบ ProductID : <code>' . $model->productSuppId . '</code></button>';
                         }
                     ],
                     [
@@ -118,7 +118,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'attribute' => 'ตรวจสอบข้อมูล',
                         'format' => 'raw',
                         'value' => function($model) {
-                            return '<button class="btn btn-warning btn-xs" data-toggle="modal" data-bind="' . $model->productId . ',2" data-target="#myModal">ตรวจสอบ ProductID : <code>' . $model->productId . '</code></button>';
+                            return '<button class="btn btn-warning btn-xs investigate-approve" data-toggle="modal" data-bind="' . $model->productId . ',2">ตรวจสอบ ProductID : <code>' . $model->productId . '</code></button>';
                         }
                     ],
                     [
@@ -202,7 +202,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
 <!-- 5. $DEFAULT_MODAL ===================Default modal============================= -->
 <!-- Modal -->
-<div id="myModal" class="modal fade" tabindex="-1" role="dialog" style="display: none;">
+<div id="myModal-investigate-approve" class="modal fade" tabindex="-1" role="dialog" style="display: none;">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -210,28 +210,101 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <h4 class="modal-title" id="myModalLabel">Modal Heading</h4>
             </div>
             <div class="modal-body">
-                <h4>Text in a modal</h4>
+                <!--<h4>Text in a modal</h4>
                 <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
-                <hr>
-                <h4>Popover in a modal</h4>
-                <p>This should trigger a popover on click.</p>
-                <hr>
-                <h4>Tooltips in a modal</h4>
-                <p> This link and that link should have tooltips on hover.</p>
-                <hr>
-                <h4>Overflowing text to show scroll behavior</h4>
-                <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-                <hr>
-                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-                <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-                <hr>
-                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-                <hr>
-                <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                <hr>-->
+                <table id="w0" class="table table-striped table-bordered detail-view">
+                    <tbody>
+                        <tr>
+                            <th>Product ID</th>
+                            <td class="view-product-id">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>User ID</th>
+                            <td class="view-user-id">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>Product Group ID</th>
+                            <td class="view-product-group-id">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>Brand ID</th>
+                            <td class="view-brand-id">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>Category ID</th>
+                            <td class="view-category-id">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>Isbn</th>
+                            <td class="view-isbn">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>Code</th>
+                            <td class="view-code">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>Title</th>
+                            <td class="view-title">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>Option Name</th>
+                            <td class="view-option-name">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>Short Description</th>
+                            <td class="view-short-description">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>Description</th>
+                            <td class="view-description">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>Specification</th>
+                            <td class="view-specification">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>Width</th>
+                            <td class="view-width">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>Height</th>
+                            <td class="view-height">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>Depth</th>
+                            <td class="view-depth">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>Weight</th>
+                            <td class="view-weight">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>Price</th>
+                            <td class="view-price">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>Unit</th>
+                            <td class="view-unit">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>Small Unit</th>
+                            <td class="view-small-unit">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>Tags</th>
+                            <td class="view-tags">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>Create Date Time</th>
+                            <td class="view-create-date-time">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>Update Date Time</th>
+                            <td class="view-update-date-time">&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div> <!-- / .modal-body -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

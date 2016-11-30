@@ -230,6 +230,7 @@ $('.remark-submit').on('click', function () {
         alert('ระบุปัญหาที่เจอทุกครั้ง ก่อน Submit')
     }
 });
+
 $('.test-test').on('click', function () {
     var dataBind = this.getAttribute('data-bind');
     var resDataBind = dataBind.split(",");
@@ -253,6 +254,7 @@ $('.test-test').on('click', function () {
     });
     $('#uidemo-modals-alerts-info').modal('show');
 });
+
 function suppliers(productId) {
     $.ajax({
         url: 'products-system',
@@ -398,14 +400,6 @@ $('.switch').on('switch-change', function () {
 });
 
 function switchers(id, type, status) {
-    // alert(id);
-    //alert(type);
-    //var dataKey = this.getAttribute('data-key');
-    //alert(dataKey);
-
-    //thisdata = $(this).attr('data-key');
-    //var tableData = $('tr[data-key]').value();
-    //console.log(tableData);
     $.ajax({
         url: 'approve/approve-items',
         data: {"productSuppId": id, "type": type, 'status': status},
@@ -430,14 +424,70 @@ function switchers(id, type, status) {
 
     init.push(function () {
         $('#switchers-colors-square .switcher > input').on('change.switcher', function (on, off, toggle) {
-            alert('Test Yes !!');
+            //alert('Test Yes !!');
             //console.log(on);
         });
     });
     //alert($('#switchers-colors-square').find('.switcher').find(".checked"));
-
-
 }
 
+// investigate-approve //
 
+$('.investigate-approve').on('click', function () {
+    var dataBind = this.getAttribute('data-bind');
+    var resDataBind = dataBind.split(",");
+    var productId = resDataBind[0];
+    var type = resDataBind[1];
 
+    $.ajax({
+        url: 'approve/investigate-approve-items',
+        data: {"productId": productId, "type": type},
+        type: 'post',
+        success: function (result) {
+            //alert(JSONObject2);
+            var JSONObject2 = JSON.parse(result);
+            //alert(JSONObject2.productSuppId + JSONObject2.title);
+            //alert(type);
+            if (type == 1) {
+                $('.view-product-id').html(JSONObject2.productSuppId);
+            } else if (type == 2) {
+                //alert(JSONObject2.productId);
+                $('.view-product-id').html(JSONObject2.productId);
+            }
+            $('.view-user-id').html(JSONObject2.userId);
+            $('.view-product-group-id').html(JSONObject2.productGroupId);
+            $('.view-category-id').html(JSONObject2.categoryId);
+            $('.view-brand-id').html(JSONObject2.brandId);
+            $('.view-unit-id').html(JSONObject2.unit);
+            $('.view-small-unit').html(JSONObject2.smallUnit);
+            // ------ end kartik ------ //
+            $('.view-isbn').html(JSONObject2.isbn);
+            $('.view-code').html(JSONObject2.code);
+            $('.view-title').html(JSONObject2.title);
+            $('.view-option-name').html(JSONObject2.optionName);
+            // ---- summernote ---- //
+            //$('#productsuppliers-shortdescription').val(JSONObject2.shortdescription);
+            $('.view-shortdescription').html(JSONObject2.shortdescription);
+            //$('#productsuppliers-description').val(JSONObject2.description);
+            $('.view-description').html(JSONObject2.description);
+            //$('#productsuppliers-specification').val(JSONObject2.specification);
+            $('.view-specification').html(JSONObject2.specification);
+            // ---- end summernote ---- //
+            $('.view-width').html(JSONObject2.width);
+            $('.view-height').html(JSONObject2.height);
+            $('.view-depth').html(JSONObject2.depth);
+            $('.view-weight').html(JSONObject2.weight);
+            $('.view-price').html(JSONObject2.price);
+            //$('#unitId').val(JSONObject2.title);
+            //$('#smallUnit').val(JSONObject2.title);
+            $('.view-tags').html(JSONObject2.tags);
+            $('.view-create-date-time').html(JSONObject2.createDateTime);
+            $('.view-update-date-time').html(JSONObject2.updateDateTime);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //debugger;
+            // alert(errorThrown);
+        }
+    });
+    $('#myModal-investigate-approve').modal('show');
+});

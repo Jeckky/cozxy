@@ -100,6 +100,7 @@ class UserController extends ManagementMasterController {
     public function actionCreate() {
 
         $model = new User(['scenario' => 'user_backend']);
+
         if (isset($_POST["User"])) {
             $model->attributes = $_POST["User"];
             $model->status = 1;
@@ -112,6 +113,7 @@ class UserController extends ManagementMasterController {
                 return $this->redirect(['index']);
             }
         }
+
         return $this->render('create', [
             'model' => $model,
         ]);
