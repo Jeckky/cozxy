@@ -73,7 +73,10 @@ class ApproveController extends ManagementMasterController {
         $typeId = Yii::$app->request->post('type');
 
         if ($typeId == 1) { // cozxy.com
-            $suppliers = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $productId)->one();
+            $suppliers = \common\models\costfit\ProductSuppliers::find()
+            ->select('`product_suppliers`.* ,  user.firstname')
+            ->join('LEFT JOIN', 'user', 'product_suppliers.userId = user.userId')
+            ->where('product_suppliers.productSuppId =' . $productId)->one();
         } else if ($typeId == 2) { // suppliers
             $suppliers = \common\models\costfit\Product::find()->where('productId =' . $productId)->one();
         }

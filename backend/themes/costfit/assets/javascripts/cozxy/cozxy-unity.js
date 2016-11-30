@@ -454,6 +454,7 @@ $('.investigate-approve').on('click', function () {
                 //alert(JSONObject2.productId);
                 $('.view-product-id').html(JSONObject2.productId);
             }
+            // alert(JSONObject2.firstname);
             $('.view-user-id').html(JSONObject2.userId);
             $('.view-product-group-id').html(JSONObject2.productGroupId);
             $('.view-category-id').html(JSONObject2.categoryId);
