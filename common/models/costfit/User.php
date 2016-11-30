@@ -80,8 +80,8 @@ class User extends \common\models\costfit\master\UserMaster {
 
     public function scenarios() {
         return [
-            self::COZXY_REGIS => ['email', 'password', 'confirmPassword', 'acceptTerm', ['currentPassword', 'newPassword', 'rePassword']],
-            self::COZXY_PROFILE => ['currentPassword', 'newPassword', 'rePassword'],
+            self::COZXY_REGIS => ['email', 'password', 'confirmPassword', 'acceptTerm'],
+            self::COZXY_PROFILE => ['currentPassword', 'newPassword', 'rePassword', ['currentPassword', 'newPassword', 'rePassword']],
             self::COZXY_USER_BACKEND => ['firstname', 'lastname', 'password', 'email', 'type', 'gender'],
             self::COZXY_EDIT_PROFILE => ['firstname', 'lastname', 'gender', 'tel' => [['tel'], 'integer'], 'birthDate', 'acceptTerm']
         ];
