@@ -118,7 +118,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'attribute' => 'ตรวจสอบข้อมูล',
                         'format' => 'raw',
                         'value' => function($model) {
-                            return '<button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal">ตรวจสอบ ProductID : <code>' . $model->productSuppId . '</code></button>';
+                            return '<button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal">ตรวจสอบ ProductID : <code>' . $model->productId . '</code></button>';
                         }
                     ],
                     [
@@ -234,7 +234,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
             </div> <!-- / .modal-body -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
             </div>
         </div> <!-- / .modal-content -->
     </div> <!-- / .modal-dialog -->
