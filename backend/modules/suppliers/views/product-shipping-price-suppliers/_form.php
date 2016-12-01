@@ -49,7 +49,7 @@ use common\models\costfit\ShippingType;
                 'id' => 'shippingTypeId',
                 'class' => 'required'
             ],
-        ])->label('ShippingType');
+        ])//->label('ShippingType');
         ?>
 
         <?= $form->field($model, 'discount', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 45]) ?>
