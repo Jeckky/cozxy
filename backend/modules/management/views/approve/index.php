@@ -40,6 +40,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     ['class' => 'yii\grid\SerialColumn'],
                     //'productSuppId',
                     //'userId',
+                    [
+                        'attribute' => 'Suppliers Name',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            $userSuppliers = common\models\costfit\User::find()->where('userId=' . $model->userId)->one();
+                            return 'คุณ' . $userSuppliers->firstname . ' ' . $userSuppliers->lastname;
+                        }
+                    ],
                     //'productGroupId',
                     'isbn:ntext',
                     'code',
@@ -109,7 +117,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     //'productId',
-                    //'userId',
+                    [
+                        'attribute' => 'Suppliers Name',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            $userSuppliers = common\models\costfit\User::find()->where('userId=' . $model->userId)->one();
+                            return 'คุณ' . $userSuppliers->firstname . ' ' . $userSuppliers->lastname;
+                        }
+                    ],
                     //'productGroupId',
                     'isbn:ntext',
                     'code',
