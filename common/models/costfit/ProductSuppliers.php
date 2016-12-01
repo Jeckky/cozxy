@@ -51,7 +51,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
             'title' => 'หัวข้อ',
             'optionName' => 'option name',
             'shortDescription' => 'คำอธิบายสั้น',
-            'description' => 'ลักษณะ',
+            'description' => 'รายละเอียด',
             'specification' => 'สเปค',
             'width' => 'ความกว้าง',
             'height' => 'ความสูง',
