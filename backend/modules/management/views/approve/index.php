@@ -99,7 +99,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     'options' => ['class' => 'pagination pagination-xs']
                 ],
                 'options' => [
-                    'class' => 'table-light'
+                    'class' => 'table-light table-hover'
                 ],
                 'rowOptions' => function ($model, $index, $widget, $grid) {
                     return [
@@ -158,35 +158,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 <!-- Javascript -->
 <script>
     init.push(function () {
-        /*
-         // Colors
-         //$('#switchers-colors-default > input').switcher();
-         $('#switchers-colors-square > input').switcher({
-         theme: 'square',
-         });
-         //$('#switchers-colors-modern > input').switcher({theme: 'modern'});
 
-         // Sizes
-         //$('#switchers-sizes .switcher-example-default').switcher();
-         $('#switchers-sizes .switcher-example-square').switcher({theme: 'square'});
-         //$('#switchers-sizes .switcher-example-modern').switcher({theme: 'modern'});
-
-         // Disabled state
-         //$('#switcher-disabled-default').switcher();
-         $('#switcher-disabled-square').switcher({theme: 'square'});
-         //$('#switcher-disabled-modern').switcher({theme: 'modern'});
-
-         $('#switcher-enable-all').click(function () {
-         $('#switchers-disabled input').switcher('enable');
-
-         });
-
-         $('#switcher-disable-all').click(function () {
-         $('#switchers-disabled input').switcher('disable');
-         });
-
-
-         */
         $('#switchers-colors-square > input').switcher(function (e, data) {
 
         });
