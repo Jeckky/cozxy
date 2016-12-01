@@ -62,19 +62,19 @@ class User extends \common\models\costfit\master\UserMaster {
 //            ['email', 'uniqueEmail'],
             ['email', 'email'],
 //            ['email', 'exist', 'targetAttribute' => 'username', 'targetClass' => '\common\models\cosfit\User'],
-            [['email', 'password', 'confirmPassword', 'acceptTerm'], 'required', 'on' => 'register'],
+            [['email', 'password', 'confirmPassword', 'acceptTerm'], 'required', 'on' => self::COZXY_REGIS],
 //            ['email', 'unique', 'targetClass' => '\common\models\costfit\User', 'message' => 'this email address has already been taken'],
             ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"],
 //            ['email', 'exist']
             [
                 ['firstname', 'lastname', 'gender', 'tel' => [['tel'], 'integer'], 'birthDate', 'acceptTerm'],
-                'required', 'on' => 'editinfo'],
+                'required', 'on' => self::COZXY_EDIT_PROFILE],
             // [['currentPassword', 'newPassword', 'rePassword'], 'required'],
-            [['currentPassword', 'newPassword', 'rePassword'], 'required', 'on' => 'profile'],
+            [['currentPassword', 'newPassword', 'rePassword'], 'required', 'on' => self::COZXY_PROFILE],
             // ['currentPassword', 'findPasswords'],
-            ['rePassword', 'compare', 'compareAttribute' => 'newPassword', 'on' => 'profile'],
+            ['rePassword', 'compare', 'compareAttribute' => 'newPassword', 'on' => self::COZXY_PROFILE],
             //['username', 'email'],
-            [['firstname', 'lastname', 'password', 'email', 'type', 'gender'], 'required', 'on' => 'user_backend'],
+            [['firstname', 'lastname', 'password', 'email', 'type', 'gender'], 'required', 'on' => self::COZXY_USER_BACKEND],
         ]);
     }
 
