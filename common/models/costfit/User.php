@@ -191,14 +191,14 @@ class User extends \common\models\costfit\master\UserMaster {
      * @return \yii\db\ActiveQuery
      */
     public function getBillingAddresses() {
-        return $this->hasMany(AddressMaster::className(), ['userId' => 'userId'])->where('address.type=1');
+        return $this->hasMany(Address::className(), ['userId' => 'userId'])->where('address.type=1');
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getShippingAddresses() {
-        return $this->hasMany(AddressMaster::className(), ['userId' => 'userId'])->where('address.type=2');
+        return $this->hasMany(Address::className(), ['userId' => 'userId'])->where('address.type=2');
     }
 
     public function updateProfile($email, $userId) {

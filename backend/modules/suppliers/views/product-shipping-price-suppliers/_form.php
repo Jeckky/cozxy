@@ -51,11 +51,9 @@ use common\models\costfit\ShippingType;
             ],
         ])->label('ShippingType');
         ?>
-        <?//= $form->field($model, 'date', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 20]) ?>
 
         <?= $form->field($model, 'discount', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 45]) ?>
         <?= $form->field($model, 'type', ['options' => ['class' => 'row form-group']])->dropDownList(common\models\costfit\ProductPriceSuppliers::getDiscountTypeArray()) ?>
-
 
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
