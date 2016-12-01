@@ -102,9 +102,10 @@ class UserController extends ManagementMasterController {
         $model = new User(['scenario' => 'user_backend']);
 
         if (isset($_POST["User"])) {
-            $model->attributes = $_POST["User"];
+
             $model = \common\models\costfit\User::find()->where('email = "' . $_POST["User"]['email'] . '" ')->one();
             if (isset($model)) {
+                $model->attributes = $_POST["User"];
                 //echo 'มี Emial นี้แล้ว !!';
                 //echo CHtml::errorSummary($model->email);
                 //$form = \kartik\form\ActiveForm::begin();
@@ -113,6 +114,8 @@ class UserController extends ManagementMasterController {
                 //echo $CheckEmail->addError('email', 'Email already exists');
                 $model->addError('email', 'Email นี้มีในระบบแล้ว');
             } else {
+                $model = new User(['scenario' => 'user_backend']);
+                $model->attributes = $_POST["User"];
                 $model->status = 1;
                 $model->auth_type = 'Backend';
                 $model->username = $_POST["User"]['email'];
