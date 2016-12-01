@@ -447,7 +447,7 @@ $('.investigate-approve').on('click', function () {
             //alert(JSONObject2);
             var JSONObject2 = JSON.parse(result);
             //alert(JSONObject2.productSuppId + JSONObject2.title);
-            //alert(type);
+            //alert(JSONObject2.smuTitle + ' :: ' + JSONObject2.uTitle);
             if (type == 1) {
                 $('.view-product-id').html(JSONObject2.productSuppId);
             } else if (type == 2) {
@@ -455,12 +455,12 @@ $('.investigate-approve').on('click', function () {
                 $('.view-product-id').html(JSONObject2.productId);
             }
             // alert(JSONObject2.firstname);
-            $('.view-user-id').html(JSONObject2.userId);
+            $('.view-user-id').html(JSONObject2.firstname + ' ' + JSONObject2.astname);
             $('.view-product-group-id').html(JSONObject2.productGroupId);
-            $('.view-category-id').html(JSONObject2.categoryId);
-            $('.view-brand-id').html(JSONObject2.brandId);
-            $('.view-unit-id').html(JSONObject2.unit);
-            $('.view-small-unit').html(JSONObject2.smallUnit);
+            $('.view-category-id').html(JSONObject2.cTitle);
+            $('.view-brand-id').html(JSONObject2.bTitle);
+            //$('.view-unit-id').html(JSONObject2.unit);
+            //$('.view-small-unit').html(JSONObject2.smallUnit);
             // ------ end kartik ------ //
             $('.view-isbn').html(JSONObject2.isbn);
             $('.view-code').html(JSONObject2.code);
@@ -479,8 +479,8 @@ $('.investigate-approve').on('click', function () {
             $('.view-depth').html(JSONObject2.depth);
             $('.view-weight').html(JSONObject2.weight);
             $('.view-price').html(JSONObject2.price);
-            //$('#unitId').val(JSONObject2.title);
-            //$('#smallUnit').val(JSONObject2.title);
+            $('.view-unit').html(JSONObject2.uTitle);
+            $('.view-small-unit').html(JSONObject2.smuTitle);
             $('.view-tags').html(JSONObject2.tags);
             $('.view-create-date-time').html(JSONObject2.createDateTime);
             $('.view-update-date-time').html(JSONObject2.updateDateTime);
