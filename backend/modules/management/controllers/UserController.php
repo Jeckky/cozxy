@@ -103,14 +103,24 @@ class UserController extends ManagementMasterController {
 
         if (isset($_POST["User"])) {
             $model->attributes = $_POST["User"];
-            $model->status = 1;
-            $model->auth_type = 'Backend';
-            $model->username = $_POST["User"]['email'];
-            $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
-            $model->token = Yii::$app->security->generateRandomString(10);
-            $model->createDateTime = new \yii\db\Expression("NOW()");
-            if ($model->save(FALSE)) {
-                return $this->redirect(['index']);
+            $CheckEmail = \common\models\costfit\User::find()->where('email = "' . $_POST["User"]['email'] . '" ')->one();
+            if (isset($CheckEmail)) {
+                echo 'มี Emial นี้แล้ว !!';
+                //echo CHtml::errorSummary($model->email);
+                //$form = \kartik\form\ActiveForm::begin();
+                //echo $form->errorSummary($model, ['header' => '']);
+                //\kartik\form\ActiveForm::end();
+                //echo $CheckEmail->addError('email', 'Email already exists');
+            } else {
+                $model->status = 1;
+                $model->auth_type = 'Backend';
+                $model->username = $_POST["User"]['email'];
+                $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
+                $model->token = Yii::$app->security->generateRandomString(10);
+                $model->createDateTime = new \yii\db\Expression("NOW()");
+                if ($model->save(FALSE)) {
+                    return $this->redirect(['index']);
+                }
             }
         }
 
