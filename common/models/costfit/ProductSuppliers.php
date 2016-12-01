@@ -45,7 +45,23 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
      * @inheritdoc
      */
     public function attributeLabels() {
-        return array_merge(parent::attributeLabels(), []);
+        return array_merge(parent::attributeLabels(), [
+            'categoryId' => 'หมวดหมู่',
+            'brandId' => 'ยี่ห้อ',
+            'title' => 'หัวข้อ',
+            'optionName' => 'option name',
+            'shortDescription' => 'คำอธิบายสั้น',
+            'description' => 'ลักษณะ',
+            'specification' => 'สเปค',
+            'width' => 'ความกว้าง',
+            'height' => 'ความสูง',
+            'depth' => 'ความลึก',
+            'weight' => 'น้ำหนัก',
+            'price' => 'ราคา',
+            'unit' => 'หน่วย',
+            'smallUnit' => 'หน่วยขนาดเล็ก',
+            'tags' => 'แท็ก',
+        ]);
     }
 
     /**
