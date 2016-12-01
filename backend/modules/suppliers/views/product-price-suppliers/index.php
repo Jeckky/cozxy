@@ -143,7 +143,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'template' => '{view} {update} {delete}',
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                return Html::a('<i class="fa fa-eye"></i>', Yii::$app->homeUrl . 'suppliers/product-shipping-price-suppliers/create?id=' . $model->productShippingPriceId . '&productSuppId=' . $_GET['productSuppId'], [
+                                return Html::a('<i class="fa fa-eye"></i>', Yii::$app->homeUrl . 'suppliers/product-shipping-price-suppliers/view?id=' . $model->productShippingPriceId . '&productSuppId=' . $_GET['productSuppId'], [
                                     'title' => Yii::t('yii', 'view'),
                                 ]);
                             },
