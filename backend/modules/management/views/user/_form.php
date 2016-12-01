@@ -30,6 +30,7 @@ use yii\jui\DatePicker;
     </div>
 
     <div class="panel-body">
+
         <?= $form->errorSummary($model) ?>
 
         <?= $form->field($model, 'firstname', ['options' => ['class' => 'row form-group ']])->textInput(['maxlength' => 200])->label('ชื่อ') ?>
