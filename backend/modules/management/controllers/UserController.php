@@ -103,22 +103,38 @@ class UserController extends ManagementMasterController
      */
     public function actionCreate()
     {
-        $model = new User();
-        $model->scenario = "user_backend";
+
+        $model = new User(['scenario' => 'user_backend']);
+
         if (isset($_POST["User"])) {
-            $model->attributes = $_POST["User"];
-            $model->status = 1;
-            $model->auth_type = 'Backend';
-            $model->username = $_POST["User"]['email'];
-            $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
-            $model->token = Yii::$app->security->generateRandomString(10);
-            $model->createDateTime = new \yii\db\Expression("NOW()");
-            if ($model->save()) {
-                return $this->redirect(['index']);
+
+            $model = \common\models\costfit\User::find()->where('email = "' . $_POST["User"]['email'] . '" ')->one();
+            if (isset($model)) {
+                $model->attributes = $_POST["User"];
+                //echo 'มี Emial นี้แล้ว !!';
+                //echo CHtml::errorSummary($model->email);
+                //$form = \kartik\form\ActiveForm::begin();
+                //echo $form->errorSummary($model, ['header' => '']);
+                //\kartik\form\ActiveForm::end();
+                //echo $CheckEmail->addError('email', 'Email already exists');
+                $model->addError('email', 'Email นี้มีในระบบแล้ว');
+            } else {
+                $model = new User(['scenario' => 'user_backend']);
+                $model->attributes = $_POST["User"];
+                $model->status = 1;
+                $model->auth_type = 'Backend';
+                $model->username = $_POST["User"]['email'];
+                $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
+                $model->token = Yii::$app->security->generateRandomString(10);
+                $model->createDateTime = new \yii\db\Expression("NOW()");
+                if ($model->save(FALSE)) {
+                    return $this->redirect(['index']);
+                }
             }
         }
+
         return $this->render('create', [
-            'model' => $model,
+            'model' => $model
         ]);
     }
 
@@ -134,7 +150,7 @@ class UserController extends ManagementMasterController
         if (isset($_POST["User"])) {
             $model->attributes = $_POST["User"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-            if ($model->save()) {
+            if ($model->save(FALSE)) {
                 return $this->redirect(['index']);
             }
         }
@@ -180,7 +196,7 @@ class UserController extends ManagementMasterController
             $model->user_group_Id = $getRules;
             $model->updateDateTime = new \yii\db\Expression('NOW()');
 
-            if ($model->save()) {
+            if ($model->save(FALSE)) {
                 return $this->redirect(['index']);
             }
         }
@@ -201,7 +217,7 @@ class UserController extends ManagementMasterController
             $model->attributes = $_POST["Access"];
             $model->type = $_POST["Access"]['jq-validation-radios'];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-            if ($model->save()) {
+            if ($model->save(FALSE)) {
                 return $this->redirect(['index']);
             }
         }

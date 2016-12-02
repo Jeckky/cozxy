@@ -43,11 +43,15 @@ class User extends \common\models\costfit\master\UserMaster
     const USER_TYPE_BACKEND = 2;
     const USER_TYPE_FRONTEND_BACKEND = 3;
     const USER_TYPE_SUPPLIERS = 4;
-
     //const USER_STATUS_CHECKOUTS = 2;
     //const USER_STATUS_E_PAYMENT_DRAFT = 3;
     //const USER_STATUS_COMFIRM_PAYMENT = 4;
     // const USER_STATUS_E_PAYMENT_SUCCESS = 5;
+
+    const COZXY_REGIS = 'register';
+    const COZXY_PROFILE = 'profile';
+    const COZXY_USER_BACKEND = 'user_backend';
+    const COZXY_EDIT_PROFILE = 'editinfo';
 
     /**
      * @inheritdoc
@@ -60,20 +64,30 @@ class User extends \common\models\costfit\master\UserMaster
 //            ['email', 'uniqueEmail'],
             ['email', 'email'],
 //            ['email', 'exist', 'targetAttribute' => 'username', 'targetClass' => '\common\models\cosfit\User'],
-            [['email', 'password', 'confirmPassword', 'acceptTerm'], 'required', 'on' => 'register'],
+            [['email', 'password', 'confirmPassword', 'acceptTerm'], 'required', 'on' => self::COZXY_REGIS],
 //            ['email', 'unique', 'targetClass' => '\common\models\costfit\User', 'message' => 'this email address has already been taken'],
             ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"],
 //            ['email', 'exist']
             [
                 ['firstname', 'lastname', 'gender', 'tel' => [['tel'], 'integer'], 'birthDate', 'acceptTerm'],
-                'required', 'on' => 'editinfo'],
+                'required', 'on' => self::COZXY_EDIT_PROFILE],
             // [['currentPassword', 'newPassword', 'rePassword'], 'required'],
-            [['currentPassword', 'newPassword', 'rePassword'], 'required', 'on' => 'profile'],
+            [['currentPassword', 'newPassword', 'rePassword'], 'required', 'on' => self::COZXY_PROFILE],
             // ['currentPassword', 'findPasswords'],
-            ['rePassword', 'compare', 'compareAttribute' => 'newPassword', 'on' => 'profile'],
+            ['rePassword', 'compare', 'compareAttribute' => 'newPassword', 'on' => self::COZXY_PROFILE],
             //['username', 'email'],
-            [['firstname', 'lastname', 'password', 'email', 'type', 'gender'], 'required', 'on' => 'user_backend'],
+            [['firstname', 'lastname', 'password', 'email', 'type', 'gender'], 'required', 'on' => self::COZXY_USER_BACKEND],
         ]);
+    }
+
+    public function scenarios()
+    {
+        return [
+            self::COZXY_REGIS => ['email', 'password', 'confirmPassword', 'acceptTerm'],
+            self::COZXY_PROFILE => ['currentPassword', 'newPassword', 'rePassword', ['currentPassword', 'newPassword', 'rePassword']],
+            self::COZXY_USER_BACKEND => ['firstname', 'lastname', 'password', 'email', 'type', 'gender'],
+            self::COZXY_EDIT_PROFILE => ['firstname', 'lastname', 'gender', 'tel' => [['tel'], 'integer'], 'birthDate', 'acceptTerm']
+        ];
     }
 
     public function uniqueEmail($attribute, $email)
@@ -191,7 +205,7 @@ class User extends \common\models\costfit\master\UserMaster
      */
     public function getBillingAddresses()
     {
-        return $this->hasMany(AddressMaster::className(), ['userId' => 'userId'])->where('address.type=1');
+        return $this->hasMany(Address::className(), ['userId' => 'userId'])->where('address.type=1');
     }
 
     /**
@@ -199,7 +213,7 @@ class User extends \common\models\costfit\master\UserMaster
      */
     public function getShippingAddresses()
     {
-        return $this->hasMany(AddressMaster::className(), ['userId' => 'userId'])->where('address.type=2');
+        return $this->hasMany(Address::className(), ['userId' => 'userId'])->where('address.type=2');
     }
 
     public function updateProfile($email, $userId)

@@ -68,4 +68,26 @@ class ApproveController extends ManagementMasterController {
         }
     }
 
+    public function actionInvestigateApproveItems() {
+        $productId = Yii::$app->request->post('productId');
+        $typeId = Yii::$app->request->post('type');
+
+        if ($typeId == 1) { // cozxy.com
+            $suppliers = \common\models\costfit\ProductSuppliers::find()
+            ->select('`product_suppliers`.* ,  user.firstname , user.lastname , brand.title as bTitle , category.title as cTitle '
+            . ' , u1.title as uTitle , u2.title as smuTitle')
+            ->join('LEFT JOIN', 'user', 'product_suppliers.userId = user.userId')
+            ->join('LEFT JOIN', 'brand', 'product_suppliers.brandId = brand.brandId')
+            ->join('LEFT JOIN', 'category', 'product_suppliers.categoryId = category.categoryId')
+            ->join('LEFT JOIN', 'unit u1', 'product_suppliers.unit = u1.unitId')
+            ->join('LEFT JOIN', 'unit u2', 'product_suppliers.smallUnit = u2.unitId')
+            ->where('product_suppliers.productSuppId =' . $productId)->one();
+        } else if ($typeId == 2) { // suppliers
+            $suppliers = \common\models\costfit\Product::find()->where('productId =' . $productId)->one();
+        }
+        //echo '<pre>';
+        //print_r($suppliers->attributes);
+        echo json_encode($suppliers->attributes);
+    }
+
 }

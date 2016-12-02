@@ -90,6 +90,31 @@ use leandrogehlen\treegrid\TreeGrid;
             </div>
         </div>
 
+        <div class="panel ">
+            <div class="panel-heading ">
+                <span class="panel-title">Approve Product</span>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-3">
+
+                    <div class="panel panel-default panel-dark panel-body-colorful widget-profile widget-profile-centered">
+                        <div class="panel-heading">
+                            <div class="widget-profile-header">
+                                <a href="<?php echo Yii::$app->homeUrl; ?>management/approve" class="btn" style="color: #000;">
+                                    <i class="fa fa-tasks list-group-icon text-danger"></i> Approve Product </a><br>
+                            </div>
+                        </div> <!-- / .panel-heading -->
+                        <div class="panel-body text-left">
+                            <div class="widget-profile-text" style="padding: 0;">
+                                <p class="text-success">อธิบาย</p>
+                                - อนุมัติสินค้าของ Suppliers และ Coxzy.com
+                            </div>
+                        </div>
+                    </div> <!-- / .panel -->
+                </div>
+            </div>
+        </div>
+
         <div class="note note-info padding-xs-vr">
             <p>
                 - การกำหนด Group และ Level นั้น จะทำให้เราสามารถควบคุมการใช้งานของสมาชิกในการเข้าถึงบทความ หรือลิ้งค์ต่าง ๆ ได้

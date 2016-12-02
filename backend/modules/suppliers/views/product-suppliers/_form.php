@@ -101,7 +101,7 @@ use yii\redactor\widgets\Redactor;
                 'id' => 'categoryId',
                 'class' => 'required'
             ],
-        ])->label('Category');
+        ]); //->label('Category');
         echo $form->field($model, 'brandId')->widget(kartik\select2\Select2::classname(), [
             'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Brand::find()->all(), 'brandId', 'title'),
             'pluginOptions' => [
@@ -112,7 +112,7 @@ use yii\redactor\widgets\Redactor;
                 'id' => 'brandId',
                 'class' => 'required'
             ],
-        ])->label('Brand');
+        ]); //->label('Brand');
         ?>
         <?//= $form->field($model, 'categoryId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(Category::find()->all(), 'categoryId', 'title'), ['prompt' => '-- Select Category --']) ?>
 
@@ -151,7 +151,7 @@ use yii\redactor\widgets\Redactor;
                 'id' => 'unitId',
                 'class' => 'required'
             ],
-        ])->label('Unit');
+        ]); //->label('Unit');
         echo $form->field($model, 'smallUnit')->widget(kartik\select2\Select2::classname(), [
             'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Unit::find()->all(), 'unitId', 'title'),
             'pluginOptions' => [
@@ -162,7 +162,7 @@ use yii\redactor\widgets\Redactor;
                 'id' => 'smallUnit',
                 'class' => 'required'
             ],
-        ])->label('Small Unit');
+        ]); //->label('Small Unit');
         ?>
         <?= $form->field($model, 'tags', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 255]) ?>
 

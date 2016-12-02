@@ -45,7 +45,23 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
      * @inheritdoc
      */
     public function attributeLabels() {
-        return array_merge(parent::attributeLabels(), []);
+        return array_merge(parent::attributeLabels(), [
+            'categoryId' => 'หมวดหมู่',
+            'brandId' => 'ยี่ห้อ',
+            'title' => 'หัวข้อ',
+            'optionName' => 'option name',
+            'shortDescription' => 'คำอธิบายสั้น',
+            'description' => 'รายละเอียด',
+            'specification' => 'สเปค',
+            'width' => 'ความกว้าง',
+            'height' => 'ความสูง',
+            'depth' => 'ความลึก',
+            'weight' => 'น้ำหนัก',
+            'price' => 'ราคา',
+            'unit' => 'หน่วย',
+            'smallUnit' => 'หน่วยขนาดเล็ก',
+            'tags' => 'แท็ก',
+        ]);
     }
 
     /**
@@ -53,7 +69,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
      */
     public function attributes() {
         return array_merge(parent::attributes(), [
-            'image', 'Smart Price'
+            'image', 'Smart Price', 'firstname', 'lastname', 'bTitle', 'cTitle', 'uTitle', 'smuTitle'
         ]);
     }
 
@@ -63,6 +79,15 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
 
     public function getCategory() {
         return $this->hasOne(Category::className(), ['categoryId' => 'categoryId']);
+    }
+
+    static public function getUser($userId) {
+        $userSuppliers = \common\models\costfit\User::find()->where('UserId =' . $userId)->one();
+        if (isset($userSuppliers)) {
+            return 'คุณ ' . $userSuppliers->firstname . ' ' . $userSuppliers->lastname;
+        } else {
+            return 'ไม่พบข้อมูล';
+        }
     }
 
 }

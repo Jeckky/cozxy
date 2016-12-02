@@ -97,7 +97,7 @@ class ViewLevelsController extends ManagementMasterController {
             }
             $model->rules = $getRules;
             $model->createDateTime = new \yii\db\Expression('NOW()');
-            if ($model->save()) {
+            if ($model->save(FALSE)) {
                 return $this->redirect(['index']);
             }
         }
@@ -142,7 +142,7 @@ class ViewLevelsController extends ManagementMasterController {
             $model->rules = $getRules;
             $model->updateDateTime = new \yii\db\Expression('NOW()');
 
-            if ($model->save()) {
+            if ($model->save(FALSE)) {
                 return $this->redirect(['index']);
             }
         }

@@ -79,7 +79,7 @@ class UserGroupsController extends ManagementMasterController {
             }
 
             $model->createDateTime = new \yii\db\Expression('NOW()');
-            if ($model->save()) {
+            if ($model->save(FALSE)) {
                 return $this->redirect(['index']);
             }
         }
@@ -110,7 +110,7 @@ class UserGroupsController extends ManagementMasterController {
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             //echo $model->parent_id;
             //exit();
-            if ($model->save()) {
+            if ($model->save(FALSE)) {
                 return $this->redirect(['index']);
             }
         }

@@ -97,7 +97,7 @@ class MenuController extends ManagementMasterController {
 
             //echo '<pre>';
             //print_r($model->attributes );
-            if ($model->save()) {
+            if ($model->save(FALSE)) {
                 return $this->redirect(['index']);
             }
         }
@@ -148,7 +148,7 @@ class MenuController extends ManagementMasterController {
                 //echo 'not isset';
             }
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-            if ($model->save()) {
+            if ($model->save(FALSE)) {
                 return $this->redirect(['index']);
             }
         }

@@ -128,7 +128,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <div class="shippingArea">
                             <?php if (!Yii::$app->user->isGuest): ?>
                                 <?php
-                                if (count($user->addresses) > 0):
+                                if (count($user->billingAddresses) > 0):
                                     ?>
                                     <a class="panel-toggle active action" href="#costfit-select-Billing-address" style="margin-left: 10px;"><i></i>Select Billing Address </a>
                                     <div class="row" style="background-color: rgba(249, 249, 249, 0.32); width: 98%; margin-left: 2%; ">
