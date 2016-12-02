@@ -13,162 +13,294 @@ $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <h1>approve/index</h1>
 
-<?php Pjax::begin(['id' => 'employee-grid-view']); ?>
-<div class="panel colourable" id="switcher-examples">
-    <div class="panel-heading">
-        <span class="panel-title"> <h4>  รายการสินค้าที่ต้อง Approve ของ <code>Suppliers</code> </h4></span>
-    </div>
+<div class="row">
+    <div class="col-sm-12">
+        <!-- 5. $DEFAULT_TABS =============== Default tabs =============================  -->
+        <div class="panel" style="border: 0px solid transparent;">
+            <div class="panel-body" style="padding: 5px;">
+                <ul id="uidemo-tabs-default-demo" class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#uidemo-tabs-default-demo-home" data-toggle="tab">รออนุมัติ</a>
+                    </li>
+                    <li class="">
+                        <a href="#uidemo-tabs-default-demo-profile" data-toggle="tab">อนุมัติแล้ว </a>
+                    </li>
+                </ul>
 
-    <div class="panel-body">
-        <div class="col-sm-12 suppliers">
-            <?=
-            GridView::widget([
-                'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
-                'dataProvider' => $productSupp,
-                'pager' => [
-                    'options' => ['class' => 'pagination pagination-xs']
-                ],
-                'options' => [
-                    'class' => 'table-light'
-                ],
-                'rowOptions' => function ($model, $index, $widget, $grid) {
-                    return [
-                        'id' => 'productSuppId-' . $model['productSuppId']
-                    ];
-                },
-                'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-                    //'productSuppId',
-                    //'userId',
-                    [
-                        'attribute' => 'Suppliers Name',
-                        'format' => 'raw',
-                        'value' => function($model) {
-                            $userSuppliers = common\models\costfit\User::find()->where('userId=' . $model->userId)->one();
-                            return 'คุณ' . $userSuppliers->firstname . ' ' . $userSuppliers->lastname;
-                        }
-                    ],
-                    //'productGroupId',
-                    'isbn:ntext',
-                    'code',
-                    'title',
-                    [
-                        'attribute' => 'ตรวจสอบข้อมูล',
-                        'format' => 'raw',
-                        'value' => function($model) {
-                            return '<button class="btn btn-warning  btn-xs investigate-approve" data-toggle="modal" data-bind="' . $model->productSuppId . ',1"  >ตรวจสอบ ProductID : <code>' . $model->productSuppId . '</code></button>';
-                        }
-                    ],
-                    [
-                        'attribute' => 'อนุมัติ',
-                        'format' => 'raw',
-                        'value' => function($model) {
-                            $type = 'supp';
-                            $approve_txt = '<div id="switchers-colors-square" class="form-group-margin"  onchange="switchers(' . $model->productSuppId . ',1)">';
-                            if ($model->approve == 'new') {
-                                $approve_txt .= '<input type="checkbox" data-class="switcher-warning" >';
-                            } else {
-                                $approve_txt .= '<input type="checkbox" data-class="switcher-warning"   checked="checked" >';
-                            }
-                            $approve_txt .= '</div>';
-                            return $approve_txt;
-                        }
-                    ],
-                /* ['class' => 'yii\grid\ActionColumn',
-                  'header' => 'Actions',
-                  'template' => '{view}',
-                  'buttons' => [
-                  'view' => function ($url, $model) {
-                  return Html::a('<i class="fa fa-eye"></i>', $url, [
-                  'title' => Yii::t('yii', 'view'),
-                  ]);
-                  }
-                  ]
-                  ], */
-                ],
-            ]);
-            ?>
+                <div class="tab-content tab-content-bordered">
+                    <div class="tab-pane fade active in" id="uidemo-tabs-default-demo-home">
+                        <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
+                        <div class="panel colourable" id="switcher-examples">
+                            <div class="panel-heading">
+                                <span class="panel-title"> <h4>  รายการสินค้าที่ต้อง Approve ของ <code>Suppliers</code> </h4></span>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="col-sm-12 suppliers">
+                                    <?=
+                                    GridView::widget([
+                                        'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
+                                        'dataProvider' => $productSupp,
+                                        'pager' => [
+                                            'options' => ['class' => 'pagination pagination-xs']
+                                        ],
+                                        'options' => [
+                                            'class' => 'table-light'
+                                        ],
+                                        'rowOptions' => function ($model, $index, $widget, $grid) {
+                                            return [
+                                                'id' => 'productSuppId-' . $model['productSuppId']
+                                            ];
+                                        },
+                                        'columns' => [
+                                            ['class' => 'yii\grid\SerialColumn'],
+                                            //'productSuppId',
+                                            //'userId',
+                                            [
+                                                'attribute' => 'Suppliers Name',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    $userSuppliers = common\models\costfit\User::find()->where('userId=' . $model->userId)->one();
+                                                    return 'คุณ' . $userSuppliers->firstname . ' ' . $userSuppliers->lastname;
+                                                }
+                                            ],
+                                            //'productGroupId',
+                                            'isbn:ntext',
+                                            'code',
+                                            'title',
+                                            [
+                                                'attribute' => 'ตรวจสอบข้อมูล',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    return '<button class="btn btn-warning  btn-xs investigate-approve" data-toggle="modal" data-bind="' . $model->productSuppId . ',1"  >ตรวจสอบ ProductID : <code>' . $model->productSuppId . '</code></button>';
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'อนุมัติ',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    $type = 'supp';
+                                                    $approve_txt = '<div id="switchers-colors-square" class="form-group-margin"  onchange="switchers(' . $model->productSuppId . ',1)">';
+                                                    if ($model->approve == 'new') {
+                                                        $approve_txt .= '<input type="checkbox" data-class="switcher-warning" >';
+                                                    } else {
+                                                        $approve_txt .= '<input type="checkbox" data-class="switcher-warning"   checked="checked" >';
+                                                    }
+                                                    $approve_txt .= '</div>';
+                                                    return $approve_txt;
+                                                }
+                                            ],
+                                        /* ['class' => 'yii\grid\ActionColumn',
+                                          'header' => 'Actions',
+                                          'template' => '{view}',
+                                          'buttons' => [
+                                          'view' => function ($url, $model) {
+                                          return Html::a('<i class="fa fa-eye"></i>', $url, [
+                                          'title' => Yii::t('yii', 'view'),
+                                          ]);
+                                          }
+                                          ]
+                                          ], */
+                                        ],
+                                    ]);
+                                    ?>
+                                </div>
+                            </div>
+                        </div>.
+
+                        <div class="panel colourable">
+                            <div class="panel-heading">
+                                <span class="panel-title"> <h4>  รายการสินค้าที่ต้อง Approve ของ<code>Cozxy.com</code> </h4></span>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="col-sm-12 system">
+                                    <?=
+                                    GridView::widget([
+                                        'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
+                                        'dataProvider' => $productSys,
+                                        'pager' => [
+                                            'options' => ['class' => 'pagination pagination-xs']
+                                        ],
+                                        'options' => [
+                                            'class' => 'table-light table-hover'
+                                        ],
+                                        'rowOptions' => function ($model, $index, $widget, $grid) {
+                                            return [
+                                                'id' => 'productId-' . $model['productId']
+                                            ];
+                                        },
+                                        'columns' => [
+                                            ['class' => 'yii\grid\SerialColumn'],
+                                            //'productId',
+                                            [
+                                                'attribute' => 'Suppliers Name',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    $userSuppliers = common\models\costfit\User::find()->where('userId=' . $model->userId)->one();
+                                                    return 'คุณ' . $userSuppliers->firstname . ' ' . $userSuppliers->lastname;
+                                                }
+                                            ],
+                                            //'productGroupId',
+                                            'isbn:ntext',
+                                            'code',
+                                            'title',
+                                            [
+                                                'attribute' => 'ตรวจสอบข้อมูล',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    return '<button class="btn btn-warning btn-xs investigate-approve" data-toggle="modal" data-bind="' . $model->productId . ',2">ตรวจสอบ ProductID : <code>' . $model->productId . '</code></button>';
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'อนุมัติ',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    $type = 'supp';
+                                                    $approve_txt = '<div id="switchers-colors-square" class="form-group-margin"  onchange="switchers(' . $model->productId . ',2)">';
+                                                    if ($model->approve == 'new') {
+                                                        $approve_txt .= '<input type="checkbox" data-class="switcher-warning" >';
+                                                    } else {
+                                                        $approve_txt .= '<input type="checkbox" data-class="switcher-warning"   checked="checked" >';
+                                                    }
+                                                    $approve_txt .= '</div>';
+                                                    return $approve_txt;
+                                                }
+                                            ],
+                                        /* ['class' => 'yii\grid\ActionColumn',
+                                          'header' => 'Actions',
+                                          'template' => '{view}',
+                                          'buttons' => [
+                                          'view' => function ($url, $model) {
+                                          return Html::a('<i class="fa fa-eye"></i>', $url, [
+                                          'title' => Yii::t('yii', 'view'),
+                                          ]);
+                                          }
+                                          ]
+                                          ], */
+                                        ],
+                                    ]);
+                                    ?>
+                                </div>
+                            </div>
+                        </div>.
+                        <?php Pjax::end(); ?>
+                    </div> <!-- / .tab-pane -->
+                    <div class="tab-pane fade" id="uidemo-tabs-default-demo-profile">
+                        <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
+                        <div class="panel colourable" id="switcher-examples">
+                            <div class="panel-heading">
+                                <span class="panel-title"> <h4>  รายการสินค้าที่ต้อง Approve ของ <code>Suppliers</code> </h4></span>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="col-sm-12 suppliers">
+                                    <?=
+                                    GridView::widget([
+                                        'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
+                                        'dataProvider' => $productSuppApprove,
+                                        'pager' => [
+                                            'options' => ['class' => 'pagination pagination-xs']
+                                        ],
+                                        'options' => [
+                                            'class' => 'table-light'
+                                        ],
+                                        'rowOptions' => function ($model, $index, $widget, $grid) {
+                                            return [
+                                                'id' => 'productSuppId-' . $model['productSuppId']
+                                            ];
+                                        },
+                                        'columns' => [
+                                            ['class' => 'yii\grid\SerialColumn'],
+                                            //'productSuppId',
+                                            //'userId',
+                                            [
+                                                'attribute' => 'Suppliers Name',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    $userSuppliers = common\models\costfit\User::find()->where('userId=' . $model->userId)->one();
+                                                    return 'คุณ' . $userSuppliers->firstname . ' ' . $userSuppliers->lastname;
+                                                }
+                                            ],
+                                            //'productGroupId',
+                                            'isbn:ntext',
+                                            'code',
+                                            'title',
+                                            [
+                                                'attribute' => 'ดูข้อมูล',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    return '<button class="btn btn-warning  btn-xs investigate-approve" data-toggle="modal" data-bind="' . $model->productSuppId . ',1"  >ตรวจสอบ ProductID : <code>' . $model->productSuppId . '</code></button>';
+                                                }
+                                            ],
+                                        ],
+                                    ]);
+                                    ?>
+                                </div>
+                            </div>
+                        </div>.
+
+                        <div class="panel colourable">
+                            <div class="panel-heading">
+                                <span class="panel-title"> <h4>  รายการสินค้าที่ต้อง Approve ของ<code>Cozxy.com</code> </h4></span>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="col-sm-12 system">
+                                    <?=
+                                    GridView::widget([
+                                        'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
+                                        'dataProvider' => $productSysApprove,
+                                        'pager' => [
+                                            'options' => ['class' => 'pagination pagination-xs']
+                                        ],
+                                        'options' => [
+                                            'class' => 'table-light table-hover'
+                                        ],
+                                        'rowOptions' => function ($model, $index, $widget, $grid) {
+                                            return [
+                                                'id' => 'productId-' . $model['productId']
+                                            ];
+                                        },
+                                        'columns' => [
+                                            ['class' => 'yii\grid\SerialColumn'],
+                                            //'productId',
+                                            [
+                                                'attribute' => 'Suppliers Name',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    $userSuppliers = common\models\costfit\User::find()->where('userId=' . $model->userId)->one();
+                                                    return 'คุณ' . $userSuppliers->firstname . ' ' . $userSuppliers->lastname;
+                                                }
+                                            ],
+                                            //'productGroupId',
+                                            'isbn:ntext',
+                                            'code',
+                                            'title',
+                                            [
+                                                'attribute' => 'ดูข้อมูล',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    return '<button class="btn btn-warning btn-xs investigate-approve" data-toggle="modal" data-bind="' . $model->productId . ',2">ตรวจสอบ ProductID : <code>' . $model->productId . '</code></button>';
+                                                }
+                                            ],
+                                        ],
+                                    ]);
+                                    ?>
+                                </div>
+                            </div>
+                        </div>.
+                        <?php Pjax::end(); ?>
+                    </div> <!-- / .tab-pane -->
+
+                </div> <!-- / .tab-content -->
+            </div>
         </div>
+        <!-- /5. $DEFAULT_TABS -->
     </div>
-</div>.
+</div>
 
-<div class="panel colourable">
-    <div class="panel-heading">
-        <span class="panel-title"> <h4>  รายการสินค้าที่ต้อง Approve ของ<code>Cozxy.com</code> </h4></span>
-    </div>
 
-    <div class="panel-body">
-        <div class="col-sm-12 system">
-            <?=
-            GridView::widget([
-                'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
-                'dataProvider' => $productSys,
-                'pager' => [
-                    'options' => ['class' => 'pagination pagination-xs']
-                ],
-                'options' => [
-                    'class' => 'table-light table-hover'
-                ],
-                'rowOptions' => function ($model, $index, $widget, $grid) {
-                    return [
-                        'id' => 'productId-' . $model['productId']
-                    ];
-                },
-                'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-                    //'productId',
-                    [
-                        'attribute' => 'Suppliers Name',
-                        'format' => 'raw',
-                        'value' => function($model) {
-                            $userSuppliers = common\models\costfit\User::find()->where('userId=' . $model->userId)->one();
-                            return 'คุณ' . $userSuppliers->firstname . ' ' . $userSuppliers->lastname;
-                        }
-                    ],
-                    //'productGroupId',
-                    'isbn:ntext',
-                    'code',
-                    'title',
-                    [
-                        'attribute' => 'ตรวจสอบข้อมูล',
-                        'format' => 'raw',
-                        'value' => function($model) {
-                            return '<button class="btn btn-warning btn-xs investigate-approve" data-toggle="modal" data-bind="' . $model->productId . ',2">ตรวจสอบ ProductID : <code>' . $model->productId . '</code></button>';
-                        }
-                    ],
-                    [
-                        'attribute' => 'อนุมัติ',
-                        'format' => 'raw',
-                        'value' => function($model) {
-                            $type = 'supp';
-                            $approve_txt = '<div id="switchers-colors-square" class="form-group-margin"  onchange="switchers(' . $model->productId . ',2)">';
-                            if ($model->approve == 'new') {
-                                $approve_txt .= '<input type="checkbox" data-class="switcher-warning" >';
-                            } else {
-                                $approve_txt .= '<input type="checkbox" data-class="switcher-warning"   checked="checked" >';
-                            }
-                            $approve_txt .= '</div>';
-                            return $approve_txt;
-                        }
-                    ],
-                /* ['class' => 'yii\grid\ActionColumn',
-                  'header' => 'Actions',
-                  'template' => '{view}',
-                  'buttons' => [
-                  'view' => function ($url, $model) {
-                  return Html::a('<i class="fa fa-eye"></i>', $url, [
-                  'title' => Yii::t('yii', 'view'),
-                  ]);
-                  }
-                  ]
-                  ], */
-                ],
-            ]);
-            ?>
-        </div>
-    </div>
-</div>.
-<?php Pjax::end(); ?>
 <!-- 5. $SWITCHERS =============== Switchers ===============-->
 <!-- Javascript -->
 <script>
@@ -292,16 +424,19 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         </tr>
                     </tbody>
                 </table>
-                <div class="col-sm-12"><h5>(Image( Size 553px X 484px)) ::</h5>
-                    <div class="view-image-s1" style="padding: 10px;">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-12" ><h5>(Image( Size 553px X 484px)) ::</h5>
+                        <div class="view-image-s1" style="padding: 10px;">&nbsp;</div>
+                    </div>
+                    <br><br>
+                    <div class="col-sm-12"><h5>(Image Thumbnail1( Size 356px X 390px)) ::</h5>
+                        <div class="view-thumbnail1-s1" style="padding: 10px;">&nbsp;</div>
+                    </div>
+                    <div class="col-sm-12"><h5>Image Thumbnail2( Size 137px X 130px) ::</h5>
+                        <div class="view-thumbnail2-s1" style="padding: 10px;">&nbsp;</div>
+                    </div>
                 </div>
-                <br><br>
-                <div class="col-sm-12"><h5>(Image Thumbnail1( Size 356px X 390px)) ::</h5>
-                    <div class="view-thumbnail1-s1" style="padding: 10px;">&nbsp;</div>
-                </div>
-                <div class="col-sm-12"><h5>Image Thumbnail2( Size 137px X 130px) ::</h5>
-                    <div class="view-thumbnail2-s1" style="padding: 10px;">&nbsp;</div>
-                </div>
+
             </div> <!-- / .modal-body -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

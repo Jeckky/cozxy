@@ -455,31 +455,42 @@ $('.investigate-approve').on('click', function () {
                 $('.view-product-id').html(JSONObject2.productId);
             }
 
-            var simage = JSONObject2.simage.split(',');
-            var simageThumbnail1 = JSONObject2.simageThumbnail1.split(',');
-            var simageThumbnail2 = JSONObject2.simageThumbnail2.split(',');
-            for (var x in simage) {
-                //console.log(simage[i]);
-                var simage_n = [];
-                //var simage_n = '< img class = "img-responsive" src = "/' + simage[x] + '" alt = "" style = "width:100px;height:100px;" >';
-                //console.log(simage[x]);
-                $('.view-image-s1').append('<div class="col-sm-3">\n\
+            if (typeof (JSONObject2.simage) != 'undefined') {
+
+                var simage = JSONObject2.simage.split(',');
+
+                for (var x in simage) {
+                    //console.log(simage[i]);
+                    //var simage_n = '< img class = "img-responsive" src = "/' + simage[x] + '" alt = "" style = "width:100px;height:100px;" >';
+                    //console.log(simage[x]);
+                    $('.view-image-s1').append('<div class="col-sm-3" style="padding: 5px;">\n\
                         <img class="img-responsive" src="/' + simage[x] + '" alt="" style="width:100px;height:100px;">\n\
                     </div>');
+                }
+
             }
-            //$('.view-image-s1').html(simage_n);
-            for (var y in simageThumbnail1) {
-                //console.log(simage[i]);
-                $('.view-thumbnail1-s1').append('<div class="col-sm-3">\n\
+
+            if (typeof (JSONObject2.simageThumbnail1) != 'undefined') {
+                var simageThumbnail1 = JSONObject2.simageThumbnail1.split(',');
+                for (var y in simageThumbnail1) {
+                    //console.log(simage[i]);
+                    $('.view-thumbnail1-s1').append('<div class="col-sm-3" style="padding: 5px;">\n\
                             <img class="img-responsive" src="/' + simageThumbnail1[y] + '" alt="" style="width:100px;height:100px;">\n\
                         </div>');
+                }
             }
-            for (var z in simageThumbnail2) {
-                //console.log(simage[i]);
-                $('.view-thumbnail2-s1').append('<div class="col-sm-3">\n\
+
+            if (typeof (JSONObject2.simageThumbnail2) != 'undefined') {
+                var simageThumbnail2 = JSONObject2.simageThumbnail2.split(',');
+
+                for (var z in simageThumbnail2) {
+                    //console.log(simage[i]);
+                    $('.view-thumbnail2-s1').append('<div class="col-sm-3" style="padding: 5px;">\n\
                         <img class="img-responsive" src="/' + simageThumbnail2[z] + '" alt="" style="width:100px;height:100px;">\n\
                 </div>');
+                }
             }
+
             // alert(JSONObject2.firstname);
             $('.view-user-id').html(JSONObject2.firstname + ' ' + JSONObject2.astname);
             $('.view-product-group-id').html(JSONObject2.productGroupId);
@@ -517,4 +528,11 @@ $('.investigate-approve').on('click', function () {
         }
     });
     $('#myModal-investigate-approve').modal('show');
+    $('.view-image-s1').html('');
+    $('.view-thumbnail1-s1').html('');
+    $('.view-thumbnail2-s1').html('');
+    $('.view-user-id').html('');
+    $('.view-product-group-id').html('');
+    $('.view-category-id').html('');
+    $('.view-brand-id').html('');
 });
