@@ -154,8 +154,20 @@ class PickingController extends StoreMasterController {
                 } else {
                     $old = $this->checkOldUser($allOrderId); //ถ้ายังทำรายการไม่เสร็จ ยังไม่เปลี่ยนหรือ ปิดไฟ//หรือ กด refresh
                     if ($old == 'no') {
+                        //$slots = ['4', '6'];
                         $colors = \common\models\costfit\Led::variableColor($allSlot->getSlotName($slots[0]));
+                        //throw new \yii\base\Exception(print_r($colors, true));
                         $this->turnOnLedSlot($slots, $colors->ledColor, $allOrderId);
+                        $stringSlots = '';
+                        foreach ($slots as $str):
+                            $slotName = \common\models\costfit\StoreSlot::find()->where("storeSlotId=" . $str)->one();
+                            $stringSlots = $stringSlots . "'" . $slotName->barcode . "'" . ",";
+                            // $stringSlots = $stringSlots . $slotName->barcode . ",";
+                        endforeach;
+                        $stringSlots = substr($stringSlots, 0, -1);
+                        //$stringSlots = "'R1C1S2'";
+                        //throw new \yii\base\Exception($stringSlots);
+                        Yii::$app->runAction('led/led/open-led', ['slot' => $stringSlots, 'colorId' => $colors->ledColor]);
                     } else {
                         $colors = \common\models\costfit\LedColor::find()->where("ledColor = " . $old)->one();
                         //$this->turnOnLedSlot($slots, $colors->ledColor, $allOrderId);

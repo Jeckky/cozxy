@@ -447,14 +447,18 @@ class LedController extends LedMasterController {
 
     public function actionOpenLed($slot, $colorId) {
         $models = Led::find()->where("status=1 AND slot in($slot)")->all();
-
-//        throw new \yii\base\Exception(print_r($context, true));\]
+//       throw new \yii\base\Exception(print_r($context, true));\]
+        //throw new \yii\base\Exception($colorId);
+        //throw new \yii\base\Exception(print_r($models, true));
         foreach ($models as $item) {
+
             foreach ($item->ledItems as $index => $led) {
-                if ($led->status == 1) {
-                    continue;
-                }
+                /* if ($led->status == 1) {
+                  continue;
+                  } */
+                //throw new \yii\base\Exception($led->ledId);
                 $color = \common\models\costfit\LedColor::find()->where("ledColorId=$colorId")->one();
+                //throw new \yii\base\Exception($colorId . "," . $color->ledColorId . "," . $led->color);
                 if ($color->ledColorId == $led->color) {
                     $r = $color->r;
                     $g = $color->g;
