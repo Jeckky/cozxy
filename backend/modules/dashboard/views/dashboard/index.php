@@ -43,13 +43,13 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
     <?php foreach ($circulations as $month => $value): ?>
         <?= "{day: $month, v: $value}," ?>
     <?php endforeach; ?>
-    //                {day: '2014-03-10', v: 20},
-    //                {day: '2014-03-11', v: 10},
-    //                {day: '2014-03-12', v: 15},
-    //                {day: '2014-03-13', v: 12},
-    //                {day: '2014-03-14', v: 5},
-    //                {day: '2014-03-15', v: 5},
-    //                {day: '2014-03-16', v: 20}
+                    //                {day: '2014-03-10', v: 20},
+                    //                {day: '2014-03-11', v: 10},
+                    //                {day: '2014-03-12', v: 15},
+                    //                {day: '2014-03-13', v: 12},
+                    //                {day: '2014-03-14', v: 5},
+                    //                {day: '2014-03-15', v: 5},
+                    //                {day: '2014-03-16', v: 20}
                     ];
                             Morris.Line({
                                 element: 'hero-graph',
@@ -641,4 +641,9 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 
     </div>
 
+<?php } else { ?>
+    <div class="col-md-12" style="font-size: 36px;">
+        &nbsp;Welcome to Supplier
+    </div>
+    <!--<img class="img-responsive" src="<?php //echo Yii::$app->homeUrl;                ?>images/suppliers/CRM_article_011.jpg" alt="">-->
 <?php } ?>
