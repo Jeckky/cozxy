@@ -190,7 +190,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
                         <div class="panel colourable" id="switcher-examples">
                             <div class="panel-heading">
-                                <span class="panel-title"> <h4>  รายการสินค้าที่ต้อง Approve ของ <code>Suppliers</code> </h4></span>
+                                <span class="panel-title"> <h4>  รายการสินค้าที่ Approve ของ <code>Suppliers</code> </h4></span>
                             </div>
 
                             <div class="panel-body">
@@ -242,7 +242,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
                         <div class="panel colourable">
                             <div class="panel-heading">
-                                <span class="panel-title"> <h4>  รายการสินค้าที่ต้อง Approve ของ<code>Cozxy.com</code> </h4></span>
+                                <span class="panel-title"> <h4>  รายการสินค้าที่ Approve ของ<code>Cozxy.com</code> </h4></span>
                             </div>
 
                             <div class="panel-body">
