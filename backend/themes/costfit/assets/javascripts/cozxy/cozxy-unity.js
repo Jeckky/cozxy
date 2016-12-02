@@ -460,7 +460,7 @@ $('.investigate-approve').on('click', function () {
                 var simage = JSONObject2.simage.split(',');
 
                 for (var x in simage) {
-                    //console.log(simage[i]);
+                    //console.log(simage[x]);
                     //var simage_n = '< img class = "img-responsive" src = "/' + simage[x] + '" alt = "" style = "width:100px;height:100px;" >';
                     //console.log(simage[x]);
                     $('.view-image-s1').append('<div class="col-sm-3" style="padding: 5px;">\n\
