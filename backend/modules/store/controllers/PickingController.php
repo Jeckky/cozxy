@@ -290,7 +290,8 @@ class PickingController extends StoreMasterController {
 //                    }
 //                endforeach;
 //            endforeach;
-            $arrange = \common\models\costfit\StoreProductArrange::find()->where("orderId = " . $_GET['orderId'] . " and productId = " . $_GET['productId'] . " and slotId = " . $_GET['slot'] . " and pickerId = " . $userId . " and status = 99")->all(); //slot หยิบไอเทมของตัวเองหมดหรือยัง
+            //$arrange = \common\models\costfit\StoreProductArrange::find()->where("orderId = " . $_GET['orderId'] . " and productId = " . $_GET['productId'] . " and slotId = " . $_GET['slot'] . " and pickerId = " . $userId . " and status = 99")->all(); //slot หยิบไอเทมของตัวเองหมดหรือยัง
+            $arrange = \common\models\costfit\StoreProductArrange::find()->where("slotId = " . $_GET['slot'] . " and pickerId = " . $userId . " and status = 99")->all(); //slot หยิบไอเทมของตัวเองหมดหรือยัง
             $countSlot = count($arrange);
             if ($countSlot == 0) {//เมื่อ หยิบครบทุก Item ใน slot นั้น ==> ปิดไฟ(set status=0)
                 $slot = \common\models\costfit\StoreSlot::find()->where("storeSlotId = " . $_GET['slot'])->one();
@@ -298,6 +299,8 @@ class PickingController extends StoreMasterController {
                 $ledItem = LedItem::find()->where("ledId = " . $led->ledId . " and color = " . $_GET['colorId'])->one();
                 $ledItem->status = 0;
                 $ledItem->save();
+                //throw new \yii\base\Exception($slot->barcode . "," . $_GET['colorId']);
+                Yii::$app->runAction('led/led/close-led', ['slot' => $slot->barcode, 'colorId' => $_GET['colorId']]);
                 $checkCloseAll = LedItem::find()->where("color = " . $_GET['colorId'] . " and status = 1")->all();
                 if (empty($checkCloseAll)) {
                     $ledColor = \common\models\costfit\LedColor::find()->where("ledColor = " . $_GET['colorId'])->one(); //set ไฟ สีนั้นให้ว่าง

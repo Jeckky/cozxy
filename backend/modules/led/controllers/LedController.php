@@ -447,26 +447,16 @@ class LedController extends LedMasterController {
 
     public function actionOpenLed($slot, $colorId) {
         $models = Led::find()->where("status=1 AND slot in($slot)")->all();
-//       throw new \yii\base\Exception(print_r($context, true));\]
-        //throw new \yii\base\Exception($colorId);
-        //throw new \yii\base\Exception(print_r($models, true));
         foreach ($models as $item) {
 
             foreach ($item->ledItems as $index => $led) {
-                /* if ($led->status == 1) {
-                  continue;
-                  } */
-                //throw new \yii\base\Exception($led->ledId);
                 $color = \common\models\costfit\LedColor::find()->where("ledColorId=$colorId")->one();
-                //throw new \yii\base\Exception($colorId . "," . $color->ledColorId . "," . $led->color);
                 if ($color->ledColorId == $led->color) {
                     $r = $color->r;
                     $g = $color->g;
                     $b = $color->b;
                     $id = $index + 1;
-//            file_get_contents('http://' . $item->ip . "/", FALSE, $context);
                     if (file_get_contents('http://' . $item->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0) !== FALSE) {
-//            throw new \yii\base\Exception("?id=$id&status=$status&r=$r&g=$g&b=$b");
                         $statusText = "Turn On ";
                         $led->status = 1;
                         $led->save();
@@ -491,28 +481,21 @@ class LedController extends LedMasterController {
     public function actionCloseLed($slot, $colorId) {
         $item = Led::find()->where("status=1 AND slot='$slot'")->one();
 
-//        throw new \yii\base\Exception(print_r($context, true));\]
+        //throw new \yii\base\Exception(print_r($item->ledId, true));
         foreach ($item->ledItems as $index => $led) {
-            if ($led->status == 0) {
-                continue;
-            }
             $color = \common\models\costfit\LedColor::find()->where("ledColorId=$colorId")->one();
             if ($color->ledColorId == $led->color) {
                 $r = $color->r;
                 $g = $color->g;
                 $b = $color->b;
                 $id = $index + 1;
-//            file_get_contents('http://' . $item->ip . "/", FALSE, $context);
                 if (file_get_contents('http://' . $item->ip . "?id=$id&status=0&r=$r&g=$g&b=$b", NULL, NULL, 0, 0) !== FALSE) {
-//            throw new \yii\base\Exception("?id=$id&status=$status&r=$r&g=$g&b=$b");
                     $statusText = "Turn Off ";
                     $led->status = 0;
                     $led->save();
-//                        echo "LED " . $item->code . " " . $statusText . $item->ip . "<br>";
                     break;
                 } else {
                     $statusText = "Turn On ";
-//                        echo "LED " . $item->code . " " . $statusText . $item->ip . $exc->getMessage();
                 }
             } else {
                 continue;
