@@ -24,7 +24,8 @@ use \common\models\costfit\master\UserMaster;
  * @property Order[] $orders
  * @property Product[] $products
  */
-class User extends \common\models\costfit\master\UserMaster {
+class User extends \common\models\costfit\master\UserMaster
+{
 
     public $confirmPassword;
     public $acceptTerm;
@@ -51,7 +52,8 @@ class User extends \common\models\costfit\master\UserMaster {
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return array_merge(parent::rules(), [
             ['email', 'unique'],
             'tel' => [['tel'], 'string'],
@@ -74,7 +76,8 @@ class User extends \common\models\costfit\master\UserMaster {
         ]);
     }
 
-    public function uniqueEmail($attribute, $email) {
+    public function uniqueEmail($attribute, $email)
+    {
         // throw new \yii\base\Exception($email);
         $user = static::findOne(['email' => Yii::$app->encrypter->encrypt($email)]);
         if (count($user) > 0)
@@ -84,7 +87,8 @@ class User extends \common\models\costfit\master\UserMaster {
     /**
      * @inheritdoc
      */
-    public function attributes() {
+    public function attributes()
+    {
         return array_merge(parent::attributes(), [
 //            'acceptTerm',
 //            'confirmPassword'
@@ -100,7 +104,8 @@ class User extends \common\models\costfit\master\UserMaster {
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), [
             'username' => 'Email',
             'firstname' => 'Name',
@@ -109,7 +114,8 @@ class User extends \common\models\costfit\master\UserMaster {
         ]);
     }
 
-    public function findAllStatusArray() {
+    public function findAllStatusArray()
+    {
         return [
             self::USER_REGISTER => "<span class='text-warning'>ยังไม่ยืนยันผ่านอีเมลล์</span>",
             self::USER_CONFIRM_EMAIL => "<span class='text-success'>ยืนยันผ่านแล้ว</span>",
@@ -117,7 +123,8 @@ class User extends \common\models\costfit\master\UserMaster {
         ];
     }
 
-    public function getStatusText($status) {
+    public function getStatusText($status)
+    {
         $res = $this->findAllStatusArray($status);
         if (isset($res[$status])) {
             return $res[$status];
@@ -126,7 +133,8 @@ class User extends \common\models\costfit\master\UserMaster {
         }
     }
 
-    public function findAllGenderArray() {
+    public function findAllGenderArray()
+    {
         return [
 
             self::USER_STATUS_GENDER_Female => "เพศหญิง",
@@ -134,7 +142,8 @@ class User extends \common\models\costfit\master\UserMaster {
         ];
     }
 
-    public function getGenderText($status) {
+    public function getGenderText($status)
+    {
         $res = $this->findAllGenderArray($status);
         if (isset($res[$status])) {
             return $res[$status];
@@ -144,7 +153,8 @@ class User extends \common\models\costfit\master\UserMaster {
     }
 
     // USER TYPE
-    public function findAllTypeArray() {
+    public function findAllTypeArray()
+    {
         return [
             //const USER_TYPE_FRONTEND = 1;
             //const USER_TYPE_BACKEND = 2;
@@ -156,7 +166,8 @@ class User extends \common\models\costfit\master\UserMaster {
         ];
     }
 
-    public function getTypeText($status) {
+    public function getTypeText($status)
+    {
         $res = $this->findAllTypeArray($status);
         if (isset($res[$status])) {
             return $res[$status];
@@ -165,7 +176,8 @@ class User extends \common\models\costfit\master\UserMaster {
         }
     }
 
-    public static function getIsExistWishlist($productId) {
+    public static function getIsExistWishlist($productId)
+    {
         $ws = \common\models\costfit\Wishlist::find()->where("productId =" . $productId . " AND userId = " . \Yii::$app->user->id)->one();
         if (isset($ws)) {
             return TRUE;
@@ -177,22 +189,26 @@ class User extends \common\models\costfit\master\UserMaster {
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getBillingAddresses() {
+    public function getBillingAddresses()
+    {
         return $this->hasMany(AddressMaster::className(), ['userId' => 'userId'])->where('address.type=1');
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getShippingAddresses() {
+    public function getShippingAddresses()
+    {
         return $this->hasMany(AddressMaster::className(), ['userId' => 'userId'])->where('address.type=2');
     }
 
-    public function updateProfile($email, $userId) {
+    public function updateProfile($email, $userId)
+    {
         return 'ok';
     }
 
-    public function getFullName() {
+    public function getFullName()
+    {
         $fullName = '';
         if (isset($this->firstname)) {
             $fullName = $this->firstname . "  " . $this->lastname;
@@ -200,7 +216,8 @@ class User extends \common\models\costfit\master\UserMaster {
         return $fullName;
     }
 
-    public function getOrderSummary() {
+    public function getOrderSummary()
+    {
         $summary = 0;
         $orders = Order::find()->where("userId=" . $this->userId)->all();
         if (isset($orders)) {
@@ -210,7 +227,8 @@ class User extends \common\models\costfit\master\UserMaster {
         return $summary;
     }
 
-    public static function userName($id) {
+    public static function userName($id)
+    {
         $user = User::find()->where("userId=" . $id)->one();
         if (isset($user) && !empty($user)) {
             return $user->firstname . " " . $user->lastname;
