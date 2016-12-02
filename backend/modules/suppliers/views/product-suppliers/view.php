@@ -34,11 +34,23 @@ $this->params['pageHeader'] = Html::encode($this->title);
             DetailView::widget([
                 'model' => $model,
                 'attributes' => [
-                    'productId',
-                    'userId',
+                    'productSuppId',
+                    //'userId',
+                    [
+                        'attribute' => 'user',
+                        'value' => common\models\costfit\ProductSuppliers::getUser($model->userId)
+                    ],
                     'productGroupId',
-                    'brandId',
-                    'categoryId',
+                    //'brandId',
+                    //'categoryId',
+                    [
+                        'attribute' => 'brand',
+                        'value' => isset($model->brand) ? $model->brand->title : NULL
+                    ],
+                    [
+                        'attribute' => 'category',
+                        'value' => isset($model->category) ? $model->category->title : NULL
+                    ],
                     'isbn:ntext',
                     'code',
                     'title',
@@ -54,9 +66,19 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     'unit',
                     'smallUnit',
                     'tags',
-                    'status',
-                    'createDateTime',
-                    'updateDateTime',
+                    //'status',
+                    //'createDateTime',
+                    //'updateDateTime',
+                    [
+                        'attribute' => 'createDateTime',
+                        'format' => 'raw',
+                        'value' => $this->context->dateThai($model->createDateTime, 1, TRUE)
+                    ],
+                    [
+                        'attribute' => 'updateDateTime',
+                        'format' => 'raw',
+                        'value' => $this->context->dateThai($model->updateDateTime, 1, TRUE)
+                    ],
                 ],
             ])
             ?>

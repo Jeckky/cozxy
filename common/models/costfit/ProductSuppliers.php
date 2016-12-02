@@ -81,4 +81,13 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         return $this->hasOne(Category::className(), ['categoryId' => 'categoryId']);
     }
 
+    static public function getUser($userId) {
+        $userSuppliers = \common\models\costfit\User::find()->where('UserId =' . $userId)->one();
+        if (isset($userSuppliers)) {
+            return 'คุณ ' . $userSuppliers->firstname . ' ' . $userSuppliers->lastname;
+        } else {
+            return 'ไม่พบข้อมูล';
+        }
+    }
+
 }
