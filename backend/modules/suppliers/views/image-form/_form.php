@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\widgets\MaskedInput;
-use common\models\areawow;
+use common\models\costfit;
 use yii\jui\DatePicker;
 use common\models\costfit\User;
 use common\models\costfit\ProductGroup;

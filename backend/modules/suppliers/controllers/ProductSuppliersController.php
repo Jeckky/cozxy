@@ -64,8 +64,13 @@ class ProductSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionView($id) {
+        //$images = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId =' . $id)->one();
+        $dataProviderImages = new ActiveDataProvider([
+            'query' => \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $id),
+        ]);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($id), 'dataProviderImages' => $dataProviderImages
         ]);
     }
 

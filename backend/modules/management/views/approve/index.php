@@ -292,6 +292,16 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         </tr>
                     </tbody>
                 </table>
+                <div class="col-sm-12"><h5>(Image( Size 553px X 484px)) ::</h5>
+                    <div class="view-image-s1" style="padding: 10px;">&nbsp;</div>
+                </div>
+                <br><br>
+                <div class="col-sm-12"><h5>(Image Thumbnail1( Size 356px X 390px)) ::</h5>
+                    <div class="view-thumbnail1-s1" style="padding: 10px;">&nbsp;</div>
+                </div>
+                <div class="col-sm-12"><h5>Image Thumbnail2( Size 137px X 130px) ::</h5>
+                    <div class="view-thumbnail2-s1" style="padding: 10px;">&nbsp;</div>
+                </div>
             </div> <!-- / .modal-body -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

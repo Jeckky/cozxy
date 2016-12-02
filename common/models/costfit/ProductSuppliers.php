@@ -70,6 +70,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     public function attributes() {
         return array_merge(parent::attributes(), [
             'image', 'Smart Price', 'firstname', 'lastname', 'bTitle', 'cTitle', 'uTitle', 'smuTitle'
+            , 'simage', 'simageThumbnail1', 'simageThumbnail2'
         ]);
     }
 

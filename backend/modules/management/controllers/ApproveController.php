@@ -75,13 +75,16 @@ class ApproveController extends ManagementMasterController {
         if ($typeId == 1) { // cozxy.com
             $suppliers = \common\models\costfit\ProductSuppliers::find()
             ->select('`product_suppliers`.* ,  user.firstname , user.lastname , brand.title as bTitle , category.title as cTitle '
-            . ' , u1.title as uTitle , u2.title as smuTitle')
+            . ' , u1.title as uTitle , u2.title as smuTitle'
+            . ' , GROUP_CONCAT(pis.image)  as simage, GROUP_CONCAT(pis.imageThumbnail1) as simageThumbnail1 ,GROUP_CONCAT(pis.imageThumbnail2)  as simageThumbnail2')
             ->join('LEFT JOIN', 'user', 'product_suppliers.userId = user.userId')
             ->join('LEFT JOIN', 'brand', 'product_suppliers.brandId = brand.brandId')
             ->join('LEFT JOIN', 'category', 'product_suppliers.categoryId = category.categoryId')
             ->join('LEFT JOIN', 'unit u1', 'product_suppliers.unit = u1.unitId')
             ->join('LEFT JOIN', 'unit u2', 'product_suppliers.smallUnit = u2.unitId')
-            ->where('product_suppliers.productSuppId =' . $productId)->one();
+            ->join('LEFT JOIN', 'product_image_suppliers pis', 'product_suppliers.productSuppId = pis.productSuppId')
+            ->where('product_suppliers.productSuppId =' . $productId)
+            ->one();
         } else if ($typeId == 2) { // suppliers
             $suppliers = \common\models\costfit\Product::find()->where('productId =' . $productId)->one();
         }
