@@ -17,7 +17,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
     $this->render('_form', [
         'model' => $model,
         'title' => Html::encode($this->title),
-        'rankingPrice' => $rankingPrice
+        'rankingPrice' => $rankingPrice,
+        'status' => 'create'
     ])
     ?>
 
