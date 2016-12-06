@@ -154,6 +154,17 @@ class LedController extends LedMasterController {
                 $g = $_POST['LedColor']['g'];
             }
             //throw new \yii\base\Exception($b);
+            $r = $r * 7;
+            $g = $g * 7;
+            $b = $b * 7;
+            if ($r > 255) {
+                $r = 255;
+            }if ($g > 255) {
+                $g = 255;
+            }
+            if ($b > 255) {
+                $b = 255;
+            }
             $rgb = array($r, $g, $b);
             $hex = $this->rgb2hex($rgb);
             $oldColor = \common\models\costfit\LedColor::find()->where("1 order by ledColor DESC")->one();
@@ -164,18 +175,18 @@ class LedController extends LedMasterController {
             }
             $model->ledColor = $ledColorId;
             $model->htmlCode = $hex;
-            $model->r = $r;
-            $model->g = $g;
-            $model->b = $b;
+            $model->r = $_POST['LedColor']['r'];
+            $model->g = $_POST['LedColor']['g'];
+            $model->b = $_POST['LedColor']['b'];
             $model->status = 1;
             $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save(false)) {
                 return $this->redirect('index-color');
             } else {
                 return $this->render('create_color', [
-                            'r' => $r,
-                            'g' => $g,
-                            'b' => $b,
+                            'r' => $_POST['LedColor']['r'],
+                            'g' => $_POST['LedColor']['g'],
+                            'b' => $_POST['LedColor']['b'],
                             'model' => $model,
                 ]);
             }
@@ -512,7 +523,6 @@ class LedController extends LedMasterController {
             $color = \common\models\costfit\LedColor::find()->where("ledColorId=$led->color")->one();
             $result[] = ["id" => $index + 1, "status" => $led->status, "r" => $color->r, "g" => $color->g, "b" => $color->b];
         }
-
         echo json_encode($result);
     }
 

@@ -70,9 +70,10 @@ class Led extends \common\models\costfit\master\LedMaster {
             if (isset($variableColor)) {
                 $colorItem = LedItem::find()->where("ledId=" . $led->ledId . " and color=" . $variableColor->ledColor . " and status=0 order by sortOrder ASC")->one(); //หาไฟดวงที่ว่างอยู่ (status = 0)
                 $ledColor = $variableColor->ledColor;
+                $count = count($variableColor);
                 while (!isset($colorItem)) {
                     $ledColor++;
-                    if ($ledColor == 5) {
+                    if ($ledColor == $count) {
                         $ledColor = 1;
                     }
                     $colorItem = LedItem::find()->where("ledId=" . $led->ledId . " and color=" . $ledColor . " and status=0 order by sortOrder ASC")->one();
@@ -83,8 +84,8 @@ class Led extends \common\models\costfit\master\LedMaster {
             $colorItem->status = 1;
             $colorItem->save();
             $variableColor->save();
-            return $variableColor;
         }
+        return $variableColor;
     }
 
 }

@@ -34,6 +34,7 @@ $(document).on('click', '.links', function (e) {
         }
     });
 });
+// ONLY NUMBER KEYPRESS
 $(document).on('keypress', '#ledcolor-r', function (e) {
     var code = e.keyCode ? e.keyCode : e.which;
     if (code > 57) {
@@ -58,6 +59,7 @@ $(document).on('keypress', '#ledcolor-b', function (e) {
         return false;
     }
 });
+// END ONLY NUMBER
 $(document).on('keyup', '#ledcolor-r', function (event) {
     if (event.keyCode > 98 || event.keyCode < 105) {
         var a = event.keyCode;
@@ -80,6 +82,18 @@ $(document).on('keyup', '#ledcolor-r', function (event) {
             if (b == '') {
                 b = '0';
             }
+            r = r * 7;
+            g = g * 7;
+            b = b * 7;
+            if (r > 255) {
+                r = 255;
+            }
+            if (g > 255) {
+                g = 255;
+            }
+            if (b > 255) {
+                b = 255;
+            }
             $(".showColor").html('<input type="text" name="result" class="form-control" disabled style="background-color: rgb(' + r + ', ' + g + ', ' + b + ');">');
             $(".showColor").show();
         }
@@ -97,6 +111,18 @@ $(document).on('keyup', '#ledcolor-r', function (event) {
         }
         if (b == '') {
             b = '0';
+        }
+        r = r * 7;
+        g = g * 7;
+        b = b * 7;
+        if (r > 255) {
+            r = 255;
+        }
+        if (g > 255) {
+            g = 255;
+        }
+        if (b > 255) {
+            b = 255;
         }
         $(".showColor").html('<input type="text" name="result" class="form-control" disabled style="background-color: rgb(' + r + ', ' + g + ', ' + b + ');">');
         $(".showColor").show();
@@ -125,6 +151,18 @@ $(document).on('keyup', '#ledcolor-g', function (event) {
             if (b == '') {
                 b = '0';
             }
+            r = r * 7;
+            g = g * 7;
+            b = b * 7;
+            if (r > 255) {
+                r = 255;
+            }
+            if (g > 255) {
+                g = 255;
+            }
+            if (b > 255) {
+                b = 255;
+            }
             $(".showColor").html('<input type="text" name="result" class="form-control" disabled style="background-color: rgb(' + r + ', ' + g + ', ' + b + ');">');
             $(".showColor").show();
         }
@@ -142,6 +180,18 @@ $(document).on('keyup', '#ledcolor-g', function (event) {
         }
         if (b == '') {
             b = '0';
+        }
+        r = r * 7;
+        g = g * 7;
+        b = b * 7;
+        if (r > 255) {
+            r = 255;
+        }
+        if (g > 255) {
+            g = 255;
+        }
+        if (b > 255) {
+            b = 255;
         }
         $(".showColor").html('<input type="text" name="result" class="form-control" disabled style="background-color: rgb(' + r + ', ' + g + ', ' + b + ');">');
         $(".showColor").show();
@@ -170,6 +220,18 @@ $(document).on('keyup', '#ledcolor-b', function (event) {
             if (b == '') {
                 b = '0';
             }
+            r = r * 7;
+            g = g * 7;
+            b = b * 7;
+            if (r > 255) {
+                r = 255;
+            }
+            if (g > 255) {
+                g = 255;
+            }
+            if (b > 255) {
+                b = 255;
+            }
             $(".showColor").html('<input type="text" name="result" class="form-control" disabled style="background-color: rgb(' + r + ', ' + g + ', ' + b + ');">');
             $(".showColor").show();
         }
@@ -186,6 +248,18 @@ $(document).on('keyup', '#ledcolor-b', function (event) {
         }
         if (b == '') {
             b = '0';
+        }
+        r = r * 7;
+        g = g * 7;
+        b = b * 7;
+        if (r > 255) {
+            r = 255;
+        }
+        if (g > 255) {
+            g = 255;
+        }
+        if (b > 255) {
+            b = 255;
         }
         $(".showColor").html('<input type="text" name="result" class="form-control" disabled style="background-color: rgb(' + r + ', ' + g + ', ' + b + ');">');
         $(".showColor").show();
