@@ -455,7 +455,15 @@ $('.investigate-approve').on('click', function () {
                 $('.view-product-id').html(JSONObject2.productId);
             }
 
-            if (typeof (JSONObject2.simage) != 'undefined') {
+            //alert(JSONObject2.simage);
+            //alert(JSONObject2.simageThumbnail1);
+            //alert(JSONObject2.simageThumbnail2);
+
+            //alert(typeof (JSONObject2.simage));
+            //alert(typeof (JSONObject2.simageThumbnail1));
+            //alert(typeof (JSONObject2.simageThumbnail2));
+
+            if (typeof (JSONObject2.simage) != 'object') {
 
                 var simage = JSONObject2.simage.split(',');
 
@@ -470,7 +478,7 @@ $('.investigate-approve').on('click', function () {
 
             }
 
-            if (typeof (JSONObject2.simageThumbnail1) != 'undefined') {
+            if (typeof (JSONObject2.simageThumbnail1) != 'object') {
                 var simageThumbnail1 = JSONObject2.simageThumbnail1.split(',');
                 for (var y in simageThumbnail1) {
                     //console.log(simage[i]);
@@ -480,7 +488,7 @@ $('.investigate-approve').on('click', function () {
                 }
             }
 
-            if (typeof (JSONObject2.simageThumbnail2) != 'undefined') {
+            if (typeof (JSONObject2.simageThumbnail2) != 'object') {
                 var simageThumbnail2 = JSONObject2.simageThumbnail2.split(',');
 
                 for (var z in simageThumbnail2) {
