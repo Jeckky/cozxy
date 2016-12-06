@@ -61,6 +61,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
             'unit' => 'หน่วย',
             'smallUnit' => 'หน่วยขนาดเล็ก',
             'tags' => 'แท็ก',
+            'quantity' => 'จำนวน'
         ]);
     }
 
@@ -70,7 +71,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     public function attributes() {
         return array_merge(parent::attributes(), [
             'image', 'Smart Price', 'firstname', 'lastname', 'bTitle', 'cTitle', 'uTitle', 'smuTitle'
-            , 'simage', 'simageThumbnail1', 'simageThumbnail2'
+            , 'simage', 'simageThumbnail1', 'simageThumbnail2', 'priceSuppliers'
         ]);
     }
 

@@ -65,7 +65,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     // 'height',
                     // 'depth',
                     // 'weight',
-                    'price',
+                    //'price',
+                    [
+                        'attribute' => 'ราคาล่าสุด',
+                        'format' => 'html',
+                        'value' => function($model) {
+                            return $model->priceSuppliers;
+                        }
+                    ],
                     //'approve',
                     [
                         'attribute' => 'approve',
@@ -99,13 +106,22 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         }
                     ],
                     [
-                        'attribute' => 'Smart',
+                        'attribute' => 'ราคา',
                         'format' => 'html',
                         'value' => function($model) {
-                            return Html::a('<i class="fa fa-btc"></i> เพิ่มราคาขาย / ราคาค่าจัดส่ง', Yii::$app->homeUrl . "suppliers/product-price-suppliers?productSuppId=" . $model->productSuppId, [
+                            return Html::a('<i class="fa fa-btc"></i> เพิ่มราคาขาย', Yii::$app->homeUrl . "suppliers/product-price-suppliers?productSuppId=" . $model->productSuppId, [
                                 'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
                         }
                     ],
+                    /*
+                      [
+                      'attribute' => 'Smart',
+                      'format' => 'html',
+                      'value' => function($model) {
+                      return Html::a('<i class="fa fa-btc"></i> เพิ่มราคาขายและราคาค่าจัดส่ง', Yii::$app->homeUrl . "suppliers/product-price-suppliers?productSuppId=" . $model->productSuppId, [
+                      'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
+                      }
+                      ], */
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
                         'template' => '{view} {update} {delete}',

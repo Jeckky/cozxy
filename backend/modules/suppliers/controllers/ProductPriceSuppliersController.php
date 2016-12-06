@@ -31,7 +31,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
      */
     public function actionIndex() {
         $dataProvider = new ActiveDataProvider([
-            'query' => ProductPriceSuppliers::find()->where('productSuppId=' . $_GET['productSuppId']),
+            'query' => ProductPriceSuppliers::find()->where('productSuppId=' . $_GET['productSuppId'])->orderBy('status desc'),
         ]);
 
         $dataProvider1 = new ActiveDataProvider([
@@ -63,15 +63,19 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
      */
     public function actionCreate() {
         $model = new ProductPriceSuppliers();
+        $rankingPrice = \common\models\costfit\ProductPriceSuppliers::rankingPrice();
         if (isset($_POST["ProductPriceSuppliers"])) {
             $model->attributes = $_POST["ProductPriceSuppliers"];
+            \common\models\costfit\ProductPriceSuppliers::updateAll(['status' => 0], ['productSuppId' => $_GET['productSuppId']]);
+            $model->status = 1;
             $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
-                return $this->redirect(['product-price-suppliers/index?productSuppId=' . $_GET['productSuppId']]);
+                //return $this->redirect(['product-price-suppliers/index?productSuppId=' . $_GET['productSuppId']]);
+                return $this->redirect('/suppliers/product-suppliers/image-form?productSuppId=' . $model->productSuppId);
             }
         }
         return $this->render('create', [
-            'model' => $model,
+            'model' => $model, 'rankingPrice' => $rankingPrice
         ]);
     }
 
@@ -82,6 +86,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionUpdate($id) {
+        $rankingPrice = \common\models\costfit\ProductPriceSuppliers::rankingPrice();
         $model = $this->findModel($id);
         if (isset($_POST["ProductPriceSuppliers"])) {
             $model->attributes = $_POST["ProductPriceSuppliers"];
@@ -91,7 +96,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
             }
         }
         return $this->render('update', [
-            'model' => $model,
+            'model' => $model, 'rankingPrice' => $rankingPrice
         ]);
     }
 

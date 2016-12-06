@@ -3,6 +3,7 @@
 namespace common\models\costfit;
 
 use Yii;
+use yii\data\ActiveDataProvider;
 use \common\models\costfit\master\ProductPriceSuppliersMaster;
 
 /**
@@ -67,6 +68,13 @@ class ProductPriceSuppliers extends \common\models\costfit\master\ProductPriceSu
         } else {
             return NULL;
         }
+    }
+
+    public static function rankingPrice() {
+        $rankingPrice = new ActiveDataProvider([
+            'query' => ProductPriceSuppliers::find()->where('status = 1')->orderBy('price asc'),
+        ]);
+        return $rankingPrice;
     }
 
 }

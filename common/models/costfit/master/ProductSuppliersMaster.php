@@ -23,13 +23,13 @@ use Yii;
     * @property string $height
     * @property string $depth
     * @property string $weight
-    * @property string $price
     * @property string $unit
     * @property string $smallUnit
     * @property string $tags
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
+    * @property string $quantity
     * @property string $approve
     * @property string $productId
     * @property string $approveCreateBy
@@ -51,10 +51,10 @@ return 'product_suppliers';
 public function rules()
 {
 return [
-            [['userId', 'productGroupId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'productId', 'approveCreateBy'], 'integer'],
+            [['userId', 'productGroupId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'quantity', 'productId', 'approveCreateBy'], 'integer'],
             [['isbn', 'shortDescription', 'description', 'specification'], 'string'],
             [['title', 'createDateTime', 'approvecreateDateTime'], 'required'],
-            [['width', 'height', 'depth', 'weight', 'price'], 'number'],
+            [['width', 'height', 'depth', 'weight'], 'number'],
             [['createDateTime', 'updateDateTime', 'approvecreateDateTime'], 'safe'],
             [['code'], 'string', 'max' => 100],
             [['title', 'optionName'], 'string', 'max' => 200],
@@ -85,13 +85,13 @@ return [
     'height' => Yii::t('product_suppliers', 'Height'),
     'depth' => Yii::t('product_suppliers', 'Depth'),
     'weight' => Yii::t('product_suppliers', 'Weight'),
-    'price' => Yii::t('product_suppliers', 'Price'),
     'unit' => Yii::t('product_suppliers', 'Unit'),
     'smallUnit' => Yii::t('product_suppliers', 'Small Unit'),
     'tags' => Yii::t('product_suppliers', 'Tags'),
     'status' => Yii::t('product_suppliers', 'Status'),
     'createDateTime' => Yii::t('product_suppliers', 'Create Date Time'),
     'updateDateTime' => Yii::t('product_suppliers', 'Update Date Time'),
+    'quantity' => Yii::t('product_suppliers', 'Quantity'),
     'approve' => Yii::t('product_suppliers', 'Approve'),
     'productId' => Yii::t('product_suppliers', 'Product ID'),
     'approveCreateBy' => Yii::t('product_suppliers', 'Approve Create By'),
