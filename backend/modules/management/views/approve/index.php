@@ -60,8 +60,16 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 'attribute' => 'Suppliers Name',
                                                 'format' => 'raw',
                                                 'value' => function($model) {
-                                                    $userSuppliers = common\models\costfit\User::find()->where('userId=' . $model->userId)->one();
-                                                    return 'คุณ' . $userSuppliers->firstname . ' ' . $userSuppliers->lastname;
+                                                    if (isset($model->userId)) {
+                                                        $userSuppliers = common\models\costfit\User::find()->where('userId =' . isset($model->userId) ? $model->userId : '')->one();
+                                                        $firstname = $userSuppliers->firstname;
+                                                        $lastname = $userSuppliers->lastname;
+                                                    } else {
+                                                        $firstname = NULL;
+                                                        $lastname = NULL;
+                                                    }
+
+                                                    return 'คุณ' . $firstname . ' ' . $lastname;
                                                 }
                                             ],
                                             //'productGroupId',
@@ -137,8 +145,16 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 'attribute' => 'Suppliers Name',
                                                 'format' => 'raw',
                                                 'value' => function($model) {
-                                                    $userSuppliers = common\models\costfit\User::find()->where('userId=' . $model->userId)->one();
-                                                    return 'คุณ' . $userSuppliers->firstname . ' ' . $userSuppliers->lastname;
+                                                    if (isset($model->userId)) {
+                                                        $userSuppliers = common\models\costfit\User::find()->where('userId =' . isset($model->userId) ? $model->userId : '')->one();
+                                                        $firstname = $userSuppliers->firstname;
+                                                        $lastname = $userSuppliers->lastname;
+                                                    } else {
+                                                        $firstname = NULL;
+                                                        $lastname = NULL;
+                                                    }
+
+                                                    return 'คุณ' . $firstname . ' ' . $lastname;
                                                 }
                                             ],
                                             //'productGroupId',
@@ -218,8 +234,16 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 'attribute' => 'Suppliers Name',
                                                 'format' => 'raw',
                                                 'value' => function($model) {
-                                                    $userSuppliers = common\models\costfit\User::find()->where('userId=' . $model->userId)->one();
-                                                    return 'คุณ' . $userSuppliers->firstname . ' ' . $userSuppliers->lastname;
+                                                    if (isset($model->userId)) {
+                                                        $userSuppliers = common\models\costfit\User::find()->where('userId =' . isset($model->userId) ? $model->userId : '')->one();
+                                                        $firstname = $userSuppliers->firstname;
+                                                        $lastname = $userSuppliers->lastname;
+                                                    } else {
+                                                        $firstname = NULL;
+                                                        $lastname = NULL;
+                                                    }
+
+                                                    return 'คุณ' . $firstname . ' ' . $lastname;
                                                 }
                                             ],
                                             //'productGroupId',
@@ -269,8 +293,16 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 'attribute' => 'Suppliers Name',
                                                 'format' => 'raw',
                                                 'value' => function($model) {
-                                                    $userSuppliers = common\models\costfit\User::find()->where('userId=' . $model->userId)->one();
-                                                    return 'คุณ' . $userSuppliers->firstname . ' ' . $userSuppliers->lastname;
+                                                    if (isset($model->userId)) {
+                                                        $userSuppliers = common\models\costfit\User::find()->where('userId =' . isset($model->userId) ? $model->userId : '')->one();
+                                                        $firstname = $userSuppliers->firstname;
+                                                        $lastname = $userSuppliers->lastname;
+                                                    } else {
+                                                        $firstname = NULL;
+                                                        $lastname = NULL;
+                                                    }
+
+                                                    return 'คุณ' . $firstname . ' ' . $lastname;
                                                 }
                                             ],
                                             //'productGroupId',
