@@ -78,7 +78,7 @@ use common\models\costfit\ProductSuppliers;
 
     <div class="col-sm-6">
         <div class="panel-heading">
-            <span class="panel-title">เทียบลำดับราคา :: Suppliers</span>
+            <span class="panel-title">ตารางเปรียบเทียบราคา :: Suppliers</span>
         </div>
 
         <div class="panel-heading">
@@ -91,7 +91,7 @@ use common\models\costfit\ProductSuppliers;
             ];
 
             echo kartik\select2\Select2::widget([
-                'name' => 'userId',
+                'name' => 'comparePrices',
                 // 'value' => ['THA'], // initial value
                 'data' => $data,
                 'options' => ['placeholder' => 'Select or Search ...', 'id' => 'userSuppliers'], //, 'onchange' => 'this.form.submit()'
@@ -100,6 +100,7 @@ use common\models\costfit\ProductSuppliers;
                     'placeholder' => 'Select or Search ...',
                     'loadingText' => 'Loading  ...',
                     'initialize' => true,
+                    'id' => 'comparePrices'
                 ],
             ]);
             ?>
