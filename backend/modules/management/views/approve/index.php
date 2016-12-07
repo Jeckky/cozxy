@@ -286,7 +286,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 'format' => 'raw',
                                                 'value' => function($model) {
                                                     if (isset($model->userId)) {
-                                                        $userSuppliers = common\models\costfit\User::find()->where('userId =' . isset($model->userId) ? $model->userId : '')->one();
+                                                        $userSuppliers = common\models\costfit\User::find()->where('userId =' . $model->userId)->one();
                                                         $firstname = $userSuppliers->firstname;
                                                         $lastname = $userSuppliers->lastname;
                                                     } else {
@@ -303,7 +303,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 'format' => 'raw',
                                                 'value' => function($model) {
                                                     if (isset($model->userId)) {
-                                                        $userSuppliers = common\models\costfit\User::find()->where('userId =' . isset($model->approveCreateBy) ? $model->approveCreateBy : '')->one();
+                                                        $userSuppliers = common\models\costfit\User::find()->where('userId =' . $model->approveCreateBy)->one();
                                                         $firstname = $userSuppliers->firstname;
                                                         $lastname = $userSuppliers->lastname;
                                                     } else {
@@ -374,7 +374,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 'format' => 'raw',
                                                 'value' => function($model) {
                                                     if (isset($model->userId)) {
-                                                        $userSuppliers = common\models\costfit\User::find()->where('userId =' . isset($model->userId) ? $model->userId : '')->one();
+                                                        $userSuppliers = common\models\costfit\User::find()->where('userId =' . $model->userId)->one();
                                                         $firstname = $userSuppliers->firstname;
                                                         $lastname = $userSuppliers->lastname;
                                                     } else {
@@ -391,7 +391,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 'format' => 'raw',
                                                 'value' => function($model) {
                                                     if (isset($model->userId)) {
-                                                        $userSuppliers = common\models\costfit\User::find()->where('userId =' . isset($model->approveCreateBy) ? $model->approveCreateBy : '')->one();
+                                                        $userSuppliers = common\models\costfit\User::find()->where('userId =' . $model->approveCreateBy)->one();
                                                         $firstname = $userSuppliers->firstname;
                                                         $lastname = $userSuppliers->lastname;
                                                     } else {
