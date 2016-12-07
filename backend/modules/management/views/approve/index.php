@@ -14,7 +14,25 @@ $this->params['pageHeader'] = Html::encode($this->title);
 <h1>approve/index</h1>
 
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-xs-12 col-sm-12">
+        <?php
+        //echo '<label class="control-label">Provinces</label>';
+        echo kartik\select2\Select2::widget([
+            'name' => 'User[userId] ',
+            // 'value' => ['THA'], // initial value
+            'data' => yii\helpers\ArrayHelper::map(common\models\costfit\User::find()->where('type =4')->all(), 'userId', 'username'),
+            'options' => ['placeholder' => 'Select User Suppliers ...', 'id' => 'userSuppliers'],
+            'pluginOptions' => [
+                'tags' => true,
+                'placeholder' => 'Select...',
+                'loadingText' => 'Loading User Suppliers ...',
+                'initialize' => true,
+            ],
+        ]);
+        ?>
+    </div>
+
+    <div class="col-sm-12" style="margin-top: 10px;">
         <!-- 5. $DEFAULT_TABS =============== Default tabs =============================  -->
         <div class="panel" style="border: 0px solid transparent;">
             <div class="panel-body" style="padding: 5px;">
