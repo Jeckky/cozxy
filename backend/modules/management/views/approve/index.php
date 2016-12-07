@@ -99,6 +99,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             'isbn:ntext',
                                             'code',
                                             'title',
+                                            'quantity',
                                             [
                                                 'attribute' => 'ตรวจสอบข้อมูล',
                                                 'format' => 'raw',
