@@ -80,7 +80,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             //'productSuppId',
                                             //'userId',
                                             [
-                                                'attribute' => 'Suppliers Name',
+                                                'attribute' => 'Suppliers',
                                                 'format' => 'raw',
                                                 'value' => function($model) {
                                                     if (isset($model->userId)) {
@@ -165,7 +165,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             ['class' => 'yii\grid\SerialColumn'],
                                             //'productId',
                                             [
-                                                'attribute' => 'Suppliers Name',
+                                                'attribute' => 'Suppliers',
                                                 'format' => 'raw',
                                                 'value' => function($model) {
                                                     if (isset($model->userId)) {
@@ -253,8 +253,21 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             ['class' => 'yii\grid\SerialColumn'],
                                             //'productSuppId',
                                             //'userId',
+                                            //'productGroupId',
+                                            'isbn:ntext',
+                                            'code',
+                                            'title',
+                                            //'quantity',
                                             [
-                                                'attribute' => 'Suppliers Name',
+                                                'attribute' => 'จำนวน',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    return $model->quantity;
+                                                }
+                                            ],
+                                            //'userId',
+                                            [
+                                                'attribute' => 'Suppiers',
                                                 'format' => 'raw',
                                                 'value' => function($model) {
                                                     if (isset($model->userId)) {
@@ -269,10 +282,35 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     return 'คุณ' . $firstname . ' ' . $lastname;
                                                 }
                                             ],
-                                            //'productGroupId',
-                                            'isbn:ntext',
-                                            'code',
-                                            'title',
+                                            //'approveCreateBy',
+                                            [
+                                                'attribute' => 'Admin',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    if (isset($model->userId)) {
+                                                        $userSuppliers = common\models\costfit\User::find()->where('userId =' . isset($model->approveCreateBy) ? $model->approveCreateBy : '')->one();
+                                                        $firstname = $userSuppliers->firstname;
+                                                        $lastname = $userSuppliers->lastname;
+                                                    } else {
+                                                        $firstname = NULL;
+                                                        $lastname = NULL;
+                                                    }
+
+                                                    return 'คุณ' . $firstname . ' ' . $lastname;
+                                                }
+                                            ],
+                                            //'approvecreateDateTime',
+                                            [
+                                                'attribute' => 'วันอนุมัติ',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    if ($model->approvecreateDateTime == '0000-00-00 00:00:00') {
+                                                        return '';
+                                                    } else {
+                                                        return $this->context->dateThai($model->approvecreateDateTime, 1, TRUE);
+                                                    }
+                                                }
+                                            ],
                                             [
                                                 'attribute' => 'ดูข้อมูล',
                                                 'format' => 'raw',
@@ -312,8 +350,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         'columns' => [
                                             ['class' => 'yii\grid\SerialColumn'],
                                             //'productId',
+                                            //'productGroupId',
+                                            'isbn:ntext',
+                                            'code',
+                                            'title',
                                             [
-                                                'attribute' => 'Suppliers Name',
+                                                'attribute' => 'Suppiers',
                                                 'format' => 'raw',
                                                 'value' => function($model) {
                                                     if (isset($model->userId)) {
@@ -328,10 +370,35 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     return 'คุณ' . $firstname . ' ' . $lastname;
                                                 }
                                             ],
-                                            //'productGroupId',
-                                            'isbn:ntext',
-                                            'code',
-                                            'title',
+                                            //'approveCreateBy',
+                                            [
+                                                'attribute' => 'Admin',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    if (isset($model->userId)) {
+                                                        $userSuppliers = common\models\costfit\User::find()->where('userId =' . isset($model->approveCreateBy) ? $model->approveCreateBy : '')->one();
+                                                        $firstname = $userSuppliers->firstname;
+                                                        $lastname = $userSuppliers->lastname;
+                                                    } else {
+                                                        $firstname = NULL;
+                                                        $lastname = NULL;
+                                                    }
+
+                                                    return 'คุณ' . $firstname . ' ' . $lastname;
+                                                }
+                                            ],
+                                            //'approvecreateDateTime',
+                                            [
+                                                'attribute' => 'วันอนุมัติ',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    if ($model->approvecreateDateTime == '0000-00-00 00:00:00') {
+                                                        return '';
+                                                    } else {
+                                                        return $this->context->dateThai($model->approvecreateDateTime, 1, TRUE);
+                                                    }
+                                                }
+                                            ],
                                             [
                                                 'attribute' => 'ดูข้อมูล',
                                                 'format' => 'raw',
