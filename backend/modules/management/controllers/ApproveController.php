@@ -13,25 +13,54 @@ use common\models\costfit\Product;
 class ApproveController extends ManagementMasterController {
 
     public function actionIndex() {
-        $productSys = new ActiveDataProvider([
-            'query' => \common\models\costfit\Product:: find()
-            ->where('approve = "new"'),
-        ]);
 
-        $productSysApprove = new ActiveDataProvider([
-            'query' => \common\models\costfit\Product:: find()
-            ->where('approve = "approve"'),
-        ]);
+        $userId = Yii::$app->request->post('userId');
 
-        $productSupp = new ActiveDataProvider([
-            'query' => \common\models\costfit\ProductSuppliers:: find()
-            ->where('approve = "new"'),
-        ]);
+        if (isset($userId)) {
+            $productSys = new ActiveDataProvider([
+                'query' => \common\models\costfit\Product:: find()
+                ->where('approve = "new"')
+                ->andWhere('userId =' . $userId)
+            ]);
 
-        $productSuppApprove = new ActiveDataProvider([
-            'query' => \common\models\costfit\ProductSuppliers:: find()
-            ->where('approve = "approve"'),
-        ]);
+            $productSysApprove = new ActiveDataProvider([
+                'query' => \common\models\costfit\Product:: find()
+                ->where('approve = "approve"')
+                ->andWhere('userId =' . $userId)
+            ]);
+
+            $productSupp = new ActiveDataProvider([
+                'query' => \common\models\costfit\ProductSuppliers:: find()
+                ->where('approve = "new"')
+                ->andWhere('userId =' . $userId)
+            ]);
+
+            $productSuppApprove = new ActiveDataProvider([
+                'query' => \common\models\costfit\ProductSuppliers:: find()
+                ->where('approve = "approve"')
+                ->andWhere('userId =' . $userId)
+            ]);
+        } else {
+            $productSys = new ActiveDataProvider([
+                'query' => \common\models\costfit\Product:: find()
+                ->where('approve = "new"')
+            ]);
+
+            $productSysApprove = new ActiveDataProvider([
+                'query' => \common\models\costfit\Product:: find()
+                ->where('approve = "approve"'),
+            ]);
+
+            $productSupp = new ActiveDataProvider([
+                'query' => \common\models\costfit\ProductSuppliers:: find()
+                ->where('approve = "new"'),
+            ]);
+
+            $productSuppApprove = new ActiveDataProvider([
+                'query' => \common\models\costfit\ProductSuppliers:: find()
+                ->where('approve = "approve"'),
+            ]);
+        }
 
         return $this->render('index', [
             'productSys' => $productSys, 'productSupp' => $productSupp, 'productSysApprove' => $productSysApprove, 'productSuppApprove' => $productSuppApprove
@@ -43,7 +72,7 @@ class ApproveController extends ManagementMasterController {
         $productId = Yii::$app->request->post('productSuppId');
         $type = Yii::$app->request->post('type');
         if ($type == 1) { // Product Suppliers
-            $ps = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $productId . ' and approve = "new"')->one();
+            $ps = \common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $productId . ' and approve = "new"')->one();
             $ps->approve = 'approve';
             $ps->approveCreateBy = Yii::$app->user->identity->userId;
             $ps->approvecreateDateTime = new \yii\db\Expression('NOW()');
@@ -51,7 +80,7 @@ class ApproveController extends ManagementMasterController {
                 //return $this->redirect(['index']);
             }
         } elseif ($type == 2) {// Product Sys
-            $pss = \common\models\costfit\Product::find()->where('productId =' . $productId . ' and approve = "new"')->one();
+            $pss = \common\models\costfit\Product::find()->where('productId = ' . $productId . ' and approve = "new"')->one();
             $pss->approve = 'approve';
             $pss->approveCreateBy = Yii::$app->user->identity->userId;
             $pss->approvecreateDateTime = new \yii\db\Expression('NOW()');
@@ -84,30 +113,30 @@ class ApproveController extends ManagementMasterController {
 
         if ($typeId == 1) { // cozxy.com
             $suppliers = \common\models\costfit\ProductSuppliers::find()
-            ->select('`product_suppliers`.* ,  user.firstname , user.lastname , brand.title as bTitle , category.title as cTitle '
-            . ' , u1.title as uTitle , u2.title as smuTitle'
-            . ' , GROUP_CONCAT(pis.image)  as simage, GROUP_CONCAT(pis.imageThumbnail1) as simageThumbnail1 ,GROUP_CONCAT(pis.imageThumbnail2)  as simageThumbnail2')
+            ->select('`product_suppliers`.*, user.firstname, user.lastname, brand.title as bTitle, category.title as cTitle '
+            . ', u1.title as uTitle, u2.title as smuTitle'
+            . ', GROUP_CONCAT(pis.image) as simage, GROUP_CONCAT(pis.imageThumbnail1) as simageThumbnail1, GROUP_CONCAT(pis.imageThumbnail2) as simageThumbnail2')
             ->join('LEFT JOIN', 'user', 'product_suppliers.userId = user.userId')
             ->join('LEFT JOIN', 'brand', 'product_suppliers.brandId = brand.brandId')
             ->join('LEFT JOIN', 'category', 'product_suppliers.categoryId = category.categoryId')
             ->join('LEFT JOIN', 'unit u1', 'product_suppliers.unit = u1.unitId')
             ->join('LEFT JOIN', 'unit u2', 'product_suppliers.smallUnit = u2.unitId')
             ->join('LEFT JOIN', 'product_image_suppliers pis', 'product_suppliers.productSuppId = pis.productSuppId')
-            ->where('product_suppliers.productSuppId =' . $productId)
+            ->where('product_suppliers.productSuppId = ' . $productId)
             ->one();
         } else if ($typeId == 2) { // suppliers
-            //$suppliers = \common\models\costfit\Product::find()->where('productId =' . $productId)->one();
+            //$suppliers = \common\models\costfit\Product::find()->where('productId = ' . $productId)->one();
             $suppliers = \common\models\costfit\Product::find()
-            ->select('`product`.* ,  user.firstname , user.lastname , brand.title as bTitle , category.title as cTitle '
-            . ' , u1.title as uTitle , u2.title as smuTitle'
-            . ' , GROUP_CONCAT(pis.image)  as simage, GROUP_CONCAT(pis.imageThumbnail1) as simageThumbnail1 ,GROUP_CONCAT(pis.imageThumbnail2)  as simageThumbnail2')
+            ->select('`product`.*, user.firstname, user.lastname, brand.title as bTitle, category.title as cTitle '
+            . ', u1.title as uTitle, u2.title as smuTitle'
+            . ', GROUP_CONCAT(pis.image) as simage, GROUP_CONCAT(pis.imageThumbnail1) as simageThumbnail1, GROUP_CONCAT(pis.imageThumbnail2) as simageThumbnail2')
             ->join('LEFT JOIN', 'user', 'product.userId = user.userId')
             ->join('LEFT JOIN', 'brand', 'product.brandId = brand.brandId')
             ->join('LEFT JOIN', 'category', 'product.categoryId = category.categoryId')
             ->join('LEFT JOIN', 'unit u1', 'product.unit = u1.unitId')
             ->join('LEFT JOIN', 'unit u2', 'product.smallUnit = u2.unitId')
             ->join('LEFT JOIN', 'product_image pis', 'product.productId = pis.productId')
-            ->where('product.productId =' . $productId)
+            ->where('product.productId = ' . $productId)
             ->one();
         }
         //echo '<pre>';

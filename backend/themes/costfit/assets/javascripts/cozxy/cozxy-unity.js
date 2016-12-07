@@ -544,3 +544,23 @@ $('.investigate-approve').on('click', function () {
     $('.view-category-id').html('');
     $('.view-brand-id').html('');
 });
+
+function search(userId) {
+    //alert(userId);
+    $.ajax({
+        url: 'approve',
+        data: {"userId": userId},
+        type: 'post',
+        success: function (result) {
+            //alert(result);
+            //var JSONObject2 = JSON.parse(result);
+            //$(".tes-test").html('' + JSONObject2 + '');
+            //$("tbody tr:first-child").css({backgroundColor: 'yellow', fontWeight: 'bolder'});
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //debugger;
+            //alert(errorThrown);
+        }
+    });
+}

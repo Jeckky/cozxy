@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -12,19 +13,31 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <h1>approve/index</h1>
-<hr>
+
 <div class="row">
-    <div class="col-xs-12 col-sm-12">
-        <div class="row form-group">
-            <label class="col-sm-2 control-label text-right">ค้น Suppliers:</label>
+    <div class="col-xs-12 col-sm-12" style="margin-top: 20px;">
+        <?php
+        $form = ActiveForm::begin([
+            //'action' => '#',
+            'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+            'fieldConfig' => [
+                'template' => '{label}<div class="col-sm-9">{input}</div>',
+                'labelOptions' => [
+                    'class' => 'col-sm-3 control-label  '
+                ]
+            ]
+        ]);
+        ?>
+        <div class="row form-group" style="margin-top: 10px; padding: 10px;">
+            <label class="col-sm-2 control-label text-right">ค้นหา Suppliers:</label>
             <div class="col-sm-10">
                 <?php
                 //echo '<label class="control-label">Provinces</label>';
                 echo kartik\select2\Select2::widget([
-                    'name' => 'User[userId] ',
+                    'name' => 'userId',
                     // 'value' => ['THA'], // initial value
                     'data' => yii\helpers\ArrayHelper::map(common\models\costfit\User::find()->where('type =4')->all(), 'userId', 'username'),
-                    'options' => ['placeholder' => 'Select or Search User Suppliers ...', 'id' => 'userSuppliers'],
+                    'options' => ['placeholder' => 'Select or Search User Suppliers ...', 'id' => 'userSuppliers', 'onchange' => 'this.form.submit()'], //, 'onchange' => 'this.form.submit()'
                     'pluginOptions' => [
                         'tags' => true,
                         'placeholder' => 'Select or Search ...',
@@ -35,9 +48,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 ?>
             </div>
         </div>
+        <?php ActiveForm::end(); ?>
     </div>
     <hr>
-    <div class="col-sm-12" style="margin-top: 10px;">
+    <div class="col-sm-12" style="margin-top:5px;">
         <!-- 5. $DEFAULT_TABS =============== Default tabs =============================  -->
         <div class="panel" style="border: 0px solid transparent;">
             <div class="panel-body" style="padding: 5px;">
@@ -84,7 +98,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 'format' => 'raw',
                                                 'value' => function($model) {
                                                     if (isset($model->userId)) {
-                                                        $userSuppliers = common\models\costfit\User::find()->where('userId =' . isset($model->userId) ? $model->userId : '')->one();
+                                                        $userSuppliers = common\models\costfit\User::find()->where('userId =' . $model->userId)->one();
                                                         $firstname = $userSuppliers->firstname;
                                                         $lastname = $userSuppliers->lastname;
                                                     } else {
@@ -170,7 +184,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 'format' => 'raw',
                                                 'value' => function($model) {
                                                     if (isset($model->userId)) {
-                                                        $userSuppliers = common\models\costfit\User::find()->where('userId =' . isset($model->userId) ? $model->userId : '')->one();
+                                                        $userSuppliers = common\models\costfit\User::find()->where('userId =' . $model->userId)->one();
                                                         $firstname = $userSuppliers->firstname;
                                                         $lastname = $userSuppliers->lastname;
                                                     } else {
