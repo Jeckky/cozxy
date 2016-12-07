@@ -38,7 +38,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
             'query' => \common\models\costfit\ProductShippingPriceSuppliers::find()->where('productSuppId=' . $_GET['productSuppId']),
         ]);
 
-        $productSupp = \common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $_GET['productSuppId'])->one();
+        $productSupp = \common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $_GET['productSuppId'])->limit(10)->one();
 
         return $this->render('index', [
             'dataProvider' => $dataProvider, 'dataProvider1' => $dataProvider1, 'productSupp' => $productSupp
