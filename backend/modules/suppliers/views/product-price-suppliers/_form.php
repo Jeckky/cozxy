@@ -80,6 +80,30 @@ use common\models\costfit\ProductSuppliers;
         <div class="panel-heading">
             <span class="panel-title">เทียบลำดับราคา :: Suppliers</span>
         </div>
+
+        <div class="panel-heading">
+            <?php
+            $data = [
+                //"red" => "วันนี้",
+                "fastest" => "7 วันล่าสุด",
+                "late" => "1 เดือนที่ผ่านมา",
+                "slowest" => "3 เดือนที่ผ่านมา",
+            ];
+
+            echo kartik\select2\Select2::widget([
+                'name' => 'userId',
+                // 'value' => ['THA'], // initial value
+                'data' => $data,
+                'options' => ['placeholder' => 'Select or Search ...', 'id' => 'userSuppliers'], //, 'onchange' => 'this.form.submit()'
+                'pluginOptions' => [
+                    'tags' => true,
+                    'placeholder' => 'Select or Search ...',
+                    'loadingText' => 'Loading  ...',
+                    'initialize' => true,
+                ],
+            ]);
+            ?>
+        </div>
         <div class="panel-body">
             <?=
             GridView::widget([
