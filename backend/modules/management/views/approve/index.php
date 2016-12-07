@@ -97,7 +97,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             ],
                                             //'productGroupId',
                                             'isbn:ntext',
-                                            'code',
+                                            //'code',
                                             'title',
                                             'quantity',
                                             [
@@ -183,7 +183,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             ],
                                             //'productGroupId',
                                             'isbn:ntext',
-                                            'code',
+                                            //'code',
                                             'title',
                                             [
                                                 'attribute' => 'ตรวจสอบข้อมูล',
@@ -256,7 +256,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             //'userId',
                                             //'productGroupId',
                                             'isbn:ntext',
-                                            'code',
+                                            //'code',
                                             'title',
                                             //'quantity',
                                             [
@@ -353,7 +353,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             //'productId',
                                             //'productGroupId',
                                             'isbn:ntext',
-                                            'code',
+                                            //'code',
                                             'title',
                                             [
                                                 'attribute' => 'Suppiers',
