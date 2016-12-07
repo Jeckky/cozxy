@@ -57,7 +57,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
             'height' => 'ความสูง',
             'depth' => 'ความลึก',
             'weight' => 'น้ำหนัก',
-            'price' => 'ราคา',
+            //'price' => 'ราคา',
             'unit' => 'หน่วย',
             'smallUnit' => 'หน่วยขนาดเล็ก',
             'tags' => 'แท็ก',

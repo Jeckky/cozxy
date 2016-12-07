@@ -82,30 +82,14 @@ use common\models\costfit\ProductSuppliers;
         </div>
 
         <div class="panel-heading">
-            <?php
-            $data = [
-                //"red" => "วันนี้",
-                "fastest" => "7 วันล่าสุด",
-                "late" => "1 เดือนที่ผ่านมา",
-                "slowest" => "3 เดือนที่ผ่านมา",
-            ];
-
-            echo kartik\select2\Select2::widget([
-                'name' => 'comparePrices',
-                // 'value' => ['THA'], // initial value
-                'data' => $data,
-                'options' => ['placeholder' => 'Select or Search ...', 'id' => 'userSuppliers'], //, 'onchange' => 'this.form.submit()'
-                'pluginOptions' => [
-                    'tags' => true,
-                    'placeholder' => 'Select or Search ...',
-                    'loadingText' => 'Loading  ...',
-                    'initialize' => true,
-                    'id' => 'comparePrices'
-                ],
-            ]);
-            ?>
+            เงื่อนไขเขียนโปรแกรม <br><br>
+            1. ก่อนหน้าเค้ากี่ชิ้น <br>
+            2. ลำดับปัจจุบันเค้า <br>
+            3. ลำดับราคาปัจจุบัน :: ขายต่อวัน ถ้า 7 วันไม่มี ไปเฉลีย 14 ถ้า 14 ไม่มีไปเฉลีย 1 เดือน
+            <br>** อยู่ในประเภทเดียวกัน Product เดียวกัน <br><br>
         </div>
         <div class="panel-body">
+
             <?=
             GridView::widget([
                 'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
@@ -113,6 +97,12 @@ use common\models\costfit\ProductSuppliers;
                 'pager' => [
                     'options' => ['class' => 'pagination pagination-xs']
                 ],
+                'rowOptions' => function ($model, $index, $widget, $grid) {
+
+                    if ($model->userId == Yii::$app->user->identity->userId) {
+                        return ['class' => 'alert alert-success'];
+                    }
+                },
                 'options' => [
                     'class' => 'table-light'
                 ],
@@ -121,14 +111,15 @@ use common\models\costfit\ProductSuppliers;
                     //'productPriceId',
                     //'productSuppId',
                     //'quantity',
-                    'price',
+                    'priceSuppliers',
+                    'quantity',
                     //'discountType',
-                    [
-                        'attribute' => 'discountType',
-                        'value' => function($model) {
-                            return $model->getDiscountTypeText($model->discountType);
-                        }
-                    ], /*
+                    /* [
+                      'attribute' => 'discountType',
+                      'value' => function($model) {
+                      return $model->getDiscountTypeText($model->discountType);
+                      }
+                      ],
                       [
                       'attribute' => 'status',
                       'format' => 'html',

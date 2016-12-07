@@ -63,15 +63,26 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
      */
     public function actionCreate() {
         $model = new ProductPriceSuppliers();
-        $rankingPrice = \common\models\costfit\ProductPriceSuppliers::rankingPrice();
+        //$rankingPrice = \common\models\costfit\ProductPriceSuppliers::rankingPrice();
+        $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $_GET['productSuppId'])->one();
+        //echo $rankOne->brandId . '::' . $rankOne->categoryId;
+        $rankTwo = \common\models\costfit\ProductSuppliers::find()
+        ->select('`product_suppliers`.* , product_price_suppliers.price  as priceSuppliers')
+        ->join('LEFT JOIN', 'product_price_suppliers', 'product_price_suppliers.productSuppId = product_suppliers.productSuppId')
+        ->where('product_suppliers.brandId=' . $rankOne->brandId . ' and product_suppliers.categoryId=' . $rankOne->categoryId . ' and product_price_suppliers.price != ""')
+        ->orderBy(' product_price_suppliers.price asc');
+        //$rankThree = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId = ' . $_GET['productSuppId']);
+        $rankingPrice = new ActiveDataProvider([
+            'query' => $rankTwo
+        ]);
         if (isset($_POST["ProductPriceSuppliers"])) {
             $model->attributes = $_POST["ProductPriceSuppliers"];
             \common\models\costfit\ProductPriceSuppliers::updateAll(['status' => 0], ['productSuppId' => $_GET['productSuppId']]);
             $model->status = 1;
             $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
-                //return $this->redirect(['product-price-suppliers/index?productSuppId=' . $_GET['productSuppId']]);
-                return $this->redirect('/suppliers/product-suppliers/image-form?productSuppId=' . $model->productSuppId);
+                //return $this->redirect(['product-price-suppliers/index?productSuppId = ' . $_GET['productSuppId']]);
+                return $this->redirect('/suppliers/product-suppliers/image-form?productSuppId = ' . $model->productSuppId);
             }
         }
         return $this->render('create', [
@@ -86,13 +97,24 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionUpdate($id) {
-        $rankingPrice = \common\models\costfit\ProductPriceSuppliers::rankingPrice();
+        //$rankingPrice = \common\models\costfit\ProductPriceSuppliers::rankingPrice();
+        $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $_GET['productSuppId'])->one();
+        //echo $rankOne->brandId . '::' . $rankOne->categoryId;
+        $rankTwo = \common\models\costfit\ProductSuppliers::find()
+        ->select('`product_suppliers`.* , product_price_suppliers.price  as priceSuppliers')
+        ->join('LEFT JOIN', 'product_price_suppliers', 'product_price_suppliers.productSuppId = product_suppliers.productSuppId')
+        ->where('product_suppliers.brandId=' . $rankOne->brandId . ' and product_suppliers.categoryId=' . $rankOne->categoryId . ' and product_price_suppliers.price != ""')
+        ->orderBy(' product_price_suppliers.price asc');
+        //$rankThree = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId = ' . $_GET['productSuppId']);
+        $rankingPrice = new ActiveDataProvider([
+            'query' => $rankTwo
+        ]);
         $model = $this->findModel($id);
         if (isset($_POST["ProductPriceSuppliers"])) {
             $model->attributes = $_POST["ProductPriceSuppliers"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
-                return $this->redirect(['product-price-suppliers/index?productSuppId=' . $model->productSuppId]);
+                return $this->redirect(['product-price-suppliers/index?productSuppId = ' . $model->productSuppId]);
             }
         }
         return $this->render('update', [
@@ -109,7 +131,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
     public function actionDelete($id) {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['product-price-suppliers/index?productSuppId=' . $_GET['productSuppId']]);
+        return $this->redirect(['product-price-suppliers/index?productSuppId = ' . $_GET['productSuppId']]);
     }
 
     /**
@@ -123,7 +145,13 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
         if (($model = ProductPriceSuppliers::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('The requested page does not exist.
+
+
+
+
+
+        ');
         }
     }
 
