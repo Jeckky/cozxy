@@ -65,14 +65,18 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 [
                     'attribute' => 'จำนวนที่ขายได้',
                     'value' => function($model) {
-                        $order = common\models\costfit\OrderItem::find()->where('productId=' . $model->productSuppId)->count('productId');
+                        $order = common\models\costfit\OrderItem::find()
+                        ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
+                        ->where('order_item.productId=' . $model->productSuppId . ' and order_item.status = 5')->count('order_item.productId');
                         return $order . ' ชิ้น';
                     }
                 ],
                 [
                     'attribute' => 'จำนวนสินค้าคงเหลือ',
                     'value' => function($model) {
-                        $order = common\models\costfit\OrderItem::find()->where('productId=' . $model->productSuppId)->count('productId');
+                        $order = common\models\costfit\OrderItem::find()
+                        ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
+                        ->where('order_item.productId=' . $model->productSuppId . ' and order_item.status = 5')->count('order_item.productId');
                         return $model->quantity - $order . ' ชิ้น';
                     }
                 ],

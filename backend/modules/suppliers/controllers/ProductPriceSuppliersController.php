@@ -44,7 +44,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
         ->join('LEFT JOIN', 'brand', 'brand.brandId = product_suppliers.brandId')
         ->join('LEFT JOIN', 'category', 'category.categoryId = product_suppliers.categoryId')
         ->join('LEFT JOIN', 'user', 'user.userId = product_suppliers.userId')
-        ->where('product_suppliers.brandId=' . $rankOne->brandId . ' and product_suppliers.categoryId=' . $rankOne->categoryId . ' and product_price_suppliers.price != ""')
+        ->where(' product_price_suppliers.status =1  and   product_suppliers.brandId=' . $rankOne->brandId . ' and product_suppliers.categoryId=' . $rankOne->categoryId . ' and product_price_suppliers.price != ""')
         ->orderBy(' product_price_suppliers.price asc');
         //$rankThree = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId = ' . $_GET['productSuppId']);
         $rankingPrice = new ActiveDataProvider([
