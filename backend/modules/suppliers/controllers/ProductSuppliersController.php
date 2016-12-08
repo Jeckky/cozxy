@@ -107,6 +107,10 @@ class ProductSuppliersController extends SuppliersMasterController {
                 $modelSys->approve = Yii::$app->request->post('approve');
                 $modelSys->productSuppId = $model->productSuppId;
                 if ($modelSys->save(FALSE)) {
+                    //throw new \yii\base\Exception(1);
+                    $productId = Yii::$app->db->lastInsertID;
+                    $model->productId = $productId;
+                    $model->save(FALSE);
                     //return $this->redirect('image-form?id=' . $model->productSuppId);
                 }
             }

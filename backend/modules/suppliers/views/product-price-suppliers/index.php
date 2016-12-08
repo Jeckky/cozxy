@@ -69,6 +69,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         return $order . ' ชิ้น';
                     }
                 ],
+                [
+                    'attribute' => 'จำนวนสินค้าคงเหลือ',
+                    'value' => function($model) {
+                        $order = common\models\costfit\OrderItem::find()->where('productId=' . $model->productSuppId)->count('productId');
+                        return $model->quantity - $order . ' ชิ้น';
+                    }
+                ],
                 //'discountType',
                 /* [
                   'attribute' => 'discountType',
