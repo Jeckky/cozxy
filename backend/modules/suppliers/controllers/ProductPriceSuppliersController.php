@@ -103,8 +103,8 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
             $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
                 //return $this->redirect(['product-price-suppliers/index?productSuppId = ' . $_GET['productSuppId']]);
-                //return $this->redirect('/suppliers/product-suppliers/image-form?productSuppId=' . $model->productSuppId);
-                return $this->redirect('/suppliers/product-suppliers/create?productSuppId=' . $model->productSuppId);
+                return $this->redirect('/suppliers/product-suppliers/image-form?productSuppId=' . $model->productSuppId);
+                //return $this->redirect('/suppliers/product-price-suppliers/create?productSuppId=' . $model->productSuppId);
             }
         }
         return $this->render('create', [
