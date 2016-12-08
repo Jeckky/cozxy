@@ -92,4 +92,18 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         }
     }
 
+    public static function productPrice($productSuppId) {
+        $lowestPrice = ProductPriceSuppliers::find()->where("productSuppId=" . $productSuppId . " and quantity=1")->one();
+        if (isset($lowestPrice) && !empty($lowestPrice)) {
+            return $lowestPrice->price;
+        }
+    }
+
+    public static function productImageSuppliers($productSuppId) {
+        $image = ProductImageSuppliers::find()->where("productSuppId=" . $productSuppId . " and status=1")->one();
+        if (isset($image) && !empty($image)) {
+            return $image->imageThumbnail1;
+        }
+    }
+
 }

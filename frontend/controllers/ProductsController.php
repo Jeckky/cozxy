@@ -16,18 +16,16 @@ use frontend\models\ContactForm;
 /**
  * Products controller
  */
-class ProductsController extends MasterController
-{
+class ProductsController extends MasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
                 'only' => ['create', 'update'],
                 'rules' => [
                     // deny all POST requests
-                    [
+                        [
                         'allow' => false,
                         'verbs' => ['POST']
                     ],
@@ -47,8 +45,7 @@ class ProductsController extends MasterController
      *
      * @return mixed
      */
-    public function actionIndex($hash)
-    {
+    public function actionIndex($hash) {
 
         //return Yii::$app->getResponse()->redirect('register/login');
         $k = base64_decode(base64_decode($hash));
@@ -66,7 +63,6 @@ class ProductsController extends MasterController
                 $this->title = 'Cozxy.com | Products';
                 $this->subTitle = $model->attributes['title'];
                 $this->subSubTitle = '';
-
                 return $this->render('products_all', ['model' => $model, 'term' => $terms]);
             } else {
                 return $this->render('@app/views/error/error');
@@ -76,8 +72,7 @@ class ProductsController extends MasterController
         }
     }
 
-    public function actionChangeOption()
-    {
+    public function actionChangeOption() {
         $productId = Yii::$app->request->post('productId');
         $model = \common\models\costfit\Product::find()->where("productId = " . $productId)->one();
         $res = [];
@@ -104,8 +99,7 @@ class ProductsController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionGetProductShippingPrice()
-    {
+    public function actionGetProductShippingPrice() {
         $productId = Yii::$app->request->post('productId');
         $fastId = Yii::$app->request->post('fastId');
         $minDate = 99;
@@ -125,8 +119,7 @@ class ProductsController extends MasterController
         echo $minDate;
     }
 
-    public function actionGetDefultProductShippingPrice()
-    {
+    public function actionGetDefultProductShippingPrice() {
         $productId = Yii::$app->request->post('productId');
         $default = \common\models\costfit\Product::getShippingTypeId($productId);
         echo $default;
