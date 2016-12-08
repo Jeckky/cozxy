@@ -15,8 +15,94 @@ $this->params['pageHeader'] = Html::encode($this->title);
 <div class="product-price-suppliers-index">
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <h3>
-        Title :  <?php echo isset($productSupp->title) ? $productSupp->title : ''; ?>
+        <div class="alert alert-success">Title :  <?php echo isset($productSupp->title) ? $productSupp->title : ''; ?></div>
     </h3>
+    <br>
+    <div class="panel-heading">
+        เงื่อนไขเขียนโปรแกรม <br><br>
+        1. ก่อนหน้าเค้ากี่ชิ้น <br>
+        2. ลำดับปัจจุบันเค้า <br>
+        3. ลำดับราคาปัจจุบัน :: ขายต่อวัน ถ้า 7 วันไม่มี ไปเฉลีย 14 ถ้า 14 ไม่มีไปเฉลีย 1 เดือน
+        <br>** อยู่ในประเภทเดียวกัน Product เดียวกัน <br><br>
+        <h2>ลำดับราคาปัจจุบัน</h2>
+    </div>
+    <div class="panel-body">
+
+        <?=
+        GridView::widget([
+            'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
+            'dataProvider' => $rankingPrice,
+            'pager' => [
+                'options' => ['class' => 'pagination pagination-xs']
+            ],
+            'rowOptions' => function ($model, $index, $widget, $grid) {
+
+                if ($model->userId == Yii::$app->user->identity->userId) {
+                    return ['class' => 'success'];
+                }
+            },
+            'options' => [
+                'class' => 'table-light'
+            ],
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                'sUser',
+                'pTitle',
+                'cTitle',
+                'bTitle',
+                [
+                    'attribute' => 'priceSuppliers',
+                    'value' => function($model) {
+                        return $model->priceSuppliers . ' บาท';
+                    }
+                ],
+                [
+                    'attribute' => 'quantity',
+                    'value' => function($model) {
+                        return $model->quantity . ' ชิ้น';
+                    }
+                ],
+                [
+                    'attribute' => 'จำนวนที่ขายได้',
+                    'value' => function($model) {
+                        $order = common\models\costfit\OrderItem::find()->where('productId=' . $model->productSuppId)->count('productId');
+                        return $order . ' ชิ้น';
+                    }
+                ],
+                //'discountType',
+                /* [
+                  'attribute' => 'discountType',
+                  'value' => function($model) {
+                  return $model->getDiscountTypeText($model->discountType);
+                  }
+                  ],
+                  [
+                  'attribute' => 'status',
+                  'format' => 'html',
+                  'value' => function($model) {
+                  if ($model->status == 1) {
+                  $status = '<span class="label label-success">enable</span>';
+                  } else {
+                  $status = '<span class="label label-danger">disable</span>';
+                  }
+                  return $status;
+                  }
+                  ], */
+                [
+                    'attribute' => 'createDateTime',
+                    'format' => 'raw',
+                    'value' => function($model) {
+                        if ($model->createDateTime == '0000-00-00 00:00:00') {
+                            return '';
+                        } else {
+                            return $this->context->dateThai($model->createDateTime, 1, TRUE);
+                        }
+                    }
+                ],
+            ],
+        ]);
+        ?>
+    </div>
     <br>
     <div class="panel panel-default">
         <div class="panel-heading">

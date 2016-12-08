@@ -30,6 +30,27 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionIndex() {
+
+        //$rankingPrice = \common\models\costfit\ProductPriceSuppliers::rankingPrice();
+        /*
+
+         * */
+        $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $_GET['productSuppId'])->one();
+        //echo $rankOne->brandId . '::' . $rankOne->categoryId;
+        $rankTwo = \common\models\costfit\ProductSuppliers::find()
+        ->select('`product_suppliers`.* , product_suppliers.title as pTitle, product_price_suppliers.price  as priceSuppliers ,'
+        . 'brand.title as bTitle,category.title as cTitle , user.username as sUser')
+        ->join('LEFT JOIN', 'product_price_suppliers', 'product_price_suppliers.productSuppId = product_suppliers.productSuppId')
+        ->join('LEFT JOIN', 'brand', 'brand.brandId = product_suppliers.brandId')
+        ->join('LEFT JOIN', 'category', 'category.categoryId = product_suppliers.categoryId')
+        ->join('LEFT JOIN', 'user', 'user.userId = product_suppliers.userId')
+        ->where('product_suppliers.brandId=' . $rankOne->brandId . ' and product_suppliers.categoryId=' . $rankOne->categoryId . ' and product_price_suppliers.price != ""')
+        ->orderBy(' product_price_suppliers.price asc');
+        //$rankThree = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId = ' . $_GET['productSuppId']);
+        $rankingPrice = new ActiveDataProvider([
+            'query' => $rankTwo
+        ]);
+
         $dataProvider = new ActiveDataProvider([
             'query' => ProductPriceSuppliers::find()->where('productSuppId=' . $_GET['productSuppId'])->orderBy('status desc'),
         ]);
@@ -41,7 +62,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
         $productSupp = \common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $_GET['productSuppId'])->limit(10)->one();
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider, 'dataProvider1' => $dataProvider1, 'productSupp' => $productSupp
+            'dataProvider' => $dataProvider, 'dataProvider1' => $dataProvider1, 'productSupp' => $productSupp, 'rankingPrice' => $rankingPrice
         ]);
     }
 
@@ -82,7 +103,8 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
             $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
                 //return $this->redirect(['product-price-suppliers/index?productSuppId = ' . $_GET['productSuppId']]);
-                return $this->redirect('/suppliers/product-suppliers/image-form?productSuppId = ' . $model->productSuppId);
+                //return $this->redirect('/suppliers/product-suppliers/image-form?productSuppId=' . $model->productSuppId);
+                return $this->redirect('/suppliers/product-suppliers/create?productSuppId=' . $model->productSuppId);
             }
         }
         return $this->render('create', [
@@ -114,7 +136,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
             $model->attributes = $_POST["ProductPriceSuppliers"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
-                return $this->redirect(['product-price-suppliers/index?productSuppId = ' . $model->productSuppId]);
+                return $this->redirect(['product-price-suppliers/index?productSuppId=' . $model->productSuppId]);
             }
         }
         return $this->render('update', [
@@ -131,7 +153,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
     public function actionDelete($id) {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['product-price-suppliers/index?productSuppId = ' . $_GET['productSuppId']]);
+        return $this->redirect(['product-price-suppliers/index?productSuppId=' . $_GET['productSuppId']]);
     }
 
     /**

@@ -70,7 +70,7 @@ use common\models\costfit\ProductSuppliers;
                 <div class="col-sm-9 col-sm-offset-3">
                     <a class="btn wizard-prev-step-btn  btn-lg" href="/suppliers/product-suppliers">Prev</a>
                     <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success btn-lg' : 'btn btn-primary btn-lg']) ?>
-                    <a class="btn btn-primary wizard-next-step-btn  btn-lg" href="/suppliers/product-suppliers/image-form?productSuppId=<?= $_GET['productSuppId'] ?>">Skip</a>
+                    <a class="btn btn-primary wizard-next-step-btn  btn-lg" href="/suppliers/product-suppliers/image-form?productSuppId=<?= $_GET['productSuppId'] ?>">Skip to upload images</a>
                 </div>
             </div>
         </div>
@@ -100,7 +100,7 @@ use common\models\costfit\ProductSuppliers;
                 'rowOptions' => function ($model, $index, $widget, $grid) {
 
                     if ($model->userId == Yii::$app->user->identity->userId) {
-                        return ['class' => 'alert alert-success'];
+                        return ['class' => 'success'];
                     }
                 },
                 'options' => [
