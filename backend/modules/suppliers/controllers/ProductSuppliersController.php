@@ -109,7 +109,7 @@ class ProductSuppliersController extends SuppliersMasterController {
                 if ($modelSys->save(FALSE)) {
                     //throw new \yii\base\Exception(1);
                     $productId = Yii::$app->db->lastInsertID;
-                    \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $productId); //
+                    \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $productId); //เพื่อให้รู้ว่าอยู่ภายใต้ Category ไหน
                     $model->productId = $productId;
                     $model->save(FALSE);
                     //return $this->redirect('image-form?id=' . $model->productSuppId);
