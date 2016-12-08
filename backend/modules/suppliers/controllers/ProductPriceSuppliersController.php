@@ -16,6 +16,18 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
 
     public function behaviors() {
         return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['index', 'create', 'update', 'view'],
+                'rules' => [
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                // everything else is denied
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -37,6 +49,32 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
          * */
         $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $_GET['productSuppId'])->one();
         //echo $rankOne->brandId . '::' . $rankOne->categoryId;
+        // $rankTwoCheck = \common\models\costfit\ProductSuppliers::find()
+        // ->select('`product_suppliers`.* , product_suppliers.title as pTitle, product_price_suppliers.price  as priceSuppliers ,'
+        //. 'brand.title as bTitle,category.title as cTitle , user.username as sUser')
+        //->join('LEFT JOIN', 'product_price_suppliers', 'product_price_suppliers.productSuppId = product_suppliers.productSuppId')
+        //->join('LEFT JOIN', 'brand', 'brand.brandId = product_suppliers.brandId')
+        // ->join('LEFT JOIN', 'category', 'category.categoryId = product_suppliers.categoryId')
+        // ->join('LEFT JOIN', 'user', 'user.userId = product_suppliers.userId')
+        // ->where(' product_price_suppliers.status =1  and   product_suppliers.brandId=' . $rankOne->brandId . ' and product_suppliers.categoryId=' . $rankOne->categoryId . ' and product_price_suppliers.price != ""')
+        //->orderBy(' product_price_suppliers.price asc')
+        //->count();
+        //if ($rankTwoCheck == 0) {
+        // $rankTwo = \common\models\costfit\ProductSuppliers::find()
+        // ->select('`product_suppliers`.* , product_suppliers.title as pTitle, product_price_suppliers.price  as priceSuppliers ,'
+        // . 'brand.title as bTitle,category.title as cTitle , user.username as sUser')
+        // ->join('LEFT JOIN', 'product_price_suppliers', 'product_price_suppliers.productSuppId = product_suppliers.productSuppId')
+        // ->join('LEFT JOIN', 'brand', 'brand.brandId = product_suppliers.brandId')
+        // ->join('LEFT JOIN', 'category', 'category.categoryId = product_suppliers.categoryId')
+        // ->join('LEFT JOIN', 'user', 'user.userId = product_suppliers.userId')
+        // ->where(' product_price_suppliers.status =1 '
+        //. ' and  date(product_price_suppliers.createDateTime) >= date_add(curdate(),interval -14 day)      '
+        // . '      date(product_price_suppliers.createDateTime) >= date_add(curdate(),interval -30 day) or '
+        // . '      date(product_price_suppliers.createDateTime) >= date_add(curdate(),interval -60 day)   '
+        // . '  and   product_suppliers.brandId=' . $rankOne->brandId . ' '
+        //  . ' and product_suppliers.categoryId=' . $rankOne->categoryId . ' and product_price_suppliers.price != ""')
+        // ->orderBy(' product_price_suppliers.price asc');
+        // } else {
         $rankTwo = \common\models\costfit\ProductSuppliers::find()
         ->select('`product_suppliers`.* , product_suppliers.title as pTitle, product_price_suppliers.price  as priceSuppliers ,'
         . 'brand.title as bTitle,category.title as cTitle , user.username as sUser')
@@ -44,8 +82,11 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
         ->join('LEFT JOIN', 'brand', 'brand.brandId = product_suppliers.brandId')
         ->join('LEFT JOIN', 'category', 'category.categoryId = product_suppliers.categoryId')
         ->join('LEFT JOIN', 'user', 'user.userId = product_suppliers.userId')
-        ->where(' product_price_suppliers.status =1  and   product_suppliers.brandId=' . $rankOne->brandId . ' and product_suppliers.categoryId=' . $rankOne->categoryId . ' and product_price_suppliers.price != ""')
+        ->where(' product_price_suppliers.status =1  and   product_suppliers.brandId=' . $rankOne->brandId . ' and product_suppliers.categoryId='
+        . '' . $rankOne->categoryId . ' and product_price_suppliers.price != ""')
+        //. '  and  date(product_price_suppliers.createDateTime) >= date_add(curdate(),interval -7 day)     ')
         ->orderBy(' product_price_suppliers.price asc');
+        //}
         //$rankThree = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId = ' . $_GET['productSuppId']);
         $rankingPrice = new ActiveDataProvider([
             'query' => $rankTwo
