@@ -61,7 +61,7 @@ use common\models\costfit\ProductSuppliers;
                 <?= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15, 'onkeypress' => 'suppliersCreatePrice(this.value,' . $_GET['productSuppId'] . ')', 'onkeyup' => 'suppliersCreatePrice(this.value,' . $_GET['productSuppId'] . ')']) ?>
                 <div class="row">
                     <div class="col-sm-3"></div>
-                    <div class="col-sm-9 suppliersCreatePrice  note note-info hidden" style="margin-bottom: 10px; font-size: 20px; "></div>
+                    <div class="col-sm-9 suppliersCreatePrice note note-info hidden" style="margin-bottom: 10px; font-size: 20px; "></div>
                 </div>
             <?php } ?>
             <?= $form->field($model, 'discountType', ['options' => ['class' => 'row form-group']])->dropDownList($model->getDiscountTypeArray(), ['prompt' => '-- Select Discount Type --']) ?>
