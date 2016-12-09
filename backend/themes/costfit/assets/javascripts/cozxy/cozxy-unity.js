@@ -564,3 +564,23 @@ function search(userId) {
         }
     });
 }
+
+
+function suppliersCreatePrice(price, productSuppId) {
+    $.ajax({
+        url: 'suppliers-create-price',
+        data: {"price": price, 'productSuppId': productSuppId},
+        type: 'post',
+        success: function (result) {
+            // alert(result);
+            //var JSONObject2 = JSON.parse(result);
+            $(".suppliersCreatePrice").removeClass("hidden");
+            $(".suppliersCreatePrice").html('<code>ลำดับคะแนนที่  :' + result + '</code>');
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //debugger;
+            //alert(errorThrown);
+        }
+    });
+}

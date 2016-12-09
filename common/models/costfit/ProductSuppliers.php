@@ -109,8 +109,4 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         }
     }
 
-    public static function priceCreateSuppliers($productSuppliersId) {
-        
-    }
-
 }
