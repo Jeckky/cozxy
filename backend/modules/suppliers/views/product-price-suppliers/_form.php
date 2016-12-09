@@ -54,7 +54,7 @@ use common\models\costfit\ProductSuppliers;
             <?//= $form->field($model, 'quantity', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 5]) ?>
             <?php
             if ($status == 'update') {
-                echo 'update';
+                //echo 'update';
                 ?>
                 <?= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15, 'readonly' => true]) ?>
             <?php } else { ?>
@@ -69,7 +69,7 @@ use common\models\costfit\ProductSuppliers;
             <div class="form-group">
                 <div class="col-sm-9 col-sm-offset-3">
                     <a class="btn wizard-prev-step-btn  btn-lg" href="/suppliers/product-suppliers">Prev</a>
-                    <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success btn-lg' : 'btn btn-primary btn-lg']) ?>
+                    <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success btn-lg' : 'btn btn-success btn-lg']) ?>
                     <a class="btn btn-primary wizard-next-step-btn  btn-lg" href="/suppliers/product-suppliers/image-form?productSuppId=<?= $_GET['productSuppId'] ?>">Skip to upload images</a>
                 </div>
             </div>
