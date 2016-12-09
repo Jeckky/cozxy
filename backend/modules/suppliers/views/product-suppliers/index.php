@@ -65,7 +65,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     // 'height',
                     // 'depth',
                     // 'weight',
-                    //'price',
+                    'quantity',
                     [
                         'attribute' => 'ราคาล่าสุด',
                         'format' => 'html',
