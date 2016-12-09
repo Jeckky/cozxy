@@ -50,7 +50,7 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster {
             'sumQuantity',
             'remainDay',
             'storeProductId',
-            'stockQuantity'
+            'stockQuantity', 'conutProduct', 'summaryPrice'
         ]);
     }
 

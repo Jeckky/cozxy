@@ -160,10 +160,31 @@ use common\models\costfit\ProductSuppliers;
         </div>
         <div class="panel-body">
             <?php
-            echo '1. จำนวนสินค้าที่ขายได้ล่าสุด :: ' . $productLastDay . ' ชิ้น <br><br>';
-            echo '2. จำนวนสินค้าที่ขายได้ภายใน 7 วันล่าสุด :: ' . $productLastWeek . ' ชิ้น <br><br>';
-            echo '3. จำนวนสินค้าที่ขายได้ภายใน 14 วันล่าสุด :: ' . $product14LastWeek . ' ชิ้น <br><br>';
-            echo '4. จำนวนสินค้าที่ขายได้ภายใน 1 เดือนล่าสุด :: ' . $orderLastMONTH . ' ชิ้น <br><br>';
+            if (isset($productLastDay->summaryPrice)) {
+                $productLastDay_summaryPrice = $productLastDay->summaryPrice . ' บาท';
+            } else {
+                $productLastDay_summaryPrice = '0 บาท';
+            }
+            if (isset($productLastWeek->summaryPrice)) {
+                $productLastWeek_summaryPrice = $productLastWeek->summaryPrice . ' บาท';
+            } else {
+                $productLastWeek_summaryPrice = '0 บาท';
+            }
+            if (isset($product14LastWeek->summaryPrice)) {
+                $product14LastWeek_summaryPrice = $product14LastWeek->summaryPrice . ' บาท';
+            } else {
+                $product14LastWeek_summaryPrice = '0 บาท';
+            }
+            if (isset($orderLastMONTH->summaryPrice)) {
+                $orderLastMONTH_summaryPrice = $orderLastMONTH->summaryPrice . ' บาท';
+            } else {
+                $orderLastMONTH_summaryPrice = '0 บาท';
+            }
+
+            echo '1. จำนวนสินค้าที่ขายได้ล่าสุด :: <code>' . $productLastDay->conutProduct . ' ชิ้น ,' . $productLastDay_summaryPrice . ' </code><br><br>';
+            echo '2. จำนวนสินค้าที่ขายได้ภายใน 7 วัน :: <code>' . $productLastWeek->conutProduct . ' ชิ้น ,' . $productLastWeek_summaryPrice . ' </code><br><br>';
+            echo '3. จำนวนสินค้าที่ขายได้ภายใน 14 วัน :: <code>' . $product14LastWeek->conutProduct . ' ชิ้น ,' . $product14LastWeek_summaryPrice . ' </code><br><br>';
+            echo '4. จำนวนสินค้าที่ขายได้ภายใน 1 เดือน:: <code>' . $orderLastMONTH->conutProduct . ' ชิ้น ,' . $orderLastMONTH_summaryPrice . ' </code><br><br>';
             ?>
         </div>
     </div>
