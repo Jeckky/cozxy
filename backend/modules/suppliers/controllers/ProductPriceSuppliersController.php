@@ -163,29 +163,29 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
         ->select('count(order_item.productId) as conutProduct , sum(order.summary) as  summaryPrice ')
         ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
         ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
-        ->where('order.status >= 5 and date(order.createDateTime) >= date_add(curdate(),interval  0 day) '
-        . ' and product_suppliers.brandId=' . $rankOne->brandId . ' and product_suppliers.categoryId= ' . $rankOne->categoryId . ' ')->one(); //->count('order_item.productId');
+        ->where('order.status >= 5 and date(order.createDateTime) >= date_add(curdate(),interval  0 day) and product_suppliers.productSuppId =' . $_GET['productSuppId'] . '')->one();
+        //. ' and product_suppliers.brandId = ' . $rankOne->brandId . ' and product_suppliers.categoryId = ' . $rankOne->categoryId . ' ')->one(); //->count('order_item.productId');
 
         $productLastWeek = \common\models\costfit\OrderItem::find()
-        ->select('count(order_item.productId) as conutProduct , sum(order.summary) as  summaryPrice ')
+        ->select('count(order_item.productId) as conutProduct, sum(order.summary) as summaryPrice ')
         ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
         ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
-        ->where('`order`.status >= 5 and   order.createDateTime BETWEEN (NOW() - INTERVAL 7 DAY) AND NOW()'
-        . 'and product_suppliers.brandId=' . $rankOne->brandId . ' and product_suppliers.categoryId= ' . $rankOne->categoryId . ' ')->one(); //->count('order_item.productId');
+        ->where('`order`.status >= 5 and order.createDateTime BETWEEN (NOW() - INTERVAL 7 DAY) AND NOW() and product_suppliers.productSuppId =' . $_GET['productSuppId'] . '')->one();
+        //. 'and product_suppliers.brandId = ' . $rankOne->brandId . ' and product_suppliers.categoryId = ' . $rankOne->categoryId . ' ')->one(); //->count('order_item.productId');
 
         $product14LastWeek = \common\models\costfit\OrderItem::find()
-        ->select('count(order_item.productId) as conutProduct , sum(order.summary) as  summaryPrice ')
+        ->select('count(order_item.productId) as conutProduct, sum(order.summary) as summaryPrice ')
         ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
         ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
-        ->where('`order`.status >= 5 and   order.createDateTime BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW()'
-        . 'and product_suppliers.brandId=' . $rankOne->brandId . ' and product_suppliers.categoryId= ' . $rankOne->categoryId . ' ')->one(); //->count('order_item.productId');
+        ->where('`order`.status >= 5 and order.createDateTime BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW() and product_suppliers.productSuppId =' . $_GET['productSuppId'] . '')->one();
+        //. 'and product_suppliers.brandId = ' . $rankOne->brandId . ' and product_suppliers.categoryId = ' . $rankOne->categoryId . ' ')->one(); //->count('order_item.productId');
 
         $orderLastMONTH = \common\models\costfit\OrderItem::find()
-        ->select('count(order_item.productId) as conutProduct , sum(order.summary) as  summaryPrice ')
+        ->select('count(order_item.productId) as conutProduct, sum(order.summary) as summaryPrice ')
         ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
         ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
-        ->where('`order`.status >= 5   and  MONTH(curdate()) = MONTH(order.createDateTime) and year(order.createDateTime) = year(curdate())'
-        . 'and product_suppliers.brandId=' . $rankOne->brandId . ' and product_suppliers.categoryId= ' . $rankOne->categoryId . ' ')->one(); //->count('order_item.productId');
+        ->where('`order`.status >= 5 and MONTH(curdate()) = MONTH(order.createDateTime) and year(order.createDateTime) = year(curdate()) and product_suppliers.productSuppId =' . $_GET['productSuppId'] . '')->one();
+        //. 'and product_suppliers.brandId = ' . $rankOne->brandId . ' and product_suppliers.categoryId = ' . $rankOne->categoryId . ' ')->one(); //->count('order_item.productId');
 
         return $this->render('create', [
             'model' => $model, 'rankingPrice' => $rankingPrice
@@ -204,18 +204,18 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
      */
     public function actionUpdate($id) {
         //$rankingPrice = \common\models\costfit\ProductPriceSuppliers::rankingPrice();
-        $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $_GET['productSuppId'])->one();
+        $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $_GET['productSuppId'])->one();
         //echo $rankOne->brandId . '::' . $rankOne->categoryId;
         $rankTwo = \common\models\costfit\ProductSuppliers::find()
-        ->select('`product_suppliers`.* , product_suppliers.title as pTitle, product_price_suppliers.price  as priceSuppliers ,'
-        . 'brand.title as bTitle,category.title as cTitle , user.username as sUser')
+        ->select('`product_suppliers`.*, product_suppliers.title as pTitle, product_price_suppliers.price as priceSuppliers, '
+        . 'brand.title as bTitle, category.title as cTitle, user.username as sUser')
         ->join('LEFT JOIN', 'product_price_suppliers', 'product_price_suppliers.productSuppId = product_suppliers.productSuppId')
         ->join('LEFT JOIN', 'brand', 'brand.brandId = product_suppliers.brandId')
         ->join('LEFT JOIN', 'category', 'category.categoryId = product_suppliers.categoryId')
         ->join('LEFT JOIN', 'user', 'user.userId = product_suppliers.userId')
-        ->where(' product_price_suppliers.status =1  and   product_suppliers.brandId=' . $rankOne->brandId . ' and product_suppliers.categoryId='
+        ->where(' product_price_suppliers.status = 1 and product_suppliers.brandId = ' . $rankOne->brandId . ' and product_suppliers.categoryId = '
         . '' . $rankOne->categoryId . ' and product_price_suppliers.price != ""')
-        //. '  and  date(product_price_suppliers.createDateTime) >= date_add(curdate(),interval -7 day)     ')
+        //. ' and date(product_price_suppliers.createDateTime) >= date_add(curdate(), interval -7 day) ')
         ->orderBy(' product_price_suppliers.price asc');
         //}
         //$rankThree = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId = ' . $_GET['productSuppId']);
@@ -227,36 +227,36 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
             $model->attributes = $_POST["ProductPriceSuppliers"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
-                return $this->redirect(['product-price-suppliers/index?productSuppId=' . $model->productSuppId]);
+                return $this->redirect(['product-price-suppliers/index?productSuppId = ' . $model->productSuppId]);
             }
         }
         $productLastDay = \common\models\costfit\OrderItem::find()
-        ->select('count(order_item.productId) as conutProduct , sum(order.summary) as  summaryPrice ')
+        ->select('count(order_item.productId) as conutProduct, sum(order.summary) as summaryPrice ')
         ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
         ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
-        ->where('order.status >= 5 and date(order.createDateTime) >= date_add(curdate(),interval  0 day) '
-        . ' and product_suppliers.brandId=' . $rankOne->brandId . ' and product_suppliers.categoryId= ' . $rankOne->categoryId . ' ')->one(); //->count('order_item.productId');
+        ->where('order.status >= 5 and date(order.createDateTime) >= date_add(curdate(), interval 0 day) '
+        . ' and product_suppliers.brandId = ' . $rankOne->brandId . ' and product_suppliers.categoryId = ' . $rankOne->categoryId . ' ')->one(); //->count('order_item.productId');
 
         $productLastWeek = \common\models\costfit\OrderItem::find()
-        ->select('count(order_item.productId) as conutProduct , sum(order.summary) as  summaryPrice ')
+        ->select('count(order_item.productId) as conutProduct, sum(order.summary) as summaryPrice ')
         ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
         ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
-        ->where('`order`.status >= 5 and   order.createDateTime BETWEEN (NOW() - INTERVAL 7 DAY) AND NOW()'
-        . 'and product_suppliers.brandId=' . $rankOne->brandId . ' and product_suppliers.categoryId= ' . $rankOne->categoryId . ' ')->one(); //->count('order_item.productId');
+        ->where('`order`.status >= 5 and order.createDateTime BETWEEN (NOW() - INTERVAL 7 DAY) AND NOW()'
+        . 'and product_suppliers.brandId = ' . $rankOne->brandId . ' and product_suppliers.categoryId = ' . $rankOne->categoryId . ' ')->one(); //->count('order_item.productId');
 
         $product14LastWeek = \common\models\costfit\OrderItem::find()
-        ->select('count(order_item.productId) as conutProduct , sum(order.summary) as  summaryPrice ')
+        ->select('count(order_item.productId) as conutProduct, sum(order.summary) as summaryPrice ')
         ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
         ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
-        ->where('`order`.status >= 5 and   order.createDateTime BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW()'
-        . 'and product_suppliers.brandId=' . $rankOne->brandId . ' and product_suppliers.categoryId= ' . $rankOne->categoryId . ' ')->one(); //->count('order_item.productId');
+        ->where('`order`.status >= 5 and order.createDateTime BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW()'
+        . 'and product_suppliers.brandId = ' . $rankOne->brandId . ' and product_suppliers.categoryId = ' . $rankOne->categoryId . ' ')->one(); //->count('order_item.productId');
 
         $orderLastMONTH = \common\models\costfit\OrderItem::find()
-        ->select('count(order_item.productId) as conutProduct , sum(order.summary) as  summaryPrice ')
+        ->select('count(order_item.productId) as conutProduct, sum(order.summary) as summaryPrice ')
         ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
         ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
-        ->where('`order`.status >= 5   and  MONTH(curdate()) = MONTH(order.createDateTime) and year(order.createDateTime) = year(curdate())'
-        . 'and product_suppliers.brandId=' . $rankOne->brandId . ' and product_suppliers.categoryId= ' . $rankOne->categoryId . ' ')->one(); //->count('order_item.productId');
+        ->where('`order`.status >= 5 and MONTH(curdate()) = MONTH(order.createDateTime) and year(order.createDateTime) = year(curdate())'
+        . 'and product_suppliers.brandId = ' . $rankOne->brandId . ' and product_suppliers.categoryId = ' . $rankOne->categoryId . ' ')->one(); //->count('order_item.productId');
 
         return $this->render('update', [
             'model' => $model, 'rankingPrice' => $rankingPrice
@@ -276,7 +276,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
     public function actionDelete($id) {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['product-price-suppliers/index?productSuppId=' . $_GET['productSuppId']]);
+        return $this->redirect(['product-price-suppliers/index?productSuppId = ' . $_GET['productSuppId']]);
     }
 
     /**
@@ -297,16 +297,16 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
     public function actionSuppliersCreatePrice() {
         $price = Yii::$app->request->post('price');
         $productSuppliersId = Yii::$app->request->post('productSuppId');
-        $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $productSuppliersId)->one();
+        $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $productSuppliersId)->one();
         $rankTwo = \common\models\costfit\ProductSuppliers::find()
-        ->select('`product_suppliers`.* , product_suppliers.title as pTitle, product_price_suppliers.price  as priceSuppliers ,'
-        . 'brand.title as bTitle,category.title as cTitle , user.username as sUser')
+        ->select('`product_suppliers`.*, product_suppliers.title as pTitle, product_price_suppliers.price as priceSuppliers, '
+        . 'brand.title as bTitle, category.title as cTitle, user.username as sUser')
         ->join('LEFT JOIN', 'product_price_suppliers', 'product_price_suppliers.productSuppId = product_suppliers.productSuppId')
         ->join('LEFT JOIN', 'brand', 'brand.brandId = product_suppliers.brandId')
         ->join('LEFT JOIN', 'category', 'category.categoryId = product_suppliers.categoryId')
         ->join('LEFT JOIN', 'user', 'user.userId = product_suppliers.userId')
-        ->where(' product_price_suppliers.status =1  and   product_suppliers.brandId=' . $rankOne->brandId . ' and product_suppliers.categoryId='
-        . '' . $rankOne->categoryId . ' and product_price_suppliers.price != "" and   product_price_suppliers.price <= ' . $price)
+        ->where(' product_price_suppliers.status = 1 and product_suppliers.brandId = ' . $rankOne->brandId . ' and product_suppliers.categoryId = '
+        . '' . $rankOne->categoryId . ' and product_price_suppliers.price != "" and product_price_suppliers.price <= ' . $price)
         ->count();
 
         return $rankTwo + 1;

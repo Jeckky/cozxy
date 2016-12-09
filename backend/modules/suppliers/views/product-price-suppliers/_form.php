@@ -184,7 +184,7 @@ use common\models\costfit\ProductSuppliers;
             } else {
                 $orderLastMONTH_summaryPrice = '0 บาท';
             }
-
+            echo '0. จำนวนสินค้าที่ขายได้/วัน :: <code>  ชิ้น ,  </code><br><br>';
             echo '1. จำนวนสินค้าที่ขายได้ล่าสุด :: <code>' . $productLastDay->conutProduct . ' ชิ้น ,' . $productLastDay_summaryPrice . ' </code><br><br>';
             echo '2. จำนวนสินค้าที่ขายได้ภายใน 7 วัน :: <code>' . $productLastWeek->conutProduct . ' ชิ้น ,' . $productLastWeek_summaryPrice . ' </code><br><br>';
             echo '3. จำนวนสินค้าที่ขายได้ภายใน 14 วัน :: <code>' . $product14LastWeek->conutProduct . ' ชิ้น ,' . $product14LastWeek_summaryPrice . ' </code><br><br>';
