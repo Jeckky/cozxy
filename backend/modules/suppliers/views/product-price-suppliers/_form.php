@@ -78,7 +78,7 @@ use common\models\costfit\ProductSuppliers;
 
     <div class="col-sm-6">
         <div class="panel-heading">
-            <span class="panel-title">ตารางเปรียบเทียบราคา :: Suppliers</span>
+            <span class="panel-title">ลำดับราคา :: Suppliers</span>
         </div>
 
         <div class="panel-heading">
@@ -108,30 +108,38 @@ use common\models\costfit\ProductSuppliers;
                 ],
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    //'productPriceId',
-                    //'productSuppId',
-                    //'quantity',
-                    'priceSuppliers',
-                    'quantity',
-                    //'discountType',
-                    /* [
-                      'attribute' => 'discountType',
-                      'value' => function($model) {
-                      return $model->getDiscountTypeText($model->discountType);
-                      }
-                      ],
-                      [
-                      'attribute' => 'status',
-                      'format' => 'html',
-                      'value' => function($model) {
-                      if ($model->status == 1) {
-                      $status = '<span class="label label-success">enable</span>';
-                      } else {
-                      $status = '<span class="label label-danger">disable</span>';
-                      }
-                      return $status;
-                      }
-                      ], */
+                    [
+                        'attribute' => 'priceSuppliers',
+                        'value' => function($model) {
+                            return $model->priceSuppliers . ' บาท';
+                        }
+                    ],
+                    [
+                        'attribute' => 'quantity',
+                        'value' => function($model) {
+                            return $model->quantity . ' ชิ้น';
+                        }
+                    ],
+                    [
+                        'attribute' => 'จำนวนที่ขายได้',
+                        'value' => function($model) {
+                            $order = common\models\costfit\OrderItem::find()
+                            ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
+                            ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
+                            ->where('order_item.productId=' . $model->productSuppId . ' and order.status >= 5')->count('order_item.productId');
+                            return $order . ' ชิ้น';
+                        }
+                    ],
+                    [
+                        'attribute' => 'จำนวนสินค้าคงเหลือ',
+                        'value' => function($model) {
+                            $order = common\models\costfit\OrderItem::find()
+                            ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
+                            ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
+                            ->where('order_item.productId=' . $model->productSuppId . ' and order.status >= 5')->count('order_item.productId');
+                            return $model->quantity - $order . ' ชิ้น';
+                        }
+                    ],
                     [
                         'attribute' => 'createDateTime',
                         'format' => 'raw',
@@ -147,7 +155,17 @@ use common\models\costfit\ProductSuppliers;
             ]);
             ?>
         </div>
-
+        <div class="panel-heading">
+            รายการที่ขายได้
+        </div>
+        <div class="panel-body">
+            <?php
+            echo '1. จำนวนสินค้าที่ขายได้ล่าสุด :: ' . $productLastDay . ' ชิ้น <br><br>';
+            echo '2. จำนวนสินค้าที่ขายได้ภายใน 7 วันล่าสุด :: ' . $productLastWeek . ' ชิ้น <br><br>';
+            echo '3. จำนวนสินค้าที่ขายได้ภายใน 14 วันล่าสุด :: ' . $product14LastWeek . ' ชิ้น <br><br>';
+            echo '4. จำนวนสินค้าที่ขายได้ภายใน 1 เดือนล่าสุด :: ' . $orderLastMONTH . ' ชิ้น <br><br>';
+            ?>
+        </div>
     </div>
     <?php ActiveForm::end(); ?>
 

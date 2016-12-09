@@ -19,11 +19,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
     </h3>
     <br>
     <div class="panel-heading">
-        เงื่อนไขเขียนโปรแกรม <br><br>
-        1. ก่อนหน้าเค้ากี่ชิ้น <br>
-        2. ลำดับปัจจุบันเค้า <br>
-        3. ลำดับราคาปัจจุบัน :: ขายต่อวัน ถ้า 7 วันไม่มี ไปเฉลีย 14 ถ้า 14 ไม่มีไปเฉลีย 1 เดือน
-        <br>** อยู่ในประเภทเดียวกัน Product เดียวกัน <br><br>
         <h2>ลำดับราคาปัจจุบัน</h2>
     </div>
     <div class="panel-body">
@@ -67,7 +62,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     'value' => function($model) {
                         $order = common\models\costfit\OrderItem::find()
                         ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
-                        ->where('order_item.productId=' . $model->productSuppId . ' and order_item.status = 5')->count('order_item.productId');
+                        ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
+                        ->where('order_item.productId=' . $model->productSuppId . ' and order.status >= 5')->count('order_item.productId');
                         return $order . ' ชิ้น';
                     }
                 ],
@@ -76,7 +72,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     'value' => function($model) {
                         $order = common\models\costfit\OrderItem::find()
                         ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
-                        ->where('order_item.productId=' . $model->productSuppId . ' and order_item.status = 5')->count('order_item.productId');
+                        ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
+                        ->where('order_item.productId=' . $model->productSuppId . ' and order.status >= 5')->count('order_item.productId');
                         return $model->quantity - $order . ' ชิ้น';
                     }
                 ],
