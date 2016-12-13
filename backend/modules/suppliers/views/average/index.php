@@ -18,7 +18,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-info" style="font-size: 16px;">
         <div class="panel-heading ">
-            <h4>ระยะเวลาที่ขายได้ล่าสุด :: 13 ธันวาคม 2559</h4>
+            <h4>ระยะเวลาที่ขายได้ล่าสุด :: <?php echo $this->context->dateThai(date("Y-m-d"), 1, TRUE); ?></h4>
         </div>
         <div class="panel-body">
             <table class="table">
@@ -43,7 +43,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
     </div>
     <div class="panel panel-info" style="font-size: 16px;">
         <div class="panel-heading">
-            <h4>ระยะเวลาที่ขายได้ 7 วันล่าสุด :: 6 ธันวาคม 2559  - 13 ธันวาคม 2559</h4>
+            <h4>ระยะเวลาที่ขายได้ 7 วันล่าสุด :: <?php echo $this->context->dateThai(date('Y-m-d', strtotime("-7 day")), 1, TRUE); ?>  - <?php echo $this->context->dateThai(date("Y-m-d"), 1, TRUE); ?></h4>
         </div>
         <div class="panel-body">
             <table class="table">
@@ -68,7 +68,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
     </div>
     <div class="panel panel-info" style="font-size: 16px;">
         <div class="panel-heading">
-            <h4>ระยะเวลาที่ขายได้ 14 วันล่าสุด :: 29 พฤศจิกายน 2559  - 13 ธันวาคม 2559</h4>
+            <h4>ระยะเวลาที่ขายได้ 14 วันล่าสุด :: <?php echo $this->context->dateThai(date('Y-m-d', strtotime("-14 day")), 1, TRUE); ?> - <?php echo $this->context->dateThai(date("Y-m-d"), 1, TRUE); ?></h4>
         </div>
         <div class="panel-body">
             <table class="table">
@@ -93,7 +93,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
     </div>
     <div class="panel panel-info" style="font-size: 16px;">
         <div class="panel-heading">
-            <h4>ระยะเวลาที่ขายได้ 1 เดือนล่าสุด :: 13 พฤศจิกายน 2559  - 13 ธันวาคม 2559</h4>
+            <h4>ระยะเวลาที่ขายได้ 1 เดือนล่าสุด :: <?php echo $this->context->dateThai(date('Y-m-d', strtotime("-1 month")), 1, TRUE); ?>  - <?php echo $this->context->dateThai(date("Y-m-d"), 1, TRUE); ?></h4>
         </div>
         <div class="panel-body">
             <table class="table">
