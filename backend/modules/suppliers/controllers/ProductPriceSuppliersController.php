@@ -176,16 +176,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
         $price = Yii::$app->request->post('price');
         $productSuppliersId = Yii::$app->request->post('productSuppId');
         $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $productSuppliersId)->one();
-        $rankTwo = \common\models\costfit\ProductSuppliers::find()
-        ->select('`product_suppliers`.*, product_suppliers.title as pTitle, product_price_suppliers.price as priceSuppliers, '
-        . 'brand.title as bTitle, category.title as cTitle, user.username as sUser')
-        ->join('LEFT JOIN', 'product_price_suppliers', 'product_price_suppliers.productSuppId = product_suppliers.productSuppId')
-        ->join('LEFT JOIN', 'brand', 'brand.brandId = product_suppliers.brandId')
-        ->join('LEFT JOIN', 'category', 'category.categoryId = product_suppliers.categoryId')
-        ->join('LEFT JOIN', 'user', 'user.userId = product_suppliers.userId')
-        ->where(' product_price_suppliers.status = 1 and product_suppliers.brandId = ' . $rankOne->brandId . ' and product_suppliers.categoryId = '
-        . '' . $rankOne->categoryId . ' and product_price_suppliers.price != "" and product_price_suppliers.price <= ' . $price)
-        ->count();
+        $rankTwo = AverageSuppliers::SuppliersCreatePrice($rankOne->brandId, $rankOne->categoryId, $price);
 
         return $rankTwo + 1;
     }
