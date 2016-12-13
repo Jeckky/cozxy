@@ -84,14 +84,15 @@ use common\models\costfit\ProductSuppliers;
         <div class="panel-heading">
             <span class="panel-title">ลำดับราคา :: Suppliers</span>
         </div>
-
-        <div class="panel-heading">
-            เงื่อนไขเขียนโปรแกรม <br><br>
-            1. ก่อนหน้าเค้ากี่ชิ้น <br>
-            2. ลำดับปัจจุบันเค้า <br>
-            3. ลำดับราคาปัจจุบัน :: ขายต่อวัน ถ้า 7 วันไม่มี ไปเฉลีย 14 ถ้า 14 ไม่มีไปเฉลีย 1 เดือน
-            <br>** อยู่ในประเภทเดียวกัน Product เดียวกัน <br><br>
-        </div>
+        <!--
+                <div class="panel-heading">
+                    เงื่อนไขเขียนโปรแกรม <br><br>
+                    1. ก่อนหน้าเค้ากี่ชิ้น <br>
+                    2. ลำดับปัจจุบันเค้า <br>
+                    3. ลำดับราคาปัจจุบัน :: ขายต่อวัน ถ้า 7 วันไม่มี ไปเฉลีย 14 ถ้า 14 ไม่มีไปเฉลีย 1 เดือน
+                    <br>** อยู่ในประเภทเดียวกัน Product เดียวกัน <br><br>
+                </div>
+        -->
         <div class="panel-body">
 
             <?=

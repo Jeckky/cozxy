@@ -46,13 +46,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 'cTitle',
                 'bTitle',
                 [
-                    'attribute' => 'priceSuppliers',
+                    'attribute' => 'ราคา',
                     'value' => function($model) {
                         return $model->priceSuppliers . ' บาท';
                     }
                 ],
                 [
-                    'attribute' => 'quantity',
+                    'attribute' => 'จำนวนสินค้า',
                     'value' => function($model) {
                         return $model->quantity . ' ชิ้น';
                     }
