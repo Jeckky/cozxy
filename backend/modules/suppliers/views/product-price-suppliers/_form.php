@@ -164,31 +164,27 @@ use common\models\costfit\ProductSuppliers;
         </div>
         <div class="panel-body">
             <?php
-            if (isset($productLastDay->summaryPrice)) {
-                $productLastDay_summaryPrice = $productLastDay->summaryPrice . ' บาท';
+            if ($productLastDay->conutProduct != 0) {
+                echo ' จำนวนสินค้าที่ขายได้ล่าสุด <br>&nbsp;&nbsp;-<code>' . $productLastDay->conutProduct . ' ชิ้น ,' . $productLastDay->summaryPrice . ' บาท</code> ,'
+                . 'เฉลี่ยจำนวนชิ้นที่ขาย ' . number_format($productLastDay->avgNum, 2) . ' ชิ้น/วัน</code><br><br>';
             } else {
-                $productLastDay_summaryPrice = '0 บาท';
+                if ($productLastWeek->conutProduct != 0) {
+                    echo 'จำนวนสินค้าที่ขายได้ภายใน 7 วัน <br>&nbsp;&nbsp;-<code>' . $productLastWeek->conutProduct . ' ชิ้น ,' . $productLastWeek->summaryPrice . ' บาท ,'
+                    . 'เฉลี่ยจำนวนชิ้นที่ขาย ' . number_format($productLastWeek->avgNum, 2) . ' ชิ้น/วัน</code><br><br>';
+                } else {
+                    if ($product14LastWeek->conutProduct != 0) {
+                        echo 'จำนวนสินค้าที่ขายได้ภายใน 14 วัน <br>&nbsp;&nbsp;-<code>' . $product14LastWeek->conutProduct . ' ชิ้น ,' . $product14LastWeek->summaryPrice . ' บาท ,'
+                        . 'เฉลี่ยจำนวนชิ้นที่ขาย ' . number_format($product14LastWeek->avgNum, 2) . ' ชิ้น/วัน</code><br><br>';
+                    } else {
+                        if ($orderLastMONTH->conutProduct != 0) {
+                            echo 'จำนวนสินค้าที่ขายได้ภายใน 1 เดือน <br>&nbsp;&nbsp;-<code>' . $orderLastMONTH->conutProduct . ' ชิ้น ,' . $orderLastMONTH->summaryPrice . ' บาท ,'
+                            . 'เฉลี่ยจำนวนชิ้นที่ขาย ' . number_format($orderLastMONTH->avgNum, 2) . ' ชิ้น/วัน</code><br><br>';
+                        } else {
+                            echo '<code>ไม่พบข้อมูล</code>';
+                        }
+                    }
+                }
             }
-            if (isset($productLastWeek->summaryPrice)) {
-                $productLastWeek_summaryPrice = $productLastWeek->summaryPrice . ' บาท';
-            } else {
-                $productLastWeek_summaryPrice = '0 บาท';
-            }
-            if (isset($product14LastWeek->summaryPrice)) {
-                $product14LastWeek_summaryPrice = $product14LastWeek->summaryPrice . ' บาท';
-            } else {
-                $product14LastWeek_summaryPrice = '0 บาท';
-            }
-            if (isset($orderLastMONTH->summaryPrice)) {
-                $orderLastMONTH_summaryPrice = $orderLastMONTH->summaryPrice . ' บาท';
-            } else {
-                $orderLastMONTH_summaryPrice = '0 บาท';
-            }
-            echo '0. จำนวนสินค้าที่ขายได้/วัน :: <code>  ชิ้น ,  </code><br><br>';
-            echo '1. จำนวนสินค้าที่ขายได้ล่าสุด :: <code>' . $productLastDay->conutProduct . ' ชิ้น ,' . $productLastDay_summaryPrice . ' </code><br><br>';
-            echo '2. จำนวนสินค้าที่ขายได้ภายใน 7 วัน :: <code>' . $productLastWeek->conutProduct . ' ชิ้น ,' . $productLastWeek_summaryPrice . ' </code><br><br>';
-            echo '3. จำนวนสินค้าที่ขายได้ภายใน 14 วัน :: <code>' . $product14LastWeek->conutProduct . ' ชิ้น ,' . $product14LastWeek_summaryPrice . ' </code><br><br>';
-            echo '4. จำนวนสินค้าที่ขายได้ภายใน 1 เดือน:: <code>' . $orderLastMONTH->conutProduct . ' ชิ้น ,' . $orderLastMONTH_summaryPrice . ' </code><br><br>';
             ?>
         </div>
     </div>
