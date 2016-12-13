@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\db\ActiveRecord;
+use yii\data\ActiveDataProvider;
 
 /**
  * Login form
@@ -63,6 +64,24 @@ class AverageSuppliers extends Model {
         ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
         ->where('`order`.status >= 5 and MONTH(curdate()) = MONTH(order.createDateTime) and year(order.createDateTime) = year(curdate()) ')->one();
         return $orderLastMonth;
+    }
+
+    public static function GetPriceSuppliersSame($brandId, $categoryId) {
+        $rankTwo = \common\models\costfit\ProductSuppliers::find()
+        ->select('`product_suppliers`.* , product_suppliers.title as pTitle, product_price_suppliers.price  as priceSuppliers ,'
+        . 'brand.title as bTitle,category.title as cTitle , user.username as sUser')
+        ->join('LEFT JOIN', 'product_price_suppliers', 'product_price_suppliers.productSuppId = product_suppliers.productSuppId')
+        ->join('LEFT JOIN', 'brand', 'brand.brandId = product_suppliers.brandId')
+        ->join('LEFT JOIN', 'category', 'category.categoryId = product_suppliers.categoryId')
+        ->join('LEFT JOIN', 'user', 'user.userId = product_suppliers.userId')
+        ->where(' product_price_suppliers.status =1  and   product_suppliers.brandId=' . $brandId . ' and product_suppliers.categoryId='
+        . '' . $categoryId . ' and product_price_suppliers.price != ""')
+        //. '  and  date(product_price_suppliers.createDateTime) >= date_add(curdate(),interval -7 day)     ')
+        ->orderBy(' product_price_suppliers.price asc');
+        $rankingPrice = new ActiveDataProvider([
+            'query' => $rankTwo
+        ]);
+        return $rankingPrice;
     }
 
 }

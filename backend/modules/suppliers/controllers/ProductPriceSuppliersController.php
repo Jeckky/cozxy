@@ -46,21 +46,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
 
         $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $_GET['productSuppId'])->one();
 
-        $rankTwo = \common\models\costfit\ProductSuppliers::find()
-        ->select('`product_suppliers`.* , product_suppliers.title as pTitle, product_price_suppliers.price  as priceSuppliers ,'
-        . 'brand.title as bTitle,category.title as cTitle , user.username as sUser')
-        ->join('LEFT JOIN', 'product_price_suppliers', 'product_price_suppliers.productSuppId = product_suppliers.productSuppId')
-        ->join('LEFT JOIN', 'brand', 'brand.brandId = product_suppliers.brandId')
-        ->join('LEFT JOIN', 'category', 'category.categoryId = product_suppliers.categoryId')
-        ->join('LEFT JOIN', 'user', 'user.userId = product_suppliers.userId')
-        ->where(' product_price_suppliers.status =1  and   product_suppliers.brandId=' . $rankOne->brandId . ' and product_suppliers.categoryId='
-        . '' . $rankOne->categoryId . ' and product_price_suppliers.price != ""')
-        //. '  and  date(product_price_suppliers.createDateTime) >= date_add(curdate(),interval -7 day)     ')
-        ->orderBy(' product_price_suppliers.price asc');
-
-        $rankingPrice = new ActiveDataProvider([
-            'query' => $rankTwo
-        ]);
+        $rankingPrice = AverageSuppliers::GetPriceSuppliersSame($rankOne->brandId, $rankOne->categoryId);
 
         $dataProvider = new ActiveDataProvider([
             'query' => ProductPriceSuppliers::find()->where('productSuppId=' . $_GET['productSuppId'])->orderBy('status desc'),
@@ -99,22 +85,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
         //$rankingPrice = \common\models\costfit\ProductPriceSuppliers::rankingPrice();
         $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $_GET['productSuppId'])->one();
         //echo $rankOne->brandId . '::' . $rankOne->categoryId;
-        $rankTwo = \common\models\costfit\ProductSuppliers::find()
-        ->select('`product_suppliers`.* , product_suppliers.title as pTitle, product_price_suppliers.price  as priceSuppliers ,'
-        . 'brand.title as bTitle,category.title as cTitle , user.username as sUser')
-        ->join('LEFT JOIN', 'product_price_suppliers', 'product_price_suppliers.productSuppId = product_suppliers.productSuppId')
-        ->join('LEFT JOIN', 'brand', 'brand.brandId = product_suppliers.brandId')
-        ->join('LEFT JOIN', 'category', 'category.categoryId = product_suppliers.categoryId')
-        ->join('LEFT JOIN', 'user', 'user.userId = product_suppliers.userId')
-        ->where(' product_price_suppliers.status =1  and   product_suppliers.brandId=' . $rankOne->brandId . ' and product_suppliers.categoryId='
-        . '' . $rankOne->categoryId . ' and product_price_suppliers.price != ""')
-        //. '  and  date(product_price_suppliers.createDateTime) >= date_add(curdate(),interval -7 day)     ')
-        ->orderBy(' product_price_suppliers.price asc');
-        //}
-        //$rankThree = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId = ' . $_GET['productSuppId']);
-        $rankingPrice = new ActiveDataProvider([
-            'query' => $rankTwo
-        ]);
+        $rankingPrice = AverageSuppliers::GetPriceSuppliersSame($rankOne->brandId, $rankOne->categoryId);
         if (isset($_POST["ProductPriceSuppliers"])) {
             $model->attributes = $_POST["ProductPriceSuppliers"];
             \common\models\costfit\ProductPriceSuppliers::updateAll(['status' => 0], ['productSuppId' => $_GET['productSuppId']]);
@@ -152,22 +123,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
         //$rankingPrice = \common\models\costfit\ProductPriceSuppliers::rankingPrice();
         $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $_GET['productSuppId'])->one();
         //echo $rankOne->brandId . '::' . $rankOne->categoryId;
-        $rankTwo = \common\models\costfit\ProductSuppliers::find()
-        ->select('`product_suppliers`.*, product_suppliers.title as pTitle, product_price_suppliers.price as priceSuppliers, '
-        . 'brand.title as bTitle, category.title as cTitle, user.username as sUser')
-        ->join('LEFT JOIN', 'product_price_suppliers', 'product_price_suppliers.productSuppId = product_suppliers.productSuppId')
-        ->join('LEFT JOIN', 'brand', 'brand.brandId = product_suppliers.brandId')
-        ->join('LEFT JOIN', 'category', 'category.categoryId = product_suppliers.categoryId')
-        ->join('LEFT JOIN', 'user', 'user.userId = product_suppliers.userId')
-        ->where(' product_price_suppliers.status = 1 and product_suppliers.brandId = ' . $rankOne->brandId . ' and product_suppliers.categoryId = '
-        . '' . $rankOne->categoryId . ' and product_price_suppliers.price != ""')
-        //. ' and date(product_price_suppliers.createDateTime) >= date_add(curdate(), interval -7 day) ')
-        ->orderBy(' product_price_suppliers.price asc');
-        //}
-        //$rankThree = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId = ' . $_GET['productSuppId']);
-        $rankingPrice = new ActiveDataProvider([
-            'query' => $rankTwo
-        ]);
+        $rankingPrice = AverageSuppliers::GetPriceSuppliersSame($rankOne->brandId, $rankOne->categoryId);
         $model = $this->findModel($id);
         if (isset($_POST["ProductPriceSuppliers"])) {
             $model->attributes = $_POST["ProductPriceSuppliers"];
