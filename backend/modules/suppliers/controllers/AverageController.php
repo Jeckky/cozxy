@@ -16,11 +16,11 @@ use common\helpers\Suppliers;
 class AverageController extends SuppliersMasterController {
 
     public function actionIndex() {
-
-        $productLastDay = Suppliers::LastDay();
-        $productLastWeek = Suppliers::LastWeek();
-        $product14LastWeek = Suppliers::LastWeek14();
-        $orderLastMONTH = Suppliers::LastMonth();
+        $productSuppId = '';
+        $productLastDay = Suppliers::LastDay($productSuppId);
+        $productLastWeek = Suppliers::LastWeek($productSuppId);
+        $product14LastWeek = Suppliers::LastWeek14($productSuppId);
+        $orderLastMONTH = Suppliers::LastMonth($productSuppId);
 
 
         return $this->render('index', [

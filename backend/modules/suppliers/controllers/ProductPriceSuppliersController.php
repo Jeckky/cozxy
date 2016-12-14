@@ -114,10 +114,10 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
 
         $productSupp = \common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $_GET['productSuppId'])->one();
 
-        $productLastDay = Suppliers::LastDay();
-        $productLastWeek = Suppliers::LastWeek();
-        $product14LastWeek = Suppliers::LastWeek14();
-        $orderLastMONTH = Suppliers::LastMonth();
+        $productLastDay = Suppliers::LastDay($_GET['productSuppId']);
+        $productLastWeek = Suppliers::LastWeek($_GET['productSuppId']);
+        $product14LastWeek = Suppliers::LastWeek14($_GET['productSuppId']);
+        $orderLastMONTH = Suppliers::LastMonth($_GET['productSuppId']);
         return $this->render('create', [
             'model' => $model, 'rankingPrice' => $rankingPrice
             , 'productLastDay' => $productLastDay
@@ -150,10 +150,10 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
                 return $this->redirect(['product-price-suppliers/index?productSuppId = ' . $model->productSuppId]);
             }
         }
-        $productLastDay = Suppliers::LastDay();
-        $productLastWeek = Suppliers::LastWeek();
-        $product14LastWeek = Suppliers::LastWeek14();
-        $orderLastMONTH = Suppliers::LastMonth();
+        $productLastDay = Suppliers::LastDay($_GET['productSuppId']);
+        $productLastWeek = Suppliers::LastWeek($_GET['productSuppId']);
+        $product14LastWeek = Suppliers::LastWeek14($_GET['productSuppId']);
+        $orderLastMONTH = Suppliers::LastMonth($_GET['productSuppId']);
         return $this->render('update', [
             'model' => $model, 'rankingPrice' => $rankingPrice
             , 'productLastDay' => $productLastDay
