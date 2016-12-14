@@ -16,9 +16,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
 <div class="product-price-suppliers-index">
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
-    <div class="panel panel-info" style="font-size: 16px;">
+    <div class=" panel colourable" >
         <div class="panel-heading ">
-            <h4>ระยะเวลาที่ขายได้ล่าสุด :: <?php echo $this->context->dateThai(date("Y-m-d"), 1, TRUE); ?></h4>
+            <span class="panel-title text-danger">ระยะเวลาที่ขายได้ล่าสุด ::
+                <span class="text-primary">
+                    <?php echo $this->context->dateThai(date("Y-m-d"), 1, TRUE); ?>
+                </span>
+            </span>
         </div>
         <div class="panel-body">
             <table class="table">
@@ -34,16 +38,20 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         <td><?php echo $productLastDay->summaryPrice; ?>&nbsp;บาท</td>
                     </tr>
                     <tr>
-                        <td class="text-right">เฉลี่ยจำนวนชิ้นที่ขาย</td>
-                        <td><?php echo number_format($productLastDay->avgNum, 2); ?>&nbsp;ชิ้น/วัน</td>
+                        <td class="text-right text-success">เฉลี่ยจำนวนชิ้นที่ขาย</td>
+                        <td class="text-success"><?php echo number_format($productLastDay->avgNum, 2); ?>&nbsp;ชิ้น/วัน</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="panel panel-info" style="font-size: 16px;">
+    <div class=" panel colourable" >
         <div class="panel-heading">
-            <h4>ระยะเวลาที่ขายได้ 7 วันล่าสุด :: <?php echo $this->context->dateThai(date('Y-m-d', strtotime("-7 day")), 1, TRUE); ?>  - <?php echo $this->context->dateThai(date("Y-m-d"), 1, TRUE); ?></h4>
+            <span class="panel-title text-danger">ระยะเวลาที่ขายได้ 7 วันล่าสุด ::
+                <span class="text-primary">
+                    <?php echo $this->context->dateThai(date('Y-m-d', strtotime("-7 day")), 1, TRUE); ?>  - <?php echo $this->context->dateThai(date("Y-m-d"), 1, TRUE); ?>
+                </span>
+            </span>
         </div>
         <div class="panel-body">
             <table class="table">
@@ -59,16 +67,21 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         <td><?php echo $productLastWeek->summaryPrice; ?>&nbsp;บาท</td>
                     </tr>
                     <tr>
-                        <td class="text-right">เฉลี่ยจำนวนชิ้นที่ขาย</td>
-                        <td><?php echo number_format($productLastWeek->avgNum, 2); ?>&nbsp;ชิ้น/วัน</td>
+                        <td class="text-right text-success">เฉลี่ยจำนวนชิ้นที่ขาย</td>
+                        <td class="text-success"><?php echo number_format($productLastWeek->avgNum, 2); ?>&nbsp;ชิ้น/วัน</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="panel panel-info" style="font-size: 16px;">
+    <div class=" panel colourable" >
         <div class="panel-heading">
-            <h4>ระยะเวลาที่ขายได้ 14 วันล่าสุด :: <?php echo $this->context->dateThai(date('Y-m-d', strtotime("-14 day")), 1, TRUE); ?> - <?php echo $this->context->dateThai(date("Y-m-d"), 1, TRUE); ?></h4>
+            <span class="panel-title text-danger">
+                ระยะเวลาที่ขายได้ 14 วันล่าสุด ::
+                <span class="text-primary">
+                    <?php echo $this->context->dateThai(date('Y-m-d', strtotime("-14 day")), 1, TRUE); ?> - <?php echo $this->context->dateThai(date("Y-m-d"), 1, TRUE); ?>
+                </span>
+            </span>
         </div>
         <div class="panel-body">
             <table class="table">
@@ -84,16 +97,21 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         <td><?php echo $product14LastWeek->summaryPrice; ?>&nbsp;บาท</td>
                     </tr>
                     <tr>
-                        <td class="text-right">เฉลี่ยจำนวนชิ้นที่ขาย</td>
-                        <td><?php echo number_format($product14LastWeek->avgNum, 2); ?>&nbsp;ชิ้น/วัน</td>
+                        <td class="text-right text-success">เฉลี่ยจำนวนชิ้นที่ขาย</td>
+                        <td class=" text-success"><?php echo number_format($product14LastWeek->avgNum, 2); ?>&nbsp;ชิ้น/วัน</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="panel panel-info" style="font-size: 16px;">
+    <div class=" panel colourable" >
         <div class="panel-heading">
-            <h4>ระยะเวลาที่ขายได้ 1 เดือนล่าสุด :: <?php echo $this->context->dateThai(date('Y-m-d', strtotime("-1 month")), 1, TRUE); ?>  - <?php echo $this->context->dateThai(date("Y-m-d"), 1, TRUE); ?></h4>
+            <span class="panel-title text-danger">
+                ระยะเวลาที่ขายได้ 1 เดือนล่าสุด ::
+                <span class="text-primary">
+                    <?php echo $this->context->dateThai(date('Y-m-d', strtotime("-1 month")), 1, TRUE); ?>  - <?php echo $this->context->dateThai(date("Y-m-d"), 1, TRUE); ?>
+                </span>
+            </span>
         </div>
         <div class="panel-body">
             <table class="table">
@@ -109,8 +127,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         <td><?php echo $orderLastMONTH->summaryPrice; ?>&nbsp;บาท</td>
                     </tr>
                     <tr>
-                        <td class="text-right">เฉลี่ยจำนวนชิ้นที่ขาย</td>
-                        <td><?php echo number_format($orderLastMONTH->avgNum, 2); ?>&nbsp;ชิ้น/วัน</td>
+                        <td class="text-right text-success">เฉลี่ยจำนวนชิ้นที่ขาย</td>
+                        <td class="text-success"><?php echo number_format($orderLastMONTH->avgNum, 2); ?>&nbsp;ชิ้น/วัน</td>
                     </tr>
                 </tbody>
             </table>
