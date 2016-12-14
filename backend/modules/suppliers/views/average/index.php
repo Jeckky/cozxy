@@ -34,8 +34,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 </thead>
                 <tbody>
                     <tr>
-                        <td><?php echo $productLastDay->conutProduct; ?>&nbsp;ชิ้น</td>
-                        <td><?php echo $productLastDay->summaryPrice; ?>&nbsp;บาท</td>
+                        <td><?php echo isset($productLastDay->conutProduct) ? $productLastDay->conutProduct : '0'; ?>&nbsp;ชิ้น</td>
+                        <td><?php echo isset($productLastDay->summaryPrice) ? $productLastDay->summaryPrice : '0'; ?>&nbsp;บาท</td>
                     </tr>
                     <tr>
                         <td class="text-right text-success">เฉลี่ยจำนวนชิ้นที่ขาย</td>
@@ -63,8 +63,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 </thead>
                 <tbody>
                     <tr>
-                        <td><?php echo $productLastWeek->conutProduct; ?>&nbsp;ชิ้น</td>
-                        <td><?php echo $productLastWeek->summaryPrice; ?>&nbsp;บาท</td>
+                        <td><?php echo isset($productLastWeek->conutProduct) ? $productLastWeek->conutProduct : '0'; ?>&nbsp;ชิ้น</td>
+                        <td><?php echo isset($productLastWeek->summaryPrice) ? $productLastWeek->summaryPrice : '0'; ?>&nbsp;บาท</td>
                     </tr>
                     <tr>
                         <td class="text-right text-success">เฉลี่ยจำนวนชิ้นที่ขาย</td>
@@ -93,8 +93,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 </thead>
                 <tbody>
                     <tr>
-                        <td><?php echo $product14LastWeek->conutProduct; ?>&nbsp;ชิ้น</td>
-                        <td><?php echo $product14LastWeek->summaryPrice; ?>&nbsp;บาท</td>
+                        <td><?php echo isset($product14LastWeek->conutProduct) ? $product14LastWeek->conutProduct : '0'; ?>&nbsp;ชิ้น</td>
+                        <td><?php echo isset($product14LastWeek->summaryPrice) ? $product14LastWeek->summaryPrice : '0'; ?>&nbsp;บาท</td>
                     </tr>
                     <tr>
                         <td class="text-right text-success">เฉลี่ยจำนวนชิ้นที่ขาย</td>
@@ -123,8 +123,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 </thead>
                 <tbody>
                     <tr>
-                        <td><?php echo $orderLastMONTH->conutProduct; ?>&nbsp;ชิ้น</td>
-                        <td><?php echo $orderLastMONTH->summaryPrice; ?>&nbsp;บาท</td>
+                        <td><?php echo isset($orderLastMONTH->conutProduct) ? $orderLastMONTH->conutProduct : '0'; ?>&nbsp;ชิ้น</td>
+                        <td><?php echo isset($orderLastMONTH->summaryPrice) ? $orderLastMONTH->summaryPrice : '0'; ?>&nbsp;บาท</td>
                     </tr>
                     <tr>
                         <td class="text-right text-success">เฉลี่ยจำนวนชิ้นที่ขาย</td>

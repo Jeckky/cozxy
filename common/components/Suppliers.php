@@ -66,6 +66,11 @@ class Suppliers {
         return $orderLastMonth;
     }
 
+    /*
+     * หัวข้อ ลำดับราคา
+     * แสดงข้อมูลราคาของ Suppliers ที่อยู่ใน   brand , category เดียวกัน
+     */
+
     public static function GetPriceSuppliersSame($brandId, $categoryId) {
         $rankTwo = \common\models\costfit\ProductSuppliers::find()
         ->select('`product_suppliers`.* , product_suppliers.title as pTitle, product_price_suppliers.price  as priceSuppliers ,'
