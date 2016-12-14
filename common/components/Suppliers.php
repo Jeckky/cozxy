@@ -84,6 +84,13 @@ class Suppliers {
         return $rankingPrice;
     }
 
+    /*
+     * - ajax post url yii2: /suppliers/product-price-suppliers/create?
+     * - หาลำดับ ราคาของ Supplires
+     * table : product_suppliers ,product_price_suppliers , brand ,category ,user
+     * where : สถานะราคาของ Suppliers เท่า 1 ,ราคาของ Suppliers ต้องมีค่าเสมอ  และ brand , category เดียวกัน โดยส่ง ราคาจากฟอร์ม
+     * */
+
     public static function SuppliersCreatePrice($brandId, $categoryId, $price) {
         $rankTwo = \common\models\costfit\ProductSuppliers::find()
         ->select('`product_suppliers`.*, product_suppliers.title as pTitle, product_price_suppliers.price as priceSuppliers, '
