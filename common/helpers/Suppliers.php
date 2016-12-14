@@ -8,7 +8,7 @@ use yii\db\ActiveRecord;
 use yii\data\ActiveDataProvider;
 
 /**
- * Suppliers 
+ * Suppliers 14/12/2016
  */
 class Suppliers {
 
@@ -30,6 +30,13 @@ class Suppliers {
         return $productLastDay;
     }
 
+    /*
+     * หาสินค้าที่ขายได้ล่าสุด
+     * หาจำนวนชิ้น
+     * หาราคารวม
+     * หาค่าเฉลี่ยจำนวนชิ้นที่ขายได้/วัน
+     */
+
     public static function LastDay() {
         $productLastDay = \common\models\costfit\OrderItem::find()
         ->select('sum(`order_item`.`quantity`) as conutProduct , sum(`order`.`summary`) as  summaryPrice ,count(`order_item`.`productId`)/1 as avgNum')
@@ -38,6 +45,10 @@ class Suppliers {
         ->where('order.status >= 5 and date(order.createDateTime) >= date_add(curdate(),interval  0 day) ')->one();
         return $productLastDay;
     }
+
+    /*
+     * หาสินค้าที่ขายได้ 7 วันล่าสุด
+     */
 
     public static function LastWeek() {
         $productLastWeek = \common\models\costfit\OrderItem::find()
@@ -48,6 +59,13 @@ class Suppliers {
         return $productLastWeek;
     }
 
+    /*
+     * หาสินค้าที่ขายได้ 14 วันล่าสุด
+     * หาจำนวนชิ้น
+     * หาราคารวม
+     * หาค่าเฉลี่ยจำนวนชิ้นที่ขายได้/วัน
+     */
+
     public static function LastWeek14() {
         $product14LastWeek = \common\models\costfit\OrderItem::find()
         ->select('sum(`order_item`.`quantity`) as conutProduct, sum(`order`.`summary`) as summaryPrice , count(`order_item`.`productId`)/14 as avgNum ')
@@ -56,6 +74,13 @@ class Suppliers {
         ->where('`order`.status >= 5 and order.createDateTime BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW()')->one();
         return $product14LastWeek;
     }
+
+    /*
+     * หาสินค้าที่ขายได้ 1 เดือนล่าสุด
+     * หาจำนวนชิ้น
+     * หาราคารวม
+     * หาค่าเฉลี่ยจำนวนชิ้นที่ขายได้/วัน
+     */
 
     public static function LastMonth() {
         $orderLastMonth = \common\models\costfit\OrderItem::find()
