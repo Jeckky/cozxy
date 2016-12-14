@@ -580,7 +580,7 @@ function suppliersCreatePrice(price, productSuppId) {
                 // alert(result);
                 //var JSONObject2 = JSON.parse(result);
                 $(".suppliersCreatePrice").removeClass("hidden");
-                $(".suppliersCreatePrice").html('<code>ลำดับคะแนนที่  :' + result + '</code>');
+                $(".suppliersCreatePrice").html('<code>ลำดับราคาที่  :' + result + '</code>');
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 //debugger;
