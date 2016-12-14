@@ -14,9 +14,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <h1>ค่าเฉลี่ยการค้า/จำนวนสินค้าที่ขายได้</h1>
 
-<div class="product-price-suppliers-index">
+<div class="product-price-suppliers-index ">
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
-    <div class=" panel colourable" >
+    <div class=" panel colourable col-sm-6" >
         <div class="panel-heading ">
             <span class="panel-title text-danger">ระยะเวลาที่ขายได้ล่าสุด ::
                 <span class="text-primary">
@@ -45,7 +45,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
             </table>
         </div>
     </div>
-    <div class=" panel colourable" >
+    <div class=" panel colourable col-sm-6" >
         <div class="panel-heading">
             <span class="panel-title text-danger">ระยะเวลาที่ขายได้ 7 วันล่าสุด ::
                 <span class="text-primary">
@@ -74,7 +74,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
             </table>
         </div>
     </div>
-    <div class=" panel colourable" >
+    <div class=" panel colourable col-sm-6" >
         <div class="panel-heading">
             <span class="panel-title text-danger">
                 ระยะเวลาที่ขายได้ 14 วันล่าสุด ::
@@ -104,7 +104,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
             </table>
         </div>
     </div>
-    <div class=" panel colourable" >
+    <div class=" panel colourable col-sm-6" >
         <div class="panel-heading">
             <span class="panel-title text-danger">
                 ระยะเวลาที่ขายได้ 1 เดือนล่าสุด ::
