@@ -161,25 +161,29 @@ use common\models\costfit\ProductSuppliers;
             ?>
         </div>
 
-        <div class="panel-body" style="margin-top: 0px;">
+        <div class="panel-body" style="margin-top: 0px; font-size: 16px; margin-top: -30px;">
             <?php
             if ($productLastDay->conutProduct != 0) {
-                echo ' จำนวนสินค้าที่ขายได้ล่าสุด<br><code>&nbsp;&nbsp;- จำนวน ' . $productLastDay->conutProduct . ' ชิ้น <br>'
+                echo '<h4>จำนวนสินค้าที่ขายได้ล่าสุด</h4><code>'
+                . '&nbsp;&nbsp;- จำนวน ' . $productLastDay->conutProduct . ' ชิ้น <br>'
                 . '&nbsp;&nbsp;&nbsp;- ราคา ' . $productLastDay->summaryPrice . ' บาท'
                 . '<br>&nbsp;&nbsp;&nbsp;- เฉลี่ยจำนวนชิ้นที่ขาย ' . number_format($productLastDay->avgNum, 2) . ' ชิ้น/วัน</code><br><br>';
             } else {
                 if ($productLastWeek->conutProduct != 0) {
-                    echo 'จำนวนสินค้าที่ขายได้ภายใน 7 วัน <br><code>&nbsp;&nbsp;- จำนวน ' . $productLastWeek->conutProduct . ' ชิ้น <br>'
-                    . '&nbsp;&nbsp;- ราคา ' . $productLastWeek->summaryPrice . ' บาท ,'
+                    echo '<h4>จำนวนสินค้าที่ขายได้ภายใน 7 วัน</h4><code>'
+                    . '&nbsp;- จำนวน ' . $productLastWeek->conutProduct . ' ชิ้น <br>'
+                    . '&nbsp;&nbsp;- ราคา ' . $productLastWeek->summaryPrice . ' บาท <br>'
                     . '&nbsp;&nbsp;- เฉลี่ยจำนวนชิ้นที่ขาย ' . number_format($productLastWeek->avgNum, 2) . ' ชิ้น/วัน</code><br><br>';
                 } else {
                     if ($product14LastWeek->conutProduct != 0) {
-                        echo 'จำนวนสินค้าที่ขายได้ภายใน 14 วัน <br><code>&nbsp;&nbsp;- จำนวน ' . $product14LastWeek->conutProduct . ' ชิ้น <br>'
+                        echo '<h4>จำนวนสินค้าที่ขายได้ภายใน 14 วัน</h4><code>'
+                        . '&nbsp;- จำนวน ' . $product14LastWeek->conutProduct . ' ชิ้น <br>'
                         . '&nbsp;&nbsp;- ราคา ' . $product14LastWeek->summaryPrice . ' บาท <br>'
                         . '&nbsp;&nbsp;- เฉลี่ยจำนวนชิ้นที่ขาย ' . number_format($product14LastWeek->avgNum, 2) . ' ชิ้น/วัน</code><br><br>';
                     } else {
                         if ($orderLastMONTH->conutProduct != 0) {
-                            echo 'จำนวนสินค้าที่ขายได้ภายใน 1 เดือน <br><code>&nbsp;&nbsp;- จำนวน' . $orderLastMONTH->conutProduct . ' ชิ้น <br>'
+                            echo '<h4>จำนวนสินค้าที่ขายได้ภายใน 1 เดือน</h4><code>'
+                            . '&nbsp;- จำนวน' . $orderLastMONTH->conutProduct . ' ชิ้น <br>'
                             . '&nbsp;&nbsp;- ราคา ' . $orderLastMONTH->summaryPrice . ' บาท <br>'
                             . '&nbsp;&nbsp;- เฉลี่ยจำนวนชิ้นที่ขาย ' . number_format($orderLastMONTH->avgNum, 2) . ' ชิ้น/วัน</code><br><br>';
                         } else {
