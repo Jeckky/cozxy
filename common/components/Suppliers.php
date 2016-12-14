@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models;
+namespace common\components;
 
 use Yii;
 use yii\base\Model;
@@ -10,7 +10,7 @@ use yii\data\ActiveDataProvider;
 /**
  * Login form
  */
-class AverageSuppliers extends Model {
+class Suppliers {
 
     /**
      * @inheritdoc

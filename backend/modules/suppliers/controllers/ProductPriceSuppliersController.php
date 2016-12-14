@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use common\models\AverageSuppliers;
+use common\components\Suppliers;
 
 /**
  * ProductPriceSuppliersController implements the CRUD actions for ProductPriceSuppliers model.
@@ -50,7 +50,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
          * แสดงข้อมูลที่อยู่ใน brand , category เดียวกัน
          * ทุก Suppliers
          */
-        $rankingPrice = AverageSuppliers::GetPriceSuppliersSame($rankOne->brandId, $rankOne->categoryId);
+        $rankingPrice = Suppliers::GetPriceSuppliersSame($rankOne->brandId, $rankOne->categoryId);
 
         $dataProvider = new ActiveDataProvider([
             'query' => ProductPriceSuppliers::find()->where('productSuppId=' . $_GET['productSuppId'])->orderBy('status desc'),
@@ -97,7 +97,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
          * แสดงข้อมูลที่อยู่ใน brand , category เดียวกัน
          * ทุก Suppliers
          */
-        $rankingPrice = AverageSuppliers::GetPriceSuppliersSame($rankOne->brandId, $rankOne->categoryId);
+        $rankingPrice = Suppliers::GetPriceSuppliersSame($rankOne->brandId, $rankOne->categoryId);
         if (isset($_POST["ProductPriceSuppliers"])) {
             $model->attributes = $_POST["ProductPriceSuppliers"];
             \common\models\costfit\ProductPriceSuppliers::updateAll(['status' => 0], ['productSuppId' => $_GET['productSuppId']]);
@@ -112,10 +112,10 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
 
         $productSupp = \common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $_GET['productSuppId'])->one();
 
-        $productLastDay = AverageSuppliers::LastDay();
-        $productLastWeek = AverageSuppliers::LastWeek();
-        $product14LastWeek = AverageSuppliers::LastWeek14();
-        $orderLastMONTH = AverageSuppliers::LastMonth();
+        $productLastDay = Suppliers::LastDay();
+        $productLastWeek = Suppliers::LastWeek();
+        $product14LastWeek = Suppliers::LastWeek14();
+        $orderLastMONTH = Suppliers::LastMonth();
         return $this->render('create', [
             'model' => $model, 'rankingPrice' => $rankingPrice
             , 'productLastDay' => $productLastDay
@@ -139,7 +139,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
          * แสดงข้อมูลที่อยู่ใน brand , category เดียวกัน
          * ทุก Suppliers
          */
-        $rankingPrice = AverageSuppliers::GetPriceSuppliersSame($rankOne->brandId, $rankOne->categoryId);
+        $rankingPrice = Suppliers::GetPriceSuppliersSame($rankOne->brandId, $rankOne->categoryId);
         $model = $this->findModel($id);
         if (isset($_POST["ProductPriceSuppliers"])) {
             $model->attributes = $_POST["ProductPriceSuppliers"];
@@ -148,10 +148,10 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
                 return $this->redirect(['product-price-suppliers/index?productSuppId = ' . $model->productSuppId]);
             }
         }
-        $productLastDay = AverageSuppliers::LastDay();
-        $productLastWeek = AverageSuppliers::LastWeek();
-        $product14LastWeek = AverageSuppliers::LastWeek14();
-        $orderLastMONTH = AverageSuppliers::LastMonth();
+        $productLastDay = Suppliers::LastDay();
+        $productLastWeek = Suppliers::LastWeek();
+        $product14LastWeek = Suppliers::LastWeek14();
+        $orderLastMONTH = Suppliers::LastMonth();
         return $this->render('update', [
             'model' => $model, 'rankingPrice' => $rankingPrice
             , 'productLastDay' => $productLastDay
@@ -192,7 +192,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
         $price = Yii::$app->request->post('price');
         $productSuppliersId = Yii::$app->request->post('productSuppId');
         $rankOne = $this->SearchProductSuppliers($productSuppliersId); //\common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $productSuppliersId)->one();
-        $rankTwo = AverageSuppliers::SuppliersCreatePrice($rankOne->brandId, $rankOne->categoryId, $price);
+        $rankTwo = Suppliers::SuppliersCreatePrice($rankOne->brandId, $rankOne->categoryId, $price);
 
         return $rankTwo + 1;
     }

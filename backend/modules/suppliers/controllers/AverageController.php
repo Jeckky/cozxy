@@ -11,16 +11,16 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use common\models\AverageSuppliers;
+use common\components\Suppliers;
 
 class AverageController extends SuppliersMasterController {
 
     public function actionIndex() {
 
-        $productLastDay = AverageSuppliers::LastDay();
-        $productLastWeek = AverageSuppliers::LastWeek();
-        $product14LastWeek = AverageSuppliers::LastWeek14();
-        $orderLastMONTH = AverageSuppliers::LastMonth();
+        $productLastDay = Suppliers::LastDay();
+        $productLastWeek = Suppliers::LastWeek();
+        $product14LastWeek = Suppliers::LastWeek14();
+        $orderLastMONTH = Suppliers::LastMonth();
 
 
         return $this->render('index', [
