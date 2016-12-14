@@ -11,7 +11,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use common\components\Suppliers;
+use common\helpers\Suppliers;
 
 class AverageController extends SuppliersMasterController {
 
