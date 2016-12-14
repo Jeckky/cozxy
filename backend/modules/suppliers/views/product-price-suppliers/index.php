@@ -74,7 +74,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
                         ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
                         ->where('order_item.productId=' . $model->productSuppId . ' and order.status >= 5')->count('order_item.productId');
-                        return $model->quantity - $order . ' ชิ้น';
+                        return $model->quantity - $order . ' ชิ้น,';
                     }
                 ],
                 //'discountType',

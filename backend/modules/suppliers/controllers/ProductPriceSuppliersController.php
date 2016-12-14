@@ -44,22 +44,31 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
      */
     public function actionIndex() {
 
-        $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $_GET['productSuppId'])->one();
+        $rankOne = $this->SearchProductSuppliers($_GET['productSuppId']); //\common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $_GET['productSuppId'])->one();
 
+        /*
+         * แสดงข้อมูลที่อยู่ใน brand , category เดียวกัน
+         * ทุก Suppliers
+         */
         $rankingPrice = AverageSuppliers::GetPriceSuppliersSame($rankOne->brandId, $rankOne->categoryId);
 
         $dataProvider = new ActiveDataProvider([
             'query' => ProductPriceSuppliers::find()->where('productSuppId=' . $_GET['productSuppId'])->orderBy('status desc'),
         ]);
 
-        $dataProvider1 = new ActiveDataProvider([
-            'query' => \common\models\costfit\ProductShippingPriceSuppliers::find()->where('productSuppId=' . $_GET['productSuppId']),
-        ]);
+        /*
+          $dataProvider1 = new ActiveDataProvider([
+          'query' => \common\models\costfit\ProductShippingPriceSuppliers::find()->where('productSuppId=' . $_GET['productSuppId']),
+          ]);
+         *
+         */
 
-        $productSupp = \common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $_GET['productSuppId'])->limit(10)->one();
+        /*
+         * แสดง Title Product
+         */
+        $productSupp = \common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $_GET['productSuppId'])->one();
         return $this->render('index', [
-
-            'dataProvider' => $dataProvider, 'dataProvider1' => $dataProvider1,
+            'dataProvider' => $dataProvider,
             'productSupp' => $productSupp, 'rankingPrice' => $rankingPrice
         ]);
     }
@@ -83,8 +92,11 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
     public function actionCreate() {
         $model = new ProductPriceSuppliers();
         //$rankingPrice = \common\models\costfit\ProductPriceSuppliers::rankingPrice();
-        $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $_GET['productSuppId'])->one();
-        //echo $rankOne->brandId . '::' . $rankOne->categoryId;
+        $rankOne = $this->SearchProductSuppliers($_GET['productSuppId']); //\common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $_GET['productSuppId'])->one();
+        /*
+         * แสดงข้อมูลที่อยู่ใน brand , category เดียวกัน
+         * ทุก Suppliers
+         */
         $rankingPrice = AverageSuppliers::GetPriceSuppliersSame($rankOne->brandId, $rankOne->categoryId);
         if (isset($_POST["ProductPriceSuppliers"])) {
             $model->attributes = $_POST["ProductPriceSuppliers"];
@@ -98,7 +110,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
             }
         }
 
-        $productSupp = \common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $_GET['productSuppId'])->limit(10)->one();
+        $productSupp = \common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $_GET['productSuppId'])->one();
 
         $productLastDay = AverageSuppliers::LastDay();
         $productLastWeek = AverageSuppliers::LastWeek();
@@ -121,8 +133,12 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
      */
     public function actionUpdate($id) {
         //$rankingPrice = \common\models\costfit\ProductPriceSuppliers::rankingPrice();
-        $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $_GET['productSuppId'])->one();
+        $rankOne = $this->SearchProductSuppliers($_GET['productSuppId']); //\common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $_GET['productSuppId'])->one();
         //echo $rankOne->brandId . '::' . $rankOne->categoryId;
+        /*
+         * แสดงข้อมูลที่อยู่ใน brand , category เดียวกัน
+         * ทุก Suppliers
+         */
         $rankingPrice = AverageSuppliers::GetPriceSuppliersSame($rankOne->brandId, $rankOne->categoryId);
         $model = $this->findModel($id);
         if (isset($_POST["ProductPriceSuppliers"])) {
@@ -175,10 +191,15 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
     public function actionSuppliersCreatePrice() {
         $price = Yii::$app->request->post('price');
         $productSuppliersId = Yii::$app->request->post('productSuppId');
-        $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $productSuppliersId)->one();
+        $rankOne = $this->SearchProductSuppliers($productSuppliersId); //\common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $productSuppliersId)->one();
         $rankTwo = AverageSuppliers::SuppliersCreatePrice($rankOne->brandId, $rankOne->categoryId, $price);
 
         return $rankTwo + 1;
+    }
+
+    public function SearchProductSuppliers($productSuppliersId) {
+        $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $productSuppliersId)->one();
+        return $rankOne;
     }
 
 }
