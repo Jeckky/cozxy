@@ -196,7 +196,6 @@ use common\models\costfit\ProductSuppliers;
         </div>
     </div>
     <?php ActiveForm::end(); ?>
-
 </div>
 <?php $this->registerJs("
            init.push(function () {
