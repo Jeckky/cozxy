@@ -8,7 +8,7 @@ use yii\db\ActiveRecord;
 use yii\data\ActiveDataProvider;
 
 /**
- * Login form
+ * Suppliers 
  */
 class Suppliers {
 
