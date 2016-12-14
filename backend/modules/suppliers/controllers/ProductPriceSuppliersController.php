@@ -50,7 +50,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
          * แสดงข้อมูลที่อยู่ใน brand , category เดียวกัน
          * ทุก Suppliers
          */
-        $rankingPrice = Suppliers::GetPriceSuppliersSame($rankOne->brandId, $rankOne->categoryId);
+        $rankingPrice = Suppliers::GetPriceSuppliersSame($rankOne->brandId, $rankOne->categoryId, $_GET['productSuppId']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => ProductPriceSuppliers::find()->where('productSuppId=' . $_GET['productSuppId'])->orderBy('status desc'),
@@ -97,7 +97,9 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
          * แสดงข้อมูลที่อยู่ใน brand , category เดียวกัน
          * ทุก Suppliers
          */
-        $rankingPrice = Suppliers::GetPriceSuppliersSame($rankOne->brandId, $rankOne->categoryId);
+
+        $rankingPrice = Suppliers::GetPriceSuppliersSame($rankOne->brandId, $rankOne->categoryId, $_GET['productSuppId']);
+
         if (isset($_POST["ProductPriceSuppliers"])) {
             $model->attributes = $_POST["ProductPriceSuppliers"];
             \common\models\costfit\ProductPriceSuppliers::updateAll(['status' => 0], ['productSuppId' => $_GET['productSuppId']]);
@@ -139,7 +141,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
          * แสดงข้อมูลที่อยู่ใน brand , category เดียวกัน
          * ทุก Suppliers
          */
-        $rankingPrice = Suppliers::GetPriceSuppliersSame($rankOne->brandId, $rankOne->categoryId);
+        $rankingPrice = Suppliers::GetPriceSuppliersSame($rankOne->brandId, $rankOne->categoryId, $_GET['productSuppId']);
         $model = $this->findModel($id);
         if (isset($_POST["ProductPriceSuppliers"])) {
             $model->attributes = $_POST["ProductPriceSuppliers"];
@@ -191,8 +193,8 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
     public function actionSuppliersCreatePrice() {
         $price = Yii::$app->request->post('price');
         $productSuppliersId = Yii::$app->request->post('productSuppId');
-        $rankOne = $this->SearchProductSuppliers($productSuppliersId); //\common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $productSuppliersId)->one();
-        $rankTwo = Suppliers::SuppliersCreatePrice($rankOne->brandId, $rankOne->categoryId, $price);
+        //$rankOne = $this->SearchProductSuppliers($productSuppliersId); //\common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $productSuppliersId)->one();
+        $rankTwo = Suppliers::SuppliersCreatePrice($price, $productSuppliersId);
 
         return $rankTwo + 1;
     }

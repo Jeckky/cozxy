@@ -30,17 +30,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <tr>
                         <th>จำนวนสินค้าที่ขายได้</th>
                         <th>จำนวนเงินที่ได้</th>
-
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td><?php echo isset($productLastDay->conutProduct) ? number_format($productLastDay->conutProduct, 0) : '0'; ?>&nbsp;ชิ้น</td>
                         <td><?php echo isset($productLastDay->summaryPrice) ? number_format($productLastDay->summaryPrice, 2) : '0'; ?>&nbsp;บาท</td>
-
                     </tr>
                     <tr>
-
                         <td class="text-success text-right">เฉลี่ยจำนวนชิ้นที่ขาย</td>
                         <td class="text-success limiter-count"><?php echo number_format($productLastDay->avgNum, 2); ?>&nbsp;ชิ้น/วัน </td>
                     </tr>
@@ -122,7 +119,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <tr>
                         <th>จำนวนสินค้าที่ขายได้</th>
                         <th>จำนวนเงินที่ได้</th>
-
                     </tr>
                 </thead>
                 <tbody>

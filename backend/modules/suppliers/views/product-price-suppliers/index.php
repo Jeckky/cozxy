@@ -18,100 +18,102 @@ $this->params['pageHeader'] = Html::encode($this->title);
         <div class="alert alert-success">Title :  <?php echo isset($productSupp->title) ? $productSupp->title : ''; ?></div>
     </h3>
     <br>
+    <!--
     <div class="panel-heading">
         <h2>ลำดับราคาปัจจุบัน</h2>
     </div>
     <div class="panel-body">
 
-        <?=
+        <?//=
         GridView::widget([
-            'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
-            'dataProvider' => $rankingPrice,
-            'pager' => [
-                'options' => ['class' => 'pagination pagination-xs']
-            ],
-            'rowOptions' => function ($model, $index, $widget, $grid) {
+        'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
+        'dataProvider' => $rankingPrice,
+        'pager' => [
+        'options' => ['class' => 'pagination pagination-xs']
+        ],
+        'rowOptions' => function ($model, $index, $widget, $grid) {
 
-                if ($model->userId == Yii::$app->user->identity->userId) {
-                    return ['class' => 'success'];
-                }
-            },
-            'options' => [
-                'class' => 'table-light'
-            ],
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
-                'sUser',
-                'pTitle',
-                'cTitle',
-                'bTitle',
-                [
-                    'attribute' => 'ราคา',
-                    'value' => function($model) {
-                        return $model->priceSuppliers . ' บาท';
-                    }
-                ],
-                [
-                    'attribute' => 'จำนวนสินค้า',
-                    'value' => function($model) {
-                        return $model->quantity . ' ชิ้น';
-                    }
-                ],
-                [
-                    'attribute' => 'จำนวนที่ขายได้',
-                    'value' => function($model) {
-                        $order = common\models\costfit\OrderItem::find()
-                        ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
-                        ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
-                        ->where('order_item.productId=' . $model->productSuppId . ' and order.status >= 5')->count('order_item.productId');
-                        return $order . ' ชิ้น';
-                    }
-                ],
-                [
-                    'attribute' => 'จำนวนสินค้าคงเหลือ',
-                    'value' => function($model) {
-                        $order = common\models\costfit\OrderItem::find()
-                        ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
-                        ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
-                        ->where('order_item.productId=' . $model->productSuppId . ' and order.status >= 5')->count('order_item.productId');
-                        return $model->quantity - $order . ' ชิ้น,';
-                    }
-                ],
-                //'discountType',
-                /* [
-                  'attribute' => 'discountType',
-                  'value' => function($model) {
-                  return $model->getDiscountTypeText($model->discountType);
-                  }
-                  ],
-                  [
-                  'attribute' => 'status',
-                  'format' => 'html',
-                  'value' => function($model) {
-                  if ($model->status == 1) {
-                  $status = '<span class="label label-success">enable</span>';
-                  } else {
-                  $status = '<span class="label label-danger">disable</span>';
-                  }
-                  return $status;
-                  }
-                  ], */
-                [
-                    'attribute' => 'createDateTime',
-                    'format' => 'raw',
-                    'value' => function($model) {
-                        if ($model->createDateTime == '0000-00-00 00:00:00') {
-                            return '';
-                        } else {
-                            return $this->context->dateThai($model->createDateTime, 1, TRUE);
-                        }
-                    }
-                ],
-            ],
+        if ($model->userId == Yii::$app->user->identity->userId) {
+        return ['class' => 'success'];
+        }
+        },
+        'options' => [
+        'class' => 'table-light'
+        ],
+        'columns' => [
+        ['class' => 'yii\grid\SerialColumn'],
+        'sUser',
+        'pTitle',
+        'cTitle',
+        'bTitle',
+        [
+        'attribute' => 'ราคา',
+        'value' => function($model) {
+        return $model->priceSuppliers . ' บาท';
+        }
+        ],
+        [
+        'attribute' => 'จำนวนสินค้า',
+        'value' => function($model) {
+        return $model->quantity . ' ชิ้น';
+        }
+        ],
+        [
+        'attribute' => 'จำนวนที่ขายได้',
+        'value' => function($model) {
+        $order = common\models\costfit\OrderItem::find()
+        ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
+        ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
+        ->where('order_item.productId=' . $model->productSuppId . ' and order.status >= 5')->count('order_item.productId');
+        return $order . ' ชิ้น';
+        }
+        ],
+        [
+        'attribute' => 'จำนวนสินค้าคงเหลือ',
+        'value' => function($model) {
+        $order = common\models\costfit\OrderItem::find()
+        ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
+        ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
+        ->where('order_item.productId=' . $model->productSuppId . ' and order.status >= 5')->count('order_item.productId');
+        return $model->quantity - $order . ' ชิ้น,';
+        }
+        ],
+        //'discountType',
+        /* [
+        'attribute' => 'discountType',
+        'value' => function($model) {
+        return $model->getDiscountTypeText($model->discountType);
+        }
+        ],
+        [
+        'attribute' => 'status',
+        'format' => 'html',
+        'value' => function($model) {
+        if ($model->status == 1) {
+        $status = '<span class="label label-success">enable</span>';
+        } else {
+        $status = '<span class="label label-danger">disable</span>';
+        }
+        return $status;
+        }
+        ], */
+        [
+        'attribute' => 'createDateTime',
+        'format' => 'raw',
+        'value' => function($model) {
+        if ($model->createDateTime == '0000-00-00 00:00:00') {
+        return '';
+        } else {
+        return $this->context->dateThai($model->createDateTime, 1, TRUE);
+        }
+        }
+        ],
+        ],
         ]);
         ?>
     </div>
     <br>
+    -->
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
