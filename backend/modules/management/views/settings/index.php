@@ -90,6 +90,8 @@ use leandrogehlen\treegrid\TreeGrid;
             </div>
         </div>
 
+
+
         <div class="panel ">
             <div class="panel-heading ">
                 <span class="panel-title">Approve Product</span>
@@ -100,20 +102,21 @@ use leandrogehlen\treegrid\TreeGrid;
                     <div class="panel panel-default panel-dark panel-body-colorful widget-profile widget-profile-centered">
                         <div class="panel-heading">
                             <div class="widget-profile-header">
-                                <a href="<?php echo Yii::$app->homeUrl; ?>management/approve" class="btn" style="color: #000;">
-                                    <i class="fa fa-tasks list-group-icon text-danger"></i> Approve Product </a><br>
+                                <a href="<?php echo Yii::$app->homeUrl; ?>suppliers/average" class="btn" style="color: #000;">
+                                    <i class="fa fa-tasks list-group-icon text-danger"></i> จำนวนสินค้าที่ขายได้ </a><br>
                             </div>
                         </div> <!-- / .panel-heading -->
                         <div class="panel-body text-left">
                             <div class="widget-profile-text" style="padding: 0;">
                                 <p class="text-success">อธิบาย</p>
-                                - อนุมัติสินค้าของ Suppliers และ Coxzy.com
+                                -  ค่าเฉลี่ยการค้า/จำนวนสินค้าที่ขายได้
                             </div>
                         </div>
                     </div> <!-- / .panel -->
                 </div>
             </div>
         </div>
+
 
         <div class="note note-info padding-xs-vr">
             <p>
