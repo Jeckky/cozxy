@@ -30,16 +30,19 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <tr>
                         <th>จำนวนสินค้าที่ขายได้</th>
                         <th>จำนวนเงินที่ได้</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><?php echo isset($productLastDay->conutProduct) ? $productLastDay->conutProduct : '0'; ?>&nbsp;ชิ้น</td>
+                        <td><?php echo isset($productLastDay->conutProduct) ? number_format($productLastDay->conutProduct, 0) : '0'; ?>&nbsp;ชิ้น</td>
                         <td><?php echo isset($productLastDay->summaryPrice) ? $productLastDay->summaryPrice : '0'; ?>&nbsp;บาท</td>
+
                     </tr>
                     <tr>
-                        <td class="text-right text-success">เฉลี่ยจำนวนชิ้นที่ขาย</td>
-                        <td class="text-success"><?php echo number_format($productLastDay->avgNum, 2); ?>&nbsp;ชิ้น/วัน</td>
+
+                        <td class="text-success text-right">เฉลี่ยจำนวนชิ้นที่ขาย</td>
+                        <td class="text-success limiter-count"><?php echo number_format($productLastDay->avgNum, 2); ?>&nbsp;ชิ้น/วัน </td>
                     </tr>
                 </tbody>
             </table>
@@ -58,17 +61,17 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <thead>
                     <tr>
                         <th>จำนวนสินค้าที่ขายได้</th>
-                        <th>จำนวนเงินที่ได้</th>
+                        <th>จำนวนเงินที่ได้</th> 
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><?php echo isset($productLastWeek->conutProduct) ? $productLastWeek->conutProduct : '0'; ?>&nbsp;ชิ้น</td>
+                        <td><?php echo isset($productLastWeek->conutProduct) ? number_format($productLastWeek->conutProduct, 0) : '0'; ?>&nbsp;ชิ้น</td>
                         <td><?php echo isset($productLastWeek->summaryPrice) ? $productLastWeek->summaryPrice : '0'; ?>&nbsp;บาท</td>
                     </tr>
                     <tr>
-                        <td class="text-right text-success">เฉลี่ยจำนวนชิ้นที่ขาย</td>
-                        <td class="text-success"><?php echo number_format($productLastWeek->avgNum, 2); ?>&nbsp;ชิ้น/วัน</td>
+                        <td class="text-success text-right">เฉลี่ยจำนวนชิ้นที่ขาย</td>
+                        <td class="limiter-count text-success "><?php echo number_format($productLastWeek->avgNum, 2); ?>&nbsp;ชิ้น/วัน </td>
                     </tr>
                 </tbody>
             </table>
@@ -93,12 +96,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 </thead>
                 <tbody>
                     <tr>
-                        <td><?php echo isset($product14LastWeek->conutProduct) ? $product14LastWeek->conutProduct : '0'; ?>&nbsp;ชิ้น</td>
+                        <td><?php echo isset($product14LastWeek->conutProduct) ? number_format($product14LastWeek->conutProduct, 0) : '0'; ?>&nbsp;ชิ้น</td>
                         <td><?php echo isset($product14LastWeek->summaryPrice) ? $product14LastWeek->summaryPrice : '0'; ?>&nbsp;บาท</td>
                     </tr>
                     <tr>
-                        <td class="text-right text-success">เฉลี่ยจำนวนชิ้นที่ขาย</td>
-                        <td class=" text-success"><?php echo number_format($product14LastWeek->avgNum, 2); ?>&nbsp;ชิ้น/วัน</td>
+                        <td class="text-success text-right">เฉลี่ยจำนวนชิ้นที่ขาย</td>
+                        <td class="limiter-count text-success "><?php echo number_format($product14LastWeek->avgNum, 2); ?>&nbsp;ชิ้น/วัน </td>
                     </tr>
                 </tbody>
             </table>
@@ -119,16 +122,17 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <tr>
                         <th>จำนวนสินค้าที่ขายได้</th>
                         <th>จำนวนเงินที่ได้</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><?php echo isset($orderLastMONTH->conutProduct) ? $orderLastMONTH->conutProduct : '0'; ?>&nbsp;ชิ้น</td>
+                        <td><?php echo isset($orderLastMONTH->conutProduct) ? number_format($orderLastMONTH->conutProduct, 0) : '0'; ?>&nbsp;ชิ้น</td>
                         <td><?php echo isset($orderLastMONTH->summaryPrice) ? $orderLastMONTH->summaryPrice : '0'; ?>&nbsp;บาท</td>
                     </tr>
                     <tr>
-                        <td class="text-right text-success">เฉลี่ยจำนวนชิ้นที่ขาย</td>
-                        <td class="text-success"><?php echo number_format($orderLastMONTH->avgNum, 2); ?>&nbsp;ชิ้น/วัน</td>
+                        <td class="text-success text-right">เฉลี่ยจำนวนชิ้นที่ขาย</td>
+                        <td class="limiter-count text-success "><?php echo number_format($orderLastMONTH->avgNum, 2); ?>&nbsp;ชิ้น/วัน </td>
                     </tr>
                 </tbody>
             </table>

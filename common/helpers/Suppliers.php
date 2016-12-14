@@ -39,7 +39,9 @@ class Suppliers {
 
     public static function LastDay() {
         $productLastDay = \common\models\costfit\OrderItem::find()
-        ->select('sum(`order_item`.`quantity`) as conutProduct , sum(`order`.`summary`) as  summaryPrice ,count(`order_item`.`productId`)/1 as avgNum')
+        ->select('sum(`order_item`.`quantity`) as conutProduct , sum(`order`.`summary`) as  summaryPrice ,count(`order_item`.`productId`)/1 as avgNum'
+        . ', (SELECT  sum(`product_suppliers`.`quantity`)  FROM  `product_suppliers`  limit 1)   as  quantitySuppliers,'
+        . '(SELECT quantitySuppliers - sum(`order_item`.`quantity`)  FROM  `product_suppliers`   limit 1) as  quantityBalance')
         ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
         ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId ')
         ->where('order.status >= 5 and date(order.createDateTime) >= date_add(curdate(),interval  0 day) ')->one();
