@@ -187,7 +187,7 @@ use common\models\costfit\ProductSuppliers;
                             . '&nbsp;&nbsp;- ราคารวม ' . number_format($orderLastMONTH->summaryPrice, 2) . ' บาท <br>'
                             . '&nbsp;&nbsp;- จำนวนชิ้นที่ขายได้เฉลี่ยมี ' . number_format($orderLastMONTH->avgNum, 2) . ' ชิ้น/วัน</code><br><br>';
                         } else {
-                            echo '<code>ไม่พบข้อมูล</code>';
+                            echo '<code>ไม่พบข้อมูลขายสินค้ามากกว่า 1 เดือน</code>';
                         }
                     }
                 }

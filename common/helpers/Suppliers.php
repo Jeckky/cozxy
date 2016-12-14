@@ -38,7 +38,7 @@ class Suppliers {
      */
 
     public static function LastDay($productSuppId) {
-        if (!isset($productSuppId)) {
+        if ($productSuppId != '') {
             $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $productSuppId)->one();
             $parentsProductId = $rankOne->attributes['productId'];
             $productLastDay = \common\models\costfit\OrderItem::find()
@@ -66,7 +66,7 @@ class Suppliers {
      */
 
     public static function LastWeek($productSuppId) {
-        if (!isset($productSuppId)) {
+        if ($productSuppId != '') {
             $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $productSuppId)->one();
             $parentsProductId = $rankOne->attributes['productId'];
             $productLastWeek = \common\models\costfit\OrderItem::find()
@@ -93,7 +93,7 @@ class Suppliers {
      */
 
     public static function LastWeek14($productSuppId) {
-        if (!isset($productSuppId)) {
+        if ($productSuppId != '') {
             $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $productSuppId)->one();
             $parentsProductId = $rankOne->attributes['productId'];
             $product14LastWeek = \common\models\costfit\OrderItem::find()
@@ -120,7 +120,7 @@ class Suppliers {
      */
 
     public static function LastMonth($productSuppId) {
-        if (!isset($productSuppId)) {
+        if ($productSuppId != '') {
             $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $productSuppId)->one();
             $parentsProductId = $rankOne->attributes['productId'];
             $orderLastMonth = \common\models\costfit\OrderItem::find()
