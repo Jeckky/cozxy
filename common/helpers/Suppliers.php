@@ -169,7 +169,8 @@ class Suppliers {
         ->select('`product_suppliers`.*, product_suppliers.title as pTitle, product_price_suppliers.price as priceSuppliers '
         . ', product_price_suppliers.price as priceSuppliers')
         ->join('LEFT JOIN', 'product_price_suppliers', 'product_price_suppliers.productSuppId = product_suppliers.productSuppId')
-        ->where('product_price_suppliers.status = 1 and product_price_suppliers.price != "" and product_suppliers.productId = ' . $parentsProductId);
+        ->where('product_price_suppliers.status = 1 and product_price_suppliers.price != "" and product_suppliers.productId = ' . $parentsProductId)
+        ->orderBy(' product_price_suppliers.price asc');
 
         $rankingPrice = new ActiveDataProvider([
             'query' => $rankTwo
