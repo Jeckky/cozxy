@@ -8,11 +8,12 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
-use yii\imagine\Image;
-use Imagine\Gd;
-use Imagine\Image\Box;
-use Imagine\Image\BoxInterface;
+//use yii\web\UploadedFile;
+//use yii\imagine\Image;
+//use Imagine\Gd;
+//use Imagine\Image\Box;
+//use Imagine\Image\BoxInterface;
+use common\helpers\Upload;
 
 /**
  * BrandController implements the CRUD actions for Brand model.
@@ -68,12 +69,13 @@ class BrandController extends SuppliersMasterController {
         if (isset($_POST["Brand"])) {
             $model->attributes = $_POST["Brand"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
-            $file = \yii\web\UploadedFile::getInstanceByName('Brand[image]');
-            $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
-            $file->saveAs($uploadPath . '/' . $newFileName);
-            $originalFile = $uploadPath . '/' . $newFileName; // originalFile
-            $thumbFile = $uploadPath . '/' . $newFileName;
-            $saveThumb1 = Image::thumbnail($originalFile, 164, 120)->save($thumbFile, ['quality' => 80]); // thumbnail file
+            /*
+             * helpers Upload
+             * path : common/helpers/Upload.php
+             * user : Upload::uploadBasic($fileName, $folderName, $uploadPath, $width, $height)
+             */
+            $newFileName = Upload::UploadBasic('Brand[image]', $folderName, $uploadPath, '164', '120');
+
             $model->attributes = $_POST["Brand"];
             $model->image = '/' . 'images/' . $folderName . "/" . $newFileName;
             $model->userId = Yii::$app->user->identity->userId;
@@ -102,35 +104,17 @@ class BrandController extends SuppliersMasterController {
         $folderName = "Brand"; //  Size 553 x 484
         $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName;
         if (isset($_POST["Brand"])) {
-            $file = \yii\web\UploadedFile::getInstanceByName('Brand[image]');
-            $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
-            $file->saveAs($uploadPath . '/' . $newFileName);
-            $originalFile = $uploadPath . '/' . $newFileName; // originalFile
-            $thumbFile = $uploadPath . '/' . $newFileName;
-            $saveThumb1 = Image::thumbnail($originalFile, 164, 120)->save($thumbFile, ['quality' => 80]); // thumbnail file
+            /*
+             * helpers Upload
+             * path : common/helpers/Upload.php
+             * user : Upload::uploadBasic($fileName, $folderName, $uploadPath, $width, $height)
+             */
+            $newFileName = Upload::UploadBasic('Brand[image]', $folderName, $uploadPath, '164', '120');
+
             $model->attributes = $_POST["Brand"];
             $model->image = '/' . 'images/' . $folderName . "/" . $newFileName;
             $model->userId = Yii::$app->user->identity->userId;
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-
-            /* $imageObj = \yii\web\UploadedFile::getInstanceByName("Brand[image]");
-              if (isset($imageObj) && !empty($imageObj)) {
-              $folderName = "Brand";
-              $file = $imageObj->name;
-              $filenameArray = explode('.', $file);
-              $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
-              $fileName = \Yii::$app->security->generateRandomString(10) . '.' . $filenameArray[1];
-              $urlFile = $urlFolder . $fileName;
-              $model->image = '/' . 'images/' . $folderName . "/" . $fileName;
-              if (!file_exists($urlFolder)) {
-              mkdir($urlFolder, 0777);
-              }
-              } else {
-              if (isset($_POST["Brand"]["imageOld"])) {
-              $model->image = $_POST["Brand"]["imageOld"];
-              }
-              } */
-
 
             if ($model->save()) {
                 if (isset($imageObj) && $imageObj->saveAs($urlFile)) {

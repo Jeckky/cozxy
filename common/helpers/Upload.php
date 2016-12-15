@@ -26,8 +26,14 @@ class Upload {
         ];
     }
 
-    public static function UploadBasic() {
-
+    public static function UploadBasic($fileName, $folderName, $uploadPath, $width, $height) {
+        $file = \yii\web\UploadedFile::getInstanceByName($fileName);
+        $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
+        $file->saveAs($uploadPath . '/' . $newFileName);
+        $originalFile = $uploadPath . '/' . $newFileName; // originalFile
+        $thumbFile = $uploadPath . '/' . $newFileName;
+        $saveThumb1 = Image::thumbnail($originalFile, 164, 120)->save($thumbFile, ['quality' => 80]); // thumbnail file
+        return $newFileName;
     }
 
     public static function UploadSuppliers($model) {

@@ -203,7 +203,10 @@ class ProductSuppliersController extends SuppliersMasterController {
 
         $model = new \common\models\costfit\productImageSuppliers();
         /*
-         * - commom/helpers
+         * helpers Upload
+         * path : common/helpers/Upload.php
+         * user : Upload::UploadSuppliers($model)
+         * กรณีพิเศษ
          */
         Upload::UploadSuppliers($model);
     }
