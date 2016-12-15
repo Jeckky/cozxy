@@ -139,6 +139,7 @@ class ProductSuppliersController extends SuppliersMasterController {
             $model->approve = Yii::$app->request->post('approve');
             $model->productId = Yii::$app->request->post('productIds');
             if ($model->save()) {
+                \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $model->productId);
                 return $this->redirect(['index']);
             }
         }
