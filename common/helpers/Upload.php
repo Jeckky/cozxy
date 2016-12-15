@@ -13,7 +13,7 @@ use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 
 /**
- * Suppliers 14/12/2016
+ * Suppliers 15/12/2016 By Taninut.Bm
  */
 class Upload {
 
@@ -26,6 +26,10 @@ class Upload {
         ];
     }
 
+    /*
+     * Upload ครั้งละรูป
+     */
+
     public static function UploadBasic($fileName, $folderName, $uploadPath, $width, $height) {
         $file = \yii\web\UploadedFile::getInstanceByName($fileName);
         $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
@@ -35,6 +39,10 @@ class Upload {
         $saveThumb1 = Image::thumbnail($originalFile, 164, 120)->save($thumbFile, ['quality' => 80]); // thumbnail file
         return $newFileName;
     }
+
+    /*
+     * Upload ครั้งละหลายรูป
+     */
 
     public static function UploadSuppliers($model) {
         //$uploadPath = Yii::getAlias('@root') . '/uploads/';

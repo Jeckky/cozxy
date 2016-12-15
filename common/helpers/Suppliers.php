@@ -8,7 +8,7 @@ use yii\db\ActiveRecord;
 use yii\data\ActiveDataProvider;
 
 /**
- * Suppliers 14/12/2016
+ * Suppliers 14/12/2016 By Taninut.Bm
  */
 class Suppliers {
 
