@@ -70,6 +70,7 @@ class BrandController extends SuppliersMasterController {
             $model->attributes = $_POST["Brand"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
             /*
+             * Upload ครั้งละรูป
              * helpers Upload
              * path : common/helpers/Upload.php
              * use : Upload::uploadBasic($fileName, $folderName, $uploadPath, $width, $height)
@@ -105,6 +106,7 @@ class BrandController extends SuppliersMasterController {
         $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName;
         if (isset($_POST["Brand"])) {
             /*
+             * Upload ครั้งละรูป
              * helpers Upload
              * path : common/helpers/Upload.php
              * use : Upload::uploadBasic($fileName, $folderName, $uploadPath, $width, $height)
