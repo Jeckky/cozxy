@@ -119,7 +119,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
         $product14LastWeek = Suppliers::LastWeek14($_GET['productSuppId']);
         $orderLastMONTH = Suppliers::LastMonth($_GET['productSuppId']);
         return $this->render('create', [
-            'model' => $model, 'rankingPrice' => $rankingPrice
+            'model' => $model, 'rankingPrice' => $rankingPrice, 'titleSuppliers' => $rankOne
             , 'productLastDay' => $productLastDay
             , 'productLastWeek' => $productLastWeek
             , 'orderLastMONTH' => $orderLastMONTH
@@ -155,7 +155,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
         $product14LastWeek = Suppliers::LastWeek14($_GET['productSuppId']);
         $orderLastMONTH = Suppliers::LastMonth($_GET['productSuppId']);
         return $this->render('update', [
-            'model' => $model, 'rankingPrice' => $rankingPrice
+            'model' => $model, 'rankingPrice' => $rankingPrice, 'titleSuppliers' => $rankOne
             , 'productLastDay' => $productLastDay
             , 'productLastWeek' => $productLastWeek
             , 'orderLastMONTH' => $orderLastMONTH

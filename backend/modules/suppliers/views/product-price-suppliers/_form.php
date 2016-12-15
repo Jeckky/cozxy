@@ -29,7 +29,7 @@ use common\models\costfit\ProductSuppliers;
     ?>
     <div class="  col-sm-6">
         <div class="panel-heading">
-            <span class="panel-title"><?= $title ?></span>
+            <span class="panel-title limiter-count"><?= $title ?> :: หัวข้อ <?php echo $titleSuppliers['title'] ?></span>
         </div>
 
         <div class="panel-body">
@@ -82,7 +82,7 @@ use common\models\costfit\ProductSuppliers;
 
     <div class="col-sm-6">
         <div class="panel-heading">
-            <span class="panel-title">ลำดับราคา :: Suppliers</span>
+            <span class="panel-title limiter-count">ลำดับราคา :: Suppliers</span>
         </div>
         <!--
                 <div class="panel-heading">
