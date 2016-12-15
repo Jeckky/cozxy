@@ -11,23 +11,60 @@ use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use backend\controllers\EmailSend;
 
+/* เพิ่มคำสั่ง 3 บรรทัดต่อจากนี้ลงไป */
+use yii\filters\AccessControl;        // เรียกใช้ คลาส AccessControl
+use common\models\User;             // เรียกใช้ Model คลาส User ที่ปรับปรังปรุงไว้
+use common\components\AccessRule;   // เรียกใช้ คลาส Component AccessRule ที่เราสร้างใหม่
+
 class SettingsController extends ManagementMasterController {
 
     /**
      * @inheritdoc
      */
     public function behaviors() {
+
         return [
+            /* 'access' => [
+              'class' => \yii\filters\AccessControl::className(),
+              'only' => ['index', 'create', 'update', 'view'],
+              'rules' => [
+              // allow authenticated users
+              [
+              'allow' => true,
+              'roles' => ['@'],
+              ],
+              // everything else is denied
+              ],
+              ], */
             'access' => [
-                'class' => \yii\filters\AccessControl::className(),
-                'only' => ['index', 'create', 'update', 'view'],
+                'class' => AccessControl::className(),
+                'only' => ['index', 'create', 'update', 'view'], // กำหนด action ทั้งหมดภายใน Controller นี้
+                'ruleConfig' => [
+                    'class' => AccessRule::className() // เรียกใช้งาน accessRule (component) ที่เราสร้างขึ้นใหม่
+                ],
                 'rules' => [
-                    // allow authenticated users
                     [
+                        'actions' => ['index'], // กำหนด rules ให้ actionIndex()
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => [
+                        //  User::ROLE_Administrator, // อนุญาตให้ "ผู้ใช้งาน / สมาชิก" ใช้งานได้
+                        //User::ROLE_SuperAdministrator, // อนุญาตให้ "พนักงาน" ใช้งานได้
+                        ]
                     ],
-                // everything else is denied
+                    [
+                        'actions' => ['create'], // กำหนด rules ให้ actionCreate()
+                        'allow' => true,
+                        'roles' => [
+                        // User::ROLE_Administrator, // อนุญาตให้ "ผู้ใช้งาน / สมาชิก" ใช้งานได้
+                        ]
+                    ],
+                    [
+                        'actions' => ['view'], // กำหนด rules ให้ actionView()
+                        'allow' => true,
+                        'roles' => [
+                        // User::ROLE_Administrator, // อนุญาตให้ "ผู้ใช้งาน / สมาชิก" ใช้งานได้
+                        ]
+                    ]
                 ],
             ],
             'verbs' => [
@@ -40,6 +77,7 @@ class SettingsController extends ManagementMasterController {
     }
 
     public function actionIndex() {
+        //echo 'user_group_Id : ' . Yii::$app->user->identity->user_group_Id;
         $listViewLevels = new ActiveDataProvider([
             'query' => \common\models\costfit\ViewLevels::find(),
         ]);
