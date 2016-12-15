@@ -12,9 +12,11 @@ use yii\filters\VerbFilter;
 /**
  * StoreController implements the CRUD actions for Store model.
  */
-class StoreController extends StoreMasterController {
+class StoreController extends StoreMasterController
+{
 
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
@@ -41,7 +43,8 @@ class StoreController extends StoreMasterController {
      * Lists all Store models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         if (!isset(Yii::$app->user->identity->userId)) {
             return $this->redirect($baseUrl . '/auth');
@@ -60,7 +63,8 @@ class StoreController extends StoreMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -71,7 +75,8 @@ class StoreController extends StoreMasterController {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $model = new Store();
         if (isset($_POST["Store"])) {
             $model->attributes = $_POST["Store"];
@@ -91,7 +96,8 @@ class StoreController extends StoreMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $model = $this->findModel($id);
         if (isset($_POST["Store"])) {
             $model->attributes = $_POST["Store"];
@@ -114,7 +120,8 @@ class StoreController extends StoreMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -127,12 +134,28 @@ class StoreController extends StoreMasterController {
      * @return Store the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id) {
+    protected function findModel($id)
+    {
         if (($model = Store::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionQr($id)
+    {
+        $model = Store::find()->where("storeId=$id")->one();
+        return $this->render('_qr', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionPrintQr($id)
+    {
+        $model = Store::find()->where("storeId=$id")->one();
+        $content = $this->renderPartial('_qr', compact('model'));
+        $this->actionMpdfDocument($content, FALSE, FALSE, 5);
     }
 
 }
