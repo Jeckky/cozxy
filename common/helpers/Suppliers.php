@@ -165,6 +165,11 @@ class Suppliers {
         return $rankingPrice;
     }
 
+    /*
+     * หัวข้อ ลำดับราคา
+     * แสดงข้อมูลราคาของ Suppliers ที่อยู่ใน Product เดียวกัน
+     */
+
     public static function GetPriceSuppliersSame($brandId, $categoryId, $productSuppId) {
         $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $productSuppId)->one();
         $parentsProductId = $rankOne->attributes['productId'];
@@ -201,6 +206,13 @@ class Suppliers {
         ->count();
         return $rankTwo;
     }
+
+    /*
+     * - ajax post url yii2: /suppliers/product-price-suppliers/create?
+     * - หาลำดับ ราคาของ Supplires
+     * table : product_suppliers ,product_price_suppliers
+     * where : สถานะราคาของ Suppliers เท่า 1 ,ราคาของ Suppliers ต้องมีค่าเสมอ  และ productId parents เดียวกัน โดยส่ง ราคาจากฟอร์ม
+     * */
 
     public static function SuppliersCreatePrice($price, $productSuppId) {
         $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $productSuppId)->one();
