@@ -132,12 +132,16 @@ class ProductSuppliersController extends SuppliersMasterController {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
+        //echo '<pre>';
+        //print_r($model->attributes['productId']);
+
         if (isset($_POST["ProductSuppliers"])) {
             $model->attributes = $_POST["ProductSuppliers"];
             $model->userId = Yii::$app->user->identity->userId;
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $model->approve = Yii::$app->request->post('approve');
-            $model->productId = Yii::$app->request->post('productIds');
+            $model->productId = (Yii::$app->request->post('productIds') != '') ? Yii::$app->request->post('productIds') : $model->attributes['productId']; //
+
             if ($model->save()) {
                 \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $model->productId);
                 return $this->redirect(['index']);
