@@ -31,6 +31,7 @@ class PickingController extends PickingMasterController {
                     'class' => AccessRule::className() // เรียกใช้งาน accessRule (component) ที่เราสร้างขึ้นใหม่
                 ],
                 'rules' => [
+
                     [
                         'actions' => ['index'], // กำหนด rules ให้ actionIndex()
                         'allow' => true,
