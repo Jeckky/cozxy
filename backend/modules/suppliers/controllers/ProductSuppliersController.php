@@ -10,11 +10,11 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
-use yii\imagine\Image;
-use Imagine\Gd;
-use Imagine\Image\Box;
-use Imagine\Image\BoxInterface;
+//use yii\web\UploadedFile;
+//use yii\imagine\Image;
+//use Imagine\Gd;
+//use Imagine\Image\Box;
+//use Imagine\Image\BoxInterface;
 use common\helpers\Upload;
 
 /**
