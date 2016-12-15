@@ -63,6 +63,9 @@ class Suppliers {
 
     /*
      * หาสินค้าที่ขายได้ 7 วันล่าสุด
+     * หาจำนวนชิ้น
+     * หาราคารวม
+     * หาค่าเฉลี่ยจำนวนชิ้นที่ขายได้/วัน
      */
 
     public static function LastWeek($productSuppId) {
