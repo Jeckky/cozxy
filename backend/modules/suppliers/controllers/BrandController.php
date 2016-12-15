@@ -68,9 +68,6 @@ class BrandController extends SuppliersMasterController {
         if (isset($_POST["Brand"])) {
             $model->attributes = $_POST["Brand"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
-            //$imageObj = \yii\web\UploadedFile::getInstanceByName("Brand[image]");
-            //if (isset($imageObj) && !empty($imageObj)) {
-
             $file = \yii\web\UploadedFile::getInstanceByName('Brand[image]');
             $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
             $file->saveAs($uploadPath . '/' . $newFileName);
@@ -81,17 +78,7 @@ class BrandController extends SuppliersMasterController {
             $model->image = '/' . 'images/' . $folderName . "/" . $newFileName;
             $model->userId = Yii::$app->user->identity->userId;
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-            //$folderName = "Brand";
-            //$file = $imageObj->name;
-            //$filenameArray = explode('.', $file);
-            //$urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
-            //$fileName = \Yii::$app->security->generateRandomString(10) . '.' . $filenameArray[1];
-            // $urlFile = $urlFolder . $fileName;
-            // $model->image = '/' . 'images/' . $folderName . "/" . $fileName;
-            //if (!file_exists($urlFolder)) {
-            // mkdir($urlFolder, 0777);
-            //}
-            //}
+
             if ($model->save()) {
                 //if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
                 //Do Some Thing
