@@ -103,13 +103,15 @@ use leandrogehlen\treegrid\TreeGrid;
                         <div class="panel-heading">
                             <div class="widget-profile-header">
                                 <a href="<?php echo Yii::$app->homeUrl; ?>management/approve" class="btn" style="color: #000;">
-                                    <i class="fa fa-tasks list-group-icon text-danger"></i> จำนวนสินค้าที่ขายได้ </a><br>
+                                    <i class="fa fa-tasks list-group-icon text-danger"></i> อนุมัติรายการสินค้า </a><br>
                             </div>
                         </div> <!-- / .panel-heading -->
                         <div class="panel-body text-left">
                             <div class="widget-profile-text" style="padding: 0;">
                                 <p class="text-success">อธิบาย</p>
-                                -  ค่าเฉลี่ยการค้า/จำนวนสินค้าที่ขายได้
+                                -  อนุมัติรายการสินค้าของ
+                                &nbsp;&nbsp;&nbsp;- Product Suppliers
+                                &nbsp;&nbsp;&nbsp;- Product Cozxy
                             </div>
                         </div>
                     </div> <!-- / .panel -->
