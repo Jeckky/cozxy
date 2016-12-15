@@ -36,7 +36,7 @@ class Upload {
         $file->saveAs($uploadPath . '/' . $newFileName);
         $originalFile = $uploadPath . '/' . $newFileName; // originalFile
         $thumbFile = $uploadPath . '/' . $newFileName;
-        $saveThumb1 = Image::thumbnail($originalFile, 164, 120)->save($thumbFile, ['quality' => 80]); // thumbnail file
+        $saveThumb1 = Image::thumbnail($originalFile, $width, $height)->save($thumbFile, ['quality' => 80]); // thumbnail file
         return $newFileName;
     }
 
