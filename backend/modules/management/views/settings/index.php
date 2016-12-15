@@ -109,8 +109,8 @@ use leandrogehlen\treegrid\TreeGrid;
                         <div class="panel-body text-left">
                             <div class="widget-profile-text" style="padding: 0;">
                                 <p class="text-success">อธิบาย</p>
-                                -  อนุมัติรายการสินค้าของ
-                                &nbsp;&nbsp;&nbsp;- Product Suppliers
+                                -  อนุมัติรายการสินค้าของ<br>
+                                &nbsp;&nbsp;&nbsp;- Product Suppliers<br>
                                 &nbsp;&nbsp;&nbsp;- Product Cozxy
                             </div>
                         </div>
