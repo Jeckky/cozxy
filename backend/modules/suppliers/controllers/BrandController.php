@@ -72,7 +72,7 @@ class BrandController extends SuppliersMasterController {
             /*
              * helpers Upload
              * path : common/helpers/Upload.php
-             * user : Upload::uploadBasic($fileName, $folderName, $uploadPath, $width, $height)
+             * use : Upload::uploadBasic($fileName, $folderName, $uploadPath, $width, $height)
              */
             $newFileName = Upload::UploadBasic('Brand[image]', $folderName, $uploadPath, '164', '120');
 
@@ -107,7 +107,7 @@ class BrandController extends SuppliersMasterController {
             /*
              * helpers Upload
              * path : common/helpers/Upload.php
-             * user : Upload::uploadBasic($fileName, $folderName, $uploadPath, $width, $height)
+             * use : Upload::uploadBasic($fileName, $folderName, $uploadPath, $width, $height)
              */
             $newFileName = Upload::UploadBasic('Brand[image]', $folderName, $uploadPath, '164', '120');
 

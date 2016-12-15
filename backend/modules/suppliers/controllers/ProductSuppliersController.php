@@ -205,7 +205,7 @@ class ProductSuppliersController extends SuppliersMasterController {
         /*
          * helpers Upload
          * path : common/helpers/Upload.php
-         * user : Upload::UploadSuppliers($model)
+         * use : Upload::UploadSuppliers($model)
          * กรณีพิเศษ
          */
         Upload::UploadSuppliers($model);
