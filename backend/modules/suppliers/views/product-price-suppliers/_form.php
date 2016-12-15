@@ -15,7 +15,7 @@ use common\models\costfit\ProductSuppliers;
 ?>
 
 <div class="product-price-suppliers-form">
-
+    <div class="alert alert-success">Title : <?php echo $titleSuppliers['title'] ?></div>
     <?php
     $form = ActiveForm::begin([
         'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
@@ -27,9 +27,10 @@ use common\models\costfit\ProductSuppliers;
         ]
     ]);
     ?>
+
     <div class="  col-sm-6">
         <div class="panel-heading">
-            <span class="panel-title limiter-count"><?= $title ?> :: หัวข้อ <?php echo $titleSuppliers['title'] ?></span>
+            <span class="panel-title limiter-count"><?= $title ?> </span>
         </div>
 
         <div class="panel-body">
