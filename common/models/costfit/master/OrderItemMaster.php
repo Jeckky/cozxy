@@ -10,6 +10,7 @@ use Yii;
     * @property string $orderItemId
     * @property string $orderId
     * @property string $productId
+    * @property string $productSuppId
     * @property string $productGroupId
     * @property string $brandId
     * @property string $categoryId
@@ -23,9 +24,10 @@ use Yii;
     * @property integer $sendDate
     * @property string $sendDateTime
     * @property integer $firstTimeSendDate
-    * @property string $pickerId
-    * @property string $color
+    * @property integer $pickerId
+    * @property integer $color
     * @property string $bagNo
+    * @property integer $supplierId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -47,7 +49,7 @@ public function rules()
 {
 return [
             [['orderId', 'productId', 'priceOnePiece', 'quantity', 'price', 'createDateTime'], 'required'],
-            [['orderId', 'productId', 'productGroupId', 'brandId', 'categoryId', 'sendDate', 'firstTimeSendDate', 'pickerId', 'color', 'status'], 'integer'],
+            [['orderId', 'productId', 'productSuppId', 'productGroupId', 'brandId', 'categoryId', 'sendDate', 'firstTimeSendDate', 'pickerId', 'color', 'supplierId', 'status'], 'integer'],
             [['priceOnePiece', 'quantity', 'price', 'subTotal', 'discountValue', 'shippingDiscountValue', 'total'], 'number'],
             [['sendDateTime', 'createDateTime', 'updateDateTime'], 'safe'],
             [['bagNo'], 'string', 'max' => 20],
@@ -63,6 +65,7 @@ return [
     'orderItemId' => Yii::t('order_item', 'Order Item ID'),
     'orderId' => Yii::t('order_item', 'Order ID'),
     'productId' => Yii::t('order_item', 'Product ID'),
+    'productSuppId' => Yii::t('order_item', 'Product Supp ID'),
     'productGroupId' => Yii::t('order_item', 'Product Group ID'),
     'brandId' => Yii::t('order_item', 'Brand ID'),
     'categoryId' => Yii::t('order_item', 'Category ID'),
@@ -79,6 +82,7 @@ return [
     'pickerId' => Yii::t('order_item', 'Picker ID'),
     'color' => Yii::t('order_item', 'Color'),
     'bagNo' => Yii::t('order_item', 'Bag No'),
+    'supplierId' => Yii::t('order_item', 'Supplier ID'),
     'status' => Yii::t('order_item', 'Status'),
     'createDateTime' => Yii::t('order_item', 'Create Date Time'),
     'updateDateTime' => Yii::t('order_item', 'Update Date Time'),
