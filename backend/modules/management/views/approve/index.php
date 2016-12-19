@@ -302,7 +302,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 'attribute' => 'Admin',
                                                 'format' => 'raw',
                                                 'value' => function($model) {
-                                                    if (isset($model->userId)) {
+                                                    if (isset($model->approveCreateBy)) {
                                                         $userSuppliers = common\models\costfit\User::find()->where('userId =' . $model->approveCreateBy)->one();
                                                         $firstname = $userSuppliers->firstname;
                                                         $lastname = $userSuppliers->lastname;
@@ -390,7 +390,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 'attribute' => 'Admin',
                                                 'format' => 'raw',
                                                 'value' => function($model) {
-                                                    if (isset($model->userId)) {
+                                                    if (isset($model->approveCreateBy)) {
                                                         $userSuppliers = common\models\costfit\User::find()->where('userId =' . $model->approveCreateBy)->one();
                                                         $firstname = $userSuppliers->firstname;
                                                         $lastname = $userSuppliers->lastname;

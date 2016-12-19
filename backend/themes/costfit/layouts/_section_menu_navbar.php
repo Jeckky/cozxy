@@ -1,6 +1,10 @@
 <?php
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
+if (!isset(Yii::$app->user->identity->type)) {
+    header("location: /auth");
+    exit(0);
+}
 ?>
 
 <!-- 2. $MAIN_NAVIGATION ======= Main navigation ========= -->
@@ -15,7 +19,9 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             <!-- Logo -->
             <a href="<?php echo $baseUrl; ?>/dashboard" class="navbar-brand">
                 <div><img alt="Pixel Admin" src="<?php echo $directoryAsset; ?>/images/pixel-admin/main-navbar-logo.png"></div>
-                <?php if (Yii::$app->user->identity->type == 4) { ?>
+                <?php
+                if (Yii::$app->user->identity->type == 4) {
+                    ?>
                     Suppliers Admin
                 <?php } else { ?> Cozxy.com Admin
                 <?php } ?>
@@ -255,7 +261,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                                 <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
                                     <img src="<?php echo $directoryAsset ?>/demo/avatars/silhouette.jpg" alt="">
                                 <?php } ?>
-                        <!--<span> <?php //echo Yii::$app->session['firstname'];                   ?></span>-->
+<!--<span> <?php //echo Yii::$app->session['firstname'];                                       ?></span>-->
                                 <span> <?= isset(Yii::$app->user->identity->email) ? Yii::$app->user->identity->firstname : 'Guest' ?></span>
                             </a>
                             <ul class="dropdown-menu">

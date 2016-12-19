@@ -26,6 +26,18 @@ class User extends ActiveRecord implements IdentityInterface {
 
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 1;
+    /* เพิ่มเติม const ลงไป */
+    const ROLE_USER = 'USER';
+    const ROLE_EMPLOYEE = 'EMPLOYEE';
+    const ROLE_ADMIN = 'ADMIN';
+    // ROLE LOGIN TO BACKEND //
+    const ROLE_Cozxy = '25';
+    const ROLE_Manager = '26';
+    const ROLE_Administrator = '31';
+    const ROLE_Shipping = '32';
+    const ROLE_Lockers = '33';
+    const ROLE_SuperAdministrator = '34';
+    const ROLE_Service = '35';
 
     /**
      * @inheritdoc
@@ -50,6 +62,11 @@ class User extends ActiveRecord implements IdentityInterface {
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['user_group_Id', 'default', 'value' => self::ROLE_Administrator],
+            ['user_group_Id', 'in', 'range' => [self::ROLE_Cozxy, self::ROLE_Manager, self::ROLE_Administrator, self::ROLE_Shipping
+                    , self::ROLE_Lockers, self::ROLE_SuperAdministrator, self::ROLE_Service]],
+        //['status', 'default', 'value' => self::STATUS_ACTIVE],
+        //['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
     }
 
@@ -89,8 +106,8 @@ class User extends ActiveRecord implements IdentityInterface {
         }
 
         return static::findOne([
-                    'password_reset_token' => $token,
-                    'status' => self::STATUS_ACTIVE,
+            'password_reset_token' => $token,
+            'status' => self::STATUS_ACTIVE,
         ]);
     }
 

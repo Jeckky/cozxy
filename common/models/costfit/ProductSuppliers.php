@@ -61,7 +61,10 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
             'unit' => 'หน่วย',
             'smallUnit' => 'หน่วยขนาดเล็ก',
             'tags' => 'แท็ก',
-            'quantity' => 'จำนวน'
+            'quantity' => 'จำนวนสินค้าทั้งหมด',
+            'bTitle' => 'Brand',
+            'cTitle' => 'Category',
+            'sUser' => 'Suppliers', 'pTitle' => 'หัวข้อสินค้า',
         ]);
     }
 
@@ -70,8 +73,8 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
      */
     public function attributes() {
         return array_merge(parent::attributes(), [
-            'price', 'image', 'Smart Price', 'firstname', 'lastname', 'bTitle', 'cTitle', 'uTitle', 'smuTitle'
-            , 'simage', 'simageThumbnail1', 'simageThumbnail2', 'priceSuppliers'
+            'price image', 'Smart Price', 'firstname', 'lastname', 'bTitle', 'cTitle', 'uTitle', 'smuTitle'
+            , 'simage', 'simageThumbnail1', 'simageThumbnail2', 'priceSuppliers', 'pTitle', 'sUser'
         ]);
     }
 

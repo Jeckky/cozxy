@@ -15,10 +15,15 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
     <?=
     $this->render('_form', [
+        'titleSuppliers' => $titleSuppliers,
         'model' => $model,
         'title' => Html::encode($this->title),
         'rankingPrice' => $rankingPrice,
         'status' => 'update'
+        , 'productLastDay' => $productLastDay
+        , 'productLastWeek' => $productLastWeek
+        , 'orderLastMONTH' => $orderLastMONTH
+        , 'product14LastWeek' => $product14LastWeek
     ])
     ?>
 
