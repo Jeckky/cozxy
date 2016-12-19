@@ -13,6 +13,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use backend\controllers\EmailSend;
+use common\components\AccessRule;
+use common\models\User;
 
 class LockersController extends LockersMasterController {
 
@@ -24,12 +26,39 @@ class LockersController extends LockersMasterController {
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
                 'only' => ['index', 'create', 'update', 'view', 'lockers'],
+                'ruleConfig' => [
+                    'class' => AccessRule::className() // เรียกใช้งาน accessRule (component) ที่เราสร้างขึ้นใหม่
+                ],
                 'rules' => [
-                    // allow authenticated users
                     [
+                        'actions' => ['index'], // กำหนด rules ให้ actionIndex()
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['@'
+                        //User::ROLE_Administrator, // อนุญาตให้ "ผู้ใช้งาน / สมาชิก" ใช้งานได้
+                        //User::ROLE_Lockers
+                        // User::ROLE_SuperAdministrator, // อนุญาตให้ "พนักงาน" ใช้งานได้
+                        // User::ROLE_SuperAdministrator, // อนุญาตให้ "พนักงาน" ใช้งานได้
+                        ]
                     ],
+                    [
+                        'actions' => ['create'], // กำหนด rules ให้ actionCreate()
+                        'allow' => true,
+                        'roles' => ['@'
+                        //User::ROLE_Administrator, // อนุญาตให้ "ผู้ใช้งาน / สมาชิก" ใช้งานได้
+                        ]
+                    ],
+                    [
+                        'actions' => ['view'], // กำหนด rules ให้ actionView()
+                        'allow' => true,
+                        'roles' => ['@'
+                        // User::ROLE_Administrator, // อนุญาตให้ "ผู้ใช้งาน / สมาชิก" ใช้งานได้
+                        ]
+                    ]
+                // allow authenticated users
+                //[
+                //'allow' => true,
+                //'roles' => ['@'],
+                //],
                 // everything else is denied
                 ],
             ],

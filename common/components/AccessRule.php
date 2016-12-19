@@ -19,17 +19,32 @@ class AccessRule extends \yii\filters\AccessRule {
 
 //put your code here
     protected function matchRole($user) {
+        $getUser = str_replace('[', '(', str_replace(']', ')', $user->identity->user_group_Id));
+        echo print_r($this->roles);
+        echo '<br>';
+        echo print_r($getUser);
 
         if (empty($this->roles)) {
             return true;
         }
+        echo 'xxx';
         foreach ($this->roles as $role) {
-            ## User Login Only
+            echo 'xx : ' . $role;
+            // exit();
+            /*
+             * User Login Only
+             * เอา user_group_id จากการ login ของ  table user
+             */
             $getUser = str_replace('[', '', str_replace(']', '', $user->identity->user_group_Id));
             $explodeUser = explode(',', $getUser);
-
+            /*
+             * get uri menu
+             */
+            $get_uri = count(explode('/', $_SERVER["REQUEST_URI"]));
             $get_menu_uri = substr($_SERVER["REQUEST_URI"], 1);
-            //throw new \yii\base\Exception($get_menu_uri);
+            /*
+             * get user_group_id จาก table manu @$getUser
+             */
             $get_menu_name = \common\models\costfit\Menu::find()->where('link= "' . $get_menu_uri . '" ')->one();
             if ($get_menu_name) {
                 $link = $get_menu_name->link;
@@ -37,20 +52,24 @@ class AccessRule extends \yii\filters\AccessRule {
                 $user_group_Id = $get_menu_name->user_group_Id;
                 $user_group = str_replace('[', '', str_replace(']', '', $user_group_Id));
                 $get_user_group_Id = explode(',', $user_group);
+
                 $get_menu_group = $get_user_group_Id[0];
-                $user_group_intersect = array_intersect($explodeUser, $get_user_group_Id);
-                if ($user_group_intersect) {
-                    //$user_group_intersect = TRUE;
-                } else {
-                    //$user_group_intersect = FALSE;
-                }
+
+                //throw new \yii\base\Exception(print_r($get_user_group_Id));
+                //$user_group_intersect = array_intersect(settype($getUser, "array"), settype($user_group, "array"));
+                //throw new \yii\base\Exception(settype($getUser, "array"));
+                //throw new \yii\base\Exception(settype($getUser, "array") . 'xxx' . settype($user_group, "array") . 'xxx' . gettype($getUser) . 'xxx' . gettype($user_group));
+                //if ($user_group_intersect) {
+                //$user_group_intersect = $user_group_intersect[1];
+                //} else {
+                //$user_group_intersect = $user->identity->user_group_Id;
+                //}
             } else {
                 $get_menu_group = $user->identity->user_group_Id;
             }
-            //
-            ///throw new \yii\base\Exception($user_group_intersect);
-            //throw new \yii\base\Exception($user_group_intersect);
-            //throw new \yii\base\Exception($user->identity->user_group_Id . '==' . $get_menu_name->link . '::' . $user_group[0] . '::' . $role);
+
+            //throw new \yii\base\Exception($user_group_intersect[0]);
+
             /* ถ้า role เท่ากับ ? และ ผู้ใช้ยังไม่ได้ล๊อกอิน */
             if ($role == '?' && $user->getIsGuest()) {
                 return true;
@@ -68,46 +87,6 @@ class AccessRule extends \yii\filters\AccessRule {
             }
         }
         return false;
-    }
-
-    protected function matchRole1($user) {
-        //parent::matchRole($user);
-        if (empty($this->roles)) {
-            return TRUE;
-        }
-        foreach ($this->roles as $role) {
-            /*
-             * ถ้า role เท่ากับ ? และ ผู้ใช้ยังไม่ได้ล็อกอิน
-             */
-            if ($role == '?' && $user->getIsGuest()) {
-                return TRUE;
-            }
-            /*
-             * ถ้า role เท่ากับ @ และผู้ใช้ยังล็อกอินสำเร็จ
-             */ else if ($role == '@' && !$user->getIsGuest()) {
-
-                return TRUE;
-            }
-            /*
-             * หรือ ถ้า ผู้ใช้ล๊อกอินสำเร็จ และ role เท่ากับ role ของ ผู้ใช้ที่ล็อกอินอยู่
-             */ else if (!$user->getIsGuest() && $role == $user->identity->user_group_Id) {
-                $menuRe = str_replace('[', '', str_replace(']', '', $user->identity->user_group_Id));
-                $memuEx = explode(',', $menuRe);
-                ## User Login Only
-                $user_group_Id = Yii::$app->user->identity->user_group_Id;
-                $userRe = str_replace('[', '', str_replace(']', '', $user_group_Id));
-                $userEx = explode(',', $userRe);
-                if (array_intersect($userEx, $memuEx)) {
-                    //echo '(checked)' . '::' . $value->user_group_Id;
-                    //print_r(array_intersect($userEx, $memuEx));
-                    return print_r(array_intersect($userEx, $memuEx));
-                } else {
-                    echo '(No)   ';
-                    return '(No)   ';
-                }
-            }
-        }
-        return FALSE;
     }
 
 }

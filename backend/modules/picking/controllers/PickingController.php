@@ -31,28 +31,11 @@ class PickingController extends PickingMasterController {
                     'class' => AccessRule::className() // เรียกใช้งาน accessRule (component) ที่เราสร้างขึ้นใหม่
                 ],
                 'rules' => [
-                    /*
-                      [
-                      'actions' => ['index'],
-                      'allow' => true,
-                      'matchCallback' => function ($rule, $action) {
-                      //$group =  array(User::ROLE_Administrator);
-                      // $group = \common\models\costfit\Menu::find()->where('');
-                      $userRe = str_replace('[', '', str_replace(']', '', Yii::$app->user->identity->user_group_Id));
-                      $user = array($userRe);
-                      if (array_intersect($group, $user)) {
-                      return $value[0];
-                      } else {
-                      return 31;
-                      }
-                      // return 34; //Yii::$app->getUser()->can('updateUser', ['model' => $model]);
-                      }
-                      ], */
                     [
                         'actions' => ['index'], // กำหนด rules ให้ actionIndex()
                         'allow' => true,
-                        'roles' => [//'@'
-                            User::ROLE_Administrator, // อนุญาตให้ "ผู้ใช้งาน / สมาชิก" ใช้งานได้
+                        'roles' => ['@'
+                        // User::ROLE_Administrator, // อนุญาตให้ "ผู้ใช้งาน / สมาชิก" ใช้งานได้
                         //User::ROLE_SuperAdministrator, // อนุญาตให้ "พนักงาน" ใช้งานได้
                         ]
                     ],
