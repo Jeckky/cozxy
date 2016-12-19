@@ -12,6 +12,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use common\models\costfit\ProductSuppliers;
 
 /**
  * Products controller
@@ -46,7 +47,7 @@ class ProductsController extends MasterController {
      * @return mixed
      */
     public function actionIndex($hash) {
-
+        //throw new \yii\base\Exception('aaa');
         //return Yii::$app->getResponse()->redirect('register/login');
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
@@ -56,14 +57,14 @@ class ProductsController extends MasterController {
             $terms = \common\models\costfit\Content::find()->where("contentGroupId=" . $term->contentGroupId)->one();
         }
         $productId = $params['productId'];
-
+        $productSupplierId = $params['productSupplierId'];
         if ($productId != '') {
             $model = \common\models\costfit\Product::find()->where("productId =" . $productId)->one();
             if (count($model) > 0) {
                 $this->title = 'Cozxy.com | Products';
                 $this->subTitle = $model->attributes['title'];
                 $this->subSubTitle = '';
-                return $this->render('products_all', ['model' => $model, 'term' => $terms]);
+                return $this->render('products_all', ['model' => $model, 'term' => $terms, 'productSupplierId' => $productSupplierId]);
             } else {
                 return $this->render('@app/views/error/error');
             }

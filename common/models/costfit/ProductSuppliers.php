@@ -38,7 +38,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
      * @inheritdoc
      */
     public function rules() {
-        return array_merge(parent::rules(), []);
+        return array_merge(parent::rules(), ['price']);
     }
 
     /**
@@ -57,7 +57,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
             'height' => 'ความสูง',
             'depth' => 'ความลึก',
             'weight' => 'น้ำหนัก',
-            //'price' => 'ราคา',
+            // 'price' => 'ราคา',
             'unit' => 'หน่วย',
             'smallUnit' => 'หน่วยขนาดเล็ก',
             'tags' => 'แท็ก',
@@ -70,7 +70,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
      */
     public function attributes() {
         return array_merge(parent::attributes(), [
-            'image', 'Smart Price', 'firstname', 'lastname', 'bTitle', 'cTitle', 'uTitle', 'smuTitle'
+            'price', 'image', 'Smart Price', 'firstname', 'lastname', 'bTitle', 'cTitle', 'uTitle', 'smuTitle'
             , 'simage', 'simageThumbnail1', 'simageThumbnail2', 'priceSuppliers'
         ]);
     }
@@ -93,16 +93,40 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     }
 
     public static function productPrice($productSuppId) {
-        $lowestPrice = ProductPriceSuppliers::find()->where("productSuppId=" . $productSuppId . " and quantity=1")->one();
+        //throw new \yii\base\Exception($productSuppId);
+        $lowestPrice = ProductPriceSuppliers::find()->where("productSuppId=" . $productSuppId . " and status=1")->one();
         if (isset($lowestPrice) && !empty($lowestPrice)) {
             return $lowestPrice->price;
         }
     }
 
-    public static function productImageSuppliers($productSuppId) {
-        $image = ProductImageSuppliers::find()->where("productSuppId=" . $productSuppId . " and status=1")->one();
+    public static function productImageSuppliers($productId) {
+        //throw new \yii\base\Exception($productSuppId);
+        $image = ProductImage::find()->where("productId=" . $productId . " and status=1")->one();
         if (isset($image) && !empty($image)) {
             return $image->imageThumbnail1;
+        }
+    }
+
+    public static function productPriceSupplier($productSuppId) {
+        //throw new \yii\base\Exception($productSuppId);
+        $price = ProductPriceSuppliers::find()->where("productSuppId=" . $productSuppId . " and status=1")->one();
+        if (isset($price) && !empty($price)) {
+            return $price->price;
+        }
+    }
+
+    public static function productSuppliersId($productSuppId) {
+        $id = Product::find()->where("productSuppId=" . $productSuppId)->one();
+        if (isset($id) && !empty($id)) {
+            return $id->productId;
+        }
+    }
+
+    public static function supplier($productSuppId) {
+        $id = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
+        if (isset($id) && !empty($id)) {
+            return $id->userId;
         }
     }
 

@@ -4,6 +4,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use common\models\costfit\Product;
+use common\models\costfit\ProductSuppliers;
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
@@ -76,11 +77,16 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <div class="badges">
             <?php if (common\models\costfit\Product::isSmartItem($model->productId)): ?>
                 <span class="sale" style="background-color: #d2d042 !important;color: white;font-size: 20px;padding: 5px 10px 5px 10px">SMART</span>
-            <?php endif; ?>
+                <?php
+            endif;
+            //throw new \yii\base\Exception(print_r($model, true));
+            ?>
         </div>
     </h1>
-    <?= Html::hiddenInput("productId", $model->productId, ['id' => 'productId']); ?>
     <?= Html::hiddenInput("fastId", $fastId = Product::getShippingTypeId($model->productId), ['id' => 'fastId']); ?>
+    <?= Html::hiddenInput("productId", $model->productId, ['id' => 'productId']); ?>
+    <?= Html::hiddenInput("supplierId", ProductSuppliers::supplier($productSupplierId), ['id' => 'supplierId']); ?>
+    <?php // throw new \yii\base\Exception($fastId); ?>
     <div class="form-group">
         <?php if (isset($model->productGroup)): ?>
             <div class="select-style">
@@ -95,10 +101,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <?php endif; ?>
     </div>
     <div class="buttons group products-buttons-group">
-        <div class="old-price"><?= (isset($model->price) && !empty($model->price)) ? number_format($model->price, 2) . " ฿" : "815,00 $" ?></div>
-        <div class="price"><?= number_format($model->calProductPrice($model->productId, 1), 2) . " ฿" ?></div>
+        <?php
+        $supplierPrice = ProductSuppliers::productPriceSupplier($productSupplierId);
+        //$trueId = Suppliers::productSuppliersId($productSupplierId);
+        $oldPrice = (isset($supplierPrice) && !empty($supplierPrice)) ? number_format($supplierPrice, 2) : "815.00";
+        $newPrice = number_format($model->calProductPrice($productSupplierId, 1), 2);
+        if ($oldPrice != $newPrice) {
+            ?>
+            <div class="old-price"><?= (isset($supplierPrice) && !empty($supplierPrice)) ? number_format($supplierPrice, 2) . " ฿" : "815.00 $" ?></div>
+        <?php } ?>
+        <div class="price"><?= number_format($model->calProductPrice($productSupplierId, 1), 2) . " ฿" ?></div>
     </div>
-
     <div class="buttons group products-buttons-group" style="margin-top: -18px;">
         <div class="form-group" style="word-wrap: break-word;">
             <label for="shopping-dollar" class="col-sm-1 " style="float: left; padding-right: 0px; padding-left: 0px; margin-bottom: 0px;">
@@ -115,7 +128,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <img  src="<?php echo Yii::$app->homeUrl; ?>images/icon/1.png" alt="thumb" class="img-responsive" width="38" height="38"/>
             </label>
             <div id="choose" class="col-sm-11 text-left " style="float: left; padding: 0px; margin-left: 0px; margin-top: 15px;">
-                &nbsp;ส่งสินค้าภายใน <?php echo Product::getShippingDate($model->productId, 1); ?> วัน 
+                &nbsp;ส่งสินค้าภายใน <?php echo Product::getShippingDate($model->productId, 1); ?> วัน
             </div>
             <div id="unchoose" class="col-sm-11 text-left " style="padding: 0px; margin-left: 0px; margin-top: 18px;text-decoration: line-through;color:#bbb;display: none;">
                 &nbsp;ส่งสินค้าภายใน <?php echo Product::getShippingDate($model->productId, 1); ?> วัน
@@ -125,7 +138,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <label style="color: red;">
                         <input type="checkbox" id="lateShippingCheck" name="lateShippingCheck">  ต้องการส่งสินค้าราคาประหยัดอีก
                         <?php
-                        $productPrice = $model->calProductPrice($model->productId, 1, 1, 2);
+                        $productPrice = $model->calProductPrice($productSupplierId, 1, 1, 2);
 //                        throw new \yii\base\Exception(print_r($productPrice, true));
                         echo $productPrice["shippingDiscountValue"];
                         ?>  บาท (ส่งภายใน <?php echo Product::getShippingDate($model->productId, 2); ?> วัน)
@@ -232,7 +245,6 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
             data: {'productId': productId, 'fastId': fastId},
             success: function (data)
             {
-                // alert(productId);
                 $('#fastId').val(data);
                 $('#choose').hide();
                 $('#unchoose').show();
@@ -249,7 +261,6 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
             data: {'productId': productId},
             success: function (data)
             {
-                //  alert(data);
                 $('#fastId').val(data);
                 $('#choose').show();
                 $('#unchoose').hide();

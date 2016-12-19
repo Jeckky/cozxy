@@ -23,7 +23,7 @@ class ProductPriceController extends ProductMasterController {
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
                     // allow authenticated users
-                    [
+                        [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -65,10 +65,10 @@ class ProductPriceController extends ProductMasterController {
             'query' => $queryWeb,
         ]);
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'dataProviderPrice' => $dataProviderPrice,
-            'dataProviderWeb' => $dataProviderWeb,
-            'id' => $id
+                    'dataProvider' => $dataProvider,
+                    'dataProviderPrice' => $dataProviderPrice,
+                    'dataProviderWeb' => $dataProviderWeb,
+                    'id' => $id
         ]);
     }
 
@@ -79,7 +79,7 @@ class ProductPriceController extends ProductMasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -101,7 +101,7 @@ class ProductPriceController extends ProductMasterController {
             }
         }
         return $this->render('create', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -121,7 +121,7 @@ class ProductPriceController extends ProductMasterController {
             }
         }
         return $this->render('update', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -132,9 +132,10 @@ class ProductPriceController extends ProductMasterController {
      * @return mixed
      */
     public function actionDelete($id) {
-        $this->findModel($id)->delete();
         $product = ProductPrice::find()->where("productPriceId='" . $id . "'")->one();
-        return $this->redirect(['index', 'productId' => $product->productId]);
+        $productId = $product->productId;
+        $this->findModel($id)->delete();
+        return $this->redirect(['index', 'productId' => $productId]);
     }
 
     /**

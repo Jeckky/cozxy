@@ -18,17 +18,20 @@ if (isset($model->productId)):
             <div class="tile">
                 <div class="badges">
                     <span class="sale">Sale</span>
-                    <?php if (common\models\costfit\Product::isSmartItem($suppliers->productId)): ?>
+                    <?php
+                    if (common\models\costfit\Product::isSmartItem($suppliers->productId)):
+                        ?>
                         <br><span class="sale" style="background-color: #d2d042 !important;">SMART</span>
                         <?php
                     endif;
                     $price = ProductSuppliers::productPrice($suppliers->productSuppId);
+                    // throw new \yii\base\Exception($suppliers->productId);
                     ?>
                 </div>
                 <div class="price-label"><?= isset($price) ? number_format($price, 2) : "Not Set"; ?> ฿</div>
-                <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $suppliers->productId]) ?>" style="/*min-height: 210px; max-height: 210px;*/">
+                <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $suppliers->productId, 'productSupplierId' => $suppliers->productSuppId]) ?>" style="/*min-height: 210px; max-height: 210px;*/">
                     <?php
-                    $image = ProductSuppliers::productImageSuppliers($suppliers->productSuppId);
+                    $image = ProductSuppliers::productImageSuppliers($suppliers->productId);
                     if (isset($image) && !empty($image)):
                         $filename = $image;
                         if (file_exists($filename)) {
@@ -44,13 +47,13 @@ if (isset($model->productId)):
                 </a>
                 <div class="footer search-category-footer">
                     <div class="" style="max-height: 50px; min-height: 50px;">
-                        <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $suppliers->encodeParams(['productId' => $suppliers->productId]) ?>">
+                        <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $suppliers->encodeParams(['productId' => $suppliers->productId, 'productSupplierId' => $suppliers->productSuppId]) ?>">
                             <?=
                             substr($suppliers->title, 0, 40);
                             ?></a>
                     </div>
-                    <span><?php //= $model->shortDescription;                          ?></span>
-                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $suppliers->encodeParams(['productId' => $suppliers->productId]) ?>"><button class="btn btn-primary" id="addItemToCart"><i class="fa fa-search"></i>View</button></a>
+                    <span><?php //= $model->shortDescription;                                              ?></span>
+                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $suppliers->encodeParams(['productId' => $suppliers->productId, 'productSupplierId' => $suppliers->productSuppId]) ?>"><button class="btn btn-primary" id="addItemToCart"><i class="fa fa-search"></i>View</button></a>
                 </div>
             </div>
         </div>

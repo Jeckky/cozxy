@@ -18,39 +18,33 @@ use \common\models\costfit\master\ProductShippingPriceMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class ProductShippingPrice extends \common\models\costfit\master\ProductShippingPriceMaster
-{
+class ProductShippingPrice extends \common\models\costfit\master\ProductShippingPriceMaster {
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
             'shippingTypeId' => 'Shipping Type',
         ]);
     }
 
-    public function getProduct()
-    {
+    public function getProduct() {
         return $this->hasOne(Product::className(), ['productId' => 'productId']);
     }
 
-    public function getShippingType()
-    {
+    public function getShippingType() {
         return $this->hasOne(ShippingType::className(), ['shippingTypeId' => 'shippingTypeId']);
     }
 
-    public function getTypes()
-    {
+    public function getTypes() {
         $type = '';
         if (isset($this->type)) {
             if ($this->type == 1) {
@@ -62,11 +56,10 @@ class ProductShippingPrice extends \common\models\costfit\master\ProductShipping
         return $type;
     }
 
-    public static function calProductShippingPrice($productId, $fastId = NULL, $orderItemId = NULL)
-    {
+    public static function calProductShippingPrice($productId, $fastId = NULL, $orderItemId = NULL) {
         $res = [];
         $cart = Order::findCartArray();
-//        throw new \yii\base\Exception(print_r($cart, true));
+        //throw new \yii\base\Exception($productId);
         $shippingTypeId = 0;
         if (!isset($fastId)) {
             if (isset($cart) && $cart['isSlowest'] == 1) {
@@ -103,9 +96,8 @@ class ProductShippingPrice extends \common\models\costfit\master\ProductShipping
         }
         $shippingDisCount = ProductShippingPrice::find()->where("productId=" . $productId . " AND shippingTypeId = " . $shippingTypeId)->one();
 
-//        throw new \yii\base\Exception($productId . " " . $shippingTypeId);
-        if (isset($cart) && $cart['isSlowest'] == 0) {
-
+        //throw new \yii\base\Exception($productId . " " . $shippingTypeId);
+        if (isset($cart) && $cart['isSlowest'] == 0) {//
             if (isset($shippingDisCount)) {
                 $res["type"] = $shippingDisCount->type;
                 $res["discount"] = $shippingDisCount->discount;
@@ -119,7 +111,7 @@ class ProductShippingPrice extends \common\models\costfit\master\ProductShipping
             $res["type"] = $shippingDisCount->type;
             $res["discount"] = $shippingDisCount->discount;
         }
-
+        //throw new \yii\base\Exception(print_r($res, true));
         return $res;
     }
 

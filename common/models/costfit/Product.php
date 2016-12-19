@@ -69,15 +69,23 @@ class Product extends \common\models\costfit\master\ProductMaster {
 
     public function calProductPrice($productId, $quantity, $returnArray = 0, $fastId = NULL, $orderItemId = NULL) {
         $res = [];
-        $product = Product::find()->where("productId = $productId")->one();
-        $productPrice = ProductPrice::find()->where("productId = $productId AND quantity = $quantity")->one();
-//        throw new \yii\base\Exception($productId . " " . $quantity . " " . $productPrice->price);
+        //throw new \yii\base\Exception($productId);
+        //$product = Product::find()->where("productId =" . $productId)->one();//เดิม
+        //$productPrice = ProductPrice::find()->where("productId =" . $product->productId . " and quantity =" . $quantity)->one();//เดิม
+        if ($orderItemId == 'add' || $orderItemId != NULL) {
+            $product = Product::find()->where("productId =" . $productId)->one();
+            $productPrice = ProductPrice::find()->where("productId =" . $product->productId . " and quantity=" . $quantity)->one();
+        } else {
+            $product = ProductSuppliers::find()->where("productSuppId =" . $productId)->one();
+            $productPrice = ProductPriceSuppliers::find()->where("productSuppId =" . $product->productSuppId . " and status =1 ")->one();
+        }
         if (isset($productPrice)) {
             $price = $productPrice->price;
         } else {
             $price = $product->price;
         }
-        $shippingPrice = ProductShippingPrice::calProductShippingPrice($productId, $fastId, $orderItemId);
+        //$shippingPrice = ProductShippingPrice::calProductShippingPrice($product->productId, $fastId, $orderItemId);//เก่า
+        $shippingPrice = ProductShippingPrice::calProductShippingPrice($product->productId, $fastId, $orderItemId);
         if (isset($shippingPrice)) {
             if ($shippingPrice["type"] == 1) {
 //                $price = $price - $shippingPrice["discount"];
@@ -89,13 +97,11 @@ class Product extends \common\models\costfit\master\ProductMaster {
         }
         if (!$returnArray) {
             return $price;
-//            throw new \yii\base\Exception;
         } else {
-
             $res["discountType"] = isset($productPrice->discountType) ? $productPrice->discountType : NULL;
             $res["discountValue"] = isset($productPrice->discountValue) ? $productPrice->discountValue : NULL;
             $res["discountValueText"] = isset($productPrice->discountValue) ? number_format($productPrice->discountValue, 2) : NULL;
-//                throw new \yii\base\Exception($price);
+            //throw new \yii\base\Exception($price);
             $res["price"] = $price;
             $res["priceText"] = number_format($price, 2) . " ฿";
             $res["price"] = $price;
@@ -175,6 +181,7 @@ class Product extends \common\models\costfit\master\ProductMaster {
 
     public static function getShippingTypeId($productId) {
         $fastDate = 99;
+        $fastId = '';
         $productShippingDates = ProductShippingPrice::find()->where("productId =" . $productId)->all();
         foreach ($productShippingDates as $productShippingDate) {
             $shippingType = ShippingType::find()->where("shippingTypeId=" . $productShippingDate->shippingTypeId)->one();
@@ -193,32 +200,39 @@ class Product extends \common\models\costfit\master\ProductMaster {
 
     public static function getShippingDate($productId, $type) {
         $fastDate = 99;
+        //throw new \yii\base\Exception($productId);
         $productShippingDates = ProductShippingPrice::find()->where("productId =" . $productId)->all();
-        foreach ($productShippingDates as $productShippingDate) {
-            $shippingType = ShippingType::find()->where("shippingTypeId=" . $productShippingDate->shippingTypeId)->one();
-            if (count($shippingType) > 0) {
-                if ($shippingType->date < $fastDate) {
-                    $fastDate = $shippingType->date;
-                    $fastId = $productShippingDate->shippingTypeId;
+        if (isset($productShippingDates) && !empty($productShippingDates)) {
+
+            foreach ($productShippingDates as $productShippingDate) :
+                $shippingType = ShippingType::find()->where("shippingTypeId=" . $productShippingDate->shippingTypeId)->one();
+                if (count($shippingType) > 0) {
+                    if ($shippingType->date < $fastDate) {
+                        $fastDate = $shippingType->date;
+                        $fastId = $productShippingDate->shippingTypeId;
+                    }
+                } else {
+                    $fastDate = '';
+                    $fastId = '';
                 }
-            } else {
-                $fastDate = '';
-                $fastId = '';
-            }
+            endforeach;
+            // throw new \yii\base\Exception(print_r($shippingType, true));
         }
-        $minDate = 99;
-        $findMinDates = ProductShippingPrice::find()->where("productId =" . $productId . " and shippingTypeId!=" . $fastId)->all();
-        if (isset($findMinDates)) {
-            foreach ($findMinDates as $findMinDate) {
-                $model = ShippingType::find()->where("shippingTypeId=" . $findMinDate->shippingTypeId)->one();
-                if (isset($model)) {
-                    if ($model->date < $minDate) {
-                        $minDate = $model->date;
+        $minDate = '99';
+        if (isset($fastId)) {
+            $findMinDates = ProductShippingPrice::find()->where("productId =" . $productId . " and shippingTypeId!=" . $fastId)->all();
+            if (isset($findMinDates) && !empty($findMinDates)) {
+                foreach ($findMinDates as $findMinDate) {
+                    $model = ShippingType::find()->where("shippingTypeId=" . $findMinDate->shippingTypeId)->one();
+                    if (isset($model)) {
+                        if ($model->date < $minDate) {
+                            $minDate = $model->date;
+                        }
                     }
                 }
+            } else {
+                $minDate = $fastDate;
             }
-        } else {
-            $minDate = $fastId;
         }
 
         if ($type == 1) {
@@ -316,21 +330,43 @@ class Product extends \common\models\costfit\master\ProductMaster {
         return $flag;
     }
 
+    public static function createSupplierProductPrice($productId) {
+        $products = ProductSuppliers::find()
+                        ->select('*')
+                        ->join("LEFT JOIN", 'product_price_suppliers pps', 'product_suppliers.productSuppId=pps.productSuppId')
+                        ->where("product_suppliers.productId=" . $productId . " and pps.status=1")->one();
+
+        if (isset($products) && !empty($products)) {
+            return $products->price;
+        } else {
+            return NULL;
+        }
+    }
+
     public function getProductImages() {
         return $this->hasMany(ProductImage::className(), ['productId' => 'productId']);
     }
 
     public static function lowestPrice($productId) {
+        // throw new \yii\base\Exception($productId);
         $products = ProductSuppliers::find()
                 ->join("LEFT JOIN", 'product_price_suppliers pps', 'pps.productSuppId=product_suppliers.productSuppId')
-                ->where("product_suppliers.approve='approve' or product_suppliers.approve='old' and product_suppliers.quantity>0")
+                ->where("product_suppliers.productId=" . $productId . " and (product_suppliers.approve='approve' or product_suppliers.approve='old') and pps.status=1 and product_suppliers.quantity>0")
                 ->orderBy("pps.price ASC")
                 ->one();
         if (isset($products) && !empty($products)) {
             return $products;
-            //
         } else {
             return NULL;
+        }
+    }
+
+    public static function productSuppId($id, $supplierId) {
+        $productSuppId = ProductSuppliers::find()->where("productId=" . $id . " and userId=" . $supplierId)->one();
+        if (isset($productSuppId) && !empty($productSuppId)) {
+            return $productSuppId->productSuppId;
+        } else {
+            return '';
         }
     }
 

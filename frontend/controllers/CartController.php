@@ -16,11 +16,9 @@ use frontend\models\ContactForm;
 /**
  * Cart controller
  */
-class CartController extends MasterController
-{
+class CartController extends MasterController {
 
-    public function beforeAction($action)
-    {
+    public function beforeAction($action) {
         if ($action->id == 'add-coupon' || $action->id == 'change-quantity-item-and-save' || $action->id == 'add-to-cart') {
             $this->enableCsrfValidation = false;
         }
@@ -33,8 +31,7 @@ class CartController extends MasterController
      *
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $this->layout = "/content_right";
         $this->title = 'Cozxy.com | cart';
         $this->subTitle = 'Shopping Cart';
@@ -44,8 +41,7 @@ class CartController extends MasterController
         return $this->render('cart', compact('product'));
     }
 
-    public function actionAddToCart($id)
-    {
+    public function actionAddToCart($id) {
         $res = [];
         $order = \common\models\costfit\Order::getOrder();
         if (!isset($order)) {
@@ -57,7 +53,8 @@ class CartController extends MasterController
                 throw new \yii\base\Exception("Can't Save Order");
             }
         }
-        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productId =" . $id . " and sendDate=" . $_POST["fastId"])->one();
+        //throw new \yii\base\Exception('fastId=' . $id);
+        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productId =" . $id . " and sendDate=" . $_POST['fastId'])->one();
         if (!isset($orderItem)) {
             $orderItem = new \common\models\costfit\OrderItem();
             $orderItem->quantity = $_POST["quantity"];
@@ -67,11 +64,15 @@ class CartController extends MasterController
         $product = new \common\models\costfit\Product();
         $orderItem->sendDate = $_POST["fastId"];
         $orderItem->firstTimeSendDate = $_POST["fastId"];
-        $productPrice = $product->calProductPrice($id, $orderItem->quantity, 1, $_POST["fastId"]);
+        $orderItem->supplierId = $_POST['supplierId'];
+        $productPrice = $product->calProductPrice($id, $orderItem->quantity, 1, $_POST['fastId'], 'add');
         $orderItem->orderId = $order->orderId;
         $orderItem->productId = $id;
-        $orderItem->priceOnePiece = $orderItem->product->calProductPrice($id, 1);
+        $orderItem->productSuupId = \common\models\costfit\Product::productSuppId($id, $_POST['supplierId']);
+        $orderItem->priceOnePiece = $orderItem->product->calProductPrice($id, 1, 0, NULL, 'add');
+        //$orderItem->priceOnePiece = $orderItem->product->calProductPrice($id, 1);
         $orderItem->price = $productPrice["price"];
+        //throw new \yii\base\Exception($orderItem->priceOnePiece);
         $orderItem->subTotal = $orderItem->quantity * $orderItem->price;
         $orderItem->discountValue = isset($productPrice["discountValue"]) ? $productPrice["discountValue"] : 0;
         if (isset($productPrice["shippingDiscountValue"])) {
@@ -96,7 +97,7 @@ class CartController extends MasterController
             $pQuan = 0;
             foreach ($cartArray["items"] as $item) {
                 if ($item["productId"] == $id) {
-                    $pQuan+=$item["qty"];
+                    $pQuan += $item["qty"];
                 }
             }
             $product = new \common\models\costfit\Product();
@@ -113,8 +114,7 @@ class CartController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionDeleteCartItem($id)
-    {
+    public function actionDeleteCartItem($id) {
         $res = [];
         $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId = " . $id)->one();
         $orderId = $orderItem->orderId;
@@ -131,12 +131,11 @@ class CartController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionChangeQuantityItem()
-    {
+    public function actionChangeQuantityItem() {
 
         $res = [];
         $product = new \common\models\costfit\Product();
-        $price = $product->calProductPrice($_POST["productId"], $_POST["quantity"], 1);
+        $price = $product->calProductPrice($_POST["productId"], $_POST["quantity"], 1, NULL, 'add');
         $maxQuantity = $product->findMaxQuantity($_POST["productId"]);
         if ($_POST["quantity"] <= $maxQuantity) {
             if (isset($price)) {
@@ -157,8 +156,7 @@ class CartController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionAddCoupon()
-    {
+    public function actionAddCoupon() {
         $res = [];
         $order = \common\models\costfit\Order::getOrder();
         $coupon = \common\models\costfit\Coupon::getCouponAvailable($_POST['couponCode']);
@@ -180,8 +178,7 @@ class CartController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionAddWishlist()
-    {
+    public function actionAddWishlist() {
         $res = [];
         $ws = \common\models\costfit\Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
         if (!isset($ws)) {
@@ -204,8 +201,7 @@ class CartController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionDeleteWishlist()
-    {
+    public function actionDeleteWishlist() {
         $res = [];
         $ws = \common\models\costfit\Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
         if (isset($ws)) {
@@ -219,20 +215,18 @@ class CartController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionGenerateNewToken()
-    {
+    public function actionGenerateNewToken() {
         $res = [];
         $this->generateNewToken();
         $res["status"] = TRUE;
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionChangeQuantityItemAndSave()
-    {
+    public function actionChangeQuantityItemAndSave() {
 
         $res = [];
         $product = new \common\models\costfit\Product();
-        $price = $product->calProductPrice($_POST["productId"], $_POST["quantity"], 1, $_POST["sendDate"]);
+        $price = $product->calProductPrice($_POST["productId"], $_POST["quantity"], 1, $_POST["sendDate"], 'add');
 //        throw new \yii\base\Exception(print_r($price, true));
         $maxQuantity = $product->findMaxQuantity($_POST["productId"], 0);
 //        throw new \yii\base\Exception("max quantity=" . $maxQuantity);
@@ -242,7 +236,7 @@ class CartController extends MasterController
                 $oi = \common\models\costfit\OrderItem::find()->where("productId = " . $_POST["productId"] . " AND orderId=" . $cart["orderId"] . " AND sendDate =" . $_POST["sendDate"])->one();
                 $oi->price = $price["price"];
                 $oi->quantity = $_POST["quantity"];
-                $oi->priceOnePiece = $oi->product->calProductPrice($_POST["productId"], 1);
+                $oi->priceOnePiece = $oi->product->calProductPrice($_POST["productId"], 1, 0, NULL, 'add');
                 $oi->subTotal = $oi->price * $_POST["quantity"];
                 $oi->discountValue = $price["discountValue"];
                 if (isset($price["shippingDiscountValue"])) {
@@ -283,8 +277,7 @@ class CartController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionSaveSlowest()
-    {
+    public function actionSaveSlowest() {
         if (isset($_POST['orderId'])) {
             $order = \common\models\costfit\Order::find()->where("orderId=" . $_POST['orderId'])->one();
             if (isset($order)) {
@@ -301,7 +294,7 @@ class CartController extends MasterController
                     }
                     $price = $product->calProductPrice($oi->productId, $oi->quantity, 1, NULL, $oi->orderItemId);
                     $oi->price = $price["price"];
-                    $oi->priceOnePiece = $oi->product->calProductPrice($oi->productId, 1);
+                    $oi->priceOnePiece = $oi->product->calProductPrice($oi->productId, 1, 1, NULL, 'add');
                     $oi->subTotal = $oi->price * $oi->quantity;
                     $oi->discountValue = $price["discountValue"];
                     if (isset($price["shippingDiscountValue"])) {

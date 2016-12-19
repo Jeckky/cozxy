@@ -40,12 +40,14 @@ class SearchController extends MasterController {
 //        throw new \yii\base\Exception(print_r($_POST, true));
         $whereArray = [];
         $whereArray["category_to_product.categoryId"] = $params['categoryId'];
-        $whereArray["product_price.quantity"] = 1;
+        //$whereArray["product_price.quantity"] = 1;
+        //$whereArray["pps.status"] = 1;
         $products = \common\models\costfit\CategoryToProduct::find()
-                ->join("LEFT JOIN", "product_price", "product_price.productId = category_to_product.productId")
                 ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+                //->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+                //->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+//->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = category_to_product.productId")
                 ->where($whereArray);
-
         if (isset($_POST["min"])) {
             $products->andWhere("product_price.price >=" . $_POST["min"]);
         }
@@ -58,7 +60,6 @@ class SearchController extends MasterController {
             $this->view->params['brandId'] = explode(",", $idString);
             $products->andWhere("product.brandId in ($idString)");
         }
-
         $products = new \yii\data\ActiveDataProvider([
             'query' => $products,
             'pagination' => array('pageSize' => 9),

@@ -25,12 +25,13 @@ $check_item = count($this->params['cart']['items']);
                 <?php foreach ($this->params['cart']['items'] as $item): ?>
                     <tr class="item" id="item<?= $item['orderItemId'] ?>">
                         <td >
+
                             <div class="delete"><?= yii\helpers\Html::hiddenInput("orderItemId", $item['orderItemId'], ['id' => 'orderItemId']); ?></div>
                             <a href="#"><?= $item['title'] ?></a></td>
                         <td class="qty"><input id="qty" type="text" value="<?= $item['qty'] ?>"></td>
                         <td class="price"><?= number_format($item['price'], 2) ?></td>
                     </tr>
-                <?php endforeach; ?> 
+                <?php endforeach; ?>
             </table>
         </div>
         <div class="footer group">

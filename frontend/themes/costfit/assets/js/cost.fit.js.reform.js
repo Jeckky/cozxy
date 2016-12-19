@@ -682,6 +682,7 @@ $(".addWishlistItemToCart").click(function () {
 //        var getUrl = window.location;
 //        var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
 //        alert(baseUrl);
+    //alert($itemId);
     $.ajax({
         type: "POST",
         dataType: "JSON",
@@ -817,6 +818,7 @@ function changeoption(value)
 $('#slowest').on('ifChecked', function (event) {
     //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
     var orderId = $('input[id=orderId]').val();
+    //alert(orderId);
     $.ajax({
         type: "POST",
         dataType: "JSON",

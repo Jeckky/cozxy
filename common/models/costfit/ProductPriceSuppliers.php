@@ -73,9 +73,9 @@ class ProductPriceSuppliers extends \common\models\costfit\master\ProductPriceSu
     public static function rankingPrice() {
         $rankingPrice = new ActiveDataProvider([
             'query' => ProductPriceSuppliers::find()
-            ->groupBy('price')
-            ->where('status = 1')
-            ->orderBy('price asc')
+                    ->groupBy('price')
+                    ->where('status = 1')
+                    ->orderBy('price asc')
         ]);
         return $rankingPrice;
     }
