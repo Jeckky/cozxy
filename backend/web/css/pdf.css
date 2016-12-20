@@ -38,7 +38,39 @@ th {
     line-height: 28px;
     border:0.5px solid #eee;
 }
+.table_border{
+    font-family: "Garuda"; font-size: 8pt;
+    color:#000000;
+    width: 100%;
+    font-weight: normal;
+    border: 0.5px solid #000;
+    margin-bottom: 10px;
+}
 
+.table_border td {
+    border:0.5px solid #000;
+    font-family: "Garuda";font-size: 6pt;
+    line-height: 17px;
+}
+.table_border th {
+    font-weight: normal;
+    font-family: "Garuda"; font-size: 8pt;
+    line-height: 18px;
+    border:0.5px solid #000;
+}
+.table_noborder{
+    width: 100%;
+    font-weight: normal;
+    border: 0px;
+}
+
+.table_noborder td {
+    border:0px;
+}
+.table_noborder th {
+    font-weight: normal;
+    border:0px;
+}
 .bg-purchase-order{
     background-color: #f8f9f8;
     text-align: right;

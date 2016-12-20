@@ -1,5 +1,6 @@
 <?php
 $check_item = count($this->params['cart']['items']);
+//throw new \yii\base\Exception(print_r($this->params, true));
 ?>
 <style type="text/css">
     .body{

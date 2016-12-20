@@ -65,11 +65,12 @@ class CartController extends MasterController {
         $orderItem->sendDate = $_POST["fastId"];
         $orderItem->firstTimeSendDate = $_POST["fastId"];
         $orderItem->supplierId = $_POST['supplierId'];
-        $productPrice = $product->calProductPrice($id, $orderItem->quantity, 1, $_POST['fastId'], 'add');
         $orderItem->orderId = $order->orderId;
         $orderItem->productId = $id;
-        $orderItem->productSuupId = \common\models\costfit\Product::productSuppId($id, $_POST['supplierId']);
-        $orderItem->priceOnePiece = $orderItem->product->calProductPrice($id, 1, 0, NULL, 'add');
+        $orderItem->productSuppId = \common\models\costfit\Product::productSuppId($id, $_POST['supplierId']);
+        $productPrice = $product->calProductPrice($orderItem->productSuppId, $orderItem->quantity, 1, $_POST['fastId'], NULL);
+        $orderItem->priceOnePiece = $orderItem->product->calProductPrice($orderItem->productSuppId, 1, 0, NULL, NULL);
+        //$orderItem->priceOnePiece = $orderItem->product->calProductPrice($id, 1, 0, NULL, 'add');
         //$orderItem->priceOnePiece = $orderItem->product->calProductPrice($id, 1);
         $orderItem->price = $productPrice["price"];
         //throw new \yii\base\Exception($orderItem->priceOnePiece);

@@ -32,7 +32,6 @@ $(document).ready(function (e) {
         var $positionQty = parseInt($('.cart-btn a span').text());
         var orderItemId = $(this).find("#orderItemId").val();
         var itemQty = $(this).parent().parent().find(".qty").find("#qty").val();
-        alert(orderItemId);
         $.ajax({
             type: "POST",
             dataType: "JSON",
@@ -202,7 +201,6 @@ $(document).ready(function (e) {
         //$addedToCartMessage.find('p').text('"' + $itemName + '"' + '  ' + 'was successfully added to your cart.');
         //var getUrl = window.location;
         //var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-        // alert($supplierId);
         $.ajax({
             type: "POST",
             dataType: "JSON",
@@ -212,7 +210,6 @@ $(document).ready(function (e) {
             {
                 if (data.status)
                 {
-                    alert($itemPrice);
                     $('.cart-dropdown table').append(
                             '<tr class="item"><td><div class="delete"><input type="hidden" id="orderItemId" value="' + data.orderItemId + '"></div><a href="#">' + $itemName +
                             '<td><input type="text" value="' + $itemQnty +

@@ -133,13 +133,15 @@ class Order extends \common\models\costfit\master\OrderMaster {
                 if (isset($item->shippingDiscountValue)) {
                     $totalItemDiscount += $item->shippingDiscountValue;
                 }
+
                 $items[$item->orderItemId] = [
                     'orderItemId' => $item->orderItemId,
                     'productId' => $item->productId,
                     'title' => $item->product->title,
                     'code' => $item->product->code,
                     'qty' => $item->quantity,
-                    'price' => $item->price,
+                    //'price' => $item->price,
+                    'price' => ProductSuppliers::productPriceSupplier($item->productSuppId),
                     'priceText' => number_format($item->price, 2),
                     'priceOnePiece' => $item->priceOnePiece,
                     'priceOnePieceText' => number_format($item->priceOnePiece, 2),
@@ -661,6 +663,11 @@ class Order extends \common\models\costfit\master\OrderMaster {
         } else {
             return '';
         }
+    }
+
+    static public function countOrderItem($orderId) {
+        $orderItem = count(OrderItem::find()->where("orderId=" . $orderId)->all());
+        return $orderItem;
     }
 
     static public function findOrderId($orderId) {

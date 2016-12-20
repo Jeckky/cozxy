@@ -9,6 +9,7 @@ use backend\controllers\BackendMasterController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\costfit\OrderPaymentHistory;
+use kartik\mpdf\Pdf;
 
 /**
  * OrderController implements the CRUD actions for Order model.
@@ -21,7 +22,7 @@ class OrderController extends OrderMasterController {
                 'class' => \yii\filters\AccessControl::className(),
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
-                    // allow authenticated users
+// allow authenticated users
                         [
                         'allow' => true,
                         'roles' => ['@'],
@@ -147,8 +148,8 @@ class OrderController extends OrderMasterController {
 //        $this->subSubTitle = "Order Purchase";
         $orderId = $params['orderId'];
 
-        //echo htmlspecialchars($orderId);
-        //echo $orderId;
+//echo htmlspecialchars($orderId);
+//echo $orderId;
         if (isset($params['orderId'])) {
             $order = \common\models\costfit\Order::find()->where('orderId = "' . $params['orderId'] . '" ')
                     ->one();
@@ -156,7 +157,7 @@ class OrderController extends OrderMasterController {
             return $this->redirect(['profile/order']);
         }
 
-        //$content = $this->renderPartial('purchase_order');
+//$content = $this->renderPartial('purchase_order');
         $content = $this->renderPartial('@frontend/views/payment/purchase_order', compact('order'));
         $this->actionMpdfDocument($content);
     }
@@ -175,7 +176,7 @@ class OrderController extends OrderMasterController {
     }
 
     public function actionPaymentHistory() {
-        //  throw new \yii\base\Exception($_GET['orderId']);
+//  throw new \yii\base\Exception($_GET['orderId']);
         if (isset($_GET['orderId'])) {
             $order = Order::find()->where("orderId='" . $_GET['orderId'] . "'")->one();
             $dataProvider = new ActiveDataProvider([
@@ -218,6 +219,116 @@ class OrderController extends OrderMasterController {
             $show = $thead . $show . $tfoot;
             return \yii\helpers\Json::encode($show);
         }
+    }
+
+    public function actionPurchaseOrder() {
+        $ms = '';
+        $model = Order::find()->where("status=" . Order::ORDER_STATUS_E_PAYMENT_SUCCESS)->all();
+        if (!isset($model)) {
+            $ms = 'ไม่มีรายการสั่งซื้อ';
+            return $this->render('purchase', [
+                        'ms' => $ms
+            ]);
+        } else {
+            return $this->render('purchase', [
+                        'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionCreatePo() {
+        $supplierId[0] = 0;
+        $i = 0;
+        if (isset($_GET['orderId']) && !empty($_GET['orderId'])) {
+            $orders = $_GET['orderId'];
+            foreach ($orders as $orderId):
+                $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
+                foreach ($orderItems as $orderItem):
+                    $flag = false;
+                    $flag = $this->checkDupplicateId($supplierId, $orderItem->supplierId);
+                    if ($flag == true) {
+                        $supplierId[$i] = $orderItem->supplierId; //ได้ supplierId
+                        $i++;
+                    }
+                endforeach;
+            endforeach;
+            //throw new \yii\base\Exception(print_r($orders, true));
+            $header = $this->renderPartial('header');
+            $content = $this->renderPartial('content', [
+                'orders' => $orders,
+                'supplierId' => $supplierId
+            ]);
+            $this->printPdf($content, $header);
+        } else {
+            $ms = '';
+            $model = Order::find()->where("status=" . Order::ORDER_STATUS_E_PAYMENT_SUCCESS)->all();
+            if (!isset($model)) {
+                $ms = 'ไม่มีรายการสั่งซื้อ';
+                return $this->render('purchase', [
+                            'ms' => $ms
+                ]);
+            } else {
+                return $this->render('purchase', [
+                            'model' => $model,
+                ]);
+            }
+        }
+    }
+
+    public static function checkDupplicateId($array, $newIndex) {
+        $check = 0;
+        //throw new \yii\base\Exception(print_r($array, true));
+        foreach ($array as $old):
+            if ($old == $newIndex) {
+                $check++;
+            }
+            if ($check == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        endforeach;
+    }
+
+    static function printPdf($content, $header) {
+        $pdf = new Pdf([
+            // set to use core fonts only
+            'mode' => Pdf::MODE_UTF8,
+            // A4 paper format
+            'format' => Pdf::FORMAT_A4,
+            // portrait orientation
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            // stream to browser inline
+            'destination' => Pdf::DEST_BROWSER,
+            // your html content input
+            'content' => $content,
+            // format content from your own css file if needed or use the
+            // enhanced bootstrap css built by Krajee for mPDF formatting
+            'cssFile' => '@backend/web/css/pdf.css',
+            // any css to be embedded if required
+            'cssInline' => '.kv-heading-1{font-size:14px}',
+            //'cssInline' => 'body{font-size:9px}',
+            // set mPDF properties on the fly
+            // 'defaultFontSize' => 3,
+            // 'marginLeft' => 10,
+            // 'marginRight' => 10,
+            'marginTop' => 10,
+            // 'marginBottom' => 11,
+            //'marginHeader' => 6,
+            //'marginFooter' => 6,
+            // 'options' => ['title' => 'Cost.fit Print '],
+            // call mPDF methods on the fly
+            'methods' => [
+                'SetHeader' => [$header], //Krajee Report Header
+                // 'SetFooter' => ['{PAGENO}'],
+                // 'SetHeader' => FALSE, //Krajee Report Header
+                'SetFooter' => ['{PAGENO} / {nbpg}'],
+            ]
+        ]);
+
+
+        // return the pdf output as per the destination setting
+        return $pdf->render();
     }
 
 }

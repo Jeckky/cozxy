@@ -105,7 +105,7 @@ class ProductsController extends MasterController {
         $fastId = Yii::$app->request->post('fastId');
         $minDate = 99;
         $findMinDates = \common\models\costfit\ProductShippingPrice::find()->where("productId =" . $productId . " and shippingTypeId!=" . $fastId)->all();
-        if (isset($findMinDates)) {
+        if (isset($findMinDates) && !empty($findMinDates)) {
             foreach ($findMinDates as $findMinDate) {
                 $model = \common\models\costfit\ShippingType::find()->where("shippingTypeId=" . $findMinDate->shippingTypeId)->one();
                 if (isset($model)) {

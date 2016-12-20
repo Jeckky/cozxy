@@ -57,7 +57,7 @@ class User extends \common\models\costfit\master\UserMaster {
      */
     public function rules() {
         return array_merge(parent::rules(), [
-            ['email', 'unique'],
+                ['email', 'unique'],
             'tel' => [['tel'], 'string'],
 //            ['email', 'uniqueEmail'],
             ['email', 'email'],
@@ -67,7 +67,7 @@ class User extends \common\models\costfit\master\UserMaster {
             ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"],
 //            ['email', 'exist']
             [
-                ['firstname', 'lastname', 'gender', 'tel' => [['tel'], 'integer'], 'birthDate', 'acceptTerm'],
+                    ['firstname', 'lastname', 'gender', 'tel' => [['tel'], 'integer'], 'birthDate', 'acceptTerm'],
                 'required', 'on' => self::COZXY_EDIT_PROFILE],
             // [['currentPassword', 'newPassword', 'rePassword'], 'required'],
             [['currentPassword', 'newPassword', 'rePassword'], 'required', 'on' => self::COZXY_PROFILE],
@@ -141,7 +141,6 @@ class User extends \common\models\costfit\master\UserMaster {
 
     public function findAllGenderArray() {
         return [
-
             self::USER_STATUS_GENDER_Female => "เพศหญิง",
             self::USER_STATUS_GENDER_Male => "เพศชาย",
         ];
@@ -218,7 +217,7 @@ class User extends \common\models\costfit\master\UserMaster {
         $orders = Order::find()->where("userId=" . $this->userId)->all();
         if (isset($orders)) {
             foreach ($orders as $order)
-                $summary+=$order->summary;
+                $summary += $order->summary;
         }
         return $summary;
     }
@@ -229,6 +228,45 @@ class User extends \common\models\costfit\master\UserMaster {
             return $user->firstname . " " . $user->lastname;
         } else {
             return '';
+        }
+    }
+
+    public static function supplierDetail($userId) {
+        $detail = Address::find()->where("userId=" . $userId . " and isDefault=1")->one();
+        if (isset($detail) && !empty($detail)) {
+            return $detail;
+        } else {
+            return NULL;
+        }
+    }
+
+    public static function supplierAddressText($addressId) {
+        $text = Address::find()->where("addressId=" . $addressId . " and isDefault=1")->one();
+        if (isset($text) && !empty($text)) {
+            $districtId = \common\models\dbworld\District::find()->where("districtId=" . $text->districtId)->one();
+            if (isset($districtId) && !empty($districtId)) {
+                $district = $districtId->localName;
+                $id = $districtId->cityId;
+            } else {
+                $district = '';
+                $id = '';
+            }
+            $aumphur = \common\models\dbworld\Cities::find()->where("cityId=" . $text->amphurId)->one();
+            if (isset($aumphur) && !empty($aumphur)) {
+                $city = $aumphur->cityName;
+            } else {
+                $city = '';
+            }
+            $province = \common\models\dbworld\States::find()->where("stateId=" . $text->provinceId)->one();
+            if (isset($province) && !empty($province)) {
+                $state = $province->stateName;
+            } else {
+                $state = '';
+            }
+            $address = $text->address . " " . $district . "<br>" . $city . " " . $state . " " . $id . "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEL " . $text->tel . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fax " . $text->fax;
+            return $address;
+        } else {
+            return NULL;
         }
     }
 

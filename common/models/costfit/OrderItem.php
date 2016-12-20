@@ -71,10 +71,10 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster {
 
     public static function findSlowestDate($orderId) {
         $model = OrderItem::find()
-        ->select("MAX(st.date) as maxDate")
-        ->join("LEFT JOIN", 'shipping_type st', 'st.shippingTypeId = order_item.sendDate')
-        ->where('order_item.orderId=' . $orderId)
-        ->one();
+                ->select("MAX(st.date) as maxDate")
+                ->join("LEFT JOIN", 'shipping_type st', 'st.shippingTypeId = order_item.sendDate')
+                ->where('order_item.orderId=' . $orderId)
+                ->one();
 
         return isset($model->maxDate) ? $model->maxDate : NULL;
     }
@@ -82,13 +82,13 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster {
     public static function countPickingItemsArray($orderId) {
         $res = [];
         $query = \common\models\costfit\OrderItem::find()
-        ->where("orderId=" . $orderId)
-        ->all();
+                ->where("orderId=" . $orderId)
+                ->all();
 
         $res['countItems'] = count($query);
         $sumQuantity = 0;
         foreach ($query as $item) {
-            $sumQuantity+=$item->quantity;
+            $sumQuantity += $item->quantity;
         }
         $res['sumQuantity'] = $sumQuantity;
 
@@ -111,18 +111,64 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster {
         $picked = count($items);
         if (isset($items) && !empty($items)) {
             foreach ($items as $item):
-                $totalPicked+=$item->quantity;
+                $totalPicked += $item->quantity;
             endforeach;
         }
         $items2 = OrderItem::find()->where("orderId=" . $orderId . " and status=1")->all();
         $ready = count($items2);
         if (isset($items2) && !empty($items2)) {
             foreach ($items2 as $item2):
-                $total2+=$item2->quantity;
+                $total2 += $item2->quantity;
             endforeach;
         }
         $text = 'ส่งแล้ว ' . $picked . ' รายการ ' . $totalPicked . ' ชิ้น<br> ยังไม่หยิบ ' . $ready . ' รายการ ' . $total2 . ' ชิ้น';
         return $text;
+    }
+
+    public static function supplierItems($supplierId, $orderIds) {
+        $orderId = '';
+        $productId = [];
+        $i = 0;
+        foreach ($orderIds as $order):
+            $orderId = $orderId . $order . ",";
+        endforeach;
+        $orderId = substr($orderId, 0, -1);
+        $orderItem = OrderItem::find()->where("orderId in (" . $orderId . ") and supplierId=" . $supplierId)->all();
+        if (isset($orderItem) && !empty($orderItem)) {
+            foreach ($orderItem as $item):
+                $flag = false;
+                $check = 0;
+                foreach ($productId as $id):
+                    if ($id == $item->productSuppId) {
+                        $check++;
+                    }
+                endforeach;
+                if ($check == 0) {
+                    $flag = true;
+                }
+                if ($flag == true) {
+                    $productId[$i] = $item->productSuppId; // ได้ productId ที่ไม่ซ้ำกัน
+                    $i++;
+                }
+            endforeach;
+        }
+        return $productId;
+    }
+
+    public static function totalSupplierItem($supplierId, $productSuppId, $orders) {
+        $orderId = '';
+        $total = 0;
+        foreach ($orders as $order):
+            $orderId = $orderId . $order . ",";
+        endforeach;
+        $orderId = substr($orderId, 0, -1);
+        $orderItems = OrderItem::find()->where("orderId in (" . $orderId . ") and supplierId=" . $supplierId . " and productSuppId=" . $productSuppId)->all();
+        if (isset($orderItems) && !empty($orderItems)) {
+            foreach ($orderItems as $orderItem):
+                $total += $orderItem->quantity;
+            endforeach;
+        }
+        return $total;
     }
 
 }
