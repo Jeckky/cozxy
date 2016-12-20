@@ -16,6 +16,7 @@ use Yii;
     * @property string $email
     * @property string $token
     * @property integer $type
+    * @property string $user_group_Id
     * @property string $auth_key
     * @property string $auth_type
     * @property string $birthDate
@@ -25,8 +26,10 @@ use Yii;
     * @property string $createDateTime
     * @property string $updateDateTime
     * @property string $lastvisitDate
-    * @property string $user_group_Id
-*/
+    *
+            * @property Address[] $addresses
+            * @property Order[] $orders
+    */
 class UserMaster extends \common\models\ModelMaster
 {
 /**
@@ -48,7 +51,7 @@ return [
             [['type', 'gender', 'status'], 'integer'],
             [['birthDate', 'createDateTime', 'updateDateTime', 'lastvisitDate'], 'safe'],
             [['username', 'firstname', 'password', 'lastname', 'email', 'user_group_Id'], 'string', 'max' => 200],
-            [['auth_type'], 'string', 'max' => 45],
+            [['auth_type'], 'string', 'max' => 255],
             [['tel'], 'string', 'max' => 20],
         ];
 }
@@ -68,6 +71,7 @@ return [
     'email' => Yii::t('user', 'Email'),
     'token' => Yii::t('user', 'Token'),
     'type' => Yii::t('user', 'Type'),
+    'user_group_Id' => Yii::t('user', 'User Group  ID'),
     'auth_key' => Yii::t('user', 'Auth Key'),
     'auth_type' => Yii::t('user', 'Auth Type'),
     'birthDate' => Yii::t('user', 'Birth Date'),
@@ -77,7 +81,22 @@ return [
     'createDateTime' => Yii::t('user', 'Create Date Time'),
     'updateDateTime' => Yii::t('user', 'Update Date Time'),
     'lastvisitDate' => Yii::t('user', 'Lastvisit Date'),
-    'user_group_Id' => Yii::t('user', 'User Group  ID'),
 ];
 }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getAddresses()
+    {
+    return $this->hasMany(AddressMaster::className(), ['userId' => 'userId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getOrders()
+    {
+    return $this->hasMany(OrderMaster::className(), ['userId' => 'userId']);
+    }
 }

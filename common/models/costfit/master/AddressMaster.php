@@ -28,7 +28,10 @@ use Yii;
     * @property string $longitude
     * @property string $latitude
     * @property string $email
-*/
+    * @property string $fax
+    *
+            * @property User $user
+    */
 class AddressMaster extends \common\models\ModelMaster
 {
 /**
@@ -50,11 +53,12 @@ return [
             [['address'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['firstname', 'lastname', 'company'], 'string', 'max' => 200],
-            [['tax', 'tel'], 'string', 'max' => 45],
+            [['tax', 'tel', 'fax'], 'string', 'max' => 45],
             [['countryId'], 'string', 'max' => 3],
             [['zipcode'], 'string', 'max' => 10],
             [['longitude', 'latitude'], 'string', 'max' => 150],
             [['email'], 'string', 'max' => 100],
+            [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => UserMaster::className(), 'targetAttribute' => ['userId' => 'userId']],
         ];
 }
 
@@ -85,6 +89,15 @@ return [
     'longitude' => Yii::t('address', 'Longitude'),
     'latitude' => Yii::t('address', 'Latitude'),
     'email' => Yii::t('address', 'Email'),
+    'fax' => Yii::t('address', 'Fax'),
 ];
 }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getUser()
+    {
+    return $this->hasOne(UserMaster::className(), ['userId' => 'userId']);
+    }
 }

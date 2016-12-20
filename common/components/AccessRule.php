@@ -20,16 +20,16 @@ class AccessRule extends \yii\filters\AccessRule {
 //put your code here
     protected function matchRole($user) {
         $getUser = str_replace('[', '(', str_replace(']', ')', $user->identity->user_group_Id));
-        echo print_r($this->roles);
-        echo '<br>';
-        echo print_r($getUser);
+        //echo print_r($this->roles);
+        //echo '<br>';
+        //echo print_r($getUser);
 
         if (empty($this->roles)) {
             return true;
         }
-        echo 'xxx';
+        //echo 'xxx';
         foreach ($this->roles as $role) {
-            echo 'xx : ' . $role;
+            //echo 'xx : ' . $role;
             // exit();
             /*
              * User Login Only

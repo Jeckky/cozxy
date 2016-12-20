@@ -87,22 +87,26 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 return $this->context->dateThai($model->lastvisitDate, 1, TRUE);
                             }
                         }
-                    ],
-                    [
-                        'attribute' => 'createDateTime',
-                        'format' => 'raw',
-                        'value' => function($model) {
-                            return $this->context->dateThai($model->createDateTime, 1, TRUE);
-                        }
-                    ],
+                    ], /*
+                      [
+                      'attribute' => 'createDateTime',
+                      'format' => 'raw',
+                      'value' => function($model) {
+                      return $this->context->dateThai($model->createDateTime, 1, TRUE);
+                      }
+                      ], */
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
-                        'template' => '{view}   ',
+                        'template' => '{view} {address}',
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                return Html::a('ตั้งค่าสมาชิก', $url, [
+                                return Html::a('<i class="fa fa-pencil"></i> ตั้งค่าสมาชิก', $url, [
                                     'title' => Yii::t('yii', 'view'),
                                 ]);
+                            },
+                            'address' => function ($url, $model) {
+                                return Html::a('<i class="fa fa-pencil"></i> สถานที่', Yii::$app->homeUrl . "management/address/?userId=" . $model->userId, [
+                                    'title' => Yii::t('app', 'สถานที่'), 'class' => 'text-center']);
                             },
                             'update' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-pencil"></i>', $url, [

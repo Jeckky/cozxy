@@ -40,7 +40,7 @@ use yii\jui\DatePicker;
 
         <?= $form->field($model, 'email', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
 
-        <?= $form->field($model, 'type')->radioList(['1' => 'Frontend', '2' => 'Backend', '3' => 'Frontend and Frontend', '4' => 'Suppliers'])->label('ประเภท') ?>
+        <?= $form->field($model, 'type')->radioList(['1' => 'Frontend', '2' => 'Backend', '3' => 'Frontend and Backend', '4' => 'Suppliers'])->label('ประเภท') ?>
 
         <?= $form->field($model, 'gender')->radioList(['1' => 'เพศชาย', '0' => 'เพศหญิง'])->label('เพศ') ?>
 

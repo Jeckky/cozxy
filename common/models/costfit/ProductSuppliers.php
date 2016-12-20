@@ -33,13 +33,13 @@ use \common\models\costfit\master\ProductSuppliersMaster;
  * @property string $updateDateTime
  */
 class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMaster {
-
     /**
      * @inheritdoc
      */
-    public function rules() {
-        return array_merge(parent::rules(), ['price']);
-    }
+//    public function rules() {
+//        return array_merge(parent::rules(), [[['price']]
+//        ]);
+//    }
 
     /**
      * @inheritdoc

@@ -13,7 +13,9 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-*/
+    *
+            * @property Product[] $products
+    */
 class ProductGroupMaster extends \common\models\ModelMaster
 {
 /**
@@ -52,4 +54,12 @@ return [
     'updateDateTime' => Yii::t('product_group', 'Update Date Time'),
 ];
 }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getProducts()
+    {
+    return $this->hasMany(ProductMaster::className(), ['productGroupId' => 'productGroupId']);
+    }
 }

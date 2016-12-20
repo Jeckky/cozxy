@@ -88,4 +88,22 @@ class Address extends \common\models\costfit\master\AddressMaster {
         return $this->hasOne(\common\models\dbworld\States::className(), ['stateId' => 'provinceId']);
     }
 
+    /*
+     * increate : 20/10/2559
+     * use : management/address/
+     * by : taninut.b
+     */
+
+    public function getCitie() {
+        return $this->hasOne(\common\models\dbworld\Cities::className(), ['cityId' => 'amphurId']);
+    }
+
+    public function getCountrie() {
+        return $this->hasOne(\common\models\dbworld\Countries::className(), ['countryId' => 'countryId']);
+    }
+
+    public function getState() {
+        return $this->hasOne(\common\models\dbworld\States::className(), ['stateId' => 'provinceId']);
+    }
+
 }

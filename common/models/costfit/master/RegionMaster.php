@@ -13,7 +13,9 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-*/
+    *
+            * @property Store[] $stores
+    */
 class RegionMaster extends \common\models\ModelMaster
 {
 /**
@@ -52,4 +54,12 @@ return [
     'updateDateTime' => Yii::t('region', 'Update Date Time'),
 ];
 }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getStores()
+    {
+    return $this->hasMany(StoreMaster::className(), ['regionId' => 'regionId']);
+    }
 }
