@@ -106,7 +106,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             },
                             'address' => function ($url, $model) {
                                 if ($model->type == 4) {
-                                    return Html::a('<i class="fa fa-pencil"></i> สถานที่', Yii::$app->homeUrl . "management/address/?userId=" . $model->userId, [
+                                    return Html::a('<i class="fa fa-pencil"></i> สถานที่ suppliers', Yii::$app->homeUrl . "management/address/?userId=" . $model->userId, [
                                         'title' => Yii::t('app', 'สถานที่'), 'class' => 'text-center']);
                                 }
                             },
