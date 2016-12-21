@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
+use yii\jui\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\Order */
@@ -47,11 +48,10 @@ use yii\widgets\ActiveForm;
         <?php }
         ?>
     </table>
+
     <?php
     if (isset($model) && !empty($model)) {
-        echo '<div class="pull-right">' . Html::a('<i class="fa fa-check-square-o" aria-hidden="true"></i> สร้างใบ PO', ['create-po',
-            'orderId' => $orderId
-                ], ['class' => 'btn btn-lg btn-success']) . '</div>';
+        echo '<div class="pull-right">' . Html::a('<i class="fa fa-check-square-o" aria-hidden="true">  สร้างใบ PO</i>', ['create-po', 'orderId' => $orderId], ['class' => 'btn btn-lg btn-success pono', 'target' => '_blank']) . '</div>';
     }
     ?>
 </div>

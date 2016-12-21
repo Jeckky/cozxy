@@ -171,4 +171,23 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster {
         return $total;
     }
 
+    public static function summarySupplier($supplierId, $orders) {
+        $orderId = '';
+        $i = 0;
+        $summary = 0;
+        foreach ($orders as $order):
+            $orderId = $orderId . $order . ",";
+        endforeach;
+        $orderId = substr($orderId, 0, -1);
+        $orderItem = OrderItem::find()->where("orderId in (" . $orderId . ") and supplierId=" . $supplierId)->all();
+        if (isset($orderItem) && !empty($orderItem)) {
+            foreach ($orderItem as $item):
+                $price = ProductSuppliers::productPriceSupplier($item->productSuppId);
+                $amount = $price * $item->quantity;
+                $summary += $amount;
+            endforeach;
+        }
+        return $summary;
+    }
+
 }

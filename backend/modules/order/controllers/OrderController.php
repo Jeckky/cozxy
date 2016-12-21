@@ -252,11 +252,12 @@ class OrderController extends OrderMasterController {
                     }
                 endforeach;
             endforeach;
+            $this->saveStoreProduct($orders, $supplierId);
             //throw new \yii\base\Exception(print_r($orders, true));
             $header = $this->renderPartial('header');
             $content = $this->renderPartial('content', [
                 'orders' => $orders,
-                'supplierId' => $supplierId
+                'supplierId' => $supplierId,
             ]);
             $this->printPdf($content, $header);
         } else {
@@ -329,6 +330,37 @@ class OrderController extends OrderMasterController {
 
         // return the pdf output as per the destination setting
         return $pdf->render();
+    }
+
+    public static function saveStoreProduct($orders, $supplierId) {
+        foreach ($supplierId as $suppId):
+            $storeProductGroup = new \common\models\costfit\StoreProductGroup();
+            $storeProductGroup->supplierId = $suppId;
+            // $storeProductGroup->receiveDate = $receiveDate;
+            $storeProductGroup->poNo = \common\models\costfit\StoreProductGroup::genPoNo();
+            $storeProductGroup->summary = \common\models\costfit\OrderItem::summarySupplier($suppId, $orders);
+            $storeProductGroup->createDateTime = new \yii\db\Expression('NOW()');
+            $storeProductGroup->updateDateTime = new \yii\db\Expression('NOW()');
+            //$storeProductGroup->save(false);
+            $lastStoreProductGroupId = Yii::$app->db->getLastInsertID();
+            $productSuppId = \common\models\costfit\OrderItem::supplierItems($suppId, $orders);
+            //throw new \yii\base\Exception(print_r($productSuppId, true));
+            foreach ($productSuppId as $pSuppId):
+                $storeProducts = new \common\models\costfit\StoreProduct();
+                $storeProducts->storeProductGroupId = $lastStoreProductGroupId;
+                $storeProduct->productSuppId = $pSuppId;
+                $storeProduct->productId = \common\models\costfit\ProductSuppliers::productSuppliersId($productSuppId);
+                //throw new \yii\base\Exception($storeProduct->productId);
+                $storeProduct->storeId = 1;
+                $storeProduct->paletNo = 1;
+                $storeProduct->quantity = \common\models\costfit\OrderItem::totalSupplierItem($suppId, $pSuppId, $orders);
+                $storeProduct->price = \common\models\costfit\ProductSuppliers::productPriceSupplier($pSuppId);
+                $storeProduct->total = $storeProduct->price * $storeProduct->quantity;
+                $storeProduct->createDateTime = new \yii\db\Expression('NOW()');
+                $storeProduct->updateDateTime = new \yii\db\Expression('NOW()');
+                $storeProduct->save(false);
+            endforeach;
+        endforeach;
     }
 
 }

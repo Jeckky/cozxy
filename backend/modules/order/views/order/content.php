@@ -21,7 +21,8 @@ foreach ($supplierId as $suppId):
         <div style="width: 45%;border:solid 0.5px #000000;-webkit-border-radius:10px;
              -moz-border-radius:10px;
              border-radius:10px;padding-left: 10px;margin-left: 360px;margin-top: -86px;">
-            เลขที่ใบสั่งซื้อ / PO No :......................<br>
+             <?php $po = \common\models\costfit\StoreProductGroup::genPoNo(); ?>
+            เลขที่ใบสั่งซื้อ / PO No : <?= $po ?><br>
             วันที่ / Date : <b><?= date('d/m/Y') ?></b><br>
             <br>
             ระยะเวลาที่ชำระเงิน/ Credit Term : <b>30 วันนับจากวันวางบิล</b>
