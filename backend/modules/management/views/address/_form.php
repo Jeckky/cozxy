@@ -60,8 +60,9 @@ use yii\helpers\Url;
                 'class' => 'required'
             ],
         ])->label('จังหวัด'); //->label('ProvinceId');
-        //echo $form->field($model, 'provinceId')->dropDownList($catList, ['id' => 'cat-id']);
         // Child level 2
+        echo Html::hiddenInput('input-type-1', $model->amphurId, ['id' => 'input-type-1']);
+        echo Html::hiddenInput('input-type-2', 'Additional value 2', ['id' => 'input-type-2']);
         echo $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
             'options' => ['placeholder' => 'Select ...', 'id' => 'subcat-id'],
             'type' => DepDrop::TYPE_SELECT2,
@@ -71,10 +72,14 @@ use yii\helpers\Url;
                 'depends' => ['cat-id'],
                 'url' => Url::to(['child-amphur-address']),
                 'loadingText' => 'Loading amphur ...',
+                'params' => ['input-type-1', 'input-type-2']
             ]
         ])->label('อำเภอ/เขต');
 
+
         // Child level 3
+        echo Html::hiddenInput('input-type-3', $model->districtId, ['id' => 'input-type-3']);
+        echo Html::hiddenInput('input-type-4', 'Additional value 2', ['id' => 'input-type-4']);
         echo $form->field($model, 'districtId')->widget(DepDrop::classname(), [
             'options' => ['placeholder' => 'Select ...', 'id' => 'subsubcat-id'],
             'type' => DepDrop::TYPE_SELECT2,
@@ -84,6 +89,7 @@ use yii\helpers\Url;
                 'depends' => ['subcat-id'],
                 'url' => Url::to(['child-district-address']),
                 'loadingText' => 'Loading amphur ...',
+                'params' => ['input-type-3', 'input-type-4']
             ]
         ])->label('ตำบล/แขวง');
         ?>

@@ -25,40 +25,13 @@ class LockersController extends LockersMasterController {
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['index', 'create', 'update', 'view', 'lockers'],
-                'ruleConfig' => [
-                    'class' => AccessRule::className() // เรียกใช้งาน accessRule (component) ที่เราสร้างขึ้นใหม่
-                ],
+                'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
+// allow authenticated users
                     [
-                        'actions' => ['index'], // กำหนด rules ให้ actionIndex()
                         'allow' => true,
-                        'roles' => ['@'
-                        //User::ROLE_Administrator, // อนุญาตให้ "ผู้ใช้งาน / สมาชิก" ใช้งานได้
-                        //User::ROLE_Lockers
-                        // User::ROLE_SuperAdministrator, // อนุญาตให้ "พนักงาน" ใช้งานได้
-                        // User::ROLE_SuperAdministrator, // อนุญาตให้ "พนักงาน" ใช้งานได้
-                        ]
+                        'roles' => ['@'],
                     ],
-                    [
-                        'actions' => ['create'], // กำหนด rules ให้ actionCreate()
-                        'allow' => true,
-                        'roles' => ['@'
-                        //User::ROLE_Administrator, // อนุญาตให้ "ผู้ใช้งาน / สมาชิก" ใช้งานได้
-                        ]
-                    ],
-                    [
-                        'actions' => ['view'], // กำหนด rules ให้ actionView()
-                        'allow' => true,
-                        'roles' => ['@'
-                        // User::ROLE_Administrator, // อนุญาตให้ "ผู้ใช้งาน / สมาชิก" ใช้งานได้
-                        ]
-                    ]
-                // allow authenticated users
-                //[
-                //'allow' => true,
-                //'roles' => ['@'],
-                //],
                 // everything else is denied
                 ],
             ],
