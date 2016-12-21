@@ -55,12 +55,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             $province = isset($model->state) ? $model->state->localName : NULL;
                             $amphur = isset($model->citie) ? $model->citie->localName : NULL;
                             $districtId = isset($model->district) ? $model->district->localName : NULL;
-                            return '- ' . $address . ''
-                            . '- ประเทศ' . $countryId . '<br>'
-                            . '- ' . $province . '<br>'
-                            . '- ' . $amphur . '<br>'
-                            . '- ' . $districtId . '<br>'
-                            . '- รหัสไปรษณีย์ ' . $model->zipcode . '<br>';
+                            return '<i class="fa fa-home"></i> ' . $address . '<br>'
+                            . '&nbsp;<i class="fa fa-dot-circle-o"></i> ประเทศ' . $countryId . '<br>'
+                            . '&nbsp;<i class="fa fa-dot-circle-o"></i>  ' . $province . '<br>'
+                            . '&nbsp;<i class="fa fa-dot-circle-o"></i>  ' . $amphur . '<br>'
+                            . '&nbsp;<i class="fa fa-dot-circle-o"></i>  ' . $districtId . '<br>'
+                            . '&nbsp;<i class="fa fa-dot-circle-o"></i>  รหัสไปรษณีย์ ' . $model->zipcode . '<br>';
                         }
                     ],
                     //'zipcode',

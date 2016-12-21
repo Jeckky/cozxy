@@ -105,8 +105,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 ]);
                             },
                             'address' => function ($url, $model) {
-                                return Html::a('<i class="fa fa-pencil"></i> สถานที่', Yii::$app->homeUrl . "management/address/?userId=" . $model->userId, [
-                                    'title' => Yii::t('app', 'สถานที่'), 'class' => 'text-center']);
+                                if ($model->type == 4) {
+                                    return Html::a('<i class="fa fa-pencil"></i> สถานที่', Yii::$app->homeUrl . "management/address/?userId=" . $model->userId, [
+                                        'title' => Yii::t('app', 'สถานที่'), 'class' => 'text-center']);
+                                }
                             },
                             'update' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-pencil"></i>', $url, [

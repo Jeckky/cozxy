@@ -41,44 +41,56 @@ use yii\helpers\Url;
     <div class="panel-body">
         <?= $form->errorSummary($model) ?>
 
-        <?= $form->field($model, 'company', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
+        <?= $form->field($model, 'company', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200])->label('ชื่อบริษัท ') ?>
 
-        <?= $form->field($model, 'tax', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 45]) ?>
+        <?= $form->field($model, 'tax', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 45])->label('เลขประจำตัวผู้เสียภาษี ') ?>
 
-        <?= $form->field($model, 'address', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => true])->textArea(['rows' => '6']) ?>
+        <?= $form->field($model, 'address', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => true])->textArea(['rows' => '6'])->label('สถานที่ ') ?>
 
         <?php
-        $catList = yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'stateName');
-        echo $form->field($model, 'provinceId')->dropDownList($catList, ['id' => 'cat-id']);
-
+        // $catList = yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'stateName');
+        echo $form->field($model, 'provinceId')->widget(kartik\select2\Select2::classname(), [
+            'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->all(), 'stateId', 'localName'),
+            'pluginOptions' => [
+                'loadingText' => '-- Select Province --',
+            ],
+            'options' => [
+                'placeholder' => 'Select Province ...',
+                'id' => 'cat-id',
+                'class' => 'required'
+            ],
+        ])->label('จังหวัด'); //->label('ProvinceId');
+        //echo $form->field($model, 'provinceId')->dropDownList($catList, ['id' => 'cat-id']);
         // Child level 2
         echo $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
-            'options' => ['id' => 'subcat-id'],
+            'options' => ['placeholder' => 'Select ...', 'id' => 'subcat-id'],
+            'type' => DepDrop::TYPE_SELECT2,
             'select2Options' => ['pluginOptions' => ['allowClear' => true]],
             'pluginOptions' => [
                 'initialize' => true,
                 'depends' => ['cat-id'],
-                'placeholder' => 'Select...',
-                'url' => Url::to(['child-amphur-address'])
+                'url' => Url::to(['child-amphur-address']),
+                'loadingText' => 'Loading amphur ...',
             ]
-        ]);
+        ])->label('อำเภอ/เขต');
 
         // Child level 3
         echo $form->field($model, 'districtId')->widget(DepDrop::classname(), [
-            'options' => ['id' => 'subsubcat-id'],
+            'options' => ['placeholder' => 'Select ...', 'id' => 'subsubcat-id'],
+            'type' => DepDrop::TYPE_SELECT2,
             'select2Options' => ['pluginOptions' => ['allowClear' => true]],
             'pluginOptions' => [
                 'initialize' => true,
                 'depends' => ['subcat-id'],
-                'placeholder' => 'Select...',
-                'url' => Url::to(['child-district-address'])
+                'url' => Url::to(['child-district-address']),
+                'loadingText' => 'Loading amphur ...',
             ]
-        ]);
+        ])->label('ตำบล/แขวง');
         ?>
 
-        <?= $form->field($model, 'zipcode', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 10]) ?>
+        <?= $form->field($model, 'zipcode', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 10])->label('รหัสไปรษณีย์') ?>
 
-        <?= $form->field($model, 'fax', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 45]) ?>
+        <?= $form->field($model, 'fax', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 45])->label('เบอร์แฟกซ์') ?>
 
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
