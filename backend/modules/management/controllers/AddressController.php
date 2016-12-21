@@ -86,6 +86,9 @@ class AddressController extends ManagementMasterController {
         $model = $this->findModel($id);
         if (isset($_POST["Address"])) {
             $model->attributes = $_POST["Address"];
+            $model->districtId = isset($_POST["Address"]['districtId']) ? $_POST["Address"]['districtId'] : NULL;
+            $model->provinceId = isset($_POST["Address"]['provinceId']) ? $_POST["Address"]['provinceId'] : NULL;
+            $model->amphurId = isset($_POST["Address"]['amphurId']) ? $_POST["Address"]['amphurId'] : NULL;
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
                 return $this->redirect('/management/user');
