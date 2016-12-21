@@ -17,9 +17,7 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-    *
-            * @property Product $product
-    */
+*/
 class ProductPriceMaster extends \common\models\ModelMaster
 {
 /**
@@ -41,7 +39,6 @@ return [
             [['quantity', 'price', 'discountValue'], 'number'],
             [['description'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['productId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductMaster::className(), 'targetAttribute' => ['productId' => 'productId']],
         ];
 }
 
@@ -63,12 +60,4 @@ return [
     'updateDateTime' => Yii::t('product_price', 'Update Date Time'),
 ];
 }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getProduct()
-    {
-    return $this->hasOne(ProductMaster::className(), ['productId' => 'productId']);
-    }
 }

@@ -20,9 +20,7 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-    *
-            * @property PackageType $packageType
-    */
+*/
 class PackageMaster extends \common\models\ModelMaster
 {
 /**
@@ -46,7 +44,6 @@ return [
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 200],
             [['image'], 'string', 'max' => 255],
-            [['packageTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => PackageTypeMaster::className(), 'targetAttribute' => ['packageTypeId' => 'packageTypeId']],
         ];
 }
 
@@ -71,12 +68,4 @@ return [
     'updateDateTime' => Yii::t('package', 'Update Date Time'),
 ];
 }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getPackageType()
-    {
-    return $this->hasOne(PackageTypeMaster::className(), ['packageTypeId' => 'packageTypeId']);
-    }
 }

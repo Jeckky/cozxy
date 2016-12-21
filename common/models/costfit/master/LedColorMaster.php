@@ -7,8 +7,8 @@ use Yii;
 /**
 * This is the model class for table "led_color".
 *
-    * @property string $ledColorId
-    * @property string $ledColor
+    * @property integer $ledColorId
+    * @property integer $ledColor
     * @property string $htmlCode
     * @property integer $r
     * @property integer $g
@@ -34,9 +34,9 @@ public function rules()
 {
 return [
             [['ledColor', 'htmlCode'], 'required'],
-            [['r', 'g', 'b', 'status'], 'integer'],
+            [['ledColor', 'r', 'g', 'b', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['ledColor', 'htmlCode'], 'string', 'max' => 45],
+            [['htmlCode'], 'string', 'max' => 45],
         ];
 }
 

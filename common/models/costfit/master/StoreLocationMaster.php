@@ -9,13 +9,11 @@ use Yii;
 *
     * @property string $storeLocationId
     * @property string $storeId
-    * @property string $provinceId
+    * @property integer $provinceId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-    *
-            * @property Store $store
-    */
+*/
 class StoreLocationMaster extends \common\models\ModelMaster
 {
 /**
@@ -35,7 +33,6 @@ return [
             [['storeId', 'createDateTime'], 'required'],
             [['storeId', 'provinceId', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['storeId'], 'exist', 'skipOnError' => true, 'targetClass' => StoreMaster::className(), 'targetAttribute' => ['storeId' => 'storeId']],
         ];
 }
 
@@ -53,12 +50,4 @@ return [
     'updateDateTime' => Yii::t('store_location', 'Update Date Time'),
 ];
 }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getStore()
-    {
-    return $this->hasOne(StoreMaster::className(), ['storeId' => 'storeId']);
-    }
 }

@@ -9,7 +9,7 @@ use Yii;
 *
     * @property string $orderId
     * @property string $userId
-    * @property string $pickingId
+    * @property integer $pickingId
     * @property string $token
     * @property string $orderNo
     * @property string $invoiceNo
@@ -44,24 +44,20 @@ use Yii;
     * @property string $shippingZipcode
     * @property string $shippingTel
     * @property integer $paymentType
-    * @property string $couponId
+    * @property integer $couponId
     * @property integer $checkStep
     * @property string $note
     * @property string $paymentDateTime
     * @property integer $isSlowest
-    * @property string $color
-    * @property string $pickerId
+    * @property integer $color
+    * @property integer $pickerId
     * @property string $password
     * @property string $otp
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
     * @property string $email
-    *
-            * @property User $user
-            * @property OrderItem[] $orderItems
-            * @property StoreProductOrderItem[] $storeProductOrderItems
-    */
+*/
 class OrderMaster extends \common\models\ModelMaster
 {
 /**
@@ -89,7 +85,6 @@ return [
             [['billingZipcode', 'shippingZipcode'], 'string', 'max' => 10],
             [['password', 'otp'], 'string', 'max' => 255],
             [['email'], 'string', 'max' => 100],
-            [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => UserMaster::className(), 'targetAttribute' => ['userId' => 'userId']],
         ];
 }
 
@@ -151,28 +146,4 @@ return [
     'email' => Yii::t('order', 'Email'),
 ];
 }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getUser()
-    {
-    return $this->hasOne(UserMaster::className(), ['userId' => 'userId']);
-    }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getOrderItems()
-    {
-    return $this->hasMany(OrderItemMaster::className(), ['orderId' => 'orderId']);
-    }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getStoreProductOrderItems()
-    {
-    return $this->hasMany(StoreProductOrderItemMaster::className(), ['orderId' => 'orderId']);
-    }
 }

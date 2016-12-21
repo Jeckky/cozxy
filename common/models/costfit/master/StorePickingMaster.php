@@ -7,8 +7,8 @@ use Yii;
 /**
 * This is the model class for table "store_picking".
 *
-    * @property string $storePickingId
-    * @property string $pickerId
+    * @property integer $storePickingId
+    * @property integer $pickerId
     * @property string $orderId
     * @property integer $status
     * @property string $createDateTime

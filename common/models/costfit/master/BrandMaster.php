@@ -16,9 +16,7 @@ use Yii;
     * @property string $parentId
     * @property string $createDateTime
     * @property string $updateDateTime
-    *
-            * @property Product[] $products
-    */
+*/
 class BrandMaster extends \common\models\ModelMaster
 {
 /**
@@ -61,12 +59,4 @@ return [
     'updateDateTime' => Yii::t('brand', 'Update Date Time'),
 ];
 }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getProducts()
-    {
-    return $this->hasMany(ProductMaster::className(), ['brandId' => 'brandId']);
-    }
 }
