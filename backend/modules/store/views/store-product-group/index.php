@@ -18,7 +18,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-default">
         <div class="panel-heading"  style="background-color: #ccffcc;vertical-align: middle;">
-            <div class="pull-right" style="margin-top: 10px;"><?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> สร้างใบ PO', ['create'], ['class' => 'btn btn-primary btn-lg pull-right']) ?></div>
+            <div class="pull-right" style="margin-top: 10px;"><?//= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> สร้างใบ PO', ['create'], ['class' => 'btn btn-primary btn-lg pull-right']) ?></div>
             <span class="panel-title" style="vertical-align: middle;"><h3><?= $this->title ?>
 
                 </h3></span>
@@ -35,7 +35,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     'class' => 'table-light'
                 ],
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                        ['class' => 'yii\grid\SerialColumn'],
 //                    'storeProductGroupId',
                     [
                         'attribute' => 'supplierId',
@@ -44,20 +44,20 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         }
                     ],
                     'poNo',
-                    [
+                        [
                         'attribute' => 'receiveDate',
                         'value' => function($model) {
                             return (isset($model->receiveDate) && $model->receiveDate != '0000-00-00 00:00:00') ? $this->context->dateThai($model->receiveDate, 2) : NULL;
                         }
                     ],
-                    [
+                        [
                         'attribute' => 'noProduct',
                         'label' => 'No. Of Product',
                         'value' => function($model) {
                             return count($model->storeProducts);
                         }
                     ],
-                    [
+                        [
                         'attribute' => 'summary',
                         'value' => function($model) {
                             return number_format($model->summary);
@@ -73,32 +73,32 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-eye"></i>', $url, [
-                                    'title' => Yii::t('yii', 'view'),
+                                            'title' => Yii::t('yii', 'view'),
                                 ]);
                             },
                             'update' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-pencil"></i>', $url, [
-                                    'title' => Yii::t('yii', 'update'),
+                                            'title' => Yii::t('yii', 'update'),
                                 ]);
                             },
                             'delete' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-trash-o"></i>', $url, [
-                                    'title' => Yii::t('yii', 'Delete'),
-                                    'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
-                                    'data-method' => 'post',
+                                            'title' => Yii::t('yii', 'Delete'),
+                                            'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+                                            'data-method' => 'post',
                                 ]);
                             },
                             'product' => function($url, $model) {
                                 return Html::a('<br><u>Product</u>', ['/store/store-product', 'storeProductGroupId' => $model->storeProductGroupId], [
-                                    'title' => Yii::t('app', 'Change today\'s lists'),]);
+                                            'title' => Yii::t('app', 'Change today\'s lists'),]);
                             },
                             'qc' => function($url, $model) {
                                 return Html::a('<br><u>ตรวจรับ</u>', ['/store/store-product/check', 'storeProductGroupId' => $model->storeProductGroupId], [
-                                    'title' => Yii::t('app', 'check\'s lists'),]);
+                                            'title' => Yii::t('app', 'check\'s lists'),]);
                             },
                             'arrange' => function($url, $model) {
                                 return Html::a('<br><u>จัดเรียง</u>', ['/store/store-product/arrange', 'storeProductGroupId' => $model->storeProductGroupId], [
-                                    'title' => Yii::t('app', 'check\'s lists'),]);
+                                            'title' => Yii::t('app', 'check\'s lists'),]);
                             },
                         ]
                     ],
@@ -115,8 +115,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
             <div class="row">
                 <?php
                 $form = ActiveForm::begin([
-                    'method' => 'GET',
-                    'action' => ['index'],
+                            'method' => 'GET',
+                            'action' => ['index'],
                 ]);
                 ?>
                 <div class="col-lg-3">

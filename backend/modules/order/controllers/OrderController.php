@@ -336,29 +336,26 @@ class OrderController extends OrderMasterController {
         foreach ($supplierId as $suppId):
             $storeProductGroup = new \common\models\costfit\StoreProductGroup();
             $storeProductGroup->supplierId = $suppId;
-            // $storeProductGroup->receiveDate = $receiveDate;
             $storeProductGroup->poNo = \common\models\costfit\StoreProductGroup::genPoNo();
             $storeProductGroup->summary = \common\models\costfit\OrderItem::summarySupplier($suppId, $orders);
             $storeProductGroup->createDateTime = new \yii\db\Expression('NOW()');
             $storeProductGroup->updateDateTime = new \yii\db\Expression('NOW()');
-            //$storeProductGroup->save(false);
+            $storeProductGroup->save(false);
             $lastStoreProductGroupId = Yii::$app->db->getLastInsertID();
             $productSuppId = \common\models\costfit\OrderItem::supplierItems($suppId, $orders);
-            //throw new \yii\base\Exception(print_r($productSuppId, true));
             foreach ($productSuppId as $pSuppId):
                 $storeProducts = new \common\models\costfit\StoreProduct();
                 $storeProducts->storeProductGroupId = $lastStoreProductGroupId;
-                $storeProduct->productSuppId = $pSuppId;
-                $storeProduct->productId = \common\models\costfit\ProductSuppliers::productSuppliersId($productSuppId);
-                //throw new \yii\base\Exception($storeProduct->productId);
-                $storeProduct->storeId = 1;
-                $storeProduct->paletNo = 1;
-                $storeProduct->quantity = \common\models\costfit\OrderItem::totalSupplierItem($suppId, $pSuppId, $orders);
-                $storeProduct->price = \common\models\costfit\ProductSuppliers::productPriceSupplier($pSuppId);
-                $storeProduct->total = $storeProduct->price * $storeProduct->quantity;
-                $storeProduct->createDateTime = new \yii\db\Expression('NOW()');
-                $storeProduct->updateDateTime = new \yii\db\Expression('NOW()');
-                $storeProduct->save(false);
+                $storeProducts->productSuppId = $pSuppId;
+                $storeProducts->productId = \common\models\costfit\ProductSuppliers::productSupplierName($pSuppId)->productId;
+                $storeProducts->storeId = 1;
+                $storeProducts->paletNo = 1;
+                $storeProducts->quantity = \common\models\costfit\OrderItem::totalSupplierItem($suppId, $pSuppId, $orders);
+                $storeProducts->price = \common\models\costfit\ProductSuppliers::productPriceSupplier($pSuppId);
+                $storeProducts->total = $storeProducts->price * $storeProducts->quantity;
+                $storeProducts->createDateTime = new \yii\db\Expression('NOW()');
+                $storeProducts->updateDateTime = new \yii\db\Expression('NOW()');
+                $storeProducts->save(false);
             endforeach;
         endforeach;
     }

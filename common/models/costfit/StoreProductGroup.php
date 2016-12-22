@@ -96,6 +96,10 @@ class StoreProductGroup extends \common\models\costfit\master\StoreProductGroupM
         return $this->hasOne(Supplier::className(), ['supplierId' => 'supplierId']);
     }
 
+    public function getSupplierAddress() {
+        return $this->hasOne(Address::className(), ['userId' => 'supplierId']);
+    }
+
     public function getStoreProducts() {
         return $this->hasMany(StoreProduct::className(), ['storeProductGroupId' => 'storeProductGroupId'])->orderBy("status");
     }

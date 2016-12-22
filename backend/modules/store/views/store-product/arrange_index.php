@@ -52,14 +52,22 @@ foreach ($allProducts as $product):
         if (isset($allProducts) && !empty($allProducts)) {
             $i = 1;
             foreach ($allProducts as $product):
+                $suppProduct = \common\models\costfit\ProductSuppliers::productSupplierName($product);
                 ?>
                 <tr>
                     <td style="vertical-align: middle;text-align: center;width: 5%;"><?= $i ?></td>
-                    <td style="vertical-align: middle;text-align: center;width: 35%;"><?= \common\models\costfit\Product::findProductName($product) ?></td>
-                    <td style="vertical-align: middle;text-align: center;width: 20%;"><?= \common\models\costfit\Product::findProductIsbn($product) ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 35%;"><?= $suppProduct->title ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 20%;"><?= $suppProduct->isbn ?></td>
                     <td style="vertical-align: middle;text-align: center;width: 20%;"><?= \common\models\costfit\StoreProduct::quantity($product, $chooseStoreProductGroup) ?></td>
                     <td style="vertical-align: middle;text-align: center;width: 20%;"><?= \common\models\costfit\StoreProduct::createStatus($product, $chooseStoreProductGroup) ?></td>
                 </tr>
+        <!--                <tr>
+                    <td style="vertical-align: middle;text-align: center;width: 5%;"><?//= $i ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 35%;"><?//= \common\models\costfit\Product::findProductName($product) ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 20%;"><?//= \common\models\costfit\Product::findProductIsbn($product) ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 20%;"><?//= \common\models\costfit\StoreProduct::quantity($product, $chooseStoreProductGroup) ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 20%;"><?//= \common\models\costfit\StoreProduct::createStatus($product, $chooseStoreProductGroup) ?></td>
+                </tr>-->
                 <?php
                 $i++;
             endforeach;

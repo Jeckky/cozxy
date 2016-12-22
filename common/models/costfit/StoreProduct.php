@@ -365,7 +365,8 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
 
     public static function quantity($productId, $storeProductGroupId) {
         $sum = 0;
-        $storeProduct = StoreProduct::find()->where("productId=" . $productId . " and storeProductGroupId in (" . $storeProductGroupId . ")")->all();
+        //$storeProduct = StoreProduct::find()->where("productId=" . $productId . " and storeProductGroupId in (" . $storeProductGroupId . ")")->all();
+        $storeProduct = StoreProduct::find()->where("productSuppId=" . $productId . " and storeProductGroupId in (" . $storeProductGroupId . ")")->all();
         if (isset($storeProduct) && !empty($storeProduct)) {
             foreach ($storeProduct as $product):
                 $sum += $product->importQuantity;
@@ -380,7 +381,7 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
         $noSome = 0;
         $no = 0;
         $text = '';
-        $storeProduct = StoreProduct::find()->where("productId=" . $productId . " and storeProductGroupId in (" . $storeProductGroupId . ")")->all();
+        $storeProduct = StoreProduct::find()->where("productSuppId=" . $productId . " and storeProductGroupId in (" . $storeProductGroupId . ")")->all();
         foreach ($storeProduct as $product):
             if ($product->status == 4) {
                 $all++;

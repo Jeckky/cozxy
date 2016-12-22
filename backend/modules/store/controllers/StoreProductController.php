@@ -186,6 +186,7 @@ class StoreProductController extends StoreMasterController {
                 $this->checkPo($inPo->storeProductGroupId);
                 $model = StoreProductGroup::find()->where("storeProductGroupId='" . $inPo->storeProductGroupId . "'")->one();
             } else {
+                //throw new \yii\base\Exception($_POST["quantity"][$inPo->storeProductId]);
                 if (!empty($_POST["remark"][$inPo->storeProductId]) && !empty($_POST["quantity"][$inPo->storeProductId])) {
                     if ($_POST["quantity"][$inPo->storeProductId] + $inPo->importQuantity < $inPo->quantity) {
                         $inPo->importQuantity = $_POST["quantity"][$inPo->storeProductId] + $inPo->importQuantity;
@@ -207,6 +208,7 @@ class StoreProductController extends StoreMasterController {
                         $model = StoreProductGroup::find()->where("storeProductGroupId='" . $inPo->storeProductGroupId . "'")->one();
                     }
                 } else {
+                    // throw new \yii\base\Exception($inPo->storeProductId);
                     $msError = 'Empty import quantity or remark ';
                     $errorId = $inPo->storeProductId;
                     $model = StoreProductGroup::find()->where("storeProductGroupId='" . $inPo->storeProductGroupId . "'")->one();
@@ -288,7 +290,9 @@ class StoreProductController extends StoreMasterController {
         $checkPo = StoreProduct::find()->where("storeProductGroupId='" . $id . "' and status!=3")->all();
         if (count($checkPo) == 0) {
             $changePoStatus = StoreProductGroup::find()->where("storeProductGroupId='" . $id . "'")->one();
+            $changePoStatus->receiveDate = new \yii\db\Expression('NOW()');
             $changePoStatus->status = 2;
+            $changePoStatus->receiveBy = Yii::$app->user->identity->userId;
             $changePoStatus->save(FALSE);
             return $this->redirect(['store-product-group/index']);
         }
@@ -323,11 +327,22 @@ class StoreProductController extends StoreMasterController {
               ->join("LEFT JOIN", 'store_product sp', 'product.productId=sp.productId and sp.storeProductGroupId in (' . $_POST['storeProductGroupId'] . ') and (sp.status=5 or sp.status=3)')
               ->orderBy('sp.createDateTime ASC')
               ->all(); */
-            $isbn = \common\models\costfit\Product::find()->where("isbn='" . $_POST["StoreProduct"]['isbn'] . "'")->one();
-            if (isset($isbn) && !empty($isbn)) {
-                $products = StoreProduct::find()->where("productId=" . $isbn->productId . " and storeProductGroupId in (" . $_POST['storeProductGroupId'] . ") and status in (3,5)")->all();
+            //$isbn = \common\models\costfit\Product::find()->where("isbn='" . $_POST["StoreProduct"]['isbn'] . "'")->one();
+            $storeProductIds = StoreProduct::find()->where("storeProductGroupId in (" . $_POST['storeProductGroupId'] . ")")->all();
+            $suppId = '';
+            if (isset($storeProductIds) && !empty($storeProductIds)) {
+                foreach ($storeProductIds as $storeProductId):
+                    $suppId = $suppId . $storeProductId->productSuppId . ",";
+                endforeach;
+                $suppId = substr($suppId, 0, -1);
             }
-            //throw new \yii\base\Exception($_POST['storeProductGroupId']);
+            // throw new \yii\base\Exception(print_r($storeProductIds, true));
+            $isbn = \common\models\costfit\ProductSuppliers::find()->where("isbn='" . $_POST["StoreProduct"]['isbn'] . "' and productSuppId in (" . $suppId . ")")->one();
+            if (isset($isbn) && !empty($isbn)) {
+                //$products = StoreProduct::find()->where("productId=" . $isbn->productId . " and storeProductGroupId in (" . $_POST['storeProductGroupId'] . ") and status in (3,5)")->all();
+                $products = StoreProduct::find()->where("productSuppId=" . $isbn->productSuppId . " and storeProductGroupId in (" . $_POST['storeProductGroupId'] . ") and status in (3,5)")->all();
+            }
+            //throw new \yii\base\Exception($isbn->productSuppId);
             if (isset($products) && !empty($products)) {
                 return $this->render('arrange', [
                             'model' => $products,
@@ -477,7 +492,8 @@ class StoreProductController extends StoreMasterController {
                     $check = false;
                     $check = $this->checkDupProduct($pro->productId, $product);
                     if ($check == true) {
-                        $product[$i] = $pro->productId;
+                        //$product[$i] = $pro->productId;//เปลี่ยนเป็นใช้ ProductSuppId
+                        $product[$i] = $pro->productSuppId;
                         $i++;
                     }
                 endforeach;

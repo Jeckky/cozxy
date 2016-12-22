@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use common\models\costfit\StoreProductGroup;
 
 Pjax::begin(['id' => 'employee-grid-view']);
 ?>
@@ -11,7 +12,7 @@ Pjax::begin(['id' => 'employee-grid-view']);
     <div class="panel-heading">
         <div class="row">
             <div class="col-md-6">PO No. <?= $model->poNo ?></div>
-            <div class="col-md-6 text-right">Supplier : <?= $model->supplierName->name; ?></div>
+            <div class="col-md-6 text-right">Supplier : <?= $model->supplierAddress->company; ?></div>
         </div>
     </div>
     <div class="panel-body">
@@ -36,6 +37,7 @@ Pjax::begin(['id' => 'employee-grid-view']);
                 <?php
                 $i = 1;
                 foreach ($model->storeProducts as $product):
+                    //throw new \yii\base\Exception($product->products->units);
                     $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data'],
                                 'method' => 'POST',
                                 'action' => ['store-product/check']]);
@@ -43,11 +45,11 @@ Pjax::begin(['id' => 'employee-grid-view']);
 
                     <tr>
                         <td><center><?php echo $i; ?></center></td>
-                <td><center><?php echo $product->products->title; ?></center><br><br>
-                <?= isset($product->products) ? Html::img(Yii::$app->homeUrl . $product->products->images->image, ['style' => 'width:150px', 'class' => 'col-lg-offset-3']) : NULL ?>
+                <td><center><?= isset($product->products->title) ? $product->products->title : '' ?></center><br><br>
+                <?= isset($product->products->images->image) ? Html::img(Yii::$app->homeUrl . $product->products->images->image, ['style' => 'width:150px', 'class' => 'col-lg-offset-3']) : Html::img(Yii::$app->homeUrl . "images/ContentGroup/DUHWYsdXVc.png", ['style' => 'width:150px', 'class' => 'col-lg-offset-3']) ?>
                 </td>
                 <td><center><?php echo $product->quantity; ?></center></td>
-                <td><center><?php echo $product->products->units->title; ?></center></td>
+                <td><center><?= isset($product->products->units->title) ? $product->products->units->title : '' ?></center></td>
                 <td class="text-right"><?php echo number_format($product->price, 2); ?></td>
                 <td class="text-right"><?php echo number_format($product->price * $product->quantity, 2); ?></td>
                 <td><center>
