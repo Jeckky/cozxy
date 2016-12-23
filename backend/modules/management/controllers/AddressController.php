@@ -68,7 +68,7 @@ class AddressController extends ManagementMasterController {
             $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
                 //return $this->redirect(['index']);.
-                return $this->redirect('/management/user');
+                return $this->redirect(Yii::$app->homeUrl . 'management/user');
             }
         }
         return $this->render('create', [
@@ -91,7 +91,7 @@ class AddressController extends ManagementMasterController {
             $model->amphurId = isset($_POST["Address"]['amphurId']) ? $_POST["Address"]['amphurId'] : NULL;
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
-                return $this->redirect('/management/user');
+                return $this->redirect(Yii::$app->homeUrl . 'management/user');
             }
         }
         return $this->render('update', [
@@ -108,7 +108,7 @@ class AddressController extends ManagementMasterController {
     public function actionDelete($id) {
         $this->findModel($id)->delete();
 
-        return $this->redirect('/management/user');
+        return $this->redirect(Yii::$app->homeUrl . 'management/user');
     }
 
     /**

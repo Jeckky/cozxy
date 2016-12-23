@@ -124,7 +124,7 @@ class UserController extends ManagementMasterController {
                 $model->createDateTime = new \yii\db\Expression("NOW()");
                 if ($model->save(FALSE)) {
                     //return $this->redirect(['index']);
-                    return $this->redirect('/management/address/create?userId=' . $model->userId);
+                    return $this->redirect(Yii::$app->homeUrl . 'management/address/create?userId=' . $model->userId);
                 }
             }
         }
