@@ -217,6 +217,9 @@ class Product extends \common\models\costfit\master\ProductMaster {
                 }
             endforeach;
             // throw new \yii\base\Exception(print_r($shippingType, true));
+        } else {
+            $fastDate = 5;
+            $fastId = 5;
         }
         $minDate = '99';
         if (isset($fastId)) {

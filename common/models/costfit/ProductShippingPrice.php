@@ -103,13 +103,25 @@ class ProductShippingPrice extends \common\models\costfit\master\ProductShipping
                 $res["discount"] = $shippingDisCount->discount;
             } else {
                 $shippingDisCount = ProductShippingPrice::find()->where("productId=" . $productId)->orderBy("date DESC")->one();
-                $res["type"] = $shippingDisCount->type;
-                $res["discount"] = $shippingDisCount->discount;
+                if (isset($shippingDisCount) && !empty($shippingDisCount)) {
+                    $res["type"] = $shippingDisCount->type;
+                    $res["discount"] = $shippingDisCount->discount;
+                } else {
+                    $res["type"] = 1;
+                    $res["discount"] = 0;
+                }
             }
         } else {
             $shippingDisCount = ProductShippingPrice::find()->where("productId=" . $productId)->orderBy("date DESC")->one();
-            $res["type"] = $shippingDisCount->type;
-            $res["discount"] = $shippingDisCount->discount;
+            //$res["type"] = $shippingDisCount->type;
+            //$res["discount"] = $shippingDisCount->discount;
+            if (isset($shippingDisCount) && !empty($shippingDisCount)) {
+                $res["type"] = $shippingDisCount->type;
+                $res["discount"] = $shippingDisCount->discount;
+            } else {
+                $res["type"] = 1;
+                $res["discount"] = 0;
+            }
         }
         //throw new \yii\base\Exception(print_r($res, true));
         return $res;

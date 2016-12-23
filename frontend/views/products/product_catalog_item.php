@@ -133,18 +133,23 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div id="unchoose" class="col-sm-11 text-left " style="padding: 0px; margin-left: 0px; margin-top: 18px;text-decoration: line-through;color:#bbb;display: none;">
                 &nbsp;ส่งสินค้าภายใน <?php echo Product::getShippingDate($model->productId, 1); ?> วัน
             </div>
-            <div class="form-group  col-lg-12" style="margin-bottom: 5px;">
-                <div class="checkbox">
-                    <label style="color: red;">
-                        <input type="checkbox" id="lateShippingCheck" name="lateShippingCheck">  ต้องการส่งสินค้าราคาประหยัดอีก
-                        <?php
-                        $productPrice = $model->calProductPrice($productSupplierId, 1, 1, 2);
-//                        throw new \yii\base\Exception(print_r($productPrice, true));
-                        echo $productPrice["shippingDiscountValue"];
-                        ?>  บาท (ส่งภายใน <?php echo Product::getShippingDate($model->productId, 2); ?> วัน)
-                    </label>
+            <?php
+            $default = Product::getShippingDate($model->productId, 1);
+            $fast = Product::getShippingDate($model->productId, 2);
+            if ($fast != $default) {
+                ?>
+                <div class="form-group  col-lg-12" style="margin-bottom: 5px;">
+                    <div class="checkbox">
+                        <label style="color: red;">
+                            <input type="checkbox" id="lateShippingCheck" name="lateShippingCheck">  ต้องการส่งสินค้าราคาประหยัดอีก
+                            <?php
+                            $productPrice = $model->calProductPrice($productSupplierId, 1, 1, 2);
+                            echo $productPrice["shippingDiscountValue"];
+                            ?>  บาท (ส่งภายใน <?php echo Product::getShippingDate($model->productId, 2); ?> วัน)
+                        </label>
+                    </div>
                 </div>
-            </div>
+            <?php } ?>
         </div>
     </div>
     <div class="buttons group">

@@ -43,7 +43,7 @@ class SearchController extends MasterController {
         //$whereArray["product_price.quantity"] = 1;
         //$whereArray["pps.status"] = 1;
         $products = \common\models\costfit\CategoryToProduct::find()
-                ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+                ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId ")
                 //->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
                 //->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
 //->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = category_to_product.productId")
