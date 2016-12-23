@@ -127,6 +127,7 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
             $model->storeProductId = $storeProductId;
             $model->slotId = $slotId;
             $model->productId = $storeProduct->productId;
+            $model->productSuppId = $storeProduct->productSuppId;
             if ($quantity > $storeProduct->importQuantity) {//ของที่เอามาจัดเรียงมากกว่าของที่ตรวจรับ ?
                 $pushQuan = $storeProduct->importQuantity; //ของที่จัดเรียง = จำนวนที่นำมาจัดเรียง - จำนวนของที่ตรวจรับ
                 $isHave = StoreProductArrange::find()->where("storeProductId =" . $storeProductId)->all();
@@ -238,7 +239,8 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
             //$someQuanNew = 0;
             //throw new \yii\base\Exception($someQuan);
             while ($someQuan > 0) { //ถ้าส่วนที่เกินจาก ที่รับเข้า ยังมากกว่า 0 ทำ
-                $otherStoreProduct = StoreProduct::find()->where("productId =" . $storeProduct->productId . " and status=3")->orderBy("createDateTime ASC")->one(); // หาจาก store_product ที่ productId จากตัวที่ เวลาสร้างน้อยสุด(ตรวจรบครบแล้วแแต่ยังไม่มีการดึงมาจัดเรียง)
+                //$otherStoreProduct = StoreProduct::find()->where("productId =" . $storeProduct->productId . " and status=3")->orderBy("createDateTime ASC")->one(); // หาจาก store_product ที่ productId จากตัวที่ เวลาสร้างน้อยสุด(ตรวจรบครบแล้วแแต่ยังไม่มีการดึงมาจัดเรียง)
+                $otherStoreProduct = StoreProduct::find()->where("productSuppId =" . $storeProduct->productSuppId . " and status=3")->orderBy("createDateTime ASC")->one(); // หาจาก store_product ที่ productId จากตัวที่ เวลาสร้างน้อยสุด(ตรวจรบครบแล้วแแต่ยังไม่มีการดึงมาจัดเรียง)
 //                $modelNew = new StoreProductArrange();
 //                $modelNew->storeProductId = $storeProductId;
 //                $modelNew->slotId = $slotId;
@@ -278,7 +280,8 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
         $total = 0;
         $storeProducts = StoreProduct::find()->where("storeProductId=" . $storeProductId)->one();
         if (isset($storeProducts) && !empty($storeProducts)) {
-            $arranges = StoreProductArrange::find()->where("productId=" . $storeProducts->productId . " and storeProductId=" . $storeProductId)->all();
+            $arranges = StoreProductArrange::find()->where("productSuppId=" . $storeProducts->productSuppId . " and storeProductId=" . $storeProductId)->all();
+            // $arranges = StoreProductArrange::find()->where("productId=" . $storeProducts->productId . " and storeProductId=" . $storeProductId)->all();
             if (isset($arranges) && !empty($arranges)) {
                 foreach ($arranges as $arrange):
                     $total += $arrange->quantity;
@@ -316,7 +319,8 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
         $total = 0;
         $storeProducts = StoreProduct::find()->where("storeProductId=" . $storeProductId)->one();
         if (isset($storeProducts) && !empty($storeProducts)) {
-            $arranges = StoreProductArrange::find()->where("productId=" . $storeProducts->productId)->all();
+            //$arranges = StoreProductArrange::find()->where("productId=" . $storeProducts->productId)->all();
+            $arranges = StoreProductArrange::find()->where("productSuppId=" . $storeProducts->productSuppId)->all();
             if (isset($arranges) && !empty($arranges)) {
                 foreach ($arranges as $arrange):
                     $total += $arrange->quantity;
@@ -352,6 +356,7 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
                 }
                 $model->storeProductId = $storeProductId;
                 $model->productId = $storeProducts->productId;
+                $model->productSuppId = $storeProducts->productSuppId;
                 $model->slotId = $slotId;
                 $model->updateDateTime = new \yii\db\Expression('NOW()');
                 $model->save(false);

@@ -96,7 +96,8 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster {
     }
 
     public static function findOrderItems($orderId, $productId) {
-        $items = OrderItem::find()->where("orderId=" . $orderId . " and productId=" . $productId . " and status<=5")->one();
+        //$items = OrderItem::find()->where("orderId=" . $orderId . " and productId=" . $productId . " and status<=5")->one();
+        $items = OrderItem::find()->where("orderId=" . $orderId . " and productSuppId=" . $productId . " and status<=5")->one();
         if (isset($items)) {
             return $items;
         } else {

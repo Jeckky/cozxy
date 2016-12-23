@@ -30,9 +30,9 @@ foreach ($orders as $order) {
         foreach ($items as $item):
             echo '<tr>';
             echo '<td><center>' . $i . '</center></td>';
-            echo '<td><center>' . common\models\costfit\Product::findProductName($item->productId) . '</center></td>';
+            echo '<td><center>' . common\models\costfit\Product::findProductName($item->productSuppId) . '</center></td>';
             echo '<td style="text-align: right;">' . $item->quantity . '</td>';
-            echo '<td><center>' . common\models\costfit\Product::findUnit($item->productId) . '</center></td>';
+            echo '<td><center>' . common\models\costfit\Product::findUnit($item->productSuppId) . '</center></td>';
             echo '<td><center>' . substr($item->sendDateTime, 0, 10) . '</center></td>';
             echo '</tr>';
             $i++;

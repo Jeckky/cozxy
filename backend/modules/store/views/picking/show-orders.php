@@ -27,7 +27,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <?=
                     Html::a('<i class="fa fa-print" aria-hidden="true"></i> Print Order', ['print-order',
                         'order' => $allOrderId
-                    ], ['class' => 'btn btn-sm btn-success', 'target' => '_blank']);
+                            ], ['class' => 'btn btn-sm btn-success', 'target' => '_blank']);
                     ?>
                 </div>
             </div>
@@ -36,8 +36,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
     <div class="panel-body">
         <?php
         $form = ActiveForm::begin([
-            'method' => 'GET',
-            'action' => ['picking/index'],
+                    'method' => 'GET',
+                    'action' => ['picking/index'],
         ]);
         foreach ($selection as $select):
             echo '<input type="hidden" name="selection[]" value="' . $select . '">';
@@ -82,6 +82,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <?php
                     // throw new \yii\base\Exception(print_r($allOrderId, true));
                     $product = common\models\costfit\StoreProductArrange::findItems($slot, $allOrderId);
+                    //throw new \yii\base\Exception(print_r($product, true));
                     $couuntProduct = 0;
                     $a = 0;
                     $total = 0;
@@ -89,48 +90,49 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     $oldOrderId = '';
                     if (isset($product) && !empty($product)) {
                         foreach ($product as $productId):
-                            $item = common\models\costfit\OrderItem::findOrderItems($productId->orderId, $productId->productId);
-
+                            //$item = common\models\costfit\OrderItem::findOrderItems($productId->orderId, $productId->productId);
+                            $item = common\models\costfit\OrderItem::findOrderItems($productId->orderId, $productId->productSuppId);
                             if (isset($item) && !empty($item)) {
-                                if (($oldProductId != $productId->productId) || ($oldOrderId != $productId->orderId)) {
+                                if (($oldProductId != $productId->productSuppId) || ($oldOrderId != $productId->orderId)) {
                                     ?><tr>
                                         <td><?php echo $i; ?></td>
-                                        <td><?php echo Product::findProductName($productId->productId); ?></td>
-                                        <td><?php echo common\models\costfit\StoreProductArrange::sumQuantitiy($productId->productId, $productId->orderId, $slot); ?></td>
+                                        <td><?php echo Product::findProductName($productId->productSuppId); ?></td>
+                                        <td><?php echo common\models\costfit\StoreProductArrange::sumQuantitiy($productId->productSuppId, $productId->orderId, $slot); ?></td>
                                         <td><?php echo Order::findOrderNo($productId->orderId); ?></td>
                                         <td><?=
                                             ($productId->status == 99) ?
-                                            Html::a('<i aria-hidden="true"></i> หยิบ', ['pick-item',
-                                                'arrangeId' => $productId->storeProductArrangeId,
-                                                'orderId' => $item->orderId,
-                                                'orderItemId' => $item->orderItemId,
-                                                'productId' => $item->productId,
-                                                'orderQuantity' => -($productId->quantity),
-                                                'slot' => $slot,
-                                                'arraySlots' => $slots,
-                                                'colorId' => $colorId,
-                                                'color' => $color,
-                                                'allOrderId' => $allOrderId,
-                                                'selection' => $selection
-                                            ], ['class' => 'btn btn-warning']) : Html::a('<i class="fa fa-check" aria-hidden="true"></i> หยิบแล้ว', ['pick-item'
-                                            ], ['class' => 'btn btn-defult', 'disabled' => true]);
+                                                    Html::a('<i aria-hidden="true"></i> หยิบ', ['pick-item',
+                                                        'arrangeId' => $productId->storeProductArrangeId,
+                                                        'orderId' => $item->orderId,
+                                                        'orderItemId' => $item->orderItemId,
+                                                        'productId' => $item->productSuppId,
+                                                        'productSuppId' => $item->productSuppId,
+                                                        'orderQuantity' => -($productId->quantity),
+                                                        'slot' => $slot,
+                                                        'arraySlots' => $slots,
+                                                        'colorId' => $colorId,
+                                                        'color' => $color,
+                                                        'allOrderId' => $allOrderId,
+                                                        'selection' => $selection
+                                                            ], ['class' => 'btn btn-warning']) : Html::a('<i class="fa fa-check" aria-hidden="true"></i> หยิบแล้ว', ['pick-item'
+                                                            ], ['class' => 'btn btn-defult', 'disabled' => true]);
                                             // throw new \yii\base\Exception($item->orderItemId);
                                             ?></td>
                                     </tr>
 
                                     <?php
                                 }
-                                $oldProductId = $productId->productId;
+                                $oldProductId = $productId->productSuppId;
                                 $oldOrderId = $productId->orderId;
                                 $checkId = \common\models\costfit\StoreProductArrange::checkProductId($a, $allOrderId, $slot);
                                 // $array[$a] = $productId->productId;
                                 // $a++;
                                 if ($checkId) {
 
-                                    $total = \common\models\costfit\StoreProductArrange::findProductInSlot($slot, $allOrderId, $productId->productId);
+                                    $total = \common\models\costfit\StoreProductArrange::findProductInSlot($slot, $allOrderId, $productId->productSuppId);
                                     ?>
                                     <tr style="background-color: #F5F5F5;">
-                                        <td colspan="2" class="text-right"><b>Total ( <?php echo Product::findProductName($item->productId); ?> )</b></td>
+                                        <td colspan="2" class="text-right"><b>Total ( <?php echo Product::findProductName($item->productSuppId); ?> )</b></td>
                                         <td><b><?php echo $total; ?></b></td>
                                         <td><b></b></td>
                                         <td><b></b></td>

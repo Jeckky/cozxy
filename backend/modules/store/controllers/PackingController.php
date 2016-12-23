@@ -21,7 +21,7 @@ class PackingController extends StoreMasterController {
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
                     // allow authenticated users
-                    [
+                        [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -45,9 +45,9 @@ class PackingController extends StoreMasterController {
             return $this->redirect($baseUrl . '/auth');
         }
         $query = \common\models\costfit\Order::find()
-        ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-        ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND (`order`.status = " . \common\models\costfit\Order::ORDER_STATUS_PICKED . " OR `order`.status =" . \common\models\costfit\Order::ORDER_STATUS_PACKED . " )")
-        ->orderBy("`order`.status ASC");
+                ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
+                ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND (`order`.status = " . \common\models\costfit\Order::ORDER_STATUS_PICKED . " OR `order`.status =" . \common\models\costfit\Order::ORDER_STATUS_PACKED . " )")
+                ->orderBy("`order`.status ASC");
 
         $ms = '';
         $dataProvider = new ActiveDataProvider([
@@ -57,18 +57,18 @@ class PackingController extends StoreMasterController {
             $order = \common\models\costfit\Order::find()->where("orderNo='" . $_GET['orderNo'] . "' and status=12")->one();
             if (isset($order) && !empty($order)) {
                 return $this->render('show-orders', [
-                    'orderId' => $order->orderId,
+                            'orderId' => $order->orderId,
                 ]);
             } else {
                 $ms = 'ไม่พบออร์เดอร์นี้ หรือ ออร์เดอร์นี้ถูกแพ็คแล้ว';
                 return $this->render('index', [
-                    'dataProvider' => $dataProvider,
-                    'ms' => $ms
+                            'dataProvider' => $dataProvider,
+                            'ms' => $ms
                 ]);
             }
         } else {
             return $this->render('index', [
-                'dataProvider' => $dataProvider,
+                        'dataProvider' => $dataProvider,
             ]);
         }
     }
@@ -78,16 +78,17 @@ class PackingController extends StoreMasterController {
         $save = false;
         if (isset($_GET['item'])) {
             $order = \common\models\costfit\Order::find()->where("orderId=" . $_GET['orderId'])->one();
-            $productId = \common\models\costfit\Product::findProductId($_GET['item']);
+            $productId = \common\models\costfit\Product::findProductSuppId($_GET['item'], $_GET['orderId']);
             if (isset($order)) {
                 if (isset($productId) && !empty($productId)) {
-                    $items = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId . " and productId=" . $productId . " and status=" . \common\models\costfit\OrderItem::ORDERITEM_PICKED)->one();
+                    //$items = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId . " and productId=" . $productId . " and status=" . \common\models\costfit\OrderItem::ORDERITEM_PICKED)->one();
+                    $items = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId . " and productSuppId=" . $productId . " and status=" . \common\models\costfit\OrderItem::ORDERITEM_PICKED)->one();
                     if (isset($items) && !empty($items)) {
                         $packingItems = \common\models\costfit\OrderItemPacking::find()->where("orderItemId=" . $items->orderItemId . " and status=99")->one();
                         if (isset($packingItems)) {
                             $save = $this->checkSum($items->orderItemId, $items->quantity);
                             if ($save == true) {
-                                $packingItems->quantity+=1;
+                                $packingItems->quantity += 1;
                                 $packingItems->updateDateTime = new \yii\db\Expression('NOW()');
                                 $packingItems->save(false);
                             } else {
@@ -117,8 +118,8 @@ class PackingController extends StoreMasterController {
                 $ms = 'ไม่เจอ Order Id นี้';
             }
             return $this->render('show-orders', [
-                'orderId' => $order->orderId,
-                'ms' => $ms
+                        'orderId' => $order->orderId,
+                        'ms' => $ms
             ]);
         }
     }
@@ -144,21 +145,21 @@ class PackingController extends StoreMasterController {
 
                 if ($full > 0) {//ถ้ายังไม่ครบทุก item กลับไปหน้าสแกนโปรดักใส่ถุง (เปิดถุงใหม่)
                     return $this->render('show-orders', [
-                        'orderId' => $_GET['orderId'],
-                        'ms' => $ms,
+                                'orderId' => $_GET['orderId'],
+                                'ms' => $ms,
                     ]);
                 } else {//กลับไปหน้า index เพื่อ เลือก order ถัดไป
                     $checkOrder = $this->checkSuccessOrder($_GET['orderId']);
                     if ($checkOrder == true) {
                         return $this->render('show-orders', [
-                            'orderId' => $_GET['orderId'],
-                            'ms' => $ms,
-                            'success' => 'yes'
+                                    'orderId' => $_GET['orderId'],
+                                    'ms' => $ms,
+                                    'success' => 'yes'
                         ]);
                     } else {
                         return $this->render('show-orders', [
-                            'orderId' => $_GET['orderId'],
-                            'ms' => $ms,
+                                    'orderId' => $_GET['orderId'],
+                                    'ms' => $ms,
                         ]);
                     }
                 }
@@ -172,8 +173,8 @@ class PackingController extends StoreMasterController {
             }
         } else {
             return $this->render('show-orders', [
-                'orderId' => $_GET['orderId'],
-                'ms' => $ms
+                        'orderId' => $_GET['orderId'],
+                        'ms' => $ms
             ]);
         }
     }
@@ -217,11 +218,19 @@ class PackingController extends StoreMasterController {
     public function actionRemove() {
         if (isset($_GET['packingId'])) {
             $itemPacking = \common\models\costfit\OrderItemPacking::find()->where("orderItemPackingId=" . $_GET['packingId'])->one();
-            $itemPacking->delete();
-            return $this->render('show-orders', [
-                'orderId' => $_GET['orderId'],
-                'ms' => $_GET['ms']
-            ]);
+            if (isset($itemPacking) && !empty($itemPacking)) {
+                $itemPacking->delete();
+                return $this->render('show-orders', [
+                            'orderId' => $_GET['orderId'],
+                            'ms' => $_GET['ms']
+                ]);
+            } else {
+                $ms = 'ไม่มีรายการ';
+                return $this->render('show-orders', [
+                            'orderId' => $_GET['orderId'],
+                            'ms' => $ms
+                ]);
+            }
         }
     }
 
@@ -229,8 +238,8 @@ class PackingController extends StoreMasterController {
         $orderItem = \common\models\costfit\OrderItemPacking::find()->where("bagNo='" . $bag . "'")->one();
         $order = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $orderItem->orderItemId)->one();
         return $this->renderPartial('bag_label', [
-            'bagNo' => $bag,
-            'orderId' => $order->orderId
+                    'bagNo' => $bag,
+                    'orderId' => $order->orderId
         ]);
     }
 
@@ -240,8 +249,8 @@ class PackingController extends StoreMasterController {
             $itemPacking->quantity = $itemPacking->quantity - 1;
             $itemPacking->save(false);
             return $this->render('show-orders', [
-                'orderId' => $_GET['orderId'],
-                'ms' => $_GET['ms']
+                        'orderId' => $_GET['orderId'],
+                        'ms' => $_GET['ms']
             ]);
         }
     }
@@ -251,7 +260,7 @@ class PackingController extends StoreMasterController {
         $total = 0;
         if (isset($orderInPacks) && !empty($orderInPacks)) {
             foreach ($orderInPacks as $orderInPack):
-                $total+=$orderInPack->quantity;
+                $total += $orderInPack->quantity;
             endforeach;
             if ($total < $orderQuantity) {//ถ้า ยังไม่ครบ
                 return true;
@@ -293,7 +302,7 @@ class PackingController extends StoreMasterController {
         if (isset($orderItem)) {
             $orderItemInBag = \common\models\costfit\OrderItemPacking::find()->where("orderItemId=" . $orderItemId)->all();
             foreach ($orderItemInBag as $inBag):
-                $itemInBag+=$inBag->quantity;
+                $itemInBag += $inBag->quantity;
             endforeach;
 //throw new \yii\base\Exception($orderItem->quantity . " = " . $itemInBag);
             if ($orderItem->quantity == $itemInBag) {//ครบแล้ว
@@ -315,7 +324,7 @@ class PackingController extends StoreMasterController {
                 $orderPack = \common\models\costfit\OrderItemPacking::find()->where("orderItemId=" . $item->orderItemId)->all();
                 if (isset($orderPack) && !empty($orderPack)) {
                     foreach ($orderPack as $inpack):
-                        $total+=$inpack->quantity;
+                        $total += $inpack->quantity;
                     endforeach;
                     if ($total != $item->quantity) {
                         $check++;

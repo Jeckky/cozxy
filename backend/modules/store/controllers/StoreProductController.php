@@ -349,6 +349,7 @@ class StoreProductController extends StoreMasterController {
                             'chooseStoreProductGroup' => $_POST['storeProductGroupId'],
                             'isbn' => $_POST["StoreProduct"]['isbn'],
                             'allProducts' => $_POST['allProduct'],
+                            'productSuppId' => $suppId
                 ]);
             } else {//ถ้า ไม่เจอสินค้าหรือจัดเรียงไปแล้ว
                 $ms = 'Imported products not found.';
@@ -356,6 +357,7 @@ class StoreProductController extends StoreMasterController {
                             'ms' => $ms,
                             'chooseStoreProductGroup' => $_POST['storeProductGroupId'],
                             'allProducts' => $_POST['allProduct'],
+                            'productSuppId' => $suppId
                 ]);
             }
         }
@@ -364,8 +366,10 @@ class StoreProductController extends StoreMasterController {
               ->join("LEFT JOIN", 'store_product sp', 'product.productId=sp.productId and sp.storeProductGroupId=' . $_POST['storeProductGroupId'] . ' and (sp.status=5 or sp.status=3)')
               ->orderBy('sp.createDateTime ASC')
               ->one(); */
-            $productId = \common\models\costfit\Product::find()->where("isbn ='" . $_POST['isbn'] . "'")->one();
-            $products = StoreProduct::find()->where("productId=" . $productId->productId . " and storeProductGroupId in (" . $_POST['storeProductGroupId'] . ") and status in (3,5)")->all();
+            //$productId = \common\models\costfit\Product::find()->where("isbn ='" . $_POST['isbn'] . "'")->one();
+            $productId = \common\models\costfit\ProductSuppliers::find()->where("isbn ='" . $_POST['isbn'] . "' and productSuppId in (" . $_POST['productSuppId'] . ")")->one();
+            //$products = StoreProduct::find()->where("productId=" . $productId->productId . " and storeProductGroupId in (" . $_POST['storeProductGroupId'] . ") and status in (3,5)")->all();
+            $products = StoreProduct::find()->where("productSuppId=" . $productId->productSuppId . " and storeProductGroupId in (" . $_POST['storeProductGroupId'] . ") and status in (3,5)")->all();
             if (isset($_POST['slot']) && !empty($_POST['slot'])) {//จัดเรียง
                 $slot = \common\models\costfit\StoreSlot::find()->where("barcode='" . $_POST["slot"] . "'")->one();
                 if (isset($slot) && !empty($slot)) {
@@ -375,9 +379,9 @@ class StoreProductController extends StoreMasterController {
                         foreach ($_POST['quantity'] as $storeProductGroupId => $quantity):
                             if (($quantity != NULL) && ($quantity != 0)) {//ทำเฉพาะที่ได้กรอกจำนวนมาเท่านั้น
                                 $canSave = false;
-                                $canSave = $this->checkOver($storeProductGroupId, $quantity, $productId->productId); // ค้างเชคฟังก์ชันนี้
+                                $canSave = $this->checkOver($storeProductGroupId, $quantity, $productId->productSuppId); // ค้างเชคฟังก์ชันนี้
                                 if ($canSave == true) {
-                                    $storeProductId = $this->findStoreProductId($storeProductGroupId, $productId->productId);
+                                    $storeProductId = $this->findStoreProductId($storeProductGroupId, $productId->productSuppId);
                                     StoreProduct::arrangeProductToSlot($storeProductId, $slot->storeSlotId, $quantity); //จัดเรียง
                                     $clear = false;
                                     $clear = $this->checkClear($storeProductGroupId);
@@ -402,14 +406,16 @@ class StoreProductController extends StoreMasterController {
                                                                 'ms' => $ms
                                                     ]);
                                                 } else {
-                                                    $products = StoreProduct::find()->where("productId=" . $productId->productId . " and storeProductGroupId in (" . $_POST['storeProductGroupId'] . ") and status in (3,5)")->all();
+                                                    //$products = StoreProduct::find()->where("productId=" . $productId->productId . " and storeProductGroupId in (" . $_POST['storeProductGroupId'] . ") and status in (3,5)")->all();
+                                                    $products = StoreProduct::find()->where("productSuppId=" . $productId->productSuppId . " and storeProductGroupId in (" . $_POST['storeProductGroupId'] . ") and status in (3,5)")->all();
                                                     return $this->render('arrange', [
                                                                 'model' => $products,
                                                                 'chooseStoreProductGroup' => $_POST['storeProductGroupId'],
                                                                 'isbn' => $_POST['isbn'],
                                                                 'allProducts' => $_POST['allProduct'],
                                                                 'ms' => $ms,
-                                                                'aSlot' => $_POST['slot']
+                                                                'aSlot' => $_POST['slot'],
+                                                                'productSuppId' => $_POST['productSuppId']
                                                     ]);
                                                 }
                                             }
@@ -430,7 +436,8 @@ class StoreProductController extends StoreMasterController {
                                                             'isbn' => $_POST['isbn'],
                                                             'allProducts' => $_POST['allProduct'],
                                                             'ms' => $ms,
-                                                            'aSlot' => $_POST['slot']
+                                                            'aSlot' => $_POST['slot'],
+                                                            'productSuppId' => $_POST['productSuppId']
                                                 ]);
                                             }
                                         }
@@ -448,7 +455,8 @@ class StoreProductController extends StoreMasterController {
                                                     'isbn' => $_POST['isbn'],
                                                     'allProducts' => $_POST['allProduct'],
                                                     'ms' => $ms,
-                                                    'aSlot' => $_POST['slot']
+                                                    'aSlot' => $_POST['slot'],
+                                                    'productSuppId' => $_POST['productSuppId']
                                         ]);
                                     }
                                 }
@@ -465,7 +473,8 @@ class StoreProductController extends StoreMasterController {
                                 'isbn' => $_POST['isbn'],
                                 'allProducts' => $_POST['allProduct'],
                                 'ms' => $ms,
-                                'aSlot' => $_POST['slot']
+                                'aSlot' => $_POST['slot'],
+                                'productSuppId' => $_POST['productSuppId']
                     ]);
                 }
             } else {
@@ -475,7 +484,8 @@ class StoreProductController extends StoreMasterController {
                             'chooseStoreProductGroup' => $_POST['storeProductGroupId'],
                             'isbn' => $_POST['isbn'],
                             'allProducts' => $_POST['allProduct'],
-                            'ms' => $ms
+                            'ms' => $ms,
+                            'productSuppId' => $_POST['productSuppId']
                 ]);
             }
         }if (isset($allPo) && !empty($allPo)) {
@@ -508,9 +518,11 @@ class StoreProductController extends StoreMasterController {
 
     public static function checkOver($storeProductGroupId, $quantity, $productId) {
         $total = 0;
-        $storeProducts = StoreProduct::find()->where("storeProductGroupId=" . $storeProductGroupId . " and productId=" . $productId)->one();
+        //$storeProducts = StoreProduct::find()->where("storeProductGroupId=" . $storeProductGroupId . " and productId=" . $productId)->one();
+        $storeProducts = StoreProduct::find()->where("storeProductGroupId=" . $storeProductGroupId . " and productSuppId=" . $productId)->one();
         if (isset($storeProducts) && !empty($storeProducts)) {
-            $storeProductArranges = \common\models\costfit\StoreProductArrange::find()->where("storeProductId=" . $storeProducts->storeProductId . " and productId=" . $productId)->all();
+            //$storeProductArranges = \common\models\costfit\StoreProductArrange::find()->where("storeProductId=" . $storeProducts->storeProductId . " and productId=" . $productId)->all();
+            $storeProductArranges = \common\models\costfit\StoreProductArrange::find()->where("storeProductId=" . $storeProducts->storeProductId . " and productSuppId=" . $productId)->all();
             if (isset($storeProductArranges) && !empty($storeProductArranges)) {
                 foreach ($storeProductArranges as $storeProductArrange):
                     $total += $storeProductArrange->quantity;
@@ -518,7 +530,8 @@ class StoreProductController extends StoreMasterController {
             }
 
             //throw new \yii\base\Exception($storeProductId . " total " . $total . " re " . $quantity);
-            $storeProduct = StoreProduct::find()->where("storeProductId=" . $storeProducts->storeProductId . " and productId=" . $productId)->one();
+            //$storeProduct = StoreProduct::find()->where("storeProductId=" . $storeProducts->storeProductId . " and productId=" . $productId)->one();
+            $storeProduct = StoreProduct::find()->where("storeProductId=" . $storeProducts->storeProductId . " and productSuppId=" . $productId)->one();
             if (($quantity + $total) <= $storeProduct->importQuantity) {
                 return true;
             } else {
@@ -568,7 +581,8 @@ class StoreProductController extends StoreMasterController {
     }
 
     public static function findStoreProductId($storeProductGroupId, $productId) {
-        $storeProduct = StoreProduct::find()->where("productId=" . $productId . " and storeProductGroupId=" . $storeProductGroupId)->one();
+        //$storeProduct = StoreProduct::find()->where("productId=" . $productId . " and storeProductGroupId=" . $storeProductGroupId)->one();
+        $storeProduct = StoreProduct::find()->where("productSuppId=" . $productId . " and storeProductGroupId=" . $storeProductGroupId)->one();
         return $storeProduct->storeProductId;
     }
 

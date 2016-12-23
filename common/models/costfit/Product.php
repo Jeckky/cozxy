@@ -243,16 +243,18 @@ class Product extends \common\models\costfit\master\ProductMaster {
     }
 
     static public function findProductName($productId) {
-        $product = Product::find()->where("productId=" . $productId)->one();
+        //$product = Product::find()->where("productId=" . $productId)->one();
+        $product = ProductSuppliers::find()->where("productSuppId=" . $productId)->one();
         if (isset($product)) {
-            return $product->code;
+            return $product->title;
         } else {
             return '';
         }
     }
 
     static public function findUnit($productId) {
-        $product = Product::find()->where("productId=" . $productId)->one();
+        //$product = Product::find()->where("productId=" . $productId)->one();
+        $product = ProductSuppliers::find()->where("productSuppId=" . $productId)->one();
         if (isset($product)) {
             $unit = Unit::find()->where("unitId=" . $product->unit)->one();
             return $unit->title;
@@ -262,9 +264,23 @@ class Product extends \common\models\costfit\master\ProductMaster {
     }
 
     static public function findProductId($barcode) {
-        $product = Product::find()->where("isbn='" . $barcode . "'")->one();
+        // $product = Product::find()->where("isbn='" . $barcode . "'")->one();
+        $product = ProductSuppliers::find()->where("isbn='" . $barcode . "'")->one();
         if (isset($product) && !empty($product)) {
-            return $product->productId;
+            return $product->productSuppId;
+        } else {
+            return '';
+        }
+    }
+
+    static public function findProductSuppId($barcode, $orderId) {
+        $productSupp = OrderItem::find()
+                        //->select('*.order_item,*.product_suppliers')
+                        ->join("LEFT JOIN", "product_suppliers ps", "order_item.productSuppId=ps.productSuppId")
+                        ->where("ps.isbn='" . $barcode . "' and order_item.orderId=" . $orderId . " and order_item.status=5")->one(); //เอาเฉพาะที่ status เป็น หยิบแล้ว
+
+        if (isset($productSupp) && !empty($productSupp)) {
+            return $productSupp->productSuppId;
         } else {
             return '';
         }
@@ -282,9 +298,10 @@ class Product extends \common\models\costfit\master\ProductMaster {
     static public function findProductInPack($orderItemId) {// 28/09/2016  หน้า show product  ที่เอาลงถุงแล้ว
         $orderItem = OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
         if (isset($orderItem) && !empty($orderItem)) {
-            $product = Product::find()->where("productId=" . $orderItem->productId)->one();
+            //$product = Product::find()->where("productId=" . $orderItem->productId)->one();
+            $product = ProductSuppliers::find()->where("productsuppId=" . $orderItem->productSuppId)->one();
             if (isset($orderItem) && !empty($orderItem)) {
-                return $product->code;
+                return $product->title;
             } else {
                 return '';
             }
@@ -296,7 +313,8 @@ class Product extends \common\models\costfit\master\ProductMaster {
     public static function findProducts($orderItemId) {
         $orderItems = OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
         if (isset($orderItems) && !empty($orderItems)) {
-            $product = Product::find()->where("productId=" . $orderItems->productId)->one();
+            //$product = Product::find()->where("productId=" . $orderItems->productId)->one();
+            $product = ProductSuppliers::find()->where("productSuppId=" . $orderItems->productSuppId)->one();
             if (isset($product) && !empty($product)) {
                 return $product;
             } else {

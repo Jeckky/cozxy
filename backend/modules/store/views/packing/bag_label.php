@@ -38,8 +38,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <!--<body onLoad="window.print();NoDialogBox();">-->
         <table width ="750"  cellpadding="2" cellspacing="0" style="border: 0px; text-align: center;">
             <tr style="height: 160px;">
-                <td colspan="2" style="text-align: left; vertical-align: text-top;border: 0.5px slategray solid;border-right: 0px;">
-                    <img src="<?php echo $baseUrl; ?>/images/logo/cozxy.png" alt="cozxy.com" width="110" height="65">
+                <td colspan="2" style="text-align: left; vertical-align: middle;border: 0.5px slategray solid;border-right: 0px;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo $baseUrl; ?>/images/logo/cozxy.png" alt="cozxy.com" width="110" height="65">
                 </td>
                 <td colspan="3" style="padding: 5px; vertical-align: text-top; text-align: center;border: 0.5px slategray solid;border-right: 0px;">
                     <h2>
@@ -65,11 +65,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </table>
 <table class="table table_bordered" width="750"  cellpadding="2" cellspacing="0" style="border: 0.5px slategray solid;">
     <tr style="height: 50px;">
-        <td colspan="3" style="border-bottom: 0.5px slategray solid;"><center><b>สินค้า</b></center></td>
+        <td colspan="4" style="border-bottom: 0.5px slategray solid;"><center><b>สินค้า</b></center></td>
 </tr>
 <tr style="height: 50px;">
 
     <th ><center>No.</center></th>
+<th><center>Code</center></th>
 <th><center>สินค้า</center></th>
 <th><center>จำนวน</center></th>
 </tr>
@@ -84,15 +85,16 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 echo '<tr style="height: 50px;">';
                 echo '<td><center>' . $i . '</center></td>';
                 echo '<td><center>' . $item->code . '</center></td>';
+                echo '<td><center>' . $item->title . '</center></td>';
                 echo '<td><center>' . $orderItem->quantity . '</center></td>';
                 echo '</tr>';
                 $i++;
             } else {
-                echo '<tr><td colspan="3"><center>ไม่มีรายการสินค้า1</center></td></tr>';
+                echo '<tr><td colspan="4"><center>ไม่มีรายการสินค้า</center></td></tr>';
             }
         endforeach;
     } else {
-        echo '<tr><td colspan="3"><center>ไม่มีรายการสินค้า2</center></td></tr>';
+        echo '<tr><td colspan="3"><center>ไม่มีรายการสินค้า</center></td></tr>';
     }
     ?>
 </tbody>

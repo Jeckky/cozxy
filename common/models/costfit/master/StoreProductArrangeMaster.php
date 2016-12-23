@@ -10,6 +10,7 @@ use Yii;
     * @property string $storeProductArrangeId
     * @property string $storeProductId
     * @property string $productId
+    * @property string $productSuppId
     * @property string $slotId
     * @property string $quantity
     * @property integer $orderId
@@ -37,7 +38,7 @@ public function rules()
 {
 return [
             [['storeProductId', 'productId', 'slotId', 'quantity', 'createDateTime'], 'required'],
-            [['storeProductId', 'productId', 'slotId', 'orderId', 'parentId', 'result', 'pickerId', 'status'], 'integer'],
+            [['storeProductId', 'productId', 'productSuppId', 'slotId', 'orderId', 'parentId', 'result', 'pickerId', 'status'], 'integer'],
             [['quantity'], 'number'],
             [['createDateTime', 'updateDateTime'], 'safe'],
         ];
@@ -52,6 +53,7 @@ return [
     'storeProductArrangeId' => Yii::t('store_product_arrange', 'Store Product Arrange ID'),
     'storeProductId' => Yii::t('store_product_arrange', 'Store Product ID'),
     'productId' => Yii::t('store_product_arrange', 'Product ID'),
+    'productSuppId' => Yii::t('store_product_arrange', 'Product Supp ID'),
     'slotId' => Yii::t('store_product_arrange', 'Slot ID'),
     'quantity' => Yii::t('store_product_arrange', 'Quantity'),
     'orderId' => Yii::t('store_product_arrange', 'Order ID'),

@@ -19,6 +19,8 @@ $form = yii\bootstrap\ActiveForm::begin([
 <input type="hidden" name="arrange" value="arrange">
 <!--<input type="hidden" name="storeProductId" value="<?//= $model->storeProductId ?>">-->
 <input type="hidden" name="storeProductGroupId" value="<?= $chooseStoreProductGroup ?>">
+<input type="hidden" name="productSuppId" value="<?= $productSuppId ?>">
+
 <?php foreach ($allProducts as $product):
     ?>
     <input type="hidden" name="allProduct[]" value="<?= $product ?>">

@@ -35,7 +35,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
             foreach ($selects as $select):
                 echo '<input type="hidden" name="selection[]" value="' . $select->orderId . '">';
             endforeach;
-            // throw new \yii\base\Exception(print_r($selects, true));
+            //throw new \yii\base\Exception(print_r($selects, true));
             ?>
 
             <?=
@@ -69,7 +69,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 ],
             ]);
             ?>
-            <?= Html::submitButton("Pick", ['class' => 'btn btn-success btn-lg']) ?>
+            <?= Html::submitButton('<i class="fa fa-hand-lizard-o" aria-hidden="true"></i> หยิบ', ['class' => 'btn btn-success btn-lg pull-right']) ?>
         </div>
     </div>
 
