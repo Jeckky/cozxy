@@ -128,6 +128,17 @@ class StoreProductGroup extends \common\models\costfit\master\StoreProductGroupM
         }
     }
 
+    public static function allPurchaseOrder() {
+        $all = StoreProductGroup::find()
+                ->orderBy("poNo DESC")
+                ->all();
+        if (isset($all) && !empty($all)) {
+            return $all;
+        } else {
+            return NULL;
+        }
+    }
+
     public static function findMaxPoNo($prefix = NULL) {
         $order = Order::findBySql("SELECT MAX(RIGHT(poNo,6)) as maxCode from `store_product_group` WHERE substr(poNo,1,2)='$prefix' order by poNo DESC ")->one();
 //        $order = Order::find()->select("MAX(RIGHT(orderNo,7)) as maxCode")
@@ -137,6 +148,11 @@ class StoreProductGroup extends \common\models\costfit\master\StoreProductGroupM
 //        ->one();
 
         return isset($order) ? $order->maxCode : 0;
+    }
+
+    public static function prouductGroup($id) {
+        $storeProductGroup = StoreProductGroup::find()->where("storeProuductGroupId=" . $id)->one();
+        return $storeProductGroup;
     }
 
 }

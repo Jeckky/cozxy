@@ -33,6 +33,7 @@ $form = yii\bootstrap\ActiveForm::begin([
 <?php yii\bootstrap\ActiveForm::end(); ?>
 <?php
 if (isset($chooseId) && !empty($chooseId)) {
+    //throw new \yii\base\Exception(print_r($chooseId, true));
     $i = 1;
     ?>
     <div class="panel-heading" style="background-color: #ccffff;">
@@ -57,8 +58,8 @@ if (isset($chooseId) && !empty($chooseId)) {
                     <td style="vertical-align: middle;text-align: center;width: 30%;"><?= $id->poNo ?></td>
                     <td style="vertical-align: middle;text-align: center;width: 15%;"><?= \common\models\costfit\StoreProductGroup::countProducts($id->storeProductGroupId) ?> รายการ</td>
                     <td style="vertical-align: middle;text-align: center;width: 15%;"><?= \common\models\costfit\StoreProductGroup::getStatusText($id->status) ?></td>
-                    <td style="vertical-align: middle;text-align: center;width: 15%;"><?= \common\models\costfit\User::userName($id->arranger) ?></td>
-                    <td style="vertical-align: middle;text-align: center;width: 15%;"><?= common\models\costfit\User::userName($id->receiveBy) ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 15%;"><?= isset($id->arranger) ? \common\models\costfit\User::userName($id->arranger) : '' ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 15%;"><?= isset($id->receiveBy) ? common\models\costfit\User::userName($id->receiveBy) : '' ?></td>
                     <td style="vertical-align: middle;text-align: center;width: 5%;"><?=
                         Html::a('<i class="fa fa-times" aria-hidden="true"></i>', ['delete-choose-po',
                             'id' => $id->storeProductGroupId

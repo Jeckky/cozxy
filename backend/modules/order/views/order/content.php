@@ -6,24 +6,26 @@ use common\models\costfit\ProductSuppliers;
 
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 $i = 1;
+$j = 1;
 //throw new \yii\base\Exception(print_r($supplierId, true));
-foreach ($supplierId as $suppId):
-    $supplier = User::supplierDetail($suppId);
+foreach ($storeProductGroupId as $id):
+    $storeProductGroup = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId=" . $id)->one();
+    $supplier = User::supplierDetail($storeProductGroup->supplierId);
     ?>
     <br><br><br><br>
-    <div style="width: 100%;font-size: 10px;">
-        <div style="width: 50%;border:solid 0.5px #000000;-webkit-border-radius:10px;
+    <div style="width: 100%;font-size: 10px;margin-top: 2px;">
+        <div style="width: 50%;height: 90px;border:solid 0.5px #000000;-webkit-border-radius:10px;
              -moz-border-radius:10px;
              border-radius:10px;padding-left: 10px;">
             ชื่อผู้ขาย/Vendor Name : <b><?= $supplier != '' ? $supplier->firstname . " " . $supplier->lastname : '' ?></b><br>
             ที่อยู่ / Address : <b><?= $supplier != '' ? User::supplierAddressText($supplier->addressId) : '' ?></b>
         </div>
-        <div style="width: 45%;border:solid 0.5px #000000;-webkit-border-radius:10px;
+        <div style="width: 45%;height: 90px;border:solid 0.5px #000000;-webkit-border-radius:10px;
              -moz-border-radius:10px;
-             border-radius:10px;padding-left: 10px;margin-left: 360px;margin-top: -86px;">
+             border-radius:10px;padding-left: 10px;margin-left: 360px;margin-top: -90px;">
              <?php $po = \common\models\costfit\StoreProductGroup::genPoNo(); ?>
-            เลขที่ใบสั่งซื้อ / PO No : <?= $po ?><br>
-            วันที่ / Date : <b><?= date('d/m/Y') ?></b><br>
+            เลขที่ใบสั่งซื้อ / PO No : <?= $storeProductGroup->poNo ?><br>
+            วันที่ / Date : <b><?= $this->context->dateThai($storeProductGroup->createDateTime, 1) ?></b><br>
             <br>
             ระยะเวลาที่ชำระเงิน/ Credit Term : <b>30 วันนับจากวันวางบิล</b>
         </div>
@@ -80,25 +82,25 @@ foreach ($supplierId as $suppId):
     <tbody>
         <?php
         //throw new \yii\base\Exception(print_r($orders, true));
-        $items = \common\models\costfit\OrderItem::supplierItems($suppId, $orders); //group Product
+        $items = \common\models\costfit\StoreProduct::allProductInPo($id); //group Product
         $allTotal = 0;
         if ($items != '' && !empty($items)) {
             foreach ($items as $item):
                 echo '<tr>';
                 echo '<td><center>' . $i . '</center></td>';
-                $productSupp = ProductSuppliers::productSupplierName($item);
+                $productSupp = ProductSuppliers::productSupplierName($item->productSuppId);
                 echo '<td><center>' . $productSupp->code . '</center></td>';
                 echo '<td><center>' . $productSupp->description . '</center></td>';
-                $total = \common\models\costfit\OrderItem::totalSupplierItem($suppId, $item, $orders);
-                echo '<td><center>' . $total . '</center></td>';
-                $unit = \common\models\costfit\Unit::unitName($item);
+                // $total = \common\models\costfit\OrderItem::totalSupplierItem($suppId, $item, $orders);
+                echo '<td><center>' . $item->quantity . '</center></td>';
+                $unit = \common\models\costfit\Unit::unitName($item->productSuppId);
                 echo '<td><center>' . $unit . '</center></td>';
-                $price = ProductSuppliers::productPriceSupplier($item);
+                $price = ProductSuppliers::productPriceSupplier($item->productSuppId);
                 echo '<td style="text-align: right;">' . $price . '</td>';
-                echo '<td style="text-align: right;">' . number_format($price * $total, 2) . '</td>';
+                echo '<td style="text-align: right;">' . number_format($price * $item->quantity, 2) . '</td>';
                 echo '<tr>';
                 $i++;
-                $amount = $price * $total;
+                $amount = $price * $item->quantity;
                 $allTotal += $amount;
             endforeach;
         }else {
@@ -146,7 +148,12 @@ foreach ($supplierId as $suppId):
             </tr>
         </table>
     </div>
-    <?php
+    <?php if ($j < count($storeProductGroupId)) {
+        ?>
+        <pagebreak />
+        <?php
+    }
+    $j++;
 endforeach;
 ?>
 <!--    <br><br><br><br><br>

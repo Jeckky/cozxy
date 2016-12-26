@@ -57,13 +57,14 @@ class Order extends \common\models\costfit\master\OrderMaster {
     const ORDER_STATUS_PICKED = 12;
     const ORDER_STATUS_PACKED = 13;
     const ORDER_STATUS_SENDING_SHIPPING = 14;
+    const ORDER_STATUS_SEND = 15;
+    const ORDER_STATUS_RECEIVED = 16;
+    const ORDER_STATUS_CREATEPO = 17;
 //
     const CHECKOUT_STEP_WAIT_CHECKOUT = 0;
     const CHECKOUT_STEP_ADDRESS = 1;
     const CHECKOUT_STEP_PAYMENT = 2;
     const CHECKOUT_STEP_SUCCESS = 3;
-    const ORDER_STATUS_RECEIVED = 16;
-    const ORDER_STATUS_SEND = 15;
 
     public $orderMessage = null;
 
@@ -439,7 +440,8 @@ class Order extends \common\models\costfit\master\OrderMaster {
             self::ORDER_STATUS_PACKED => 'ใส่ถุงแล้ว',
             self::ORDER_STATUS_RECEIVED => 'ลูกค้ารับสินค้าเรียบร้อยแล้ว',
             self::ORDER_STATUS_SEND => 'สามารถรับสินค้าได้',
-            self::ORDER_STATUS_SENDING_SHIPPING => 'อยู่ระหว่างการจัดส่ง'
+            self::ORDER_STATUS_SENDING_SHIPPING => 'อยู่ระหว่างการจัดส่ง',
+            self::ORDER_STATUS_RECEIVED => 'สร้างใบ PO แล้ว'
         ];
     }
 

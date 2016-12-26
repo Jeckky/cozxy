@@ -53,7 +53,7 @@ class PickingController extends StoreMasterController {
         $oldUser = $this->checkOldPicker($userId); // ถ้าเป็นคนหยิบของที่หยิบของในออเดอร์ที่เลือกมายังไม่เสร็จ บังคับให้กลับบมาหน้าหยิบให้เสร็จ
         $findEnough = \common\models\costfit\Order::find()
                         ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-                        ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status >= " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " and oi.status=1 and oi.productSuppId!=''")->all();
+                        ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status >= " . \common\models\costfit\Order::ORDER_STATUS_CREATEPO . " and oi.status=1 and oi.productSuppId!=''")->all();
         $allId = [];
         $e = 0;
         if (isset($findEnough)):
@@ -64,15 +64,16 @@ class PickingController extends StoreMasterController {
         endif;
         //throw new \yii\base\Exception(print_r($allId, true));
         $enoughId = $this->checkQuantity($allId); //ได้ orderId ที่มีของพอ
+        // throw new \yii\base\Exception($enoughId);
         if ($enoughId != '') {
-//throw new \yii\base\Exception('aaaa');
+
             $query = \common\models\costfit\Order::find()
                     ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-                    ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status >= " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " and order.orderId in(" . $enoughId . ") and oi.status=1  and oi.productSuppId!='' order by oi.sendDateTime")
+                    ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status >= " . \common\models\costfit\Order::ORDER_STATUS_CREATEPO . " and order.orderId in(" . $enoughId . ") and oi.status=1  and oi.productSuppId!='' order by oi.sendDateTime")
                     ->limit(6);
             $select = \common\models\costfit\Order::find()
                     ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-                    ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status >= " . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . " and order.orderId in(" . $enoughId . ") and oi.status=1 and oi.productSuppId!=''")
+                    ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status >= " . \common\models\costfit\Order::ORDER_STATUS_CREATEPO . " and order.orderId in(" . $enoughId . ") and oi.status=1 and oi.productSuppId!=''")
                     ->limit(6)
                     ->all();
         } else {//ถ้า มีของใน order ไม่ครบ
@@ -365,7 +366,7 @@ class PickingController extends StoreMasterController {
         $select = TRUE;
         foreach ($selectOrder as $order):
             $check = \common\models\costfit\Order::find()->where("orderId=" . $order)->one();
-            if ($check->status != \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS) {
+            if ($check->status != \common\models\costfit\Order::ORDER_STATUS_CREATEPO) {
                 $select = FALSE;
             }
         endforeach;
@@ -391,16 +392,22 @@ class PickingController extends StoreMasterController {
         foreach ($allOrder as $orderId)://หาว่าใน order ที่เลือกมา มี Product อะไรบ้าง
             $i = 0;
             $orderItems = \common\models\costfit\OrderItem::find()->where("orderId = " . $orderId . " and DATE(DATE_SUB(sendDateTime, INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE()")->all();
+
             if (isset($orderItems) && !empty($orderItems)) {
                 foreach ($orderItems as $item):
                     //$arranges = \common\models\costfit\StoreProductArrange::find()->where("productId = " . $item->productId . " and status = 4")->all();
                     $arranges = \common\models\costfit\StoreProductArrange::find()->where("productSuppId = " . $item->productSuppId . " and status = 4")->all();
+
                     if (isset($arranges) && !empty($arranges)) {
                         foreach ($arranges as $arrange):
                             $arrangTotal += $arrange->result;
                         endforeach;
+
                         $result = $arrangTotal - $item->quantity;
-                        if ($result <= $oldResult) {//ถ้าของใน arrange store ไม่พอ
+                        // if ($orderId == 78) {
+                        //    throw new \yii\base\Exception($result . "=" . $arrangTotal . "-" . $item->quantity);
+                        //  }
+                        if ($result < $oldResult) {//ถ้าของใน arrange store ไม่พอ
                             $i++;
                         } else {
                             $oldResult = $result;
@@ -567,7 +574,7 @@ class PickingController extends StoreMasterController {
     }
 
     static function checkOldPicker($userId) {
-        $orders = \common\models\costfit\Order::find()->where("pickerId = " . $userId . " and status = 11")->all();
+        $orders = \common\models\costfit\Order::find()->where("pickerId = " . $userId . " and status =" . \common\models\costfit\Order::ORDER_STATUS_PICKING)->all();
         if (count($orders) > 0) {
             return true;
         } else {
@@ -587,7 +594,7 @@ class PickingController extends StoreMasterController {
                 endforeach;
                 if ($i == 0) {
                     $a = \common\models\costfit\Order::find()->where("orderId = " . $orderId)->one();
-                    $a->status = 12;
+                    $a->status = \common\models\costfit\Order::ORDER_STATUS_PICKED;
                     $a->updateDateTime = new \yii\db\Expression('NOW()');
                     $a->save(false);
                 }
@@ -650,7 +657,7 @@ class PickingController extends StoreMasterController {
                     $orderItem->pickerId = $userId;
                     $orderItem->updateDateTime = new \yii\db\Expression('NOW()');
                     $orderItem->save();
-                    $order->status = 11;
+                    $order->status = \common\models\costfit\Order::ORDER_STATUS_PICKING;
                     $order->pickerId = $userId;
                     $order->updateDateTime = new \yii\db\Expression('NOW()');
                     $order->save();

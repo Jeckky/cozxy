@@ -34,7 +34,11 @@ class Unit extends \common\models\costfit\master\UnitMaster {
     public static function unitName($productSuppId) {
         $productSupp = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
         if (isset($productSupp) && !empty($productSupp)) {
-            $unit = Unit::find()->where("unitId=" . $productSupp->unit . " and status=1")->one();
+            if ($productSupp->unit == NULL) {
+                return '';
+            } else {
+                $unit = Unit::find()->where("unitId=" . $productSupp->unit . " and status=1")->one();
+            }
             if (isset($unit) && !empty($unit)) {
                 return $unit->title;
             } else {

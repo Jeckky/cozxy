@@ -421,4 +421,13 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
         return $text;
     }
 
+    public static function allProductInPo($storeProductGroupId) {
+        $storeProduct = StoreProduct::find()->where("storeProductGroupId=" . $storeProductGroupId)->all();
+        if (isset($storeProduct) && !empty($storeProduct)) {
+            return $storeProduct;
+        } else {
+            return NULL;
+        }
+    }
+
 }

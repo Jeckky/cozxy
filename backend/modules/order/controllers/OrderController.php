@@ -251,13 +251,17 @@ class OrderController extends OrderMasterController {
                         $i++;
                     }
                 endforeach;
+                $order = Order::find()->where("orderId=" . $orderId)->one();
+                $order->status = Order::ORDER_STATUS_CREATEPO;
+                $order->updateDateTime = new \yii\db\Expression('NOW()');
+                $order->save(false);
             endforeach;
-            $this->saveStoreProduct($orders, $supplierId);
+
+            $storeProductGroupId = $this->saveStoreProduct($orders, $supplierId);
             //throw new \yii\base\Exception(print_r($orders, true));
             $header = $this->renderPartial('header');
             $content = $this->renderPartial('content', [
-                'orders' => $orders,
-                'supplierId' => $supplierId,
+                'storeProductGroupId' => $storeProductGroupId,
             ]);
             $this->printPdf($content, $header);
         } else {
@@ -274,6 +278,15 @@ class OrderController extends OrderMasterController {
                 ]);
             }
         }
+    }
+
+    public function actionReprintPo() {
+        $storeProductGroup = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId=" . $_GET['storeProductGroupId'])->one();
+        $header = $this->renderPartial('header', ['ms' => 'Reprint']);
+        $content = $this->renderPartial('content2', [
+            'storeProductGroup' => $storeProductGroup
+        ]);
+        $this->printPdf($content, $header);
     }
 
     public static function checkDupplicateId($array, $newIndex) {
@@ -333,6 +346,8 @@ class OrderController extends OrderMasterController {
     }
 
     public static function saveStoreProduct($orders, $supplierId) {
+        $storeProductGroupId = [];
+        $i = 0;
         foreach ($supplierId as $suppId):
             $storeProductGroup = new \common\models\costfit\StoreProductGroup();
             $storeProductGroup->supplierId = $suppId;
@@ -342,6 +357,7 @@ class OrderController extends OrderMasterController {
             $storeProductGroup->updateDateTime = new \yii\db\Expression('NOW()');
             $storeProductGroup->save(false);
             $lastStoreProductGroupId = Yii::$app->db->getLastInsertID();
+            $storeProductGroupId[$i] = $lastStoreProductGroupId;
             $productSuppId = \common\models\costfit\OrderItem::supplierItems($suppId, $orders);
             foreach ($productSuppId as $pSuppId):
                 $storeProducts = new \common\models\costfit\StoreProduct();
@@ -357,7 +373,9 @@ class OrderController extends OrderMasterController {
                 $storeProducts->updateDateTime = new \yii\db\Expression('NOW()');
                 $storeProducts->save(false);
             endforeach;
+            $i++;
         endforeach;
+        return $storeProductGroupId;
     }
 
 }
