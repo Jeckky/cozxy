@@ -14,7 +14,9 @@ use common\models\costfit\District;
 use kartik\widgets\DepDrop;
 use kartik\widgets\Select2;
 use yii\helpers\Url;
+use common\helpers\GetBrowser;
 
+$yourbrowser = GetBrowser::Browser();
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\Address */
 /* @var $form yii\widgets\ActiveForm */
@@ -63,35 +65,66 @@ use yii\helpers\Url;
         // Child level 2
         echo Html::hiddenInput('input-type-1', $model->amphurId, ['id' => 'input-type-1']);
         echo Html::hiddenInput('input-type-2', 'Additional value 2', ['id' => 'input-type-2']);
-        echo $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
-            'options' => ['placeholder' => 'Select ...', 'id' => 'subcat-id'],
-            'type' => DepDrop::TYPE_SELECT2,
-            'select2Options' => ['pluginOptions' => ['allowClear' => true]],
-            'pluginOptions' => [
-                'initialize' => true,
-                'depends' => ['cat-id'],
-                'url' => Url::to(['child-amphur-address']),
-                'loadingText' => 'Loading amphur ...',
-                'params' => ['input-type-1', 'input-type-2']
-            ]
-        ])->label('อำเภอ/เขต');
+        if ($yourbrowser != 'Safari') {
+            echo $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
+                'options' => ['placeholder' => 'Select ...', 'id' => 'subcat-id'],
+                'type' => DepDrop::TYPE_SELECT2,
+                'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                'pluginOptions' => [
+                    'initialize' => true,
+                    'depends' => ['cat-id'],
+                    'url' => Url::to(['child-amphur-address']),
+                    'loadingText' => 'Loading amphur ...',
+                    'params' => ['input-type-1', 'input-type-2']
+                ]
+            ])->label('อำเภอ/เขต');
+        } else {
+            echo $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
+                'options' => ['placeholder' => 'Select ...', 'id' => 'subcat-id'],
+                //'type' => DepDrop::TYPE_SELECT2,
+                'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                'pluginOptions' => [
+                    'initialize' => true,
+                    'depends' => ['cat-id'],
+                    'url' => Url::to(['child-amphur-address']),
+                    'loadingText' => 'Loading amphur ...',
+                    'params' => ['input-type-1', 'input-type-2']
+                ]
+            ])->label('อำเภอ/เขต');
+        }
+
 
 
         // Child level 3
         echo Html::hiddenInput('input-type-3', $model->districtId, ['id' => 'input-type-3']);
         echo Html::hiddenInput('input-type-4', 'Additional value 2', ['id' => 'input-type-4']);
-        echo $form->field($model, 'districtId')->widget(DepDrop::classname(), [
-            'options' => ['placeholder' => 'Select ...', 'id' => 'subsubcat-id'],
-            'type' => DepDrop::TYPE_SELECT2,
-            'select2Options' => ['pluginOptions' => ['allowClear' => true]],
-            'pluginOptions' => [
-                'initialize' => true,
-                'depends' => ['subcat-id'],
-                'url' => Url::to(['child-district-address']),
-                'loadingText' => 'Loading amphur ...',
-                'params' => ['input-type-3', 'input-type-4']
-            ]
-        ])->label('ตำบล/แขวง');
+        if ($yourbrowser != 'Safari') {
+            echo $form->field($model, 'districtId')->widget(DepDrop::classname(), [
+                'options' => ['placeholder' => 'Select ...', 'id' => 'subsubcat-id'],
+                'type' => DepDrop::TYPE_SELECT2,
+                'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                'pluginOptions' => [
+                    'initialize' => true,
+                    'depends' => ['subcat-id'],
+                    'url' => Url::to(['child-district-address']),
+                    'loadingText' => 'Loading amphur ...',
+                    'params' => ['input-type-3', 'input-type-4']
+                ]
+            ])->label('ตำบล/แขวง');
+        } else {
+            echo $form->field($model, 'districtId')->widget(DepDrop::classname(), [
+                'options' => ['placeholder' => 'Select ...', 'id' => 'subsubcat-id'],
+                //'type' => DepDrop::TYPE_SELECT2,
+                'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                'pluginOptions' => [
+                    'initialize' => true,
+                    'depends' => ['subcat-id'],
+                    'url' => Url::to(['child-district-address']),
+                    'loadingText' => 'Loading amphur ...',
+                    'params' => ['input-type-3', 'input-type-4']
+                ]
+            ])->label('ตำบล/แขวง');
+        }
         ?>
 
         <?= $form->field($model, 'zipcode', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 10])->label('รหัสไปรษณีย์') ?>

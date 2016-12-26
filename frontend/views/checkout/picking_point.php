@@ -96,7 +96,7 @@ $pickingId = rand(0, 9999);
             //'type' => DepDrop::TYPE_SELECT2,
             'select2Options' => ['pluginOptions' => ['allowClear' => true]],
             'pluginOptions' => [
-                'class' => 'required form-control ',
+                'class' => 'required form-control input-lg',
                 'initialize' => true,
                 'depends' => ['pickingpoint-provinceid'],
                 'url' => Url::to(['child-amphur-address-picking-point']),
