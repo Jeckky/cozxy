@@ -91,10 +91,10 @@ use kartik\depdrop\DepDrop;
 //}
 //<form id="checkout-form" method="post" novalidate="novalidate">
 $form = ActiveForm::begin([
-            'id' => 'checkout-form',
-            'validateOnSubmit' => true,
-            'options' => ['class' => "space-bottom formBilling"],
-        ]);
+    'id' => 'checkout-form',
+    'validateOnSubmit' => true,
+    'options' => ['class' => "space-bottom formBilling"],
+]);
 
 $countryId = rand(0, 9999);
 $stateId = rand(0, 9999);
