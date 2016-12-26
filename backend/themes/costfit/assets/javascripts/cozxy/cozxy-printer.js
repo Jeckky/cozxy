@@ -313,3 +313,7 @@ $(document).on('click', '.reprint2', function (e) {
     $('.reprint').show();
     $('.reprint2').hide();
 });
+$(document).on('click', '.refresh', function (e) {
+
+    location.reload();
+});

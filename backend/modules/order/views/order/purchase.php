@@ -9,8 +9,10 @@ use yii\jui\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\Order */
 ?>
+
 <div class="panel-heading" style="background-color: #ccffcc;">
     <span class="panel-title"><h3>รายการ Orders ที่ยังไม่สร้าง PO</h3></span>
+    <span class="pull-right refresh"><img src="<?= Yii::$app->homeUrl . 'images/icon/refresh.png' ?>" style="width:50px;height:50px;margin-top: -70px;cursor: pointer;"></span>
 </div>
 <div class="panel-body">
     <table class="table" >
@@ -22,6 +24,8 @@ use yii\jui\DatePicker;
         </tr>
 
         <?php
+        //$a = Yii::$app->homeUrl;
+        //throw new \yii\base\Exception($a);
         if (isset($model) && !empty($model)) {
             $i = 1;
             $a = 0;
@@ -84,7 +88,7 @@ use yii\jui\DatePicker;
                     <td style="vertical-align: middle;text-align: center;width: 5%;"><?= $i ?></td>
                     <td style="vertical-align: middle;text-align: center;width: 30%;"><?= $po->poNo ?></td>
                     <td style="vertical-align: middle;text-align: center;width: 15%;"><?= $this->context->dateThai($po->createDateTime, 1) ?></td>
-                    <td style="vertical-align: middle;text-align: center;width: 15%;"><?= $po->status ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 15%;"><?= \common\models\costfit\StoreProductGroup::getStatusText($po->status) ?></td>
                     <td style="vertical-align: middle;text-align: center;width: 15%;"><?= Html::a('<i class="fa fa-print" aria-hidden="true"></i> พิมพ์ซ้ำ', ['reprint-po', 'storeProductGroupId' => $po->storeProductGroupId], ['class' => 'btn btn-md btn-warning pono', 'target' => '_blank']) ?></td>
                 </tr>
                 <?php
