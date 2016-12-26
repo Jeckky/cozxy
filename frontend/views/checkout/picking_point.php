@@ -65,7 +65,7 @@ $pickingId = rand(0, 9999);
     ?>
 </div>
 
-<div class="form-group col-lg-6 col-md-6 col-sm-6">
+<div class="form-group col-lg-6 col-md-6 col-sm-6 ">
     <?php
 // Child level 2
 //echo Html::hiddenInput('input-type-11', $pickingPoint->amphurId, ['id' => 'input-type-11']);
@@ -77,9 +77,9 @@ $pickingId = rand(0, 9999);
             'attribute' => 'amphurId',
             'options' => ['placeholder' => 'Select ...'],
             'type' => DepDrop::TYPE_SELECT2,
-            'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+            'select2Options' => ['pluginOptions' => ['allowClear' => true,]],
             'pluginOptions' => [
-                'class' => 'required',
+                'class' => 'required ',
                 'initialize' => true,
                 'depends' => ['pickingpoint-provinceid'],
                 'url' => Url::to(['child-amphur-address-picking-point']),
@@ -96,7 +96,7 @@ $pickingId = rand(0, 9999);
             //'type' => DepDrop::TYPE_SELECT2,
             'select2Options' => ['pluginOptions' => ['allowClear' => true]],
             'pluginOptions' => [
-                'class' => 'required form-control input-lg',
+                'class' => 'required form-control ',
                 'initialize' => true,
                 'depends' => ['pickingpoint-provinceid'],
                 'url' => Url::to(['child-amphur-address-picking-point']),
@@ -109,6 +109,7 @@ $pickingId = rand(0, 9999);
     <?php
     echo Html::hiddenInput("amphurDDId", $cityId, ['id' => "amphurDDId"]);
     ?>
+
 </div>
 
 <div class="form-group col-lg-6 col-md-6 col-sm-6">
