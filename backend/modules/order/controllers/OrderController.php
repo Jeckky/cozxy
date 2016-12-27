@@ -3,6 +3,7 @@
 namespace backend\modules\order\controllers;
 
 use Yii;
+use yii\helpers\Html;
 use common\models\costfit\Order;
 use yii\data\ActiveDataProvider;
 use backend\controllers\BackendMasterController;
@@ -289,9 +290,42 @@ class OrderController extends OrderMasterController {
         $this->printPdf($content, $header);
     }
 
+    public function actionRealTime() {
+        echo '<table class="table">';
+        echo '<tr style="height: 50px;background-color: #F0FFFF;">';
+        echo '<th style="vertical-align: middle;text-align: center;width: 10%;">ลำดับที่</th>';
+        echo '<th style="vertical-align: middle;text-align: center;width: 30%;">Order Invoice.</th>';
+        echo '<th style="vertical-align: middle;text-align: center;width: 15%;">จำนวนรายการ</th>';
+        echo '<th style="vertical-align: middle;text-align: center;width: 30%;">สถานะ</th>';
+        echo '</tr>';
+        $model = Order::find()->where("status=" . Order::ORDER_STATUS_E_PAYMENT_SUCCESS)->all();
+        if (isset($model)) {
+            $i = 1;
+            $a = 0;
+            foreach ($model as $order):
+
+                echo '<tr>';
+                echo '<td style="vertical-align: middle;text-align: center;width: 5%;">' . $i . '</td>';
+                echo '<td style = "vertical-align: middle;text-align: center;width: 30%;">' . $order->invoiceNo . '</td>';
+                echo '<td style="vertical-align: middle;text-align: center;width: 15%;">' . Order::countOrderItem($order->orderId) . ' รายการ</td>';
+                echo '<td style = "vertical-align: middle;text-align: center;width: 15%;">' . $order->getStatusText($order->status) . '</td>';
+                echo '</tr>';
+                $orderId[$a] = $order->orderId;
+                $a++;
+                $i++;
+            endforeach;
+        }else {
+            echo '<tr><td colspan="5" style="text-align: center; background-color: #cccccc;"><h4> ไม่มีข้อมูล</h4></td></tr>';
+        }
+        echo '<table>';
+        if (isset($model) && !empty($model)) {
+            echo '<div class="pull-right">' . Html::a('<i class="fa fa-check-square-o" aria-hidden="true">  สร้างใบ PO</i>', ['create-po', 'orderId' => $orderId], ['class' => 'btn btn-lg btn-success pono', 'target' => '_blank']) . '</div>';
+        }
+    }
+
     public static function checkDupplicateId($array, $newIndex) {
         $check = 0;
-        //throw new \yii\base\Exception(print_r($array, true));
+//throw new \yii\base\Exception(print_r($array, true));
         foreach ($array as $old):
             if ($old == $newIndex) {
                 $check++;
@@ -306,42 +340,42 @@ class OrderController extends OrderMasterController {
 
     static function printPdf($content, $header) {
         $pdf = new Pdf([
-            // set to use core fonts only
+// set to use core fonts only
             'mode' => Pdf::MODE_UTF8,
-            // A4 paper format
+// A4 paper format
             'format' => Pdf::FORMAT_A4,
-            // portrait orientation
+// portrait orientation
             'orientation' => Pdf::ORIENT_PORTRAIT,
-            // stream to browser inline
+// stream to browser inline
             'destination' => Pdf::DEST_BROWSER,
-            // your html content input
+// your html content input
             'content' => $content,
-            // format content from your own css file if needed or use the
-            // enhanced bootstrap css built by Krajee for mPDF formatting
+// format content from your own css file if needed or use the
+// enhanced bootstrap css built by Krajee for mPDF formatting
             'cssFile' => '@backend/web/css/pdf.css',
-            // any css to be embedded if required
+// any css to be embedded if required
             'cssInline' => '.kv-heading-1{font-size:14px}',
-            //'cssInline' => 'body{font-size:9px}',
-            // set mPDF properties on the fly
-            // 'defaultFontSize' => 3,
-            // 'marginLeft' => 10,
-            // 'marginRight' => 10,
+//'cssInline' => 'body{font-size:9px}',
+// set mPDF properties on the fly
+// 'defaultFontSize' => 3,
+// 'marginLeft' => 10,
+// 'marginRight' => 10,
             'marginTop' => 10,
-            // 'marginBottom' => 11,
-            //'marginHeader' => 6,
-            //'marginFooter' => 6,
-            // 'options' => ['title' => 'Cost.fit Print '],
-            // call mPDF methods on the fly
+// 'marginBottom' => 11,
+//'marginHeader' => 6,
+//'marginFooter' => 6,
+// 'options' => ['title' => 'Cost.fit Print '],
+// call mPDF methods on the fly
             'methods' => [
                 'SetHeader' => [$header], //Krajee Report Header
-                // 'SetFooter' => ['{PAGENO}'],
-                // 'SetHeader' => FALSE, //Krajee Report Header
+// 'SetFooter' => ['{PAGENO}'],
+// 'SetHeader' => FALSE, //Krajee Report Header
                 'SetFooter' => ['{PAGENO} / {nbpg}'],
             ]
         ]);
 
 
-        // return the pdf output as per the destination setting
+// return the pdf output as per the destination setting
         return $pdf->render();
     }
 
