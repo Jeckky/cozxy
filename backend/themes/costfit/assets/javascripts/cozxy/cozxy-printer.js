@@ -299,7 +299,20 @@ function newKey(key) {
     }
     return a;
 }
-
+$(document).on('click', '.reprint', function (e) {
+    var url = $baseUrl + 'order/order/reprint-real-time';
+    $.ajax({
+        url: url,
+        data: 'status=1',
+        type: 'post',
+        success: function (data) {
+            $('#allPoes').html(data);
+            $('#allPoes').fadeToggle('fade')
+        },
+    });
+    $('.reprint').hide();
+    $('.reprint2').show();
+});
 $(document).on('click', '.reprint2', function (e) {
     $('#allPoes').hide();
     $('.reprint').show();
@@ -322,18 +335,3 @@ $(document).on('mouseout', '.refresh2', function (e) {
     $('.refresh').show();
 });
 ///
-$(function () {
-    var url = $baseUrl + 'order/order/real-time';
-    setInterval(function () { // เขียนฟังก์ชัน javascript ให้ทำงานทุก ๆ 30 วินาที
-        // 1 วินาที่ เท่า 1000
-        // คำสั่งที่ต้องการให้ทำงาน ทุก ๆ 3 วินาที
-        var getData = $.ajax({// ใช้ ajax ด้วย jQuery ดึงข้อมูลจากฐานข้อมูล
-            url: url,
-            data: "rev=1",
-            async: false,
-            success: function (getData) {
-                $("#showData").html(getData); // ส่วนที่ 3 นำข้อมูลมาแสดง
-            }
-        }).responseText;
-    }, 1000);
-});

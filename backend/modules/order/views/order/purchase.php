@@ -10,19 +10,22 @@ use yii\jui\DatePicker;
 /* @var $model common\models\costfit\Order */
 ?>
 <?php
-$baseUrl = $js = "$(document).on('click', '.reprint', function (e) {
-    var url = 'order/order/reprint-real-time';
-    $.ajax({
-        url: url,
-        data: 'status=1',
-        type: 'post',
-        success: function (data) {
-            $('#allPoes').html(data);
-            $('#allPoes').fadeToggle('fade')
-        },
-    });
-    $('.reprint').hide();
-    $('.reprint2').show();
+$baseUrl = '';
+$js = "
+$(function () {
+    var url = 'real-time';
+    setInterval(function () { // เขียนฟังก์ชัน javascript ให้ทำงานทุก ๆ 30 วินาที
+        // 1 วินาที่ เท่า 1000
+        // คำสั่งที่ต้องการให้ทำงาน ทุก ๆ 3 วินาที
+        var getData = $.ajax({// ใช้ ajax ด้วย jQuery ดึงข้อมูลจากฐานข้อมูล
+            url: url,
+            data: 'rev=1',
+            async: false,
+            success: function (getData) {
+                $('#showData').html(getData); // ส่วนที่ 3 นำข้อมูลมาแสดง
+            }
+        }).responseText;
+    }, 1000);
 });";
 $this->registerJs($js);
 ?>
