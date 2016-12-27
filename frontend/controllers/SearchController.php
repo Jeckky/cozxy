@@ -45,15 +45,15 @@ class SearchController extends MasterController {
         //$whereArray["pps.status"] = 1;
         $products = \common\models\costfit\CategoryToProduct::find()
                 ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
-                //->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
-                //->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+                ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+                ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
 //->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = category_to_product.productId")
                 ->where($whereArray);
         if (isset($_POST["min"])) {
-            $products->andWhere("product_price.price >=" . $_POST["min"]);
+            $products->andWhere("pps.price >=" . $_POST["min"]);
         }
         if (isset($_POST["max"])) {
-            $products->andWhere("product_price.price <=" . $_POST["max"]);
+            $products->andWhere("pps.price <=" . $_POST["max"]);
         }
 
         if (isset($params['brandId'])) {
