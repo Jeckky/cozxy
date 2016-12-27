@@ -31,7 +31,7 @@ class ApproveController extends ManagementMasterController {
 
             $productSupp = new ActiveDataProvider([
                 'query' => \common\models\costfit\ProductSuppliers:: find()
-                ->where('approve = "new"')
+                ->where('approve in ("new","old")')
                 ->andWhere('userId =' . $userId)
             ]);
 
@@ -53,7 +53,7 @@ class ApproveController extends ManagementMasterController {
 
             $productSupp = new ActiveDataProvider([
                 'query' => \common\models\costfit\ProductSuppliers:: find()
-                ->where('approve = "new"'),
+                ->where('approve in ("new","old")'),
             ]);
 
             $productSuppApprove = new ActiveDataProvider([
