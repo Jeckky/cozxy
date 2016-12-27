@@ -107,7 +107,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
             $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
                 //return $this->redirect(['product-price-suppliers/index?productSuppId = ' . $_GET['productSuppId']]);
-                return $this->redirect('/suppliers/product-suppliers/image-form?productSuppId=' . $model->productSuppId);
+                return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-suppliers/image-form?productSuppId=' . $model->productSuppId);
                 //return $this->redirect('/suppliers/product-price-suppliers/create?productSuppId=' . $model->productSuppId);
             }
         }
@@ -147,7 +147,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
             $model->attributes = $_POST["ProductPriceSuppliers"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
-                return $this->redirect(['product-price-suppliers/index?productSuppId=' . $model->productSuppId]);
+                return $this->redirect(Yii::$app->homeUrl . 'product-price-suppliers/index?productSuppId=' . $model->productSuppId);
             }
         }
         $productLastDay = Suppliers::LastDay($_GET['productSuppId']);
@@ -172,7 +172,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
     public function actionDelete($id) {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['product-price-suppliers/index?productSuppId=' . $_GET['productSuppId']]);
+        return $this->redirect(Yii::$app->homeUrl . 'product-price-suppliers/index?productSuppId=' . $_GET['productSuppId']);
     }
 
     /**
