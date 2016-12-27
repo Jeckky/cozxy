@@ -94,6 +94,7 @@ class ApproveController extends ManagementMasterController {
     }
 
     public function actionView($id) {
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
