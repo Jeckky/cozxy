@@ -80,7 +80,7 @@ class ProductImageSuppliersController extends SuppliersMasterController {
         $id = Yii::$app->request->get('id');
         $this->findModel($id)->delete();
         //return $this->redirect(['product-suppliers/image-form?productSuppId=' . $productSuppId]);
-        return $this->redirect(Yii::$app->homeUrl . 'product-suppliers/image-form?productSuppId=' . $productSuppId);
+        return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-suppliers/image-form?productSuppId=' . $productSuppId);
     }
 
     /**
