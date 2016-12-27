@@ -257,9 +257,7 @@ class OrderController extends OrderMasterController {
                 $order->updateDateTime = new \yii\db\Expression('NOW()');
                 $order->save(false);
             endforeach;
-
             $storeProductGroupId = $this->saveStoreProduct($orders, $supplierId);
-            //throw new \yii\base\Exception(print_r($orders, true));
             $header = $this->renderPartial('header');
             $content = $this->renderPartial('content', [
                 'storeProductGroupId' => $storeProductGroupId,
@@ -365,12 +363,13 @@ class OrderController extends OrderMasterController {
             if ($old == $newIndex) {
                 $check++;
             }
-            if ($check == 0) {
-                return true;
-            } else {
-                return false;
-            }
+
         endforeach;
+        if ($check == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     static function printPdf($content, $header) {

@@ -31,7 +31,6 @@ $this->registerJs($js);
 ?>
 <div class="panel-heading" style="background-color: #ccffcc;">
     <span class="panel-title"><h3>รายการ Orders ที่ยังไม่สร้าง PO</h3></span>
-
 </div>
 <div class="panel-body" id="showData">
 </div>

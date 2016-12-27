@@ -5,10 +5,11 @@ use common\models\costfit\User;
 use common\models\costfit\ProductSuppliers;
 
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
-$i = 1;
+
 $j = 1;
 //throw new \yii\base\Exception(print_r($supplierId, true));
 foreach ($storeProductGroupId as $id):
+    $i = 1;
     $storeProductGroup = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId=" . $id)->one();
     $supplier = User::supplierDetail($storeProductGroup->supplierId);
     ?>

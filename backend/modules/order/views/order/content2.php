@@ -5,7 +5,6 @@ use common\models\costfit\User;
 use common\models\costfit\ProductSuppliers;
 
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
-$i = 1;
 //throw new \yii\base\Exception(print_r($supplierId, true));
 $supplier = User::supplierDetail($storeProductGroup->supplierId);
 ?>
@@ -77,6 +76,7 @@ $supplier = User::supplierDetail($storeProductGroup->supplierId);
 </thead>
 <tbody>
     <?php
+    $i = 1;
     //throw new \yii\base\Exception(print_r($orders, true));
     $items = \common\models\costfit\StoreProduct::allProductInPo($storeProductGroup->storeProductGroupId); //group Product
     $allTotal = 0;
