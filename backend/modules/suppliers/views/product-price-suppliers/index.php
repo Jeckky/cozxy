@@ -119,10 +119,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
             <div class="row">
                 <div class="col-md-6"><?= $this->title ?> : ราคาขายสินค้า</div>
                 <div class="col-md-6">
-                    <div class="btn-group pull-right">
-                        <?= Html::a('<i class=\'fa fa-angle-left\'></i><i class=\'fa fa-angle-left\'></i> Back To Product Suppliers', ['/suppliers/product-suppliers'], ['class' => 'btn btn-warning btn-xs']) ?>
-                        <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Product Price Suppliers', ['create?productSuppId=' . $_GET["productSuppId"]], ['class' => 'btn btn-success btn-xs']) ?>
-                    </div>
+                    <?php
+                    if (Yii::$app->user->identity->type == 4) {
+                        ?>
+                        <div class="btn-group pull-right">
+                            <?= Html::a('<i class=\'fa fa-angle-left\'></i><i class=\'fa fa-angle-left\'></i> Back To Product Suppliers', ['/suppliers/product-suppliers'], ['class' => 'btn btn-warning btn-xs']) ?>
+                            <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Product Price Suppliers', ['create?productSuppId=' . $_GET["productSuppId"]], ['class' => 'btn btn-success btn-xs']) ?>
+                        </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>

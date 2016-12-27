@@ -51,7 +51,11 @@ use yii\widgets\Pjax;
     <div class="panel-heading">
         <span class="panel-title">อัพโหลดรูปภาพเพิ่มเติม</span>
         <div class="panel-heading-controls">
-            <a href="/suppliers/product-suppliers">กลับหน้าหลัก</a>
+            <?php
+            if (Yii::$app->user->identity->type == 4) {
+                ?>
+                <a href="/suppliers/product-suppliers">กลับหน้าหลัก</a>
+            <?php } ?>
         </div> <!-- / .panel-heading-controls -->
     </div>
 
@@ -177,56 +181,57 @@ use yii\widgets\Pjax;
                 <?php } ?>
             </h4>
         </div>
-        <!-- 49.1. $DROPZONEJS_EXAMPLE ====   Example ==== -->
-        <div class="row">
-            <div class="col-md-12">
-                <?php
-                if (isset($_GET['productSuppId'])) {
-                    echo \kato\DropZone::widget([
-                        'options' => [
-                            'url' => \yii\helpers\Url::to(['upload', 'id' => $_GET['productSuppId']]),
-                            'paramName' => 'image',
-                            //'maxFilesize' => '200',
-                            'clickable' => true,
-                            'addRemoveLinks' => true,
-                            'enqueueForUpload' => true,
-                            'dictDefaultMessage' => "<h1><i class='fa fa-cloud-upload'></i><br>Drop files in here<h1><br><span class='dz-text-small'>or click to pick manually</span>",
-                        ],
-                        'clientEvents' => [
-                            'sending' => "function(file, xhr, formData) {
-                        //console.log(file);
-                        }",
-                            'complete' => "function(file){console.log(file)}",
-                            'removedfile' => "function(file){alert(file.name + ' is removed')}"
-                        ],
-                    ]);
-                } else {
-                    echo \kato\DropZone::widget([
-                        'options' => [
-                            'url' => \yii\helpers\Url::to(['upload', 'id' => $_GET['productSuppId']]),
-                            'paramName' => 'image',
-                            //'maxFilesize' => '200',
-                            'clickable' => true,
-                            'addRemoveLinks' => true,
-                            'enqueueForUpload' => true,
-                            'dictDefaultMessage' => "<h1><i class='fa fa-cloud-upload'></i><br>Drop files in here<h1><br><span class='dz-text-small'>or click to pick manually</span>",
-                        ],
-                        'clientEvents' => [
-                            'sending' => "function(file, xhr, formData) {
-                        //console.log(file);
-                        }",
-                            'complete' => "function(file){console.log(file)}",
-                            'removedfile' => "function(file){alert(file.name + ' is removed')}"
-                        ],
-                    ]);
-                }
-                ?>
-            </div>
-        </div>
-        <br><br><br>
         <?php
         if (Yii::$app->user->identity->type == 4) {
             ?>
+            <!-- 49.1. $DROPZONEJS_EXAMPLE ====   Example ==== -->
+            <div class="row">
+                <div class="col-md-12">
+                    <?php
+                    if (isset($_GET['productSuppId'])) {
+                        echo \kato\DropZone::widget([
+                            'options' => [
+                                'url' => \yii\helpers\Url::to(['upload', 'id' => $_GET['productSuppId']]),
+                                'paramName' => 'image',
+                                //'maxFilesize' => '200',
+                                'clickable' => true,
+                                'addRemoveLinks' => true,
+                                'enqueueForUpload' => true,
+                                'dictDefaultMessage' => "<h1><i class='fa fa-cloud-upload'></i><br>Drop files in here<h1><br><span class='dz-text-small'>or click to pick manually</span>",
+                            ],
+                            'clientEvents' => [
+                                'sending' => "function(file, xhr, formData) {
+                        //console.log(file);
+                        }",
+                                'complete' => "function(file){console.log(file)}",
+                                'removedfile' => "function(file){alert(file.name + ' is removed')}"
+                            ],
+                        ]);
+                    } else {
+                        echo \kato\DropZone::widget([
+                            'options' => [
+                                'url' => \yii\helpers\Url::to(['upload', 'id' => $_GET['productSuppId']]),
+                                'paramName' => 'image',
+                                //'maxFilesize' => '200',
+                                'clickable' => true,
+                                'addRemoveLinks' => true,
+                                'enqueueForUpload' => true,
+                                'dictDefaultMessage' => "<h1><i class='fa fa-cloud-upload'></i><br>Drop files in here<h1><br><span class='dz-text-small'>or click to pick manually</span>",
+                            ],
+                            'clientEvents' => [
+                                'sending' => "function(file, xhr, formData) {
+                        //console.log(file);
+                        }",
+                                'complete' => "function(file){console.log(file)}",
+                                'removedfile' => "function(file){alert(file.name + ' is removed')}"
+                            ],
+                        ]);
+                    }
+                    ?>
+                </div>
+            </div>
+            <br><br><br>
+
             <div class="form-group col-sm-12 text-right">
                 <!--<a class="btn wizard-prev-step-btn  btn-lg" href="/suppliers/product-suppliers">Prev</a>-->
                 <!--<a class="btn btn-success btn-lg" href="/suppliers/product-price-suppliers?productSuppId=<?//php echo $_GET['productSuppId']; ?>">Next step</a>-->
