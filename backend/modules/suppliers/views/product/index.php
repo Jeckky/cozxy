@@ -42,7 +42,7 @@
                     </div>
                 </div> <!-- /.stat-row -->
                 <ul class="pager">
-                    <li class=""><a href="/suppliers/product-all">ดูทั้งหมด</a></li>
+                    <li class=""><a href="/suppliers/product-all?userId=<?php echo $value->userId; ?>">ดูทั้งหมด</a></li>
                 </ul>
             </div> <!-- /.stat-panel -->
         </div>
