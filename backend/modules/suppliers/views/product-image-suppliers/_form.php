@@ -61,9 +61,13 @@ use common\models\areawow\ProductSupp;
         <?= (isset($model->imageThumbnail2) && !empty($model->imageThumbnail2)) ? Html::hiddenInput((new ReflectionClass($model))->getShortName() . '[imageOld]', $model->imageThumbnail2) : ''; ?>
 
         <div class="form-group">
-            <div class="col-sm-9 col-sm-offset-3"> 
-                <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-            </div>
+            <?php
+            if (Yii::$app->user->identity->type == 4) {
+                ?>
+                <div class="col-sm-9 col-sm-offset-3">
+                    <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                </div>
+            <?php } ?>
         </div>
     </div>
     <?php ActiveForm::end(); ?>

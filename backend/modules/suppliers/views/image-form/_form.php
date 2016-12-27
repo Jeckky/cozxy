@@ -224,12 +224,16 @@ use yii\widgets\Pjax;
             </div>
         </div>
         <br><br><br>
-        <div class="form-group col-sm-12 text-right">
-            <!--<a class="btn wizard-prev-step-btn  btn-lg" href="/suppliers/product-suppliers">Prev</a>-->
-            <!--<a class="btn btn-success btn-lg" href="/suppliers/product-price-suppliers?productSuppId=<?//php echo $_GET['productSuppId']; ?>">Next step</a>-->
-            <!--<a class="btn btn-primary wizard-next-step-btn  btn-lg" href="<?//php Yii::$app->homeUrl ?>index">Skip</a>-->
-            <a class="btn btn-primary wizard-next-step-btn  btn-lg" href="<?//php Yii::$app->homeUrl ?>index">Finish</a>
-        </div>
+        <?php
+        if (Yii::$app->user->identity->type == 4) {
+            ?>
+            <div class="form-group col-sm-12 text-right">
+                <!--<a class="btn wizard-prev-step-btn  btn-lg" href="/suppliers/product-suppliers">Prev</a>-->
+                <!--<a class="btn btn-success btn-lg" href="/suppliers/product-price-suppliers?productSuppId=<?//php echo $_GET['productSuppId']; ?>">Next step</a>-->
+                <!--<a class="btn btn-primary wizard-next-step-btn  btn-lg" href="<?//php Yii::$app->homeUrl ?>index">Skip</a>-->
+                <a class="btn btn-primary wizard-next-step-btn  btn-lg" href="<?//php Yii::$app->homeUrl ?>index">Finish</a>
+            </div>
+        <?php } ?>
     </div>
     <?php ActiveForm::end(); ?>
     <script>
