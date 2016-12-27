@@ -117,7 +117,7 @@ class ProductSuppliersController extends SuppliersMasterController {
                 }
             }
             //return $this->redirect('image-form?productSuppId=' . $model->productSuppId);
-            return $this->redirect('/suppliers/product-price-suppliers/create?productSuppId=' . $model->productSuppId);
+            return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-price-suppliers/create?productSuppId=' . $model->productSuppId);
         } else {
             return $this->render('create', [
                 'model' => $model
