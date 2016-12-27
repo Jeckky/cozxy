@@ -40,7 +40,7 @@ class SearchController extends MasterController {
 //        throw new \yii\base\Exception(print_r($_POST, true));
         $whereArray = [];
         $whereArray["category_to_product.categoryId"] = $params['categoryId'];
-        //$whereArray["product.approve"] = "approve";
+        $whereArray["product.approve"] = "approve";
         //$whereArray["product_price.quantity"] = 1;
         //$whereArray["pps.status"] = 1;
         $products = \common\models\costfit\CategoryToProduct::find()
