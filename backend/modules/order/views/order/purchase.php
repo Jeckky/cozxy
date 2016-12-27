@@ -22,7 +22,7 @@ use yii\jui\DatePicker;
 <div class="panel-heading reprint2" style="background-color: #99ccff;color: #F0FFFF;cursor: pointer; display: none;">
     <h3><b><i class="fa fa-minus-circle" aria-hidden="true"></i> Reprint PO</b></h3>
 </div>
-<div class="panel-body allPoes fade in" style="display: none;">
+<div class="panel-body" style="display: none;" id="allPoes">
     <table class="table" >
         <tr style="height: 50px;background-color: #ffffcc;">
             <th style="vertical-align: middle;text-align: center;width: 10%;">ลำดับที่</th>

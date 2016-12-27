@@ -10,7 +10,7 @@ use yii\jui\DatePicker;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'ใบ PO ที่ยังไม่ตรวจรับ / จัดเรียง';
+$this->title = 'รายการ PO ที่ยังไม่ตรวจรับ';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
@@ -52,7 +52,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     ],
                         [
                         'attribute' => 'noProduct',
-                        'label' => 'No. Of Product',
+                        'label' => 'No. Of Product(s)',
                         'value' => function($model) {
                             return count($model->storeProducts);
                         }
@@ -69,25 +69,25 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     // 'updateDateTime',
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
-                        'template' => '{view} {update} {delete} {product} {qc} {arrange}',
+                        'template' => '{view} {product} {qc}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-eye"></i>', $url, [
                                             'title' => Yii::t('yii', 'view'),
                                 ]);
                             },
-                            'update' => function ($url, $model) {
-                                return Html::a('<i class="fa fa-pencil"></i>', $url, [
-                                            'title' => Yii::t('yii', 'update'),
-                                ]);
-                            },
-                            'delete' => function ($url, $model) {
-                                return Html::a('<i class="fa fa-trash-o"></i>', $url, [
-                                            'title' => Yii::t('yii', 'Delete'),
-                                            'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
-                                            'data-method' => 'post',
-                                ]);
-                            },
+//                            'update' => function ($url, $model) {
+//                                return Html::a('<i class="fa fa-pencil"></i>', $url, [
+//                                            'title' => Yii::t('yii', 'update'),
+//                                ]);
+//                            },
+//                            'delete' => function ($url, $model) {
+//                                return Html::a('<i class="fa fa-trash-o"></i>', $url, [
+//                                            'title' => Yii::t('yii', 'Delete'),
+//                                            'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+//                                            'data-method' => 'post',
+//                                ]);
+//                            },
                             'product' => function($url, $model) {
                                 return Html::a('<br><u>Product</u>', ['/store/store-product', 'storeProductGroupId' => $model->storeProductGroupId], [
                                             'title' => Yii::t('app', 'Change today\'s lists'),]);
@@ -96,10 +96,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 return Html::a('<br><u>ตรวจรับ</u>', ['/store/store-product/check', 'storeProductGroupId' => $model->storeProductGroupId], [
                                             'title' => Yii::t('app', 'check\'s lists'),]);
                             },
-                            'arrange' => function($url, $model) {
-                                return Html::a('<br><u>จัดเรียง</u>', ['/store/store-product/arrange', 'storeProductGroupId' => $model->storeProductGroupId], [
-                                            'title' => Yii::t('app', 'check\'s lists'),]);
-                            },
+//                            'arrange' => function($url, $model) {
+//                                return Html::a('<br><u>จัดเรียง</u>', ['/store/store-product/arrange', 'storeProductGroupId' => $model->storeProductGroupId], [
+//                                            'title' => Yii::t('app', 'check\'s lists'),]);
+//                            },
                         ]
                     ],
                 ],
@@ -158,7 +158,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <th style="vertical-align: middle;text-align: center;width: 5%;">Supplier</th>
                     <th style="vertical-align: middle;text-align: center;width: 25%;">Po No</th>
                     <th style="vertical-align: middle;text-align: center;width: 20%;">Receive Date</th>
-                    <th style="vertical-align: middle;text-align: center;width: 20%;">No. of product(s)</th>
+                    <th style="vertical-align: middle;text-align: center;width: 20%;">No. Of Product(s)</th>
                     <th style="vertical-align: middle;text-align: center;width: 20%;">Summary</th>
                     <th style="vertical-align: middle;text-align: center;width: 10%;">Status</th>
                 </tr>
@@ -190,7 +190,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 } else {
                     ?>
                     <tr>
-                        <th style="vertical-align: middle;text-align: center;width: 5%;background-color:#cccccc;" colspan="4"><i><h4>ไม่มีรายการ PO</h4></i></th>
+                        <th style="vertical-align: middle;text-align: left;width: 5%;background-color:#cccccc;" colspan="6">ไม่พบผลลัพธ์</th>
                     </tr>
                 <?php } ?>
             </table>
