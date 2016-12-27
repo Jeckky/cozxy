@@ -35,7 +35,7 @@
                             </div>
                             <div class="col-sm-12" style="padding: 5px;">
                                 อนุมัติ <span class="label label-warning ticket-label">
-                                    <?php echo common\helpers\Suppliers::GetCountProductApprove($value->userId); ?>
+                                    <?php echo common\helpers\Suppliers::GetCountProductWait($value->userId); ?>
                                 </span>&nbsp;รายการ
                             </div>
                         </div>

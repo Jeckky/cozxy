@@ -249,7 +249,7 @@ class Suppliers {
     }
 
     public static function GetCountProductWait($userId) {
-        $count = \common\models\costfit\ProductSuppliers::find()->where('userId=' . $userId . ' and approve != "approve" ')->count();
+        $count = \common\models\costfit\ProductSuppliers::find()->where('userId=' . $userId . ' and approve in ("new","old") ')->count();
         return $count;
     }
 
