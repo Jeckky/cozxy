@@ -470,7 +470,6 @@ $('.investigate-approve').on('click', function () {
             if (typeof (JSONObject2.simage) != 'object') {
 
                 var simage = JSONObject2.simage.split(',');
-
                 for (var x in simage) {
                     //console.log(simage[x]);
                     //var simage_n = '< img class = "img-responsive" src = "/' + simage[x] + '" alt = "" style = "width:100px;height:100px;" >';
