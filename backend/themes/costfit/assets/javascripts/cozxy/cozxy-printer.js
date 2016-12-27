@@ -299,13 +299,9 @@ function newKey(key) {
     }
     return a;
 }
-$(document).on('click', '.reprint', function (e) {
-    $('#allPoes').fadeToggle("fade");
-    $('.reprint').hide();
-    $('.reprint2').show();
-});
+
 $(document).on('click', '.reprint2', function (e) {
-    $('#allPoes').fadeToggle("fade");
+    $('#allPoes').hide();
     $('.reprint').show();
     $('.reprint2').hide();
 });
