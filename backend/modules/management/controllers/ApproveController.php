@@ -35,9 +35,10 @@ class ApproveController extends ManagementMasterController {
                 ->andWhere('userId =' . $userId)
             ]);
 
+            // Approve แล้ว 27/12/2016
             $productSuppApprove = new ActiveDataProvider([
                 'query' => \common\models\costfit\ProductSuppliers:: find()
-                ->where('approve = "approve"')
+                ->where('approve  in ("approve") ')
                 ->andWhere('userId =' . $userId)
             ]);
         } else {
@@ -56,9 +57,10 @@ class ApproveController extends ManagementMasterController {
                 ->where('approve in ("new","old")'),
             ]);
 
+            // Approve แล้ว 27/12/2016
             $productSuppApprove = new ActiveDataProvider([
                 'query' => \common\models\costfit\ProductSuppliers:: find()
-                ->where('approve = "approve"'),
+                ->where('approve in ("approve") '),
             ]);
         }
 
@@ -72,7 +74,7 @@ class ApproveController extends ManagementMasterController {
         $productId = Yii::$app->request->post('productSuppId');
         $type = Yii::$app->request->post('type');
         if ($type == 1) { // Product Suppliers
-            $ps = \common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $productId . ' and approve = "new"')->one();
+            $ps = \common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $productId . ' ')->one(); // and approve = "new"
             $ps->approve = 'approve';
             $ps->approveCreateBy = Yii::$app->user->identity->userId;
             $ps->approvecreateDateTime = new \yii\db\Expression('NOW()');

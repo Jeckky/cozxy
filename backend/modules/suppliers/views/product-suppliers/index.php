@@ -79,7 +79,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'format' => 'html',
                         'value' => function($model) {
                             if ($model->approve == 'old') {
-                                $txt = '<span class="text-success">อนุมัติแล้ว</span>';
+                                $txt = '<span class="text-warning">รออนุมัติ</span>';
                             } else if ($model->approve == 'approve') {
                                 $txt = '<span class="text-success">อนุมัติแล้ว</span>';
                             } else if ($model->approve == 'new') {

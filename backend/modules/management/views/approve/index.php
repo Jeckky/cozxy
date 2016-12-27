@@ -127,7 +127,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 'value' => function($model) {
                                                     $type = 'supp';
                                                     $approve_txt = '<div id="switchers-colors-square" class="form-group-margin"  onchange="switchers(' . $model->productSuppId . ',1)">';
-                                                    if ($model->approve == 'new') {
+                                                    if ($model->approve != 'approve') {
                                                         $approve_txt .= '<input type="checkbox" data-class="switcher-warning" >';
                                                     } else {
                                                         $approve_txt .= '<input type="checkbox" data-class="switcher-warning"   checked="checked" >';
