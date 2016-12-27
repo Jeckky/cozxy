@@ -240,29 +240,52 @@ class OrderController extends OrderMasterController {
     public function actionCreatePo() {
         $supplierId[0] = 0;
         $i = 0;
+        $r = 0;
+        $orderIds = [];
         if (isset($_GET['orderId']) && !empty($_GET['orderId'])) {
             $orders = $_GET['orderId'];
             foreach ($orders as $orderId):
-                $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
-                foreach ($orderItems as $orderItem):
-                    $flag = false;
-                    $flag = $this->checkDupplicateId($supplierId, $orderItem->supplierId);
-                    if ($flag == true) {
-                        $supplierId[$i] = $orderItem->supplierId; //ได้ supplierId
-                        $i++;
-                    }
-                endforeach;
-                $order = Order::find()->where("orderId=" . $orderId)->one();
-                $order->status = Order::ORDER_STATUS_CREATEPO;
-                $order->updateDateTime = new \yii\db\Expression('NOW()');
-                $order->save(false);
+                $checkStatus = false;
+                $checkStatus = $this->checkOrderStatus($orderId);
+                if ($checkStatus == true) {
+                    $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
+                    foreach ($orderItems as $orderItem):
+                        $flag = false;
+                        $flag = $this->checkDupplicateId($supplierId, $orderItem->supplierId);
+                        if ($flag == true) {
+                            $supplierId[$i] = $orderItem->supplierId; //ได้ supplierId
+                            $i++;
+                        }
+                    endforeach;
+                    $order = Order::find()->where("orderId=" . $orderId)->one();
+                    $order->status = Order::ORDER_STATUS_CREATEPO;
+                    $order->updateDateTime = new \yii\db\Expression('NOW()');
+                    $order->save(false);
+                    $orderIds[$r] = $orderId;
+                    $r++;
+                }
             endforeach;
-            $storeProductGroupId = $this->saveStoreProduct($orders, $supplierId);
-            $header = $this->renderPartial('header');
-            $content = $this->renderPartial('content', [
-                'storeProductGroupId' => $storeProductGroupId,
-            ]);
-            $this->printPdf($content, $header);
+            if (isset($orderIds) && !empty($orderIds)) {
+                $storeProductGroupId = $this->saveStoreProduct($orderIds, $supplierId);
+                $header = $this->renderPartial('header');
+                $content = $this->renderPartial('content', [
+                    'storeProductGroupId' => $storeProductGroupId,
+                ]);
+                $this->printPdf($content, $header);
+            } else {
+                $ms = '';
+                $model = Order::find()->where("status=" . Order::ORDER_STATUS_E_PAYMENT_SUCCESS)->all();
+                if (!isset($model)) {
+                    $ms = 'ไม่มีรายการสั่งซื้อ';
+                    return $this->render('purchase', [
+                                'ms' => $ms
+                    ]);
+                } else {
+                    return $this->render('purchase', [
+                                'model' => $model,
+                    ]);
+                }
+            }
         } else {
             $ms = '';
             $model = Order::find()->where("status=" . Order::ORDER_STATUS_E_PAYMENT_SUCCESS)->all();
@@ -411,6 +434,19 @@ class OrderController extends OrderMasterController {
 
 // return the pdf output as per the destination setting
         return $pdf->render();
+    }
+
+    public static function checkOrderStatus($orderId) {
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        if (isset($order) && !empty($order)) {
+            if ($order->status == Order::ORDER_STATUS_E_PAYMENT_SUCCESS) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     public static function saveStoreProduct($orders, $supplierId) {

@@ -13,13 +13,25 @@ foreach ($storeProductGroupId as $id):
     $storeProductGroup = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId=" . $id)->one();
     $supplier = User::supplierDetail($storeProductGroup->supplierId);
     ?>
+    <?php
+    $showText = '';
+    if ($supplier != '') {
+        if (($supplier->firstname != null)) {
+            $showText = $supplier->firstname . " " . $supplier->lastname;
+        } else {
+            $showText = $supplier->company;
+        }
+    } else {
+        $showText = 'ไม่มีข้อมูล Supplier';
+    }
+    ?>
     <br><br><br><br>
     <div style="width: 100%;font-size: 10px;margin-top: 2px;">
         <div style="width: 50%;height: 90px;border:solid 0.5px #000000;-webkit-border-radius:10px;
              -moz-border-radius:10px;
              border-radius:10px;padding-left: 10px;">
-            ชื่อผู้ขาย/Vendor Name : <b><?= $supplier != '' ? $supplier->firstname . " " . $supplier->lastname : '' ?></b><br>
-            ที่อยู่ / Address : <b><?= $supplier != '' ? User::supplierAddressText($supplier->addressId) : '' ?></b>
+            ชื่อผู้ขาย/Vendor Name : <b><?= $showText ?></b><br>
+            ที่อยู่ / Address : <b><?= $supplier != '' ? User::supplierAddressText($supplier->addressId) : 'ไม่มีข้อมูลที่อยู่ Supplier' ?></b>
         </div>
         <div style="width: 45%;height: 90px;border:solid 0.5px #000000;-webkit-border-radius:10px;
              -moz-border-radius:10px;
