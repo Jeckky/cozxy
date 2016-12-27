@@ -15,6 +15,7 @@ use yii\base\Model;
  * Description of GetBrowser
  *
  * @author it
+ * 27/12/2016 By Taninut.Bm
  */
 class GetBrowser {
 
