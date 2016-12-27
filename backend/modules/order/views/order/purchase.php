@@ -31,8 +31,7 @@ $this->registerJs($js);
 ?>
 <div class="panel-heading" style="background-color: #ccffcc;">
     <span class="panel-title"><h3>รายการ Orders ที่ยังไม่สร้าง PO</h3></span>
-    <span class="pull-right refresh"><img src="<?= Yii::$app->homeUrl . 'images/icon/refresh.png' ?>" style="width:50px;height:50px;margin-top: -70px;cursor: pointer;"></span>
-    <span class="pull-right refresh2" style="display: none;"><img src="<?= Yii::$app->homeUrl . 'images/icon/refresh.png' ?>" style="width:70px;height:70px;margin-top: -70px;cursor: pointer;"></span>
+
 </div>
 <div class="panel-body" id="showData">
 </div>

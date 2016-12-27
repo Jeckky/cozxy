@@ -318,20 +318,3 @@ $(document).on('click', '.reprint2', function (e) {
     $('.reprint').show();
     $('.reprint2').hide();
 });
-// ปุ่มrefresh create PO
-$(document).on('click', '.refresh', function (e) {
-    location.reload();
-});
-$(document).on('click', '.refresh2', function (e) {
-    location.reload();
-});
-$(document).on('mouseover', '.refresh', function (e) {
-    $('.refresh').hide();
-    $('.refresh2').show();
-
-});
-$(document).on('mouseout', '.refresh2', function (e) {
-    $('.refresh2').hide();
-    $('.refresh').show();
-});
-///
