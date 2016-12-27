@@ -114,7 +114,7 @@ class ApproveController extends ManagementMasterController {
         $productId = Yii::$app->request->post('productId');
         $typeId = Yii::$app->request->post('type');
 
-        if ($typeId == 1) { // cozxy.com
+        if ($typeId == 1) { // Suppliers
             $suppliers = \common\models\costfit\ProductSuppliers::find()
             ->select('`product_suppliers`.*, user.firstname, user.lastname, brand.title as bTitle, category.title as cTitle '
             . ', u1.title as uTitle, u2.title as smuTitle'
@@ -127,7 +127,7 @@ class ApproveController extends ManagementMasterController {
             ->join('LEFT JOIN', 'product_image_suppliers pis', 'product_suppliers.productSuppId = pis.productSuppId')
             ->where('product_suppliers.productSuppId = ' . $productId)
             ->one();
-        } else if ($typeId == 2) { // suppliers
+        } else if ($typeId == 2) { // cozxy.coms
             //$suppliers = \common\models\costfit\Product::find()->where('productId = ' . $productId)->one();
             $suppliers = \common\models\costfit\Product::find()
             ->select('`product`.*, user.firstname, user.lastname, brand.title as bTitle, category.title as cTitle '

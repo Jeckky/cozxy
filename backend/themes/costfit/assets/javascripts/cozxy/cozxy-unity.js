@@ -462,6 +462,10 @@ $('.investigate-approve').on('click', function () {
             //alert(typeof (JSONObject2.simage));
             //alert(typeof (JSONObject2.simageThumbnail1));
             //alert(typeof (JSONObject2.simageThumbnail2));
+            console.log(JSONObject2.simag);
+            console.log(JSONObject2.simageThumbnail1);
+            console.log(JSONObject2.simageThumbnail2);
+            console.log(typeof (JSONObject2.simage));
 
             if (typeof (JSONObject2.simage) != 'object') {
 

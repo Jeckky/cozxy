@@ -202,7 +202,8 @@ class ProductSuppliersController extends SuppliersMasterController {
 
     public function actionUpload() {
 
-        $model = new \common\models\costfit\productImageSuppliers();
+        //$model = new \common\models\costfit\productImageSuppliers();
+        $model = new \common\models\costfit\ProductImageSuppliers();
         /*
          * helpers Upload
          * path : common/helpers/Upload.php
