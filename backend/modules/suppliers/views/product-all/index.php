@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 ?>
-<h1>product-all/index</h1>
+<h1>product ของ Suppliers/index</h1>
 
 <div class="panel-body">
     <?=
