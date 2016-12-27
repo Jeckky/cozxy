@@ -475,7 +475,7 @@ $('.investigate-approve').on('click', function () {
                     //var simage_n = '< img class = "img-responsive" src = "/' + simage[x] + '" alt = "" style = "width:100px;height:100px;" >';
                     //console.log(simage[x]);
                     $('.view-image-s1').append('<div class="col-sm-3" style="padding: 5px;">\n\
-                        <img class="img-responsive" src="/' + simage[x] + '" alt="" style="width:100px;height:100px;">\n\
+                        <img class="img-responsive" src="' + $baseUrl + simage[x] + '" alt="" style="width:100px;height:100px;">\n\
                     </div>');
                 }
 
@@ -486,7 +486,7 @@ $('.investigate-approve').on('click', function () {
                 for (var y in simageThumbnail1) {
                     //console.log(simage[i]);
                     $('.view-thumbnail1-s1').append('<div class="col-sm-3" style="padding: 5px;">\n\
-                            <img class="img-responsive" src="/' + simageThumbnail1[y] + '" alt="" style="width:100px;height:100px;">\n\
+                            <img class="img-responsive" src="' + $baseUrl + simageThumbnail1[y] + '" alt="" style="width:100px;height:100px;">\n\
                         </div>');
                 }
             }
@@ -497,7 +497,7 @@ $('.investigate-approve').on('click', function () {
                 for (var z in simageThumbnail2) {
                     //console.log(simage[i]);
                     $('.view-thumbnail2-s1').append('<div class="col-sm-3" style="padding: 5px;">\n\
-                        <img class="img-responsive" src="/' + simageThumbnail2[z] + '" alt="" style="width:100px;height:100px;">\n\
+                        <img class="img-responsive" src="' + $baseUrl + simageThumbnail2[z] + '" alt="" style="width:100px;height:100px;">\n\
                 </div>');
                 }
             }
