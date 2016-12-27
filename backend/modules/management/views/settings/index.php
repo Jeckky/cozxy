@@ -121,9 +121,26 @@ use leandrogehlen\treegrid\TreeGrid;
 
         <div class="panel ">
             <div class="panel-heading ">
-                <span class="panel-title">Average Product</span>
+                <span class="panel-title">Suppliers.</span>
             </div>
             <div class="panel-body">
+                <div class="col-md-3">
+
+                    <div class="panel panel-default panel-dark panel-body-colorful widget-profile widget-profile-centered">
+                        <div class="panel-heading">
+                            <div class="widget-profile-header">
+                                <a href="<?php echo Yii::$app->homeUrl; ?>suppliers/product" class="btn" style="color: #000;">
+                                    <i class="fa fa-tasks list-group-icon text-danger"></i> Product </a><br>
+                            </div>
+                        </div> <!-- / .panel-heading -->
+                        <div class="panel-body text-left">
+                            <div class="widget-profile-text" style="padding: 0;">
+                                <p class="text-success">อธิบาย</p>
+                                -  รายการสินค้าของแต่ละ Suppliers.
+                            </div>
+                        </div>
+                    </div> <!-- / .panel -->
+                </div>
                 <div class="col-md-3">
 
                     <div class="panel panel-default panel-dark panel-body-colorful widget-profile widget-profile-centered">

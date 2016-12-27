@@ -228,4 +228,29 @@ class Suppliers {
         return $rankTwo;
     }
 
+    /*
+     * แสดงรายชื่อของ Suppliers
+     * table : type = 4
+     */
+
+    public static function GetUserSuppliers() {
+        $user = \common\models\costfit\User::find()->where('type = 4')->all();
+        return $user;
+    }
+
+    public static function GetCountProduct($userId) {
+        $count = \common\models\costfit\ProductSuppliers::find()->where('userId=' . $userId)->count();
+        return $count;
+    }
+
+    public static function GetCountProductApprove($userId) {
+        $count = \common\models\costfit\ProductSuppliers::find()->where('userId=' . $userId . ' and approve = "approve" ')->count();
+        return $count;
+    }
+
+    public static function GetCountProductWait($userId) {
+        $count = \common\models\costfit\ProductSuppliers::find()->where('userId=' . $userId . ' and approve != "approve" ')->count();
+        return $count;
+    }
+
 }
