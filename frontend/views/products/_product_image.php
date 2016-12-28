@@ -4,8 +4,9 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 ?>
 <div class="prod-gal master-slider" id="prod-gal">
     <?php
-//    throw new \yii\base\Exception(count($model->productImages));
-    foreach ($model->productImages as $image) {
+    // throw new \yii\base\Exception($productSupplierId);
+    $images = \common\models\costfit\ProductSuppliers::productImagesSuppliers($productSupplierId);
+    foreach ($images as $image) {
         // รูปภาพ default : /Cozxy.com/assets/img/catalog/product-gallery/th_1.jpg
         ?>
         <div class="ms-slide">

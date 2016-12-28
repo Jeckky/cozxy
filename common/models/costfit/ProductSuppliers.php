@@ -105,7 +105,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
 
     public static function productImageSuppliers($productId) {
         //throw new \yii\base\Exception($productSuppId);
-        $image = ProductImage::find()->where("productId=" . $productId . " and status=1")->one();
+        $image = ProductImageSuppliers::find()->where("productSuppId=" . $productId . " and status=1")->one();
         if (isset($image) && !empty($image)) {
             return $image->imageThumbnail1;
         }
@@ -139,6 +139,14 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
             return $id;
         } else {
             return '';
+        }
+    }
+
+    public static function productImagesSuppliers($productSuppId) {
+        //throw new \yii\base\Exception($productSuppId);
+        $image = ProductImageSuppliers::find()->where("productSuppId=" . $productSuppId . " and status=1")->all();
+        if (isset($image) && !empty($image)) {
+            return $image;
         }
     }
 
