@@ -11,6 +11,7 @@ use common\models\areawow\master;
 use common\models\areawow;
 use kartik\mpdf\Pdf;
 use yii\data\ActiveDataProvider;
+use common\helpers\Notifications;
 
 /**
  * Site controller
@@ -38,6 +39,8 @@ class BackendMasterController extends MasterController {
             $type = Yii::$app->user->identity->type;
             $user_group_Id = Yii::$app->user->identity->user_group_Id;
             $this->view->params['listDataProviderMenu']['menuBackend'] = $dataProvider;
+            $this->view->params['listDataProviderNotifications']['menuNotifications'] = Notifications::NotificationsLogin();
+
 
             //echo 'test menu backend isGuest';
         } else {

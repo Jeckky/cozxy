@@ -24,8 +24,14 @@ class Notifications {
     //put your code here
 
     public static function NotificationsApprove($productSuppId) {
-        $suppliers = \common\models\costfit\Notifications::find()->where('id=' . $productSuppId . ' and type =1')->orderBy('notiId desc')->one();
-        return isset($suppliers) ? $suppliers->notiId : NULL;
+        $Noti = \common\models\costfit\Notifications::find()->where('id=' . $productSuppId . ' and type =1')->orderBy('notiId desc')->one();
+        return isset($Noti) ? $Noti->notiId : NULL;
+    }
+
+    public static function NotificationsLogin() {
+        $NotiLogin = \common\models\costfit\Notifications::find()->where('userId=' . Yii::$app->user->identity->userId . ' and type =1')
+        ->orderBy('notiId desc')->all();
+        return isset($NotiLogin) ? $NotiLogin : NULL;
     }
 
 }

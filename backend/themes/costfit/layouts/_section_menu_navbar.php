@@ -1,4 +1,7 @@
 <?php
+
+use yii\web\View;
+
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 if (!isset(Yii::$app->user->identity->type)) {
@@ -82,9 +85,19 @@ if (!isset(Yii::$app->user->identity->type)) {
 
                                     <div class="notification">
                                         <div class="notification-title text-danger">SYSTEM COZXY</div>
-                                        <div class="notification-description"><strong>Error 500</strong>: Syntax error in index.php at line <strong>461</strong>.</div>
-                                        <div class="notification-ago">12h ago</div>
-                                        <div class="notification-icon fa fa-hdd-o bg-danger"></div>
+                                        <?php
+                                        if (isset($this->params['listDataProviderNotifications']['menuNotifications'])) {
+                                            $menuNotifications = $this->params['listDataProviderNotifications']['menuNotifications'];
+                                            foreach ($menuNotifications as $key => $value) {
+                                                ?>
+                                                <div class="notification-description"><strong>Error 500</strong>: Syntax error in index.php at line <strong>461</strong>.</div>
+                                                <div class="notification-ago">12h ago</div>
+                                                <div class="notification-icon fa fa-hdd-o bg-danger"></div>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+
                                     </div> <!-- / .notification -->
 
                                 </div> <!-- / .notifications-list -->
@@ -136,14 +149,14 @@ if (!isset(Yii::$app->user->identity->type)) {
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle user-menu" data-toggle="dropdown">
                                 <?php
-                                //echo 'gender :: ' . Yii::$app->user->identity->gender;
+//echo 'gender :: ' . Yii::$app->user->identity->gender;
                                 if (Yii::$app->user->identity->gender == 0) {
                                     ?>
                                     <img src="<?php echo $directoryAsset ?>/demo/avatars/female.jpg" alt="">
                                 <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
                                     <img src="<?php echo $directoryAsset ?>/demo/avatars/silhouette.jpg" alt="">
                                 <?php } ?>
-                            <!--<span> <?php //echo Yii::$app->session['firstname'];                                                 ?></span>-->
+<!--<span> <?php //echo Yii::$app->session['firstname'];                                                                   ?></span>-->
                                 <span> <?= isset(Yii::$app->user->identity->email) ? Yii::$app->user->identity->firstname : 'Guest' ?></span>
                             </a>
                             <ul class="dropdown-menu">
