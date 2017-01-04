@@ -1,5 +1,9 @@
 <?php
 /* @var $this yii\web\View */
+
+use yii\helpers\Html;
+use yii\grid\GridView;
+use yii\widgets\Pjax;
 ?>
 <h1>สินค้าของ Suppliers ทั้งหมด/index</h1>
 
@@ -42,7 +46,7 @@
                     </div>
                 </div> <!-- /.stat-row -->
                 <ul class="pager">
-                    <li class=""><a href="<?php echo Yii::$app->homeUrl; ?>/suppliers/product-all?userId=<?php echo $value->userId; ?>">ดูทั้งหมด</a></li>
+                    <li class=""><a href="<?php echo Yii::$app->homeUrl; ?>suppliers/product-all?userId=<?php echo $value->userId; ?>">ดูทั้งหมด</a></li>
                 </ul>
             </div> <!-- /.stat-panel -->
         </div>
