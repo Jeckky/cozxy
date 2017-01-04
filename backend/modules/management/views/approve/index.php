@@ -115,10 +115,20 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             'title',
                                             'quantity',
                                             [
-                                                'attribute' => 'ตรวจสอบข้อมูล',
+                                                'attribute' => 'ตรวจสอบ',
                                                 'format' => 'raw',
                                                 'value' => function($model) {
-                                                    return '<button class="btn btn-warning  btn-xs investigate-approve" data-toggle="modal" data-bind="' . $model->productSuppId . ',1"  >ตรวจสอบ ProductID : <code>' . $model->productSuppId . '</code></button>';
+                                                    return '<button class="btn btn-warning  btn-xs investigate-approve" data-toggle="modal" data-bind="' . $model->productSuppId . ',1"  >Product : <code>' . $model->productSuppId . '</code></button>';
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'แจ้งเตือน',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    $approve_txt = '<div class = " buttons-with-margins" >';
+                                                    $approve_txt .= '<button id ="jq-growl-warning-noti" class="btn btn-warning btn-xs" onclick="notifications(' . $model->productSuppId . ',1)">แจ้งปรับปรุง</button>';
+                                                    $approve_txt .= '</div>';
+                                                    return $approve_txt;
                                                 }
                                             ],
                                             [
@@ -143,17 +153,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     }
                                                 }
                                             ],
-                                        /* ['class' => 'yii\grid\ActionColumn',
-                                          'header' => 'Actions',
-                                          'template' => '{view}',
-                                          'buttons' => [
-                                          'view' => function ($url, $model) {
-                                          return Html::a('<i class = "fa fa-eye"></i>', $url, [
-                                          'title' => Yii::t('yii', 'view'),
-                                          ]);
-                                          }
-                                          ]
-                                          ], */
                                         ],
                                     ]);
                                     ?>
@@ -210,7 +209,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 'attribute' => 'ตรวจสอบข้อมูล',
                                                 'format' => 'raw',
                                                 'value' => function($model) {
-                                                    return '<button class="btn btn-warning btn-xs investigate-approve" data-toggle="modal" data-bind="' . $model->productId . ',2">ตรวจสอบ ProductID : <code>' . $model->productId . '</code></button>';
+                                                    return '<button class="btn btn-warning btn-xs investigate-approve" data-toggle="modal" data-bind="' . $model->productId . ',2">Product : <code>' . $model->productId . '</code></button>';
                                                 }
                                             ],
                                             [
@@ -594,3 +593,47 @@ $this->params['pageHeader'] = Html::encode($this->title);
     </div> <!-- / .modal-dialog -->
 </div> <!-- /.modal -->
 <!-- / Modal -->
+<script>
+    /*
+     init.push(function () {
+     $('#jq-growl-default').click(function () {
+     $.growl({title: "Growl", message: "The kitten is awake!"});
+     });
+     $('#jq-growl-error').click(function () {
+     $.growl.error({message: "The kitten is attacking!"});
+     });
+     $('#jq-growl-notice').click(function () {
+     $.growl.notice({message: "The kitten is cute!"});
+     });
+     $('#jq-growl-warning').click(function () {
+     $.growl.warning({message: "The kitten is ugly!"});
+     });
+     $('#jq-growl-small').click(function () {
+     $.growl({title: "Growl", message: "The kitten is awake!", size: 'small'});
+     });
+     $('#jq-growl-large').click(function () {
+     $.growl({title: "Growl", message: "The kitten is awake!", size: 'large'});
+     });
+     $('#jq-growl-static').click(function () {
+     $.growl({title: "Growl", message: "The kitten is awake!", duration: 9999 * 9999});
+     });
+     });*/
+</script>
+<!--
+<div class="panel">
+    <div class="panel-heading">
+        <span class="panel-title">jQuery Growl notifications</span>
+    </div>
+    <div class="panel-body buttons-with-margins">
+        <button id="jq-growl-default" class="btn">Default</button>&nbsp;&nbsp;&nbsp;
+        <button id="jq-growl-error" class="btn btn-danger">Error</button>&nbsp;&nbsp;&nbsp;
+        <button id="jq-growl-notice" class="btn btn-success">Notice</button>&nbsp;&nbsp;&nbsp;
+        <button id="jq-growl-warning" class="btn btn-warning">Warning</button>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+
+        <button id="jq-growl-small" class="btn">Small</button>&nbsp;&nbsp;&nbsp;
+        <button id="jq-growl-large" class="btn">Large</button>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+
+        <button id="jq-growl-static" class="btn">Static</button>&nbsp;&nbsp;&nbsp;
+    </div>
+</div>
+-->

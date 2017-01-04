@@ -9,6 +9,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\costfit\ProductSuppliers;
 use common\models\costfit\Product;
+use common\helpers\Notifications;
 
 class ApproveController extends ManagementMasterController {
 
@@ -145,6 +146,10 @@ class ApproveController extends ManagementMasterController {
         //echo '<pre>';
         //print_r($suppliers->attributes);
         echo json_encode($suppliers->attributes);
+    }
+
+    public function actionNotifications() {
+        echo 'xxx';
     }
 
 }

@@ -599,5 +599,30 @@ function suppliersCreatePrice(price, productSuppId) {
         });
     }
 
+}
+
+function notifications(productSuppId, type) {
+    //alert('test : notifications');
+    //$.growl({title: "Growl", message: "The kitten is awake!"});
+    $.ajax({
+        url: 'approve/notifications',
+        data: {"type": type, 'productSuppId': productSuppId},
+        type: 'post',
+        success: function (result) {
+            // alert(result);
+            //var JSONObject2 = JSON.parse(result);
+            //$(".suppliersCreatePrice").removeClass("hidden");
+            //(".suppliersCreatePrice").html('<code>ลำดับราคาที่  :' + result + '</code>');
+            $.growl.warning({message: "แจ้งเตือนให้ Suppliers ปรับปรุงเนื้อแล้ว ", size: 'small'});
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //debugger;
+            //alert(errorThrown);
+        }
+    });
+
+    //$.growl.error({message: "The kitten is cute!"});
+    //$.growl.warning({message: "The kitten is ugly!"});
 
 }
+
