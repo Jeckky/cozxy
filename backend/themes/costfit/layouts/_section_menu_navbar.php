@@ -81,38 +81,10 @@ if (!isset(Yii::$app->user->identity->type)) {
                                 <div class="notifications-list" id="main-navbar-notifications">
 
                                     <div class="notification">
-                                        <div class="notification-title text-danger">SYSTEM</div>
+                                        <div class="notification-title text-danger">SYSTEM COZXY</div>
                                         <div class="notification-description"><strong>Error 500</strong>: Syntax error in index.php at line <strong>461</strong>.</div>
                                         <div class="notification-ago">12h ago</div>
                                         <div class="notification-icon fa fa-hdd-o bg-danger"></div>
-                                    </div> <!-- / .notification -->
-
-                                    <div class="notification">
-                                        <div class="notification-title text-info">STORE</div>
-                                        <div class="notification-description">You have <strong>9</strong> new orders.</div>
-                                        <div class="notification-ago">12h ago</div>
-                                        <div class="notification-icon fa fa-truck bg-info"></div>
-                                    </div> <!-- / .notification -->
-
-                                    <div class="notification">
-                                        <div class="notification-title text-default">CRON DAEMON</div>
-                                        <div class="notification-description">Job <strong>"Clean DB"</strong> has been completed.</div>
-                                        <div class="notification-ago">12h ago</div>
-                                        <div class="notification-icon fa fa-clock-o bg-default"></div>
-                                    </div> <!-- / .notification -->
-
-                                    <div class="notification">
-                                        <div class="notification-title text-success">SYSTEM</div>
-                                        <div class="notification-description">Server <strong>up</strong>.</div>
-                                        <div class="notification-ago">12h ago</div>
-                                        <div class="notification-icon fa fa-hdd-o bg-success"></div>
-                                    </div> <!-- / .notification -->
-
-                                    <div class="notification">
-                                        <div class="notification-title text-warning">SYSTEM</div>
-                                        <div class="notification-description"><strong>Warning</strong>: Processor load <strong>92%</strong>.</div>
-                                        <div class="notification-ago">12h ago</div>
-                                        <div class="notification-icon fa fa-hdd-o bg-warning"></div>
                                     </div> <!-- / .notification -->
 
                                 </div> <!-- / .notifications-list -->
@@ -261,7 +233,7 @@ if (!isset(Yii::$app->user->identity->type)) {
                                 <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
                                     <img src="<?php echo $directoryAsset ?>/demo/avatars/silhouette.jpg" alt="">
                                 <?php } ?>
-<!--<span> <?php //echo Yii::$app->session['firstname'];                                       ?></span>-->
+<!--<span> <?php //echo Yii::$app->session['firstname'];                                          ?></span>-->
                                 <span> <?= isset(Yii::$app->user->identity->email) ? Yii::$app->user->identity->firstname : 'Guest' ?></span>
                             </a>
                             <ul class="dropdown-menu">
