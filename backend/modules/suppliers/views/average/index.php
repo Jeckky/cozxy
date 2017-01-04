@@ -34,7 +34,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 </thead>
                 <tbody>
                     <tr>
-                        <td><?php echo isset($productLastDay->conutProduct) ? number_format($productLastDay->conutProduct, 0) : '0'; ?>&nbsp;ชิ้น</td>
+                        <td><?php echo isset($productLastDay->conutProduct) ? number_format($productLastDay->conutProduct, 0) : '0'; ?>&nbsp;รายการ</td>
                         <td><?php echo isset($productLastDay->summaryPrice) ? number_format($productLastDay->summaryPrice, 2) : '0'; ?>&nbsp;บาท</td>
                     </tr>
                     <tr>
@@ -63,7 +63,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 </thead>
                 <tbody>
                     <tr>
-                        <td><?php echo isset($productLastWeek->conutProduct) ? number_format($productLastWeek->conutProduct, 0) : '0'; ?>&nbsp;ชิ้น</td>
+                        <td><?php echo isset($productLastWeek->conutProduct) ? number_format($productLastWeek->conutProduct, 0) : '0'; ?>&nbsp;รายการ</td>
                         <td><?php echo isset($productLastWeek->summaryPrice) ? number_format($productLastWeek->summaryPrice, 2) : '0'; ?>&nbsp;บาท</td>
                     </tr>
                     <tr>
@@ -93,7 +93,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 </thead>
                 <tbody>
                     <tr>
-                        <td><?php echo isset($product14LastWeek->conutProduct) ? number_format($product14LastWeek->conutProduct, 0) : '0'; ?>&nbsp;ชิ้น</td>
+                        <td><?php echo isset($product14LastWeek->conutProduct) ? number_format($product14LastWeek->conutProduct, 0) : '0'; ?>&nbsp;รายการ</td>
                         <td><?php echo isset($product14LastWeek->summaryPrice) ? number_format($product14LastWeek->summaryPrice, 2) : '0'; ?>&nbsp;บาท</td>
                     </tr>
                     <tr>
@@ -123,7 +123,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 </thead>
                 <tbody>
                     <tr>
-                        <td><?php echo isset($orderLastMONTH->conutProduct) ? number_format($orderLastMONTH->conutProduct, 0) : '0'; ?>&nbsp;ชิ้น</td>
+                        <td><?php echo isset($orderLastMONTH->conutProduct) ? number_format($orderLastMONTH->conutProduct, 0) : '0'; ?>&nbsp;รายการ</td>
                         <td><?php echo isset($orderLastMONTH->summaryPrice) ? number_format($orderLastMONTH->summaryPrice, 2) : '0'; ?>&nbsp;บาท</td>
                     </tr>
                     <tr>

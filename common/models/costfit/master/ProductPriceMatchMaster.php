@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "product_price_match".
 *
-    * @property integer $productPriceMatchId
+    * @property string $productPriceMatchId
     * @property string $productPriceMatchGroupId
     * @property string $productId
     * @property integer $status

@@ -137,7 +137,9 @@ class Suppliers {
             ->select('sum(`order_item`.`quantity`) as conutProduct, sum(`order`.`summary`) as summaryPrice, count(`order_item`.`productId`)/30 as avgNum ')
             ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
             ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
-            ->where('`order`.status >= 5 and MONTH(curdate()) = MONTH(order.createDateTime) and year(order.createDateTime) = year(curdate())   ')->one();
+            //->where('`order`.status >= 5 and MONTH(curdate()) = MONTH(order.createDateTime) and year(order.createDateTime) = year(curdate())   ')
+            ->where('`order`.`status` >= 5 and (NOW() - INTERVAL 1 MONTH) <= (NOW() ) ')
+            ->one();
         }
         return $orderLastMonth;
     }
