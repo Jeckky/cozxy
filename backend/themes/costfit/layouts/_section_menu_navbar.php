@@ -63,7 +63,7 @@ if (!isset(Yii::$app->user->identity->type)) {
                         -->
                         <li class="nav-icon-btn nav-icon-btn-danger dropdown">
                             <a href="#notifications" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="label">5</span>
+                                <span class="label">0</span>
                                 <i class="nav-icon fa fa-bullhorn"></i>
                                 <span class="small-screen-text">Notifications</span>
                             </a>
@@ -93,7 +93,7 @@ if (!isset(Yii::$app->user->identity->type)) {
                         </li>
                         <li class="nav-icon-btn nav-icon-btn-success dropdown">
                             <a href="#messages" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="label">10</span>
+                                <span class="label">0</span>
                                 <i class="nav-icon fa fa-envelope"></i>
                                 <span class="small-screen-text">Income messages</span>
                             </a>
@@ -114,96 +114,6 @@ if (!isset(Yii::$app->user->identity->type)) {
                                     <div class="message">
                                         <img src="<?= $directoryAsset; ?>/demo/avatars/2.jpg" alt="" class="message-avatar">
                                         <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a>
-                                        <div class="message-description">
-                                            from <a href="#">Robert Jang</a>
-                                            &nbsp;&nbsp;·&nbsp;&nbsp;
-                                            2h ago
-                                        </div>
-                                    </div> <!-- / .message -->
-
-                                    <div class="message">
-                                        <img src="<?= $directoryAsset; ?>/demo/avatars/3.jpg" alt="" class="message-avatar">
-                                        <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a>
-                                        <div class="message-description">
-                                            from <a href="#">Michelle Bortz</a>
-                                            &nbsp;&nbsp;·&nbsp;&nbsp;
-                                            2h ago
-                                        </div>
-                                    </div> <!-- / .message -->
-
-                                    <div class="message">
-                                        <img src="<?= $directoryAsset; ?>/demo/avatars/4.jpg" alt="" class="message-avatar">
-                                        <a href="#" class="message-subject">Lorem ipsum dolor sit amet.</a>
-                                        <div class="message-description">
-                                            from <a href="#">Timothy Owens</a>
-                                            &nbsp;&nbsp;·&nbsp;&nbsp;
-                                            2h ago
-                                        </div>
-                                    </div> <!-- / .message -->
-
-                                    <div class="message">
-                                        <img src="<?= $directoryAsset; ?>/demo/avatars/5.jpg" alt="" class="message-avatar">
-                                        <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a>
-                                        <div class="message-description">
-                                            from <a href="#">Denise Steiner</a>
-                                            &nbsp;&nbsp;·&nbsp;&nbsp;
-                                            2h ago
-                                        </div>
-                                    </div> <!-- / .message -->
-
-                                    <div class="message">
-                                        <img src="<?= $directoryAsset; ?>/demo/avatars/2.jpg" alt="" class="message-avatar">
-                                        <a href="#" class="message-subject">Lorem ipsum dolor sit amet.</a>
-                                        <div class="message-description">
-                                            from <a href="#">Robert Jang</a>
-                                            &nbsp;&nbsp;·&nbsp;&nbsp;
-                                            2h ago
-                                        </div>
-                                    </div> <!-- / .message -->
-
-                                    <div class="message">
-                                        <img src="<?= $directoryAsset; ?>/demo/avatars/2.jpg" alt="" class="message-avatar">
-                                        <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a>
-                                        <div class="message-description">
-                                            from <a href="#">Robert Jang</a>
-                                            &nbsp;&nbsp;·&nbsp;&nbsp;
-                                            2h ago
-                                        </div>
-                                    </div> <!-- / .message -->
-
-                                    <div class="message">
-                                        <img src="<?= $directoryAsset; ?>/demo/avatars/3.jpg" alt="" class="message-avatar">
-                                        <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a>
-                                        <div class="message-description">
-                                            from <a href="#">Michelle Bortz</a>
-                                            &nbsp;&nbsp;·&nbsp;&nbsp;
-                                            2h ago
-                                        </div>
-                                    </div> <!-- / .message -->
-
-                                    <div class="message">
-                                        <img src="<?= $directoryAsset; ?>/demo/avatars/4.jpg" alt="" class="message-avatar">
-                                        <a href="#" class="message-subject">Lorem ipsum dolor sit amet.</a>
-                                        <div class="message-description">
-                                            from <a href="#">Timothy Owens</a>
-                                            &nbsp;&nbsp;·&nbsp;&nbsp;
-                                            2h ago
-                                        </div>
-                                    </div> <!-- / .message -->
-
-                                    <div class="message">
-                                        <img src="<?= $directoryAsset; ?>/demo/avatars/5.jpg" alt="" class="message-avatar">
-                                        <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a>
-                                        <div class="message-description">
-                                            from <a href="#">Denise Steiner</a>
-                                            &nbsp;&nbsp;·&nbsp;&nbsp;
-                                            2h ago
-                                        </div>
-                                    </div> <!-- / .message -->
-
-                                    <div class="message">
-                                        <img src="<?= $directoryAsset; ?>/demo/avatars/2.jpg" alt="" class="message-avatar">
-                                        <a href="#" class="message-subject">Lorem ipsum dolor sit amet.</a>
                                         <div class="message-description">
                                             from <a href="#">Robert Jang</a>
                                             &nbsp;&nbsp;·&nbsp;&nbsp;
@@ -233,7 +143,7 @@ if (!isset(Yii::$app->user->identity->type)) {
                                 <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
                                     <img src="<?php echo $directoryAsset ?>/demo/avatars/silhouette.jpg" alt="">
                                 <?php } ?>
-<!--<span> <?php //echo Yii::$app->session['firstname'];                                          ?></span>-->
+                            <!--<span> <?php //echo Yii::$app->session['firstname'];                                                 ?></span>-->
                                 <span> <?= isset(Yii::$app->user->identity->email) ? Yii::$app->user->identity->firstname : 'Guest' ?></span>
                             </a>
                             <ul class="dropdown-menu">
