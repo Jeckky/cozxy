@@ -468,39 +468,7 @@ $('.investigate-approve').on('click', function () {
             //console.log(JSONObject2.simageThumbnail2);
             //console.log(typeof (JSONObject2.simage));
 
-            if (typeof (JSONObject2.simage) != 'object') {
 
-                var simage = JSONObject2.simage.split(',');
-                for (var x in simage) {
-                    //console.log(simage[x]);
-                    //var simage_n = '< img class = "img-responsive" src = "/' + simage[x] + '" alt = "" style = "width:100px;height:100px;" >';
-                    //console.log(simage[x]);
-                    $('.view-image-s1').append('<div class="col-sm-3" style="padding: 5px;">\n\
-                        <img class="img-responsive" src="' + $baseUrl + simage[x] + '" alt="" style="width:100px;height:100px;">\n\
-                    </div>');
-                }
-
-            }
-
-            if (typeof (JSONObject2.simageThumbnail1) != 'object') {
-                var simageThumbnail1 = JSONObject2.simageThumbnail1.split(',');
-                for (var y in simageThumbnail1) {
-                    //console.log(simage[i]);
-                    $('.view-thumbnail1-s1').append('<div class="col-sm-3" style="padding: 5px;">\n\
-                            <img class="img-responsive" src="' + $baseUrl + simageThumbnail1[y] + '" alt="" style="width:100px;height:100px;">\n\
-                        </div>');
-                }
-            }
-
-            if (typeof (JSONObject2.simageThumbnail2) != 'object') {
-                var simageThumbnail2 = JSONObject2.simageThumbnail2.split(',');
-                for (var z in simageThumbnail2) {
-                    //console.log(simage[i]);
-                    $('.view-thumbnail2-s1').append('<div class="col-sm-3" style="padding: 5px;">\n\
-                        <img class="img-responsive" src="' + $baseUrl + simageThumbnail2[z] + '" alt="" style="width:100px;height:100px;">\n\
-                </div>');
-                }
-            }
 
             // alert(JSONObject2.firstname);
             $('.view-user-id').html(JSONObject2.firstname + ' ' + JSONObject2.astname);
@@ -532,6 +500,46 @@ $('.investigate-approve').on('click', function () {
             $('.view-tags').html(JSONObject2.tags);
             $('.view-create-date-time').html(JSONObject2.createDateTime);
             $('.view-update-date-time').html(JSONObject2.updateDateTime);
+
+            if (typeof (JSONObject2.simage) != 'object') {
+                console.log(JSONObject2.simage);
+                if (JSONObject2.simage != 'undefined') {
+                    var simage = JSONObject2.simage.split(',');
+                    for (var x in simage) {
+                        //console.log(simage[x]);
+                        //var simage_n = '< img class = "img-responsive" src = "/' + simage[x] + '" alt = "" style = "width:100px;height:100px;" >';
+                        //console.log(simage[x]);
+                        $('.view-image-s1').append('<div class="col-sm-3" style="padding: 5px;">\n\
+                        <img class="img-responsive" src="' + $baseUrl + simage[x] + '" alt="" style="width:100px;height:100px;">\n\
+                    </div>');
+                    }
+                }
+
+            }
+
+            if (typeof (JSONObject2.simageThumbnail1) != 'object') {
+                if (JSONObject2.simageThumbnail1 != 'undefined') {
+                    var simageThumbnail1 = JSONObject2.simageThumbnail1.split(',');
+                    for (var y in simageThumbnail1) {
+                        //console.log(simage[i]);
+                        $('.view-thumbnail1-s1').append('<div class="col-sm-3" style="padding: 5px;">\n\
+                            <img class="img-responsive" src="' + $baseUrl + simageThumbnail1[y] + '" alt="" style="width:100px;height:100px;">\n\
+                        </div>');
+                    }
+                }
+            }
+
+            if (typeof (JSONObject2.simageThumbnail2) != 'object') {
+                if (JSONObject2.simageThumbnail2 != 'undefined') {
+                    var simageThumbnail2 = JSONObject2.simageThumbnail2.split(',');
+                    for (var z in simageThumbnail2) {
+                        //console.log(simage[i]);
+                        $('.view-thumbnail2-s1').append('<div class="col-sm-3" style="padding: 5px;">\n\
+                        <img class="img-responsive" src="' + $baseUrl + simageThumbnail2[z] + '" alt="" style="width:100px;height:100px;">\n\
+                </div>');
+                    }
+                }
+            }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             //debugger;
