@@ -129,7 +129,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     $product_price_suppliers = common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId =' . $model->productSuppId . ' and status =1')->one();
                                                     //echo '<pre>';
                                                     //print_r($product_price_suppliers);
-                                                    if ($product_price_suppliers->price != '') {
+                                                    if (isset($product_price_suppliers->price)) {
                                                         $approve_txt = '<div id="switchers-colors-square" class="form-group-margin"  onchange="switchers(' . $model->productSuppId . ',1)">';
                                                         if ($model->approve != 'approve') {
                                                             $approve_txt .= '<input type="checkbox" data-class="switcher-warning" >';
@@ -218,14 +218,18 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 'format' => 'raw',
                                                 'value' => function($model) {
                                                     $type = 'supp';
-                                                    $approve_txt = '<div id="switchers-colors-square" class="form-group-margin"  onchange="switchers(' . $model->productId . ',2)">';
-                                                    if ($model->approve == 'new') {
-                                                        $approve_txt .= '<input type="checkbox" data-class="switcher-warning" >';
+                                                    if (isset($model->price)) {
+                                                        $approve_txt = '<div id="switchers-colors-square" class="form-group-margin"  onchange="switchers(' . $model->productId . ',2)">';
+                                                        if ($model->approve == 'new') {
+                                                            $approve_txt .= '<input type="checkbox" data-class="switcher-warning" >';
+                                                        } else {
+                                                            $approve_txt .= '<input type="checkbox" data-class="switcher-warning"   checked="checked" >';
+                                                        }
+                                                        $approve_txt .= '</div>';
+                                                        return $approve_txt;
                                                     } else {
-                                                        $approve_txt .= '<input type="checkbox" data-class="switcher-warning"   checked="checked" >';
+                                                        return 'ยังไม่ระบุราคา';
                                                     }
-                                                    $approve_txt .= '</div>';
-                                                    return $approve_txt;
                                                 }
                                             ],
                                         /* ['class' => 'yii\grid\ActionColumn',
