@@ -196,9 +196,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-7">
             <h3 style="text-decoration: underline">Description</h3>
-            <?= $model->description; ?>
+            <?php $description = ProductSuppliers::productSupplierName($productSupplierId); ?>
+            <?= isset($description) && !empty($description) ? $description->description : '' ?>
             <h3 style="text-decoration: underline">Specification</h3>
-            <?= $model->specification; ?>
+            <?= isset($description) && !empty($description) ? $description->specification : '' ?>
         </div>
     </div>
 
