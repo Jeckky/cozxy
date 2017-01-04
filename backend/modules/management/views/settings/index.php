@@ -94,7 +94,7 @@ use leandrogehlen\treegrid\TreeGrid;
 
         <div class="panel ">
             <div class="panel-heading ">
-                <span class="panel-title">Approve Product</span>
+                <span class="panel-title">Suppliers , Approve Product</span>
             </div>
             <div class="panel-body">
                 <div class="col-md-3">
@@ -116,14 +116,6 @@ use leandrogehlen\treegrid\TreeGrid;
                         </div>
                     </div> <!-- / .panel -->
                 </div>
-            </div>
-        </div>
-
-        <div class="panel ">
-            <div class="panel-heading ">
-                <span class="panel-title">Suppliers.</span>
-            </div>
-            <div class="panel-body">
                 <div class="col-md-3">
 
                     <div class="panel panel-default panel-dark panel-body-colorful widget-profile widget-profile-centered">
@@ -160,6 +152,8 @@ use leandrogehlen\treegrid\TreeGrid;
                 </div>
             </div>
         </div>
+
+
 
 
         <div class="note note-info padding-xs-vr">

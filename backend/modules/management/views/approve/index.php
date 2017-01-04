@@ -126,14 +126,21 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 'format' => 'raw',
                                                 'value' => function($model) {
                                                     $type = 'supp';
-                                                    $approve_txt = '<div id="switchers-colors-square" class="form-group-margin"  onchange="switchers(' . $model->productSuppId . ',1)">';
-                                                    if ($model->approve != 'approve') {
-                                                        $approve_txt .= '<input type="checkbox" data-class="switcher-warning" >';
+                                                    $product_price_suppliers = common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId =' . $model->productSuppId . ' and status =1')->one();
+                                                    //echo '<pre>';
+                                                    //print_r($product_price_suppliers);
+                                                    if ($product_price_suppliers->price != '') {
+                                                        $approve_txt = '<div id="switchers-colors-square" class="form-group-margin"  onchange="switchers(' . $model->productSuppId . ',1)">';
+                                                        if ($model->approve != 'approve') {
+                                                            $approve_txt .= '<input type="checkbox" data-class="switcher-warning" >';
+                                                        } else {
+                                                            $approve_txt .= '<input type="checkbox" data-class="switcher-warning"   checked="checked" >';
+                                                        }
+                                                        $approve_txt .= '</div>';
+                                                        return $approve_txt;
                                                     } else {
-                                                        $approve_txt .= '<input type="checkbox" data-class="switcher-warning"   checked="checked" >';
+                                                        return 'ยังไม่ระบุราคา';
                                                     }
-                                                    $approve_txt .= '</div>';
-                                                    return $approve_txt;
                                                 }
                                             ],
                                         /* ['class' => 'yii\grid\ActionColumn',
@@ -141,7 +148,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                           'template' => '{view}',
                                           'buttons' => [
                                           'view' => function ($url, $model) {
-                                          return Html::a('<i class="fa fa-eye"></i>', $url, [
+                                          return Html::a('<i class = "fa fa-eye"></i>', $url, [
                                           'title' => Yii::t('yii', 'view'),
                                           ]);
                                           }
@@ -184,7 +191,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 'format' => 'raw',
                                                 'value' => function($model) {
                                                     if (isset($model->userId)) {
-                                                        $userSuppliers = common\models\costfit\User::find()->where('userId =' . $model->userId)->one();
+                                                        $userSuppliers = common\models\costfit\User::find()->where('userId = ' . $model->userId)->one();
                                                         $firstname = $userSuppliers->firstname;
                                                         $lastname = $userSuppliers->lastname;
                                                     } else {
@@ -254,7 +261,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
                                         'dataProvider' => $productSuppApprove,
                                         'pager' => [
-                                            'options' => ['class' => 'pagination pagination-xs']
+                                            'options' => [ 'class' => 'pagination pagination-xs']
                                         ],
                                         'options' => [
                                             'class' => 'table-light'
