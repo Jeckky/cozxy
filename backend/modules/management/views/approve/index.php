@@ -125,8 +125,17 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 'attribute' => 'แจ้งเตือน',
                                                 'format' => 'raw',
                                                 'value' => function($model) {
-                                                    $approve_txt = '<div class = " buttons-with-margins" >';
-                                                    $approve_txt .= '<button id ="jq-growl-warning-noti" class="btn btn-warning btn-xs" onclick="notifications(' . $model->productSuppId . ',1)">แจ้งปรับปรุง</button>';
+                                                    $NotificationsApprove = common\helpers\Notifications::NotificationsApprove($model->productSuppId);
+                                                    if (isset($NotificationsApprove)) {
+                                                        $approve_txt = '<div class = "buttons-with-margins jq-growl-' . $model->productSuppId . '" >';
+                                                        $approve_txt .= '<button id ="jq-growl-danger-noti-' . $model->productSuppId . '" class="btn btn-danger btn-xs" onclick="notifications(' . $model->productSuppId . ',1)">แจ้งปรับปรุงแล้ว</button>';
+                                                        $approve_txt .= '</div>';
+                                                        return $approve_txt;
+                                                    } else {
+
+                                                    }
+                                                    $approve_txt = '<div class = "buttons-with-margins jq-growl-' . $model->productSuppId . '" >';
+                                                    $approve_txt .= '<button id ="jq-growl-warning-noti-' . $model->productSuppId . '" class="btn btn-warning btn-xs" onclick="notifications(' . $model->productSuppId . ',1)">ต้องการแจ้งปรับปรุง</button>';
                                                     $approve_txt .= '</div>';
                                                     return $approve_txt;
                                                 }

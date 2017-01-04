@@ -23,8 +23,9 @@ class Notifications {
 
     //put your code here
 
-    public static function NotificationsApprove() {
-
+    public static function NotificationsApprove($productSuppId) {
+        $suppliers = \common\models\costfit\Notifications::find()->where('id=' . $productSuppId . ' and type =1')->orderBy('notiId desc')->one();
+        return isset($suppliers) ? $suppliers->notiId : NULL;
     }
 
 }

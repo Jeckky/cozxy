@@ -609,10 +609,11 @@ function notifications(productSuppId, type) {
         data: {"type": type, 'productSuppId': productSuppId},
         type: 'post',
         success: function (result) {
-            // alert(result);
+            //alert(result);
             //var JSONObject2 = JSON.parse(result);
-            //$(".suppliersCreatePrice").removeClass("hidden");
-            //(".suppliersCreatePrice").html('<code>ลำดับราคาที่  :' + result + '</code>');
+            if (result == productSuppId) {
+                $('.jq-growl-' + productSuppId).html('<button id="jq-growl-danger-noti-' + productSuppId + '" class="btn btn-danger btn-xs" onclick ="notifications( ' + productSuppId + ', 1)" > แจ้งปรับปรุงแล้ว </button>');
+            }
             $.growl.warning({message: "แจ้งเตือนให้ Suppliers ปรับปรุงเนื้อแล้ว ", size: 'small'});
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -620,9 +621,7 @@ function notifications(productSuppId, type) {
             //alert(errorThrown);
         }
     });
-
     //$.growl.error({message: "The kitten is cute!"});
     //$.growl.warning({message: "The kitten is ugly!"});
-
 }
 

@@ -149,7 +149,20 @@ class ApproveController extends ManagementMasterController {
     }
 
     public function actionNotifications() {
-        echo 'xxx';
+        $productSuppId = Yii::$app->request->post('productSuppId');
+        $typeId = Yii::$app->request->post('type');
+
+        $suppliers = \common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $productSuppId)->one();
+        $model = new \common\models\costfit\Notifications();
+        $model->id = $productSuppId;
+        $model->userId = $suppliers->userId;
+        $model->title = 'แจ้งเตือนให้ Suppliers ปรับปรุงเนื้อแล้ว ';
+        $model->type = \common\models\costfit\Notifications::NOTI_APPROVE;
+        $model->createBy = Yii::$app->user->identity->userId;
+        $model->createDateTime = new \yii\db\Expression('NOW()');
+        if ($model->save(FALSE)) {
+            return $model->id;
+        }
     }
 
 }
