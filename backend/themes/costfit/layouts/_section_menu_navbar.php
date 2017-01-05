@@ -84,7 +84,7 @@ if (!isset(Yii::$app->user->identity->type)) {
                                             $menuNotificationsSuppliers = $this->params['listDataProviderNotificationsSuppliers']['menuNotificationsSuppliers'];
                                             foreach ($menuNotificationsSuppliers as $key => $value) {
                                                 ?>
-                                                <div class="notification-description"><strong>อนุมัติสินค้า</strong>: <?php echo $value->title; ?> </div>
+                                                <div class="notification-description"><strong>หัวข้ออนุมัติสินค้า</strong>: <?php echo $value->title; ?> </div>
                                                 <div class="notification-ago"><?php echo common\helpers\CozxyUnity::TimeElapsedString($value->createDateTime); ?></div>
                                                 <div class="notification-icon fa fa-hdd-o bg-danger"></div>
                                                 <?php
@@ -150,7 +150,7 @@ if (!isset(Yii::$app->user->identity->type)) {
                                 <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
                                     <img src="<?php echo $directoryAsset ?>/demo/avatars/silhouette.jpg" alt="">
                                 <?php } ?>
-<!--<span> <?php //echo Yii::$app->session['firstname'];                                                                                                ?></span>-->
+<!--<span> <?php //echo Yii::$app->session['firstname'];                                                                                                  ?></span>-->
                                 <span> <?= isset(Yii::$app->user->identity->email) ? Yii::$app->user->identity->firstname : 'Guest' ?></span>
                             </a>
                             <ul class="dropdown-menu">
