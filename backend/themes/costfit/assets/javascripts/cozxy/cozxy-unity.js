@@ -614,7 +614,7 @@ function notifications(productSuppId, type) {
             if (result == productSuppId) {
                 $('.jq-growl-' + productSuppId).html('<button id="jq-growl-danger-noti-' + productSuppId + '" class="btn btn-danger btn-xs" onclick ="notifications( ' + productSuppId + ', 1)"> แจ้งปรับปรุงแล้ว </button>');
             }
-            $.growl.warning({message: "แจ้งเตือนให้ Suppliers ปรับปรุงเนื้อแล้ว ", size: 'small'});
+            $.growl.warning({message: "แจ้งเตือนให้ Suppliers ปรับปรุงเนื้อหา ", size: 'small'});
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             //debugger;

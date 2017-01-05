@@ -25,13 +25,19 @@ class Notifications {
 
     public static function NotificationsApprove($productSuppId) {
         $Noti = \common\models\costfit\Notifications::find()->where('id=' . $productSuppId . ' and type =1')->orderBy('notiId desc')->one();
-        return isset($Noti) ? $Noti->notiId : NULL;
+        return isset($Noti) ? $Noti : NULL;
     }
 
-    public static function NotificationsLogin() {
+    public static function NotificationsLoginSuppliers() {
         $NotiLogin = \common\models\costfit\Notifications::find()->where('userId=' . Yii::$app->user->identity->userId . ' and type =1')
         ->orderBy('notiId desc')->all();
         return isset($NotiLogin) ? $NotiLogin : NULL;
+    }
+
+    public static function NotificationsLoginSuppliersCount() {
+        $NotiLogin = \common\models\costfit\Notifications::find()->where('userId=' . Yii::$app->user->identity->userId . ' and type =1')
+        ->orderBy('notiId desc')->count();
+        return isset($NotiLogin) ? $NotiLogin : 0;
     }
 
 }

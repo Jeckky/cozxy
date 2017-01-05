@@ -24,10 +24,11 @@ if (!isset(Yii::$app->user->identity->type)) {
                 <div><img alt="Pixel Admin" src="<?php echo $directoryAsset; ?>/images/pixel-admin/main-navbar-logo.png"></div>
                 <?php
                 if (Yii::$app->user->identity->type == 4) {
-                    ?>
-                    Suppliers Admin
-                <?php } else { ?> Cozxy.com Admin
-                <?php } ?>
+                    echo 'Suppliers Admin';
+                } else {
+                    echo 'Cozxy.com Admin';
+                }
+                ?>
             </a>
 
             <!-- Main navbar toggle -->
@@ -37,21 +38,6 @@ if (!isset(Yii::$app->user->identity->type)) {
 
         <div id="main-navbar-collapse" class="collapse navbar-collapse main-navbar-collapse">
             <div>
-                <!-- <ul class="nav navbar-nav">
-                     <li>
-                         <a href="#">Home</a>
-                     </li>
-                     <li class="dropdown">
-                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown</a>
-                         <ul class="dropdown-menu">
-                             <li><a href="#">First item</a></li>
-                             <li><a href="#">Second item</a></li>
-                             <li class="divider"></li>
-                             <li><a href="#">Third item</a></li>
-                         </ul>
-                     </li>
-                 </ul>--> <!-- / .navbar-nav -->
-
                 <div class="right clearfix">
                     <ul class="nav navbar-nav pull-right right-navbar-nav">
                         <!-- 3. $NAVBAR_ICON_BUTTONS =======================================================================
@@ -66,7 +52,15 @@ if (!isset(Yii::$app->user->identity->type)) {
                         -->
                         <li class="nav-icon-btn nav-icon-btn-danger dropdown">
                             <a href="#notifications" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="label">0</span>
+                                <span class="label">
+                                    <?php
+                                    if (isset($this->params['listDataProviderNotificationsSuppliersCount']['menuNotificationsSuppliersCount'])) {
+                                        echo $this->params['listDataProviderNotificationsSuppliersCount']['menuNotificationsSuppliersCount'];
+                                    } else {
+                                        echo '0';
+                                    }
+                                    ?>
+                                </span>
                                 <i class="nav-icon fa fa-bullhorn"></i>
                                 <span class="small-screen-text">Notifications</span>
                             </a>
@@ -86,12 +80,12 @@ if (!isset(Yii::$app->user->identity->type)) {
                                     <div class="notification">
                                         <div class="notification-title text-danger">SYSTEM COZXY</div>
                                         <?php
-                                        if (isset($this->params['listDataProviderNotifications']['menuNotifications'])) {
-                                            $menuNotifications = $this->params['listDataProviderNotifications']['menuNotifications'];
-                                            foreach ($menuNotifications as $key => $value) {
+                                        if (isset($this->params['listDataProviderNotificationsSuppliers']['menuNotificationsSuppliers'])) {
+                                            $menuNotificationsSuppliers = $this->params['listDataProviderNotificationsSuppliers']['menuNotificationsSuppliers'];
+                                            foreach ($menuNotificationsSuppliers as $key => $value) {
                                                 ?>
-                                                <div class="notification-description"><strong>Error 500</strong>: Syntax error in index.php at line <strong>461</strong>.</div>
-                                                <div class="notification-ago">12h ago</div>
+                                                <div class="notification-description"><strong>อนุมัติสินค้า</strong>: <?php echo $value->title; ?> </div>
+                                                <div class="notification-ago"><?php echo common\helpers\CozxyUnity::TimeElapsedString($value->createDateTime); ?></div>
                                                 <div class="notification-icon fa fa-hdd-o bg-danger"></div>
                                                 <?php
                                             }
@@ -156,7 +150,7 @@ if (!isset(Yii::$app->user->identity->type)) {
                                 <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
                                     <img src="<?php echo $directoryAsset ?>/demo/avatars/silhouette.jpg" alt="">
                                 <?php } ?>
-<!--<span> <?php //echo Yii::$app->session['firstname'];                                                                   ?></span>-->
+<!--<span> <?php //echo Yii::$app->session['firstname'];                                                                                                ?></span>-->
                                 <span> <?= isset(Yii::$app->user->identity->email) ? Yii::$app->user->identity->firstname : 'Guest' ?></span>
                             </a>
                             <ul class="dropdown-menu">

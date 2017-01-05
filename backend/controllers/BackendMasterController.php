@@ -12,6 +12,7 @@ use common\models\areawow;
 use kartik\mpdf\Pdf;
 use yii\data\ActiveDataProvider;
 use common\helpers\Notifications;
+use common\helpers\CozxyUnity;
 
 /**
  * Site controller
@@ -39,7 +40,12 @@ class BackendMasterController extends MasterController {
             $type = Yii::$app->user->identity->type;
             $user_group_Id = Yii::$app->user->identity->user_group_Id;
             $this->view->params['listDataProviderMenu']['menuBackend'] = $dataProvider;
-            $this->view->params['listDataProviderNotifications']['menuNotifications'] = Notifications::NotificationsLogin();
+
+            /*
+             * Notifications Suppliers
+             */
+            $this->view->params['listDataProviderNotificationsSuppliers']['menuNotificationsSuppliers'] = Notifications::NotificationsLoginSuppliers();
+            $this->view->params['listDataProviderNotificationsSuppliersCount']['menuNotificationsSuppliersCount'] = Notifications::NotificationsLoginSuppliersCount();
 
 
             //echo 'test menu backend isGuest';
