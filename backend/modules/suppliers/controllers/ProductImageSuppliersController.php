@@ -30,6 +30,10 @@ class ProductImageSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionIndex() {
+        if (Yii::$app->user->identity->type != 4) {
+            header("location: /auth");
+            exit(0);
+        }
         $dataProvider = new ActiveDataProvider([
             'query' => ProductImageSuppliers::find(),
         ]);
@@ -45,6 +49,10 @@ class ProductImageSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionView($id) {
+        if (Yii::$app->user->identity->type != 4) {
+            header("location: /auth");
+            exit(0);
+        }
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -76,6 +84,10 @@ class ProductImageSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionDelete($id) {
+        if (Yii::$app->user->identity->type != 4) {
+            header("location: /auth");
+            exit(0);
+        }
         $productSuppId = Yii::$app->request->get('productSuppId');
         $id = Yii::$app->request->get('id');
         $this->findModel($id)->delete();

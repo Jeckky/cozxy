@@ -43,7 +43,10 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionIndex() {
-
+        if (Yii::$app->user->identity->type != 4) {
+            header("location: /auth");
+            exit(0);
+        }
         $rankOne = $this->SearchProductSuppliers($_GET['productSuppId']); //\common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $_GET['productSuppId'])->one();
 
         /*
@@ -79,6 +82,10 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionView($id) {
+        if (Yii::$app->user->identity->type != 4) {
+            header("location: /auth");
+            exit(0);
+        }
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -90,6 +97,10 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionCreate() {
+        if (Yii::$app->user->identity->type != 4) {
+            header("location: /auth");
+            exit(0);
+        }
         $model = new ProductPriceSuppliers();
         //$rankingPrice = \common\models\costfit\ProductPriceSuppliers::rankingPrice();
         $rankOne = $this->SearchProductSuppliers($_GET['productSuppId']); //\common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $_GET['productSuppId'])->one();
@@ -134,6 +145,10 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionUpdate($id) {
+        if (Yii::$app->user->identity->type != 4) {
+            header("location: /auth");
+            exit(0);
+        }
         //$rankingPrice = \common\models\costfit\ProductPriceSuppliers::rankingPrice();
         $rankOne = $this->SearchProductSuppliers($_GET['productSuppId']); //\common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $_GET['productSuppId'])->one();
         //echo $rankOne->brandId . '::' . $rankOne->categoryId;
@@ -170,6 +185,10 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionDelete($id) {
+        if (Yii::$app->user->identity->type != 4) {
+            header("location: /auth");
+            exit(0);
+        }
         $this->findModel($id)->delete();
 
         return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-price-suppliers/index?productSuppId=' . $_GET['productSuppId']);
