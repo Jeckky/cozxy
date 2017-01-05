@@ -79,13 +79,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'format' => 'html',
                         'value' => function($model) {
                             if ($model->approve == 'old') {
-                                $txt = '<span class="text-warning">รออนุมัติ</span>';
+                                $txt = '<span class="text-warning">รออนุมัติ (' . common\helpers\CozxyUnity::TimeElapsedString($model->createDateTime) . ')</span>';
                             } else if ($model->approve == 'approve') {
                                 $txt = '<span class="text-success">อนุมัติแล้ว</span>';
                             } else if ($model->approve == 'new') {
-                                $txt = '<span class="text-warning">รออนุมัติ</span>';
+                                $txt = '<span class="text-warning">รออนุมัติ (' . common\helpers\CozxyUnity::TimeElapsedString($model->createDateTime) . ')</span>';
                             } else {
-                                $txt = '<span class="text-danger">แจ้งเจ้าหน้าที่</span>';
+                                $txt = '<span class="text-danger">แจ้งเจ้าหน้าที่ (' . common\helpers\CozxyUnity::TimeElapsedString($model->createDateTime) . ')</span>';
                             }
                             return $txt;
                         }

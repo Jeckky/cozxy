@@ -61,7 +61,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
             'unit' => 'หน่วย',
             'smallUnit' => 'หน่วยขนาดเล็ก',
             'tags' => 'แท็ก',
-            'quantity' => 'จำนวนสินค้าทั้งหมด',
+            'quantity' => 'จำนวนสินค้า',
             'bTitle' => 'Brand',
             'cTitle' => 'Category',
             'sUser' => 'Suppliers', 'pTitle' => 'หัวข้อสินค้า',
