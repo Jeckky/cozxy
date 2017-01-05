@@ -9,7 +9,6 @@ if (!isset(Yii::$app->user->identity->type)) {
     exit(0);
 }
 ?>
-
 <!-- 2. $MAIN_NAVIGATION ======= Main navigation ========= -->
 <div id="main-navbar" class="navbar navbar-inverse" role="navigation">
     <!-- Main menu toggle -->
@@ -18,7 +17,6 @@ if (!isset(Yii::$app->user->identity->type)) {
     <div class="navbar-inner">
         <!-- Main navbar header -->
         <div class="navbar-header">
-
             <!-- Logo -->
             <a href="<?php echo $baseUrl; ?>/dashboard" class="navbar-brand">
                 <div><img alt="Pixel Admin" src="<?php echo $directoryAsset; ?>/images/pixel-admin/main-navbar-logo.png"></div>
@@ -100,7 +98,7 @@ if (!isset(Yii::$app->user->identity->type)) {
                         </li>
                         <li class="nav-icon-btn nav-icon-btn-success dropdown">
                             <a href="#messages" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="label">0</span>
+                                <span class="label">1</span>
                                 <i class="nav-icon fa fa-envelope"></i>
                                 <span class="small-screen-text">Income messages</span>
                             </a>
@@ -120,9 +118,9 @@ if (!isset(Yii::$app->user->identity->type)) {
 
                                     <div class="message">
                                         <img src="<?= $directoryAsset; ?>/demo/avatars/2.jpg" alt="" class="message-avatar">
-                                        <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a>
+                                        <a href="#" class="message-subject">ยินดีต้อนรับสู่ Cozxy.com</a>
                                         <div class="message-description">
-                                            from <a href="#">Robert Jang</a>
+                                            from <a href="#">Cozxy dotcom</a>
                                             &nbsp;&nbsp;·&nbsp;&nbsp;
                                             2h ago
                                         </div>
@@ -134,23 +132,17 @@ if (!isset(Yii::$app->user->identity->type)) {
                         </li>
                         <!-- /3. $END_NAVBAR_ICON_BUTTONS -->
 
-                        <!--<li>
-                            <form class="navbar-form pull-left">
-                                <input type="text" class="form-control" placeholder="Search">
-                            </form>
-                        </li>-->
-
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle user-menu" data-toggle="dropdown">
                                 <?php
-//echo 'gender :: ' . Yii::$app->user->identity->gender;
+                                //echo 'gender :: ' . Yii::$app->user->identity->gender;
                                 if (Yii::$app->user->identity->gender == 0) {
                                     ?>
                                     <img src="<?php echo $directoryAsset ?>/demo/avatars/female.jpg" alt="">
                                 <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
                                     <img src="<?php echo $directoryAsset ?>/demo/avatars/silhouette.jpg" alt="">
                                 <?php } ?>
-<!--<span> <?php //echo Yii::$app->session['firstname'];                                                                                                   ?></span>-->
+                            <!--<span> <?php //echo Yii::$app->session['firstname'];                                                                                                            ?></span>-->
                                 <span> <?= isset(Yii::$app->user->identity->email) ? Yii::$app->user->identity->firstname : 'Guest' ?></span>
                             </a>
                             <ul class="dropdown-menu">
