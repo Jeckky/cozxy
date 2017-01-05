@@ -38,16 +38,6 @@ if (!isset(Yii::$app->user->identity->type)) {
             <div>
                 <div class="right clearfix">
                     <ul class="nav navbar-nav pull-right right-navbar-nav">
-                        <!-- 3. $NAVBAR_ICON_BUTTONS =======================================================================
-                            Navbar Icon Buttons
-                            NOTE: .nav-icon-btn triggers a dropdown menu on desktop screens only. On small screens .nav-icon-btn acts like a hyperlink.
-
-                            Classes:
-                            * 'nav-icon-btn-info'
-                            * 'nav-icon-btn-success'
-                            * 'nav-icon-btn-warning'
-                            * 'nav-icon-btn-danger'
-                        -->
                         <li class="nav-icon-btn nav-icon-btn-danger dropdown">
                             <a href="#notifications" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="label">
@@ -142,7 +132,7 @@ if (!isset(Yii::$app->user->identity->type)) {
                                 <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
                                     <img src="<?php echo $directoryAsset ?>/demo/avatars/silhouette.jpg" alt="">
                                 <?php } ?>
-<!--<span> <?php //echo Yii::$app->session['firstname'];                                                                                                                   ?></span>-->
+<!--<span> <?php //echo Yii::$app->session['firstname'];                                                                                                                    ?></span>-->
                                 <span> <?= isset(Yii::$app->user->identity->email) ? Yii::$app->user->identity->firstname : 'Guest' ?></span>
                             </a>
                             <ul class="dropdown-menu">
