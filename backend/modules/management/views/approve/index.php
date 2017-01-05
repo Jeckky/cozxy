@@ -128,7 +128,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     $GetNotificationsApprove = common\helpers\Notifications::NotificationsApprove($model->productSuppId);
                                                     if (isset($GetNotificationsApprove)) {
                                                         $curenttime = $GetNotificationsApprove->createDateTime;
-                                                        $time_ago = strtotime($curenttime);
+                                                        //$time_ago = strtotime($curenttime);
                                                         $time_agoq = common\helpers\CozxyUnity::TimeElapsedString($curenttime);
                                                         $approve_txt = '<div class = "buttons-with-margins jq-growl-' . $model->productSuppId . '" >';
                                                         $approve_txt .= '<button id ="jq-growl-danger-noti-' . $model->productSuppId . '" class="btn btn-danger btn-xs" onclick="notifications(' . $model->productSuppId . ',1)"'
