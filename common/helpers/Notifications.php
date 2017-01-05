@@ -22,20 +22,24 @@ use yii\data\ActiveDataProvider;
 class Notifications {
 
     //put your code here
-
+    /*
+     * การ Approve , Suppliers
+     */
     public static function NotificationsApprove($productSuppId) {
         $Noti = \common\models\costfit\Notifications::find()->where('id=' . $productSuppId . ' and type =1')->orderBy('notiId desc')->one();
         return isset($Noti) ? $Noti : NULL;
     }
 
     public static function NotificationsLoginSuppliers() {
-        $NotiLogin = \common\models\costfit\Notifications::find()->where('userId=' . Yii::$app->user->identity->userId . ' and type =1')
+        $NotiLogin = \common\models\costfit\Notifications::find()->where('userId=' . Yii::$app->user->identity->userId .
+        ' and type =' . \common\models\costfit\Notifications::NOTI_APPROVE)
         ->orderBy('notiId desc')->all();
         return isset($NotiLogin) ? $NotiLogin : NULL;
     }
 
     public static function NotificationsLoginSuppliersCount() {
-        $NotiLogin = \common\models\costfit\Notifications::find()->where('userId=' . Yii::$app->user->identity->userId . ' and type =1')
+        $NotiLogin = \common\models\costfit\Notifications::find()->where('userId=' . Yii::$app->user->identity->userId . ' and type ='
+        . \common\models\costfit\Notifications::NOTI_APPROVE)
         ->orderBy('notiId desc')->count();
         return isset($NotiLogin) ? $NotiLogin : 0;
     }
