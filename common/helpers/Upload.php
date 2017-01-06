@@ -41,7 +41,33 @@ class Upload {
     }
 
     /*
-     * Upload ครั้งละหลายรูป
+     * Upload ครั้งละหลายรูป Demo
+     * ยังไม่ได้เทส
+     * 6/1/2017
+     */
+
+    public static function UploadMultiple($fileName, $folderName, $uploadPath, $width, $height) {
+        $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName;
+
+        if (isset($_FILES['image'])) {
+            $file = \yii\web\UploadedFile::getInstanceByName('image');
+            $original_name = $file->baseName;
+            $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
+            $file->saveAs($uploadPath . '/' . $newFileName);
+            $originalFile = $uploadPath . '/' . $newFileName; // originalFile
+            $thumbFile0 = $uploadPath . '/' . $newFileName; // Size $width x $height
+            $saveThumb0 = Image::thumbnail($originalFile, $width, $height)->save($thumbFile0, ['quality' => 80]);
+
+            return $newFileName;
+        } else {
+            echo 'Test Upload images';
+        }
+
+        return false;
+    }
+
+    /*
+     * Upload ครั้งละหลายรูป ของ Suppliers
      */
 
     public static function UploadSuppliers($model) {
