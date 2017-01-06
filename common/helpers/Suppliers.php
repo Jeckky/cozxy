@@ -246,12 +246,12 @@ class Suppliers {
     }
 
     public static function GetCountProductApprove($userId) {
-        $count = \common\models\costfit\ProductSuppliers::find()->where('userId=' . $userId . ' and approve = "approve" ')->count();
+        $count = \common\models\costfit\ProductSuppliers::find()->where('userId=' . $userId . ' and approve = "' . \common\models\costfit\ProductSuppliers::SUPPLIERS_APPROVE . '" ')->count();
         return $count;
     }
 
     public static function GetCountProductWait($userId) {
-        $count = \common\models\costfit\ProductSuppliers::find()->where('userId=' . $userId . ' and approve in ("new","old") ')->count();
+        $count = \common\models\costfit\ProductSuppliers::find()->where('userId=' . $userId . ' and approve in ("' . \common\models\costfit\ProductSuppliers::SUPPLIERS_NEW . '","' . \common\models\costfit\ProductSuppliers::SUPPLIERS_OLD . '") ')->count();
         return $count;
     }
 

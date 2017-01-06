@@ -38,7 +38,7 @@ class Notifications {
         ->select('notifications.notiId ,notifications.id ,notifications.userId  ,notifications.title,notifications.type , notifications.status , notifications.createBy , notifications.createDateTime , notifications.updateDateTime ')
         ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = notifications.id')
         ->where(' notifications.userId=' . Yii::$app->user->identity->userId .
-        ' and notifications.type =' . \common\models\costfit\Notifications::NOTI_APPROVE . ' and product_suppliers.approve != "approve" ')
+        ' and notifications.type =' . \common\models\costfit\Notifications::NOTI_APPROVE . ' and product_suppliers.approve != "' . \common\models\costfit\ProductSuppliers::SUPPLIERS_APPROVE . '" ')
         ->orderBy('notifications.notiId desc')->all();
         return isset($NotiLogin) ? $NotiLogin : NULL;
     }
@@ -48,7 +48,7 @@ class Notifications {
         ->select(' notifications.notiId ,notifications.id ,notifications.userId ,notifications.title, notifications.type , notifications.status , notifications.createBy , notifications.createDateTime , notifications.updateDateTime ')
         ->join(' LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = notifications.id')
         ->where(' notifications.userId=' . Yii::$app->user->identity->userId . ' and notifications.type ='
-        . \common\models\costfit\Notifications::NOTI_APPROVE . ' and product_suppliers.approve != "approve" ')
+        . \common\models\costfit\Notifications::NOTI_APPROVE . ' and product_suppliers.approve != "' . \common\models\costfit\ProductSuppliers::SUPPLIERS_APPROVE . '" ')
         ->orderBy('notifications.notiId desc')->count();
         return isset($NotiLogin) ? $NotiLogin : 0;
     }
