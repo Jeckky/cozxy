@@ -42,6 +42,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         'model' => $model,
                                         'attributes' => [
                                             'userId',
+                                            'code',
+                                            'passportNo',
+                                            [
+                                                'attribute' => 'passport Image',
+                                                'format' => 'raw',
+                                                'value' => Html::img(Yii::getAlias('@web') . $model->passportImage, ['style' => 'width:150px;height:150px', 'class' => 'img-responsive'])
+                                            ],
                                             'username',
                                             //'password_hash:ntext',
                                             'firstname',

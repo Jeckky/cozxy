@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\helpers\Upload;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -119,6 +120,18 @@ class UserController extends ManagementMasterController {
                 $model->status = 1;
                 $model->auth_type = 'Backend';
                 $model->username = $_POST["User"]['email'];
+                $model->code = $_POST["User"]['code'];
+                $model->passportNo = $_POST["User"]['passportNo'];
+                /*
+                 * Upload ครั้งละรูป
+                 * helpers Upload
+                 * path : common/helpers/Upload.php
+                 * use : Upload::uploadBasic($fileName, $folderName, $uploadPath, $width, $height)
+                 */
+                $folderName = "passport"; //  Size 553 x 484
+                $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName;
+                $newFileName = Upload::UploadBasic('User[passportImage]', $folderName, $uploadPath, '300', '300');
+                $model->passportImage = '/' . 'images/' . $folderName . "/" . $newFileName;
                 $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
                 $model->token = Yii::$app->security->generateRandomString(10);
                 $model->createDateTime = new \yii\db\Expression("NOW()");
@@ -144,6 +157,16 @@ class UserController extends ManagementMasterController {
         $model = $this->findModel($id);
         if (isset($_POST["User"])) {
             $model->attributes = $_POST["User"];
+            /*
+             * Upload ครั้งละรูป
+             * helpers Upload
+             * path : common/helpers/Upload.php
+             * use : Upload::uploadBasic($fileName, $folderName, $uploadPath, $width, $height)
+             */
+            $folderName = "passport"; //  Size 553 x 484
+            $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName;
+            $newFileName = Upload::UploadBasic('User[passportImage]', $folderName, $uploadPath, '300', '300');
+            $model->passportImage = '/' . 'images/' . $folderName . "/" . $newFileName;
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             if ($model->save(FALSE)) {
                 return $this->redirect(['index']);

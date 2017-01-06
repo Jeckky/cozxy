@@ -32,6 +32,10 @@ use yii\jui\DatePicker;
 
         <?= $form->errorSummary($model) ?>
 
+        <?= $form->field($model, 'code', ['options' => ['class' => 'row form-group ']])->textInput()->label('Code') ?>
+
+        <?= $form->field($model, 'passportNo', ['options' => ['class' => 'row form-group ']])->textInput()->label('Passport No') ?>
+
         <?= $form->field($model, 'firstname', ['options' => ['class' => 'row form-group ']])->textInput(['maxlength' => 200])->label('ชื่อ') ?>
 
         <?= $form->field($model, 'lastname', ['options' => ['class' => 'row form-group ']])->textInput(['maxlength' => 200])->label('นามสกุล') ?>
@@ -45,6 +49,10 @@ use yii\jui\DatePicker;
         <?= $form->field($model, 'gender')->radioList(['1' => 'เพศชาย', '0' => 'เพศหญิง'])->label('เพศ') ?>
 
         <?= $form->field($model, 'tel', ['options' => [ 'class' => 'row form-group']])->textInput(['maxlength' => 20, 'placeholder' => 'Phone: (999) 999-9999']) ?>
+
+        <?= $form->field($model, 'passportImage', ['options' => ['class' => 'row form-group']])->fileInput() ?>
+
+        <?= (isset($model->passportImage) && !empty($model->passportImage)) ? Html::hiddenInput((new ReflectionClass($model))->getShortName() . '[imageOld]', $model->passportImage) : ''; ?>
 
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
