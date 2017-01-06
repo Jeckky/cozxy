@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "web".
 *
-    * @property string $webId
+    * @property integer $webId
     * @property string $title
     * @property string $company
     * @property integer $status

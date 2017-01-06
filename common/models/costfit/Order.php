@@ -65,6 +65,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
     const CHECKOUT_STEP_ADDRESS = 1;
     const CHECKOUT_STEP_PAYMENT = 2;
     const CHECKOUT_STEP_SUCCESS = 3;
+    const REJECT_DATE = 48;
 
     public $orderMessage = null;
 
