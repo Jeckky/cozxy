@@ -33,6 +33,7 @@ use \common\models\costfit\master\ProductSuppliersMaster;
  * @property string $updateDateTime
  */
 class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMaster {
+
     /**
      * @inheritdoc
      */
@@ -40,6 +41,9 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
 //        return array_merge(parent::rules(), [[['price']]
 //        ]);
 //    }
+    const SUPPLIERS_APPROVE = 'approve';
+    const SUPPLIERS_OLD = 'old';
+    const SUPPLIERS_NEW = 'new';
 
     /**
      * @inheritdoc
@@ -76,6 +80,23 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
             'price image', 'Smart Price', 'firstname', 'lastname', 'bTitle', 'cTitle', 'uTitle', 'smuTitle'
             , 'simage', 'simageThumbnail1', 'simageThumbnail2', 'priceSuppliers', 'pTitle', 'sUser', 'price'
         ]);
+    }
+
+    public function findCheckoutStepArray() {
+        return [
+            self::SUPPLIERS_APPROVE => "อนุมัติ",
+            self::SUPPLIERS_OLD => "สินค้าจาก Cozxy",
+            self::SUPPLIERS_NEW => "สินค้าจาก Suppliers"
+        ];
+    }
+
+    public function getCheckoutStepText($step) {
+        $res = $this->findCheckoutStepArray();
+        if (isset($res[$step])) {
+            return $res[$step];
+        } else {
+            return NULL;
+        }
     }
 
     public function getBrand() {
