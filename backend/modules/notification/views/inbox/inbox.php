@@ -122,7 +122,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     <div class="m-subject"><a href="pages-show-email.html">Complete your Dropbox setup!</a></div>
                     <div class="m-date">Yesterday, 1:15 PM</div>
                 </li>
-                <li class="mail-item unread">
+                <!--<li class="mail-item unread">
                     <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
                     <div class="m-star"><a href="#"></a></div>
                     <div class="m-from"><a href="#">Michelle Bortz</a></div>
@@ -254,7 +254,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     <div class="m-from"><a href="#">Timothy Owens</a></div>
                     <div class="m-subject"><span class="label label-warning">Friends</span>&nbsp;&nbsp;<a href="pages-show-email.html">Hi John! How are you?</a></div>
                     <div class="m-date">Mar 10</div>
-                </li>
+                </li>-->
             </ul>
 
         </div>
