@@ -126,7 +126,7 @@ if (!isset(Yii::$app->user->identity->type)) {
                             <a href="#" class="dropdown-toggle user-menu" data-toggle="dropdown">
                                 <?php
                                 if (isset(Yii::$app->user->identity->passportImage)) {
-                                    echo '<img src="' . Yii::$app->user->identity->passportImage . '" alt="passport Image">';
+                                    echo '<img src="' . $baseUrl . Yii::$app->user->identity->passportImage . '" alt="passport Image">';
                                 } else {
                                     if (Yii::$app->user->identity->gender == 0) {
                                         ?>
