@@ -295,6 +295,7 @@ class CheckoutController extends MasterController {
             if ($_REQUEST["decision"] == "ACCEPT") {
                 /*
                  * Reward Points
+                 * 9/1/2017 By Taninut.Bm
                  */
                 $orderSummary = $order->summary;
                 $orderOrderId = $order->orderId;
