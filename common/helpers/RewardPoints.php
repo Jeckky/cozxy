@@ -24,7 +24,9 @@ class RewardPoints {
 
     //put your code here
     public static function getRankMemberPoints($orderUserId, $orderOrderId, $orderSummary) {
-        $GetPointsRewardRank = \common\models\costfit\PointsRewardRank::find()->where('num1 >= ' . $orderSummary . ' and  num2 <=' . $orderSummary)->one();
+        $GetPointsRewardRank = \common\models\costfit\PointsRewardRank::find()->where('num1 <= ' . $orderSummary . ' or  num2 <=' . $orderSummary)
+        ->orderBy(' order by  rankId desc ')
+        ->one();
         if (isset($GetPointsRewardRank)) {
             $pointsMember = new \common\models\costfit\PointsRewardMember();
             $pointsMember->rankId = $GetPointsRewardRank->rankId;
