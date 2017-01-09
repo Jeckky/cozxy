@@ -126,12 +126,16 @@ if (!isset(Yii::$app->user->identity->type)) {
                             <a href="#" class="dropdown-toggle user-menu" data-toggle="dropdown">
                                 <?php
                                 if (isset(Yii::$app->user->identity->passportImage)) {
-                                    echo '<img src="' . Yii::$app->user->identity->passportImage . '" alt="female">';
+                                    echo '<img src="' . Yii::$app->user->identity->passportImage . '" alt="passport Image">';
                                 } else {
                                     if (Yii::$app->user->identity->gender == 0) {
-                                        echo '<img src="' . $directoryAsset . '"/demo/avatars/female.jpg" alt="female">';
+                                        ?>
+                                        <img src="<?php echo $directoryAsset; ?>/demo/avatars/female.jpg" alt="female">
+                                        <?php
                                     } else if (Yii::$app->user->identity->gender == 1) {
-                                        echo '<img src="' . $directoryAsset . '"/demo/avatars/silhouette.jpg" alt="man">';
+                                        ?>
+                                        <img src="<?php echo $directoryAsset; ?>/demo/avatars/silhouette.jpg" alt="female">
+                                        <?php
                                     }
                                 }
                                 ?>
