@@ -130,7 +130,8 @@ class Suppliers {
             ->select('sum(`order_item`.`quantity`) as conutProduct, sum(`order`.`summary`) as summaryPrice, count(`order_item`.`productId`)/30 as avgNum ')
             ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
             ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
-            ->where('`order`.status >= 5 and MONTH(curdate()) = MONTH(order.createDateTime) and year(order.createDateTime) = year(curdate()) '
+            //->where('`order`.status >= 5 and MONTH(curdate()) = MONTH(order.createDateTime) and year(order.createDateTime) = year(curdate()) '
+            ->where('`order`.`status` >= 5 and (NOW() - INTERVAL 1 MONTH) <= (NOW() ) '
             . ' and product_suppliers.productId = ' . $parentsProductId . ' ')->one();
         } else {
             $orderLastMonth = \common\models\costfit\OrderItem::find()
@@ -142,29 +143,6 @@ class Suppliers {
             ->one();
         }
         return $orderLastMonth;
-    }
-
-    /*
-     * หัวข้อ ลำดับราคา
-     * แสดงข้อมูลราคาของ Suppliers ที่อยู่ใน   brand , category เดียวกัน
-     */
-
-    public static function GetPriceSuppliersSame_BK($brandId, $categoryId) {
-        $rankTwo = \common\models\costfit\ProductSuppliers::find()
-        ->select('`product_suppliers`.*, product_suppliers.title as pTitle, product_price_suppliers.price as priceSuppliers, '
-        . 'brand.title as bTitle, category.title as cTitle, user.username as sUser')
-        ->join('LEFT JOIN', 'product_price_suppliers', 'product_price_suppliers.productSuppId = product_suppliers.productSuppId')
-        ->join('LEFT JOIN', 'brand', 'brand.brandId = product_suppliers.brandId')
-        ->join('LEFT JOIN', 'category', 'category.categoryId = product_suppliers.categoryId')
-        ->join('LEFT JOIN', 'user', 'user.userId = product_suppliers.userId')
-        ->where(' product_price_suppliers.status = 1 and product_suppliers.brandId = ' . $brandId . ' and product_suppliers.categoryId = '
-        . '' . $categoryId . ' and product_price_suppliers.price != ""')
-        //. ' and date(product_price_suppliers.createDateTime) >= date_add(curdate(), interval -7 day) ')
-        ->orderBy(' product_price_suppliers.price asc');
-        $rankingPrice = new ActiveDataProvider([
-            'query' => $rankTwo
-        ]);
-        return $rankingPrice;
     }
 
     /*
@@ -186,27 +164,6 @@ class Suppliers {
             'query' => $rankTwo
         ]);
         return $rankingPrice;
-    }
-
-    /*
-     * - ajax post url yii2: /suppliers/product-price-suppliers/create?
-     * - หาลำดับ ราคาของ Supplires
-     * table : product_suppliers ,product_price_suppliers , brand ,category ,user
-     * where : สถานะราคาของ Suppliers เท่า 1 ,ราคาของ Suppliers ต้องมีค่าเสมอ  และ brand , category เดียวกัน โดยส่ง ราคาจากฟอร์ม
-     * */
-
-    public static function SuppliersCreatePrice_Bk($brandId, $categoryId, $price) {
-        $rankTwo = \common\models\costfit\ProductSuppliers::find()
-        ->select('`product_suppliers`.*, product_suppliers.title as pTitle, product_price_suppliers.price as priceSuppliers, '
-        . 'brand.title as bTitle, category.title as cTitle, user.username as sUser')
-        ->join('LEFT JOIN', 'product_price_suppliers', 'product_price_suppliers.productSuppId = product_suppliers.productSuppId')
-        ->join('LEFT JOIN', 'brand', 'brand.brandId = product_suppliers.brandId')
-        ->join('LEFT JOIN', 'category', 'category.categoryId = product_suppliers.categoryId')
-        ->join('LEFT JOIN', 'user', 'user.userId = product_suppliers.userId')
-        ->where(' product_price_suppliers.status = 1 and product_suppliers.brandId = ' . $brandId . ' and product_suppliers.categoryId = '
-        . '' . $categoryId . ' and product_price_suppliers.price != "" and product_price_suppliers.price <= ' . $price)
-        ->count();
-        return $rankTwo;
     }
 
     /*

@@ -59,6 +59,7 @@ class PointsRewardRankController extends ContentMasterController {
         $model = new PointsRewardRank();
         if (isset($_POST["PointsRewardRank"])) {
             $model->attributes = $_POST["PointsRewardRank"];
+            $model->createBy = Yii::$app->user->identity->userId;
             $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
                 return $this->redirect(['index']);
@@ -80,9 +81,6 @@ class PointsRewardRankController extends ContentMasterController {
         if (isset($_POST["PointsRewardRank"])) {
             $model->attributes = $_POST["PointsRewardRank"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-
-
-
             if ($model->save()) {
                 return $this->redirect(['index']);
             }
