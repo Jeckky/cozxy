@@ -23,8 +23,13 @@ use yii\data\ActiveDataProvider;
 class RewardPoints {
 
     //put your code here
+    /*
+     * เก็บคะแนนสะสมของ Member ตาม Rank Points ต่าง ๆ
+     * ตอนที่ธนาคาร return url Result กลับมาด้วย status : ACCEPT
+     */
     public static function getRankMemberPoints($orderUserId, $orderOrderId, $orderSummary) {
-        $GetPointsRewardRank = \common\models\costfit\PointsRewardRank::find()->where('num1 <= ' . $orderSummary . ' or  num2 <=' . $orderSummary)
+        $GetPointsRewardRank = \common\models\costfit\PointsRewardRank::find()
+        ->where('num1 <= ' . $orderSummary . ' or  num2 <=' . $orderSummary)
         ->orderBy('rankId desc ')
         ->one();
         if (isset($GetPointsRewardRank)) {
