@@ -8,10 +8,12 @@ use Yii;
 * This is the model class for table "category".
 *
     * @property string $categoryId
+    * @property string $supplierId
     * @property string $title
     * @property string $description
     * @property string $image
-    * @property string $parentId
+    * @property integer $sortOrder
+    * @property integer $isRoot
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -32,9 +34,9 @@ return 'category';
 public function rules()
 {
 return [
-            [['title', 'createDateTime'], 'required'],
+            [['supplierId', 'title', 'createDateTime'], 'required'],
+            [['supplierId', 'sortOrder', 'isRoot', 'status'], 'integer'],
             [['description'], 'string'],
-            [['parentId', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 200],
             [['image'], 'string', 'max' => 255],
@@ -48,10 +50,12 @@ public function attributeLabels()
 {
 return [
     'categoryId' => Yii::t('category', 'Category ID'),
+    'supplierId' => Yii::t('category', 'Supplier ID'),
     'title' => Yii::t('category', 'Title'),
     'description' => Yii::t('category', 'Description'),
     'image' => Yii::t('category', 'Image'),
-    'parentId' => Yii::t('category', 'Parent ID'),
+    'sortOrder' => Yii::t('category', 'Sort Order'),
+    'isRoot' => Yii::t('category', 'Is Root'),
     'status' => Yii::t('category', 'Status'),
     'createDateTime' => Yii::t('category', 'Create Date Time'),
     'updateDateTime' => Yii::t('category', 'Update Date Time'),

@@ -12,8 +12,7 @@ use Yii;
     * @property string $title
     * @property string $description
     * @property string $image
-    * @property string $imageThumbnail1
-    * @property string $imageThumbnail2
+    * @property integer $sortOrder
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -34,12 +33,12 @@ return 'product_image';
 public function rules()
 {
 return [
-            [['productId', 'title', 'createDateTime'], 'required'],
-            [['productId', 'status'], 'integer'],
+            [['productId', 'image', 'createDateTime'], 'required'],
+            [['productId', 'sortOrder', 'status'], 'integer'],
             [['description'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 200],
-            [['image', 'imageThumbnail1', 'imageThumbnail2'], 'string', 'max' => 255],
+            [['image'], 'string', 'max' => 255],
         ];
 }
 
@@ -54,8 +53,7 @@ return [
     'title' => Yii::t('product_image', 'Title'),
     'description' => Yii::t('product_image', 'Description'),
     'image' => Yii::t('product_image', 'Image'),
-    'imageThumbnail1' => Yii::t('product_image', 'Image Thumbnail1'),
-    'imageThumbnail2' => Yii::t('product_image', 'Image Thumbnail2'),
+    'sortOrder' => Yii::t('product_image', 'Sort Order'),
     'status' => Yii::t('product_image', 'Status'),
     'createDateTime' => Yii::t('product_image', 'Create Date Time'),
     'updateDateTime' => Yii::t('product_image', 'Update Date Time'),

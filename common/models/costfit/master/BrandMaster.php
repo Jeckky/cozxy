@@ -8,15 +8,17 @@ use Yii;
 * This is the model class for table "brand".
 *
     * @property string $brandId
-    * @property string $userId
+    * @property string $supplierId
     * @property string $title
     * @property string $description
     * @property string $image
+    * @property integer $sortOrder
     * @property integer $status
-    * @property string $parentId
     * @property string $createDateTime
     * @property string $updateDateTime
-*/
+    *
+            * @property BrandImage[] $brandImages
+    */
 class BrandMaster extends \common\models\ModelMaster
 {
 /**
@@ -33,8 +35,8 @@ return 'brand';
 public function rules()
 {
 return [
-            [['userId', 'title', 'createDateTime'], 'required'],
-            [['userId', 'status', 'parentId'], 'integer'],
+            [['supplierId', 'title', 'createDateTime'], 'required'],
+            [['supplierId', 'sortOrder', 'status'], 'integer'],
             [['description'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 200],
@@ -49,14 +51,22 @@ public function attributeLabels()
 {
 return [
     'brandId' => Yii::t('brand', 'Brand ID'),
-    'userId' => Yii::t('brand', 'User ID'),
+    'supplierId' => Yii::t('brand', 'Supplier ID'),
     'title' => Yii::t('brand', 'Title'),
     'description' => Yii::t('brand', 'Description'),
     'image' => Yii::t('brand', 'Image'),
+    'sortOrder' => Yii::t('brand', 'Sort Order'),
     'status' => Yii::t('brand', 'Status'),
-    'parentId' => Yii::t('brand', 'Parent ID'),
     'createDateTime' => Yii::t('brand', 'Create Date Time'),
     'updateDateTime' => Yii::t('brand', 'Update Date Time'),
 ];
 }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getBrandImages()
+    {
+    return $this->hasMany(BrandImageMaster::className(), ['brandId' => 'brandId']);
+    }
 }
