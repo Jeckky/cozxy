@@ -29,10 +29,9 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-    * @property integer $quantity
-    * @property integer $result
+    * @property string $quantity
     * @property string $approve
-    * @property integer $productId
+    * @property string $productId
     * @property string $approveCreateBy
     * @property string $approvecreateDateTime
 */
@@ -52,9 +51,9 @@ return 'product_suppliers';
 public function rules()
 {
 return [
-            [['userId', 'productGroupId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'quantity', 'result', 'productId', 'approveCreateBy'], 'integer'],
+            [['userId', 'productGroupId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'quantity', 'productId', 'approveCreateBy'], 'integer'],
             [['isbn', 'shortDescription', 'description', 'specification'], 'string'],
-            [['title', 'createDateTime', 'quantity', 'result', 'approvecreateDateTime'], 'required'],
+            [['title', 'createDateTime', 'quantity', 'approvecreateDateTime'], 'required'],
             [['width', 'height', 'depth', 'weight'], 'number'],
             [['createDateTime', 'updateDateTime', 'approvecreateDateTime'], 'safe'],
             [['code'], 'string', 'max' => 100],
@@ -93,7 +92,6 @@ return [
     'createDateTime' => Yii::t('product_suppliers', 'Create Date Time'),
     'updateDateTime' => Yii::t('product_suppliers', 'Update Date Time'),
     'quantity' => Yii::t('product_suppliers', 'Quantity'),
-    'result' => Yii::t('product_suppliers', 'Result'),
     'approve' => Yii::t('product_suppliers', 'Approve'),
     'productId' => Yii::t('product_suppliers', 'Product ID'),
     'approveCreateBy' => Yii::t('product_suppliers', 'Approve Create By'),
