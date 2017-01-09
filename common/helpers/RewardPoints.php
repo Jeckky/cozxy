@@ -32,6 +32,7 @@ class RewardPoints {
             $pointsMember->rankId = $GetPointsRewardRank->rankId;
             $pointsMember->userId = $orderUserId;
             $pointsMember->orderId = $orderOrderId;
+            $pointsMember->createDateTime = new \yii\db\Expression("NOW()");
             if ($pointsMember->save(FALSE)) {
                 return TRUE;
             }
