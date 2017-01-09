@@ -21,5 +21,21 @@ use yii\data\ActiveDataProvider;
  *
  */
 class RewardPoints {
+
     //put your code here
+    public static function getRankMemberPoints($orderUserId, $orderOrderId, $orderSummary) {
+        $GetPointsRewardRank = \common\models\costfit\PointsRewardRank::find()->where('num1 <=' . $orderSummary)->one();
+        if (isset($GetPointsRewardRank)) {
+            $pointsMember = new \common\models\costfit\PointsRewardMember();
+            $pointsMember->rankId = $GetPointsRewardRank->rankId;
+            $pointsMember->userId = $orderUserId;
+            $pointsMember->orderId = $orderOrderId;
+            if ($pointsMember->save(FALSE)) {
+                return TRUE;
+            }
+        } else {
+            return FALSE;
+        }
+    }
+
 }

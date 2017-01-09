@@ -14,6 +14,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use \common\models\costfit\Order;
+use common\helpers\RewardPoints;
 
 /**
  * Checkout controller
@@ -61,8 +62,8 @@ class CheckoutController extends MasterController {
             if (isset($_POST['Address'])) {
                 //print_r($_POST['Address']);
                 $address = \common\models\costfit\Address::find()
-                        ->where('userId =' . \Yii::$app->user->id . ' and addressId=' . $addressId . ' and  type = 1')
-                        ->one();
+                ->where('userId =' . \Yii::$app->user->id . ' and addressId=' . $addressId . ' and  type = 1')
+                ->one();
 
                 $address->attributes = $_POST['Address'];
                 $address->countryId = (isset($_POST['Address']['countryId']) ? $_POST['Address']['countryId'] : '');
@@ -78,24 +79,24 @@ class CheckoutController extends MasterController {
             //echo 'no hidden ';
             if (\Yii::$app->user->isGuest) {
                 $address_shipping = \common\models\costfit\Address::find()->where('userId=' . 0 . ' and type = 2  ')
-                        ->orderBy('isDefault desc ')
-                        ->all();
+                ->orderBy('isDefault desc ')
+                ->all();
 
 
 
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . 0 . ' and type = 1  ')
-                        ->orderBy('isDefault desc  ')
-                        ->all();
+                ->orderBy('isDefault desc  ')
+                ->all();
             } else {
                 $address_shipping = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 2  ')
-                        ->orderBy('isDefault desc ')
-                        ->all();
+                ->orderBy('isDefault desc ')
+                ->all();
 
 
 
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 1  ')
-                        ->orderBy('isDefault desc  ')
-                        ->all();
+                ->orderBy('isDefault desc  ')
+                ->all();
                 //$address_billing['scenario'] = 'shipping_address';
             }
 
@@ -177,8 +178,8 @@ class CheckoutController extends MasterController {
 
             if (isset($billing)) {
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . $placeUserId . ' and addressId =' . $billing)
-                        ->orderBy('addressId desc')
-                        ->one();
+                ->orderBy('addressId desc')
+                ->one();
                 //$address_shipping = \common\models\costfit\Address::find()->where('userId=' . $placeUserId . ' and addressId = ' . $shipping)
                 // ->orderBy('addressId desc')
                 // ->one();
@@ -187,8 +188,8 @@ class CheckoutController extends MasterController {
                 //->orderBy('addressId desc')
                 //->one();
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . $placeUserId . ' and addressId = ' . $shipping)
-                        ->orderBy('addressId desc')
-                        ->one();
+                ->orderBy('addressId desc')
+                ->one();
             }
 
             $order = \common\models\costfit\Order::find()->where('userId= ' . $placeUserId . ' and orderId = ' . $placeOrderId)->one();
@@ -250,8 +251,8 @@ class CheckoutController extends MasterController {
         }
         $addressId = Yii::$app->request->post('address');
         $address = \common\models\costfit\Address::find()->where('addressId = ' . $addressId)
-                ->orderBy('isDefault desc, updateDateTime desc')
-                ->one();
+        ->orderBy('isDefault desc, updateDateTime desc')
+        ->one();
         //echo '<pre>';
         //print_r($address->attributes);
         echo json_encode($address->attributes);
@@ -279,8 +280,8 @@ class CheckoutController extends MasterController {
         $model = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
         $ePayment = \common\models\costfit\EPayment::find()->where("PaymentMethodId = 2 AND type =" . \Yii::$app->params['ePaymentServerType'])->one();
         return $this->render("//e_payment/payment_confirmation", [
-                    'model' => $model,
-                    'ePayment' => $ePayment]);
+            'model' => $model,
+            'ePayment' => $ePayment]);
     }
 
     public function actionResult() {
@@ -292,6 +293,16 @@ class CheckoutController extends MasterController {
         if (isset($_REQUEST) && $_REQUEST != array()) {
             $order = Order::find()->where("orderNo='" . $_REQUEST["req_reference_number"] . "'")->one();
             if ($_REQUEST["decision"] == "ACCEPT") {
+                /*
+                 * Reward Points
+                 */
+                $orderSummary = $order->summary;
+                $orderOrderId = $order->orderId;
+                $orderUserId = $order->userId;
+                $getRankMemberPoints = RewardPoints::getRankMemberPoints($orderUserId, $orderOrderId, $orderSummary);
+                /*
+                 * Insert Order
+                 */
 
                 $order->invoiceNo = Order::genInvNo($order);
                 $order->status = Order::ORDER_STATUS_E_PAYMENT_SUCCESS;
