@@ -34,7 +34,7 @@ use yii\jui\DatePicker;
 
         <?= $form->field($model, 'code', ['options' => ['class' => 'row form-group ']])->textInput()->label('Code') ?>
 
-        <?= $form->field($model, 'passportNo', ['options' => ['class' => 'row form-group ']])->textInput()->label('Passport No') ?>
+        <?= $form->field($model, 'passportNo', ['options' => ['class' => 'row form-group ']])->textInput(['maxlength' => 13])->label('Passport No') ?>
 
         <?= $form->field($model, 'firstname', ['options' => ['class' => 'row form-group ']])->textInput(['maxlength' => 200])->label('ชื่อ') ?>
 

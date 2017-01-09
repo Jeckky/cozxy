@@ -30,7 +30,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <div class="col-sm-12">
                         <!-- Pills -->
                         <ul class="nav nav-pills bs-tabdrop-example">
-                            <li class="active"><a href="#bs-tabdrop-pill1" data-toggle="tab">รายละเอียด</a></li>
+                            <li class="active"><a href="#bs-tabdrop-pill1" data-toggle="tab">รายละเอียด User</a></li>
+                            <li><a href="#bs-tabdrop-pill4" data-toggle="tab">แก้ไข User</a></li>
                             <li><a href="#bs-tabdrop-pill2" data-toggle="tab">เข้าอยู่ในกลุ่ม</a></li>
                             <li><a href="#bs-tabdrop-pill3" data-toggle="tab">ตั้งค่าพื้นฐาน</a></li>
                         </ul>
@@ -102,6 +103,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         ],
                                     ])
                                     ?>
+                                </p>
+                            </div>
+                            <div class="tab-pane" id="bs-tabdrop-pill4">
+                                <p><h3>
+                                    <a href="update?id=<?php echo $_GET['id']; ?>">
+                                        แก้ไข User ( กรุณากดลิงค์นี้... )
+                                    </a></h3>
                                 </p>
                             </div>
                             <div class="tab-pane" id="bs-tabdrop-pill2">
@@ -219,7 +227,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 </div>
 
                             </div>
-
                         </div>
                     </div>
                 </div>
