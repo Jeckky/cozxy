@@ -67,7 +67,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 }
                 ?>
                 <tr style="background-color: <?php echo $bg; ?>; border-bottom: 1px #000000 solid;">
-                    <td style="font-size: 12px;"><?php echo ++$num; ?></td>
+                    <td style="font-size: 12px;"><?php echo ++$num; ?>, <?php echo isset($value->supplierId) ? $value->supplierId : '-'; ?></td>
                     <td style="font-size: 12px;"><?php echo isset($value->product->code) ? $value->product->code : '-'; ?></td>
                     <td style="font-size: 12px;"><?php echo isset($value->product->title) ? $value->product->title : ''; ?></td>
                     <td style="font-size: 12px;"><?php echo isset($value->product->units) ? $value->product->units->title : ''; ?></td>

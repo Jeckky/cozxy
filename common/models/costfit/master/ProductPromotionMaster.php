@@ -9,13 +9,16 @@ use Yii;
 *
     * @property string $productPromotionId
     * @property string $productId
-    * @property string $userGroupId
-    * @property integer $quantity
-    * @property integer $priority
-    * @property string $price
-    * @property string $dateStart
-    * @property string $dateEnd
-*/
+    * @property string $statusDate
+    * @property string $endDate
+    * @property string $discount
+    * @property integer $discountType
+    * @property integer $status
+    * @property string $createDateTime
+    * @property string $updateDateTime
+    *
+            * @property Product $product
+    */
 class ProductPromotionMaster extends \common\models\ModelMaster
 {
 /**
@@ -32,10 +35,11 @@ return 'product_promotion';
 public function rules()
 {
 return [
-            [['productId'], 'required'],
-            [['productId', 'userGroupId', 'quantity', 'priority'], 'integer'],
-            [['price'], 'number'],
-            [['dateStart', 'dateEnd'], 'safe'],
+            [['productId', 'discountType', 'status'], 'integer'],
+            [['statusDate', 'endDate', 'createDateTime', 'updateDateTime'], 'safe'],
+            [['discount'], 'number'],
+            [['discountType', 'createDateTime'], 'required'],
+            [['productId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductMaster::className(), 'targetAttribute' => ['productId' => 'productId']],
         ];
 }
 
@@ -47,12 +51,21 @@ public function attributeLabels()
 return [
     'productPromotionId' => Yii::t('product_promotion', 'Product Promotion ID'),
     'productId' => Yii::t('product_promotion', 'Product ID'),
-    'userGroupId' => Yii::t('product_promotion', 'User Group ID'),
-    'quantity' => Yii::t('product_promotion', 'Quantity'),
-    'priority' => Yii::t('product_promotion', 'Priority'),
-    'price' => Yii::t('product_promotion', 'Price'),
-    'dateStart' => Yii::t('product_promotion', 'Date Start'),
-    'dateEnd' => Yii::t('product_promotion', 'Date End'),
+    'statusDate' => Yii::t('product_promotion', 'Status Date'),
+    'endDate' => Yii::t('product_promotion', 'End Date'),
+    'discount' => Yii::t('product_promotion', 'Discount'),
+    'discountType' => Yii::t('product_promotion', 'Discount Type'),
+    'status' => Yii::t('product_promotion', 'Status'),
+    'createDateTime' => Yii::t('product_promotion', 'Create Date Time'),
+    'updateDateTime' => Yii::t('product_promotion', 'Update Date Time'),
 ];
 }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getProduct()
+    {
+    return $this->hasOne(ProductMaster::className(), ['productId' => 'productId']);
+    }
 }

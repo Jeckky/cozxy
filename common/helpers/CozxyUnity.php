@@ -191,4 +191,10 @@ class CozxyUnity {
         return $pdf->render();
     }
 
+    public static function GetParams($hash, $title) {
+        $k = base64_decode(base64_decode($hash));
+        $params = \common\models\ModelMaster::decodeParams($hash);
+        return $params;
+    }
+
 }

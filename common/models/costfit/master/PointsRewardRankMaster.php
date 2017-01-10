@@ -33,10 +33,11 @@ return 'points_reward_rank';
 public function rules()
 {
 return [
+            [['num1', 'num2'], 'number'],
             [['status'], 'integer'],
             [['createDateTime'], 'required'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['num1', 'num2', 'cash', 'points', 'createBy'], 'string', 'max' => 45],
+            [['cash', 'points', 'createBy'], 'string', 'max' => 45],
         ];
 }
 

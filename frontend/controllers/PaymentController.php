@@ -15,6 +15,7 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use yii\data\ActiveDataProvider;
 use common\helpers\CozxyUnity;
+use common\helpers\PaymentPrint;
 
 /**
  * Payment Controller
@@ -103,7 +104,13 @@ class PaymentController extends MasterController {
         CozxyUnity::actionMpdfDocument($content, $heading, $title);
     }
 
-    public function actionPrintReceipt($hash, $title) {
+    /*
+     * Backend Print Receipt v1
+     * 10/1/2017
+     * By Taninut.Bm
+     */
+
+    public function actionPrintReceipt_V1($hash, $title) {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
@@ -121,6 +128,42 @@ class PaymentController extends MasterController {
         if (isset($params['orderId'])) {
             $order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . $params['orderId'] . '" ')
             ->one();
+        } else {
+            return $this->redirect(['profile/order']);
+        }
+
+        //$content = $this->renderPartial('purchase_order');
+        $title = 'Receipt';
+        $heading = $this->renderPartial('@app/views/payment/heading_order', ['title' => 'ใบเสร็จ/ใบกำกับภาษี']);
+        $content = $this->renderPartial('@app/views/payment/receipt', compact('order'));
+        //$this->actionMpdfDocument($content, $heading, $title);
+        CozxyUnity::actionMpdfDocument($content, $heading, $title);
+    }
+
+    public function actionPrintReceipt($hash, $title) {
+        /*
+         * "payment/print-receipt/" . $model->encodeParams(['orderId' => $model->orderId]) . '/' . $model->orderNo)
+         */
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
+
+        /*
+         * use common\helpers\CozxyUnity
+         * function GetParams($hash, $title)
+         * 10/1/2017
+         */
+        $params = CozxyUnity::GetParams($hash, $title);
+
+        $orderId = Yii::$app->request->get('OrderNo');
+        $this->layout = "payment/content";
+        $this->title = 'ใบ​เสร็จ​/ใบ​กํากับ​ภา​ษี บริษัท​ คอ​ซซี่​ ดอทคอม​ จํากัด';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = "Order Purchase";
+        $orderId = $params['orderId'];
+
+        if (isset($params['orderId'])) {
+            $order = PaymentPrint::GetPrintReceipt(Yii::$app->user->id, $params['orderId']);
         } else {
             return $this->redirect(['profile/order']);
         }

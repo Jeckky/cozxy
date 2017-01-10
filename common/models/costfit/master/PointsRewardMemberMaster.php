@@ -32,8 +32,8 @@ return 'points_reward_member';
 public function rules()
 {
 return [
-            [['pointsMemberId', 'createDateTime'], 'required'],
-            [['pointsMemberId', 'rankId', 'userId', 'orderId', 'status'], 'integer'],
+            [['rankId', 'userId', 'orderId', 'status'], 'integer'],
+            [['createDateTime'], 'required'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['createBy'], 'string', 'max' => 45],
         ];

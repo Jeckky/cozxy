@@ -7,20 +7,14 @@ use Yii;
 /**
 * This is the model class for table "bank".
 *
-    * @property string $id
-    * @property string $bankNameId
-    * @property string $branch
-    * @property string $accNo
-    * @property string $accName
-    * @property string $accType
-    * @property string $supplierId
-    * @property string $compCode
+    * @property string $bankId
+    * @property string $title
+    * @property string $description
+    * @property string $image
     * @property integer $status
     * @property string $createDateTime
-    *
-            * @property BankName $bankName
-            * @property Supplier $supplier
-    */
+    * @property string $updateDateTime
+*/
 class BankMaster extends \common\models\ModelMaster
 {
 /**
@@ -37,16 +31,12 @@ return 'bank';
 public function rules()
 {
 return [
-            [['bankNameId', 'branch', 'accNo', 'accName', 'accType', 'supplierId', 'createDateTime'], 'required'],
-            [['bankNameId', 'supplierId', 'status'], 'integer'],
-            [['accNo'], 'string'],
-            [['createDateTime'], 'safe'],
-            [['branch'], 'string', 'max' => 25],
-            [['accName'], 'string', 'max' => 300],
-            [['accType'], 'string', 'max' => 100],
-            [['compCode'], 'string', 'max' => 5],
-            [['bankNameId'], 'exist', 'skipOnError' => true, 'targetClass' => BankNameMaster::className(), 'targetAttribute' => ['bankNameId' => 'bankNameId']],
-            [['supplierId'], 'exist', 'skipOnError' => true, 'targetClass' => SupplierMaster::className(), 'targetAttribute' => ['supplierId' => 'supplierId']],
+            [['description'], 'string'],
+            [['status'], 'integer'],
+            [['createDateTime'], 'required'],
+            [['createDateTime', 'updateDateTime'], 'safe'],
+            [['title'], 'string', 'max' => 200],
+            [['image'], 'string', 'max' => 255],
         ];
 }
 
@@ -56,32 +46,13 @@ return [
 public function attributeLabels()
 {
 return [
-    'id' => Yii::t('bank', 'ID'),
-    'bankNameId' => Yii::t('bank', 'Bank Name ID'),
-    'branch' => Yii::t('bank', 'Branch'),
-    'accNo' => Yii::t('bank', 'Acc No'),
-    'accName' => Yii::t('bank', 'Acc Name'),
-    'accType' => Yii::t('bank', 'Acc Type'),
-    'supplierId' => Yii::t('bank', 'Supplier ID'),
-    'compCode' => Yii::t('bank', 'Comp Code'),
+    'bankId' => Yii::t('bank', 'Bank ID'),
+    'title' => Yii::t('bank', 'Title'),
+    'description' => Yii::t('bank', 'Description'),
+    'image' => Yii::t('bank', 'Image'),
     'status' => Yii::t('bank', 'Status'),
     'createDateTime' => Yii::t('bank', 'Create Date Time'),
+    'updateDateTime' => Yii::t('bank', 'Update Date Time'),
 ];
 }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getBankName()
-    {
-    return $this->hasOne(BankNameMaster::className(), ['bankNameId' => 'bankNameId']);
-    }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getSupplier()
-    {
-    return $this->hasOne(SupplierMaster::className(), ['supplierId' => 'supplierId']);
-    }
 }

@@ -7,8 +7,8 @@ use Yii;
 /**
 * This is the model class for table "configuration".
 *
-    * @property string $id
-    * @property string $name
+    * @property string $configurationId
+    * @property string $title
     * @property string $description
     * @property string $value
     * @property integer $status
@@ -31,11 +31,11 @@ return 'configuration';
 public function rules()
 {
 return [
-            [['name', 'createDateTime'], 'required'],
-            [['description', 'value'], 'string'],
+            [['title', 'value'], 'required'],
             [['status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['name'], 'string', 'max' => 200],
+            [['title', 'description'], 'string', 'max' => 255],
+            [['value'], 'string', 'max' => 45],
         ];
 }
 
@@ -45,8 +45,8 @@ return [
 public function attributeLabels()
 {
 return [
-    'id' => Yii::t('configuration', 'ID'),
-    'name' => Yii::t('configuration', 'Name'),
+    'configurationId' => Yii::t('configuration', 'Configuration ID'),
+    'title' => Yii::t('configuration', 'Title'),
     'description' => Yii::t('configuration', 'Description'),
     'value' => Yii::t('configuration', 'Value'),
     'status' => Yii::t('configuration', 'Status'),
