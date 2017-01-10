@@ -235,8 +235,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 ?>
                 <input class="btn btn-black btn-block" type="submit" name="place-order" id="place-order" value="Place order">
             </div>
+
             <!--</form>-->
-            <?php //ActiveForm::end();     ?>
+
         </div>
     </div>
 </section>

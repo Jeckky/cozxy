@@ -24,8 +24,8 @@ class CheckoutController extends MasterController {
     public $enableCsrfValidation = false;
 
     public function beforeAction($action) {
-        if ($action->id == 'confirmation' || $action->id == 'confirm-checkout') {
-            $this->enableCsrfValidation = false;
+        if ($action->id == 'confirmation' || $action->id == 'confirm-checkout' || $action->id == 'edit-checkout') {
+            $this->enableCsrfValidation = FALSE;
         }
 
         return parent::beforeAction($action);
@@ -173,7 +173,6 @@ class CheckoutController extends MasterController {
             $placeUserId = (Yii::$app->request->post('placeUserId') != '') ? Yii::$app->request->post('placeUserId') : \Yii::$app->user->id;
             $notes = Yii::$app->request->post('notes');
             $placeOrderId = Yii::$app->request->post('placeOrderId');
-
             // echo 'billing : ' . $billing;
 
             if (isset($billing)) {
@@ -191,16 +190,13 @@ class CheckoutController extends MasterController {
                 ->orderBy('addressId desc')
                 ->one();
             }
-
             $order = \common\models\costfit\Order::find()->where('userId= ' . $placeUserId . ' and orderId = ' . $placeOrderId)->one();
+            //check ก่อนว่า มี ITEMS ครบตามจำนวนที่ต้องการหรือไม่ ถ้า ไม่ครบให้บอกจำนวนที่เหลือ พร้อมถามว่าต้องการหรือป่าว ถ้าต้องการเปลี่ยนในตารางorderItemแล้วคำนวณราคาใหม่
+            //ถ้าไม่ต้องการลบออกจากตาราง orderItem แล้วคำนวณราคาใหม่
             $order->orderNo = \common\models\costfit\Order::genOrderNo();
-
-            //echo "<pre>";
-            //print_r($order->orderNo);
-            // exit();
             $order->paymentType = $payment01;
             $order->pickingId = $pickingId;
-            $order->status = Order::ORDER_STATUS_CHECKOUTS;
+            //$order->status = Order::ORDER_STATUS_CHECKOUTS;
             $order->userId = $placeUserId;
             $order->updateDateTime = new \yii\db\Expression("NOW()");
             // Billing //
@@ -223,21 +219,31 @@ class CheckoutController extends MasterController {
             //$order->shippingAmphurId = ($address_shipping['amphurId'] != '') ? $address_shipping['amphurId'] : '';
             //$order->shippingZipcode = ($address_shipping['zipcode'] != '') ? $address_shipping['zipcode'] : '';
             //$order->shippingTel = ($address_shipping['tel'] != '') ? $address_shipping['tel'] : '';
-
-            if ($order->paymentType == 2) {
-                $order->status = \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_DRAFT;
-            }
+            /* if ($order->paymentType == 2) {
+              $order->status = \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_DRAFT;
+              } */
             if ($order->save(FALSE)) {
 
                 if ($order->paymentType == 1) {
                     $this->redirect(Yii::$app->homeUrl . 'checkout/order-thank');
                 } else {
+                    //throw new \yii\base\Exception(print_r($order, true));
                     // $order->encodeParams(['orderId'=>$orderId->orderId])
                     //$this->redirect(Yii::$app->homeUrl . 'checkout/confirm-checkout?orderId=' . $order->orderId);
                     //echo $order->orderId;
                     //echo $order->encodeParams(['orderId' => $order->orderId]);
                     //exit();
-                    $this->redirect(Yii::$app->homeUrl . 'checkout/confirm-checkout/' . $order->encodeParams(['orderId' => $order->orderId]));
+                    $enough = \common\models\costfit\OrderItem::enoughtProductSupp($order);
+                    // throw new \yii\base\Exception($enough);
+                    if ($enough != '') {//ถ้าไม่พอ
+                        //$this->updateSupplierStock($order);
+                        ///throw new \yii\base\Exception('aaaaaa');
+                        $this->redirect(Yii::$app->homeUrl . 'checkout/edit-checkout/' . $order->encodeParams(['orderId' => $order->orderId, 'id' => $enough]));
+                    } else {
+                        $order->status = Order::ORDER_STATUS_CHECKOUTS;
+                        $order->save(false);
+                        $this->redirect(Yii::$app->homeUrl . 'checkout/confirm-checkout/' . $order->encodeParams(['orderId' => $order->orderId]));
+                    }
                 }
             }
         } else {
@@ -267,6 +273,125 @@ class CheckoutController extends MasterController {
         //$model = \common\models\costfit\Order::find()->where("orderId=" . $_GET["orderId"])->one();
         $ePayment = \common\models\costfit\EPayment::find()->where("PaymentMethodId = 2 AND type =" . \Yii::$app->params['ePaymentServerType'])->one();
         return $this->render('_confirm_checkout', compact('model', 'ePayment'));
+    }
+
+    public function actionEditCheckout($hash) {
+        $k = base64_decode(base64_decode($hash));
+        $params = ModelMaster::decodeParams($hash);
+        $orderId = $params['orderId'];
+        $id = $params['id'];
+        if (isset($_POST['quantity'])) {
+            foreach ($_POST['quantity'] as $productSuppId => $quantity):
+                $orderItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and productSuppId=" . $productSuppId)->one();
+                if ($quantity == 0) {//ถ้า quantity=0 ลบออกจาก orderItem
+                    $orderItem->delete();
+                } else {
+                    //$productPrice = $product->calProductPrice($id, $_POST["quantity"], 1, $_POST['fastId'], NULL);
+                    $orderItem->quantity = $quantity;
+                    $product = new \common\models\costfit\Product();
+                    $productPrice = $product->calProductPrice($productSuppId, $quantity, 1, NULL, NULL);
+                    $orderItem->price = $productPrice["price"];
+                    $orderItem->subTotal = $quantity * $orderItem->price;
+                    $orderItem->discountValue = isset($productPrice["discountValue"]) ? $productPrice["discountValue"] : 0;
+                    if (isset($productPrice["shippingDiscountValue"])) {
+                        $orderItem->shippingDiscountValue = $productPrice["shippingDiscountValue"];
+                        $orderItem->total = ($quantity * $orderItem->price) - $orderItem->discountValue - $productPrice["shippingDiscountValue"];
+                    } else {
+                        $orderItem->total = ($quantity * $orderItem->price) - $orderItem->discountValue;
+                    }
+                    $orderItem->createDateTime = new \yii\db\Expression("NOW()");
+                    $orderItem->save(false);
+                }
+            endforeach;
+            $order = Order::find()->where("orderId=" . $orderId)->one();
+            $order->status = Order::ORDER_STATUS_CHECKOUTS;
+            $order->save(false);
+            $items = count(\common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all());
+            if ($items < 0) {
+                $this->updateSupplierStock($order);
+                $this->redirect(Yii::$app->homeUrl . 'checkout/confirm-checkout/' . $order->encodeParams(['orderId' => $order->orderId]));
+            } else {
+                $order = Order::find()->where("orderId=" . $orderId)->one();
+                $order->delete();
+                $this->redirect(Yii::$app->homeUrl);
+            }
+        } else {
+            return $this->render('edit_checkout', ['orderId' => $orderId, 'id' => $id]);
+        }
+    }
+
+    public function actionEditCart($id) {
+        // throw new \yii\base\Exception($id);
+        $res = [];
+        $order = \common\models\costfit\Order::getOrder();
+        if (!isset($order)) {
+            $order = new \common\models\costfit\Order();
+            $order->token = $this->getToken();
+            $order->status = \common\models\costfit\Order::ORDER_STATUS_DRAFT;
+            $order->createDateTime = new \yii\db\Expression("NOW()");
+            if (!$order->save(FALSE)) {
+                throw new \yii\base\Exception("Can't Save Order");
+            }
+        }
+        //throw new \yii\base\Exception('fastId=' . $id);
+        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $id . " and sendDate=" . $_POST['fastId'])->one();
+        if (!isset($orderItem)) {
+            $orderItem = new \common\models\costfit\OrderItem();
+        }
+        $orderItem->quantity = $_POST["quantity"];
+        $product = new \common\models\costfit\Product();
+        $orderItem->sendDate = $_POST["fastId"];
+        $orderItem->firstTimeSendDate = $_POST["fastId"];
+        $orderItem->supplierId = $_POST['supplierId'];
+        $orderItem->orderId = $order->orderId;
+        //$orderItem->productId = $id;
+        //$orderItem->productSuppId = \common\models\costfit\Product::productSuppId($id, $_POST['supplierId']);
+        $productPrice = $product->calProductPrice($id, $_POST["quantity"], 1, $_POST['fastId'], NULL);
+        //$orderItem->priceOnePiece = $orderItem->product->calProductPrice($id, 1, 0, NULL, NULL);
+        //$orderItem->priceOnePiece = $orderItem->product->calProductPrice($id, 1, 0, NULL, 'add');
+        //$orderItem->priceOnePiece = $orderItem->product->calProductPrice($id, 1);
+        $orderItem->price = $productPrice["price"];
+        //throw new \yii\base\Exception($orderItem->priceOnePiece);
+        $orderItem->subTotal = $orderItem->quantity * $orderItem->price;
+        $orderItem->discountValue = isset($productPrice["discountValue"]) ? $productPrice["discountValue"] : 0;
+        if (isset($productPrice["shippingDiscountValue"])) {
+            $orderItem->shippingDiscountValue = $productPrice["shippingDiscountValue"];
+            $orderItem->total = ($orderItem->quantity * $orderItem->price) - $orderItem->discountValue - $productPrice["shippingDiscountValue"];
+        } else {
+            $orderItem->total = ($orderItem->quantity * $orderItem->price) - $orderItem->discountValue;
+        }
+
+        $orderItem->createDateTime = new \yii\db\Expression("NOW()");
+        if ($orderItem->save(false)) {
+            if (Yii::$app->db->lastInsertID > 0) {
+                $orderItemId = Yii::$app->db->lastInsertID;
+            } else {
+                $orderItemId = $orderItem->orderItemId;
+            }
+            $order->save();
+            $res["status"] = TRUE;
+            $res["orderItemId"] = $orderItemId;
+            $cartArray = \common\models\costfit\Order::findCartArray();
+            $res["cart"] = $cartArray;
+            $pQuan = 0;
+            foreach ($cartArray["items"] as $item) {
+                if ($item["productId"] == $id) {
+                    $pQuan += $item["qty"];
+                }
+            }
+            $product = new \common\models\costfit\Product();
+            $maxQuantity = $product->findMaxQuantity($id);
+            if ($pQuan >= $maxQuantity) {
+                $res["isMaxQuantity"] = TRUE;
+            } else {
+                $res["isMaxQuantity"] = FALSE;
+            }
+        } else {
+//            throw new \yii\base\Exception(print_r($orderItem->errors, true));
+            $res["status"] = FALSE;
+        }
+
+        return \yii\helpers\Json::encode($res);
     }
 
     public function actionConfirmation($hash) {
@@ -308,6 +433,7 @@ class CheckoutController extends MasterController {
                 $order->invoiceNo = Order::genInvNo($order);
                 $order->status = Order::ORDER_STATUS_E_PAYMENT_SUCCESS;
                 $order->paymentDateTime = new \yii\db\Expression('NOW()');
+                //$this->updateSupplierStock($order); //ถ้าจ่ายบัติผ่าน ตัด stock ของ supplier
                 //ตัดstock ในPRODUCT SUPPLIER
                 if ($order->save()) {
                     $res["status"] = 1;
@@ -342,12 +468,37 @@ class CheckoutController extends MasterController {
                 $order->save();
                 $res["status"] = 3;
                 $res["message"] = \common\models\costfit\EPayment::getReasonCodeText($_POST["reason_code"]);
-                //คืนstock
+
+                $this->returnSupplierStock($order); //คืนstock
             }
             Order::saveOrderPaymentHistory($order, $_REQUEST["decision"], $_POST["reason_code"], $_POST['score_device_fingerprint_true_ipaddress']);
         }
 
         return $this->render('payment_result', compact('res'));
+    }
+
+    public function actionChangeQuantityItem() {
+        $res = [];
+        $product = new \common\models\costfit\Product();
+        $price = $product->calProductPrice($_POST["productId"], $_POST["quantity"], 1, NULL, NULL);
+        $maxQuantity = $product->findMaxQuantity($_POST["productId"]);
+        if ($_POST["quantity"] <= $maxQuantity) {
+            if (isset($price)) {
+                $res["status"] = TRUE;
+                $res["price"] = $price["price"];
+                $res["priceText"] = $price["priceText"];
+                $res["discountType"] = $price["discountType"];
+                $res["discountValue"] = $price["discountValue"];
+            } else {
+                $res["status"] = FALSE;
+                $res['errorCode'] = 2;
+            }
+        } else {
+            $res["status"] = FALSE;
+            $res['errorCode'] = 1;
+        }
+
+        return \yii\helpers\Json::encode($res);
     }
 
     public function actionReverseOrderToCart($hash) {
@@ -362,13 +513,36 @@ class CheckoutController extends MasterController {
     }
 
     public function updateSupplierStock($order) {
+        //foreach ($order as $orderId):
+        // throw new \yii\base\Exception($orderId->orderId);
+        $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId)->all();
+        foreach ($orderItems as $orderItem):
+            $productSupp = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $orderItem->productSuppId)->one();
+            if (isset($productSupp) && !empty($productSupp)) {
+                $History = new \common\models\costfit\StockHistory();
+                $History->orderItemId = $orderItem->orderItemId;
+                $History->productSuppId = $productSupp->productSuppId;
+                $History->quantity = $orderItem->quantity;
+                $History->status = 1;
+                $History->createDateTime = new \yii\db\Expression('NOW()');
+                $History->updateDateTime = new \yii\db\Expression('NOW()');
+                $History->save(false);
+            }
+            $productSupp->result = $productSupp->quantity - $orderItem->quantity;
+            $productSupp->updateDateTime = new \yii\db\Expression('NOW()');
+            $productSupp->save(false);
+        endforeach;
+        //endforeach;
+    }
+
+    public function returnSupplierStock($order) {
         foreach ($order as $orderId):
             $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId->orderId)->all();
             foreach ($orderItems as $orderItem):
                 $productSupp = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $orderItem->productSuppId)->one();
-                if (isset($productSupp) && !empty($productSupp)) {
-
-                }
+                $productSupp->result = $productSupp->quantity + $orderItem->quantity;
+                $productSupp->updateDateTime = new \yii\db\Expression('NOW()');
+                $productSupp->save(false);
             endforeach;
         endforeach;
     }

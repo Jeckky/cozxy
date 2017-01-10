@@ -199,4 +199,27 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster {
         return $summary;
     }
 
+    public static function enoughtProductSupp($order) {
+        $notEnough = '';
+        $orderItems = OrderItem::find()->where("orderId=" . $order->orderId)->all();
+        foreach ($orderItems as $item):
+            $productSupp = ProductSuppliers::find()->where("productSuppId=" . $item->productSuppId)->one();
+            // throw new \yii\base\Exception($productSupp->result . "<" . $item->quantity);
+            if ($productSupp->result < $item->quantity) {//product ใน stock  มีพอหรือไม่
+                $notEnough = $notEnough . $productSupp->productSuppId . ",";
+            }
+        endforeach;
+        if ($notEnough != '') {
+            $notEnough = substr($notEnough, 0, -1);
+            return $notEnough;
+        } else {
+            return $notEnough;
+        }
+    }
+
+    public static function itemNotEnought($orderId, $id) {
+        $orderItems = OrderItem::find()->where("orderId=" . $orderId . " and productsuppId in ($id)")->all();
+        return $orderItems;
+    }
+
 }
