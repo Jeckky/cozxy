@@ -18,27 +18,32 @@ use \common\models\costfit\master\CategoryMaster;
  *
  * @property Product[] $products
  */
-class Category extends \common\models\costfit\master\CategoryMaster {
+class Category extends \common\models\costfit\master\CategoryMaster
+{
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function getChilds() {
-        return $this->hasMany(Category::className(), ['parentId'=>'categoryId']);
+    public function getChilds()
+    {
+        return $this->hasMany(Category::className(), ['parentId' => 'categoryId']);
     }
 
-    public function getCategoryWithParentArray() {
+    public function getCategoryWithParentArray()
+    {
         $res = [];
         foreach ($this->find()->all() as $item) {
             $title = $item->title;
@@ -49,18 +54,19 @@ class Category extends \common\models\costfit\master\CategoryMaster {
         return $res;
     }
 
-    public static function findAllSaveCategory($returnType = 1, $isRandom = TRUE, $limit = 6) {
+    public static function findAllSaveCategory($returnType = 1, $isRandom = TRUE, $limit = 6)
+    {
         if ($isRandom) {
             $query = Category::find()
-                    ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
-                    ->where('sc.type = 1')
-                    ->orderBy(new \yii\db\Expression('rand()'))
-                    ->limit($limit);
+            ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
+            ->where('sc.type = 1')
+            ->orderBy(new \yii\db\Expression('rand()'))
+            ->limit($limit);
         } else {
             $query = Category::find()
-                    ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
-                    ->where('sc.type = 1')
-                    ->LIMIT($limit);
+            ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
+            ->where('sc.type = 1')
+            ->LIMIT($limit);
         }
         if ($returnType == 1) {
             return new \yii\data\ActiveDataProvider([
@@ -74,18 +80,19 @@ class Category extends \common\models\costfit\master\CategoryMaster {
         }
     }
 
-    public static function findAllPopularCategory($returnType = 1, $isRandom = TRUE, $limit = 6) {
+    public static function findAllPopularCategory($returnType = 1, $isRandom = TRUE, $limit = 6)
+    {
         if ($isRandom) {
             $query = Category::find()
-                    ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
-                    ->where('sc.type = 2')
-                    ->limit($limit);
+            ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
+            ->where('sc.type = 2')
+            ->limit($limit);
             //->orderBy(new \yii\db\Expression('rand()'));
         } else {
             $query = Category::find()
-                    ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
-                    ->where('sc.type = 2')
-                    ->limit($limit);
+            ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
+            ->where('sc.type = 2')
+            ->limit($limit);
         }
 
         if ($returnType == 1) {
@@ -100,15 +107,51 @@ class Category extends \common\models\costfit\master\CategoryMaster {
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getParent() {
+    public function getParent()
+    {
         return $this->hasOne(Category::className(), ['categoryId' => 'parentId']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCategories() {
+    public function getCategories()
+    {
         return $this->hasMany(Category::className(), ['parentId' => 'categoryId']);
+    }
+
+    public static function findAllLastLevelCategory()
+    {
+        $res = [];
+        $cats = Category::find()->where("parentId is null")->all();
+
+        foreach ($cats as $cat) {
+            $catText = "";
+            if (isset($cat->childs)) {
+                $catText.="" . $cat->title;
+                foreach ($cat->childs as $child1) {
+                    if (isset($child1->childs)) {
+                        $catText.="->" . $child1->title;
+                        foreach ($child1->childs as $child2) {
+                            if (isset($child2->childs)) {
+                                $catText.="->" . $child2->title;
+                                $res[$child2->categoryId] = $catText;
+                            } else {
+                                $catText.="->" . $child2->title;
+                                $res[$child2->categoryId] = $catText;
+                            }
+                        }
+                    } else {
+                        $catText.="->" . $child1->title;
+                        $res[$child1->categoryId] = $catText;
+                    }
+                }
+            } else {
+                $res[$cat->categoryId] = $cat->title;
+            }
+        }
+
+        return $res;
     }
 
 }
