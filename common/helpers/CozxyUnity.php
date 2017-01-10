@@ -32,6 +32,7 @@ class CozxyUnity {
      * Output :
       4 months ago
       4 months, 2 weeks, 3 days, 1 hour, 49 minutes, 15 seconds ago
+     * By Taninut.Bm
      */
 
     public static function TimeElapsedString($time_ago) {
@@ -143,6 +144,11 @@ class CozxyUnity {
     }
 
     // Privacy statement output demo
+    /*
+     * ส่วนของ Frontend 10/1/2017
+     * url ที่เรียกใช้ : payment/print-receipt/..........
+     * By Taninut.Bm
+     */
     public static function actionMpdfDocument($content, $header, $title) {
 
         $pdf = new Pdf([
