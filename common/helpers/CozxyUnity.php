@@ -12,6 +12,7 @@ use Yii;
 use yii\base\Model;
 use yii\db\ActiveRecord;
 use yii\data\ActiveDataProvider;
+use kartik\mpdf\Pdf;
 
 /**
  * Description of CozxyUnity
@@ -133,6 +134,49 @@ class CozxyUnity {
                 //'SetFooter' => ['{PAGENO}'],
                 'SetHeader' => $setHeader, //Krajee Report Header
                 'SetFooter' => $setFooter,
+            ]
+        ]);
+
+
+        // return the pdf output as per the destination setting
+        return $pdf->render();
+    }
+
+    // Privacy statement output demo
+    public static function actionMpdfDocument($content, $header, $title) {
+
+        $pdf = new Pdf([
+            // set to use core fonts only
+            'mode' => Pdf::MODE_UTF8,
+            // A4 paper format
+            'format' => Pdf::FORMAT_A4,
+            // portrait orientation
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            // stream to browser inline
+            'destination' => Pdf::DEST_BROWSER,
+            // your html content input
+            'content' => $content,
+            // format content from your own css file if needed or use the
+            // enhanced bootstrap css built by Krajee for mPDF formatting
+            'cssFile' => '@frontend/web/css/pdf.css',
+            // any css to be embedded if required
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            //'cssInline' => 'body{font-size:9px}',
+            // set mPDF properties on the fly
+            // 'defaultFontSize' => 3,
+            // 'marginLeft' => 10,
+            // 'marginRight' => 10,
+            'marginTop' => 40,
+            // 'marginBottom' => 11,
+            //'marginHeader' => 6,
+            //'marginFooter' => 6,
+            'options' => ['title' => 'Cozxy.com Print ' . $title],
+            // call mPDF methods on the fly
+            'methods' => [
+                'SetHeader' => [$header], //Krajee Report Header
+                // 'SetFooter' => ['{PAGENO}'],
+                // 'SetHeader' => FALSE, //Krajee Report Header
+                'SetFooter' => ['{PAGENO} / {nbpg}'],
             ]
         ]);
 

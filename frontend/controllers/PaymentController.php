@@ -14,6 +14,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use yii\data\ActiveDataProvider;
+use common\helpers\CozxyUnity;
 
 /**
  * Payment Controller
@@ -58,7 +59,7 @@ class PaymentController extends MasterController {
 
         if (isset($params['orderId'])) {
             $order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . $params['orderId'] . '" ')
-                    ->one();
+            ->one();
         } else {
             return $this->redirect(['profile/order']);
         }
@@ -88,7 +89,7 @@ class PaymentController extends MasterController {
 
         if (isset($params['orderId'])) {
             $order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . $params['orderId'] . '" ')
-                    ->one();
+            ->one();
         } else {
             return $this->redirect(['profile/order']);
         }
@@ -98,7 +99,8 @@ class PaymentController extends MasterController {
         $title = 'PayIn';
         $heading = $this->renderPartial('@app/views/payment/heading_order', ['title' => 'Pay In']);
         $content = $this->renderPartial('@app/views/payment/pay_in', compact('order'));
-        $this->actionMpdfDocument($content, $heading, $title);
+        //$this->actionMpdfDocument($content, $heading, $title);
+        CozxyUnity::actionMpdfDocument($content, $heading, $title);
     }
 
     public function actionPrintReceipt($hash, $title) {
@@ -118,7 +120,7 @@ class PaymentController extends MasterController {
 
         if (isset($params['orderId'])) {
             $order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . $params['orderId'] . '" ')
-                    ->one();
+            ->one();
         } else {
             return $this->redirect(['profile/order']);
         }
@@ -127,7 +129,8 @@ class PaymentController extends MasterController {
         $title = 'Receipt';
         $heading = $this->renderPartial('@app/views/payment/heading_order', ['title' => 'ใบเสร็จ/ใบกำกับภาษี']);
         $content = $this->renderPartial('@app/views/payment/receipt', compact('order'));
-        $this->actionMpdfDocument($content, $heading, $title);
+        //$this->actionMpdfDocument($content, $heading, $title);
+        CozxyUnity::actionMpdfDocument($content, $heading, $title);
     }
 
 }
