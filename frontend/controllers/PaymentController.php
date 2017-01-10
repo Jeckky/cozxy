@@ -169,8 +169,8 @@ class PaymentController extends MasterController {
         }
 
         //$content = $this->renderPartial('purchase_order');
-        $title = 'Receipt';
-        $heading = $this->renderPartial('@app/views/payment/heading_order', ['title' => 'ใบเสร็จ/ใบกำกับภาษี']);
+        $title = 'ใบเสร็จ/ใบกำกับภาษี';
+        $heading = $this->renderPartial('@app/views/payment/heading_order', ['title' => $title]);
         $content = $this->renderPartial('@app/views/payment/receipt', compact('order'));
         //$this->actionMpdfDocument($content, $heading, $title);
         CozxyUnity::actionMpdfDocument($content, $heading, $title);
