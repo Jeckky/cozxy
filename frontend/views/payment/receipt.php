@@ -89,10 +89,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </tr>
                     <?php
                 }
-                /*
-                 * # แสดงข้อมูล Product ของ Cozxy.com
-                 * # เงือนไขของ Product Cozxy
-                 */
             }
         } else {
             ?>

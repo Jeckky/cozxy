@@ -591,6 +591,10 @@ class Order extends \common\models\costfit\master\OrderMaster {
         return $this->hasMany(OrderItem::className(), ['orderId' => 'orderId']); //[Order :: ปลายทาง ,  OrderItem :: ต้นทาง]
     }
 
+    public function getUser() {
+        return $this->hasOne(User::className(), ['userId' => 'userId']);
+    }
+
     public function getAddress() {
         return $this->hasOne(address::className(), ['addressId' => 'addressId']);
     }
