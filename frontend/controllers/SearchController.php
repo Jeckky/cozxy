@@ -40,15 +40,18 @@ class SearchController extends MasterController {
 //        throw new \yii\base\Exception(print_r($_POST, true));
         $whereArray = [];
         $whereArray["category_to_product.categoryId"] = $params['categoryId'];
-        $whereArray["product.approve"] = "approve";
+
+        //$whereArray["product.approve"] = "approve";
+        //
         //$whereArray["product_price.quantity"] = 1;
         //$whereArray["pps.status"] = 1;
         $products = \common\models\costfit\CategoryToProduct::find()
-                ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
-                ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
-                ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
-//->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = category_to_product.productId")
-                ->where($whereArray);
+        ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+        ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+        ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+        //->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = category_to_product.productId")
+        ->where($whereArray)
+        ->andWhere("product.approve != 'new'");
         if (isset($_POST["min"])) {
             $products->andWhere("pps.price >=" . $_POST["min"]);
         }
@@ -87,8 +90,8 @@ class SearchController extends MasterController {
 
         //throw new \yii\base\Exception($categoryId);
         $products = \common\models\costfit\Product::find()
-                ->join("INNER JOIN", "category_to_product ctp", 'ctp.productId = product.productId')
-                ->where("ctp.categoryId in($categoryId)");
+        ->join("INNER JOIN", "category_to_product ctp", 'ctp.productId = product.productId')
+        ->where("ctp.categoryId in($categoryId)");
 
         $products = new \yii\data\ActiveDataProvider([
             'query' => $products,

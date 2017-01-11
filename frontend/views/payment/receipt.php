@@ -58,7 +58,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         if (count($order) > 0) {
             $listOrderItems = common\models\costfit\OrderItem::find()
             ->select('orderId,productSuppId,supplierId')->where('orderId=' . $order->orderId)->groupBy('supplierId')->all();
-            foreach ($listOrderItems as $value1) { # หา Suppliers ไม่ซ้ำกัน
+            foreach ($listOrderItems as $value1) {
+                /*
+                 * # แยก Suppliers ไม่ซ้ำกัน
+                 * จาก table OderItem
+                 * 10/1/2017
+                 */
                 ?>
                 <tr style="background-color:#f9f9f9 ; border-bottom: 1px #000000 solid; height: 25px;">
                     <td style="font-size: 12px;" colspan="7"><?php echo isset($value1->user) ? $value1->user->code : '-'; ?></td>
@@ -66,7 +71,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <?php
                 $GetOrder = common\models\costfit\OrderItem::find()->where('orderId=' . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'])->all();
                 $num = 0;
-                foreach ($GetOrder as $value) { #  แสดงข้อมูล Product ของแต่ละ Suppliers หรือ Cozxy.com
+                foreach ($GetOrder as $value) {
+                    /*
+                     * # แสดงข้อมูล Product ของแต่ละ Suppliers
+                     * # เงือนไขของ Product Suppliers
+                     */
                     $listOrderItemsShow = common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $value['productSuppId'])->one();
                     ?>
                     <tr style=" border-bottom: 1px #000000 solid;">
@@ -80,6 +89,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </tr>
                     <?php
                 }
+                /*
+                 * # แสดงข้อมูล Product ของ Cozxy.com
+                 * # เงือนไขของ Product Cozxy
+                 */
             }
         } else {
             ?>
