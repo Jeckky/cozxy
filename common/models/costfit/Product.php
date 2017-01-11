@@ -112,15 +112,29 @@ class Product extends \common\models\costfit\master\ProductMaster {
         }
     }
 
+    /* public static function findMaxQuantity($id, $checkInCart = 1) {
+      //        throw new \yii\base\Exception("productId =" . $id);
+      $productPrice = ProductPrice::find()->select("MAX(quantity) as maxQuantity")->where("productId = $id")->one();
+      if (isset($productPrice)) {
+      if ($checkInCart) {
+      $quantityInCart = Product::findQuantityInCart($id);
+      return $productPrice->maxQuantity - $quantityInCart;
+      } else {
+      return $productPrice->maxQuantity;
+      }
+      } else {
+      return 1;
+      }
+      } */
+
     public static function findMaxQuantity($id, $checkInCart = 1) {
-//        throw new \yii\base\Exception("productId =" . $id);
-        $productPrice = ProductPrice::find()->select("MAX(quantity) as maxQuantity")->where("productId = $id")->one();
-        if (isset($productPrice)) {
+        $productSupplier = ProductSuppliers::find()->where("productSuppId=" . $id)->one();
+        if (isset($productSupplier)) {
             if ($checkInCart) {
                 $quantityInCart = Product::findQuantityInCart($id);
-                return $productPrice->maxQuantity - $quantityInCart;
+                return $productSupplier->result - $quantityInCart;
             } else {
-                return $productPrice->maxQuantity;
+                return $productSupplier->result;
             }
         } else {
             return 1;
@@ -131,7 +145,7 @@ class Product extends \common\models\costfit\master\ProductMaster {
         $order = Order::findCartArray();
         $quantity = 0;
         foreach ($order["items"] as $item) {
-            if ($item['productId'] == $id) {
+            if ($item['productSuppId'] == $id) {
                 $quantity = $item['qty'];
                 break;
             }

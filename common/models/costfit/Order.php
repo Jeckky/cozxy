@@ -139,6 +139,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
                 $items[$item->orderItemId] = [
                     'orderItemId' => $item->orderItemId,
                     'productId' => $item->productId,
+                    'productSuppId' => $item->productSuppId,
                     'title' => $item->product->title,
                     'code' => $item->product->code,
                     'qty' => $item->quantity,

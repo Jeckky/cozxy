@@ -54,7 +54,7 @@ class CartController extends MasterController {
             }
         }
         //throw new \yii\base\Exception('fastId=' . $id);
-        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productId =" . $id . " and sendDate=" . $_POST['fastId'])->one();
+        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . " and sendDate=" . $_POST['fastId'])->one();
         if (!isset($orderItem)) {
             $orderItem = new \common\models\costfit\OrderItem();
             $orderItem->quantity = $_POST["quantity"];
@@ -67,7 +67,7 @@ class CartController extends MasterController {
         $orderItem->supplierId = $_POST['supplierId'];
         $orderItem->orderId = $order->orderId;
         $orderItem->productId = $id;
-        $orderItem->productSuppId = \common\models\costfit\Product::productSuppId($id, $_POST['supplierId']);
+        $orderItem->productSuppId = $_POST['productSuppId'];
         $productPrice = $product->calProductPrice($orderItem->productSuppId, $orderItem->quantity, 1, $_POST['fastId'], NULL);
         $orderItem->priceOnePiece = $orderItem->product->calProductPrice($orderItem->productSuppId, 1, 0, NULL, NULL);
         //$orderItem->priceOnePiece = $orderItem->product->calProductPrice($id, 1, 0, NULL, 'add');
@@ -97,12 +97,12 @@ class CartController extends MasterController {
             $res["cart"] = $cartArray;
             $pQuan = 0;
             foreach ($cartArray["items"] as $item) {
-                if ($item["productId"] == $id) {
+                if ($item["productSuppId"] == $id) {
                     $pQuan += $item["qty"];
                 }
             }
             $product = new \common\models\costfit\Product();
-            $maxQuantity = $product->findMaxQuantity($id);
+            $maxQuantity = $product->findMaxQuantity($_POST['productSuppId']);
             if ($pQuan >= $maxQuantity) {
                 $res["isMaxQuantity"] = TRUE;
             } else {
@@ -136,8 +136,9 @@ class CartController extends MasterController {
 
         $res = [];
         $product = new \common\models\costfit\Product();
-        $price = $product->calProductPrice($_POST["productId"], $_POST["quantity"], 1, NULL, 'add');
-        $maxQuantity = $product->findMaxQuantity($_POST["productId"]);
+        //$price = $product->calProductPrice($_POST["productId"], $_POST["quantity"], 1, NULL, 'add');
+        $price = $product->calProductPrice($_POST["productSuppId"], $_POST["quantity"], 1, NULL, NULL);
+        $maxQuantity = $product->findMaxQuantity($_POST["productSuppId"]);
         if ($_POST["quantity"] <= $maxQuantity) {
             if (isset($price)) {
                 $res["status"] = TRUE;

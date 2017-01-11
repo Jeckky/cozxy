@@ -86,6 +86,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <?= Html::hiddenInput("fastId", $fastId = Product::getShippingTypeId($model->productId), ['id' => 'fastId']); ?>
     <?= Html::hiddenInput("productId", $model->productId, ['id' => 'productId']); ?>
     <?= Html::hiddenInput("supplierId", ProductSuppliers::supplier($productSupplierId), ['id' => 'supplierId']); ?>
+    <?= Html::hiddenInput("productSuppId", $productSupplierId, ['id' => 'productSuppId']); ?>
     <?php // throw new \yii\base\Exception($fastId); ?>
     <div class="form-group">
         <?php if (isset($model->productGroup)): ?>
@@ -152,44 +153,45 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <?php } ?>
         </div>
     </div>
-    <div class="buttons group">
-        <?php
-        $i = 0;
-        foreach ($model->productPrices as $pp) {
-            ?>
-            <div class="col-lg-2 col-md-3" style="float: left; padding-right: 0px; padding-left: 0px;">
-                <table id="pp<?= number_format($pp->quantity, 0) ?>" class="col-lg-12 col-md-12 text-center <?= ($i == 0) ? " priceActive" : " " ?>" style="font-size: 14px; border: 1px #f5f5f5 solid;">
+    <!--    <div class="buttons group">
+    <?php
+    // $i = 0;
+    // foreach ($model->productPrices as $pp) {
+    ?>
+                <div class="col-lg-2 col-md-3" style="float: left; padding-right: 0px; padding-left: 0px;">
+                    <table id="pp<?//= number_format($pp->quantity, 0) ?>" class="col-lg-12 col-md-12 text-center <?//= ($i == 0) ? " priceActive" : " " ?>" style="font-size: 14px; border: 1px #f5f5f5 solid;">
 
-                    <thead style="border-bottom: 1px #f5f5f5 solid;">
-                        <tr>
-                            <th class="text-center">Buy <?= number_format($pp->quantity, 0) ?></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="item first">
-                            <td class="thumb"><?= number_format($pp->getSavePrice(), 2) . " ฿"; ?></td>
-                        </tr>
-                        <!--<tr class="item first">
-                            <td class="name">
-                                <small>off your order</small>
-                            </td>
-                        </tr>-->
-                    </tbody>
-                </table>
-            </div>
-            <?php
-            $i++;
-        }
-        ?>
-    </div>
+                        <thead style="border-bottom: 1px #f5f5f5 solid;">
+                            <tr>
+                                <th class="text-center">Buy <?//= number_format($pp->quantity, 0) ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="item first">
+                                <td class="thumb"><?//= number_format($pp->getSavePrice(), 2) . " ฿"; ?></td>
+                            </tr>
+                            <tr class="item first">
+                                <td class="name">
+                                    <small>off your order</small>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+    <?php
+    //$i++;
+    //}
+    ?>
+        </div>-->
 
     <div class="buttons group">
         <div class="qnt-count">
             <a class="incr-btn" href="#">-</a>
-            <input id="quantity" class="form-control" type="text" value="<?= ($model->findMaxQuantity($model->productId) == 0) ? 0 : 1 ?>">
+            <input type="hidden" id="maxQnty" value="<?= $model->findMaxQuantity($model->productSuppId) ?>">
+            <input id="quantity" class="form-control" type="text" value="<?= ($model->findMaxQuantity($model->productSuppId) == 0) ? 0 : 1 ?>">
             <a class="incr-btn" href="#" data-toggle="popover" data-content="Max Quantity For this Item" data-placement="bottom">+</a>
         </div>
-        <a class="btn btn-primary btn-sm" id="addItemToCartUnity" href="#" <?= ($model->findMaxQuantity($model->productId) <= 0) ? " disabled" : " " ?>><i class="icon-shopping-cart"></i>Add to cart</a>
+        <a class="btn btn-primary btn-sm" id="addItemToCartUnity" href="#" <?= ($model->findMaxQuantity($model->productSuppId) <= 0) ? " disabled" : " " ?>><i class="icon-shopping-cart"></i>Add to cart</a>
         <a class="btn btn-black btn-sm" <?php if (\Yii::$app->user->isGuest == 1) { ?> id="GuestaddItemToWishlist" <?php } else { ?> id="addItemToWishlist" <?php } ?> href="#" <?= (\common\models\costfit\Wishlist::isExistingList($model->productId)) ? " disabled" : " " ?>><i class="icon-heart"></i>Add to wishlist</a>
     </div>
 

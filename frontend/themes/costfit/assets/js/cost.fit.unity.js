@@ -193,37 +193,43 @@ $(document).ready(function (e) {
         }
 
         var $itemId = $(this).parent().parent().find('#productId').val();
+        var $productSuppId = $(this).parent().parent().find('#productSuppId').val();
         var $fastId = $(this).parent().parent().find('#fastId').val();
         var $supplierId = $(this).parent().parent().find('#supplierId').val();
         var $itemPrice = $(this).parent().parent().find('.price').text();
         var $itemQnty = $(this).parent().find('#quantity').val();
         var $cartTotalItems = parseInt($('.cart-btn a span').text()) + parseInt($itemQnty);
+        var $maxQnty = $(this).parent().find('#maxQnty').val();
         //$addedToCartMessage.find('p').text('"' + $itemName + '"' + '  ' + 'was successfully added to your cart.');
         //var getUrl = window.location;
         //var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-        $.ajax({
-            type: "POST",
-            dataType: "JSON",
-            url: $baseUrl + '/cart/add-to-cart' + "?id=" + $itemId,
-            data: {quantity: $itemQnty, fastId: $fastId, supplierId: $supplierId},
-            success: function (data)
-            {
-                if (data.status)
+        if ($itemQnty <= $maxQnty) {
+            $.ajax({
+                type: "POST",
+                dataType: "JSON",
+                url: $baseUrl + '/cart/add-to-cart' + "?id=" + $itemId,
+                data: {quantity: $itemQnty, fastId: $fastId, supplierId: $supplierId, productSuppId: $productSuppId},
+                success: function (data)
                 {
-                    $('.cart-dropdown table').append(
-                            '<tr class="item"><td><div class="delete"><input type="hidden" id="orderItemId" value="' + data.orderItemId + '"></div><a href="#">' + $itemName +
-                            '<td><input type="text" value="' + $itemQnty +
-                            '"></td><td class="price">' + $itemPrice + '</td>'
-                            );
-                    $('.cart-btn a span').text($cartTotalItems);
-                    $('.cart-btn a').find("#cartTotal").html(data.cart.totalFormatText);
-                    $('.cart-dropdown .footer .total').html(data.cart.totalFormatText);
+                    if (data.status)
+                    {
+                        $('.cart-dropdown table').append(
+                                '<tr class="item"><td><div class="delete"><input type="hidden" id="orderItemId" value="' + data.orderItemId + '"></div><a href="#">' + $itemName +
+                                '<td><input type="text" value="' + $itemQnty +
+                                '"></td><td class="price">' + $itemPrice + '</td>'
+                                );
+                        $('.cart-btn a span').text($cartTotalItems);
+                        $('.cart-btn a').find("#cartTotal").html(data.cart.totalFormatText);
+                        $('.cart-dropdown .footer .total').html(data.cart.totalFormatText);
+
+                    }
+                    $addedToCartMessage.addClass('visible');
 
                 }
-                $addedToCartMessage.addClass('visible');
-
-            }
-        });
+            });
+        } else {
+            alert("Max quantity for this item is " + $maxQnty);
+        }
 
         //
     });
@@ -254,7 +260,7 @@ $(document).ready(function (e) {
             type: "POST",
             dataType: "JSON",
             url: $baseUrl + '/cart/change-quantity-item',
-            data: {productId: $("#productId").val(), quantity: newVal},
+            data: {productSuppId: $("#productSuppId").val(), quantity: newVal},
             success: function (data)
             {
                 if (data.status)

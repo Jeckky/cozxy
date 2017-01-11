@@ -86,27 +86,25 @@ $form = ActiveForm::begin();
         newVal = parseFloat(oldValue) - 1;
         url='/checkout/edit-cart?id='+productId;
         $('.oldPrice$item->productSuppId').val(newVal);
-             $.ajax({
-            type: 'POST',
-            dataType: 'JSON',
-            url:url,
-            data: {quantity: newVal, fastId: fastId, supplierId: supplierId},
-success: function (data)
-            {
-
-}
-        });
+            $.ajax({
+                type: 'POST',
+                dataType: 'JSON',
+                url:url,
+                data: {quantity: newVal, fastId: fastId, supplierId: supplierId},
+                success: function (data){}
+            });
         if (newVal == 0) {
             $('.minut-btn$item->productSuppId').hide();
             $('.minut-btn2$item->productSuppId').show();
             $('.plus-btn2$item->productSuppId').hide();
             $('.plus-btn$item->productSuppId').show();
 
-        }});
+        }
+    });
         $(document).on('click', '.plus-btn$item->productSuppId', function (e) {
         var oldValue = $(this).parent().find('.oldPrice$item->productSuppId').val();
         var maxValue = $(this).parent().find('.maxVal$item->productSuppId').val();
-var productId = $(this).parent().find('.productId$item->productSuppId').val();
+        var productId = $(this).parent().find('.productId$item->productSuppId').val();
         var supplierId=$(this).parent().find('.supplierId$item->productSuppId').val();
         var fastId = $(this).parent().find('#fastId$item->productSuppId').val();
         var newVal = 1;
@@ -114,25 +112,23 @@ var productId = $(this).parent().find('.productId$item->productSuppId').val();
         url='/checkout/edit-cart?id='+productId;
         $('.oldPrice$item->productSuppId').val(newVal);
             $.ajax({
-            type: 'POST',
-            dataType: 'JSON',
-            url:url,
-            data: {quantity: newVal, fastId: fastId, supplierId: supplierId},
-success: function (data)
-            {
-
-}
-});
-        if (newVal==maxValue) {
-            $('.minut-btn$item->productSuppId').show();
-            $('.minut-btn2$item->productSuppId').hide();
-            $('.plus-btn2$item->productSuppId').show();
-            $('.plus-btn$item->productSuppId').hide();
-        }
-    });
+                type: 'POST',
+                dataType: 'JSON',
+                url:url,
+                data: {quantity: newVal, fastId: fastId, supplierId: supplierId},
+                success: function (data){}
+            });
+            if (newVal==maxValue) {
+                $('.minut-btn$item->productSuppId').show();
+                $('.minut-btn2$item->productSuppId').hide();
+                $('.plus-btn2$item->productSuppId').show();
+                $('.plus-btn$item->productSuppId').hide();
+            }
+        });
     $(document).on('keydown', '.oldPrice$item->productSuppId', function (e) {
-      return false;
-                        })";
+        return false;
+    });"
+                ;
                 $this->registerJs($script);
                 $i++;
             endforeach;
