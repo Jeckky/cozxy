@@ -67,10 +67,11 @@ class PaymentController extends MasterController {
 
         //return $this->render('@app/views/payment/purchase_order', compact('order'));
         //$content = $this->renderPartial('purchase_order');
-        $title = 'Purchase Order';
+        $title = 'ใบสั่งซื้อ​สิน​ค้า​/ใบ​แจ้ง​หนี้';
         $heading = $this->renderPartial('@app/views/payment/heading_order', ['title' => 'ใบสั่งซื้อ​สิน​ค้า​/ใบ​แจ้ง​หนี้']);
         $content = $this->renderPartial('@app/views/payment/purchase_order', compact('order'));
-        $this->actionMpdfDocument($content, $heading, $title);
+        //$this->actionMpdfDocument($content, $heading, $title);
+        CozxyUnity::actionMpdfDocument($content, $heading, $title);
     }
 
     public function actionPrintPayIn($hash, $title) {

@@ -10,7 +10,9 @@ use backend\controllers\BackendMasterController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\costfit\OrderPaymentHistory;
-use kartik\mpdf\Pdf;
+//use kartik\mpdf\Pdf;
+use common\helpers\CozxyUnity;
+use common\helpers\PaymentPrint;
 
 /**
  * OrderController implements the CRUD actions for Order model.
@@ -24,7 +26,7 @@ class OrderController extends OrderMasterController {
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
 // allow authenticated users
-                        [
+                    [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -50,7 +52,7 @@ class OrderController extends OrderMasterController {
         ]);
 
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -63,7 +65,7 @@ class OrderController extends OrderMasterController {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
         $order = \common\models\costfit\Order::find()->where('orderId = "' . $params['id'] . '" ')
-                ->one();
+        ->one();
         return $this->render('@frontend/views/profile/purchase_order', compact('order'));
     }
 
@@ -82,7 +84,7 @@ class OrderController extends OrderMasterController {
             }
         }
         return $this->render('create', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -102,7 +104,7 @@ class OrderController extends OrderMasterController {
             }
         }
         return $this->render('update', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -153,14 +155,17 @@ class OrderController extends OrderMasterController {
 //echo $orderId;
         if (isset($params['orderId'])) {
             $order = \common\models\costfit\Order::find()->where('orderId = "' . $params['orderId'] . '" ')
-                    ->one();
+            ->one();
         } else {
             return $this->redirect(['profile/order']);
         }
 
-//$content = $this->renderPartial('purchase_order');
+        //$content = $this->renderPartial('purchase_order');
         $content = $this->renderPartial('@frontend/views/payment/purchase_order', compact('order'));
-        $this->actionMpdfDocument($content);
+        //$this->actionMpdfDocument($content);
+        $heading = FALSE;
+        $title = FALSE;
+        CozxyUnity::actionMpdfDocument($content, $heading, $title);
     }
 
     public function actionPrintPayIn() {
@@ -185,8 +190,8 @@ class OrderController extends OrderMasterController {
             ]);
 
             return $this->render('payment', [
-                        'dataProvider' => $dataProvider,
-                        'order' => $order
+                'dataProvider' => $dataProvider,
+                'order' => $order
             ]);
         } else {
             return $this->render('@app/views/error/error');
@@ -228,11 +233,11 @@ class OrderController extends OrderMasterController {
         if (!isset($model)) {
             $ms = 'ไม่มีรายการสั่งซื้อ';
             return $this->render('purchase', [
-                        'ms' => $ms
+                'ms' => $ms
             ]);
         } else {
             return $this->render('purchase', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -278,11 +283,11 @@ class OrderController extends OrderMasterController {
                 if (!isset($model)) {
                     $ms = 'ไม่มีรายการสั่งซื้อ';
                     return $this->render('purchase', [
-                                'ms' => $ms
+                        'ms' => $ms
                     ]);
                 } else {
                     return $this->render('purchase', [
-                                'model' => $model,
+                        'model' => $model,
                     ]);
                 }
             }
@@ -292,11 +297,11 @@ class OrderController extends OrderMasterController {
             if (!isset($model)) {
                 $ms = 'ไม่มีรายการสั่งซื้อ';
                 return $this->render('purchase', [
-                            'ms' => $ms
+                    'ms' => $ms
                 ]);
             } else {
                 return $this->render('purchase', [
-                            'model' => $model,
+                    'model' => $model,
                 ]);
             }
         }
@@ -346,13 +351,13 @@ class OrderController extends OrderMasterController {
 
     public function actionReprintRealTime() {
         $show = '<table class="table" >' .
-                '<tr style="height: 50px;background-color: #ffffcc;">' .
-                '<th style="vertical-align: middle;text-align: center;width: 10%;">ลำดับที่</th>' .
-                '<th style="vertical-align: middle;text-align: center;width: 30%;">PO NO.</th>' .
-                '<th style="vertical-align: middle;text-align: center;width: 15%;">วันที่สร้าง</th>' .
-                '<th style="vertical-align: middle;text-align: center;width: 30%;">สถานะ</th>' .
-                '<th style="vertical-align: middle;text-align: center;width: 30%;">พิมพ์ซ้ำ</th>' .
-                '</tr>';
+        '<tr style="height: 50px;background-color: #ffffcc;">' .
+        '<th style="vertical-align: middle;text-align: center;width: 10%;">ลำดับที่</th>' .
+        '<th style="vertical-align: middle;text-align: center;width: 30%;">PO NO.</th>' .
+        '<th style="vertical-align: middle;text-align: center;width: 15%;">วันที่สร้าง</th>' .
+        '<th style="vertical-align: middle;text-align: center;width: 30%;">สถานะ</th>' .
+        '<th style="vertical-align: middle;text-align: center;width: 30%;">พิมพ์ซ้ำ</th>' .
+        '</tr>';
         $poes = \common\models\costfit\StoreProductGroup::allPurchaseOrder();
 
         if (isset($poes) && !empty($poes)) {
@@ -362,12 +367,12 @@ class OrderController extends OrderMasterController {
             foreach ($poes as $po):
 
                 $show = $show . '<tr>' .
-                        ' <td style="vertical-align: middle;text-align: center;width: 5%;">' . $i . '</td>' .
-                        '<td style="vertical-align: middle;text-align: center;width: 30%;">' . $po->poNo . '</td>' .
-                        '<td style="vertical-align: middle;text-align: center;width: 15%;">' . $this->dateThai($po->createDateTime, 1) . '</td>' .
-                        '<td style="vertical-align: middle;text-align: center;width: 15%;">' . \common\models\costfit\StoreProductGroup::getStatusText($po->status) . '</td>' .
-                        '<td style="vertical-align: middle;text-align: center;width: 15%;">' . Html::a('<i class = "fa fa-print" aria-hidden = "true"></i> พิมพ์ซ้ำ', ['reprint-po', 'storeProductGroupId' => $po->storeProductGroupId], ['class' => 'btn btn-md btn-warning pono', 'target' => '_blank']) . '</td>' .
-                        '</tr>';
+                ' <td style="vertical-align: middle;text-align: center;width: 5%;">' . $i . '</td>' .
+                '<td style="vertical-align: middle;text-align: center;width: 30%;">' . $po->poNo . '</td>' .
+                '<td style="vertical-align: middle;text-align: center;width: 15%;">' . $this->dateThai($po->createDateTime, 1) . '</td>' .
+                '<td style="vertical-align: middle;text-align: center;width: 15%;">' . \common\models\costfit\StoreProductGroup::getStatusText($po->status) . '</td>' .
+                '<td style="vertical-align: middle;text-align: center;width: 15%;">' . Html::a('<i class = "fa fa-print" aria-hidden = "true"></i> พิมพ์ซ้ำ', ['reprint-po', 'storeProductGroupId' => $po->storeProductGroupId], ['class' => 'btn btn-md btn-warning pono', 'target' => '_blank']) . '</td>' .
+                '</tr>';
                 $i++;
             endforeach;
         } else {
