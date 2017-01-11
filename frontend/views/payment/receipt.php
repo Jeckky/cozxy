@@ -79,13 +79,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     $listOrderItemsShow = common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $value['productSuppId'])->one();
                     ?>
                     <tr style=" border-bottom: 1px #000000 solid;">
-                        <td style="font-size: 12px;"><?php echo ++$num; ?></td>
+                        <td style="font-size: 12px;"><?php echo ++$i; ?></td>
                         <td style="font-size: 12px;"><?php echo isset($listOrderItemsShow['code']) ? $listOrderItemsShow['code'] : '-'; ?></td>
-                        <td style="font-size: 12px;"><?php echo isset($listOrderItemsShow['title']) ? $listOrderItemsShow['title'] : ''; ?></td>
-                        <td style="font-size: 12px;"><?php echo isset($listOrderItemsShow['units']) ? $listOrderItemsShow['units'] : ''; ?></td>
-                        <td style="font-size: 12px; text-align: right;"><?php echo isset($value->price) ? number_format($value->price, 2) : ''; ?></td>
-                        <td style="font-size: 12px; text-align: right;"><?php echo isset($value->quantity) ? $value->quantity : '' ?></td>
-                        <td style="font-size: 12px; text-align: right;"><?php echo isset($value->total) ? number_format($value->total, 2) : ''; ?></td>
+                        <td style="font-size: 12px;"><?php echo isset($listOrderItemsShow['title']) ? $listOrderItemsShow['title'] : '-'; ?></td>
+                        <td style="font-size: 12px;"><?php echo isset($listOrderItemsShow['unit']) ? $listOrderItemsShow->units->title : '-'; ?></td>
+                        <td style="font-size: 12px; text-align: right;"><?php echo isset($value->price) ? number_format($value->price, 2) : '-'; ?></td>
+                        <td style="font-size: 12px; text-align: right;"><?php echo isset($value->quantity) ? $value->quantity : '-' ?></td>
+                        <td style="font-size: 12px; text-align: right;"><?php echo isset($value->total) ? number_format($value->total, 2) : '-'; ?></td>
                     </tr>
                     <?php
                 }

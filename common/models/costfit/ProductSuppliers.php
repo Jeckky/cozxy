@@ -171,4 +171,8 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         }
     }
 
+    public function getUnits() {
+        return $this->hasOne(Unit::className(), ['unitId' => 'unit']);
+    }
+
 }
