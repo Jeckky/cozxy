@@ -154,6 +154,32 @@ class Product extends \common\models\costfit\master\ProductMaster {
         return $quantity;
     }
 
+    public static function findMaxQuantitySupplier($id, $checkInCart = 1) {
+        $productSupplier = ProductSuppliers::find()->where("productSuppId=" . $id)->one();
+        if (isset($productSupplier)) {
+            if ($checkInCart) {
+                $quantityInCart = Product::findQuantityInCartSupplier($id);
+                return $productSupplier->result - $quantityInCart;
+            } else {
+                return $productSupplier->result;
+            }
+        } else {
+            return 1;
+        }
+    }
+
+    public static function findQuantityInCartSupplier($id) {
+        $order = Order::getOrder();
+        $quantity = 0;
+        $orderItems = OrderItem::find()->where("orderId=" . $order->orderId . " and productSuppId=" . $id)->all();
+        if (isset($orderItems) && !empty($orderItems)) {
+            foreach ($orderItems as $item):
+                $quantity += $item->quantity;
+            endforeach;
+        }
+        return $quantity;
+    }
+
     public function getProductPrices() {
         return $this->hasMany(ProductPrice::className(), ['productId' => 'productId']);
     }

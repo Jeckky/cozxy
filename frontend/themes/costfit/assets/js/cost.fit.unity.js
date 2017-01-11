@@ -213,6 +213,7 @@ $(document).ready(function (e) {
                 {
                     if (data.status)
                     {
+                        $('#maxQnty').val($maxQnty - $itemQnty);
                         $('.cart-dropdown table').append(
                                 '<tr class="item"><td><div class="delete"><input type="hidden" id="orderItemId" value="' + data.orderItemId + '"></div><a href="#">' + $itemName +
                                 '<td><input type="text" value="' + $itemQnty +
@@ -228,7 +229,9 @@ $(document).ready(function (e) {
                 }
             });
         } else {
-            alert("Max quantity for this item is " + $maxQnty);
+            $('#quantity').val(0);
+            $('.incr-btn').popover('show');
+            //alert("Max quantity for this item is " + $maxQnty);
         }
 
         //
