@@ -92,6 +92,7 @@ class ProductController extends ProductMasterController {
         $model = new Product();
         if (isset($_POST["Product"])) {
             $model->attributes = $_POST["Product"];
+            $model->userId = Yii::$app->user->identity->userId;
             $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
                 $lastId = Yii::$app->db->getLastInsertID();
@@ -118,6 +119,7 @@ class ProductController extends ProductMasterController {
         $model = $this->findModel($id);
         if (isset($_POST["Product"])) {
             $model->attributes = $_POST["Product"];
+            $model->userId = Yii::$app->user->identity->userId;
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
                 \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $model->productId);
