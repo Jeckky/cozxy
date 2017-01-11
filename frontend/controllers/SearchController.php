@@ -41,7 +41,7 @@ class SearchController extends MasterController {
         $whereArray = [];
         $whereArray["category_to_product.categoryId"] = $params['categoryId'];
 
-        //$whereArray["product.approve"] = "approve";
+        $whereArray["product.approve"] = "approve";
         //
         //$whereArray["product_price.quantity"] = 1;
         //$whereArray["pps.status"] = 1;
@@ -50,8 +50,8 @@ class SearchController extends MasterController {
         ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
         ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
         //->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = category_to_product.productId")
-        ->where($whereArray)
-        ->andWhere("product.approve != 'new'");
+        ->where($whereArray);
+        //->andWhere("product.approve != 'new'");
         if (isset($_POST["min"])) {
             $products->andWhere("pps.price >=" . $_POST["min"]);
         }
