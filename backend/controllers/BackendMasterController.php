@@ -239,9 +239,10 @@ class BackendMasterController extends MasterController {
     }
 
     // Privacy statement output demo
-    public function actionMpdfDocument($content, $setHeader = FALSE, $setFooter = FALSE, $marginTop = FALSE) {
-        $GetMpdfDocument = CozxyUnity::GetMpdfDocument($content, $setHeader, $setFooter, $marginTop);
-    }
+    /*
+      public function actionMpdfDocument($content, $setHeader = FALSE, $setFooter = FALSE, $marginTop = FALSE) {
+      $GetMpdfDocument = CozxyUnity::GetMpdfDocument($content, $setHeader, $setFooter, $marginTop);
+      } */
 
     public function actionChildStatesAddress() {
         $out = [];

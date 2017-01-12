@@ -7,6 +7,8 @@ use backend\controllers\BackendMasterController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\costfit\Order;
+use common\helpers\CozxyUnity;
+use common\helpers\PaymentPrint;
 
 class FuturePlanReportController extends ReportMasterController {
 
@@ -304,7 +306,8 @@ class FuturePlanReportController extends ReportMasterController {
         $content = $this->renderPartial('po', compact('model'));
         $header = $this->renderPartial('@backend/modules/store/views/picking/header', ['title' => "ใบสั่งซื้อ / Purchase Order"]);
         $footer = $this->renderPartial('footer', []);
-        $this->actionMpdfDocument($content, $header, $footer, 35);
+        //$this->actionMpdfDocument($content, $header, $footer, 35);
+        CozxyUnity::actionMpdfDocument($content, $header, $footer, 35);
     }
 
 }
