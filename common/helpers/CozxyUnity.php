@@ -103,6 +103,7 @@ class CozxyUnity {
     // Privacy statement output demo
     /*
      * ส่วนของ Baekend 10/1/2017
+     * Move From backend/common/helpers/PaymentPrint.php
      * By Taninut.Bm
      * email : taninut.bm@cozxy.com , sodapew17@gmail.com
      */
