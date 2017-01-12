@@ -101,6 +101,11 @@ class CozxyUnity {
     }
 
     // Privacy statement output demo
+    /*
+     * ส่วนของ Baekend 10/1/2017
+     * By Taninut.Bm
+     * email : taninut.bm@cozxy.com , sodapew17@gmail.com
+     */
     public static function GetMpdfDocument($content, $setHeader = FALSE, $setFooter = FALSE, $marginTop = FALSE) {
         //$orderId = Yii::$app->request->get('OrderNo');
         // $orderId = $params['orderId'];
@@ -148,6 +153,7 @@ class CozxyUnity {
      * ส่วนของ Frontend 10/1/2017
      * url ที่เรียกใช้ : payment/print-receipt/..........
      * By Taninut.Bm
+     * email : taninut.bm@cozxy.com , sodapew17@gmail.com
      */
     public static function actionMpdfDocument($content, $header, $title) {
 
