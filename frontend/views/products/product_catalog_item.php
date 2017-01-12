@@ -185,9 +185,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>-->
 
     <div class="buttons group">
+        <input type="hidden" id="maxQnty" value="<?= $model->findMaxQuantitySupplier($model->productSuppId) ?>">
         <div class="qnt-count">
             <a class="incr-btn" href="#">-</a>
-            <input type="hidden" id="maxQnty" value="<?= $model->findMaxQuantitySupplier($model->productSuppId) ?>">
             <input id="quantity" class="form-control" type="text" value="<?= ($model->findMaxQuantity($model->productSuppId) == 0) ? 0 : 1 ?>">
             <a class="incr-btn" href="#" data-toggle="popover" data-content="Max Quantity For this Item" data-placement="bottom">+</a>
         </div>

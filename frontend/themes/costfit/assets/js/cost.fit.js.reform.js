@@ -537,7 +537,8 @@ $(".incr-btn-cart").on("click", function (e) {
     event.preventDefault();
     var $button = $(this);
     var oldValue = $button.parent().find("input").val();
-    var pId = $button.parent().parent().find("#productId").val();
+    //var pId = $button.parent().parent().find("#productId").val();
+    var pSuppId = $button.parent().parent().find("#productSuppId").val();
     var sendDate = $button.parent().parent().find("#sendDate").val();
 //    var pId = $("#productId").val();
     var newVal = 1
@@ -555,7 +556,7 @@ $(".incr-btn-cart").on("click", function (e) {
         type: "POST",
         dataType: "JSON",
         url: $baseUrl + "cart/change-quantity-item-and-save",
-        data: {productId: pId, quantity: newVal, sendDate: sendDate},
+        data: {productSuppId: pSuppId, quantity: newVal, sendDate: sendDate},
         success: function (data)
         {
             if (data.status)

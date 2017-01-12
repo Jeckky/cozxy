@@ -6,7 +6,7 @@ $(document).ready(function (e) {
     if (window.location.host == 'localhost' || window.location.host == 'dev') {
         $baseUrl = window.location.protocol + "//" + window.location.host + '/cozxy-frontend/';
     } else if (window.location.host == '192.168.100.8') {
-        //console.log($baseUrl);
+//console.log($baseUrl);
         var str = window.location.pathname;
         var res = str.split("/");
         //console.log(window.location.pathname);
@@ -16,37 +16,49 @@ $(document).ready(function (e) {
     } else {
         $baseUrl = window.location.protocol + "//" + window.location.host + '/';
     }
-    //console.log($baseUrl);
+//console.log($baseUrl);
     /*Adding Placeholder Support in Older Browsers
      ************************************************/
     $('input, textarea').placeholder();
-
     /*Shopping Cart Dropdown
      *******************************************/
     //wishlist
 
     $(document).on('click', '.cart-dropdown .delete', function () {
-
         var $target = $(this).parent().parent();
         var $positions = $('.cart-dropdown .item');
         var $positionQty = parseInt($('.cart-btn a span').text());
         var orderItemId = $(this).find("#orderItemId").val();
         var itemQty = $(this).parent().parent().find(".qty").find("#qty").val();
+        var $maxQnty = parseInt($('#maxQnty').val());
         $.ajax({
             type: "POST",
             dataType: "JSON",
             url: $baseUrl + 'cart/delete-cart-item' + "?id=" + orderItemId,
-            //data: {quantity: $itemQnty},
+            data: {maxQnty: $maxQnty},
             success: function (data)
             {
+
                 if (data.status)
                 {
                     $target.hide(300, function () {
                         $.when($target.remove()).then(function () {
                             $positionQty = $positionQty - itemQty;
                             $('.cart-btn a span').text($positionQty);
+                            $('#maxQnty').val($maxQnty + data.deleteQnty);
+                            if (($maxQnty + data.deleteQnty) > 0) {
+                                $('#quantity').val(1);
+                                $addToCartBtn.removeAttr('disabled');
+                            } else {
+                                $('#quantity').val(0);
+                                $addToCartBtn.attr('disabled', 'disabled');
+                            }
+
                             if ($positions.length === 1) {
                                 $('.cart-dropdown .body').html('<h3>Cart is empty!</h3>');
+                                $('.shopping-cart .items-list').remove();
+                                $('.shopping-cart .title').html('<h3>Cart is empty!</h3>');
+                                $('.shopping-cart #showSlow').remove();
                             }
                             $('.cart-btn a').find("#cartTotal").html(data.cart.totalFormatText);
                             $('.cart-dropdown .footer .total').html(data.cart.totalFormatText);
@@ -60,6 +72,7 @@ $(document).ready(function (e) {
                                 $('.shopping-cart .cart-sidebar .cart-totals .shipping').html(data.cart.shippingFormatText);
                                 $('.shopping-cart .cart-sidebar .cart-totals .summary').html(data.cart.summaryFormatText);
                             }
+                            //$('.cart-dropdown ').append($target);
                         });
                     });
                 }
@@ -119,19 +132,17 @@ $(document).ready(function (e) {
             }
         });
     });
-
     /*Wishlist Deleting Items
      *******************************************/
     $(document).on('click', '.wishlist .delete i', function () {
         if (navigator.userAgent.indexOf("Firefox") != -1) {
-            //alert('Firefox');
+//alert('Firefox');
         } else {
             event.preventDefault();
         }
 
         var $target = $(this).parent().parent();
         var pId = $(this).parent().parent().find("#productId").val();
-
 //        $target.hide(300, function () {
         $.when($target.remove()).then(function () {
             $.ajax({
@@ -169,12 +180,9 @@ $(document).ready(function (e) {
                     }
                 }
             });
-
         });
 //        });
     });
-
-
     /*Added To Cart Message + Action (For Demo Purpose)
      **************************************************/
     $addToCartBtn.click(function () {
@@ -186,7 +194,6 @@ $(document).ready(function (e) {
 
         //$addedToCartMessage.removeClass('visible');
         var $itemName = $(this).parent().parent().find('h1').text();
-
         if (typeof $itemName == 'undefined' || $itemName == '')
         {
             var $itemName = $(this).parent().parent().find('.title').html();
@@ -203,7 +210,7 @@ $(document).ready(function (e) {
         //$addedToCartMessage.find('p').text('"' + $itemName + '"' + '  ' + 'was successfully added to your cart.');
         //var getUrl = window.location;
         //var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-        if ($itemQnty <= $maxQnty) {
+        if ($itemQnty <= $maxQnty && $itemQnty != 0) {
             $.ajax({
                 type: "POST",
                 dataType: "JSON",
@@ -214,33 +221,35 @@ $(document).ready(function (e) {
                     if (data.status)
                     {
                         $('#maxQnty').val($maxQnty - $itemQnty);
-                        $('.cart-dropdown table').append(
-                                '<tr class="item"><td><div class="delete"><input type="hidden" id="orderItemId" value="' + data.orderItemId + '"></div><a href="#">' + $itemName +
-                                '<td><input type="text" value="' + $itemQnty +
-                                '"></td><td class="price">' + $itemPrice + '</td>'
+                        if (($maxQnty - $itemQnty) == 0) {
+                            $('#quantity').val(0);
+                            $addToCartBtn.attr('disabled', 'disabled');
+                        } else {
+                            $('#quantity').val(1);
+                        }
+                        $('.cart-dropdown table').remove();
+                        $('.cart-dropdown .body').append(
+                                data.shoppingCart
                                 );
                         $('.cart-btn a span').text($cartTotalItems);
                         $('.cart-btn a').find("#cartTotal").html(data.cart.totalFormatText);
                         $('.cart-dropdown .footer .total').html(data.cart.totalFormatText);
-
                     }
+                    //alert(data.shoppingCart);
                     $addedToCartMessage.addClass('visible');
-
                 }
             });
         } else {
-            $('#quantity').val(0);
-            $('.incr-btn').popover('show');
-            //alert("Max quantity for this item is " + $maxQnty);
+            $('#quantity').val($maxQnty);
+            alert("รายการสินค้าไม่พอ สั่งได้อีก " + $maxQnty + " รายการ");
         }
 
         //
     });
-
     //Add(+/-) Button Number Incrementers
     $(".incr-btn").on("click", function (e) {
         if (navigator.userAgent.indexOf("Firefox") != -1) {
-            //alert('Firefox');
+//alert('Firefox');
         } else {
             event.preventDefault();
         }
@@ -250,7 +259,7 @@ $(document).ready(function (e) {
         if ($button.text() == "+") {
             newVal = parseFloat(oldValue) + 1;
         } else {
-            // Don't allow decrementing below 1
+// Don't allow decrementing below 1
             if (oldValue > 1) {
                 newVal = parseFloat(oldValue) - 1;
             } else {
@@ -278,7 +287,6 @@ $(document).ready(function (e) {
                     }
                     $('#pp' + oldValue).removeClass("priceActive");
                     $('#pp' + newVal).addClass("priceActive");
-
                     $button.parent().find("input").val(newVal);
                 } else
                 {
@@ -292,7 +300,6 @@ $(document).ready(function (e) {
             }
         });
     });
-
 });/*Document Ready End*//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

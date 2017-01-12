@@ -1,6 +1,6 @@
 <?php
 $check_item = count($this->params['cart']['items']);
-//throw new \yii\base\Exception(print_r($this->params, true));
+//throw new \yii\base\Exception($check_item);
 ?>
 <style type="text/css">
     .body{
@@ -26,10 +26,9 @@ $check_item = count($this->params['cart']['items']);
                 <?php foreach ($this->params['cart']['items'] as $item): ?>
                     <tr class="item" id="item<?= $item['orderItemId'] ?>">
                         <td >
-
                             <div class="delete"><?= yii\helpers\Html::hiddenInput("orderItemId", $item['orderItemId'], ['id' => 'orderItemId']); ?></div>
-                            <a href="#"><?= $item['title'] ?></a></td>
-                        <td class="qty"><input id="qty" type="text" value="<?= $item['qty'] ?>"></td>
+                            <a href="<?php echo Yii::$app->homeUrl; ?>products/<?php echo common\models\ModelMaster::encodeParams(['productId' => $item["productId"], 'productSupplierId' => $item['productSuppId']]); ?>"><?= $item['title'] ?></a></td>
+                        <td class="qty"><input id="qty" type="text" value="<?= $item['qty'] ?>" readonly="true"></td>
                         <td class="price"><?= number_format($item['price'], 2) ?></td>
                     </tr>
                 <?php endforeach; ?>

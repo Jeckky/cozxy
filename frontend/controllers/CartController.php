@@ -92,6 +92,7 @@ class CartController extends MasterController {
             }
             $order->save();
             $res["status"] = TRUE;
+            $res["shoppingCart"] = $this->createShoppingCart($order->orderId);
             $res["orderItemId"] = $orderItemId;
             $cartArray = \common\models\costfit\Order::findCartArray();
             $res["cart"] = $cartArray;
@@ -118,6 +119,8 @@ class CartController extends MasterController {
     public function actionDeleteCartItem($id) {
         $res = [];
         $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId = " . $id)->one();
+        $qnty = intval($orderItem->quantity);
+        //throw new \yii\base\Exception($qnty);
         $orderId = $orderItem->orderId;
         if (\common\models\costfit\OrderItem::deleteAll("orderItemId = $id") > 0) {
             $res["status"] = TRUE;
@@ -125,6 +128,7 @@ class CartController extends MasterController {
             $order->save(); // Save For Cal new total
             $cartArray = \common\models\costfit\Order::findCartArray();
             $res["cart"] = $cartArray;
+            $res["deleteQnty"] = $qnty;
         } else {
             $res["status"] = FALSE;
         }
@@ -156,6 +160,29 @@ class CartController extends MasterController {
         }
 
         return \yii\helpers\Json::encode($res);
+    }
+
+    public function createShoppingCart($orderId) {
+        $text = "";
+        $showOrder = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
+        if (isset($showOrder) && !empty($showOrder)) {
+            $header = "<table id='cartTable' style='margin-top:-5px;'><tr><th>Items</th><th>Quantity</th><th>Price</th></tr>";
+            $footer = "</table>";
+            foreach ($showOrder as $item):
+                $productSupp = \common\models\costfit\ProductSuppliers::productSupplierName($item->productSuppId);
+                $text = $text . '<tr class="item">'
+                        . '<td><div class="delete"><input type="hidden" id="orderItemId" value="' . $item->orderItemId . '"></div><a href="' . Yii::$app->homeUrl . 'products/' . \common\models\ModelMaster::encodeParams(["productId" => $item->productId, "productSupplierId" => $item->productSuppId]) . '">' . $productSupp->title . '</a></td>'
+                        . '<td class="qty"><input type="text" id="qty" value="' . $item->quantity . '" readonly="true"></td>'
+                        . '<td class="price">' . number_format(\common\models\costfit\ProductSuppliers::productPriceSupplier($item->productSuppId), 2) . '</td></tr>';
+            endforeach;
+            $text = $header . $text . $footer;
+        }
+        /* $text = $text . '<tr class="item">'
+          . '<td><div class="delete"><input type="hidden" id="orderItemId" value="' . $item->orderItemId . '"></div><a href="#">' . $productSupp->title . ''
+          . '<td class="qty"><input type="text" id="qty" value="' . $item->quantity . '" readonly="true"></td>'
+          . '<td class="price">' . number_format(\common\models\costfit\ProductSuppliers::productPriceSupplier($item->productSuppId), 2) . '</td></tr>';
+         */
+        return $text;
     }
 
     public function actionAddCoupon() {
@@ -228,17 +255,17 @@ class CartController extends MasterController {
 
         $res = [];
         $product = new \common\models\costfit\Product();
-        $price = $product->calProductPrice($_POST["productId"], $_POST["quantity"], 1, $_POST["sendDate"], 'add');
+        $price = $product->calProductPrice($_POST["productSuppId"], $_POST["quantity"], 1, $_POST["sendDate"], NULL);
 //        throw new \yii\base\Exception(print_r($price, true));
-        $maxQuantity = $product->findMaxQuantity($_POST["productId"], 0);
+        $maxQuantity = $product->findMaxQuantitySupplier($_POST["productSuppId"], 0);
 //        throw new \yii\base\Exception("max quantity=" . $maxQuantity);
         if ($_POST["quantity"] <= $maxQuantity) {
             if (isset($price)) {
                 $cart = \common\models\costfit\Order::findCartArray();
-                $oi = \common\models\costfit\OrderItem::find()->where("productId = " . $_POST["productId"] . " AND orderId=" . $cart["orderId"] . " AND sendDate =" . $_POST["sendDate"])->one();
+                $oi = \common\models\costfit\OrderItem::find()->where("productSuppId = " . $_POST["productSuppId"] . " AND orderId=" . $cart["orderId"] . " AND sendDate =" . $_POST["sendDate"])->one();
                 $oi->price = $price["price"];
                 $oi->quantity = $_POST["quantity"];
-                $oi->priceOnePiece = $oi->product->calProductPrice($_POST["productId"], 1, 0, NULL, 'add');
+                $oi->priceOnePiece = $oi->product->calProductPrice($_POST["productSuppId"], 1, 0, NULL, NULL);
                 $oi->subTotal = $oi->price * $_POST["quantity"];
                 $oi->discountValue = $price["discountValue"];
                 if (isset($price["shippingDiscountValue"])) {
