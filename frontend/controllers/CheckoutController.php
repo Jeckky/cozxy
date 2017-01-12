@@ -240,8 +240,8 @@ class CheckoutController extends MasterController {
                         ///throw new \yii\base\Exception('aaaaaa');
                         $this->redirect(Yii::$app->homeUrl . 'checkout/edit-checkout/' . $order->encodeParams(['orderId' => $order->orderId, 'id' => $enough]));
                     } else {
-                        $this->updateSupplierStock($order);
-                        $order->status = Order::ORDER_STATUS_CHECKOUTS;
+                        //$this->updateSupplierStock($order);
+                        //$order->status = Order::ORDER_STATUS_CHECKOUTS;
                         $order->save(false);
                         $this->redirect(Yii::$app->homeUrl . 'checkout/confirm-checkout/' . $order->encodeParams(['orderId' => $order->orderId]));
                     }
@@ -305,11 +305,11 @@ class CheckoutController extends MasterController {
                 }
             endforeach;
             $order = Order::find()->where("orderId=" . $orderId)->one();
-            $order->status = Order::ORDER_STATUS_CHECKOUTS;
+            //$order->status = Order::ORDER_STATUS_CHECKOUTS;
             $order->save(false);
             $items = count(\common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all());
             if ($items < 0) {
-                $this->updateSupplierStock($order);
+                //$this->updateSupplierStock($order);
                 $this->redirect(Yii::$app->homeUrl . 'checkout/confirm-checkout/' . $order->encodeParams(['orderId' => $order->orderId]));
             } else {
                 $order = Order::find()->where("orderId=" . $orderId)->one();
@@ -404,6 +404,10 @@ class CheckoutController extends MasterController {
         //exit();
         $orderId = $params['orderId'];
         $model = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
+        $this->updateSupplierStock($model);
+        $model->status = Order::ORDER_STATUS_CHECKOUTS;
+        $model->updateDateTime = new \yii\db\Expression('NOW()');
+        $model->save(FALSE);
         $ePayment = \common\models\costfit\EPayment::find()->where("PaymentMethodId = 2 AND type =" . \Yii::$app->params['ePaymentServerType'])->one();
         return $this->render("//e_payment/payment_confirmation", [
                     'model' => $model,
@@ -505,11 +509,25 @@ class CheckoutController extends MasterController {
     public function actionReverseOrderToCart($hash) {
         $params = \common\models\ModelMaster::decodeParams($hash);
         $orderId = $params['orderId'];
-
-
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $order->status = Order::ORDER_STATUS_DRAFT;
         $order->save();
+//        $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
+//        if (isset($orderItems) && !empty($orderItems)) {
+//            foreach ($orderItems as $item):
+//                $history = \common\models\costfit\StockHistory::find()->where("orderItemId=" . $item->orderItemId)->one();
+//                if (isset($history) && !empty($history)) {
+//                    $history->delete();
+//                }
+//                $productSupplier = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $item->productSuppId)->one();
+//                if (isset($productSupplier) && !empty($productSupplier)) {
+//                    $productSupplier->result += $item->quantity;
+//                    $productSupplier->save(FALSE);
+//                }
+//            endforeach;
+//        }
+
+
         return $this->redirect(['/cart']);
     }
 
@@ -541,7 +559,7 @@ class CheckoutController extends MasterController {
             $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId->orderId)->all();
             foreach ($orderItems as $orderItem):
                 $productSupp = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $orderItem->productSuppId)->one();
-                $productSupp->result = $productSupp->quantity + $orderItem->quantity;
+                $productSupp->result = $productSupp->result + $orderItem->quantity;
                 $productSupp->updateDateTime = new \yii\db\Expression('NOW()');
                 $productSupp->save(false);
             endforeach;
