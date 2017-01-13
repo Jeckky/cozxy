@@ -33,7 +33,8 @@ class WishlistController extends MasterController {
         $this->subTitle = 'Wishlist';
         $this->subSubTitle = '';
         $wishlists = \common\models\costfit\Wishlist::find()->where("userId=" . \Yii::$app->user->id)->all();
-        $product = \common\models\costfit\search\Product::find()->where("categoryId='3'")->all();
+        //$product = \common\models\costfit\search\Product::find()->where("categoryId='3'")->all();
+        $product = \common\models\costfit\ProductSuppliers::find()->where("1")->all();
         return $this->render('wishlist', compact('wishlists', 'product'));
     }
 

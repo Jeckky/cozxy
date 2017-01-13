@@ -15,32 +15,31 @@ use \common\models\costfit\master\WishlistMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class Wishlist extends \common\models\costfit\master\WishlistMaster
-{
+class Wishlist extends \common\models\costfit\master\WishlistMaster {
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function getProduct()
-    {
+    public function getProduct() {
         return $this->hasOne(Product::className(), ['productId' => 'productId']);
     }
 
-    public static function isExistingList($productId)
-    {
+    public function getProductSuppliers() {
+        return $this->hasOne(ProductSuppliers::className(), ['productSuppId' => 'productId']);
+    }
+
+    public static function isExistingList($productId) {
         if (isset(\Yii::$app->user->id)) {
             $ws = \common\models\costfit\Wishlist::find()->where("productId =" . $productId . " AND userId = " . \Yii::$app->user->id)->one();
             if (isset($ws)) {

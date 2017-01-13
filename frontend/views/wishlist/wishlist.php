@@ -31,13 +31,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <?php foreach ($wishlists as $wishlist): ?>
                         <tr class="item first">
                             <?= Html::hiddenInput("productId", $wishlist->productId, ['id' => 'productId']); ?>
-                            <td class="title hide" ><?= $wishlist->product->title; ?></td>
-                            <td class="thumb"><a href="<?php echo Yii::$app->homeUrl ?>products/<?= $wishlist->encodeParams(['productId' => $wishlist->productId]) ?>"><img src="<?php echo Yii::$app->homeUrl . $wishlist->product->productImages[0]->image; ?>" alt="Lorem ipsum" class="img-responsive"/></a></td>
-                            <td class="name" style="font-size: 14px;"><a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $wishlist->encodeParams(['productId' => $wishlist->productId]) ?>"><?= $wishlist->product->title; ?></a></td>
-                            <td class="price"><?= $wishlist->product->calProductPrice($wishlist->productId, 1); ?></td>
+                            <td class="title hide" ><?= $wishlist->productSuppliers->title; ?></td>
+                            <td class="thumb"><a href="<?php echo Yii::$app->homeUrl ?>products/<?php $wishlist->encodeParams(['productId' => $wishlist->productId]) ?>"><img src="<?php echo Yii::$app->homeUrl . $wishlist->productSuppliers->images[0]->image; ?>" alt="Lorem ipsum" class="img-responsive"/></a></td>
+                            <td class="name" style="font-size: 14px;"><a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $wishlist->encodeParams(['productId' => $wishlist->productId]) ?>"><?= $wishlist->productSuppliers->title; ?></a></td>
+                            <td class="price"><?//= $wishlist->product->calProductPrice($wishlist->productId, 1); ?></td>
                             <td class="button">
                                 <?= Html::hiddenInput("quantity", 1, ['id' => 'quantity']); ?>
-                                <a class="btn btn-primary btn-sm addWishlistItemToCart" href="#" <?= ($wishlist->product->findMaxQuantity($wishlist->productId) <= 0) ? " disabled" : " " ?>><i class="icon-shopping-cart"></i>Add to cart</a>
+                                <a class="btn btn-primary btn-sm addWishlistItemToCart" href="#" <?//= ($wishlist->product->findMaxQuantity($wishlist->productId) <= 0) ? " disabled" : " " ?>><i class="icon-shopping-cart"></i>Add to cart</a>
                             </td>
                             <td class="delete" id='deleteWishlist'><i class="icon-delete"></i></td>
                         </tr>

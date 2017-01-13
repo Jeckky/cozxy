@@ -140,15 +140,16 @@ class Order extends \common\models\costfit\master\OrderMaster {
                     'orderItemId' => $item->orderItemId,
                     'productId' => $item->productId,
                     'productSuppId' => $item->productSuppId,
-                    'title' => $item->product->title,
-                    'code' => $item->product->code,
+                    'title' => $item->productSupplier->title,
+                    'code' => $item->productSupplier->code,
                     'qty' => $item->quantity,
                     //'price' => $item->price,
                     'price' => ProductSuppliers::productPriceSupplier($item->productSuppId),
                     'priceText' => number_format($item->price, 2),
                     'priceOnePiece' => $item->priceOnePiece,
                     'priceOnePieceText' => number_format($item->priceOnePiece, 2),
-                    'priceMarket' => $item->product->price,
+                    'priceMarket' => ProductSuppliers::productPriceSupplier($item->productSuppId),
+                    //'priceMarket' => $item->product->price,
                     'sendDate' => $item->sendDate,
                     'firstTimeSendDate' => $item->firstTimeSendDate,
                     'sendDateNoDate' => isset($item->shippingType) ? $item->shippingType->date : NULL,
@@ -554,7 +555,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
     public function search($params) {
 
         $query = \common\models\costfit\Order::find()
-        ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "");
+                ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "");
         //  and orderNo  is not null order by orderId desc
 
         $dataProvider = new ActiveDataProvider([
@@ -570,7 +571,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
         }
 
         $query->andFilterWhere(['like', 'createDateTime', $this->createDateTime])
-        ->andFilterWhere(['like', 'orderNo', $this->orderNo]);
+                ->andFilterWhere(['like', 'orderNo', $this->orderNo]);
 
         return $dataProvider;
     }
