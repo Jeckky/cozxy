@@ -303,7 +303,7 @@
     color: #ffff00;
 }
 .menu .catalog .submenu .sub-submenu li a {
-    color: #ddff00 !important;
+    color: #d6b402 !important;
 }
 .menu .catalog .submenu .sub-submenu li a:hover {
     color: #ffff00 !important;
@@ -381,6 +381,12 @@
 }
 .toolbar a span {
     color: #d6b402;
+}
+
+.close-search,
+.toolbar a span:hover,
+.info-block-image .color-box .tiles div span {
+    color: #000000 !important;
 }
 .list-wrapper .empty{
     color: #cbd010 !important;
