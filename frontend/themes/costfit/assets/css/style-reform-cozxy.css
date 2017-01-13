@@ -426,3 +426,9 @@ a:hover {
     color: #d6b402;
 }
 
+.cart-dropdown .footer .btn {
+    background-color: #2b2727;
+}
+.cart-dropdown .footer .btn, .info-block-image h2 {
+    color: #ffffff !important;
+}
