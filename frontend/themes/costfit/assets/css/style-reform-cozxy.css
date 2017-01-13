@@ -347,6 +347,9 @@
 .toolbar i {
     color: #000000 !important;
 }
+.toolbar i:hover {
+    color: #ffff00 !important;
+}
 .hero-slider .ms-nav-next:before, .hero-slider .ms-nav-prev:before {
     color: #cbd010;
 }
