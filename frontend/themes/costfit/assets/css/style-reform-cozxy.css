@@ -267,6 +267,7 @@
 /*
     * Update 12/1/2017
     * By Taninut.Bm
+    * สีเหลือง - color: rgba(255,212,36,.9) ;
 */
 
 .menu .catalog-block {
@@ -453,4 +454,26 @@ a:hover {
 }
 .sticky-btns span:hover {
     background: rgba(255,212,36,.9);
+}
+.modal-header .close {
+    color: rgba(255,212,36,.9);
+}
+.modal-header {
+    border-bottom-color: rgba(255,212,36,.9);
+}
+.form-control {
+    border-color: rgba(255,212,36,.9);
+}
+.btn-black:hover {
+    background-color: rgba(255,212,36,.9);
+}
+.modal-header a:hover {
+    color: rgba(255,212,36,.9);
+    border-bottom: 1px dashed rgba(255,212,36,.9);
+}
+.log-reg h4, .tracking h4 {
+    color: rgba(255,212,36,.9) !important;
+}
+.cat-tiles a, .about .team .member h5, .cont-info-widget ul li i, .cont-info-widget ol li i, .coming-soon h1, .support h4, .history-title {
+    color: rgba(255,212,36,.9) !important;
 }
