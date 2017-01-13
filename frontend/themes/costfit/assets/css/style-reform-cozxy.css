@@ -559,3 +559,6 @@ a.panel-toggle {
 .shopping-cart table td.delete i, .wishlist table td.delete i {
     color: rgba(255,212,36,.9);
 }
+.checkout .payment-method {
+    background: rgba(255,212,36,.9);
+}
