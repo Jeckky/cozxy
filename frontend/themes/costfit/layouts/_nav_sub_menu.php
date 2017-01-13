@@ -87,7 +87,7 @@ $MenuCategory = $this->context->actionMenuCategory();
                     <a href="#" style="font-size: 14px;">
                         <?php echo $items->title; ?> <i class="fa fa-chevron-down"></i>
                     </a>
-                    <ul class="sub-submenu" id="test-menu" style="width: 900px; float: left; ">
+                    <ul class="sub-submenu scrollbar" id="test-menu" style="width: 900px; float: left; ">
                         <?php
                         $MenuCategoryParentId = $this->context->actionMenuCategoryParentId($items->categoryId);
                         $num = 0;
@@ -95,7 +95,7 @@ $MenuCategory = $this->context->actionMenuCategory();
                             $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items_sub->categoryId]);
                             $MenuCategorySubParentId = $this->context->actionMenuCategorySubParentId($items_sub->categoryId);
                             ?>
-                            <a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub->createTitle() ?>/<?= $params ?>" style="color: #000; font-weight: 900 ; width:50%; border-bottom :1px #dfdfdf solid;">
+                            <a class="sub-catolog" href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub->createTitle() ?>/<?= $params ?>">
                                 <?php echo $items_sub->title; ?> <span style="color:#6c6c6c; font-size: 10px;"><!--(<?//php echo count($MenuCategorySubParentId); ?>)--></span></a>
                                 <?php
                                 foreach ($MenuCategorySubParentId as $items_sub_parent) {

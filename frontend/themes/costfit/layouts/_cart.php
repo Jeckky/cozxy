@@ -11,7 +11,8 @@ $check_item = count($this->params['cart']['items']);
 </style>
 <div class="cart-btn">
     <a class="btn btn-outlined-invert">
-        <i class="icon-shopping-cart-content"></i><span><?= $this->params['cart']['qty'] ?></span><b id="cartTotal"><?= number_format($this->params['cart']['total'], 2) ?></b>
+        <i class="icon-shopping-cart-content"></i><span><?= $this->params['cart']['qty'] ?></span>
+        <b id="cartTotal"><?= number_format($this->params['cart']['total'], 2) ?></b>
     </a>
     <!--Cart Dropdown-->
     <div class="cart-dropdown" style="margin-top: -15px; font-size: 14px;">

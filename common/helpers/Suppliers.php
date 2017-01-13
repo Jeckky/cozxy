@@ -189,7 +189,7 @@ class Suppliers {
 
     /*
      * แสดงรายชื่อของ Suppliers
-     * table : type = 4
+     * table User : type = 4
      */
 
     public static function GetUserSuppliers() {

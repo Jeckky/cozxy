@@ -23,7 +23,7 @@ class CostfitAsset extends AssetBundle {
         'masterslider/style/masterslider.css',
         'css/styles.css',
         'css/colors/color-scheme6.css',
-        'css/style-reform.css', //Create By Taninut.B
+        'css/style-reform-cozxy.css', //Create By Taninut.B
     ];
     public $js = [
 

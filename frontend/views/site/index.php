@@ -31,7 +31,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="ms-anim-layers">
                     <div class="ms-layer text-block" style="margin: 50px; padding: 108px 0px 0px 25px; font-size: 16px; line-height: 22px;">
                         <h2 style="width: 456px; left: 110px; top: 110px;" class="dark-color ms-layer" data-effect="top(50,true)" data-duration="700" data-delay="250" data-ease="easeOutQuad">
-                            <span style="color: #03a9f4;"><?= $banner->headTitle ?></span><br><?= $banner->title ?>
+                            <span><?= $banner->headTitle ?></span><br><?= $banner->title ?>
                         </h2>
                         <?php
                         $desc = str_replace("<p>", " ", str_replace("</p>", " ", str_replace("</p><p>", "<br>", $banner->description)));

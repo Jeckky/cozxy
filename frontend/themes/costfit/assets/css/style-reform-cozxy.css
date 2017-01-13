@@ -51,10 +51,10 @@
     z-index: 5;
     top: 0;
     left: 228px;
-    background-color: #fff;
-    border-right: 1px #03a9f4  solid;
-    border-bottom: 1px #03a9f4  solid;
-    border-left: 1px #03a9f4  solid;
+    background-color: #2b2727;
+    border-right: 1px #2b2727  solid;
+    border-bottom: 1px #2b2727  solid;
+    border-left: 1px #2b2727  solid;
     height: 530px;
     overflow-y: scroll;
     width: 100%;
@@ -99,7 +99,7 @@
 
 .search-category-footer{
     min-height: 150px;
-    /* max-height: 180px; */ 
+    /* max-height: 180px; */
     word-wrap: break-word;
 }
 
@@ -263,3 +263,166 @@
     padding: 10px 12px; color: #fff; border-width: 1px;
     border-radius: 4px 4px 0 0; -webkit-box-shadow: none; box-shadow: none;
 }
+
+/*
+    * Update 12/1/2017
+    * By Taninut.Bm
+*/
+
+.menu .catalog-block {
+    background-color: #000000;
+}
+.menu .catalog li a {
+    color: #ffff00;/* #ddff00;*/
+}
+.menu .catalog li:hover {
+    background-color:#2b2727;/*#1f1d1d;#4c4646;*/
+}
+.menu .catalog li .submenu {
+    background-color: #000000;
+    border-color: #2b2727;
+}
+.menu .catalog li .submenu li {
+    border-color: #2b2727 !important;
+}
+.menu .catalog li .submenu li:hover {
+    background: #2b2727;
+}
+.menu .catalog li .submenu li>a {
+    font-size: 13px;
+    margin-left: 6px;
+}
+.menu .catalog li .submenu #test-menu .sub-catolog{
+    color: #ffff00;
+    width:50%;
+    border-bottom: 1px #f5f5f5 solid;
+}
+.menu .main li:hover a,
+.menu .catalog li:hover a {
+    text-decoration: none;
+    color: #ffff00;
+}
+.menu .catalog .submenu .sub-submenu li a {
+    color: #ddff00 !important;
+}
+.menu .catalog .submenu .sub-submenu li a:hover {
+    color: #ffff00 !important;
+}
+.menu .catalog .submenu .sub-submenu li:hover {
+    background: #2b2727 !important;
+
+}
+.menu .catalog .submenu .sub-submenu li:after {
+
+    border-color: #2b2727 !important;
+    background: #6f6565 !important;
+}
+.scrollbar{
+    /*float: left; height: 300px; width: 65px;*/
+    background: #F5F5F5; overflow-y: scroll; margin-bottom: 25px;
+}
+
+#test-menu::-webkit-scrollbar-track{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+#test-menu::-webkit-scrollbar{
+    width: 6px;
+    background-color: #F5F5F5;
+}
+
+#test-menu::-webkit-scrollbar-thumb{
+    background-color: #000000;
+}
+
+.price-label, #lightGallery-outer, .thumb_cont, body > footer {
+    background-color: #000000 !important;
+}
+
+.footer p {
+    color: #ffff00;
+}
+.footer a {
+    color: #ffff00;
+}
+.footer .list-unstyled li a:hover {
+    color: #ffff00;
+}
+
+.toolbar i {
+    color: #000000 !important;
+}
+
+.hero-slider .ms-nav-next:before, .hero-slider .ms-nav-prev:before {
+    color: #000000;
+}
+
+.btn-primary {
+    background: #2b2727;
+    color: #ffff00;
+}
+
+.hero-slider .ms-bullet-selected {
+    background-color: #d6b402;
+}
+
+/* 13/1/2017 */
+.toolbar-container .toolbar .cart-btn .btn span {
+    background-color: #000000;
+}
+.cart-dropdown {
+    border-color: #000000;
+}
+
+.cart-dropdown .footer {
+    background: #000000;
+}
+
+.toolbar .cart-btn>.btn i {
+    color: #000000 !important;
+}
+
+.toolbar  .cart-btn .btn i {
+    color: #ffff00 !important;
+}
+
+.toolbar  .cart-btn .btn span {
+    background : #ffff00 !important;
+    color: #000000 !important;
+    border-color: #000000 !important;
+}
+.toolbar a span {
+    color: #d6b402;
+}
+
+.list-wrapper .empty{
+    color: #d6b402 !important;
+}
+
+.tabs-widget .nav-tabs li.active a {
+    border-color: #000000;
+    background: #000000 !important;
+}
+
+.tabs-widget .nav-tabs li.active a {
+    color: #ffff00;
+}
+
+.tabs-widget .nav-tabs {
+    border-bottom-color: #000000;
+}
+
+.tabs-widget .nav-tabs li.active {
+    background: #000000;
+}
+.tabs-widget .nav-tabs li a:hover {
+    border-color: #000000;
+}
+a {
+    color: #000000;
+}
+a:hover {
+    color: #d6b402;
+}
+
