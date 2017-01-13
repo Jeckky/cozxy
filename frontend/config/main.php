@@ -112,7 +112,7 @@ return [
                     //'class' => 'yii\authclient\clients\GoogleOAuth',
                     'clientId' => '51351302330-9bnvl3nmdqmdspqece4rlbc71br0o5sh.apps.googleusercontent.com',
                     'clientSecret' => 'N739bef0DKOS7VUKT4DKmAL2',
-//                    'scope' => 'https://www.googleapis.com/auth/userinfo.email',
+                    // 'scope' => 'https://www.googleapis.com/auth/userinfo.email',
                     'scope' => 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email',
                     'returnUrl' => 'http://localhost/Cozxy.com-frontend/site/auth?authclient=google',
                 ]
