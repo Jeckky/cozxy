@@ -69,7 +69,7 @@ use common\models\ModelMaster;
         transition: background .3s
     }
     .incr-btn-cart {
-        background: #03a9f4;
+        background: rgba(255,212,36,.9);
     }
     incr-btn-cart:hover {
         color: #fff;
@@ -148,7 +148,7 @@ use common\models\ModelMaster;
                 </table>
                 <?php if (isset($this->params['cart']['items']) && !empty($this->params['cart']['items'])) { ?>
                     <div class="checkbox " id="showSlow">
-                        <label style="color:#03a9f4">
+                        <label style="color:rgba(255,212,36,.9">
                             <input type="checkbox" id="slowest" name="slowest" <?= (isset($this->params['cart']) && $this->params['cart']['isSlowest']) ? " checked" : "" ?>>  ต้องการส่งสินค้าช้าที่สุดเพื่อประหยัดค่าใช้จ่าย
                         </label>
                     </div>
