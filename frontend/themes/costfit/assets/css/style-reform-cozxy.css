@@ -450,3 +450,6 @@ a:hover {
     color: #ffff00;
     background-color: #000000;
 }
+.sticky-btns span:hover {
+    background: #cbd010;
+}
