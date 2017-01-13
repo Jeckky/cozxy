@@ -556,3 +556,6 @@ a.panel-toggle {
     border: 1px solid rgba(255,212,36,.9);
     padding-right: 50px;
 }
+.shopping-cart table td.delete i, .wishlist table td.delete i {
+    color: rgba(255,212,36,.9);
+}
