@@ -1,14 +1,14 @@
 <?php
 
 $params = array_merge(
-        require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
+require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
 );
 
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log',
-            [
+        [
             'class' => 'common\components\LanguageSelector',
             'supportedLanguages' => ['en-US', 'th-TH'], //กำหนดรายการภาษาที่ support หรือใช้ได้
         ]
@@ -33,7 +33,7 @@ return [
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
-                    [
+                [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
@@ -108,8 +108,8 @@ return [
                     'clientSecret' => 'd4503ebb0f9b512e58d73fee8134853f',
                 ],
                 'google' => [
-                    'class' => 'yii\authclient\clients\Google',
-                    //'class' => 'yii\authclient\clients\GoogleOAuth',
+                    //'class' => 'yii\authclient\clients\Google',
+                    'class' => 'yii\authclient\clients\GoogleOAuth',
                     'clientId' => '51351302330-9bnvl3nmdqmdspqece4rlbc71br0o5sh.apps.googleusercontent.com',
                     'clientSecret' => 'N739bef0DKOS7VUKT4DKmAL2',
 //                    'scope' => 'https://www.googleapis.com/auth/userinfo.email',
