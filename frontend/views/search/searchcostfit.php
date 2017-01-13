@@ -7,17 +7,7 @@ use yii\bootstrap\ActiveForm;
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
-<style>
-    .subscr-form {
-        width: 80%;
-    }
-    .subscr-form .form-control {
-        color: #000;
-        border: 1px solid #03a9f4;
-        padding-right: 50px;
 
-    }
-</style>
 <!--Breadcrumbs-->
 <ol class="breadcrumb">
     <li><a href="<?php echo Yii::$app->homeUrl; ?>"><?= isset($this->context->subTitle) ? $this->context->subTitle : "sub Title" ?></a></li>

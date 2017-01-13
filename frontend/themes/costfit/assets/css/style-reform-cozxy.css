@@ -539,3 +539,17 @@ a.panel-toggle {
 .shop-filters .filter-section {
     border-bottom-color: rgba(255,212,36,.9);
 }
+.catalog-single h1 {
+    color: rgba(255,212,36,.9);
+}
+.catalog-single .buttons .qnt-count .incr-btn {
+    background: rgba(255,212,36,.9);
+}
+.subscr-form {
+    width: 74%;
+}
+.subscr-form .form-control {
+    color: #000;
+    border: 1px solid rgba(255,212,36,.9);
+    padding-right: 50px;
+}
