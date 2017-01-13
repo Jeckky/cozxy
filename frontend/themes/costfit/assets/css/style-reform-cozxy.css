@@ -10,7 +10,9 @@
     max-height: 500px;
     overflow-y: scroll;
 }*/
-
+body {
+    color: rgba(255,212,36,.9);
+}
 .submenu{
 
 }
@@ -484,7 +486,7 @@ a.panel-toggle {
     color: rgba(255,212,36,.9) !important;
 }
 .accordion .panel-heading a {
-    color: #000000;
+    color: rgba(255,212,36,.9);
 }
 .accordion .panel-heading a h1,
 .accordion .panel-heading a .h1,
@@ -498,7 +500,7 @@ a.panel-toggle {
 .accordion .panel-heading a h5,
 .accordion .panel-heading a .h6,
 .accordion .panel-heading a h6 {
-    color: #000000;
+    color: rgba(255,212,36,.9);
 }
 .accordion .panel-heading a:hover {
     color: rgba(255,212,36,.9) !important;
@@ -512,4 +514,28 @@ a.panel-toggle {
 }
 .search-form button {
     color: rgba(255,212,36,.9) !important;
+}
+.sale {
+    background-color: rgba(255,212,36,.9) !important;
+}
+.sorting {
+    color: rgba(255,212,36,.9);
+}
+.sorting a:hover {
+    color: rgba(255,212,36,.9);
+}
+.shop-filters .filter-section .clear {
+    color: rgba(255,212,36,.9);
+}
+.shop-filters .filter-section .clear:hover {
+    border-bottom-color: rgba(255,212,36,.9);
+}
+.noUi-handle {
+    background: rgba(255,212,36,.9);
+}
+.noUi-connect {
+    background: rgba(255,212,36,.9);
+}
+.shop-filters .filter-section {
+    border-bottom-color: rgba(255,212,36,.9);
 }

@@ -49,11 +49,10 @@ if (isset($model->productId)):
                 <div class="footer search-category-footer">
                     <div class="" style="max-height: 50px; min-height: 50px;">
                         <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $suppliers->encodeParams(['productId' => $suppliers->productId, 'productSupplierId' => $suppliers->productSuppId]) ?>">
-                            <?=
-                            substr($suppliers->title, 0, 40);
+                            <?= substr($suppliers->title, 0, 40);
                             ?></a>
                     </div>
-                    <span><?php //= $model->shortDescription;                                                    ?></span>
+                    <span><?php //= $model->shortDescription;  ?></span>
                     <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $suppliers->encodeParams(['productId' => $suppliers->productId, 'productSupplierId' => $suppliers->productSuppId]) ?>"><button class="btn btn-primary" id="addItemToCart"><i class="fa fa-search"></i>View</button></a>
                 </div>
             </div>

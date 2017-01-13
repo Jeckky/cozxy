@@ -74,8 +74,8 @@ $title = $this->params['title'];
                                     </ul>
                                 </div>
                             <?php } ?>
-                            <div class="sorting" style="margin:0 0 0 0; font-size: 12px;">
-                                <a href="#cate" style="color: #03a9f4;">LESS</a>
+                            <div class="sorting">
+                                <a href="#cate">LESS</a>
                             </div><!--sorting-->
                         </section>
 
