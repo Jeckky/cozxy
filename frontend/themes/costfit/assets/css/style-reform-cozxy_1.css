@@ -273,7 +273,7 @@
     background-color: #000000;
 }
 .menu .catalog li a {
-    color: rgba(255,212,36,.9);/* #ddff00;*/
+    color: #ffff00;/* #ddff00;*/
 }
 .menu .catalog li:hover {
     background-color:#2b2727;/*#1f1d1d;#4c4646;*/
@@ -293,20 +293,20 @@
     margin-left: 6px;
 }
 .menu .catalog li .submenu #test-menu .sub-catolog{
-    color: rgba(255,212,36,.9);
+    color: #ffff00;
     width:50%;
     border-bottom: 1px #f5f5f5 solid;
 }
 .menu .main li:hover a,
 .menu .catalog li:hover a {
     text-decoration: none;
-    color: rgba(255,212,36,.9);
+    color: #ffff00;
 }
 .menu .catalog .submenu .sub-submenu li a {
-    color: rgba(255,212,36,.9) !important;
+    color: #d6b402 !important;
 }
 .menu .catalog .submenu .sub-submenu li a:hover {
-    color: rgba(255,212,36,.9) !important;
+    color: #ffff00 !important;
 }
 .menu .catalog .submenu .sub-submenu li:hover {
     background: #2b2727 !important;
@@ -336,29 +336,29 @@
     background-color: #000000 !important;
 }
 .footer p {
-    color: rgba(255,212,36,.9);
+    color: #ffff00;
 }
 .footer a {
-    color: rgba(255,212,36,.9);
+    color: #ffff00;
 }
 .footer .list-unstyled li a:hover {
-    color: rgba(255,212,36,.9);
+    color: #ffff00;
 }
 .toolbar i {
     color: #000000 !important;
 }
 .toolbar i:hover {
-    color: rgba(255,212,36,.9) !important;
+    color: #ffff00 !important;
 }
 .hero-slider .ms-nav-next:before, .hero-slider .ms-nav-prev:before {
-    color: rgba(255,212,36,.9);
+    color: #cbd010;
 }
 .btn-primary {
     background: #2b2727;
-    color: rgba(255,212,36,.9);
+    color: #ffff00;
 }
 .hero-slider .ms-bullet-selected {
-    background-color: rgba(255,212,36,.9);
+    background-color: #cbd010;
 }
 
 /* 13/1/2017 */
@@ -375,16 +375,16 @@
     color: #000000 !important;
 }
 .toolbar  .cart-btn .btn i {
-    color: rgba(255,212,36,.9) !important;
+    color: #ffff00 !important;
 }
 .toolbar  .cart-btn .btn span {
-    background : rgba(255,212,36,.9) !important;
+    background : #ffff00 !important;
     color: #000000 !important;
     border-color: #000000 !important;
     border: 1px rgb(176, 197, 7) solid;
 }
 .toolbar a span {
-    color: rgba(255,212,36,.9);
+    color: #d6b402;
 }
 /*#FED943 rgba(255,212,36,.9)*/
 .close-search,
@@ -393,14 +393,14 @@
     color: #000000 !important;
 }
 .list-wrapper .empty{
-    color: rgba(255,212,36,.9) !important;
+    color: #cbd010 !important;
 }
 .tabs-widget .nav-tabs li.active a {
     border-color: #000000;
     background: #000000 !important;
 }
 .tabs-widget .nav-tabs li.active a {
-    color: rgba(255,212,36,.9);
+    color: #ffff00;
 }
 .tabs-widget .nav-tabs {
     border-bottom-color: #000000;
@@ -415,7 +415,7 @@ a{
     color: #000000;
 }
 a:hover {
-    color: rgba(255,212,36,.9);
+    color: #d6b402;
 }
 .cart-dropdown .footer .btn {
     background-color: #2b2727;
@@ -427,30 +427,30 @@ a:hover {
     color: #000000;
 }
 .cart-dropdown .footer .total {
-    color: rgba(255,212,36,.9);
+    color: #ffff00;
 }
 .catalog-grid .tile .footer a {
     color: #292c2e;
 }
 .title-head {
-    color: rgba(255,212,36,.9);
+    color: #cbd010;
 }
 .feature-tabs .tab i {
-    color: rgba(255,212,36,.9);
+    color: #cbd010;
 }
 .feature-tabs .tab.active i {
     color: #000000 !important;
 }
 .cat-tiles a:hover {
-    border-color: rgba(255,212,36,.9);
+    border-color: #cbd010;
 }
 .brand-carousel .owl-prev, .brand-carousel .owl-next {
-    color: rgba(255,212,36,.9) !important;
+    color: #cbd010 !important;
 }
 .desc-bestseller {
-    color: rgba(255,212,36,.9);
+    color: #ffff00;
     background-color: #000000;
 }
 .sticky-btns span:hover {
-    background: rgba(255,212,36,.9);
+    background: #cbd010;
 }
