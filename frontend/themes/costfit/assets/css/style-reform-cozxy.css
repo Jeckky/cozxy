@@ -477,3 +477,39 @@ a:hover {
 .cat-tiles a, .about .team .member h5, .cont-info-widget ul li i, .cont-info-widget ol li i, .coming-soon h1, .support h4, .history-title {
     color: rgba(255,212,36,.9) !important;
 }
+.accordion .panel-heading a {
+    color: rgba(255,212,36,.9);
+}
+a.panel-toggle {
+    color: rgba(255,212,36,.9) !important;
+}
+.accordion .panel-heading a {
+    color: #000000;
+}
+.accordion .panel-heading a h1,
+.accordion .panel-heading a .h1,
+.accordion .panel-heading a .h2,
+.accordion .panel-heading a h2,
+.accordion .panel-heading a .h3,
+.accordion .panel-heading a h3,
+.accordion .panel-heading a .h4,
+.accordion .panel-heading a h4,
+.accordion .panel-heading a .h5,
+.accordion .panel-heading a h5,
+.accordion .panel-heading a .h6,
+.accordion .panel-heading a h6 {
+    color: #000000;
+}
+.accordion .panel-heading a:hover {
+    color: rgba(255,212,36,.9) !important;
+    border-bottom-color: rgba(255,212,36,.9);
+}
+.member-since{
+    color: rgba(255,212,36,.9) !important;
+}
+.search-form .form-group input {
+    border-color: rgba(255,212,36,.9) !important;
+}
+.search-form button {
+    color: rgba(255,212,36,.9) !important;
+}

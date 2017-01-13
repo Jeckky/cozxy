@@ -22,7 +22,7 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                 <span class="profile-title-head">FREE MEMBERSHIP</span>
             </h4>
             <p>Member since
-                <span style="color: #03a9f4;"><?php echo $createDateTime; ?></span><!--Apr 9,2016 -->
+                <span class="member-since"><?php echo $createDateTime; ?></span><!--Apr 9,2016 -->
             </p>
             <hr>
             <p class="col-lg-6 col-md-6 col-sm-6 text-left" style="padding-left: 0px;">You've Saved</p>
