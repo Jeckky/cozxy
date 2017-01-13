@@ -128,6 +128,7 @@ class CartController extends MasterController {
             $order->save(); // Save For Cal new total
             $cartArray = \common\models\costfit\Order::findCartArray();
             $res["cart"] = $cartArray;
+            $res["productSuppId"] = $orderItem->productSuppId;
             $res["deleteQnty"] = $qnty;
         } else {
             $res["status"] = FALSE;
@@ -166,14 +167,14 @@ class CartController extends MasterController {
         $text = "";
         $showOrder = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
         if (isset($showOrder) && !empty($showOrder)) {
-            $header = "<table id='cartTable' style='margin-top:-5px;'><tr><th>Items</th><th>Quantity</th><th>Price</th></tr>";
+            $header = "<table id='cartTable' style='margin-top: -10px; font-size: 14px;'><tr><th>Items</th><th>Quantity</th><th>Price</th></tr>";
             $footer = "</table>";
             foreach ($showOrder as $item):
                 $productSupp = \common\models\costfit\ProductSuppliers::productSupplierName($item->productSuppId);
-                $text = $text . '<tr class="item">'
+                $text = $text . '<tr class="item" id="item' . $item->orderItemId . '">'
                         . '<td><div class="delete"><input type="hidden" id="orderItemId" value="' . $item->orderItemId . '"></div><a href="' . Yii::$app->homeUrl . 'products/' . \common\models\ModelMaster::encodeParams(["productId" => $item->productId, "productSupplierId" => $item->productSuppId]) . '">' . $productSupp->title . '</a></td>'
                         . '<td class="qty"><input type="text" id="qty" value="' . $item->quantity . '" readonly="true"></td>'
-                        . '<td class="price">' . number_format(\common\models\costfit\ProductSuppliers::productPriceSupplier($item->productSuppId), 2) . '</td></tr>';
+                        . '<td class="price">' . number_format(\common\models\costfit\ProductSuppliers::productPriceSupplier($item->productSuppId), 2) . '</td><input type="hidden" id="productSuppId" value="' . $item->productSuppId . '"></tr>';
             endforeach;
             $text = $header . $text . $footer;
         }
@@ -235,7 +236,9 @@ class CartController extends MasterController {
         $ws = \common\models\costfit\Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
         if (isset($ws)) {
             \common\models\costfit\Wishlist::deleteAll("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id);
+            $length = count(\common\models\costfit\Wishlist::find()->where("userId = " . \Yii::$app->user->id)->all());
             $res["status"] = TRUE;
+            $res["length"] = $length;
         } else {
             $res["status"] = FALSE;
             $res['errorCode'] = 1;

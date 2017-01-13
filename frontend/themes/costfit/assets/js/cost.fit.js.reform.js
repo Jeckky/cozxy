@@ -652,7 +652,7 @@ function itemzero(items, title) {
 
 $addToWishlistBtn.click(function () {
     event.preventDefault();
-    var $pId = $(this).parent().parent().find('#productId').val();
+    var $pId = $(this).parent().parent().find('#productSuppId').val();
     $.ajax({
         type: "POST",
         dataType: "JSON",
@@ -676,9 +676,14 @@ $(".addWishlistItemToCart").click(function () {
     $addedToCartMessage.removeClass('visible');
     var $itemName = $(this).parent().parent().find('.title').html();
     var $itemId = $(this).parent().parent().find('#productId').val();
-    var $itemPrice = $(this).parent().parent().find('.price').text();
+    var $productSuppId = $(this).parent().parent().find('#productSuppId').val();
+    var $supplierId = $(this).parent().parent().find('#supplierId').val();
+    var $fastId = $(this).parent().parent().find('#fastId').val();
+    var $maxQnty = $(this).parent().parent().find('#maxQnty' + $productSuppId).val();
+    //var $itemPrice = $(this).parent().parent().find('.price').text();
     var $itemQnty = $(this).parent().find('#quantity').val();
     var $cartTotalItems = parseInt($('.cart-btn a span').text()) + parseInt($itemQnty);
+    var $button = $('#addWishlistItemToCart' + $productSuppId);
     $addedToCartMessage.find('p').text('"' + $itemName + '"' + '  ' + 'was successfully added to your cart.');
 //        var getUrl = window.location;
 //        var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
@@ -688,15 +693,18 @@ $(".addWishlistItemToCart").click(function () {
         type: "POST",
         dataType: "JSON",
         url: $baseUrl + "cart/add-to-cart?id=" + $itemId,
-        data: {quantity: $itemQnty},
+        data: {quantity: $itemQnty, fastId: $fastId, supplierId: $supplierId, productSuppId: $productSuppId},
         success: function (data)
         {
             if (data.status)
             {
-                $('.cart-dropdown table').append(
-                        '<tr class="item"><td><div class="delete"></div><a href="#">' + $itemName +
-                        '<td><input type="text" value="' + $itemQnty +
-                        '"></td><td class="price">' + $itemPrice + '</td>'
+                $('#maxQnty' + $productSuppId).val($maxQnty - $itemQnty);
+                if (($maxQnty - $itemQnty) == 0) {
+                    $button.attr('disabled', 'disabled');
+                }
+                $('.cart-dropdown table').remove();
+                $('.cart-dropdown .body').append(
+                        data.shoppingCart
                         );
                 $('.cart-btn a span').text($cartTotalItems);
                 $('.cart-btn a').find("#cartTotal").html(data.cart.totalFormatText);

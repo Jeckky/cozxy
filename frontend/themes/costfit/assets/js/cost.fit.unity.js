@@ -31,6 +31,8 @@ $(document).ready(function (e) {
         var orderItemId = $(this).find("#orderItemId").val();
         var itemQty = $(this).parent().parent().find(".qty").find("#qty").val();
         var $maxQnty = parseInt($('#maxQnty').val());
+        var $productSuppId = $(this).parent().parent().find("#productSuppId").val();
+        var $wmaxQnty = parseInt($('#maxQnty' + $productSuppId).val());
         $.ajax({
             type: "POST",
             dataType: "JSON",
@@ -46,14 +48,18 @@ $(document).ready(function (e) {
                             $positionQty = $positionQty - itemQty;
                             $('.cart-btn a span').text($positionQty);
                             $('#maxQnty').val($maxQnty + data.deleteQnty);
+                            $('#maxQnty' + $productSuppId).val($wmaxQnty + data.deleteQnty);
                             if (($maxQnty + data.deleteQnty) > 0) {
                                 $('#quantity').val(1);
                                 $addToCartBtn.removeAttr('disabled');
+                                $('#addWishlistItemToCart' + data.productSuppId).removeAttr('disabled');
                             } else {
                                 $('#quantity').val(0);
                                 $addToCartBtn.attr('disabled', 'disabled');
                             }
-
+                            if (($wmaxQnty + data.deleteQnty) > 0) {
+                                $('#addWishlistItemToCart' + data.productSuppId).removeAttr('disabled');
+                            }
                             if ($positions.length === 1) {
                                 $('.cart-dropdown .body').html('<h3>Cart is empty!</h3>');
                                 $('.shopping-cart .items-list').remove();
@@ -142,7 +148,7 @@ $(document).ready(function (e) {
         }
 
         var $target = $(this).parent().parent();
-        var pId = $(this).parent().parent().find("#productId").val();
+        var pId = $(this).parent().parent().find("#productSuppId").val();
 //        $target.hide(300, function () {
         $.when($target.remove()).then(function () {
             $.ajax({
@@ -155,8 +161,11 @@ $(document).ready(function (e) {
                     if (data.status)
                     {
                         $target.hide(300, function () {
-                            $('.wishlist .items-list').remove();
-                            $('.wishlist .title').text('Wishlist is empty!');
+
+                            if (data.length == 0) {
+                                $('.wishlist .title').text('Wishlist is empty!');
+                                $('.wishlist .items-list').remove();
+                            }
                             alert("Delete wishlist success");
 //                                    $positionQty = $positionQty - itemQty;
 //                                    $('.cart-btn a span').text($positionQty);

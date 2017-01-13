@@ -31,6 +31,7 @@ $check_item = count($this->params['cart']['items']);
                             <a href="<?php echo Yii::$app->homeUrl; ?>products/<?php echo common\models\ModelMaster::encodeParams(['productId' => $item["productId"], 'productSupplierId' => $item['productSuppId']]); ?>"><?= $item['title'] ?></a></td>
                         <td class="qty"><input id="qty" type="text" value="<?= $item['qty'] ?>" readonly="true"></td>
                         <td class="price"><?= number_format($item['price'], 2) ?></td>
+                    <input type="hidden" id="productSuppId" value="<?= $item->productSuppId ?>">
                     </tr>
                 <?php endforeach; ?>
             </table>

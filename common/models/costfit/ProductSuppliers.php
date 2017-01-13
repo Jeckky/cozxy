@@ -104,7 +104,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     }
 
     public function getImages() {
-        return $this->hasOne(ProductImageSuppliers::className(), ['productSuppId' => 'productId']);
+        return $this->hasOne(ProductImageSuppliers::className(), ['productSuppId' => 'productSuppId']);
     }
 
     public function getCategory() {
