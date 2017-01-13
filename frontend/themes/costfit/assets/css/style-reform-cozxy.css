@@ -435,6 +435,9 @@ a:hover {
 .catalog-grid .tile .footer a {
     color: #292c2e;
 }
+.catalog-grid .tile .footer a:hover {
+    color: rgba(255,212,36,.9);
+}
 .title-head {
     color: rgba(255,212,36,.9);
 }
@@ -553,3 +556,4 @@ a.panel-toggle {
     border: 1px solid rgba(255,212,36,.9);
     padding-right: 50px;
 }
+
