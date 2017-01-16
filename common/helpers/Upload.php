@@ -122,4 +122,55 @@ class Upload {
         return false;
     }
 
+    /*
+     * Upload ครั้งละรูป
+     */
+
+    public static function UploadCSV($fileName, $folderName, $uploadPath, $width, $height) {
+        $file = \yii\web\UploadedFile::getInstanceByName($fileName);
+        $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
+        $file->saveAs($uploadPath . '/' . $newFileName);
+        $originalFile = $uploadPath . '/' . $newFileName; // originalFile
+        $thumbFile = $uploadPath . '/' . $newFileName;
+        $saveThumb1 = Image::thumbnail($originalFile, $width, $height)->save($thumbFile, ['quality' => 80]); // thumbnail file
+        return $newFileName;
+    }
+
+    public function actionUploadxxx() {
+        $model = new CsvForm;
+
+        if ($model->load(Yii::$app->request->post())) {
+            $file = \yii\web\UploadedFile::getInstance($model, 'file');
+            $filename = 'Data.' . $file->extension;
+            $upload = $file->saveAs('uploads/' . $filename);
+            if ($upload) {
+                define('CSV_PATH', 'uploads/');
+                $csv_file = CSV_PATH . $filename;
+                $filecsv = file($csv_file);
+                print_r($filecsv);
+                foreach ($filecsv as $data) {
+                    $modelnew = new Mahasiswa;
+                    $hasil = explode(",", $data);
+                    $nim = $hasil[0];
+                    $nama = $hasil[1];
+                    $jurusan = $hasil[2];
+                    $angkatan = $hasil[3];
+                    $alamat = $hasil[4];
+                    $foto = $hasil[5];
+                    $modelnew->nim = $nim;
+                    $modelnew->nama = $nama;
+                    $modelnew->jurusan = $jurusan;
+                    $modelnew->angkatan = $angkatan;
+                    $modelnew->alamat = $alamat;
+                    $modelnew->foto = $foto;
+                    $modelnew->save();
+                }
+                unlink('uploads/' . $filename);
+                return $this->redirect(['site/index']);
+            }
+        } else {
+            return $this->render('upload', ['model' => $model]);
+        }
+    }
+
 }
