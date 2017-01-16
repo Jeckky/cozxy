@@ -18,7 +18,7 @@ use kartik\depdrop\DepDrop;
         line-height: 1.42857143;
         color: #292c2e;
         background: transparent;
-        border: 1px solid #03a9f4;
+        border: 1px solid rgba(255,212,36,.9);
         border-radius: 0;
         box-shadow: none;
 
@@ -91,9 +91,9 @@ if (isset($isUpdate)) {
 }
 
 $form = ActiveForm::begin([
-            'id' => 'default-shipping-address',
-            'options' => ['class' => 'space-bottom'],
-        ]);
+    'id' => 'default-shipping-address',
+    'options' => ['class' => 'space-bottom'],
+]);
 
 $countryId = rand(0, 9999);
 $stateId = rand(0, 9999);
