@@ -22,7 +22,7 @@ class Upload {
      */
     public function rules() {
         return [
-        //
+//
         ];
     }
 
@@ -71,7 +71,7 @@ class Upload {
      */
 
     public static function UploadSuppliers($model) {
-        //$uploadPath = Yii::getAlias('@root') . '/uploads/';
+//$uploadPath = Yii::getAlias('@root') . '/uploads/';
         $folderName = "ProductImageSuppliers"; //  Size 553 x 484
         $folderThumbnail = "thumbnail"; // Size 553 x 484
         $folderThumbnail1 = "thumbnail1"; // Size 356 x 390
@@ -95,23 +95,23 @@ class Upload {
             $thumbFile3 = $uploadPath3 . '/' . $newFileName; // Size 137 x 130
 
             $saveThumb0 = Image::thumbnail($originalFile, 553, 484)->save($thumbFile0, ['quality' => 80]);
-            //$saveThumb1 = Image::thumbnail($originalFile, 553, 484)->save($thumbFile1, ['quality' => 80]); // thumbnail file
+//$saveThumb1 = Image::thumbnail($originalFile, 553, 484)->save($thumbFile1, ['quality' => 80]); // thumbnail file
             $saveThumb2 = Image::thumbnail($originalFile, 356, 390)->save($thumbFile2, ['quality' => 80]); // thumbnail file
             $saveThumb3 = Image::thumbnail($originalFile, 137, 130)->save($thumbFile3, ['quality' => 80]); // thumbnail file
-            //mage::getImagine()->open($originalFile)->thumbnail(new Box(553, 484))->save($thumbFile1, ['quality' => 90]);
+//mage::getImagine()->open($originalFile)->thumbnail(new Box(553, 484))->save($thumbFile1, ['quality' => 90]);
 
             $model->image = 'images/' . $folderName . '/' . $newFileName; // Size 553 x 484
             $model->imageThumbnail1 = 'images/' . $folderName . '/' . $folderThumbnail1 . '/' . $newFileName; // Size 356 x 390
             $model->imageThumbnail2 = 'images/' . $folderName . '/' . $folderThumbnail2 . '/' . $newFileName; // Size 137 x 130
             $model->productSuppId = Yii::$app->request->get('id');
-            //$model->original_name = $file->name;
+//$model->original_name = $file->name;
             $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save(FALSE)) {
                 echo \yii\helpers\Json::encode($file);
             } else {
                 echo \yii\helpers\Json::encode($model->getErrors());
             }
-            //}
+//}
         } else {
             /* return $this->render('upload', [
               'model' => $model,
@@ -123,53 +123,130 @@ class Upload {
     }
 
     /*
-     * Upload ครั้งละรูป
+     * Upload File csv ของ Category ครั้งละรูป
+     * Create date : 16/1/2017
+     * By Taninut.BM
+     * emial : taninut.bm@cozxy.com , sodapew17@gmial.com
      */
 
-    public static function UploadCSV($fileName, $folderName, $uploadPath, $width, $height) {
+    public static function UploadCSVCategory($fileName, $folderName, $uploadPath) {
+
         $file = \yii\web\UploadedFile::getInstanceByName($fileName);
         $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
-        $file->saveAs($uploadPath . '/' . $newFileName);
-        $originalFile = $uploadPath . '/' . $newFileName; // originalFile
-        $thumbFile = $uploadPath . '/' . $newFileName;
-        $saveThumb1 = Image::thumbnail($originalFile, $width, $height)->save($thumbFile, ['quality' => 80]); // thumbnail file
-        return $newFileName;
+        $upload = $file->saveAs($uploadPath . '/' . $newFileName);
+        if ($upload) {
+            $row = 1;
+            define('CSV_PATH', $uploadPath);
+            $csv_file = CSV_PATH . '/' . $newFileName;
+            $handle = fopen($csv_file, "r");
+            if ($handle) {
+                $row = 1;
+                while (($line = fgetcsv($handle, 1000, ",")) != FALSE) {
+                    //print_r($line);
+                    if ($row > 1) {
+                        $newModel = new \common\models\costfit\ImportCategory;
+                        $hasil = explode(",", $line[0]);
+                        //print_r($hasil[1]);
+                        $newModel->categoryId = isset($hasil[0]) ? $hasil[0] : '';
+                        $newModel->title = isset($hasil[1]) ? $hasil[1] : '';
+                        $newModel->parentId = isset($hasil[2]) ? $hasil[2] : '';
+                        $newModel->save(FALSE);
+                    }
+                    $row++;
+                }
+            }
+            fclose($handle);
+        }
     }
 
-    public function actionUploadxxx() {
-        $model = new CsvForm;
+    /*
+     * Upload File csv ของ Brand ครั้งละรูป
+     * Create date : 16/1/2017
+     * By Taninut.BM
+     * emial : taninut.bm@cozxy.com , sodapew17@gmial.com
+     */
 
-        if ($model->load(Yii::$app->request->post())) {
-            $file = \yii\web\UploadedFile::getInstance($model, 'file');
-            $filename = 'Data.' . $file->extension;
-            $upload = $file->saveAs('uploads/' . $filename);
-            if ($upload) {
-                define('CSV_PATH', 'uploads/');
-                $csv_file = CSV_PATH . $filename;
-                $filecsv = file($csv_file);
-                print_r($filecsv);
-                foreach ($filecsv as $data) {
-                    $modelnew = new Mahasiswa;
-                    $hasil = explode(",", $data);
-                    $nim = $hasil[0];
-                    $nama = $hasil[1];
-                    $jurusan = $hasil[2];
-                    $angkatan = $hasil[3];
-                    $alamat = $hasil[4];
-                    $foto = $hasil[5];
-                    $modelnew->nim = $nim;
-                    $modelnew->nama = $nama;
-                    $modelnew->jurusan = $jurusan;
-                    $modelnew->angkatan = $angkatan;
-                    $modelnew->alamat = $alamat;
-                    $modelnew->foto = $foto;
-                    $modelnew->save();
+    public static function UploadCSVBrand($fileName, $folderName, $uploadPath) {
+
+        $file = \yii\web\UploadedFile::getInstanceByName($fileName);
+        $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
+        $upload = $file->saveAs($uploadPath . '/' . $newFileName);
+        if ($upload) {
+            $row = 1;
+            define('CSV_PATH', $uploadPath);
+            $csv_file = CSV_PATH . '/' . $newFileName;
+            $handle = fopen($csv_file, "r");
+            if ($handle) {
+                $row = 1;
+                echo '<pre>';
+                while (($line = fgetcsv($handle, 1000, ",")) != FALSE) {
+                    //print_r($line);
+                    if ($row > 1) {
+                        $newModel = new \common\models\costfit\ImportBrand;
+                        $hasil = explode(",", $line[0]);
+                        //print_r($hasil);
+                        $newModel->brandId = isset($line[0]) ? $line[0] : '';
+                        $newModel->title = isset($line[1]) ? $line[1] : '';
+                        $newModel->save(FALSE);
+                        //exit();
+                    }
+                    $row++;
                 }
-                unlink('uploads/' . $filename);
-                return $this->redirect(['site/index']);
             }
-        } else {
-            return $this->render('upload', ['model' => $model]);
+            fclose($handle);
+        }
+    }
+
+    /*
+     * Upload File csv ของ Product ครั้งละรูป
+     * Create date : 16/1/2017
+     * By Taninut.BM
+     * emial : taninut.bm@cozxy.com , sodapew17@gmial.com
+     */
+
+    public static function UploadCSVProduct($fileName, $folderName, $uploadPath) {
+        $file = \yii\web\UploadedFile::getInstanceByName($fileName);
+        $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
+        $upload = $file->saveAs($uploadPath . '/' . $newFileName);
+        if ($upload) {
+            $row = 1;
+            define('CSV_PATH', $uploadPath);
+            $csv_file = CSV_PATH . '/' . $newFileName;
+            $handle = fopen($csv_file, "r");
+            if ($handle) {
+                $row = 1;
+                while (($line = fgetcsv($handle, 1000, ",")) != FALSE) {
+                    //print_r($line);
+                    if ($row > 1) {
+                        $newModel = new \common\models\costfit\ImportProduct();
+                        $hasil = explode(",", $line[0]);
+                        //print_r($hasil[1]);
+                        /*
+                          brandId,categoryId,isbn,code,title,optionName,shortDescription,description,specification,width,height,depth,weight,price,unit,smallUnit,tags
+                         */
+                        $newModel->brandId = $hasil[0];
+                        $newModel->categoryId = isset($hasil[1]) ? $hasil[1] : '';
+                        $newModel->isbn = isset($hasil[2]) ? $hasil[2] : '';
+                        $newModel->code = isset($hasil[4]) ? $hasil[3] : '';
+                        $newModel->title = isset($hasil[5]) ? $hasil[5] : '';
+                        $newModel->optionName = isset($hasil[6]) ? $hasil[6] : '';
+                        $newModel->shortDescription = isset($hasil[7]) ? $hasil[7] : '';
+                        $newModel->description = isset($hasil[8]) ? $hasil[8] : '';
+                        $newModel->specification = isset($hasil[9]) ? $hasil[9] : '';
+                        $newModel->width = isset($hasil[10]) ? $hasil[10] : '';
+                        $newModel->height = isset($hasil[11]) ? $hasil[11] : '';
+                        $newModel->depth = isset($hasil[12]) ? $hasil[12] : '';
+                        $newModel->weight = isset($hasil[13]) ? $hasil[13] : '';
+                        $newModel->price = isset($hasil[14]) ? $hasil[14] : '';
+                        $newModel->unit = isset($hasil[15]) ? $hasil[16] : '';
+                        $newModel->smallUnit = isset($hasil[16]) ? $hasil[16] : '';
+                        $newModel->tags = isset($hasil[17]) ? $hasil[17] : '';
+                        $newModel->save(FALSE);
+                    }
+                    $row++;
+                }
+            }
+            fclose($handle);
         }
     }
 
