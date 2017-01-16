@@ -32,9 +32,9 @@ return 'import_category';
 public function rules()
 {
 return [
+            [['categoryId', 'createDateTime'], 'required'],
             [['categoryId', 'parentId', 'status'], 'integer'],
             [['description'], 'string'],
-            [['createDateTime'], 'required'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 200],
             [['image'], 'string', 'max' => 255],
