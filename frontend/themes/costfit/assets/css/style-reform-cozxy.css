@@ -562,23 +562,20 @@ a.panel-toggle {
 .checkout .payment-method {
     background: rgba(255,212,36,.9);
 }
-
 .btn-info .badge {
     color: rgba(255,212,36,.9);
     background-color: #000
 }
-
 .panel-toggle:hover {
     color: #000000 !important;
     border-bottom-color: #000000;
 }
-
 .checkout table th, .checkout table .th {
     color: #000000;
 }
-
 .selection {
-
     border: 1px solid rgba(255,212,36,.9);
-
+}
+.btn-info:hover {
+    background: rgba(255,212,36,.9);
 }
