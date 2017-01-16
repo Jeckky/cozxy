@@ -16,8 +16,7 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class CostfitAsset extends AssetBundle
-{
+class CostfitAsset extends AssetBundle {
 
     public $sourcePath = '@app/themes/costfit/assets';
     public $css = [
@@ -25,6 +24,7 @@ class CostfitAsset extends AssetBundle
         'css/styles.css',
         'css/colors/color-scheme6.css',
         'css/style-reform-cozxy.css', //Create By Taninut.B
+        'css/style-interpolate-cosxy', //Create By Taninut.B , Create Date : 16/1/2017
     ];
     public $js = [
         'js/libs/jquery-1.11.1.min.js',
