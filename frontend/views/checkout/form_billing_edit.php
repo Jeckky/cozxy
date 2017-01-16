@@ -8,7 +8,6 @@ use yii\helpers\Url;
 use kartik\depdrop\DepDrop;
 ?>
 <style type="text/css">
-
 </style>
 <?php
 $formName = (isset($type) && $type == 1) ? "formBilling" : "formShipping";
