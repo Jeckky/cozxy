@@ -50,14 +50,30 @@ class ImporterController extends ManagementMasterController {
         $request = Yii::$app->request;
         if ($request->isPost) {
             if (isset($_POST["File"])) {
-                $folderName = "file"; //  file
-                $folderThumbnail = "brand"; //  file
-                $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . '/' . $folderThumbnail;
+                $folderName = "file"; //  folderName
+                $folderThumbnail = "brand"; //  folderName
+                $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . '/' . $folderThumbnail; //Path
                 $newFileName = Upload::UploadCSVBrand('File[image]', $folderName, $uploadPath);
-                return $this->redirect(['/management/importer']);
+                //return $this->redirect(['/management/importer']);
+                if ($newFileName == 'warning') {
+                    //return $this->render('category');
+                    $notify = 'warning';
+                    return $this->render('brand', [
+                        'notify' => $notify
+                    ]);
+                } else if ($newFileName == 'success') {
+                    $notify = 'success';
+                    return $this->render('brand', [
+                        'notify' => $notify
+                    ]);
+                }
             }
         } else {
-            return $this->render('brand');
+            //return $this->render('brand');
+            $notify = '';
+            return $this->render('brand', [
+                'notify' => $notify
+            ]);
         }
     }
 
@@ -66,14 +82,28 @@ class ImporterController extends ManagementMasterController {
         $request = Yii::$app->request;
         if ($request->isPost) {
             if (isset($_POST["File"])) {
-                $folderName = "file"; //  file
-                $folderThumbnail = "category"; //  file
-                $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . '/' . $folderThumbnail;
+                $folderName = "file"; //  folderName
+                $folderThumbnail = "category"; //  folderName
+                $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . '/' . $folderThumbnail; // Path
                 $newFileName = Upload::UploadCSVCategory('File[image]', $folderName, $uploadPath);
-                return $this->redirect(['/management/importer']);
+                if ($newFileName == 'warning') {
+                    //return $this->render('category');
+                    $notify = 'warning';
+                    return $this->render('category', [
+                        'notify' => $notify
+                    ]);
+                } else if ($newFileName == 'success') {
+                    $notify = 'success';
+                    return $this->render('category', [
+                        'notify' => $notify
+                    ]);
+                }
             }
         } else {
-            return $this->render('category');
+            $notify = '';
+            return $this->render('category', [
+                'notify' => $notify
+            ]);
         }
     }
 
@@ -82,14 +112,30 @@ class ImporterController extends ManagementMasterController {
         $request = Yii::$app->request;
         if ($request->isPost) {
             if (isset($_POST["File"])) {
-                $folderName = "file"; //  file
-                $folderThumbnail = "product"; //  file
-                $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . '/' . $folderThumbnail;
+                $folderName = "file"; //  folderName
+                $folderThumbnail = "product"; //  folderName
+                $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . '/' . $folderThumbnail; // Path
                 $newFileName = Upload::UploadCSVProduct('File[image]', $folderName, $uploadPath);
-                return $this->redirect(['/management/importer']);
+                //return $this->redirect(['/management/importer']);
+                if ($newFileName == 'warning') {
+                    //return $this->render('category');
+                    $notify = 'warning';
+                    return $this->render('product', [
+                        'notify' => $notify
+                    ]);
+                } else if ($newFileName == 'success') {
+                    $notify = 'success';
+                    return $this->render('product', [
+                        'notify' => $notify
+                    ]);
+                }
             }
         } else {
-            return $this->render('product');
+            //return $this->render('product');
+            $notify = '';
+            return $this->render('product', [
+                'notify' => $notify
+            ]);
         }
     }
 

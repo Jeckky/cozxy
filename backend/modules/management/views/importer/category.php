@@ -33,6 +33,25 @@ use yii\widgets\ActiveForm;
                         <input type="hidden" name="File[image]" value="">
                         <?= Html::input('file', 'File[image]') ?>
                     </div>
+                    <?php if ($notify == 'warning') { ?>
+                        <div class="col-sm-9">
+                            <div class="note note-warning">
+                                <h4 class="note-title">Warning note title</h4>
+                                Warning note text here.
+                            </div>
+                        </div>
+                        <?php
+                    } else if ($notify == 'success') {
+                        ?> 
+                        <div class="col-sm-9">
+                            <div class="note note-success">
+                                <h4 class="note-title">Success note title</h4>
+                                Success note text here.
+                            </div>
+                        </div>
+                        <?php
+                    }
+                    ?>
                 </div>
 
                 <div class="form-group">

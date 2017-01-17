@@ -126,48 +126,68 @@ class Upload {
      * Upload File csv ของ Category ครั้งละรูป
      * Create date : 16/1/2017
      * By Taninut.BM
-     * emial : taninut.bm@cozxy.com , sodapew17@gmial.com
+     * emial : taninut.b@cozxy.com , sodapew17@gmial.com
      */
 
     public static function UploadCSVCategory($fileName, $folderName, $uploadPath) {
-
         $file = \yii\web\UploadedFile::getInstanceByName($fileName);
         $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
-        $upload = $file->saveAs($uploadPath . '/' . $newFileName);
-        if ($upload) {
-            $row = 1;
-            define('CSV_PATH', $uploadPath);
-            $csv_file = CSV_PATH . '/' . $newFileName;
-            $handle = fopen($csv_file, "r");
-            if ($handle) {
+        //echo '<pre>';
+        /*
+          yii\web\UploadedFile Object
+          (
+          [name] => import product - cozxy - category.csv
+          [tempName] => C:\Users\it\AppData\Local\Temp\php33F9.tmp
+          [type] => application/octet-stream
+          [size] => 1341
+          [error] => 0
+          )
+         */
+        $ext = explode('.', $file->name);
+        //echo current($ext) . "<br>"; //: Run example » แสดงค่าของ ตัวแรก
+        //echo end($ext); //Run example » แสดงค่าของ ตัวสุดท้าย
+        if (end($ext) == 'csv') {
+            $upload = $file->saveAs($uploadPath . '/' . $newFileName);
+            if ($upload) {
                 $row = 1;
-                //echo '<pre>';
-                while (($line = fgetcsv($handle, 1000, ",")) != FALSE) {
-                    //print_r($line);
-                    if ($row > 1) {
-                        $newModel = new \common\models\costfit\ImportCategory;
-                        $hasil = explode(",", $line[0]);
-                        //print_r($hasil[1]);
-                        $getModel = \common\models\costfit\ImportCategory::find()->where('categoryId=' . $hasil[0])->one();
-                        if (isset($getModel)) {
-                            //echo 'Yes';
-                            //$getModel->categoryId = isset($hasil[0]) ? $hasil[0] : '';
-                            $getModel->title = isset($hasil[1]) ? $hasil[1] : '';
-                            $getModel->parentId = isset($hasil[2]) ? $hasil[2] : '';
-                            $getModel->save(FALSE);
-                        } else {
-                            //echo 'No !!';
-                            $newModel->categoryId = isset($hasil[0]) ? $hasil[0] : '';
-                            $newModel->title = isset($hasil[1]) ? $hasil[1] : '';
-                            $newModel->parentId = isset($hasil[2]) ? $hasil[2] : '';
-                            //print_r($newModel);
-                            $newModel->save(FALSE);
+                define('CSV_PATH', $uploadPath);
+                $csv_file = CSV_PATH . '/' . $newFileName;
+                $handle = fopen($csv_file, "r");
+                //print_r($handle);
+                //exit();
+                if ($handle) {
+                    $row = 1;
+                    //echo '<pre>';
+                    while (($line = fgetcsv($handle, 1000, ",")) != FALSE) {
+                        //print_r(fgetcsv($handle, 1000, ","));
+                        if ($row > 1) {
+                            $newModel = new \common\models\costfit\ImportCategory;
+                            $hasil = explode(",", $line[0]);
+                            //print_r($hasil[1]);
+                            $getModel = \common\models\costfit\ImportCategory::find()->where('categoryId=' . $hasil[0])->one();
+                            if (isset($getModel)) {
+                                //echo 'Yes';
+                                //$getModel->categoryId = isset($hasil[0]) ? $hasil[0] : '';
+                                $getModel->title = isset($hasil[1]) ? $hasil[1] : '';
+                                $getModel->parentId = isset($hasil[2]) ? $hasil[2] : '';
+                                $getModel->save(FALSE);
+                            } else {
+                                //echo 'No !!';
+                                $newModel->categoryId = isset($hasil[0]) ? $hasil[0] : '';
+                                $newModel->title = isset($hasil[1]) ? $hasil[1] : '';
+                                $newModel->parentId = isset($hasil[2]) ? $hasil[2] : '';
+                                //print_r($newModel);
+                                $newModel->save(FALSE);
+                            }
                         }
+                        $row++;
                     }
-                    $row++;
                 }
+                fclose($handle);
+                return 'success';
             }
-            fclose($handle);
+        } else {
+            return 'warning';
         }
     }
 
@@ -175,46 +195,51 @@ class Upload {
      * Upload File csv ของ Brand ครั้งละรูป
      * Create date : 16/1/2017
      * By Taninut.BM
-     * emial : taninut.bm@cozxy.com , sodapew17@gmial.com
+     * emial : taninut.b@cozxy.com , sodapew17@gmial.com
      */
 
     public static function UploadCSVBrand($fileName, $folderName, $uploadPath) {
-
         $file = \yii\web\UploadedFile::getInstanceByName($fileName);
         $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
-        $upload = $file->saveAs($uploadPath . '/' . $newFileName);
-        if ($upload) {
-            $row = 1;
-            define('CSV_PATH', $uploadPath);
-            $csv_file = CSV_PATH . '/' . $newFileName;
-            $handle = fopen($csv_file, "r");
-            if ($handle) {
+        $ext = explode('.', $file->name);
+        if (end($ext) == 'csv') {
+            $upload = $file->saveAs($uploadPath . '/' . $newFileName);
+            if ($upload) {
                 $row = 1;
-                echo '<pre>';
-                while (($line = fgetcsv($handle, 1000, ",")) != FALSE) {
-                    //print_r($line);
-                    if ($row > 1) {
-                        $newModel = new \common\models\costfit\ImportBrand;
-                        $hasil = explode(",", $line[0]);
-                        $getModel = \common\models\costfit\ImportBrand::find()->where('brandId=' . $hasil[0])->one();
-                        if (isset($getModel)) {
-                            //echo 'Yes';
-                            //$getModel->categoryId = isset($hasil[0]) ? $hasil[0] : '';
-                            $getModel->brandId = isset($hasil[0]) ? $hasil[0] : '';
-                            $getModel->save(FALSE);
-                        } else {
-                            //echo 'No !!';
-                            //print_r($hasil);
-                            $newModel->brandId = isset($hasil[0]) ? $hasil[0] : '';
-                            $newModel->title = isset($hasil[1]) ? $hasil[1] : '';
-                            $newModel->save(FALSE);
+                define('CSV_PATH', $uploadPath);
+                $csv_file = CSV_PATH . '/' . $newFileName;
+                $handle = fopen($csv_file, "r");
+                if ($handle) {
+                    $row = 1;
+                    //echo '<pre>';
+                    while (($line = fgetcsv($handle, 1000, ",")) != FALSE) {
+                        //print_r($line);
+                        if ($row > 1) {
+                            $newModel = new \common\models\costfit\ImportBrand;
+                            $hasil = explode(",", $line[0]);
+                            $getModel = \common\models\costfit\ImportBrand::find()->where('brandId=' . $hasil[0])->one();
+                            if (isset($getModel)) {
+                                //echo 'Yes';
+                                //$getModel->categoryId = isset($hasil[0]) ? $hasil[0] : '';
+                                $getModel->brandId = isset($hasil[0]) ? $hasil[0] : '';
+                                $getModel->save(FALSE);
+                            } else {
+                                //echo 'No !!';
+                                //print_r($hasil);
+                                $newModel->brandId = isset($hasil[0]) ? $hasil[0] : '';
+                                $newModel->title = isset($hasil[1]) ? $hasil[1] : '';
+                                $newModel->save(FALSE);
+                            }
+                            //exit();
                         }
-                        //exit();
+                        $row++;
                     }
-                    $row++;
                 }
+                fclose($handle);
+                return 'success';
             }
-            fclose($handle);
+        } else {
+            return 'warning';
         }
     }
 
@@ -222,78 +247,84 @@ class Upload {
      * Upload File csv ของ Product ครั้งละรูป
      * Create date : 16/1/2017
      * By Taninut.BM
-     * emial : taninut.bm@cozxy.com , sodapew17@gmial.com
+     * emial : taninut.b@cozxy.com , sodapew17@gmial.com
      */
 
     public static function UploadCSVProduct($fileName, $folderName, $uploadPath) {
         $file = \yii\web\UploadedFile::getInstanceByName($fileName);
         $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
-        $upload = $file->saveAs($uploadPath . '/' . $newFileName);
-        if ($upload) {
-            $row = 1;
-            define('CSV_PATH', $uploadPath);
-            $csv_file = CSV_PATH . '/' . $newFileName;
-            $handle = fopen($csv_file, "r");
-            if ($handle) {
+        $ext = explode('.', $file->name);
+        if (end($ext) == 'csv') {
+            $upload = $file->saveAs($uploadPath . '/' . $newFileName);
+            if ($upload) {
                 $row = 1;
-                while (($line = fgetcsv($handle, 1000, ",")) != FALSE) {
-                    //print_r($line);
-                    if ($row > 1) {
-                        $newModel = new \common\models\costfit\ImportProduct();
-                        $hasil = explode(",", $line[0]);
-                        //print_r($hasil[1]);
-                        /*
-                         * product, brandId,categoryId,isbn,code,title,optionName,shortDescription,description,specification,
-                         * width,height,depth,weight,price,unit,smallUnit,tags
-                         */
+                define('CSV_PATH', $uploadPath);
+                $csv_file = CSV_PATH . '/' . $newFileName;
+                $handle = fopen($csv_file, "r");
+                if ($handle) {
+                    $row = 1;
+                    while (($line = fgetcsv($handle, 1000, ",")) != FALSE) {
+                        //print_r($line);
+                        if ($row > 1) {
+                            $newModel = new \common\models\costfit\ImportProduct();
+                            $hasil = explode(",", $line[0]);
+                            //print_r($hasil[1]);
+                            /*
+                             * product, brandId,categoryId,isbn,code,title,optionName,shortDescription,description,specification,
+                             * width,height,depth,weight,price,unit,smallUnit,tags
+                             */
 
-                        $getModel = \common\models\costfit\ImportProduct::find()->where('productId=' . $hasil[0])->one();
-                        if (isset($getModel)) {
-                            //echo 'Yes';
-                            $getModel->brandId = isset($hasil[1]) ? $hasil[1] : '';
-                            $getModel->categoryId = isset($hasil[2]) ? $hasil[2] : '';
-                            $getModel->isbn = isset($hasil[3]) ? $hasil[3] : '';
-                            $getModel->code = isset($hasil[4]) ? $hasil[4] : '';
-                            $getModel->title = isset($hasil[5]) ? $hasil[5] : '';
-                            $getModel->optionName = isset($hasil[6]) ? $hasil[6] : '';
-                            $getModel->shortDescription = isset($hasil[7]) ? $hasil[7] : '';
-                            $getModel->specification = isset($hasil[9]) ? $hasil[9] : '';
-                            $getModel->width = isset($hasil[10]) ? $hasil[10] : '';
-                            $getModel->height = isset($hasil[11]) ? $hasil[11] : '';
-                            $getModel->depth = isset($hasil[12]) ? $hasil[12] : '';
-                            $getModel->weight = isset($hasil[13]) ? $hasil[13] : '';
-                            $getModel->price = isset($hasil[14]) ? $hasil[14] : '';
-                            $getModel->unit = isset($hasil[15]) ? $hasil[16] : '';
-                            $getModel->smallUnit = isset($hasil[16]) ? $hasil[16] : '';
-                            $getModel->tags = isset($hasil[17]) ? $hasil[17] : '';
-                            $getModel->save(FALSE);
-                        } else {
-                            //echo 'No!!';
-                            $newModel->productId = isset($hasil[0]) ? $hasil[0] : '';
-                            $newModel->brandId = isset($hasil[1]) ? $hasil[1] : '';
-                            $newModel->categoryId = isset($hasil[2]) ? $hasil[2] : '';
-                            $newModel->isbn = isset($hasil[3]) ? $hasil[3] : '';
-                            $newModel->code = isset($hasil[4]) ? $hasil[4] : '';
-                            $newModel->title = isset($hasil[5]) ? $hasil[5] : '';
-                            $newModel->optionName = isset($hasil[6]) ? $hasil[6] : '';
-                            $newModel->shortDescription = isset($hasil[7]) ? $hasil[7] : '';
-                            $newModel->description = isset($hasil[8]) ? $hasil[8] : '';
-                            $newModel->specification = isset($hasil[9]) ? $hasil[9] : '';
-                            $newModel->width = isset($hasil[10]) ? $hasil[10] : '';
-                            $newModel->height = isset($hasil[11]) ? $hasil[11] : '';
-                            $newModel->depth = isset($hasil[12]) ? $hasil[12] : '';
-                            $newModel->weight = isset($hasil[13]) ? $hasil[13] : '';
-                            $newModel->price = isset($hasil[14]) ? $hasil[14] : '';
-                            $newModel->unit = isset($hasil[15]) ? $hasil[16] : '';
-                            $newModel->smallUnit = isset($hasil[16]) ? $hasil[16] : '';
-                            $newModel->tags = isset($hasil[17]) ? $hasil[17] : '';
-                            $newModel->save(FALSE);
+                            $getModel = \common\models\costfit\ImportProduct::find()->where('productId=' . $hasil[0])->one();
+                            if (isset($getModel)) {
+                                //echo 'Yes';
+                                $getModel->brandId = isset($hasil[1]) ? $hasil[1] : '';
+                                $getModel->categoryId = isset($hasil[2]) ? $hasil[2] : '';
+                                $getModel->isbn = isset($hasil[3]) ? $hasil[3] : '';
+                                $getModel->code = isset($hasil[4]) ? $hasil[4] : '';
+                                $getModel->title = isset($hasil[5]) ? $hasil[5] : '';
+                                $getModel->optionName = isset($hasil[6]) ? $hasil[6] : '';
+                                $getModel->shortDescription = isset($hasil[7]) ? $hasil[7] : '';
+                                $getModel->specification = isset($hasil[9]) ? $hasil[9] : '';
+                                $getModel->width = isset($hasil[10]) ? $hasil[10] : '';
+                                $getModel->height = isset($hasil[11]) ? $hasil[11] : '';
+                                $getModel->depth = isset($hasil[12]) ? $hasil[12] : '';
+                                $getModel->weight = isset($hasil[13]) ? $hasil[13] : '';
+                                $getModel->price = isset($hasil[14]) ? $hasil[14] : '';
+                                $getModel->unit = isset($hasil[15]) ? $hasil[16] : '';
+                                $getModel->smallUnit = isset($hasil[16]) ? $hasil[16] : '';
+                                $getModel->tags = isset($hasil[17]) ? $hasil[17] : '';
+                                $getModel->save(FALSE);
+                            } else {
+                                //echo 'No!!';
+                                $newModel->productId = isset($hasil[0]) ? $hasil[0] : '';
+                                $newModel->brandId = isset($hasil[1]) ? $hasil[1] : '';
+                                $newModel->categoryId = isset($hasil[2]) ? $hasil[2] : '';
+                                $newModel->isbn = isset($hasil[3]) ? $hasil[3] : '';
+                                $newModel->code = isset($hasil[4]) ? $hasil[4] : '';
+                                $newModel->title = isset($hasil[5]) ? $hasil[5] : '';
+                                $newModel->optionName = isset($hasil[6]) ? $hasil[6] : '';
+                                $newModel->shortDescription = isset($hasil[7]) ? $hasil[7] : '';
+                                $newModel->description = isset($hasil[8]) ? $hasil[8] : '';
+                                $newModel->specification = isset($hasil[9]) ? $hasil[9] : '';
+                                $newModel->width = isset($hasil[10]) ? $hasil[10] : '';
+                                $newModel->height = isset($hasil[11]) ? $hasil[11] : '';
+                                $newModel->depth = isset($hasil[12]) ? $hasil[12] : '';
+                                $newModel->weight = isset($hasil[13]) ? $hasil[13] : '';
+                                $newModel->price = isset($hasil[14]) ? $hasil[14] : '';
+                                $newModel->unit = isset($hasil[15]) ? $hasil[16] : '';
+                                $newModel->smallUnit = isset($hasil[16]) ? $hasil[16] : '';
+                                $newModel->tags = isset($hasil[17]) ? $hasil[17] : '';
+                                $newModel->save(FALSE);
+                            }
                         }
+                        $row++;
                     }
-                    $row++;
                 }
+                fclose($handle);
+                return 'success';
             }
-            fclose($handle);
+        } else {
+            return 'warning';
         }
     }
 
