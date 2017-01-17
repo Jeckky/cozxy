@@ -4,7 +4,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
-<h1>CSV Importer category to Database</h1>
+<h1>CSV Importer <span class="text-danger">Category</span> to Database</h1>
 
 <div id="content-wrapper">
     <div class="row">

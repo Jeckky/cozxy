@@ -145,7 +145,7 @@ class ImporterController extends ManagementMasterController {
     }
 
     public function actionClearBrand() {
-        $title = 'Clear Error Brand Importer CSV Importer to Database';
+        $title = 'Clear Error <span class="text-danger">Brand</span> Importer CSV Importer to Database';
         $model = \common\models\costfit\ImportBrand::deleteAll();
         //$model->deleteAll();
         return $this->render('clear_error', [
@@ -154,7 +154,7 @@ class ImporterController extends ManagementMasterController {
     }
 
     public function actionClearCategory() {
-        $title = 'Clear Error Category Importer CSV Importer to Database';
+        $title = 'Clear Error <span class="text-danger">Category</span> Importer CSV Importer to Database';
         $model = \common\models\costfit\ImportCategory::deleteAll();
         //$model->deleteAll();
         $notify = 'success';
@@ -164,7 +164,7 @@ class ImporterController extends ManagementMasterController {
     }
 
     public function actionClearProduct() {
-        $title = 'Clear Error Product Importer CSV Importer to Database';
+        $title = 'Clear Error <span class="text-danger">Product</span> Importer CSV Importer to Database';
         $model = \common\models\costfit\ImportProduct::deleteAll();
         //$model->deleteAll();
         $notify = 'success';
