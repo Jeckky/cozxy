@@ -48,9 +48,10 @@ return [
             'rules' => [
                 'search/<title>/<hash>' => 'search/index',
                 //Custom Rule
-                '<controller:\w+>/<hash>' => '<controller>/index',
+//                '<controller:\w+>/<hash>' => '<controller>/index',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<hash>' => '<controller>/<action>',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<hash>/<title>' => '<controller>/<action>',
+                'products/<hash>' => 'products/index',
             //Custom Rule
 //                'profile/purchase-order/<hash>' => 'profile/purchase-order',
 //                'profile/transfer-confirm/<hash>' => 'profile/transfer-confirm',
@@ -59,7 +60,6 @@ return [
 //                'payment/print-pay-in/<hash>/<title>' => 'payment/print-pay-in',
 //                'profile/shipping-address/<hash>' => 'profile/shipping-address',
 //                'profile/billings-address/<hash>' => 'profile/billings-address',
-//                'products/<hash>' => 'products/index',
 //                'checkout/confirm-checkout/<hash>' => 'checkout/confirm-checkout',
 //                'checkout/edit-checkout/<hash>' => 'checkout/edit-checkout',
 //                'checkout/confirmation/<hash>' => 'checkout/confirmation',
