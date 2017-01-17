@@ -222,9 +222,10 @@ class Upload {
                         $hasil = explode(",", $line[0]);
                         //print_r($hasil[1]);
                         /*
-                          product, brandId,categoryId,isbn,code,title,optionName,shortDescription,description,specification,width,height,depth,weight,price,unit,smallUnit,tags
+                         * product, brandId,categoryId,isbn,code,title,optionName,shortDescription,description,specification,
+                         * width,height,depth,weight,price,unit,smallUnit,tags
                          */
-                        $newModel->brandId = isset($hasil[0]) ? $hasil[0] : '';
+                        $newModel->productId = isset($hasil[0]) ? $hasil[0] : '';
                         $newModel->brandId = isset($hasil[1]) ? $hasil[1] : '';
                         $newModel->categoryId = isset($hasil[2]) ? $hasil[2] : '';
                         $newModel->isbn = isset($hasil[3]) ? $hasil[3] : '';
