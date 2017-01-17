@@ -62,7 +62,7 @@ class BrandController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionCreate() {
-        //echo Yii::$app->user->identity->userId;
+//echo Yii::$app->user->identity->userId;
         $model = new Brand();
         $folderName = "Brand"; //  Size 553 x 484
         $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName;
@@ -75,10 +75,15 @@ class BrandController extends SuppliersMasterController {
              * path : common/helpers/Upload.php
              * use : Upload::uploadBasic($fileName, $folderName, $uploadPath, $width, $height)
              */
-            $newFileName = Upload::UploadBasic('Brand[image]', $folderName, $uploadPath, '164', '120');
+            //echo 'xxx : ' . isset($_POST["Brand"]['image']) ? 'Yes' : 'No';
+            $imageObj = \yii\web\UploadedFile::getInstanceByName("Brand[image]");
+            if (isset($imageObj) && !empty($imageObj)) {
+                $newFileName = Upload::UploadBasic('Brand[image]', $folderName, $uploadPath, '164', '120');
+                $model->image = '/' . 'images/' . $folderName . "/" . $newFileName;
+            } else {
+                echo 'No';
+            }
 
-            $model->attributes = $_POST["Brand"];
-            $model->image = '/' . 'images/' . $folderName . "/" . $newFileName;
             $model->userId = Yii::$app->user->identity->userId;
             $model->updateDateTime = new \yii\db\Expression('NOW()');
 
@@ -111,16 +116,21 @@ class BrandController extends SuppliersMasterController {
              * path : common/helpers/Upload.php
              * use : Upload::uploadBasic($fileName, $folderName, $uploadPath, $width, $height)
              */
-            $newFileName = Upload::UploadBasic('Brand[image]', $folderName, $uploadPath, '164', '120');
-
             $model->attributes = $_POST["Brand"];
-            $model->image = '/' . 'images/' . $folderName . "/" . $newFileName;
+            $imageObj = \yii\web\UploadedFile::getInstanceByName("Brand[image]");
+            if (isset($imageObj) && !empty($imageObj)) {
+                $newFileName = Upload::UploadBasic('Brand[image]', $folderName, $uploadPath, '164', '120');
+                $model->image = '/' . 'images/' . $folderName . "/" . $newFileName;
+            } else {
+                echo 'No';
+            }
+
             $model->userId = Yii::$app->user->identity->userId;
             $model->updateDateTime = new \yii\db\Expression('NOW()');
 
             if ($model->save()) {
                 if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
-                    //Do Some Thing
+//Do Some Thing
                 }
                 return $this->redirect(['index']);
             }
