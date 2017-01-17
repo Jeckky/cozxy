@@ -3,6 +3,7 @@
 //$this->title = 'My Cost Fit';
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+//throw new \yii\base\Exception($baseUrl);
 ?>
 <style type="text/css">
     .cat-tiles h2
@@ -45,7 +46,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <?php endif; ?>
                         <!--<a class="btn btn-black" href="#">Browse all</a>-->
                     </div>
-                    <img style="right: 200px;" class="ms-layer img-block" src="<?= Yii::$app->homeUrl . $banner->image ?>" alt="1" data-effect="back(500)" data-duration="800" data-delay="350" data-ease="easeOutQuad"/>
+                    <img style="right: 200px;" class="ms-layer img-block" src="<?= $baseUrl . $banner->image ?>" alt="1" data-effect="back(500)" data-duration="800" data-delay="350" data-ease="easeOutQuad"/>
                 </div>
             </div>
             <?php
@@ -69,7 +70,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     'id' => 'list-wrapper',
                 ],
                 'itemView' => function ($model, $key, $index, $widget) {
-                    return $this->render('_hot_product', ['model' => $model->product]);
+                    return $this->render('_hot_product', ['model' => $model]);
                 },
                 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                 //            'layout'=>"{summary}{pager}{items}"
@@ -169,7 +170,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <li><a href="#onsale" data-toggle="tab">Items on sale</a></li>
                 </ul>
                 <div class="tab-content">
-
                     <div class="tab-pane fade in active" id="bestsel">
                         <div class="container">
                             <div class="row">
@@ -179,11 +179,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     foreach ($product as $products) {
                                         ?>
                                         <div id="photos-bestseller-items-padding">
-                                            <a class="media-link" href="<?php echo Yii::$app->homeUrl; ?>products/<?= $products->encodeParams(['productId' => $products->productId]) ?>" id="media-link-bestseller">
+                                            <a class="media-link" href="<?php echo Yii::$app->homeUrl; ?>products/<?= $products->encodeParams(['productId' => $products->productId, 'productSupplierId' => $products->productSuppId]) ?>" id="media-link-bestseller">
                                                 <div class="badges" style="margin-top:20px;position: absolute;left: 0px">
-                                                    <?php if (common\models\costfit\Product::isSmartItem($products->productId)): ?>
-                                                        <span class="sale" style="background-color: #d2d042 !important;color:white;padding: 5px 10px 5px 10px;">SMART</span>
-                                                    <?php endif; ?>
+                                                    <?php //if (common\models\costfit\Product::isSmartItem($products->productId)): ?>
+                                                        <!--<span class="sale" style="background-color: #d2d042 !important;color:white;padding: 5px 10px 5px 10px;">SMART</span>-->
+                                                    <?php // endif; ?>
                                                 </div>
                                                 <div class="overlay">
                                                     <div class="descrx desc-bestseller">
@@ -192,11 +192,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <?php if (isset($products->productImages[0]->imageThumbnail1) && !empty($products->productImages[0]->imageThumbnail1)): ?>
+                                                <?php
+                                                //throw new \yii\base\Exception($products->imageSupp[0]->imageThumbnail1);
+                                                if (isset($products->imageSupp[0]->imageThumbnail1) && !empty($products->imageSupp[0]->imageThumbnail1)):
+                                                    // throw new \yii\base\Exception($products->imageSupp[0]->imageThumbnail1);
+                                                    ?>
                                                     <?php
-                                                    $filename = $products->productImages[0]->imageThumbnail1;
+                                                    $filename = $products->imageSupp[0]->imageThumbnail1;
                                                     if (file_exists($filename)) {
-                                                        echo "<img src=\" " . Yii::$app->homeUrl . $products->productImages[0]->imageThumbnail1 . "  \" alt=\"1\"/>";
+                                                        echo "<img src=\" " . Yii::$app->homeUrl . $products->imageSupp[0]->imageThumbnail1 . "  \" alt=\"1\"/>";
                                                     } else {
                                                         echo "<img src=\"" . $baseUrl . "/images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\"/>";
                                                     }
@@ -224,11 +228,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     foreach ($product2 as $item) {
                                         ?>
                                         <div id="photos-bestseller-items-padding">
-                                            <a class="media-link" href="<?php echo Yii::$app->homeUrl; ?>products/<?= $item->encodeParams(['productId' => $item->productId]) ?>" id="media-link-bestseller">
+                                            <a class="media-link" href="<?php echo Yii::$app->homeUrl; ?>products/<?= $item->encodeParams(['productId' => $item->productId, 'productSupplierId' => $item->productSuppId]) ?>" id="media-link-bestseller">
                                                 <div class="badges" style="margin-top:20px;position: absolute;left: 0px">
-                                                    <?php if (common\models\costfit\Product::isSmartItem($products->productId)): ?>
-                                                        <span class="sale" style="background-color: #d2d042 !important;color:white;padding: 5px 10px 5px 10px;">SMART</span>
-                                                    <?php endif; ?>
+                                                    <?php //if (common\models\costfit\Product::isSmartItem($products->productId)): ?>
+                                                        <!--<span class="sale" style="background-color: #d2d042 !important;color:white;padding: 5px 10px 5px 10px;">SMART</span>-->
+                                                    <?php // endif; ?>
                                                 </div>
                                                 <div class="overlay">
                                                     <div class="descrx desc-bestseller">
@@ -237,11 +241,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <?php if (isset($item->productImages[0]->imageThumbnail1) && !empty($item->productImages[0]->imageThumbnail1)): ?>
+                                                <?php if (isset($item->imageSupp[0]->imageThumbnail1) && !empty($item->imageSupp[0]->imageThumbnail1)): ?>
                                                     <?php
-                                                    $filename = $item->productImages[0]->imageThumbnail1;
+                                                    $filename = $item->imageSupp[0]->imageThumbnail1;
                                                     if (file_exists($filename)) {
-                                                        echo "<img src=\" " . Yii::$app->homeUrl . $item->productImages[0]->imageThumbnail1 . "  \" alt=\"1\" class=\"img-responsive\"/>";
+                                                        echo "<img src=\" " . Yii::$app->homeUrl . $item->imageSupp[0]->imageThumbnail1 . "  \" alt=\"1\" class=\"img-responsive\"/>";
                                                     } else {
                                                         echo "<img src=\"" . $baseUrl . "/images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" class=\"img-responsive\"/>";
                                                     }

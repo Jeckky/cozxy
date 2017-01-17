@@ -107,8 +107,16 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         return $this->hasOne(ProductImageSuppliers::className(), ['productSuppId' => 'productSuppId']);
     }
 
+    public function getImageSupp() {
+        return $this->hasMany(ProductImageSuppliers::className(), ['productSuppId' => 'productSuppId']);
+    }
+
     public function getCategory() {
         return $this->hasOne(Category::className(), ['categoryId' => 'categoryId']);
+    }
+
+    public function getProductOnePrice() {
+        return $this->hasOne(ProductPriceSuppliers::className(), ['productSuppId' => 'productSuppId']);
     }
 
     static public function getUser($userId) {
@@ -177,6 +185,14 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
 
     public function getUnits() {
         return $this->hasOne(Unit::className(), ['unitId' => 'unit']);
+    }
+
+    public static function bestSellers() {
+        return ProductSuppliers::find()->where("approve='approve' and result>0")->orderBy("rand()")->limit(6)->all();
+    }
+
+    public static function itemOnSales() {
+        return ProductSuppliers::find()->where("approve='approve' and result>0")->orderBy("rand()")->limit(6)->all();
     }
 
 }

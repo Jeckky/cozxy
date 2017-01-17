@@ -31,12 +31,12 @@ class SiteController extends MasterController {
                 'class' => AccessControl::className(),
                 'only' => ['logout', 'signup'],
                 'rules' => [
-                    [
+                        [
                         'actions' => ['signup'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
-                    [
+                        [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -86,8 +86,10 @@ class SiteController extends MasterController {
         $bottomContent = Content::find()->where("contentGroupId='" . $bottomIndexGroup->contentGroupId . "'")->all();
         $lastIndexGroup = ContentGroup::find()->where("lower(title)='lastIndex'")->one();
         $lastIndexContent = Content::find()->where("contentGroupId='" . $lastIndexGroup->contentGroupId . "' order by contentId DESC limit 0,1")->one();
-        $product = \common\models\costfit\search\Product::bestSellers();
-        $product2 = \common\models\costfit\search\Product::itemOnSales();
+        //$product = \common\models\costfit\search\Product::bestSellers();
+        $product = \common\models\costfit\ProductSuppliers::bestSellers();
+        //$product2 = \common\models\costfit\search\Product::itemOnSales();
+        $product2 = \common\models\costfit\ProductSuppliers::itemOnSales();
         $hotProducts = \common\models\costfit\search\Product::hotProducts();
         $saveCat = Category::findAllSaveCategory();
         $popularCat = Category::findAllPopularCategory();

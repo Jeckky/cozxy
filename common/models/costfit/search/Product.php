@@ -17,9 +17,9 @@ class Product extends ProductModel {
      */
     public function rules() {
         return [
-            [['productId', 'userId', 'productGroupId', 'categoryId', 'status'], 'integer'],
-            [['code', 'title', 'description', 'createDateTime', 'updateDateTime'], 'safe'],
-            [['width', 'height', 'depth', 'weight'], 'number'],
+                [['productId', 'userId', 'productGroupId', 'categoryId', 'status'], 'integer'],
+                [['code', 'title', 'description', 'createDateTime', 'updateDateTime'], 'safe'],
+                [['width', 'height', 'depth', 'weight'], 'number'],
         ];
     }
 
@@ -79,6 +79,7 @@ class Product extends ProductModel {
 
     public static function bestSellers() {
         return \common\models\costfit\search\Product::find()->where("RAND()")->limit(6)->all();
+        //return \common\models\costfit\ProductSuppliers::find()->where("RAND()")->limit(6)->all();
     }
 
     public static function itemOnSales() {
