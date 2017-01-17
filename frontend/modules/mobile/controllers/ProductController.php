@@ -20,12 +20,14 @@ class ProductController extends \common\controllers\MasterController
         }
         $params = ModelMaster::decodeParams($hash);
 
-//        $params['categoryId'] = $_GET["categoryId"];
+        $params['categoryId'] = $_GET["categoryId"];
 
-        $ctps = CategoryToProduct::find()
-        ->where(['category_to_product.categoryId' => $params['categoryId'], "product_suppliers.productId = (SELECT productId FROM product_suppliers WHERE product_suppliers.approve='approve' and pps.status=1 and product_suppliers.quantity>0 ORDER BY price DESC limit 1)"])
-        ->joinWith(['product_suppliers'])
-        ->orderBy('product.titled')
+        $ctps = CategoryToProduct::find()->select("* ,ps.productSuppId as productSupplierId")
+        ->join("LEFT JOIN", 'product p', "category_to_product.productId = p.productId")
+        ->join("LEFT JOIN", 'product_suppliers ps', "ps.productId = p.productId")
+        ->where(['category_to_product.categoryId' => $params['categoryId']])
+        ->andWhere("ps.productId in (SELECT productId FROM product_suppliers WHERE product_suppliers.approve='approve' and product_suppliers.status=1 and product_suppliers.quantity>0 ORDER BY price DESC)")
+        ->orderBy('p.title')
         ->all();
 
 
@@ -33,33 +35,38 @@ class ProductController extends \common\controllers\MasterController
 
         $i = 0;
         foreach ($ctps as $ctp) {
-            if (!isset($ctp->product))
+
+
+            $pso = \common\models\costfit\ProductSuppliers::find()->where("productId = $ctp->productId AND productSuppId = $ctp->productSupplierId")->one();
+//            throw new \yii\base\Exception(print_r($ps->attributes, true));
+            if (!isset($pso))
                 continue;
 
-            $ps[$i]['title'] = $ctp->product->title;
-            $ps[$i]['isbn'] = $ctp->product->isbn;
-            $ps[$i]['code'] = $ctp->product->code;
-            $ps[$i]['shortDescription'] = $ctp->product->shortDescription;
-            $ps[$i]['description'] = $ctp->product->description;
-            $ps[$i]['specification'] = $ctp->product->specification;
-            $ps[$i]['width'] = $ctp->product->width;
-            $ps[$i]['height'] = $ctp->product->height;
-            $ps[$i]['depth'] = $ctp->product->depth;
-            $ps[$i]['weight'] = $ctp->product->weight;
-            $ps[$i]['price'] = $ctp->product->price;
-            $ps[$i]['brand'] = $ctp->product->brand->title;
+            $ps[$i]['title'] = $pso->title;
+            $ps[$i]['isbn'] = $pso->isbn;
+            $ps[$i]['code'] = $pso->code;
+            $ps[$i]['shortDescription'] = $pso->shortDescription;
+            $ps[$i]['description'] = $pso->description;
+            $ps[$i]['specification'] = $pso->specification;
+            $ps[$i]['width'] = $pso->width;
+            $ps[$i]['height'] = $pso->height;
+            $ps[$i]['depth'] = $pso->depth;
+            $ps[$i]['weight'] = $pso->weight;
+            $ps[$i]['price'] = $pso->price;
+            $ps[$i]['brand'] = isset($pso->brand) ? $pso->brand->title : NULL;
 
             $hash = [
-                'categoryId' => $ctp->categoryId,
-                'productId' => $ctp->productId,
-                'brandId' => $ctp->product->brandId,
+                'categoryId' => $pso->categoryId,
+                'productId' => $pso->productId,
+                'brandId' => $pso->brandId,
             ];
 
             $ps[$i]['hash'] = ModelMaster::encodeParams($hash);
 
             //product images
             $j = 0;
-            foreach ($ctp->product->productImages as $pi) {
+            $pis = \common\models\costfit\ProductImageSuppliers::find()->where("productSuppId = $ctp->productSupplierId")->all();
+            foreach ($pis as $pi) {
                 $ps[$i]['images'][$j] = [
                     'url' => $pi->image,
                     'urlTn1' => $pi->imageThumbnail1,

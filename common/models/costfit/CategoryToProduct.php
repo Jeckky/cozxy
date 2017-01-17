@@ -43,6 +43,7 @@ class CategoryToProduct extends \common\models\costfit\master\CategoryToProductM
         return array_merge(parent::attributes(), [
             'minPrice',
             'maxPrice',
+            'productSupplierId'
         ]);
     }
 
