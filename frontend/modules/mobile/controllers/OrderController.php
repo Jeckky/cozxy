@@ -115,6 +115,31 @@ class OrderController extends Controller
         print_r(\yii\helpers\Json::encode($res));
     }
 
+    public function actionDeleteCartItem($id)
+    {
+        //Receive Get Parameter
+        //$_GET[id] = Order Item Id
+        //Return Array of error
+        $res = [];
+        $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId = " . $id)->one();
+        $qnty = intval($orderItem->quantity);
+        //throw new \yii\base\Exception($qnty);
+        $orderId = $orderItem->orderId;
+        if (\common\models\costfit\OrderItem::deleteAll("orderItemId = $id") > 0) {
+            $res["error"] = NULL;
+            $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
+            $order->save(); // Save For Cal new total
+            $cartArray = \common\models\costfit\Order::findCartArray();
+            $res["cart"] = $cartArray;
+            $res["productSuppId"] = $orderItem->productSuppId;
+            $res["deleteQnty"] = $qnty;
+        } else {
+            $res["error"] = "ไม่สามารถลบสินค้าออกจากตระกร้าได้";
+        }
+
+        print_r(\yii\helpers\Json::encode($res));
+    }
+
     public function getToken()
     {
         $cookies = Yii::$app->request->cookies;
@@ -175,6 +200,24 @@ class OrderController extends Controller
             }
         } else {
             $res["error"] = "Exits product in Wishlist";
+        }
+        print_r(\yii\helpers\Json::encode($res));
+    }
+
+    public function actionDeleteWishlist()
+    {
+        //Receive Get Parameter
+        //$_GET[productId] = productId
+        //Return Array of error
+        $res = [];
+        $ws = \common\models\costfit\Wishlist::find()->where("productId =" . $_GET['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
+        if (isset($ws)) {
+            \common\models\costfit\Wishlist::deleteAll("productId =" . $_GET['productId'] . " AND userId = " . \Yii::$app->user->id);
+            $length = count(\common\models\costfit\Wishlist::find()->where("userId = " . \Yii::$app->user->id)->all());
+            $res["error"] = NULL;
+            $res["length"] = $length;
+        } else {
+            $res["error"] = "ไม่สามารถลบรายการได้";
         }
         print_r(\yii\helpers\Json::encode($res));
     }
