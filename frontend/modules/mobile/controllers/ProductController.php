@@ -99,42 +99,51 @@ class ProductController extends \common\controllers\MasterController
         $params["isbn"] = $_GET["isbn"];
         if (isset($params["productId"])) {
             $productId = $params["productId"];
-            $p = \common\models\costfit\ProductSuppliers::find()->where("productId = $productId AND approve='approve' and status=1 and quantity>0 ORDER BY price DESC")->one();
+            $p = \common\models\costfit\ProductSuppliers::find()
+            ->join("LEFT JOIN", 'product_price_suppliers pps', "pps.productSuppId = product_suppliers.productSuppId")
+            ->where("product_suppliers.isbn = '$isbn' AND product_suppliers.approve='approve' and product_suppliers.status=1 AND product_suppliers.quantity>0")->orderBy("pps.price DESC")->one();
         } else {
-            $res["error"] = "Not Found From ProductId";
+            $res["error"] = "Not Use ProductId";
         }
 
         if (isset($params["isbn"])) {
             $isbn = $params["isbn"];
-            $p = \common\models\costfit\ProductSuppliers::find()->where("isbn = '$isbn' AND approve='approve' and status=1 quantity>0 ORDER BY price DESC")->one();
+            $p = \common\models\costfit\ProductSuppliers::find()
+            ->join("LEFT JOIN", 'product_price_suppliers pps', "pps.productSuppId = product_suppliers.productSuppId")
+            ->where("product_suppliers.isbn = '$isbn' AND product_suppliers.approve='approve' and product_suppliers.status=1 AND product_suppliers.quantity>0")->orderBy("pps.price DESC")->one();
         } else {
-            $res["error"] = "Not Found From isbn";
+            $res["error"] = "Not Use isbn";
         }
 
 
-        $res['title'] = $p->title;
-        $res['isbn'] = $p->isbn;
-        $res['code'] = $p->code;
-        $res['shortDescription'] = $p->shortDescription;
-        $res['description'] = $p->description;
-        $res['specification'] = $p->specification;
-        $res['width'] = $p->width;
-        $res['height'] = $p->height;
-        $res['depth'] = $p->depth;
-        $res['weight'] = $p->weight;
-        $res['price'] = $p->price;
-        $res['brand'] = isset($p->brand) ? $p->brand->title : NULL;
+        if (isset($p)) {
+
+            $res['title'] = $p->title;
+            $res['isbn'] = $p->isbn;
+            $res['code'] = $p->code;
+            $res['shortDescription'] = $p->shortDescription;
+            $res['description'] = $p->description;
+            $res['specification'] = $p->specification;
+            $res['width'] = $p->width;
+            $res['height'] = $p->height;
+            $res['depth'] = $p->depth;
+            $res['weight'] = $p->weight;
+            $res['price'] = $p->price;
+            $res['brand'] = isset($p->brand) ? $p->brand->title : NULL;
 
 
-        $j = 0;
-        $pis = \common\models\costfit\ProductImageSuppliers::find()->where("productSuppId = $ctp->productSupplierId")->all();
-        foreach ($pis as $pi) {
-            $res['images'][$j] = [
-                'url' => $pi->image,
-                'urlTn1' => $pi->imageThumbnail1,
-                'urlTn2' => $pi->imageThumbnail2,
-            ];
-            $j++;
+            $j = 0;
+            $pis = \common\models\costfit\ProductImageSuppliers::find()->where("productSuppId = $p->productSuppId")->all();
+            foreach ($pis as $pi) {
+                $res['images'][$j] = [
+                    'url' => $pi->image,
+                    'urlTn1' => $pi->imageThumbnail1,
+                    'urlTn2' => $pi->imageThumbnail2,
+                ];
+                $j++;
+            }
+        } else {
+            $res["error"] = "Not Found Product";
         }
         print_r(Json::encode($res));
     }
