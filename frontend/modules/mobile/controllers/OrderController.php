@@ -156,4 +156,27 @@ class OrderController extends Controller
         return $text;
     }
 
+    public function actionAddWishlist()
+    {
+        //Receive Get Parameter
+        //$_GET[productId] = productId
+        //Return Array of error
+        $res = [];
+        $ws = \common\models\costfit\Wishlist::find()->where("productId =" . $_GET['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
+        if (!isset($ws)) {
+            $ws = new \common\models\costfit\Wishlist();
+            $ws->productId = $_GET['productId'];
+            $ws->userId = \Yii::$app->user->id;
+            $ws->createDateTime = new \yii\db\Expression("NOW()");
+            if ($ws->save()) {
+                $res["error"] = NULL;
+            } else {
+                $res["error"] = $ws->errors;
+            }
+        } else {
+            $res["error"] = "Exits product in Wishlist";
+        }
+        print_r(\yii\helpers\Json::encode($res));
+    }
+
 }
