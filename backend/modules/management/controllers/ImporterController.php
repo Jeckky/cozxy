@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\helpers\Upload;
+use yii\db\ActiveQuery;
 
 class ImporterController extends ManagementMasterController {
 
@@ -137,6 +138,39 @@ class ImporterController extends ManagementMasterController {
                 'notify' => $notify
             ]);
         }
+    }
+
+    public function actionClear() {
+        return $this->render('clear');
+    }
+
+    public function actionClearBrand() {
+        $title = 'Clear Error Brand Importer CSV Importer to Database';
+        $model = \common\models\costfit\ImportBrand::deleteAll();
+        //$model->deleteAll();
+        return $this->render('clear_error', [
+            'title' => $title
+        ]);
+    }
+
+    public function actionClearCategory() {
+        $title = 'Clear Error Category Importer CSV Importer to Database';
+        $model = \common\models\costfit\ImportCategory::deleteAll();
+        //$model->deleteAll();
+        $notify = 'success';
+        return $this->render('clear_error', [
+            'title' => $title, 'notify' => $notify
+        ]);
+    }
+
+    public function actionClearProduct() {
+        $title = 'Clear Error Product Importer CSV Importer to Database';
+        $model = \common\models\costfit\ImportProduct::deleteAll();
+        //$model->deleteAll();
+        $notify = 'success';
+        return $this->render('clear_error', [
+            'title' => $title, 'notify' => $notify
+        ]);
     }
 
 }
