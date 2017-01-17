@@ -13,7 +13,7 @@ use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 
 /**
- * Suppliers 15/12/2016 By Taninut.Bm
+ * Upload 15/12/2016 By Taninut.Bm
  */
 class Upload {
 
@@ -95,23 +95,23 @@ class Upload {
             $thumbFile3 = $uploadPath3 . '/' . $newFileName; // Size 137 x 130
 
             $saveThumb0 = Image::thumbnail($originalFile, 553, 484)->save($thumbFile0, ['quality' => 80]);
-//$saveThumb1 = Image::thumbnail($originalFile, 553, 484)->save($thumbFile1, ['quality' => 80]); // thumbnail file
+            //$saveThumb1 = Image::thumbnail($originalFile, 553, 484)->save($thumbFile1, ['quality' => 80]); // thumbnail file
             $saveThumb2 = Image::thumbnail($originalFile, 356, 390)->save($thumbFile2, ['quality' => 80]); // thumbnail file
             $saveThumb3 = Image::thumbnail($originalFile, 137, 130)->save($thumbFile3, ['quality' => 80]); // thumbnail file
-//mage::getImagine()->open($originalFile)->thumbnail(new Box(553, 484))->save($thumbFile1, ['quality' => 90]);
+            //mage::getImagine()->open($originalFile)->thumbnail(new Box(553, 484))->save($thumbFile1, ['quality' => 90]);
 
             $model->image = 'images/' . $folderName . '/' . $newFileName; // Size 553 x 484
             $model->imageThumbnail1 = 'images/' . $folderName . '/' . $folderThumbnail1 . '/' . $newFileName; // Size 356 x 390
             $model->imageThumbnail2 = 'images/' . $folderName . '/' . $folderThumbnail2 . '/' . $newFileName; // Size 137 x 130
             $model->productSuppId = Yii::$app->request->get('id');
-//$model->original_name = $file->name;
+            //$model->original_name = $file->name;
             $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save(FALSE)) {
                 echo \yii\helpers\Json::encode($file);
             } else {
                 echo \yii\helpers\Json::encode($model->getErrors());
             }
-//}
+            //}
         } else {
             /* return $this->render('upload', [
               'model' => $model,

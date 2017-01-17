@@ -106,6 +106,7 @@ class ProductSuppliersController extends SuppliersMasterController {
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $model->approve = Yii::$app->request->post('approve');
             $model->productId = Yii::$app->request->post('productIds');
+            $model->result = $_POST['ProductSuppliers']['quantity'];
             if ($model->save(FALSE)) {
 
             }
@@ -120,7 +121,7 @@ class ProductSuppliersController extends SuppliersMasterController {
                 $modelSys->productSuppId = $model->productSuppId;
                 if ($modelSys->save(FALSE)) {
                     //throw new \yii\base\Exception(1);
-                    $productId = Yii::$app->db->lastInsertID;
+                    $productId = Yii::$app->db->lastInsertID; // idของProduct : ProductId
                     \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $productId); //เพื่อให้รู้ว่าอยู่ภายใต้ Category ไหน
                     $model->productId = $productId;
                     $model->save(FALSE);
@@ -153,12 +154,14 @@ class ProductSuppliersController extends SuppliersMasterController {
         //print_r($model->attributes['productId']);
 
         if (isset($_POST["ProductSuppliers"])) {
+            $model1 = ProductSuppliers::find()->where('productSuppId=' . $id)->one();
             $model->attributes = $_POST["ProductSuppliers"];
             $model->userId = Yii::$app->user->identity->userId;
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $model->approve = Yii::$app->request->post('approve');
             $model->productId = (Yii::$app->request->post('productIds') != '') ? Yii::$app->request->post('productIds') : $model->attributes['productId']; //
-
+            $model->quantity = $model1->quantity - $_POST['ProductSuppliers']['quantity'];
+            $model->result = $model1->result - $_POST['ProductSuppliers']['quantity'];
             if ($model->save()) {
                 \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $model->productId);
                 return $this->redirect(['index']);

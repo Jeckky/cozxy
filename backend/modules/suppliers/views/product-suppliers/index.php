@@ -72,10 +72,26 @@ if (Yii::$app->user->identity->type != 4) {
                     // 'weight',
                     'quantity',
                     [
+                        'attribute' => 'คงเหลือ',
+                        'format' => 'html',
+                        'value' => function($model) {
+                            return Html::a($model->result . ' ชิ้น(เพิ่ม)', Yii::$app->homeUrl . "suppliers/product-total-suppliers/create?productSuppId=" . $model->productSuppId . '&total=addup', [
+                                'title' => Yii::t('app', 'เพิ่มจำนวนสินค้า'), 'class' => 'text-center']);
+                        }
+                    ],
+                    [
                         'attribute' => 'ราคาล่าสุด',
                         'format' => 'html',
                         'value' => function($model) {
                             return $model->priceSuppliers;
+                        }
+                    ],
+                    [
+                        'attribute' => 'ราคา',
+                        'format' => 'html',
+                        'value' => function($model) {
+                            return Html::a(' เพิ่มราคา', Yii::$app->homeUrl . "suppliers/product-price-suppliers?productSuppId=" . $model->productSuppId, [
+                                'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
                         }
                     ],
                     //'approve',
@@ -106,15 +122,7 @@ if (Yii::$app->user->identity->type != 4) {
                         'attribute' => 'image',
                         'format' => 'html',
                         'value' => function($model) {
-                            return Html::a('<i class="fa fa-picture-o"></i> เพิ่มรูปภาพ', Yii::$app->homeUrl . "suppliers/product-suppliers/image-form?productSuppId=" . $model->productSuppId, [
-                                'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
-                        }
-                    ],
-                    [
-                        'attribute' => 'ราคา',
-                        'format' => 'html',
-                        'value' => function($model) {
-                            return Html::a('<i class="fa fa-btc"></i> เพิ่มราคาขาย', Yii::$app->homeUrl . "suppliers/product-price-suppliers?productSuppId=" . $model->productSuppId, [
+                            return Html::a('<i class="fa fa-picture-o"></i> รูปภาพ', Yii::$app->homeUrl . "suppliers/product-suppliers/image-form?productSuppId=" . $model->productSuppId, [
                                 'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
                         }
                     ],
