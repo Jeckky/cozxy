@@ -33,11 +33,11 @@ use yii\widgets\ActiveForm;
                         <input type="hidden" name="File[image]" value="">
                         <?= Html::input('file', 'File[image]') ?>
                     </div>
-                    <?php if ($notify == 'warning') { ?> 
+                    <?php if ($notify == 'warning') { ?>
                         <div class="col-sm-9">
                             <div class="note note-warning">
-                                <h4 class="note-title">Warning note title</h4>
-                                Warning note text here.
+                                <h4 class="note-title">Warning note file .csv</h4>
+                                Warning note file .csv here.
                             </div>
                         </div>
                         <?php
@@ -45,8 +45,8 @@ use yii\widgets\ActiveForm;
                         ?>
                         <div class="col-sm-9">
                             <div class="note note-success">
-                                <h4 class="note-title">Success note title</h4>
-                                Success note text here.
+                                <h4 class="note-title">Success note file .csv</h4>
+                                Success note file .csv here.
                             </div>
                         </div>
                         <?php
