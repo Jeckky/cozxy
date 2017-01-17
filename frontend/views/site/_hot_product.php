@@ -14,17 +14,17 @@ if (count($model->product) > 0) {
                     <!--<br><span class="sale" style="background-color: #d2d042 !important;">SMART</span>-->
                 <?php // endif;  ?>
             </div>
-            <div class="price-label" ><?php echo $model->price// number_format($model->calProductPrice($model->productId, 1, 0, 1), 2)    ?> ฿</div>
+            <div class="price-label" ><?php echo $model->price// number_format($model->calProductPrice($model->productId, 1, 0, 1), 2)                 ?> ฿</div>
 
             <img src="<?= (isset($model->images[0])) ? $baseUrl . $model->images[0]->image : Yii::$app->homeUrl . "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1"/>
             <span class="tile-overlay"></span>
 
             <div class="footer" id="products-popular-footer" style="max-height: 320px;min-height: 80px;">
-                <a href="<?php echo $baseUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productId]) ?>"><?//= $model->title; ?></a>
+                <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->product->productId, 'productSupplierId' => $model->productId]) ?>"><?= $model->product->title; ?></a>
                 <span>
-                    <small>in <?php //echo $model->category->title;        ?></small>
+                    <small>in <?php echo $model->product->category->title; ?></small>
                 </span>
-                <a href="<?php echo $baseUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productId]) ?>"><button class="btn btn-primary btn-sm">view</button></a>
+                <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->product->productId, 'productSupplierId' => $model->productId]) ?>"><button class="btn btn-primary btn-sm">view</button></a>
             </div>
         </div>
     </div>
