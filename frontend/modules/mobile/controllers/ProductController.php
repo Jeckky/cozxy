@@ -26,7 +26,14 @@ class ProductController extends \common\controllers\MasterController
         ->join("LEFT JOIN", 'product p', "category_to_product.productId = p.productId")
         ->join("LEFT JOIN", 'product_suppliers ps', "ps.productId = p.productId")
         ->where(['category_to_product.categoryId' => $params['categoryId']])
-        ->andWhere("ps.productId in (SELECT productId FROM product_suppliers WHERE product_suppliers.approve='approve' and product_suppliers.status=1 and product_suppliers.quantity>0 ORDER BY price DESC)")
+        ->andWhere("ps.productId in (SELECT productId FROM product_suppliers ps
+                                    LEFT JOIN product_price_suppliers pps ON pps.productSuppId = ps.productSuppId
+                                         WHERE ps.approve='approve'
+                                         and ps.status=1
+                                         and ps.result>0
+                                         ORDER BY pps.price ASC
+                                    )"
+        )
         ->orderBy('p.title')
         ->all();
 
@@ -37,11 +44,13 @@ class ProductController extends \common\controllers\MasterController
         foreach ($ctps as $ctp) {
 
 
-            $pso = \common\models\costfit\ProductSuppliers::find()->where("productId = $ctp->productId AND productSuppId = $ctp->productSupplierId")->one();
-//            throw new \yii\base\Exception(print_r($ps->attributes, true));
+            $pso = \common\models\costfit\ProductSuppliers::find()
+            ->where("productId = $ctp->productId AND productSuppId = $ctp->productSupplierId")->one();
             if (!isset($pso))
                 continue;
 
+            $res['productId'] = $pso->productId;
+            $res['productSupplierId'] = $pso->productSuppId;
             $ps[$i]['title'] = $pso->title;
             $ps[$i]['isbn'] = $pso->isbn;
             $ps[$i]['code'] = $pso->code;
@@ -52,7 +61,7 @@ class ProductController extends \common\controllers\MasterController
             $ps[$i]['height'] = $pso->height;
             $ps[$i]['depth'] = $pso->depth;
             $ps[$i]['weight'] = $pso->weight;
-            $ps[$i]['price'] = $pso->price;
+            $ps[$i]['price'] = \common\models\costfit\ProductSuppliers::productPrice($pso->productSuppId);
             $ps[$i]['brand'] = isset($pso->brand) ? $pso->brand->title : NULL;
 
             $hash = [
@@ -99,25 +108,30 @@ class ProductController extends \common\controllers\MasterController
         $params["isbn"] = $_GET["isbn"];
         if (isset($params["productId"])) {
             $productId = $params["productId"];
-            $p = \common\models\costfit\ProductSuppliers::find()
+            $p = \common\models\costfit\ProductSuppliers::find()->select("* , pps.price")
             ->join("LEFT JOIN", 'product_price_suppliers pps', "pps.productSuppId = product_suppliers.productSuppId")
-            ->where("product_suppliers.isbn = '$isbn' AND product_suppliers.approve='approve' and product_suppliers.status=1 AND product_suppliers.quantity>0")->orderBy("pps.price DESC")->one();
+            ->where("product_suppliers.isbn = '$isbn' AND product_suppliers.approve='approve' and product_suppliers.status=1 AND product_suppliers.result>0")
+            ->orderBy("pps.price ASC")
+            ->one();
         } else {
             $res["error"] = "Not Use ProductId";
         }
 
         if (isset($params["isbn"])) {
             $isbn = $params["isbn"];
-            $p = \common\models\costfit\ProductSuppliers::find()
+            $p = \common\models\costfit\ProductSuppliers::find()->select("* , pps.price")
             ->join("LEFT JOIN", 'product_price_suppliers pps', "pps.productSuppId = product_suppliers.productSuppId")
-            ->where("product_suppliers.isbn = '$isbn' AND product_suppliers.approve='approve' and product_suppliers.status=1 AND product_suppliers.quantity>0")->orderBy("pps.price DESC")->one();
+            ->where("product_suppliers.isbn = '$isbn' AND product_suppliers.approve='approve' and product_suppliers.status=1 AND product_suppliers.result>0")
+            ->orderBy("pps.price ASC")
+            ->one();
         } else {
             $res["error"] = "Not Use isbn";
         }
 
-
         if (isset($p)) {
 
+            $res['productId'] = $p->productId;
+            $res['productSupplierId'] = $p->productSuppId;
             $res['title'] = $p->title;
             $res['isbn'] = $p->isbn;
             $res['code'] = $p->code;
