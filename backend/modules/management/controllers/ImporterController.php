@@ -70,10 +70,10 @@ class ImporterController extends ManagementMasterController {
                 $folderThumbnail = "category"; //  file
                 $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . '/' . $folderThumbnail;
                 $newFileName = Upload::UploadCSVCategory('File[image]', $folderName, $uploadPath);
-                //return $this->redirect(['/management/importer']);
+                return $this->redirect(['/management/importer']);
             }
         } else {
-            //return $this->render('category');
+            return $this->render('category');
         }
     }
 
