@@ -43,9 +43,9 @@ use common\models\costfit\Brand;
 
         <?= $form->field($model, 'brandId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(Brand::find()->all(), 'brandId', 'title'), ['prompt' => '-- Select Brand --']) ?>
 
-        <?//= $form->field($model, 'categoryId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(Category::find()->all(), 'categoryId', 'title'), ['prompt' => '-- Select Category --']) ?>
+        <?= $form->field($model, 'categoryId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(Category::find()->all(), 'categoryId', 'title'), ['prompt' => '-- Select Category --']) ?>
 
-        <?= $form->field($model, 'categoryId', ['options' => ['class' => 'row form-group']])->dropDownList(Category::findAllLastLevelCategory(), ['prompt' => '-- Select Category --']) ?>
+        <?//= $form->field($model, 'categoryId', ['options' => ['class' => 'row form-group']])->dropDownList(Category::findAllLastLevelCategory(), ['prompt' => '-- Select Category --']) ?>
 
         <?= $form->field($model, 'isbn', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 100]) ?>
 

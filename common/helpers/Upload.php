@@ -147,10 +147,16 @@ class Upload {
                         $newModel = new \common\models\costfit\ImportCategory;
                         $hasil = explode(",", $line[0]);
                         //print_r($hasil[1]);
+                        $getModel = \common\models\costfit\ImportCategory::find()->where('categoryId=' . $hasil[0])->one();
+                        if (isset($getModel)) {
+                            echo $getModel->title;
+                        } else {
+                            echo 'No !!';
+                        }
                         $newModel->categoryId = isset($hasil[0]) ? $hasil[0] : '';
                         $newModel->title = isset($hasil[1]) ? $hasil[1] : '';
                         $newModel->parentId = isset($hasil[2]) ? $hasil[2] : '';
-                        $newModel->save(FALSE);
+                        //$newModel->save(FALSE);
                     }
                     $row++;
                 }
