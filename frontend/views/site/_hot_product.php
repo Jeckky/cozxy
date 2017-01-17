@@ -14,9 +14,9 @@ if (count($model->product) > 0) {
                     <!--<br><span class="sale" style="background-color: #d2d042 !important;">SMART</span>-->
                 <?php // endif;  ?>
             </div>
-            <div class="price-label" ><?php echo $model->price// number_format($model->calProductPrice($model->productId, 1, 0, 1), 2)                 ?> ฿</div>
+            <div class="price-label" ><?php echo $model->price// number_format($model->calProductPrice($model->productId, 1, 0, 1), 2)                   ?> ฿</div>
 
-            <img src="<?= (isset($model->images[0])) ? $baseUrl . $model->images[0]->image : Yii::$app->homeUrl . "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1"/>
+            <img src="<?= (isset($model->images[0])) ? Yii::$app->homeUrl . $model->images[0]->image : Yii::$app->homeUrl . "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1"/>
             <span class="tile-overlay"></span>
 
             <div class="footer" id="products-popular-footer" style="max-height: 320px;min-height: 80px;">

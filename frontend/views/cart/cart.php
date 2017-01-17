@@ -113,14 +113,14 @@ use common\models\ModelMaster;
                     </tr>
                     <!--Item-->
                     <?php
-                    //throw new \yii\base\Exception(print_r($this->params['cart']['items'], true));
                     foreach ($this->params['cart']['items'] as $item) {
+                        // throw new \yii\base\Exception(print_r($item["image"], true));
                         ?>
                         <tr class="item first" id="item<?= $item['orderItemId'] ?>">
                             <?= Html::hiddenInput("productId", $item["productId"], ['id' => 'productId']); ?>
                             <?= Html::hiddenInput("productSuppId", $item["productSuppId"], ['id' => 'productSuppId']); ?>
                             <?= Html::hiddenInput("sendDate", $item["sendDate"], ['id' => 'sendDate']); ?>
-                            <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products/<?php echo ModelMaster::encodeParams(['productId' => $item["productId"], 'productSupplierId' => $item['productSuppId']]); ?>"><img src="<?php echo $item["image"]; ?>" alt="Lorem ipsum" width="152" height="119"/></a></td>
+                            <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products/<?php echo ModelMaster::encodeParams(['productId' => $item["productId"], 'productSupplierId' => $item['productSuppId']]); ?>"><img src="<?php echo $baseUrl . common\models\costfit\ProductSuppliers::productImageSuppliers($item['productSuppId']); ?>" alt="Lorem ipsum" width="152" height="119"/></a></td>
                             <td class="name" style="width:30%">
                                 <a href="<?php echo Yii::$app->homeUrl; ?>products/<?php echo ModelMaster::encodeParams(['productId' => $item["productId"], 'productSupplierId' => $item['productSuppId']]); ?>" style="font-size:14px;word-wrap: break-word; "><?= $item["title"] ?></a>
                             </td>

@@ -414,7 +414,7 @@ class Product extends \common\models\costfit\master\ProductMaster {
         // throw new \yii\base\Exception($productId);
         $products = ProductSuppliers::find()
                 ->join("LEFT JOIN", 'product_price_suppliers pps', 'pps.productSuppId=product_suppliers.productSuppId')
-                ->where("product_suppliers.productId=" . $productId . " and product_suppliers.approve='approve' and pps.status=1 and product_suppliers.quantity>0")
+                ->where("product_suppliers.productId=" . $productId . " and product_suppliers.approve='approve' and pps.status=1 and product_suppliers.result>0")
                 ->orderBy("pps.price ASC")
                 ->one();
         if (isset($products) && !empty($products)) {
