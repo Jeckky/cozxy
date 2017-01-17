@@ -120,7 +120,7 @@ use common\models\ModelMaster;
                             <?= Html::hiddenInput("productId", $item["productId"], ['id' => 'productId']); ?>
                             <?= Html::hiddenInput("productSuppId", $item["productSuppId"], ['id' => 'productSuppId']); ?>
                             <?= Html::hiddenInput("sendDate", $item["sendDate"], ['id' => 'sendDate']); ?>
-                            <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products/<?php echo ModelMaster::encodeParams(['productId' => $item["productId"], 'productSupplierId' => $item['productSuppId']]); ?>"><img src="<?php echo $baseUrl . common\models\costfit\ProductSuppliers::productImageSuppliers($item['productSuppId']); ?>" alt="Lorem ipsum" width="152" height="119"/></a></td>
+                            <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products/<?php echo ModelMaster::encodeParams(['productId' => $item["productId"], 'productSupplierId' => $item['productSuppId']]); ?>"><img src="<?php echo Yii::$app->homeUrl . common\models\costfit\ProductSuppliers::productImageSuppliers($item['productSuppId']); ?>" alt="Lorem ipsum" width="152" height="119"/></a></td>
                             <td class="name" style="width:30%">
                                 <a href="<?php echo Yii::$app->homeUrl; ?>products/<?php echo ModelMaster::encodeParams(['productId' => $item["productId"], 'productSupplierId' => $item['productSuppId']]); ?>" style="font-size:14px;word-wrap: break-word; "><?= $item["title"] ?></a>
                             </td>
