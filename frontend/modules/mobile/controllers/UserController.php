@@ -3,6 +3,7 @@
 namespace frontend\modules\mobile\controllers;
 
 use yii\web\Controller;
+use \yii\helpers\Json;
 
 /**
  * Default controller for the `mobile` module
@@ -40,6 +41,7 @@ class UserController extends Controller
             $res["error"] = "อีเมล์ หรือ รหัสผ่าน ไม่ถูกต้อง";
         }
 //        return $this->render('index');
+        print_r(Json::encode($res));
     }
 
     public function actionLogout()
@@ -47,7 +49,7 @@ class UserController extends Controller
         $res = [];
         Yii::$app->user->logout();
         $res['error'] = NULL;
-        return $res;
+        print_r(Json::encode($res));
     }
 
     public function actionResetPassword()
@@ -62,7 +64,7 @@ class UserController extends Controller
             }
         }
 
-        return $res;
+        print_r(Json::encode($res));
     }
 
     public function actionRegister()
@@ -104,7 +106,7 @@ class UserController extends Controller
         $res['attributes'] = $model->attributes;
         $res['termTitle'] = $term->contents[0]->title;
         $res['termDescription'] = $term->contents[0]->description;
-        return $res;
+        print_r(Json::encode($res));
     }
 
 }
