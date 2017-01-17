@@ -46,6 +46,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+
                 'search/<title>/<hash>' => 'search/index',
                 'profile/purchase-order/<hash>' => 'profile/purchase-order',
                 'profile/transfer-confirm/<hash>' => 'profile/transfer-confirm',
@@ -61,8 +62,9 @@ return [
                 'checkout/reverse-order-to-cart/<hash>' => 'checkout/reverse-order-to-cart',
                 'profile/picking-point/<hash>' => 'profile/picking-point',
                 //mobile
+                'mobile/product/find-product/<hash>' => 'mobile/product/find-product',
                 'mobile/product/<hash>' => 'mobile/product',
-                'mobile/product/product/<hash>' => 'mobile/product/product',
+//                'mobile/product/product/<hash>' => 'mobile/product/product',
             ],
         ],
         /**

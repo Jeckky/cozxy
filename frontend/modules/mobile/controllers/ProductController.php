@@ -81,8 +81,14 @@ class ProductController extends \common\controllers\MasterController
         print_r(Json::encode($ps));
     }
 
+    public function actionTest()
+    {
+        throw new \yii\base\Exception("Test Function");
+    }
+
     public function actionFindProduct($hash) // With ProductId Or ISBN (Barcode)
     {
+        $res = [];
         if (isset($_SERVER['HTTP_ORIGIN'])) {
             header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
             header('Access-Control-Allow-Credentials: true');
@@ -90,13 +96,47 @@ class ProductController extends \common\controllers\MasterController
         }
 
         $params = ModelMaster::decodeParams($hash);
-
+        $params["isbn"] = $_GET["isbn"];
         if (isset($params["productId"])) {
             $productId = $params["productId"];
+            $p = \common\models\costfit\ProductSuppliers::find()->where("productId = $productId AND approve='approve' and status=1 and quantity>0 ORDER BY price DESC")->one();
+        } else {
+            $res["error"] = "Not Found From ProductId";
         }
+
         if (isset($params["isbn"])) {
-            $productId = $params["isbn"];
+            $isbn = $params["isbn"];
+            $p = \common\models\costfit\ProductSuppliers::find()->where("isbn = '$isbn' AND approve='approve' and status=1 quantity>0 ORDER BY price DESC")->one();
+        } else {
+            $res["error"] = "Not Found From isbn";
         }
+
+
+        $res['title'] = $p->title;
+        $res['isbn'] = $p->isbn;
+        $res['code'] = $p->code;
+        $res['shortDescription'] = $p->shortDescription;
+        $res['description'] = $p->description;
+        $res['specification'] = $p->specification;
+        $res['width'] = $p->width;
+        $res['height'] = $p->height;
+        $res['depth'] = $p->depth;
+        $res['weight'] = $p->weight;
+        $res['price'] = $p->price;
+        $res['brand'] = isset($p->brand) ? $p->brand->title : NULL;
+
+
+        $j = 0;
+        $pis = \common\models\costfit\ProductImageSuppliers::find()->where("productSuppId = $ctp->productSupplierId")->all();
+        foreach ($pis as $pi) {
+            $res['images'][$j] = [
+                'url' => $pi->image,
+                'urlTn1' => $pi->imageThumbnail1,
+                'urlTn2' => $pi->imageThumbnail2,
+            ];
+            $j++;
+        }
+        print_r(Json::encode($res));
     }
 
 }
