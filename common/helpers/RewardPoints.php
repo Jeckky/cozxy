@@ -26,6 +26,7 @@ class RewardPoints {
     /*
      * เก็บคะแนนสะสมของ Member ตาม Rank Points ต่าง ๆ
      * ตอนที่ธนาคาร return url Result กลับมาด้วย status : ACCEPT
+     * เก๋บข้อมูล Points ลง table PointsRewardMember
      */
     public static function getRankMemberPoints($orderUserId, $orderOrderId, $orderSummary) {
         $GetPointsRewardRank = \common\models\costfit\PointsRewardRank::find()
