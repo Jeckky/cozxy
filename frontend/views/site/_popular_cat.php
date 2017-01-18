@@ -9,8 +9,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <div class="price-label">715,00 $</div>-->
 
         <img src="<?=
-(isset($model->image) && !empty($model->image)) ? $baseUrl . $model->image : Yii::$app->urlManagerFrontend->baseUrl . "/images/ContentGroup/DUHWYsdXVc.png";
-?>" alt="1"/>
+        (isset($model->image) && !empty($model->image)) ? $baseUrl . $model->image : Yii::$app->urlManagerFrontend->baseUrl . "/images/ContentGroup/DUHWYsdXVc.png";
+        ?>" alt="1"/>
         <span class="tile-overlay"></span>
 
         <div class="footer" id="products-popular-footer">
@@ -18,7 +18,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <span>
                 <small><?= $model->title; ?></small>
             </span>
-            <a href="<?php echo $baseUrl; //Yii::$app->homeUrl;  ?>search/<?= $model->createTitle() ?>/<?= $model->encodeParams(['categoryId' => $model->categoryId]) ?>"><button class="btn btn-primary btn-sm">view</button></a>
+            <a href="<?php echo $baseUrl; //Yii::$app->homeUrl;   ?>/search/<?= $model->createTitle() ?>/<?= $model->encodeParams(['categoryId' => $model->categoryId]) ?>"><button class="btn btn-primary btn-sm">view</button></a>
         </div>
     </div>
 </div>
