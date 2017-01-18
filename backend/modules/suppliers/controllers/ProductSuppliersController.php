@@ -104,7 +104,7 @@ class ProductSuppliersController extends SuppliersMasterController {
             $model->attributes = $_POST["ProductSuppliers"];
             $model->userId = Yii::$app->user->identity->userId;
             $model->createDateTime = new \yii\db\Expression('NOW()');
-            $model->approvecreateDateTime = new \yii\db\Expression('0000-00-00 00:00:00');
+            $model->approvecreateDateTime = $model->timestamp();
             $model->approve = Yii::$app->request->post('approve');
             $model->productId = Yii::$app->request->post('productIds');
             $model->result = $_POST['ProductSuppliers']['quantity'];
