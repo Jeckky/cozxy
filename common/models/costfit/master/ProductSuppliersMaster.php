@@ -29,10 +29,10 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-    * @property string $quantity
-    * @property string $result
+    * @property integer $quantity
+    * @property integer $result
     * @property string $approve
-    * @property string $productId
+    * @property integer $productId
     * @property string $approveCreateBy
     * @property string $approvecreateDateTime
 */

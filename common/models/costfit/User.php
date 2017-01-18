@@ -270,4 +270,34 @@ class User extends \common\models\costfit\master\UserMaster {
         }
     }
 
+    public static function userAddressText($addressId) {
+        $text = Address::find()->where("addressId=" . $addressId . " and isDefault=1")->one();
+        if (isset($text) && !empty($text)) {
+            $districtId = \common\models\dbworld\District::find()->where("districtId=" . $text->districtId)->one();
+            if (isset($districtId) && !empty($districtId)) {
+                $district = $districtId->localName;
+                $id = $districtId->cityId;
+            } else {
+                $district = '';
+                $id = '';
+            }
+            $aumphur = \common\models\dbworld\Cities::find()->where("cityId=" . $text->amphurId)->one();
+            if (isset($aumphur) && !empty($aumphur)) {
+                $city = $aumphur->cityName;
+            } else {
+                $city = '';
+            }
+            $province = \common\models\dbworld\States::find()->where("stateId=" . $text->provinceId)->one();
+            if (isset($province) && !empty($province)) {
+                $state = $province->stateName;
+            } else {
+                $state = '';
+            }
+            $address = $text->address . " " . $district . " " . $city . " " . $state . " " . $id . "<br>TEL. " . $text->tel . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fax. " . $text->fax;
+            return $address;
+        } else {
+            return NULL;
+        }
+    }
+
 }

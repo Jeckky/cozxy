@@ -318,3 +318,27 @@ $(document).on('click', '.reprint2', function (e) {
     $('.reprint').show();
     $('.reprint2').hide();
 });
+$(document).on('keyup', '.productQr', function (event) {
+    var code = event.keyCode;
+    if (code == 13) {
+        var isbn = $(".productQr").val();
+        var orderId = $(this).parent().find("#orderId").val();
+        var url = $baseUrl + 'returnproduct/return-product/return-list';
+        //alert(orderId);
+        $.ajax({
+            url: url,
+            data: {orderId: orderId, isbn: isbn},
+            dataType: 'JSON',
+            type: 'post',
+            success: function (data) {
+                if (data.errors != '1') {
+                    alert(data.errors);
+                } else {
+                    $('#returnList').html(data.dataList);
+                    $(".productQr").val('');
+                }
+                //$('#returnList').fadeToggle('fade')
+            },
+        });
+    }
+});

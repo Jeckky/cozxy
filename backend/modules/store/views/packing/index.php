@@ -22,15 +22,15 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
             <?php
             $form = ActiveForm::begin([
-                'method' => 'GET',
-                'action' => ['packing/index'],
+                        'method' => 'GET',
+                        'action' => ['packing/index'],
             ]);
             ?>
             <table class="table table-bordered">
                 <tbody>
                     <tr>
                         <th style="vertical-align: middle;text-align: center;"><h4><b>Order No QR code : </b></h4></th>
-                        <td><?= \yii\helpers\Html::textInput('orderNo', NULL, ['class' => 'input-lg', 'autofocus' => 'autofocus']); ?><?= isset($ms) && $ms != '' ? ' <code> ' . $ms . '</code>' : '' ?></td>
+                        <td><?= \yii\helpers\Html::textInput('productQr', NULL, ['class' => 'input-lg', 'autofocus' => 'autofocus']); ?><?= isset($ms) && $ms != '' ? ' <code> ' . $ms . '</code>' : '' ?></td>
                     </tr>
                 </tbody>
             </table>
@@ -65,9 +65,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         return ['class' => 'success'];
                 },
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                        ['class' => 'yii\grid\SerialColumn'],
                     'orderNo',
-                    [
+                        [
                         'attribute' => 'countItem',
                         'format' => 'html',
                         'value' => function($model) {
@@ -75,7 +75,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             return $countItemsArray['countItems'] . " รายการ<br>" . $countItemsArray['sumQuantity'] . " ชิ้น";
                         }
                     ],
-                    [
+                        [
                         'attribute' => 'status',
                         'format' => 'html',
                         'value' => function($model) {

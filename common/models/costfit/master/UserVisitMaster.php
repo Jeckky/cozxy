@@ -8,7 +8,7 @@ use Yii;
 * This is the model class for table "user_visit".
 *
     * @property string $visitId
-    * @property string $userId
+    * @property integer $userId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
