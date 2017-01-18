@@ -52,9 +52,9 @@ return [
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<hash>' => '<controller>/<action>',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<hash>/<title>' => '<controller>/<action>',
                 'products/<hash>' => 'products/index',
-            //Custom Rule
-//                'profile/purchase-order/<hash>' => 'profile/purchase-order',
-//                'profile/transfer-confirm/<hash>' => 'profile/transfer-confirm',
+                //Custom Rule
+                'profile/purchase-order/<hash>' => 'profile/purchase-order',
+                'profile/transfer-confirm/<hash>' => 'profile/transfer-confirm',
 //                'payment/print-purchase-order/<hash>/<title>' => 'payment/print-purchase-order',
 //                'payment/print-receipt/<hash>/<title>' => 'payment/print-receipt',
 //                'payment/print-pay-in/<hash>/<title>' => 'payment/print-pay-in',

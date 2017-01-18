@@ -5,7 +5,7 @@ use yii\helpers\Html;
 //$this->title = 'My Cost Fit';
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
-$logo = common\models\costfit\ContentGroup::find()->where("lower(title)='logoimage'")->one();
+$logo = common\models\costfit\ContentGroup::find()->where("lower(title)='logoimagetop'")->one();
 ?>
 <header data-offset-top="500" data-stuck="600"><!--data-offset-top is when header converts to small variant and data-stuck when it becomes visible. Values in px represent position of scroll from top. Make sure there is at least 100px between those two values for smooth animation-->
 
