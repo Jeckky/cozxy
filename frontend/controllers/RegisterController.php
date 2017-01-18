@@ -16,7 +16,8 @@ use frontend\models\ContactForm;
 /**
  * Register controller
  */
-class RegisterController extends MasterController {
+class RegisterController extends MasterController
+{
 
     public $enableCsrfValidation = false;
 
@@ -25,14 +26,16 @@ class RegisterController extends MasterController {
      *
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
 //return Yii::$app->getResponse()->redirect('register/login');
         $this->title = 'Cozxy.com | Register Login';
         $this->subTitle = 'Register Login';
         return $this->render('register/Login');
     }
 
-    public function actionLogin() {
+    public function actionLogin()
+    {
         $model = new \common\models\costfit\User(['scenario' => 'register']);
         $term = \common\models\costfit\ContentGroup::find()->where("lower(title)='term'")->one();
         $loginForm = new \common\models\LoginForm();
@@ -41,6 +44,7 @@ class RegisterController extends MasterController {
             $article = new \common\models\costfit\UserVisit(); //Create an article and link it to the author
             $article->userId = Yii::$app->user->identity->userId;
             $article->lastvisitDate = new \yii\db\Expression('NOW()');
+            $article->createDateTime = new \yii\db\Expression('NOW()');
             $article->save(FALSE);
             //exit();
             //return $this->redirect(['site/index']);
@@ -53,7 +57,8 @@ class RegisterController extends MasterController {
         return $this->render('register', ['model' => $model, 'loginForm' => $loginForm, 'term' => $term]);
     }
 
-    public function actionRegister() {
+    public function actionRegister()
+    {
         $model = new \common\models\costfit\User(['scenario' => 'register']);
         $loginForm = new \common\models\LoginForm();
         $ms = '';
@@ -90,21 +95,24 @@ class RegisterController extends MasterController {
         return $this->render('register', ['model' => $model, 'loginForm' => $loginForm, 'term' => $term, 'ms' => $ms]);
     }
 
-    public function actionThank() {
+    public function actionThank()
+    {
         $this->title = 'Cozxy.com | Register Thank';
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Register Thank';
         return $this->render('register_thank');
     }
 
-    public function actionForgot() {
+    public function actionForgot()
+    {
         $this->title = 'Cozxy.com | Forgot password?';
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Forgot password?';
         return $this->render('register_forgot');
     }
 
-    public function actionConfirm() {
+    public function actionConfirm()
+    {
         $this->title = 'Cozxy.com | Register Thank';
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Register Thank';
