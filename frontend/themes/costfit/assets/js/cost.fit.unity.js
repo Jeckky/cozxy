@@ -5,7 +5,7 @@ $(document).ready(function (e) {
     var $baseUrl = window.location.protocol + "//" + window.location.host;
     if (window.location.host == 'localhost' || window.location.host == 'dev') {
         $baseUrl = window.location.protocol + "//" + window.location.host + '/cozxy-frontend/';
-    } else if (window.location.host == '192.168.100.8') {
+    } else if (window.location.host == '192.168.100.8' || window.location.host == '192.168.100.20') {
 //console.log($baseUrl);
         var str = window.location.pathname;
         var res = str.split("/");
