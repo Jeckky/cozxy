@@ -24,7 +24,7 @@ class CostfitAsset extends AssetBundle {
         'css/styles.css',
         'css/colors/color-scheme6.css',
         'css/style-reform-cozxy.css', //Create By Taninut.B
-        'css/style-interpolate-cosxy', //Create By Taninut.B , Create Date : 16/1/2017
+    //'css/style-interpolate-cosxy', //Create By Taninut.B , Create Date : 16/1/2017
     ];
     public $js = [
         'js/libs/jquery-1.11.1.min.js',
