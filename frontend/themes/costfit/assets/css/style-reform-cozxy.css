@@ -581,6 +581,10 @@ a.panel-toggle {
 .btn-info:hover {
     background: #000000;
 }
+/* 18/1/2017 by Taninut.BM*/
 .tags {
     color: rgba(255,212,36,.9);
+}
+.shop-filters .filter-section .price-slider .values input {
+    width: 95px;
 }
