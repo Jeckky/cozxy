@@ -581,3 +581,6 @@ a.panel-toggle {
 .btn-info:hover {
     background: #000000;
 }
+.tags {
+    color: rgba(255,212,36,.9);
+}
