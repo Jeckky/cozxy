@@ -12,7 +12,7 @@ Pjax::begin(['id' => 'employee-grid-view']);
     <div class="panel-heading">
         <div class="row">
             <div class="col-md-6">PO No. <?= $model->poNo ?></div>
-            <div class="col-md-6 text-right">Supplier : <?= $model->supplierAddress->company; ?></div>
+            <div class="col-md-6 text-right">Supplier : <?= isset($model->supplierAddress->company) && !empty($model->supplierAddress->company) ? $model->supplierAddress->company : ''; ?></div>
         </div>
     </div>
     <div class="panel-body">
