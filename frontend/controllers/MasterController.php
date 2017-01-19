@@ -546,8 +546,8 @@ class MasterController extends MasterCommonController {
     }
 
     public function getTitleProduct() {
-        $productId = CozxyUnity::GetParams(Yii::$app->request->get('productId'), '');
-        $getTitleProduct = \common\models\costfit\Product::find()->where("productId ='" . $productId . "'")->one();
+        $Params = CozxyUnity::GetParams(Yii::$app->request->get('productId'), '');
+        $getTitleProduct = \common\models\costfit\Product::find()->where("productId ='" . $Params['productId'] . "'")->one();
 
         return $getTitleProduct;
     }

@@ -204,4 +204,11 @@ class CozxyUnity {
         return $params;
     }
 
+    public function getTitleProductMeta() {
+        $productId = CozxyUnity::GetParams(Yii::$app->request->get('productId'), '');
+        $getTitleProduct = \common\models\costfit\Product::find()->where("productId ='" . $productId . "'")->one();
+
+        return $getTitleProduct;
+    }
+
 }
