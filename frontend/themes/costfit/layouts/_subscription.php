@@ -1,5 +1,5 @@
 <section class="subscr-widget gray-bg">
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <div class="col-lg-7 col-md-8 col-sm-8">
                 <h2><?php echo $lastIndexContent->title; ?></h2>
