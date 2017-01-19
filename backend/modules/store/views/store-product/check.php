@@ -59,7 +59,8 @@ Pjax::begin(['id' => 'employee-grid-view']);
                         <input type="radio" name="check[<?= $product->storeProductId ?>]" value="1" onclick="hide(<?= $product->storeProductId ?>)">&nbsp; ครบ &nbsp;&nbsp;&nbsp;
                         <input type="radio"  name="check[<?= $product->storeProductId ?>]" value="2" onclick="show(<?= $product->storeProductId ?>)">&nbsp; ไม่ครบ &nbsp;&nbsp;&nbsp;<br><br>
                         <div id="notAll<?= $product->storeProductId ?>" style="display: none;">
-                            <input type="text"  name="quantity[<?= $product->storeProductId ?>]" style="width: 100px;" placeholder="จำนวนที่รับ"><?php echo $product->products->units->title; ?>
+                            <?php // throw new \yii\base\Exception($product->storeProductId); ?>
+                            <input type="text"  name="quantity[<?= $product->storeProductId ?>]" style="width: 100px;" placeholder="จำนวนที่รับ"><?= isset($product->products->units->title) ? $product->products->units->title : '' ?>
                         </div>
                         <br>
                         <input type="hidden" name="storeProductId" value="<?= $product->storeProductId ?>">
