@@ -204,20 +204,24 @@ use common\models\ModelMaster;
 <!--Catalog Grid-->
 <section class = "catalog-grid">
     <div class = "container">
-        <h2>You may also like</h2>
+        <?php
+        if (count($products) > 0):
+            ?>
+            <h2>You may also like</h2>
+        <?php endif; ?>
         <div class = "row">
             <?php
-            if (count($product) > 0):
-                for ($index = 0; $index <= 3; $index++) {
+            if (count($products) > 0):
+                foreach ($products as $product) {
                     ?>
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="tile">
-                            <div class="price-label"><?php echo number_format($product[$index]->price, 2); ?></div>
-                            <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product[$index]->encodeParams(['productId' => $product[$index]->productId]) ?>">
+                            <div class="price-label"><?php echo number_format($product->price, 2); ?></div>
+                            <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product->encodeParams(['productId' => $product->productId, 'productSupplierId' => $product->productSuppId]) ?>">
                                 <?php
-                                if (isset($product[$index]->productImages[$index]->imageThumbnail1)) {
+                                if (isset($product->productImages->imageThumbnail1)) {
                                     ?>
-                                    <img src="<?php echo Yii::$app->homeUrl . $product[$index]->productImages[$index]->imageThumbnail1; ?>" alt="1"/>
+                                    <img src="<?php echo Yii::$app->homeUrl . $product->productImages->imageThumbnail1; ?>" alt="1"/>
                                     <?php
                                 } else {
                                     ?>
@@ -228,14 +232,14 @@ use common\models\ModelMaster;
                                 <span class="tile-overlay"></span>
                             </a>
                             <div class="footer">
-                                <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product[$index]->encodeParams(['productId' => $product[$index]->productId]) ?>"><?= $product[$index]->title ?></a>
+                                <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product->encodeParams(['productId' => $product->productId, 'productSupplierId' => $product->productSuppId]) ?>"><?= $product->title ?></a>
                                 <span>by Cozxy.com</span>
-                                <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product[$index]->encodeParams(['productId' => $product[$index]->productId]) ?>"><button class="btn btn-primary">View</button></a>
+                                <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product->encodeParams(['productId' => $product->productId, 'productSupplierId' => $product->productSuppId]) ?>"><button class="btn btn-primary">View</button></a>
                             </div>
                         </div>
                     </div>
                     <?php
-                    $index = $index++;
+                    // $index = $index++;
                 }
             endif;
             ?>

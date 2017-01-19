@@ -35,10 +35,28 @@ class CartController extends MasterController {
         $this->layout = "/content_right";
         $this->title = 'Cozxy.com | cart';
         $this->subTitle = 'Shopping Cart';
-        $product = \common\models\costfit\search\Product::find()->where("categoryId='3'")->all();
+        $allProducts = $this->allProduct();
+        $id = '';
+        if (isset($allProducts) && !empty($allProducts) && ($allProducts != '')) {
+            foreach ($allProducts as $item):
+                $id = $id . $item . ",";
+            endforeach;
+            $id = substr($id, 0, -1);
+            $products = \common\models\costfit\ProductSuppliers::find()
+                    ->where("productSuppId in ($id) and approve='approve'")
+                    ->orderBy(new \yii\db\Expression('rand()'))
+                    ->limit(4)
+                    ->all();
+        } else {
+            $products = \common\models\costfit\ProductSuppliers::find()->where("approve='approve'")
+                    ->orderBy(new \yii\db\Expression('rand()'))
+                    ->limit(4)
+                    ->all();
+        }
+        //$product = \common\models\costfit\search\Product::find()->where("categoryId='3'")->all();
         $this->subSubTitle = '';
         //return $this->render('cart');
-        return $this->render('cart', compact('product'));
+        return $this->render('cart', compact('products'));
     }
 
     public function actionAddToCart($id) {
@@ -342,6 +360,36 @@ class CartController extends MasterController {
             }
         }
         echo $_POST['orderId'];
+    }
+
+    public function allProduct() {
+        $products = \common\models\costfit\Product::find()->where("approve='approve'")->all();
+        $productSuppId = [];
+        if (isset($products) && !empty($products)) {
+            $i = 0;
+            foreach ($products as $product):
+                $productSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productId=" . $product->productId . " and approve='approve'")->all();
+                if (isset($productSuppliers) && !empty($productSuppliers)) {
+                    $id = '';
+                    foreach ($productSuppliers as $productSupplier):
+                        $id = $id . $productSupplier->productSuppId . ",";
+                    endforeach;
+                    $id = substr($id, 0, -1);
+                    if ($id != '') {
+                        $price = \common\models\costfit\ProductPriceSuppliers::find()->where("productSuppId in ($id)")->orderBy("price ASC")->one();
+                        $productSuppId[$i] = $price->productSuppId;
+                        $i++;
+                    }
+                }
+            endforeach;
+            if (isset($productSuppId) && !empty($productSuppId)) {
+                return $productSuppId;
+            } else {
+                return '';
+            }
+        } else {
+            return '';
+        }
     }
 
 }
