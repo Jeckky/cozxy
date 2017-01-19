@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * Default controller for the `returnProduct` module
  */
-class ReturnProductMasterController extends \backend\controllers\BackendMasterController {
+class ReturnProductMasterController extends BackendMasterController {
 
     public $breadcrumbs = [];
     public $layout = '/cl1';
