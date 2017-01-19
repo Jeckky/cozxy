@@ -188,7 +188,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                 <div class="overlay">
                                                     <div class="descrx desc-bestseller">
                                                         <div class="product-name"><?php echo $products->title; ?>
-                                                            <div class="bestseller-name-price"><?php echo isset($products->productOnePrice) ? $products->productOnePrice->price : $products->price; ?></div>
+                                                            <div class="bestseller-name-price"><?php echo isset($products->productOnePrice) ? number_format($products->productOnePrice->price) : number_format($products->price); ?></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -237,7 +237,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                 <div class="overlay">
                                                     <div class="descrx desc-bestseller">
                                                         <div class="product-name"><?php echo $item->title; ?>
-                                                            <div class="bestseller-name-price"><?php echo isset($item->productOnePrice) ? $item->productOnePrice->price : $item->price; ?></div>
+                                                            <div class="bestseller-name-price"><?php echo isset($item->productOnePrice) ? number_format($item->productOnePrice->price) : number_format($item->price); ?></div>
                                                         </div>
                                                     </div>
                                                 </div>
