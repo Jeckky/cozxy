@@ -7,6 +7,7 @@ use yii\helpers\Url;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
+use common\helpers\CozxyUnity;
 use common\controllers\MasterController as MasterCommonController;
 
 /**
@@ -545,7 +546,7 @@ class MasterController extends MasterCommonController {
     }
 
     public function getTitleProduct() {
-        $productId = Yii::$app->request->get('productId');
+        $productId = CozxyUnity::GetParams(Yii::$app->request->get('productId'), '');
         $getTitleProduct = \common\models\costfit\Product::find()->where("productId ='" . $productId . "'")->one();
 
         return $getTitleProduct;
