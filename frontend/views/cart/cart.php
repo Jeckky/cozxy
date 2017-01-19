@@ -219,9 +219,9 @@ use common\models\ModelMaster;
                             <div class="price-label"><?php echo number_format($product->price, 2); ?></div>
                             <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product->encodeParams(['productId' => $product->productId, 'productSupplierId' => $product->productSuppId]) ?>">
                                 <?php
-                                if (isset($product->productImages->imageThumbnail1)) {
+                                if (isset($product->images->imageThumbnail1)) {
                                     ?>
-                                    <img src="<?php echo $baseUrl . $product->productImages->imageThumbnail1; ?>" alt="1"/>
+                                    <img src="<?php echo Yii::$app->homeUrl . $product->images->imageThumbnail1; ?>" alt="1"/>
                                     <?php
                                 } else {
                                     ?>
