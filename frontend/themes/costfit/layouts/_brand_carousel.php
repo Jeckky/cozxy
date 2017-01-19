@@ -13,7 +13,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <?php
             $brands = common\models\costfit\Brand::find()->all();
             foreach ($brands as $brand) {
-                if (file_exists(Yii::$app->homeUrl . $brand->image)) {
+                if (file_exists(Yii::$app->basePath . $brand->image)) {
                     $image = Yii::$app->homeUrl . $brand->image;
                 } else {
                     $image = Yii::$app->homeUrl . "images/no-image.jpg";
