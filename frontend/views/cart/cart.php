@@ -221,7 +221,7 @@ use common\models\ModelMaster;
                                 <?php
                                 if (isset($product->productImages->imageThumbnail1)) {
                                     ?>
-                                    <img src="<?php echo Yii::$app->homeUrl . $product->productImages->imageThumbnail1; ?>" alt="1"/>
+                                    <img src="<?php echo $baseUrl . $product->productImages->imageThumbnail1; ?>" alt="1"/>
                                     <?php
                                 } else {
                                     ?>

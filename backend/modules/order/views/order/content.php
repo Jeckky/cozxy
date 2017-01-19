@@ -103,7 +103,7 @@ foreach ($storeProductGroupId as $id):
                 echo '<td><center>' . $i . '</center></td>';
                 $productSupp = ProductSuppliers::productSupplierName($item->productSuppId);
                 echo '<td><center>' . $productSupp->code . '</center></td>';
-                echo '<td><center>' . $productSupp->description . '</center></td>';
+                echo '<td> ' . $productSupp->title . '</td>';
                 // $total = \common\models\costfit\OrderItem::totalSupplierItem($suppId, $item, $orders);
                 echo '<td><center>' . $item->quantity . '</center></td>';
                 $unit = \common\models\costfit\Unit::unitName($item->productSuppId);
@@ -111,7 +111,7 @@ foreach ($storeProductGroupId as $id):
                 $price = ProductSuppliers::productPriceSupplier($item->productSuppId);
                 echo '<td style="text-align: right;">' . $price . '</td>';
                 echo '<td style="text-align: right;">' . number_format($price * $item->quantity, 2) . '</td>';
-                echo '<tr>';
+                echo '</tr>';
                 $i++;
                 $amount = $price * $item->quantity;
                 $allTotal += $amount;
@@ -119,7 +119,7 @@ foreach ($storeProductGroupId as $id):
         }else {
             echo '<tr>';
             echo '<td colspan="7">ไม่มีข้อมูล</td>';
-            echo '<tr>';
+            echo '</tr>';
         }
         $vat = $allTotal * 0.07;
         ?>
