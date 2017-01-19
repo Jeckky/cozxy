@@ -5,7 +5,7 @@ namespace backend\modules\returnproduct;
 /**
  * returnProduct module definition class
  */
-class returnproduct extends \yii\base\Module {
+class Returnproduct extends \yii\base\Module {
 
     /**
      * @inheritdoc

@@ -5,8 +5,8 @@ namespace backend\modules\led;
 /**
  * led module definition class
  */
-class led extends \yii\base\Module
-{
+class Led extends \yii\base\Module {
+
     /**
      * @inheritdoc
      */
@@ -15,10 +15,10 @@ class led extends \yii\base\Module
     /**
      * @inheritdoc
      */
-    public function init()
-    {
+    public function init() {
         parent::init();
 
         // custom initialization code goes here
     }
+
 }
