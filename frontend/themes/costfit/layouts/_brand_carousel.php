@@ -13,8 +13,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <?php
             $brands = common\models\costfit\Brand::find()->all();
             foreach ($brands as $brand) {
+                if (file_exists(Yii::$app->homeUrl . $brand->image)) {
+                    $image = Yii::$app->homeUrl . $brand->image;
+                } else {
+                    $image = Yii::$app->homeUrl . "images/no-image.jpg";
+                }
                 ?>
-                <a class="item" href="#"><img src="<?php echo Yii::getAlias('@web') . $brand->image; ?>" alt="" title="ขนาด : 164x120" width="164" height="120" class="img-responsive"/></a>
+                <a class="item" href="#"><img src="<?php echo $image; ?>" alt="" title="ขนาด : 164x120" width="164" height="120" class="img-responsive"/></a>
                     <?php
                 }
                 ?>
