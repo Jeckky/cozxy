@@ -40,7 +40,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     [
                         'attribute' => 'supplierId',
                         'value' => function($model) {
-                            return isset($model->supplier) ? $model->supplier->name : NULL;
+                            return isset($model->supplierName) ? $model->supplierName->name : NULL;
                         }
                     ],
                     'poNo',

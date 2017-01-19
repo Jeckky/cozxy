@@ -476,7 +476,8 @@ class CheckoutController extends MasterController {
 
                 $this->returnSupplierStock($order); //คืนstock
             }
-            Order::saveOrderPaymentHistory($order, $_REQUEST["decision"], $_POST["reason_code"], $_POST['score_device_fingerprint_true_ipaddress']);
+            //Order::saveOrderPaymentHistory($order, $_REQUEST["decision"], $_POST["reason_code"], $_POST['score_device_fingerprint_true_ipaddress']);
+            Order::saveOrderPaymentHistory($order, $_REQUEST["decision"], $_POST["reason_code"], 1);
         }
 
         return $this->render('payment_result', compact('res'));
