@@ -49,6 +49,7 @@ class CartController extends MasterController {
             $order->token = $this->getToken();
             $order->status = \common\models\costfit\Order::ORDER_STATUS_DRAFT;
             $order->createDateTime = new \yii\db\Expression("NOW()");
+            $order->paymentType = \common\models\costfit\PaymentMethod::TYPE_CREDIT_CARD;
             if (!$order->save(FALSE)) {
                 throw new \yii\base\Exception("Can't Save Order");
             }

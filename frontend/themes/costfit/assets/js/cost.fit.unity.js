@@ -219,7 +219,8 @@ $(document).ready(function (e) {
         //$addedToCartMessage.find('p').text('"' + $itemName + '"' + '  ' + 'was successfully added to your cart.');
         //var getUrl = window.location;
         //var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-        if ($itemQnty <= $maxQnty && $itemQnty != 0) {
+        //alert($itemQnty + " max=> " + $maxQnty);
+        if (($itemQnty <= $maxQnty) && ($itemQnty > 0)) {
             $.ajax({
                 type: "POST",
                 dataType: "JSON",
@@ -249,8 +250,15 @@ $(document).ready(function (e) {
                 }
             });
         } else {
-            $('#quantity').val($maxQnty);
-            alert("รายการสินค้าไม่พอ สั่งได้อีก " + $maxQnty + " รายการ");
+            $(this).parent().find('#quantity').val($maxQnty);
+            $(this).parent().find('#maxQnty').val($maxQnty);
+            if ($itemQnty == 0) {
+                $(this).parent().find('#quantity').val(1);
+                alert("Can not be '0'");
+            } else {
+                //alert($(this).parent().find('#quantity').val() + ' max ' + $(this).parent().find('#maxQnty').val());
+                alert("Max quantity for this product");
+            }
         }
 
         //
@@ -276,7 +284,7 @@ $(document).ready(function (e) {
             }
             $('.incr-btn').popover('hide');
         }
-
+        $button.parent().find("input").val(newVal);
         $.ajax({
             type: "POST",
             dataType: "JSON",

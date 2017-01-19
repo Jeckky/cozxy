@@ -169,14 +169,25 @@ class Product extends \common\models\costfit\master\ProductMaster {
     }
 
     public static function findQuantityInCartSupplier($id) {
-        $order = Order::getOrder();
+        //$order = Order::getOrder();
+        $status = "0,1,2,3,4,8";
+        $orderId = '';
+        $orders = Order::find()->where("status in ($status)")->all();
+        if (isset($orders) && !empty($orders)) {
+            foreach ($orders as $order):
+                $orderId = $order->orderId . ",";
+            endforeach;
+            $orderId = substr($orderId, 0, -1);
+        }
         $quantity = 0;
-        if (isset($order) && !empty($order)) {
-            $orderItems = OrderItem::find()->where("orderId=" . $order->orderId . " and productSuppId=" . $id)->all();
-            if (isset($orderItems) && !empty($orderItems)) {
-                foreach ($orderItems as $item):
-                    $quantity += $item->quantity;
-                endforeach;
+        if ($orderId != '') {
+            if (isset($order) && !empty($order)) {
+                $orderItems = OrderItem::find()->where("orderId in ($orderId) and productSuppId=" . $id)->all();
+                if (isset($orderItems) && !empty($orderItems)) {
+                    foreach ($orderItems as $item):
+                        $quantity += $item->quantity;
+                    endforeach;
+                }
             }
         }
         return $quantity;
