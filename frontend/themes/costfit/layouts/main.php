@@ -14,9 +14,9 @@ use yii\web\View;
 AppAsset::register($this);
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 if (Yii::$app->controller->id == 'products') {
-    $title = $this->params['listDataProvider']['tagMeta']->title;
-    $keyWords = $this->params['listDataProvider']['tagMeta']->tags;
-    $description = $this->params['listDataProvider']['tagMeta']->title;
+    $title = isset($this->params['listDataProvider']['tagMeta']->title) ? $this->params['listDataProvider']['tagMeta']->title : '';
+    $keyWords = isset($this->params['listDataProvider']['tagMeta']->tags) ? $this->params['listDataProvider']['tagMeta']->tags : '';
+    $description = isset($this->params['listDataProvider']['tagMeta']->title) ? $this->params['listDataProvider']['tagMeta']->title : '';
 } else {
     $title = '';
     $keyWords = '';
