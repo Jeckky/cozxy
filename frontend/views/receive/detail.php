@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <div class="receive-index">
-    <?php $form = ActiveForm::begin(['action' => 'send-sms']); ?>
+    <?php $form = ActiveForm::begin(['action' => 'receive/send-sms']); ?>
     <div class="col-md-12"> <h2 class="text-center"><strong><?= Html::encode($this->title) ?></strong></h2></div>
     <div class="row">
         <div class="col-md-4"> </div>
