@@ -40,7 +40,15 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     [
                         'attribute' => 'supplierId',
                         'value' => function($model) {
-                            return isset($model->supplierName) ? $model->supplierName->name : NULL;
+                            if (isset($model->supplierAddress)) {
+                                if ($model->supplierAddress->company != '') {
+                                    return $model->supplierAddress->company;
+                                } else {
+                                    return $$model->supplierAddress->firstname . " " . $model->supplierAddress->lastname;
+                                }
+                            } else {
+                                return NULL;
+                            }
                         }
                     ],
                     'poNo',
