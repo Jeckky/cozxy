@@ -47,7 +47,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <tr>
                         <td><center><?php echo $i; ?></center></td>
                 <td><center><?= isset($product->products->title) ? $product->products->title : '' ?></center><br><br>
-                <?= isset($product->products->images->image) ? Html::img($baseUrl . $product->products->images->image, ['style' => 'width:150px', 'class' => 'col-lg-offset-3']) : Html::img($baseUrl . "images/ContentGroup/DUHWYsdXVc.png", ['style' => 'width:150px', 'class' => 'col-lg-offset-3']) ?>
+                <?= isset($product->products->images->image) ? Html::img($baseUrl . '/' . $product->products->images->image, ['style' => 'width:150px', 'class' => 'col-lg-offset-3']) : Html::img($baseUrl . "/images/ContentGroup/DUHWYsdXVc.png", ['style' => 'width:150px', 'class' => 'col-lg-offset-3']) ?>
                 </td>
                 <td><center><?php echo $product->quantity; ?></center></td>
                 <td><center><?= isset($product->products->units->title) ? $product->products->units->title : '' ?></center></td>

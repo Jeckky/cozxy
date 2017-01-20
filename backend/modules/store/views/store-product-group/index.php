@@ -140,7 +140,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     ])
                     ?>
 
-                </div> -
+                </div>
                 <div class="col-lg-3">
                     <?=
                     DatePicker::widget(['name' => 'toDate',
