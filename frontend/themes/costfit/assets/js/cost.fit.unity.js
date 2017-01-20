@@ -219,8 +219,9 @@ $(document).ready(function (e) {
         //$addedToCartMessage.find('p').text('"' + $itemName + '"' + '  ' + 'was successfully added to your cart.');
         //var getUrl = window.location;
         //var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-        //alert($itemQnty + " max=> " + $maxQnty);
-        if (($itemQnty <= $maxQnty) && ($itemQnty > 0)) {
+        // alert($itemQnty + " max=> " + $maxQnty);
+        if (parseInt($itemQnty) <= parseInt($maxQnty) && parseInt($itemQnty) > 0) {
+            // alert("aaaaaa");
             $.ajax({
                 type: "POST",
                 dataType: "JSON",
