@@ -30,7 +30,7 @@ if (Yii::$app->controller->id == 'products') {
         <meta charset="<?= Yii::$app->charset ?>"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <?= Html::csrfMetaTags() ?>
-        <title><?= Html::encode(isset($title) ? $title . '   COZXY.COM LOWEST PRICE PRODUCTS' : "COZXY.COM LOWEST PRICE PRODUCTS") ?></title>
+        <title><?= Html::encode(isset($title) ? $title . ' COZXY.COM LOWEST PRICE PRODUCTS' : "COZXY.COM LOWEST PRICE PRODUCTS") ?></title>
         <meta http-equiv="Cache-Control" content="no-store">
         <meta http-equiv="Pragma" content="no-cache">
         <meta name="KeyWords" content="<?= Html::encode(isset($keyWords) ? $keyWords . ' : cozxy.com' : "My cozxy.com") ?>">
