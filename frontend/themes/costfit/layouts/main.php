@@ -37,8 +37,17 @@ if (Yii::$app->controller->id == 'products') {
         <meta name="author" content="cozxy.com">
         <meta itemprop="name" content="cozxy.com">
         <meta itemprop="description" content="<?= Html::encode(isset($description) ? $description . ' : cozxy.com' : "My cozxy.com") ?>">
-        <meta itemprop="image" content="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png">
-        <link rel="image_src" type="image/jpeg" href="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png">
+        <meta itemprop="image" content="<?php echo $baseUrl; ?>/images/ContentGroup/TwpF5Rm9-d.png">
+        <link rel="image_src" type="image/jpeg" href="<?php echo $baseUrl; ?>/images/ContentGroup/TwpF5Rm9-d.png">
+        <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+        <meta http-equiv="PRAGMA" content="NO-CACHE">
+        <meta http-equiv="imagetoolbar" content="on">
+        <meta name="robots" content="index,follow">
+        <meta name="googlebot" content="index,follow">
+        <meta name="revisit-after" content="1 days">
+        <meta name="distribution" content="global">
+        <meta name="rating" content="general">
+        <meta name="content-Language" content="th">
         <?php $this->head() ?>
     </head>
     <body class="">
