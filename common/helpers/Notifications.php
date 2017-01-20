@@ -113,19 +113,19 @@ class Notifications {
 
     public static function DashboarMovementorderLastDay() {
         $orderLastDay = \common\models\costfit\Order::find()
-        ->where('`order`.status >= 5 and date(`order`.`createDateTime`)>= date_add(curdate(),interval  0 day)')->sum('summary');
+        ->where('`order`.status >= 5 and  date(order.createDateTime) >= date_add(curdate(),interval  0 day) ')->sum('summary');
         return $orderLastDay;
     }
 
     public static function DashboarMovementorderLastWeek() {
         $orderLastWeek = \common\models\costfit\Order::find()
-        ->where('`order`.status >= 5 and   createDateTime BETWEEN (NOW() - INTERVAL 7 DAY) AND NOW()')->sum('summary');
+        ->where('`order`.status >= 5 and order.createDateTime BETWEEN (NOW() - INTERVAL 7 DAY) AND NOW() ')->sum('summary');
         return $orderLastWeek;
     }
 
     public static function DashboarMovementorderLastMONTH() {
         $orderLastMONTH = \common\models\costfit\Order::find()
-        ->where(' `order`.status >= 5   and  MONTH(curdate()) = MONTH(createDateTime) and year(createDateTime) = year(curdate()) ')->sum('summary');
+        ->where(' `order`.status >= 5  and (NOW() - INTERVAL 1 MONTH) <= (NOW() ) ')->sum('summary');
         return $orderLastMONTH;
     }
 
