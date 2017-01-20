@@ -13,6 +13,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\models\costfit\ProductSuppliers;
+use common\helpers\CozxyUnity;
 
 /**
  * Products controller
@@ -26,7 +27,7 @@ class ProductsController extends MasterController {
                 'only' => ['create', 'update'],
                 'rules' => [
                     // deny all POST requests
-                        [
+                    [
                         'allow' => false,
                         'verbs' => ['POST']
                     ],

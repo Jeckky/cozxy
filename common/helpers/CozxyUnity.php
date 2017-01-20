@@ -201,14 +201,19 @@ class CozxyUnity {
     public static function GetParams($hash, $title) {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
-        return $params;
+        $productIds = $params['productId'];
+        return $productIds;
     }
 
-    public function getTitleProductMeta() {
-        $productId = CozxyUnity::GetParams(Yii::$app->request->get('productId'), '');
+    public static function GetTitleProductMeta($hash) {
+        $productId = CozxyUnity::GetParams($hash, '');
         $getTitleProduct = \common\models\costfit\Product::find()->where("productId ='" . $productId . "'")->one();
-
         return $getTitleProduct;
+    }
+
+    public static function curPageURL($hash) {
+        $get = CozxyUnity::GetTitleProductMeta($hash, '');
+        return $get;
     }
 
 }

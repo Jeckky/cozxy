@@ -75,6 +75,11 @@ class MasterController extends MasterCommonController {
             $this->view->params['listDataProvider']['shipping'] = $dataProvider_picking_point;
             $this->view->params['listDataProvider']['billing'] = $dataProvider_billing;
         }
+        if ($this->id == 'products') {
+            $uri = explode('/', $_SERVER["REQUEST_URI"]);
+            //echo 'REQUEST_URI = ' . $uri[2];
+            $this->view->params['listDataProvider']['tagMeta'] = CozxyUnity::curPageURL($uri[2]);
+        }
     }
 
     public function getToken() {
