@@ -207,7 +207,7 @@ class PickingPointItems extends \common\models\costfit\master\PickingPointItemsM
          * */
         $CountChannelsInspector = \common\models\costfit\PickingPointItems::find()
         ->where("`picking_point_items`.pickingId = '" . $pickingId . "' "
-        . " and (select order_item_packing.status from costfit_test.order_item_packing "
+        . " and (select order_item_packing.status from order_item_packing "
         . "where order_item_packing.pickingItemsId = `picking_point_items`.pickingItemsId  limit 1)  = 8")
         ->count();
         //if (count($CountChannelsInspector) > 0) {
@@ -231,7 +231,7 @@ class PickingPointItems extends \common\models\costfit\master\PickingPointItemsM
          * */
         $CountChannelsInspector = \common\models\costfit\PickingPointItems::find()
         ->where("`picking_point_items`.pickingId = '" . $pickingId . "' "
-        . " and (select order_item_packing.status from costfit_test.order_item_packing "
+        . " and (select order_item_packing.status from order_item_packing "
         . "where order_item_packing.pickingItemsId = `picking_point_items`.pickingItemsId  limit 1)  in(8) ") // in(8, 10)  ช่องที่ต้องตรวจสอบ
         ->one();
         //if (count($CountChannelsInspector) > 0) {
