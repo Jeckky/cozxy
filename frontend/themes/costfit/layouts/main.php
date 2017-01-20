@@ -37,6 +37,7 @@ if (Yii::$app->controller->id == 'products') {
         <meta name="author" content="cozxy.com">
         <meta itemprop="name" content="cozxy.com">
         <meta itemprop="description" content="<?= Html::encode(isset($description) ? $description . ' : cozxy.com' : "My cozxy.com") ?>">
+        <link href="<?php echo $baseUrl; ?>/images/logo/cozxy.ico" rel="shortcut icon" type="image/x-icon" />
         <meta itemprop="image" content="<?php echo $baseUrl; ?>/images/ContentGroup/TwpF5Rm9-d.png">
         <link rel="image_src" type="image/jpeg" href="<?php echo $baseUrl; ?>/images/ContentGroup/TwpF5Rm9-d.png">
         <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
