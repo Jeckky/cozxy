@@ -166,7 +166,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     ],
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
-                        'template' => '{view} ',
+                        'template' => ' ',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-eye"></i>', Yii::$app->homeUrl . 'suppliers/product-image-suppliers/view?id=' . $model->productImageId . '&productSuppId=' . $model->productSuppId, [
