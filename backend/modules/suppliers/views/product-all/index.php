@@ -78,22 +78,8 @@ use yii\widgets\Pjax;
             // 'createDateTime',
             // 'updateDateTime',
             //'image',
-            [
-                'attribute' => 'image',
-                'format' => 'html',
-                'value' => function($model) {
-                    return Html::a('<i class="fa fa-picture-o"></i> เพิ่มรูปภาพ', Yii::$app->homeUrl . "suppliers/product-suppliers/image-form?productSuppId=" . $model->productSuppId, [
-                        'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
-                }
-            ],
-            [
-                'attribute' => 'ราคา',
-                'format' => 'html',
-                'value' => function($model) {
-                    return Html::a('<i class="fa fa-btc"></i> เพิ่มราคาขาย', Yii::$app->homeUrl . "suppliers/product-price-suppliers?productSuppId=" . $model->productSuppId, [
-                        'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
-                }
-            ],
+
+
             /*
               [
               'attribute' => 'Smart',

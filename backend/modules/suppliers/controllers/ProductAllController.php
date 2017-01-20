@@ -24,4 +24,31 @@ class ProductAllController extends SuppliersMasterController {
         ]);
     }
 
+    public function actionView($id) {
+
+        //$images = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId =' . $id)->one();
+        $dataProviderImages = new ActiveDataProvider([
+            'query' => \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $id),
+        ]);
+
+        return $this->render('view', [
+            'model' => $this->findModel($id), 'dataProviderImages' => $dataProviderImages
+        ]);
+    }
+
+    /**
+     * Finds the ProductSuppliers model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param string $id
+     * @return ProductSuppliers the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id) {
+        if (($model = ProductSuppliers::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
 }
