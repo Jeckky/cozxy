@@ -234,10 +234,10 @@ class LedItemController extends LedItemMasterController
         $model = LedItem::find()->where("ledItemId=" . $id)->one();
         if (isset($model) && !empty($model)) {
             if ($type == 'on') {
-                file_get_contents('http://' . $model->led->ip . "?id=$model->sortOrder&status=1&r=" . $model->ledColor->r . "&g=" . $model->ledColor->g . "&b=" . $model->ledColor->b . "&e", NULL, NULL, 0, 0);
+                @file_get_contents('http://' . $model->led->ip . "?id=$model->sortOrder&status=1&r=" . $model->ledColor->r . "&g=" . $model->ledColor->g . "&b=" . $model->ledColor->b . "&e", NULL, NULL, 0, 0);
                 $model->status = 1;
             } else {
-                file_get_contents('http://' . $model->led->ip . "?id=$model->sortOrder&status=0&r=" . $model->ledColor->r . "&g=" . $model->ledColor->g . "&b=" . $model->ledColor->b . "&e", NULL, NULL, 0, 0);
+                @file_get_contents('http://' . $model->led->ip . "?id=$model->sortOrder&status=0&r=" . $model->ledColor->r . "&g=" . $model->ledColor->g . "&b=" . $model->ledColor->b . "&e", NULL, NULL, 0, 0);
                 $model->status = 0;
             }
             $model->save(false);
