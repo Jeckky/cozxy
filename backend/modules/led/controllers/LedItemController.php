@@ -12,19 +12,21 @@ use yii\filters\VerbFilter;
 /**
  * LedItemController implements the CRUD actions for LedItem model.
  */
-class LedItemController extends LedItemMasterController {
+class LedItemController extends LedItemMasterController
+{
 
     /**
      * @inheritdoc
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
                     // allow authenticated users
-                        [
+                    [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -44,7 +46,8 @@ class LedItemController extends LedItemMasterController {
      * Lists all LedItem models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         // $model = new LedItem();
         $query = LedItem::find();
         $count = 0;
@@ -58,9 +61,9 @@ class LedItemController extends LedItemMasterController {
         ]);
 
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
-                    //'model' => $model,
-                    'count' => $count
+            'dataProvider' => $dataProvider,
+            //'model' => $model,
+            'count' => $count
         ]);
     }
 
@@ -69,9 +72,10 @@ class LedItemController extends LedItemMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -80,7 +84,8 @@ class LedItemController extends LedItemMasterController {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
 
         $model = new LedItem();
         $defultColor = ['1', '2', '3', '4', '5'];
@@ -129,11 +134,11 @@ class LedItemController extends LedItemMasterController {
             }
         } else {
             return $this->render('create', [
-                        'model' => $model,
-                        //'defultColor' => $defultColor,
-                        'oldColor' => $oldColor,
-                        'sort' => $sort,
-                        'allColor' => $allColor
+                'model' => $model,
+                //'defultColor' => $defultColor,
+                'oldColor' => $oldColor,
+                'sort' => $sort,
+                'allColor' => $allColor
             ]);
         }
     }
@@ -144,7 +149,8 @@ class LedItemController extends LedItemMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $allColor = \common\models\costfit\LedColor::find()->all();
         $c = 0;
 //        foreach ($allColor as $color):
@@ -184,11 +190,11 @@ class LedItemController extends LedItemMasterController {
             }
         } else {
             return $this->render('update', [
-                        'model' => $model,
-                        // 'defultColor' => $defultColor,
-                        'oldColor' => $oldColor,
-                        'sort' => $sort,
-                        'allColor' => $allColor
+                'model' => $model,
+                // 'defultColor' => $defultColor,
+                'oldColor' => $oldColor,
+                'sort' => $sort,
+                'allColor' => $allColor
             ]);
         }
     }
@@ -199,7 +205,8 @@ class LedItemController extends LedItemMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         //  throw new \yii\base\Exception($id);
         $led = \common\models\costfit\LedItem::find()->where("ledItemId=" . $id)->one();
         $this->findModel($id)->delete();
@@ -213,7 +220,8 @@ class LedItemController extends LedItemMasterController {
      * @return LedItem the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id) {
+    protected function findModel($id)
+    {
         if (($model = LedItem::findOne($id)) !== null) {
             return $model;
         } else {
@@ -221,12 +229,15 @@ class LedItemController extends LedItemMasterController {
         }
     }
 
-    public function actionChange($id, $type) {
+    public function actionChange($id, $type)
+    {
         $model = LedItem::find()->where("ledItemId=" . $id)->one();
         if (isset($model) && !empty($model)) {
             if ($type == 'on') {
+                file_get_contents('http://' . $model->led->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0);
                 $model->status = 1;
             } else {
+                file_get_contents('http://' . $model->led->ip . "?id=$id&status=0&r=$r&g=$g&b=$b", NULL, NULL, 0, 0);
                 $model->status = 0;
             }
             $model->save(false);
