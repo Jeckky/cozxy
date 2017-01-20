@@ -102,4 +102,9 @@ class LedItem extends \common\models\costfit\master\LedItemMaster
         return $this->hasOne(LedColor::className(), ['ledColorId' => 'color']);
     }
 
+    public function getLed()
+    {
+        return $this->hasOne(Led::className(), ['ledId' => 'ledId']);
+    }
+
 }
