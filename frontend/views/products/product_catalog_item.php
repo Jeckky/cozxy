@@ -221,7 +221,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <div class="col-lg-6 col-md-6" id="productImage">
     <?php echo $this->render('_product_image', ['model' => $model, 'productSupplierId' => $productSupplierId]); ?>
     <div class="row">
-        <div class="col-lg-8 col-md-8 col-sm-7">
+        <div class="col-lg-12 col-md-12 col-sm-12">
             <h3>Tags</h3>
             <div class="tags">&nbsp;
                 <?php
