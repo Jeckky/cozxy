@@ -30,13 +30,13 @@ if (Yii::$app->controller->id == 'products') {
         <meta charset="<?= Yii::$app->charset ?>"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <?= Html::csrfMetaTags() ?>
-        <title><?= Html::encode($title) ?></title>
+        <title><?= Html::encode(isset($title) ? $title : 'COZXY.COM LOWEST PRICE PRODUCTS') ?></title>
         <meta http-equiv="Cache-Control" content="no-store">
         <meta http-equiv="Pragma" content="no-cache">
-        <meta name="KeyWords" content="<?= Html::encode($keyWords) ?>">
+        <meta name="KeyWords" content="<?= Html::encode(isset($keyWords) ? $keyWords : 'COZXY.COM LOWEST PRICE PRODUCTS') ?>">
         <meta name="author" content="cozxy.com">
         <meta itemprop="name" content="cozxy.com">
-        <meta itemprop="description" content="<?= Html::encode($description) ?>">
+        <meta itemprop="description" content="<?= Html::encode(isset($description) ? $description : 'COZXY.COM LOWEST PRICE PRODUCTS') ?>">
         <meta itemprop="image" content="<?php echo $baseUrl; ?>/images/ContentGroup/TwpF5Rm9-d.png">
         <link rel="image_src" type="image/jpeg" href="<?php echo $baseUrl; ?>/images/ContentGroup/TwpF5Rm9-d.png">
         <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
