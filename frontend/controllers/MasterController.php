@@ -77,7 +77,8 @@ class MasterController extends MasterCommonController {
         }
         if ($this->id == 'products') {
             $uri = explode('/', $_SERVER["REQUEST_URI"]);
-            echo 'REQUEST_URI = ' . $uri[2];
+            //echo 'REQUEST_URI = ' . $uri[2];
+            //http://192.168.100.20/cost.fit/frontend/web/products/V52KtMKZH6TM5OIjK4zdfQNvRT3EiR9mCcNVFO_afKddRLAHkAyJApKgm80ScAW1
             $this->view->params['listDataProvider']['tagMeta'] = CozxyUnity::curPageURL($uri[2]);
         }
     }
