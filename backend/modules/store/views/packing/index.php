@@ -30,7 +30,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <tbody>
                     <tr>
                         <th style="vertical-align: middle;text-align: center;"><h4><b>Order No QR code : </b></h4></th>
-                        <td><?= \yii\helpers\Html::textInput('productQr', NULL, ['class' => 'input-lg', 'autofocus' => 'autofocus']); ?><?= isset($ms) && $ms != '' ? ' <code> ' . $ms . '</code>' : '' ?></td>
+                        <td><?= \yii\helpers\Html::textInput('orderNo', NULL, ['class' => 'input-lg', 'autofocus' => 'autofocus']); ?><?= isset($ms) && $ms != '' ? ' <code> ' . $ms . '</code>' : '' ?></td>
                     </tr>
                 </tbody>
             </table>
