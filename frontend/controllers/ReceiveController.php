@@ -50,7 +50,7 @@ class ReceiveController extends MasterController {
                     if (count($orderItem) == 0) { // เชคว่า มี สินค้าที่ยังไม่ได้ รับหรือไม่ ถ้าไม่มี รับไม่ได้
                         $ms = 'รายการนี้ได้รับสินค้าไปแล้ว';
                         return $this->render('error', [
-                            'ms' => $ms
+                                    'ms' => $ms
                         ]);
                     }
                 }
@@ -61,9 +61,9 @@ class ReceiveController extends MasterController {
                         $tel = $address->tel;
                     }
                     return $this->render('detail', [
-                        'user' => $user,
-                        'tel' => $tel,
-                        'orderId' => $order->orderId
+                                'user' => $user,
+                                'tel' => $tel,
+                                'orderId' => $order->orderId
                     ]);
                 } else {
                     $ms = 'ไม่พบรายชื่อของท่าน';
@@ -73,12 +73,12 @@ class ReceiveController extends MasterController {
             }
             if ($ms != '') {//ถ้าไม่เจอรายการ แสดงข้อความ แล้วกลับไปหน้าเดิม
                 return $this->render('error', [
-                    'ms' => $ms
+                            'ms' => $ms
                 ]);
             }
         }
         return $this->render('index', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -89,7 +89,7 @@ class ReceiveController extends MasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -105,7 +105,7 @@ class ReceiveController extends MasterController {
             return $this->redirect(['view', 'id' => $model->receiveId]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -123,7 +123,7 @@ class ReceiveController extends MasterController {
             return $this->redirect(['view', 'id' => $model->receiveId]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -149,7 +149,9 @@ class ReceiveController extends MasterController {
                 $user = User::find()->where("userId=" . $order->userId)->one();
                 if (isset($user) && !empty($user)) {
                     $otp = $this->genOtp();
+                    $ref = $this->genRefNo();
                     $order->otp = $otp;
+                    $order->refNo = $ref;
                     $order->updateDateTime = new \yii\db\Expression('NOW()');
                     $order->save(false);
                     $receive = new Receive();
@@ -158,16 +160,18 @@ class ReceiveController extends MasterController {
                     $receive->password = $order->password;
                     $receive->pickingId = $order->pickingId;
                     $receive->otp = $otp;
+                    $receive->refNo = $ref;
                     $receive->isUse = 0;
                     $receive->status = 1;
                     $receive->createDateTime = new \yii\db\Expression('NOW()');
                     $receive->updateDateTime = new \yii\db\Expression('NOW()');
                     if ($receive->save(false)) {
                         return $this->render('receive', [
-                            'userId' => $user->userId,
-                            'tel' => $tel,
-                            'password' => $order->password,
-                            'orderId' => $order->orderId
+                                    'userId' => $user->userId,
+                                    'tel' => $tel,
+                                    'password' => $order->password,
+                                    'orderId' => $order->orderId,
+                                    'refNo' => $order->refNo
                         ]);
                     }
                 } else {
@@ -188,7 +192,7 @@ class ReceiveController extends MasterController {
         $check = [];
         $i = 0;
         $time = false;
-        $receive = Receive::find()->where("otp='" . $_POST['otp'] . "' and orderId=" . $_POST['orderId'] . " and userId=" . $_POST['userId'] . " and password='" . $_POST['password'] . "'")->one();
+        $receive = Receive::find()->where("otp='" . $_POST['otp'] . "' and orderId=" . $_POST['orderId'] . " and userId=" . $_POST['userId'] . " and password='" . $_POST['password'] . "' and refNo='" . $_POST['refNo'] . "' and status=1 and isUse=0")->one();
         if (isset($receive) && !empty($receive)) {
             $time = $this->checkTime($receive->updateDateTime);
             if ($time == true) {//ถ้าเวลา ไม่เกิน 5 นาที
@@ -224,14 +228,14 @@ class ReceiveController extends MasterController {
                             // รอ อัพเดทสถานะ เป็นลูกค้ารับของแล้ว order orderItem orderItemPacking
                             //$order->status=16;
                             //$order->save();//รับของแล้ว
-                            $this->updateOrder($order->orderId, $_POST['otp'], $_POST['userId'], $_POST['password']);
+                            $this->updateOrder($order->orderId, $_POST['otp'], $_POST['userId'], $_POST['password'], $_POST['refNo']);
                             return $this->render('thank', [
-                                'userId' => $_POST['userId'],
-                                'tel' => $_POST['tel'],
-                                'password' => $_POST['password'],
-                                'orderId' => $_POST['orderId'],
-                                'locker' => $allLocker,
-                                'ms' => $ms
+                                        'userId' => $_POST['userId'],
+                                        'tel' => $_POST['tel'],
+                                        'password' => $_POST['password'],
+                                        'orderId' => $_POST['orderId'],
+                                        'locker' => $allLocker,
+                                        'ms' => $ms
                             ]);
                         } else {
                             $ms = 'ยังไม่มีรายการพัสดุของคุณใน locker ใดเลย';
@@ -245,19 +249,48 @@ class ReceiveController extends MasterController {
             } else {
                 $ms = 'รหัสผ่านหมดเวลาการใช้งาน กรุณากดรับรหัสใหม่';
                 return $this->render('error', [
-                    'ms' => $ms
+                            'ms' => $ms
                 ]);
             }
         } else {
             $ms = 'รหัสผ่านไม่ถูกต้อง';
             return $this->render('receive', [
-                'userId' => $_POST['userId'],
-                'tel' => $_POST['tel'],
-                'password' => $_POST['password'],
-                'orderId' => $_POST['orderId'],
-                'ms' => $ms
+                        'userId' => $_POST['userId'],
+                        'tel' => $_POST['tel'],
+                        'password' => $_POST['password'],
+                        'orderId' => $_POST['orderId'],
+                        'ms' => $ms,
+                        'refNo' => $_POST['refNo']
             ]);
         }
+    }
+
+    public function actionGenNewOtp() {
+        $userId = $_POST["userId"];
+        $orderId = $_POST["orderId"];
+        $tel = $_POST["tel"];
+        $otp = $this->genOtp();
+        $refNo = $this->genRefNo();
+        $order = Order::find()->where("orderId=" . $orderId . " and userId=" . $userId)->one();
+        if (isset($order) && !empty($order)) {
+            $order->otp = $otp;
+            $order->refNo = $refNo;
+            $order->updateDateTime = new \yii\db\Expression('NOW()');
+            $order->save(FALSE);
+            $receive = new Receive();
+            $receive->orderId = $orderId;
+            $receive->userId = $order->userId;
+            $receive->password = $order->password;
+            $receive->pickingId = $order->pickingId;
+            $receive->otp = $otp;
+            $receive->refNo = $refNo;
+            $receive->isUse = 0;
+            $receive->status = 1;
+            $receive->createDateTime = new \yii\db\Expression('NOW()');
+            $receive->updateDateTime = new \yii\db\Expression('NOW()');
+            $receive->save(FALSE);
+        }
+        return $refNo;
     }
 
     protected function checkTime($time) {
@@ -315,7 +348,31 @@ class ReceiveController extends MasterController {
         return $otp;
     }
 
-    protected function updateOrder($orderId, $otp, $userId, $password) {
+    protected function genRefNo() {
+        $flag = false;
+        $characters = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
+        $ref = '';
+        $charactersLength = strlen($characters);
+        for ($i = 0; $i < 8; $i++) {
+            $n = $characters[rand(0, $charactersLength - 1)];
+            $ref = $ref . $n;
+        }
+        while ($flag == false) {
+            $order = Order::find()->where("refNo='" . $ref . "' and status!=16")->one(); //Gen OTP จนกว่าจะได้เลขไม่ซ้ำ
+            if (isset($order) && !empty($order)) {
+                $ref = '';
+                for ($j = 0; $j < 8; $j++) {
+                    $n = $characters[rand(0, $charactersLength - 1)];
+                    $ref = $ref . $n;
+                }
+            } else {
+                $flag = true;
+            }
+        }
+        return $ref;
+    }
+
+    protected function updateOrder($orderId, $otp, $userId, $password, $refNo) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (isset($order) && !empty($order)) {
             $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId . " and status=15")->all(); //หาorderItem ที่สถานะ = นำจ่ายแล้ว
@@ -336,9 +393,9 @@ class ReceiveController extends MasterController {
             $order->status = 16;
             $order->updateDateTime = new \yii\db\Expression('NOW()');
             $order->save(false);
-            $receive = Receive::find()->where("orderId=" . $order->orderId . " and userId=" . $userId . " and otp='" . $otp . "' and password='" . $password . "'")->one();
+            $receive = Receive::find()->where("orderId=" . $order->orderId . " and userId=" . $userId . " and otp='" . $otp . "' and password='" . $password . "' and refNo='" . $refNo . "'")->one();
             $receive->status = 2;
-            $receive->save();
+            $receive->save(FALSE);
         }
     }
 

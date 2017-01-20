@@ -318,6 +318,19 @@ $(document).ready(function (e) {
             }
         });
     });
+    $("#resetOtp").on("click", function (e) {
+        var orderId = $(this).parent().parent().parent().find("#orderId").val();
+        var tel = $(this).parent().parent().parent().find("#tel").val();
+        var userId = $(this).parent().parent().parent().find("#userId").val();
+        $.ajax({
+            type: "POST",
+            url: $baseUrl + '/receive/gen-new-otp',
+            data: {orderId: orderId, tel: tel, userId: userId},
+            success: function (data) {
+                $('.refNo').html('<h4 class="text-center refNo"> Ref No : ' + data + '</h4>');
+            }
+        });
+    });
 });/*Document Ready End*//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
