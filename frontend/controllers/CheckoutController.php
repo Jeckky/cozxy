@@ -173,7 +173,7 @@ class CheckoutController extends MasterController {
             $placeUserId = (Yii::$app->request->post('placeUserId') != '') ? Yii::$app->request->post('placeUserId') : \Yii::$app->user->id;
             $notes = Yii::$app->request->post('notes');
             $placeOrderId = Yii::$app->request->post('placeOrderId');
-            // echo 'billing : ' . $billing;
+            //echo 'billing : ' . $billing;
 
             if (isset($billing)) {
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . $placeUserId . ' and addressId =' . $billing)
@@ -243,6 +243,7 @@ class CheckoutController extends MasterController {
                         //$this->updateSupplierStock($order);
                         //$order->status = Order::ORDER_STATUS_CHECKOUTS;
                         $order->save(false);
+                        //throw new \yii\base\Exception($order->orderId);
                         $this->redirect(Yii::$app->homeUrl . 'checkout/confirm-checkout/' . $order->encodeParams(['orderId' => $order->orderId]));
                     }
                 }
@@ -266,7 +267,7 @@ class CheckoutController extends MasterController {
     }
 
     public function actionConfirmCheckout($hash) {
-
+        throw new \yii\base\Exception("aaaa");
         $k = base64_decode(base64_decode($hash));
         $params = ModelMaster::decodeParams($hash);
         $orderId = $params['orderId'];

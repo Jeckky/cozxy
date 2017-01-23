@@ -342,3 +342,52 @@ $(document).on('keyup', '.productQr', function (event) {
         });
     }
 });
+$(document).on('click', '.deleteR', function () {
+    var returnId = $(this).parent().parent().find("#pSuppId").val();
+    var orderId = $(this).parent().parent().find("#pOrderId").val();
+    var url = $baseUrl + 'returnproduct/return-product/delete-return-list';
+    $.ajax({
+        url: url,
+        data: {returnId: returnId, pOrderId: orderId},
+        dataType: 'JSON',
+        type: 'POST',
+        success: function (data) {
+            if (data.status) {
+
+                $('#returnList').html(data.dataList);
+            } else {
+                $('#returnList').html('');
+            }
+            //$('#returnList').fadeToggle('fade')
+        },
+
+    });
+});
+$(document).on('click', '#incr-return', function () {
+    var button = $(this);
+    var returnId = $(this).parent().parent().find("#pSuppId").val();
+    var orderId = $(this).parent().parent().find("#pOrderId").val();
+    var qntyReturn = $(this).parent().find("#qnty-return" + returnId).val();
+    var incr = '';
+    if (button.val() == "+") {
+        incr = "+";
+    } else {
+        incr = "-";
+    }
+    var url = $baseUrl + 'returnproduct/return-product/change-quantity-return-list';
+    $.ajax({
+        url: url,
+        data: {returnId: returnId, orderId: orderId, qnty: qntyReturn, incr: incr},
+        dataType: 'JSON',
+        type: 'POST',
+        success: function (data) {
+            if (data.status) {
+                $("#qnty-return" + returnId).val(data.quantity);
+            } else {
+                alert(data.messege);
+            }
+        },
+
+    });
+
+});

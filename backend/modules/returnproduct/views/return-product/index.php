@@ -12,8 +12,8 @@ use yii\widgets\ActiveForm;
 <div class="order-index">
     <?php Pjax::begin(['id' => 'return-product']); ?>
     <div class="panel panel-default">
-        <div class="panel-heading"  style="background-color: #ccffcc;vertical-align: middle;">
-            <span class="panel-title"><h3>รับสินค้าคืน</h3></span>
+        <div class="panel-heading"  style="background-color: #000;vertical-align: middle;">
+            <span class="panel-title"><h3 style="color:#ffcc00;">รับสินค้าคืน</h3></span>
         </div>
         <div class="panel-body">
 
@@ -52,8 +52,8 @@ use yii\widgets\ActiveForm;
 <div class="order-index">
     <?php Pjax::begin(['id' => 'return-product']); ?>
     <div class="panel panel-default">
-        <div class="panel-heading"  style="background-color: #ffffcc;vertical-align: middle;">
-            <span class="panel-title"><h3>เงื่อนไขการรับคืน</h3></span>
+        <div class="panel-heading"  style="background-color: #999999;vertical-align: middle;">
+            <span class="panel-title"><h3 style="color:#ffcc00;">เงื่อนไขการรับคืน</h3></span>
         </div>
         <div class="panel-body">
 

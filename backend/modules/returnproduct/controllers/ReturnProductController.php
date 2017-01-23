@@ -64,53 +64,159 @@ class ReturnProductController extends ReturnProductMasterController {
     public function actionReturnList() {
         $res = [];
         $body = '';
-        $producSupp = ProductSuppliers::find()->where("isbn='" . $_POST["isbn"] . "'")->one();
-        if (isset($producSupp) && !empty($producSupp)) {
-            $orderItems = OrderItem::find()->where("productSuppId=" . $producSupp->productSuppId . " and orderId=" . $_POST["orderId"])->all();
-            if (isset($orderItems) && !empty($orderItems)) {
-                $header = '<table class="table">' .
-                        '<tr style="height: 50px;background-color: #999999;">' .
-                        '<th style="vertical-align: middle;text-align: center;width: 10%;">ลำดับที่</th>' .
-                        '<th style="vertical-align: middle;text-align: center;width: 30%;">สินค้า</th>' .
-                        '<th style="vertical-align: middle;text-align: center;width: 15%;">จำนวนที่สั่งซื้อ</th>' .
-                        '<th style="vertical-align: middle;text-align: center;width: 35%;">จำนวนที่ต้องการคืน</th>' .
-                        '<th style="vertical-align: middle;text-align: center;width: 10%;">ยกเลิก</th>' .
-                        '</tr>';
-                foreach ($orderItems as $item):
-                    $returns = new ReturnProduct();
-                    $returns->orderId = $_POST["orderId"];
-                    $returns->orderItemId = $item->orderItemId;
-                    $returns->productSuppId = $item->productSuppId;
-                    $returns->quantity = 1;
-                    $returns->price = ProductSuppliers::productPrice($item->productSuppId);
-                    $returns->receiver = Yii::$app->user->identity->userId;
-                    $returns->status = 1;
-                    $returns->createDateTime = new \yii\db\Expression('NOW()');
-                    $returns->updateDateTime = new \yii\db\Expression('NOW()');
-                    $returns->save(false);
-                endforeach;
-                $returnItems = ReturnProduct::find()->where("orderId=" . $_POST["orderId"])->all();
-                $i = 1;
-                foreach ($returnItems as $rItem):
-                    $body = $body . '<tr style="height: 50px;">' . '<td style="vertical-align: middle;text-align: center;">' . $i . '</td>' .
-                            '<td style="vertical-align: middle;text-align: center;">' . $producSupp->title . '</td>' .
-                            '<td style="vertical-align: middle;text-align: center;">' . $rItem->quantity . '</td>' .
-                            '<td style="vertical-align: middle;text-align: center;"><button class="btn-md"> - </button> <input type="text" class="text-center" style="width:35px;height:35px;"> <button class="btn-md"> + </button></td>' .
-                            '<td style="vertical-align: middle;text-align: center;font-size:25pt;"><i class="fa fa-times-circle" id="deleteR' . $rItem->returnProductId . '" aria-hidden="true" style="cursor: pointer;"></i></td>' .
-                            '</tr>';
-                    $i++;
-                endforeach;
-                $footer = '<table>';
-                $res["dataList"] = $header . $body . $footer;
-                $res["errors"] = '1';
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        $productSuppId = $this->supplierId($_POST["isbn"], $_POST["orderId"]);
+
+        if ($productSuppId != '') {
+            $productSuppId = trim($productSuppId);
+            $producSupp = ProductSuppliers::find()->where("isbn='" . $_POST["isbn"] . "' and productSuppId=" . $productSuppId)->one();
+            if (isset($producSupp) && !empty($producSupp)) {
+                $orderItems = OrderItem::find()->where("productSuppId=" . $producSupp->productSuppId . " and orderId=" . $_POST["orderId"])->all();
+                if (isset($orderItems) && !empty($orderItems)) {
+                    $header = $this->tableHeader();
+                    foreach ($orderItems as $item):
+                        $returns = new ReturnProduct();
+                        $returns->orderId = $_POST["orderId"];
+                        $returns->orderItemId = $item->orderItemId;
+                        $returns->productSuppId = $item->productSuppId;
+                        $returns->quantity = 1;
+                        $returns->price = ProductSuppliers::productPrice($item->productSuppId);
+                        $returns->receiver = Yii::$app->user->identity->userId;
+                        $returns->status = 1;
+                        $returns->createDateTime = new \yii\db\Expression('NOW()');
+                        $returns->updateDateTime = new \yii\db\Expression('NOW()');
+                        $returns->save(false);
+                    endforeach;
+                    $returnItems = ReturnProduct::find()->where("orderId=" . $_POST["orderId"])->all();
+                    $i = 1;
+                    foreach ($returnItems as $rItem):
+                        $producSupp = ProductSuppliers::find()->where("productSuppId=" . $rItem->productSuppId)->one();
+                        $body = $body . '<tr style="height: 50px;">' . '<td style="vertical-align: middle;text-align: center;">' . $i . '</td>' .
+                                '<td style="vertical-align: middle;text-align: center;"><img src="' . $baseUrl . '/' . ProductSuppliers::productImagesSuppliers($rItem->productSuppId)[0]->image . '" style="width:150px;height: 100px;"><br>'
+                                . $producSupp->title . '</td>' .
+                                '<td style="vertical-align: middle;text-align: center;">' . $rItem->quantity . '</td>' .
+                                '<td style="vertical-align: middle;text-align: center;"><button class="btn-md" id="incr-return" value="-" > - </button> <input type="text" class="text-center" id="qnty-return' . $rItem->returnProductId . '" value="' . $rItem->quantity . '" style="width:35px;height:35px;" readonly="true"> <button class="btn-md" id="incr-return" value="+"> + </button></td>' .
+                                '<td style="vertical-align: middle;text-align: center;"><textarea name="remark[' . $rItem->returnProductId . ']"></textarea></td>' .
+                                '<input type="hidden" id="pSuppId" value="' . $rItem->returnProductId . '">' .
+                                '<input type="hidden" id="pOrderId" value="' . $rItem->orderId . '">' .
+                                '<td style="vertical-align: middle;text-align: center;font-size:25pt;"><i class="fa fa-times-circle deleteR" id="deleteR"' . $rItem->returnProductId . '" aria-hidden="true" style="cursor: pointer;"></i></td>' .
+                                '</tr>';
+                        $i++;
+                    endforeach;
+                    $footer = $this->tableFooter();
+                    $res["dataList"] = $header . $body . $footer;
+                    $res["errors"] = '1';
+                } else {
+                    $res["errors"] = "Product not found in this order";
+                }
             } else {
-                $res["errors"] = "Product not found in this order";
+                $res["errors"] = "Product not found";
             }
         } else {
             $res["errors"] = "Product not found";
         }
 
         return \yii\helpers\Json::encode($res);
+    }
+
+    public function actionConfirmReturn() {
+
+    }
+
+    public function actionDeleteReturnList() {
+        $res = [];
+        $body = '';
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        $returnProductId = $_POST["returnId"];
+        $returnProduct = ReturnProduct::find()->where("returnProductId=" . $returnProductId)->one();
+        if (isset($returnProduct) && !empty($returnProduct)) {
+            $returnProduct->delete();
+            $items = count(ReturnProduct::find()->where("orderId=" . $_POST['pOrderId'])->all());
+            if ($items > 0) {
+                $header = $this->tableHeader();
+                $returnItems = ReturnProduct::find()->where("orderId=" . $_POST["pOrderId"])->all();
+                $i = 1;
+                foreach ($returnItems as $rItem):
+                    $producSupp = ProductSuppliers::find()->where("productSuppId=" . $rItem->productSuppId)->one();
+                    $body = $body . '<tr style="height: 50px;">' . '<td style="vertical-align: middle;text-align: center;">' . $i . '</td>' .
+                            '<td style="vertical-align: middle;text-align: center;"><img src="' . $baseUrl . '/' . ProductSuppliers::productImagesSuppliers($rItem->productSuppId)[0]->image . '" style="width:150px;height: 100px;"><br>'
+                            . $producSupp->title . '</td>' .
+                            '<td style="vertical-align: middle;text-align: center;">' . $rItem->quantity . '</td>' .
+                            '<td style="vertical-align: middle;text-align: center;"><button class="btn-md" id="incr-return" value="-"> - </button> <input type="text" class="text-center" id="qnty-return' . $rItem->returnProductId . '" value="' . $rItem->quantity . '" style="width:35px;height:35px;" readonly="true"> <button class="btn-md" id="incr-return" value="+"> + </button></td>' .
+                            '<td style="vertical-align: middle;text-align: center;"><textarea name="remark[' . $rItem->returnProductId . ']"></textarea></td>' .
+                            '<input type="hidden" id="pSuppId" value="' . $rItem->returnProductId . '">' .
+                            '<input type="hidden" id="pOrderId" value="' . $rItem->orderId . '">' .
+                            '<td style="vertical-align: middle;text-align: center;font-size:25pt;"><i class="fa fa-times-circle deleteR" id="deleteR"' . $rItem->returnProductId . '" aria-hidden="true" style="cursor: pointer;"></i></td>' .
+                            '</tr>';
+                    $i++;
+                endforeach;
+                $footer = $this->tableFooter();
+                $res["dataList"] = $header . $body . $footer;
+                $res["status"] = TRUE;
+            }else {
+                $res["status"] = FALSE;
+            }
+        }
+
+        return \yii\helpers\Json::encode($res);
+    }
+
+    public function actionChangeQuantityReturnList() {
+        $orderId = $_POST["orderId"];
+        $returnId = $_POST["returnId"];
+        $currentQnty = $_POST["qnty"];
+        $type = $_POST["incr"];
+        $res = [];
+        if ($type == "+") {
+            $newQuantity = $currentQnty + 1;
+        } else {
+            $newQuantity = $currentQnty - 1;
+        }
+        $return = ReturnProduct::find()->where("returnProductId=" . $returnId)->one();
+        $orderItem = OrderItem::find()->where("orderItemId=" . $return->orderItemId . " and orderId=" . $orderId)->one();
+        if ($newQuantity <= 0) {
+            $res["quantity"] = 1;
+            $res["messege"] = "จำนวนที่ต้องการคืนต้องไม่น้อยกว่า 1 รายการ";
+            $res["status"] = FALSE;
+        } else if ($newQuantity > $orderItem->quantity) {
+            $res["quantity"] = $orderItem->quantity;
+            $res["messege"] = "จำนวนที่ต้องการคืนต้องไม่มากกว่าจำนวนที่ซื้อ(" . $orderItem->quantity . " รายการ)";
+            $res["status"] = FALSE;
+        } else {
+            $res["quantity"] = $newQuantity;
+            $res["status"] = TRUE;
+        }
+        $return->quantity = $res["quantity"];
+        $return->save(false);
+        return \yii\helpers\Json::encode($res);
+    }
+
+    public function supplierId($isbn, $orderId) {
+        $id = OrderItem::find()
+                ->join("LEFT JOIN", "product_suppliers ps", "order_item.productSuppId=ps.productSuppId")
+                ->where("ps.isbn='" . $isbn . "' and order_item.orderId=" . $orderId)
+                ->one();
+        if (isset($id) && !empty($id)) {
+            return $id->productSuppId;
+        } else {
+            return '';
+        }
+    }
+
+    public function tableHeader() {
+        return $header = '<table class="table">' .
+                '<tr style="height: 50px;background-color: #999999;">' .
+                '<th style="vertical-align: middle;text-align: center;width: 5%;">No.</th>' .
+                '<th style="vertical-align: middle;text-align: center;width: 30%;">สินค้า</th>' .
+                '<th style="vertical-align: middle;text-align: center;width: 10%;">สั่งซื้อ</th>' .
+                '<th style="vertical-align: middle;text-align: center;width: 35%;">จำนวนที่ต้องการคืน</th>' .
+                '<th style="vertical-align: middle;text-align: center;width: 15%;">Remark</th>' .
+                '<th style="vertical-align: middle;text-align: center;width: 5%;">ยกเลิก</th>' .
+                '</tr>';
+    }
+
+    public function tableFooter() {
+        return $footer = '</table>' . '<button type="submit" class="btn btn-lg btn-warning pull-right"><i class="fa fa-check-square-o" aria-hidden="true"></i> คืนสินค้า</button>';
     }
 
 }
