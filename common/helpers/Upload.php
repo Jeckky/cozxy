@@ -123,7 +123,7 @@ class Upload {
     }
 
     /*
-     * Upload File csv ของ Category ครั้งละรูป
+     * Upload File csv ของ Category ครั้งละไฟล์
      * Create date : 16/1/2017
      * By Taninut.BM
      * emial : taninut.b@cozxy.com , sodapew17@gmial.com
@@ -192,7 +192,7 @@ class Upload {
     }
 
     /*
-     * Upload File csv ของ Brand ครั้งละรูป
+     * Upload File csv ของ Brand ครั้งละไฟล์
      * Create date : 16/1/2017
      * By Taninut.BM
      * emial : taninut.b@cozxy.com , sodapew17@gmial.com
@@ -244,7 +244,7 @@ class Upload {
     }
 
     /*
-     * Upload File csv ของ Product ครั้งละรูป
+     * Upload File csv ของ Product ครั้งละไฟล์
      * Create date : 16/1/2017
      * By Taninut.BM
      * emial : taninut.b@cozxy.com , sodapew17@gmial.com
@@ -284,6 +284,7 @@ class Upload {
                                 $getModel->title = isset($hasil[5]) ? $hasil[5] : '';
                                 $getModel->optionName = isset($hasil[6]) ? $hasil[6] : '';
                                 $getModel->shortDescription = isset($hasil[7]) ? $hasil[7] : '';
+                                $newModel->description = isset($hasil[8]) ? $hasil[8] : '';
                                 $getModel->specification = isset($hasil[9]) ? $hasil[9] : '';
                                 $getModel->width = isset($hasil[10]) ? $hasil[10] : '';
                                 $getModel->height = isset($hasil[11]) ? $hasil[11] : '';
