@@ -10,6 +10,7 @@ use common\models\ModelMaster;
 use yii\helpers\Url;
 
 $MenuCategory = $this->context->actionMenuCategory();
+$baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <style>
     /*#test-menu{
@@ -70,8 +71,20 @@ $MenuCategory = $this->context->actionMenuCategory();
             </ul>
         </li>
     <?php endif; ?>
+    <li class="has-submenu pull-right">
+        <?php
+        //echo Html::a(Html::img($baseUrl . '/images/flags/flag_th.jpg'), Url::current(['language' => 'th-TH']), ['class' => (Yii::$app->request->cookies['language'] == 'th-TH' ? 'active' : ''), 'style' => ' margin-top: 5px']);
+        ?>
+    </li>
+    <li class="has-submenu pull-right">
+        <?php
+        //echo Html::a(Html::img($baseUrl . '/images/flags/flag_en.jpg'), Url::current(['language' => 'en-US']), ['class' => (Yii::$app->request->cookies['language'] == 'en-US' ? 'active' : ''), 'style' => ' margin-top: 5px']);
+        ?>
+    </li>
     <li class="has-submenu pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>coupon">Super special offers</a></li><!--ข้อเสนอพิเศษจากพาร์ทเนอร์-->
     <li class="has-submenu pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works">How Works</a></li>
+
+
 </ul>
 
 <!-- Show For Desktop -->
@@ -127,6 +140,16 @@ $MenuCategory = $this->context->actionMenuCategory();
         </ul>
     </li>
 <?php endif; ?>
+<li class="has-submenu pull-right">
+    <?php
+    //echo Html::a(Html::img($baseUrl . '/images/flags/flag_th.jpg'), Url::current(['language' => 'th-TH']), ['class' => (Yii::$app->request->cookies['language'] == 'th-TH' ? 'active' : ''), 'style' => ' margin-top: 5px']);
+    ?>
+</li>
+<li class="has-submenu pull-right">
+    <?php
+    //echo Html::a(Html::img($baseUrl . '/images/flags/flag_en.jpg'), Url::current(['language' => 'en-US']), ['class' => (Yii::$app->request->cookies['language'] == 'en-US' ? 'active' : ''), 'style' => ' margin-top: 5px']);
+    ?>
+</li>
 <li class="has-submenu pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works"><?= Yii::t('app', 'How Works') ?></a></li>
 <li class="has-submenu pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>coupon"><?= Yii::t('app', 'Super special offers') ?></a></li><!--ข้อเสนอพิเศษจากพาร์ทเนอร์-->
 
