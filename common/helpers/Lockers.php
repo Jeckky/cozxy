@@ -17,7 +17,20 @@ use yii\data\ActiveDataProvider;
  * Description of Lockers
  *
  * @author it
+ *
  */
 class Lockers {
+    /*
+     * แสดงสถานที่ตั้งของ Lockers
+     * Create date : 16/1/2017
+     * By Taninut.BM
+     * emial : taninut.b@cozxy.com , sodapew17@gmial.com
+     */
+
     //put your code here
+    public static function GetPickingPoint($pickingId) {
+        $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $pickingId . "'")->one();
+        return isset($listPoint) ? $listPoint : NULL;
+    }
+
 }

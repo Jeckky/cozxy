@@ -15,8 +15,6 @@ use yii\helpers\Json;
 use backend\controllers\EmailSend;
 use common\components\AccessRule;
 use common\models\User;
-use common\helpers\Lockers;
-use common\helpers\Local;
 
 class LockersController extends LockersMasterController {
 
@@ -68,18 +66,10 @@ class LockersController extends LockersMasterController {
 
         $pickingId = Yii::$app->request->get('boxcode');
         if ($pickingId != '') {
-
-            /* OLD , By Taninut.Bm */
-            //$listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $pickingId . "'")->one();
-            //$localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
-            //$localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
-            //$localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
-
-            /* Customize Date 21/01/2017 , By Taninut.Bm */
-            $listPoint = Lockers::GetPickingPoint($pickingId);
-            $localNamecitie = Local::Cities($listPoint->amphurId);
-            $localNamestate = Local::States($listPoint->provinceId);
-            $localNamecountrie = Local::Countries($listPoint->countryId);
+            $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $pickingId . "'")->one();
+            $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
+            $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
+            $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
 
             /*
              * API OPEN CAHNNELS LOCKERS To Hardware
@@ -90,22 +80,21 @@ class LockersController extends LockersMasterController {
              */
 
             $query = \common\models\costfit\PickingPointItems::find()
+            //->join('RIGHT JOIN', 'order_item_packing', 'order_item_packing.pickingItemsId =picking_point_items.pickingItemsId')
             ->where("picking_point_items.pickingId = '" . $pickingId . "'");
 
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
             ]);
 
-            // $point = PickingPoint::find()->where("pickingId=" . $pickingId)->one();
+            $point = PickingPoint::find()->where("pickingId=" . $pickingId)->one();
 
             return $this->render('lockers', [
                 'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
                 'citie' => $localNamecitie,
                 'countrie' => $localNamecountrie,
                 'state' => $localNamestate,
-                // 'point' => $point,
-                /* Customize Date 21/01/2017 , By Taninut.Bm */
-                'point' => $listPoint,
+                'point' => $point,
             ]);
         }
 
