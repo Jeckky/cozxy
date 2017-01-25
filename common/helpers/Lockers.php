@@ -28,9 +28,27 @@ class Lockers {
      */
 
     //put your code here
+
+    /*
+     * Get ข้อมูลของ PickingPoint
+     * Create Date : 25/01/2017
+     * By : Taninut.Bm
+     */
     public static function GetPickingPoint($pickingId) {
         $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $pickingId . "'")->one();
         return isset($listPoint) ? $listPoint : NULL;
+    }
+
+    /*
+     * Get ข้อมูลของ PickingPointItems
+     * Create Date : 25/01/2017
+     * By : Taninut.Bm
+     */
+
+    public static function GetPickingPointItems($pickingId) {
+        $query = \common\models\costfit\PickingPointItems::find()
+        ->where("picking_point_items.pickingId = '" . $pickingId . "'");
+        return $query;
     }
 
 }

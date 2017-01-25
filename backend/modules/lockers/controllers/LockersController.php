@@ -40,6 +40,12 @@ class LockersController extends LockersMasterController {
         ];
     }
 
+    /*
+     * หัวข้อ  : ฟอร์ม สแกน QR Code ของล็อกเกอร์ เพื่อตรวจความของสถานที่ของตู้.
+     * Updatetime : 25/01/2017
+     * By : Taninut.bm
+     */
+
     public function actionIndex() {
 
         $codes = Yii::$app->request->post('codes');
@@ -63,6 +69,12 @@ class LockersController extends LockersMasterController {
         // PickingPoint::openAllChannel($ip, $portIndexs, $macAddress) เรียกเปิดทุกช่อง
         return $this->render('index', ['txt' => $txt, 'codes' => $codes, 'data' => $data]);
     }
+
+    /*
+     * หัวข้อ  : Lockers / แสดงช่องของ Lockers ทั้งหมด จากการสแกน Qr code ของ Lockers
+     * Update time : 25/01/2017
+     * By : Taninut.Bm
+     */
 
     public function actionLockers() {
 
@@ -88,10 +100,12 @@ class LockersController extends LockersMasterController {
             /*
              * END API OPEN CAHNNELS LOCKERS
              */
-
-            $query = \common\models\costfit\PickingPointItems::find()
-            ->where("picking_point_items.pickingId = '" . $pickingId . "'");
-
+            /* OLD , By Taninut.Bm */
+            /* $query = \common\models\costfit\PickingPointItems::find()
+              ->where("picking_point_items.pickingId = '" . $pickingId . "'");
+             */
+            /* Customize Date 25/01/2017 , By Taninut.Bm */
+            $query = Lockers::GetPickingPointItems($pickingId);
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
             ]);
