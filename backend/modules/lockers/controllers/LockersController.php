@@ -150,14 +150,21 @@ class LockersController extends LockersMasterController {
 
         /* OLD , By Taninut.Bm */
         //$listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $boxcode . "'")->one();
-        /* Customize Date 21/01/2017 , By Taninut.Bm */
+        /* Customize Date 25/01/2017 , By Taninut.Bm */
         $listPoint = Lockers::GetPickingPoint($boxcode);
+        /* OLD , By Taninut.Bm */
+        //$listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channel . "' ")->one();
+        /* Customize Date 25/01/2017 , By Taninut.Bm */
+        $listPointItems = Lockers::GetPickingPointItemsParameters($boxcode, $channel);
+        /* OLD , By Taninut.Bm */
+        //$localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
+        //$localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
+        //$localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
+        /* Customize Date 25/01/2017 , By Taninut.Bm */
+        $localNamecitie = Local::Cities($listPoint->amphurId);
+        $localNamestate = Local::States($listPoint->provinceId);
+        $localNamecountrie = Local::Countries($listPoint->countryId);
 
-        $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channel . "' ")->one();
-
-        $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
-        $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
-        $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
         $orderId = '';
 
         //Check ว่า BagNo. นี้ มีอยู่ใน Lockers และช่องนี้ยัง //

@@ -51,4 +51,9 @@ class Lockers {
         return $query;
     }
 
+    public static function GetPickingPointItemsParameters($pickingId, $code) {
+        $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $pickingId . "' and  code = '" . $code . "' ")->one();
+        return $listPointItems;
+    }
+
 }
