@@ -31,13 +31,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
             <?= \yii\helpers\Html::textInput('isbn', NULL, ['class' => 'input-lg productQr', 'autofocus' => 'autofocus', 'placeholder' => 'Product Qr Code']); ?><?= isset($ms) && $ms != '' ? ' <code> ' . $ms . '</code>' : '' ?>
             <?php
-            Pjax::begin(['id' => 'confirm-return']);
             $form = ActiveForm::begin([
                         'method' => 'POST',
+                        'id' => 'returnDetail',
                         'action' => ['return-product/confirm-return'],
             ]);
             ?>
-            <input type="hidden" id="orderId" value="<?= $order->orderId ?>">
+            <input type="hidden" name="orderId" id="orderId" value="<?= $order->orderId ?>">
             <div id="returnList" style="margin-top: 10px;">
                 <?php if (isset($returnList) && !empty($returnList)) { ?>
                     <table class="table">
@@ -59,10 +59,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     <?= ProductSuppliers::productSupplierName($rItem->productSuppId)->title ?></td>
                                 <td style="vertical-align: middle;text-align: center;"><?= $rItem->quantity ?></td>
                                 <td style="vertical-align: middle;text-align: center;">
-                                    <button class="btn-md" id="incr-return" value="-"> - </button>
+                                    <a class="btn" id="incr-return">-</a>
                                     <input type="text" class="text-center" style="width:35px;height:35px;" id="qnty-return<?= $rItem->returnProductId ?>" value="<?= $rItem->quantity ?>" readonly="true">
-                                    <button class="btn-md" id="incr-return" value="+"> + </button></td>
-                                <td style="vertical-align: middle;text-align: center;"><textarea name="remark[<?= $rItem->returnProductId ?>]"></textarea></td>
+                                    <a class="btn" id="incr-return">+</a>
+                                </td>
+                                <td style="vertical-align: middle;text-align: center;"><textarea name="remark[<?= $rItem->returnProductId ?>]" id="remark<?= $rItem->returnProductId ?>" required="true"><?= isset($rItem->remark) ? $rItem->remark : '' ?></textarea></td>
                             <input type="hidden" id="pSuppId" value="<?= $rItem->returnProductId ?>">
                             <input type="hidden" id="pOrderId" value="<?= $order->orderId ?>">
                             <td style="vertical-align: middle;text-align: center;font-size: 25pt;"><i class="fa fa-times-circle deleteR" id="deleteR<?= $rItem->returnProductId ?>" aria-hidden="true" style="cursor: pointer;"></i></td>
@@ -72,11 +73,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         endforeach;
                         ?>
                     </table>
-                    <button type="submit" class="btn btn-lg btn-warning pull-right"><i class="fa fa-check-square-o" aria-hidden="true"></i> คืนสินค้า</button>
+                    <a class="btn-lg pull-right" id="confirm-return" style="background-color: #000;color: #ffcc00;cursor: pointer;"><i class="fa fa-check-square-o" aria-hidden="true"></i> คืนสินค้า</a>
                 <?php } ?>
             </div>
         </div>
     </div>
     <?php ActiveForm::end(); ?>
-    <?php Pjax::end(); ?>
 </div>

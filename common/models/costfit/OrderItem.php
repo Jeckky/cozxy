@@ -21,8 +21,7 @@ use \common\models\costfit\master\OrderItemMaster;
  * @property Order $order
  * @property Product $product
  */
-class OrderItem extends \common\models\costfit\master\OrderItemMaster
-{
+class OrderItem extends \common\models\costfit\master\OrderItemMaster {
 
     const DATE_GAP_TO_PICKING = 2;
     const ORDERITEM_PICKING = 4;
@@ -38,16 +37,14 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributes()
-    {
+    public function attributes() {
         return array_merge(parent::attributes(), [
             'maxDate',
             'sumQuantity',
@@ -60,48 +57,41 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function getProduct()
-    {
+    public function getProduct() {
         return $this->hasOne(Product::className(), ['productId' => 'productId']);
     }
 
-    public function getProductSupplier()
-    {
+    public function getProductSupplier() {
         return $this->hasOne(\common\models\costfit\ProductSuppliers::className(), ['productSuppId' => 'productSuppId']);
     }
 
-    public function getShippingType()
-    {
+    public function getShippingType() {
         return $this->hasOne(ShippingType::className(), ['shippingTypeId' => 'sendDate']);
     }
 
-    public function getUser()
-    {
+    public function getUser() {
         return $this->hasOne(User::className(), ['userId' => 'supplierId']);
     }
 
-    public static function findSlowestDate($orderId)
-    {
+    public static function findSlowestDate($orderId) {
         $model = OrderItem::find()
-        ->select("MAX(st.date) as maxDate")
-        ->join("LEFT JOIN", 'shipping_type st', 'st.shippingTypeId = order_item.sendDate')
-        ->where('order_item.orderId=' . $orderId)
-        ->one();
+                ->select("MAX(st.date) as maxDate")
+                ->join("LEFT JOIN", 'shipping_type st', 'st.shippingTypeId = order_item.sendDate')
+                ->where('order_item.orderId=' . $orderId)
+                ->one();
 
         return isset($model->maxDate) ? $model->maxDate : NULL;
     }
 
-    public static function countPickingItemsArray($orderId)
-    {
+    public static function countPickingItemsArray($orderId) {
         $res = [];
         $query = \common\models\costfit\OrderItem::find()
-        ->where("orderId=" . $orderId)
-        ->all();
+                ->where("orderId=" . $orderId)
+                ->all();
 
         $res['countItems'] = count($query);
         $sumQuantity = 0;
@@ -113,8 +103,7 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster
         return $res;
     }
 
-    public static function findOrderItems($orderId, $productId)
-    {
+    public static function findOrderItems($orderId, $productId) {
         //$items = OrderItem::find()->where("orderId=" . $orderId . " and productId=" . $productId . " and status<=5")->one();
         $items = OrderItem::find()->where("orderId=" . $orderId . " and productSuppId=" . $productId . " and status<=5")->one();
         if (isset($items)) {
@@ -124,8 +113,7 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster
         }
     }
 
-    public static function creteStatus($orderId)
-    {
+    public static function creteStatus($orderId) {
         $totalPicked = 0;
         $total2 = 0;
         $items = OrderItem::find()->where("orderId=" . $orderId . " and status!=1")->all();
@@ -146,8 +134,7 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster
         return $text;
     }
 
-    public static function supplierItems($supplierId, $orderIds)
-    {
+    public static function supplierItems($supplierId, $orderIds) {
         $orderId = '';
         $productId = [];
         $i = 0;
@@ -177,8 +164,7 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster
         return $productId;
     }
 
-    public static function totalSupplierItem($supplierId, $productSuppId, $orders)
-    {
+    public static function totalSupplierItem($supplierId, $productSuppId, $orders) {
         $orderId = '';
         $total = 0;
         foreach ($orders as $order):
@@ -194,8 +180,7 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster
         return $total;
     }
 
-    public static function summarySupplier($supplierId, $orders)
-    {
+    public static function summarySupplier($supplierId, $orders) {
         $orderId = '';
         $i = 0;
         $summary = 0;
@@ -214,8 +199,7 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster
         return $summary;
     }
 
-    public static function enoughtProductSupp($order)
-    {
+    public static function enoughtProductSupp($order) {
         $notEnough = '';
         $orderItems = OrderItem::find()->where("orderId=" . $order->orderId)->all();
         foreach ($orderItems as $item):
@@ -233,10 +217,18 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster
         }
     }
 
-    public static function itemNotEnought($orderId, $id)
-    {
+    public static function itemNotEnought($orderId, $id) {
         $orderItems = OrderItem::find()->where("orderId=" . $orderId . " and productsuppId in ($id)")->all();
         return $orderItems;
+    }
+
+    public static function calculateReturnDiscount($orderItemId) {
+        $orderItem = OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
+        $discount = 0;
+        if (isset($orderItem) && !empty($orderItem)) {
+            $discount = $orderItem->discountValue / $orderItem->quantity;
+        }
+        return $discount;
     }
 
 }

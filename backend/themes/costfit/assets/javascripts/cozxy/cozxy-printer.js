@@ -369,7 +369,7 @@ $(document).on('click', '#incr-return', function () {
     var orderId = $(this).parent().parent().find("#pOrderId").val();
     var qntyReturn = $(this).parent().find("#qnty-return" + returnId).val();
     var incr = '';
-    if (button.val() == "+") {
+    if (button.text() == "+") {
         incr = "+";
     } else {
         incr = "-";
@@ -390,4 +390,30 @@ $(document).on('click', '#incr-return', function () {
 
     });
 
+});
+$(document).on('click', '#confirm-return', function () {
+    var orderId = $(this).parent().parent().find("#orderId").val();
+    var url = $baseUrl + 'returnproduct/return-product/check-remark';
+    $.ajax({
+        url: url,
+        data: {orderId: orderId},
+        dataType: 'JSON',
+        type: 'POST',
+        success: function (data) {
+            // if (data.status) {
+            var a = 1;
+            for (var i = 0; i < data.counts; i++) {
+                if ($("#remark" + data.returnId[i]).val() == '') {
+                    a = 2;
+                }
+                //alert($("#remark" + data.returnId[i]).val());
+            }
+            if (a == 1) {
+                $("#returnDetail").submit();
+            } else {
+                alert("กรุณาใส่เหตุผลที่คืนสินค้า");
+            }
+        }
+
+    });
 });
