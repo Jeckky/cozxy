@@ -618,25 +618,41 @@ class LockersController extends LockersMasterController {
         // echo count($CountChannelsInspector);
         if (count($CountChannelsInspector) > 0) { // ยังมีข้อมูลที่ยังไม่ตรวสอบ คือ 8
             if ($pickingId != '') { //รอตรวจสอบจากเจ้าหน้าที่ : ตรวจสอบช่องที่ลูกค้ารับสินค้าแล้ว
-                $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $pickingId . "'")->one();
-                $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
-                $localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
-                $localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
-                $query = \common\models\costfit\PickingPointItems::find()
-                //->join('RIGHT JOIN', 'order_item_packing', 'order_item_packing.pickingItemsId =picking_point_items.pickingItemsId')
-                ->where("picking_point_items.pickingId = '" . $pickingId . "'");
+
+                /* old */
+                //$listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $pickingId . "'")->one();
+                //$localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
+                //$localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
+                //$localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
+
+                /* Customize Date 25/01/2017   */
+                $listPoint = Lockers::GetPickingPoint($pickingId);
+                $localNamecitie = Local::Cities($listPoint->amphurId);
+                $localNamestate = Local::States($listPoint->provinceId);
+                $localNamecountrie = Local::Countries($listPoint->countryId);
+
+                /* old */
+                /* $query = \common\models\costfit\PickingPointItems::find()
+                  ->where("picking_point_items.pickingId = '" . $pickingId . "'"); */
+
+                /* Customize Date 25/01/2017   */
+                $query = Lockers::GetPickingPointItems($pickingId);
                 $dataProvider = new ActiveDataProvider([
                     'query' => $query,
                 ]);
 
-                $point = PickingPoint::find()->where("pickingId=" . $pickingId)->one();
+                /* old */
+                //$point = PickingPoint::find()->where("pickingId=" . $pickingId)->one();
 
                 return $this->render('channels', [
                     'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
                     'citie' => $localNamecitie,
                     'countrie' => $localNamecountrie,
                     'state' => $localNamestate,
-                    'point' => $point,
+                    /* old */
+                    //'point' => $point,
+                    /* Customize Date 25/01/2017   */
+                    'point' => $listPoint,
                 ]);
             }
         } else { // ถ้าช่องไหนครวจสอบผ่าน มีข้อมูล
