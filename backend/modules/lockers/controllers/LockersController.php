@@ -158,12 +158,7 @@ class LockersController extends LockersMasterController {
         $localNamecitie = Local::Cities($listPoint->amphurId);
         $localNamestate = Local::States($listPoint->provinceId);
         $localNamecountrie = Local::Countries($listPoint->countryId);
-
         $orderId = '';
-
-        //Check ว่า BagNo. นี้ มีอยู่ใน Lockers และช่องนี้ยัง //
-        //$BagDuplicate = \common\models\costfit\OrderItemPacking::find()->where("bagNo = '" . $bagNo . "' and status < 8 and pickingItemsId !='' ")->count();
-        //End Check ว่า BagNo. นี้ มีอยู่ใน Lockers และช่องนี้ยัง //
 
         /*
          * ตรวจสอบว่ามี bagNo ส่งค่ามาหรือป่าว
@@ -193,15 +188,12 @@ class LockersController extends LockersMasterController {
              */
             $query = Lockers::getQueryToViewScanBagNo($bagNo);
 
-
-
             /*   Customize Date 25/01/2017 */
             $queryCountBag = Lockers::getQueryCountBag($bagNo);
 
             if (count($queryCountBag) > 0) {
                 //echo 'มี BagNo นี้';
                 //echo 'xxx : ' . $orderId . 'xx : ' . $orderItemPackingId;
-
                 $countBag = Lockers::GetCountBag($orderId);
                 //echo $countBag;
 
