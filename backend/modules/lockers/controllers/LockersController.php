@@ -81,11 +81,6 @@ class LockersController extends LockersMasterController {
         $pickingId = Yii::$app->request->get('boxcode');
         if ($pickingId != '') {
 
-            /* OLD , By Taninut.Bm */
-            //$listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $pickingId . "'")->one();
-            //$localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
-            //$localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
-            //$localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
 
             /* Customize Date 21/01/2017 , By Taninut.Bm */
             $listPoint = Lockers::GetPickingPoint($pickingId);
@@ -152,18 +147,13 @@ class LockersController extends LockersMasterController {
         $orderItemPackingId = Yii::$app->request->get('orderItemPackingId');
         $channels = Yii::$app->request->get('channels');
 
-        /* OLD , By Taninut.Bm */
-        //$listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $boxcode . "'")->one();
+
         /* Customize Date 25/01/2017 , By Taninut.Bm */
         $listPoint = Lockers::GetPickingPoint($boxcode);
-        /* OLD , By Taninut.Bm */
-        //$listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channel . "' ")->one();
+
         /* Customize Date 25/01/2017 , By Taninut.Bm */
         $listPointItems = Lockers::GetPickingPointItemsParameters($boxcode, $channel);
-        /* OLD , By Taninut.Bm */
-        //$localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
-        //$localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
-        //$localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
+
         /* Customize Date 25/01/2017 , By Taninut.Bm */
         $localNamecitie = Local::Cities($listPoint->amphurId);
         $localNamestate = Local::States($listPoint->provinceId);
@@ -186,19 +176,6 @@ class LockersController extends LockersMasterController {
              * Check ว่า BagNo. นี้ มีอยู่ใน Lockers และช่องนี้ยัง
              * End Check ว่า BagNo. นี้ มีอยู่ใน Lockers และช่องนี้ยั
              */
-            /*  OLD , By Taninut.Bm
-              $queryOrderItemPackingId = \common\models\costfit\OrderItemPacking::find()
-              ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
-              . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,'
-              . 'count(order_item_packing.quantity) AS NumberOfQuantity , order.orderNo, order.orderId , order.pickingId')
-              ->joinWith(['orderItems'])
-              ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-              ->where("order_item_packing.status = '" . OrderItemPacking::PACKING_SENDING_PACKING_SHIPPING . "' "
-              . " and order_item_packing.bagNo ='" . $bagNo . "' and order.pickingId = '" . $boxcode . "' "
-              . " or order_item_packing.status = '" . OrderItemPacking::PACKING_STATUS_EXPORT_TO_LOCKERS . "'  "
-              . " and order_item_packing.bagNo ='" . $bagNo . "' and order.pickingId = '" . $boxcode . "' ")
-              ->groupBy(['order_item_packing.bagNo'])->one();
-             */
 
             /* Customize Date 25/01/2017 , By Taninut.Bm */
             $queryOrderItemPackingId = Lockers::GetOrderItemPackingCheckLockersBagNo($bagNo, $boxcode);
@@ -209,16 +186,6 @@ class LockersController extends LockersMasterController {
             $orderItemId = $queryOrderItemPackingId->orderItemId; // ได้ OrderId มาเพื่อหา ????
             $orderItemPackingId = $queryOrderItemPackingId->orderItemPackingId;
 
-            /* OLD , By Taninut.Bm
-             * $query = \common\models\costfit\OrderItemPacking::find()
-              ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
-              . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, '
-              . 'order.orderNo, '
-              . 'order.orderId,order_item_packing.quantity')
-              ->joinWith(['orderItems'])
-              ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-              ->where("order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "' ")
-              ->groupBy(['order_item_packing.bagNo']); */
             /*
              * หัวข้อ Query หน้า View scanbag
              *  Customize Date 25/01/2017
@@ -226,16 +193,7 @@ class LockersController extends LockersMasterController {
              */
             $query = Lockers::getQueryToViewScanBagNo($bagNo);
 
-            /*  OLD , By Taninut.Bm
-             * $queryCountBag = \common\models\costfit\OrderItemPacking::find()
-              ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
-              . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, '
-              . 'order.orderNo, '
-              . 'order.orderId,order_item_packing.quantity')
-              ->joinWith(['orderItems'])
-              ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-              ->where("order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "' ")
-              ->groupBy(['order_item_packing.bagNo'])->one(); */
+
 
             /*   Customize Date 25/01/2017 */
             $queryCountBag = Lockers::getQueryCountBag($bagNo);
@@ -243,17 +201,10 @@ class LockersController extends LockersMasterController {
             if (count($queryCountBag) > 0) {
                 //echo 'มี BagNo นี้';
                 //echo 'xxx : ' . $orderId . 'xx : ' . $orderItemPackingId;
-                /*  OLD , By Taninut.Bm
-                  $countBag = \common\models\costfit\OrderItemPacking::find()
-                  ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, order_item_packing.status')
-                  ->joinWith(['orderItems'])
-                  ->where("order_item.orderId = '" . $orderId . "' and order_item_packing.status = 5")
-                  ->groupBy(['order_item_packing.bagNo'])
-                  ->count(); */
+
                 $countBag = Lockers::GetCountBag($orderId);
                 //echo $countBag;
-                /*  OLD , By Taninut.Bm  */
-                //$OrderItemPacking = \common\models\costfit\OrderItemPacking::find()->where(" orderItemPackingId = '" . $orderItemPackingId . "'")->one();
+
                 /*  Customize Date 25/01/2017 */
                 $OrderItemPacking = Lockers::GetOrderItemPacking($orderItemPackingId);
                 if ($countBag > 1) {
@@ -277,8 +228,7 @@ class LockersController extends LockersMasterController {
                         ]);
                     }
                 } else if ($countBag == 1) {
-                    /*  OLD , By Taninut.Bm  */
-                    //$listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channel . "' and pickingItemsId  = '" . $pickingItemsId . "' ")->one();
+
                     /*  Customize Date 25/01/2017 */
                     $listPointItems = Lockers::GetPickingPointItemsPickingItems($boxcode, $channel, $pickingItemsId);
                     if (count($listPointItems) > 0) {
@@ -310,78 +260,21 @@ class LockersController extends LockersMasterController {
                 }
             }
 
-            //->where("order_item.orderId = '" . $orderId . "' and order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "' ");
-
-            /* OLD Query ส่วนของแสดง Order ของถุงนี้ที่ ใส่เข้าช่องของ Lockers นี้แล้ว */
-            /* $query1 = \common\models\costfit\OrderItemPacking::find()
-              ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.pickingItemsId, '
-              . 'order_item_packing.bagNo, order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,'
-              . 'count(order_item_packing.quantity) AS NumberOfQuantity, order.orderNo, '
-              . 'order.orderId ,order_item_packing.quantity')
-              ->joinWith(['orderItems'])
-              ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-              //->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-              //->where("order_item_packing.status in (7,8) and  order.orderId ='" . $orderId . "' or order_item_packing.status in (7,8) and  order_item_packing.bagNo ='" . $bagNo . "' ")
-              ->where("order_item_packing.status in (7,8) and  order_item.orderItemId ='" . $orderItemId . "' and order_item_packing.pickingItemsId = '" . $pickingItemsId . "'or order_item_packing.status in (7,8) "
-              . "and  order_item_packing.bagNo ='" . $bagNo . "' and order_item_packing.pickingItemsId = '" . $pickingItemsId . "' ")
-              //->where("order_item_packing.status in (7,8) and  order_item_packing.bagNo ='" . $bagNo . "' ")
-              //->where("order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "' ")
-              ->groupBy(['order_item_packing.bagNo']); */
-
+            /*   Query ส่วนของแสดง Order ของถุงนี้ที่ ใส่เข้าช่องของ Lockers นี้แล้ว */
             /* Customize Date 25/01/2017 */
             $query1 = Lockers::GetOrderNoToBagNoOnChannelToLockers($orderItemId, $pickingItemsId, $bagNo);
 
             // OLD แสดงจำนวนถุงของ Order นี้ทั้งหมด
-            /* $queryAllOrder = \common\models\costfit\OrderItemPacking::find()
-              ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
-              . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, '
-              . 'order.orderNo, '
-              . 'order.orderId,order_item_packing.quantity')
-              ->joinWith(['orderItems'])
-              ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-              ->where("order_item_packing.status = 5 and order.orderId ='" . $orderId . "' ")
-              ->groupBy(['order_item_packing.bagNo']); */
             /* Customize Date 25/01/2017  แสดงจำนวนถุงของ Order นี้ทั้งหมด */
             $queryAllOrder = Lockers::GetOrderNoToBagNoOnChannelToLockersAll($orderId);
         } else {
             //echo 'xx'; แสดง BagNo ที่ Scan Qr code
-            /* OLD
-              $query1 = \common\models\costfit\OrderItemPacking::find()
-              ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId,  order_item_packing.pickingItemsId,'
-              . 'order_item_packing.bagNo, order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,'
-              . 'count(order_item_packing.quantity) AS NumberOfQuantity, order.orderNo, '
-              . 'order.orderId ,order_item_packing.quantity')
-              ->joinWith(['orderItems'])
-              ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-              ->where("order_item_packing.status in (7,8) and  order_item_packing.orderItemId ='" . $orderItemId . "'")
-              //->where("order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "' ")
-              ->groupBy(['order_item_packing.bagNo']); */
-
             /* Customize Date 25/01/2017  แสดง BagNo ที่ Scan Qr code */
             $query1 = Lockers::GetBagNo($orderItemId);
 
-            /* OLD
-             * $query = \common\models\costfit\OrderItemPacking::find()
-              ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, order_item_packing.status')
-              ->joinWith(['orderItems'])
-              ->where("order_item.orderId = '" . $orderId . "' and order_item_packing.status = 5"); */
-
             /* Customize Date 25/01/2017   */
             $query = Lockers::GetOrderItemPackingGetOrderItem($orderId);
-
             // แสดงจำนวนถุงของ Order นี้ทั้งหมด
-            /* OLD
-             * $queryAllOrder = \common\models\costfit\OrderItemPacking::find()
-              ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
-              . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, '
-              . 'order.orderNo, '
-              . 'order.orderId,order_item_packing.quantity')
-              ->joinWith(['orderItems'])
-              ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-              ->where("order_item_packing.status = 5 and order.orderId ='" . $orderId . "' ")
-              ->groupBy(['order_item_packing.bagNo']);
-             */
-
             /* Customize Date 25/01/2017   */
             $queryAllOrder = Lockers::GetOrderNoToBagNoOnChannelToLockersAllCheckParaBagNo($orderId);
         }
@@ -455,27 +348,15 @@ class LockersController extends LockersMasterController {
         $close = Yii::$app->request->get('close');
         // echo 'ทดสอบ ปิดช่อง';
         // OrderItemPacking  มากกว่า 1 รายการ
-        /* OLD
-          $countBag = \common\models\costfit\OrderItemPacking::find()
-          ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, order_item_packing.status')
-          ->joinWith(['orderItems'])
-          ->where("order_item.orderId = '" . $orderId . "' and order_item_packing.status = 5")
-          ->groupBy(['order_item_packing.bagNo'])
-          ->count();
-         */
 
         $countBag = Lockers::GetCountBag($orderId);
         //echo $countBag;
-        /* OLD
-         * $OrderItemPacking = \common\models\costfit\OrderItemPacking::find()->where(" orderItemPackingId = '" . $orderItemPackingId . "'")->one();
-         */
+
         /* Customize Date 25/01/2017   */
         $OrderItemPacking = Lockers::GetOrderItemPacking($orderItemPackingId);
 
         if ($countBag == 0) {
-            /* OLD
-              $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channel . "' and pickingItemsId  = '" . $pickingItemsId . "' ")->one();
-             */
+
             /* Customize Date 25/01/2017   */
             $listPointItems = Lockers::GetPickingPointItemsPickingItems($boxcode, $channel, $pickingItemsId);
             if (count($listPointItems) > 0) {
@@ -510,8 +391,7 @@ class LockersController extends LockersMasterController {
                 ]);
             }
         } else if ($countBag == 1) {
-            /* OLD */
-            //$listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channel . "' and pickingItemsId  = '" . $pickingItemsId . "' ")->one();
+
             /* Customize Date 25/01/2017   */
             $listPointItems = Lockers::GetPickingPointItemsPickingItems($boxcode, $channel, $pickingItemsId);
             if (count($listPointItems) > 0) {
@@ -619,21 +499,11 @@ class LockersController extends LockersMasterController {
         if (count($CountChannelsInspector) > 0) { // ยังมีข้อมูลที่ยังไม่ตรวสอบ คือ 8
             if ($pickingId != '') { //รอตรวจสอบจากเจ้าหน้าที่ : ตรวจสอบช่องที่ลูกค้ารับสินค้าแล้ว
 
-                /* old */
-                //$listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $pickingId . "'")->one();
-                //$localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
-                //$localNamestate = \common\models\dbworld\States::find()->where("stateId = '" . $listPoint->provinceId . "' ")->one();
-                //$localNamecountrie = \common\models\dbworld\Countries::find()->where("countryId = '" . $listPoint->countryId . "' ")->one();
-
                 /* Customize Date 25/01/2017   */
                 $listPoint = Lockers::GetPickingPoint($pickingId);
                 $localNamecitie = Local::Cities($listPoint->amphurId);
                 $localNamestate = Local::States($listPoint->provinceId);
                 $localNamecountrie = Local::Countries($listPoint->countryId);
-
-                /* old */
-                /* $query = \common\models\costfit\PickingPointItems::find()
-                  ->where("picking_point_items.pickingId = '" . $pickingId . "'"); */
 
                 /* Customize Date 25/01/2017   */
                 $query = Lockers::GetPickingPointItems($pickingId);
