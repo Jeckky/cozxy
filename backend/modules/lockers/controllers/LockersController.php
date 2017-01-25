@@ -148,7 +148,11 @@ class LockersController extends LockersMasterController {
         $orderItemPackingId = Yii::$app->request->get('orderItemPackingId');
         $channels = Yii::$app->request->get('channels');
 
-        $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $boxcode . "'")->one();
+        /* OLD , By Taninut.Bm */
+        //$listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $boxcode . "'")->one();
+        /* Customize Date 21/01/2017 , By Taninut.Bm */
+        $listPoint = Lockers::GetPickingPoint($boxcode);
+
         $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  code = '" . $channel . "' ")->one();
 
         $localNamecitie = \common\models\dbworld\Cities::find()->where("cityId = '" . $listPoint->amphurId . "' ")->one();
