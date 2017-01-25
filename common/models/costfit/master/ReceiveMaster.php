@@ -13,6 +13,7 @@ use Yii;
     * @property integer $pickingId
     * @property string $password
     * @property string $otp
+    * @property string $refNo
     * @property integer $isUse
     * @property integer $status
     * @property string $createDateTime
@@ -38,6 +39,7 @@ return [
             [['orderId', 'userId', 'pickingId', 'isUse', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['password', 'otp'], 'string', 'max' => 45],
+            [['refNo'], 'string', 'max' => 255],
         ];
 }
 
@@ -53,6 +55,7 @@ return [
     'pickingId' => Yii::t('receive', 'Picking ID'),
     'password' => Yii::t('receive', 'Password'),
     'otp' => Yii::t('receive', 'Otp'),
+    'refNo' => Yii::t('receive', 'Ref No'),
     'isUse' => Yii::t('receive', 'Is Use'),
     'status' => Yii::t('receive', 'Status'),
     'createDateTime' => Yii::t('receive', 'Create Date Time'),

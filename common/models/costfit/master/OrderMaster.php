@@ -53,6 +53,7 @@ use Yii;
     * @property integer $pickerId
     * @property string $password
     * @property string $otp
+    * @property string $refNo
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -83,7 +84,7 @@ return [
             [['billingFirstname', 'billingLastname', 'billingCompany', 'shippingFirstname', 'shippingLastname', 'shippingCompany'], 'string', 'max' => 200],
             [['billingCountryId', 'shippingCountryId'], 'string', 'max' => 3],
             [['billingZipcode', 'shippingZipcode'], 'string', 'max' => 10],
-            [['password', 'otp'], 'string', 'max' => 255],
+            [['password', 'otp', 'refNo'], 'string', 'max' => 255],
             [['email'], 'string', 'max' => 100],
         ];
 }
@@ -140,6 +141,7 @@ return [
     'pickerId' => Yii::t('order', 'Picker ID'),
     'password' => Yii::t('order', 'Password'),
     'otp' => Yii::t('order', 'Otp'),
+    'refNo' => Yii::t('order', 'Ref No'),
     'status' => Yii::t('order', 'Status'),
     'createDateTime' => Yii::t('order', 'Create Date Time'),
     'updateDateTime' => Yii::t('order', 'Update Date Time'),
