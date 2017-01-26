@@ -344,23 +344,40 @@ $(document).ready(function (e) {
     });
     $(document).on('click', '#sendMessege', function () {
         var messege = $(this).parent().parent().find("#messege").val();
-        var orderId;
-        var userId;
-        var ticketId;
-        $("#messege").val('');
+        var orderId = $(this).parent().parent().find("#orderId").val();
+        var userId = $(this).parent().parent().find("#userId").val();
+        var ticketId = $(this).parent().parent().find("#ticketId").val();
         $.ajax({
             type: 'POST',
             dataType: 'JSON',
             url: $baseUrl + '/profile/save-messege',
-            data: {messege: messege},
+            data: {messege: messege, orderId: orderId, userId: userId, ticketId: ticketId},
             success: function (data) {
-                messege.val('');
+                if (data.status) {
+                    $("#messege").val('');
+                }
             }
         });
     });
     $(document).on('keyup', '#messege', function (e) {
+        var messege = $(this).parent().parent().find("#messege").val();
+        var orderId = $(this).parent().parent().find("#orderId").val();
+        var userId = $(this).parent().parent().find("#userId").val();
+        var ticketId = $(this).parent().parent().find("#ticketId").val();
+
         if (e.keyCode == 13) {
             $("#messege").val('');
+            $.ajax({
+                type: 'POST',
+                dataType: 'JSON',
+                url: $baseUrl + '/profile/save-messege',
+                data: {messege: messege, orderId: orderId, userId: userId, ticketId: ticketId},
+                success: function (data) {
+                    if (data.status) {
+                        $("#messege").val('');
+                    }
+                }
+            });
         }
     });
 });/*Document Ready End*//////////////////////////////////////////////////////////////////////////////////////////////////////////////

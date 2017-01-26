@@ -74,12 +74,16 @@ if (isset($tickets) && !empty($tickets)) {// LEFT
                     <?php } else {
                         ?>
 
-                        <?= $this->render('messege') ?>
+                        <?= $this->render('messege', [
+                            'ticketId' => $tickets->ticketId])
+                        ?>
                         <div class="row">
                             <div class="col-lg-11 col-sm-11 col-md-11 col-xs-11" >
                                 <input type="text" name="message" class="form-control" placeholder="Messege" id="messege">
                             </div>
-                            <input type="hidden" name="">
+                            <input type="hidden" name="orderId" value="<?= $tickets->orderId ?>" id="orderId">
+                            <input type="hidden" name="userId" value="<?= $tickets->userId ?>"  id="userId">
+                            <input type="hidden" name="ticketId" value="<?= $tickets->ticketId ?>"  id="ticketId">
                             <div class="col-lg-1 col-sm-1 col-md-1 col-xs-1" style="margin-left: -20px;">
                                 <h1 style="color: #ff9900;margin-top: -1px;cursor: pointer;" id="sendMessege"> <i class="fa fa-paper-plane-o" aria-hidden="true"></i></h1>
                             </div>
@@ -97,7 +101,7 @@ if (isset($tickets) && !empty($tickets)) {// LEFT
                             <p>4.</p>
                         </div>
                     </div>
-                <?php } ?>
+<?php } ?>
             </div>
 
         </div>

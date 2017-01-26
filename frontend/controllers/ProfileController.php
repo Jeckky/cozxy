@@ -418,7 +418,43 @@ class ProfileController extends MasterController {
     }
 
     public function actionSaveMessege() {
+        $messege = new \common\models\costfit\Messege();
+        $res = [];
+        if ($_POST["messege"] != '') {
+            $messege->orderId = $_POST["orderId"];
+            $messege->userId = $_POST["userId"];
+            $messege->ticketId = $_POST["ticketId"];
+            $messege->messege = $_POST["messege"];
+            $messege->messegeType = 1; //customer   2=> cozxy
+            $messege->status = 1;
+            $messege->createDateTime = new \yii\db\Expression('NOW()');
+            $messege->updateDateTime = new \yii\db\Expression('NOW()');
+            $messege->save(false);
+            $res["status"] = True;
+        } else {
+            $res["status"] = FALSE;
+        }
+        return \yii\helpers\Json::encode($res);
+    }
 
+    public function actionShowMessege() {
+        $messeges = \common\models\costfit\Messege::find()->where("ticketId=" . $_POST["ticketId"])
+                ->orderBy("createDateTime DESC")
+                ->all();
+        $ms = '';
+        $customer = 'คุณ';
+        $position = 150;
+        if (isset($messeges) && !empty($messeges)) {
+            foreach ($messeges as $messege):
+                if ($messege->messegeType == 1) {//ข้อความทางฝั่ง customer ชิดซ้าย
+                    $ms = $ms . '<div class="pull-left" style="position: absolute;bottom:' . $position . 'px;right: 60px;color:#000;">' . $messege->messege . ' : คุณ</div>';
+                } else {///ฝั่ง cozxy ชิดขวา
+                    $ms = $ms . '<div class="pull-right" style="position: absolute;bottom:' . $position . 'px;left: 60px;color:#000;">Cozxy : ' . $messege->messege . '</div>';
+                }
+                $position += 50;
+            endforeach;
+            echo $ms;
+        }
     }
 
 }
