@@ -331,6 +331,16 @@ $(document).ready(function (e) {
             }
         });
     });
+    $(document).on('click', '#sendTicket', function () {
+        var invoice = $(this).parent().parent().find("#invoiceNo").val();
+        var tickeTitle = $(this).parent().parent().find("#tickeTitle").val();
+        var description = $(this).parent().parent().find("#description").val();
+        if (invoice == '' || tickeTitle == '' || description == '') {
+            alert('กรุณากรอกข้อมูลให้ครบทุกช่อง');
+        } else {
+            $("#ticket-form").submit();
+        }
+    });
 });/*Document Ready End*//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

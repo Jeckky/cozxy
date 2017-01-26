@@ -29,7 +29,7 @@ class ReturnProductController extends ReturnProductMasterController {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
         if (isset($_POST['orderNo']) && !empty($_POST['orderNo'])) {
-            $order = Order::find()->where("orderNo='" . $_POST['orderNo'] . "'")->one();
+            $order = Order::find()->where("orderNo='" . $_POST['orderNo'] . "' and status=" . Order::ORDER_STATUS_RECEIVED)->one();
             if (isset($order) && !empty($order)) {
                 return $this->redirect(['order-detail',
                             'orderId' => $order->orderId
@@ -144,7 +144,53 @@ class ReturnProductController extends ReturnProductMasterController {
         }
         if (isset($_POST['confirm'])) {
             $orderId = $_POST['confirm'];
-            $returnProduct = ReturnProduct::find()->where("orderId=" . $orderId . " and status=1")->all();
+            $totalCredit = 0;
+            $returnProduct = ReturnProduct::find()->where("orderId=" . $orderId . " and status=1")->all(); //ยอดเครดิตที่ลูกค้าเพิ่งคืน
+            if (isset($returnProduct) && !empty($returnProduct)) {
+                foreach ($returnProduct as $return):
+                    $totalCredit += $return->credit;
+                    $orderId = $return->orderId;
+                endforeach;
+                $order = Order::find()->where("orderId=" . $orderId)->one();
+                if (isset($order) && !empty($order)) {
+                    $userCredit = \common\models\costfit\UserCredit::find()->where("userId=" . $order->userId)->one();
+                    if (isset($userCredit) && !empty($userCredit)) {//ถ้ามีอยู่แล้วให้เพิ่มลงไปในเรคคอร์ดอันเก่า
+                        $userCredit->totalCredit += $totalCredit;
+                        $userCredit->updateDateTime = new \yii\db\Expression('NOW()');
+                        $userCredit->save(false);
+                    } else {//ถ้ายังไม่มี ให้สร้างใหม่
+                        $userCredit = new \common\models\costfit\UserCredit();
+                        $userCredit->userId = $order->userId;
+                        $userCredit->totalCredit = $totalCredit;
+                        $userCredit->createDateTime = new \yii\db\Expression('NOW()');
+                        $userCredit->updateDateTime = new \yii\db\Expression('NOW()');
+                        $userCredit->save();
+                    }
+                    foreach ($returnProduct as $return):
+                        $return->status = 2; //เปลี่ยน สถานะเป็น 2 (การคืนเสร็จสิ้นสำหรับ order นี้)
+                        $return->updateDateTime = new \yii\db\Expression('NOW()');
+                        $return->save(FALSE);
+                    endforeach;
+                    $returnHistory = ReturnProduct::find()
+                            ->select(`order.*`, `return_product.*`)
+                            ->join('LEFT JOIN', 'order', 'order.orderId=return_product.orderId')
+                            ->where("order.userId=" . $order->userId . " and return_product.status=2")
+                            ->orderBy("return_product.updateDateTime DESC")
+                            ->all();
+                    $userTotalCredit = \common\models\costfit\UserCredit::find()->where("userId=" . $order->userId)->one();
+                    $lastReturn = ReturnProduct::find()->where("orderId=" . $order->orderId)->all();
+                    return $this->render('successful_return', [
+                                'userId' => $order->userId,
+                                'returnHistory' => $returnHistory,
+                                'userTotalCredit' => $userTotalCredit,
+                                'lastReturn' => $lastReturn
+                    ]);
+                } else {
+                    return $this->redirect(['index']);
+                }
+            } else {
+                return $this->redirect(['index']);
+            }
         }
     }
 

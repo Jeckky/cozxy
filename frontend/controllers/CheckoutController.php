@@ -267,7 +267,6 @@ class CheckoutController extends MasterController {
     }
 
     public function actionConfirmCheckout($hash) {
-        throw new \yii\base\Exception("aaaa");
         $k = base64_decode(base64_decode($hash));
         $params = ModelMaster::decodeParams($hash);
         $orderId = $params['orderId'];

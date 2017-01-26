@@ -14,6 +14,8 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use yii\data\ActiveDataProvider;
+use common\models\costfit\Order;
+use common\models\costfit\Ticket;
 
 /**
  * Profile controller
@@ -72,7 +74,7 @@ class ProfileController extends MasterController {
         $this->subTitle = 'Home';
         $this->subSubTitle = "Order History";
 
-        $searchModel = new \common\models\costfit\Order();
+        $searchModel = new Order();
         // $dataProvider = $searchModel->search(Yii::$app->request->get());
         $dataProvider = $searchModel->search(Yii::$app->request->get());
         return $this->render('@app/views/profile/order_history', compact('dataProvider', 'searchModel'));
@@ -260,8 +262,8 @@ class ProfileController extends MasterController {
 
         //echo htmlspecialchars($orderId);
         if (isset($params['orderId'])) {
-            $order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . $params['orderId'] . '" ')
-            ->one();
+            $order = Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . $params['orderId'] . '" ')
+                    ->one();
             //echo '<pre>';
             //print_r($order);
             //exit();
@@ -356,6 +358,53 @@ class ProfileController extends MasterController {
         }
 
         return $this->render('@app/views/profile/picking_point', ['model' => $model, 'label' => $label, 'action' => $action]);
+    }
+
+    public function actionReturning() {
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
+        //$this->layout = "/content_profile";
+        $this->title = 'Cozxy.com | ขอคืนสินค้า';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = "คำขอคืนสินค้า";
+        $ms = '';
+        //$checkStatus = Ticket::TICKET_STATUS_CREATE . "," . Ticket::TICKET_STATUS_WAIT . "," . Ticket::TICKET_STATUS_APPROVED;
+        if (isset($_POST["invoiceNo"])) {
+            $order = Order::find()->where("invoiceNo='" . $_POST["invoiceNo"] . "' and status=" . Order::ORDER_STATUS_RECEIVED)->one();
+            if (isset($order) && !empty($order)) {
+                $tickets = Ticket::find()->where("orderId=" . $order->orderId . " and status=" . Ticket::TICKET_STATUS_SUCCESSFULL)->one();
+                if (isset($tickets) && !empty($tickets)) {//ถ้ายังมี order  ที่อยู่ระหว่างการคืน ไม่ให้สร้างใหม่
+                    $ms = 'ERROR :This invoice already in process returning, please wait cozxy reply.';
+                    return $this->render('@app/views/profile/return_form');
+                } else {
+                    $ticket = new Ticket();
+                    $ticket->orderId = $order->orderId;
+                    $ticket->title = $_POST["tickeTitle"];
+                    $ticket->description = $_POST["ticketDescription"];
+                    $ticket->status = 1;
+                    $ticket->createDateTime = new \yii\db\Expression('NOW()');
+                    $ticket->updateDateTime = new \yii\db\Expression('NOW()');
+                    $ticket->save(false);
+                    $id = Yii::$app->db->getLastInsertID();
+                    $tickets = Ticket::find()->where("ticketId=" . $id)->one();
+                    return $this->render('@app/views/profile/return_form', [
+                                'tickets' => $tickets
+                    ]);
+                }
+            } else {
+                $ms = 'ERROR : Invoice not found';
+                return $this->render('@app/views/profile/return_form', [
+                            'ms' => $ms
+                ]);
+            }
+        } else {
+            return $this->render('@app/views/profile/return_form');
+        }
+        //$searchModel = new \common\models\costfit\Order();
+        // $dataProvider = $searchModel->search(Yii::$app->request->get());
+        //$dataProvider = $searchModel->search(Yii::$app->request->get());
+        return $this->render('@app/views/profile/return_form');
     }
 
 }
