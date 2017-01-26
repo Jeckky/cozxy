@@ -331,6 +331,7 @@ $(document).ready(function (e) {
             }
         });
     });
+    //////////////////////////////    RETURN  ///////////////////////////////////////
     $(document).on('click', '#sendTicket', function () {
         var invoice = $(this).parent().parent().find("#invoiceNo").val();
         var tickeTitle = $(this).parent().parent().find("#tickeTitle").val();
@@ -339,6 +340,27 @@ $(document).ready(function (e) {
             alert('กรุณากรอกข้อมูลให้ครบทุกช่อง');
         } else {
             $("#ticket-form").submit();
+        }
+    });
+    $(document).on('click', '#sendMessege', function () {
+        var messege = $(this).parent().parent().find("#messege").val();
+        var orderId;
+        var userId;
+        var ticketId;
+        $("#messege").val('');
+        $.ajax({
+            type: 'POST',
+            dataType: 'JSON',
+            url: $baseUrl + '/profile/save-messege',
+            data: {messege: messege},
+            success: function (data) {
+                messege.val('');
+            }
+        });
+    });
+    $(document).on('keyup', '#messege', function (e) {
+        if (e.keyCode == 13) {
+            $("#messege").val('');
         }
     });
 });/*Document Ready End*//////////////////////////////////////////////////////////////////////////////////////////////////////////////

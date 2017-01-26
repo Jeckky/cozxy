@@ -373,15 +373,19 @@ class ProfileController extends MasterController {
         if (isset($_POST["invoiceNo"])) {
             $order = Order::find()->where("invoiceNo='" . $_POST["invoiceNo"] . "' and status=" . Order::ORDER_STATUS_RECEIVED)->one();
             if (isset($order) && !empty($order)) {
-                $tickets = Ticket::find()->where("orderId=" . $order->orderId . " and status=" . Ticket::TICKET_STATUS_SUCCESSFULL)->one();
+                $tickets = Ticket::find()->where("orderId=" . $order->orderId . " and status!=" . Ticket::TICKET_STATUS_SUCCESSFULL)->one();
                 if (isset($tickets) && !empty($tickets)) {//ถ้ายังมี order  ที่อยู่ระหว่างการคืน ไม่ให้สร้างใหม่
+                    $tickets = Ticket::find()->where("ticketId=" . $tickets->ticketId)->one();
                     $ms = 'ERROR :This invoice already in process returning, please wait cozxy reply.';
-                    return $this->render('@app/views/profile/return_form');
+                    return $this->render('@app/views/profile/return_form', [
+                                'tickets' => $tickets
+                    ]);
                 } else {
                     $ticket = new Ticket();
                     $ticket->orderId = $order->orderId;
                     $ticket->title = $_POST["tickeTitle"];
                     $ticket->description = $_POST["ticketDescription"];
+                    $ticket->userId = Yii::$app->user->identity->userId;
                     $ticket->status = 1;
                     $ticket->createDateTime = new \yii\db\Expression('NOW()');
                     $ticket->updateDateTime = new \yii\db\Expression('NOW()');
@@ -399,12 +403,22 @@ class ProfileController extends MasterController {
                 ]);
             }
         } else {
-            return $this->render('@app/views/profile/return_form');
+            $ticket1 = Ticket::find()->where("userId=" . Yii::$app->user->identity->userId . " and status!=" . Ticket::TICKET_STATUS_SUCCESSFULL)->one();
+            if (isset($ticket1) && !empty($ticket1)) {
+                return $this->render('@app/views/profile/return_form', [
+                            'tickets' => $ticket1
+                ]);
+            } else {
+                return $this->render('@app/views/profile/return_form');
+            }
         }
         //$searchModel = new \common\models\costfit\Order();
         // $dataProvider = $searchModel->search(Yii::$app->request->get());
         //$dataProvider = $searchModel->search(Yii::$app->request->get());
-        return $this->render('@app/views/profile/return_form');
+    }
+
+    public function actionSaveMessege() {
+
     }
 
 }
