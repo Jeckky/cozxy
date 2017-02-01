@@ -417,3 +417,123 @@ $(document).on('click', '#confirm-return', function () {
 
     });
 });
+$(document).on('click', '#approve', function () {
+    var ticketId = $(this).parent().find("#ticketId").val();
+    var approve = $('#approve').text();
+    var url = $baseUrl + 'returnproduct/return-product/approve-ticket';
+    $.ajax({
+        url: url,
+        data: {ticketId: ticketId, approve: approve},
+        dataType: 'JSON',
+        type: 'POST',
+        success: function (data) {
+            if (data.status) {
+                if (confirm('ต้องการอนุมัติรายการนี้ ?')) {
+                    window.location.href = $baseUrl + 'returnproduct/return-product/request-ticket';
+                }
+            }
+        }
+
+    });
+});
+$(document).on('click', '#not-approve', function () {
+    $('#remark').show();
+});
+$(document).on('click', '#send-remark', function () {
+    var ticketId = $(this).parent().parent().find("#ticketId").val();
+    var remark = $(this).parent().find("#remark").val();
+    var url = $baseUrl + 'returnproduct/return-product/approve-ticket';
+    if (remark == '') {
+        alert('กรุณากรอก Remark (เหตุผลที่ไม่อนุมัติ)');
+        return false;
+    } else {
+        $.ajax({
+            url: url,
+            data: {ticketId: ticketId, approve: 'not', remark: remark},
+            dataType: 'JSON',
+            type: 'POST',
+            success: function (data) {
+                if (!data.status) {
+                    alert('ดำเนินการเรียบร้อย');
+                    window.location.href = $baseUrl + 'returnproduct/return-product/request-ticket';
+                }
+            }
+
+        });
+    }
+
+});
+$(document).on('click', '#sendMessege', function () {
+    var messege = $(this).parent().parent().find("#messege").val();
+    var orderId = $(this).parent().parent().find("#orderId").val();
+    var userId = $(this).parent().parent().find("#userId").val();
+    var ticketId = $(this).parent().parent().find("#ticketId").val();
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: $baseUrl + 'returnproduct/return-product/save-messege',
+        data: {messege: messege, orderId: orderId, userId: userId, ticketId: ticketId},
+        success: function (data) {
+            if (data.status) {
+                $("#messege").val('');
+            }
+        }
+    });
+});
+$(document).on('keyup', '#messege', function (e) {
+    var messege = $(this).parent().parent().find("#messege").val();
+    var orderId = $(this).parent().parent().find("#orderId").val();
+    var userId = $(this).parent().parent().find("#userId").val();
+    var ticketId = $(this).parent().parent().find("#ticketId").val();
+
+    if (e.keyCode == 13) {
+        $("#messege").val('');
+        $.ajax({
+            type: 'POST',
+            dataType: 'JSON',
+            url: $baseUrl + 'returnproduct/return-product/save-messege',
+            data: {messege: messege, orderId: orderId, userId: userId, ticketId: ticketId},
+            success: function (data) {
+                if (data.status) {
+                    $("#messege").val('');
+                }
+            }
+        });
+    }
+});
+$(document).on('keyup', '#search-wait', function (e) {
+    var ms = $("#search-wait").val();
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: $baseUrl + 'returnproduct/return-product/search-wait',
+        data: {ms: ms},
+        success: function (data) {
+            $("#search-w").html(data.wait);
+        }
+    });
+});
+$(document).on('keyup', '#search-approve', function (e) {
+    var ms = $("#search-approve").val();
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: $baseUrl + 'returnproduct/return-product/search-approve',
+        data: {ms: ms},
+        success: function (data) {
+            $("#search-a").html(data.wait);
+        }
+    });
+});
+$(document).on('keyup', '#search-notApprove', function (e) {
+    var ms = $("#search-notApprove").val();
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: $baseUrl + 'returnproduct/return-product/search-not-approve',
+        data: {ms: ms},
+        success: function (data) {
+            $('#search-n').html(data.wait);
+        }
+    });
+});

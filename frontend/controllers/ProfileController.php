@@ -16,6 +16,7 @@ use frontend\models\ContactForm;
 use yii\data\ActiveDataProvider;
 use common\models\costfit\Order;
 use common\models\costfit\Ticket;
+use common\models\costfit\ReturnProduct;
 
 /**
  * Profile controller
@@ -370,6 +371,9 @@ class ProfileController extends MasterController {
         $this->subSubTitle = "คำขอคืนสินค้า";
         $ms = '';
         //$checkStatus = Ticket::TICKET_STATUS_CREATE . "," . Ticket::TICKET_STATUS_WAIT . "," . Ticket::TICKET_STATUS_APPROVED;
+        $histories = Ticket::find()->where("userId=" . Yii::$app->user->identity->userId)
+                ->orderBy("updateDateTime DESC")
+                ->all();
         if (isset($_POST["invoiceNo"])) {
             $order = Order::find()->where("invoiceNo='" . $_POST["invoiceNo"] . "' and status=" . Order::ORDER_STATUS_RECEIVED)->one();
             if (isset($order) && !empty($order)) {
@@ -378,7 +382,8 @@ class ProfileController extends MasterController {
                     $tickets = Ticket::find()->where("ticketId=" . $tickets->ticketId)->one();
                     $ms = 'ERROR :This invoice already in process returning, please wait cozxy reply.';
                     return $this->render('@app/views/profile/return_form', [
-                                'tickets' => $tickets
+                                'tickets' => $tickets,
+                                'histories' => $histories
                     ]);
                 } else {
                     $ticket = new Ticket();
@@ -387,29 +392,35 @@ class ProfileController extends MasterController {
                     $ticket->description = $_POST["ticketDescription"];
                     $ticket->userId = Yii::$app->user->identity->userId;
                     $ticket->status = 1;
+                    $ticket->ticketNo = $this->genNewTicket();
                     $ticket->createDateTime = new \yii\db\Expression('NOW()');
                     $ticket->updateDateTime = new \yii\db\Expression('NOW()');
                     $ticket->save(false);
                     $id = Yii::$app->db->getLastInsertID();
                     $tickets = Ticket::find()->where("ticketId=" . $id)->one();
                     return $this->render('@app/views/profile/return_form', [
-                                'tickets' => $tickets
+                                'tickets' => $tickets,
+                                'histories' => $histories
                     ]);
                 }
             } else {
                 $ms = 'ERROR : Invoice not found';
                 return $this->render('@app/views/profile/return_form', [
-                            'ms' => $ms
+                            'ms' => $ms,
+                            'histories' => $histories
                 ]);
             }
         } else {
             $ticket1 = Ticket::find()->where("userId=" . Yii::$app->user->identity->userId . " and status!=" . Ticket::TICKET_STATUS_SUCCESSFULL)->one();
             if (isset($ticket1) && !empty($ticket1)) {
                 return $this->render('@app/views/profile/return_form', [
-                            'tickets' => $ticket1
+                            'tickets' => $ticket1,
+                            'histories' => $histories
                 ]);
             } else {
-                return $this->render('@app/views/profile/return_form');
+                return $this->render('@app/views/profile/return_form', [
+                            'histories' => $histories
+                ]);
             }
         }
         //$searchModel = new \common\models\costfit\Order();
@@ -439,22 +450,52 @@ class ProfileController extends MasterController {
 
     public function actionShowMessege() {
         $messeges = \common\models\costfit\Messege::find()->where("ticketId=" . $_POST["ticketId"])
-                ->orderBy("createDateTime DESC")
+                ->orderBy("createDateTime ASC")
                 ->all();
         $ms = '';
-        $customer = 'คุณ';
-        $position = 150;
+        $ScrollPosition = 300;
+        $res = [];
         if (isset($messeges) && !empty($messeges)) {
             foreach ($messeges as $messege):
-                if ($messege->messegeType == 1) {//ข้อความทางฝั่ง customer ชิดซ้าย
-                    $ms = $ms . '<div class="pull-left" style="position: absolute;bottom:' . $position . 'px;right: 60px;color:#000;">' . $messege->messege . ' : คุณ</div>';
-                } else {///ฝั่ง cozxy ชิดขวา
-                    $ms = $ms . '<div class="pull-right" style="position: absolute;bottom:' . $position . 'px;left: 60px;color:#000;">Cozxy : ' . $messege->messege . '</div>';
+                if ($messege->messegeType == 1) {//ข้อความทางฝั่ง customer ชิดขวา
+                    $ms = $ms . '<div class="message-yellow-right">' . $messege->messege . '</div><div class="col-lg-12"></div>';
+                } else {///ฝั่ง cozxy ชิดซ้าย
+                    $ms = $ms . '<div class="message-black-left">' . $messege->messege . '</div><div class="col-lg-12"></div>';
                 }
-                $position += 50;
+                $ms = $ms;
+                $ScrollPosition += 50;
             endforeach;
-            echo $ms;
+            //echo $ms;
+            $res["posi"] = $ScrollPosition;
+            $res["ms"] = $ms;
+        } else {
+            $res["posi"] = $ScrollPosition;
+            $res["ms"] = $ms;
         }
+        return \yii\helpers\Json::encode($res);
+    }
+
+    public function actionTicketDetail($ticketId) {
+        $ticket = Ticket::find()->where("ticketId=" . $ticketId)->one();
+        $returnProducts = ReturnProduct::find()->where("ticketId=" . $ticketId)->all();
+        $chats = \common\models\costfit\Messege::find()->where("ticketId=" . $ticketId)
+                ->orderBy("createDateTime ASC")
+                ->all();
+        return $this->render('@app/views/profile/ticket_detail', [
+                    'ticket' => $ticket,
+                    'returnProducts' => $returnProducts,
+                    'chats' => $chats
+        ]);
+    }
+
+    public function genNewTicket() {
+        $ticket = Ticket::find()->max("ticketNo");
+        if (isset($ticket) && !empty($ticket)) {
+            $ticketNo = $ticket->ticketNo + 1;
+        } else {
+            $ticketNo = "00000001";
+        }
+        return $ticketNo;
     }
 
 }

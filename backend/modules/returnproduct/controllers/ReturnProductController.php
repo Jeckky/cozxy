@@ -14,6 +14,7 @@ use common\models\costfit\PickingPoint;
 use common\models\costfit\OrderItem;
 use common\models\costfit\ProductSuppliers;
 use common\models\costfit\ReturnProduct;
+use common\models\costfit\Ticket;
 
 /**
  * Default controller for the `returnProduct` module
@@ -42,6 +43,61 @@ class ReturnProductController extends ReturnProductMasterController {
         } else {
             return $this->render('index');
         }
+    }
+
+    public function actionRequestTicket() {
+        $tickets = Ticket::find()->where("status=1")
+                ->orderBy("createDateTime ASC")
+                ->limit(30)
+                ->all();
+        $approved = Ticket::find()->where("status=3")
+                ->orderBy("updateDateTime DESC")
+                ->limit(30)
+                ->all();
+        $notApproved = Ticket::find()->where("status=4")
+                ->orderBy("updateDateTime DESC")
+                ->limit(30)
+                ->all();
+        return $this->render('ticket_request', [
+                    'tickets' => $tickets,
+                    'approved' => $approved,
+                    'notApproved' => $notApproved
+        ]);
+    }
+
+    public function actionTicketDetail($ticketId) {
+        if (isset($ticketId)) {
+            $ticket = Ticket::find()->where("ticketId=" . $ticketId)->orderBy("createDateTime DESC")->one();
+            $orderItems = OrderItem::find()->where("orderId=" . $ticket->orderId)->all();
+            return $this->render('ticket_detail', [
+                        'orderItems' => $orderItems,
+                        'orderId' => $ticket->orderId,
+                        'ticket' => $ticket
+            ]);
+        }
+    }
+
+    public function actionContact($ticketId) {
+        $ticket = Ticket::find()->where("ticketId=" . $ticketId)->one();
+        return $this->render('contact', [
+                    'ticket' => $ticket,
+        ]);
+    }
+
+    public function actionApproveTicket() {
+        $ticket = Ticket::find()->where("ticketId=" . $_POST["ticketId"])->one();
+        $res = [];
+        if ($_POST['approve'] == 'Approve') {
+            $ticket->status = Ticket::TICKET_STATUS_APPROVED;
+            $res["status"] = TRUE;
+        } else {
+            $ticket->status = Ticket::TICKET_STATUS_NOT_APPROVE;
+            $ticket->remark = $_POST['remark'];
+            $res["status"] = FALSE;
+        }
+        $ticket->updateDateTime = new \yii\db\Expression('NOW()');
+        $ticket->save(false);
+        return \yii\helpers\Json::encode($res);
     }
 
     public function actionOrderDetail($orderId) {
@@ -313,6 +369,182 @@ class ReturnProductController extends ReturnProductMasterController {
 
     public function tableFooter() {
         return $footer = '</table>' . '<a class="btn-lg  pull-right" id="confirm-return" style="background-color: #000;color: #ffcc00;cursor: pointer;"><i class="fa fa-check-square-o" aria-hidden="true"></i> คืนสินค้า</a>';
+    }
+
+    public function actionSaveMessege() {
+        $messege = new \common\models\costfit\Messege();
+        $res = [];
+        if ($_POST["messege"] != '') {
+            $messege->orderId = $_POST["orderId"];
+            $messege->userId = $_POST["userId"];
+            $messege->ticketId = $_POST["ticketId"];
+            $messege->messege = $_POST["messege"];
+            $messege->messegeType = 2; //customer   2=> cozxy
+            $messege->status = 1;
+            $messege->createDateTime = new \yii\db\Expression('NOW()');
+            $messege->updateDateTime = new \yii\db\Expression('NOW()');
+            $messege->save(false);
+            $res["status"] = True;
+        } else {
+            $res["status"] = FALSE;
+        }
+        return \yii\helpers\Json::encode($res);
+    }
+
+    public function actionShowMessege() {
+        $messeges = \common\models\costfit\Messege::find()->where("ticketId=" . $_POST["ticketId"])
+                ->orderBy("createDateTime ASC")
+                ->all();
+        $ms = '';
+        $customer = 'คุณ';
+        $ScrollPosition = 300;
+        $res = [];
+        if (isset($messeges) && !empty($messeges)) {
+            foreach ($messeges as $messege):
+                if ($messege->messegeType == 2) {//ข้อความทางฝั่ง cozxy ชิดขวา
+                    $ms = $ms . '<div class="message-yellow-right">' . $messege->messege . '</div><div class="col-lg-12"></div>';
+                } else {///ฝั่ง customer ชิดซ้าย
+                    $ms = $ms . '<div class="message-black-left">' . $messege->messege . '</div><div class="col-lg-12"></div>';
+                }
+                $ScrollPosition += 50;
+            endforeach;
+            $res["posi"] = $ScrollPosition;
+            $res["ms"] = $ms;
+        } else {
+            $res["posi"] = $ScrollPosition;
+            $res["ms"] = $ms;
+        }
+        return \yii\helpers\Json::encode($res);
+    }
+
+    public function actionSearchWait() {
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        $res = [];
+        $text = '';
+        $ms = $_POST['ms'];
+        $header = '';
+        $userId = $this->findUserId($_POST['ms']);
+        $orderId = $this->findOrderId($_POST['ms']);
+        if ($userId == '' && $orderId == '') {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_CREATE . " and ticketNo like'%" . $_POST['ms'] . "%'")->all();
+        } else if ($userId != '' && $orderId == '') {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_CREATE . " and (ticketNo like'%" . $_POST['ms'] . "%' or userId in ($userId))")->all();
+        } else if ($userId == '' && $orderId != '') {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_CREATE . " and (ticketNo like'%" . $_POST['ms'] . "%' or orderId in ($orderId))")->all();
+        } else {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_CREATE . " and (ticketNo like'%" . $_POST['ms'] . "%' or orderId in ($orderId) or userId in ($userId))")->all();
+        }
+
+        if (isset($tickets) && !empty($tickets)) {
+            $i = 1;
+            foreach ($tickets as $ticket):
+                $text = $text . "<tr><td style='text-align: center;width: 5%;'>" . $i . "</td>" .
+                        "<td style='text-align: center;width: 15%;'>" . Order::findOrderNo($ticket->orderId) . "</td>" .
+                        "<td style='text-align: center;width: 15%;'>" . Order::invoiceNo($ticket->orderId) . "</td>" .
+                        "<td style='text-align: center;width: 15%;'>" . $ticket->ticketNo . "</td>" .
+                        "<td style='text-align: center;width: 15%;'>" . User::userName($ticket->userId) . "</td>" .
+                        "<td style='text-align: center;width: 20%;'>" . substr($this->dateThai(Order::recieveDate($ticket->orderId), 1, true), 0, -8) . "</td>" .
+                        "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'ticket-detail?orderId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
+                $i++;
+            endforeach;
+            $res["wait"] = $text;
+        } else {
+            $res["wait"] = '<td colspan="7" style="text-align: center;color:red;font-size:14pt;"><i>ไม่มีข้อมูล</i></td>';
+        }
+        return \yii\helpers\Json::encode($res);
+    }
+
+    public function actionSearchApprove() {
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        $res = [];
+        $text = '';
+        $ms = $_POST['ms'];
+        $userId = $this->findUserId($_POST['ms']);
+        $orderId = $this->findOrderId($_POST['ms']);
+        if ($userId == '' && $orderId == '') {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_APPROVED . " and ticketNo like'%" . $_POST['ms'] . "%'")->all();
+        } else if ($userId != '' && $orderId == '') {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_APPROVED . " and (ticketNo like'%" . $_POST['ms'] . "%' or userId in ($userId))")->all();
+        } else if ($userId == '' && $orderId != '') {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_APPROVED . " and (ticketNo like'%" . $_POST['ms'] . "%' or orderId in ($orderId))")->all();
+        } else {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_APPROVED . " and (ticketNo like'%" . $_POST['ms'] . "%' or orderId in ($orderId) or userId in ($userId))")->all();
+        }
+
+        if (isset($tickets) && !empty($tickets)) {
+            $i = 1;
+            foreach ($tickets as $ticket):
+                $text = $text . "<tr><td style='text-align: center;width: 15%;'>" . Order::invoiceNo($ticket->orderId) . "</td>" .
+                        "<td style='text-align: center;width: 35%;'>" . $ticket->ticketNo . "</td>" .
+                        "<td style='text-align: center;width: 35%;'>" . User::userName($ticket->userId) . "</td>" .
+                        "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'ticket-detail?orderId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
+                $i++;
+            endforeach;
+            $res["wait"] = $text;
+        } else {
+            $res["wait"] = '<td colspan="4" style="text-align: center;color:red;font-size:14pt;"><i>ไม่มีข้อมูล</i></td>';
+        }
+        return \yii\helpers\Json::encode($res);
+    }
+
+    public function actionSearchNotApprove() {
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        $res = [];
+        $text = '';
+        $ms = $_POST['ms'];
+        $userId = $this->findUserId($_POST['ms']);
+        $orderId = $this->findOrderId($_POST['ms']);
+        if ($userId == '' && $orderId == '') {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_NOT_APPROVE . " and ticketNo like'%" . $_POST['ms'] . "%'")->all();
+        } else if ($userId != '' && $orderId == '') {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_NOT_APPROVE . " and (ticketNo like'%" . $_POST['ms'] . "%' or userId in ($userId))")->all();
+        } else if ($userId == '' && $orderId != '') {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_NOT_APPROVE . " and (ticketNo like'%" . $_POST['ms'] . "%' or orderId in ($orderId))")->all();
+        } else {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_NOT_APPROVE . " and (ticketNo like'%" . $_POST['ms'] . "%' or orderId in ($orderId) or userId in ($userId))")->all();
+        }
+
+        if (isset($tickets) && !empty($tickets)) {
+            $i = 1;
+            foreach ($tickets as $ticket):
+                $text = $text . "<tr><td style='text-align: center;width: 40%;'>" . Order::invoiceNo($ticket->orderId) . "</td>" .
+                        "<td style='text-align: center;width: 30%;'>" . $ticket->ticketNo . "</td>" .
+                        "<td style='text-align: center;width: 30%;'><a href=" . $baseUrl . 'ticket-detail?orderId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
+                $i++;
+            endforeach;
+            $res["wait"] = $text;
+        } else {
+            $res["wait"] = '<td colspan="3" style="text-align: center;color:red;font-size:14pt;"><i>ไม่มีข้อมูล</i></td>';
+        }
+        return \yii\helpers\Json::encode($res);
+    }
+
+    public function findUserId($ms) {
+        $id = '';
+        $users = User::find()->where("firstname like '%" . $ms . "%' or lastname like '%" . $ms . "%'")->all();
+        if (isset($users) && !empty($users)) {
+            foreach ($users as $user):
+                $id = $id . $user->userId . ",";
+            endforeach;
+        }
+        if ($id != '') {
+            $id = substr($id, 0, -1);
+        }
+        return $id;
+    }
+
+    public function findOrderId($ms) {
+        $id = '';
+        $orders = Order::find()->where("orderNo like'%" . $ms . "%' or invoiceNo like '%" . $ms . "%'")->all();
+        if (isset($orders) && !empty($orders)) {
+            foreach ($orders as $order):
+                $id = $id . $order->orderId . ",";
+            endforeach;
+        }
+        if ($id != '') {
+            $id = substr($id, 0, -1);
+        }
+        return $id;
     }
 
 }

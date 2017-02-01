@@ -737,4 +737,13 @@ class Order extends \common\models\costfit\master\OrderMaster {
         return $total;
     }
 
+    public static function recieveDate($orderId) {
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        $receiveDate = '';
+        if (isset($order) && !empty($order)) {
+            $receiveDate = $order->updateDateTime;
+        }
+        return $receiveDate;
+    }
+
 }

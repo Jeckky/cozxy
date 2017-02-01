@@ -300,4 +300,13 @@ class User extends \common\models\costfit\master\UserMaster {
         }
     }
 
+    public static function userTel($userId) {
+        $user = User::find()->where("userId=" . $userId)->one();
+        $tel = '';
+        if (isset($user) && !empty($user)) {
+            $tel = $user->tel;
+        }
+        return $tel;
+    }
+
 }

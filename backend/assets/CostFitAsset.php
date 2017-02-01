@@ -18,7 +18,8 @@ class CostFitAsset extends AssetBundle {
         'stylesheets/pages.min.css',
         'stylesheets/widgets.min.css',
         'stylesheets/rtl.min.css',
-        'stylesheets/themes.min.css'
+        'stylesheets/themes.min.css',
+        'stylesheets/chat.css'
     ];
     public $js = [
         'javascripts/jquery-2.1.3.min.js',
