@@ -45,9 +45,10 @@ class Suppliers {
             ->select(' sum(`order`.`summary`) as summaryPrice, '
             . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= 5 limit 1) as conutProduct, '
             . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= 5 limit 1) as avgNum')
-            ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
-            ->where('order.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and date(order.createDateTime) >= date_add(curdate(),interval  0 day) '
-            . 'and product_suppliers.productId =' . $parentsProductId . ' ')->one();
+            ->join('LEFT JOIN', 'order_item', '`order_item`.orderId = `order`.orderId')
+            ->join('LEFT JOIN', 'product_suppliers', '`product_suppliers`.productSuppId = `order_item`.productId')
+            ->where('`order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and date(order.createDateTime) >= date_add(curdate(),interval  0 day) '
+            . 'and `product_suppliers`.productId =' . $parentsProductId . ' ')->one();
         } else {
             $productLastDay = \common\models\costfit\Order::find()
             ->select(' sum(`order`.`summary`) as summaryPrice, '
@@ -74,6 +75,7 @@ class Suppliers {
             ->select(' sum(`order`.`summary`) as summaryPrice, '
             . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as conutProduct, '
             . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
+            ->join('LEFT JOIN', 'order_item', '`order_item`.orderId = `order`.orderId')
             ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
             ->where('`order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and order.createDateTime BETWEEN (NOW() - INTERVAL 7 DAY) AND NOW() '
             . 'and product_suppliers.productId =' . $parentsProductId . ' ')->one();
@@ -105,6 +107,7 @@ class Suppliers {
             ->select(' sum(`order`.`summary`) as summaryPrice, '
             . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as conutProduct, '
             . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
+            ->join('LEFT JOIN', 'order_item', '`order_item`.orderId = `order`.orderId')
             ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
             ->where('`order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and order.createDateTime BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW()'
             . 'and product_suppliers.productId =' . $parentsProductId . ' ')->one();
@@ -135,6 +138,7 @@ class Suppliers {
             ->select(' sum(`order`.`summary`) as summaryPrice, '
             . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as conutProduct, '
             . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
+            ->join('LEFT JOIN', 'order_item', '`order_item`.orderId = `order`.orderId')
             ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
             ->where('`order`.`status` >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and (NOW() - INTERVAL 1 MONTH) <= (NOW() )'
             . 'and product_suppliers.productId =' . $parentsProductId . ' ')->one();
