@@ -1,3 +1,10 @@
+/*
+ * http://www.codeigniter.in.th/jsmin
+ * ลดขนาดไฟล์ Javascript ด้วย JS Minifier
+ * By Taninut.Bm
+ * Create Date : 2/02/2017
+ */
+
 $(document).ready(function (e) {
     /*Global Variables
      *******************************************/
