@@ -323,11 +323,11 @@ $(document).on('keyup', '.productQr', function (event) {
     if (code == 13) {
         var isbn = $(".productQr").val();
         var orderId = $(this).parent().find("#orderId").val();
+        var ticketId = $(this).parent().find("#ticketId").val();
         var url = $baseUrl + 'returnproduct/return-product/return-list';
-        //alert(orderId);
         $.ajax({
             url: url,
-            data: {orderId: orderId, isbn: isbn},
+            data: {orderId: orderId, isbn: isbn, ticketId: ticketId},
             dataType: 'JSON',
             type: 'post',
             success: function (data) {

@@ -50,7 +50,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <div style="width: 100%;background-color: #ffffcc;min-height: 70px;border: #ffcc00 solid thin;padding-left: 10px;padding-top: 10px;font-size: 11pt;">
                         <?= $ticket->description ?>
                     </div><br>
-                    <a href="<?= $baseUrl . 'index' ?>" class="btn-lg pull-right"  style="margin-right: 5px;background-color: #000;color: #ffcc;"><i class="fa fa-paper-plane" aria-hidden="true"></i> คืนสินค้า</a>
+                    <a href="<?= $baseUrl . 'index?ticketId=' . $ticket->ticketId ?>" class="btn-lg pull-right"  style="margin-right: 5px;background-color: #000;color: #ffcc;"><i class="fa fa-paper-plane" aria-hidden="true"></i> คืนสินค้า</a>
                     <a href="<?= $baseUrl . 'request-ticket' ?>" class="btn-lg pull-right"  style="margin-right: 5px;background-color: #ffcc00;color: #000;"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back</a>
 
                 </div>

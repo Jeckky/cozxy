@@ -38,6 +38,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             ]);
             ?>
             <input type="hidden" name="orderId" id="orderId" value="<?= $order->orderId ?>">
+            <input type="hidden" id="ticketId" value="<?= $ticketId ?>">
             <div id="returnList" style="margin-top: 10px;">
                 <?php if (isset($returnList) && !empty($returnList)) { ?>
                     <table class="table">
@@ -64,6 +65,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     <a class="btn" id="incr-return">+</a>
                                 </td>
                                 <td style="vertical-align: middle;text-align: center;"><textarea name="remark[<?= $rItem->returnProductId ?>]" id="remark<?= $rItem->returnProductId ?>" required="true"><?= isset($rItem->remark) ? $rItem->remark : '' ?></textarea></td>
+
                             <input type="hidden" id="pSuppId" value="<?= $rItem->returnProductId ?>">
                             <input type="hidden" id="pOrderId" value="<?= $order->orderId ?>">
                             <td style="vertical-align: middle;text-align: center;font-size: 25pt;"><i class="fa fa-times-circle deleteR" id="deleteR<?= $rItem->returnProductId ?>" aria-hidden="true" style="cursor: pointer;"></i></td>

@@ -20,9 +20,10 @@ use yii\widgets\ActiveForm;
             <?php
             $form = ActiveForm::begin([
                         'method' => 'POST',
-                        'action' => ['return-product/index'],
+                        'action' => ['return-product/detail'],
             ]);
             ?>
+            <input type="hidden" name="ticketId" value="<?= $ticketId ?>">
             <table class="table table-bordered">
                 <tbody>
                     <tr>

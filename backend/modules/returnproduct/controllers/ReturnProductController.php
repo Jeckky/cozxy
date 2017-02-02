@@ -25,23 +25,32 @@ class ReturnProductController extends ReturnProductMasterController {
      * Renders the index view for the module
      * @return string
      */
-    public function actionIndex() {
+    public function actionIndex($ticketId) {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        } else {
+            return $this->render('index', [
+                        'ticketId' => $ticketId
+            ]);
         }
+    }
+
+    public function actionDetail() {
+        $ticketId = $_POST['ticketId'];
         if (isset($_POST['orderNo']) && !empty($_POST['orderNo'])) {
             $order = Order::find()->where("orderNo='" . $_POST['orderNo'] . "' and status=" . Order::ORDER_STATUS_RECEIVED)->one();
             if (isset($order) && !empty($order)) {
                 return $this->redirect(['order-detail',
-                            'orderId' => $order->orderId
+                            'orderId' => $order->orderId,
+                            'ticketId' => $ticketId
                 ]);
             } else {
                 $ms = 'ไม่มีออร์เดอร์ ' . $_POST['orderNo'] . ' กรุณาลองใหม่อีกครั้ง';
                 return $this->render('index', [
-                            'ms' => $ms]);
+                            'ms' => $ms,
+                            'ticketId' => $ticketId
+                ]);
             }
-        } else {
-            return $this->render('index');
         }
     }
 
@@ -100,7 +109,7 @@ class ReturnProductController extends ReturnProductMasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionOrderDetail($orderId) {
+    public function actionOrderDetail($orderId, $ticketId) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $addressText = '';
         $returnList = ReturnProduct::find()->where("orderId=" . $orderId . " and status=1")->all();
@@ -113,7 +122,8 @@ class ReturnProductController extends ReturnProductMasterController {
                     'order' => $order,
                     'addressText' => $addressText,
                     'pickingPoint' => isset($pickingPoint) && !empty($pickingPoint) ? $pickingPoint->title : '',
-                    'returnList' => $returnList
+                    'returnList' => $returnList,
+                    'ticketId' => $ticketId
         ]);
     }
 
@@ -131,22 +141,28 @@ class ReturnProductController extends ReturnProductMasterController {
                 if (isset($orderItems) && !empty($orderItems)) {
                     $header = $this->tableHeader();
                     foreach ($orderItems as $item):
-                        $returns = new ReturnProduct();
-                        $returns->orderId = $_POST["orderId"];
-                        $returns->orderItemId = $item->orderItemId;
-                        $returns->discount = OrderItem::calculateReturnDiscount($item->orderItemId);
-                        $returns->productSuppId = $item->productSuppId;
-                        $returns->quantity = 1;
-                        $returns->price = ProductSuppliers::productPrice($item->productSuppId);
-                        $returns->totalPrice = $returns->quantity * $returns->price;
-                        $returns->totalDiscount = $returns->discount * $returns->quantity;
-                        $returns->credit = $returns->totalPrice - $returns->totalDiscount;
-                        $returns->receiver = Yii::$app->user->identity->userId;
-                        $returns->status = 1;
-                        $returns->createDateTime = new \yii\db\Expression('NOW()');
-                        $returns->updateDateTime = new \yii\db\Expression('NOW()');
-                        $returns->save(false);
+                        $check = false;
+                        $check = $this->checkDupplicateItem($item->orderItemId, $_POST['ticketId'], $_POST["orderId"]);
+                        if ($check) {
+                            $returns = new ReturnProduct();
+                            $returns->orderId = $_POST["orderId"];
+                            $returns->ticketId = $_POST["ticketId"];
+                            $returns->orderItemId = $item->orderItemId;
+                            $returns->discount = OrderItem::calculateReturnDiscount($item->orderItemId);
+                            $returns->productSuppId = $item->productSuppId;
+                            $returns->quantity = 1;
+                            $returns->price = ProductSuppliers::productPrice($item->productSuppId);
+                            $returns->totalPrice = $returns->quantity * $returns->price;
+                            $returns->totalDiscount = $returns->discount * $returns->quantity;
+                            $returns->credit = $returns->totalPrice - $returns->totalDiscount;
+                            $returns->receiver = Yii::$app->user->identity->userId;
+                            $returns->status = 1;
+                            $returns->createDateTime = new \yii\db\Expression('NOW()');
+                            $returns->updateDateTime = new \yii\db\Expression('NOW()');
+                            $returns->save(false);
+                        }
                     endforeach;
+
                     $returnItems = ReturnProduct::find()->where("orderId=" . $_POST["orderId"] . " and status=1")->all();
                     $i = 1;
                     foreach ($returnItems as $rItem):
@@ -177,6 +193,15 @@ class ReturnProductController extends ReturnProductMasterController {
         }
 
         return \yii\helpers\Json::encode($res);
+    }
+
+    public function checkDupplicateItem($orderItemId, $ticketId, $orderId) {
+        $returns = ReturnProduct::find()->where("orderItemId=" . $orderItemId . " and ticketId=" . $ticketId . " and orderId=" . $orderId)->one();
+        if (isset($returns) && !empty($returns)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public function actionConfirmReturn() {
