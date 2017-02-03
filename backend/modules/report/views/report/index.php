@@ -66,6 +66,23 @@ $this->params['pageHeader'] = Html::encode($this->title);
             </div>
             <br>
             <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
+            <?php
+            if (isset($_GET['fromDate'])) {
+                $fromDate = $_GET['fromDate'];
+            } else {
+                $fromDate = '';
+            }
+            if (isset($_GET['toDate'])) {
+                $toDate = $_GET['toDate'];
+            } else {
+                $toDate = '';
+            }
+            ?>
+            <?php if (isset($model) && !empty($model)) { ?>
+                <input type="hidden" id="fromDate" value="<?= $fromDate ?>">
+                <input type="hidden" id="toDate" value="<?= $toDate ?>">
+                <a class="btn btn-lg btn-primary pull-right" id="export-txt" style="margin-bottom: 3px;"> <i class="fa fa-download" aria-hidden="true"></i>  Download</a>
+            <?php } ?>
             <?=
             GridView::widget([
                 'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",

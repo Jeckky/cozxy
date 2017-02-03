@@ -40,11 +40,11 @@ class Address extends \common\models\costfit\master\AddressMaster {
     public function rules() {
 
         return array_merge(parent::rules(), [//, 'countryId'
-            [['firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'zipcode', 'type', 'isDefault', 'status', 'tel']
+                [['firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'zipcode', 'type', 'isDefault', 'status', 'tel']
                 , 'required', 'on' => 'shipping_address'],
-            ['tel', 'number'],
-            ['zipcode', 'number'],
-            [['countryId', 'firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'districtId', 'zipcode', 'email']
+                ['tel', 'number'],
+                ['zipcode', 'number'],
+                [['countryId', 'firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'districtId', 'zipcode', 'email']
                 , 'required', 'on' => 'checkout-billing-address'],
         ]);
     }
@@ -104,6 +104,19 @@ class Address extends \common\models\costfit\master\AddressMaster {
 
     public function getState() {
         return $this->hasOne(\common\models\dbworld\States::className(), ['stateId' => 'provinceId']);
+    }
+
+    public static function CompanyName($userId) {
+        $address = Address::find()->where("userId=" . $userId . " and isDefault=1")->one();
+        if (isset($address) && !empty($address)) {
+            if ($address->company != NULL || $address->company != '') {
+                return $address->company;
+            } else {
+                return $address->firstname . " " . $address->lastname;
+            }
+        } else {
+            return '';
+        }
     }
 
 }

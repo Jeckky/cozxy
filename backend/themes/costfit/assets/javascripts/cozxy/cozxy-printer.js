@@ -537,3 +537,22 @@ $(document).on('keyup', '#search-notApprove', function (e) {
         }
     });
 });
+$(document).on('click', '#export-txt', function (e) {
+    var fromDate = $(this).parent().find("#fromDate").val();
+    var toDate = $(this).parent().find("#toDate").val();
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: $baseUrl + 'report/report/export',
+        data: {fromDate: fromDate, toDate: toDate},
+        success: function (data) {
+            if (data.status) {
+
+                window.location.href = $baseUrl + 'report/report/download?files=' + data.file;
+                alert("Download successful,please check '" + data.filename + "' in Download folder");
+            } else {
+                alert('Please try to search and download again');
+            }
+        }
+    });
+});
