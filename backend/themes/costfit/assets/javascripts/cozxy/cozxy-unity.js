@@ -2,12 +2,18 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
+
+ * http://www.codeigniter.in.th/jsmin
+ * ลดขนาดไฟล์ Javascript ด้วย JS Minifier
+ * By Taninut.Bm
+ * Create Date : 6/02/2017
+
  */
-var $baseUrl = window.location.protocol + "//" + window.location.host;
+var $baseUrl = window.location.protocol + "/ / " + window.location.host;
 if (window.location.host == 'localhost') {
     $baseUrl = window.location.protocol + "//" + window.location.host + '/cost.fit-backend/';
 } else if (window.location.host == '192.168.100.8' || window.location.host == '192.168.100.20') {
-//console.log($baseUrl);
+    //console.log($baseUrl);
     var str = window.location.pathname;
     var res = str.split("/");
     //console.log(window.location.pathname);
