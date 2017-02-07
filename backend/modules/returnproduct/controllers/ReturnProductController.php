@@ -426,10 +426,11 @@ class ReturnProductController extends ReturnProductMasterController {
         $res = [];
         if (isset($messeges) && !empty($messeges)) {
             foreach ($messeges as $messege):
+                $showTime = substr($messege->createDateTime, 11, 5);
                 if ($messege->messegeType == 2) {//ข้อความทางฝั่ง cozxy ชิดขวา
-                    $ms = $ms . '<div class="message-yellow-right">' . $messege->messege . '</div><div class="col-lg-12"></div>';
+                    $ms = $ms . '<div class="message-yellow-right">' . $messege->messege . '</div>' . '<div class="pull-right" style="color:#cccccc;font-size:9pt;margin-top:12px;margin-right:2px;">' . $showTime . '</div><div class="col-lg-12"></div>';
                 } else {///ฝั่ง customer ชิดซ้าย
-                    $ms = $ms . '<div class="message-black-left">' . $messege->messege . '</div><div class="col-lg-12"></div>';
+                    $ms = $ms . '<div class="message-black-left">' . $messege->messege . '</div>' . '<div class="pull-left" style="color:#cccccc;font-size:9pt;margin-top:12px;margin-left:2px;">' . $showTime . '</div><div class="col-lg-12"></div>';
                 }
                 $ScrollPosition += 50;
             endforeach;
@@ -469,7 +470,7 @@ class ReturnProductController extends ReturnProductMasterController {
                         "<td style='text-align: center;width: 15%;'>" . $ticket->ticketNo . "</td>" .
                         "<td style='text-align: center;width: 15%;'>" . User::userName($ticket->userId) . "</td>" .
                         "<td style='text-align: center;width: 20%;'>" . substr($this->dateThai(Order::recieveDate($ticket->orderId), 1, true), 0, -8) . "</td>" .
-                        "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'ticket-detail?orderId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
+                        "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'ticket-detail?ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
                 $i++;
             endforeach;
             $res["wait"] = $text;
@@ -502,7 +503,7 @@ class ReturnProductController extends ReturnProductMasterController {
                 $text = $text . "<tr><td style='text-align: center;width: 15%;'>" . Order::invoiceNo($ticket->orderId) . "</td>" .
                         "<td style='text-align: center;width: 35%;'>" . $ticket->ticketNo . "</td>" .
                         "<td style='text-align: center;width: 35%;'>" . User::userName($ticket->userId) . "</td>" .
-                        "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'ticket-detail?orderId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
+                        "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'ticket-detail?ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
                 $i++;
             endforeach;
             $res["wait"] = $text;
@@ -534,7 +535,7 @@ class ReturnProductController extends ReturnProductMasterController {
             foreach ($tickets as $ticket):
                 $text = $text . "<tr><td style='text-align: center;width: 40%;'>" . Order::invoiceNo($ticket->orderId) . "</td>" .
                         "<td style='text-align: center;width: 30%;'>" . $ticket->ticketNo . "</td>" .
-                        "<td style='text-align: center;width: 30%;'><a href=" . $baseUrl . 'ticket-detail?orderId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
+                        "<td style='text-align: center;width: 30%;'><a href=" . $baseUrl . 'ticket-detail?ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
                 $i++;
             endforeach;
             $res["wait"] = $text;

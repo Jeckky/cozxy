@@ -457,10 +457,11 @@ class ProfileController extends MasterController {
         $res = [];
         if (isset($messeges) && !empty($messeges)) {
             foreach ($messeges as $messege):
+                $showTime = substr($messege->createDateTime, 11, 5);
                 if ($messege->messegeType == 1) {//ข้อความทางฝั่ง customer ชิดขวา
-                    $ms = $ms . '<div class="message-yellow-right">' . $messege->messege . '</div><div class="col-lg-12"></div>';
+                    $ms = $ms . '<div class="message-yellow-right">' . $messege->messege . '</div><div class="pull-right" style="color:#cccccc;font-size:9pt;margin-top:12px;margin-right:2px;">' . $showTime . '</div><div class="col-lg-12"></div>';
                 } else {///ฝั่ง cozxy ชิดซ้าย
-                    $ms = $ms . '<div class="message-black-left">' . $messege->messege . '</div><div class="col-lg-12"></div>';
+                    $ms = $ms . '<div class="message-black-left">' . $messege->messege . '</div><div class="pull-left" style="color:#cccccc;font-size:9pt;margin-top:12px;margin-left:2px;">' . $showTime . '</div><div class="col-lg-12"></div>';
                 }
                 $ms = $ms;
                 $ScrollPosition += 50;

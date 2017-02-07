@@ -107,7 +107,7 @@ class Address extends \common\models\costfit\master\AddressMaster {
     }
 
     public static function CompanyName($userId) {
-        $address = Address::find()->where("userId=" . $userId . " and isDefault=1")->one();
+        $address = Address::find()->where("userId=" . $userId . " and status=1")->one();
         if (isset($address) && !empty($address)) {
             if ($address->company != NULL || $address->company != '') {
                 return $address->company;

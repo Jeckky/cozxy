@@ -66,12 +66,19 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                 <?php
                 if (isset($chats) && !empty($chats)) {
                     $ms = '';
+                    $oldDay = '0000-00-00';
                     foreach ($chats as $chat):
-                        if ($chat->messegeType == 1) {//ข้อความทางฝั่ง customer ชิดขวา
-                            $ms = $ms . '<div class="message-yellow-right">' . $chat->messege . '</div><div class="col-lg-12"></div>';
-                        } else {///ฝั่ง cozxy ชิดซ้าย
-                            $ms = $ms . '<div class="message-black-left">' . $chat->messege . '</div><div class="col-lg-12"></div>';
+                        $newDay = substr($chat->createDateTime, 0, 10);
+                        if ($newDay > $oldDay) {
+                            $ms = $ms . '<div class="col-lg-12" style="font-size:9pt;color:#999999;text-align:center;">' . $this->context->dateThai($chat->createDateTime, 2) . '</div><div class="col-lg-12"></div>';
                         }
+                        $showTime = substr($chat->createDateTime, 11, 5);
+                        if ($chat->messegeType == 1) {//ข้อความทางฝั่ง customer ชิดขวา
+                            $ms = $ms . '<div class="message-yellow-right">' . $chat->messege . '</div><div class="pull-right" style="color:#cccccc;font-size:9pt;margin-top:12px;margin-right:2px;">' . $showTime . '</div><div class="col-lg-12"></div>';
+                        } else {///ฝั่ง cozxy ชิดซ้าย
+                            $ms = $ms . '<div class="message-black-left">' . $chat->messege . '</div><div class="pull-left" style="color:#cccccc;font-size:9pt;margin-top:12px;margin-left:2px;">' . $showTime . '</div><div class="col-lg-12"></div>';
+                        }
+                        $oldDay = $newDay;
                     endforeach;
                 } else {
                     $ms = '<div style="width:100%;min-height:50px;color:#000;background-color:#cccccc;padding-top:15px;"><center>ไม่พบข้อมูลการสนทนา</center></div><div class="col-lg-12"></div>';

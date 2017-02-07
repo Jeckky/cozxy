@@ -10,7 +10,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?><?php
 //$id = Order::findOrderId($orderId);
 ?>
-asdfasdgagasdasdfadfadfadfd
 <table class="table table_bordered" width="100%"  cellpadding="3" cellspacing="0" style="border: 0px;">
     <tr>
         <td style="text-align: center;width:20%">Order No</td>

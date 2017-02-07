@@ -102,7 +102,6 @@ class ReportController extends ReportMasterController {
                     $price = \common\models\costfit\ProductSuppliers::productPriceSupplier($item->productSuppId);
                     $data .= $report->orderNo . "|" . $company . "|" . $product . "|" . $item->quantity . "|" . $price . "|" . number_format($item->quantity * $price, 2) . "|\r\n";
                 endforeach;
-
             endforeach;
             fwrite($file, $data);
             fclose($file);

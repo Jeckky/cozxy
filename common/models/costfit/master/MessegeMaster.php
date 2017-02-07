@@ -11,6 +11,7 @@ use Yii;
     * @property integer $ticketId
     * @property integer $orderId
     * @property integer $userId
+    * @property string $messege
     * @property integer $messegeType
     * @property integer $status
     * @property string $createDateTime
@@ -32,8 +33,9 @@ return 'messege';
 public function rules()
 {
 return [
-            [['ticketId', 'orderId', 'userId', 'messegeType'], 'required'],
+            [['ticketId', 'orderId', 'userId', 'messege', 'messegeType'], 'required'],
             [['ticketId', 'orderId', 'userId', 'messegeType', 'status'], 'integer'],
+            [['messege'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
         ];
 }
@@ -48,6 +50,7 @@ return [
     'ticketId' => Yii::t('messege', 'Ticket ID'),
     'orderId' => Yii::t('messege', 'Order ID'),
     'userId' => Yii::t('messege', 'User ID'),
+    'messege' => Yii::t('messege', 'Messege'),
     'messegeType' => Yii::t('messege', 'Messege Type'),
     'status' => Yii::t('messege', 'Status'),
     'createDateTime' => Yii::t('messege', 'Create Date Time'),

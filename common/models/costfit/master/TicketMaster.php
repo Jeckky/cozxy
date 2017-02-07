@@ -9,6 +9,7 @@ use Yii;
 *
     * @property string $ticketId
     * @property integer $orderId
+    * @property integer $userId
     * @property string $title
     * @property string $description
     * @property integer $status
@@ -31,8 +32,8 @@ return 'ticket';
 public function rules()
 {
 return [
-            [['orderId'], 'required'],
-            [['orderId', 'status'], 'integer'],
+            [['orderId', 'userId', 'description'], 'required'],
+            [['orderId', 'userId', 'status'], 'integer'],
             [['description'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 255],
@@ -47,6 +48,7 @@ public function attributeLabels()
 return [
     'ticketId' => Yii::t('ticket', 'Ticket ID'),
     'orderId' => Yii::t('ticket', 'Order ID'),
+    'userId' => Yii::t('ticket', 'User ID'),
     'title' => Yii::t('ticket', 'Title'),
     'description' => Yii::t('ticket', 'Description'),
     'status' => Yii::t('ticket', 'Status'),
