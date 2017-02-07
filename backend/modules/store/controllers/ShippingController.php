@@ -74,7 +74,7 @@ class ShippingController extends StoreMasterController {
                 /* shippingScanTrayOnly = true เข้าเงื่อนไขที่ 1 ต้อง Scan ทีละ OrderId */
                 $queryList = \common\models\costfit\Order::find()->where("orderNo = '" . $orderNo . "' ")->one();
                 if (isset($queryList) && !empty($queryList)) {
-                    if ($queryList->status == 13) {
+                    if ($queryList->status == Order::ORDER_STATUS_PACKED) {
                         $queryItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $queryList->orderId . ' and status =13')->all(); // status : 6 pack ใส่ลงถุง
                         if (isset($queryItem) && !empty($queryItem)) {
                             foreach ($queryItem as $items) :
@@ -82,6 +82,7 @@ class ShippingController extends StoreMasterController {
                                 if (isset($orderItemPackings) && !empty($orderItemPackings)) {
                                     foreach ($orderItemPackings as $packing):
                                         $packing->status = OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING;
+                                        $packing->shipper = Yii::$app->user->identity->userId;
                                         $packing->save(FALSE);
                                         $queryItemStatus = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $packing->orderItemId . ' and status = 13')->all();
                                         foreach ($queryItemStatus as $shipStatus) :
@@ -109,10 +110,12 @@ class ShippingController extends StoreMasterController {
             }
             //$this->redirect(Yii::$app->homeUrl . 'store/shipping/');
         }
-
-        //print_r($query);
+        $orderInCars = OrderItemPacking::find()->where("shipper=" . Yii::$app->user->identity->userId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)->all();
+        $pickingPoint = $this->findPickingPoint($orderInCars);
         return $this->render('index', [
                     'dataProvider' => $dataProvider,
+                    'orderInCar' => $orderInCars,
+                    'pickingPoints' => $pickingPoint,
                     'ms' => $ms
         ]);
 
@@ -125,7 +128,7 @@ class ShippingController extends StoreMasterController {
         $orderNo = Yii::$app->request->get('orderNo');
         $order = Order::find()->where("orderNo='" . $orderNo . "'")->one();
         if (isset($order) && !empty($order)) {
-            if ($order->status == 13) {
+            if ($order->status == Order::ORDER_STATUS_PACKED) {
                 $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId)->all();
                 if (isset($orderItems) && !empty($orderItems)) {
                     foreach ($orderItems as $item):
@@ -136,9 +139,9 @@ class ShippingController extends StoreMasterController {
                 }else {
                     $ms = 'ไม่พบสินค้าในออเดอร์นี้';
                 }
-            } else if ($order->status == 14) {
+            } else if ($order->status == Order::ORDER_STATUS_SENDING_SHIPPING) {
                 $ms = 'Order นี้ สแกนแล้ว'; //ไม่เจอ order กลับไปหน้า index
-                $query = \common\models\costfit\Order::find()
+                $query = Order::find()
                         ->select('*')
                         ->joinWith(['orderItems'])
                         ->where("order_item.status = 13");
@@ -150,7 +153,7 @@ class ShippingController extends StoreMasterController {
             }
         } else {
             $ms = 'ไม่พบออเดอร์นี้'; //ไม่เจอ order กลับไปหน้า index
-            $query = \common\models\costfit\Order::find()
+            $query = Order::find()
                     ->select('*')
                     ->joinWith(['orderItems'])
                     ->where("order_item.status = 13");
@@ -204,7 +207,7 @@ class ShippingController extends StoreMasterController {
         if ($ItemInPacking == 0) {
             $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
             if (isset($orderItem) && !empty($orderItem)) {
-                $orderItem->status = 14;
+                $orderItem->status = \common\models\costfit\OrderItem::ORDER_STATUS_SENDING_SHIPPING;
                 $orderItem->updateDateTime = new \yii\db\Expression('NOW()');
                 $orderItem->save(false);
             }
@@ -215,9 +218,9 @@ class ShippingController extends StoreMasterController {
         $order = Order::find()->where("orderNo='" . $orderNo . "'")->one();
         $orderItem = 0;
         if (isset($order) && !empty($order)) {
-            $orderItem = count(\common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId . " and status=13")->all());
+            $orderItem = count(\common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId . " and status=" . Order::ORDER_STATUS_PACKED)->all());
             if ($orderItem == 0) {
-                $order->status = 14;
+                $order->status = \common\models\costfit\OrderItem::ORDER_STATUS_SENDING_SHIPPING;
                 $order->updateDateTime = new \yii\db\Expression('NOW()');
                 $order->save();
                 return true;
@@ -227,6 +230,28 @@ class ShippingController extends StoreMasterController {
         } else {
             return false;
         }
+    }
+
+    public static function findPickingPoint($incars) {
+        $pickingPoint = [];
+        $i = 0;
+        if (isset($incars) && !empty($incars)) {
+            foreach ($incars as $incar):
+                $check = 0;
+                $order = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $incar->orderItemId)->one();
+                $point = Order::find()->where("orderId=" . $order->orderId)->one();
+                foreach ($pickingPoint as $old):
+                    if ($old == $point->pickingId) {
+                        $check++;
+                    }
+                endforeach;
+                if ($check == 0) {
+                    $pickingPoint[$i] = $point->pickingId;
+                    $i++;
+                }
+            endforeach;
+        }
+        return $pickingPoint;
     }
 
 }

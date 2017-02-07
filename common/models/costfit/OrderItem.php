@@ -79,10 +79,10 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster {
 
     public static function findSlowestDate($orderId) {
         $model = OrderItem::find()
-        ->select("MAX(st.date) as maxDate")
-        ->join("LEFT JOIN", 'shipping_type st', 'st.shippingTypeId = order_item.sendDate')
-        ->where('order_item.orderId=' . $orderId)
-        ->one();
+                ->select("MAX(st.date) as maxDate")
+                ->join("LEFT JOIN", 'shipping_type st', 'st.shippingTypeId = order_item.sendDate')
+                ->where('order_item.orderId=' . $orderId)
+                ->one();
 
         return isset($model->maxDate) ? $model->maxDate : NULL;
     }
@@ -90,8 +90,8 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster {
     public static function countPickingItemsArray($orderId) {
         $res = [];
         $query = \common\models\costfit\OrderItem::find()
-        ->where("orderId=" . $orderId)
-        ->all();
+                ->where("orderId=" . $orderId)
+                ->all();
 
         $res['countItems'] = count($query);
         $sumQuantity = 0;
@@ -106,6 +106,16 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster {
     public static function findOrderItems($orderId, $productId) {
         //$items = OrderItem::find()->where("orderId=" . $orderId . " and productId=" . $productId . " and status<=5")->one();
         $items = OrderItem::find()->where("orderId=" . $orderId . " and productSuppId=" . $productId . " and status<=5")->one();
+        if (isset($items)) {
+            return $items;
+        } else {
+            return '';
+        }
+    }
+
+    public static function findAllItems($orderId) {
+        //$items = OrderItem::find()->where("orderId=" . $orderId . " and productId=" . $productId . " and status<=5")->one();
+        $items = OrderItem::find()->where("orderId=" . $orderId)->all();
         if (isset($items)) {
             return $items;
         } else {

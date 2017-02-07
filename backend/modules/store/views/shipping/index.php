@@ -8,26 +8,26 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Shipping List';
+$this->title = 'Shipping';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <?php
 if (\Yii::$app->params['shippingScanTrayOnly'] == true) {
     $form = ActiveForm::begin([
-        'method' => 'GET',
-        'action' => ['shipping/index'],
+                'method' => 'GET',
+                'action' => ['shipping/index'],
     ]);
 } else if (\Yii::$app->params['shippingScanTrayOnly'] == False) {
     $form = ActiveForm::begin([
-        'method' => 'GET',
-        'action' => ['shipping/scanbag'],
+                'method' => 'GET',
+                'action' => ['shipping/scanbag'],
     ]);
 }
 ?>
 <div class="panel panel-default">
-    <div class="panel-heading"  style="background-color: #ccffcc;vertical-align: middle;">
-        <span class="panel-title"><h3><?= $this->title ?></h3></span>
+    <div class="panel-heading"  style="background-color: #000;vertical-align: middle;">
+        <span class="panel-title"><h3 style="color:#ffcc00;"><?= $this->title ?></h3></span>
     </div>
     <div class="panel-body ">
         <table class="table table-bordered">
@@ -51,9 +51,40 @@ if (\Yii::$app->params['shippingScanTrayOnly'] == true) {
 
     </div>
 </div>
+<?php
+if (isset($orderInCar) && !empty($orderInCar) && isset($pickingPoints) && !empty($pickingPoints)) {
+    ?>
+    <div class="panel panel-default">
+        <div class="panel-heading" style="background-color: #cccccc;vertical-align: middle;">
+            <span class="panel-title"><h3>นำส่ง</h3></span>
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>จุดส่ง</th>
+                        <th>OrderNo</th>
+                        <th>Order Barcode</th>
+                        <th>หมายเลขถุง</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($pickingPoints as $pickingPoint):
+                        $order = common\models\costfit\OrderItemPacking::findOrderAtPoint($pickingPoint)
+                        ?>
+
+                    <?php endforeach;
+                    ?>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+<?php } ?>
 <div class="panel panel-default">
-    <div class="panel-heading" style="background-color: #ccffff;vertical-align: middle;">
-        <span class="panel-title"><h4> Order ที่มาจาก Packing </h4></span>
+    <div class="panel-heading" style="background-color: #ffcc00;vertical-align: middle;">
+        <span class="panel-title"><h4> Order รอส่ง(แพ๊คแล้ว) </h4></span>
     </div>
     <div class="panel-body">
 
@@ -68,7 +99,7 @@ if (\Yii::$app->params['shippingScanTrayOnly'] == true) {
                 }
             },
             'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+                    ['class' => 'yii\grid\SerialColumn'],
                 //'orderId',
                 //'orderItemId',
                 //'orderNo',
@@ -102,7 +133,7 @@ if (\Yii::$app->params['shippingScanTrayOnly'] == true) {
                         return isset($txt) ? $txt : ''; // status items 6 : แพ็คใส่ถุงแล้ว
                     }
                 ],
-                [
+                    [
                     'attribute' => 'จำนวน bagNo',
                     'value' => function($model) {
                         return \common\models\costfit\OrderItemPacking::shipPacking($model->orderItemId) . "  ถุง";

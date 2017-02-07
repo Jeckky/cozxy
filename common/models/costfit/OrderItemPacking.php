@@ -146,7 +146,7 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     static public function shipPacking($orderItemId) {
 
         $orderItem = OrderItem::find()
-        ->where("orderItemId=" . $orderItemId)->one();
+                        ->where("orderItemId=" . $orderItemId)->one();
         //throw new \yii\base\Exception($orderItem->order->status);
         if ($orderItem->status == 13) {
             $status = 4;
@@ -155,10 +155,10 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
         }
 
         $result = OrderItemPacking::find()
-        //->distinct('order_item_packing.bagNo')
-        ->join('LEFT JOIN', 'order_item oi', 'oi.orderItemId = order_item_packing.orderItemId')
-        ->where(['oi.orderId' => $orderItem->orderId, 'order_item_packing.status' => $status])
-        ->count();
+                //->distinct('order_item_packing.bagNo')
+                ->join('LEFT JOIN', 'order_item oi', 'oi.orderItemId = order_item_packing.orderItemId')
+                ->where(['oi.orderId' => $orderItem->orderId, 'order_item_packing.status' => $status])
+                ->count();
         //throw new \yii\base\Exception($orderItemId);
         return $result;
     }
@@ -178,17 +178,17 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
 
     static public function countBagNo($bagNo) {
         $result = OrderItemPacking::find()
-        //->distinct('order_item_packing.bagNo')
-        //->join('LEFT JOIN', 'order_item oi', 'oi.orderItemId = order_item_packing.orderItemId')
-        ->where(['order_item_packing.bagNo' => $bagNo])
-        ->count();
+                //->distinct('order_item_packing.bagNo')
+                //->join('LEFT JOIN', 'order_item oi', 'oi.orderItemId = order_item_packing.orderItemId')
+                ->where(['order_item_packing.bagNo' => $bagNo])
+                ->count();
         return $result;
     }
 
     static public function countQuantity($bagNo) {
         $result = OrderItemPacking::find()
-        ->where(['order_item_packing.bagNo' => $bagNo])
-        ->sum('order_item_packing.quantity');
+                ->where(['order_item_packing.bagNo' => $bagNo])
+                ->sum('order_item_packing.quantity');
         return $result;
     }
 
@@ -207,7 +207,7 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
           ->groupBy(['order_item_packing.bagNo'])->one(); */
 
         $queryOrderItemPackingId = \common\models\costfit\PickingPointItems::find()
-        ->where("pickingItemsId= '" . $pickingItemsId . "' ")->one();
+                        ->where("pickingItemsId= '" . $pickingItemsId . "' ")->one();
         if (count($queryOrderItemPackingId) == 0) {
             return $queryOrderItemPackingId['pickingItemsId']; // yes
         } else {
@@ -217,10 +217,27 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
 
     static public function checkInspector($pickingItemsId) {
         $result = OrderItemPacking::find()
-        ->select('curdate(),date(shipdate) , (curdate() - date(shipdate)) AS DateOfPut , (date(updateDateTime) - date(shipdate)) AS DateOfReceive  , status ,remark ')
-        ->where(['order_item_packing.pickingItemsId' => $pickingItemsId])
-        ->one();
+                ->select('curdate(),date(shipdate) , (curdate() - date(shipdate)) AS DateOfPut , (date(updateDateTime) - date(shipdate)) AS DateOfReceive  , status ,remark ')
+                ->where(['order_item_packing.pickingItemsId' => $pickingItemsId])
+                ->one();
         return $result;
+    }
+
+    public static function findOrderAtPoint($pickingPointId) {
+        $items = OrderItemPacking::find()->where("shipper=" . Yii::$app->user->identity->userId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)->all();
+        $orderItemId = '';
+        $orderId = '';
+        foreach ($items as $item):
+            $orderItemId .= $item->orderItemId . ",";
+        endforeach;
+        $orderItemId = substr($orderItemId, 0, -1);
+        $orderItem = OrderItem::find()
+                        ->select('*')
+                        ->JOIN('LEFT JOIN', 'order', 'order.orderId=order_item.orderId')
+                        ->where("orderItemId in ($orderItemId) and pickingId=" . $pickingPointId)->all();
+
+        //throw new \yii\base\Exception(print_r($orderItem, true));
+        //throw new \yii\base\Exception(count($orderItem));
     }
 
 }

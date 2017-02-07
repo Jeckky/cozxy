@@ -6,6 +6,7 @@ use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
 use common\models\costfit\Product;
 use common\models\costfit\Order;
+use common\models\costfit\ProductSuppliers;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -25,8 +26,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
     <div class="panel-body">
         <?php
         $form = ActiveForm::begin([
-            'method' => 'GET',
-            'action' => ['packing/packing'],
+                    'method' => 'GET',
+                    'action' => ['packing/packing'],
         ]);
         ?>
         <h3> Scan Product Code </h3><br>
@@ -107,19 +108,19 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 'packingId' => $item->orderItemPackingId,
                                 'orderId' => $orderId,
                                 'ms' => isset($ms) ? $ms : ''
-                            ], ['class' => 'btn btn-sm btn-warning']) . '</td>';
+                                    ], ['class' => 'btn btn-sm btn-warning']) . '</td>';
                         } else if ($item->quantity == 1) {//ลบออก
                             echo '<td>' . Html::a('<i class="fa fa-minus" aria-hidden="true"></i>', ['remove',
                                 'packingId' => $item->orderItemPackingId,
                                 'orderId' => $orderId,
                                 'ms' => isset($ms) ? $ms : ''
-                            ], ['class' => 'btn btn-sm btn-danger']) . '</td>';
+                                    ], ['class' => 'btn btn-sm btn-danger']) . '</td>';
                         }
                         echo '</tr>';
                         $i++;
                     endforeach;
                 } else {
-                    echo '<td colspan="3"> ยังไม่มีสินค้าในถุง </td>';
+                    echo '<td colspan="3"> ยังไม่มีสิ นค้าในถุง </td>';
                 }
 //throw new \yii\base\Exception(print_r($order, true));
                 ?>
@@ -137,12 +138,48 @@ $this->params['pageHeader'] = Html::encode($this->title);
             if (isset($items) && !empty($items)) {
                 echo Html::a('<i class="fa fa-check-square-o" aria-hidden="true"></i> ปิดถุง', ['close-bag',
                     'orderId' => $orderId
-                ], ['class' => 'closeBag btn btn-lg btn-success',
+                        ], ['class' => 'closeBag btn btn-lg btn-success',
                     'onClick' => 'return confirm("คุณต้องการปิดถุง ?")'
                 ]);
             }
             ?>
         </div>
         <?php // ActiveForm::end();      ?>
+
+
     </div>
+
+    <table class="table table-condensed" style="text-align: center;width:40%;margin-top: 200px;">
+        <thead>
+            <tr style="background-color: #cccccc;">
+                <th><center>No.</center></th>
+        <th><center>isbn</center></th>
+        <th><center>Product</center></th>
+        <th><center>จำนวน</center></th>
+        </tr>
+        </thead>
+        <tbody>
+            <?php
+            $orderItems = common\models\costfit\OrderItem::findAllItems($orderId);
+            //throw new \yii\base\Exception(print_r($orderItems, true));
+            if (isset($orderItems) && !empty($orderItems) && $orderItems != '') {
+                $i = 1;
+                foreach ($orderItems as $orderItem):
+                    ?>
+                    <tr>
+                        <td><?= $i ?></td>
+                        <td><?= ProductSuppliers::productSupplierName($orderItem->productSuppId)->isbn ?></td>
+                        <td><img src="<?= Yii::$app->homeUrl . ProductSuppliers::productImageSuppliers($orderItem->productSuppId) ?>" style="width:120px;height: 100px;"></td>
+                        <td><?= $orderItem->quantity ?></td>
+                    </tr>
+                    <?php
+                    $i++;
+                endforeach;
+            } else {
+                ?>
+                <tr><td colspan="4">ไม่มีข้อมูล</td></tr>
+            <?php }
+            ?>
+        </tbody>
+    </table>
 </div>
