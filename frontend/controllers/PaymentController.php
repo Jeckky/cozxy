@@ -154,7 +154,9 @@ class PaymentController extends MasterController {
          * function GetParams($hash, $title)
          * 10/1/2017
          */
-        $params = CozxyUnity::GetParams($hash, $title);
+        //$params = CozxyUnity::GetParams($hash, $title);
+        $k = base64_decode(base64_decode($hash));
+        $params = \common\models\ModelMaster::decodeParams($hash);
 
         $orderId = Yii::$app->request->get('OrderNo');
         $this->layout = "payment/content";
