@@ -12,19 +12,21 @@ use yii\filters\VerbFilter;
 /**
  * LedController implements the CRUD actions for Led model.
  */
-class LedController extends LedMasterController {
+class LedController extends LedMasterController
+{
 
     /**
      * @inheritdoc
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
                     // allow authenticated users
-                        [
+                    [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -44,7 +46,8 @@ class LedController extends LedMasterController {
      * Lists all Led models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         $model = new Led();
         if (isset($_GET['Led']['start']) && isset($_GET['Led']['start']) && isset($_GET['Led']['start'])) {
@@ -91,8 +94,8 @@ class LedController extends LedMasterController {
         ]);
 
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
-                    'model' => $model
+            'dataProvider' => $dataProvider,
+            'model' => $model
         ]);
     }
 
@@ -101,9 +104,10 @@ class LedController extends LedMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -112,7 +116,8 @@ class LedController extends LedMasterController {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $model = new Led();
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         if (isset($_POST["Led"])) {
@@ -127,19 +132,21 @@ class LedController extends LedMasterController {
             }
         } else {
             return $this->render('create', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
 
-    public function actionIndexColor() {
+    public function actionIndexColor()
+    {
         $model = \common\models\costfit\LedColor::find()->all();
         return $this->render('index_color', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
-    public function actionCreateColor() {
+    public function actionCreateColor()
+    {
         $model = new \common\models\costfit\LedColor();
         $r = 0;
         $b = 0;
@@ -184,19 +191,20 @@ class LedController extends LedMasterController {
                 return $this->redirect('index-color');
             } else {
                 return $this->render('create_color', [
-                            'r' => $_POST['LedColor']['r'],
-                            'g' => $_POST['LedColor']['g'],
-                            'b' => $_POST['LedColor']['b'],
-                            'model' => $model,
+                    'r' => $_POST['LedColor']['r'],
+                    'g' => $_POST['LedColor']['g'],
+                    'b' => $_POST['LedColor']['b'],
+                    'model' => $model,
                 ]);
             }
         }
         return $this->render('create_color', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
-    public static function rgb2hex($rgb) {
+    public static function rgb2hex($rgb)
+    {
         $hex = "#";
         $hex .= str_pad(dechex($rgb[0]), 2, "0", STR_PAD_LEFT);
         $hex .= str_pad(dechex($rgb[1]), 2, "0", STR_PAD_LEFT);
@@ -211,7 +219,8 @@ class LedController extends LedMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionUpdateColor($id) {
+    public function actionUpdateColor($id)
+    {
         $model = \common\models\costfit\LedColor::find()->where("ledColorId=" . $id)->one();
         $r = 0;
         $b = 0;
@@ -246,32 +255,33 @@ class LedController extends LedMasterController {
                     return $this->redirect('index-color');
                 } else {
                     return $this->render('create_color', [
-                                'r' => $r,
-                                'g' => $g,
-                                'b' => $b,
-                                'model' => $model,
+                        'r' => $r,
+                        'g' => $g,
+                        'b' => $b,
+                        'model' => $model,
                     ]);
                 }
             } else {
                 return $this->render('create_color', [
-                            'model' => $model,
+                    'model' => $model,
                 ]);
             }
         } else {
             return $this->render('index_color', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
 
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $model = $this->findModel($id);
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect($baseUrl . '/led/led');
         } else {
             return $this->render('update', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -282,7 +292,8 @@ class LedController extends LedMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         $this->findModel($id)->delete();
         $items = \common\models\costfit\LedItem::find()->where("ledId=" . $id)->all();
         foreach ($items as $item) {
@@ -292,7 +303,8 @@ class LedController extends LedMasterController {
         return $this->redirect($baseUrl . '/led/led');
     }
 
-    public function actionDeleteColor($id) {
+    public function actionDeleteColor($id)
+    {
         $items = \common\models\costfit\LedColor::find()->where("ledColorId=" . $id)->one();
         if (isset($items)) {
             $items->delete();
@@ -308,7 +320,8 @@ class LedController extends LedMasterController {
      * @return Led the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id) {
+    protected function findModel($id)
+    {
         if (($model = Led::findOne($id)) !== null) {
             return $model;
         } else {
@@ -316,7 +329,8 @@ class LedController extends LedMasterController {
         }
     }
 
-    function chekIp($ip) {
+    function chekIp($ip)
+    {
         $led = Led::find()->where("ip='" . $ip . "'")->all();
         if (isset($led) and ! empty($led)) {
             return true;
@@ -325,7 +339,8 @@ class LedController extends LedMasterController {
         }
     }
 
-    public function actionChangeStatus($id) {
+    public function actionChangeStatus($id)
+    {
         $model = Led::find()->where("ledId=$id")->one();
         $model->status = $_GET["status"];
         if ($model->save()) {
@@ -333,7 +348,8 @@ class LedController extends LedMasterController {
         }
     }
 
-    public function actionOpenAllLed() {
+    public function actionOpenAllLed()
+    {
         $models = Led::find()->where("status=1")->all();
 
 //        throw new \yii\base\Exception(print_r($context, true));\]
@@ -363,7 +379,8 @@ class LedController extends LedMasterController {
         }
     }
 
-    public function actionOpenAllLedByColor($colorId) {
+    public function actionOpenAllLedByColor($colorId)
+    {
         $models = Led::find()->where("status=1")->all();
 
 //        throw new \yii\base\Exception(print_r($context, true));\]
@@ -397,7 +414,8 @@ class LedController extends LedMasterController {
         }
     }
 
-    public function actionCloseAllLed() {
+    public function actionCloseAllLed()
+    {
         $models = Led::find()->where("status=1")->all();
 
 //        throw new \yii\base\Exception(print_r($context, true));\]
@@ -422,7 +440,8 @@ class LedController extends LedMasterController {
         }
     }
 
-    public function actionCloseAllLedByColor($colorId) {
+    public function actionCloseAllLedByColor($colorId)
+    {
         $models = Led::find()->where("status=1")->all();
 
 //        throw new \yii\base\Exception(print_r($context, true));\]
@@ -456,7 +475,8 @@ class LedController extends LedMasterController {
         }
     }
 
-    public function actionOpenLed($slot, $colorId) {
+    public function actionOpenLed($slot, $colorId)
+    {
         $models = Led::find()->where("status=1 AND slot in($slot)")->all();
         foreach ($models as $item) {
 
@@ -467,7 +487,7 @@ class LedController extends LedMasterController {
                     $g = $color->g;
                     $b = $color->b;
                     $id = $index + 1;
-                    if (file_get_contents('http://' . $item->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0) !== FALSE) {
+                    if (@file_get_contents('http://' . $item->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0) !== FALSE) {
                         $statusText = "Turn On ";
                         $led->status = 1;
                         $led->save();
@@ -489,7 +509,8 @@ class LedController extends LedMasterController {
         }
     }
 
-    public function actionCloseLed($slot, $colorId) {
+    public function actionCloseLed($slot, $colorId)
+    {
         $item = Led::find()->where("status=1 AND slot='$slot'")->one();
 
         //throw new \yii\base\Exception(print_r($item->ledId, true));
@@ -500,7 +521,7 @@ class LedController extends LedMasterController {
                 $g = $color->g;
                 $b = $color->b;
                 $id = $index + 1;
-                if (file_get_contents('http://' . $item->ip . "?id=$id&status=0&r=$r&g=$g&b=$b", NULL, NULL, 0, 0) !== FALSE) {
+                if (@file_get_contents('http://' . $item->ip . "?id=$id&status=0&r=$r&g=$g&b=$b", NULL, NULL, 0, 0) !== FALSE) {
                     $statusText = "Turn Off ";
                     $led->status = 0;
                     $led->save();
@@ -515,7 +536,8 @@ class LedController extends LedMasterController {
         $this->checkShelfLed($slot, $colorId, 0);
     }
 
-    public function actionGetLastState($ip) {
+    public function actionGetLastState($ip)
+    {
         $result = [];
         $model = Led::find()->where("status=1 AND ip='$ip'")->one();
         $ledItems = \common\models\costfit\LedItem::find()->where("ledId=$model->ledId")->orderBy("sortOrder ASC")->all();
@@ -526,7 +548,8 @@ class LedController extends LedMasterController {
         echo json_encode($result);
     }
 
-    public function checkShelfLed($slot, $colorId, $status) {
+    public function checkShelfLed($slot, $colorId, $status)
+    {
         if (strlen($slot) == 2) {
             $code = $slot;
         } else {
@@ -543,14 +566,14 @@ class LedController extends LedMasterController {
                     $r = $color->r;
                     $g = $color->g;
                     $b = $color->b;
-                    file_get_contents('http://' . $model->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0);
+                    @file_get_contents('http://' . $model->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0);
                     $item->status = 1;
                     $item->save();
                 } else {
                     $countOpenLed = \common\models\costfit\LedItem::find()
-                            ->join("LEFT JOIN", "led l", "led_item.ledId=l.ledId")
-                            ->where("l.slot LIKE '$code%' AND l.slot != '$code' AND led_item.status = 1")
-                            ->count();
+                    ->join("LEFT JOIN", "led l", "led_item.ledId=l.ledId")
+                    ->where("l.slot LIKE '$code%' AND l.slot != '$code' AND led_item.status = 1")
+                    ->count();
                     if ($countOpenLed == 0) {
                         file_get_contents('http://' . $model->ip . "?id=$id&status=0", NULL, NULL, 0, 0);
                         $item->status = 0;
