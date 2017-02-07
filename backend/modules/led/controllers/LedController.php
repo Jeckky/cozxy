@@ -575,7 +575,7 @@ class LedController extends LedMasterController
                     ->where("l.slot LIKE '$code%' AND l.slot != '$code' AND led_item.status = 1")
                     ->count();
                     if ($countOpenLed == 0) {
-                        file_get_contents('http://' . $model->ip . "?id=$id&status=0", NULL, NULL, 0, 0);
+                        @file_get_contents('http://' . $model->ip . "?id=$id&status=0", NULL, NULL, 0, 0);
                         $item->status = 0;
                         $item->save();
                     }
