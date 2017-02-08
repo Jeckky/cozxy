@@ -85,4 +85,9 @@ class Coupon extends \common\models\costfit\master\CouponMaster
         }
     }
 
+    public function getCouponOwner()
+    {
+        return $this->hasOne(CouponOwner::className(), ['couponOwnerId' => 'couponOwnerId']);
+    }
+
 }
