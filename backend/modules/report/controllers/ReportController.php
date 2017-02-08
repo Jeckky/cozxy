@@ -108,7 +108,7 @@ class ReportController extends ReportMasterController {
         }
 
 
-        $files = $baseUrl . "textfile/" . $fileName . ".txt";
+        $files = $baseUrl . "/textfile/" . $fileName . ".txt";
         if (file_exists($files)) {
             $res["status"] = true;
             $res["filename"] = $fileName . ".txt";
