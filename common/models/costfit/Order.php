@@ -746,4 +746,17 @@ class Order extends \common\models\costfit\master\OrderMaster {
         return $receiveDate;
     }
 
+    public static function getItemString($orderId) {
+        //throw new \yii\base\Exception($orderId);
+        $string = '';
+        $items = OrderItem::find()->where("orderId=" . $orderId)->all();
+        if (isset($items) && !empty($items)) {
+            foreach ($items as $item):
+                $string .= $item->orderItemId . ",";
+            endforeach;
+            $string = substr($string, 0, -1);
+        }
+        return $string;
+    }
+
 }

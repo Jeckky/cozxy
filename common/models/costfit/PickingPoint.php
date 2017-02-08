@@ -33,7 +33,7 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
 
     public function rules() {
         return array_merge(parent::rules(), [
-            [['provinceId', 'amphurId', 'type', 'isDefault']
+                [['provinceId', 'amphurId', 'type', 'isDefault']
                 , 'required', 'on' => 'picking_point'],
         ]);
     }
@@ -140,6 +140,15 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
     public static function openChannel($ip, $portIndex, $macAddress = NULL) {
         // port
         return TRUE;
+    }
+
+    public static function pickingPointName($pickingPointId) {
+        $pickingPoint = PickingPoint::find()->where("pickingId=" . $pickingPointId)->one();
+        if (isset($pickingPoint) && !empty($pickingPoint)) {
+            return $pickingPoint->title;
+        } else {
+            return '';
+        }
     }
 
 }

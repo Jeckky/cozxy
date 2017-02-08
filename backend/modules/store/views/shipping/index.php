@@ -4,6 +4,9 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
+use common\models\costfit\PickingPoint;
+use common\models\costfit\OrderItemPacking;
+use common\models\costfit\Order;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -59,25 +62,46 @@ if (isset($orderInCar) && !empty($orderInCar) && isset($pickingPoints) && !empty
             <span class="panel-title"><h3>นำส่ง</h3></span>
         </div>
         <div class="panel-body">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>จุดส่ง</th>
-                        <th>OrderNo</th>
-                        <th>Order Barcode</th>
-                        <th>หมายเลขถุง</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    foreach ($pickingPoints as $pickingPoint):
-                        $order = common\models\costfit\OrderItemPacking::findOrderAtPoint($pickingPoint)
-                        ?>
 
-                    <?php endforeach;
+            <?php
+            $colors = ["#FFFFCC", "#FFFF99", "#FFFF66", "#FFFF33", "#FFFF00", "#FFCC66"];
+            $color = 0;
+            foreach ($pickingPoints as $pickingPoint):
+                $order = OrderItemPacking::findOrderAtPoint($pickingPoint);
+
+                $pickingPointName = PickingPoint::pickingPointName($pickingPoint);
+                ?>
+                <div class="col-lg-12 text-center" style="height: 60px;background-color: <?= $colors[$color] ?>;font-size: 15pt;padding-top:15px;margin-bottom: 15px;">
+                    <?= $pickingPointName ?>
+                </div>
+                <?php
+                //throw new \yii\base\Exception(print_r($order, true));
+                foreach ($order as $orderId):
                     ?>
-                </tbody>
-            </table>
+                    <div class="row">
+                        <div class="col-lg-5 col-lg-offset-1 col-sm-5 col-sm-offset-1 col-xs-5 col-xs-offset-1 col-md-5 col-md-offset-1" style="font-size: 12pt;">
+                            <?= Order::findOrderNo($orderId) ?>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6" style="font-size: 10pt;">
+                            <?php
+                            $orderItems = Order::getItemString($orderId);
+                            $bagNoes = OrderItemPacking::findBagNo($orderItems);
+                            foreach ($bagNoes as $bagNo):
+                                echo '<div class="col-lg-12" style="margin-bottom:10px;"><b>' . $bagNo->bagNo . '</b></div>';
+                            endforeach;
+                            ?>
+
+                        </div>
+                    </div>
+                    <hr>
+                    <?php
+                endforeach;
+                $color++;
+                if ($color > 5) {
+                    $color = 0;
+                }
+            endforeach;
+            ?>
 
         </div>
     </div>

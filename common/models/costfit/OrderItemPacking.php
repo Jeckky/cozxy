@@ -225,19 +225,35 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
 
     public static function findOrderAtPoint($pickingPointId) {
         $items = OrderItemPacking::find()->where("shipper=" . Yii::$app->user->identity->userId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)->all();
-        $orderItemId = '';
-        $orderId = '';
-        foreach ($items as $item):
-            $orderItemId .= $item->orderItemId . ",";
-        endforeach;
-        $orderItemId = substr($orderItemId, 0, -1);
-        $orderItem = OrderItem::find()
-                        ->select('*')
-                        ->JOIN('LEFT JOIN', 'order', 'order.orderId=order_item.orderId')
-                        ->where("orderItemId in ($orderItemId) and pickingId=" . $pickingPointId)->all();
 
-        //throw new \yii\base\Exception(print_r($orderItem, true));
-        //throw new \yii\base\Exception(count($orderItem));
+        $orderId = [];
+        if (isset($items) && !empty($items)) {
+            $i = 0;
+            foreach ($items as $item):
+                $check = 0;
+                $orderItem = OrderItem::find()->where("orderItemId=" . $item->orderItemId)->one();
+                foreach ($orderId as $old):
+                    if ($old == $orderItem->orderId) {
+                        $check++;
+                    }
+                endforeach;
+                if ($check == 0) {
+                    $order = Order::find()->where("orderId=" . $orderItem->orderId)->one();
+                    if ($order->pickingId == $pickingPointId) {
+                        $orderId[$i] = $orderItem->orderId;
+                        $i++;
+                    }
+                }
+            endforeach;
+            return $orderId;
+        } else {
+            return '';
+        }
+    }
+
+    public static function findBagNo($orderItemId) {
+        $orderItemId = OrderItemPacking::find()->where("orderItemId in ($orderItemId) and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)->all();
+        return $orderItemId;
     }
 
 }
