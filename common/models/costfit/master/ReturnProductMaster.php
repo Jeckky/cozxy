@@ -8,20 +8,21 @@ use Yii;
 * This is the model class for table "return_product".
 *
     * @property string $returnProductId
+    * @property string $ticketId
     * @property integer $orderId
     * @property integer $orderItemId
     * @property integer $productSuppId
     * @property integer $quantity
     * @property integer $price
-    * @property integer $totalPrice
-    * @property integer $discount
-    * @property integer $totalDiscount
-    * @property integer $credit
+    * @property string $totalPrice
+    * @property string $discount
+    * @property string $totalDiscount
+    * @property string $credit
     * @property integer $receiver
     * @property string $remark
     * @property integer $status
-    * @property string $createDateTime
-    * @property string $updateDateTime
+    * @property integer $createDateTime
+    * @property integer $updateDateTime
 */
 class ReturnProductMaster extends \common\models\ModelMaster
 {
@@ -39,10 +40,9 @@ return 'return_product';
 public function rules()
 {
 return [
-            [['orderId', 'orderItemId', 'productSuppId', 'quantity', 'price', 'receiver'], 'required'],
-            [['orderId', 'orderItemId', 'productSuppId', 'quantity', 'price', 'totalPrice', 'discount', 'totalDiscount', 'credit', 'receiver', 'status'], 'integer'],
-            [['createDateTime', 'updateDateTime'], 'safe'],
-            [['remark'], 'string', 'max' => 255],
+            [['ticketId', 'orderId', 'orderItemId', 'productSuppId', 'quantity', 'price', 'totalPrice', 'discount', 'totalDiscount', 'credit', 'receiver', 'remark'], 'required'],
+            [['ticketId', 'orderId', 'orderItemId', 'productSuppId', 'quantity', 'price', 'totalPrice', 'discount', 'totalDiscount', 'credit', 'receiver', 'status', 'createDateTime', 'updateDateTime'], 'integer'],
+            [['remark'], 'string'],
         ];
 }
 
@@ -53,6 +53,7 @@ public function attributeLabels()
 {
 return [
     'returnProductId' => Yii::t('return_product', 'Return Product ID'),
+    'ticketId' => Yii::t('return_product', 'Ticket ID'),
     'orderId' => Yii::t('return_product', 'Order ID'),
     'orderItemId' => Yii::t('return_product', 'Order Item ID'),
     'productSuppId' => Yii::t('return_product', 'Product Supp ID'),

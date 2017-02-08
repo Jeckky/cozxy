@@ -29,12 +29,13 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-    * @property integer $quantity
-    * @property integer $result
+    * @property string $quantity
+    * @property string $result
     * @property string $approve
-    * @property integer $productId
+    * @property string $productId
     * @property string $approveCreateBy
     * @property string $approvecreateDateTime
+    * @property string $type
 */
 class ProductSuppliersMaster extends \common\models\ModelMaster
 {
@@ -61,6 +62,7 @@ return [
             [['title', 'optionName'], 'string', 'max' => 200],
             [['tags'], 'string', 'max' => 255],
             [['approve'], 'string', 'max' => 10],
+            [['type'], 'string', 'max' => 45],
         ];
 }
 
@@ -98,6 +100,7 @@ return [
     'productId' => Yii::t('product_suppliers', 'Product ID'),
     'approveCreateBy' => Yii::t('product_suppliers', 'Approve Create By'),
     'approvecreateDateTime' => Yii::t('product_suppliers', 'Approvecreate Date Time'),
+    'type' => Yii::t('product_suppliers', 'Type'),
 ];
 }
 }

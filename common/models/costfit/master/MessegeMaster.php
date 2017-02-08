@@ -8,10 +8,10 @@ use Yii;
 * This is the model class for table "messege".
 *
     * @property string $messegeId
-    * @property integer $ticketId
-    * @property integer $orderId
-    * @property integer $userId
-    * @property string $messege
+    * @property string $ticketId
+    * @property string $orderId
+    * @property string $userId
+    * @property string $message
     * @property integer $messegeType
     * @property integer $status
     * @property string $createDateTime
@@ -33,9 +33,9 @@ return 'messege';
 public function rules()
 {
 return [
-            [['ticketId', 'orderId', 'userId', 'messege', 'messegeType'], 'required'],
+            [['ticketId', 'orderId', 'userId', 'message', 'messegeType'], 'required'],
             [['ticketId', 'orderId', 'userId', 'messegeType', 'status'], 'integer'],
-            [['messege'], 'string'],
+            [['message'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
         ];
 }
@@ -50,7 +50,7 @@ return [
     'ticketId' => Yii::t('messege', 'Ticket ID'),
     'orderId' => Yii::t('messege', 'Order ID'),
     'userId' => Yii::t('messege', 'User ID'),
-    'messege' => Yii::t('messege', 'Messege'),
+    'message' => Yii::t('messege', 'Message'),
     'messegeType' => Yii::t('messege', 'Messege Type'),
     'status' => Yii::t('messege', 'Status'),
     'createDateTime' => Yii::t('messege', 'Create Date Time'),

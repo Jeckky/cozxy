@@ -34,6 +34,7 @@ use Yii;
     * @property string $productSuppId
     * @property string $approveCreateBy
     * @property string $approvecreateDateTime
+    * @property string $type
     *
             * @property ProductPromotion[] $productPromotions
     */
@@ -62,6 +63,7 @@ return [
             [['title', 'optionName'], 'string', 'max' => 200],
             [['tags'], 'string', 'max' => 255],
             [['approve'], 'string', 'max' => 10],
+            [['type'], 'string', 'max' => 45],
         ];
 }
 
@@ -98,6 +100,7 @@ return [
     'productSuppId' => Yii::t('product', 'Product Supp ID'),
     'approveCreateBy' => Yii::t('product', 'Approve Create By'),
     'approvecreateDateTime' => Yii::t('product', 'Approvecreate Date Time'),
+    'type' => Yii::t('product', 'Type'),
 ];
 }
 

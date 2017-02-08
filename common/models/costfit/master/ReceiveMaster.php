@@ -7,10 +7,10 @@ use Yii;
 /**
 * This is the model class for table "receive".
 *
-    * @property integer $receiveId
-    * @property integer $orderId
-    * @property integer $userId
-    * @property integer $pickingId
+    * @property string $receiveId
+    * @property string $orderId
+    * @property string $userId
+    * @property string $pickingId
     * @property string $password
     * @property string $otp
     * @property string $refNo
@@ -35,7 +35,7 @@ return 'receive';
 public function rules()
 {
 return [
-            [['orderId', 'userId', 'pickingId'], 'required'],
+            [['orderId', 'userId', 'pickingId', 'refNo'], 'required'],
             [['orderId', 'userId', 'pickingId', 'isUse', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['password', 'otp'], 'string', 'max' => 45],

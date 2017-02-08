@@ -8,10 +8,12 @@ use Yii;
 * This is the model class for table "ticket".
 *
     * @property string $ticketId
-    * @property integer $orderId
-    * @property integer $userId
+    * @property string $orderId
+    * @property string $userId
     * @property string $title
     * @property string $description
+    * @property string $ticketNo
+    * @property string $remark
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -32,11 +34,11 @@ return 'ticket';
 public function rules()
 {
 return [
-            [['orderId', 'userId', 'description'], 'required'],
+            [['orderId', 'userId', 'ticketNo', 'remark'], 'required'],
             [['orderId', 'userId', 'status'], 'integer'],
-            [['description'], 'string'],
+            [['description', 'remark'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['title'], 'string', 'max' => 255],
+            [['title', 'ticketNo'], 'string', 'max' => 255],
         ];
 }
 
@@ -51,6 +53,8 @@ return [
     'userId' => Yii::t('ticket', 'User ID'),
     'title' => Yii::t('ticket', 'Title'),
     'description' => Yii::t('ticket', 'Description'),
+    'ticketNo' => Yii::t('ticket', 'Ticket No'),
+    'remark' => Yii::t('ticket', 'Remark'),
     'status' => Yii::t('ticket', 'Status'),
     'createDateTime' => Yii::t('ticket', 'Create Date Time'),
     'updateDateTime' => Yii::t('ticket', 'Update Date Time'),
