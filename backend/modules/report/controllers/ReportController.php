@@ -91,7 +91,7 @@ class ReportController extends ReportMasterController {
 
         if (isset($model) && !empty($model)) {
             $data = "";
-            $file = fopen($baseUrl . "textfile/" . $fileName . ".txt", "w+") or die("Unable to open file!");
+            $file = fopen($baseUrl . "/textfile/" . $fileName . ".txt", "w+") or die("Unable to open file!");
 
             foreach ($model as $report):
                 $orderItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $report->orderId)->all();
@@ -108,7 +108,7 @@ class ReportController extends ReportMasterController {
         }
 
 
-        $files = $baseUrl . "textfile/" . $fileName . ".txt";
+        $files = $baseUrl . "/textfile/" . $fileName . ".txt";
         if (file_exists($files)) {
             $res["status"] = true;
             $res["filename"] = $fileName . ".txt";
