@@ -1,7 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 ?>
-<h1>report/index</h1>
+<h1>report ข้อมูลการใช้งานช่องของ Lockers</h1>
 
 <p>
     You may change the content of this page by modifying
