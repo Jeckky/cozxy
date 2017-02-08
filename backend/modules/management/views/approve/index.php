@@ -153,7 +153,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     //echo '<pre>';
                                                     //print_r($product_price_suppliers);
                                                     if (isset($product_price_suppliers->price)) {
-                                                        $approve_txt = 'ให้ไปรับที่<br>';
+                                                        $approve_txt = 'วิธีรับสินค้า<br>';
                                                         $approve_txt .= "<div class=\"col-sm-12\">
                                                                         <div class=\"radio\">
                                                                             <label>
