@@ -153,7 +153,23 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     //echo '<pre>';
                                                     //print_r($product_price_suppliers);
                                                     if (isset($product_price_suppliers->price)) {
-                                                        $approve_txt = '<div id="switchers-colors-square" class="form-group-margin"  onchange="switchers(' . $model->productSuppId . ',1)">';
+                                                        $approve_txt = 'ให้ไปรับที่<br>';
+                                                        $approve_txt .= "<div class=\"col-sm-12\">
+                                                                        <div class=\"radio\">
+                                                                            <label>
+                                                                                <input type=\"radio\" name=\"jq-validation-radios\" value=\"1\" class=\"px\">
+                                                                                <span class=\"lbl\">Lockers</span>
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class=\"radio\">
+                                                                            <label>
+                                                                                <input type=\"radio\" name=\"jq-validation-radios\" value=\"2\" class=\"px\">
+                                                                                <span class=\"lbl\">Booth</span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>";
+                                                        $approve_txt .= '<div id="switchers-colors-square" class="form-group-margin"  onchange="switchers(' . $model->productSuppId . ',1)">';
+
                                                         if ($model->approve != 'approve') {
                                                             $approve_txt .= '<input type="checkbox" data-class="switcher-warning" >';
                                                         } else {
