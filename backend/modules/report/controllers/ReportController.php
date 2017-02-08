@@ -65,6 +65,8 @@ class ReportController extends ReportMasterController {
     public function actionExport() {
         $res = [];
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        $basePath = Yii::$app->getBasePath();
+        //throw new \yii\base\Exception($basePath);
         $userId = Yii::$app->user->identity->userId;
         $fromDate = $_POST['fromDate'];
         $toDate = $_POST['toDate'];
@@ -91,7 +93,7 @@ class ReportController extends ReportMasterController {
 
         if (isset($model) && !empty($model)) {
             $data = "";
-            $file = fopen($baseUrl . "/textfile/" . $fileName . ".txt", "w+") or die("Unable to open file!");
+            $file = fopen($basePath . "/web/textfile/" . $fileName . ".txt", "w+") or die("Unable to open file!");
 
             foreach ($model as $report):
                 $orderItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $report->orderId)->all();
@@ -108,7 +110,7 @@ class ReportController extends ReportMasterController {
         }
 
 
-        $files = $baseUrl . "/textfile/" . $fileName . ".txt";
+        $files = $basePath . "/web/textfile/" . $fileName . ".txt";
         if (file_exists($files)) {
             $res["status"] = true;
             $res["filename"] = $fileName . ".txt";
