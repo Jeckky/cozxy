@@ -74,12 +74,21 @@ class ApproveController extends ManagementMasterController {
     public function actionApproveItems() {
         $productId = Yii::$app->request->post('productSuppId');
         $type = Yii::$app->request->post('type');
+        $receiveType = Yii::$app->request->post('receiveType');
+
         if ($type == 1) { // Product Suppliers
             $ps = \common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $productId . ' ')->one(); // and approve = "new"
             $ps->approve = 'approve';
+            $ps->receiveType = $receiveType;
             $ps->approveCreateBy = Yii::$app->user->identity->userId;
             $ps->approvecreateDateTime = new \yii\db\Expression('NOW()');
             if ($ps->save(FALSE)) {
+                //return $this->redirect(['index']);
+            }
+            // Update ReceiveType ของ Product Cozxy
+            $pss = \common\models\costfit\Product::find()->where('productId = ' . $ps->productId . ' and productSuppId = ' . $productId)->one();
+            $pss->receiveType = $receiveType;
+            if ($pss->save(FALSE)) {
                 //return $this->redirect(['index']);
             }
         } elseif ($type == 2) {// Product Sys

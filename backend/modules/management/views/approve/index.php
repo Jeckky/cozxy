@@ -13,7 +13,11 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <h1>approve/index</h1>
-
+<style type="text/css">
+    .switcher {
+        margin-left: 12px;
+    }
+</style>
 <div class="row">
     <div class="col-xs-12 col-sm-12" style="margin-top: 20px;">
         <?php
@@ -67,9 +71,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <div class="tab-content tab-content-bordered">
                     <div class="tab-pane fade active in" id="uidemo-tabs-default-demo-home">
                         <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
-                        <div class="panel colourable" id="switcher-examples">
-                            <div class="panel-heading">
-                                <span class="panel-title"> <h4>  รายการสินค้าที่ต้อง Approve ของ <code>Suppliers</code> </h4></span>
+                        <div class="panel colourable" id="switcher-examples" >
+                            <div class="panel-heading" style="background-color: #1d89cf; padding: 5px 5px;">
+                                <span class="panel-title"> <h4  style="color: #ffffff;">  รายการสินค้าที่ต้อง Approve ของ <code>Suppliers</code> </h4></span>
                             </div>
 
                             <div class="panel-body">
@@ -145,19 +149,19 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 }
                                             ],
                                             [
-                                                'attribute' => 'วิธีรับสินค้า',
+                                                'attribute' => 'รูปแบบการรับสินค้า',
                                                 'format' => 'raw',
                                                 'value' => function($model) {
                                                     $approve_txt = "<div class=\"col-sm-12\">
                                                                         <div class=\"radio\">
                                                                             <label>
-                                                                                <input type=\"radio\" name=\"jq-validation-radios\" value=\"1\" class=\"px\">
+                                                                                <input type=\"radio\" name=\"jq-validation-radios-$model->productSuppId\" id=\"approveReceiveType-$model->productSuppId\" onchange=\"approveReceiveType($model->productSuppId,1)\" data-bind=" . $model->productSuppId . " value=\"1\" class=\"px\">
                                                                                 <span class=\"lbl\">Lockers</span>
                                                                             </label>
                                                                         </div>
                                                                         <div class=\"radio\">
                                                                             <label>
-                                                                                <input type=\"radio\" name=\"jq-validation-radios\" value=\"2\" class=\"px\">
+                                                                                <input type=\"radio\" name=\"jq-validation-radios-$model->productSuppId\"  id=\"approveReceiveType-$model->productSuppId\" onchange=\"approveReceiveType($model->productSuppId,2)\"  data-bind=" . $model->productSuppId . " value=\"2\" class=\"px\">
                                                                                 <span class=\"lbl\">Booth</span>
                                                                             </label>
                                                                         </div>
@@ -174,9 +178,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     //echo '<pre>';
                                                     //print_r($product_price_suppliers);
                                                     if (isset($product_price_suppliers->price)) {
-
-                                                        $approve_txt = '<div id="switchers-colors-square" class="form-group-margin"  onchange="switchers(' . $model->productSuppId . ',1)">';
-
+                                                        $approve_txt = '<div id="switchers-colors-square" class="form-group-margin  "  onchange="switchers(' . $model->productSuppId . ',1)">';
                                                         if ($model->approve != 'approve') {
                                                             $approve_txt .= '<input type="checkbox" data-class="switcher-warning" >';
                                                         } else {
@@ -197,8 +199,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         </div>.
 
                         <div class="panel colourable">
-                            <div class="panel-heading">
-                                <span class="panel-title"> <h4>  รายการสินค้าที่ต้อง Approve ของ<code>Cozxy.com</code> </h4></span>
+                            <div class="panel-heading" style="background-color: #1d89cf; padding: 5px 5px;">
+                                <span class="panel-title"> <h4 style=" color: #ffffff;">  รายการสินค้าที่ต้อง Approve ของ<code>Cozxy.com</code> </h4></span>
                             </div>
 
                             <div class="panel-body">
@@ -289,8 +291,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <div class="tab-pane fade" id="uidemo-tabs-default-demo-profile">
                         <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
                         <div class="panel colourable" id="switcher-examples">
-                            <div class="panel-heading">
-                                <span class="panel-title"> <h4>  รายการสินค้าที่ Approve ของ <code>Suppliers</code> </h4></span>
+                            <div class="panel-heading" style="background-color: #1d89cf; padding: 5px 5px; ">
+                                <span class="panel-title"> <h4 style=" color: #ffffff;">  รายการสินค้าที่ Approve ของ <code>Suppliers</code> </h4></span>
                             </div>
 
                             <div class="panel-body">
@@ -387,8 +389,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         </div>.
 
                         <div class="panel colourable">
-                            <div class="panel-heading">
-                                <span class="panel-title"> <h4>  รายการสินค้าที่ Approve ของ<code>Cozxy.com</code> </h4></span>
+                            <div class="panel-heading" style="background-color: #1d89cf; padding: 5px 5px;">
+                                <span class="panel-title"> <h4 style="color: #ffffff;">  รายการสินค้าที่ Approve ของ<code>Cozxy.com</code> </h4></span>
                             </div>
 
                             <div class="panel-body">

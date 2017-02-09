@@ -408,10 +408,16 @@ $('.switch').on('switch-change', function () {
     console.log("inside switchchange");
     toggleWeather();
 });
+
 function switchers(id, type, status) {
+    //approveReceiveType-
+    var approveReceiveType = $('input:radio[name=jq-validation-radios-' + id + ']:checked').val();
+    //alert(approveReceiveType);
+    ///var ReceiveType = $('#approveReceiveType-' + id).checked;
+
     $.ajax({
-        url: 'approve/approve-items',
-        data: {"productSuppId": id, "type": type, 'status': status},
+        url: 'approve-items',
+        data: {"productSuppId": id, "type": type, 'status': status, "receiveType": approveReceiveType},
         type: 'post',
         success: function (result) {
             //alert(result);
@@ -561,6 +567,8 @@ $('.investigate-approve').on('click', function () {
     $('.view-category-id').html('');
     $('.view-brand-id').html('');
 });
+
+
 function search(userId) {
     //alert(userId);
     $.ajax({
@@ -631,3 +639,14 @@ function notifications(productSuppId, type) {
     //$.growl.warning({message: "The kitten is ugly!"});
 }
 
+/*
+ * Receive Type : ส่วนของ Approve ให้เลือกรูปแบบการรับของ มีดังนี้ Lockers , Booth
+ * Create By : Taninut.Bm
+ * Create date : 09/02/2017
+ */
+
+function approveReceiveType(productSuppId, value) {
+    //alert('Id :' + productSuppId + ' value :' + value);
+    $("#switchers-colors-square").removeClass("hidden");
+    $('.approve-text-danger-' + productSuppId).html('');
+}
