@@ -45,9 +45,19 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     const SUPPLIERS_OLD = 'old';
     const SUPPLIERS_NEW = 'new';
 
+    /*
+     * ส่วนของ รูปแบบการรับสินค้า
+     * Create date : 09/02/2017
+     * Create By : Taninut.Bm
+     */
+    const APPROVE_RECEIVE_LOCKERS = '1'; //Lockers
+    const APPROVE_RECEIVE_BOOTH = '2'; //Booth
+    const APPROVE_RECEIVE_LvsB = '3'; //Lockers and Booth
+
     /**
      * @inheritdoc
      */
+
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
             'categoryId' => 'หมวดหมู่',
@@ -86,7 +96,10 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         return [
             self::SUPPLIERS_APPROVE => "อนุมัติ",
             self::SUPPLIERS_OLD => "สินค้าจาก Cozxy",
-            self::SUPPLIERS_NEW => "สินค้าจาก Suppliers"
+            self::SUPPLIERS_NEW => "สินค้าจาก Suppliers",
+            self::APPROVE_RECEIVE_LOCKERS => "Lockers",
+            self::APPROVE_RECEIVE_BOOTH => "Booth",
+            self::APPROVE_RECEIVE_LvsB => "Lockers and Booth"
         ];
     }
 
