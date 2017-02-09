@@ -145,16 +145,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 }
                                             ],
                                             [
-                                                'attribute' => 'อนุมัติ',
+                                                'attribute' => 'วิธีรับสินค้า',
                                                 'format' => 'raw',
                                                 'value' => function($model) {
-                                                    $type = 'supp';
-                                                    $product_price_suppliers = common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId =' . $model->productSuppId . ' and status =1')->one();
-                                                    //echo '<pre>';
-                                                    //print_r($product_price_suppliers);
-                                                    if (isset($product_price_suppliers->price)) {
-                                                        $approve_txt = 'วิธีรับสินค้า<br>';
-                                                        $approve_txt .= "<div class=\"col-sm-12\">
+                                                    $approve_txt = "<div class=\"col-sm-12\">
                                                                         <div class=\"radio\">
                                                                             <label>
                                                                                 <input type=\"radio\" name=\"jq-validation-radios\" value=\"1\" class=\"px\">
@@ -168,7 +162,20 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                             </label>
                                                                         </div>
                                                                     </div>";
-                                                        $approve_txt .= '<div id="switchers-colors-square" class="form-group-margin"  onchange="switchers(' . $model->productSuppId . ',1)">';
+                                                    return $approve_txt;
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'อนุมัติ',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    $type = 'supp';
+                                                    $product_price_suppliers = common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId =' . $model->productSuppId . ' and status =1')->one();
+                                                    //echo '<pre>';
+                                                    //print_r($product_price_suppliers);
+                                                    if (isset($product_price_suppliers->price)) {
+
+                                                        $approve_txt = '<div id="switchers-colors-square" class="form-group-margin"  onchange="switchers(' . $model->productSuppId . ',1)">';
 
                                                         if ($model->approve != 'approve') {
                                                             $approve_txt .= '<input type="checkbox" data-class="switcher-warning" >';
