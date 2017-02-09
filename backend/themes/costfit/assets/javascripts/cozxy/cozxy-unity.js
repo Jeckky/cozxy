@@ -414,35 +414,41 @@ function switchers(id, type, status) {
     var approveReceiveType = $('input:radio[name=jq-validation-radios-' + id + ']:checked').val();
     //alert(approveReceiveType);
     ///var ReceiveType = $('#approveReceiveType-' + id).checked;
-
-    $.ajax({
-        url: 'approve-items',
-        data: {"productSuppId": id, "type": type, 'status': status, "receiveType": approveReceiveType},
-        type: 'post',
-        success: function (result) {
-            //alert(result);
-            //var JSONObject2 = JSON.parse(result);
-            //$(".tes-test").html('' + JSONObject2 + '');
-            //$("tbody tr:first-child").css({backgroundColor: 'yellow', fontWeight: 'bolder'});
-            if (result == 1) {
-                $(".suppliers tbody #productSuppId-" + id).remove();
-            } else if (result == 2) {
-                //alert($(".suppliers tbody tr:first-child").attribute('data-key'));
-                $(".system tbody #productId-" + id).remove();
+    //
+    if (approveReceiveType == undefined) {
+        alert('กรุณาเลือกรูปแบบการรับสินค้า !!');
+    } else {
+        $.ajax({
+            url: 'approve-items',
+            data: {"productSuppId": id, "type": type, 'status': status, "receiveType": approveReceiveType},
+            type: 'post',
+            success: function (result) {
+                //alert(result);
+                //var JSONObject2 = JSON.parse(result);
+                //$(".tes-test").html('' + JSONObject2 + '');
+                //$("tbody tr:first-child").css({backgroundColor: 'yellow', fontWeight: 'bolder'});
+                if (result == 1) {
+                    $(".suppliers tbody #productSuppId-" + id).remove();
+                } else if (result == 2) {
+                    //alert($(".suppliers tbody tr:first-child").attribute('data-key'));
+                    $(".system tbody #productId-" + id).remove();
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //debugger;
+                //alert(errorThrown);
             }
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            //debugger;
-            //alert(errorThrown);
-        }
-    });
-    init.push(function () {
-        $('#switchers-colors-square .switcher > input').on('change.switcher', function (on, off, toggle) {
-            //alert('Test Yes !!');
-            //console.log(on);
         });
-    });
-    //alert($('#switchers-colors-square').find('.switcher').find(".checked"));
+
+        init.push(function () {
+            $('#switchers-colors-square .switcher > input').on('change.switcher', function (on, off, toggle) {
+                //alert('Test Yes !!');
+                //console.log(on);
+            });
+        });
+    }
+    //
+    ///alert($('#switchers-colors-square').find('.switcher').find(".checked"));
 }
 
 // investigate-approve //
@@ -647,6 +653,6 @@ function notifications(productSuppId, type) {
 
 function approveReceiveType(productSuppId, value) {
     //alert('Id :' + productSuppId + ' value :' + value);
-    $("#switchers-colors-square").removeClass("hidden");
-    $('.approve-text-danger-' + productSuppId).html('');
+    $(".switchers-xx-" + productSuppId).removeClass("hidden");
+    $('.text-switcher-warning-' + productSuppId).html('');
 }

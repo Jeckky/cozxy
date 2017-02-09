@@ -109,7 +109,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                         $firstname = NULL;
                                                         $lastname = NULL;
                                                     }
-
                                                     return 'คุณ' . $firstname . ' ' . $lastname;
                                                 }
                                             ],
@@ -152,6 +151,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 'attribute' => 'รูปแบบการรับสินค้า',
                                                 'format' => 'raw',
                                                 'value' => function($model) {
+                                                    $product_price_suppliers = common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId =' . $model->productSuppId . ' and status =1')->one();
                                                     $approve_txt = "<div class=\"col-sm-12\">
                                                                         <div class=\"radio\">
                                                                             <label>
@@ -166,7 +166,11 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                             </label>
                                                                         </div>
                                                                     </div>";
-                                                    return $approve_txt;
+                                                    if (isset($product_price_suppliers->price)) {
+                                                        return $approve_txt;
+                                                    } else {
+                                                        return 'รอเพิ่มราคา';
+                                                    }
                                                 }
                                             ],
                                             [
@@ -178,16 +182,16 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     //echo '<pre>';
                                                     //print_r($product_price_suppliers);
                                                     if (isset($product_price_suppliers->price)) {
-                                                        $approve_txt = '<div id="switchers-colors-square" class="form-group-margin  "  onchange="switchers(' . $model->productSuppId . ',1)">';
+                                                        $approve_txt = '<div id="switchers-colors-square" class="form-group-margin  hidden  switchers-xx-' . $model->productSuppId . '"  onchange="switchers(' . $model->productSuppId . ',1)">';
                                                         if ($model->approve != 'approve') {
                                                             $approve_txt .= '<input type="checkbox" data-class="switcher-warning" >';
                                                         } else {
                                                             $approve_txt .= '<input type="checkbox" data-class="switcher-warning"   checked="checked" >';
                                                         }
-                                                        $approve_txt .= '</div>';
+                                                        $approve_txt .= '</div><span class="text-switcher-warning-' . $model->productSuppId . ' text-danger">ยังไม่เลือกรูปแบบการรับสินค้า</span>';
                                                         return $approve_txt;
                                                     } else {
-                                                        return 'ยังไม่ระบุราคา';
+                                                        return '<span class="text-warning">ยังไม่ระบุราคา</span>';
                                                     }
                                                 }
                                             ],
@@ -200,7 +204,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
                         <div class="panel colourable">
                             <div class="panel-heading" style="background-color: #1d89cf; padding: 5px 5px;">
-                                <span class="panel-title"> <h4 style=" color: #ffffff;">  รายการสินค้าที่ต้อง Approve ของ<code>Cozxy.com</code> </h4></span>
+                                <span class="panel-title"> <h4 style=" color: #ffffff;">  รายการสินค้าที่ต้อง Approve ของ <code>Cozxy.com</code> </h4></span>
                             </div>
 
                             <div class="panel-body">
@@ -256,16 +260,16 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 'value' => function($model) {
                                                     $type = 'supp';
                                                     if (isset($model->price)) {
-                                                        $approve_txt = '<div id="switchers-colors-square" class="form-group-margin"  onchange="switchers(' . $model->productId . ',2)">';
+                                                        $approve_txt = '<div id="switchers-colors-square" class="form-group-margin "  onchange="switchers(' . $model->productId . ', 2)">';
                                                         if ($model->approve == 'new') {
-                                                            $approve_txt .= '<input type="checkbox" data-class="switcher-warning" >';
+                                                            $approve_txt .= '<input type="checkbox"  id="switcher-example-1" data-class="switcher-warning" >';
                                                         } else {
-                                                            $approve_txt .= '<input type="checkbox" data-class="switcher-warning"   checked="checked" >';
+                                                            $approve_txt .= '<input type="checkbox"   id="switcher-example-1"  data-class="switcher-warning"   checked="checked" >';
                                                         }
                                                         $approve_txt .= '</div>';
                                                         return $approve_txt;
                                                     } else {
-                                                        return 'ยังไม่ระบุราคา';
+                                                        return '<span class="text-warning">ยังไม่ระบุราคา</span>';
                                                     }
                                                 }
                                             ],
@@ -292,17 +296,17 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
                         <div class="panel colourable" id="switcher-examples">
                             <div class="panel-heading" style="background-color: #1d89cf; padding: 5px 5px; ">
-                                <span class="panel-title"> <h4 style=" color: #ffffff;">  รายการสินค้าที่ Approve ของ <code>Suppliers</code> </h4></span>
+                                <span class = "panel-title"> <h4 style = " color: #ffffff;"> รายการสินค้าที่ Approve ของ <code>Suppliers</code> </h4></span>
                             </div>
 
-                            <div class="panel-body">
-                                <div class="col-sm-12 suppliers">
+                            <div class = "panel-body">
+                                <div class = "col-sm-12 suppliers">
                                     <?=
                                     GridView::widget([
                                         'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
                                         'dataProvider' => $productSuppApprove,
                                         'pager' => [
-                                            'options' => [ 'class' => 'pagination pagination-xs']
+                                            'options' => ['class' => 'pagination pagination-xs']
                                         ],
                                         'options' => [
                                             'class' => 'table-light'
@@ -389,7 +393,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         </div>.
 
                         <div class="panel colourable">
-                            <div class="panel-heading" style="background-color: #1d89cf; padding: 5px 5px;">
+                            <div class="panel-heading" style="background-color: #1d89cf; padding: 5px 5px">
                                 <span class="panel-title"> <h4 style="color: #ffffff;">  รายการสินค้าที่ Approve ของ<code>Cozxy.com</code> </h4></span>
                             </div>
 
@@ -413,7 +417,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         'columns' => [
                                             ['class' => 'yii\grid\SerialColumn'],
                                             //'productId',
-                                            //'productGroupId',
+//'productGroupId',
                                             'isbn:ntext',
                                             //'code',
                                             'title',
@@ -489,17 +493,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
 <!-- 5. $SWITCHERS =============== Switchers ===============-->
 <!-- Javascript -->
 <script>
-    init.push(function () {
 
+    init.push(function () {
         $('#switchers-colors-square > input').switcher(function (e, data) {
 
         });
-
         //alert(switcherEl.switcher('setValue', true));
         //console.log($('#switchers-colors-square').switcher({}));
     });
-
-
 
 </script>
 <!-- / Javascript -->

@@ -87,9 +87,14 @@ class ApproveController extends ManagementMasterController {
             }
             // Update ReceiveType ของ Product Cozxy
             $pss = \common\models\costfit\Product::find()->where('productId = ' . $ps->productId . ' and productSuppId = ' . $productId)->one();
-            $pss->receiveType = $receiveType;
-            if ($pss->save(FALSE)) {
-                //return $this->redirect(['index']);
+
+            if (count($pss) > 0) {
+                $pss->receiveType = $receiveType;
+                if ($pss->save(FALSE)) {
+                    //return $this->redirect(['index']);
+                }
+            } else {
+
             }
         } elseif ($type == 2) {// Product Sys
             $pss = \common\models\costfit\Product::find()->where('productId = ' . $productId . ' and approve = "new"')->one();
