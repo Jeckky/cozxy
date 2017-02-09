@@ -169,7 +169,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     if (isset($product_price_suppliers->price)) {
                                                         return $approve_txt;
                                                     } else {
-                                                        return 'รอเพิ่มราคา';
+                                                        return 'ยังไม่ระบุราคา';
                                                     }
                                                 }
                                             ],
