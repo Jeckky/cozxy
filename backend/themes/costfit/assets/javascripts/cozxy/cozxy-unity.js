@@ -419,7 +419,7 @@ function switchers(id, type, status) {
         alert('กรุณาเลือกรูปแบบการรับสินค้า !!');
     } else {
         $.ajax({
-            url: 'approve-items',
+            url: 'approve/approve-items',
             data: {"productSuppId": id, "type": type, 'status': status, "receiveType": approveReceiveType},
             type: 'post',
             success: function (result) {
@@ -459,7 +459,7 @@ $('.investigate-approve').on('click', function () {
     var productId = resDataBind[0];
     var type = resDataBind[1];
     $.ajax({
-        url: 'investigate-approve-items',
+        url: 'approve/investigate-approve-items',
         data: {"productId": productId, "type": type},
         type: 'post',
         success: function (result) {
