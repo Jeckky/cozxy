@@ -110,7 +110,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 }
                                             ],
                                             //'productGroupId',
-                                            'isbn:ntext',
+                                            //'isbn:ntext',
                                             //'code',
                                             'title',
                                             'quantity',
@@ -139,7 +139,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
                                                     }
                                                     $approve_txt = '<div class = "buttons-with-margins jq-growl-' . $model->productSuppId . '" >';
-                                                    $approve_txt .= '<button id ="jq-growl-warning-noti-' . $model->productSuppId . '" class="btn btn-warning btn-xs" onclick="notifications(' . $model->productSuppId . ',1)">ต้องการแจ้งปรับปรุง</button>';
+                                                    $approve_txt .= '<button id ="jq-growl-warning-noti-' . $model->productSuppId . '" class="btn btn-primary btn-xs" onclick="notifications(' . $model->productSuppId . ',1)">ต้องการแจ้งปรับปรุง</button>';
                                                     $approve_txt .= '</div>';
                                                     return $approve_txt;
                                                 }
@@ -238,7 +238,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 }
                                             ],
                                             //'productGroupId',
-                                            'isbn:ntext',
+                                            //'isbn:ntext',
                                             //'code',
                                             'title',
                                             [

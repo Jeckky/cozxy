@@ -35,7 +35,7 @@ use Yii;
     * @property string $productId
     * @property string $approveCreateBy
     * @property string $approvecreateDateTime
-    * @property string $type
+    * @property string $receiveType
 */
 class ProductSuppliersMaster extends \common\models\ModelMaster
 {
@@ -62,7 +62,7 @@ return [
             [['title', 'optionName'], 'string', 'max' => 200],
             [['tags'], 'string', 'max' => 255],
             [['approve'], 'string', 'max' => 10],
-            [['type'], 'string', 'max' => 45],
+            [['receiveType'], 'string', 'max' => 45],
         ];
 }
 
@@ -100,7 +100,7 @@ return [
     'productId' => Yii::t('product_suppliers', 'Product ID'),
     'approveCreateBy' => Yii::t('product_suppliers', 'Approve Create By'),
     'approvecreateDateTime' => Yii::t('product_suppliers', 'Approvecreate Date Time'),
-    'type' => Yii::t('product_suppliers', 'Type'),
+    'receiveType' => Yii::t('product_suppliers', 'Receive Type'),
 ];
 }
 }
