@@ -72,7 +72,7 @@ if (isset($orderInCar) && !empty($orderInCar) && isset($pickingPoints) && !empty
                 $pickingPointName = PickingPoint::pickingPointName($pickingPoint);
                 ?>
                 <div class="col-lg-12 text-center" style="height: 60px;background-color: <?= $colors[$color] ?>;font-size: 15pt;padding-top:15px;margin-bottom: 15px;">
-                    <?= $pickingPointName ?>
+                    <?= $pickingPointName ?><div class="pull-right"><?= OrderItemPacking::countBagAtPoint($pickingPoint) ?> ถุง</div>
                 </div>
                 <?php
                 //throw new \yii\base\Exception(print_r($order, true));

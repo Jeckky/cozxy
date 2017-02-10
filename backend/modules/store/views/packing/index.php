@@ -15,8 +15,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
 <div class="order-index">
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-default">
-        <div class="panel-heading"  style="background-color: #ccffcc;vertical-align: middle;">
-            <span class="panel-title"><h3><?= $this->title ?></h3></span>
+        <div class="panel-heading"  style="background-color: #000;vertical-align: middle;">
+            <span class="panel-title"><h3 style="color:#ffcc00;"><?= $this->title ?></h3></span>
         </div>
         <div class="panel-body">
 
@@ -34,7 +34,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     </tr>
                 </tbody>
             </table>
-            <br><h4>:: สแกน Qr Code ของ Order เพื่อแพ็คสินค้า ::</h4>
+            <br><h4>สแกน Qr Code ของ Order เพื่อแพ็คสินค้า</h4>
             <?= $this->registerJS("
                             $('#orderNo').blur(function(event){
                                 if(event.which == 13 || event.keyCode == 13)
@@ -46,7 +46,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
         </div>
     </div>
     <div class="panel panel-default">
-        <div class="panel-heading" style="background-color: #ccffff;vertical-align: middle;">
+        <div class="panel-heading" style="background-color:#ffcc00;vertical-align: middle;">
             <span class="panel-title"><h4> รายการ Order เตรียมแพ็ค / แพ็คแล้ว </h4></span>
         </div>
         <div class="panel-body">

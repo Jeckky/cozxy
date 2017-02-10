@@ -16,8 +16,8 @@ $form = yii\bootstrap\ActiveForm::begin([
         ]);
 ?>
 
-<div class="panel-heading" style="background-color: #ccffcc;">
-    <span class="panel-title"><h3>สแกนรายการ PO ที่ต้องการนำไปจัดเรียง</h3></span>
+<div class="panel-heading" style="background-color: #000;">
+    <span class="panel-title"><h3 style="color:#ffcc00">สแกนรายการ PO ที่ต้องการนำไปจัดเรียง</h3></span>
 </div>
 <div class="panel-body">
     <table class="table table-bordered">
@@ -28,7 +28,7 @@ $form = yii\bootstrap\ActiveForm::begin([
             </tr>
         </tbody>
     </table>
-    <br><h4>:: สแกน Qr Code ของใบ Po เพื่อนำสินค้าไปจัดเรียง ::</h4>
+    <br><h4>สแกน Qr Code ของใบ Po เพื่อนำสินค้าไปจัดเรียง</h4>
 </div>
 <?php yii\bootstrap\ActiveForm::end(); ?>
 <?php
@@ -36,7 +36,7 @@ if (isset($chooseId) && !empty($chooseId)) {
     //throw new \yii\base\Exception(print_r($chooseId, true));
     $i = 1;
     ?>
-    <div class="panel-heading" style="background-color: #ccffff;">
+    <div class="panel-heading" style="background-color: #ffcc00;">
         <span class="panel-title"><h4>รายการ PO ที่ต้องการนำไปจัดเรียง</h4></span>
     </div>
     <div class="panel-body">

@@ -11,6 +11,11 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use kartik\mpdf\Pdf;
+use common\models\costfit\OrderItemPacking;
+use common\models\costfit\Order;
+use common\models\costfit\OrderItem;
+use common\models\costfit\Product;
+use common\models\costfit\ProductSuppliers;
 
 class PackingController extends StoreMasterController {
 
@@ -44,9 +49,9 @@ class PackingController extends StoreMasterController {
         if (!isset(Yii::$app->user->identity->userId)) {
             return $this->redirect($baseUrl . '/auth');
         }
-        $query = \common\models\costfit\Order::find()
+        $query = Order::find()
                 ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-                ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND (`order`.status = " . \common\models\costfit\Order::ORDER_STATUS_PICKED . " OR `order`.status =" . \common\models\costfit\Order::ORDER_STATUS_PACKED . " )")
+                ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND (`order`.status = " . Order::ORDER_STATUS_PICKED . " OR `order`.status =" . Order::ORDER_STATUS_PACKED . " )")
                 ->orderBy("`order`.status ASC");
 
         $ms = '';
@@ -54,7 +59,7 @@ class PackingController extends StoreMasterController {
             'query' => $query,
         ]);
         if (isset($_GET['orderNo']) && !empty($_GET['orderNo'])) {
-            $order = \common\models\costfit\Order::find()->where("orderNo='" . $_GET['orderNo'] . "' and status=12")->one();
+            $order = Order::find()->where("orderNo='" . $_GET['orderNo'] . "' and status=12")->one();
             if (isset($order) && !empty($order)) {
                 return $this->render('show-orders', [
                             'orderId' => $order->orderId,
@@ -76,30 +81,40 @@ class PackingController extends StoreMasterController {
     public function actionPacking() {
         $ms = '';
         $save = false;
+        $sameType = false;
+        if (!isset(Yii::$app->user->identity->userId)) {
+            return $this->redirect($baseUrl . '/auth');
+        }
         if (isset($_GET['item'])) {
-            $order = \common\models\costfit\Order::find()->where("orderId=" . $_GET['orderId'])->one();
-            $productId = \common\models\costfit\Product::findProductSuppId($_GET['item'], $_GET['orderId']);
+            $order = Order::find()->where("orderId=" . $_GET['orderId'])->one();
+            $productId = Product::findProductSuppId($_GET['item'], $_GET['orderId']);
             if (isset($order)) {
                 if (isset($productId) && !empty($productId)) {
                     //$items = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId . " and productId=" . $productId . " and status=" . \common\models\costfit\OrderItem::ORDERITEM_PICKED)->one();
-                    $items = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId . " and productSuppId=" . $productId . " and status=" . \common\models\costfit\OrderItem::ORDERITEM_PICKED)->one();
+                    $items = OrderItem::find()->where("orderId=" . $order->orderId . " and productSuppId=" . $productId . " and status=" . OrderItem::ORDERITEM_PICKED)->one();
                     if (isset($items) && !empty($items)) {
-                        $packingItems = \common\models\costfit\OrderItemPacking::find()->where("orderItemId=" . $items->orderItemId . " and status=99")->one();
+                        $packingItems = OrderItemPacking::find()->where("orderItemId=" . $items->orderItemId . " and status=99 and packer=" . Yii::$app->user->identity->userId)->one(); //ได้ตัวที่อยู่ในถุงแต่ยังไม่ปิดถุง
                         if (isset($packingItems)) {
                             $save = $this->checkSum($items->orderItemId, $items->quantity);
                             if ($save == true) {
-                                $packingItems->quantity += 1;
-                                $packingItems->updateDateTime = new \yii\db\Expression('NOW()');
-                                $packingItems->save(false);
+                                $sameType = $this->checkSameType($items->receiveType);
+                                if ($sameType == true) {
+                                    $packingItems->quantity += 1;
+                                    $packingItems->updateDateTime = new \yii\db\Expression('NOW()');
+                                    $packingItems->save(false);
+                                } else {
+                                    $ms = 'ไม่สามารถดำเนินการได้ เนื่องจากเป็นการส่งคนละประเภท';
+                                }
                             } else {
                                 $ms = 'ไม่สามารถดำเนินการได้ เนื่องจาก สินค้าเกินจำนวนใน Order';
                             }
                         } else {
                             $save = $this->checkSum($items->orderItemId, $items->quantity);
                             if ($save == true) {
-                                $packing = new \common\models\costfit\OrderItemPacking();
+                                $packing = new OrderItemPacking();
                                 $packing->orderItemId = $items->orderItemId;
                                 $packing->quantity = 1;
+                                $packing->packer = Yii::$app->user->identity->userId;
                                 $packing->status = 99;
                                 $packing->createDateTime = new \yii\db\Expression('NOW()');
                                 $packing->updateDateTime = new \yii\db\Expression('NOW()');
@@ -127,10 +142,13 @@ class PackingController extends StoreMasterController {
     public function actionCloseBag() {
         $ms = '';
         $full = 0;
+        if (!isset(Yii::$app->user->identity->userId)) {
+            return $this->redirect($baseUrl . '/auth');
+        }
         if (isset($_GET['orderId']) && !empty($_GET['orderId'])) {
             $itemInBag = $this->findItemInBag($_GET['orderId']);
             if (!empty($itemInBag)) {
-                $inBags = \common\models\costfit\OrderItemPacking::find()->where("orderItemId in($itemInBag) and status=99")->all();
+                $inBags = OrderItemPacking::find()->where("orderItemId in($itemInBag) and status=99")->all();
                 if (isset($inBags) && !empty($inBags)) {
                     foreach ($inBags as $inBag):
 
@@ -185,7 +203,7 @@ class PackingController extends StoreMasterController {
         if (isset($_POST['orderId']) && !empty($_POST['orderId'])) {
             $itemInBag = $this->findItemInBag($_POST['orderId']);
             if (!empty($itemInBag)) {
-                $inBags = \common\models\costfit\OrderItemPacking::find()->where("orderItemId in($itemInBag) and status=99")->all();
+                $inBags = OrderItemPacking::find()->where("orderItemId in($itemInBag) and status=99")->all();
                 if (count($inBags) > 0) {
                     $bagNo = $this->genBagNo();
                 } else {
@@ -216,8 +234,11 @@ class PackingController extends StoreMasterController {
     }
 
     public function actionRemove() {
+        if (!isset(Yii::$app->user->identity->userId)) {
+            return $this->redirect($baseUrl . '/auth');
+        }
         if (isset($_GET['packingId'])) {
-            $itemPacking = \common\models\costfit\OrderItemPacking::find()->where("orderItemPackingId=" . $_GET['packingId'])->one();
+            $itemPacking = OrderItemPacking::find()->where("orderItemPackingId=" . $_GET['packingId'])->one();
             if (isset($itemPacking) && !empty($itemPacking)) {
                 $itemPacking->delete();
                 return $this->render('show-orders', [
@@ -235,8 +256,11 @@ class PackingController extends StoreMasterController {
     }
 
     public function actionBagLabel($bag) {
-        $orderItem = \common\models\costfit\OrderItemPacking::find()->where("bagNo='" . $bag . "'")->one();
-        $order = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $orderItem->orderItemId)->one();
+        if (!isset(Yii::$app->user->identity->userId)) {
+            return $this->redirect($baseUrl . '/auth');
+        }
+        $orderItem = OrderItemPacking::find()->where("bagNo='" . $bag . "'")->one();
+        $order = OrderItem::find()->where("orderItemId=" . $orderItem->orderItemId)->one();
         return $this->renderPartial('bag_label', [
                     'bagNo' => $bag,
                     'orderId' => $order->orderId
@@ -244,8 +268,11 @@ class PackingController extends StoreMasterController {
     }
 
     public function actionMinus() {
+        if (!isset(Yii::$app->user->identity->userId)) {
+            return $this->redirect($baseUrl . '/auth');
+        }
         if (isset($_GET['packingId'])) {
-            $itemPacking = \common\models\costfit\OrderItemPacking::find()->where("orderItemPackingId=" . $_GET['packingId'])->one();
+            $itemPacking = OrderItemPacking::find()->where("orderItemPackingId=" . $_GET['packingId'])->one();
             $itemPacking->quantity = $itemPacking->quantity - 1;
             $itemPacking->save(false);
             return $this->render('show-orders', [
@@ -256,7 +283,7 @@ class PackingController extends StoreMasterController {
     }
 
     static function checkSum($orderItemId, $orderQuantity) {
-        $orderInPacks = \common\models\costfit\OrderItemPacking::find()->where("orderItemId=" . $orderItemId)->all();
+        $orderInPacks = OrderItemPacking::find()->where("orderItemId=" . $orderItemId)->all();
         $total = 0;
         if (isset($orderInPacks) && !empty($orderInPacks)) {
             foreach ($orderInPacks as $orderInPack):
@@ -272,8 +299,18 @@ class PackingController extends StoreMasterController {
         }
     }
 
+    static function checkSameType($receiveType) {
+        $orderItemInBag = OrderItemPacking::find()->where("packer=" . Yii::$app->user->identity->userId . " and status=99")->one(); //หาประเภทของการรับของ ของสินค้าที่เอาใส่ถุงไปก่อนหน้า
+        $orderItem = OrderItem::find()->where("orderItemId=" . $orderItemInBag->orderItemId)->one();
+        if ($orderItem->receiveType == $receiveType) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     static function findItemInBag($orderId) {
-        $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and status=5")->all();
+        $orderItems = OrderItem::find()->where("orderId=" . $orderId . " and status=5")->all();
         $items = '';
         if (isset($orderItems) && !empty($orderItems)) {
             foreach ($orderItems as $orderItem):
@@ -286,7 +323,7 @@ class PackingController extends StoreMasterController {
 
     static function genBagNo($getLast = FALSE) {
         $prefix = 'BG'; //$supplierModel->prefix;
-        $order = \common\models\costfit\OrderItemPacking::find()->where("substr(bagNo,1,2)='" . $prefix . "' order by bagNo DESC ")->one();
+        $order = OrderItemPacking::find()->where("substr(bagNo,1,2)='" . $prefix . "' order by bagNo DESC ")->one();
 //throw new \yii\base\Exception($order->bagNo);
         $max_code = isset($order) ? $order->bagNo : '0000000';
         $max_code = substr($max_code, -7);
@@ -298,9 +335,9 @@ class PackingController extends StoreMasterController {
 
     static function checkFully($orderItemId) {
         $itemInBag = 0;
-        $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
+        $orderItem = OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
         if (isset($orderItem)) {
-            $orderItemInBag = \common\models\costfit\OrderItemPacking::find()->where("orderItemId=" . $orderItemId)->all();
+            $orderItemInBag = OrderItemPacking::find()->where("orderItemId=" . $orderItemId)->all();
             foreach ($orderItemInBag as $inBag):
                 $itemInBag += $inBag->quantity;
             endforeach;
@@ -316,12 +353,12 @@ class PackingController extends StoreMasterController {
     }
 
     static function checkSuccessOrder($orderId) {
-        $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and DATE(DATE_SUB(sendDateTime,INTERVAL " . \common\models\costfit\OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE()")->all();
+        $orderItems = OrderItem::find()->where("orderId=" . $orderId . " and DATE(DATE_SUB(sendDateTime,INTERVAL " . OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE()")->all();
         $check = 0;
         if (isset($orderItems) && !empty($orderItems)) {
             foreach ($orderItems as $item):
                 $total = 0;
-                $orderPack = \common\models\costfit\OrderItemPacking::find()->where("orderItemId=" . $item->orderItemId)->all();
+                $orderPack = OrderItemPacking::find()->where("orderItemId=" . $item->orderItemId)->all();
                 if (isset($orderPack) && !empty($orderPack)) {
                     foreach ($orderPack as $inpack):
                         $total += $inpack->quantity;
@@ -344,7 +381,7 @@ class PackingController extends StoreMasterController {
     }
 
     static function updateOrderItem($orderItemId) {
-        $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
+        $orderItem = OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
         $orderItem->status = 13;
 //throw new \yii\base\Exception($orderItem->orderItemId);
         $orderItem->updateDateTime = new \yii\db\Expression('NOW()');
@@ -352,7 +389,7 @@ class PackingController extends StoreMasterController {
     }
 
     static function updateOrder($orderId) {
-        $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
+        $order = Order::find()->where("orderId=" . $orderId)->one();
         $order->status = 13;
         $order->updateDateTime = new \yii\db\Expression('NOW()');
         $order->save(false);

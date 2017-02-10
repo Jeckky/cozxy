@@ -77,17 +77,17 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
 
     static public function orderInPacking($orderId) {
         $orderItems = OrderItem::find()->where("orderId=" . $orderId)->all();
-        //throw new \yii\base\Exception(print_r($orderItems, true));
+//throw new \yii\base\Exception(print_r($orderItems, true));
         $itemItemId = '';
         foreach ($orderItems as $orderItem):
             $itemItemId = $itemItemId . $orderItem->orderItemId . ",";
         endforeach;
         if (!empty($itemItemId) && isset($itemItemId)) {
             $itemItemId = substr($itemItemId, 0, -1);
-            //throw new \yii\base\Exception($itemItemId);
+//throw new \yii\base\Exception($itemItemId);
             $orderItemPackings = OrderItemPacking::find()->where("orderItemId in ($itemItemId) and status =99")->all();
             if (isset($orderItemPackings) && !empty($orderItemPackings)) {
-                //throw new \yii\base\Exception(print_r($itemItemId, true));
+//throw new \yii\base\Exception(print_r($itemItemId, true));
                 return $orderItemPackings;
             } else {
                 return '';
@@ -119,7 +119,7 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
                     $oldBag = $bag->bagNo;
                 }
             endforeach;
-            //throw new \yii\base\Exception($items);
+//throw new \yii\base\Exception($items);
             $items = substr($items, 0, -2);
             return $items;
         } else {
@@ -147,7 +147,7 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
 
         $orderItem = OrderItem::find()
                         ->where("orderItemId=" . $orderItemId)->one();
-        //throw new \yii\base\Exception($orderItem->order->status);
+//throw new \yii\base\Exception($orderItem->order->status);
         if ($orderItem->status == 13) {
             $status = 4;
         } else {
@@ -155,11 +155,11 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
         }
 
         $result = OrderItemPacking::find()
-                //->distinct('order_item_packing.bagNo')
+//->distinct('order_item_packing.bagNo')
                 ->join('LEFT JOIN', 'order_item oi', 'oi.orderItemId = order_item_packing.orderItemId')
                 ->where(['oi.orderId' => $orderItem->orderId, 'order_item_packing.status' => $status])
                 ->count();
-        //throw new \yii\base\Exception($orderItemId);
+//throw new \yii\base\Exception($orderItemId);
         return $result;
     }
 
@@ -178,8 +178,8 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
 
     static public function countBagNo($bagNo) {
         $result = OrderItemPacking::find()
-                //->distinct('order_item_packing.bagNo')
-                //->join('LEFT JOIN', 'order_item oi', 'oi.orderItemId = order_item_packing.orderItemId')
+//->distinct('order_item_packing.bagNo')
+//->join('LEFT JOIN', 'order_item oi', 'oi.orderItemId = order_item_packing.orderItemId')
                 ->where(['order_item_packing.bagNo' => $bagNo])
                 ->count();
         return $result;
@@ -254,6 +254,44 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     public static function findBagNo($orderItemId) {
         $orderItemId = OrderItemPacking::find()->where("orderItemId in ($orderItemId) and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)->all();
         return $orderItemId;
+    }
+
+    public static function countBagAtPoint($pickingPoint) {
+        $items = OrderItemPacking::find()->where("shipper=" . Yii::$app->user->identity->userId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)->all();
+        $orderId = [];
+        $orderIds = '';
+        $orderItemBag = '';
+        if (isset($items) && !empty($items)) {
+            $i = 0;
+            foreach ($items as $item):
+                $check = 0;
+                $orderItem = OrderItem::find()->where("orderItemId=" . $item->orderItemId)->one();
+                foreach ($orderId as $old):
+                    if ($old == $orderItem->orderId) {
+                        $check++;
+                    }
+                endforeach;
+                if ($check == 0) {
+                    $order = Order::find()->where("orderId=" . $orderItem->orderId)->one();
+                    if ($order->pickingId == $pickingPoint) {
+                        $orderId[$i] = $order->orderId;
+                        $orderIds .= $orderItem->orderId . ",";
+                    }
+                }
+            endforeach;
+            if ($orderIds != '') {
+                $orderIds = substr($orderIds, 0, -1);
+            }
+            $orderItems = OrderItem::find()->where("orderId in ($orderIds)")->all();
+            foreach ($orderItems as $item) :
+                $orderItemBag .= $item->orderItemId . ",";
+            endforeach;
+            $orderItemBag = substr($orderItemBag, 0, -1);
+            $bag = OrderItemPacking::find()->where("orderItemId in ($orderItemBag) and shipper=" . Yii::$app->user->identity->userId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)->all();
+            return count($bag);
+        }else {
+            return '';
+        }
     }
 
 }
