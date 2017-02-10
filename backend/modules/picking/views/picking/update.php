@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\PickingPoint */
 
-$this->title = 'Update Picking Point: ' . $model->title . ($receive) == 1 ? ' :: Lockers' : ' :: Booth';
+$this->title = $model->title . ($receive) == 1 ? ' Update Picking Point :: Lockers' : ' Update Picking Point :: Booth';
 $this->params['breadcrumbs'][] = ['label' => 'Picking Points', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->pickingId]];
 $this->params['breadcrumbs'][] = 'Update';
@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = 'Update';
     <?=
     $this->render('_form', [
         'model' => $model,
+        'receive' => $receive
     ])
     ?>
 

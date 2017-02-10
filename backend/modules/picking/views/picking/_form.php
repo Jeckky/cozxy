@@ -51,34 +51,88 @@ use kartik\widgets\Select2;
             <?= $form->field($model, 'description')->textInput(['maxlength' => true])->textArea(['rows' => '6']) ?>
 
             <?//= $form->field($model, 'countryId')->textInput(['maxlength' => true]) ?>
-            <?php
-            $catList = yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'stateName');
-            echo $form->field($model, 'provinceId')->dropDownList($catList, ['id' => 'cat-id']);
 
-            // Child level 2
-            echo $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
-                'options' => ['id' => 'subcat-id'],
-                'select2Options' => ['pluginOptions' => ['allowClear' => true]],
-                'pluginOptions' => [
-                    'initialize' => true,
-                    'depends' => ['cat-id'],
-                    'placeholder' => 'Select...',
-                    'url' => Url::to(['child-amphur-address'])
-                ]
-            ]);
+            <?php
+            //$catList = yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'stateName');
+            //echo $form->field($model, 'provinceId')->dropDownList($catList, ['id' => 'cat-id']);
             ?>
 
-            <?//= $form->field($model, 'provinceId')->textInput(['maxlength' => true]) ?>
+            <?php
+            // Child level 2
+            /*
+              echo $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
+              'options' => ['id' => 'subcat-id'],
+              'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+              'pluginOptions' => [
+              'initialize' => true,
+              'depends' => ['cat-id'],
+              'placeholder' => 'Select...',
+              'url' => Url::to(['child-amphur-address'])
+              ]
+              ]); */
+            ?>
 
-            <?//= $form->field($model, 'amphurId')->textInput(['maxlength' => true]) ?>
+            <?php
+            // echo '<pre>';
+            //print_r(yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'countryName'));
+            // Top most parent
+            echo $form->field($model, 'countryId')->widget(kartik\select2\Select2::classname(), [
+                'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->where("countryId='THA'")->asArray()->all(), 'countryId', 'localName'),
+                'pluginOptions' => [
+                    // 'placeholder' => 'Select...',
+                    'loadingText' => 'Loading country ...',
+                //'data' => ['THA' => 'ไทย'],
+                //'initialize' => true,
+                ],
+                'options' => [
+                    //'placeholder' => 'Select country ...',
+                    'id' => 'countryId',
+                    'class' => 'required'
+                ],
+            ])->label('ประเทศ');
+            ?>
+            <?php
+            // Child level 1
+            //echo Html::hiddenInput('model_id1', '2526', ['id' => 'model_id1']);
+            echo Html::hiddenInput('input-type-1', $model->provinceId, ['id' => 'input-type-1']);
+            echo Html::hiddenInput('input-type-2', $model->provinceId, ['id' => 'input-type-2']);
+            //echo Html::hiddenInput('input-type-3', $hash, ['id' => 'input-type-3']);
+            echo $form->field($model, 'provinceId')->widget(DepDrop::classname(), [
+                'options' => ['placeholder' => 'Select ...', 'id' => 'provinceId'],
+                'type' => DepDrop::TYPE_SELECT2,
+                'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                'pluginOptions' => [
+                    'depends' => ['countryId'],
+                    'url' => Url::to(['child-states-address']),
+                    'loadingText' => 'Loading province ...',
+                    // 'tags' => '2526',
+                    'initialize' => true,
+                    //'params' => ['model_id1']
+                    'params' => ['input-type-1', 'input-type-2']
+                ]
+            ])->label('จังหวัด');
+            ?>
 
-            <?//= $form->field($model, 'status')->textInput() ?>
+            <?php
+            // Child level 2
+            //echo Html::hiddenInput('model_id2', '79745', ['id' => 'model_id2']);
+            echo Html::hiddenInput('input-type-11', $model->amphurId, ['id' => 'input-type-11']);
+            echo Html::hiddenInput('input-type-22', $model->amphurId, ['id' => 'input-type-22']);
+            // echo Html::hiddenInput('input-type-33', $hash, ['id' => 'input-type-33']);
+            echo $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
+                'options' => ['placeholder' => 'Select ...', 'id' => 'amphurId'],
+                'type' => DepDrop::TYPE_SELECT2,
+                'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                'pluginOptions' => [
+                    'depends' => ['provinceId'],
+                    'url' => Url::to(['child-amphur-address']),
+                    'loadingText' => 'Loading amphur ...',
+                    'params' => ['input-type-11', 'input-type-22']
+                //'initialize' => true,
+                ]
+            ])->label('เขต/อำเภอ');
+            ?>
 
-            <?//= $form->field($model, 'type')->textInput() ?>
-
-            <?//= $form->field($model, 'createDateTime')->textInput() ?>
-
-            <?//= $form->field($model, 'updateDateTime')->textInput() ?>
             <?= $form->field($model, 'ip')->textInput(['maxlength' => 100]) ?>
             <?= $form->field($model, 'macAddress')->textInput(['maxlength' => 100]) ?>
             <?= $form->field($model, 'authCode')->textInput(['maxlength' => 100]) ?>
@@ -86,7 +140,7 @@ use kartik\widgets\Select2;
             <div class="form-group">
                 <div class="col-sm-9 col-sm-offset-3 text-left">
                     <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-                    <?= Html::a('Back', ['index?', 'pickingId' => $model->pickingId], ['class' => 'btn btn-warning']) ?>
+                    <?= Html::a('Back', ['index?receive=' . $receive, 'pickingId' => $model->pickingId], ['class' => 'btn btn-warning']) ?>
                 </div>
             </div>
 

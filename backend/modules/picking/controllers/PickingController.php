@@ -148,7 +148,7 @@ class PickingController extends PickingMasterController {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->pickingId]);
+            return $this->redirect(['view', 'id' => $model->pickingId, 'receive' => $receive]);
         } else {
             return $this->render('update', [
                 'model' => $model, 'receive' => $receive
@@ -164,8 +164,8 @@ class PickingController extends PickingMasterController {
      */
     public function actionDelete($id) {
         $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $receive = Yii::$app->request->get('receive');
+        return $this->redirect(['index', 'receive' => $receive]);
     }
 
     /**
