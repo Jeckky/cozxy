@@ -491,7 +491,7 @@ $('.investigate-approve').on('click', function () {
     var productId = resDataBind[0];
     var type = resDataBind[1];
     $.ajax({
-        url: 'approve/investigate-approve-items',
+        url: $baseUrl.'investigate-approve-items',
         data: {"productId": productId, "type": type},
         type: 'post',
         success: function (result) {
