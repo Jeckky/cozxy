@@ -43,7 +43,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items_sub->categoryId]);
                 ?>
                 <ul class="submenu">
-                    <li class="has-submenu"><a href="#" style="font-size: 12px; font-weight: bold;"><?php echo $items_sub->title; ?></a></li>
+                    <li class="has-submenu">
+                        <a href="#" style="font-size: 12px; font-weight: bold;"><?php echo $items_sub->title; ?></a></li>
                     <ul class="has-submenu">
                         <?php
                         $MenuCategorySubParentId = $this->context->actionMenuCategorySubParentId($items_sub->categoryId);
@@ -98,7 +99,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items->categoryId]);
                 ?>
                 <li class="has-submenu">
-                    <a href="#" style="font-size: 14px;">
+                    <a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items->createTitle() ?>/<?= $params ?>" style="font-size: 14px;">
                         <?php echo $items->title; ?> <i class="fa fa-chevron-down"></i>
                     </a>
                     <ul class="sub-submenu scrollbar" id="test-menu" style="width: 900px; float: left; ">
@@ -136,8 +137,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/returning">คำขอคืนสินค้า</a></li>
-            <!--<li class="pill-right"><a href="<?php // echo Yii::$app->homeUrl;    ?>profile/payment">Payment Methods</a></li>
-            <li class="pull-right"><a href="<?php // echo Yii::$app->homeUrl;    ?>history">Easy Re-Order</a></li>-->
+            <!--<li class="pill-right"><a href="<?php // echo Yii::$app->homeUrl;         ?>profile/payment">Payment Methods</a></li>
+            <li class="pull-right"><a href="<?php // echo Yii::$app->homeUrl;         ?>history">Easy Re-Order</a></li>-->
         </ul>
     </li>
 <?php endif; ?>
