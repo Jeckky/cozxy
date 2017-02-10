@@ -417,7 +417,7 @@ function switchers(id, type, status) {
     //
     if (type == 2) {
         $.ajax({
-            url: 'approve/approve-items',
+            url: 'approve-items',
             data: {"productSuppId": id, "type": type, 'status': status, "receiveType": approveReceiveType},
             type: 'post',
             success: function (result) {
@@ -449,7 +449,7 @@ function switchers(id, type, status) {
             alert('กรุณาเลือกรูปแบบการรับสินค้า !!');
         } else {
             $.ajax({
-                url: 'approve/approve-items',
+                url: 'approve-items',
                 data: {"productSuppId": id, "type": type, 'status': status, "receiveType": approveReceiveType},
                 type: 'post',
                 success: function (result) {
@@ -491,7 +491,7 @@ $('.investigate-approve').on('click', function () {
     var productId = resDataBind[0];
     var type = resDataBind[1];
     $.ajax({
-        url: $baseUrl.'investigate-approve-items',
+        url: 'investigate-approve-items',
         data: {"productId": productId, "type": type},
         type: 'post',
         success: function (result) {
@@ -657,7 +657,7 @@ function notifications(productSuppId, type) {
     //alert('test : notifications');
     //$.growl({title: "Growl", message: "The kitten is awake!"});
     $.ajax({
-        url: 'approve/notifications',
+        url: 'notifications',
         data: {"type": type, 'productSuppId': productSuppId},
         type: 'post',
         success: function (result) {
