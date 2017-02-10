@@ -50,7 +50,7 @@ class LockersController extends LockersMasterController {
 
         $codes = Yii::$app->request->post('codes');
         if ($codes != '') {
-            $query = \common\models\costfit\PickingPoint::find()->where("code = '" . $codes . "'")->one();
+            $query = \common\models\costfit\PickingPoint::find()->where("code = '" . $codes . "' and type =" . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)->one();
 
             if (count($query) > 0) {
                 $txt = 'ข้อมูลถูกต้อง กรุณารอสักครู่...';
