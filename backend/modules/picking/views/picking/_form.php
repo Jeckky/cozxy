@@ -33,7 +33,15 @@ use kartik\widgets\Select2;
         </div>
         <div class="panel-body">
             <?php
-            $form = ActiveForm::begin();
+            $form = ActiveForm::begin([
+                'options' => ['class' => 'panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+                'fieldConfig' => [
+                    'template' => '{label}<div class="col-sm-9">{input}</div>',
+                    'labelOptions' => [
+                        'class' => 'col-sm-3 control-label'
+                    ]
+                ]
+            ]);
             ?>
 
             <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
@@ -76,8 +84,10 @@ use kartik\widgets\Select2;
             <?= $form->field($model, 'authCode')->textInput(['maxlength' => 100]) ?>
 
             <div class="form-group">
-                <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-                <?= Html::a('Back', ['index', 'pickingId' => $model->pickingId], ['class' => 'btn btn-warning']) ?>
+                <div class="col-sm-9 col-sm-offset-3 text-left">
+                    <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                    <?= Html::a('Back', ['index?', 'pickingId' => $model->pickingId], ['class' => 'btn btn-warning']) ?>
+                </div>
             </div>
 
             <?php ActiveForm::end(); ?>

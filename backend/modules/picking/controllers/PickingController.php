@@ -82,12 +82,14 @@ class PickingController extends PickingMasterController {
      */
     public function actionIndex() {
 
+        $receive = Yii::$app->request->get('receive');
+
         $dataProvider = new ActiveDataProvider([
-            'query' => PickingPoint::find(),
+            'query' => PickingPoint::find()->where('type =' . $receive),
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider, 'receiveType' => $receive
         ]);
     }
 
@@ -97,8 +99,9 @@ class PickingController extends PickingMasterController {
      * @return mixed
      */
     public function actionView($id) {
+        $receive = Yii::$app->request->get('receive');
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($id), 'receiveType' => $receive
         ]);
     }
 
@@ -108,6 +111,7 @@ class PickingController extends PickingMasterController {
      * @return mixed
      */
     public function actionCreate() {
+        $receive = Yii::$app->request->get('receive');
         $model = new PickingPoint();
         /*
           if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -121,14 +125,15 @@ class PickingController extends PickingMasterController {
         if (isset($_POST["PickingPoint"])) {
 
             $model->attributes = $_POST["PickingPoint"];
+            $model->type = $receive;
             $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save(FALSE)) {
                 //return $this->redirect(['index']);
-                return $this->redirect(['view', 'id' => $model->pickingId]);
+                return $this->redirect(['view', 'id' => $model->pickingId, 'receive' => $receive]);
             }
         }
         return $this->render('create', [
-            'model' => $model,
+            'model' => $model, 'receive' => $receive
         ]);
     }
 
@@ -139,13 +144,14 @@ class PickingController extends PickingMasterController {
      * @return mixed
      */
     public function actionUpdate($id) {
+        $receive = Yii::$app->request->get('receive');
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->pickingId]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                'model' => $model, 'receive' => $receive
             ]);
         }
     }

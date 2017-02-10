@@ -15,9 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->pickingId], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Update', ['update', 'id' => $model->pickingId, 'receive' => $receiveType], ['class' => 'btn btn-primary']) ?>
         <?=
-        Html::a('Delete', ['delete', 'id' => $model->pickingId], [
+        Html::a('Delete', ['delete', 'id' => $model->pickingId, 'receive' => $receiveType], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ])
         ?>
-        <?= Html::a('Back', ['index', 'pickingId' => $model->pickingId], ['class' => 'btn btn-warning']) ?>
+        <?= Html::a('Back', ['index', 'pickingId' => $model->pickingId, 'receive' => $receiveType], ['class' => 'btn btn-warning']) ?>
     </p>
 
     <?=

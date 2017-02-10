@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Picking Points';
+$this->title = ($receiveType ) == 1 ? 'Picking Points :: Lockers' : 'Picking Points :: Booth';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="picking-point-index">
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-md-6"><?= $this->title ?></div>
             <div class="col-md-6">
                 <div class="btn-group pull-right">
-                    <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Picking Point', ['create'], ['class' => 'btn btn-success btn-xs']) ?>
+                    <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Picking Point', ['create?receive=' . $receiveType], ['class' => 'btn btn-success btn-xs']) ?>
                 </div>
             </div>
         </div>
@@ -73,31 +73,31 @@ $this->params['breadcrumbs'][] = $this->title;
                     'template' => '{view} {update} {delete} {items}',
                     'buttons' => [
                         'view' => function ($url, $model) {
-                            return Html::a('<i class="fa fa-eye"></i>', $url, [
-                                        'title' => Yii::t('yii', 'view'),
+                            return Html::a('<i class="fa fa-eye"></i>', $url . '&receive=' . $model->type, [
+                                'title' => Yii::t('yii', 'view '),
                             ]);
                         },
-                                'update' => function ($url, $model) {
-                            return Html::a('<i class="fa fa-pencil"></i>', $url, [
-                                        'title' => Yii::t('yii', 'update'),
+                        'update' => function ($url, $model) {
+                            return Html::a('<i class = "fa fa-pencil"></i>', $url . '&receive=' . $model->type, [
+                                'title' => Yii::t('yii', 'update'),
                             ]);
                         },
-                                'delete' => function ($url, $model) {
-                            return Html::a('<i class="fa fa-trash-o"></i>', $url, [
-                                        'title' => Yii::t('yii', 'Delete'),
-                                        'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
-                                        'data-method' => 'post',
+                        'delete' => function ($url, $model) {
+                            return Html::a('<i class = "fa fa-trash-o"></i>', $url . '&receive=' . $model->type, [
+                                'title' => Yii::t('yii', 'Delete'),
+                                'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+                                'data-method' => 'post',
                             ]);
                         },
-                                'items' => function($url, $model) {
-                            return Html::a('<i class="fa fa-sign-in"></i> ', Yii::$app->homeUrl . "picking/picking-point-items/index?pickingId=" . $model->pickingId, [
-                                        'title' => Yii::t('app', 'picking point items'),]);
+                        'items' => function($url, $model) {
+                            return Html::a('<i class = "fa fa-sign-in"></i> ', Yii::$app->homeUrl . "picking/picking-point-items/index?receive=" . $model->type . "&pickingId=" . $model->pickingId, [
+                                'title' => Yii::t('app', 'picking point items'),]);
                         },
-                            ],
-                        ],
                     ],
-                ]);
-                ?>
+                ],
+            ],
+        ]);
+        ?>
     </div>
     <script>
         init.push(function () {

@@ -38,11 +38,12 @@ return 'picking_point';
 public function rules()
 {
 return [
-            [['title', 'code', 'description', 'provinceId', 'amphurId', 'createDateTime'], 'required'],
+            [['title', 'code', 'provinceId', 'amphurId', 'createDateTime'], 'required'],
             [['provinceId', 'amphurId', 'type', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['title', 'description', 'countryId'], 'string', 'max' => 45],
+            [['title', 'countryId'], 'string', 'max' => 45],
             [['code'], 'string', 'max' => 30],
+            [['description'], 'string', 'max' => 200],
             [['ip', 'macAddress', 'authCode'], 'string', 'max' => 100],
         ];
 }

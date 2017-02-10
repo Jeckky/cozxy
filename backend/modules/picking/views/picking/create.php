@@ -2,11 +2,10 @@
 
 use yii\helpers\Html;
 
-
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\PickingPoint */
 
-$this->title = 'Create Picking Point';
+$this->title = ($receive) == 1 ? 'Create Picking Points :: Lockers' : 'Create Picking Points :: Booth';
 $this->params['breadcrumbs'][] = ['label' => 'Picking Points', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -14,8 +13,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
+    <?=
+    $this->render('_form', [
         'model' => $model,
-    ]) ?>
+    ])
+    ?>
 
 </div>
