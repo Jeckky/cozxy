@@ -256,4 +256,13 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster {
         }
     }
 
+    public static function GetOrderItemrGroupMaster($orderId) {
+        $GetOrderItemMasters = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->groupBy('receiveType')->all();
+        if (isset($GetOrderItemMasters) && !empty($GetOrderItemMasters)) {
+            return $GetOrderItemMasters;
+        } else {
+            return NULL;
+        }
+    }
+
 }

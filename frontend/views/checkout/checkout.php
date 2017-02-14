@@ -115,7 +115,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         </div>
                         <div class="form-group col-lg-12 col-md-12 col-xs-12" style="margin-bottom: 10px;  background-color: #ffffff; padding: 5px;">
                             <?php
-                            echo $this->render('picking_point', ['pickingPoint' => $pickingPoint, 'address' => $address]);
+                            echo $this->render('picking_point', ['address' => $address, 'GetOrderMastersGroup' => $GetOrderMastersGroup, 'pickingPointBooth' => $pickingPointBooth, 'pickingPointLockers' => $pickingPointLockers]);
                             ?>
                         </div>
                         <div class="form-group" style="margin-bottom: 10px;  background-color: #f5f5f5; padding: 5px;">

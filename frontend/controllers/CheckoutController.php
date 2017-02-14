@@ -137,17 +137,22 @@ class CheckoutController extends MasterController {
             $GetOrderMasters = \common\models\costfit\OrderItem::GetOrderItemrMaster($orderId);
             //echo '<pre>';
             // print_r($GetOrderMasters->attributes);
+            $GetOrderMastersGroup = \common\models\costfit\OrderItem::GetOrderItemrGroupMaster($orderId);
+            //echo '<pre>';
+            //print_r($GetOrderMastersGroup[0]['attributes']);
+            $receiveOrderId = $GetOrderMasters->attributes['orderId'];
             $receiveType = $GetOrderMasters->attributes['receiveType'];
             //echo 'receiveType : ' . $receiveType;
+            ///if (isset($receiveType)) {
+            $pickingPoint_list_lockers = \common\models\costfit\PickingPoint::find()->where('type=' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)->one();
+            $pickingPoint_list_booth = \common\models\costfit\PickingPoint::find()->where('type=' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)->one();
+            //} else {
+            //$pickingPoint_list = \common\models\costfit\PickingPoint::find()->one();
+            //}
 
-            if (isset($receiveType)) {
-                $pickingPoint_list = \common\models\costfit\PickingPoint::find()->where('type=' . $receiveType)->one();
-            } else {
-                $pickingPoint_list = \common\models\costfit\PickingPoint::find()->one();
-            }
-
-            $pickingPoint = isset($pickingPoint_list) ? $pickingPoint_list : NULL;
-            return $this->render('checkout', compact('address', 'user', 'paymentMethods', 'address_shipping', 'address_billing', 'model', 'pickingPoint'));
+            $pickingPointLockers = isset($pickingPoint_list_lockers) ? $pickingPoint_list_lockers : NULL;
+            $pickingPointBooth = isset($pickingPoint_list_booth) ? $pickingPoint_list_booth : NULL;
+            return $this->render('checkout', compact('address', 'user', 'paymentMethods', 'address_shipping', 'address_billing', 'model', 'pickingPointBooth', 'pickingPointLockers', 'GetOrderMastersGroup'));
         }
     }
 

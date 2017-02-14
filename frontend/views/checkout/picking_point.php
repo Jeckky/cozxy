@@ -117,120 +117,263 @@ $pickingId = rand(0, 9999);
     <a class="panel-toggle" href="#PickingPoint"><i></i>New Picking Point</a>
     -->
 </div>
-<div class="form-group col-lg-6 col-md-6 col-sm-6">
-    <?php
-// Child level 1
-// Additional input fields passed as params to the child dropdown's pluginOptions
-// echo Html::hiddenInput('input-type-1', $pickingPoint->provinceId, ['id' => 'input-type-1']);
-// echo Html::hiddenInput('input-type-2', $pickingPoint->provinceId, ['id' => 'input-type-2']);
-    echo $form->field($pickingPoint, 'provinceId')->widget(kartik\select2\Select2::classname(), [
-        'model' => $pickingId,
-        'attribute' => 'provinceId',
-        'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'stateName'),
-        'pluginOptions' => [
-            'placeholder' => 'Select...',
-            'loadingText' => 'Loading states ...',
-        ],
-        'options' => ['placeholder' => 'Select states ...']
-    ])->label('เลือกจังหวัด');
-    ?>
-    <?php
-    echo Html::hiddenInput("statesDDId", $stateId, ['id' => "statesDDId"]);
-    ?>
-</div>
 
-<div class="form-group col-lg-6 col-md-6 col-sm-6 ">
-    <?php
-// Child level 2
-//echo Html::hiddenInput('input-type-11', $pickingPoint->amphurId, ['id' => 'input-type-11']);
-//echo Html::hiddenInput('input-type-22', $pickingPoint->amphurId, ['id' => 'input-type-22']);
-    if ($yourbrowser != 'Safari') {
-        echo $form->field($pickingPoint, 'amphurId')->widget(kartik\depdrop\DepDrop::classname(), [
-            //'data' => [9 => 'Savings'],
-            'model' => $pickingId,
-            'attribute' => 'amphurId',
-            'options' => ['placeholder' => 'Select ...'],
-            'type' => DepDrop::TYPE_SELECT2,
-            'select2Options' => ['pluginOptions' => ['allowClear' => true,]],
-            'pluginOptions' => [
-                'class' => 'required ',
-                'initialize' => true,
-                'depends' => ['pickingpoint-provinceid'],
-                'url' => Url::to(['child-amphur-address-picking-point']),
-                'loadingText' => 'Loading amphur ...',
-                'params' => ['input-type-11', 'input-type-22']
-            ]
-        ])->label('เลือกอำเภอ/เขต');
-    } else {
-        echo $form->field($pickingPoint, 'amphurId')->widget(kartik\depdrop\DepDrop::classname(), [
-            //'data' => [9 => 'Savings'],
-            'model' => $pickingId,
-            'attribute' => 'amphurId',
-            'options' => ['placeholder' => 'Select ...'],
-            //'type' => DepDrop::TYPE_SELECT2,
-            'select2Options' => ['pluginOptions' => ['allowClear' => true]],
-            'pluginOptions' => [
-                'class' => 'required form-control ',
-                'initialize' => true,
-                'depends' => ['pickingpoint-provinceid'],
-                'url' => Url::to(['child-amphur-address-picking-point']),
-                'loadingText' => 'Loading amphur ...',
-                'params' => ['input-type-11', 'input-type-22']
-            ]
-        ])->label('เลือกอำเภอ/เขต');
+<?php
+foreach ($GetOrderMastersGroup as $value) {
+    //echo $value->receiveType . '<br>';
+    //echo 'GetOrderMastersGroup :: ' . count($value) . '<br>';
+    if ($value->receiveType == '1') {
+        // Lockers
+        ?>
+        <div id="lockers" class="col-lg-12 col-md-12 col-sm-12">
+            <h4 class="shipment-title">เลือกสถานที่รับของ : ล็อคเกอร์</h4>
+            <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                <?php
+                // Child level 1
+                // Additional input fields passed as params to the child dropdown's pluginOptions
+                // echo Html::hiddenInput('input-type-1', $pickingPoint->provinceId, ['id' => 'input-type-1']);
+                // echo Html::hiddenInput('input-type-2', $pickingPoint->provinceId, ['id' => 'input-type-2']);
+                echo $form->field($pickingPointLockers, 'provinceId')->widget(kartik\select2\Select2::classname(), [
+                    'model' => $pickingId,
+                    'attribute' => 'provinceId',
+                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'stateName'),
+                    'pluginOptions' => [
+                        'placeholder' => 'Select...',
+                        'loadingText' => 'Loading states ...',
+                    ],
+                    'options' => ['placeholder' => 'Select states ...']
+                ])->label('เลือกจังหวัด');
+                ?>
+                <?php
+                echo Html::hiddenInput("statesDDId", $stateId, ['id' => "statesDDId"]);
+                ?>
+            </div>
+
+            <div  class="form-group col-lg-6 col-md-6 col-sm-6 ">
+                <?php
+                // Child level 2
+                //echo Html::hiddenInput('input-type-11', $pickingPoint->amphurId, ['id' => 'input-type-11']);
+                //echo Html::hiddenInput('input-type-22', $pickingPoint->amphurId, ['id' => 'input-type-22']);
+                if ($yourbrowser != 'Safari') {
+                    echo $form->field($pickingPointLockers, 'amphurId')->widget(kartik\depdrop\DepDrop::classname(), [
+                        //'data' => [9 => 'Savings'],
+                        'model' => $pickingId,
+                        'attribute' => 'amphurId',
+                        'options' => ['placeholder' => 'Select ...'],
+                        'type' => DepDrop::TYPE_SELECT2,
+                        'select2Options' => ['pluginOptions' => ['allowClear' => true,]],
+                        'pluginOptions' => [
+                            'class' => 'required ',
+                            'initialize' => true,
+                            'depends' => ['pickingpoint-provinceid'],
+                            'url' => Url::to(['child-amphur-address-picking-point']),
+                            'loadingText' => 'Loading amphur ...',
+                            'params' => ['input-type-11', 'input-type-22']
+                        ]
+                    ])->label('เลือกอำเภอ/เขต');
+                } else {
+                    echo $form->field($pickingPointLockers, 'amphurId')->widget(kartik\depdrop\DepDrop::classname(), [
+                        //'data' => [9 => 'Savings'],
+                        'model' => $pickingId,
+                        'attribute' => 'amphurId',
+                        'options' => ['placeholder' => 'Select ...'],
+                        //'type' => DepDrop::TYPE_SELECT2,
+                        'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                        'pluginOptions' => [
+                            'class' => 'required form-control ',
+                            'initialize' => true,
+                            'depends' => ['pickingpoint-provinceid'],
+                            'url' => Url::to(['child-amphur-address-picking-point']),
+                            'loadingText' => 'Loading amphur ...',
+                            'params' => ['input-type-11', 'input-type-22']
+                        ]
+                    ])->label('เลือกอำเภอ/เขต');
+                }
+                ?>
+                <?php
+                echo Html::hiddenInput("amphurDDId", $cityId, ['id' => "amphurDDId"]);
+                ?>
+
+            </div>
+
+            <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                <?php
+                // Child level 3
+                echo Html::hiddenInput('input-type-13', $pickingPointLockers->provinceId, ['id' => 'input-type-13']);
+                echo Html::hiddenInput('input-type-23', $pickingPointLockers->amphurId, ['id' => 'input-type-23']);
+                if ($yourbrowser != 'Safari') {
+                    echo $form->field($pickingPointLockers, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
+                        //'data' => [9 => 'Savings'],
+                        'model' => $pickingId,
+                        'attribute' => 'pickingId',
+                        'options' => ['placeholder' => 'Select ...'],
+                        'type' => DepDrop::TYPE_SELECT2,
+                        //'options' => ['multiple' => true],
+                        'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                        'pluginOptions' => [
+                            'initialize' => true,
+                            'depends' => ['pickingpoint-amphurid'],
+                            'url' => Url::to(['child-picking-point']),
+                            'loadingText' => 'Loading picking point ...',
+                            'params' => ['input-type-13', 'input-type-23']
+                        ]
+                    ])->label('เลือกจุดรับของ');
+                } else {
+                    echo $form->field($pickingPointLockers, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
+                        //'data' => [9 => 'Savings'],
+                        'model' => $pickingId,
+                        'attribute' => 'pickingId',
+                        'options' => ['placeholder' => 'Select ...'],
+                        //'type' => DepDrop::TYPE_SELECT2,
+                        //'options' => ['multiple' => true],
+                        'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                        'pluginOptions' => [
+                            'initialize' => true,
+                            'depends' => ['pickingpoint-amphurid'],
+                            'url' => Url::to(['child-picking-point']),
+                            'loadingText' => 'Loading picking point ...',
+                            'params' => ['input-type-13', 'input-type-23']
+                        ]
+                    ])->label('เลือกจุดรับของ');
+                }
+                ?>
+                <?php
+                echo Html::hiddenInput("pickingDDId", $pickingId, ['id' => "pickingDDId"]);
+                ?>
+            </div>
+        </div>
+
+        <?php
+    } else if ($value->receiveType == '2') {
+        // Booth
+        ?>
+        <div id="booth" class="col-lg-12 col-md-12 col-sm-12">
+            <h3 class="shipment-title">เลือกสถานที่รับของ : บูธ</h3>
+            <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                <?php
+                // Child level 1
+                // Additional input fields passed as params to the child dropdown's pluginOptions
+                // echo Html::hiddenInput('input-type-1', $pickingPoint->provinceId, ['id' => 'input-type-1']);
+                // echo Html::hiddenInput('input-type-2', $pickingPoint->provinceId, ['id' => 'input-type-2']);
+                echo $form->field($pickingPointBooth, 'provinceId')->widget(kartik\select2\Select2::classname(), [
+                    'model' => $pickingId,
+                    'attribute' => 'provinceId',
+                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'stateName'),
+                    'pluginOptions' => [
+                        'placeholder' => 'Select...',
+                        'loadingText' => 'Loading states ...',
+                    ],
+                    'options' => ['placeholder' => 'Select states ...', 'id' => 'BprovinceId']
+                ])->label('เลือกจังหวัด');
+                ?>
+                <?php
+                echo Html::hiddenInput("statesDDId", $stateId, ['id' => "statesDDId"]);
+                ?>
+            </div>
+
+            <div class="form-group col-lg-6 col-md-6 col-sm-6 ">
+                <?php
+                // Child level 2
+                //echo Html::hiddenInput('input-type-11', $pickingPoint->amphurId, ['id' => 'input-type-11']);
+                //echo Html::hiddenInput('input-type-22', $pickingPoint->amphurId, ['id' => 'input-type-22']);
+                if ($yourbrowser != 'Safari') {
+                    echo $form->field($pickingPointBooth, 'amphurId')->widget(kartik\depdrop\DepDrop::classname(), [
+                        //'data' => [9 => 'Savings'],
+                        'model' => $pickingId,
+                        'attribute' => 'amphurId',
+                        'options' => ['placeholder' => 'Select ...', 'id' => 'BamphurId'],
+                        'type' => DepDrop::TYPE_SELECT2,
+                        'select2Options' => ['pluginOptions' => ['allowClear' => true,]],
+                        'pluginOptions' => [
+                            'class' => 'required ',
+                            'initialize' => true,
+                            'depends' => ['pickingpoint-BprovinceId'],
+                            'url' => Url::to(['child-amphur-address-picking-point']),
+                            'loadingText' => 'Loading amphur ...',
+                            'params' => ['input-type-11', 'input-type-22']
+                        ]
+                    ])->label('เลือกอำเภอ/เขต');
+                } else {
+                    echo $form->field($pickingPointBooth, 'amphurId')->widget(kartik\depdrop\DepDrop::classname(), [
+                        //'data' => [9 => 'Savings'],
+                        'model' => $pickingId,
+                        'attribute' => 'amphurId',
+                        'options' => ['placeholder' => 'Select ...', 'id' => 'BamphurId'],
+                        //'type' => DepDrop::TYPE_SELECT2,
+                        'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                        'pluginOptions' => [
+                            'class' => 'required form-control ',
+                            'initialize' => true,
+                            'depends' => ['pickingpoint-Bprovinceid'],
+                            'url' => Url::to(['child-amphur-address-picking-point']),
+                            'loadingText' => 'Loading amphur ...',
+                            'params' => ['input-type-11', 'input-type-22']
+                        ]
+                    ])->label('เลือกอำเภอ/เขต');
+                }
+                ?>
+                <?php
+                echo Html::hiddenInput("amphurDDId", $cityId, ['id' => "amphurDDId"]);
+                ?>
+
+            </div>
+
+            <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                <?php
+                // Child level 3
+                echo Html::hiddenInput('input-type-13', $pickingPointBooth->provinceId, ['id' => 'input-type-13']);
+                echo Html::hiddenInput('input-type-23', $pickingPointBooth->amphurId, ['id' => 'input-type-23']);
+                if ($yourbrowser != 'Safari') {
+                    echo $form->field($pickingPointBooth, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
+                        //'data' => [9 => 'Savings'],
+                        'model' => $pickingId,
+                        'attribute' => 'pickingId',
+                        'options' => ['placeholder' => 'Select ...', 'id' => 'BpickingId'],
+                        'type' => DepDrop::TYPE_SELECT2,
+                        //'options' => ['multiple' => true],
+                        'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                        'pluginOptions' => [
+                            'initialize' => true,
+                            'depends' => ['pickingpoint-Bamphurid'],
+                            'url' => Url::to(['child-picking-point']),
+                            'loadingText' => 'Loading picking point ...',
+                            'params' => ['input-type-13', 'input-type-23']
+                        ]
+                    ])->label('เลือกจุดรับของ');
+                } else {
+                    echo $form->field($pickingPointBooth, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
+                        //'data' => [9 => 'Savings'],
+                        'model' => $pickingId,
+                        'attribute' => 'pickingId',
+                        'options' => ['placeholder' => 'Select ...', 'id' => 'BpickingId'],
+                        //'type' => DepDrop::TYPE_SELECT2,
+                        //'options' => ['multiple' => true],
+                        'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                        'pluginOptions' => [
+                            'initialize' => true,
+                            'depends' => ['pickingpoint-Bamphurid'],
+                            'url' => Url::to(['child-picking-point']),
+                            'loadingText' => 'Loading picking point ...',
+                            'params' => ['input-type-13', 'input-type-23']
+                        ]
+                    ])->label('เลือกจุดรับของ');
+                }
+                ?>
+                <?php
+                echo Html::hiddenInput("pickingDDId", $pickingId, ['id' => "pickingDDId"]);
+                ?>
+            </div>
+        </div>
+
+        <?php
     }
-    ?>
-    <?php
-    echo Html::hiddenInput("amphurDDId", $cityId, ['id' => "amphurDDId"]);
-    ?>
+}
+?>
 
-</div>
 
-<div class="form-group col-lg-6 col-md-6 col-sm-6">
-    <?php
-// Child level 3
-    echo Html::hiddenInput('input-type-13', $pickingPoint->provinceId, ['id' => 'input-type-13']);
-    echo Html::hiddenInput('input-type-23', $pickingPoint->amphurId, ['id' => 'input-type-23']);
-    if ($yourbrowser != 'Safari') {
-        echo $form->field($pickingPoint, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
-            //'data' => [9 => 'Savings'],
-            'model' => $pickingId,
-            'attribute' => 'pickingId',
-            'options' => ['placeholder' => 'Select ...'],
-            'type' => DepDrop::TYPE_SELECT2,
-            //'options' => ['multiple' => true],
-            'select2Options' => ['pluginOptions' => ['allowClear' => true]],
-            'pluginOptions' => [
-                'initialize' => true,
-                'depends' => ['pickingpoint-amphurid'],
-                'url' => Url::to(['child-picking-point']),
-                'loadingText' => 'Loading picking point ...',
-                'params' => ['input-type-13', 'input-type-23']
-            ]
-        ])->label('เลือกจุดรับของ');
-    } else {
-        echo $form->field($pickingPoint, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
-            //'data' => [9 => 'Savings'],
-            'model' => $pickingId,
-            'attribute' => 'pickingId',
-            'options' => ['placeholder' => 'Select ...'],
-            //'type' => DepDrop::TYPE_SELECT2,
-            //'options' => ['multiple' => true],
-            'select2Options' => ['pluginOptions' => ['allowClear' => true]],
-            'pluginOptions' => [
-                'initialize' => true,
-                'depends' => ['pickingpoint-amphurid'],
-                'url' => Url::to(['child-picking-point']),
-                'loadingText' => 'Loading picking point ...',
-                'params' => ['input-type-13', 'input-type-23']
-            ]
-        ])->label('เลือกจุดรับของ');
-    }
-    ?>
-    <?php
-    echo Html::hiddenInput("pickingDDId", $pickingId, ['id' => "pickingDDId"]);
-    ?>
-</div>
+
+
+
 <div class="form-group col-lg-12 col-md-12 col-sm-12">
     <?php
     //echo Html::submitButton('Save', ['class' => "btn btn-success createPickingSave", 'name' => 'btn-createPickingSave']);
