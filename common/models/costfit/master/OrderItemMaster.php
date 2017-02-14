@@ -28,6 +28,7 @@ use Yii;
     * @property string $color
     * @property string $bagNo
     * @property string $supplierId
+    * @property string $receiveType
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -53,6 +54,7 @@ return [
             [['priceOnePiece', 'quantity', 'price', 'subTotal', 'discountValue', 'shippingDiscountValue', 'total'], 'number'],
             [['sendDateTime', 'createDateTime', 'updateDateTime'], 'safe'],
             [['bagNo'], 'string', 'max' => 20],
+            [['receiveType'], 'string', 'max' => 45],
         ];
 }
 
@@ -83,6 +85,7 @@ return [
     'color' => Yii::t('order_item', 'Color'),
     'bagNo' => Yii::t('order_item', 'Bag No'),
     'supplierId' => Yii::t('order_item', 'Supplier ID'),
+    'receiveType' => Yii::t('order_item', 'Receive Type'),
     'status' => Yii::t('order_item', 'Status'),
     'createDateTime' => Yii::t('order_item', 'Create Date Time'),
     'updateDateTime' => Yii::t('order_item', 'Update Date Time'),

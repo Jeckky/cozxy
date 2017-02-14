@@ -613,6 +613,7 @@ $(".incr-btn-cart").on("click", function (e) {
         }
     });
 });
+
 function itemzero(items, title) {
 
     var item_cart = $('.total').html();

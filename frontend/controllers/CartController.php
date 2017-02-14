@@ -43,15 +43,15 @@ class CartController extends MasterController {
             endforeach;
             $id = substr($id, 0, -1);
             $products = \common\models\costfit\ProductSuppliers::find()
-                    ->where("productSuppId in ($id) and approve='approve'")
-                    ->orderBy(new \yii\db\Expression('rand()'))
-                    ->limit(4)
-                    ->all();
+            ->where("productSuppId in ($id) and approve='approve'")
+            ->orderBy(new \yii\db\Expression('rand()'))
+            ->limit(4)
+            ->all();
         } else {
             $products = \common\models\costfit\ProductSuppliers::find()->where("approve='approve'")
-                    ->orderBy(new \yii\db\Expression('rand()'))
-                    ->limit(4)
-                    ->all();
+            ->orderBy(new \yii\db\Expression('rand()'))
+            ->limit(4)
+            ->all();
         }
         //$product = \common\models\costfit\search\Product::find()->where("categoryId='3'")->all();
         $this->subSubTitle = '';
@@ -73,7 +73,8 @@ class CartController extends MasterController {
             }
         }
         //throw new \yii\base\Exception('fastId=' . $id);
-        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . " and sendDate=" . $_POST['fastId'])->one();
+        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . ""
+        . " and sendDate=" . $_POST['fastId'])->one();
         if (!isset($orderItem)) {
             $orderItem = new \common\models\costfit\OrderItem();
             $orderItem->quantity = $_POST["quantity"];
@@ -87,6 +88,7 @@ class CartController extends MasterController {
         $orderItem->orderId = $order->orderId;
         $orderItem->productId = $id;
         $orderItem->productSuppId = $_POST['productSuppId'];
+        $orderItem->receiveType = $_POST['receiveType'];
         $productPrice = $product->calProductPrice($orderItem->productSuppId, $orderItem->quantity, 1, $_POST['fastId'], NULL);
         $orderItem->priceOnePiece = $orderItem->product->calProductPrice($orderItem->productSuppId, 1, 0, NULL, NULL);
         //$orderItem->priceOnePiece = $orderItem->product->calProductPrice($id, 1, 0, NULL, 'add');
@@ -191,9 +193,9 @@ class CartController extends MasterController {
             foreach ($showOrder as $item):
                 $productSupp = \common\models\costfit\ProductSuppliers::productSupplierName($item->productSuppId);
                 $text = $text . '<tr class="item" id="item' . $item->orderItemId . '">'
-                        . '<td><div class="delete"><input type="hidden" id="orderItemId" value="' . $item->orderItemId . '"></div><a href="' . Yii::$app->homeUrl . 'products/' . \common\models\ModelMaster::encodeParams(["productId" => $item->productId, "productSupplierId" => $item->productSuppId]) . '">' . $productSupp->title . '</a></td>'
-                        . '<td class="qty"><input type="text" id="qty" value="' . $item->quantity . '" readonly="true"></td>'
-                        . '<td class="price">' . number_format(\common\models\costfit\ProductSuppliers::productPriceSupplier($item->productSuppId), 2) . '</td><input type="hidden" id="productSuppId" value="' . $item->productSuppId . '"></tr>';
+                . '<td><div class="delete"><input type="hidden" id="orderItemId" value="' . $item->orderItemId . '"></div><a href="' . Yii::$app->homeUrl . 'products/' . \common\models\ModelMaster::encodeParams(["productId" => $item->productId, "productSupplierId" => $item->productSuppId]) . '">' . $productSupp->title . '</a></td>'
+                . '<td class="qty"><input type="text" id="qty" value="' . $item->quantity . '" readonly="true"></td>'
+                . '<td class="price">' . number_format(\common\models\costfit\ProductSuppliers::productPriceSupplier($item->productSuppId), 2) . '</td><input type="hidden" id="productSuppId" value="' . $item->productSuppId . '"></tr>';
             endforeach;
             $text = $header . $text . $footer;
         }

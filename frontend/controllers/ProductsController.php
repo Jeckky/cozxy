@@ -14,6 +14,7 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\models\costfit\ProductSuppliers;
 use common\helpers\CozxyUnity;
+use common\helpers\Suppliers;
 
 /**
  * Products controller
@@ -59,13 +60,24 @@ class ProductsController extends MasterController {
         }
         $productId = $params['productId'];
         $productSupplierId = $params['productSupplierId'];
+        /*
+         * Get Product Suppliers
+         * create date : 14/01/2017
+         * create by : taninut.bm
+         */
+        $getPrductsSupplirs = Suppliers::GetProductSuppliersHelpers($productSupplierId);
+        $price = ProductSuppliers::productPriceSupplier($productSupplierId);
+        //echo '<pre>';
+        //print_r($getPrductsSupplirs);
+        //exit();
         if ($productId != '') {
             $model = \common\models\costfit\Product::find()->where("productId =" . $productId)->one();
             if (count($model) > 0) {
                 $this->title = 'Cozxy.com | Products';
                 $this->subTitle = $model->attributes['title'];
                 $this->subSubTitle = '';
-                return $this->render('products_all', ['model' => $model, 'term' => $terms, 'productSupplierId' => $productSupplierId]);
+                return $this->render('products_all', ['model' => $model, 'term' => $terms, 'productSupplierId' => $productSupplierId, ''
+                    . 'getPrductsSupplirs' => $getPrductsSupplirs, 'supplierPrice' => $price]);
             } else {
                 return $this->render('@app/views/error/error');
             }

@@ -223,4 +223,19 @@ class Suppliers {
         return $count;
     }
 
+    /*
+     * Frontend : products/frfrmkfmrfrfmrmfrmfrkf
+     * Create date : 14/02/2017
+     * Crate By : Taninut.Bm
+     */
+
+    public static function GetProductSuppliersHelpers($productSuppId) {
+        $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
+        if (isset($GetProductSuppliers) && !empty($GetProductSuppliers)) {
+            return $GetProductSuppliers;
+        } else {
+            return NULL;
+        }
+    }
+
 }

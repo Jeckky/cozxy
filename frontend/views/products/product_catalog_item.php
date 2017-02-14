@@ -85,8 +85,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     </h1>
     <?= Html::hiddenInput("fastId", $fastId = Product::getShippingTypeId($model->productId), ['id' => 'fastId']); ?>
     <?= Html::hiddenInput("productId", $model->productId, ['id' => 'productId']); ?>
-    <?= Html::hiddenInput("supplierId", ProductSuppliers::supplier($productSupplierId), ['id' => 'supplierId']); ?>
+    <?//= Html::hiddenInput("supplierId", ProductSuppliers::supplier($productSupplierId), ['id' => 'supplierId']); ?>
+    <?= Html::hiddenInput("supplierId", $getPrductsSupplirs->userId, ['id' => 'supplierId']); ?>
     <?= Html::hiddenInput("productSuppId", $productSupplierId, ['id' => 'productSuppId']); ?>
+    <?= Html::hiddenInput("receiveType", $getPrductsSupplirs->receiveType, ['id' => 'receiveType']); ?>
     <?php // throw new \yii\base\Exception($fastId); ?>
     <div class="form-group">
         <?php if (isset($model->productGroup)): ?>
@@ -103,7 +105,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     </div>
     <div class="buttons group products-buttons-group">
         <?php
-        $supplierPrice = ProductSuppliers::productPriceSupplier($productSupplierId);
+        //$supplierPrice = ProductSuppliers::productPriceSupplier($productSupplierId);
+        //$supplierPrice = $price->price;
         //$trueId = Suppliers::productSuppliersId($productSupplierId);
         $oldPrice = (isset($supplierPrice) && !empty($supplierPrice)) ? number_format($supplierPrice, 2) : "815.00";
         $newPrice = number_format($model->calProductPrice($productSupplierId, 1), 2);
@@ -198,10 +201,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-7">
             <h3 style="text-decoration: underline">Description</h3>
-            <?php $description = ProductSuppliers::productSupplierName($productSupplierId); ?>
-            <?= isset($description) && !empty($description) ? $description->description : '' ?>
+            <?php //$description = ProductSuppliers::productSupplierName($productSupplierId); ?>
+            <?= isset($getPrductsSupplirs) && !empty($getPrductsSupplirs) ? $getPrductsSupplirs->description : '' ?>
             <h3 style="text-decoration: underline">Specification</h3>
-            <?= isset($description) && !empty($description) ? $description->specification : '' ?>
+            <?= isset($getPrductsSupplirs) && !empty($getPrductsSupplirs) ? $getPrductsSupplirs->specification : '' ?>
         </div>
     </div>
 

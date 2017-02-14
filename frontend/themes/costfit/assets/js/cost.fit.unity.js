@@ -39,6 +39,7 @@ $(document).ready(function (e) {
         var itemQty = $(this).parent().parent().find(".qty").find("#qty").val();
         var $maxQnty = parseInt($('#maxQnty').val());
         var $productSuppId = $(this).parent().parent().find("#productSuppId").val();
+
         var $wmaxQnty = parseInt($('#maxQnty' + $productSuppId).val());
         $.ajax({
             type: "POST",
@@ -208,6 +209,8 @@ $(document).ready(function (e) {
             event.preventDefault();
         }
 
+        //alert('test add to cart new ');
+
         //$addedToCartMessage.removeClass('visible');
         var $itemName = $(this).parent().parent().find('h1').text();
         if (typeof $itemName == 'undefined' || $itemName == '')
@@ -223,6 +226,13 @@ $(document).ready(function (e) {
         var $itemQnty = $(this).parent().find('#quantity').val();
         var $cartTotalItems = parseInt($('.cart-btn a span').text()) + parseInt($itemQnty);
         var $maxQnty = $(this).parent().find('#maxQnty').val();
+        /*
+         *เพิ่ม Type จุดรับสินค้า
+         * 1.Lockers
+         * 2.Booth
+         */
+        var $receiveType = $(this).parent().parent().find("#receiveType").val();
+        //alert($receiveType);
         //$addedToCartMessage.find('p').text('"' + $itemName + '"' + '  ' + 'was successfully added to your cart.');
         //var getUrl = window.location;
         //var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
@@ -233,7 +243,7 @@ $(document).ready(function (e) {
                 type: "POST",
                 dataType: "JSON",
                 url: $baseUrl + '/cart/add-to-cart' + "?id=" + $itemId,
-                data: {quantity: $itemQnty, fastId: $fastId, supplierId: $supplierId, productSuppId: $productSuppId},
+                data: {quantity: $itemQnty, fastId: $fastId, supplierId: $supplierId, productSuppId: $productSuppId, receiveType: $receiveType},
                 success: function (data)
                 {
                     if (data.status)
@@ -278,6 +288,7 @@ $(document).ready(function (e) {
         } else {
             event.preventDefault();
         }
+
         var $button = $(this);
         var oldValue = $button.parent().find("input").val();
         var newVal = 1
