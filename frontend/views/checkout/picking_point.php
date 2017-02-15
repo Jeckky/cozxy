@@ -289,7 +289,7 @@ foreach ($GetOrderMastersGroup as $value) {
                         'pluginOptions' => [
                             'class' => 'required ',
                             'initialize' => true,
-                            'depends' => ['pickingpoint-BprovinceId'],
+                            'depends' => ['BprovinceId'],
                             'url' => Url::to(['child-amphur-address-picking-point']),
                             'loadingText' => 'Loading amphur ...',
                             'params' => ['input-type-11', 'input-type-22']
@@ -306,7 +306,7 @@ foreach ($GetOrderMastersGroup as $value) {
                         'pluginOptions' => [
                             'class' => 'required form-control ',
                             'initialize' => true,
-                            'depends' => ['pickingpoint-Bprovinceid'],
+                            'depends' => ['Bprovinceid'],
                             'url' => Url::to(['child-amphur-address-picking-point']),
                             'loadingText' => 'Loading amphur ...',
                             'params' => ['input-type-11', 'input-type-22']
@@ -336,7 +336,7 @@ foreach ($GetOrderMastersGroup as $value) {
                         'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                         'pluginOptions' => [
                             'initialize' => true,
-                            'depends' => ['pickingpoint-Bamphurid'],
+                            'depends' => ['BamphurId'],
                             'url' => Url::to(['child-picking-point']),
                             'loadingText' => 'Loading picking point ...',
                             'params' => ['input-type-13', 'input-type-23']
@@ -353,7 +353,7 @@ foreach ($GetOrderMastersGroup as $value) {
                         'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                         'pluginOptions' => [
                             'initialize' => true,
-                            'depends' => ['pickingpoint-Bamphurid'],
+                            'depends' => ['BamphurId'],
                             'url' => Url::to(['child-picking-point']),
                             'loadingText' => 'Loading picking point ...',
                             'params' => ['input-type-13', 'input-type-23']

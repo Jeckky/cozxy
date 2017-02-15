@@ -145,7 +145,7 @@ class CheckoutController extends MasterController {
             //echo 'receiveType : ' . $receiveType;
             ///if (isset($receiveType)) {
             $pickingPoint_list_lockers = \common\models\costfit\PickingPoint::find()->where('type=' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)->one();
-            $pickingPoint_list_booth = \common\models\costfit\PickingPoint::find()->where('type=' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)->one();
+            $pickingPoint_list_booth = \common\models\costfit\PickingPoint::find()->where('type=' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)->one();
             //} else {
             //$pickingPoint_list = \common\models\costfit\PickingPoint::find()->one();
             //}
