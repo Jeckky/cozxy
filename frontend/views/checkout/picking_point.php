@@ -126,7 +126,7 @@ foreach ($GetOrderMastersGroup as $value) {
         // Lockers
         ?>
         <div id="lockers" class="col-lg-12 col-md-12 col-sm-12">
-            <h5><i class="fa fa-align-justify" aria-hidden="true"></i> เลือกสถานที่รับของ : ล็อคเกอร์</h5>
+            <h5><i class="fa fa-align-justify" aria-hidden="true"></i> เลือกสถานที่รับของ : ปลายทางที่ล็อคเกอร์</h5>
             <hr>
 
             <div class="form-group col-lg-6 col-md-6 col-sm-6">
@@ -247,7 +247,7 @@ foreach ($GetOrderMastersGroup as $value) {
         // Booth
         ?>
         <div id="booth" class="col-lg-12 col-md-12 col-sm-12">
-            <h5 class="shipment-title"><i class="fa fa-align-justify" aria-hidden="true"></i> เลือกสถานที่รับของ : บูธ</h5>
+            <h5 class="shipment-title"><i class="fa fa-align-justify" aria-hidden="true"></i> เลือกสถานที่รับของ : ปลายทางที่บูธ</h5>
             <hr>
             <div class="form-group col-lg-6 col-md-6 col-sm-6">
                 <?php
