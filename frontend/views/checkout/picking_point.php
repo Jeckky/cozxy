@@ -146,7 +146,7 @@ foreach ($GetOrderMastersGroup as $value) {
                 ])->label('เลือกจังหวัด');
                 ?>
                 <?php
-                echo Html::hiddenInput("statesDDId", $stateId, ['id' => "statesDDId"]);
+                //echo Html::hiddenInput("statesDDId", $stateId, ['id' => "statesDDId"]);
                 ?>
             </div>
 
@@ -192,7 +192,7 @@ foreach ($GetOrderMastersGroup as $value) {
                 }
                 ?>
                 <?php
-                echo Html::hiddenInput("amphurDDId", $cityId, ['id' => "amphurDDId"]);
+                //echo Html::hiddenInput("amphurDDId", $cityId, ['id' => "amphurDDId"]);
                 ?>
 
             </div>
@@ -239,7 +239,7 @@ foreach ($GetOrderMastersGroup as $value) {
                 }
                 ?>
                 <?php
-                echo Html::hiddenInput("pickingDDId", $pickingId, ['id' => "pickingDDId"]);
+                //echo Html::hiddenInput("pickingDDId", $pickingId, ['id' => "pickingDDId"]);
                 ?>
             </div>
         </div>
@@ -269,7 +269,7 @@ foreach ($GetOrderMastersGroup as $value) {
                 ])->label('เลือกจังหวัด');
                 ?>
                 <?php
-                echo Html::hiddenInput("statesDDId", $stateId, ['id' => "statesDDId"]);
+                //echo Html::hiddenInput("statesDDId", $stateId, ['id' => "statesDDId"]);
                 ?>
             </div>
 
@@ -315,7 +315,7 @@ foreach ($GetOrderMastersGroup as $value) {
                 }
                 ?>
                 <?php
-                echo Html::hiddenInput("amphurDDId", $cityId, ['id' => "amphurDDId"]);
+                //echo Html::hiddenInput("amphurDDId", $cityId, ['id' => "amphurDDId"]);
                 ?>
 
             </div>
@@ -362,7 +362,7 @@ foreach ($GetOrderMastersGroup as $value) {
                 }
                 ?>
                 <?php
-                echo Html::hiddenInput("pickingDDId", $pickingId, ['id' => "pickingDDId"]);
+                //echo Html::hiddenInput("pickingDDId", $pickingId, ['id' => "pickingDDId"]);
                 ?>
             </div>
         </div>
