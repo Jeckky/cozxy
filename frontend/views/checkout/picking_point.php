@@ -124,6 +124,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 //print_r($GetOrderMastersGroup);
 //echo 'booth : ' . $CheckValuePickPoint['ListOrderItemGroupBoothAction'] . '<br>';
 //echo 'lockers : ' . $CheckValuePickPoint['ListOrderItemGroupLockersAction'] . '<br>';
+$countType = count($GetOrderMastersGroup);
 foreach ($GetOrderMastersGroup as $value) {
     //echo 'GetOrderMastersGroup :: ' . $value->pickingId . '<br>';
     //echo 'count : ' . count($value);
@@ -258,12 +259,15 @@ foreach ($GetOrderMastersGroup as $value) {
         </div>
         <?php
     } else {
+        // echo $countType;
         //echo 'ทดสอบการทำงาน : Locker';
         //echo '<img src=\"' . Yii::$app->homeUrl . '/images/picking-point/booth.jpeg\" class=\"img-responsive\">';
-        echo '<div id="booth-null" class="col-lg-12 col-md-12 col-sm-12">';
-        echo '<span style="color: #0286c2;"> <i class="fa fa-align-left" aria-hidden="true"></i> สินค้าสำหรับบางประเภท</span>';
-        echo '<img src="' . $baseUrl . '/images/picking-point/lockers.jpeg" class="img-responsive">';
-        echo '</div>';
+        if ($countType == 1) {
+            echo '<div id="booth-null" class="col-lg-12 col-md-12 col-sm-12">';
+            echo '<span style="color: #0286c2;"> <i class="fa fa-align-left" aria-hidden="true"></i> สินค้าสำหรับบางประเภท</span>';
+            echo '<img src="' . $baseUrl . '/images/picking-point/lockers.jpeg" class="img-responsive">';
+            echo '</div>';
+        }
     }
     if ($value->receiveType == '2') {
         // Booth
@@ -399,10 +403,12 @@ foreach ($GetOrderMastersGroup as $value) {
         </div>
         <?php
     } else {
-        echo '<div id="booth-null" class="col-lg-12 col-md-12 col-sm-12">';
-        echo '<span style="color: #0286c2;"> <i class="fa fa-align-left" aria-hidden="true"></i> สินค้าสำหรับบางประเภท</span>';
-        echo '<img src="' . $baseUrl . '/images/picking-point/booth.jpeg" class="img-responsive" style="opacity: .6;">';
-        echo '</div>';
+        if ($countType == 1) {
+            echo '<div id="booth-null" class="col-lg-12 col-md-12 col-sm-12">';
+            echo '<span style="color: #0286c2;"> <i class="fa fa-align-left" aria-hidden="true"></i> สินค้าสำหรับบางประเภท</span>';
+            echo '<img src="' . $baseUrl . '/images/picking-point/booth.jpeg" class="img-responsive" style="opacity: .6;">';
+            echo '</div>';
+        }
     }
 }
 ?>
