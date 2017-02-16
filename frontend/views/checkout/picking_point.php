@@ -23,6 +23,7 @@ $stateId = rand(0, 9999);
 $cityId = rand(0, 9999);
 $districtId = rand(0, 9999);
 $pickingId = rand(0, 9999);
+$baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <style type="text/css">
     .main-title-picking-point{
@@ -121,8 +122,11 @@ $pickingId = rand(0, 9999);
 <?php
 //echo '<pre>';
 //print_r($GetOrderMastersGroup);
+//echo 'booth : ' . $CheckValuePickPoint['ListOrderItemGroupBoothAction'] . '<br>';
+//echo 'lockers : ' . $CheckValuePickPoint['ListOrderItemGroupLockersAction'] . '<br>';
 foreach ($GetOrderMastersGroup as $value) {
     //echo 'GetOrderMastersGroup :: ' . $value->pickingId . '<br>';
+    //echo 'count : ' . count($value);
     if ($value->receiveType == '1') {
         // Lockers
         $ListOrderItemGroupLockersValue = $CheckValuePickPoint['ListOrderItemGroupLockersValue'];
@@ -254,7 +258,12 @@ foreach ($GetOrderMastersGroup as $value) {
         </div>
         <?php
     } else {
+        //echo 'ทดสอบการทำงาน : Locker';
         //echo '<img src=\"' . Yii::$app->homeUrl . '/images/picking-point/booth.jpeg\" class=\"img-responsive\">';
+        echo '<div id="booth-null" class="col-lg-12 col-md-12 col-sm-12">';
+        echo '<span style="color: #0286c2;"> <i class="fa fa-align-left" aria-hidden="true"></i> สินค้าสำหรับบางประเภท</span>';
+        echo '<img src="' . $baseUrl . '/images/picking-point/lockers.jpeg" class="img-responsive">';
+        echo '</div>';
     }
     if ($value->receiveType == '2') {
         // Booth
@@ -390,7 +399,10 @@ foreach ($GetOrderMastersGroup as $value) {
         </div>
         <?php
     } else {
-        //echo '<img src=\"' . Yii::$app->homeUrl . '/images/picking-point/lockers.jpeg\" class=\"img-responsive\">';
+        echo '<div id="booth-null" class="col-lg-12 col-md-12 col-sm-12">';
+        echo '<span style="color: #0286c2;"> <i class="fa fa-align-left" aria-hidden="true"></i> สินค้าสำหรับบางประเภท</span>';
+        echo '<img src="' . $baseUrl . '/images/picking-point/booth.jpeg" class="img-responsive" style="opacity: .6;">';
+        echo '</div>';
     }
 }
 ?>
