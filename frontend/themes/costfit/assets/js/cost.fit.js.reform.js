@@ -1,7 +1,8 @@
 /*  By  Taninut.B , 7/5/2016 */
 var $addToWishlistBtn = $('#addItemToWishlist');
 var $addedToCartMessage = $('.cart-message');
-
+//var userLang = navigator.language || navigator.userLanguage;
+//alert("The language is: " + userLang);
 //alert(window.location.pathname);
 
 var $baseUrl = window.location.protocol + "//" + window.location.host;
@@ -385,7 +386,7 @@ $(".reveal_re").on('click', function () {
 // 25/7/2016 Create By Taninut.B
 
 $("#place-order").on('click', function () {
-
+    //alert('test');
     var _shipping = $('input[id=checkout_select_address_shipping]:checked').val();
     var _billing = $('input[id=checkout_select_address_billing]:checked').val();
     var _payment01 = $('input[id=payment01]:checked').val();
@@ -397,56 +398,146 @@ $("#place-order").on('click', function () {
         $("#modal-cart-not-item").modal('show');
     }
 
-    // Increate 26/9/2016 By Taninut.BM
+    /*
+     * Increate 26/9/2016 By Taninut.BM
+     */
     //var provinceid = $('input[id=pickingpoint-provinceid]').val();
     //var amphurid = $('input[id=pickingpoint-amphurid]').val();
     //var pickingid = $('input[id=pickingpoint-pickingid]').val();
     var eProvinceid = document.getElementById("pickingpoint-provinceid");
-    var provinceid = eProvinceid.options[eProvinceid.selectedIndex].value;
+    if (eProvinceid != null) {
+        var provinceid = eProvinceid.options[eProvinceid.selectedIndex].value;
 
-    var eAmphurid = document.getElementById("pickingpoint-amphurid");
-    var amphurid = eAmphurid.options[eAmphurid.selectedIndex].value;
+        var eAmphurid = document.getElementById("pickingpoint-amphurid");
+        var amphurid = eAmphurid.options[eAmphurid.selectedIndex].value;
 
-    var ePickingid = document.getElementById("pickingpoint-pickingid");
-    var pickingid = ePickingid.options[ePickingid.selectedIndex].value;
+        var ePickingid = document.getElementById("pickingpoint-pickingid");
+        var pickingid = ePickingid.options[ePickingid.selectedIndex].value;
+
+        // pickingpoint amphurid //
+        var eAmphurid = document.getElementById("pickingpoint-amphurid");
+        var amphurid = eAmphurid.options[eAmphurid.selectedIndex].value;
+        if (amphurid > 0) {
+            var amphurid = ePickingid.options[ePickingid.selectedIndex].value;
+            //console.log(amphurid);
+        } else {
+            //console.log('Please select a pickingpoint amphurid list');
+            $('.field-pickingpoint-amphurid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+        }
+        // pickingpoint provinceid //
+        var eProvinceid = document.getElementById("pickingpoint-provinceid");
+        var provinceid = eProvinceid.options[eProvinceid.selectedIndex].value;
+        if (provinceid > 0) {
+            var provinceid = ePickingid.options[ePickingid.selectedIndex].value;
+            //console.log(provinceid);
+        } else {
+            //console.log('Please select a pickingpoint provinceid list');
+            $('.field-pickingpoint-provinceid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+        }
+        // pickingpoint pickingid //
+        var ePickingid = document.getElementById("pickingpoint-pickingid");
+        var pickingid = ePickingid.options[ePickingid.selectedIndex].value;
+        if (pickingid > 0) {
+            var pickingid = ePickingid.options[ePickingid.selectedIndex].value;
+            //console.log(pickingid);
+        } else {
+            //console.log('Please select a pickingpoint pickingid list');
+            $('.field-pickingpoint-pickingid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+            // exit();
+        }
+        var receiveTypeLockers = $('input[id=receiveTypeLockers]').val();
+    } else {
+        var receiveTypeLockers = false;
+        var eAmphurid = false;
+        var eProvinceid = false;
+        var ePickingid = false;
+
+    }
+
+
+    //alert(pickingid);
+    /*
+     * Checkouts : Booth
+     * Update : 15/02/2017
+     * Create By : Taninut.Bm
+     */
+
+    //var bProvinceid = document.getElementById("BprovinceId");
+    //if (bProvinceid != null) {
+
+    // }
+    //var b_provinceid = bProvinceid.options[bProvinceid.selectedIndex].value;
+
+    //var bAmphurid = document.getElementById("BamphurId");
+    //var b_amphurid = bAmphurid.options[bAmphurid.selectedIndex].value;
+
+    //var bPickingid = document.getElementById("BpickingId");
+    //var b_pickingid = bPickingid.options[bPickingid.selectedIndex].value;
 
     // pickingpoint amphurid //
-    var eAmphurid = document.getElementById("pickingpoint-amphurid");
-    var amphurid = eAmphurid.options[eAmphurid.selectedIndex].value;
-    if (amphurid > 0) {
-        var pickingid = ePickingid.options[ePickingid.selectedIndex].value;
-        //console.log(amphurid);
+    var bAmphurid = document.getElementById("BamphurId");
+    if (bAmphurid != null) {
+
+        var bPickingid = document.getElementById("BpickingId");
+        var b_pickingid = bPickingid.options[bPickingid.selectedIndex].value;
+
+        var b_amphurid = bAmphurid.options[bAmphurid.selectedIndex].value;
+        if (b_amphurid > 0) {
+            var b_pickingid = bPickingid.options[bPickingid.selectedIndex].value;
+            //console.log(amphurid);
+        } else {
+            //console.log('Please select a pickingpoint amphurid list');
+            $('.field-BamphurId').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+        }
+        // pickingpoint provinceid //
+        var bProvinceid = document.getElementById("BprovinceId");
+        var b_provinceid = bProvinceid.options[bProvinceid.selectedIndex].value;
+        if (b_provinceid > 0) {
+            var b_pickingid = bPickingid.options[bPickingid.selectedIndex].value;
+            //console.log(provinceid);
+        } else {
+            //console.log('Please select a pickingpoint provinceid list');
+            $('.field-Bprovinceid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+        }
+
+        // pickingpoint pickingid //
+        var bPickingid = document.getElementById("BpickingId");
+        var b_pickingid = bPickingid.options[bPickingid.selectedIndex].value;
+        if (b_pickingid > 0) {
+            var b_pickingid = bPickingid.options[bPickingid.selectedIndex].value;
+            //console.log(pickingid);
+        } else {
+            //console.log('Please select a pickingpoint pickingid list');
+            $('.field-BpickingId').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+            exit();
+        }
+        var receiveTypeBooth = $('input[id=receiveTypeBooth]').val();
     } else {
-        //console.log('Please select a pickingpoint amphurid list');
-        $('.field-pickingpoint-amphurid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+        var b_amphurid = false;
+        var b_provinceid = false;
+        var b_pickingid = false;
+        var receiveTypeBooth = false;
     }
-    // pickingpoint provinceid //
-    var eProvinceid = document.getElementById("pickingpoint-provinceid");
-    var provinceid = eProvinceid.options[eProvinceid.selectedIndex].value;
-    if (provinceid > 0) {
-        var pickingid = ePickingid.options[ePickingid.selectedIndex].value;
-        //console.log(provinceid);
-    } else {
-        //console.log('Please select a pickingpoint provinceid list');
-        $('.field-pickingpoint-provinceid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
-    }
-    // pickingpoint pickingid //
-    var ePickingid = document.getElementById("pickingpoint-pickingid");
-    var pickingid = ePickingid.options[ePickingid.selectedIndex].value;
-    if (pickingid > 0) {
-        var pickingid = ePickingid.options[ePickingid.selectedIndex].value;
-        //console.log(pickingid);
-    } else {
-        //console.log('Please select a pickingpoint pickingid list');
-        $('.field-pickingpoint-pickingid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
-        exit();
-    }
+
+
+    //alert(b_pickingid);
+    /*
+     * hiddenType : receiveTypeLockers and receiveTypeBooth
+     * create date : 15/02/2017
+     * create by : taninut.bm
+     */
+    //var receiveTypeLockers = document.getElementById("receiveTypeLockers");
+    //var receiveTypeBooth = document.getElementById("receiveTypeBooth");
+    //document.getElementById("receiveTypeLockers");//$('input[id=receiveTypeLockers]').val();
+
+    //alert(receiveTypeLockers);
+    //alert(receiveTypeBooth);
+    /* End */
 
     if (_countItems == '') {
         //alert('สินค้าในตะกร้า 0 รายการ');
         $("#modal-cart-not-item").modal('show');
         //window.location = 'site';
-
     } else {
         //if (_shipping === undefined) {
         //alert('Please Select Shipping Address');
@@ -459,7 +550,10 @@ $("#place-order").on('click', function () {
                 placeUserId: _placeUserId,
                 notes: _notes,
                 placeOrderId: _placeOrderId,
-                pickingId: pickingid
+                pickingId: pickingid,
+                b_pickingid: b_pickingid,
+                receiveTypeLockers: receiveTypeLockers,
+                receiveTypeBooth: receiveTypeBooth
             }, function (data, status) {
                 //alert("Data: " + data + "\nStatus: " + status);
                 // window.location = 'checkout/order-thank';
@@ -472,7 +566,10 @@ $("#place-order").on('click', function () {
                 placeUserId: _placeUserId,
                 notes: _notes,
                 placeOrderId: _placeOrderId,
-                pickingId: pickingid
+                pickingId: pickingid,
+                b_pickingid: b_pickingid,
+                receiveTypeLockers: receiveTypeLockers,
+                receiveTypeBooth: receiveTypeBooth
             }, function (data, status) {
                 //alert("Data: " + data + "\nStatus: " + status);
                 // window.location = 'checkout/order-thank';

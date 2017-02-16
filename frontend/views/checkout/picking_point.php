@@ -119,22 +119,25 @@ $pickingId = rand(0, 9999);
 </div>
 
 <?php
+//echo '<pre>';
+//print_r($GetOrderMastersGroup);
 foreach ($GetOrderMastersGroup as $value) {
-    //echo $value->receiveType . '<br>';
-    //echo 'GetOrderMastersGroup :: ' . count($value) . '<br>';
+    //echo 'GetOrderMastersGroup :: ' . $value->pickingId . '<br>';
     if ($value->receiveType == '1') {
         // Lockers
+        $ListOrderItemGroupLockersValue = $CheckValuePickPoint['ListOrderItemGroupLockersValue'];
+        $ListOrderItemGroupLockersAction = $CheckValuePickPoint['ListOrderItemGroupLockersAction'];
+        $ListpickpointLockersValueInLocation = $CheckValuePickPoint['ListpickpointLockersValueInLocation'];
         ?>
         <div id="lockers" class="col-lg-12 col-md-12 col-sm-12">
             <h5><i class="fa fa-align-justify" aria-hidden="true"></i> เลือกสถานที่รับของ : ปลายทางที่ล็อคเกอร์</h5>
             <hr>
-
-            <div class="form-group col-lg-6 col-md-6 col-sm-6">
+            <div id="lockers-province" class="form-group col-lg-6 col-md-6 col-sm-6">
                 <?php
                 // Child level 1
                 // Additional input fields passed as params to the child dropdown's pluginOptions
-                // echo Html::hiddenInput('input-type-1', $pickingPoint->provinceId, ['id' => 'input-type-1']);
-                // echo Html::hiddenInput('input-type-2', $pickingPoint->provinceId, ['id' => 'input-type-2']);
+                echo Html::hiddenInput('input-type-1', $ListpickpointLockersValueInLocation['provinceId'], ['id' => 'input-type-1']);
+                echo Html::hiddenInput('input-type-2', $ListpickpointLockersValueInLocation['provinceId'], ['id' => 'input-type-2']);
                 echo $form->field($pickingPointLockers, 'provinceId')->widget(kartik\select2\Select2::classname(), [
                     'model' => $pickingId,
                     'attribute' => 'provinceId',
@@ -142,6 +145,7 @@ foreach ($GetOrderMastersGroup as $value) {
                     'pluginOptions' => [
                         'placeholder' => 'Select...',
                         'loadingText' => 'Loading states ...',
+                        'params' => ['input-type-1', 'input-type-2']
                     ],
                     'options' => ['placeholder' => 'Select states ...']
                 ])->label('เลือกจังหวัด');
@@ -150,11 +154,11 @@ foreach ($GetOrderMastersGroup as $value) {
                 //echo Html::hiddenInput("statesDDId", $stateId, ['id' => "statesDDId"]);
                 ?>
             </div>
-            <div  class="form-group col-lg-6 col-md-6 col-sm-6 ">
+            <div id="lockers-amphur" class="form-group col-lg-6 col-md-6 col-sm-6 ">
                 <?php
                 // Child level 2
-                //echo Html::hiddenInput('input-type-11', $pickingPoint->amphurId, ['id' => 'input-type-11']);
-                //echo Html::hiddenInput('input-type-22', $pickingPoint->amphurId, ['id' => 'input-type-22']);
+                echo Html::hiddenInput('input-type-11', $ListpickpointLockersValueInLocation['amphurId'], ['id' => 'input-type-11']);
+                echo Html::hiddenInput('input-type-22', $ListpickpointLockersValueInLocation['amphurId'], ['id' => 'input-type-22']);
                 if ($yourbrowser != 'Safari') {
                     echo $form->field($pickingPointLockers, 'amphurId')->widget(kartik\depdrop\DepDrop::classname(), [
                         //'data' => [9 => 'Savings'],
@@ -194,13 +198,18 @@ foreach ($GetOrderMastersGroup as $value) {
                 <?php
                 //echo Html::hiddenInput("amphurDDId", $cityId, ['id' => "amphurDDId"]);
                 ?>
-
             </div>
-            <div class="form-group col-lg-6 col-md-6 col-sm-6">
+            <div id="lockers-picking" class="form-group col-lg-6 col-md-6 col-sm-6">
                 <?php
                 // Child level 3
-                echo Html::hiddenInput('input-type-13', $pickingPointLockers->provinceId, ['id' => 'input-type-13']);
-                echo Html::hiddenInput('input-type-23', $pickingPointLockers->amphurId, ['id' => 'input-type-23']);
+                if ($ListOrderItemGroupLockersAction == 'isFalse') {
+                    echo Html::hiddenInput('input-type-13', $pickingPointLockers->provinceId, ['id' => 'input-type-13']);
+                    echo Html::hiddenInput('input-type-23', $pickingPointLockers->amphurId, ['id' => 'input-type-23']);
+                } else {
+                    echo Html::hiddenInput('input-type-13', $ListpickpointLockersValueInLocation['pickingId'], ['id' => 'input-type-13']);
+                    echo Html::hiddenInput('input-type-23', $ListpickpointLockersValueInLocation['pickingId'], ['id' => 'input-type-23']);
+                }
+
                 if ($yourbrowser != 'Safari') {
                     echo $form->field($pickingPointLockers, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
                         //'data' => [9 => 'Savings'],
@@ -239,22 +248,32 @@ foreach ($GetOrderMastersGroup as $value) {
                 ?>
                 <?php
                 //echo Html::hiddenInput("pickingDDId", $pickingId, ['id' => "pickingDDId"]);
+                echo Html::hiddenInput("receiveTypeLockers", '1', ['id' => "receiveTypeLockers"]);
                 ?>
             </div>
         </div>
         <?php
-    } else if ($value->receiveType == '2') {
+    } else {
+        //echo '<img src=\"' . Yii::$app->homeUrl . '/images/picking-point/booth.jpeg\" class=\"img-responsive\">';
+    }
+    if ($value->receiveType == '2') {
         // Booth
+        $ListOrderItemGroupBoothValue = $CheckValuePickPoint['ListOrderItemGroupBoothValue'];
+        $ListOrderItemGroupBoothAction = $CheckValuePickPoint['ListOrderItemGroupBoothAction'];
+        $ListpickpointBoothValueInLocation = $CheckValuePickPoint['ListpickpointBoothValueInLocation'];
+        //echo 'Lockers provinceId :' . $ListpickpointBoothValueInLocation['provinceId'];
+        //echo 'Lockers amphurId :' . $ListpickpointBoothValueInLocation['amphurId'] . '<br>';
+        //echo 'Lockers pickingId :' . $ListpickpointBoothValueInLocation['pickingId'] . '<br>';
         ?>
         <div id="booth" class="col-lg-12 col-md-12 col-sm-12">
             <h5 class="shipment-title"><i class="fa fa-align-justify" aria-hidden="true"></i> เลือกสถานที่รับของ : ปลายทางที่บูธ</h5>
             <hr>
-            <div class="form-group col-lg-6 col-md-6 col-sm-6">
+            <div id="booth-province" class="form-group col-lg-6 col-md-6 col-sm-6">
                 <?php
                 // Child level 1
                 // Additional input fields passed as params to the child dropdown's pluginOptions
-                // echo Html::hiddenInput('input-type-1', $pickingPoint->provinceId, ['id' => 'input-type-1']);
-                // echo Html::hiddenInput('input-type-2', $pickingPoint->provinceId, ['id' => 'input-type-2']);
+                echo Html::hiddenInput('booth-input-type-1', $ListpickpointBoothValueInLocation['provinceId'], ['id' => 'booth-input-type-1']);
+                echo Html::hiddenInput('booth-input-type-2', $ListpickpointBoothValueInLocation['provinceId'], ['id' => 'booth-input-type-2']);
                 echo $form->field($pickingPointBooth, 'provinceId')->widget(kartik\select2\Select2::classname(), [
                     'model' => $pickingId,
                     'attribute' => 'provinceId',
@@ -262,6 +281,7 @@ foreach ($GetOrderMastersGroup as $value) {
                     'pluginOptions' => [
                         'placeholder' => 'Select...',
                         'loadingText' => 'Loading states ...',
+                        'params' => ['booth-input-type-11', 'booth-input-type-22']
                     ],
                     'options' => ['placeholder' => 'Select states ...', 'id' => 'BprovinceId']
                 ])->label('เลือกจังหวัด');
@@ -270,11 +290,11 @@ foreach ($GetOrderMastersGroup as $value) {
                 //echo Html::hiddenInput("statesDDId", $stateId, ['id' => "statesDDId"]);
                 ?>
             </div>
-            <div class="form-group col-lg-6 col-md-6 col-sm-6 ">
+            <div id="booth-amphur" class="form-group col-lg-6 col-md-6 col-sm-6 ">
                 <?php
                 // Child level 2
-                //echo Html::hiddenInput('input-type-11', $pickingPoint->amphurId, ['id' => 'input-type-11']);
-                //echo Html::hiddenInput('input-type-22', $pickingPoint->amphurId, ['id' => 'input-type-22']);
+                echo Html::hiddenInput('booth-input-type-11', $ListpickpointBoothValueInLocation['amphurId'], ['id' => 'booth-input-type-11']);
+                echo Html::hiddenInput('booth-input-type-22', $ListpickpointBoothValueInLocation['amphurId'], ['id' => 'booth-input-type-22']);
                 if ($yourbrowser != 'Safari') {
                     echo $form->field($pickingPointBooth, 'amphurId')->widget(kartik\depdrop\DepDrop::classname(), [
                         //'data' => [9 => 'Savings'],
@@ -289,7 +309,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'depends' => ['BprovinceId'],
                             'url' => Url::to(['child-amphur-address-picking-point']),
                             'loadingText' => 'Loading amphur ...',
-                            'params' => ['input-type-11', 'input-type-22']
+                            'params' => ['booth-input-type-11', 'booth-input-type-22']
                         ]
                     ])->label('เลือกอำเภอ/เขต');
                 } else {
@@ -306,7 +326,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'depends' => ['Bprovinceid'],
                             'url' => Url::to(['child-amphur-address-picking-point']),
                             'loadingText' => 'Loading amphur ...',
-                            'params' => ['input-type-11', 'input-type-22']
+                            'params' => ['booth-input-type-11', 'booth-input-type-22']
                         ]
                     ])->label('เลือกอำเภอ/เขต');
                 }
@@ -315,11 +335,17 @@ foreach ($GetOrderMastersGroup as $value) {
                 //echo Html::hiddenInput("amphurDDId", $cityId, ['id' => "amphurDDId"]);
                 ?>
             </div>
-            <div class="form-group col-lg-6 col-md-6 col-sm-6">
+            <div id="booth-picking" class="form-group col-lg-6 col-md-6 col-sm-6">
                 <?php
                 // Child level 3
-                echo Html::hiddenInput('input-type-13', $pickingPointBooth->provinceId, ['id' => 'input-type-13']);
-                echo Html::hiddenInput('input-type-23', $pickingPointBooth->amphurId, ['id' => 'input-type-23']);
+
+                if ($ListOrderItemGroupBoothAction == 'isFalse') {
+                    echo Html::hiddenInput('input-type-13', $pickingPointBooth->provinceId, ['id' => 'input-type-13']);
+                    echo Html::hiddenInput('input-type-23', $pickingPointBooth->amphurId, ['id' => 'input-type-23']);
+                } else {
+                    echo Html::hiddenInput('booth-input-type-13', $ListpickpointBoothValueInLocation['pickingId'], ['id' => 'booth-input-type-13']);
+                    echo Html::hiddenInput('booth-input-type-23', $ListpickpointBoothValueInLocation['pickingId'], ['id' => 'booth-input-type-23']);
+                }
                 if ($yourbrowser != 'Safari') {
                     echo $form->field($pickingPointBooth, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
                         //'data' => [9 => 'Savings'],
@@ -334,7 +360,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'depends' => ['BamphurId'],
                             'url' => Url::to(['child-picking-point']),
                             'loadingText' => 'Loading picking point ...',
-                            'params' => ['input-type-13', 'input-type-23']
+                            'params' => ['booth-input-type-13', 'booth-input-type-23']
                         ]
                     ])->label('เลือกจุดรับของ');
                 } else {
@@ -351,18 +377,20 @@ foreach ($GetOrderMastersGroup as $value) {
                             'depends' => ['BamphurId'],
                             'url' => Url::to(['child-picking-point']),
                             'loadingText' => 'Loading picking point ...',
-                            'params' => ['input-type-13', 'input-type-23']
+                            'params' => ['booth-input-type-13', 'booth-input-type-23']
                         ]
                     ])->label('เลือกจุดรับของ');
                 }
                 ?>
                 <?php
                 //echo Html::hiddenInput("pickingDDId", $pickingId, ['id' => "pickingDDId"]);
+                echo Html::hiddenInput("receiveTypeBooth", '2', ['id' => "receiveTypeBooth"]);
                 ?>
             </div>
         </div>
-
         <?php
+    } else {
+        //echo '<img src=\"' . Yii::$app->homeUrl . '/images/picking-point/lockers.jpeg\" class=\"img-responsive\">';
     }
 }
 ?>

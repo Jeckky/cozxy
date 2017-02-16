@@ -630,7 +630,7 @@ class MasterController extends MasterCommonController {
 
         if (isset($_POST['depdrop_parents'])) {
             $parents = ($_POST['depdrop_parents']);
-
+            //print_r($parents);
             if ($parents != null) {
                 $cat_id = $parents[0];
                 $param1 = null;

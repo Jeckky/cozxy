@@ -265,4 +265,22 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster {
         }
     }
 
+    public static function GetOrderItemrGroupLockersMaster($orderId) {
+        $GetOrderItemMasters = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)->groupBy('receiveType')->all();
+        if (isset($GetOrderItemMasters) && !empty($GetOrderItemMasters)) {
+            return $GetOrderItemMasters;
+        } else {
+            return NULL;
+        }
+    }
+
+    public static function GetOrderItemrGroupBoothMaster($orderId) {
+        $GetOrderItemMasters = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)->groupBy('receiveType')->all();
+        if (isset($GetOrderItemMasters) && !empty($GetOrderItemMasters)) {
+            return $GetOrderItemMasters;
+        } else {
+            return NULL;
+        }
+    }
+
 }

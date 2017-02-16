@@ -1,14 +1,14 @@
 <?php
 
 $params = array_merge(
-        require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
+require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
 );
 
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log',
-            [
+        [
             'class' => 'common\components\LanguageSelector',
             'supportedLanguages' => ['en-US', 'th-TH'], //กำหนดรายการภาษาที่ support หรือใช้ได้
         ]
@@ -33,7 +33,7 @@ return [
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
-                    [
+                [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
@@ -55,14 +55,14 @@ return [
                 //Custom Rule
                 'profile/purchase-order/<hash>' => 'profile/purchase-order',
                 'profile/transfer-confirm/<hash>' => 'profile/transfer-confirm',
-//                'payment/print-purchase-order/<hash>/<title>' => 'payment/print-purchase-order',
-//                'payment/print-receipt/<hash>/<title>' => 'payment/print-receipt',
+                'payment/print-purchase-order/<hash>/<title>' => 'payment/print-purchase-order',
+                'payment/print-receipt/<hash>/<title>' => 'payment/print-receipt',
 //                'payment/print-pay-in/<hash>/<title>' => 'payment/print-pay-in',
 //                'profile/shipping-address/<hash>' => 'profile/shipping-address',
-//                'profile/billings-address/<hash>' => 'profile/billings-address',
+                'profile/billings-address/<hash>' => 'profile/billings-address',
                 'checkout/confirm-checkout/<hash>' => 'checkout/confirm-checkout',
 //                'checkout/edit-checkout/<hash>' => 'checkout/edit-checkout',
-//                'checkout/confirmation/<hash>' => 'checkout/confirmation',
+                'checkout/confirmation/<hash>' => 'checkout/confirmation',
 //                'checkout/reverse-order-to-cart/<hash>' => 'checkout/reverse-order-to-cart',
 //                'profile/picking-point/<hash>' => 'profile/picking-point',
             //mobile
