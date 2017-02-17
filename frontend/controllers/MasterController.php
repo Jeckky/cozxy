@@ -630,18 +630,37 @@ class MasterController extends MasterCommonController {
 
         if (isset($_POST['depdrop_parents'])) {
             $parents = ($_POST['depdrop_parents']);
-            //print_r($parents);
+            $depdrop_params = $_POST['depdrop_params'];
+            //$depdrop_all_params = $_POST['depdrop_params'];
+            //echo $depdrop_all_params['']
+            //echo $depdrop_params[2];
+            //echo $parents[0] . '<br>';
+            //echo $parents[1] . '<br>';
+            //echo $parents[2] . '<br>';
+            /*
+              depdrop_params[0]:2523
+              depdrop_params[1]:79680
+              depdrop_params[2]:2
+              depdrop_all_params[BamphurId]:79675
+              depdrop_all_params[booth-input-type-13]:2523
+              depdrop_all_params[booth-input-type-23]:79680
+              depdrop_all_params[booth-input-type-33]:2
+             */
             if ($parents != null) {
                 $cat_id = $parents[0];
+                $type = $depdrop_params[2];
                 $param1 = null;
                 $param2 = null;
+                $param3 = null;
                 if (!empty($_POST['depdrop_params'])) {
                     $params = $_POST['depdrop_params'];
                     $param1 = $params[0]; // get the value of input-type-1
                     $param2 = $params[1]; // get the value of input-type-2
+                    $param3 = $params[2]; // get the value of input-type-3
+                    $type = $depdrop_params[2];
                 }
 
-                $list = \common\models\costfit\PickingPoint::find()->andWhere(['amphurId' => $cat_id])->asArray()->all();
+                $list = \common\models\costfit\PickingPoint::find()->andWhere(['amphurId' => $cat_id, 'type' => $type])->asArray()->all();
 
                 $selected = null;
                 if ($cat_id != null && count($list) > 0) {

@@ -115,7 +115,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         </div>
                         <div class="form-group col-lg-12 col-md-12 col-xs-12" style="margin-bottom: 10px;  background-color: #ffffff; padding: 5px;">
                             <?php
-                            echo $this->render('picking_point', ['CheckValuePickPoint' => $CheckValuePickPoint, 'address' => $address, 'GetOrderMastersGroup' => $GetOrderMastersGroup, 'pickingPointBooth' => $pickingPointBooth, 'pickingPointLockers' => $pickingPointLockers]);
+                            echo $this->render('picking_point', ['LockerHistory' => $LockerHistory, 'BoothHistory' => $BoothHistory, 'CheckValuePickPoint' => $CheckValuePickPoint, 'address' => $address, 'GetOrderMastersGroup' => $GetOrderMastersGroup, 'pickingPointBooth' => $pickingPointBooth, 'pickingPointLockers' => $pickingPointLockers]);
                             ?>
                         </div>
                         <div class="form-group" style="margin-bottom: 10px;  background-color: #f5f5f5; padding: 5px;">
@@ -142,15 +142,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                             <div class="main-title">
                                                                 <?php
                                                                 echo ($value->firstname != null) ? $value->firstname : $user->firstname;
-                                                                echo '&nbsp;&nbsp;';
+                                                                echo '&nbsp;
+                            &nbsp;
+                            ';
                                                                 echo ($value->lastname != '') ? $value->lastname : $user->lastname;
                                                                 ?><br>
-                                                                <?php echo ($value->company) ? $value->company : $value->company . ' ,'; ?><br>
-                                                                <?php echo ($value->address) ? $value->address : '' . ' ,'; ?><br>
-                                                                <?php echo ($value->district['localName']) ? $value->district['localName'] : '' . ' ,'; ?>
-                                                                <?php echo ($value->cities['cityName']) ? $value->cities['cityName'] : '' . ' ,'; ?>
-                                                                <?php echo ($value->states['stateName']) ? $value->states['stateName'] : '' . ' ,'; ?>
-                                                                <?php echo '<br>' . ($value->countries['localName']) ? $value->countries['localName'] : '' . ' ,'; ?>
+                                                                <?php echo ($value->company) ? $value->company : $value->company . ', '; ?><br>
+                                                                <?php echo ($value->address) ? $value->address : '' . ', '; ?><br>
+                                                                <?php echo ($value->district['localName']) ? $value->district['localName'] : '' . ', '; ?>
+                                                                <?php echo ($value->cities['cityName']) ? $value->cities['cityName'] : '' . ', '; ?>
+                                                                <?php echo ($value->states['stateName']) ? $value->states['stateName'] : '' . ', '; ?>
+                                                                <?php echo '<br>' . ($value->countries['localName']) ? $value->countries['localName'] : '' . ', '; ?>
                                                                 <?php echo '<br>Zipcode ' . $value->zipcode; ?>
                                                             </div>
                                                             <div class="footer-cost-fit">

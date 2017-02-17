@@ -120,19 +120,59 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </div>
 
 <?php
-//echo '<pre>';
-//print_r($GetOrderMastersGroup);
-//echo 'booth : ' . $CheckValuePickPoint['ListOrderItemGroupBoothAction'] . '<br>';
-//echo 'lockers : ' . $CheckValuePickPoint['ListOrderItemGroupLockersAction'] . '<br>';
+//echo 'ListpickpointBoothValueInLocation : ' . $BoothHistory['ListpickpointBoothValueInLocation'];
+//echo $LockerHistory['LockersHistoryLockersNoti'] . '<br>';
+//echo $LockerHistory['ListpickpointLockersValueInLocation'];
+//('BoothHistory', 'LockerHistory'
+$LocationHistoryLockers = $BoothHistory;
+$LocationHistoryBooth = $LockerHistory;
 $countType = count($GetOrderMastersGroup);
+
+//echo '<pre>';
+//($LocationHistoryLockers);
+//($LocationHistoryBooth);
+$BoothOrderItemId = $BoothHistory['BoothOrderItemId'];
+$BoothOrderId = $BoothHistory['BoothOrderId'];
+$BoothProductId = $BoothHistory['BoothProductId'];
+$BoothReceiveType = $BoothHistory['BoothReceiveType'];
+$BoothPickingId = $BoothHistory['BoothPickingId'];
+$BoothHistoryBoothNoti = $BoothHistory['BoothHistoryBoothNoti'];
+//echo $BoothHistoryBoothNoti;
+if ($BoothHistoryBoothNoti == 'isTrue') {
+    /* แสดง pickpoint ที่ลูกค้าเคยเลือกตอนสั่งซื้อในรอบที่แล้ว */
+    $ListpickpointBoothValueInLocation = $BoothHistory['ListpickpointBoothValueInLocation'];
+    $ListOrderItemGroupBoothAction = 'isTrue';
+} else {
+    $ListOrderItemGroupBoothValue = $CheckValuePickPoint['ListOrderItemGroupBoothValue'];
+    $ListOrderItemGroupBoothAction = $CheckValuePickPoint['ListOrderItemGroupBoothAction'];
+    $ListpickpointBoothValueInLocation = $CheckValuePickPoint['ListpickpointBoothValueInLocation'];
+}
+
+$LockersOrderItemId = $LockerHistory['LockersOrderItemId'];
+$LockersOrderId = $LockerHistory['LockersOrderId'];
+$LockersProductId = $LockerHistory['LockersProductId'];
+$LockersReceiveType = $LockerHistory['LockersReceiveType'];
+$LockersPickingId = $LockerHistory['LockersPickingId'];
+$LockersHistoryLockersNoti = $LockerHistory['LockersHistoryLockersNoti'];
+//$ListpickpointLockersValueInLocation = $LockerHistory['ListpickpointLockersValueInLocation'];
+
+if ($LockersHistoryLockersNoti == 'isTrue') {
+    /* แสดง pickpoint ที่ลูกค้าเคยเลือกตอนสั่งซื้อในรอบที่แล้ว */
+    $ListpickpointLockersValueInLocation = $LockerHistory['ListpickpointLockersValueInLocation'];
+    $ListOrderItemGroupLockersAction = 'isTrue';
+} else {
+    $ListOrderItemGroupLockersValue = $CheckValuePickPoint['ListOrderItemGroupLockersValue'];
+    $ListOrderItemGroupLockersAction = $CheckValuePickPoint['ListOrderItemGroupLockersAction'];
+    $ListpickpointLockersValueInLocation = $CheckValuePickPoint['ListpickpointLockersValueInLocation'];
+}
+
 foreach ($GetOrderMastersGroup as $value) {
-    //echo 'GetOrderMastersGroup :: ' . $value->pickingId . '<br>';
-    //echo 'count : ' . count($value);
+
     if ($value->receiveType == '1') {
         // Lockers
-        $ListOrderItemGroupLockersValue = $CheckValuePickPoint['ListOrderItemGroupLockersValue'];
-        $ListOrderItemGroupLockersAction = $CheckValuePickPoint['ListOrderItemGroupLockersAction'];
-        $ListpickpointLockersValueInLocation = $CheckValuePickPoint['ListpickpointLockersValueInLocation'];
+        // = $CheckValuePickPoint['ListOrderItemGroupLockersValue'];
+        // = $CheckValuePickPoint['ListOrderItemGroupLockersAction'];
+        // = $CheckValuePickPoint['ListpickpointLockersValueInLocation'];
         ?>
         <div id="lockers" class="col-lg-12 col-md-12 col-sm-12">
             <h5><i class="fa fa-align-justify" aria-hidden="true"></i> เลือกสถานที่รับของ : ปลายทางที่ล็อคเกอร์</h5>
@@ -210,9 +250,11 @@ foreach ($GetOrderMastersGroup as $value) {
                 if ($ListOrderItemGroupLockersAction == 'isFalse') {
                     echo Html::hiddenInput('input-type-13', $pickingPointLockers->provinceId, ['id' => 'input-type-13']);
                     echo Html::hiddenInput('input-type-23', $pickingPointLockers->amphurId, ['id' => 'input-type-23']);
+                    echo Html::hiddenInput('lockers-input-type-33', '1', ['id' => 'lockers-input-type-33']);
                 } else {
                     echo Html::hiddenInput('input-type-13', $ListpickpointLockersValueInLocation['pickingId'], ['id' => 'input-type-13']);
                     echo Html::hiddenInput('input-type-23', $ListpickpointLockersValueInLocation['pickingId'], ['id' => 'input-type-23']);
+                    echo Html::hiddenInput('lockers-input-type-33', '1', ['id' => 'lockers-input-type-33']);
                 }
 
                 if ($yourbrowser != 'Safari') {
@@ -229,7 +271,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'depends' => ['pickingpoint-amphurid'],
                             'url' => Url::to(['child-picking-point']),
                             'loadingText' => 'Loading picking point ...',
-                            'params' => ['input-type-13', 'input-type-23']
+                            'params' => ['input-type-13', 'input-type-23', 'lockers-input-type-33']
                         ]
                     ])->label('เลือกจุดรับของ');
                 } else {
@@ -246,7 +288,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'depends' => ['pickingpoint-amphurid'],
                             'url' => Url::to(['child-picking-point']),
                             'loadingText' => 'Loading picking point ...',
-                            'params' => ['input-type-13', 'input-type-23']
+                            'params' => ['input-type-13', 'input-type-23', 'lockers-input-type-33']
                         ]
                     ])->label('เลือกจุดรับของ');
                 }
@@ -256,6 +298,17 @@ foreach ($GetOrderMastersGroup as $value) {
                 echo Html::hiddenInput("receiveTypeLockers", '1', ['id' => "receiveTypeLockers"]);
                 ?>
             </div>
+            <?php
+            if ($LockersHistoryLockersNoti == 'isTrue') {
+                ?>
+                <div class="col-md-12">
+                    <h5 class="cs-heading" style="font-size: 14px;"><i class="fa fa-bullhorn" aria-hidden="true" style="color: rgba(255,212,36,.9);"></i> แจ้งเตือนประวัติสถานที่รับสินค้า : ปลายทางที่ล็อคเกอร์ </h5>
+                    <blockquote style="font-size: 16px;">
+                        <p style="color: #8c8c8c;">สถานที่รับสินค้าล่าสุดที่ลูกค้าเคยเลือกไว้ หากลูกค้าต้องการเปลียนจุดรับสินค้า สามารถเปลียนได้จากด้านบน.</p>
+                        <footer style="color: rgba(255,212,36,.9);">Cozxy.Com</footer>
+                    </blockquote>
+                </div>
+            <?php } ?>
         </div>
         <?php
     } else {
@@ -264,21 +317,21 @@ foreach ($GetOrderMastersGroup as $value) {
         //echo '<img src=\"' . Yii::$app->homeUrl . '/images/picking-point/booth.jpeg\" class=\"img-responsive\">';
         if ($countType == 1) {
             echo '<div id="booth-null" class="col-lg-12 col-md-12 col-sm-12">';
-            echo '<h5> <i class="fa fa-align-left" aria-hidden="true"></i> สินค้าสำหรับบางประเภท</h5>';
-            echo '<img src="' . $baseUrl . '/images/picking-point/lockers.jpeg" class="img-responsive">';
+            echo '<h5> <i class="fa fa-align-left" aria-hidden="true" style="color: rgba(255,212,36,.9);"></i> สินค้าสำหรับบางประเภท</h5>';
+            echo '<img src="' . $baseUrl . '/images/picking-point/lockers.png" class="img-responsive"  style="opacity: .4;">';
             echo '</div>';
         }
     }
     if ($value->receiveType == '2') {
         // Booth
-        $ListOrderItemGroupBoothValue = $CheckValuePickPoint['ListOrderItemGroupBoothValue'];
-        $ListOrderItemGroupBoothAction = $CheckValuePickPoint['ListOrderItemGroupBoothAction'];
-        $ListpickpointBoothValueInLocation = $CheckValuePickPoint['ListpickpointBoothValueInLocation'];
+        //$ListOrderItemGroupBoothValue = $CheckValuePickPoint['ListOrderItemGroupBoothValue'];
+        //$ListOrderItemGroupBoothAction = $CheckValuePickPoint['ListOrderItemGroupBoothAction'];
+        //$ListpickpointBoothValueInLocation = $CheckValuePickPoint['ListpickpointBoothValueInLocation'];
         //echo 'Lockers provinceId :' . $ListpickpointBoothValueInLocation['provinceId'];
         //echo 'Lockers amphurId :' . $ListpickpointBoothValueInLocation['amphurId'] . '<br>';
         //echo 'Lockers pickingId :' . $ListpickpointBoothValueInLocation['pickingId'] . '<br>';
         ?>
-        <div id="booth" class="col-lg-12 col-md-12 col-sm-12">
+        <div id="booth" class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 10px;">
             <h5 class="shipment-title"><i class="fa fa-align-justify" aria-hidden="true"></i> เลือกสถานที่รับของ : ปลายทางที่บูธ</h5>
             <hr>
             <div id="booth-province" class="form-group col-lg-6 col-md-6 col-sm-6">
@@ -308,6 +361,7 @@ foreach ($GetOrderMastersGroup as $value) {
                 // Child level 2
                 echo Html::hiddenInput('booth-input-type-11', $ListpickpointBoothValueInLocation['amphurId'], ['id' => 'booth-input-type-11']);
                 echo Html::hiddenInput('booth-input-type-22', $ListpickpointBoothValueInLocation['amphurId'], ['id' => 'booth-input-type-22']);
+                //echo Html::hiddenInput('booth-input-type-33', '2', ['id' => 'booth-input-type-33']);
                 if ($yourbrowser != 'Safari') {
                     echo $form->field($pickingPointBooth, 'amphurId')->widget(kartik\depdrop\DepDrop::classname(), [
                         //'data' => [9 => 'Savings'],
@@ -353,11 +407,13 @@ foreach ($GetOrderMastersGroup as $value) {
                 // Child level 3
 
                 if ($ListOrderItemGroupBoothAction == 'isFalse') {
-                    echo Html::hiddenInput('input-type-13', $pickingPointBooth->provinceId, ['id' => 'input-type-13']);
-                    echo Html::hiddenInput('input-type-23', $pickingPointBooth->amphurId, ['id' => 'input-type-23']);
+                    echo Html::hiddenInput('booth-input-type-13', $pickingPointBooth->provinceId, ['id' => 'booth-input-type-13']);
+                    echo Html::hiddenInput('booth-input-type-23', $pickingPointBooth->amphurId, ['id' => 'booth-input-type-23']);
+                    echo Html::hiddenInput('booth-input-type-33', '2', ['id' => 'booth-input-type-33']);
                 } else {
                     echo Html::hiddenInput('booth-input-type-13', $ListpickpointBoothValueInLocation['pickingId'], ['id' => 'booth-input-type-13']);
                     echo Html::hiddenInput('booth-input-type-23', $ListpickpointBoothValueInLocation['pickingId'], ['id' => 'booth-input-type-23']);
+                    echo Html::hiddenInput('booth-input-type-33', '2', ['id' => 'booth-input-type-33']);
                 }
                 if ($yourbrowser != 'Safari') {
                     echo $form->field($pickingPointBooth, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
@@ -373,7 +429,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'depends' => ['BamphurId'],
                             'url' => Url::to(['child-picking-point']),
                             'loadingText' => 'Loading picking point ...',
-                            'params' => ['booth-input-type-13', 'booth-input-type-23']
+                            'params' => ['booth-input-type-13', 'booth-input-type-23', 'booth-input-type-33']
                         ]
                     ])->label('เลือกจุดรับของ');
                 } else {
@@ -390,7 +446,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'depends' => ['BamphurId'],
                             'url' => Url::to(['child-picking-point']),
                             'loadingText' => 'Loading picking point ...',
-                            'params' => ['booth-input-type-13', 'booth-input-type-23']
+                            'params' => ['booth-input-type-13', 'booth-input-type-23', 'booth-input-type-33']
                         ]
                     ])->label('เลือกจุดรับของ');
                 }
@@ -400,13 +456,24 @@ foreach ($GetOrderMastersGroup as $value) {
                 echo Html::hiddenInput("receiveTypeBooth", '2', ['id' => "receiveTypeBooth"]);
                 ?>
             </div>
+            <?php
+            if ($BoothHistoryBoothNoti == 'isTrue') {
+                ?>
+                <div class="col-md-12">
+                    <h5 class="cs-heading" style="font-size: 14px;"><i class="fa fa-bullhorn" aria-hidden="true" style="color: rgba(255,212,36,.9);"></i> แจ้งเตือนประวัติสถานที่รับสินค้า : ปลายทางที่บูธ </h5>
+                    <blockquote style="font-size: 16px;">
+                        <p style="color: #8c8c8c;">สถานที่รับสินค้าล่าสุดที่ลูกค้าเคยเลือกไว้ หากลูกค้าต้องการเปลียนจุดรับสินค้า สามารถเปลียนได้จากด้านบน.</p>
+                        <footer style="color: rgba(255,212,36,.9);">Cozxy.Com</footer>
+                    </blockquote>
+                </div>
+            <?php } ?>
         </div>
         <?php
     } else {
         if ($countType == 1) {
             echo '<div id="booth-null" class="col-lg-12 col-md-12 col-sm-12">';
-            echo '<h5> <i class="fa fa-align-left" aria-hidden="true"></i> สินค้าสำหรับบางประเภท</h5>';
-            echo '<img src="' . $baseUrl . '/images/picking-point/booth.jpeg" class="img-responsive" style="opacity: .6;">';
+            echo '<h5> <i class="fa fa-align-left" aria-hidden="true" style="color: rgba(255,212,36,.9);"></i> สินค้าสำหรับบางประเภท</h5>';
+            echo '<img src="' . $baseUrl . '/images/picking-point/booth.png" class="img-responsive" style="opacity: .4;">';
             echo '</div>';
         }
     }

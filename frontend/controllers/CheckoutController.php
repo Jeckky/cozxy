@@ -40,10 +40,10 @@ class CheckoutController extends MasterController {
      * @return mixed
      */
     public function actionIndex() {
-        //echo 'params :' . $this->params['cart']['orderId'] . '::' . $this->params['cart']['items'];
+//echo 'params :' . $this->params['cart']['orderId'] . '::' . $this->params['cart']['items'];
 
         if (Yii::$app->user->isGuest == 1) {
-            //return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
+//return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         }
         $this->layout = "/content_right";
         $this->title = 'Cozxy.com | checkout';
@@ -62,7 +62,7 @@ class CheckoutController extends MasterController {
 
         if (isset($addressId)) { // ตรวจสอบว่า มี hidden addressId ให้ update ในเทเบิล address
             if (isset($_POST['Address'])) {
-                //print_r($_POST['Address']);
+//print_r($_POST['Address']);
                 $address = \common\models\costfit\Address::find()
                 ->where('userId =' . \Yii::$app->user->id . ' and addressId=' . $addressId . ' and  type = 1')
                 ->one();
@@ -78,7 +78,7 @@ class CheckoutController extends MasterController {
                 }
             }
         } else {
-            //echo 'no hidden ';
+//echo 'no hidden ';
             if (\Yii::$app->user->isGuest) {
                 $address_shipping = \common\models\costfit\Address::find()->where('userId=' . 0 . ' and type = 2  ')
                 ->orderBy('isDefault desc ')
@@ -153,6 +153,83 @@ class CheckoutController extends MasterController {
             /* End Group By Receive Type */
 
             /*
+             * แจ้งเตือนสถานที่ ที่ Customer เคยสั่งซื้อมา ให้แสดงให้เป็นค่า defaut เป็นตัวเลือกในการตัดใจเลือกว่าจะใช้ location เดิมหรือจะเปลียนใหม่
+             * create date : 17/02/2017
+             * create by : taninut.bm
+             */
+            //echo 'user id :' . Yii::$app->user->id;
+            $HistoryOrder = PickingPoint::HistoryOrderMaster(Yii::$app->user->id);
+            $HistoryOrderId = $HistoryOrder['orderId'];
+            //echo $HistoryOrderId;
+            //echo '<pre>';
+            //print_r($HistoryOrder);
+            //exit();
+            $LocationHistory = [];
+            //`order_item`.orderItemId   ,  `order`.userId   , `order_item`.orderId , `order_item`.productId , `order_item`.receiveType , `order_item`.pickingId
+            $LocationHistory['HistoryLockers'] = PickingPoint:: LocationHistoryReceiveTypeLockersInCustomer($HistoryOrderId);
+            $LocationHistory['HistoryBooth'] = PickingPoint:: LocationHistoryReceiveTypeBoothInCustomer($HistoryOrderId);
+            $LocationHistoryLockers = $LocationHistory['HistoryLockers'];
+            $LocationHistoryBooth = $LocationHistory['HistoryBooth'];
+            //echo '<pre>';
+            //print_r($LocationHistoryLockers);
+            // exit();
+            /*
+             *  Location History Lockers
+             */
+            $LockerHistory = [];
+            if (isset($LocationHistoryLockers)) {
+                $LockerHistory['LockersOrderItemId'] = $LocationHistoryLockers['orderItemId'];
+                $LockerHistory['LockersOrderId'] = $LocationHistoryLockers['orderId'];
+                $LockerHistory['LockersProductId'] = $LocationHistoryLockers['productId'];
+                $LockerHistory['LockersReceiveType'] = $LocationHistoryLockers['receiveType'];
+                $LockerHistory['LockersPickingId'] = $LocationHistoryLockers['pickingId'];
+                $LockerHistory['LockersHistoryLockersNoti'] = 'isTrue';
+                if (isset($LockerHistory['LockersPickingId'])) {
+                    $pickpointLockersValueInLocation = \common\models\costfit\PickingPoint::find()->where('pickingId = ' . $LockerHistory['LockersPickingId'])->one();
+                    $LockerHistory['ListpickpointLockersValueInLocation'] = $pickpointLockersValueInLocation->attributes;
+                } else {
+                    $LockerHistory['ListpickpointLockersValueInLocation'] = FALSE;
+                    $LockerHistory['LockersHistoryLockersNoti'] = 'isFalse';
+                }
+                //exit();
+            } else {
+                $LockerHistory['LockersOrderItemId'] = FALSE;
+                $LockerHistory['LockersOrderId'] = FALSE;
+                $LockerHistory['LockersProductId'] = FALSE;
+                $LockerHistory['LockersReceiveType'] = FALSE;
+                $LockerHistory['LockersPickingId'] = FALSE;
+                $LockerHistory['LockersHistoryLockersNoti'] = 'isFalse';
+                $LockerHistory['ListpickpointLockersValueInLocation'] = FALSE;
+            }
+
+            /*
+             *  Location History Booth
+             */
+            $BoothHistory = [];
+            if (isset($LocationHistoryBooth)) {
+                $BoothHistory['BoothOrderItemId'] = $LocationHistoryBooth['orderItemId'];
+                $BoothHistory['BoothOrderId'] = $LocationHistoryBooth['orderId'];
+                $BoothHistory['BoothProductId'] = $LocationHistoryBooth['productId'];
+                $BoothHistory['BoothReceiveType'] = $LocationHistoryBooth['receiveType'];
+                $BoothHistory['BoothPickingId'] = $LocationHistoryBooth['pickingId'];
+                $BoothHistory['BoothHistoryBoothNoti'] = 'isTrue';
+                if (isset($LockerHistory['LockersPickingId'])) {
+                    $pickpointBoothValueInLocation = \common\models\costfit\PickingPoint::find()->where('pickingId = ' . $BoothHistory['BoothPickingId'])->one();
+                    $BoothHistory['ListpickpointBoothValueInLocation'] = $pickpointBoothValueInLocation->attributes;
+                } else {
+                    $BoothHistory['ListpickpointBoothValueInLocation'] = FALSE;
+                    $BoothHistory['BoothHistoryBoothNoti'] = 'isFalse';
+                }
+            } else {
+                $BoothHistory['BoothOrderItemId'] = FALSE;
+                $BoothHistory['BoothOrderId'] = FALSE;
+                $BoothHistory['BoothProductId'] = FALSE;
+                $BoothHistory['BoothReceiveType'] = FALSE;
+                $BoothHistory['BoothPickingId'] = FALSE;
+                $BoothHistory['BoothHistoryBoothNoti'] = 'isFalse';
+                $BoothHistory['ListpickpointBoothValueInLocation'] = FALSE;
+            }
+            /*
              * Get Value in Picking Point
              * Create date : 16/02/2017
              * Create By : Taninut.Bm
@@ -161,7 +238,7 @@ class CheckoutController extends MasterController {
             $CheckValuePickPoint = [];
             if (isset($GetOrderItemrGroupLockersMaster[0]->attributes['pickingId'])) {
                 $CheckValuePickPoint['ListOrderItemGroupLockersValue'] = $GetOrderItemrGroupLockersMaster[0]->attributes['pickingId'];
-                $pickpointLockersValueInLocation = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $CheckValuePickPoint['ListOrderItemGroupLockersValue'])->one();
+                $pickpointLockersValueInLocation = \common\models\costfit\PickingPoint::find()->where('pickingId = ' . $CheckValuePickPoint['ListOrderItemGroupLockersValue'])->one();
                 $CheckValuePickPoint['ListpickpointLockersValueInLocation'] = $pickpointLockersValueInLocation->attributes;
                 $CheckValuePickPoint['ListOrderItemGroupLockersAction'] = 'isTrue';
             } else {
@@ -172,7 +249,8 @@ class CheckoutController extends MasterController {
             $GetOrderItemrGroupBoothMaster = PickingPoint::GetOrderItemrGroupBoothMaster($orderId);
             if (isset($GetOrderItemrGroupBoothMaster[0]->attributes['pickingId'])) {
                 $CheckValuePickPoint['ListOrderItemGroupBoothValue'] = $GetOrderItemrGroupBoothMaster[0]->attributes['pickingId'];
-                $pickpointBoothValueInLocation = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $CheckValuePickPoint['ListOrderItemGroupBoothValue'])->one();
+                $pickpointBoothValueInLocation = \common\models\costfit\PickingPoint::find()->where('pickingId = ' . $CheckValuePickPoint['ListOrderItemGroupBoothValue'])->one();
+                //ListpickpointBoothValueInLocation
                 $CheckValuePickPoint['ListpickpointBoothValueInLocation'] = $pickpointBoothValueInLocation->attributes;
                 $CheckValuePickPoint['ListOrderItemGroupBoothAction'] = 'isTrue';
             } else {
@@ -195,7 +273,7 @@ class CheckoutController extends MasterController {
 
             //echo '<pre>';
             //print_r($CheckValuePickPoint);
-            return $this->render('checkout', compact('CheckValuePickPoint', 'GetOrderItemrGroupLockersMaster', 'GetOrderItemrGroupBoothMaster', 'address', 'user', 'paymentMethods', 'address_shipping', 'address_billing', 'model', 'pickingPointBooth', 'pickingPointLockers', 'GetOrderMastersGroup'));
+            return $this->render('checkout', compact('BoothHistory', 'LockerHistory', 'CheckValuePickPoint', 'GetOrderItemrGroupLockersMaster', 'GetOrderItemrGroupBoothMaster', 'address', 'user', 'paymentMethods', 'address_shipping', 'address_billing', 'model', 'pickingPointBooth', 'pickingPointLockers', 'GetOrderMastersGroup'));
         }
     }
 

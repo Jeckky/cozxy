@@ -46,7 +46,7 @@ class PickingPoint {
     }
 
     public static function GetOrderItemrGroupLockersMaster($orderId) {
-        $GetOrderItemMasters = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)->groupBy('receiveType')->all();
+        $GetOrderItemMasters = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)->groupBy('receiveType')->one();
         if (isset($GetOrderItemMasters) && !empty($GetOrderItemMasters)) {
             return $GetOrderItemMasters;
         } else {
@@ -55,7 +55,7 @@ class PickingPoint {
     }
 
     public static function GetOrderItemrGroupBoothMaster($orderId) {
-        $GetOrderItemMasters = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)->groupBy('receiveType')->all();
+        $GetOrderItemMasters = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)->groupBy('receiveType')->one();
         if (isset($GetOrderItemMasters) && !empty($GetOrderItemMasters)) {
             return $GetOrderItemMasters;
         } else {
@@ -69,19 +69,35 @@ class PickingPoint {
      * create by : taninut.bm
      */
 
-    public static function LocationHistoryReceiveTypeLockersInCustomer($userId) {
-        $GetOrderItemHistoryReceive = \common\models\costfit\OrderItem::find()->where("userId=" . $userId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)->groupBy('receiveType')->all();
+    public static function HistoryOrderMaster($userId) {
+        $HistoryOrderItem = \common\models\costfit\Order::find()->where("userId=" . $userId)
+        ->orderBy('orderId desc')
+        ->limit(1)
+        ->offset(1)->one();
+        if (isset($HistoryOrderItem) && !empty($HistoryOrderItem)) {
+            return $HistoryOrderItem->attributes;
+        } else {
+            $HistoryOrderItem = \common\models\costfit\Order::find()->where("userId=" . $userId)
+            ->orderBy('orderId desc')
+            ->limit(1)->one();
+            //return NULL;
+            return $HistoryOrderItem->attributes;
+        }
+    }
+
+    public static function LocationHistoryReceiveTypeLockersInCustomer($orderId) {
+        $GetOrderItemHistoryReceive = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)->groupBy('receiveType')->all();
         if (isset($GetOrderItemHistoryReceive) && !empty($GetOrderItemHistoryReceive)) {
-            return $GetOrderItemHistoryReceive;
+            return $GetOrderItemHistoryReceive[0]->attributes;
         } else {
             return NULL;
         }
     }
 
-    public static function LocationHistoryReceiveTypeBoothInCustomer($userId) {
-        $GetOrderItemHistoryReceive = \common\models\costfit\OrderItem::find()->where("userId=" . $userId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)->groupBy('receiveType')->all();
+    public static function LocationHistoryReceiveTypeBoothInCustomer($orderId) {
+        $GetOrderItemHistoryReceive = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)->groupBy('receiveType')->all();
         if (isset($GetOrderItemHistoryReceive) && !empty($GetOrderItemHistoryReceive)) {
-            return $GetOrderItemHistoryReceive;
+            return $GetOrderItemHistoryReceive[0]->attributes;
         } else {
             return NULL;
         }
