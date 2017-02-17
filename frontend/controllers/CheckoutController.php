@@ -15,6 +15,7 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use \common\models\costfit\Order;
 use common\helpers\RewardPoints;
+use common\helpers\PickingPoint;
 
 /**
  * Checkout controller
@@ -94,7 +95,7 @@ class CheckoutController extends MasterController {
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 1  ')
                 ->orderBy('isDefault desc  ')
                 ->all();
-//$address_billing['scenario'] = 'shipping_address';
+                //$address_billing['scenario'] = 'shipping_address';
             }
 
             $paymentMethods = \common\models\costfit\PaymentMethod::find()->where("status = 1")->all();
@@ -106,7 +107,7 @@ class CheckoutController extends MasterController {
             if (isset($_POST['Address'])) {
 
                 if ($_POST['Address']['typeForm'] == 'formShipping') {
-//$model_ = new \common\models\costfit\Address();
+                    //$model_ = new \common\models\costfit\Address();
                     \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_SHIPPING]);
                     $address->type = \common\models\costfit\Address::TYPE_SHIPPING; //- SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
                     $address->isDefault = 1; // default Address First
@@ -115,10 +116,10 @@ class CheckoutController extends MasterController {
                 }
 
                 if ($_POST['Address']['typeForm'] == 'formBilling') {
-//$address->scenario = 'checkout-billing-address';
+                    //$address->scenario = 'checkout-billing-address';
                     $address->scenarios('checkout-billing-address');
                     \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_BILLING]);
-//$model = new \common\models\costfit\Address();
+                    //$model = new \common\models\costfit\Address();
 
                     $address->type = \common\models\costfit\Address::TYPE_BILLING; //- BILLING = 1; // ที่อยู่จัดส่งเอกสาร
                     $address->isDefault = 1; // default Address First
@@ -138,7 +139,7 @@ class CheckoutController extends MasterController {
              * Create date : 16/02/2017
              * Create By : Taninut.Bm
              */
-            $GetOrderMasters = \common\models\costfit\OrderItem::GetOrderItemrMaster($orderId);
+            $GetOrderMasters = PickingPoint::GetOrderItemrMaster($orderId);
             $receiveOrderId = $GetOrderMasters->attributes['orderId'];
             $receiveType = $GetOrderMasters->attributes['receiveType'];
             /* End Get Value */
@@ -148,7 +149,7 @@ class CheckoutController extends MasterController {
              * Create date : 16/02/2017
              * Create By : Taninut.Bm
              */
-            $GetOrderMastersGroup = \common\models\costfit\OrderItem::GetOrderItemrGroupMaster($orderId);
+            $GetOrderMastersGroup = PickingPoint::GetOrderItemrGroupMaster($orderId);
             /* End Group By Receive Type */
 
             /*
@@ -156,7 +157,7 @@ class CheckoutController extends MasterController {
              * Create date : 16/02/2017
              * Create By : Taninut.Bm
              */
-            $GetOrderItemrGroupLockersMaster = \common\models\costfit\OrderItem::GetOrderItemrGroupLockersMaster($orderId);
+            $GetOrderItemrGroupLockersMaster = PickingPoint::GetOrderItemrGroupLockersMaster($orderId);
             $CheckValuePickPoint = [];
             if (isset($GetOrderItemrGroupLockersMaster[0]->attributes['pickingId'])) {
                 $CheckValuePickPoint['ListOrderItemGroupLockersValue'] = $GetOrderItemrGroupLockersMaster[0]->attributes['pickingId'];
@@ -168,7 +169,7 @@ class CheckoutController extends MasterController {
                 $CheckValuePickPoint['ListpickpointLockersValueInLocation'] = NULL;
                 $CheckValuePickPoint['ListOrderItemGroupLockersAction'] = 'isFalse';
             }
-            $GetOrderItemrGroupBoothMaster = \common\models\costfit\OrderItem::GetOrderItemrGroupBoothMaster($orderId);
+            $GetOrderItemrGroupBoothMaster = PickingPoint::GetOrderItemrGroupBoothMaster($orderId);
             if (isset($GetOrderItemrGroupBoothMaster[0]->attributes['pickingId'])) {
                 $CheckValuePickPoint['ListOrderItemGroupBoothValue'] = $GetOrderItemrGroupBoothMaster[0]->attributes['pickingId'];
                 $pickpointBoothValueInLocation = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $CheckValuePickPoint['ListOrderItemGroupBoothValue'])->one();
