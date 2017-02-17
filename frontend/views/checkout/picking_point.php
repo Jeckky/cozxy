@@ -264,7 +264,7 @@ foreach ($GetOrderMastersGroup as $value) {
         //echo '<img src=\"' . Yii::$app->homeUrl . '/images/picking-point/booth.jpeg\" class=\"img-responsive\">';
         if ($countType == 1) {
             echo '<div id="booth-null" class="col-lg-12 col-md-12 col-sm-12">';
-            echo '<span style="color: #0286c2;"> <i class="fa fa-align-left" aria-hidden="true"></i> สินค้าสำหรับบางประเภท</span>';
+            echo '<h5> <i class="fa fa-align-left" aria-hidden="true"></i> สินค้าสำหรับบางประเภท</h5>';
             echo '<img src="' . $baseUrl . '/images/picking-point/lockers.jpeg" class="img-responsive">';
             echo '</div>';
         }
@@ -405,7 +405,7 @@ foreach ($GetOrderMastersGroup as $value) {
     } else {
         if ($countType == 1) {
             echo '<div id="booth-null" class="col-lg-12 col-md-12 col-sm-12">';
-            echo '<span style="color: #0286c2;"> <i class="fa fa-align-left" aria-hidden="true"></i> สินค้าสำหรับบางประเภท</span>';
+            echo '<h5> <i class="fa fa-align-left" aria-hidden="true"></i> สินค้าสำหรับบางประเภท</h5>';
             echo '<img src="' . $baseUrl . '/images/picking-point/booth.jpeg" class="img-responsive" style="opacity: .6;">';
             echo '</div>';
         }
