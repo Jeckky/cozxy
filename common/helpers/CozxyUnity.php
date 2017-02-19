@@ -23,6 +23,10 @@ use kartik\mpdf\Pdf;
 class CozxyUnity {
 
     //put your code here
+    public $day;
+    public $month;
+    public $year;
+
     /*
      * Converting timestamp to time ago in PHP e.g 1 day ago, 2 days ago…
      * Use example :
@@ -214,6 +218,52 @@ class CozxyUnity {
     public static function curPageURL($hash) {
         $get = CozxyUnity::GetTitleProductMeta($hash, '');
         return $get;
+    }
+
+    public static function getDates($dates) {
+        $dates = [];
+        for ($index = 1; $index < 32; $index++) {
+            $dates[$index] = $index;
+        }
+        return $dates;
+        // return array(
+        //  1 => 20,
+        // 21 => 21,
+        // );
+    }
+
+    public static function getMonth($month) {
+        $month = array(
+            "01" => "มกราคม",
+            "02" => "กุมภาพันธ์",
+            "03" => "มีนาคม",
+            "04" => "เมษายน",
+            "05" => "พฤษภาคม",
+            "06" => "มิถุนายน",
+            "07" => "กรกฎาคม",
+            "08" => "สิงหาคม",
+            "09" => "กันยายน",
+            "10" => "ตุลาคม",
+            "11" => "พฤศจิกายน",
+            "12" => "ธันวาคม");
+        return $month;
+        //return array(
+        // 01 => 01,
+        // 02 => 02,
+        //);
+    }
+
+    public static function getYears($years) {
+        // $year_diff = date("Y");
+        $years = [];
+        for ($index = 1927; $index < date("Y"); $index++) {
+            $years[$index] = $index + 543;
+        }
+        return $years;
+        //return array(
+        //1990 => 1990,
+        //1991 => 1991,
+        //);
     }
 
 }

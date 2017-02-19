@@ -17,6 +17,8 @@ use yii\data\ActiveDataProvider;
 use common\models\costfit\Order;
 use common\models\costfit\Ticket;
 use common\models\costfit\ReturnProduct;
+use common\helpers\PickingPoint;
+use common\helpers\CozxyUnity;
 
 /**
  * Profile controller
@@ -213,20 +215,45 @@ class ProfileController extends MasterController {
         $modelx = new \common\models\costfit\User(['scenario' => 'editinfo']);
         //$modelx->scenario = 'editinfo';
         $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
-
+        //echo '<pre>';
+        $birthDateFull = $model->attributes['birthDate'];
+        $historyBirthDate = [];
+        if (isset($birthDateFull)) {
+            $birthDateFull = explode(' ', $model->attributes['birthDate']);
+            $birthDateShort = explode('-', $birthDateFull[0]);
+            $historyBirthDate['day'] = $birthDateShort[2];
+            $historyBirthDate['month'] = $birthDateShort[1];
+            $historyBirthDate['year'] = $birthDateShort[0];
+        } else {
+            $historyBirthDate['day'] = FALSE;
+            $historyBirthDate['month'] = FALSE;
+            $historyBirthDate['year'] = FALSE;
+        }
+        $birthdate = [];
+        $birthdate['dates'] = CozxyUnity::getDates($historyBirthDate['day']);
+        $birthdate['month'] = CozxyUnity::getMonth($historyBirthDate['month']);
+        $birthdate['years'] = CozxyUnity::getYears($historyBirthDate['year']);
         if (isset($_POST["User"])) {
             $model->attributes = $_POST['User'];
             $model->firstname = $_POST["User"]['firstname'];
             $model->lastname = $_POST["User"]['lastname'];
             $model->gender = $_POST["User"]['gender'];
-            $model->birthDate = $_POST["User"]['birthDate'];
+            /* birthDate */
+            $day = $_POST['User']['day'];
+            $month = $_POST['User']['month'];
+            $year = $_POST['User']['years'];
+            $date = $year . '-' . $month . '-' . $day . ' 00:00:00';
+            // format 2016-10-11 00:00:00
+            $model->birthDate = $date;
+            //$model->birthDate = $_POST["User"]['birthDate'];
+            /* end birthDate */
             $model->tel = $_POST["User"]['tel'];
 
             if ($model->save(FALSE)) {
                 $this->redirect(Yii::$app->homeUrl . 'profile');
             }
         }
-        return $this->render('@app/views/profile/edit_info', ['model' => $model]);
+        return $this->render('@app/views/profile/edit_info', ['model' => $model, 'birthdate' => $birthdate, 'historyBirthDate' => $historyBirthDate]);
     }
 
     public function actionGetAddress() {
@@ -269,11 +296,11 @@ class ProfileController extends MasterController {
 
         //echo htmlspecialchars($orderId);
         if (isset($params['orderId'])) {
-            $order = Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . $params['orderId'] . '" ')
-            ->one();
+            $order = Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . $params['orderId'] . '" ')->one();
             //echo '<pre>';
             //print_r($order);
             //exit();
+            //$orderItem = PickingPoint::GetOrderItemrGroupLockersMaster($orderId);
             return $this->render('@app/views/profile/purchase_order', compact('order'));
         } else {
             return $this->redirect(['profile/order']);

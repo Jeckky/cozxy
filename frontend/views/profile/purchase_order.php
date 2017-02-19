@@ -11,6 +11,9 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->orderId]);
+
+//echo '<pre>';
+//print_r($order->attributes);
 ?>
 <style>
     .table{
@@ -46,6 +49,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                                 <td style="line-height: 20px;">
                                     <?php
                                     if ($order->attributes['pickingId'] != '') {
+                                        //echo 'test confirm checkout';
                                         //echo isset($order->attributes['shippingCompany']) ? 'บริษัท' . $order->attributes['shippingCompany'] : 'คุณ' . $order->user->firstname . " " . $order->user->lastname . '<br>';
                                         //echo isset($order->attributes['shippingAddress']) ? $order->attributes['shippingAddress'] : '';
                                         //echo '<br>';
