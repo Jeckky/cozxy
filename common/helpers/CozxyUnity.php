@@ -223,7 +223,13 @@ class CozxyUnity {
     public static function getDates($dates) {
         $dates = [];
         for ($index = 1; $index < 32; $index++) {
-            $dates[$index] = $index;
+            $num = strlen($index);
+            if ($num == 1) {
+                $indexs = '0' . $index;
+            } else {
+                $indexs = $index;
+            }
+            $dates[$indexs] = $index;
         }
         return $dates;
         // return array(

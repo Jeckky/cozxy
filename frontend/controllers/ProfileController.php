@@ -234,6 +234,7 @@ class ProfileController extends MasterController {
         }
         $birthdate = [];
         $birthdate['dates'] = CozxyUnity::getDates($historyBirthDate['day']);
+
         $birthdate['month'] = CozxyUnity::getMonth($historyBirthDate['month']);
         $birthdate['years'] = CozxyUnity::getYears($historyBirthDate['year']);
         if (isset($_POST["User"])) {
