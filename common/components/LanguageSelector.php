@@ -29,7 +29,7 @@ class LanguageSelector implements BootstrapInterface {
             //echo 'test1';
         } else {
 
-            $preferedLanguage = isset($app->request->cookies['language']) ? (string) $app->request->cookies['language'] : 'en-EN'; // 'th-TH'หากยังไม่ได้เลือกภาษาให้เป็นภาษาไทยก่อน
+            $preferedLanguage = isset($app->request->cookies['language']) ? (string) $app->request->cookies['language'] : 'th-TH'; // 'th-TH'หากยังไม่ได้เลือกภาษาให้เป็นภาษาไทยก่อน
 
             if (empty($preferedLanguage)) {
                 $preferedLanguage = $app->request->getPreferedLanguage($this->supportedLanguages); //หากยังไม่เลือกภาษา ให้ตรวจสอบว่าอยู่ในรายการหรือเปล่า
