@@ -137,8 +137,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/returning">คำขอคืนสินค้า</a></li>
-            <!--<li class="pill-right"><a href="<?php // echo Yii::$app->homeUrl;         ?>profile/payment">Payment Methods</a></li>
-            <li class="pull-right"><a href="<?php // echo Yii::$app->homeUrl;         ?>history">Easy Re-Order</a></li>-->
+            <!--<li class="pill-right"><a href="<?php // echo Yii::$app->homeUrl;              ?>profile/payment">Payment Methods</a></li>
+            <li class="pull-right"><a href="<?php // echo Yii::$app->homeUrl;              ?>history">Easy Re-Order</a></li>-->
         </ul>
     </li>
 <?php endif; ?>
@@ -152,6 +152,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     //echo Html::a(Html::img($baseUrl . '/images/flags/flag_en.jpg'), Url::current(['language' => 'en-US']), ['class' => (Yii::$app->request->cookies['language'] == 'en-US' ? 'active' : ''), 'style' => ' margin-top: 5px']);
     ?>
 </li>
+<li class="has-submenu pull-right"><a href="#">โทร 02-000-0000</a></li>
 <li class="has-submenu pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works"><?= Yii::t('app', 'How Works') ?></a></li>
 <li class="has-submenu pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>coupon"><?= Yii::t('app', 'Super special offers') ?></a></li><!--ข้อเสนอพิเศษจากพาร์ทเนอร์-->
 
