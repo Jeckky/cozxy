@@ -99,7 +99,7 @@ use common\models\ModelMaster;
                         if ($item->receiveType == 1) {
                             ?>
                             <tr style=" background-color: #f5f5f5; color: #000080;font-size: 13px;">
-                                <td colspan="3" style="padding: 3px 0 3px 0;">&nbsp;สถานที่รับของ : ปลายทางที่ล็อคเกอร์  </td>
+                                <td colspan="3" style="padding: 3px 0 3px 0;"><i class="fa fa-address-card" aria-hidden="true"></i>&nbsp;สถานที่รับของ : ปลายทางที่ล็อคเกอร์  </td>
                             </tr>
                             <?php
                             foreach ($itemsLockers as $value1) {
@@ -127,7 +127,7 @@ use common\models\ModelMaster;
                         if ($item->receiveType == 2) {
                             ?>
                             <tr style=" background-color: #f5f5f5; color: #000080; font-size: 13px;">
-                                <td colspan="3"  style="padding: 3px 0 3px 0;">&nbsp;สถานที่รับของ : ปลายทางที่บูธ </td>
+                                <td colspan="3"  style="padding: 3px 0 3px 0;"><i class="fa fa-address-card" aria-hidden="true"></i>&nbsp;สถานที่รับของ : ปลายทางที่บูธ </td>
                             </tr>
                             <?php
                             foreach ($itemsBooth as $value1) {
