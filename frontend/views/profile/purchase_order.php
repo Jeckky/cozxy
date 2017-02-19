@@ -192,6 +192,12 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
             </div>
         </div>
     </section><!--Support Close-->
+    <div class="col-sm-12" style="color: #000; font-size: 13px;">
+        <div class="col-sm-12"> วันที่จัดส่งสินค้า ภายในวันที่ 20 มีนาคม 2560  </div>
+        <div class="col-sm-12">&nbsp;&nbsp;*** หมายเหตุ หากมีการเปลียนวันจะแจ้งให้ทราบทาง Email และ SMS ในลำดับต่อไป</div>
+    </div>
+    <br><br><br>
 </div>
+
 
 
