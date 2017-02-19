@@ -174,6 +174,9 @@ class ProfileController extends MasterController {
         $status_address = Yii::$app->controller->action->id;
 
         $label = 'Save billings address';
+        if (!isset($model->isDefault)) {
+            $model->isDefault = 0;
+        }
 
         if (isset($_POST['Address'])) {
 

@@ -100,6 +100,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <?php echo $form->field($model, 'firstname'); ?>
     <?php echo $form->field($model, 'lastname'); ?>
     <?php echo $form->field($model, 'company'); ?>
+    <?php echo $form->field($model, 'tax'); ?>
     <?php echo $form->field($model, 'address')->textarea(); ?>
     <?php
     // Top most parent
@@ -152,9 +153,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 ]
             ])->label('States');
         }
-
-
-
 // Child level 2
         echo Html::hiddenInput('input-type-11', $model->amphurId, ['id' => 'input-type-11']);
         echo Html::hiddenInput('input-type-22', $model->amphurId, ['id' => 'input-type-22']);
@@ -188,8 +186,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 ]
             ])->label('Cities');
         }
-
-
 // Child level 3
         echo Html::hiddenInput('input-type-13', $model->districtId, ['id' => 'input-type-13']);
         echo Html::hiddenInput('input-type-23', $model->districtId, ['id' => 'input-type-23']);
@@ -258,9 +254,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 ]
             ])->label('States');
         }
-
-
-
 // Child level 2
         echo Html::hiddenInput('input-type-11', $model->amphurId, ['id' => 'input-type-11']);
         echo Html::hiddenInput('input-type-22', $model->amphurId, ['id' => 'input-type-22']);
@@ -333,7 +326,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         }
     }
     ?>
-    <?php echo $form->field($model, 'tax'); ?>
+
     <?php echo $form->field($model, 'zipcode'); ?>
     <?php echo $form->field($model, 'email'); ?>
     <?php echo $form->field($model, 'tel'); ?>
