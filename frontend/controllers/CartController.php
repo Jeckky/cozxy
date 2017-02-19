@@ -12,6 +12,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use common\helpers\PickingPoint;
 
 /**
  * Cart controller
@@ -392,6 +393,43 @@ class CartController extends MasterController {
         } else {
             return '';
         }
+    }
+
+    public function actionListProductAll() {
+        $this->layout = "/content_right";
+        $this->title = 'Cozxy.com | cart';
+        $this->subTitle = 'List product all';
+        $allProducts = $this->allProduct();
+        $id = '';
+        if (isset($allProducts) && !empty($allProducts) && ($allProducts != '')) {
+            foreach ($allProducts as $item):
+                $id = $id . $item . ",";
+            endforeach;
+            $id = substr($id, 0, -1);
+            $products = \common\models\costfit\ProductSuppliers::find()
+            ->where("productSuppId in ($id) and approve='approve'")
+            ->orderBy(new \yii\db\Expression('rand()'))
+            ->limit(4)
+            ->all();
+        } else {
+            $products = \common\models\costfit\ProductSuppliers::find()->where("approve='approve'")
+            ->orderBy(new \yii\db\Expression('rand()'))
+            ->limit(4)
+            ->all();
+        }
+        $this->subSubTitle = '';
+        //echo '<pre>';
+        //print_r($this->view->params['cart']);
+        // echo $this->view->params['cart']['orderId'];
+        //exit();
+        $orderId = $this->view->params['cart']['orderId'];
+        $GetOrderMasters = PickingPoint::GetOrderItemrGroupMaster($orderId);
+
+        $itemsLockers = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)->all();
+
+        $itemsBooth = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)->all();
+
+        return $this->render('cart_list_product_all', compact('products', 'GetOrderMasters', 'itemsLockers', 'itemsBooth'));
     }
 
 }
