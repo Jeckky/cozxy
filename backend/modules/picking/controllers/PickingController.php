@@ -12,11 +12,11 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;        // เรียกใช้ คลาส AccessControl
 use common\models\User;             // เรียกใช้ Model คลาส User ที่ปรับปรังปรุงไว้
 use common\components\AccessRule;   // เรียกใช้ คลาส Component AccessRule ที่เราสร้างใหม่
+use common\helpers\Upload;
 
 /**
  * PickingController implements the CRUD actions for PickingPoint model.
  */
-
 class PickingController extends PickingMasterController {
 
     /**
@@ -112,6 +112,8 @@ class PickingController extends PickingMasterController {
      */
     public function actionCreate() {
         $receive = Yii::$app->request->get('receive');
+        $folderName = "map"; //  Size 553 x 484
+        $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . 'picking-point/' . $folderName;
         $model = new PickingPoint();
         /*
           if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -127,6 +129,14 @@ class PickingController extends PickingMasterController {
             $model->attributes = $_POST["PickingPoint"];
             $model->type = $receive;
             $model->createDateTime = new \yii\db\Expression('NOW()');
+
+            $imageObj = \yii\web\UploadedFile::getInstanceByName("PickingPoint[mapImages]");
+            if (isset($imageObj) && !empty($imageObj)) {
+                $newFileName = Upload::UploadBasic('PickingPoint[mapImages]', $folderName, $uploadPath, '500', '500');
+                $model->mapImages = '/' . 'images/' . 'picking-point/' . $folderName . "/" . $newFileName;
+            } else {
+                echo 'No';
+            }
             if ($model->save(FALSE)) {
                 //return $this->redirect(['index']);
                 return $this->redirect(['view', 'id' => $model->pickingId, 'receive' => $receive]);
@@ -146,14 +156,38 @@ class PickingController extends PickingMasterController {
     public function actionUpdate($id) {
         $receive = Yii::$app->request->get('receive');
         $model = $this->findModel($id);
+        $folderName = "map"; //  Size 553 x 484
+        $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . 'picking-point/' . $folderName;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->pickingId, 'receive' => $receive]);
-        } else {
-            return $this->render('update', [
-                'model' => $model, 'receive' => $receive
-            ]);
+        if (isset($_POST["PickingPoint"])) {
+            /*
+             * Upload ครั้งละรูป
+             * helpers Upload
+             * path : common/helpers/Upload.php
+             * use : Upload::uploadBasic($fileName, $folderName, $uploadPath, $width, $height)
+             */
+            $model->attributes = $_POST["PickingPoint"];
+            $imageObj = \yii\web\UploadedFile::getInstanceByName("PickingPoint[mapImages]");
+            if (isset($imageObj) && !empty($imageObj)) {
+                $newFileName = Upload::UploadBasic('PickingPoint[mapImages]', $folderName, $uploadPath, '500', '500');
+                $model->mapImages = '/' . 'images/' . 'picking-point/' . $folderName . "/" . $newFileName;
+            } else {
+                echo 'No';
+            }
+            //$model->userId = Yii::$app->user->identity->userId;
+            $model->updateDateTime = new \yii\db\Expression('NOW()');
+            //if ($model->load(Yii::$app->request->post()) && $model->save(FALSE)) {
+            if ($model->save(FALSE)) {
+                return $this->redirect(['view', 'id' => $model->pickingId, 'receive' => $receive]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model, 'receive' => $receive
+                ]);
+            }
         }
+        return $this->render('update', [
+            'model' => $model, 'receive' => $receive
+        ]);
     }
 
     /**

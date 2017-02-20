@@ -63,6 +63,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 'ip',
                 'macAddress',
                 'authCode',
+                [
+                    'attribute' => 'mapImages',
+                    'format' => 'html',
+                    'value' => function($model) {
+                        if (isset($model->mapImages)) {
+                            if (file_exists($_SERVER['DOCUMENT_ROOT'] . Yii::getAlias('@web') . $model->mapImages)) {
+                                $imgBrand = Html::img(Yii::getAlias('@web') . $model->mapImages, ['style' => 'width:164px;height:120px', 'class' => 'img-responsive']);
+                            } else {
+                                $imgBrand = Html::img(Yii::getAlias('@web') . '/images/ContentGroup/DUHWYsdXVc.png', ['style' => 'width:164px;height:120px', 'class' => 'img-responsive']);
+                            }
+                        } else {
+                            $imgBrand = Html::img(Yii::getAlias('@web') . '/images/ContentGroup/DUHWYsdXVc.png', ['style' => 'width:164px;height:120px', 'class' => 'img-responsive']);
+                        }
+                        return $imgBrand;
+                    }
+                ],
                 // 'status',
                 // 'type',
                 // 'createDateTime',

@@ -129,9 +129,9 @@ class BrandController extends SuppliersMasterController {
             $model->updateDateTime = new \yii\db\Expression('NOW()');
 
             if ($model->save()) {
-                if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
-//Do Some Thing
-                }
+                //if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
+                //Do Some Thing
+                //}
                 return $this->redirect(['index']);
             }
         }

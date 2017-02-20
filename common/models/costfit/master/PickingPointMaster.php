@@ -19,6 +19,7 @@ use Yii;
     * @property string $macAddress
     * @property string $authCode
     * @property integer $status
+    * @property string $mapImages
     * @property string $createDateTime
     * @property string $updateDateTime
 */
@@ -45,6 +46,7 @@ return [
             [['code'], 'string', 'max' => 30],
             [['description'], 'string', 'max' => 200],
             [['ip', 'macAddress', 'authCode'], 'string', 'max' => 100],
+            [['mapImages'], 'string', 'max' => 150],
         ];
 }
 
@@ -66,6 +68,7 @@ return [
     'macAddress' => Yii::t('picking_point', 'Mac Address'),
     'authCode' => Yii::t('picking_point', 'Auth Code'),
     'status' => Yii::t('picking_point', 'Status'),
+    'mapImages' => Yii::t('picking_point', 'Map Images'),
     'createDateTime' => Yii::t('picking_point', 'Create Date Time'),
     'updateDateTime' => Yii::t('picking_point', 'Update Date Time'),
 ];
