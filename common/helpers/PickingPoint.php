@@ -90,8 +90,7 @@ class PickingPoint {
         ->where("orderId=" . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)
         ->groupBy('receiveType')
         ->all();
-        //foreach ($GetOrderItemHistoryReceive as $value) {
-        //}
+
         if (isset($GetOrderItemHistoryReceive) && !empty($GetOrderItemHistoryReceive)) {
             return $GetOrderItemHistoryReceive[0]->attributes;
         } else {
