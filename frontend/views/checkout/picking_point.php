@@ -261,6 +261,9 @@ foreach ($GetOrderMastersGroup as $value) {
                         'type' => DepDrop::TYPE_SELECT2,
                         //'options' => ['multiple' => true],
                         'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                        //'pluginEvents' => [
+                        //"depdrop.afterChange" => "function(event, id, value) { console.log('value: ' + value + ' id: ' + id); }"
+                        //],
                         'pluginOptions' => [
                             'initialize' => true,
                             'depends' => ['pickingpoint-amphurid'],

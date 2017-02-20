@@ -921,7 +921,6 @@ function changeoption(value)
     });
 }
 
-
 $('#slowest').on('ifChecked', function (event) {
     //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
     var orderId = $('input[id=orderId]').val();
@@ -937,6 +936,7 @@ $('#slowest').on('ifChecked', function (event) {
         }
     });
 });
+
 $('#slowest').on('ifUnchecked', function (event) {
     //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
     var orderId = $('input[id=orderId]').val();
@@ -1043,7 +1043,9 @@ $('.search-brands').on('ifUnchecked', function (event) {
     });
 });
 
+// the last child
+$('#BpickingId').on('change', function (event) {
+    //var id = $(this).attr('id');
+    //alert(id);
 
-$('#BpickingId').on('click', function () {
-    alert('test');
 });
