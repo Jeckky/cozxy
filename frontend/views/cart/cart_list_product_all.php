@@ -98,8 +98,8 @@ use common\models\ModelMaster;
                         // throw new \yii\base\Exception(print_r($item["image"], true));
                         if ($item->receiveType == 1) {
                             ?>
-                            <tr style=" background-color: #f5f5f5; color: #000080;font-size: 13px; ">
-                                <td colspan="3" ><i class="fa fa-address-card" aria-hidden="true"></i>&nbsp;สถานที่รับของ : ปลายทางที่ล็อคเกอร์  </td>
+                            <tr style=" background-color: #f5f5f5;color: #166db9; font-size: 13px; ">
+                                <td colspan="3" ><i class="fa fa-truck" aria-hidden="true"></i>&nbsp;สถานที่รับของ : ปลายทางที่ล็อคเกอร์  </td>
                             </tr>
                             <?php
                             foreach ($itemsLockers as $value1) {
@@ -126,8 +126,8 @@ use common\models\ModelMaster;
                         }
                         if ($item->receiveType == 2) {
                             ?>
-                            <tr style=" background-color: #f5f5f5; color: #000080; font-size: 13px;  ">
-                                <td colspan="3" ><i class="fa fa-address-card" aria-hidden="true"></i>&nbsp;สถานที่รับของ : ปลายทางที่บูธ </td>
+                            <tr style=" background-color: #f5f5f5; color: #166db9; font-size: 13px;  ">
+                                <td colspan="3" ><i class="fa fa-truck" aria-hidden="true"></i>&nbsp;สถานที่รับของ : ปลายทางที่บูธ </td>
                             </tr>
                             <?php
                             foreach ($itemsBooth as $value1) {

@@ -17,7 +17,7 @@ if (count($order) > 0) {
          */
         ?>
         <tr style="background-color:rgb(220, 220, 220) ; border-bottom: 1px #000000 solid; height: 25px;">
-            <td style="font-size: 12px;" colspan="7"><i class="fa fa-users" aria-hidden="true"></i> <strong><?php echo isset($value1->user) ? $value1->user->code : '-'; ?></strong></td>
+            <td style="font-size: 12px;" colspan="7"><strong><?php echo isset($value1->user) ? $value1->user->code : '-'; ?></strong></td>
         </tr>
         <?php
         $GetOrderItemMasters = \common\models\costfit\OrderItem::find()->where("orderId=" . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'])->groupBy('receiveType')->all();
@@ -25,7 +25,7 @@ if (count($order) > 0) {
             //if ($value1->receiveType == 1) {
             ?>
             <tr style="background-color:#f1f1f1 ; border-bottom: 1px #000000 solid; height: 25px; text-align: left; color: #166db9;">
-                <td style="font-size: 12px;" colspan="7"><?php echo ($value1->receiveType == 1) ? '<i class="fa fa-truck" aria-hidden="true"></i> สถานที่รับของ : ปลายทางที่ <strong>Lockers</strong>' : '<i class="fa fa-truck" aria-hidden="true"></i> สถานที่รับของ : ปลายทางที่ <strong>Booth</strong>'; ?></td>
+                <td style="font-size: 12px;" colspan="7"><?php echo ($value1->receiveType == 1) ? ' สถานที่รับของ : ปลายทางที่ <strong>Lockers</strong>' : ' สถานที่รับของ : ปลายทางที่ <strong>Booth</strong>'; ?></td>
             </tr>
             <?php
             $GetOrder = common\models\costfit\OrderItem::find()->where('orderId=' . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'] . ' and receiveType=' . $value1->receiveType)->all();
