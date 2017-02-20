@@ -113,11 +113,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     }
 </style>
 
-<div class="form-group col-lg-12 col-md-12 col-sm-12">
-    <!--<br>
-    <a class="panel-toggle" href="#PickingPoint"><i></i>New Picking Point</a>
-    -->
-</div>
 
 <?php
 //echo 'ListpickpointBoothValueInLocation : ' . $BoothHistory['ListpickpointBoothValueInLocation'];

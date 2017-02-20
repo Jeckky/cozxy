@@ -40,10 +40,10 @@ class CheckoutController extends MasterController {
      * @return mixed
      */
     public function actionIndex() {
-//echo 'params :' . $this->params['cart']['orderId'] . '::' . $this->params['cart']['items'];
+        //echo 'params :' . $this->params['cart']['orderId'] . '::' . $this->params['cart']['items'];
 
         if (Yii::$app->user->isGuest == 1) {
-//return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
+            //return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         }
         $this->layout = "/content_right";
         $this->title = 'Cozxy.com | checkout';
@@ -62,7 +62,7 @@ class CheckoutController extends MasterController {
 
         if (isset($addressId)) { // ตรวจสอบว่า มี hidden addressId ให้ update ในเทเบิล address
             if (isset($_POST['Address'])) {
-//print_r($_POST['Address']);
+                //print_r($_POST['Address']);
                 $address = \common\models\costfit\Address::find()
                 ->where('userId =' . \Yii::$app->user->id . ' and addressId=' . $addressId . ' and  type = 1')
                 ->one();
@@ -78,7 +78,7 @@ class CheckoutController extends MasterController {
                 }
             }
         } else {
-//echo 'no hidden ';
+            //echo 'no hidden ';
             if (\Yii::$app->user->isGuest) {
                 $address_shipping = \common\models\costfit\Address::find()->where('userId=' . 0 . ' and type = 2  ')
                 ->orderBy('isDefault desc ')
@@ -170,9 +170,9 @@ class CheckoutController extends MasterController {
             $LocationHistory['HistoryBooth'] = PickingPoint:: LocationHistoryReceiveTypeBoothInCustomer($HistoryOrderId);
             $LocationHistoryLockers = $LocationHistory['HistoryLockers'];
             $LocationHistoryBooth = $LocationHistory['HistoryBooth'];
-            //echo '<pre>';
+            //echo '<pre>xxxx';
             //print_r($LocationHistoryLockers);
-            // exit();
+            //exit();
             /*
              *  Location History Lockers
              */
