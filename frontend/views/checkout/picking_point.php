@@ -305,7 +305,7 @@ foreach ($GetOrderMastersGroup as $value) {
                 </div>
                 <?php
                 $mapImages = $ListpickpointLockersValueInLocation['mapImages'];
-                if (isset($mapImages)) {
+                if (isset($mapImagesxx)) {
                     ?>
                     <div class="col-md-12">
                         <h5 class="cs-heading" style="font-size: 14px;color: #166db9;"><i class="fa fa-map-marker" aria-hidden="true" style="color: #166db9;"></i> แผนที่ : ปลายทางที่บูธ </h5>
@@ -480,7 +480,7 @@ foreach ($GetOrderMastersGroup as $value) {
                 </div>
                 <?php
                 $mapImages = $ListpickpointBoothValueInLocation['mapImages'];
-                if (isset($mapImages)) {
+                if (isset($mapImagesx)) {
                     ?>
                     <div class="col-md-12">
                         <h5 class="cs-heading" style="font-size: 14px;color: #166db9;"><i class="fa fa-map-marker" aria-hidden="true" style="color: #166db9;"></i> แผนที่ : ปลายทางที่บูธ </h5>

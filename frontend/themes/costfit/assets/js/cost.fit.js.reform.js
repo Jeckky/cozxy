@@ -1043,4 +1043,7 @@ $('.search-brands').on('ifUnchecked', function (event) {
     });
 });
 
- 
+
+$('#BpickingId').on('click', function () {
+    alert('test');
+});
