@@ -303,6 +303,23 @@ foreach ($GetOrderMastersGroup as $value) {
                         <footer style="color: rgba(255,212,36,.9);">Cozxy.Com</footer>
                     </blockquote>
                 </div>
+                <?php
+                $mapImages = $ListpickpointLockersValueInLocation['mapImages'];
+                if (isset($mapImages)) {
+                    ?>
+                    <div class="col-md-12">
+                        <h5 class="cs-heading" style="font-size: 14px;color: #166db9;"><i class="fa fa-map-marker" aria-hidden="true" style="color: #166db9;"></i> แผนที่ : ปลายทางที่บูธ </h5>
+                        <blockquote style="font-size: 16px;">
+                            <p style="color: #8c8c8c; ">
+                                <?php
+                                //echo 'mapImages :' . $mapImages;
+                                echo '<img src="' . $baseUrl . $mapImages . '" class="img-responsive" style="width: 45% ">';
+                                ?>
+                            </p>
+                            <footer style="color: rgba(255,212,36,.9);">Cozxy.Com</footer>
+                        </blockquote>
+                    </div>
+                <?php } ?>
             <?php } ?>
         </div>
         <?php
@@ -432,7 +449,7 @@ foreach ($GetOrderMastersGroup as $value) {
                         //'data' => [9 => 'Savings'],
                         'model' => $pickingId,
                         'attribute' => 'pickingId',
-                        'options' => ['placeholder' => 'Select ...', 'id' => 'BpickingId'],
+                        'options' => ['placeholder' => 'Select ...', 'id' => 'BpickingId',],
                         //'type' => DepDrop::TYPE_SELECT2,
                         //'options' => ['multiple' => true],
                         'select2Options' => ['pluginOptions' => ['allowClear' => true]],
@@ -461,6 +478,23 @@ foreach ($GetOrderMastersGroup as $value) {
                         <footer style="color: rgba(255,212,36,.9);">Cozxy.Com</footer>
                     </blockquote>
                 </div>
+                <?php
+                $mapImages = $ListpickpointBoothValueInLocation['mapImages'];
+                if (isset($mapImages)) {
+                    ?>
+                    <div class="col-md-12">
+                        <h5 class="cs-heading" style="font-size: 14px;color: #166db9;"><i class="fa fa-map-marker" aria-hidden="true" style="color: #166db9;"></i> แผนที่ : ปลายทางที่บูธ </h5>
+                        <blockquote style="font-size: 16px;">
+                            <p style="color: #8c8c8c;">
+                                <?php
+                                //echo 'mapImages :' . $mapImages;
+                                echo '<img src="' . $baseUrl . $mapImages . '" class="img-responsive" style="width: 45% ">';
+                                ?>
+                            </p>
+                            <footer style="color: rgba(255,212,36,.9);">Cozxy.Com</footer>
+                        </blockquote>
+                    </div>
+                <?php } ?>
             <?php } ?>
         </div>
         <?php

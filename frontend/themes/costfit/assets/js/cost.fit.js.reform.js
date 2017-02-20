@@ -1042,3 +1042,5 @@ $('.search-brands').on('ifUnchecked', function (event) {
 
     });
 });
+
+ 

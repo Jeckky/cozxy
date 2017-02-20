@@ -88,7 +88,7 @@ class PickingPoint {
     public static function LocationHistoryReceiveTypeLockersInCustomer($orderId) {
         $GetOrderItemHistoryReceive = \common\models\costfit\OrderItem::find()
         ->where("orderId=" . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)
-        ->groupBy('receiveType')
+        ->groupBy('receiveType')->orderBy('createDateTime desc')
         ->all();
 
         if (isset($GetOrderItemHistoryReceive) && !empty($GetOrderItemHistoryReceive)) {
@@ -99,7 +99,10 @@ class PickingPoint {
     }
 
     public static function LocationHistoryReceiveTypeBoothInCustomer($orderId) {
-        $GetOrderItemHistoryReceive = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)->groupBy('receiveType')->all();
+        $GetOrderItemHistoryReceive = \common\models\costfit\OrderItem::find()
+        ->where("orderId=" . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)
+        ->groupBy('receiveType')->orderBy('createDateTime desc')
+        ->all();
         if (isset($GetOrderItemHistoryReceive) && !empty($GetOrderItemHistoryReceive)) {
             return $GetOrderItemHistoryReceive[0]->attributes;
         } else {
