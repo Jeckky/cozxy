@@ -297,7 +297,7 @@ foreach ($GetOrderMastersGroup as $value) {
             if ($LockersHistoryLockersNoti == 'isTrue') {
                 ?>
                 <div class="col-md-12">
-                    <h5 class="cs-heading" style="font-size: 14px;"><i class="fa fa-bullhorn" aria-hidden="true" style="color: rgba(255,212,36,.9);"></i> แจ้งเตือนประวัติสถานที่รับสินค้า : ปลายทางที่ล็อคเกอร์ </h5>
+                    <h5 class="cs-heading" style="font-size: 14px; color: #166db9;"><i class="fa fa-bullhorn" aria-hidden="true" style="color: rgba(255,212,36,.9);"></i> แจ้งเตือนประวัติสถานที่รับสินค้า : ปลายทางที่ล็อคเกอร์ </h5>
                     <blockquote style="font-size: 16px;">
                         <p style="color: #8c8c8c;">สถานที่รับสินค้าล่าสุดที่ลูกค้าเคยเลือกไว้ หากลูกค้าต้องการเปลียนจุดรับสินค้า สามารถเปลียนได้จากด้านบน.</p>
                         <footer style="color: rgba(255,212,36,.9);">Cozxy.Com</footer>
@@ -455,7 +455,7 @@ foreach ($GetOrderMastersGroup as $value) {
             if ($BoothHistoryBoothNoti == 'isTrue') {
                 ?>
                 <div class="col-md-12">
-                    <h5 class="cs-heading" style="font-size: 14px;"><i class="fa fa-bullhorn" aria-hidden="true" style="color: rgba(255,212,36,.9);"></i> แจ้งเตือนประวัติสถานที่รับสินค้า : ปลายทางที่บูธ </h5>
+                    <h5 class="cs-heading" style="font-size: 14px;color: #166db9;"><i class="fa fa-bullhorn" aria-hidden="true" style="color: rgba(255,212,36,.9);"></i> แจ้งเตือนประวัติสถานที่รับสินค้า : ปลายทางที่บูธ </h5>
                     <blockquote style="font-size: 16px;">
                         <p style="color: #8c8c8c;">สถานที่รับสินค้าล่าสุดที่ลูกค้าเคยเลือกไว้ หากลูกค้าต้องการเปลียนจุดรับสินค้า สามารถเปลียนได้จากด้านบน.</p>
                         <footer style="color: rgba(255,212,36,.9);">Cozxy.Com</footer>
