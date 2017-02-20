@@ -1049,3 +1049,21 @@ $('#BpickingId').on('change', function (event) {
     //alert(id);
 
 });
+
+function organization(selectObject) {
+    var value = selectObject.value;
+    //alert(value);//default-shipping-address
+    if (value == 'company') {
+        document.getElementById('address-company').disabled = false;
+        document.getElementById('address-tax').disabled = false;
+        //$("#address-company").disabled = false;
+        //$('.field-address-company').show();
+        $('#address-tax').disabled = false;//.setAttribute("disabled", false);
+    } else if (value == 'personal') {
+        //$(".default-shipping-address").find('.field-address-company').hide();
+        //$(".default-shipping-address").find('.field-address-tax').hide();
+        document.getElementById('address-company').disabled = true;
+        document.getElementById('address-tax').disabled = true;
+    }
+
+}

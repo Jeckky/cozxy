@@ -97,10 +97,21 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         'options' => ['class' => 'space-bottom'],
     ]);
     ?>
+    <div class="form-group">
+        <label for="co-organization">รูปแบบขององค์ *</label>
+        <div class="select-style">
+            <select name="co-organization" id="co-country" class="valid" onchange="organization(this)">
+                <option value="personal">บุคคลทั่วไป</option>
+                <option value="company">บริษัท</option>
+            </select>
+        </div>
+    </div>
+    <?php echo $form->field($model, 'company')->textInput([ 'disabled' => 'true']); ?>
+    <?php echo $form->field($model, 'tax')->textInput([ 'disabled' => 'true']); ?>
     <?php echo $form->field($model, 'firstname'); ?>
     <?php echo $form->field($model, 'lastname'); ?>
-    <?php echo $form->field($model, 'company'); ?>
-    <?php echo $form->field($model, 'tax'); ?>
+
+
     <?php echo $form->field($model, 'address')->textarea(); ?>
     <?php
     // Top most parent
