@@ -35,38 +35,47 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
 </style>
 
 <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup">
-    <h3><i class="fa fa-file-text" aria-hidden="true"></i> ใบสั่งซื้อเลขที่ <?php echo $order->orderNo; ?></h3>
+    <h3><i class="fa fa-file-text" aria-hidden="true"></i> ใบสั่งซื้อเลขที่ <?php echo $order->orderNo; ?> test</h3>
     <!--Support-->
     <section class="support">
         <div class="row">
             <!--Left Column-->
             <div class="col-lg-12 col-md-12 ">
                 <div class="col-lg-6 col-md-6 ">
-                    <h5>วันที่จัดส่งสินค้า<!--Picking Point--></h5>
+                    <h5>Picking Point</h5>
                     <table class="table">
                         <tbody>
                             <tr>
-                                <td>
-                                    <div class="col-sm-12" style="color: #000; font-size: 13px;">
-                                        <div class="col-sm-12"> วันที่จัดส่งสินค้า ภายในวันที่ Dates Month Years  </div>
-                                        <div class="col-sm-12"><strong>หมายเหตุ</strong> หากมีการเปลียนวันจะแจ้งให้ทราบทาง Email และ SMS ในลำดับต่อไป</div>
-                                    </div>
-                                    <?php /*
-                                      if ($order->attributes['pickingId'] != '') {
-
-                                      $Cities = \common\models\dbworld\Cities::find()->where("cityId = '" . $order->pickingpoint->amphurId . "' ")->one();
-                                      echo isset($Cities->attributes['localName']) ? $Cities->attributes['localName'] : '';
-                                      echo '&nbsp;';
-                                      $States = \common\models\dbworld\States::find()->where("stateId = '" . $order->pickingpoint->provinceId . "' ")->one();
-                                      echo isset($States->attributes['localName']) ? $States->attributes['localName'] : '';
-                                      echo '&nbsp;';
-                                      $Countries = \common\models\dbworld\Countries::find()->where("countryId = '" . $order->pickingpoint->countryId . "' ")->one();
-                                      echo isset($Countries->attributes['localName']) ? 'ประเทศ' . $Countries->attributes['localName'] : 'ประเทศ' . 'ไม่ระบุ';
-                                      echo "<br>";
-                                      echo isset($order->pickingpoint->title) ? 'จุดรับสินค้า : ' . $order->pickingpoint->title : '';
-                                      } else {
-                                      echo 'ไม่พบข้อมูล';
-                                      } */
+                                <td style="line-height: 20px;">
+                                    <?php
+                                    if ($order->attributes['pickingId'] != '') {
+                                        //echo 'test confirm checkout';
+                                        //echo isset($order->attributes['shippingCompany']) ? 'บริษัท' . $order->attributes['shippingCompany'] : 'คุณ' . $order->user->firstname . " " . $order->user->lastname . '<br>';
+                                        //echo isset($order->attributes['shippingAddress']) ? $order->attributes['shippingAddress'] : '';
+                                        //echo '<br>';
+                                        //$District = \common\models\dbworld\District::find()->where("districtId = '" . $order->attributes['shippingDistrictId'] . "' ")->one();
+                                        //echo isset($District->attributes['localName']) ? $District->attributes['localName'] : '';
+                                        //echo '&nbsp;';
+                                        $Cities = \common\models\dbworld\Cities::find()->where("cityId = '" . $order->pickingpoint->amphurId . "' ")->one();
+                                        echo isset($Cities->attributes['localName']) ? $Cities->attributes['localName'] : '';
+                                        echo '&nbsp;';
+                                        $States = \common\models\dbworld\States::find()->where("stateId = '" . $order->pickingpoint->provinceId . "' ")->one();
+                                        echo isset($States->attributes['localName']) ? $States->attributes['localName'] : '';
+                                        echo '&nbsp;';
+                                        $Countries = \common\models\dbworld\Countries::find()->where("countryId = '" . $order->pickingpoint->countryId . "' ")->one();
+                                        echo isset($Countries->attributes['localName']) ? 'ประเทศ' . $Countries->attributes['localName'] : 'ประเทศ' . 'ไม่ระบุ';
+                                        echo "<br>";
+                                        echo isset($order->pickingpoint->title) ? 'จุดรับสินค้า : ' . $order->pickingpoint->title : '';
+                                        //echo '123<pre>';
+                                        //print_r($Countries);
+                                        //echo '<br> รหัสไปรษณีย์';
+                                        //echo isset($order->attributes['shippingZipcode']) ? $order->attributes['shippingZipcode'] : '';
+                                        //echo '<br> โทร ';
+                                        //echo isset($order->attributes['shippingTel']) ? $order->attributes['shippingTel'] : '';
+                                        // echo '<br>';
+                                    } else {
+                                        echo 'ไม่พบข้อมูล';
+                                    }
                                     ?>
                                 </td>
                         </tbody>
@@ -183,7 +192,10 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
             </div>
         </div>
     </section><!--Support Close-->
-
+    <div class="col-sm-12" style="color: #000; font-size: 13px;">
+        <div class="col-sm-12"> วันที่จัดส่งสินค้า ภายในวันที่ 20 มีนาคม 2560  </div>
+        <div class="col-sm-12">&nbsp;&nbsp;*** หมายเหตุ หากมีการเปลียนวันจะแจ้งให้ทราบทาง Email และ SMS ในลำดับต่อไป</div>
+    </div>
     <br><br><br>
 </div>
 
