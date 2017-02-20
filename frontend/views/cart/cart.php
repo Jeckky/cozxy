@@ -165,7 +165,7 @@ use common\models\ModelMaster;
                         <?php echo $this->render('@app/views/coupon/coupon'); ?>
                         <!--<input type="button" class="btn btn-primary btn-sm btn-block" name="update-cart" value="Update shopping cart" onclick="proceed('update_cart')">-->
                         <?php if (!Yii::$app->user->isGuest) { ?>
-                            <a class="btn btn-black btn-block" href="<?php echo $baseUrl; ?>/cart/list-product-all">Proceed to checkou</a>
+                            <a class="btn btn-black btn-block" href="<?php echo $baseUrl; ?>/cart/list-product-all">Proceed to checkout</a>
                            <!--<input type="button" class="btn btn-black btn-block" name="to-checkout" value="Proceed to checkout" onclick="proceed('to_checkout')">-->
                         <?php } else { ?>
                             <input type="button" class="btn btn-black btn-block" name="to-checkout" value="Proceed to checkout" onclick="proceed('to_guest')">

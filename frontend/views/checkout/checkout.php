@@ -142,9 +142,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                             <div class="main-title">
                                                                 <?php
                                                                 echo ($value->firstname != null) ? $value->firstname : $user->firstname;
-                                                                echo '&nbsp;
-                            &nbsp;
-                            ';
+                                                                echo '&nbsp;  &nbsp;  ';
                                                                 echo ($value->lastname != '') ? $value->lastname : $user->lastname;
                                                                 ?><br>
                                                                 <?php echo ($value->company) ? $value->company : $value->company . ', '; ?><br>
