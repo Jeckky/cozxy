@@ -24,7 +24,7 @@ if (count($order) > 0) {
         foreach ($GetOrderItemMasters as $value1) {
             //if ($value1->receiveType == 1) {
             ?>
-            <tr style="background-color:#fffef6 ; border-bottom: 1px #000000 solid; height: 25px;">
+            <tr style="background-color:#f1f1f1 ; border-bottom: 1px #000000 solid; height: 25px;">
                 <td style="font-size: 12px;" colspan="7"><?php echo ($value1->receiveType == 1) ? '<i class="fa fa-truck" aria-hidden="true"></i> สถานที่รับของ : ปลายทางที่ Lockers' : '<i class="fa fa-truck" aria-hidden="true"></i> สถานที่รับของ : ปลายทางที่ Booth'; ?></td>
             </tr>
             <?php
