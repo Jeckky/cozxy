@@ -16,7 +16,7 @@ if (count($order) > 0) {
          * 10/1/2017
          */
         ?>
-        <tr style="background-color:#fffef6 ; border-bottom: 1px #000000 solid; height: 25px;">
+        <tr style="background-color:rgb(220, 220, 220) ; border-bottom: 1px #000000 solid; height: 25px;">
             <td style="font-size: 12px;" colspan="7"><i class="fa fa-users" aria-hidden="true"></i> <strong><?php echo isset($value1->user) ? $value1->user->code : '-'; ?></strong></td>
         </tr>
         <?php
@@ -24,7 +24,7 @@ if (count($order) > 0) {
         foreach ($GetOrderItemMasters as $value1) {
             //if ($value1->receiveType == 1) {
             ?>
-            <tr style="background-color:rgb(220, 220, 220) ; border-bottom: 1px #000000 solid; height: 25px;">
+            <tr style="background-color:#fffef6 ; border-bottom: 1px #000000 solid; height: 25px;">
                 <td style="font-size: 12px;" colspan="7"><?php echo ($value1->receiveType == 1) ? '<i class="fa fa-truck" aria-hidden="true"></i> สถานที่รับของ : ปลายทางที่ Lockers' : '<i class="fa fa-truck" aria-hidden="true"></i> สถานที่รับของ : ปลายทางที่ Booth'; ?></td>
             </tr>
             <?php
@@ -40,7 +40,7 @@ if (count($order) > 0) {
                 <tr style=" border-bottom: 1px #000000 solid;">
                     <td style="font-size: 12px;"><?php echo ++$i; ?></td>
                     <td style="font-size: 12px;"><?php echo isset($listOrderItemsShow['code']) ? $listOrderItemsShow['code'] : '-'; ?></td>
-                    <td style="font-size: 12px;"><?php echo isset($listOrderItemsShow['title']) ? $listOrderItemsShow['title'] : '-'; ?></td>
+                    <td style="font-size: 12px; width: 40%;"><?php echo isset($listOrderItemsShow['title']) ? $listOrderItemsShow['title'] : '-'; ?></td>
                     <td style="font-size: 12px;"><?php echo isset($listOrderItemsShow['unit']) ? $listOrderItemsShow->units->title : '-'; ?></td>
                     <td style="font-size: 12px; text-align: right;"><?php echo isset($value->price) ? number_format($value->price, 2) : '-'; ?></td>
                     <td style="font-size: 12px; text-align: right;"><?php echo isset($value->quantity) ? $value->quantity : '-' ?></td>
