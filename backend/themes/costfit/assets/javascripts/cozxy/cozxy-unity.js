@@ -415,7 +415,7 @@ function switchers(id, type, status) {
     //alert(approveReceiveType);
     ///var ReceiveType = $('#approveReceiveType-' + id).checked;
     //
-    alert('test');
+    //alert('test');
     if (type == 2) {
         $.ajax({
             url: $baseUrl + 'management/approve/approve-items',
