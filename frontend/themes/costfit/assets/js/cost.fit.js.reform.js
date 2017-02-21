@@ -1089,6 +1089,7 @@ $('#BpickingId').change(function (event, id, value) {
                 var JSONObject = JSON.parse(data);
                 //console.log(JSONObject.mapImages);
                 $('.name-booth').html(JSONObject.title);
+                $('.description-booth').html('ที่อยู่:' + JSONObject.description);
                 $('.view-map-images-booth').html('<div class="col-sm-12" style="padding: 5px;">\n\
                         <img class="img-responsive" src="' + $baseUrl + JSONObject.mapImages + '" alt="" style="width:100%;">\n\
                 </div>');
@@ -1119,6 +1120,7 @@ $('#pickingpoint-pickingid').change(function (event, id, value) {
                 var JSONObject = JSON.parse(data);
                 //console.log(JSONObject.mapImages);
                 $('.name-lockers').html(JSONObject.title);
+                $('.description-lockers').html('ที่อยู่:' + JSONObject.description);
                 $('.view-map-images-lockers').html('<div class="col-sm-12" style="padding: 5px;">\n\
                         <img class="img-responsive" src="' + $baseUrl + JSONObject.mapImages + '" alt="" style="width:100%;">\n\
                 </div>');

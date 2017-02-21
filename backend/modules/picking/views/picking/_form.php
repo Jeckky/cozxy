@@ -153,7 +153,7 @@ use kartik\widgets\Select2;
     <?php $this->registerJs("
            init.push(function () {
             if (!$('html').hasClass('ie8')) {
-                $('#pickingpoint-description').summernote({
+                $('#pickingpoint-descriptionx').summernote({
                     height: 200,
                     tabsize: 2,
                     codemirror: {

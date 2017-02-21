@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'pickingId',
                 'code',
                 'title',
-                'description:html',
+                //'description:html',
                 //'countryId',
                 [ // รวมคอลัมน์
                     'label' => 'Country',

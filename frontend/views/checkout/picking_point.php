@@ -314,6 +314,7 @@ foreach ($GetOrderMastersGroup as $value) {
                         <h5 class="cs-heading" style="font-size: 14px;color: #166db9;">
                             <i class="fa fa-map-marker" aria-hidden="true" style="color: #166db9;"></i> แผนที่ : ปลายทางที่ล็อคเกอร์  (<span class="name-lockers" style="color: #2ca02c;"></span>) </h5>
                         <blockquote style="font-size: 16px;">
+                            <p class="description-lockers" style="color: #000000;"></p>
                             <p class="view-map-images-lockers" style="color: #8c8c8c;">
                                 <?php
                                 //echo 'mapImages :' . $mapImages;
@@ -517,6 +518,7 @@ foreach ($GetOrderMastersGroup as $value) {
                         <h5 class="cs-heading" style="font-size: 14px;color: #166db9;">
                             <i class="fa fa-map-marker" aria-hidden="true" style="color: #166db9;"></i> แผนที่ : ปลายทางที่บูธ (<span class="name-booth" style="color: #2ca02c;"></span>) </h5>
                         <blockquote style="font-size: 16px;">
+                            <p class="description-booth" style="color: #000000;"></p>
                             <p class="view-map-images-booth" style="color: #8c8c8c;">
                                 <?php
                                 //echo 'mapImages :' . $mapImages;

@@ -44,7 +44,7 @@ return [
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title', 'countryId'], 'string', 'max' => 45],
             [['code'], 'string', 'max' => 30],
-            [['description'], 'string', 'max' => 200],
+            [['description'], 'string', 'max' => 250],
             [['ip', 'macAddress', 'authCode'], 'string', 'max' => 100],
             [['mapImages'], 'string', 'max' => 150],
         ];
