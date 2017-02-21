@@ -4,8 +4,13 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\PickingPoint */
-
-$this->title = $model->title . ($receive) == 1 ? ' Update Picking Point :: Lockers' : ' Update Picking Point :: Booth';
+//echo $receive;
+if ($receive == 1) {
+    $txt = 'Update Picking Point :: Lockers';
+} else {
+    $txt = 'Update Picking Point :: Booth';
+}
+$this->title = $model->title . ' :: ' . $txt;
 $this->params['breadcrumbs'][] = ['label' => 'Picking Points', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->pickingId]];
 $this->params['breadcrumbs'][] = 'Update';

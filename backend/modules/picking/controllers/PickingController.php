@@ -155,6 +155,7 @@ class PickingController extends PickingMasterController {
      */
     public function actionUpdate($id) {
         $receive = Yii::$app->request->get('receive');
+        //echo $receive;
         $model = $this->findModel($id);
         $modelImage = $this->findModel($id);
         $folderName = "map"; //  Size 553 x 484
