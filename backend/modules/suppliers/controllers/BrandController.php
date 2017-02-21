@@ -107,6 +107,7 @@ class BrandController extends SuppliersMasterController {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
+        $modelImage = $this->findModel($id);
         $folderName = "Brand"; //  Size 553 x 484
         $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName;
         if (isset($_POST["Brand"])) {
@@ -122,7 +123,7 @@ class BrandController extends SuppliersMasterController {
                 $newFileName = Upload::UploadBasic('Brand[image]', $folderName, $uploadPath, '164', '120');
                 $model->image = '/' . 'images/' . $folderName . "/" . $newFileName;
             } else {
-                echo 'No';
+                $model->image = $modelImage->image;
             }
 
             $model->userId = Yii::$app->user->identity->userId;

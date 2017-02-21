@@ -156,6 +156,7 @@ class PickingController extends PickingMasterController {
     public function actionUpdate($id) {
         $receive = Yii::$app->request->get('receive');
         $model = $this->findModel($id);
+        $modelImage = $this->findModel($id);
         $folderName = "map"; //  Size 553 x 484
         $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . 'picking-point/' . $folderName;
 
@@ -168,14 +169,30 @@ class PickingController extends PickingMasterController {
              */
             $model->attributes = $_POST["PickingPoint"];
             $imageObj = \yii\web\UploadedFile::getInstanceByName("PickingPoint[mapImages]");
+
+            //echo '<pre>';
+            //var_dump($imageObj);
+            //exit();
+            //print_r($imageObj);
+            // exit();
+            // if (var_dump($imageObj) == NULL) {
+            //echo '1';
+            //$model->mapImages = $model->mapImages;
+            //} else {
             if (isset($imageObj) && !empty($imageObj)) {
+                //if ($imageObj->name != '') {
                 $newFileName = Upload::UploadBasic('PickingPoint[mapImages]', $folderName, $uploadPath, '500', '500');
                 $model->mapImages = '/' . 'images/' . 'picking-point/' . $folderName . "/" . $newFileName;
+                //}
             } else {
-                echo 'No';
+                //echo 'No';
+                $model->mapImages = $modelImage->mapImages;
             }
-            //$model->userId = Yii::$app->user->identity->userId;
+            //echo '2';
+            //}
+
             $model->updateDateTime = new \yii\db\Expression('NOW()');
+            //exit();
             //if ($model->load(Yii::$app->request->post()) && $model->save(FALSE)) {
             if ($model->save(FALSE)) {
                 return $this->redirect(['view', 'id' => $model->pickingId, 'receive' => $receive]);
