@@ -1044,13 +1044,13 @@ $('.search-brands').on('ifUnchecked', function (event) {
 });
 
 // the last child
-$('#BpickingId').on('change', function (event) {
-    //var id = $(this).attr('id');
-    //alert(id);
+//$('#BpickingId').on('change', function (event) {
+//var id = $(this).attr('id');
+//alert(id);
 
-});
+//});
 
-function organization(selectObject) {
+function organization(selectObject, value) {
     var value = selectObject.value;
     //alert(value);//default-shipping-address
     if (value == 'company') {
@@ -1064,6 +1064,68 @@ function organization(selectObject) {
         //$(".default-shipping-address").find('.field-address-tax').hide();
         document.getElementById('address-company').disabled = true;
         document.getElementById('address-tax').disabled = true;
+    } else {
+        alert(value);
     }
 
 }
+
+$('#BpickingId').change(function (event, id, value) {
+    prev_val = $(this).val();
+    //console.log(value);
+    console.log(prev_val);
+    //alert(b_pickingid);
+    //alert('test');
+    $.ajax({
+        type: "POST",
+        //dataType: "JSON",
+        url: $baseUrl + "checkout/map-images",
+        data: {'pickingIds': prev_val},
+        success: function (data, status)
+        {
+            //console.log(data);
+            //console.log(status);
+            if (status == "success") {
+                var JSONObject = JSON.parse(data);
+                //console.log(JSONObject.mapImages);
+                $('.name-booth').html(JSONObject.title);
+                $('.view-map-images-booth').html('<div class="col-sm-12" style="padding: 5px;">\n\
+                        <img class="img-responsive" src="' + $baseUrl + JSONObject.mapImages + '" alt="" style="width:100%;">\n\
+                </div>');
+            } else {
+                $('.name-booth').html('');
+                $('.view-map-images-booth').html('');
+            }
+        }
+    });
+});
+
+$('#pickingpoint-pickingid').change(function (event, id, value) {
+    prev_val = $(this).val();
+    //console.log(value);
+    console.log(prev_val);
+    //alert(b_pickingid);
+    //alert('test');
+    $.ajax({
+        type: "POST",
+        //dataType: "JSON",
+        url: $baseUrl + "checkout/map-images",
+        data: {'pickingIds': prev_val},
+        success: function (data, status)
+        {
+            //console.log(data);
+            //console.log(status);
+            if (status == "success") {
+                var JSONObject = JSON.parse(data);
+                //console.log(JSONObject.mapImages);
+                $('.name-lockers').html(JSONObject.title);
+                $('.view-map-images-lockers').html('<div class="col-sm-12" style="padding: 5px;">\n\
+                        <img class="img-responsive" src="' + $baseUrl + JSONObject.mapImages + '" alt="" style="width:100%;">\n\
+                </div>');
+            } else {
+                $('.name-lockers').html('');
+                $('.view-map-images-lockers').html('');
+            }
+        }
+    });
+});

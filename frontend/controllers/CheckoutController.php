@@ -714,4 +714,19 @@ class CheckoutController extends MasterController {
         endforeach;
     }
 
+    function actionMapImages() {
+        //echo 'test map images';
+        $pickingId = Yii::$app->request->post('pickingIds');
+
+        if (isset($pickingId) && !empty($pickingId)) {
+            $mapImages = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $pickingId)->one();
+            //print_r($mapImages->attributes);
+            if (isset($mapImages) && !empty($mapImages)) {
+                return json_encode($mapImages->attributes);
+            } else {
+                return NULL;
+            }
+        }
+    }
+
 }

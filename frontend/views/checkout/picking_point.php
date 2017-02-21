@@ -308,20 +308,33 @@ foreach ($GetOrderMastersGroup as $value) {
                 </div>
                 <?php
                 $mapImages = $ListpickpointLockersValueInLocation['mapImages'];
-                if (isset($mapImagesxx)) {
+                if (isset($mapImages)) {
                     ?>
                     <div class="col-md-12">
-                        <h5 class="cs-heading" style="font-size: 14px;color: #166db9;"><i class="fa fa-map-marker" aria-hidden="true" style="color: #166db9;"></i> แผนที่ : ปลายทางที่บูธ </h5>
+                        <h5 class="cs-heading" style="font-size: 14px;color: #166db9;">
+                            <i class="fa fa-map-marker" aria-hidden="true" style="color: #166db9;"></i> แผนที่ : ปลายทางที่ล็อคเกอร์  (<span class="name-lockers" style="color: #2ca02c;"></span>) </h5>
                         <blockquote style="font-size: 16px;">
-                            <p style="color: #8c8c8c; ">
+                            <p class="view-map-images-lockers" style="color: #8c8c8c;">
                                 <?php
                                 //echo 'mapImages :' . $mapImages;
-                                echo '<img src="' . $baseUrl . $mapImages . '" class="img-responsive" style="width: 45% ">';
+                                //echo '<img src="' . $baseUrl . $mapImages . '" class="img-responsive" style="width: 45% ">';
                                 ?>
                             </p>
                             <footer style="color: rgba(255,212,36,.9);">Cozxy.Com</footer>
                         </blockquote>
                     </div>
+                    <!--<div class="col-md-12">
+                        <h5 class="cs-heading" style="font-size: 14px;color: #166db9;"><i class="fa fa-map-marker" aria-hidden="true" style="color: #166db9;"></i> แผนที่ : ปลายทางที่บูธ </h5>
+                        <blockquote style="font-size: 16px;">
+                            <p style="color: #8c8c8c; ">
+                    <?php
+                    //echo 'mapImages :' . $mapImages;
+                    //echo '<img src="' . $baseUrl . $mapImages . '" class="img-responsive" style="width: 45% ">';
+                    ?>
+                            </p>
+                            <footer style="color: rgba(255,212,36,.9);">Cozxy.Com</footer>
+                        </blockquote>
+                    </div>-->
                 <?php } ?>
             <?php } ?>
         </div>
@@ -429,15 +442,23 @@ foreach ($GetOrderMastersGroup as $value) {
                     echo Html::hiddenInput('booth-input-type-13', $ListpickpointBoothValueInLocation['pickingId'], ['id' => 'booth-input-type-13']);
                     echo Html::hiddenInput('booth-input-type-23', $ListpickpointBoothValueInLocation['pickingId'], ['id' => 'booth-input-type-23']);
                     echo Html::hiddenInput('booth-input-type-33', '2', ['id' => 'booth-input-type-33']);
+                    $pickingIds = $ListpickpointBoothValueInLocation['pickingId'];
                 }
                 if ($yourbrowser != 'Safari') {
                     echo $form->field($pickingPointBooth, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
                         //'data' => [9 => 'Savings'],
                         'model' => $pickingId,
                         'attribute' => 'pickingId',
-                        'options' => ['placeholder' => 'Select ...', 'id' => 'BpickingId'],
+                        'options' => ['placeholder' => 'Select ...', 'id' => 'BpickingId',],
                         'type' => DepDrop::TYPE_SELECT2,
                         //'options' => ['multiple' => true],
+                        'pluginEvents' => [
+                        //  'onchange' => 'mapimage(' . $pickingIds . ')'
+                        // "depdrop.change" => "function(event, id, value) { "
+                        // . "console.log('value: ' + value + ' id: ' + id + ' test :'+$pickingIds); "
+                        //. "$.post( 'checkout/map-images', { pickingId: value, valueid: id } );"
+                        //. "}",
+                        ],
                         'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                         'pluginOptions' => [
                             'initialize' => true,
@@ -455,6 +476,13 @@ foreach ($GetOrderMastersGroup as $value) {
                         'options' => ['placeholder' => 'Select ...', 'id' => 'BpickingId',],
                         //'type' => DepDrop::TYPE_SELECT2,
                         //'options' => ['multiple' => true],
+                        'pluginEvents' => [
+                        //  'onchange' => 'mapimage(' . $pickingIds . ')'
+                        //"depdrop.change" => "function(event, id, value) { "
+                        //. "console.log('value: ' + value + ' id: ' + id + ' test :'+$pickingIds); "
+                        //. "$.post( 'checkout/map-images', { pickingId: value, valueid: id } );"
+                        //. "}",
+                        ],
                         'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                         'pluginOptions' => [
                             'initialize' => true,
@@ -483,15 +511,16 @@ foreach ($GetOrderMastersGroup as $value) {
                 </div>
                 <?php
                 $mapImages = $ListpickpointBoothValueInLocation['mapImages'];
-                if (isset($mapImagesx)) {
+                if (isset($mapImages)) {
                     ?>
                     <div class="col-md-12">
-                        <h5 class="cs-heading" style="font-size: 14px;color: #166db9;"><i class="fa fa-map-marker" aria-hidden="true" style="color: #166db9;"></i> แผนที่ : ปลายทางที่บูธ </h5>
+                        <h5 class="cs-heading" style="font-size: 14px;color: #166db9;">
+                            <i class="fa fa-map-marker" aria-hidden="true" style="color: #166db9;"></i> แผนที่ : ปลายทางที่บูธ (<span class="name-booth" style="color: #2ca02c;"></span>) </h5>
                         <blockquote style="font-size: 16px;">
-                            <p style="color: #8c8c8c;">
+                            <p class="view-map-images-booth" style="color: #8c8c8c;">
                                 <?php
                                 //echo 'mapImages :' . $mapImages;
-                                echo '<img src="' . $baseUrl . $mapImages . '" class="img-responsive" style="width: 45% ">';
+                                //echo '<img src="' . $baseUrl . $mapImages . '" class="img-responsive" style="width: 45% ">';
                                 ?>
                             </p>
                             <footer style="color: rgba(255,212,36,.9);">Cozxy.Com</footer>
