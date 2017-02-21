@@ -64,6 +64,8 @@ class SearchController extends MasterController {
             $this->view->params['brandId'] = explode(",", $idString);
             $products->andWhere("product.brandId in ($idString)");
         }
+        //echo '<pre>';
+        //print_r($products);
         $products = new \yii\data\ActiveDataProvider([
             'query' => $products,
             'pagination' => array('pageSize' => 9),
