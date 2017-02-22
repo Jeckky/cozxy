@@ -61,7 +61,7 @@ return [
             'class' => 'yii\rbac\DbManager',
         ],
     ],
-    // 'language' => 'TH',
-    'language' => 'en',
+    'language' => 'TH',
+    //'language' => 'en',
     'sourceLanguage' => 'US',
 ];

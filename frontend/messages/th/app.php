@@ -25,4 +25,5 @@ return [
     'Account' => 'โปรไฟล์ของเรา',
     'LOGOUT' => 'ออกจากระบบ',
     'WISHLIST' => '',
+    'Product Returns' => 'คำขอคืนสินค้า'
 ];
