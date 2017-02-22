@@ -299,7 +299,7 @@ foreach ($GetOrderMastersGroup as $value) {
             <?php
             if ($LockersHistoryLockersNoti == 'isTrue') {
                 ?>
-                <div class="col-md-12">
+                <div class="col-md-12 history-lockers-null">
                     <h5 class="cs-heading" style="font-size: 14px; color: #166db9;"><i class="fa fa-bullhorn" aria-hidden="true" style="color: #166db9;"></i> แจ้งเตือนประวัติสถานที่รับสินค้า : ปลายทางที่ล็อคเกอร์ </h5>
                     <blockquote style="font-size: 16px;">
                         <p style="color: #8c8c8c;">สถานที่รับสินค้าล่าสุดที่ลูกค้าเคยเลือกไว้ หากลูกค้าต้องการเปลียนจุดรับสินค้า สามารถเปลียนได้จากด้านบน.</p>
@@ -503,7 +503,7 @@ foreach ($GetOrderMastersGroup as $value) {
             <?php
             if ($BoothHistoryBoothNoti == 'isTrue') {
                 ?>
-                <div class="col-md-12">
+                <div class="col-md-12 history-booth-null">
                     <h5 class="cs-heading" style="font-size: 14px;color: #166db9;"><i class="fa fa-bullhorn" aria-hidden="true" style="color: #166db9;"></i> แจ้งเตือนประวัติสถานที่รับสินค้า : ปลายทางที่บูธ </h5>
                     <blockquote style="font-size: 16px;">
                         <p style="color: #8c8c8c;">สถานที่รับสินค้าล่าสุดที่ลูกค้าเคยเลือกไว้ หากลูกค้าต้องการเปลียนจุดรับสินค้า สามารถเปลียนได้จากด้านบน.</p>
@@ -514,7 +514,7 @@ foreach ($GetOrderMastersGroup as $value) {
                 $mapImages = $ListpickpointBoothValueInLocation['mapImages'];
                 if (isset($mapImages)) {
                     ?>
-                    <div class="col-md-12">
+                    <div class="col-md-12 ">
                         <h5 class="cs-heading" style="font-size: 14px;color: #166db9;">
                             <i class="fa fa-map-marker" aria-hidden="true" style="color: #166db9;"></i> แผนที่ : ปลายทางที่บูธ (<span class="name-booth" style="color: #2ca02c;"></span>) </h5>
                         <blockquote style="font-size: 16px;">

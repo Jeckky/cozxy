@@ -1073,7 +1073,7 @@ function organization(selectObject, value) {
 $('#BpickingId').change(function (event, id, value) {
     prev_val = $(this).val();
     //console.log(value);
-    console.log(prev_val);
+    //console.log(prev_val);
     //alert(b_pickingid);
     //alert('test');
     $.ajax({
@@ -1089,6 +1089,11 @@ $('#BpickingId').change(function (event, id, value) {
                 var JSONObject = JSON.parse(data);
                 //console.log(JSONObject.mapImages);
                 $('.name-booth').html(JSONObject.title);
+                //$('.history-booth-null').setAttribute('data', 'true');
+                //alert(JSONObject.title);
+                //if (JSONObject.title != '') {
+                //$('.history-booth-null').html('');
+                //}
                 $('.description-booth').html('ที่อยู่:' + JSONObject.description);
                 $('.view-map-images-booth').html('<div class="col-sm-12" style="padding: 5px;">\n\
                         <img class="img-responsive" src="' + $baseUrl + JSONObject.mapImages + '" alt="" style="width:100%;">\n\
@@ -1096,6 +1101,7 @@ $('#BpickingId').change(function (event, id, value) {
             } else {
                 $('.name-booth').html('');
                 $('.view-map-images-booth').html('');
+                //$('.history-booth-null').html('');
             }
         }
     });
@@ -1104,12 +1110,13 @@ $('#BpickingId').change(function (event, id, value) {
 $('#pickingpoint-pickingid').change(function (event, id, value) {
     prev_val = $(this).val();
     //console.log(value);
-    console.log(prev_val);
+    //console.log(prev_val);
     //alert(b_pickingid);
     //alert('test');
     $.ajax({
         type: "POST",
         //dataType: "JSON",
+        //dataType: "html",
         url: $baseUrl + "checkout/map-images",
         data: {'pickingIds': prev_val},
         success: function (data, status)
@@ -1120,6 +1127,9 @@ $('#pickingpoint-pickingid').change(function (event, id, value) {
                 var JSONObject = JSON.parse(data);
                 //console.log(JSONObject.mapImages);
                 $('.name-lockers').html(JSONObject.title);
+                //if (JSONObject.title != '') {
+                //$('.history-lockers-null').html('');
+                //}
                 $('.description-lockers').html('ที่อยู่:' + JSONObject.description);
                 $('.view-map-images-lockers').html('<div class="col-sm-12" style="padding: 5px;">\n\
                         <img class="img-responsive" src="' + $baseUrl + JSONObject.mapImages + '" alt="" style="width:100%;">\n\
@@ -1127,6 +1137,7 @@ $('#pickingpoint-pickingid').change(function (event, id, value) {
             } else {
                 $('.name-lockers').html('');
                 $('.view-map-images-lockers').html('');
+                //$('.history-lockers-null').html('');
             }
         }
     });
