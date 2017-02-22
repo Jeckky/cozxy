@@ -85,7 +85,7 @@ use common\models\ModelMaster;
         <div class="row">
             <!--Items List-->
             <div class="col-lg-9 col-md-9">
-                <h2 class="title">List product all</h2>
+                <h2 class="title">รายการสินค้าทั้งหมด</h2>
                 <table class="items-list">
                     <!--<tr>
                         <th>&nbsp;</th>
