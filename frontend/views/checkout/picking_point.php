@@ -317,6 +317,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             <p class="description-lockers" style="color: #000000;"></p>
                             <p class="view-map-images-lockers" style="color: #8c8c8c;">
                                 <?php
+                                echo '<img src="' . $baseUrl . '/images/icon/loader.gif" class="img-responsive">';
                                 //echo 'mapImages :' . $mapImages;
                                 //echo '<img src="' . $baseUrl . $mapImages . '" class="img-responsive" style="width: 45% ">';
                                 ?>
@@ -521,6 +522,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             <p class="description-booth" style="color: #000000;"></p>
                             <p class="view-map-images-booth" style="color: #8c8c8c;">
                                 <?php
+                                echo '<img src="' . $baseUrl . '/images/icon/loader.gif" class="img-responsive">';
                                 //echo 'mapImages :' . $mapImages;
                                 //echo '<img src="' . $baseUrl . $mapImages . '" class="img-responsive" style="width: 45% ">';
                                 ?>
