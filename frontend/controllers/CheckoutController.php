@@ -566,7 +566,7 @@ class CheckoutController extends MasterController {
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Order Thank';
         $res = [];
-//throw new \yii\base\Exception(print_r($_REQUEST, TRUE));
+        //throw new \yii\base\Exception(print_r($_REQUEST, TRUE));
         if (isset($_REQUEST) && $_REQUEST != array()) {
             $order = Order::find()->where("orderNo='" . $_REQUEST["req_reference_number"] . "'")->one();
             if ($_REQUEST["decision"] == "ACCEPT") {
@@ -585,16 +585,16 @@ class CheckoutController extends MasterController {
                 $order->invoiceNo = Order::genInvNo($order);
                 $order->status = Order::ORDER_STATUS_E_PAYMENT_SUCCESS;
                 $order->paymentDateTime = new \yii\db\Expression('NOW()');
-//$this->updateSupplierStock($order); //ถ้าจ่ายบัติผ่าน ตัด stock ของ supplier
-//ตัดstock ในPRODUCT SUPPLIER
+                //$this->updateSupplierStock($order); //ถ้าจ่ายบัติผ่าน ตัด stock ของ supplier
+                //ตัดstock ในPRODUCT SUPPLIER
                 if ($order->save()) {
                     $res["status"] = 1;
                     $res["invoiceNo"] = $order->invoiceNo;
                     $res["message"] = \common\models\costfit\EPayment::getReasonCodeText($_POST["reason_code"]);
 
 
-// Update Send Date field
-// ****รอ Confirm เรื่อง สั่งหลังกี่โมง เลื่อนไปอีก 1 วัน****
+                    // Update Send Date field
+                    // ****รอ Confirm เรื่อง สั่งหลังกี่โมง เลื่อนไปอีก 1 วัน****
                     if ($order->isSlowest) {
                         $maxDate = \common\models\costfit\OrderItem::findSlowestDate($order->orderId);
                         foreach ($order->orderItems as $item):
@@ -608,7 +608,7 @@ class CheckoutController extends MasterController {
                             $item->save();
                         endforeach;
                     }
-// Update Send Date field
+                    // Update Send Date field
                 }
             } else if ($_REQUEST["decision"] == "REVIEW") {
                 $order->status = Order::ORDER_STATUS_E_PAYMENT_PENDING;
@@ -623,7 +623,7 @@ class CheckoutController extends MasterController {
 
                 $this->returnSupplierStock($order); //คืนstock
             }
-//Order::saveOrderPaymentHistory($order, $_REQUEST["decision"], $_POST["reason_code"], $_POST['score_device_fingerprint_true_ipaddress']);
+            //Order::saveOrderPaymentHistory($order, $_REQUEST["decision"], $_POST["reason_code"], $_POST['score_device_fingerprint_true_ipaddress']);
             Order::saveOrderPaymentHistory($order, $_REQUEST["decision"], $_POST["reason_code"], 1);
         }
 
@@ -680,8 +680,8 @@ class CheckoutController extends MasterController {
     }
 
     public function updateSupplierStock($order) {
-//foreach ($order as $orderId):
-// throw new \yii\base\Exception($orderId->orderId);
+        //foreach ($order as $orderId):
+        // throw new \yii\base\Exception($orderId->orderId);
         $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId)->all();
         foreach ($orderItems as $orderItem):
             $productSupp = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $orderItem->productSuppId)->one();
@@ -699,7 +699,7 @@ class CheckoutController extends MasterController {
             $productSupp->updateDateTime = new \yii\db\Expression('NOW()');
             $productSupp->save(false);
         endforeach;
-//endforeach;
+        //endforeach;
     }
 
     public function returnSupplierStock($order) {
