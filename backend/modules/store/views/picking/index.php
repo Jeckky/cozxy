@@ -22,8 +22,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
     ?>
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-default">
-        <div class="panel-heading"  style="background-color: #ccffcc;vertical-align: middle;">
-            <span class="panel-title"><h3><?= $this->title ?></h3></span>
+        <div class="panel-heading"  style="background-color: #000;vertical-align: middle;">
+            <span class="panel-title"><h3 style="color:#ffcc00;"><?= $this->title ?></h3></span>
         </div>
 
         <div class="panel-body">

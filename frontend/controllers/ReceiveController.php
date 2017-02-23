@@ -48,7 +48,7 @@ class ReceiveController extends MasterController {
                 if ($order->status == 16) {//16 = รับของแล้ว
                     $orderItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId . " and status<16")->all();
                     if (count($orderItem) == 0) { // เชคว่า มี สินค้าที่ยังไม่ได้ รับหรือไม่ ถ้าไม่มี รับไม่ได้
-                        $ms = 'รายการนี้ได้รับสินค้าไปแล้ว';
+                        $ms = 'รายการนี้ได้รับสินค้าไปแล้ว'; //300
                         return $this->render('error', [
                                     'ms' => $ms
                         ]);
@@ -66,10 +66,10 @@ class ReceiveController extends MasterController {
                                 'orderId' => $order->orderId
                     ]);
                 } else {
-                    $ms = 'ไม่พบรายชื่อของท่าน';
+                    $ms = 'ไม่เจอรายการสินค้า'; //301
                 }
             } else {
-                $ms = 'ไม่เจอรายการสินค้า';
+                $ms = 'ไม่เจอรายการสินค้า'; //301
             }
             if ($ms != '') {//ถ้าไม่เจอรายการ แสดงข้อความ แล้วกลับไปหน้าเดิม
                 return $this->render('error', [
@@ -153,7 +153,7 @@ class ReceiveController extends MasterController {
                     $order->otp = $otp;
                     $order->refNo = $ref;
                     $order->updateDateTime = new \yii\db\Expression('NOW()');
-                    $order->save(false);
+                    $order->save(false); //ส่งOTP ตรงนี้
                     $receive = new Receive();
                     $receive->orderId = $_POST['orderId'];
                     $receive->userId = $user->userId;

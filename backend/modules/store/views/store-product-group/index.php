@@ -17,9 +17,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
 <div class="store-product-group-index">
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-default">
-        <div class="panel-heading"  style="background-color: #ccffcc;vertical-align: middle;">
+        <div class="panel-heading"  style="background-color: #000;vertical-align: middle;">
             <div class="pull-right" style="margin-top: 10px;"><?//= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> สร้างใบ PO', ['create'], ['class' => 'btn btn-primary btn-lg pull-right']) ?></div>
-            <span class="panel-title" style="vertical-align: middle;"><h3><?= $this->title ?>
+            <span class="panel-title" style="vertical-align: middle;"><h3 style="color:#ffcc00;"><?= $this->title ?>
 
                 </h3></span>
         </div>
@@ -116,7 +116,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
         </div>
     </div>
     <div class="panel panel-default">
-        <div class="panel-heading" style="background-color: #ccffff;">
+        <div class="panel-heading" style="background-color: #ffcc00;">
             <span class="panel-title"><h3>รายการ PO ที่ตรวจรับ / จัดเรียงแล้ว</h3></span>
         </div>
         <div class="panel-body">
@@ -162,7 +162,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
             <br>
             <table class="table table-bordered">
 
-                <tr style="height: 50px;background-color: #F0FFFF;">
+                <tr style="height: 50px;background-color: #ffffcc;">
                     <th style="vertical-align: middle;text-align: center;width: 5%;">Supplier</th>
                     <th style="vertical-align: middle;text-align: center;width: 25%;">Po No</th>
                     <th style="vertical-align: middle;text-align: center;width: 20%;">Receive Date</th>
