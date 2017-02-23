@@ -1095,9 +1095,15 @@ $('#BpickingId').change(function (event, id, value) {
                 //$('.history-booth-null').html('');
                 //}
                 $('.description-booth').html('ที่อยู่:' + JSONObject.description);
-                $('.view-map-images-booth').html('<div class="col-sm-12" style="padding: 5px;">\n\
+                if (JSONObject.mapImages == null) {
+                    $('.view-map-images-booth').html('<div class="col-sm-12" style="padding: 5px;">\n\
+                       <img class="img-responsive" src="' + $baseUrl + 'images/picking-point/No_map.png' + '" alt="" style="width:100%;">\n\
+                </div>');
+                } else {
+                    $('.view-map-images-booth').html('<div class="col-sm-12" style="padding: 5px;">\n\
                         <img class="img-responsive" src="' + $baseUrl + JSONObject.mapImages + '" alt="" style="width:100%;">\n\
                 </div>');
+                }
             } else {
                 $('.name-booth').html('');
                 $('.view-map-images-booth').html('');
@@ -1130,10 +1136,17 @@ $('#pickingpoint-pickingid').change(function (event, id, value) {
                 //if (JSONObject.title != '') {
                 //$('.history-lockers-null').html('');
                 //}
+                //alert(JSONObject.mapImages);
                 $('.description-lockers').html('ที่อยู่:' + JSONObject.description);
-                $('.view-map-images-lockers').html('<div class="col-sm-12" style="padding: 5px;">\n\
+                if (JSONObject.mapImages == null) {
+                    $('.view-map-images-lockers').html('<div class="col-sm-12" style="padding: 5px;">\n\
+                       <img class="img-responsive" src="' + $baseUrl + 'images/picking-point/No_map.png' + '" alt="" style="width:100%;">\n\
+                </div>');
+                } else {
+                    $('.view-map-images-lockers').html('<div class="col-sm-12" style="padding: 5px;">\n\
                         <img class="img-responsive" src="' + $baseUrl + JSONObject.mapImages + '" alt="" style="width:100%;">\n\
                 </div>');
+                }
             } else {
                 $('.name-lockers').html('');
                 $('.view-map-images-lockers').html('');
