@@ -12,7 +12,8 @@ use common\helpers\Yii;
 
 /**
  * Description of Email
- *
+ * Create Date : 24/02/2017
+ * Create By : Taninut.BM
  * @author it
  */
 class Email {
