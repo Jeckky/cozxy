@@ -22,7 +22,7 @@ class Email {
         \Yii::$app->mail->compose('register_confirm', ['url' => $url])
         //Yii::$app->mail->compose('register_confirm', ['url' => $url])
         ->setTo($toMail)//tomail
-        ->setFrom('online@daiigroup.com')
+        ->setFrom('online@cozxy.com')
         ->setSubject('Cozxy Register Confirm')
         ->send();
     }

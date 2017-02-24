@@ -70,13 +70,11 @@
                     <br><br>
                 </div>
                 <div class="foorter title"  style="background-color: #03a9f4; color: #ffffff; padding: 20px;">
-                    บริษัท ไดอิ กรุ๊ป จำกัด (มหาชน)<br>
-                    Daii Group Public Company Limited<br>
-                    เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19 ถนนลาดพร้าว แขวงจอมพล เขตจตุจักร กรุงเทพมหานคร 10900<br>
-                    T: 02-938-3464 , F 02-938-3463<br>
-                    <a href="http://www.fenzer.biz" style="color: #fff;">www.fenzer.biz</a><br>
-                    <a href="http://www.qsaf.biz" style="color: #fff;">www.qsaf.biz</a><br>
-                    <a href="http://www.atechwindow.com" style="color: #fff;">www.atechwindow.com</a><br>
+                    บริษัท​ คอ​ซซี่​ ดอทคอม​ จํากัด​<br>
+                    เลขประจำตัวผู้เสียภาษี : 0105546109903 <br>
+                    สำนักงานใหญ่ เลขที่ 1 ซ.ลาดพร้าว 19 ถ.ลาดพร้าว <br>
+                    แขวงจอมพล เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900<br>
+                    T: , F: <br>
                 </div>
             </div>
         </div>
