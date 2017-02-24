@@ -659,8 +659,8 @@ class LockersController extends LockersMasterController
         $method = "POST";
         $data = json_encode(array(
             "from" => "Test",
-//            "to" => ["66836134241", "66813041313", "66871342204"],
-            "to" => ["66914366944"],
+            "to" => ["66937419977", "66616539889", "66836134241"],
+//            "to" => ["66914366944"],
             "text" => $msg)
         );
 
