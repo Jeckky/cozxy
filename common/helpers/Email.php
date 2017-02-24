@@ -28,12 +28,13 @@ class Email {
         ->send();
     }
 
-    public static function mailMember($toMail, $url, $type) {//ส่งถึงสมาชิก
+    public static function mailMember($toMail, $url, $type) {//ส่งรายการ Order ให้สมาชิก
         \Yii::$app->mail->compose('order', ['url' => $url])
         //Yii::$app->mail->compose('register_confirm', ['url' => $url])
         ->setTo($toMail)//tomail
         ->setFrom('online@cozxy.com')
         ->setSubject('Cozxy Register Confirm')
+        //->setHtmlBody($model->job_description)
         ->send();
     }
 
