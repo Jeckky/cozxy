@@ -16,6 +16,7 @@ use frontend\models\ContactForm;
 use \common\models\costfit\Order;
 use common\helpers\RewardPoints;
 use common\helpers\PickingPoint;
+use common\helpers\Email;
 
 /**
  * Checkout controller
@@ -609,6 +610,15 @@ class CheckoutController extends MasterController {
                         endforeach;
                     }
                     // Update Send Date field
+                    /*
+                     * Send For Email
+                     * Create Date : 24/2/2017
+                     * Create By : 27/02/2017
+                     */
+
+                    /*
+                     * End Send Email
+                     */
                 }
             } else if ($_REQUEST["decision"] == "REVIEW") {
                 $order->status = Order::ORDER_STATUS_E_PAYMENT_PENDING;

@@ -19,8 +19,17 @@ use common\helpers\Yii;
 class Email {
 
     //put your code here
-    public static function mailRegisterConfirm($toMail, $url) {//ส่งถึงสมาชิก
+    public static function mailRegisterConfirm($toMail, $url) {//ส่งถึงสมาชิกให้ยืนยันอีเมล์
         \Yii::$app->mail->compose('register_confirm', ['url' => $url])
+        //Yii::$app->mail->compose('register_confirm', ['url' => $url])
+        ->setTo($toMail)//tomail
+        ->setFrom('online@cozxy.com')
+        ->setSubject('Cozxy Register Confirm')
+        ->send();
+    }
+
+    public static function mailMember($toMail, $url, $type) {//ส่งถึงสมาชิก
+        \Yii::$app->mail->compose('order', ['url' => $url])
         //Yii::$app->mail->compose('register_confirm', ['url' => $url])
         ->setTo($toMail)//tomail
         ->setFrom('online@cozxy.com')
