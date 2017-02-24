@@ -18,12 +18,14 @@ use common\models\User;
 use common\helpers\Lockers;
 use common\helpers\Local;
 
-class LockersController extends LockersMasterController {
+class LockersController extends LockersMasterController
+{
 
     /**
      * @inheritdoc
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
@@ -46,7 +48,8 @@ class LockersController extends LockersMasterController {
      * By : Taninut.bm
      */
 
-    public function actionIndex() {
+    public function actionIndex()
+    {
 
         $codes = Yii::$app->request->post('codes');
         if ($codes != '') {
@@ -76,7 +79,8 @@ class LockersController extends LockersMasterController {
      * By : Taninut.Bm
      */
 
-    public function actionLockers() {
+    public function actionLockers()
+    {
 
         $pickingId = Yii::$app->request->get('boxcode');
         if ($pickingId != '') {
@@ -125,7 +129,8 @@ class LockersController extends LockersMasterController {
      * แสดงข้อมูลของถุง ที่ต้องการใส่ช่องในล็อคเกอร์
      */
 
-    public function actionScanBag() {
+    public function actionScanBag()
+    {
 
         $request = Yii::$app->request;
 
@@ -316,7 +321,8 @@ class LockersController extends LockersMasterController {
      * By : Taninut.Bm
      */
 
-    public function actionCloseChannel() {
+    public function actionCloseChannel()
+    {
         $request = Yii::$app->request;
 
         if ($request->isGet) { /* the request method is GET */
@@ -428,7 +434,8 @@ class LockersController extends LockersMasterController {
      * By : Taninut.Bm
      */
 
-    public function actionReturnBag() {
+    public function actionReturnBag()
+    {
         //return
         $model = Yii::$app->request->get('model');
         $code = Yii::$app->request->get('code');
@@ -447,7 +454,8 @@ class LockersController extends LockersMasterController {
         //return $this->redirect(Yii::$app->homeUrl . '/lockers/lockers/scan-bag?model=' . $model . '&code=' . $code . '&boxcode=' . $boxcode . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId . '&bagNo=' . $bagNo . '');
     }
 
-    static public function generatePassword($orderId) {
+    static public function generatePassword($orderId)
+    {
         $flag = false;
         $password = rand('00000000', '99999999');
         while ($flag == false) {
@@ -464,7 +472,8 @@ class LockersController extends LockersMasterController {
         }
     }
 
-    static public function sendEmail($orderId) {
+    static public function sendEmail($orderId)
+    {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (isset($order) && !empty($order)) {
             $user = \common\models\costfit\User::find()->where("userId=" . $order->userId)->one();
@@ -480,7 +489,8 @@ class LockersController extends LockersMasterController {
         }
     }
 
-    public function actionChannels() {
+    public function actionChannels()
+    {
         /**
          *  เจ้าหน้าต้องตรวจสอบ "ช่อง" ของ lockers ก่อนที่จะไปสแกนถุง
          */
@@ -522,7 +532,8 @@ class LockersController extends LockersMasterController {
         }
     }
 
-    public function actionRemarkChannels() {
+    public function actionRemarkChannels()
+    {
         //
         //pickingItemsId
         //remartDesc
@@ -591,7 +602,8 @@ class LockersController extends LockersMasterController {
         //echo 'ok ok ok Rememart Channels';
     }
 
-    public function actionChannelsPackingItems() {
+    public function actionChannelsPackingItems()
+    {
         $pickingItemsId = Yii::$app->request->post('pickingItemsId');
         $pickingId = Yii::$app->request->post('pickingId');
         $orderItemPackingId = Yii::$app->request->post('orderItemPackingId');
@@ -603,6 +615,61 @@ class LockersController extends LockersMasterController {
         }
 
         return json_encode($html);
+    }
+
+    public function actionOpenLocker()
+    {
+//        $locker = \common\models\costfit\PickingPoint::find()->where("code = '" . $codes . "' and type =" . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)->one();
+        $locker = PickingPoint::find()->where("pickingId = 1")->one();
+
+        $num = array(1, 2, 3, 4);
+
+        $response = \common\helpers\Locker::Open($locker, $num);
+
+        return $this->render('open_locker', [
+            'response' => $response,
+            'msg' => "",
+        ]);
+    }
+
+//    private function callWebservice($method, $request)
+//    {
+//        $responses;
+//        $auth = $this->customauth->auth_login();
+//        if ($auth != null) {
+//            $this->load->library('xmlrpc');
+//            $this->xmlrpc->set_debug(TRUE);
+//            $url = sprintf(APIPATH, $auth['username'], $auth['password']);
+//            $this->xmlrpc->server($url, '80');
+//            $this->xmlrpc->method($method);
+//            $this->xmlrpc->request($request);
+//            if (!$this->xmlrpc->send_request()) {
+//                $responses = $this->xmlrpc->display_error();
+//            } else {
+//                $responses = $this->xmlrpc->display_response();
+//            }
+//        }
+//        return $responses;
+//    }
+
+    public function actionSendSms()
+    {
+        $msg = 'ทดสอบการส่ง ข้อความของ www.cozxy.com';
+        $url = "http://api.ants.co.th/sms/1/text/single";
+        $method = "POST";
+        $data = json_encode(array(
+            "from" => "Test",
+//            "to" => ["66836134241", "66813041313", "66871342204"],
+            "to" => ["66914366944"],
+            "text" => $msg)
+        );
+
+        $response = \common\helpers\Sms::Send($method, $url, $data);
+
+        return $this->render('sms', [
+            'response' => $response,
+            'msg' => $msg,
+        ]);
     }
 
 }
