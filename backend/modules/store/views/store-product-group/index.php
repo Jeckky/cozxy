@@ -189,7 +189,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             <td style="vertical-align: middle;text-align: center;width: 25%;"><?= $qc->poNo ?></td>
                             <td style="vertical-align: middle;text-align: center;width: 20%;"><?= isset($qc->receiveDate) ? $this->context->dateThai($qc->receiveDate, 2) : "-" ?></td>
                             <td style="vertical-align: middle;text-align: center;width: 20%;"><?= StoreProductGroup::countProducts($qc->storeProductGroupId) ?></td>
-                            <td style="vertical-align: middle;text-align: right;width: 20%;"><?= $qc->summary ?></td>
+                            <td style="vertical-align: middle;text-align: right;width: 20%;"><?= number_format($qc->summary, 2) ?></td>
                             <td style="vertical-align: middle;text-align: center;width: 10%;"><?= StoreProductGroup::getStatusText($qc->status) ?></td>
                         </tr>
                         <?php

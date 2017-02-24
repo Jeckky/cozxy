@@ -95,6 +95,7 @@ class PackingController extends StoreMasterController {
                     if (isset($items) && !empty($items)) {
                         $packingItems = OrderItemPacking::find()->where("orderItemId=" . $items->orderItemId . " and status=99 and packer=" . Yii::$app->user->identity->userId)->one(); //ได้ตัวที่อยู่ในถุงแต่ยังไม่ปิดถุง
                         if (isset($packingItems)) {
+
                             $save = $this->checkSum($items->orderItemId, $items->quantity);
                             if ($save == true) {
                                 $sameType = $this->checkSameType($items->receiveType);
@@ -110,15 +111,20 @@ class PackingController extends StoreMasterController {
                             }
                         } else {
                             $save = $this->checkSum($items->orderItemId, $items->quantity);
+                            $sameType = $this->checkSameType($items->receiveType);
                             if ($save == true) {
-                                $packing = new OrderItemPacking();
-                                $packing->orderItemId = $items->orderItemId;
-                                $packing->quantity = 1;
-                                $packing->packer = Yii::$app->user->identity->userId;
-                                $packing->status = 99;
-                                $packing->createDateTime = new \yii\db\Expression('NOW()');
-                                $packing->updateDateTime = new \yii\db\Expression('NOW()');
-                                $packing->save(false);
+                                if ($sameType == true) {
+                                    $packing = new OrderItemPacking();
+                                    $packing->orderItemId = $items->orderItemId;
+                                    $packing->quantity = 1;
+                                    $packing->packer = Yii::$app->user->identity->userId;
+                                    $packing->status = 99;
+                                    $packing->createDateTime = new \yii\db\Expression('NOW()');
+                                    $packing->updateDateTime = new \yii\db\Expression('NOW()');
+                                    $packing->save(false);
+                                } else {
+                                    $ms = 'ไม่สามารถดำเนินการได้ เนื่องจากเป็นการส่งคนละประเภท';
+                                }
                             } else {
                                 $ms = 'ไม่สามารถดำเนินการได้ เนื่องจาก สินค้าเกินจำนวนใน Order';
                             }
@@ -301,11 +307,16 @@ class PackingController extends StoreMasterController {
 
     static function checkSameType($receiveType) {
         $orderItemInBag = OrderItemPacking::find()->where("packer=" . Yii::$app->user->identity->userId . " and status=99")->one(); //หาประเภทของการรับของ ของสินค้าที่เอาใส่ถุงไปก่อนหน้า
-        $orderItem = OrderItem::find()->where("orderItemId=" . $orderItemInBag->orderItemId)->one();
-        if ($orderItem->receiveType == $receiveType) {
-            return true;
+        if (isset($orderItemInBag) && !empty($orderItemInBag)) {
+            $orderItem = OrderItem::find()->where("orderItemId=" . $orderItemInBag->orderItemId)->one();
+            //throw new \yii\base\Exception($receiveType . ' old=>' . $orderItem->receiveType);
+            if ($orderItem->receiveType == $receiveType) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            return false;
+            return true;
         }
     }
 

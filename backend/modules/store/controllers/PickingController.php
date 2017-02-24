@@ -173,7 +173,7 @@ class PickingController extends StoreMasterController {
                         $stringSlots = substr($stringSlots, 0, -1);
                         //$stringSlots = "'R1C1S2'";
                         //throw new \yii\base\Exception($stringSlots);
-                        Yii::$app->runAction('led/led/open-led', ['slot' => $stringSlots, 'colorId' => $colors->ledColor]);
+                        // Yii::$app->runAction('led/led/open-led', ['slot' => $stringSlots, 'colorId' => $colors->ledColor]);
                     } else {
                         $colors = \common\models\costfit\LedColor::find()->where("ledColor = " . $old)->one();
                         //$this->turnOnLedSlot($slots, $colors->ledColor, $allOrderId);
@@ -282,10 +282,10 @@ class PickingController extends StoreMasterController {
         if (isset($orderItems)) {
             if ($count == 0) {//หยิบไอเทมนั้นในออเดอร์ หมดทุก slot แล้ว?
                 foreach ($orderItems as $orderItem):
-                    $orderItem->status = 5;
+                    $orderItem->status = \common\models\costfit\OrderItem::ORDERITEM_PICKED;
                     $orderItem->pickerId = $userId;
                     $orderItem->updateDateTime = new \yii\db\Expression('NOW()');
-                    $orderItem->save();
+                    $orderItem->save(false);
                 endforeach;
                 //set pinked product in orderItem to  5  (หยิบแล้ว)
             }
@@ -309,7 +309,7 @@ class PickingController extends StoreMasterController {
                 $ledItem->status = 0;
                 $ledItem->save();
                 //throw new \yii\base\Exception($slot->barcode . "," . $_GET['colorId']);
-                Yii::$app->runAction('led/led/close-led', ['slot' => $slot->barcode, 'colorId' => $_GET['colorId']]);
+                //Yii::$app->runAction('led/led/close-led', ['slot' => $slot->barcode, 'colorId' => $_GET['colorId']]);
                 $checkCloseAll = LedItem::find()->where("color = " . $_GET['colorId'] . " and status = 1")->all();
                 if (empty($checkCloseAll)) {
                     $ledColor = \common\models\costfit\LedColor::find()->where("ledColor = " . $_GET['colorId'])->one(); //set ไฟ สีนั้นให้ว่าง
@@ -588,7 +588,7 @@ class PickingController extends StoreMasterController {
             $orders = \common\models\costfit\OrderItem::find()->where("orderId = " . $orderId)->all();
             if (isset($orders) && !empty($orders)) {
                 foreach ($orders as $order):
-                    if ($order->status == 4) {
+                    if ($order->status == \common\models\costfit\OrderItem::ORDERITEM_PICKING) {
                         $i++;
                     }
                 endforeach;
