@@ -9,16 +9,19 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
-?>
 
+if (isset($billingCompany) && !empty($billingCompany)) {
+    $billingUse = 'บริษัท' . $order->billingCompany . 'tax :' . $order->billingTax;
+} else {
+    $billingUse = 'คุณ' . $order->user->firstname . " " . $order->user->lastname;
+}
+?>
 
 <!--<hr> 1 -->
 <table class="table table_bordered" width="100%" cellpadding="2" cellspacing="0">
     <tr>
         <td  colspan="4" style="text-align: left; vertical-align: text-top; padding: 5px; font-size: 12px; line-height: 20px;">
-            ได้รับเงินจาก : <?php
-            echo isset($order->billingCompany) ? 'บริษัท' . $order->billingCompany : 'คุณ' . $order->user->firstname . " " . $order->user->lastname;
-            ?>
+            ได้รับเงินจาก : <?php echo $billingUse; ?>
             <?php //echo $order->user->firstname;  ?> <?php //echo $order->user->lastname;  ?><br>
             <!--เลขที่ประจำตัวผู้เสียภาษี :  <br>-->
             <?php echo isset($order->billingAddress) ? $order->billingAddress : "-"; ?><br>
