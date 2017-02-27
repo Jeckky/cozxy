@@ -81,7 +81,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             ?>
                                             <tr>
                                                 <td style="border:2px black solid ;text-align:center;vertical-align: middle; height: <?= $height ?>" class="<?= ($row->status == 1) ? "alert-success" : "alert-danger" ?>">
-                                                    <?php if ($colIndex == 1 && $rowIndex == 1): ?>
+                                                    <?php if ($colIndex == 2 && $rowIndex == 1): ?>
                                                         <span style="font-size: 20px;font-weight: bold"><?= "Controller" ?></span>
                                                     <?php else: ?>
                                                         <?php
