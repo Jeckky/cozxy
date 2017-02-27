@@ -622,7 +622,7 @@ class LockersController extends LockersMasterController
 //        $locker = \common\models\costfit\PickingPoint::find()->where("code = '" . $codes . "' and type =" . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)->one();
         $locker = PickingPoint::find()->where("pickingId = 1")->one();
 
-        $num = array(1, 2, 3, 4);
+        $num = array(3);
 
         $response = \common\helpers\Locker::Open($locker, $num);
 
@@ -659,8 +659,8 @@ class LockersController extends LockersMasterController
         $method = "POST";
         $data = json_encode(array(
             "from" => "Test",
-            "to" => ["66937419977", "66616539889", "66836134241"],
-//            "to" => ["66914366944"],
+//            "to" => ["66937419977", "66616539889", "66836134241"],
+            "to" => ["66937419977"],
             "text" => $msg)
         );
 
