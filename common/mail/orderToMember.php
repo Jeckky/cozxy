@@ -111,7 +111,7 @@
                                                             ?>
                                                             <strong>
                                                                 <?php
-                                                                if ($billingCompany == '') {
+                                                                if (isset($billingCompany)) {
                                                                     echo 'คุณ' . $billingFirstname . ' ' . $billingLastname;
                                                                 } else {
                                                                     echo $billingCompany . ' เลขประจำตัวผู้เสียภาษีอากร : ' . $billingTax;
