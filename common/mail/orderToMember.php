@@ -126,18 +126,19 @@
                                                 </td>
                                             </tr>
                                         </tbody>
-                                    </table>
+                                    </table> 
 
-                                    <div style="width: 100%; text-align: left;">
-                                        รายละเอียดของคำสั่งซื้อ: <br>
-                                    </div>
-
-                                    <p style="color: #ff9016; font-size: 16px;">อีเมลฉบับนี้เป็นการแจ้งข้อมูลโดยอัตโนมัติ กรุณาอย่าตอบกลับ</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" style="border-collapse:collapse; padding:0">
+                                    <div style="margin-top:20px; margin-bottom:10px; margin-right:10px"><strong>รายละเอียดของคำสั่งซื้อ:</strong></div>
                                 </td>
                             </tr>
                         </table>
                     </center>
                     <br><br>
+                    <p style="color: #ff9016; font-size: 16px;">อีเมลฉบับนี้เป็นการแจ้งข้อมูลโดยอัตโนมัติ กรุณาอย่าตอบกลับ</p>
                 </div>
                 <div class="foorter title"  style="background-color: #000000; color: rgba(255,212,36,.9); padding: 20px;">
                     บริษัท​ คอ​ซซี่​ ดอทคอม​ จํากัด​<br>
