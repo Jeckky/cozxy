@@ -50,13 +50,16 @@ class SearchCostFitController extends MasterController {
                 $sortName = '';
             }
             if (isset($search_hd)) {
-                $products = \common\models\costfit\Product::find()
+                //$products = \common\models\costfit\Product::find()
+                $products = \common\models\costfit\ProductSuppliers::find()
+                        ->where("result>0 and status=1 and approve='approve'")
                         ->andFilterWhere(['OR',
-                            ['LIKE', 'product.title', trim($search_hd)],
-                            ['LIKE', 'product.description', trim($search_hd)],
-                            ['LIKE', 'product.specification', trim($search_hd)]
+                                ['LIKE', 'product_suppliers.title', trim($search_hd)],
+                                ['LIKE', 'product_suppliers.description', trim($search_hd)],
+                                ['LIKE', 'product_suppliers.specification', trim($search_hd)]
                         ])
-                        ->orderBy("title $sortName , price $sortPrice")
+                        //->orderBy("title $sortName , price $sortPrice")
+                        ->orderBy("title $sortName")
                         ->all();
             } else {
                 $products = array();
@@ -73,13 +76,15 @@ class SearchCostFitController extends MasterController {
                 $sortPrice = $_POST['sortPrice'];
             }
 
-            $products = \common\models\costfit\Product::find()
+            $products = \common\models\costfit\ProductSuppliers::find()
+                    ->where("result>0 and status=1 and approve='approve'")
                     ->andFilterWhere(['OR',
-                        ['LIKE', 'product.title', $_POST['search_hd']],
-                        ['LIKE', 'product.description', $_POST['search_hd']],
-                        ['LIKE', 'product.specification', $_POST['search_hd']]
+                            ['LIKE', 'product_suppliers.title', $_POST['search_hd']],
+                            ['LIKE', 'product_suppliers.description', $_POST['search_hd']],
+                            ['LIKE', 'product_suppliers.specification', $_POST['search_hd']]
                     ])
-                    ->orderBy("title $sortName , price $sortPrice")
+                    //->orderBy("title $sortName , price $sortPrice")
+                    ->orderBy("title $sortName")
                     ->all();
         }
 

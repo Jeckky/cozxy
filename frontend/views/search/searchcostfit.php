@@ -3,6 +3,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use common\models\costfit\ProductSuppliers;
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
@@ -43,7 +44,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <!--Tiles-->
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="row">
-                    <?php foreach ($products as $item) {
+                    <?php
+                    foreach ($products as $item) {
+                        $price = ProductSuppliers::productPrice($item->productSuppId);
+                        $image = ProductSuppliers::productImageSuppliers($item->productSuppId);
                         ?>
                         <!--Tile-->
                         <div id="products-category-search" class="col-lg-3 col-md-3 col-sm-6">
@@ -52,19 +56,19 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     <div class="badges">
                                         <span class="sale">Sale</span>
                                     </div>
-                                    <div class="price-label"><?= $item->price ?> ฿</div>
+                                    <div class="price-label"><?= $price ?> ฿</div>
                                 </div>
-                                <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $item->productId]) ?>" style="min-height: 210px; max-height: 210px;">
-                                    <?php if (isset($item->productImages[0])): ?>
-                                        <img src="<?php echo Yii::$app->homeUrl . $item->productImages[0]->image; ?>" alt="1"/>
+                                <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $item->productId, 'productSupplierId' => $item->productSuppId]) ?>" style="min-height: 210px; max-height: 210px;">
+                                    <?php if ($image != ''): ?>
+                                        <img src="<?php echo Yii::$app->homeUrl . $image; ?>" alt="1"/>
                                     <?php endif; ?>
                                     <span class="tile-overlay"></span>
                                 </a>
                                 <div class="footer search-category-footer">
-                                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $item->productId]) ?>"><?= $item->title; ?></a>
+                                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $item->productId, 'productSupplierId' => $item->productSuppId]) ?>"><?= $item->title; ?></a>
                                     <!--<span>by Pirate3d</span>-->
-                                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $item->productId]) ?>">View</a>
-                                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $item->productId]) ?>"><button class="btn btn-primary">View</button></a>
+                                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $item->productId, 'productSupplierId' => $item->productSuppId]) ?>">View <?= $item->productSuppId ?></a>
+                                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $item->productId, 'productSupplierId' => $item->productSuppId]) ?>"><button class="btn btn-primary">View</button></a>
                                 </div>
                             </div>
                         </div>

@@ -154,6 +154,8 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         $image = ProductImageSuppliers::find()->where("productSuppId=" . $productId . " and status=1")->one();
         if (isset($image) && !empty($image)) {
             return $image->imageThumbnail1;
+        } else {
+            return '';
         }
     }
 
