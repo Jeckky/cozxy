@@ -34,7 +34,7 @@ class Email {
         ->setTo($toMail)//tomail
         ->setFrom('online@cozxy.com')
         ->setSubject('Cozxy Register Confirm')
-        ->setHtmlBody($htmls)
+        //->setHtmlBody($htmls)
         ->send();
     }
 
