@@ -617,7 +617,12 @@ class CheckoutController extends MasterController {
                      */
                     $member = \common\models\costfit\User::find()->where('userId=' . $orderUserId)->one();
                     if (isset($member)) {
-                        $toMail = $member->email;
+                        if (isset($member->email)) {
+                            $toMails = $member->email;
+                        } else {
+                            $toMails = $member->username;
+                        }
+                        $toMail = $toMails;
                         $url = '';
                         $type = $member->firstname . ' ' . $member->lastname;
                         $Subject = 'ยืนยันคำสั่งซื้อหมายเลข ' . $order->invoiceNo;
