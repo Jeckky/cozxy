@@ -89,7 +89,7 @@
                                                             <tbody>
                                                                 <tr>
                                                                     <td valign="middle" align="center" style="background-color:rgba(255,212,36,.9); text-align:center; width:100%!important">
-                                                                        <a href="<?php echo $url; ?>" target="_blank" class="x_btn-orange" style="display:inline-block; text-decoration:none; color:#FFF; width:100%!important">สถานะของคำสั่งซื้อ</a> </td>
+                                                                        <a href="<?php echo $url; ?>" target="_blank" class="x_btn-orange" style="display:inline-block; text-decoration:none; color:#000000; width:100%!important">สถานะของคำสั่งซื้อ</a> </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -151,12 +151,6 @@
                                         </thead>
                                         <tbody>
                                             <?php
-                                            /*
-                                             * To change this license header, choose License Headers in Project Properties.
-                                             * To change this template file, choose Tools | Templates
-                                             * and open the template in the editor.
-                                             */
-
                                             $i = 0;
                                             if (count($order) > 0) {
                                                 $listOrderItems = common\models\costfit\OrderItem::find()
