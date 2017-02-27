@@ -9,6 +9,21 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         -->
     </head>
+    <?php
+    $billingCompany = $adress['billingCompany'];
+    $billingTax = $adress['billingTax'];
+
+    $billingFirstname = $adress['billingFirstname'];
+    $billingLastname = $adress['billingLastname'];
+
+    $billingAddress = $adress['billingAddress'];
+    $billingCountryId = $adress['billingCountryId'];
+    $billingProvinceId = $adress['billingProvinceId'];
+    $billingAmphurId = $adress['billingAmphurId'];
+    $billingDistrictId = $adress['billingDistrictId'];
+    $billingZipcode = $adress['billingZipcode'];
+    $billingTel = $adress['billingTel'];
+    ?>
     <body>
         <style type="text/css">
             .title{
@@ -73,8 +88,8 @@
                                                         <table width="100%" cellpadding="10" style="width:100%!important">
                                                             <tbody>
                                                                 <tr>
-                                                                    <td valign="middle" align="center" style="background-color:#F36F21; text-align:center; width:100%!important">
-                                                                        <a href="http://info.lazada.co.th/c/r?ACTION=ri&amp;EMID=09004HV02NOAK00UF9C67&amp;UID=KK3CC4L5JWFDRJYB6Q7A&amp;ordernumber=333762358&amp;email=piew%2D17%40hotmail%2Ecom" target="_blank" class="x_btn-orange" style="display:inline-block; text-decoration:none; color:#FFF; width:100%!important">สถานะของคำสั่งซื้อ</a> </td>
+                                                                    <td valign="middle" align="center" style="background-color:rgba(255,212,36,.9); text-align:center; width:100%!important">
+                                                                        <a href="#" target="_blank" class="x_btn-orange" style="display:inline-block; text-decoration:none; color:#FFF; width:100%!important">สถานะของคำสั่งซื้อ</a> </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -94,21 +109,6 @@
                                                             <strong class="x_color-orange" style="color:#f36f21"> <?php echo $type; ?></strong>
                                                         </div>
                                                         <div class="x_mts" style="margin-top:5px">
-                                                            <?php
-                                                            $billingCompany = $adress['billingCompany'];
-                                                            $billingTax = $adress['billingTax'];
-
-                                                            $billingFirstname = $adress['billingFirstname'];
-                                                            $billingLastname = $adress['billingLastname'];
-
-                                                            $billingAddress = $adress['billingAddress'];
-                                                            $billingCountryId = $adress['billingCountryId'];
-                                                            $billingProvinceId = $adress['billingProvinceId'];
-                                                            $billingAmphurId = $adress['billingAmphurId'];
-                                                            $billingDistrictId = $adress['billingDistrictId'];
-                                                            $billingZipcode = $adress['billingZipcode'];
-                                                            $billingTel = $adress['billingTel'];
-                                                            ?>
                                                             <strong>
                                                                 <?php
                                                                 if (isset($billingCompany)) {
