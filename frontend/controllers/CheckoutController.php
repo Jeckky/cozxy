@@ -658,6 +658,9 @@ class CheckoutController extends MasterController {
                         $adress['billingZipcode'] = $order->billingZipcode;
                         $adress['billingTel'] = $order->billingTel;
 
+                        $orderList = \common\models\costfit\Order::find()->where('orderId=' . $orderOrderId)->one();
+                        //$orderItems = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderOrderId)->all();
+
                         $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList);
                     }
 
