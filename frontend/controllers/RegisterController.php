@@ -12,6 +12,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use common\helpers\Email;
 
 /**
  * Register controller
@@ -74,13 +75,14 @@ class RegisterController extends MasterController {
                     $model->addError("acceptTerm", 'Please Accept Term&Condition');
                 } else {
                     if ($model->save()) {
-                        $emailSend = new \frontend\controllers\EmailSend();
+                        //$emailSend = new \frontend\controllers\EmailSend();
                         $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "register/confirm?token=" . $model->token;
                         $toMail = $model->email;
-                        $emailSend->mailRegisterConfirm($toMail, $url);
+                        $emailSend = Email::mailRegisterConfirm($toMail, $url);
+                        //$emailSend->mailRegisterConfirm($toMail, $url);
                         return $this->redirect(['thank']);
                     } else {
-//                        throw new \yii\base\Exception(print_r($model->errors, true));
+                        // throw new \yii\base\Exception(print_r($model->errors, true));
                     }
                 }
             } else {

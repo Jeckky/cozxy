@@ -55,6 +55,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         ->where(["pickingId" => $point->pickingId])
                         ->groupBy(["LEFT(portIndex,1)"])
                         ->all();
+                        //echo '<pre>';
+                        //print_r($cols);
                         ?>
                         <tr>
                             <?php foreach ($cols as $colIndex => $col): ?>
@@ -83,10 +85,11 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 <td style="border:2px black solid ;text-align:center;vertical-align: middle; height: <?= $height ?>" class="<?= ($row->status == 1) ? "alert-success" : "alert-danger" ?>">
                                                     <?php
                                                     $Inspector = common\models\costfit\OrderItemPacking::checkInspector($row->pickingItemsId);
-
-                                                    if ($colIndex == 1 && $rowIndex == 1):
+                                                    //echo $colIndex . '::';
+                                                    //echo $rowIndex;
+                                                    if ($colIndex == 2 && $rowIndex == 1): // if ($colIndex == 1 && $rowIndex == 1):
                                                         ?>
-                                                        <span style="font-size: 20px;font-weight: bold"><?= "Controller" ?></span>
+                                                        <p style="font-size: 20px;font-weight: bold; padding: 20px; background-color: #000000;"><?= "Controller" ?></p>
                                                     <?php else: ?><h4>
                                                             <?php
                                                             if ($row->status == 0) {

@@ -5,7 +5,7 @@ use yii\helpers\Html;
 //$this->title = 'My Cost Fit';
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
-$logo = common\models\costfit\ContentGroup::find()->where("lower(title)='logoimagetop'")->one();
+$logo = common\helpers\Content::ContentLogo('logoImageTop');
 ?>
 <header data-offset-top="500" data-stuck="600"><!--data-offset-top is when header converts to small variant and data-stuck when it becomes visible. Values in px represent position of scroll from top. Make sure there is at least 100px between those two values for smooth animation-->
 
@@ -25,11 +25,11 @@ $logo = common\models\costfit\ContentGroup::find()->where("lower(title)='logoima
     <div class="menu-toggle"><i class="fa fa-list"></i></div>
     <!-- Show For Desktop -->
     <div class="container hidden-xs hidden-sm">
-        <a class="logo" href="<?= Yii::$app->homeUrl ?>"><img src="<?php echo $baseUrl . $logo->image; ?>" alt="Cost Fit" class="img-responsive"/></a>
+        <a class="logo" href="<?= Yii::$app->homeUrl ?>"><img src="<?php echo $baseUrl . $logo->image; ?>" alt="Cozxy" class="img-responsive"/></a>
     </div>
     <!-- Show For Mobile -->
     <div class="container hidden-md  hidden-lg">
-        <a class="logo" href="<?= Yii::$app->homeUrl ?>"><img src="<?php echo $baseUrl . $logo->image; ?>" alt="Cost Fit" class="img-responsive" style="width: 70px; height: 32px;"/></a>
+        <a class="logo" href="<?= Yii::$app->homeUrl ?>"><img src="<?php echo $baseUrl . $logo->image; ?>" alt="Cozxy" class="img-responsive" style="width: 70px; height: 32px;"/></a>
     </div>
 
     <!--Main Menu-->

@@ -53,7 +53,7 @@ class Locker
         $url = "http://$params[6]/iLockerWebAPI/index_api.php/$api";
 //        throw new \yii\base\Exception(print_r($params, true));
         $token = base64_encode('admin' . ':' . 'admin');
-        $result = self::get_result_from_api($url, 0, $params);
+        $result = self::get_result_from_api($url, $token, $params);
 //        } else {
 //            $result = array("header" => 401, "error" => 'Unauthorized');
 //        }

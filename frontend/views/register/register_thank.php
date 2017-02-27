@@ -6,6 +6,7 @@ use yii\bootstrap\ActiveForm;
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+$logoImage = common\helpers\Content::ContentLogo('logoImage');
 ?>
 
 <!--Breadcrumbs-->
@@ -20,8 +21,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <div class="row">
             <div class="col-lg-12 col-md-12">
                 <div class="col-lg-4 col-md-4">
-                    <a class="logo" href="<?php echo $baseUrl; ?>"><img class="col-md-8" src="<?php echo Yii::$app->homeUrl; ?>images/logo/costfit.png" alt="Cozxy.com"></a>
-                    <br><br>
+                    <a class="logo" href="<?= Yii::$app->homeUrl ?>"><img src="<?php echo $baseUrl . $logoImage->image; ?>" alt="Cozxy" class="img-responsive" style="width: 50%;"/></a>
+                    <br> 
                 </div>
             </div>
             <!--Left Column-->

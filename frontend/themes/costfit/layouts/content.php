@@ -6,7 +6,7 @@ use yii\widgets\Breadcrumbs;
 ?>
 <?php
 $this->beginContent('@app/themes/costfit/layouts/main.php');
-$logo = common\models\costfit\ContentGroup::find()->where("lower(title)='logoimage'")->one();
+$logo = common\helpers\Content::ContentLogo('logoImageTop');
 ?>
 <?= $this->render('_modal_login') ?>
 <?= $this->render('_header', compact('logo')) ?>
@@ -14,9 +14,9 @@ $logo = common\models\costfit\ContentGroup::find()->where("lower(title)='logoima
     <?php echo $content; ?>
 </div>
 <?php
-$logoImage = common\models\costfit\ContentGroup::find()->where("lower(title)='logoImage'")->one();
-$news = common\models\costfit\ContentGroup::find()->where("lower(title)='NEWS'")->one();
-$footerContact = common\models\costfit\ContentGroup::find()->where("lower(title)='contactFooter'")->one();
+$logoImage = common\helpers\Content::ContentLogo('logoImage');
+$news = common\helpers\Content::ContentLogo('NEWS');
+$footerContact = common\helpers\Content::ContentLogo('contactFooter');
 echo $this->render('_footer', compact('logoImage', 'news', 'footerContact'));
 ?>
 <?php $this->registerJs("

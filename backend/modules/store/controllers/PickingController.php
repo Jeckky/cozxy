@@ -53,9 +53,11 @@ class PickingController extends StoreMasterController {
         }
         $userId = Yii::$app->user->identity->userId;
         $oldUser = $this->checkOldPicker($userId); // ถ้าเป็นคนหยิบของที่หยิบของในออเดอร์ที่เลือกมายังไม่เสร็จ บังคับให้กลับบมาหน้าหยิบให้เสร็จ
+
         $findEnough = Order::find()
                         ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
                         ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status >= " . Order::ORDER_STATUS_CREATEPO . " and oi.status=1 and oi.productSuppId!=''")->all();
+
         $allId = [];
         $e = 0;
         if (isset($findEnough)):
@@ -68,7 +70,6 @@ class PickingController extends StoreMasterController {
         $enoughId = $this->checkQuantity($allId); //ได้ orderId ที่มีของพอ
         //throw new \yii\base\Exception($enoughId);
         if ($enoughId != '') {
-
             $query = Order::find()
                     ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
                     ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND `order`.status >= " . Order::ORDER_STATUS_CREATEPO . " and order.orderId in(" . $enoughId . ") and oi.status=1  and oi.productSuppId!='' order by oi.sendDateTime")
