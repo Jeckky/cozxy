@@ -55,8 +55,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <div class="post">
                         <div class="cont-info-widget">
                             <ul>
-                                <li><h3><i class="fa fa-building"></i>บริษัท ไดอิ กรุ๊ป จำกัด (มหาชน)</h3></li>
-                                <li>Daii Group Public Company Limited</li>
+                                <li><h3><i class="fa fa-building"></i>บริษัท​ คอ​ซซี่​ ดอทคอม​ จํากัด​</h3></li>
+                                <li>Cozxy Public Company Limited</li>
                                 <li>เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19 ถนนลาดพร้าว
                                     แขวงจอมพล เขตจตุจักร กรุงเทพมหานคร 10900</li>
                                 <!--<li><a href="#"><i class="fa fa-envelope"></i>mail@Limo.com</a></li>-->
