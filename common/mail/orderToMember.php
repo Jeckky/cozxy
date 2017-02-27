@@ -89,7 +89,7 @@
                                                             <tbody>
                                                                 <tr>
                                                                     <td valign="middle" align="center" style="background-color:rgba(255,212,36,.9); text-align:center; width:100%!important">
-                                                                        <a href="#" target="_blank" class="x_btn-orange" style="display:inline-block; text-decoration:none; color:#FFF; width:100%!important">สถานะของคำสั่งซื้อ</a> </td>
+                                                                        <a href="<?php echo $url; ?>" target="_blank" class="x_btn-orange" style="display:inline-block; text-decoration:none; color:#FFF; width:100%!important">สถานะของคำสั่งซื้อ</a> </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>

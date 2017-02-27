@@ -623,7 +623,7 @@ class CheckoutController extends MasterController {
                             $toMails = $member->username;
                         }
                         $toMail = $toMails;
-                        $url = '';
+                        $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "/profile/order";
                         $type = $member->firstname . ' ' . $member->lastname;
                         $Subject = 'ยืนยันคำสั่งซื้อหมายเลข ' . $order->invoiceNo;
                         /*
