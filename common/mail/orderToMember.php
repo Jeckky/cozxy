@@ -87,7 +87,7 @@
                                                 <td class="x_order-col x_pam x_txt-left" valign="top" style="border-collapse:collapse; padding-top:10px; padding-right:10px; padding-bottom:10px; padding-left:10px; text-align:left">
                                                     <div class="x_order-status-inner">
                                                         <div class="x_color-grey" style="color:#646464">สินค้าของคุณจะได้รับการจัดส่งไปยัง:</div>
-                                                        <div class="x_mts" style="margin-top:5px"><strong class="x_color-orange" style="color:#f36f21">นิธิศา สมหวัง </strong></div>
+                                                        <div class="x_mts" style="margin-top:5px"><strong class="x_color-orange" style="color:#f36f21"> <?php echo $type; ?></strong></div>
                                                         <div class="x_mts" style="margin-top:5px"><strong>บริษัท สยาม แอดมินนิสเทรทีฟ แมเนจเม้นท์ เลขที่ 313 อาคารมคธ ซ.รามคำแหง 21 (นวศรี) แขวงวังทองหลาง กรุงเทพมหานคร/ Bangkok-วังทองหลาง/ Wang Thonglang-10310 10310 <br>
                                                                 Phone: 0949945229 </strong></div>
                                                     </div>
@@ -96,9 +96,9 @@
                                         </tbody>
                                     </table>
 
-                                    <p style="width: 100%">
+                                    <div style="width: 100%; text-align: left;">
                                         รายละเอียดของคำสั่งซื้อ: <br>
-                                    </p>
+                                    </div>
 
                                     <p style="color: #ff9016; font-size: 16px;">อีเมลฉบับนี้เป็นการแจ้งข้อมูลโดยอัตโนมัติ กรุณาอย่าตอบกลับ</p>
                                 </td>
