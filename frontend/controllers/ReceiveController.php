@@ -11,8 +11,11 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\costfit\Order;
+use common\models\costfit\OrderItem;
+use common\models\costfit\OrderItemPacking;
 use common\models\costfit\User;
 use common\models\costfit\Address;
+use common\models\costfit\PickingPointItems;
 
 /**
  * ReceiveController implements the CRUD actions for receive model.
@@ -45,8 +48,8 @@ class ReceiveController extends MasterController {
         if (isset($_POST['Receive']['password']) && !empty($_POST['Receive']['password'])) {
             $order = Order::find()->where("password='" . $_POST['Receive']['password'] . "'")->one();
             if (isset($order) && !empty($order)) {
-                if ($order->status == 16) {//16 = รับของแล้ว
-                    $orderItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId . " and status<16")->all();
+                if ($order->status == Order::ORDER_STATUS_RECEIVED) {//16 = รับของแล้ว
+                    $orderItem = OrderItem::find()->where("orderId=" . $order->orderId . " and status<" . Order::ORDER_STATUS_RECEIVED)->all();
                     if (count($orderItem) == 0) { // เชคว่า มี สินค้าที่ยังไม่ได้ รับหรือไม่ ถ้าไม่มี รับไม่ได้
                         $ms = 'รายการนี้ได้รับสินค้าไปแล้ว'; //300
                         return $this->render('error', [
@@ -200,24 +203,24 @@ class ReceiveController extends MasterController {
                 if (isset($order) && !empty($order)) {
                     //ยังไม่ได้เชค ว่า picking point ถูกต้องหรือไม่ ถ้าไม่ถูกให้บอกที่ถูก
                     $pickingPoint = $order->pickingId;
-                    $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId)->all();
+                    $orderItems = OrderItem::find()->where("orderId=" . $order->orderId)->all();
                     if (isset($orderItems) && !empty($orderItems)) {
                         foreach ($orderItems as $item):
                             $orderItem = $orderItem . $item->orderItemId . ",";
                         endforeach;
                         $orderItem = substr($orderItem, 0, -1);
-                        $lockers = \common\models\costfit\OrderItemPacking::find()->where("orderItemId in($orderItem) and status=7")->all();
+                        $lockers = OrderItemPacking::find()->where("orderItemId in($orderItem) and status=7")->all();
                         if (isset($lockers) && !empty($lockers)) {
                             foreach ($lockers as $locker):
                                 $total = 0;
-                                $pickingLocker = \common\models\costfit\PickingPointItems::find()->where("pickingItemsId=" . $locker->pickingItemsId . " and pickingId=" . $pickingPoint)->one();
+                                $pickingLocker = PickingPointItems::find()->where("pickingItemsId=" . $locker->pickingItemsId . " and pickingId=" . $pickingPoint)->one();
                                 if (isset($pickingLocker)) {
                                     $flag = false;
                                     $flag = $this->check($check, $pickingLocker->pickingItemsId);
                                     $check[$i] = $pickingLocker->pickingItemsId;
 
                                     if ($flag == true) {
-                                        $total = count(\common\models\costfit\OrderItemPacking::find()->where("pickingItemsId=" . $pickingLocker->pickingItemsId . " and status=7")->all());
+                                        $total = count(OrderItemPacking::find()->where("pickingItemsId=" . $pickingLocker->pickingItemsId . " and status=7")->all());
                                         $allLocker = $allLocker . " ช่อง " . $pickingLocker->name . " จำนวน " . $total . " ถุง" . "<br>";
                                     }
                                     $i++;
@@ -293,7 +296,7 @@ class ReceiveController extends MasterController {
         return $refNo;
     }
 
-    protected function checkTime($time) {
+    protected function checkTime($time) {//กำหนดเวลา ของ OTP
         $now = date('Y-m-d H:i:s');
         $time_diff = strtotime($now) - strtotime($time);
         $time_diff_m = floor(($time_diff % 3600) / 60);
@@ -306,7 +309,6 @@ class ReceiveController extends MasterController {
 
     protected function check($alls, $new) {
         $a = 0;
-        //throw new \yii\base\Exception(print_r($alls, true));
         foreach ($alls as $all):
             if ($all == $new) {
                 $a++;
@@ -375,22 +377,22 @@ class ReceiveController extends MasterController {
     protected function updateOrder($orderId, $otp, $userId, $password, $refNo) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (isset($order) && !empty($order)) {
-            $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId . " and status=15")->all(); //หาorderItem ที่สถานะ = นำจ่ายแล้ว
+            $orderItems = OrderItem::find()->where("orderId=" . $order->orderId . " and status=15")->all(); //หาorderItem ที่สถานะ = นำจ่ายแล้ว
             foreach ($orderItems as $orderItem):
                 $orderItem->status = 16; //update orderItem
                 $orderItem->updateDateTime = new \yii\db\Expression('NOW()');
                 $orderItem->save(false);
-                $packings = \common\models\costfit\OrderItemPacking::find()->where("orderItemId=" . $orderItem->orderItemId)->all();
+                $packings = OrderItemPacking::find()->where("orderItemId=" . $orderItem->orderItemId)->all();
                 foreach ($packings as $packing)://update orderItemPacking
                     $packing->status = 8;
                     $packing->updateDateTime = new \yii\db\Expression('NOW()');
                     $packing->save(false);
-                    $locker = \common\models\costfit\PickingPointItems::find()->where("pickingItemsId=" . $packing->pickingItemsId)->one();
+                    $locker = PickingPointItems::find()->where("pickingItemsId=" . $packing->pickingItemsId)->one();
                     $locker->status = 1;
                     $locker->save(false);
                 endforeach;
             endforeach;
-            $order->status = 16;
+            $order->status = Order::ORDER_STATUS_RECEIVED;
             $order->updateDateTime = new \yii\db\Expression('NOW()');
             $order->save(false);
             $receive = Receive::find()->where("orderId=" . $order->orderId . " and userId=" . $userId . " and otp='" . $otp . "' and password='" . $password . "' and refNo='" . $refNo . "'")->one();
