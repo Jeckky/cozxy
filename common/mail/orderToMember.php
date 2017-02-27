@@ -66,7 +66,10 @@
                                                 <td class="x_order-col x_pam" align="left" valign="top" style="border-collapse:collapse; padding-top:10px; padding-right:10px; padding-bottom:10px; padding-left:10px">
                                                     <div class="x_order-status-inner">
                                                         <div class="x_color-grey" style="color:#646464">สินค้าจะจัดส่งถึงคุณภายใน:</div>
-                                                        <div class="x_pts" style="margin-top:5px; margin-bottom:10px"><strong>การจัดส่ง # 1</strong>: 13 Dec - 17 Dec, 2016</div>
+                                                        <div class="x_pts" style="margin-top:5px; margin-bottom:10px">
+                                                            <strong>การจัดส่ง # 1</strong>: Dates Month - Dates Month, Years <br>
+                                                            <strong>หมายเหตุ</strong> หากมีการเปลียนวันจะแจ้งให้ทราบทาง Email และ SMS ในลำดับต่อไป
+                                                        </div>
                                                         <table width="100%" cellpadding="10" style="width:100%!important">
                                                             <tbody>
                                                                 <tr>
