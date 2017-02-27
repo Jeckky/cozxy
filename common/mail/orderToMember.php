@@ -51,7 +51,8 @@
                 text-align: center;
                 background-image: url("https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-9/13627169_1304244949603614_4827214866156693546_n.jpg?oh=7f153e886b70ba02a5139fd2821c1c5f&oe=583185F8xxxx") ;
                 background-repeat: repeat;
-                height: 260px;
+                /*height: 260px;*/
+                height: auto;
                 color: #ffffff;
                 color: #000;
             }
