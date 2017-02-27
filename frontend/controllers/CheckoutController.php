@@ -17,6 +17,7 @@ use \common\models\costfit\Order;
 use common\helpers\RewardPoints;
 use common\helpers\PickingPoint;
 use common\helpers\Email;
+use common\helpers\Local;
 
 /**
  * Checkout controller
@@ -593,7 +594,6 @@ class CheckoutController extends MasterController {
                     $res["invoiceNo"] = $order->invoiceNo;
                     $res["message"] = \common\models\costfit\EPayment::getReasonCodeText($_POST["reason_code"]);
 
-
                     // Update Send Date field
                     // ****รอ Confirm เรื่อง สั่งหลังกี่โมง เลื่อนไปอีก 1 วัน****
                     if ($order->isSlowest) {
@@ -627,15 +627,29 @@ class CheckoutController extends MasterController {
                          * `billingDistrictId`, `billingZipcode`, `billingTel`
                          */
                         $adress = [];
-                        $adress['billingFirstname'] = $order->billingFirstname;
-                        $adress['billingLastname'] = $order->billingLastname;
                         $adress['billingCompany'] = $order->billingCompany;
                         $adress['billingTax'] = $order->billingTax;
+
+                        $adress['billingFirstname'] = $order->billingFirstname;
+                        $adress['billingLastname'] = $order->billingLastname;
                         $adress['billingAddress'] = $order->billingAddress;
-                        $adress['billingCountryId'] = $order->billingCountryId;
-                        $adress['billingProvinceId'] = $order->billingProvinceId;
-                        $adress['billingAmphurId'] = $order->billingAmphurId;
-                        $adress['billingDistrictId'] = $order->billingDistrictId;
+
+                        $billingCountryId = $order->billingCountryId; //ประเทศ
+                        $country = Local::Countries($billingCountryId);
+                        $adress['billingCountryId'] = $country->localName;
+
+                        $billingProvinceId = $order->billingProvinceId; //จังหวัด
+                        $States = Local::States($billingProvinceId);
+                        $adress['billingProvinceId'] = $States->localName;
+
+                        $billingAmphurId = $order->billingAmphurId; //อำเภอ
+                        $Cities = Local::Cities($billingAmphurId);
+                        $adress['billingAmphurId'] = $Cities->localName;
+
+                        $billingDistrictId = $order->billingDistrictId; //ตำบล
+                        $District = Local::District($billingDistrictId);
+                        $adress['billingDistrictId'] = $District->localName;
+
                         $adress['billingZipcode'] = $order->billingZipcode;
                         $adress['billingTel'] = $order->billingTel;
 

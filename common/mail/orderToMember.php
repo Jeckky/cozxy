@@ -89,7 +89,7 @@
                                             <tr>
                                                 <td class="x_order-col x_pam x_txt-left" valign="top" style="border-collapse:collapse; padding-top:10px; padding-right:10px; padding-bottom:10px; padding-left:10px; text-align:left">
                                                     <div class="x_order-status-inner">
-                                                        <div class="x_color-grey" style="color:#646464"><!--สินค้าของคุณจะได้รับการจัดส่งไปยัง-->ที่อยู่ในบิลลิงส์:</div>
+                                                        <div class="x_color-grey" style="color:#646464"><!--สินค้าของคุณจะได้รับการจัดส่งไปยัง-->ที่อยู่การจัดส่งใบบิลลิงส์:</div>
                                                         <div class="x_mts" style="margin-top:5px">
                                                             <strong class="x_color-orange" style="color:#f36f21"> <?php echo $type; ?></strong>
                                                         </div>
@@ -126,7 +126,7 @@
                                                 </td>
                                             </tr>
                                         </tbody>
-                                    </table> 
+                                    </table>
 
                                 </td>
                             </tr>

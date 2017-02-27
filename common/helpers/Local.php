@@ -38,4 +38,9 @@ class Local {
         return $localNamecountrie;
     }
 
+    public static function District($districtId) {
+        $localNamedistrict = \common\models\dbworld\District::find()->where("districtId = '" . $districtId . "' ")->one();
+        return $localNamedistrict;
+    }
+
 }
