@@ -116,7 +116,7 @@
                                                                 } else {
                                                                     echo $billingCompany . ' เลขประจำตัวผู้เสียภาษีอากร : ' . $billingTax;
                                                                 }
-                                                                echo $billingAddress . '' . $billingDistrictId . ' / ' . $billingAmphurId . ' / ' . $billingProvinceId . ' / ' . $billingCountryId . ' / ' . $billingZipcode;
+                                                                echo $billingAddress . ' ' . $billingDistrictId . ' / ' . $billingAmphurId . ' / ' . $billingProvinceId . ' / ' . $billingCountryId . ' / ' . $billingZipcode;
                                                                 ?><!--บริษัท สยาม แอดมินนิสเทรทีฟ แมเนจเม้นท์
                                                                 เลขที่ 313 อาคารมคธ ซ.รามคำแหง 21 (นวศรี)
                                                                 แขวงวังทองหลาง กรุงเทพมหานคร/ Bangkok-วังทองหลาง/ Wang Thonglang-10310 10310 --><br>
