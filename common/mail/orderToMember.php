@@ -60,7 +60,7 @@
                                 <td>
                                     <p style="color: #ff9016; font-size: 20px;"><strong>เรียนคุณ <?php echo $type; ?></strong></p>
 
-                                    <table class="x_col1of2" width="48%" border="0" cellpadding="0" cellspacing="0" align="left" style="border-spacing:0; border-collapse:collapse; font-size:14px">
+                                    <table class="x_col1of2" width="50%" border="0" cellpadding="0" cellspacing="0" align="left" style="border-spacing:0; border-collapse:collapse; font-size:14px">
                                         <tbody>
                                             <tr>
                                                 <td class="x_order-col x_pam" align="left" valign="top" style="border-collapse:collapse; padding-top:10px; padding-right:10px; padding-bottom:10px; padding-left:10px">
@@ -80,26 +80,25 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    </div>
-                                    <div style="width: 50%;">
-                                        <table class="x_col1of2" width="48%" border="0" cellpadding="0" cellspacing="0" align="left" style="border-spacing:0; border-collapse:collapse; font-size:14px">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="x_order-col x_pam x_txt-left" valign="top" style="border-collapse:collapse; padding-top:10px; padding-right:10px; padding-bottom:10px; padding-left:10px; text-align:left">
-                                                        <div class="x_order-status-inner">
-                                                            <div class="x_color-grey" style="color:#646464">สินค้าของคุณจะได้รับการจัดส่งไปยัง:</div>
-                                                            <div class="x_mts" style="margin-top:5px"><strong class="x_color-orange" style="color:#f36f21">นิธิศา สมหวัง </strong></div>
-                                                            <div class="x_mts" style="margin-top:5px"><strong>บริษัท สยาม แอดมินนิสเทรทีฟ แมเนจเม้นท์ เลขที่ 313 อาคารมคธ ซ.รามคำแหง 21 (นวศรี) แขวงวังทองหลาง กรุงเทพมหานคร/ Bangkok-วังทองหลาง/ Wang Thonglang-10310 10310 <br>
-                                                                    Phone: 0949945229 </strong></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div style="width: 50%">
+
+                                    <table class="x_col1of2" width="50%" border="0" cellpadding="0" cellspacing="0" align="left" style="border-spacing:0; border-collapse:collapse; font-size:14px">
+                                        <tbody>
+                                            <tr>
+                                                <td class="x_order-col x_pam x_txt-left" valign="top" style="border-collapse:collapse; padding-top:10px; padding-right:10px; padding-bottom:10px; padding-left:10px; text-align:left">
+                                                    <div class="x_order-status-inner">
+                                                        <div class="x_color-grey" style="color:#646464">สินค้าของคุณจะได้รับการจัดส่งไปยัง:</div>
+                                                        <div class="x_mts" style="margin-top:5px"><strong class="x_color-orange" style="color:#f36f21">นิธิศา สมหวัง </strong></div>
+                                                        <div class="x_mts" style="margin-top:5px"><strong>บริษัท สยาม แอดมินนิสเทรทีฟ แมเนจเม้นท์ เลขที่ 313 อาคารมคธ ซ.รามคำแหง 21 (นวศรี) แขวงวังทองหลาง กรุงเทพมหานคร/ Bangkok-วังทองหลาง/ Wang Thonglang-10310 10310 <br>
+                                                                Phone: 0949945229 </strong></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <p style="width: 100%">
                                         รายละเอียดของคำสั่งซื้อ: <br>
-                                    </div>
+                                    </p>
 
                                     <p style="color: #ff9016; font-size: 16px;">อีเมลฉบับนี้เป็นการแจ้งข้อมูลโดยอัตโนมัติ กรุณาอย่าตอบกลับ</p>
                                 </td>
