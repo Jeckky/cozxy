@@ -621,8 +621,25 @@ class CheckoutController extends MasterController {
                         $url = '';
                         $type = $member->firstname . ' ' . $member->lastname;
                         $Subject = 'ยืนยันคำสั่งซื้อหมายเลข ' . $order->invoiceNo;
-                        $htmls = '<p>test send order to member.</p>';
-                        $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $htmls);
+                        /*
+                         * `billingFirstname`, `billingLastname`, `billingCompany`, `billingTax`,
+                         * `billingAddress`, `billingCountryId`, `billingProvinceId`, `billingAmphurId`,
+                         * `billingDistrictId`, `billingZipcode`, `billingTel`
+                         */
+                        $adress = [];
+                        $adress['billingFirstname'] = $order->billingFirstname;
+                        $adress['billingLastname'] = $order->billingLastname;
+                        $adress['billingCompany'] = $order->billingCompany;
+                        $adress['billingTax'] = $order->billingTax;
+                        $adress['billingAddress'] = $order->billingAddress;
+                        $adress['billingCountryId'] = $order->billingCountryId;
+                        $adress['billingProvinceId'] = $order->billingProvinceId;
+                        $adress['billingAmphurId'] = $order->billingAmphurId;
+                        $adress['billingDistrictId'] = $order->billingDistrictId;
+                        $adress['billingZipcode'] = $order->billingZipcode;
+                        $adress['billingTel'] = $order->billingTel;
+
+                        $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress);
                     }
 
                     /*

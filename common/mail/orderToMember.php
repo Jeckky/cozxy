@@ -89,10 +89,39 @@
                                             <tr>
                                                 <td class="x_order-col x_pam x_txt-left" valign="top" style="border-collapse:collapse; padding-top:10px; padding-right:10px; padding-bottom:10px; padding-left:10px; text-align:left">
                                                     <div class="x_order-status-inner">
-                                                        <div class="x_color-grey" style="color:#646464">สินค้าของคุณจะได้รับการจัดส่งไปยัง:</div>
-                                                        <div class="x_mts" style="margin-top:5px"><strong class="x_color-orange" style="color:#f36f21"> <?php echo $type; ?></strong></div>
-                                                        <div class="x_mts" style="margin-top:5px"><strong>บริษัท สยาม แอดมินนิสเทรทีฟ แมเนจเม้นท์ เลขที่ 313 อาคารมคธ ซ.รามคำแหง 21 (นวศรี) แขวงวังทองหลาง กรุงเทพมหานคร/ Bangkok-วังทองหลาง/ Wang Thonglang-10310 10310 <br>
-                                                                Phone: 0949945229 </strong></div>
+                                                        <div class="x_color-grey" style="color:#646464"><!--สินค้าของคุณจะได้รับการจัดส่งไปยัง-->ที่อยู่ในบิลลิงส์:</div>
+                                                        <div class="x_mts" style="margin-top:5px">
+                                                            <strong class="x_color-orange" style="color:#f36f21"> <?php echo $type; ?></strong>
+                                                        </div>
+                                                        <div class="x_mts" style="margin-top:5px">
+                                                            <?php
+                                                            $billingCompany = $adress['billingCompany'];
+                                                            $billingTax = $adress['billingTax'];
+
+                                                            $billingFirstname = $adress['billingFirstname'];
+                                                            $billingLastname = $adress['billingLastname'];
+
+                                                            $billingAddress = $adress['billingAddress'];
+                                                            $billingCountryId = $adress['billingCountryId'];
+                                                            $billingProvinceId = $adress['billingProvinceId'];
+                                                            $billingAmphurId = $adress['billingAmphurId'];
+                                                            $billingDistrictId = $adress['billingDistrictId'];
+                                                            $billingZipcode = $adress['billingZipcode'];
+                                                            $billingTel = $adress['billingTel'];
+                                                            ?>
+                                                            <strong>
+                                                                <?php
+                                                                if ($billingCompany == '') {
+                                                                    echo 'คุณ' . $billingFirstname . ' ' . $billingLastname;
+                                                                } else {
+                                                                    echo $billingCompany . ' เลขประจำตัวผู้เสียภาษีอากร : ' . $billingTax;
+                                                                }
+                                                                echo $billingAddress . '' . $billingDistrictId . ' / ' . $billingAmphurId . ' / ' . $billingProvinceId . ' / ' . $billingCountryId . ' / ' . $billingZipcode;
+                                                                ?><!--บริษัท สยาม แอดมินนิสเทรทีฟ แมเนจเม้นท์
+                                                                เลขที่ 313 อาคารมคธ ซ.รามคำแหง 21 (นวศรี)
+                                                                แขวงวังทองหลาง กรุงเทพมหานคร/ Bangkok-วังทองหลาง/ Wang Thonglang-10310 10310 --><br>
+                                                                Phone: <?php echo $billingTel; ?> </strong>
+                                                        </div>
                                                     </div>
                                                 </td>
                                             </tr>
