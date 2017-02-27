@@ -613,7 +613,7 @@ class CheckoutController extends MasterController {
                     /*
                      * Send For Email
                      * Create Date : 24/2/2017
-                     * Create By : 27/02/2017
+                     * Create By : Taninut.Bm
                      */
                     $member = \common\models\costfit\User::find()->where('userId=' . $orderUserId)->one();
                     if (isset($member)) {
@@ -658,7 +658,7 @@ class CheckoutController extends MasterController {
                         $adress['billingZipcode'] = $order->billingZipcode;
                         $adress['billingTel'] = $order->billingTel;
 
-                        $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress);
+                        $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList);
                     }
 
                     /*

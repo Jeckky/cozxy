@@ -28,7 +28,7 @@ class Email {
         ->send();
     }
 
-    public static function mailOrderMember($toMail, $Subject, $url, $type, $adress) {//ส่งรายการ Order ให้สมาชิก
+    public static function mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList) {//ส่งรายการ Order ให้สมาชิก
         \Yii::$app->mail->compose('orderToMember', ['url' => $url, 'type' => $type, 'adress' => $adress])
         //Yii::$app->mail->compose('register_confirm', ['url' => $url])
         ->setTo($toMail)//tomail
