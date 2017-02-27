@@ -616,13 +616,14 @@ class CheckoutController extends MasterController {
                      * Create By : 27/02/2017
                      */
                     $member = \common\models\costfit\User::find()->where('userId=' . $orderUserId)->one();
-                    //if (isset($member)) {
-                    $toMail = $member->email;
-                    $url = '';
-                    $type = '';
-                    $htmls = '<p>test send order to member.</p>';
-                    $orderEmail = Email::mailOrderMember($toMail, $url, $type, $htmls);
-                    //}
+                    if (isset($member)) {
+                        $toMail = $member->email;
+                        $url = '';
+                        $type = $member->firstname . ' ' . $member->lastname;
+                        $Subject = 'ยืนยันคำสั่งซื้อหมายเลข ' . $order->invoiceNo;
+                        $htmls = '<p>test send order to member.</p>';
+                        $orderEmail = Email::mailOrderMember($toMail, $url, $type, $htmls);
+                    }
 
                     /*
                      * End Send Email
