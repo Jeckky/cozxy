@@ -213,23 +213,23 @@
                                                 <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้าไม่รวมภาษี/Sub Total excluded VAT :</td>
                                                 <td class="bg-purchase-order text-right"><?php echo number_format($order->totalExVat, 2); ?></td>
                                             </tr>
-                                            <tr style="text-align: left; font-size: 12px;">
+                                            <tr style="text-align: right; font-size: 12px;">
                                                 <td colspan="6" class="text-right" class="foorter-purchase-order">ภาษีมูลค่าเพิ่ม/VAT 7 % :</td>
                                                 <td class="bg-purchase-order text-right"><?php echo number_format($order->vat, 2); ?></td>
                                             </tr>
-                                            <tr style="text-align: left; font-size: 12px;">
+                                            <tr style="text-align: right; font-size: 12px;">
                                                 <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้ารวมภาษีมูลค่าเพิ่ม / sub Total Included VAT :</td>
                                                 <td class="bg-purchase-order text-right"><?php echo number_format($order->total, 2); ?></td>
                                             </tr>
-                                            <tr style="text-align: left; font-size: 12px;">
+                                            <tr style="text-align: right; font-size: 12px;">
                                                 <td colspan="6" class="text-right" class="foorter-purchase-order">ส่วนลดพิเศษ / Extra Saving :</td>
                                                 <td class="bg-purchase-order text-right"><?php echo number_format($order->discount, 2); ?></td>
                                             </tr>
-                                            <tr style="text-align: left; font-size: 12px;">
+                                            <tr style="text-align: right; font-size: 12px;">
                                                 <td colspan="6" class="text-right" class="foorter-purchase-order">ค่าจัดส่ง / Shipping :</td>
                                                 <td class="bg-purchase-order text-right"><?php echo ($order->shippingRate > 0) ? number_format($order->shippingRate, 2) : "Free"; ?></td>
                                             </tr>
-                                            <tr style="text-align: left; font-size: 12px;">
+                                            <tr style="text-align: right; font-size: 12px;">
                                                 <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้าที่ต้องชำระเงินรวมภาษีมูลค่าเพิ่ม/Total excluded VAT :</td>
                                                 <td class="bg-purchase-order text-right"><?php echo number_format($order->summary, 2); ?></td>
                                             </tr>
