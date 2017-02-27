@@ -622,7 +622,7 @@ class CheckoutController extends MasterController {
                         $type = $member->firstname . ' ' . $member->lastname;
                         $Subject = 'ยืนยันคำสั่งซื้อหมายเลข ' . $order->invoiceNo;
                         $htmls = '<p>test send order to member.</p>';
-                        $orderEmail = Email::mailOrderMember($toMail, $url, $type, $htmls);
+                        $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $htmls);
                     }
 
                     /*
