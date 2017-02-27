@@ -246,7 +246,7 @@
                         </table>
                     </center>
                     <br><br>
-                    <p style="color: #ff9016; font-size: 12px;">อีเมลฉบับนี้เป็นการแจ้งข้อมูลโดยอัตโนมัติ กรุณาอย่าตอบกลับ</p>
+                    <p style="color: #ff9016; font-size: 12px;">*** อีเมลฉบับนี้เป็นการแจ้งข้อมูลโดยอัตโนมัติ กรุณาอย่าตอบกลับ</p>
                 </div>
                 <div class="foorter title"  style="background-color: #000000; color: rgba(255,212,36,.9); padding: 20px;">
                     บริษัท​ คอ​ซซี่​ ดอทคอม​ จํากัด​<br>
