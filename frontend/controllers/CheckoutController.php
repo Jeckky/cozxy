@@ -616,7 +616,7 @@ class CheckoutController extends MasterController {
                      * Create By : 27/02/2017
                      */
                     $member = \common\models\costfit\User::find()->where('userId=' . $orderUserId)->one();
-                    if (isset($member) && !empty($member)) {
+                    if (isset($member)) {
                         $toMail = $member->email;
                         $url = '';
                         $type = '';
