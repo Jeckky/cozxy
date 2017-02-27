@@ -615,11 +615,15 @@ class CheckoutController extends MasterController {
                      * Create Date : 24/2/2017
                      * Create By : 27/02/2017
                      */
-                    $toMail = '';
-                    $url = '';
-                    $type = '';
-                    $htmls = '<p>test send order to member.</p>';
-                    $orderEmail = Email::mailOrderMember($toMail, $url, $type, $htmls);
+                    $member = \common\models\costfit\User::find()->where('userId=' . $orderUserId)->one();
+                    if (isset($member) && !empty($member)) {
+                        $toMail = $member->email;
+                        $url = '';
+                        $type = '';
+                        $htmls = '<p>test send order to member.</p>';
+                        $orderEmail = Email::mailOrderMember($toMail, $url, $type, $htmls);
+                    }
+
                     /*
                      * End Send Email
                      */
