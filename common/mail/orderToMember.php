@@ -70,7 +70,7 @@
                 </div>
                 <div class="content" style="background-color: #f5f5f5;">
                     <center>
-                        <table width="100%"  text-align="center" style=" width:100% ;  text-align: center;  ">
+                        <table width="100%"  text-align="center" style=" width:100% ; height: auto;  text-align: center;  ">
                             <tr>
                                 <td>
                                     <p style="color: #ff9016; font-size: 20px; text-align: left;"><strong>เรียนคุณ <?php echo $type; ?></strong></p>
