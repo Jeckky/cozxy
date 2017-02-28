@@ -252,6 +252,25 @@
                 </div>
             </div>
         </div>
+        <table class="table" style="width: 100%; height: auto;">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>แผ่นที่ : ปลายทางที่ Locker</th>
+                    <th>แผ่นที่ : ปลายทางที่ Booth</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="active">
+                    <th scope="row">1</th>
+                    <td>Column content map image lockers</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Column content map image Booth</td>
+                </tr>
+            </tbody>
+        </table>
     </body>
 </html>
 
