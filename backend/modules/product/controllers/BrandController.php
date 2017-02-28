@@ -71,6 +71,7 @@ class BrandController extends ProductMasterController {
         $model = new Brand();
         if (isset($_POST["Brand"])) {
             $model->attributes = $_POST["Brand"];
+            $model->userId = Yii::$app->user->identity->userId;
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $imageObj = \yii\web\UploadedFile::getInstanceByName("Brand[image]");
             if (isset($imageObj) && !empty($imageObj)) {
@@ -108,7 +109,7 @@ class BrandController extends ProductMasterController {
         if (isset($_POST["Brand"])) {
             $model->attributes = $_POST["Brand"];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-
+            $model->userId = Yii::$app->user->identity->userId;
             $imageObj = \yii\web\UploadedFile::getInstanceByName("Brand[image]");
             if (isset($imageObj) && !empty($imageObj)) {
                 $folderName = "Brand";
