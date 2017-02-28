@@ -252,6 +252,7 @@
                 </div>
             </div>
         </div>
+        <br><br><br>
         <table class="table" style="width: 100%; height: auto;">
             <thead>
                 <tr>
@@ -264,9 +265,6 @@
                 <tr class="active">
                     <th scope="row">1</th>
                     <td>Column content map image lockers</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
                     <td>Column content map image Booth</td>
                 </tr>
             </tbody>
