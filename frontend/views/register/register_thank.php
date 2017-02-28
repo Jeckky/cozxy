@@ -68,8 +68,7 @@ $logoImage = common\helpers\Content::ContentLogo('logoImage');
                             <ul>
                                 <li><h3><i class="fa fa-building"></i>บริษัท​ คอ​ซซี่​ ดอทคอม​ จํากัด​</h3></li>
                                 <li>Cozxy Public Company Limited</li>
-                                <li>เลขที่ 1 ชั้น 7 ซอยลาดพร้าว 19 ถนนลาดพร้าว
-                                    แขวงจอมพล เขตจตุจักร กรุงเทพมหานคร 10900</li>
+                                <li>เลขที่ 5 ซอยรามอินทรา 5 แยก 4 แขวงอนุสวรีย์ เขตบางเขน กทม. 10220</li>
                                 <!--<li><a href="#"><i class="fa fa-envelope"></i>mail@Limo.com</a></li>-->
                                 <li><i class="fa fa-phone"></i>02-938-3464</li>
                                 <li><i class="fa fa-mobile"></i>02-938-3463</li>
