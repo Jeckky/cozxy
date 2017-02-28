@@ -68,8 +68,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <div class="post">
                         <div class="cont-info-widget">
                             <ul>
-                                <li><i class="fa fa-building"></i>บริษัท​ คอ​ซซี่​ ดอทคอม​ จํากัด​</li>
-                                <li><i class="fa fa-building"></i>Cozxy Public Company Limited</li>
+                                <li><i class="fa fa-building"></i>บริษัท​ คอ​ซซี่​ ดอทคอม​ จํากัด​</li> 
                                 <li><i class="fa fa-building"></i>เลขที่ 5 ซอยรามอินทรา 5 แยก 4 แขวงอนุสวรีย์ เขตบางเขน กทม. 10220</li>
                                 <li><a href="#"><i class="fa fa-envelope"></i>online@cozxy.com</a></li>
                                 <li><i class="fa fa-phone"></i></li>

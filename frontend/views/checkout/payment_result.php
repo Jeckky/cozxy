@@ -69,14 +69,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <div class="cont-info-widget">
                             <ul>
                                 <li><i class="fa fa-building"></i>บริษัท​ คอ​ซซี่​ ดอทคอม​ จํากัด​</li>
-                                <li><i class="fa fa-building"></i>Cozxy Public Company Limited</li>
                                 <li><i class="fa fa-building"></i>เลขที่ 5 ซอยรามอินทรา 5 แยก 4 แขวงอนุสวรีย์ เขตบางเขน กทม. 10220</li>
                                 <li><a href="#"><i class="fa fa-envelope"></i>online@cozxy.com</a></li>
-                                <!--<li><i class="fa fa-phone"></i>02-938-3464</li>
-                                <li><i class="fa fa-mobile"></i>02-938-3463</li>
-                                <li><i class="fa fa-support"></i> <a href="http://www.fenzer.biz">www.qsaf.biz</a></li>
-                                <li><i class="fa fa-support"></i> <a href="http://www.qsaf.biz">www.qsaf.biz</a></li>
-                                <li><i class="fa fa-support"></i> <a href="http://www.atechwindow.com">www.atechwindow.com</a></li>-->
+                                <li><i class="fa fa-phone"></i></li>
+                                <li><i class="fa fa-mobile"></i></li>
+                                <li><i class="fa fa-support"></i> </li>
+                                <li><i class="fa fa-support"></i> </li>
+                                <li><i class="fa fa-support"></i> </li>
                             </ul>
                         </div>
                     </div>
