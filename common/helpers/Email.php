@@ -28,8 +28,8 @@ class Email {
         ->send();
     }
 
-    public static function mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList) {//ส่งรายการ Order ให้สมาชิก
-        \Yii::$app->mail->compose('orderToMember', ['url' => $url, 'type' => $type, 'adress' => $adress, 'order' => $orderList])
+    public static function mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType) {//ส่งรายการ Order ให้สมาชิก
+        \Yii::$app->mail->compose('orderToMember', ['url' => $url, 'type' => $type, 'adress' => $adress, 'order' => $orderList, 'receiveType' => $receiveType])
         ->setTo($toMail)//tomail
         ->setFrom('online@cozxy.com')
         ->setSubject($Subject)
