@@ -69,7 +69,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 ],
             ]);
             ?>
-            <?= Html::submitButton('<i class="fa fa-hand-lizard-o" aria-hidden="true"></i> หยิบ', ['class' => 'btn btn-success btn-lg pull-right']) ?>
+            <?=
+            Html::submitButton('หยิบ', ['class' => 'pull-right',
+                'style' => 'background-color:#000;color:#ffcc00;border:#000 solid thin;width:90px;height:45px;font-size:12pt;'])
+            ?>
         </div>
     </div>
 
