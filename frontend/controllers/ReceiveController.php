@@ -10,6 +10,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Json;
 use common\models\costfit\Order;
 use common\models\costfit\OrderItem;
 use common\models\costfit\OrderItemPacking;
@@ -44,45 +45,67 @@ class ReceiveController extends MasterController {
         $ms = '';
         $tel = '';
         $model = new \common\models\costfit\Receive();
-
+        $res = [];
         if (isset($_POST['Receive']['password']) && !empty($_POST['Receive']['password'])) {
             $order = Order::find()->where("password='" . $_POST['Receive']['password'] . "'")->one();
             if (isset($order) && !empty($order)) {
                 if ($order->status == Order::ORDER_STATUS_RECEIVED) {//16 = รับของแล้ว
                     $orderItem = OrderItem::find()->where("orderId=" . $order->orderId . " and status<" . Order::ORDER_STATUS_RECEIVED)->all();
                     if (count($orderItem) == 0) { // เชคว่า มี สินค้าที่ยังไม่ได้ รับหรือไม่ ถ้าไม่มี รับไม่ได้
-                        $ms = 'รายการนี้ได้รับสินค้าไปแล้ว'; //300
-                        return $this->render('error', [
-                                    'ms' => $ms
-                        ]);
+                        //  $ms = 'รายการนี้ได้รับสินค้าไปแล้ว'; //300
+//                        return $this->render('error', [
+//                                    'ms' => $ms
+//                        ]);
+                        $res["status"] = 300;
+                        $res["error"] = "รายการนี้รับสินค้าไปแล้ว";
+                        print_r(Json::encode($res));
                     }
                 }
-                $user = User::find()->where("userId='" . $order->userId . "'")->one();
-                if (isset($user) && !empty($user)) {
-                    $address = Address::find()->where("userId='" . $user->userId . "' and isDefault=1")->one();
-                    if (isset($address) && !empty($address)) {
-                        $tel = $address->tel;
-                    }
-                    return $this->render('detail', [
-                                'user' => $user,
-                                'tel' => $tel,
-                                'orderId' => $order->orderId
-                    ]);
+                if ($order->error >= Receive::ERROR_PASSWORD) {
+                    $res["status"] = 302;
+                    $res["error"] = "รายการนี้กรอกรหัสรับสินค้าเกิน " . Receive::ERROR_PASSWORD . " ครั้งกรุณาติดต่อ cozxy.com";
+                    print_r(Json::encode($res));
                 } else {
-                    $ms = 'ไม่เจอรายการสินค้า'; //301
+                    $user = User::find()->where("userId='" . $order->userId . "'")->one();
+                    if (isset($user) && !empty($user)) {
+                        $address = Address::find()->where("userId='" . $user->userId . "' and isDefault=1")->one();
+                        if (isset($address) && !empty($address)) {
+                            $tel = $address->tel;
+                        }
+//                    return $this->render('detail', [
+//                                'user' => $user,
+//                                'tel' => $tel,
+//                                'orderId' => $order->orderId
+//                    ]);
+                        $res["status"] = 200; //success
+                        $res["tel"] = $tel;
+                        $res["email"] = $user->email;
+                        $res["name"] = $user->firstname . ' ' . $user->lastname;
+                        $res["orderNo"] = $order->orderId;
+                        $res["orderId"] = $order->orderNo;
+                        print_r(Json::encode($res));
+                    } else {
+                        //$ms = 'ไม่เจอรายการสินค้า'; //301
+                        $res["status"] = 301;
+                        $res["error"] = "ไม่เจอรายการสินค้า";
+                        print_r(Json::encode($res));
+                    }
                 }
             } else {
-                $ms = 'ไม่เจอรายการสินค้า'; //301
+                //$ms = 'ไม่เจอรายการสินค้า'; //301
+                $res["status"] = 301;
+                $res["error"] = "ไม่เจอรายการสินค้า";
+                print_r(Json::encode($res));
             }
-            if ($ms != '') {//ถ้าไม่เจอรายการ แสดงข้อความ แล้วกลับไปหน้าเดิม
-                return $this->render('error', [
-                            'ms' => $ms
-                ]);
-            }
+            //if ($ms != '') {//ถ้าไม่เจอรายการ แสดงข้อความ แล้วกลับไปหน้าเดิม
+//                return $this->render('error', [
+//                            'ms' => $ms
+//                ]);
+            // }
         }
-        return $this->render('index', [
-                    'model' => $model,
-        ]);
+//        return $this->render('index', [
+//                    'model' => $model,
+//        ]);
     }
 
     /**
@@ -146,6 +169,7 @@ class ReceiveController extends MasterController {
     public function actionSendSms() {
         $ms = '';
         $tel = $_POST['tel'];
+        $res = [];
         if (isset($_POST['orderId'])) {
             $order = Order::find()->where("orderId=" . $_POST['orderId'])->one();
             if (isset($order) && !empty($order)) {
@@ -169,15 +193,23 @@ class ReceiveController extends MasterController {
                     $receive->createDateTime = new \yii\db\Expression('NOW()');
                     $receive->updateDateTime = new \yii\db\Expression('NOW()');
                     if ($receive->save(false)) {
-                        return $this->render('receive', [
-                                    'userId' => $user->userId,
-                                    'tel' => $tel,
-                                    'password' => $order->password,
-                                    'orderId' => $order->orderId,
-                                    'refNo' => $order->refNo
-                        ]);
+//                        return $this->render('receive', [
+//                                    'userId' => $user->userId,
+//                                    'tel' => $tel,
+//                                    'password' => $order->password,
+//                                    'orderId' => $order->orderId,
+//                                    'refNo' => $order->refNo
+//                        ]);
+                        $res["status"] = 200;
+                        $res["userId"] = $user->userId;
+                        $res["name"] = $user->firstname . ' ' . $user->lastname;
+                        $res["orderNo"] = $order->orderNo;
+                        $res["orderId"] = $order->orderId;
+                        $res["tel"] = $tel;
+                        $res["refNo"] = $ref;
+                        print_r(Json::encode($res));
                     }
-                } else {
+                } else {//error
                     $ms = 'ไม่พบผู้ใช้งาน';
                 }
             } else {
@@ -190,12 +222,14 @@ class ReceiveController extends MasterController {
 
     public function actionReceived() {
         $ms = '';
-        $allLocker = '';
+        //$allLocker = '';
+        $allLocker = [];
         $orderItem = '';
         $check = [];
+        $res = [];
         $i = 0;
         $time = false;
-        $receive = Receive::find()->where("otp='" . $_POST['otp'] . "' and orderId=" . $_POST['orderId'] . " and userId=" . $_POST['userId'] . " and password='" . $_POST['password'] . "' and refNo='" . $_POST['refNo'] . "' and status=1 and isUse=0")->one();
+        $receive = Receive::find()->where("otp='" . $_POST['otp'] . "' and orderId=" . $_POST['orderId'] . " and userId=" . $_POST['userId'] . " and password='" . $_POST['password'] . "' and refNo='" . $_POST['refNo'] . "' and status=1 and isUse=0 and error<" . Receive::ERROR_PASSWORD)->one();
         if (isset($receive) && !empty($receive)) {
             $time = $this->checkTime($receive->updateDateTime);
             if ($time == true) {//ถ้าเวลา ไม่เกิน 5 นาที
@@ -213,6 +247,7 @@ class ReceiveController extends MasterController {
                         if (isset($lockers) && !empty($lockers)) {
                             foreach ($lockers as $locker):
                                 $total = 0;
+                                $count = 0;
                                 $pickingLocker = PickingPointItems::find()->where("pickingItemsId=" . $locker->pickingItemsId . " and pickingId=" . $pickingPoint)->one();
                                 if (isset($pickingLocker)) {
                                     $flag = false;
@@ -221,7 +256,9 @@ class ReceiveController extends MasterController {
 
                                     if ($flag == true) {
                                         $total = count(OrderItemPacking::find()->where("pickingItemsId=" . $pickingLocker->pickingItemsId . " and status=7")->all());
-                                        $allLocker = $allLocker . " ช่อง " . $pickingLocker->name . " จำนวน " . $total . " ถุง" . "<br>";
+                                        //$allLocker = $allLocker . " ช่อง " . $pickingLocker->name . " จำนวน " . $total . " ถุง" . "<br>";
+                                        $allLocker[$count] = $pickingLocker->name;
+                                        $count++;
                                     }
                                     $i++;
                                 }
@@ -232,39 +269,76 @@ class ReceiveController extends MasterController {
                             //$order->status=16;
                             //$order->save();//รับของแล้ว
                             $this->updateOrder($order->orderId, $_POST['otp'], $_POST['userId'], $_POST['password'], $_POST['refNo']);
-                            return $this->render('thank', [
-                                        'userId' => $_POST['userId'],
-                                        'tel' => $_POST['tel'],
-                                        'password' => $_POST['password'],
-                                        'orderId' => $_POST['orderId'],
-                                        'locker' => $allLocker,
-                                        'ms' => $ms
-                            ]);
+//                            return $this->render('thank', [
+//                                        'userId' => $_POST['userId'],
+//                                        'tel' => $_POST['tel'],
+//                                        'password' => $_POST['password'],
+//                                        'orderId' => $_POST['orderId'],
+//                                        'locker' => $allLocker,
+//                                        'ms' => $ms
+//                            ]);
+                            $res["status"] = 200;
+                            $res["tel"] = $_POST['tel'];
+                            $res["userId"] = $_POST['userId'];
+                            $res["orderId"] = $_POST['orderId'];
+                            $res["numberLocker"] = $allLocker;
+                            $res["refNo"] = $order->refNo;
+                            print_r(Json::encode($res));
                         } else {
-                            $ms = 'ยังไม่มีรายการพัสดุของคุณใน locker ใดเลย';
+                            $res["status"] = 300;
+                            $res["error"] = "ยังไม่มีรายการพัสดุของคุณใน locker ใดเลย";
+                            print_r(Json::encode($res));
+                            //$ms = 'ยังไม่มีรายการพัสดุของคุณใน locker ใดเลย';
                         }
                     } else {
-                        $ms = 'ไม่เจอรายการสินค้า2';
+                        $res["status"] = 301;
+                        $res["error"] = "ไม่เจอรายการสินค้า";
+                        print_r(Json::encode($res));
+                        //$ms = 'ไม่เจอรายการสินค้า2';
                     }
                 } else {
-                    $ms = 'ไม่เจอรายการสินค้า1';
+                    $res["status"] = 301;
+                    $res["error"] = "ไม่เจอรายการสินค้า";
+                    print_r(Json::encode($res));
+                    //$ms = 'ไม่เจอรายการสินค้า1';
                 }
             } else {
-                $ms = 'รหัสผ่านหมดเวลาการใช้งาน กรุณากดรับรหัสใหม่';
-                return $this->render('error', [
-                            'ms' => $ms
-                ]);
+                $res["status"] = 302;
+                $res["error"] = "รหัสผ่านหมดเวลาการใช้งาน กรุณากดรับรหัสใหม่";
+                print_r(Json::encode($res));
+                //$ms = 'รหัสผ่านหมดเวลาการใช้งาน กรุณากดรับรหัสใหม่';
+//                return $this->render('error', [
+//                            'ms' => $ms
+//                ]);
             }
         } else {
-            $ms = 'รหัสผ่านไม่ถูกต้อง';
-            return $this->render('receive', [
-                        'userId' => $_POST['userId'],
-                        'tel' => $_POST['tel'],
-                        'password' => $_POST['password'],
-                        'orderId' => $_POST['orderId'],
-                        'ms' => $ms,
-                        'refNo' => $_POST['refNo']
-            ]);
+//            $ms = 'รหัสผ่านไม่ถูกต้อง';
+//            return $this->render('receive', [
+//                        'userId' => $_POST['userId'],
+//                        'tel' => $_POST['tel'],
+//                        'password' => $_POST['password'],
+//                        'orderId' => $_POST['orderId'],
+//                        'ms' => $ms,
+//                        'refNo' => $_POST['refNo']
+//            ]);
+            $error = Receive::find()->where("orderId=" . $_POST['orderId'] . " and isUse=0 and userId=" . $_POST['userId'] . " and status=1")->one();
+            if (isset($error) && !empty($error)) {
+                $error->error += 1;
+                if ($error->error >= Receive::ERROR_PASSWORD) {
+                    //สั่ง save รูปผู้กดรับสินค้า
+                    $res["status"] = 500;
+                    $res["error"] = "กรอกรหัสผิดเกิน " . Receive::ERROR_PASSWORD . " ครั้ง กรุณาติดต่อ cozxy.com";
+                    print_r(Json::encode($res));
+                } else {
+                    $res["status"] = 303;
+                    $res["error"] = "รหัส OTP ไม่ถูกต้อง";
+                    print_r(Json::encode($res));
+                }
+            } else {
+                $res["status"] = 303;
+                $res["error"] = "รหัส OTP ไม่ถูกต้อง";
+                print_r(Json::encode($res));
+            }
         }
     }
 
@@ -272,6 +346,7 @@ class ReceiveController extends MasterController {
         $userId = $_POST["userId"];
         $orderId = $_POST["orderId"];
         $tel = $_POST["tel"];
+        $res = [];
         $otp = $this->genOtp();
         $refNo = $this->genRefNo();
         $order = Order::find()->where("orderId=" . $orderId . " and userId=" . $userId)->one();
@@ -293,7 +368,17 @@ class ReceiveController extends MasterController {
             $receive->updateDateTime = new \yii\db\Expression('NOW()');
             $receive->save(FALSE);
         }
-        return $refNo;
+
+
+        $res["status"] = 200;
+        $res["userId"] = $order->userId;
+        $res["name"] = User::userName($order->userId);
+        $res["orderId"] = $order->orderId;
+        $res["OrderNo"] = $order->orderNo;
+        $res["tel"] = $_POST["tel"];
+        $res["refNo"] = $refNo;
+        print_r(Json::encode($res));
+        //return $refNo;
     }
 
     protected function checkTime($time) {//กำหนดเวลา ของ OTP
@@ -397,6 +482,7 @@ class ReceiveController extends MasterController {
             $order->save(false);
             $receive = Receive::find()->where("orderId=" . $order->orderId . " and userId=" . $userId . " and otp='" . $otp . "' and password='" . $password . "' and refNo='" . $refNo . "'")->one();
             $receive->status = 2;
+            $receive->isUse = 1;
             $receive->save(FALSE);
         }
     }
