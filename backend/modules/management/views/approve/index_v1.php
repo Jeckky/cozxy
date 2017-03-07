@@ -115,11 +115,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             //'productGroupId',
                                             //'isbn:ntext',
                                             //'code',
-                                            //'title',
-                                            ['attribute' => 'title',
-                                                'label' => 'title',
-                                                'contentOptions' => ['style' => 'width:300px;  min-width:300px;  '],
-                                            ],
+                                            'title',
                                             'quantity',
                                             [
                                                 'attribute' => 'ตรวจสอบ',
@@ -152,27 +148,26 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 }
                                             ],
                                             [
-                                                'attribute' => 'ปลายทางรับสินค้',
+                                                'attribute' => 'รูปแบบการรับสินค้า',
                                                 'format' => 'raw',
                                                 'value' => function($model) {
                                                     $product_price_suppliers = common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId =' . $model->productSuppId . ' and status =1')->one();
-
-                                                    $picking_point_type = common\models\costfit\PickingPointType::find()->all();
-                                                    $point_type = "<div class=\"col-sm-12\">";
-                                                    foreach ($picking_point_type as $value) {
-                                                        $point_type .= "
+                                                    $approve_txt = "<div class=\"col-sm-12\">
                                                                         <div class=\"radio\">
                                                                             <label>
-                                                                                <input type=\"radio\" name=\"jq-validation-radios-$model->productSuppId\" id=\"approveReceiveType-$model->productSuppId\" onchange=\"approveReceiveType($model->productSuppId,$value->pptId)\" data-bind=" . $model->productSuppId . " value=" . $value->pptId . " class=\"px\">
-                                                                                <span class=\"lbl\">" . $value->name . "</span>
+                                                                                <input type=\"radio\" name=\"jq-validation-radios-$model->productSuppId\" id=\"approveReceiveType-$model->productSuppId\" onchange=\"approveReceiveType($model->productSuppId,1)\" data-bind=" . $model->productSuppId . " value=\"1\" class=\"px\">
+                                                                                <span class=\"lbl\">Lockers</span>
                                                                             </label>
                                                                         </div>
-                                                                   ";
-                                                    }
-                                                    $point_type .= "</div>";
+                                                                        <div class=\"radio\">
+                                                                            <label>
+                                                                                <input type=\"radio\" name=\"jq-validation-radios-$model->productSuppId\"  id=\"approveReceiveType-$model->productSuppId\" onchange=\"approveReceiveType($model->productSuppId,2)\"  data-bind=" . $model->productSuppId . " value=\"2\" class=\"px\">
+                                                                                <span class=\"lbl\">Booth</span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>";
                                                     if (isset($product_price_suppliers->price)) {
-                                                        return $point_type;
-                                                        //return $approve_txt;
+                                                        return $approve_txt;
                                                     } else {
                                                         return 'ยังไม่ระบุราคา';
                                                     }
@@ -193,7 +188,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                         } else {
                                                             $approve_txt .= '<input type="checkbox" data-class="switcher-warning"   checked="checked" >';
                                                         }
-                                                        $approve_txt .= '</div><span class="text-switcher-warning-' . $model->productSuppId . ' text-danger">ยังไม่เลือกปลายทางรับสินค้า</span>';
+                                                        $approve_txt .= '</div><span class="text-switcher-warning-' . $model->productSuppId . ' text-danger">ยังไม่เลือกรูปแบบการรับสินค้า</span>';
                                                         return $approve_txt;
                                                     } else {
                                                         return '<span class="text-warning">ยังไม่ระบุราคา</span>';
@@ -251,11 +246,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             //'productGroupId',
                                             //'isbn:ntext',
                                             //'code',
-                                            //'title',
-                                            ['attribute' => 'title',
-                                                'label' => 'title',
-                                                'contentOptions' => ['style' => 'width:300px;  min-width:300px;  '],
-                                            ],
+                                            'title',
                                             [
                                                 'attribute' => 'ตรวจสอบข้อมูล',
                                                 'format' => 'raw',
@@ -332,11 +323,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             //'productGroupId',
                                             'isbn:ntext',
                                             //'code',
-                                            //'title',
-                                            ['attribute' => 'title',
-                                                'label' => 'title',
-                                                'contentOptions' => ['style' => 'width:300px;  min-width:300px;  '],
-                                            ],
+                                            'title',
                                             //'quantity',
                                             [
                                                 'attribute' => 'จำนวน',
@@ -430,14 +417,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         'columns' => [
                                             ['class' => 'yii\grid\SerialColumn'],
                                             //'productId',
-                                            //'productGroupId',
+//'productGroupId',
                                             'isbn:ntext',
                                             //'code',
-                                            //'title',
-                                            ['attribute' => 'title',
-                                                'label' => 'title',
-                                                'contentOptions' => ['style' => 'width:300px;  min-width:300px;  '],
-                                            ],
+                                            'title',
                                             [
                                                 'attribute' => 'Suppiers',
                                                 'format' => 'raw',
