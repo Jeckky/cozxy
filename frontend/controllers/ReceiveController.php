@@ -63,7 +63,7 @@ class ReceiveController extends MasterController {
                 }
                 if ($order->error >= Receive::ERROR_PASSWORD) {
                     $res["status"] = 302;
-                    $res["error"] = "รายการนี้กรอกรหัสรับสินค้าเกิน " . Receive::ERROR_PASSWORD . " ครั้งกรุณาติดต่อ cozxy.com";
+                    $res["error"] = "รายการนี้กรอกรหัสรับสินค้าผิดเกิน " . Receive::ERROR_PASSWORD . " ครั้งกรุณาติดต่อ cozxy.com";
                     print_r(Json::encode($res));
                 } else {
                     $user = User::find()->where("userId='" . $order->userId . "'")->one();
@@ -327,7 +327,7 @@ class ReceiveController extends MasterController {
                 if ($error->error >= Receive::ERROR_PASSWORD) {
                     //สั่ง save รูปผู้กดรับสินค้า
                     $res["status"] = 500;
-                    $res["error"] = "กรอกรหัสผิดเกิน " . Receive::ERROR_PASSWORD . " ครั้ง กรุณาติดต่อ cozxy.com";
+                    $res["error"] = "กรอกรหัสรับสินค้าผิดเกิน " . Receive::ERROR_PASSWORD . " ครั้ง กรุณาติดต่อ cozxy.com";
                     print_r(Json::encode($res));
                 } else {
                     $res["status"] = 303;
