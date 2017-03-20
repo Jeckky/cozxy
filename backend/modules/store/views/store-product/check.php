@@ -39,9 +39,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 $i = 1;
                 foreach ($model->storeProducts as $product):
                     //throw new \yii\base\Exception($product->products->units);
-                    $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data'],
+                    $form = ActiveForm::begin(['options' => [
+                                    'enctype' => 'multipart/form-data'],
                                 'method' => 'POST',
-                                'action' => ['store-product/check']]);
+                                'action' => ['store-product/check']]); //อาจจะผิดตรงนี้ 
                     ?>
 
                     <tr>

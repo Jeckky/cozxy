@@ -58,13 +58,15 @@ class ReceiveController extends MasterController {
 //                        ]);
                         $res["status"] = 300;
                         $res["error"] = "รายการนี้รับสินค้าไปแล้ว";
-                        print_r(Json::encode($res));
+                        //print_r(Json::encode($res));
+                        echo Json::encode($res);
                     }
                 }
                 if ($order->error >= Receive::ERROR_PASSWORD) {
                     $res["status"] = 302;
                     $res["error"] = "รายการนี้กรอกรหัสรับสินค้าผิดเกิน " . Receive::ERROR_PASSWORD . " ครั้งกรุณาติดต่อ cozxy.com";
-                    print_r(Json::encode($res));
+                    //  print_r(Json::encode($res));
+                    echo Json::encode($res);
                 } else {
                     $user = User::find()->where("userId='" . $order->userId . "'")->one();
                     if (isset($user) && !empty($user)) {
@@ -83,19 +85,22 @@ class ReceiveController extends MasterController {
                         $res["name"] = $user->firstname . ' ' . $user->lastname;
                         $res["orderNo"] = $order->orderId;
                         $res["orderId"] = $order->orderNo;
-                        print_r(Json::encode($res));
+                        //print_r(Json::encode($res));
+                        echo Json::encode($res);
                     } else {
                         //$ms = 'ไม่เจอรายการสินค้า'; //301
                         $res["status"] = 301;
                         $res["error"] = "ไม่เจอรายการสินค้า";
-                        print_r(Json::encode($res));
+                        //print_r(Json::encode($res));
+                        echo Json::encode($res);
                     }
                 }
             } else {
                 //$ms = 'ไม่เจอรายการสินค้า'; //301
                 $res["status"] = 301;
                 $res["error"] = "ไม่เจอรายการสินค้า";
-                print_r(Json::encode($res));
+                //print_r(Json::encode($res));
+                echo Json::encode($res);
             }
             //if ($ms != '') {//ถ้าไม่เจอรายการ แสดงข้อความ แล้วกลับไปหน้าเดิม
 //                return $this->render('error', [
@@ -207,7 +212,8 @@ class ReceiveController extends MasterController {
                         $res["orderId"] = $order->orderId;
                         $res["tel"] = $tel;
                         $res["refNo"] = $ref;
-                        print_r(Json::encode($res));
+                        // print_r(Json::encode($res));
+                        echo Json::encode($res);
                     }
                 } else {//error
                     $ms = 'ไม่พบผู้ใช้งาน';
@@ -283,30 +289,35 @@ class ReceiveController extends MasterController {
                             $res["orderId"] = $_POST['orderId'];
                             $res["numberLocker"] = $allLocker;
                             $res["refNo"] = $order->refNo;
-                            print_r(Json::encode($res));
+                            //print_r(Json::encode($res));
+                            echo Json::encode($res);
                         } else {
                             $res["status"] = 300;
                             $res["error"] = "ยังไม่มีรายการพัสดุของคุณใน locker ใดเลย";
-                            print_r(Json::encode($res));
+                            //print_r(Json::encode($res));
+                            echo Json::encode($res);
                             //$ms = 'ยังไม่มีรายการพัสดุของคุณใน locker ใดเลย';
                         }
                     } else {
                         $res["status"] = 301;
                         $res["error"] = "ไม่เจอรายการสินค้า";
-                        print_r(Json::encode($res));
+                        //print_r(Json::encode($res));
+                        echo Json::encode($res);
                         //$ms = 'ไม่เจอรายการสินค้า2';
                     }
                 } else {
                     $res["status"] = 301;
                     $res["error"] = "ไม่เจอรายการสินค้า";
-                    print_r(Json::encode($res));
+                    // print_r(Json::encode($res));
+                    echo Json::encode($res);
                     //$ms = 'ไม่เจอรายการสินค้า1';
                 }
             } else {
                 $res["status"] = 302;
                 $res["error"] = "รหัสผ่านหมดเวลาการใช้งาน กรุณากดรับรหัสใหม่";
-                print_r(Json::encode($res));
-                //$ms = 'รหัสผ่านหมดเวลาการใช้งาน กรุณากดรับรหัสใหม่';
+                //print_r(Json::encode($res));
+                echo Json::encode($res);
+                ////$ms = 'รหัสผ่านหมดเวลาการใช้งาน กรุณากดรับรหัสใหม่';
 //                return $this->render('error', [
 //                            'ms' => $ms
 //                ]);
@@ -328,16 +339,19 @@ class ReceiveController extends MasterController {
                     //สั่ง save รูปผู้กดรับสินค้า
                     $res["status"] = 500;
                     $res["error"] = "กรอกรหัสรับสินค้าผิดเกิน " . Receive::ERROR_PASSWORD . " ครั้ง กรุณาติดต่อ cozxy.com";
-                    print_r(Json::encode($res));
+                    // print_r(Json::encode($res));
+                    echo Json::encode($res);
                 } else {
                     $res["status"] = 303;
                     $res["error"] = "รหัส OTP ไม่ถูกต้อง";
-                    print_r(Json::encode($res));
+                    // print_r(Json::encode($res));
+                    echo Json::encode($res);
                 }
             } else {
                 $res["status"] = 303;
                 $res["error"] = "รหัส OTP ไม่ถูกต้อง";
-                print_r(Json::encode($res));
+                //print_r(Json::encode($res));
+                echo Json::encode($res);
             }
         }
     }
@@ -377,7 +391,8 @@ class ReceiveController extends MasterController {
         $res["OrderNo"] = $order->orderNo;
         $res["tel"] = $_POST["tel"];
         $res["refNo"] = $refNo;
-        print_r(Json::encode($res));
+        //print_r(Json::encode($res));
+        echo Json::encode($res);
         //return $refNo;
     }
 

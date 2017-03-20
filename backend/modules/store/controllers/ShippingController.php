@@ -12,6 +12,7 @@ use backend\controllers\BackendMasterController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
+use common\helpers\Shipping;
 
 // อยู่ที่ไหน ช่องไหน : หยิบโปรดักจากสโตร์ไป Picking ponit
 class ShippingController extends StoreMasterController {
