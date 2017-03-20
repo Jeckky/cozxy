@@ -50,9 +50,10 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
      * Create date : 09/02/2017
      * Create By : Taninut.Bm
      */
-    const APPROVE_RECEIVE_LOCKERS = '1'; //Lockers
-    const APPROVE_RECEIVE_BOOTH = '2'; //Booth
-    const APPROVE_RECEIVE_LvsB = '3'; //Lockers and Booth
+    const APPROVE_RECEIVE_LOCKERS_COOL = '1'; //Lockers เย็น
+    const APPROVE_RECEIVE_LOCKERS_HOT = '2'; //Lockers ร้อน
+    const APPROVE_RECEIVE_BOOTH = '3'; //Booth
+    const APPROVE_RECEIVE_LvsB = '4'; //Lockers and Booth
 
     /**
      * @inheritdoc

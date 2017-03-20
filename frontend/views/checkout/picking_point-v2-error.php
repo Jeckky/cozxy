@@ -142,9 +142,7 @@ if ($BoothHistoryBoothNoti == 'isTrue') {
     $ListOrderItemGroupBoothAction = $CheckValuePickPoint['ListOrderItemGroupBoothAction'];
     $ListpickpointBoothValueInLocation = $CheckValuePickPoint['ListpickpointBoothValueInLocation'];
 }
-/*
- * Lockers ร้อน
- */
+
 $LockersOrderItemId = $LockerHistory['LockersOrderItemId'];
 $LockersOrderId = $LockerHistory['LockersOrderId'];
 $LockersProductId = $LockerHistory['LockersProductId'];
@@ -162,39 +160,19 @@ if ($LockersHistoryLockersNoti == 'isTrue') {
     $ListOrderItemGroupLockersAction = $CheckValuePickPoint['ListOrderItemGroupLockersAction'];
     $ListpickpointLockersValueInLocation = $CheckValuePickPoint['ListpickpointLockersValueInLocation'];
 }
-/*
- * Lockers เย็น
- */
-$LockersCoolOrderItemId = $LockerHistory['LockersCoolOrderItemId'];
-$LockersCoolOrderId = $LockerHistory['LockersCoolOrderId'];
-$LockersCoolProductId = $LockerHistory['LockersCoolProductId'];
-$LockersCoolReceiveType = $LockerHistory['LockersCoolReceiveType'];
-$LockersCoolPickingId = $LockerHistory['LockersCoolPickingId'];
-$LockersCoolHistoryLockersNoti = $LockerHistory['LockersCoolHistoryLockersNoti'];
-//$ListpickpointLockersValueInLocation = $LockerHistory['ListpickpointLockersValueInLocation'];
 
-if ($LockersCoolHistoryLockersNoti == 'isTrue') {
-    /* แสดง pickpoint ที่ลูกค้าเคยเลือกตอนสั่งซื้อในรอบที่แล้ว */
-    $ListpickpointLockersCoolValueInLocation = $LockerHistory['ListpickpointLockersCoolValueInLocation'];
-    $ListOrderItemGroupLockersCoolAction = 'isTrue';
-} else {
-    $ListOrderItemGroupLockersCoolValue = $CheckValuePickPoint['ListOrderItemGroupLockersCoolValue'];
-    $ListOrderItemGroupLockersCoolAction = $CheckValuePickPoint['ListOrderItemGroupLockersCoolAction'];
-    $ListpickpointLockersCoolValueInLocation = $CheckValuePickPoint['ListpickpointLockersCoolValueInLocation'];
-}
 foreach ($GetOrderMastersGroup as $value) {
     /*
      * ปลายทางรับของที่ Lockers เย็น
      */
-    if ($value->receiveType == '2') {//ประเภทปลายทางแบบล็อคเกอร์ร้อน
+    if ($value->receiveType == '1') {//ประเภทปลายทางแบบล็อคเกอร์เย็น
         // Lockers
         // = $CheckValuePickPoint['ListOrderItemGroupLockersValue'];
         // = $CheckValuePickPoint['ListOrderItemGroupLockersAction'];
         // = $CheckValuePickPoint['ListpickpointLockersValueInLocation'];
-        //echo 'ประเภทปลายทางแบบล็อคเกอร์ร้อน';
         ?>
-        <div id="lockers-hot-status-2" class="col-lg-12 col-md-12 col-sm-12">
-            <h5><i class="fa fa-align-justify" aria-hidden="true"></i> เลือกสถานที่รับของ : ปลายทางที่ล็อคเกอร์ร้อน</h5>
+        <div id="lockers" class="col-lg-12 col-md-12 col-sm-12">
+            <h5><i class="fa fa-align-justify" aria-hidden="true"></i> เลือกสถานที่รับของ : ปลายทางที่ล็อคเกอร์</h5>
             <hr>
             <div id="lockers-province" class="form-group col-lg-6 col-md-6 col-sm-6">
                 <?php
@@ -317,14 +295,14 @@ foreach ($GetOrderMastersGroup as $value) {
                 ?>
                 <?php
                 //echo Html::hiddenInput("pickingDDId", $pickingId, ['id' => "pickingDDId"]);
-                echo Html::hiddenInput("receiveTypeLockers", '2', ['id' => "receiveTypeLockers"]);
+                echo Html::hiddenInput("receiveTypeLockers", '1', ['id' => "receiveTypeLockers"]);
                 ?>
             </div>
             <?php
             if ($LockersHistoryLockersNoti == 'isTrue') {
                 ?>
                 <div class="col-md-12 history-lockers-null">
-                    <h5 class="cs-heading" style="font-size: 14px; color: #166db9;"><i class="fa fa-bullhorn" aria-hidden="true" style="color: #166db9;"></i> แจ้งเตือนประวัติสถานที่รับสินค้า : ปลายทางที่ล็อคเกอร์ร้อน </h5>
+                    <h5 class="cs-heading" style="font-size: 14px; color: #166db9;"><i class="fa fa-bullhorn" aria-hidden="true" style="color: #166db9;"></i> แจ้งเตือนประวัติสถานที่รับสินค้า : ปลายทางที่ล็อคเกอร์ </h5>
                     <blockquote style="font-size: 16px;">
                         <p style="color: #8c8c8c;">สถานที่รับสินค้าล่าสุดที่ลูกค้าเคยเลือกไว้ หากลูกค้าต้องการเปลียนจุดรับสินค้า สามารถเปลียนได้จากด้านบน.</p>
                         <footer style="color: rgba(255,212,36,.9);">Cozxy.Com</footer>
@@ -336,7 +314,7 @@ foreach ($GetOrderMastersGroup as $value) {
                     ?>
                     <div class="col-md-12">
                         <h5 class="cs-heading" style="font-size: 14px;color: #166db9;">
-                            <i class="fa fa-map-marker" aria-hidden="true" style="color: #166db9;"></i> แผนที่ : ปลายทางที่ล็อคเกอร์ร้อน  (<span class="name-lockers" style="color: #2ca02c;"></span>) </h5>
+                            <i class="fa fa-map-marker" aria-hidden="true" style="color: #166db9;"></i> แผนที่ : ปลายทางที่ล็อคเกอร์  (<span class="name-lockers" style="color: #2ca02c;"></span>) </h5>
                         <blockquote style="font-size: 16px;">
                             <p class="description-lockers" style="color: #000000;"></p>
                             <p class="view-map-images-lockers" style="color: #8c8c8c;">
@@ -376,187 +354,10 @@ foreach ($GetOrderMastersGroup as $value) {
             echo '</div>';
         }
     }
-    if ($value->receiveType == '1') {//ประเภทปลายทางแบบล็อคเกอร์เย็น
-        //echo 'ประเภทปลายทางแบบล็อคเกอร์เย็น';
-        ?>
-        <div id="lockers-cool-status-1" class="col-lg-12 col-md-12 col-sm-12">
-            <h5><i class="fa fa-align-justify" aria-hidden="true"></i> เลือกสถานที่รับของ : ปลายทางที่ล็อคเกอร์เย็น</h5>
-            <hr>
-            <div id="lockers-province" class="form-group col-lg-6 col-md-6 col-sm-6">
-                <?php
-                // Child level 1
-                // Additional input fields passed as params to the child dropdown's pluginOptions
-                echo Html::hiddenInput('input-type-1', $ListpickpointLockersCoolValueInLocation['provinceId'], ['id' => 'input-type-1']);
-                echo Html::hiddenInput('input-type-2', $ListpickpointLockersCoolValueInLocation['provinceId'], ['id' => 'input-type-2']);
-                echo $form->field($pickingPointLockersCool, 'provinceId')->widget(kartik\select2\Select2::classname(), [
-                    'model' => $pickingId,
-                    'attribute' => 'provinceId',
-                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'stateName'),
-                    'pluginOptions' => [
-                        'placeholder' => 'Select...',
-                        'loadingText' => 'Loading states ...',
-                        'params' => ['input-type-1', 'input-type-2']
-                    ],
-                    'options' => ['placeholder' => 'Select states ...', 'id' => 'LcprovinceId']
-                ])->label('เลือกจังหวัด');
-                ?>
-                <?php
-                //echo Html::hiddenInput("statesDDId", $stateId, ['id' => "statesDDId"]);
-                ?>
-            </div>
-            <div id="lockers-amphur" class="form-group col-lg-6 col-md-6 col-sm-6 ">
-                <?php
-                // Child level 2
-                echo Html::hiddenInput('input-type-11', $ListpickpointLockersCoolValueInLocation['amphurId'], ['id' => 'input-type-11']);
-                echo Html::hiddenInput('input-type-22', $ListpickpointLockersCoolValueInLocation['amphurId'], ['id' => 'input-type-22']);
-                if ($yourbrowser != 'Safari') {
-                    echo $form->field($pickingPointLockersCool, 'amphurId')->widget(kartik\depdrop\DepDrop::classname(), [
-                        //'data' => [9 => 'Savings'],
-                        'model' => $pickingId,
-                        'attribute' => 'amphurId',
-                        'options' => ['placeholder' => 'Select ...', 'id' => 'LcamphurId'],
-                        'type' => DepDrop::TYPE_SELECT2,
-                        'select2Options' => ['pluginOptions' => ['allowClear' => true,]],
-                        'pluginOptions' => [
-                            'class' => 'required',
-                            'initialize' => true,
-                            'depends' => ['LcprovinceId'],
-                            'url' => Url::to(['child-amphur-address-picking-point']),
-                            'loadingText' => 'Loading amphur ...',
-                            'params' => ['input-type-11', 'input-type-22']
-                        ]
-                    ])->label('เลือกอำเภอ/เขต');
-                } else {
-                    echo $form->field($pickingPointLockersCool, 'amphurId')->widget(kartik\depdrop\DepDrop::classname(), [
-                        //'data' => [9 => 'Savings'],
-                        'model' => $pickingId,
-                        'attribute' => 'amphurId',
-                        'options' => ['placeholder' => 'Select ...', 'id' => 'LcamphurId'],
-                        //'type' => DepDrop::TYPE_SELECT2,
-                        'select2Options' => ['pluginOptions' => ['allowClear' => true]],
-                        'pluginOptions' => [
-                            'class' => 'required form-control ',
-                            'initialize' => true,
-                            'depends' => ['LcprovinceId'],
-                            'url' => Url::to(['child-amphur-address-picking-point']),
-                            'loadingText' => 'Loading amphur ...',
-                            'params' => ['input-type-11', 'input-type-22']
-                        ]
-                    ])->label('เลือกอำเภอ/เขต');
-                }
-                ?>
-                <?php
-                //echo Html::hiddenInput("amphurDDId", $cityId, ['id' => "amphurDDId"]);
-                ?>
-            </div>
-            <div id="lockers-picking" class="form-group col-lg-6 col-md-6 col-sm-6">
-                <?php
-                // Child level 3
-                if ($ListOrderItemGroupLockersCoolAction == 'isFalse') {
-                    echo Html::hiddenInput('input-type-13', $pickingPointLockersCool->provinceId, ['id' => 'input-type-13']);
-                    echo Html::hiddenInput('input-type-23', $pickingPointLockersCool->amphurId, ['id' => 'input-type-23']);
-                    echo Html::hiddenInput('lockers-cool-input-type-33', '1', ['id' => 'lockers-cool-input-type-33']);
-                } else {
-                    echo Html::hiddenInput('input-type-13', $ListpickpointLockersCoolValueInLocation['pickingId'], ['id' => 'input-type-13']);
-                    echo Html::hiddenInput('input-type-23', $ListpickpointLockersCoolValueInLocation['pickingId'], ['id' => 'input-type-23']);
-                    echo Html::hiddenInput('lockers-cool-input-type-33', '1', ['id' => 'lockers-cool-input-type-33']);
-                }
-
-                if ($yourbrowser != 'Safari') {
-                    echo $form->field($pickingPointLockersCool, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
-                        //'data' => [9 => 'Savings'],
-                        'model' => $pickingId,
-                        'attribute' => 'pickingId',
-                        'options' => ['placeholder' => 'Select ...', 'id' => 'LcpickingId'],
-                        'type' => DepDrop::TYPE_SELECT2,
-                        //'options' => ['multiple' => true],
-                        'select2Options' => ['pluginOptions' => ['allowClear' => true]],
-                        //'pluginEvents' => [
-                        //"depdrop.afterChange" => "function(event, id, value) { console.log('value: ' + value + ' id: ' + id); }"
-                        //],
-                        'pluginOptions' => [
-                            'initialize' => true,
-                            'depends' => ['LcamphurId'],
-                            'url' => Url::to(['child-picking-point']),
-                            'loadingText' => 'Loading picking point ...',
-                            'params' => ['input-type-13', 'input-type-23', 'lockers-input-type-33']
-                        ]
-                    ])->label('เลือกจุดรับของ');
-                } else {
-                    echo $form->field($pickingPointLockersCool, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
-                        //'data' => [9 => 'Savings'],
-                        'model' => $pickingId,
-                        'attribute' => 'pickingId',
-                        'options' => ['placeholder' => 'Select ...', 'id' => 'LcpickingId'],
-                        //'type' => DepDrop::TYPE_SELECT2,
-                        //'options' => ['multiple' => true],
-                        'select2Options' => ['pluginOptions' => ['allowClear' => true]],
-                        'pluginOptions' => [
-                            'initialize' => true,
-                            'depends' => ['LcamphurId'],
-                            'url' => Url::to(['child-picking-point']),
-                            'loadingText' => 'Loading picking point ...',
-                            'params' => ['input-type-13', 'input-type-23', 'lockers-input-type-33']
-                        ]
-                    ])->label('เลือกจุดรับของ');
-                }
-                ?>
-                <?php
-                //echo Html::hiddenInput("pickingDDId", $pickingId, ['id' => "pickingDDId"]);
-                echo Html::hiddenInput("receiveTypeLockersCool", '1', ['id' => "receiveTypeLockersCool"]);
-                ?>
-            </div>
-            <?php
-            if ($LockersCoolHistoryLockersNoti == 'isTrue') {
-                ?>
-                <div class="col-md-12 history-lockers-cool-null">
-                    <h5 class="cs-heading" style="font-size: 14px; color: #166db9;"><i class="fa fa-bullhorn" aria-hidden="true" style="color: #166db9;"></i> แจ้งเตือนประวัติสถานที่รับสินค้า : ปลายทางที่ล็อคเกอร์เย็น </h5>
-                    <blockquote style="font-size: 16px;">
-                        <p style="color: #8c8c8c;">สถานที่รับสินค้าล่าสุดที่ลูกค้าเคยเลือกไว้ หากลูกค้าต้องการเปลียนจุดรับสินค้า สามารถเปลียนได้จากด้านบน.</p>
-                        <footer style="color: rgba(255,212,36,.9);">Cozxy.Com</footer>
-                    </blockquote>
-                </div>
-                <?php
-                $mapImages = $ListpickpointLockersCoolValueInLocation['mapImages'];
-                if (isset($mapImages)) {
-                    ?>
-                    <div class="col-md-12">
-                        <h5 class="cs-heading" style="font-size: 14px;color: #166db9;">
-                            <i class="fa fa-map-marker" aria-hidden="true" style="color: #166db9;"></i> แผนที่ : ปลายทางที่ล็อคเกอร์เย็น  (<span class="name-lockers-cool" style="color: #2ca02c;"></span>) </h5>
-                        <blockquote style="font-size: 16px;">
-                            <p class="description-lockers-cool" style="color: #000000;"></p>
-                            <p class="view-map-images-lockers-cool" style="color: #8c8c8c;">
-                                <?php
-                                echo '<img src="' . $baseUrl . '/images/icon/loader.gif" class="img-responsive">';
-                                //echo 'mapImages :' . $mapImages;
-                                //echo '<img src="' . $baseUrl . $mapImages . '" class="img-responsive" style="width: 45% ">';
-                                ?>
-                            </p>
-                            <footer style="color: rgba(255,212,36,.9);">Cozxy.Com</footer>
-                        </blockquote>
-                    </div>
-                    <!--<div class="col-md-12">
-                        <h5 class="cs-heading" style="font-size: 14px;color: #166db9;"><i class="fa fa-map-marker" aria-hidden="true" style="color: #166db9;"></i> แผนที่ : ปลายทางที่บูธ </h5>
-                        <blockquote style="font-size: 16px;">
-                            <p style="color: #8c8c8c; ">
-                    <?php
-                    //echo 'mapImages :' . $mapImages;
-                    //echo '<img src="' . $baseUrl . $mapImages . '" class="img-responsive" style="width: 45% ">';
-                    ?>
-                            </p>
-                            <footer style="color: rgba(255,212,36,.9);">Cozxy.Com</footer>
-                        </blockquote>
-                    </div>-->
-                <?php } ?>
-            <?php } ?>
-        </div>
-        <?php
-    }
     /*
      * ปลายทางรับของที่ Booth
      */
     if ($value->receiveType == '3') {//ประเภทปลายทางแบบบูธ
-        echo 'ประเภทปลายทางแบบล็อคเกอร์เย็น';
         // Booth
         //$ListOrderItemGroupBoothValue = $CheckValuePickPoint['ListOrderItemGroupBoothValue'];
         //$ListOrderItemGroupBoothAction = $CheckValuePickPoint['ListOrderItemGroupBoothAction'];
@@ -565,7 +366,7 @@ foreach ($GetOrderMastersGroup as $value) {
         //echo 'Lockers amphurId :' . $ListpickpointBoothValueInLocation['amphurId'] . '<br>';
         //echo 'Lockers pickingId :' . $ListpickpointBoothValueInLocation['pickingId'] . '<br>';
         ?>
-        <div id="booth-status-3" class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 10px;">
+        <div id="booth" class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 10px;">
             <h5 class="shipment-title"><i class="fa fa-align-justify" aria-hidden="true"></i> เลือกสถานที่รับของ : ปลายทางที่บูธ</h5>
             <hr>
             <div id="booth-province" class="form-group col-lg-6 col-md-6 col-sm-6">
@@ -643,11 +444,11 @@ foreach ($GetOrderMastersGroup as $value) {
                 if ($ListOrderItemGroupBoothAction == 'isFalse') {
                     echo Html::hiddenInput('booth-input-type-13', $pickingPointBooth->provinceId, ['id' => 'booth-input-type-13']);
                     echo Html::hiddenInput('booth-input-type-23', $pickingPointBooth->amphurId, ['id' => 'booth-input-type-23']);
-                    echo Html::hiddenInput('booth-input-type-33', '3', ['id' => 'booth-input-type-33']);
+                    echo Html::hiddenInput('booth-input-type-33', '2', ['id' => 'booth-input-type-33']);
                 } else {
                     echo Html::hiddenInput('booth-input-type-13', $ListpickpointBoothValueInLocation['pickingId'], ['id' => 'booth-input-type-13']);
                     echo Html::hiddenInput('booth-input-type-23', $ListpickpointBoothValueInLocation['pickingId'], ['id' => 'booth-input-type-23']);
-                    echo Html::hiddenInput('booth-input-type-33', '3', ['id' => 'booth-input-type-33']);
+                    echo Html::hiddenInput('booth-input-type-33', '2', ['id' => 'booth-input-type-33']);
                     $pickingIds = $ListpickpointBoothValueInLocation['pickingId'];
                 }
                 if ($yourbrowser != 'Safari') {
@@ -702,7 +503,7 @@ foreach ($GetOrderMastersGroup as $value) {
                 ?>
                 <?php
                 //echo Html::hiddenInput("pickingDDId", $pickingId, ['id' => "pickingDDId"]);
-                echo Html::hiddenInput("receiveTypeBooth", '3', ['id' => "receiveTypeBooth"]);
+                echo Html::hiddenInput("receiveTypeBooth", '2', ['id' => "receiveTypeBooth"]);
                 ?>
             </div>
             <?php

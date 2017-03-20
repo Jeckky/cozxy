@@ -118,7 +118,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             //'title',
                                             ['attribute' => 'title',
                                                 'label' => 'title',
-                                                'contentOptions' => ['style' => 'width:300px;  min-width:300px;  '],
+                                                'contentOptions' => ['style' => 'width:250px;  min-width:250px;  '],
                                             ],
                                             'quantity',
                                             [
@@ -254,7 +254,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             //'title',
                                             ['attribute' => 'title',
                                                 'label' => 'title',
-                                                'contentOptions' => ['style' => 'width:300px;  min-width:300px;  '],
+                                                'contentOptions' => ['style' => 'width:250px;  min-width:250px;  '],
                                             ],
                                             [
                                                 'attribute' => 'ตรวจสอบข้อมูล',

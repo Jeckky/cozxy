@@ -404,6 +404,9 @@ $("#place-order").on('click', function () {
     //var provinceid = $('input[id=pickingpoint-provinceid]').val();
     //var amphurid = $('input[id=pickingpoint-amphurid]').val();
     //var pickingid = $('input[id=pickingpoint-pickingid]').val();
+    /*
+     * Lockers ร้อน
+     */
     var eProvinceid = document.getElementById("pickingpoint-provinceid");
     if (eProvinceid != null) {
         var provinceid = eProvinceid.options[eProvinceid.selectedIndex].value;
@@ -453,8 +456,57 @@ $("#place-order").on('click', function () {
         var ePickingid = false;
 
     }
+    /*
+     *   Lockers เย็น
+     */
+    var LcProvinceid = document.getElementById("LcprovinceId");
+    if (LcProvinceid != null) {
+        var provinceid = LcProvinceid.options[LcProvinceid.selectedIndex].value;
 
+        var LcAmphurid = document.getElementById("Lcamphurid");
+        var amphurid = LcAmphurid.options[LcAmphurid.selectedIndex].value;
 
+        var LcPickingid = document.getElementById("Lcpickingid");
+        var pickingid = LcPickingid.options[LcPickingid.selectedIndex].value;
+
+        // pickingpoint amphurid //
+        var LcAmphurid = document.getElementById("Lcamphurid");
+        var amphurid = LcAmphurid.options[LcAmphurid.selectedIndex].value;
+        if (amphurid > 0) {
+            var amphurid = LcPickingid.options[LcPickingid.selectedIndex].value;
+            //console.log(amphurid);
+        } else {
+            //console.log('Please select a pickingpoint amphurid list');
+            $('.field-pickingpoint-amphurid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+        }
+        // pickingpoint provinceid //
+        var LcProvinceid = document.getElementById("Lcprovinceid");
+        var provinceid = LcProvinceid.options[LcProvinceid.selectedIndex].value;
+        if (provinceid > 0) {
+            var provinceid = LcPickingid.options[LcPickingid.selectedIndex].value;
+            //console.log(provinceid);
+        } else {
+            //console.log('Please select a pickingpoint provinceid list');
+            $('.field-pickingpoint-provinceid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+        }
+        // pickingpoint pickingid //
+        var LcPickingid = document.getElementById("Lcpickingid");
+        var pickingid = LcPickingid.options[LcPickingid.selectedIndex].value;
+        if (pickingid > 0) {
+            var pickingid = LcPickingid.options[LcPickingid.selectedIndex].value;
+            //console.log(pickingid);
+        } else {
+            //console.log('Please select a pickingpoint pickingid list');
+            $('.field-pickingpoint-pickingid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+            // exit();
+        }
+        var receiveTypeLockersCool = $('input[id=receiveTypeLockersCool]').val();
+    } else {
+        var receiveTypeLockersCool = false;
+        var LcAmphurid = false;
+        var LcProvinceid = false;
+        var LcPickingid = false;
+    }
     //alert(pickingid);
     /*
      * Checkouts : Booth
@@ -475,6 +527,9 @@ $("#place-order").on('click', function () {
     //var b_pickingid = bPickingid.options[bPickingid.selectedIndex].value;
 
     // pickingpoint amphurid //
+    /*
+     * Booth
+     */
     var bAmphurid = document.getElementById("BamphurId");
     if (bAmphurid != null) {
 
@@ -552,8 +607,10 @@ $("#place-order").on('click', function () {
                 placeOrderId: _placeOrderId,
                 pickingId: pickingid,
                 b_pickingid: b_pickingid,
+                LcPickingid: LcPickingid,
                 receiveTypeLockers: receiveTypeLockers,
-                receiveTypeBooth: receiveTypeBooth
+                receiveTypeBooth: receiveTypeBooth,
+                receiveTypeLockersCool: receiveTypeLockersCool
             }, function (data, status) {
                 //alert("Data: " + data + "\nStatus: " + status);
                 // window.location = 'checkout/order-thank';
@@ -568,6 +625,7 @@ $("#place-order").on('click', function () {
                 placeOrderId: _placeOrderId,
                 pickingId: pickingid,
                 b_pickingid: b_pickingid,
+                LcPickingid: LcPickingid,
                 receiveTypeLockers: receiveTypeLockers,
                 receiveTypeBooth: receiveTypeBooth
             }, function (data, status) {
@@ -1112,6 +1170,50 @@ $('#BpickingId').change(function (event, id, value) {
         }
     });
 });
+
+$('#LcpickingId').change(function (event, id, value) {
+    prev_val = $(this).val();
+    //console.log(value);
+    //console.log(prev_val);
+    //alert(b_pickingid);
+    //alert('test');
+    $.ajax({
+        type: "POST",
+        //dataType: "JSON",
+        //dataType: "html",
+        url: $baseUrl + "checkout/map-images",
+        data: {'pickingIds': prev_val},
+        success: function (data, status)
+        {
+            //console.log(data);
+            //console.log(status);
+            if (status == "success") {
+                var JSONObject = JSON.parse(data);
+                //console.log(JSONObject.mapImages);
+                $('.name-lockers').html(JSONObject.title);
+                //if (JSONObject.title != '') {
+                //$('.history-lockers-null').html('');
+                //}
+                //alert(JSONObject.mapImages);
+                $('.description-lockers-cool').html('ที่อยู่:' + JSONObject.description);
+                if (JSONObject.mapImages == null) {
+                    $('.view-map-images-lockers-cool').html('<div class="col-sm-12" style="padding: 5px;">\n\
+                       <img class="img-responsive" src="' + $baseUrl + 'images/picking-point/No_map.png' + '" alt="" style="width:100%;">\n\
+                </div>');
+                } else {
+                    $('.view-map-images-lockers-cool').html('<div class="col-sm-12" style="padding: 5px;">\n\
+                        <img class="img-responsive" src="' + $baseUrl + JSONObject.mapImages + '" alt="" style="width:100%;">\n\
+                </div>');
+                }
+            } else {
+                $('.name-lockers-cool').html('');
+                $('.view-map-images-lockers-cool').html('');
+                //$('.history-lockers-null').html('');
+            }
+        }
+    });
+});
+
 
 $('#pickingpoint-pickingid').change(function (event, id, value) {
     prev_val = $(this).val();

@@ -168,10 +168,12 @@ class CheckoutController extends MasterController {
             //exit();
             $LocationHistory = [];
             //`order_item`.orderItemId   ,  `order`.userId   , `order_item`.orderId , `order_item`.productId , `order_item`.receiveType , `order_item`.pickingId
-            $LocationHistory['HistoryLockers'] = PickingPoint:: LocationHistoryReceiveTypeLockersInCustomer($HistoryOrderId);
+            $LocationHistory['HistoryLockers'] = PickingPoint:: LocationHistoryReceiveTypeLockersInCustomer($HistoryOrderId, \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_HOT); // Locker ร้อน
+            $LocationHistory['HistoryLockersCool'] = PickingPoint:: LocationHistoryReceiveTypeLockersInCustomer($HistoryOrderId, \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_COOL); // Locker เย็น
             $LocationHistory['HistoryBooth'] = PickingPoint:: LocationHistoryReceiveTypeBoothInCustomer($HistoryOrderId);
             $LocationHistoryLockers = $LocationHistory['HistoryLockers'];
             $LocationHistoryBooth = $LocationHistory['HistoryBooth'];
+            $LocationHistoryLockersCool = $LocationHistory['HistoryLockersCool'];
             //echo '<pre>xxxx';
             //print_r($LocationHistoryLockers);
             //exit();
@@ -202,6 +204,34 @@ class CheckoutController extends MasterController {
                 $LockerHistory['LockersPickingId'] = FALSE;
                 $LockerHistory['LockersHistoryLockersNoti'] = 'isFalse';
                 $LockerHistory['ListpickpointLockersValueInLocation'] = FALSE;
+            }
+            /*
+             * Location History Lockers Cool
+             * Create Date : 16/03/2017
+             */
+            if (isset($LocationHistoryLockersCool)) {
+                $LockerHistory['LockersCoolOrderItemId'] = $LocationHistoryLockersCool['orderItemId'];
+                $LockerHistory['LockersCoolOrderId'] = $LocationHistoryLockersCool['orderId'];
+                $LockerHistory['LockersCoolProductId'] = $LocationHistoryLockersCool['productId'];
+                $LockerHistory['LockersCoolReceiveType'] = $LocationHistoryLockersCool['receiveType'];
+                $LockerHistory['LockersCoolPickingId'] = $LocationHistoryLockersCool['pickingId'];
+                $LockerHistory['LockersCoolHistoryLockersNoti'] = 'isTrue';
+                if (isset($LockerHistory['LockersCoolPickingId'])) {
+                    $pickpointLockersCoolValueInLocation = \common\models\costfit\PickingPoint::find()->where('pickingId = ' . $LockerHistory['LockersCoolPickingId'])->one();
+                    $LockerHistory['ListpickpointLockersCoolValueInLocation'] = $pickpointLockersCoolValueInLocation->attributes;
+                } else {
+                    $LockerHistory['ListpickpointLockersLockersCoolValueInLocation'] = FALSE;
+                    $LockerHistory['LockersHistoryLockerCoolsNoti'] = 'isFalse';
+                }
+                //exit();
+            } else {
+                $LockerHistory['LockersCoolOrderItemId'] = FALSE;
+                $LockerHistory['LockersCoolOrderId'] = FALSE;
+                $LockerHistory['LockersCoolProductId'] = FALSE;
+                $LockerHistory['LockersCoolReceiveType'] = FALSE;
+                $LockerHistory['LockersCoolPickingId'] = FALSE;
+                $LockerHistory['LockersCoolHistoryLockersNoti'] = 'isFalse';
+                $LockerHistory['ListpickpointLockersCoolValueInLocation'] = FALSE;
             }
 
             /*
@@ -236,7 +266,7 @@ class CheckoutController extends MasterController {
              * Create date : 16/02/2017
              * Create By : Taninut.Bm
              */
-            $GetOrderItemrGroupLockersMaster = PickingPoint::GetOrderItemrGroupLockersMaster($orderId);
+            $GetOrderItemrGroupLockersMaster = PickingPoint::GetOrderItemrGroupLockersMaster($orderId, \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_HOT);
             $CheckValuePickPoint = [];
             if (isset($GetOrderItemrGroupLockersMaster[0]->attributes['pickingId'])) {
                 $CheckValuePickPoint['ListOrderItemGroupLockersValue'] = $GetOrderItemrGroupLockersMaster[0]->attributes['pickingId'];
@@ -248,6 +278,27 @@ class CheckoutController extends MasterController {
                 $CheckValuePickPoint['ListpickpointLockersValueInLocation'] = NULL;
                 $CheckValuePickPoint['ListOrderItemGroupLockersAction'] = 'isFalse';
             }
+
+            /*
+             * Lockers เย็น
+             * Create Date : 16/03/2017
+             */
+
+            $GetOrderItemrGroupLockersCoolMaster = PickingPoint::GetOrderItemrGroupLockersMaster($orderId, \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_COOL);
+            $CheckValuePickPoint = [];
+            if (isset($GetOrderItemrGroupLockersCoolMaster[0]->attributes['pickingId'])) {
+                $CheckValuePickPoint['ListOrderItemGroupLockersCoolValue'] = $GetOrderItemrGroupLockersCoolMaster[0]->attributes['pickingId'];
+                $pickpointLockersCoolValueInLocation = \common\models\costfit\PickingPoint::find()->where('pickingId = ' . $CheckValuePickPoint['ListOrderItemGroupLockersCoolValue'])->one();
+                $CheckValuePickPoint['ListpickpointLockersCoolValueInLocation'] = $pickpointLockersCoolValueInLocation->attributes;
+                $CheckValuePickPoint['ListOrderItemGroupLockersCoolAction'] = 'isTrue';
+            } else {
+                $CheckValuePickPoint['ListOrderItemGroupLockersCoolValue'] = NULL;
+                $CheckValuePickPoint['ListpickpointLockersCoolValueInLocation'] = NULL;
+                $CheckValuePickPoint['ListOrderItemGroupLockersCoolAction'] = 'isFalse';
+            }
+            /*
+             * Booth
+             */
             $GetOrderItemrGroupBoothMaster = PickingPoint::GetOrderItemrGroupBoothMaster($orderId);
             if (isset($GetOrderItemrGroupBoothMaster[0]->attributes['pickingId'])) {
                 $CheckValuePickPoint['ListOrderItemGroupBoothValue'] = $GetOrderItemrGroupBoothMaster[0]->attributes['pickingId'];
@@ -267,15 +318,22 @@ class CheckoutController extends MasterController {
              * Create date : 16/02/2017
              * Create By : Taninut.Bm
              */
-            $pickingPoint_list_lockers = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)->one();
-            $pickingPoint_list_booth = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)->one();
+            $pickingPoint_list_lockers = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_HOT)->one(); // Lockers ร้อน
+            $pickingPoint_list_lockers_cool = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_COOL)->one(); // Lockers เย็น
+            $pickingPoint_list_booth = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)->one(); // Booth
             $pickingPointLockers = isset($pickingPoint_list_lockers) ? $pickingPoint_list_lockers : NULL;
+            $pickingPointLockersCool = isset($pickingPoint_list_lockers_cool) ? $pickingPoint_list_lockers_cool : NULL;
             $pickingPointBooth = isset($pickingPoint_list_booth) ? $pickingPoint_list_booth : NULL;
+
+            //echo '<pre>';
+            //print_r($pickingPointBooth);
+            //exit();
+
             /* End Get Value PickingPoint */
 
             //echo '<pre>';
             //print_r($CheckValuePickPoint);
-            return $this->render('checkout', compact('BoothHistory', 'LockerHistory', 'CheckValuePickPoint', 'GetOrderItemrGroupLockersMaster', 'GetOrderItemrGroupBoothMaster', 'address', 'user', 'paymentMethods', 'address_shipping', 'address_billing', 'model', 'pickingPointBooth', 'pickingPointLockers', 'GetOrderMastersGroup'));
+            return $this->render('checkout', compact('BoothHistory', 'LockerHistory', 'CheckValuePickPoint', 'GetOrderItemrGroupLockersMaster', 'GetOrderItemrGroupBoothMaster', 'address', 'user', 'paymentMethods', 'address_shipping', 'address_billing', 'model', 'pickingPointBooth', 'pickingPointLockers', 'GetOrderMastersGroup', 'pickingPointLockersCool'));
         }
     }
 
@@ -307,7 +365,9 @@ class CheckoutController extends MasterController {
             $payment01 = Yii::$app->request->post('payment01');
             $pickingId = Yii::$app->request->post('pickingId');
             $b_pickingid = Yii::$app->request->post('b_pickingid');
+            $Lcpickingid = Yii::$app->request->post('Lcpickingid');
             $receiveTypeLockers = Yii::$app->request->post('receiveTypeLockers');
+            $receiveTypeLockersCool = Yii::$app->request->post('receiveTypeLockersCool');
             $receiveTypeBooth = Yii::$app->request->post('receiveTypeBooth');
             /*
               receiveTypeLockers: receiveTypeLockers,

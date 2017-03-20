@@ -45,8 +45,8 @@ class PickingPoint {
         }
     }
 
-    public static function GetOrderItemrGroupLockersMaster($orderId) {
-        $GetOrderItemMasters = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)->groupBy('receiveType')->one();
+    public static function GetOrderItemrGroupLockersMaster($orderId, $type) {
+        $GetOrderItemMasters = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . ' and receiveType =' . $type)->groupBy('receiveType')->one();
         if (isset($GetOrderItemMasters) && !empty($GetOrderItemMasters)) {
             return $GetOrderItemMasters;
         } else {
@@ -85,9 +85,9 @@ class PickingPoint {
         }
     }
 
-    public static function LocationHistoryReceiveTypeLockersInCustomer($orderId) {
+    public static function LocationHistoryReceiveTypeLockersInCustomer($orderId, $type) {
         $GetOrderItemHistoryReceive = \common\models\costfit\OrderItem::find()
-        ->where("orderId=" . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)
+        ->where("orderId=" . $orderId . ' and receiveType =' . $type)
         ->groupBy('receiveType')->orderBy('createDateTime desc')
         ->all();
 

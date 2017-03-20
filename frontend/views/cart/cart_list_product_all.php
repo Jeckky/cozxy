@@ -96,11 +96,41 @@ use common\models\ModelMaster;
                     <?php
                     foreach ($GetOrderMasters as $item) {
                         // throw new \yii\base\Exception(print_r($item["image"], true));
-                        if ($item->receiveType == 1) {
+                        if ($item->receiveType == 1) {// lockers เย็น
                             ?>
                             <tr style=" font-size: 12px; ">
                                 <td colspan="3" >
-                                    <h4 class="title"><i class="fa fa-truck" aria-hidden="true"></i>&nbsp;สถานที่รับของ : ปลายทางที่ล็อคเกอร์ </h4>
+                                    <h4 class="title"><i class="fa fa-truck" aria-hidden="true"></i>&nbsp;สถานที่รับของ : ปลายทางที่ล็อคเกอร์เย็น </h4>
+                                </td>
+                            </tr>
+                            <?php
+                            foreach ($itemsLockersCool as $value1) {
+                                $product = common\models\costfit\Product::find()->where('productId=' . $value1['productId'])->one();
+                                ?>
+                                <tr class="item first" id="item<?= $item['orderItemId'] ?>">
+                                    <?= Html::hiddenInput("productId", $value1["productId"], ['id' => 'productId']); ?>
+                                    <?= Html::hiddenInput("productSuppId", $value1["productSuppId"], ['id' => 'productSuppId']); ?>
+                                    <?= Html::hiddenInput("sendDate", $value1["sendDate"], ['id' => 'sendDate']); ?>
+                                    <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products/<?php echo ModelMaster::encodeParams(['productId' => $value1["productId"], 'productSupplierId' => $value1['productSuppId']]); ?>"><img src="<?php echo Yii::$app->homeUrl . common\models\costfit\ProductSuppliers::productImageSuppliers($value1['productSuppId']); ?>" alt="Lorem ipsum" width="152" height="119"/></a></td>
+                                    <td class="name" style="width:55%">
+                                        <a href="<?php echo Yii::$app->homeUrl; ?>products/<?php echo ModelMaster::encodeParams(['productId' => $value1["productId"], 'productSupplierId' => $value1['productSuppId']]); ?>" style="font-size:14px;word-wrap: break-word; "><?= $product["title"] ?></a>&nbsp;&nbsp;<span style="color: #ff9016; font-size: 14px;">(จำนวน <?= $value1["quantity"] ?> ชิ้น)</span>
+                                    </td>
+                                    <td class="text-right">
+                                        <span class="price" style="font-weight: bold; color: #000;"><?= number_format($value1["priceOnePiece"], 2) . " ฿" ?></span> <br>
+                                        <?php if (isset($value1["sendDateNoDate"])): ?>
+                                            <span style="font-size: 13px; color: #0286c2;">จัดส่งภายใน <?= $value1["sendDateNoDate"] ?>  วัน </span><br>
+                                            <span class="shipSavings <?= ($value1["shippingDiscountValue"] == 0) ? " hide" : " " ?>" style="color: red;font-size: 13px;">Shipping Saved <?= number_format($value1["shippingDiscountValue"], 2) ?> ฿</span><br>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                        }
+                        if ($item->receiveType == 2) {// lockers ร้อน
+                            ?>
+                            <tr style=" font-size: 12px; ">
+                                <td colspan="3" >
+                                    <h4 class="title"><i class="fa fa-truck" aria-hidden="true"></i>&nbsp;สถานที่รับของ : ปลายทางที่ล็อคเกอร์ร้อน </h4>
                                 </td>
                             </tr>
                             <?php
@@ -126,7 +156,7 @@ use common\models\ModelMaster;
                                 <?php
                             }
                         }
-                        if ($item->receiveType == 2) {
+                        if ($item->receiveType == 3) {// Booths
                             ?>
                             <tr>
                                 <td colspan="3" >
