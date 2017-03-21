@@ -9,11 +9,11 @@ class CategoryController extends \common\controllers\MasterController
 {
 	public function actionIndex()
 	{
-		if (isset($_SERVER['HTTP_ORIGIN'])) {
-			header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
-			header('Access-Control-Allow-Credentials: true');
-			header('Access-Control-Max-Age: 86400');    // cache for 1 day
-		}
+//		if (isset($_SERVER['HTTP_ORIGIN'])) {
+//			header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+//			header('Access-Control-Allow-Credentials: true');
+//			header('Access-Control-Max-Age: 86400');    // cache for 1 day
+//		}
 
 		$categories = [];
 		$cats = Category::find()->where(['parentId' => NULL])->orderBy('title')->all();
@@ -24,10 +24,10 @@ class CategoryController extends \common\controllers\MasterController
 			$categories[$i]['name'] = $cat->title;
 			$categories[$i]['id'] = Category::encodeParams(['categoryId'=>$cat->categoryId]);
 			$categories[$i]['url'] = Category::encodeParams(['categoryId'=>$cat->categoryId]);
-			$categories[$i]['items'] = [];
 
 			if($cat->childs !== [])
 			{
+				$categories[$i]['items'] = [];
 				//first child
 				$j = 0;
 				foreach($cat->childs as $subCat)
@@ -35,10 +35,10 @@ class CategoryController extends \common\controllers\MasterController
 					$categories[$i]['items'][$j]['name'] = $subCat->title;
 					$categories[$i]['items'][$j]['id'] = Category::encodeParams(['categoryId'=>$subCat->categoryId]);
 					$categories[$i]['items'][$j]['url'] = Category::encodeParams(['categoryId'=>$subCat->categoryId]);
-					$categories[$i]['items'][$j]['items'] = [];
 
 					if($subCat->childs !== [])
 					{
+						$categories[$i]['items'][$j]['items'] = [];
 						$k = 0;
 						foreach($subCat->childs as $subCat2)
 						{
@@ -55,8 +55,9 @@ class CategoryController extends \common\controllers\MasterController
 
 			$i++;
 		}
-
-		print_r(Json::encode($categories));
+		$this->writeToFile('/tmp/categories', print_r($categories, true));
+		header('Content-type: text/json');
+		echo Json::encode($categories);
 	}
 
 }

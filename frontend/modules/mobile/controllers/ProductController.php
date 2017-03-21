@@ -19,8 +19,7 @@ class ProductController extends \common\controllers\MasterController
             header('Access-Control-Max-Age: 86400');    // cache for 1 day
         }
         $params = ModelMaster::decodeParams($hash);
-
-        $params['categoryId'] = $_GET["categoryId"];
+//        print_r($params);exit();
 
         $ctps = CategoryToProduct::find()->select("* ,ps.productSuppId as productSupplierId")
         ->join("LEFT JOIN", 'product p', "category_to_product.productId = p.productId")
@@ -49,12 +48,21 @@ class ProductController extends \common\controllers\MasterController
             if (!isset($pso))
                 continue;
 
-            $res['productId'] = $pso->productId;
-            $res['productSupplierId'] = $pso->productSuppId;
-            $ps[$i]['title'] = $pso->title;
+//            $res['productId'] = $pso->productId;
+//            $res['productSupplierId'] = $pso->productSuppId;
+
+	        $res[$i]['productId'] = $pso->productId;
+	        $res[$i]['productSupplierId'] = $pso->productSuppId;
+
+	        $ps[$i]['title'] = $pso->title;
             $ps[$i]['isbn'] = $pso->isbn;
             $ps[$i]['code'] = $pso->code;
-            $ps[$i]['shortDescription'] = $pso->shortDescription;
+//            $ps[$i]['shortDescription'] = $pso->shortDescription;
+
+            $sd = strip_tags($pso->shortDescription);
+            $sd = mb_substr($sd, 0, 60).'...';
+	        $ps[$i]['shortDescription'] = $sd;
+
             $ps[$i]['description'] = $pso->description;
             $ps[$i]['specification'] = $pso->specification;
             $ps[$i]['width'] = $pso->width;
@@ -63,6 +71,8 @@ class ProductController extends \common\controllers\MasterController
             $ps[$i]['weight'] = $pso->weight;
             $ps[$i]['price'] = \common\models\costfit\ProductSuppliers::productPrice($pso->productSuppId);
             $ps[$i]['brand'] = isset($pso->brand) ? $pso->brand->title : NULL;
+	        $ps[$i]['sale_price'] = false;
+	        $ps[$i]['on_wish_list'] = false;
 
             $hash = [
                 'categoryId' => $pso->categoryId,
@@ -76,6 +86,7 @@ class ProductController extends \common\controllers\MasterController
             $j = 0;
             $pis = \common\models\costfit\ProductImageSuppliers::find()->where("productSuppId = $ctp->productSupplierId")->all();
             foreach ($pis as $pi) {
+            	$ps[$i]['thumb'] = $pi->imageThumbnail1;
                 $ps[$i]['images'][$j] = [
                     'url' => $pi->image,
                     'urlTn1' => $pi->imageThumbnail1,
@@ -103,9 +114,10 @@ class ProductController extends \common\controllers\MasterController
             header('Access-Control-Allow-Credentials: true');
             header('Access-Control-Max-Age: 86400');    // cache for 1 day
         }
-
+/*
         $params = ModelMaster::decodeParams($hash);
-        $params["isbn"] = $_GET["isbn"];
+//	    $params["isbn"] = $_GET["isbn"];
+        $isbn = $params["isbn"];
         if (isset($params["productId"])) {
             $productId = $params["productId"];
             $p = \common\models\costfit\ProductSuppliers::find()->select("* , pps.price")
@@ -127,6 +139,14 @@ class ProductController extends \common\controllers\MasterController
         } else {
             $res["error"] = "Not Use isbn";
         }
+	    */
+		$isbn = $hash;
+
+	    $p = \common\models\costfit\ProductSuppliers::find()->select("* , pps.price")
+		    ->join("LEFT JOIN", 'product_price_suppliers pps', "pps.productSuppId = product_suppliers.productSuppId")
+		    ->where("product_suppliers.isbn = '$isbn' AND product_suppliers.approve='approve' and product_suppliers.status=1 AND product_suppliers.result>0")
+		    ->orderBy("pps.price ASC")
+		    ->one();
 
         if (isset($p)) {
 
@@ -135,7 +155,12 @@ class ProductController extends \common\controllers\MasterController
             $res['title'] = $p->title;
             $res['isbn'] = $p->isbn;
             $res['code'] = $p->code;
-            $res['shortDescription'] = $p->shortDescription;
+//            $res['shortDescription'] = $p->shortDescription;
+
+	        $sd = strip_tags($p->shortDescription);
+	        $sd = mb_substr($sd, 0, 60).'...';
+	        $res['shortDescription'] = $sd;
+
             $res['description'] = $p->description;
             $res['specification'] = $p->specification;
             $res['width'] = $p->width;
@@ -144,6 +169,8 @@ class ProductController extends \common\controllers\MasterController
             $res['weight'] = $p->weight;
             $res['price'] = $p->price;
             $res['brand'] = isset($p->brand) ? $p->brand->title : NULL;
+	        $res['sale_price'] = false;
+	        $res['on_wish_list'] = false;
 
 
             $j = 0;
