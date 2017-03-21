@@ -122,9 +122,8 @@ class LockersController extends LockersMasterController {
                 $PickingPointsBooth = [];
             }
 
-
             // $point = PickingPoint::find()->where("pickingId=" . $pickingId)->one();
-
+            $typePickingPoint = \common\models\costfit\PickingPointType::find()->where('pptId=' . $listPoint->type)->one();
             return $this->render('lockers', [
                 'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
                 'citie' => $localNamecitie,
@@ -132,7 +131,7 @@ class LockersController extends LockersMasterController {
                 'state' => $localNamestate,
                 // 'point' => $point,
                 /* Customize Date 21/01/2017 , By Taninut.Bm */
-                'point' => $listPoint,
+                'point' => $listPoint, 'typePickingPoint' => $typePickingPoint
             ]);
         }
 

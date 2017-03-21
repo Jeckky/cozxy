@@ -10,7 +10,7 @@ $this->title = 'ช่องของ Lockers';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
-<h1>Lockers / แสดงช่องของ Lockers ทั้งหมด </h1>
+<h1>Lockers / แสดงช่องของ <?php echo $typePickingPoint->name; ?> ทั้งหมด </h1>
 <!--<div class="note note-success ">
     <h3>สถานที่ตั้ง Lockers </h3>
     <h4 style="color: #003147">
