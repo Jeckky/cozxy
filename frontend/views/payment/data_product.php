@@ -25,13 +25,13 @@ if (count($order) > 0) {
             //if ($value1->receiveType == 1) {
             ?>
             <tr style="background-color:#f1f1f1 ; border-bottom: 1px #000000 solid; height: 25px; text-align: left; color: #166db9;">
-                <td style="font-size: 12px;" colspan="7"><?php
+                <td style="font-size: 12px; " colspan="7"><?php
                     if ($value1->receiveType == 1) {
-                        echo ' สถานที่รับของ : ปลายทางที่ <strong>Lockers เย็น</strong>';
+                        echo '<span style="color: #f6a828;">สถานที่รับของ : ปลายทางที่ <strong>Lockers เย็น</strong></span>';
                     } elseif ($value1->receiveType == 2) {
-                        echo 'สถานที่รับของ : ปลายทางที่ <strong>Lockers ร้อน</strong>';
+                        echo '<span style="color: #0000CC;">สถานที่รับของ : ปลายทางที่ <strong>Lockers ร้อน</strong></span>';
                     } elseif ($value1->receiveType == 3) {
-                        echo 'สถานที่รับของ : ปลายทางที่ <strong>Booth</strong>';
+                        echo '<span style="color: #000000;">สถานที่รับของ : ปลายทางที่ <strong>Booth</strong></span>';
                     }
                     ?></td>
             </tr>
