@@ -10,7 +10,7 @@ $this->title = 'Qr Code Picking Points List';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
-<h1>Lockers/Picking Points</h1>
+<h1>Lockers and Booth (ปลายทางจุดรับสินค้า)</h1>
 
 <div class="panel   panel-success">
     <?php
@@ -57,7 +57,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <strong>Code Picking Points :</strong> <?php echo $txt; ?>.&nbsp; <img src="<?php echo Yii::$app->homeUrl; ?>/images/icon/default-loader.gif" height="30" >
                 </div>
                 <meta http-equiv="refresh" content="1; url=channels?boxcode=<?php echo $data; ?>">
-
             <?php } elseif ($codes == 'false') { ?>
                 <div class="alert alert-danger">
                     <button type="button" class="close" data-dismiss="alert"> </button>

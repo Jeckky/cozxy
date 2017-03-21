@@ -654,10 +654,15 @@ class MasterController extends MasterCommonController {
                 $param3 = null;
                 if (!empty($_POST['depdrop_params'])) {
                     $params = $_POST['depdrop_params'];
+                    // echo '<pre>';
+                    //print_r($cat_id);
+                    //print_r($params);
                     $param1 = $params[0]; // get the value of input-type-1
                     $param2 = $params[1]; // get the value of input-type-2
                     $param3 = $params[2]; // get the value of input-type-3
                     $type = $depdrop_params[2];
+                    //echo $cat_id;
+                    // echo $type;
                 }
 
                 $list = \common\models\costfit\PickingPoint::find()->andWhere(['amphurId' => $cat_id, 'type' => $type])->asArray()->all();

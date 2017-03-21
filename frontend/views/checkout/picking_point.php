@@ -581,7 +581,7 @@ foreach ($GetOrderMastersGroup as $value) {
                     'pluginOptions' => [
                         'placeholder' => 'Select...',
                         'loadingText' => 'Loading states ...',
-                        'params' => ['booth-input-type-11', 'booth-input-type-22']
+                        'params' => ['booth-input-type-1', 'booth-input-type-2']
                     ],
                     'options' => ['placeholder' => 'Select states ...', 'id' => 'BprovinceId']
                 ])->label('เลือกจังหวัด');
@@ -659,11 +659,6 @@ foreach ($GetOrderMastersGroup as $value) {
                         'type' => DepDrop::TYPE_SELECT2,
                         //'options' => ['multiple' => true],
                         'pluginEvents' => [
-                        //  'onchange' => 'mapimage(' . $pickingIds . ')'
-                        // "depdrop.change" => "function(event, id, value) { "
-                        // . "console.log('value: ' + value + ' id: ' + id + ' test :'+$pickingIds); "
-                        //. "$.post( 'checkout/map-images', { pickingId: value, valueid: id } );"
-                        //. "}",
                         ],
                         'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                         'pluginOptions' => [
@@ -683,11 +678,6 @@ foreach ($GetOrderMastersGroup as $value) {
                         //'type' => DepDrop::TYPE_SELECT2,
                         //'options' => ['multiple' => true],
                         'pluginEvents' => [
-                        //  'onchange' => 'mapimage(' . $pickingIds . ')'
-                        //"depdrop.change" => "function(event, id, value) { "
-                        //. "console.log('value: ' + value + ' id: ' + id + ' test :'+$pickingIds); "
-                        //. "$.post( 'checkout/map-images', { pickingId: value, valueid: id } );"
-                        //. "}",
                         ],
                         'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                         'pluginOptions' => [

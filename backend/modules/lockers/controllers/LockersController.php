@@ -111,6 +111,17 @@ class LockersController extends LockersMasterController {
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
             ]);
+            //echo $listPoint->type;
+            if ($listPoint->type == 1) {//ประเภทปลายทางแบบล็อคเกอร์เย็น
+                $PickingPointsLockersHot = [];
+                $PickingPointsLockersHot['color_lid'] = ''; //สี
+                $PickingPointsLockersHot['frame'] = ''; //โครง
+            } else if ($listPoint->type == 2) {//ประเภทปลายทางแบบล็อคเกอร์ร้อน
+                $PickingPointsLockersCool = [];
+            } else if ($listPoint->type == 3) {//ประเภทปลายทางแบบBooth
+                $PickingPointsBooth = [];
+            }
+
 
             // $point = PickingPoint::find()->where("pickingId=" . $pickingId)->one();
 
@@ -512,6 +523,7 @@ class LockersController extends LockersMasterController {
 
                 /* old */
                 //$point = PickingPoint::find()->where("pickingId=" . $pickingId)->one();
+
 
                 return $this->render('channels', [
                     'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
