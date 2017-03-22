@@ -38,32 +38,34 @@ $this->params['breadcrumbs'][] = $this->title;
                 'code',
                 'name',
                 'portIndex',
+                'height',
+                'status',
                 ['class' => 'yii\grid\ActionColumn',
                     'header' => 'Actions',
                     'template' => '{view} {update} {delete} {items} ',
                     'buttons' => [
                         'view' => function ($url, $model) {
                             return Html::a('<i class="fa fa-eye"></i>', $url . '&pickingId=' . $model->pickingId, [
-                                        'title' => Yii::t('yii', 'view'),
+                                'title' => Yii::t('yii', 'view'),
                             ]);
                         },
-                                'update' => function ($url, $model) {
+                        'update' => function ($url, $model) {
                             return Html::a('<i class="fa fa-pencil"></i>', $url . '&pickingId=' . $model->pickingId, [
-                                        'title' => Yii::t('yii', 'update'),
+                                'title' => Yii::t('yii', 'update'),
                             ]);
                         },
-                                'delete' => function ($url, $model) {
+                        'delete' => function ($url, $model) {
                             return Html::a('<i class="fa fa-trash-o"></i>', $url . '&pickingId=' . $model->pickingId, [
-                                        'title' => Yii::t('yii', 'Delete'),
-                                        'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
-                                        'data-method' => 'post',
+                                'title' => Yii::t('yii', 'Delete'),
+                                'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+                                'data-method' => 'post',
                             ]);
                         },
-                            ]
-                        ],
-                    ],
-                ]);
-                ?>
+                    ]
+                ],
+            ],
+        ]);
+        ?>
     </div>
 
 
