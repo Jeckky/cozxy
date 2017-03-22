@@ -164,7 +164,6 @@ class LockersController extends LockersMasterController {
         $orderItemPackingId = Yii::$app->request->get('orderItemPackingId');
         $channels = Yii::$app->request->get('channels');
 
-
         /* Customize Date 25/01/2017 , By Taninut.Bm */
         $listPoint = Lockers::GetPickingPoint($boxcode);
 
@@ -304,7 +303,7 @@ class LockersController extends LockersMasterController {
 
         //echo 'check BagNo :' . $bagduplicate;
         // exit();
-
+        $typePickingPoint = \common\models\costfit\PickingPointType::find()->where('pptId=' . $listPoint->type)->one();
         return $this->render('scanbag', [
             'dataProviderAllOrder' => $dataProviderAllOrder,
             'dataProviderBag' => $dataProviderBag,
@@ -321,7 +320,7 @@ class LockersController extends LockersMasterController {
             'bagNo' => $bagNo,
             'orderId' => $orderId,
             'orderItemPackingId' => $orderItemPackingId,
-            'c' => $c,
+            'c' => $c, 'typePickingPoint' => $typePickingPoint,
         //'VarBagDuplicate' => $BagDuplicate = 1,
         ]);
         //}
@@ -522,7 +521,7 @@ class LockersController extends LockersMasterController {
 
                 /* old */
                 //$point = PickingPoint::find()->where("pickingId=" . $pickingId)->one();
-
+                $typePickingPoint = \common\models\costfit\PickingPointType::find()->where('pptId=' . $listPoint->type)->one();
 
                 return $this->render('channels', [
                     'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
@@ -532,7 +531,7 @@ class LockersController extends LockersMasterController {
                     /* old */
                     //'point' => $point,
                     /* Customize Date 25/01/2017   */
-                    'point' => $listPoint,
+                    'point' => $listPoint, 'typePickingPoint' => $typePickingPoint
                 ]);
             }
         } else { // ถ้าช่องไหนครวจสอบผ่าน มีข้อมูล

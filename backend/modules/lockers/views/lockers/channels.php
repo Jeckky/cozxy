@@ -10,7 +10,7 @@ $this->title = 'ช่องของ Lockers';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
-<h1>Lockers /  ตรวจสอบช่องที่ลูกค้ารับสินค้าแล้ว /</h1>
+<h1><?php echo $typePickingPoint->name; ?> /  ตรวจสอบช่องที่ลูกค้ารับสินค้าแล้ว /</h1>
 <!--<div class="note note-success ">
     <h3>สถานที่ตั้ง Lockers </h3>
     <h4 style="color: #003147">
@@ -26,7 +26,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
     <div class="panel-heading">
         <div class="widget-profile-bg-icon"><i class="fa fa-twitter"></i></div>
         <div class="widget-profile-header">
-            <span>สถานที่ตั้งของ Lockers</span><br>
+            <span>สถานที่ตั้งของ <?php echo $typePickingPoint->name; ?></span><br>
         </div>
     </div> <!-- / .panel-heading -->
     <div class="widget-profile-counters">
@@ -35,7 +35,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
         <div class="col-xs-3"><span><?php echo $state->localName; ?></span></div>
         <div class="col-xs-3"><span><?php echo $countrie->localName; ?></span></div>
     </div>
-    <input type="text" placeholder="Code Lockers  : <?php echo ($listPoint->code != '') ? $listPoint->code : ''; ?>" class="form-control input-lg widget-profile-input">
+    <input type="text" placeholder="Code <?php echo $typePickingPoint->name; ?>  : <?php echo ($listPoint->code != '') ? $listPoint->code : ''; ?>" class="form-control input-lg widget-profile-input">
     <div class="widget-profile-text text-center" style="font-size: 16px;">
         <?php echo $this->context->dateThai(date("Y-m-d"), 1, TRUE); ?> เวลา <div id="clockDisplay" class="clockStyle"></div>
     </div>
@@ -43,7 +43,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 <div class="order-index col-md-12">
     <div class="panel panel-warning panel-dark">
         <div class="panel-heading">
-            <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> แสดงช่องทั้งหมดของ Lockers นี้</span>
+            <span class="panel-title"><i class="fa fa-qrcode" aria-hidden="true"></i> แสดงช่องทั้งหมดของ <?php echo $typePickingPoint->name; ?> นี้</span>
         </div>
         <div class="panel-body ">
             <div class="col-sm-12">
