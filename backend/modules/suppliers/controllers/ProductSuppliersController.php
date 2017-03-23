@@ -99,7 +99,7 @@ class ProductSuppliersController extends SuppliersMasterController {
         }
         $searchProducts = \common\models\costfit\Product::find()->all();
         $model = new ProductSuppliers();
-
+        $model->scenario = 'ProductSuppliers';
         if (isset($_POST['ProductSuppliers'])) {
             $model->attributes = $_POST["ProductSuppliers"];
             $model->userId = Yii::$app->user->identity->userId;

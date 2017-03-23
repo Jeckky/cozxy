@@ -87,8 +87,8 @@ use yii\widgets\Pjax;
                                     'format' => 'html',
                                     'value' => function($model) {
                                         if (isset($model->image)) {
-                                            if (file_exists($_SERVER['DOCUMENT_ROOT'] . Yii::getAlias('@web') . '/' . $model->image)) {
-                                                $imgBrand = Html::img(Yii::getAlias('@web') . '/' . $model->image, ['style' => 'width:60px;height:60px', 'class' => 'img-responsive']);
+                                            if (file_exists($_SERVER['DOCUMENT_ROOT'] . Yii::getAlias('@web') . '/' . $model->image)) {//553px X 484px
+                                                $imgBrand = Html::img(Yii::getAlias('@web') . '/' . $model->image, ['style' => 'width:553px;height:484px', 'class' => 'img-responsive']);
                                             } else {
                                                 $imgBrand = Html::img(Yii::getAlias('@web') . '/images/ContentGroup/DUHWYsdXVc.png', ['style' => 'width:60px;height:60px', 'class' => 'img-responsive']);
                                             }
@@ -107,8 +107,8 @@ use yii\widgets\Pjax;
                                     'value' => function($model) {
 
                                         if (isset($model->image)) {
-                                            if (file_exists($_SERVER['DOCUMENT_ROOT'] . Yii::getAlias('@web') . '/' . $model->image)) {
-                                                $imgBrand = Html::img(Yii::getAlias('@web') . '/' . $model->imageThumbnail1, ['style' => 'width:60px;height:60px', 'class' => 'img-responsive']);
+                                            if (file_exists($_SERVER['DOCUMENT_ROOT'] . Yii::getAlias('@web') . '/' . $model->image)) {// 356px X 390px
+                                                $imgBrand = Html::img(Yii::getAlias('@web') . '/' . $model->imageThumbnail1, ['style' => 'width:356px;height:390px', 'class' => 'img-responsive']);
                                             } else {
                                                 $imgBrand = Html::img(Yii::getAlias('@web') . '/images/ContentGroup/DUHWYsdXVc.png', ['style' => 'width:60px;height:60px', 'class' => 'img-responsive']);
                                             }
@@ -125,8 +125,8 @@ use yii\widgets\Pjax;
                                     'value' => function($model) {
                                         //echo '@web' . Yii::getAlias('@web');
                                         if (isset($model->image)) {
-                                            if (file_exists($_SERVER['DOCUMENT_ROOT'] . Yii::getAlias('@web') . '/' . $model->image)) {
-                                                $imgBrand = Html::img(Yii::getAlias('@web') . '/' . $model->imageThumbnail1, ['style' => 'width:60px;height:60px', 'class' => 'img-responsive']);
+                                            if (file_exists($_SERVER['DOCUMENT_ROOT'] . Yii::getAlias('@web') . '/' . $model->image)) {// Size 137px X 130px
+                                                $imgBrand = Html::img(Yii::getAlias('@web') . '/' . $model->imageThumbnail1, ['style' => 'width:137px;height:130px', 'class' => 'img-responsive']);
                                             } else {
                                                 $imgBrand = Html::img(Yii::getAlias('@web') . '/images/ContentGroup/DUHWYsdXVc.png', ['style' => 'width:60px;height:60px', 'class' => 'img-responsive']);
                                             }

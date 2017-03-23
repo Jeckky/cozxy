@@ -54,11 +54,20 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     const APPROVE_RECEIVE_LOCKERS_HOT = '2'; //Lockers ร้อน
     const APPROVE_RECEIVE_BOOTH = '3'; //Booth
     const APPROVE_RECEIVE_LvsB = '4'; //Lockers and Booth
+    const ADD_NEW_PRODUCT_SUPPLIERS = 'ProductSuppliers';
 
     /**
      * @inheritdoc
      */
+    public function rules() {
+        return array_merge(parent::rules(), [
+            [['brandId', 'categoryId', 'isbn', 'code', 'title', 'quantity', 'unit', 'smallUnit'], 'required', 'on' => self::ADD_NEW_PRODUCT_SUPPLIERS],
+        ]);
+    }
 
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
             'categoryId' => 'หมวดหมู่',
