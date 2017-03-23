@@ -116,12 +116,15 @@ class LockersController extends LockersMasterController {
             if ($listPoint->type == 1) {//ประเภทปลายทางแบบล็อคเกอร์เย็น
                 $PickingPoints['color_lid'] = '#cccccc'; //สีเทา
                 $PickingPoints['frame'] = '#217CA3'; //โครงน้ำเงิน
+                $PickingPoints['front'] = '#000000'; //ฟอนต์
             } else if ($listPoint->type == 2) {//ประเภทปลายทางแบบล็อคเกอร์ร้อน
                 $PickingPoints['color_lid'] = '#F9BA32'; //สีเหลือง
                 $PickingPoints['frame'] = '#000000'; //โครงดำ
+                $PickingPoints['front'] = '#000000'; //ฟอนต์
             } else if ($listPoint->type == 3) {//ประเภทปลายทางแบบBooth
                 $PickingPoints['color_lid'] = '#F9BA32'; //สีสีเหลือง
                 $PickingPoints['frame'] = '#000000'; //โครงดำ
+                $PickingPoints['front'] = '#000000'; //ฟอนต์
             }
 
             // $point = PickingPoint::find()->where("pickingId=" . $pickingId)->one();
