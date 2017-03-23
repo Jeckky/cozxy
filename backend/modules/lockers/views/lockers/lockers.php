@@ -48,7 +48,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
         <div class="panel-body ">
             <div class="col-sm-12">
                 <h3><?= $point->title; ?></h3>
-                <table class="table table-bordered">
+                <table class="table table-bordered" style="background-color: <?php echo $PickingPoints['frame'] ?>;">
                     <tbody>
                         <?php
                         $cols = common\models\costfit\PickingPointItems::find()
@@ -82,14 +82,21 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             }
                                             ?>
                                             <tr>
-                                                <td style="border:2px black solid ;text-align:center;vertical-align: middle; height: <?= $height ?>" class="<?= ($row->status == 1) ? "alert-success" : "alert-danger" ?>">
-                                                    <?php
-                                                    $Inspector = common\models\costfit\OrderItemPacking::checkInspector($row->pickingItemsId);
-                                                    //echo $colIndex . '::';
-                                                    //echo $rowIndex;
-                                                    if ($colIndex == 2 && $rowIndex == 1): // if ($colIndex == 1 && $rowIndex == 1):
-                                                        ?>
-                                                        <p style="font-size: 20px;font-weight: bold; padding: 20px; background-color: #000000;"><?= "Controller" ?></p>
+                                                <td style="border:2px black solid ;text-align:center;vertical-align: middle; height: <?= $height ?>
+                                                    ; background-color: <?php
+                                                    if ($row->status == 1) {
+                                                        echo $PickingPoints['color_lid'];
+                                                    } else { //echo $PickingPoints['frame']
+                                                        echo '#D24136';
+                                                    }
+                                                    ?>">
+                                                        <?php
+                                                        $Inspector = common\models\costfit\OrderItemPacking::checkInspector($row->pickingItemsId);
+                                                        //echo $colIndex . '::';
+                                                        //echo $rowIndex;
+                                                        if ($colIndex == 2 && $rowIndex == 1): // if ($colIndex == 1 && $rowIndex == 1):
+                                                            ?>
+                                                        <p style="font-size: 20px;font-weight: bold; padding: 20px; background-color: <?php echo $PickingPoints['color_lid']; ?>;"><?= "Controller" ?></p>
                                                     <?php else: ?><h4>
                                                             <?php
                                                             if ($row->status == 0) {

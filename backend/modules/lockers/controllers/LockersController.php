@@ -112,14 +112,16 @@ class LockersController extends LockersMasterController {
                 'query' => $query,
             ]);
             //echo $listPoint->type;
+            $PickingPoints = [];
             if ($listPoint->type == 1) {//ประเภทปลายทางแบบล็อคเกอร์เย็น
-                $PickingPointsLockersHot = [];
-                $PickingPointsLockersHot['color_lid'] = ''; //สี
-                $PickingPointsLockersHot['frame'] = ''; //โครง
+                $PickingPoints['color_lid'] = '#cccccc'; //สีเทา
+                $PickingPoints['frame'] = '#217CA3'; //โครงน้ำเงิน
             } else if ($listPoint->type == 2) {//ประเภทปลายทางแบบล็อคเกอร์ร้อน
-                $PickingPointsLockersCool = [];
+                $PickingPoints['color_lid'] = '#F9BA32'; //สีเหลือง
+                $PickingPoints['frame'] = '#000000'; //โครงดำ
             } else if ($listPoint->type == 3) {//ประเภทปลายทางแบบBooth
-                $PickingPointsBooth = [];
+                $PickingPoints['color_lid'] = '#F9BA32'; //สีสีเหลือง
+                $PickingPoints['frame'] = '#000000'; //โครงดำ
             }
 
             // $point = PickingPoint::find()->where("pickingId=" . $pickingId)->one();
@@ -131,7 +133,7 @@ class LockersController extends LockersMasterController {
                 'state' => $localNamestate,
                 // 'point' => $point,
                 /* Customize Date 21/01/2017 , By Taninut.Bm */
-                'point' => $listPoint, 'typePickingPoint' => $typePickingPoint
+                'point' => $listPoint, 'typePickingPoint' => $typePickingPoint, 'PickingPoints' => $PickingPoints
             ]);
         }
 
