@@ -95,8 +95,38 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                         //echo $colIndex . '::';
                                                         //echo $rowIndex;
                                                         if ($colIndex == 2 && $rowIndex == 1): // if ($colIndex == 1 && $rowIndex == 1):
+                                                            if ($PickingPoints['type'] == 'booth') {
+                                                                ?>
+                                                            <h4>
+                                                                <?php
+                                                                if ($row->status == 0) {
+                                                                    echo 'ปิดช่องนี้แล้ว..';
+                                                                } else {
+                                                                    if ($Inspector['status'] == 10) {
+                                                                        echo '<span class="label label-danger">ช่อง' . $row->name . ' : มีปัญหา <br>รายละอียด : ' . $Inspector['remark'] . '</span>';
+                                                                        // echo '<br>';
+                                                                        /// echo '<small>ใส่ตู้ไป :' . $Inspector['DateOfPut'] . ' วันที่แล้ว';
+                                                                        // echo '<br>';
+                                                                        // echo 'ลูดค้ามารับไป :' . $Inspector['DateOfReceive'] . ' วันที่แล้ว</small>';
+                                                                    } else if ($Inspector['status'] < 8 || $Inspector['status'] == 9) {
+                                                                        ?>
+                                                                        <a class="btn btn-lg   btn-info" href="<?php echo Yii::$app->homeUrl; ?>lockers/lockers/scan-bag?pickingItemsId=<?php echo $row->pickingItemsId; ?>&code=<?php echo $row->code ?>&boxcode=<?php echo $row->pickingId; ?>&model=1">เปิดช่อง : <?= $row->name; ?></a>
+                                                                        <?php
+                                                                    } else if ($Inspector['status'] == 8) {
+                                                                        echo '<span class="label label-warning">ช่อง' . $row->name . ' :รอตรวจสอบจากเจ้าหน้าที่</span>';
+                                                                        // echo '<br>';
+                                                                        // echo '<small>ใส่ตู้ไป :' . $Inspector['DateOfPut'] . ' วันที่แล้ว';
+                                                                        // echo '<br>';
+                                                                        // echo 'ลูดค้ามารับไป :' . $Inspector['DateOfReceive'] . ' วันที่แล้ว</small>';
+                                                                    }
+                                                                }
+                                                                ?>
+                                                            </h4>
+                                                            <?php
+                                                        } else {
                                                             ?>
-                                                        <p style="font-size: 20px;font-weight: bold; padding: 20px; background-color: <?php echo $PickingPoints['color_lid']; ?>;"><?= "Controller" ?></p>
+                                                            <p style="font-size: 20px;font-weight: bold; padding: 20px; background-color: <?php echo $PickingPoints['color_lid']; ?>;"><?= "Controller" ?></p>
+                                                        <?php } ?>
                                                     <?php else: ?><h4>
                                                             <?php
                                                             if ($row->status == 0) {
