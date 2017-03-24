@@ -80,7 +80,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             }
                                             ?>
                                             <tr>
-                                                <td style="border:2px black solid ;text-align:center;vertical-align: middle; color: <?php echo $PickingPoints['front']; ?> ;height: <?= $height ?> ; background-color: <?php
+                                                <td style="border:2px  solid ;text-align:center;vertical-align: middle; color: <?php echo $PickingPoints['front']; ?> ;height: <?= $row->height ?>px; background-color: <?php
                                                 if ($row->status == 1) {
                                                     echo $PickingPoints['color_lid'];
                                                 } else { //echo $PickingPoints['frame']
