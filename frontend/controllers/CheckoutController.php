@@ -220,7 +220,7 @@ class CheckoutController extends MasterController {
                     $pickpointLockersCoolValueInLocation = \common\models\costfit\PickingPoint::find()->where('pickingId = ' . $LockerHistory['LockersCoolPickingId'])->one();
                     $LockerHistory['ListpickpointLockersCoolValueInLocation'] = $pickpointLockersCoolValueInLocation->attributes;
                 } else {
-                    $LockerHistory['ListpickpointLockersLockersCoolValueInLocation'] = FALSE;
+                    $LockerHistory['ListpickpointLockersCoolValueInLocation'] = FALSE;
                     $LockerHistory['LockersHistoryLockerCoolsNoti'] = 'isFalse';
                 }
                 //exit();
@@ -267,25 +267,36 @@ class CheckoutController extends MasterController {
              * Create By : Taninut.Bm
              */
             $GetOrderItemrGroupLockersMaster = PickingPoint::GetOrderItemrGroupLockersMaster($orderId, \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_HOT);
+            // echo '<pre>';
+            // print_r($GetOrderItemrGroupLockersMaster->attributes);
+
             $CheckValuePickPoint = [];
             if (isset($GetOrderItemrGroupLockersMaster[0]->attributes['pickingId'])) {
+                //echo '1';
                 $CheckValuePickPoint['ListOrderItemGroupLockersValue'] = $GetOrderItemrGroupLockersMaster[0]->attributes['pickingId'];
                 $pickpointLockersValueInLocation = \common\models\costfit\PickingPoint::find()->where('pickingId = ' . $CheckValuePickPoint['ListOrderItemGroupLockersValue'])->one();
                 $CheckValuePickPoint['ListpickpointLockersValueInLocation'] = $pickpointLockersValueInLocation->attributes;
                 $CheckValuePickPoint['ListOrderItemGroupLockersAction'] = 'isTrue';
             } else {
+                //echo '2';
+                //$CheckValuePickPoint['ListOrderItemGroupLockersValue'] = NULL;
+                //$CheckValuePickPoint['ListpickpointLockersValueInLocation'] = NULL;
+                //$CheckValuePickPoint['ListOrderItemGroupLockersAction'] = 'isFalse';
                 $CheckValuePickPoint['ListOrderItemGroupLockersValue'] = NULL;
                 $CheckValuePickPoint['ListpickpointLockersValueInLocation'] = NULL;
                 $CheckValuePickPoint['ListOrderItemGroupLockersAction'] = 'isFalse';
+                //echo '<pre>';
+                //print_r($CheckValuePickPoint);
             }
-
+            //print_r($CheckValuePickPoint);
+            // exit();
             /*
              * Lockers เย็น
              * Create Date : 16/03/2017
              */
 
             $GetOrderItemrGroupLockersCoolMaster = PickingPoint::GetOrderItemrGroupLockersMaster($orderId, \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_COOL);
-            $CheckValuePickPoint = [];
+            //$CheckValuePickPoint = [];
             if (isset($GetOrderItemrGroupLockersCoolMaster[0]->attributes['pickingId'])) {
                 $CheckValuePickPoint['ListOrderItemGroupLockersCoolValue'] = $GetOrderItemrGroupLockersCoolMaster[0]->attributes['pickingId'];
                 $pickpointLockersCoolValueInLocation = \common\models\costfit\PickingPoint::find()->where('pickingId = ' . $CheckValuePickPoint['ListOrderItemGroupLockersCoolValue'])->one();
@@ -326,7 +337,7 @@ class CheckoutController extends MasterController {
             $pickingPointBooth = isset($pickingPoint_list_booth) ? $pickingPoint_list_booth : NULL;
 
             //echo '<pre>';
-            //print_r($pickingPointBooth);
+            //print_r($LockerHistory);
             //exit();
 
             /* End Get Value PickingPoint */

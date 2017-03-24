@@ -152,7 +152,11 @@ $LockersReceiveType = $LockerHistory['LockersReceiveType'];
 $LockersPickingId = $LockerHistory['LockersPickingId'];
 $LockersHistoryLockersNoti = $LockerHistory['LockersHistoryLockersNoti'];
 //$ListpickpointLockersValueInLocation = $LockerHistory['ListpickpointLockersValueInLocation'];
-
+//echo '<pre>';
+//print_r($CheckValuePickPoint['ListOrderItemGroupLockersValue']);
+//exit();
+//echo $LockersHistoryLockersNoti;
+//exit();
 if ($LockersHistoryLockersNoti == 'isTrue') {
     /* แสดง pickpoint ที่ลูกค้าเคยเลือกตอนสั่งซื้อในรอบที่แล้ว */
     $ListpickpointLockersValueInLocation = $LockerHistory['ListpickpointLockersValueInLocation'];
