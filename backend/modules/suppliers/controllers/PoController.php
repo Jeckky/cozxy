@@ -18,7 +18,7 @@ use common\helpers\Upload;
 /**
  * BrandController implements the CRUD actions for Brand model.
  */
-class BrandController extends SuppliersMasterController {
+class PoController extends SuppliersMasterController {
 
     public function behaviors() {
         return [
@@ -40,9 +40,7 @@ class BrandController extends SuppliersMasterController {
             'query' => Brand::find()->orderBy('brandId desc'),
         ]);
 
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
+        return $this->render('index');
     }
 
     /**
