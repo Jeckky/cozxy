@@ -26,8 +26,8 @@ class PoController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionIndex() {
-        $token = Yii::$app->user->identity->userId;
-        $Po = Po::PoSuppliers($token);
+        $tokenUserId = Yii::$app->user->identity->userId;
+        $Po = Po::PoSuppliers($tokenUserId);
         /*
           $poSuppliers = [];
           foreach ($Po as $value) {

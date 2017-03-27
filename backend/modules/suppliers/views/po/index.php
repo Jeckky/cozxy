@@ -30,7 +30,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         <th>orderId</th>
                         <th>orderNo</th>
                         <th>invoiceNo</th>
-                        <th>วันที่สร้าง</th>
+                        <th>วันที่สร้าง ใบ​สั่ง​ซื้อ / Purchase Order</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,6 +44,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             <td><?php echo $value['orderNo']; ?></td>
                             <td><?php echo $value['invoiceNo']; ?></td>
                             <td><?php echo $this->context->dateThai($value['updateDateTime'], 1, TRUE); ?></td>
+                            <td><button type="button" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i> ดูใบ​สั่ง​ซื้อ / Purchase Order</button></td>
                         </tr>
                         <?php
                     }
