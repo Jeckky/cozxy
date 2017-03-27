@@ -45,7 +45,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             <td><?php echo $value['summary']; ?></td>
                             <td><?php echo $this->context->dateThai($value['createDateTime'], 1, TRUE); ?></td>
                             <td>
-                                <a  class="btn btn-warning" href="<?php echo Yii::$app->homeUrl; ?>order/order/reprint-po?storeProductGroupId=<?php echo $value['storeProductGroupId']; ?>"><i class="fa fa-eye" aria-hidden="true"></i> ดูใบ​สั่ง​ซื้อ / Purchase Order</a>
+                                <a class="btn btn-warning" href="<?php echo Yii::$app->homeUrl; ?>order/order/reprint-po?storeProductGroupId=<?php echo $value['storeProductGroupId']; ?>"><i class="fa fa-eye" aria-hidden="true"></i> ดูใบ​สั่ง​ซื้อ / Purchase Order</a>
                             </td>
                         </tr>
                         <?php
