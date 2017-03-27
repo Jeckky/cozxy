@@ -12,6 +12,7 @@ use Yii;
 use yii\base\Model;
 use yii\db\ActiveRecord;
 use yii\data\ActiveDataProvider;
+use common\models\costfit\StoreProductGroup;
 
 /**
  * Description of Po
@@ -41,7 +42,7 @@ class Po {
 
     public static function Posuppliers($token) {
         $poSuppliers = \common\models\costfit\StoreProductGroup::find()
-        ->where("status = " . \common\models\costfit\StoreProductGroup::STATUS_IMPORT_DATA . " and  supplierId = " . $token)
+        ->where("status = " . StoreProductGroup::STATUS_IMPORT_DATA . " and  supplierId = " . $token)
         ->all();
         return isset($poSuppliers) ? $poSuppliers : NULL;
     }
