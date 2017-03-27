@@ -26,7 +26,7 @@ class Po {
      * หารายการ Order ที่ ORDER_STATUS_E_PAYMENT_SUCCESS แล้ว
      */
 
-    public static function PoSuppliers($token) {
+    public static function PoSuppliers_Bk($token) {
         //$poSuppliers = \common\models\costfit\Order::find()
         //->where("status=" . \common\models\costfit\Order::ORDER_STATUS_CREATEPO)->all();
         /*
@@ -44,6 +44,14 @@ class Po {
         ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productSuppId')
         ->where("`order`.status = " . \common\models\costfit\Order::ORDER_STATUS_CREATEPO . " and  `product_suppliers`.userId = " . $token)
         ->groupBy(['`order`.orderNo'])
+        ->all();
+
+        return isset($poSuppliers) ? $poSuppliers : NULL;
+    }
+
+    public static function Posuppliers($token) {
+        $poSuppliers = \common\models\costfit\StoreProductGroup::find()
+        ->where("status = " . \common\models\costfit\StoreProductGroup::STATUS_IMPORT_DATA . " and  supplierId = " . $token)
         ->all();
 
         return isset($poSuppliers) ? $poSuppliers : NULL;
