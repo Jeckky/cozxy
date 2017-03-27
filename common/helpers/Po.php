@@ -19,7 +19,16 @@ use yii\data\ActiveDataProvider;
  * @author it , Taninut.Bm
  * create date : 27/03/2017
  * Support Suppliers.
+ * emial : taninut.b@cozxy.com , sodapew17@gmial.com
  */
 class Po {
-    //put your code here
+    /*
+     * หารายการ Order ที่ ORDER_STATUS_E_PAYMENT_SUCCESS แล้ว
+     */
+
+    public static function PoSuppliers($token) {
+        $poSuppliers = \common\models\costfit\Order::find()->where("status=" . \common\models\costfit\Order::ORDER_STATUS_CREATEPO)->all();
+        return isset($poSuppliers) ? $poSuppliers : NULL;
+    }
+
 }
