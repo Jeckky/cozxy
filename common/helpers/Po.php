@@ -23,7 +23,7 @@ use yii\data\ActiveDataProvider;
  */
 class Po {
     /*
-     * หารายการ Order ที่ ORDER_STATUS_E_PAYMENT_SUCCESS แล้ว
+     * หารายการของใบ Po
      */
 
     public static function PoSuppliers_Bk($token) {
