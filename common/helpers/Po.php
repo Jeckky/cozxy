@@ -32,7 +32,7 @@ class Po {
         ->select('`order`.orderId,`order`.userId,`order`.orderNo,`order`.invoiceNo ,`order`.updateDateTime, `order`.`status`,
           `order_item`.orderItemId,`order_item`.productSuppId, `product_suppliers`.userId')
         ->joinWith(['orderItems'])
-        ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productSuppId')
+        ->join('LEFT JOIN', 'product_suppliers', 'xproduct_suppliers.productSuppId = order_item.productSuppId')
         ->where("`order`.status = " . \common\models\costfit\Order::ORDER_STATUS_CREATEPO . " and  `product_suppliers`.userId = " . $token)
         ->groupBy(['`order`.orderNo'])
         ->all();
