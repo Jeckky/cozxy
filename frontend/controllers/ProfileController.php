@@ -409,8 +409,8 @@ class ProfileController extends MasterController {
         $ms = '';
         //$checkStatus = Ticket::TICKET_STATUS_CREATE . "," . Ticket::TICKET_STATUS_WAIT . "," . Ticket::TICKET_STATUS_APPROVED;
         $histories = Ticket::find()->where("userId=" . Yii::$app->user->identity->userId)
-        ->orderBy("updateDateTime DESC")
-        ->all();
+                ->orderBy("updateDateTime DESC")
+                ->all();
         if (isset($_POST["invoiceNo"])) {
             $order = Order::find()->where("invoiceNo='" . $_POST["invoiceNo"] . "' and status=" . Order::ORDER_STATUS_RECEIVED)->one();
             if (isset($order) && !empty($order)) {
@@ -419,8 +419,8 @@ class ProfileController extends MasterController {
                     $tickets = Ticket::find()->where("ticketId=" . $tickets->ticketId)->one();
                     $ms = 'ERROR :This invoice already in process returning, please wait cozxy reply.';
                     return $this->render('@app/views/profile/return_form', [
-                        'tickets' => $tickets,
-                        'histories' => $histories
+                                'tickets' => $tickets,
+                                'histories' => $histories
                     ]);
                 } else {
                     $ticket = new Ticket();
@@ -436,27 +436,27 @@ class ProfileController extends MasterController {
                     $id = Yii::$app->db->getLastInsertID();
                     $tickets = Ticket::find()->where("ticketId=" . $id)->one();
                     return $this->render('@app/views/profile/return_form', [
-                        'tickets' => $tickets,
-                        'histories' => $histories
+                                'tickets' => $tickets,
+                                'histories' => $histories
                     ]);
                 }
             } else {
                 $ms = 'ERROR : Invoice not found';
                 return $this->render('@app/views/profile/return_form', [
-                    'ms' => $ms,
-                    'histories' => $histories
+                            'ms' => $ms,
+                            'histories' => $histories
                 ]);
             }
         } else {
             $ticket1 = Ticket::find()->where("userId=" . Yii::$app->user->identity->userId . " and status!=" . Ticket::TICKET_STATUS_SUCCESSFULL)->one();
             if (isset($ticket1) && !empty($ticket1)) {
                 return $this->render('@app/views/profile/return_form', [
-                    'tickets' => $ticket1,
-                    'histories' => $histories
+                            'tickets' => $ticket1,
+                            'histories' => $histories
                 ]);
             } else {
                 return $this->render('@app/views/profile/return_form', [
-                    'histories' => $histories
+                            'histories' => $histories
                 ]);
             }
         }
@@ -487,8 +487,8 @@ class ProfileController extends MasterController {
 
     public function actionShowMessege() {
         $messeges = \common\models\costfit\Messege::find()->where("ticketId=" . $_POST["ticketId"])
-        ->orderBy("createDateTime ASC")
-        ->all();
+                ->orderBy("createDateTime ASC")
+                ->all();
         $ms = '';
         $ScrollPosition = 300;
         $res = [];
@@ -517,12 +517,12 @@ class ProfileController extends MasterController {
         $ticket = Ticket::find()->where("ticketId=" . $ticketId)->one();
         $returnProducts = ReturnProduct::find()->where("ticketId=" . $ticketId)->all();
         $chats = \common\models\costfit\Messege::find()->where("ticketId=" . $ticketId)
-        ->orderBy("createDateTime ASC")
-        ->all();
+                ->orderBy("createDateTime ASC")
+                ->all();
         return $this->render('@app/views/profile/ticket_detail', [
-            'ticket' => $ticket,
-            'returnProducts' => $returnProducts,
-            'chats' => $chats
+                    'ticket' => $ticket,
+                    'returnProducts' => $returnProducts,
+                    'chats' => $chats
         ]);
     }
 

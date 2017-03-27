@@ -9,7 +9,7 @@ use Yii;
 *
     * @property string $orderId
     * @property string $userId
-    * @property string $pickingId
+    * @property integer $pickingId
     * @property string $token
     * @property string $orderNo
     * @property string $invoiceNo
@@ -44,16 +44,17 @@ use Yii;
     * @property string $shippingZipcode
     * @property string $shippingTel
     * @property integer $paymentType
-    * @property string $couponId
+    * @property integer $couponId
     * @property integer $checkStep
     * @property string $note
     * @property string $paymentDateTime
     * @property integer $isSlowest
-    * @property string $color
+    * @property integer $color
     * @property integer $pickerId
     * @property string $password
     * @property string $otp
     * @property string $refNo
+    * @property integer $error
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -75,7 +76,7 @@ return 'order';
 public function rules()
 {
 return [
-            [['userId', 'pickingId', 'billingProvinceId', 'billingAmphurId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'couponId', 'checkStep', 'isSlowest', 'color', 'pickerId', 'status'], 'integer'],
+            [['userId', 'pickingId', 'billingProvinceId', 'billingAmphurId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'couponId', 'checkStep', 'isSlowest', 'color', 'pickerId', 'error', 'status'], 'integer'],
             [['token', 'billingAddress', 'shippingAddress', 'note'], 'string'],
             [['totalExVat', 'vat', 'total', 'discount', 'grandTotal', 'shippingRate', 'summary'], 'number'],
             [['sendDate', 'paymentDateTime', 'createDateTime', 'updateDateTime'], 'safe'],
@@ -142,6 +143,7 @@ return [
     'password' => Yii::t('order', 'Password'),
     'otp' => Yii::t('order', 'Otp'),
     'refNo' => Yii::t('order', 'Ref No'),
+    'error' => Yii::t('order', 'Error'),
     'status' => Yii::t('order', 'Status'),
     'createDateTime' => Yii::t('order', 'Create Date Time'),
     'updateDateTime' => Yii::t('order', 'Update Date Time'),

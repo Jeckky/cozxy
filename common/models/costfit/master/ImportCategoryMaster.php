@@ -7,11 +7,11 @@ use Yii;
 /**
 * This is the model class for table "import_category".
 *
-    * @property string $categoryId
+    * @property integer $categoryId
     * @property string $title
     * @property string $description
     * @property string $image
-    * @property string $parentId
+    * @property integer $parentId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime

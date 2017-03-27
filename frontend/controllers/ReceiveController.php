@@ -41,6 +41,14 @@ class ReceiveController extends MasterController {
      * Lists all receive models.
      * @return mixed
      */
+    public function beforeAction($action) {
+        if ($action->id == "index" || $action->id == "send-sms" || $action->id == "received" || $action->id == "gen-new-otp") {
+            $this->enableCsrfValidation = false;
+        }
+
+        return parent::beforeAction($action);
+    }
+
     public function actionIndex() {
         $ms = '';
         $tel = '';
@@ -108,6 +116,7 @@ class ReceiveController extends MasterController {
 //                ]);
             // }
         }
+
 //        return $this->render('index', [
 //                    'model' => $model,
 //        ]);
