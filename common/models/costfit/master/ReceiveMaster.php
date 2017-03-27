@@ -7,15 +7,14 @@ use Yii;
 /**
 * This is the model class for table "receive".
 *
-    * @property integer $receiveId
-    * @property integer $orderId
-    * @property integer $userId
-    * @property integer $pickingId
+    * @property string $receiveId
+    * @property string $orderId
+    * @property string $userId
+    * @property string $pickingId
     * @property string $password
     * @property string $otp
     * @property string $refNo
     * @property integer $isUse
-    * @property integer $error
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -37,7 +36,7 @@ public function rules()
 {
 return [
             [['orderId', 'userId', 'pickingId', 'refNo'], 'required'],
-            [['orderId', 'userId', 'pickingId', 'isUse', 'error', 'status'], 'integer'],
+            [['orderId', 'userId', 'pickingId', 'isUse', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['password', 'otp'], 'string', 'max' => 45],
             [['refNo'], 'string', 'max' => 255],
@@ -58,7 +57,6 @@ return [
     'otp' => Yii::t('receive', 'Otp'),
     'refNo' => Yii::t('receive', 'Ref No'),
     'isUse' => Yii::t('receive', 'Is Use'),
-    'error' => Yii::t('receive', 'Error'),
     'status' => Yii::t('receive', 'Status'),
     'createDateTime' => Yii::t('receive', 'Create Date Time'),
     'updateDateTime' => Yii::t('receive', 'Update Date Time'),

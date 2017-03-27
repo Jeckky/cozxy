@@ -8,7 +8,7 @@ use Yii;
 * This is the model class for table "led_item".
 *
     * @property string $ledItemId
-    * @property integer $ledId
+    * @property string $ledId
     * @property integer $color
     * @property integer $sortOrder
     * @property integer $status
