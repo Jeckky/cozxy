@@ -27,9 +27,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>orderId</th>
-                        <th>orderNo</th>
-                        <th>invoiceNo</th>
+                        <th>storeProductGroupId</th>
+                        <th>poNo</th>
+                        <th>summary</th>
                         <th>วันที่สร้าง ใบ​สั่ง​ซื้อ / Purchase Order</th>
                     </tr>
                 </thead>

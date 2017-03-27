@@ -27,16 +27,6 @@ class Po {
      */
 
     public static function PoSuppliers_Bk($token) {
-        //$poSuppliers = \common\models\costfit\Order::find()
-        //->where("status=" . \common\models\costfit\Order::ORDER_STATUS_CREATEPO)->all();
-        /*
-          SELECT `order`.orderId,`order`.userId,`order`.orderNo,`order`.invoiceNo ,
-          `order_item`.orderItemId,`order_item`.productSuppId, `product_suppliers`.userId
-          FROM cozxy_test_18.`order`
-          LEFT JOIN cozxy_test_18.`order_item`  ON `order`.orderId = `order_item`.orderId
-          LEFT JOIN cozxy_test_18.`product_suppliers`  ON `product_suppliers`.productSuppId = `order_item`.productSuppId
-          where `order`.status = 17 and  `product_suppliers`.userId = 9
-         */
         $poSuppliers = \common\models\costfit\Order::find()
         ->select('`order`.orderId,`order`.userId,`order`.orderNo,`order`.invoiceNo ,`order`.updateDateTime, `order`.`status`,
           `order_item`.orderItemId,`order_item`.productSuppId, `product_suppliers`.userId')
@@ -53,7 +43,6 @@ class Po {
         $poSuppliers = \common\models\costfit\StoreProductGroup::find()
         ->where("status = " . \common\models\costfit\StoreProductGroup::STATUS_IMPORT_DATA . " and  supplierId = " . $token)
         ->all();
-
         return isset($poSuppliers) ? $poSuppliers : NULL;
     }
 
