@@ -205,7 +205,9 @@ use yii\widgets\Pjax;
                             'clientEvents' => [
                                 'sending' => "function(file, xhr, formData) {
                                 console.log(file);
-                                formData.append('_csrf', '{$csrfToken}');
+                                console.log(xhr);
+                                console.log(formData);
+                                //formData.append('_csrf', '{$csrfToken}');
                                 }",
                                 'complete' => "function(file){console.log(file)}",
                                 'removedfile' => "function(file){alert(file.name + ' is removed')}"
@@ -225,7 +227,9 @@ use yii\widgets\Pjax;
                             'clientEvents' => [
                                 'sending' => "function(file, xhr, formData) {
                                         console.log(file);
-                                        formData.append('_csrf', '{$csrfToken}');
+                                        console.log(xhr);
+                                console.log(formData);
+                                        //formData.append('_csrf', '{$csrfToken}');
                                         }",
                                 'complete' => "function(file){console.log(file)}",
                                 'removedfile' => "function(file){alert(file.name + ' is removed')}"
