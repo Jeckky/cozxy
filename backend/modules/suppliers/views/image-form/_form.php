@@ -205,8 +205,6 @@ use yii\widgets\Pjax;
                             'clientEvents' => [
                                 'sending' => "function(file, xhr, formData) {
                                 console.log(file);
-                                console.log(xhr);
-                                console.log(formData);
                                 //formData.append('_csrf', '{$csrfToken}');
                                 }",
                                 'complete' => "function(file){console.log(file)}",
@@ -227,8 +225,6 @@ use yii\widgets\Pjax;
                             'clientEvents' => [
                                 'sending' => "function(file, xhr, formData) {
                                         console.log(file);
-                                        console.log(xhr);
-                                console.log(formData);
                                         //formData.append('_csrf', '{$csrfToken}');
                                         }",
                                 'complete' => "function(file){console.log(file)}",
