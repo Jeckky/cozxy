@@ -15,8 +15,26 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <br><br>
 <?php
 $form = ActiveForm::begin([
-            'id' => 'top-up'
         ]);
+$js = "$(document).on('keypress', '#amount', function (e) {
+    var code = e.keyCode ? e.keyCode : e.which;
+    if (code > 57) {
+        return false;
+    } else if (code < 48 && code != 8) {
+        return false;
+    }
+});
+$(document).on('click', '#confirm-topup', function (e) {
+var amount = $(this).parent().parent().parent().parent().find('#amount').val();
+   if(amount==''){
+        alert('empty amount');
+    }else{
+        if(!confirm(':: Confirm Amount '+amount+' THB ?')){
+            return false;
+        }
+    }
+});";
+$this->registerJs($js);
 ?>
 <div class="top-up-index" style="width: 80%;margin: auto;">
 
@@ -49,9 +67,9 @@ $form = ActiveForm::begin([
                 <td style="text-align: right;width:50%;"></td>
                 <td style="text-align: left;width:50%;">
                     <span style="margin-left: 20px;">
-                        <a class = "btn" style = "background-color: #3cc; color: #fff;font-size: 12pt;" id="confirm-topup">
+                        <button type="submit" class = "btn" style = "background-color: #3cc; color: #fff;font-size: 12pt;" id="confirm-topup">
                             ยืนยัน
-                        </a>
+                        </button>
                     </span>
                 </td>
             </tr>

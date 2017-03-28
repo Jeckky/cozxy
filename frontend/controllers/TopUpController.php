@@ -11,6 +11,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\costfit\User;
 use yii\helpers\Json;
+use common\models\costfit\UserPoint;
 
 /**
  * TopUpController implements the CRUD actions for TopUp model.
@@ -47,13 +48,95 @@ class TopUpController extends MasterController {
         $data["name"] = $user->firstname . ' ' . $user->lastname;
         $data["number"] = rand('000000', '999999');
         if (isset($_POST["inputPass"]) && !empty($_POST["inputPass"])) {
+            $topUpDraf = new TopUp();
+            $topUpDraf->userId = Yii::$app->user->id;
+            $topUpDraf->status = TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT;
+            $topUpDraf->createDateTime = new \yii\db\Expression('NOW()');
+            $topUpDraf->updateDateTime = new \yii\db\Expression('NOW()');
+            $topUpDraf->save(false);
             return $this->render('amount', [
                         'data' => $data
             ]);
+        }
+        if (isset($_POST["amount"]) && !empty($_POST["amount"])) {
+            $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT)->one();
+            $amount = $_POST["amount"];
+            if (isset($topUp) && !empty($topUp)) {
+                $topUp->money = $amount;
+                $topUp->point = $amount; //รอ คิด
+                $topUp->status = TopUp::TOPUP_STATUS_COMFIRM_PAYMENT;
+                $topUp->updateDateTime = new \yii\db\Expression('NOW()');
+                $topUp->save(false);
+                return $this->redirect(['test-result', 'userId' => $user->userId, 'amount' => $_POST["amount"]]);
+            } else {
+                return $this->render('index', [
+                            'data' => $data
+                ]);
+            }
         } else {
             return $this->render('index', [
                         'data' => $data
             ]);
+        }
+    }
+
+    public function actionTestResult($userId, $amount) {
+        $flag = true; //test
+        $response = [];
+        if ($flag == true) {//เติมเงินสำเร็จ
+            $response["decision"] = "ACCEPT";
+        } else {//เติมเงินไม่สำเร็จ
+            $response["decision"] = "DISCLAIM";
+        }
+        return $this->redirect(['result', 'res' => $response["decision"]]);
+    }
+
+    public function actionResult($res) {
+        $currentPoint = 0;
+        if ($res == "ACCEPT") {
+            $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->one();
+            if (isset($topUp) && !empty($topUp)) {
+                $topUp->status = TopUp::TOPUP_STATUS_E_PAYMENT_SUCCESS;
+                $topUp->updateDateTime = new \yii\db\Expression('NOW()');
+                $topUp->save(false);
+                $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
+                if (isset($userPoint) && !empty($userPoint)) {
+                    $userPoint->currentPoint += $topUp->point;
+                    $userPoint->totalPoint += $topUp->point;
+                    $userPoint->totalMoney += $topUp->money;
+                    $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
+                    $currentPoint = $userPoint->currentPoint;
+                    $userPoint->save(false);
+                } else {
+                    $userPoint = new UserPoint();
+                    $userPoint->userId = Yii::$app->user->id;
+                    $userPoint->currentPoint = $topUp->point;
+                    $userPoint->totalPoint = $topUp->point;
+                    $userPoint->totalMoney = $topUp->money;
+                    $userPoint->status = 1;
+                    $userPoint->createDateTime = new \yii\db\Expression('NOW()');
+                    $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
+                    $userPoint->save(false);
+                    $currentPoint = $userPoint->currentPoint;
+                }
+                $type = 'success';
+                return $this->render('thank', [
+                            'currentPoint' => $currentPoint,
+                            'type' => $type,
+                ]);
+            } else {
+                // go to error page
+            }
+        } else {
+            $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->one();
+            if (isset($topUp) && !empty($topUp)) {
+                $topUp->status = TopUp::TOPUP_STATUS_E_PAYMENT_DISCLAIM;
+                $topUp->updateDateTime = new \yii\db\Expression('NOW()');
+                $topUp->save(false);
+                $type = 'fail';
+                return $this->render('thank', [
+                            'type' => $type]);
+            }
         }
     }
 
