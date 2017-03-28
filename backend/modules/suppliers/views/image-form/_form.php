@@ -189,9 +189,8 @@ use yii\widgets\Pjax;
             <div class="row">
                 <div class="col-md-12">
                     <?php
+                    $csrfToken = \Yii::$app->request->getCsrfToken();
                     if (isset($_GET['productSuppId'])) {
-
-                        $csrfToken = \Yii::$app->request->getCsrfToken();
 
                         echo \kato\DropZone::widget([
                             'options' => [
@@ -206,7 +205,7 @@ use yii\widgets\Pjax;
                             'clientEvents' => [
                                 'sending' => "function(file, xhr, formData) {
                                 console.log(file);
-                                //formData.append('_csrf', '{$csrfToken}');
+                                formData.append('_csrf', '{$csrfToken}');
                                 }",
                                 'complete' => "function(file){console.log(file)}",
                                 'removedfile' => "function(file){alert(file.name + ' is removed')}"
@@ -226,6 +225,7 @@ use yii\widgets\Pjax;
                             'clientEvents' => [
                                 'sending' => "function(file, xhr, formData) {
                                         console.log(file);
+                                        formData.append('_csrf', '{$csrfToken}');
                                         }",
                                 'complete' => "function(file){console.log(file)}",
                                 'removedfile' => "function(file){alert(file.name + ' is removed')}"
