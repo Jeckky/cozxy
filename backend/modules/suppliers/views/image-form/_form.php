@@ -194,7 +194,8 @@ use yii\widgets\Pjax;
 
                         echo \kato\DropZone::widget([
                             'options' => [
-                                'url' => \yii\helpers\Url::to(['upload', 'id' => $_GET['productSuppId']]),
+                                //'url' => \yii\helpers\Url::to(['upload', 'id' => $_GET['productSuppId']]),
+                                'url' => \yii\helpers\Url::to(['upload']),
                                 'paramName' => 'image',
                                 //'maxFilesize' => '200',
                                 'clickable' => true,
@@ -214,7 +215,8 @@ use yii\widgets\Pjax;
                     } else {
                         echo \kato\DropZone::widget([
                             'options' => [
-                                'url' => \yii\helpers\Url::to(['upload', 'id' => $_GET['productSuppId']]),
+                                //'url' => \yii\helpers\Url::to(['upload', 'id' => $_GET['productSuppId']]),
+                                'url' => \yii\helpers\Url::to(['upload']),
                                 'paramName' => 'image',
                                 //'maxFilesize' => '200',
                                 'clickable' => true,
