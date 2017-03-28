@@ -228,6 +228,7 @@ class ProductSuppliersController extends SuppliersMasterController {
             header("location: /auth");
             exit(0);
         }
+        $productSuppId = Yii::$app->request->get('id');
         //$model = new \common\models\costfit\productImageSuppliers();
         $model = new \common\models\costfit\ProductImageSuppliers();
         /*
