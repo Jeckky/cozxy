@@ -68,6 +68,7 @@ use yii\widgets\Pjax;
 
                 <div class="panel-body">
                     <div class="col-sm-12">
+
                         <?=
                         GridView::widget([
                             // 'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
@@ -189,6 +190,9 @@ use yii\widgets\Pjax;
                 <div class="col-md-12">
                     <?php
                     if (isset($_GET['productSuppId'])) {
+
+                        $csrfToken = \Yii::$app->request->getCsrfToken();
+
                         echo \kato\DropZone::widget([
                             'options' => [
                                 'url' => \yii\helpers\Url::to(['upload', 'id' => $_GET['productSuppId']]),
@@ -201,8 +205,9 @@ use yii\widgets\Pjax;
                             ],
                             'clientEvents' => [
                                 'sending' => "function(file, xhr, formData) {
-                        //console.log(file);
-                        }",
+                                //console.log(file);
+                                formData.append('_csrf', '{$csrfToken}'); 
+                                }",
                                 'complete' => "function(file){console.log(file)}",
                                 'removedfile' => "function(file){alert(file.name + ' is removed')}"
                             ],
@@ -220,8 +225,8 @@ use yii\widgets\Pjax;
                             ],
                             'clientEvents' => [
                                 'sending' => "function(file, xhr, formData) {
-                        //console.log(file);
-                        }",
+                                        //console.log(file);
+                                        }",
                                 'complete' => "function(file){console.log(file)}",
                                 'removedfile' => "function(file){alert(file.name + ' is removed')}"
                             ],
