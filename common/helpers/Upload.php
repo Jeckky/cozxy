@@ -105,6 +105,7 @@ class Upload {
             $model->imageThumbnail2 = 'images/' . $folderName . '/' . $folderThumbnail2 . '/' . $newFileName; // Size 137 x 130
             $model->productSuppId = Yii::$app->request->get('id');
             //$model->original_name = $file->name;
+            $model->title = 'suppliers';
             $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save(FALSE)) {
                 echo \yii\helpers\Json::encode($file);
