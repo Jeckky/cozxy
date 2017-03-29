@@ -42,7 +42,7 @@ class User extends \common\models\costfit\master\UserMaster {
     const USER_TYPE_BACKEND = 2;
     const USER_TYPE_FRONTEND_BACKEND = 3;
     const USER_TYPE_SUPPLIERS = 4;
-    const USER_TYPE_CONTETN = 5;
+    const USER_TYPE_CONTENT = 5;
     //const USER_STATUS_CHECKOUTS = 2;
     //const USER_STATUS_E_PAYMENT_DRAFT = 3;
     //const USER_STATUS_COMFIRM_PAYMENT = 4;
