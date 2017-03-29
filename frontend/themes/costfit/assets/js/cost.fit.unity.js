@@ -411,7 +411,7 @@ $(document).ready(function (e) {
             }
         });
     });
-    $(document).on('click', '#checkBot', function () {
+    $(document).on('click', '#checkBot', function () {//test
         var inputPass = $(this).parent().parent().parent().parent().find("#inputPass").val();
         var passPic = $(this).parent().parent().parent().parent().find("#passwordPic").val();
         if ((inputPass == '') || (inputPass != passPic)) {
