@@ -84,7 +84,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             //if ($model->lastvisitDate == '0000-00-00 00:00:00') {
                             //return '';
                             // } else {
-                            return $this->context->dateThai($model->lastvisitDate, 1, TRUE);
+                            //return $this->context->dateThai($model->lastvisitDate, 1, TRUE);
+                            return $model->lastvisitDate;
                             //}
                         }
                     ], /*
