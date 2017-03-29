@@ -145,6 +145,7 @@ class UserController extends ManagementMasterController {
                 $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
                 $model->token = Yii::$app->security->generateRandomString(10);
                 $model->createDateTime = new \yii\db\Expression("NOW()");
+                $model->lastvisitDate = '0000-00-00 00:00:00';
                 if ($model->save(FALSE)) {
                     //return $this->redirect(['index']);
                     return $this->redirect(Yii::$app->homeUrl . 'management/address/create?userId=' . $model->userId);
