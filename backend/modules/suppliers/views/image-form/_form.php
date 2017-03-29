@@ -52,7 +52,7 @@ use yii\widgets\Pjax;
         <span class="panel-title">อัพโหลดรูปภาพเพิ่มเติม</span>
         <div class="panel-heading-controls">
             <?php
-            if (Yii::$app->user->identity->type == 4) {
+            if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5) {
                 ?>
                 <a href="/suppliers/product-suppliers">กลับหน้าหลัก</a>
             <?php } ?>
@@ -183,7 +183,7 @@ use yii\widgets\Pjax;
             </h4>
         </div>
         <?php
-        if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 3) {
+        if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5) {
             ?>
             <!-- 49.1. $DROPZONEJS_EXAMPLE ====   Example ==== -->
             <div class="row">

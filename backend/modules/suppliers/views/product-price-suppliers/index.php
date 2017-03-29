@@ -120,7 +120,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <div class="col-md-6"><?= $this->title ?> : ราคาขายสินค้า</div>
                 <div class="col-md-6">
                     <?php
-                    if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 3) {
+                    if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5) {
                         ?>
                         <div class="btn-group pull-right">
                             <?= Html::a('<i class=\'fa fa-angle-left\'></i><i class=\'fa fa-angle-left\'></i> Back To Product Suppliers', ['/suppliers/product-suppliers'], ['class' => 'btn btn-warning btn-xs']) ?>
