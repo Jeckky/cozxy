@@ -168,20 +168,20 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             ?>
             <!--
             <li>
-                <a href="<?php //echo $baseUrl;                                                                                                                                                                                                                          ?>/dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
+                <a href="<?php //echo $baseUrl;                                                                                                                                                                                                                           ?>/dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
             </li>
 
             <li class="mm-dropdown">
                 <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูล User</span><span class="label label-warning">Updated</span></a>
                 <ul>
                     <li>
-                        <a tabindex="-1" href="<?php //echo $baseUrl;                                                                                                                                                                                                                                                           ?>/user/user"><i class="fa fa-square"></i> <span class="mm-text">สมาชิก</span></a>
+                        <a tabindex="-1" href="<?php //echo $baseUrl;                                                                                                                                                                                                                                                            ?>/user/user"><i class="fa fa-square"></i> <span class="mm-text">สมาชิก</span></a>
                     </li>
                 </ul>
             </li>-->
             <?php
             echo Yii::$app->user->identity->type;
-            if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 3) {
+            if (Yii::$app->user->identity->type != 4 || Yii::$app->user->identity->type != 3) {
                 ?>
                 <li class="mm-dropdown">
                     <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Flow Chart  </span><span class="label label-danger">new</span><span class="badge badge-primary">1</span></a>
@@ -230,7 +230,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     </ul>
                 </li>
 
-<?php } ?>
+            <?php } ?>
             <!--<li class="mm-dropdown">
                 <a href="#"><i class="menu-icon fa fa-sitemap"></i><span class="mm-text">Menu levels</span><span class="badge badge-primary">6</span></a>
                 <ul>
@@ -271,7 +271,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             </li>-->
 
             <!--Suppliers-->
-<?php if (Yii::$app->user->identity->type == 4) { ?>
+            <?php if (Yii::$app->user->identity->type == 4) { ?>
                 <li class="mm-dropdown-supplier">
                     <a href="#"><i class="menu-icon fa fa-gift"></i><span class="mm-text">Suppliers</span></a>
                     <ul>
@@ -287,7 +287,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     </ul>
                 </li>
             <?php } ?>
-<?php if (Yii::$app->user->identity->type == 3) { ?>
+            <?php if (Yii::$app->user->identity->type == 3) { ?>
                 <li class="mm-dropdown-supplier">
                     <a href="#"><i class="menu-icon fa fa-gift"></i><span class="mm-text">Content</span></a>
                     <ul>
@@ -300,7 +300,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 
                     </ul>
                 </li>
-<?php } ?>
+            <?php } ?>
         </ul> <!-- / .navigation -->
     </div> <!-- / #main-menu-inner -->
 </div> <!-- / #main-menu -->
