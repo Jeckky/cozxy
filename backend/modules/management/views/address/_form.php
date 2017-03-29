@@ -11,7 +11,7 @@ use common\models\costfit\Country;
 use common\models\costfit\Province;
 use common\models\costfit\Amphur;
 use common\models\costfit\District;
-use kartik\widgets\DepDrop;
+use kartik\depdrop\DepDrop;
 use kartik\widgets\Select2;
 use yii\helpers\Url;
 use common\helpers\GetBrowser;
