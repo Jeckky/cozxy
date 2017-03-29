@@ -35,8 +35,8 @@ return [
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
                 'host' => 'smtp.gmail.com',
-                'username' => 'online@daiigroup.com',
-                'password' => 'jmjoitnalfkzqfhg',
+                'username' => 'cozxy@cozxy.com',
+                'password' => '8v::ujwmp',
                 'port' => '465',
                 'encryption' => 'ssl',
             ],

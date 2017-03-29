@@ -86,7 +86,20 @@ use yii\redactor\widgets\Redactor;
             <duv class="status-system-hidden"></duv>
         </div>
         <?//= $form->field($model, 'productGroupId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(ProductGroup::find()->all(), 'productGroupId', 'title'), ['prompt' => '-- Select ProductGroup --']) ?>
-
+        <?php
+        echo $form->field($model, 'productGroupId')->widget(kartik\select2\Select2::classname(), [
+            'data' => yii\helpers\ArrayHelper::map(common\models\costfit\ProductGroup::find()->all(), 'productGroupId', 'title'),
+            'pluginOptions' => [
+                'loadingText' => '-- Select Product group --',
+            //'params' => ['input-type-1', 'input-type-2']
+            ],
+            'options' => [
+                'placeholder' => 'SelectSelect Product group ...',
+                'id' => 'productGroupId',
+                'class' => 'required'
+            ],
+        ]); //->label('Category');
+        ?>
         <?php
         //echo Html::hiddenInput('input-type-1', $model->categoryId, ['id' => 'input-type-1']);
         //echo Html::hiddenInput('input-type-2', $model->categoryId, ['id' => 'input-type-2']);

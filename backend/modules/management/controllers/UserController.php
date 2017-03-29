@@ -128,13 +128,24 @@ class UserController extends ManagementMasterController {
                  * path : common/helpers/Upload.php
                  * use : Upload::uploadBasic($fileName, $folderName, $uploadPath, $width, $height)
                  */
-                $folderName = "passport"; //  Size 553 x 484
-                $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName;
-                $newFileName = Upload::UploadBasic('User[passportImage]', $folderName, $uploadPath, '300', '300');
-                $model->passportImage = '/' . 'images/' . $folderName . "/" . $newFileName;
+                //$folderName = "passport"; //  Size 553 x 484
+                //$uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName;
+                //$newFileName = Upload::UploadBasic('User[passportImage]', $folderName, $uploadPath, '300', '300');
+
+                $imageObj = \yii\web\UploadedFile::getInstanceByName("User[passportImage]");
+                if (isset($imageObj) && !empty($imageObj)) {
+                    $newFileName = Upload::UploadBasic('User[passportImage]', $folderName, $uploadPath, '300', '300');
+                    $model->passportImage = '/' . 'images/' . $folderName . "/" . $newFileName;
+                } else {
+                    echo 'No';
+                }
+
+
+
                 $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
                 $model->token = Yii::$app->security->generateRandomString(10);
                 $model->createDateTime = new \yii\db\Expression("NOW()");
+                $model->lastvisitDate = new \yii\db\Expression("NOW()");
                 if ($model->save(FALSE)) {
                     //return $this->redirect(['index']);
                     return $this->redirect(Yii::$app->homeUrl . 'management/address/create?userId=' . $model->userId);

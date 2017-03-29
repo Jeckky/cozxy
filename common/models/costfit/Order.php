@@ -69,6 +69,8 @@ class Order extends \common\models\costfit\master\OrderMaster {
 
     public $orderMessage = null;
 
+//    public $error;
+
     /**
      * @inheritdoc
      */

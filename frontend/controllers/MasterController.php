@@ -72,6 +72,12 @@ class MasterController extends MasterCommonController {
                 'query' => \common\models\costfit\Address::find()->where("userId ='" . Yii::$app->user->id . "' and type = 1 ")->orderBy('addressId DESC'),
                 'pagination' => false,
             ]);
+            $user_point = \common\models\costfit\UserPoint::find()->where("userId='" . Yii::$app->user->id . "'")->one();
+            if (isset($user_point) && !empty($user_point)) {
+                $this->view->params['currentPoint'] = $user_point->currentPoint;
+            } else {
+                $this->view->params['currentPoint'] = 0;
+            }
             $this->view->params['listDataProvider']['shipping'] = $dataProvider_picking_point;
             $this->view->params['listDataProvider']['billing'] = $dataProvider_billing;
         }
@@ -356,26 +362,26 @@ class MasterController extends MasterCommonController {
 
     public function actionMenuCategory() {
         $list = \common\models\costfit\Category::find()
-        ->andWhere('parentId  is null ')
-        ->andWhere('status  =1')
-        ->all();
+                ->andWhere('parentId  is null ')
+                ->andWhere('status  =1')
+                ->all();
 
         return $list;
     }
 
     public function actionMenuCategoryParentId($id) {
         $list = \common\models\costfit\Category::find()
-        ->andWhere('parentId  =' . $id)
-        ->andWhere('status  =1')
-        ->all();
+                ->andWhere('parentId  =' . $id)
+                ->andWhere('status  =1')
+                ->all();
         return $list;
     }
 
     public function actionMenuCategorySubParentId($id) {
         $list = \common\models\costfit\Category::find()
-        ->andWhere('parentId  =' . $id)
-        ->andWhere('status  =1')
-        ->all();
+                ->andWhere('parentId  =' . $id)
+                ->andWhere('status  =1')
+                ->all();
         return $list;
     }
 
@@ -567,8 +573,8 @@ class MasterController extends MasterCommonController {
     public function findPriceRange($categoryId) {
         $res = [];
         $product = \common\models\costfit\CategoryToProduct::find()->select("min(product_price.price) as  minPrice ,max(product_price.price) as maxPrice")
-        ->join("LEFT JOIN", "product_price", "product_price.productId = category_to_product.productId")
-        ->where("product_price.quantity = 1 AND category_to_product.categoryId=" . $categoryId)->one();
+                        ->join("LEFT JOIN", "product_price", "product_price.productId = category_to_product.productId")
+                        ->where("product_price.quantity = 1 AND category_to_product.categoryId=" . $categoryId)->one();
 
         if (isset($product)) {
             $res["min"] = $product['minPrice'];

@@ -62,7 +62,7 @@ use common\models\areawow\ProductSupp;
 
         <div class="form-group">
             <?php
-            if (Yii::$app->user->identity->type == 4) {
+            if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5) {
                 ?>
                 <div class="col-sm-9 col-sm-offset-3">
                     <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -52,7 +52,7 @@ use yii\widgets\Pjax;
         <span class="panel-title">อัพโหลดรูปภาพเพิ่มเติม</span>
         <div class="panel-heading-controls">
             <?php
-            if (Yii::$app->user->identity->type == 4) {
+            if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5) {
                 ?>
                 <a href="/suppliers/product-suppliers">กลับหน้าหลัก</a>
             <?php } ?>
@@ -68,6 +68,7 @@ use yii\widgets\Pjax;
 
                 <div class="panel-body">
                     <div class="col-sm-12">
+
                         <?=
                         GridView::widget([
                             // 'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
@@ -87,8 +88,8 @@ use yii\widgets\Pjax;
                                     'format' => 'html',
                                     'value' => function($model) {
                                         if (isset($model->image)) {
-                                            if (file_exists($_SERVER['DOCUMENT_ROOT'] . Yii::getAlias('@web') . '/' . $model->image)) {
-                                                $imgBrand = Html::img(Yii::getAlias('@web') . '/' . $model->image, ['style' => 'width:60px;height:60px', 'class' => 'img-responsive']);
+                                            if (file_exists($_SERVER['DOCUMENT_ROOT'] . Yii::getAlias('@web') . '/' . $model->image)) {//553px X 484px
+                                                $imgBrand = Html::img(Yii::getAlias('@web') . '/' . $model->image, ['style' => 'width:553px;height:484px', 'class' => 'img-responsive']);
                                             } else {
                                                 $imgBrand = Html::img(Yii::getAlias('@web') . '/images/ContentGroup/DUHWYsdXVc.png', ['style' => 'width:60px;height:60px', 'class' => 'img-responsive']);
                                             }
@@ -107,8 +108,8 @@ use yii\widgets\Pjax;
                                     'value' => function($model) {
 
                                         if (isset($model->image)) {
-                                            if (file_exists($_SERVER['DOCUMENT_ROOT'] . Yii::getAlias('@web') . '/' . $model->image)) {
-                                                $imgBrand = Html::img(Yii::getAlias('@web') . '/' . $model->imageThumbnail1, ['style' => 'width:60px;height:60px', 'class' => 'img-responsive']);
+                                            if (file_exists($_SERVER['DOCUMENT_ROOT'] . Yii::getAlias('@web') . '/' . $model->image)) {// 356px X 390px
+                                                $imgBrand = Html::img(Yii::getAlias('@web') . '/' . $model->imageThumbnail1, ['style' => 'width:356px;height:390px', 'class' => 'img-responsive']);
                                             } else {
                                                 $imgBrand = Html::img(Yii::getAlias('@web') . '/images/ContentGroup/DUHWYsdXVc.png', ['style' => 'width:60px;height:60px', 'class' => 'img-responsive']);
                                             }
@@ -125,8 +126,8 @@ use yii\widgets\Pjax;
                                     'value' => function($model) {
                                         //echo '@web' . Yii::getAlias('@web');
                                         if (isset($model->image)) {
-                                            if (file_exists($_SERVER['DOCUMENT_ROOT'] . Yii::getAlias('@web') . '/' . $model->image)) {
-                                                $imgBrand = Html::img(Yii::getAlias('@web') . '/' . $model->imageThumbnail1, ['style' => 'width:60px;height:60px', 'class' => 'img-responsive']);
+                                            if (file_exists($_SERVER['DOCUMENT_ROOT'] . Yii::getAlias('@web') . '/' . $model->image)) {// Size 137px X 130px
+                                                $imgBrand = Html::img(Yii::getAlias('@web') . '/' . $model->imageThumbnail1, ['style' => 'width:137px;height:130px', 'class' => 'img-responsive']);
                                             } else {
                                                 $imgBrand = Html::img(Yii::getAlias('@web') . '/images/ContentGroup/DUHWYsdXVc.png', ['style' => 'width:60px;height:60px', 'class' => 'img-responsive']);
                                             }
@@ -182,13 +183,15 @@ use yii\widgets\Pjax;
             </h4>
         </div>
         <?php
-        if (Yii::$app->user->identity->type == 4) {
+        if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5) {
             ?>
             <!-- 49.1. $DROPZONEJS_EXAMPLE ====   Example ==== -->
             <div class="row">
                 <div class="col-md-12">
                     <?php
+                    $csrfToken = \Yii::$app->request->getCsrfToken();
                     if (isset($_GET['productSuppId'])) {
+
                         echo \kato\DropZone::widget([
                             'options' => [
                                 'url' => \yii\helpers\Url::to(['upload', 'id' => $_GET['productSuppId']]),
@@ -201,8 +204,8 @@ use yii\widgets\Pjax;
                             ],
                             'clientEvents' => [
                                 'sending' => "function(file, xhr, formData) {
-                        //console.log(file);
-                        }",
+                                console.log(file);
+                                }",
                                 'complete' => "function(file){console.log(file)}",
                                 'removedfile' => "function(file){alert(file.name + ' is removed')}"
                             ],
@@ -220,8 +223,8 @@ use yii\widgets\Pjax;
                             ],
                             'clientEvents' => [
                                 'sending' => "function(file, xhr, formData) {
-                        //console.log(file);
-                        }",
+                                        console.log(file);
+                                        }",
                                 'complete' => "function(file){console.log(file)}",
                                 'removedfile' => "function(file){alert(file.name + ' is removed')}"
                             ],

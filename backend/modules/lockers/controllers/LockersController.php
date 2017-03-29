@@ -112,19 +112,26 @@ class LockersController extends LockersMasterController {
                 'query' => $query,
             ]);
             //echo $listPoint->type;
+            $PickingPoints = [];
             if ($listPoint->type == 1) {//ประเภทปลายทางแบบล็อคเกอร์เย็น
-                $PickingPointsLockersHot = [];
-                $PickingPointsLockersHot['color_lid'] = ''; //สี
-                $PickingPointsLockersHot['frame'] = ''; //โครง
+                $PickingPoints['color_lid'] = '#cccccc'; //สีเทา
+                $PickingPoints['frame'] = '#217CA3'; //โครงน้ำเงิน
+                $PickingPoints['front'] = '#000000'; //ฟอนต์
+                $PickingPoints['type'] = 'lockers-cool'; //ประเภทปลายทงในการรับสินค้า
             } else if ($listPoint->type == 2) {//ประเภทปลายทางแบบล็อคเกอร์ร้อน
-                $PickingPointsLockersCool = [];
+                $PickingPoints['color_lid'] = '#F9BA32'; //สีเหลือง
+                $PickingPoints['frame'] = '#000000'; //โครงดำ
+                $PickingPoints['front'] = '#000000'; //ฟอนต์
+                $PickingPoints['type'] = 'lockers-hot'; //ประเภทปลายทงในการรับสินค้า
             } else if ($listPoint->type == 3) {//ประเภทปลายทางแบบBooth
-                $PickingPointsBooth = [];
+                $PickingPoints['color_lid'] = '#F9BA32'; //สีสีเหลือง
+                $PickingPoints['frame'] = '#000000'; //โครงดำ
+                $PickingPoints['front'] = '#000000'; //ฟอนต์
+                $PickingPoints['type'] = 'booth'; //ประเภทปลายทงในการรับสินค้า
             }
 
-
             // $point = PickingPoint::find()->where("pickingId=" . $pickingId)->one();
-
+            $typePickingPoint = \common\models\costfit\PickingPointType::find()->where('pptId=' . $listPoint->type)->one();
             return $this->render('lockers', [
                 'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
                 'citie' => $localNamecitie,
@@ -132,7 +139,7 @@ class LockersController extends LockersMasterController {
                 'state' => $localNamestate,
                 // 'point' => $point,
                 /* Customize Date 21/01/2017 , By Taninut.Bm */
-                'point' => $listPoint,
+                'point' => $listPoint, 'typePickingPoint' => $typePickingPoint, 'PickingPoints' => $PickingPoints
             ]);
         }
 
@@ -164,7 +171,6 @@ class LockersController extends LockersMasterController {
         $pickingItemsId = Yii::$app->request->get('pickingItemsId');
         $orderItemPackingId = Yii::$app->request->get('orderItemPackingId');
         $channels = Yii::$app->request->get('channels');
-
 
         /* Customize Date 25/01/2017 , By Taninut.Bm */
         $listPoint = Lockers::GetPickingPoint($boxcode);
@@ -305,7 +311,7 @@ class LockersController extends LockersMasterController {
 
         //echo 'check BagNo :' . $bagduplicate;
         // exit();
-
+        $typePickingPoint = \common\models\costfit\PickingPointType::find()->where('pptId=' . $listPoint->type)->one();
         return $this->render('scanbag', [
             'dataProviderAllOrder' => $dataProviderAllOrder,
             'dataProviderBag' => $dataProviderBag,
@@ -322,7 +328,7 @@ class LockersController extends LockersMasterController {
             'bagNo' => $bagNo,
             'orderId' => $orderId,
             'orderItemPackingId' => $orderItemPackingId,
-            'c' => $c,
+            'c' => $c, 'typePickingPoint' => $typePickingPoint,
         //'VarBagDuplicate' => $BagDuplicate = 1,
         ]);
         //}
@@ -523,8 +529,24 @@ class LockersController extends LockersMasterController {
 
                 /* old */
                 //$point = PickingPoint::find()->where("pickingId=" . $pickingId)->one();
-
-
+                $typePickingPoint = \common\models\costfit\PickingPointType::find()->where('pptId=' . $listPoint->type)->one();
+                $PickingPoints = [];
+                if ($listPoint->type == 1) {//ประเภทปลายทางแบบล็อคเกอร์เย็น
+                    $PickingPoints['color_lid'] = '#cccccc'; //สีเทา
+                    $PickingPoints['frame'] = '#217CA3'; //โครงน้ำเงิน
+                    $PickingPoints['front'] = '#000000'; //ฟอนต์
+                    $PickingPoints['type'] = 'lockers-cool'; //ประเภทปลายทงในการรับสินค้า
+                } else if ($listPoint->type == 2) {//ประเภทปลายทางแบบล็อคเกอร์ร้อน
+                    $PickingPoints['color_lid'] = '#F9BA32'; //สีเหลือง
+                    $PickingPoints['frame'] = '#000000'; //โครงดำ
+                    $PickingPoints['front'] = '#000000'; //ฟอนต์
+                    $PickingPoints['type'] = 'lockers-hot'; //ประเภทปลายทงในการรับสินค้า
+                } else if ($listPoint->type == 3) {//ประเภทปลายทางแบบBooth
+                    $PickingPoints['color_lid'] = '#F9BA32'; //สีสีเหลือง
+                    $PickingPoints['frame'] = '#000000'; //โครงดำ
+                    $PickingPoints['front'] = '#000000'; //ฟอนต์
+                    $PickingPoints['type'] = 'booth'; //ประเภทปลายทงในการรับสินค้า
+                }
                 return $this->render('channels', [
                     'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
                     'citie' => $localNamecitie,
@@ -533,7 +555,7 @@ class LockersController extends LockersMasterController {
                     /* old */
                     //'point' => $point,
                     /* Customize Date 25/01/2017   */
-                    'point' => $listPoint,
+                    'point' => $listPoint, 'typePickingPoint' => $typePickingPoint, 'PickingPoints' => $PickingPoints
                 ]);
             }
         } else { // ถ้าช่องไหนครวจสอบผ่าน มีข้อมูล

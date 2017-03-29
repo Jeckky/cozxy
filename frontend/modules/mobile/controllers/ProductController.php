@@ -151,6 +151,11 @@ class ProductController extends \common\controllers\MasterController
 
         if (isset($p)) {
 
+<<<<<<< HEAD
+=======
+//            throw new \yii\base\Exception(print_r($p->attributes, true));
+
+>>>>>>> origin/multi-suppliers
             $res['productId'] = $p->productId;
             $res['productSuppId'] = $p->productSuppId;
             $res['title'] = $p->title;

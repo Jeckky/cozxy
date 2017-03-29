@@ -69,6 +69,7 @@ class BrandController extends SuppliersMasterController {
         if (isset($_POST["Brand"])) {
             $model->attributes = $_POST["Brand"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
+            $model->createDateTime = '0000-00-00 00:00:00';
             /*
              * Upload ครั้งละรูป
              * helpers Upload
@@ -85,6 +86,7 @@ class BrandController extends SuppliersMasterController {
             }
 
             $model->userId = Yii::$app->user->identity->userId;
+            $model->createDateTime = new \yii\db\Expression('NOW()');
             $model->updateDateTime = new \yii\db\Expression('NOW()');
 
             if ($model->save()) {
