@@ -86,6 +86,7 @@ class BrandController extends SuppliersMasterController {
             }
 
             $model->userId = Yii::$app->user->identity->userId;
+            $model->createDateTime = new \yii\db\Expression('NOW()');
             $model->updateDateTime = new \yii\db\Expression('NOW()');
 
             if ($model->save()) {
