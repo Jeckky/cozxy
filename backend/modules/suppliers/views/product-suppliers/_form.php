@@ -153,7 +153,7 @@ use yii\redactor\widgets\Redactor;
 
         <?//= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
 
-        <?= $form->field($model, 'quantity', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
+        <?= $form->field($model, 'quantity', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15, 'value' => 0]) ?>
 
         <?php
         echo $form->field($model, 'unit')->widget(kartik\select2\Select2::classname(), [
