@@ -51,8 +51,8 @@ class ProductController extends \common\controllers\MasterController
 //            $res['productId'] = $pso->productId;
 //            $res['productSupplierId'] = $pso->productSuppId;
 
-            $res[$i]['productId'] = $pso->productId;
-            $res[$i]['productSupplierId'] = $pso->productSuppId;
+            $ps[$i]['productId'] = $pso->productId;
+            $ps[$i]['productSuppId'] = $pso->productSuppId;
 
             $ps[$i]['title'] = $pso->title;
             $ps[$i]['isbn'] = $pso->isbn;
@@ -73,6 +73,7 @@ class ProductController extends \common\controllers\MasterController
             $ps[$i]['brand'] = isset($pso->brand) ? $pso->brand->title : NULL;
             $ps[$i]['sale_price'] = false;
             $ps[$i]['on_wish_list'] = false;
+	        $ps[$i]['supplierId'] = $pso->userId;
 
             $hash = [
                 'categoryId' => $pso->categoryId,
@@ -150,10 +151,8 @@ class ProductController extends \common\controllers\MasterController
 
         if (isset($p)) {
 
-            throw new \yii\base\Exception(print_r($p->attributes, true));
-
             $res['productId'] = $p->productId;
-            $res['productSupplierId'] = $p->productSuppId;
+            $res['productSuppId'] = $p->productSuppId;
             $res['title'] = $p->title;
             $res['isbn'] = $p->isbn;
             $res['code'] = $p->code;
@@ -173,6 +172,7 @@ class ProductController extends \common\controllers\MasterController
             $res['brand'] = isset($p->brand) ? $p->brand->title : NULL;
             $res['sale_price'] = false;
             $res['on_wish_list'] = false;
+            $res['supplierId'] = $p->userId;
 
 
             $j = 0;
@@ -188,6 +188,7 @@ class ProductController extends \common\controllers\MasterController
         } else {
             $res["error"] = "Not Found Product";
         }
+        sleep(3);
         print_r(Json::encode($res));
     }
 
