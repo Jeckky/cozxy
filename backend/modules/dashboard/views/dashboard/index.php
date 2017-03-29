@@ -3,7 +3,7 @@
 $this->title = 'Dashboard';
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 ?>
-<?php if (Yii::$app->user->identity->type != 4) { ?>
+<?php if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 3) { ?>
     <div class="page-header">
 
         <div class="row">
@@ -645,5 +645,5 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
     <div class="col-md-12" style="font-size: 36px;">
         &nbsp;Welcome to Supplier
     </div>
-    <!--<img class="img-responsive" src="<?php //echo Yii::$app->homeUrl;                ?>images/suppliers/CRM_article_011.jpg" alt="">-->
+    <!--<img class="img-responsive" src="<?php //echo Yii::$app->homeUrl;                 ?>images/suppliers/CRM_article_011.jpg" alt="">-->
 <?php } ?>

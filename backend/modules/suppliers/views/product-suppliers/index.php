@@ -11,7 +11,7 @@ $this->title = 'Product Suppliers';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 //echo Yii::$app->user->identity->type;
-if (Yii::$app->user->identity->type != 4) {
+if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 3) {
     header("location: /auth");
     exit(0);
 }

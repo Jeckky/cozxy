@@ -183,7 +183,7 @@ use yii\widgets\Pjax;
             </h4>
         </div>
         <?php
-        if (Yii::$app->user->identity->type == 4) {
+        if (Yii::$app->user->identity->type == 4 && Yii::$app->user->identity->type == 3) {
             ?>
             <!-- 49.1. $DROPZONEJS_EXAMPLE ====   Example ==== -->
             <div class="row">

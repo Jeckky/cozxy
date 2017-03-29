@@ -50,10 +50,10 @@ class ProductSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionIndex() {
-        //if (Yii::$app->user->identity->type != 4) {
-        //header("location: /auth");
-        //exit(0);
-        //}
+        if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 3) {
+            header("location: /auth");
+            exit(0);
+        }
         $dataProvider = new ActiveDataProvider([
             'query' => ProductSuppliers::find()
             ->select('`product_suppliers`.* ,  (SELECT product_price_suppliers.price  FROM product_price_suppliers
@@ -73,10 +73,10 @@ class ProductSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionView($id) {
-        //if (Yii::$app->user->identity->type != 4) {
-        //header("location: /auth");
-        //exit(0);
-        //}
+        if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 3) {
+            header("location: /auth");
+            exit(0);
+        }
         //$images = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId =' . $id)->one();
         $dataProviderImages = new ActiveDataProvider([
             'query' => \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $id),
@@ -93,10 +93,10 @@ class ProductSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionCreate() {
-        //if (Yii::$app->user->identity->type != 4) {
-        //header("location: /auth");
-        //  exit(0);
-        //}
+        if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 3) {
+            header("location: /auth");
+            exit(0);
+        }
         $searchProducts = \common\models\costfit\Product::find()->all();
         $model = new ProductSuppliers();
         $model->scenario = 'ProductSuppliers';
@@ -146,10 +146,10 @@ class ProductSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionUpdate($id) {
-        //if (Yii::$app->user->identity->type != 4) {
-        //header("location: /auth");
-        //  exit(0);
-        //}
+        if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 3) {
+            header("location: /auth");
+            exit(0);
+        }
         $model = $this->findModel($id);
         //echo '<pre>';
         //print_r($model->attributes['productId']);
@@ -201,10 +201,10 @@ class ProductSuppliersController extends SuppliersMasterController {
     }
 
     public function actionImageForm() {
-        //if (Yii::$app->user->identity->type != 4) {
-        //  header("location: /auth");
-        //  exit(0);
-        //}
+        if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 3) {
+            header("location: /auth");
+            exit(0);
+        }
         $productSuppId = Yii::$app->request->get('productSuppId');
         if (isset($productSuppId)) {
             //$model = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId =' . $id)->one();
@@ -224,10 +224,10 @@ class ProductSuppliersController extends SuppliersMasterController {
     }
 
     public function actionUpload() {
-        //if (Yii::$app->user->identity->type != 4) {
-        //header("location: /auth");
-        //exit(0);
-        //}
+        if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 3) {
+            header("location: /auth");
+            exit(0);
+        }
         $productSuppId = Yii::$app->request->get('id');
         //$model = new \common\models\costfit\productImageSuppliers();
         $model = new \common\models\costfit\ProductImageSuppliers();
