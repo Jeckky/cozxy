@@ -22,6 +22,7 @@ $form = ActiveForm::begin([
 
     <div class="bs-example" data-example-id="btn-tags" style="margin: auto;background-color:#3cc;height:45px; padding: 10px 12px; color: #fff; border-width: 1px;  border-radius: 4px 4px 0 0; -webkit-box-shadow: none; box-shadow: none;">
         <span style="float: left; text-align: left;"><?= $this->title ?></span>
+        <span style="float: right; text-align: right;"><?= isset($ms) ? $ms : '' ?></span>
     </div>
 
     <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="margin: auto;text-align: center;color: #000;margin-bottom: 20px;">

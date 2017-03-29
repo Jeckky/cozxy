@@ -18,8 +18,6 @@ use common\helpers\RewardPoints;
 use common\helpers\PickingPoint;
 use common\helpers\Email;
 use common\helpers\Local;
-use common\models\costfit\UserPoint;
-use common\models\costfit\PointUsed;
 
 /**
  * Checkout controller
@@ -624,157 +622,16 @@ class CheckoutController extends MasterController {
         //echo '<pre>';
         //print_r($params);
         //exit();
-        $res = [];
         $orderId = $params['orderId'];
         $model = \common\models\costfit\Order::find()->where("orderId = " . $orderId)->one();
-        $enoughtPoint = false;
-        $enoughtPoint = $this->checkEnoughtPoint($model->userId, $model->summary);
-        if ($enoughtPoint == true) {
-            $this->updateSupplierStock($model);
-            //$model->status = Order::ORDER_STATUS_CHECKOUTS;
-            // $model->status = Order::ORDER_STATUS_E_PAYMENT_SUCCESS;
-            // $model->updateDateTime = new \yii\db\Expression('NOW()');
-            // $model->save(FALSE);
-//            $ePayment = \common\models\costfit\EPayment::find()->where("PaymentMethodId = 2 AND type = " . \Yii::$app->params['ePaymentServerType'])->one();
-//            return $this->render("//e_payment/payment_confirmation", [
-//                        'model' => $model,
-//                        'ePayment' => $ePayment]);
-            //sak  to  end sak
-            $order = Order::find()->where("orderId = " . $orderId)->one();
-            // if ($_REQUEST["decision"] == "ACCEPT") {
-            /*
-             * Reward Points
-             * 9/1/2017 By Taninut.Bm
-             */
-            $orderSummary = $order->summary;
-            $orderOrderId = $order->orderId;
-            $orderUserId = $order->userId;
-            $getRankMemberPoints = RewardPoints::getRankMemberPoints($orderUserId, $orderOrderId, $orderSummary);
-            /*
-             * Insert Order
-             */
-
-            $order->invoiceNo = Order::genInvNo($order);
-            $order->status = Order::ORDER_STATUS_E_PAYMENT_SUCCESS;
-            $order->paymentDateTime = new \yii\db\Expression('NOW()');
-            $this->updateUserPoint($order->userId, $order->summary, $order->orderId);
-            //$this->updateSupplierStock($order); //ถ้าจ่ายบัติผ่าน ตัด stock ของ supplier
-            //ตัดstock ในPRODUCT SUPPLIER
-            if ($order->save()) {
-                $res["status"] = 1;
-                $res["invoiceNo"] = $order->invoiceNo;
-                // $res["message"] = \common\models\costfit\EPayment::getReasonCodeText($_POST["reason_code"]);
-                $res["message"] = "Successful transaction";
-                // Update Send Date field
-                // ****รอ Confirm เรื่อง สั่งหลังกี่โมง เลื่อนไปอีก 1 วัน****
-                if ($order->isSlowest) {
-                    $maxDate = \common\models\costfit\OrderItem::findSlowestDate($order->orderId);
-                    foreach ($order->orderItems as $item):
-                        $item->sendDateTime = date('Y-m-d', strtotime("+$maxDate day"));
-                        $item->save();
-                    endforeach;
-                } else {
-                    foreach ($order->orderItems as $item):
-                        $date = \common\models\costfit\ShippingType::find()->where('shippingTypeId=' . $item->sendDate)->one();
-                        $item->sendDateTime = date('Y-m-d', strtotime("+$date->date day"));
-                        $item->save();
-                    endforeach;
-                }
-                // Update Send Date field
-                /*
-                 * Send For Email
-                 * Create Date : 24/2/2017
-                 * Create By : Taninut.Bm
-                 */
-                $member = \common\models\costfit\User::find()->where('userId=' . $orderUserId)->one();
-                if (isset($member)) {
-                    if (isset($member->email)) {
-                        $toMails = $member->email;
-                    } else {
-                        $toMails = $member->username;
-                    }
-                    $toMail = $toMails;
-                    $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "profile/order";
-                    $type = $member->firstname . ' ' . $member->lastname;
-                    $Subject = 'ยืนยันคำสั่งซื้อหมายเลข ' . $order->invoiceNo;
-                    /*
-                     * `billingFirstname`, `billingLastname`, `billingCompany`, `billingTax`,
-                     * `billingAddress`, `billingCountryId`, `billingProvinceId`, `billingAmphurId`,
-                     * `billingDistrictId`, `billingZipcode`, `billingTel`
-                     */
-                    $adress = [];
-                    $adress['billingCompany'] = $order->billingCompany;
-                    $adress['billingTax'] = $order->billingTax;
-
-                    $adress['billingFirstname'] = $order->billingFirstname;
-                    $adress['billingLastname'] = $order->billingLastname;
-                    $adress['billingAddress'] = $order->billingAddress;
-
-                    $billingCountryId = $order->billingCountryId; //ประเทศ
-                    $country = Local::Countries($billingCountryId);
-                    $adress['billingCountryId'] = $country->localName;
-
-                    $billingProvinceId = $order->billingProvinceId; //จังหวัด
-                    $States = Local::States($billingProvinceId);
-                    $adress['billingProvinceId'] = $States->localName;
-
-                    $billingAmphurId = $order->billingAmphurId; //อำเภอ
-                    $Cities = Local::Cities($billingAmphurId);
-                    $adress['billingAmphurId'] = $Cities->localName;
-
-                    $billingDistrictId = $order->billingDistrictId; //ตำบล
-                    $District = Local::District($billingDistrictId);
-                    $adress['billingDistrictId'] = $District->localName;
-
-                    $adress['billingZipcode'] = $order->billingZipcode;
-                    $adress['billingTel'] = $order->billingTel;
-
-                    $orderList = \common\models\costfit\Order::find()->where('orderId=' . $orderOrderId)->one();
-                    //$orderItems = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderOrderId)->all();
-                    $receiveType = [];
-                    $GetOrderItemrGroupLockersMaster = PickingPoint::GetOrderItemrGroupLockersMaster($orderId, '');
-                    if (isset($GetOrderItemrGroupLockersMaster)) {
-                        $receiveType['GetLockers'] = $GetOrderItemrGroupLockersMaster->pickingId;
-                    } else {
-                        $receiveType['GetLockers'] = FALSE;
-                    }
-                    $GetOrderItemrGroupBoothMaster = PickingPoint::GetOrderItemrGroupBoothMaster($orderId);
-                    if (isset($GetOrderItemrGroupBoothMaster)) {
-                        $GetBooth = $GetOrderItemrGroupBoothMaster->pickingId;
-                    } else {
-                        $GetBooth = FALSE;
-                    }
-                    $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType);
-                    return $this->render('payment_result', compact('res'));
-                }
-
-                /*
-                 * End Send Email
-                 */
-            }
-            /* } else if ($_REQUEST["decision"] == "REVIEW") {
-              $order->status = Order::ORDER_STATUS_E_PAYMENT_PENDING;
-              $order->save();
-              $res["status"] = 2;
-              $res["message"] = \common\models\costfit\EPayment::getReasonCodeText($_POST["reason_code"]);
-              } else {
-              $order->status = Order::ORDER_STATUS_E_PAYMENT_DRAFT;
-              $order->save();
-              $res["status"] = 3;
-              $res["message"] = \common\models\costfit\EPayment::getReasonCodeText($_POST["reason_code"]);
-
-              $this->returnSupplierStock($order); //คืนstock
-              } */
-            //Order::saveOrderPaymentHistory($order, $_REQUEST["decision"], $_POST["reason_code"], $_POST['score_device_fingerprint_true_ipaddress']);
-            //Order::saveOrderPaymentHistory($order, $_REQUEST["decision"], $_POST["reason_code"], 1);
-            //end sak pay with points
-        } else {//ถ้ามี point ไม่พอให้กลับไปเติม
-            $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
-            $ms = 'จำนวน Point ของคุณไม่พอ กรุณาเติม Point';
-            return $this->redirect([$baseUrl . '/top-up',
-                        'ms' => $ms
-            ]);
-        }
+        $this->updateSupplierStock($model);
+        $model->status = Order::ORDER_STATUS_CHECKOUTS;
+        $model->updateDateTime = new \yii\db\Expression('NOW()');
+        $model->save(FALSE);
+        $ePayment = \common\models\costfit\EPayment::find()->where("PaymentMethodId = 2 AND type = " . \Yii::$app->params['ePaymentServerType'])->one();
+        return $this->render("//e_payment/payment_confirmation", [
+                    'model' => $model,
+                    'ePayment' => $ePayment]);
     }
 
     public function actionResult() {
@@ -1011,34 +868,6 @@ class CheckoutController extends MasterController {
                 return NULL;
             }
         }
-    }
-
-    public function checkEnoughtPoint($userId, $summary) {
-        $currentPoint = UserPoint::find()->where("userId=" . $userId)->one();
-        if (isset($currentPoint) && !empty($currentPoint)) {
-            if ($currentPoint->currentPoint > $summary) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
-
-    public function updateUserPoint($userId, $point, $orderId) {
-        $userPoint = UserPoint::find()->where("userId=" . $userId)->one();
-        $userPoint->currentPoint = $userPoint->currentPoint - $point;
-        $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
-        $userPoint->save(false);
-        $used = new PointUsed();
-        $used->userId = $userId;
-        $used->orderId = $orderId;
-        $used->point = $point;
-        $used->status = 1;
-        $used->createDateTime = new \yii\db\Expression('NOW()');
-        $used->updateDateTime = new \yii\db\Expression('NOW()');
-        $used->save(false);
     }
 
 }

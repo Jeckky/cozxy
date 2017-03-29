@@ -40,6 +40,10 @@ class TopUpController extends MasterController {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
+        $msg = '';
+        if (isset($_GET['ms'])) {
+            $msg = $_GET['ms'];
+        }
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Top up';
         $data = [];
@@ -75,7 +79,8 @@ class TopUpController extends MasterController {
             }
         } else {
             return $this->render('index', [
-                        'data' => $data
+                        'data' => $data,
+                        'ms' => $msg
             ]);
         }
     }
