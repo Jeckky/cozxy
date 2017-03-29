@@ -81,11 +81,11 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'attribute' => 'เข้าใช้งานล่าสุด',
                         'format' => 'raw',
                         'value' => function($model) {
-                            if ($model->lastvisitDate == '0000-00-00 00:00:00') {
-                                return '';
-                            } else {
-                                return $this->context->dateThai($model->lastvisitDate, 1, TRUE);
-                            }
+                            //if ($model->lastvisitDate == '0000-00-00 00:00:00') {
+                            //return '';
+                            // } else {
+                            return $this->context->dateThai($model->lastvisitDate, 1, TRUE);
+                            //}
                         }
                     ], /*
                       [
