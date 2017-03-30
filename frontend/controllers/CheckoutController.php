@@ -768,7 +768,7 @@ class CheckoutController extends MasterController {
             //Order::saveOrderPaymentHistory($order, $_REQUEST["decision"], $_POST["reason_code"], $_POST['score_device_fingerprint_true_ipaddress']);
             //Order::saveOrderPaymentHistory($order, $_REQUEST["decision"], $_POST["reason_code"], 1);
             //end sak pay with points
-        } else {//ถ้ามี point ไม่พอให้กลับไปเติม
+        } else {//ถ้ามี point ไม่พอให้กลับไปเติม//
             $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             $ms = 'จำนวน Point ของคุณไม่พอ กรุณาเติม Point';
             return $this->redirect([$baseUrl . '/top-up',
