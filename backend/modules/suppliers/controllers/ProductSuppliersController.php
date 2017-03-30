@@ -108,6 +108,7 @@ class ProductSuppliersController extends SuppliersMasterController {
             $model->approve = Yii::$app->request->post('approve');
             $model->productId = Yii::$app->request->post('productIds');
             $model->result = $_POST['ProductSuppliers']['quantity'];
+            $model->code = \common\helpers\Product::generateProductCode();
             if ($model->save(FALSE)) {
 
             }
@@ -120,6 +121,7 @@ class ProductSuppliersController extends SuppliersMasterController {
                 $modelSys->createDateTime = new \yii\db\Expression('NOW()');
                 $modelSys->approve = Yii::$app->request->post('approve');
                 $modelSys->productSuppId = $model->productSuppId;
+                $modelSys->code = $model->code;
                 if ($modelSys->save(FALSE)) {
                     //throw new \yii\base\Exception(1);
                     $productId = Yii::$app->db->lastInsertID; // idของProduct : ProductId
