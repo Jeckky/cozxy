@@ -732,19 +732,19 @@ class CheckoutController extends MasterController {
                     $orderList = \common\models\costfit\Order::find()->where('orderId=' . $orderOrderId)->one();
                     //$orderItems = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderOrderId)->all();
                     $receiveType = [];
-                    $GetOrderItemrGroupLockersMaster = PickingPoint::GetOrderItemrGroupLockersMaster($orderId);
-                    if (isset($GetOrderItemrGroupLockersMaster)) {
-                        $receiveType['GetLockers'] = $GetOrderItemrGroupLockersMaster->pickingId;
-                    } else {
-                        $receiveType['GetLockers'] = FALSE;
-                    }
-                    $GetOrderItemrGroupBoothMaster = PickingPoint::GetOrderItemrGroupBoothMaster($orderId);
-                    if (isset($GetOrderItemrGroupBoothMaster)) {
-                        $GetBooth = $GetOrderItemrGroupBoothMaster->pickingId;
-                    } else {
-                        $GetBooth = FALSE;
-                    }
-                    $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType);
+                    /* $GetOrderItemrGroupLockersMaster = PickingPoint::GetOrderItemrGroupLockersMaster($orderId);
+                      if (isset($GetOrderItemrGroupLockersMaster)) {
+                      $receiveType['GetLockers'] = $GetOrderItemrGroupLockersMaster->pickingId;
+                      } else {
+                      $receiveType['GetLockers'] = FALSE;
+                      }
+                      $GetOrderItemrGroupBoothMaster = PickingPoint::GetOrderItemrGroupBoothMaster($orderId);
+                      if (isset($GetOrderItemrGroupBoothMaster)) {
+                      $GetBooth = $GetOrderItemrGroupBoothMaster->pickingId;
+                      } else {
+                      $GetBooth = FALSE;
+                      } */
+                    //$orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType);
                     return $this->render('payment_result', compact('res'));
                 }
 
