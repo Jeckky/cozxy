@@ -31,7 +31,7 @@ return 'led';
 public function rules()
 {
 return [
-            [['code', 'ip', 'createDateTime'], 'required'],
+            [['code', 'ip'], 'required'],
             [['status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['code', 'ip', 'slot'], 'string', 'max' => 45],
