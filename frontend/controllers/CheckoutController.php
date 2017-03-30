@@ -732,7 +732,7 @@ class CheckoutController extends MasterController {
                     $orderList = \common\models\costfit\Order::find()->where('orderId=' . $orderOrderId)->one();
                     //$orderItems = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderOrderId)->all();
                     $receiveType = [];
-                    $GetOrderItemrGroupLockersMaster = PickingPoint::GetOrderItemrGroupLockersMaster($orderId, '');
+                    $GetOrderItemrGroupLockersMaster = PickingPoint::GetOrderItemrGroupLockersMaster($orderId);
                     if (isset($GetOrderItemrGroupLockersMaster)) {
                         $receiveType['GetLockers'] = $GetOrderItemrGroupLockersMaster->pickingId;
                     } else {
@@ -875,7 +875,7 @@ class CheckoutController extends MasterController {
                         $orderList = \common\models\costfit\Order::find()->where('orderId=' . $orderOrderId)->one();
                         //$orderItems = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderOrderId)->all();
                         $receiveType = [];
-                        $GetOrderItemrGroupLockersMaster = PickingPoint::GetOrderItemrGroupLockersMaster($orderId);
+                        $GetOrderItemrGroupLockersMaster = PickingPoint::GetOrderItemrGroupLockersMaster($orderOrderId);
                         if (isset($GetOrderItemrGroupLockersMaster)) {
                             $receiveType['GetLockers'] = $GetOrderItemrGroupLockersMaster->pickingId;
                         } else {
