@@ -24,12 +24,11 @@ class Product {
     //put your code here
     public static function generateProductCode() {
         $lastCode = ProductSuppliers::find()->where("1")->orderBy("productSuppId")->one();
-        if (isset($lastCode) && !empty($lastCode)) {
+        if (isset($lastCode) && !empty($lastCode) && $lastCode->code != '') {
             $char = 'AA0AA00';
         } else {
             $char = $lastCode->code;
         }
-        $char = $lastCode->code;
         $char1 = substr($char, -1); //ตัวที่ 1
         $result1 = Product::IntegerPlus($char1);
         $char2 = substr($char, -2, 1); // ตัวที่ 2

@@ -86,7 +86,11 @@ class TopUpController extends MasterController {
     }
 
     public function actionGen() {
-        $productSupp = \common\models\costfit\ProductSuppliers::find()->where(1)->all();
+        $productSupp = \common\models\costfit\ProductSuppliers::find()->where("1")->all();
+        foreach ($productSupp as $supp) {
+            $supp->code = \common\helpers\Product::generateProductCode();
+            $supp->save(false);
+        }
     }
 
     public function actionTestResult($userId, $amount) {
