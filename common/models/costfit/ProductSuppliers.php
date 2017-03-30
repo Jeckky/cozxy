@@ -72,7 +72,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         return array_merge(parent::attributeLabels(), [
             'categoryId' => 'หมวดหมู่',
             'brandId' => 'ยี่ห้อ',
-            'title' => 'หัวข้อ',
+            'title' => 'ชื่อสินค้า',
             'optionName' => 'option name',
             'shortDescription' => 'คำอธิบายสั้น',
             'description' => 'รายละเอียด',

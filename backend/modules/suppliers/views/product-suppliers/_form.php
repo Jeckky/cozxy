@@ -167,17 +167,18 @@ use yii\redactor\widgets\Redactor;
                 'class' => 'required'
             ],
         ]); //->label('Unit');
-        echo $form->field($model, 'smallUnit')->widget(kartik\select2\Select2::classname(), [
-            'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Unit::find()->all(), 'unitId', 'title'),
-            'pluginOptions' => [
-                'loadingText' => '-- Select Small Unit --',
-            ],
-            'options' => [
-                'placeholder' => 'Select Small Unit ...',
-                'id' => 'smallUnit',
-                'class' => 'required'
-            ],
-        ]); //->label('Small Unit');
+        /* echo $form->field($model, 'smallUnit')->widget(kartik\select2\Select2::classname(), [
+          'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Unit::find()->all(), 'unitId', 'title'),
+          'pluginOptions' => [
+          'loadingText' => '-- Select Small Unit --',
+          ],
+          'options' => [
+          'placeholder' => 'Select Small Unit ...',
+          'id' => 'smallUnit',
+          'class' => 'required'
+          ],
+          ]); //->label('Small Unit');
+         * */
         ?>
         <?= $form->field($model, 'tags', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 255]) ?>
 
