@@ -68,8 +68,8 @@ class CheckoutController extends MasterController {
             if (isset($_POST['Address'])) {
                 //print_r($_POST['Address']);
                 $address = \common\models\costfit\Address::find()
-                        ->where('userId =' . \Yii::$app->user->id . ' and addressId=' . $addressId . ' and  type = 1')
-                        ->one();
+                ->where('userId =' . \Yii::$app->user->id . ' and addressId=' . $addressId . ' and  type = 1')
+                ->one();
 
                 $address->attributes = $_POST['Address'];
                 $address->countryId = (isset($_POST['Address']['countryId']) ? $_POST['Address']['countryId'] : '');
@@ -85,20 +85,20 @@ class CheckoutController extends MasterController {
             //echo 'no hidden ';
             if (\Yii::$app->user->isGuest) {
                 $address_shipping = \common\models\costfit\Address::find()->where('userId=' . 0 . ' and type = 2  ')
-                        ->orderBy('isDefault desc ')
-                        ->all();
+                ->orderBy('isDefault desc ')
+                ->all();
 
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . 0 . ' and type = 1  ')
-                        ->orderBy('isDefault desc  ')
-                        ->all();
+                ->orderBy('isDefault desc  ')
+                ->all();
             } else {
                 $address_shipping = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 2  ')
-                        ->orderBy('isDefault desc ')
-                        ->all();
+                ->orderBy('isDefault desc ')
+                ->all();
 
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 1  ')
-                        ->orderBy('isDefault desc  ')
-                        ->all();
+                ->orderBy('isDefault desc  ')
+                ->all();
                 //$address_billing['scenario'] = 'shipping_address';
             }
 
@@ -393,8 +393,8 @@ class CheckoutController extends MasterController {
 
             if (isset($billing)) {
                 $address_billing = \common\models\costfit\Address::find()->where('userId = ' . $placeUserId . ' and addressId = ' . $billing)
-                        ->orderBy('addressId desc')
-                        ->one();
+                ->orderBy('addressId desc')
+                ->one();
                 //$address_shipping = \common\models\costfit\Address::find()->where('userId = ' . $placeUserId . ' and addressId = ' . $shipping)
                 // ->orderBy('addressId desc')
                 // ->one();
@@ -403,8 +403,8 @@ class CheckoutController extends MasterController {
                 //->orderBy('addressId desc')
                 //->one();
                 $address_billing = \common\models\costfit\Address::find()->where('userId = ' . $placeUserId . ' and addressId = ' . $shipping)
-                        ->orderBy('addressId desc')
-                        ->one();
+                ->orderBy('addressId desc')
+                ->one();
             }
             $order = \common\models\costfit\Order::find()->where('userId = ' . $placeUserId . ' and orderId = ' . $placeOrderId)->one();
             //check ก่อนว่า มี ITEMS ครบตามจำนวนที่ต้องการหรือไม่ ถ้า ไม่ครบให้บอกจำนวนที่เหลือ พร้อมถามว่าต้องการหรือป่าว ถ้าต้องการเปลี่ยนในตารางorderItemแล้วคำนวณราคาใหม่
@@ -481,8 +481,8 @@ class CheckoutController extends MasterController {
         }
         $addressId = Yii::$app->request->post('address');
         $address = \common\models\costfit\Address::find()->where('addressId = ' . $addressId)
-                ->orderBy('isDefault desc, updateDateTime desc')
-                ->one();
+        ->orderBy('isDefault desc, updateDateTime desc')
+        ->one();
         //echo '<pre>';
         //print_r($address->attributes);
         echo json_encode($address->attributes);
@@ -772,7 +772,7 @@ class CheckoutController extends MasterController {
             $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             $ms = 'จำนวน Point ของคุณไม่พอ กรุณาเติม Point';
             return $this->redirect([$baseUrl . '/top-up',
-                        'ms' => $ms
+                'ms' => $ms
             ]);
         }
     }
@@ -871,22 +871,27 @@ class CheckoutController extends MasterController {
 
                         $adress['billingZipcode'] = $order->billingZipcode;
                         $adress['billingTel'] = $order->billingTel;
-
-                        $orderList = \common\models\costfit\Order::find()->where('orderId=' . $orderOrderId)->one();
-                        //$orderItems = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderOrderId)->all();
-                        $receiveType = [];
-                        $GetOrderItemrGroupLockersMaster = PickingPoint::GetOrderItemrGroupLockersMaster($orderId);
-                        if (isset($GetOrderItemrGroupLockersMaster)) {
-                            $receiveType['GetLockers'] = $GetOrderItemrGroupLockersMaster->pickingId;
-                        } else {
-                            $receiveType['GetLockers'] = FALSE;
-                        }
-                        $GetOrderItemrGroupBoothMaster = PickingPoint::GetOrderItemrGroupBoothMaster($orderId);
-                        if (isset($GetOrderItemrGroupBoothMaster)) {
-                            $GetBooth = $GetOrderItemrGroupBoothMaster->pickingId;
-                        } else {
-                            $GetBooth = FALSE;
-                        }
+                        /*
+                         * Comment
+                         * Create Date : 30/03/2017
+                         */
+                        /*
+                          $orderList = \common\models\costfit\Order::find()->where('orderId=' . $orderOrderId)->one();
+                          //$orderItems = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderOrderId)->all();
+                          $receiveType = [];
+                          $GetOrderItemrGroupLockersMaster = PickingPoint::GetOrderItemrGroupLockersMaster($orderId);
+                          if (isset($GetOrderItemrGroupLockersMaster)) {
+                          $receiveType['GetLockers'] = $GetOrderItemrGroupLockersMaster->pickingId;
+                          } else {
+                          $receiveType['GetLockers'] = FALSE;
+                          }
+                          $GetOrderItemrGroupBoothMaster = PickingPoint::GetOrderItemrGroupBoothMaster($orderId);
+                          if (isset($GetOrderItemrGroupBoothMaster)) {
+                          $GetBooth = $GetOrderItemrGroupBoothMaster->pickingId;
+                          } else {
+                          $GetBooth = FALSE;
+                          }
+                         */
                         $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType);
                     }
 
