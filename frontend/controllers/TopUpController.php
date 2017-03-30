@@ -85,6 +85,11 @@ class TopUpController extends MasterController {
         }
     }
 
+    /* public function actionGen() {
+      $data = \common\helpers\Product::generateProductCode();
+      throw new \yii\base\Exception($data);
+      } */
+
     public function actionTestResult($userId, $amount) {
         $flag = true; //test
         $response = [];
