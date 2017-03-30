@@ -408,8 +408,6 @@ $(document).ready(function (e) {
             success: function (data) {
                 if (data.pass) {
                     $("#passwordPic").val(data.pass);
-                } else {
-                    alert('error');
                 }
             }
         });
