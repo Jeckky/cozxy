@@ -117,6 +117,8 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
             $model->status = 1;
             $model->createDateTime = new \yii\db\Expression('NOW()');
             if ($model->save()) {
+                $productPriceCozxy = \common\models\costfit\Product::updateAll(['price' => $_POST["ProductPriceSuppliers"]['price']], ['productSuppId' => $_GET['productSuppId']]);
+
                 //return $this->redirect(['product-price-suppliers/index?productSuppId = ' . $_GET['productSuppId']]);
                 return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-suppliers/image-form?productSuppId=' . $model->productSuppId);
                 //return $this->redirect('/suppliers/product-price-suppliers/create?productSuppId=' . $model->productSuppId);

@@ -871,22 +871,29 @@ class CheckoutController extends MasterController {
 
                         $adress['billingZipcode'] = $order->billingZipcode;
                         $adress['billingTel'] = $order->billingTel;
+                        /*
+                         * Comment
+                         * Create Date : 30/03/2017
+                         */
 
                         $orderList = \common\models\costfit\Order::find()->where('orderId=' . $orderOrderId)->one();
-                        //$orderItems = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderOrderId)->all();
+                        /*
+                          //$orderItems = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderOrderId)->all();
+                          $receiveType = [];
+                          $GetOrderItemrGroupLockersMaster = PickingPoint::GetOrderItemrGroupLockersMaster($orderId);
+                          if (isset($GetOrderItemrGroupLockersMaster)) {
+                          $receiveType['GetLockers'] = $GetOrderItemrGroupLockersMaster->pickingId;
+                          } else {
+                          $receiveType['GetLockers'] = FALSE;
+                          }
+                          $GetOrderItemrGroupBoothMaster = PickingPoint::GetOrderItemrGroupBoothMaster($orderId);
+                          if (isset($GetOrderItemrGroupBoothMaster)) {
+                          $GetBooth = $GetOrderItemrGroupBoothMaster->pickingId;
+                          } else {
+                          $GetBooth = FALSE;
+                          }
+                         */
                         $receiveType = [];
-                        $GetOrderItemrGroupLockersMaster = PickingPoint::GetOrderItemrGroupLockersMaster($orderOrderId);
-                        if (isset($GetOrderItemrGroupLockersMaster)) {
-                            $receiveType['GetLockers'] = $GetOrderItemrGroupLockersMaster->pickingId;
-                        } else {
-                            $receiveType['GetLockers'] = FALSE;
-                        }
-                        $GetOrderItemrGroupBoothMaster = PickingPoint::GetOrderItemrGroupBoothMaster($orderId);
-                        if (isset($GetOrderItemrGroupBoothMaster)) {
-                            $GetBooth = $GetOrderItemrGroupBoothMaster->pickingId;
-                        } else {
-                            $GetBooth = FALSE;
-                        }
                         $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType);
                     }
 

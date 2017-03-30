@@ -116,7 +116,8 @@ class MasterController extends MasterCommonController {
         if ($cookies->has('orderToken')) {
             return $cookies->getValue('orderToken');
         } else {
-            $this->generateNewToken();
+        	self::generateNewToken();
+//            $this->generateNewToken();
             $cookies = Yii::$app->request->cookies;
 //            echo print_r($cookies, true);
 //            throw new \yii\base\Exception(111);
@@ -142,7 +143,6 @@ class MasterController extends MasterCommonController {
         $cookie->value = Yii::$app->security->generateRandomString();
 //        $cookie->expire = time() + 86400 * 365;
         Yii::$app->response->cookies->add($cookie);
-
 //            throw new \yii\base\Exception(print_r($cookiesNew, true));
 //        } else {
 //

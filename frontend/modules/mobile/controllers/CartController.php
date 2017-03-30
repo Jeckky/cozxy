@@ -5,12 +5,11 @@ namespace frontend\modules\mobile\controllers;
 use Yii;
 use yii\web\Controller;
 use \yii\helpers\Json;
-use frontend\controllers\MasterController;
 
 /**
  * Default controller for the `mobile` module
  */
-class OrderController extends MasterController
+class CartController extends Controller
 {
 
     /**
@@ -19,8 +18,7 @@ class OrderController extends MasterController
      */
     public function actionIndex()
     {
-	    $cartArray = \common\models\costfit\Order::findCartArray();
-	    print_r(\yii\helpers\Json::encode($cartArray));
+        return $this->render('index');
     }
 
     public function actionFindCartArray()
@@ -39,11 +37,11 @@ class OrderController extends MasterController
         //$_GET["fastId"] = No Date to send order
         //$_GET["supplierId"] = supplier Id
         //Return JSON Array of cart
-//        $_GET["id"] = 1;
-//        $_GET["productSuppId"] = 169;
-//        $_GET["quantity"] = 1;
-//        $_GET["fastId"] = 1;
-//        $_GET["supplierId"] = 1;
+        $_GET["id"] = 1;
+        $_GET["productSuppId"] = 169;
+        $_GET["quantity"] = 1;
+        $_GET["fastId"] = 1;
+        $_GET["supplierId"] = 1;
         $res = [];
         $order = \common\models\costfit\Order::getOrder();
         if (!isset($order)) {
@@ -55,10 +53,6 @@ class OrderController extends MasterController
                 throw new \yii\base\Exception("Can't Save Order");
             }
         }
-
-
-        $res['token'] = $order->token;
-
         //throw new \yii\base\Exception('fastId=' . $id);
         $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_GET['productSuppId'] . " and sendDate=" . $_GET['fastId'])->one();
         if (!isset($orderItem)) {
@@ -118,7 +112,6 @@ class OrderController extends MasterController
 //            throw new \yii\base\Exception(print_r($orderItem->errors, true));
             $res["error"] = "ไม่สามารถเพิ่มสินค้าลงตระกร้าได้";
         }
-
         print_r(\yii\helpers\Json::encode($res));
     }
 
@@ -144,7 +137,6 @@ class OrderController extends MasterController
             $res["error"] = "ไม่สามารถลบสินค้าออกจากตระกร้าได้";
         }
 
-
         print_r(\yii\helpers\Json::encode($res));
     }
 
@@ -152,7 +144,6 @@ class OrderController extends MasterController
     {
         $cookies = Yii::$app->request->cookies;
         if ($cookies->has('orderToken')) {
-
             return $cookies->getValue('orderToken');
         } else {
             $this->generateNewToken();
