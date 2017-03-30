@@ -36,7 +36,7 @@ class ApproveController extends ManagementMasterController {
                 ->andWhere('userId =' . $userId)
             ]);
 
-            // Approve แล้ว 27/12/2016
+// Approve แล้ว 27/12/2016
             $productSuppApprove = new ActiveDataProvider([
                 'query' => \common\models\costfit\ProductSuppliers:: find()
                 ->where('approve  in ("approve") ')
@@ -58,7 +58,7 @@ class ApproveController extends ManagementMasterController {
                 ->where('approve in ("new","old")'),
             ]);
 
-            // Approve แล้ว 27/12/2016
+// Approve แล้ว 27/12/2016
             $productSuppApprove = new ActiveDataProvider([
                 'query' => \common\models\costfit\ProductSuppliers:: find()
                 ->where('approve in ("approve") '),
@@ -68,7 +68,7 @@ class ApproveController extends ManagementMasterController {
         return $this->render('index', [
             'productSys' => $productSys, 'productSupp' => $productSupp, 'productSysApprove' => $productSysApprove, 'productSuppApprove' => $productSuppApprove
         ]);
-        //return $this->render('index');
+//return $this->render('index');
     }
 
     public function actionApproveItems() {
@@ -83,15 +83,15 @@ class ApproveController extends ManagementMasterController {
             $ps->approveCreateBy = Yii::$app->user->identity->userId;
             $ps->approvecreateDateTime = new \yii\db\Expression('NOW()');
             if ($ps->save(FALSE)) {
-                //return $this->redirect(['index']);
+//return $this->redirect(['index']);
             }
-            // Update ReceiveType ของ Product Cozxy
+// Update ReceiveType ของ Product Cozxy
             $pss = \common\models\costfit\Product::find()->where('productId = ' . $ps->productId . ' and productSuppId = ' . $productId)->one();
 
             if (count($pss) > 0) {
                 $pss->receiveType = $receiveType;
                 if ($pss->save(FALSE)) {
-                    //return $this->redirect(['index']);
+//return $this->redirect(['index']);
                 }
             } else {
 
@@ -102,7 +102,7 @@ class ApproveController extends ManagementMasterController {
             $pss->approveCreateBy = Yii::$app->user->identity->userId;
             $pss->approvecreateDateTime = new \yii\db\Expression('NOW()');
             if ($pss->save(FALSE)) {
-                //return $this->redirect(['index']);
+//return $this->redirect(['index']);
             }
         } else {
 
@@ -143,7 +143,7 @@ class ApproveController extends ManagementMasterController {
             ->where('product_suppliers.productSuppId = ' . $productId)
             ->one();
         } else if ($typeId == 2) { // cozxy.coms
-            //$suppliers = \common\models\costfit\Product::find()->where('productId = ' . $productId)->one();
+//$suppliers = \common\models\costfit\Product::find()->where('productId = ' . $productId)->one();
             $suppliers = \common\models\costfit\Product::find()
             ->select('`product`.*, user.firstname, user.lastname, brand.title as bTitle, category.title as cTitle '
             . ', u1.title as uTitle, u2.title as smuTitle'
@@ -157,8 +157,8 @@ class ApproveController extends ManagementMasterController {
             ->where('product.productId = ' . $productId)
             ->one();
         }
-        //echo '<pre>';
-        //print_r($suppliers->attributes);
+//echo '<pre>';
+//print_r($suppliers->attributes);
         echo json_encode($suppliers->attributes);
     }
 
@@ -177,6 +177,171 @@ class ApproveController extends ManagementMasterController {
         if ($model->save(FALSE)) {
             return $model->id;
         }
+    }
+
+    public function actionPending() {
+        $userId = Yii::$app->request->post('userId');
+        if (isset($userId)) {
+            $productSys = new ActiveDataProvider([
+                'query' => \common\models\costfit\Product:: find()
+                ->where('approve = "new"')
+                ->andWhere('userId =' . $userId)
+            ]);
+
+            $productSysApprove = new ActiveDataProvider([
+                'query' => \common\models\costfit\Product:: find()
+                ->where('approve = "approve"')
+                ->andWhere('userId =' . $userId)
+            ]);
+
+            $productSupp = new ActiveDataProvider([
+                'query' => \common\models\costfit\ProductSuppliers:: find()
+                ->where('approve in ("new","old")')
+                ->andWhere('userId =' . $userId)
+            ]);
+
+// Approve แล้ว 27/12/2016
+            $productSuppApprove = new ActiveDataProvider([
+                'query' => \common\models\costfit\ProductSuppliers:: find()
+                ->where('approve  in ("approve") ')
+                ->andWhere('userId =' . $userId)
+            ]);
+        } else {
+            $productSys = new ActiveDataProvider([
+                'query' => \common\models\costfit\Product:: find()
+                ->where('approve = "new"')
+            ]);
+
+            $productSysApprove = new ActiveDataProvider([
+                'query' => \common\models\costfit\Product:: find()
+                ->where('approve = "approve"'),
+            ]);
+
+            $productSupp = new ActiveDataProvider([
+                'query' => \common\models\costfit\ProductSuppliers:: find()
+                ->where('approve in ("new","old")'),
+            ]);
+
+// Approve แล้ว 27/2/2016
+            $productSuppApprove = new ActiveDataProvider([
+                'query' => \common\models\costfit\ProductSuppliers:: find()
+                ->where('approve in ("approve") '),
+            ]);
+        }
+
+        return $this->render('pending', [
+            'productSys' => $productSys, 'productSupp' => $productSupp, 'productSysApprove' => $productSysApprove, 'productSuppApprove' => $productSuppApprove
+        ]);
+    }
+
+    public function actionApproved() {
+        $userId = Yii::$app->request->post('userId');
+        if (isset($userId)) {
+            $productSys = new ActiveDataProvider([
+                'query' => \common\models\costfit\Product:: find()
+                ->where('approve = "new"')
+                ->andWhere('userId =' . $userId)
+            ]);
+
+            $productSysApprove = new ActiveDataProvider([
+                'query' => \common\models\costfit\Product:: find()
+                ->where('approve = "approve"')
+                ->andWhere('userId =' . $userId)
+            ]);
+
+            $productSupp = new ActiveDataProvider([
+                'query' => \common\models\costfit\ProductSuppliers:: find()
+                ->where('approve in ("new","old")')
+                ->andWhere('userId =' . $userId)
+            ]);
+
+            // Approve แล้ว 27/12/2016
+            $productSuppApprove = new ActiveDataProvider([
+                'query' => \common\models\costfit\ProductSuppliers:: find()
+                ->where('approve  in ("approve") ')
+                ->andWhere('userId =' . $userId)
+            ]);
+        } else {
+            $productSys = new ActiveDataProvider([
+                'query' => \common\models\costfit\Product:: find()
+                ->where('approve = "new"')
+            ]);
+
+            $productSysApprove = new ActiveDataProvider([
+                'query' => \common\models\costfit\Product:: find()
+                ->where('approve = "approve"'),
+            ]);
+
+            $productSupp = new ActiveDataProvider([
+                'query' => \common\models\costfit\ProductSuppliers:: find()
+                ->where('approve in ("new","old")'),
+            ]);
+
+            // Approve แล้ว 27/12/2016
+            $productSuppApprove = new ActiveDataProvider([
+                'query' => \common\models\costfit\ProductSuppliers:: find()
+                ->where('approve in ("approve") '),
+            ]);
+        }
+
+        return $this->render('approved', [
+            'productSys' => $productSys, 'productSupp' => $productSupp, 'productSysApprove' => $productSysApprove, 'productSuppApprove' => $productSuppApprove
+        ]);
+    }
+
+    public function actionModify() {
+        $userId = Yii::$app->request->post('userId');
+        if (isset($userId)) {
+            $productSys = new ActiveDataProvider([
+                'query' => \common\models\costfit\Product:: find()
+                ->where('approve = "new"')
+                ->andWhere('userId =' . $userId)
+            ]);
+
+            $productSysApprove = new ActiveDataProvider([
+                'query' => \common\models\costfit\Product:: find()
+                ->where('approve = "approve"')
+                ->andWhere('userId =' . $userId)
+            ]);
+
+            $productSupp = new ActiveDataProvider([
+                'query' => \common\models\costfit\ProductSuppliers:: find()
+                ->where('approve in ("new","old")')
+                ->andWhere('userId =' . $userId)
+            ]);
+
+            // Approve แล้ว 27/12/2016
+            $productSuppApprove = new ActiveDataProvider([
+                'query' => \common\models\costfit\ProductSuppliers:: find()
+                ->where('approve  in ("approve") ')
+                ->andWhere('userId =' . $userId)
+            ]);
+        } else {
+            $productSys = new ActiveDataProvider([
+                'query' => \common\models\costfit\Product:: find()
+                ->where('approve = "new"')
+            ]);
+
+            $productSysApprove = new ActiveDataProvider([
+                'query' => \common\models\costfit\Product:: find()
+                ->where('approve = "approve"'),
+            ]);
+
+            $productSupp = new ActiveDataProvider([
+                'query' => \common\models\costfit\ProductSuppliers:: find()
+                ->where('approve in ("new","old")'),
+            ]);
+
+            // Approve แล้ว 27/12/2016
+            $productSuppApprove = new ActiveDataProvider([
+                'query' => \common\models\costfit\ProductSuppliers:: find()
+                ->where('approve in ("approve") '),
+            ]);
+        }
+
+        return $this->render('approved', [
+            'productSys' => $productSys, 'productSupp' => $productSupp, 'productSysApprove' => $productSysApprove, 'productSuppApprove' => $productSuppApprove
+        ]);
     }
 
 }
