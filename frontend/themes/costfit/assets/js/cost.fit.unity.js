@@ -399,6 +399,7 @@ $(document).ready(function (e) {
         }
     });
     $(document).on('click', '#refreshPass', function () {
+
         $.ajax({
             type: 'POST',
             dataType: 'JSON',
@@ -407,6 +408,8 @@ $(document).ready(function (e) {
             success: function (data) {
                 if (data.pass) {
                     $("#passwordPic").val(data.pass);
+                } else {
+                    alert('error');
                 }
             }
         });
