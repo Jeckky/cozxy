@@ -69,21 +69,55 @@ $logo = common\models\costfit\ContentGroup::find()->where("lower(title)='logoima
     <div class="signin-container">
 
         <!-- Left side -->
-
+        <div class="signin-info">
+            <a href="#" class="logo">
+                <img src="<?php echo Yii::$app->homeUrl . $logo->image; ?>" alt=" " style="margin-top: -5px;" class="img-responsive"/> &nbsp;
+                <!--DaiiBuy Admin-->
+            </a> <!-- / .logo -->
+            <div class="slogan">
+                Simple. Flexible. Powerful.
+            </div> <!-- / .slogan -->
+            <ul>
+                <li><i class="fa fa-sitemap signin-icon"></i> Flexible modular structure</li>
+                <li><i class="fa fa-file-text-o signin-icon"></i> LESS &amp; SCSS source files</li>
+                <li><i class="fa fa-outdent signin-icon"></i> RTL direction support</li>
+                <li><i class="fa fa-heart signin-icon"></i> Crafted with love</li>
+            </ul> <!-- / Info list -->
+        </div>
         <!-- / Left side -->
 
         <!-- Right side -->
         <div class="signin-form">
 
             <!-- Form -->
-            <h2><span style="color: #c50f1c">ขออภัยในความไม่สะดวก ขณะนี้เว็บไซต์กำลังทำการปรับปรุง </span> </h2>
-            <br>
-            <h3>** <span style="color: #fcd113">กำลังปรับให้ ระบบ Gen Code Product ให้ Auto. </span></h3>
-            <h4>** <span style="color: #c50f1c">ตั้งแต่ วันที่ 31 มีนาคม 2560 เวลา 10:00 น. - 13:00 น.</span> </h4>
+            <?php $form = yii\bootstrap\ActiveForm::begin(['id' => 'signin-form_id', 'action' => $baseUrl . '/site/login', 'options' => ['class' => 'login-form']]); ?>
+
+            <div class="signin-text">
+                <span>Sign In to your account</span>
+            </div> <!-- / .signin-text -->
+
+            <div class="form-group w-icon">
+                <input type="text" name="LoginForm[email]" id="username_id" class="form-control input-lg" placeholder="Username or email">
+                <span class="fa fa-user signin-form-icon"></span>
+            </div> <!-- / Username -->
+
+            <div class="form-group w-icon">
+                <input type="password" name="LoginForm[password]" id="password_id" class="form-control input-lg" placeholder="Password">
+                <span class="fa fa-lock signin-form-icon"></span>
+            </div> <!-- / Password -->
+
+            <div class="form-actions">
+                <input type="submit" value="SIGN IN" class="signin-btn bg-primary">
+                <a href="#" class="forgot-password" id="forgot-password-link">Forgot your password?</a>
+            </div> <!-- / .form-actions -->
+            <?php yii\bootstrap\ActiveForm::end(); ?>
             <!-- / Form -->
 
             <!-- "Sign In with" block -->
-
+            <div class="signin-with">
+                <!-- Facebook -->
+                <a href="#" class="signin-with-btn" style="background:#4f6faa;background:rgba(79, 111, 170, .8);">Sign In with <span>Facebook</span></a>
+            </div>
             <!-- / "Sign In with" block -->
 
             <!-- Password reset form -->

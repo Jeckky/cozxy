@@ -61,7 +61,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
      */
     public function rules() {
         return array_merge(parent::rules(), [
-            [['brandId', 'categoryId', 'title', 'description'], 'required', 'on' => self::ADD_NEW_PRODUCT_SUPPLIERS],
+            [['brandId', 'categoryId', 'title'], 'required', 'on' => self::ADD_NEW_PRODUCT_SUPPLIERS],
         ]);
     }
 
