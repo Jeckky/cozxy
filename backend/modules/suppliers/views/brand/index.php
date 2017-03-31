@@ -48,7 +48,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'format' => 'html',
                         'value' => function($model) {
                             return $model->description;
-                        }
+                        },
+                        'contentOptions' => ['style' => 'width:600px;  min-width:300px;  '],
                     ],
                     //'image',
                     [
