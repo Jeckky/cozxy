@@ -113,8 +113,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                         $lastname = NULL;
                                                     }
                                                     return 'คุณ' . $firstname . ' ' . $lastname;
-                                                },
-                                                'contentOptions' => ['style' => 'width:120px;  min-width:120px;  '],
+                                                }
                                             ],
                                             //'productGroupId',
                                             //'isbn:ntext',
@@ -122,39 +121,39 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             //'title',
                                             ['attribute' => 'title',
                                                 'label' => 'title',
-                                                'contentOptions' => ['style' => 'width:300px;  min-width:300px;  '],
+                                                'contentOptions' => ['style' => 'width:200px;  min-width:200px;  '],
                                             ],
                                             'quantity',
-                                            /*  [
-                                              'attribute' => 'ตรวจสอบ',
-                                              'format' => 'raw',
-                                              'value' => function($model) {
-                                              return '<button class="btn btn-warning  btn-xs investigate-approve" data-toggle="modal" data-bind="' . $model->productSuppId . ',1"  >Product : <code>' . $model->productSuppId . '</code></button>';
-                                              }
-                                              ],
-                                              [
-                                              'attribute' => 'แจ้งเตือน',
-                                              'format' => 'raw',
-                                              'value' => function($model) {
-                                              $GetNotificationsApprove = common\helpers\Notifications::NotificationsApprove($model->productSuppId);
-                                              if (isset($GetNotificationsApprove)) {
-                                              $curenttime = $GetNotificationsApprove->createDateTime;
-                                              //$time_ago = strtotime($curenttime);
-                                              $time_agoq = common\helpers\CozxyUnity::TimeElapsedString($curenttime);
-                                              $approve_txt = '<div class = "buttons-with-margins jq-growl-' . $model->productSuppId . '" >';
-                                              $approve_txt .= '<button id ="jq-growl-danger-noti-' . $model->productSuppId . '" class="btn btn-danger btn-xs" onclick="notifications(' . $model->productSuppId . ',1)"'
-                                              . '>แจ้งปรับปรุงแล้ว (' . $time_agoq . ')</button>';
-                                              $approve_txt .= '</div>';
-                                              return $approve_txt;
-                                              } else {
+                                            [
+                                                'attribute' => 'ตรวจสอบ',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    return '<button class="btn btn-warning  btn-xs investigate-approve" data-toggle="modal" data-bind="' . $model->productSuppId . ',1"  >Product : <code>' . $model->productSuppId . '</code></button>';
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'แจ้งเตือน',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    $GetNotificationsApprove = common\helpers\Notifications::NotificationsApprove($model->productSuppId);
+                                                    if (isset($GetNotificationsApprove)) {
+                                                        $curenttime = $GetNotificationsApprove->createDateTime;
+                                                        //$time_ago = strtotime($curenttime);
+                                                        $time_agoq = common\helpers\CozxyUnity::TimeElapsedString($curenttime);
+                                                        $approve_txt = '<div class = "buttons-with-margins jq-growl-' . $model->productSuppId . '" >';
+                                                        $approve_txt .= '<button id ="jq-growl-danger-noti-' . $model->productSuppId . '" class="btn btn-danger btn-xs" onclick="notifications(' . $model->productSuppId . ',1)"'
+                                                        . '>แจ้งปรับปรุงแล้ว (' . $time_agoq . ')</button>';
+                                                        $approve_txt .= '</div>';
+                                                        return $approve_txt;
+                                                    } else {
 
-                                              }
-                                              $approve_txt = '<div class = "buttons-with-margins jq-growl-' . $model->productSuppId . '" >';
-                                              $approve_txt .= '<button id ="jq-growl-warning-noti-' . $model->productSuppId . '" class="btn btn-primary btn-xs" onclick="notifications(' . $model->productSuppId . ',1)">ต้องการแจ้งปรับปรุง</button>';
-                                              $approve_txt .= '</div>';
-                                              return $approve_txt;
-                                              }
-                                              ], */
+                                                    }
+                                                    $approve_txt = '<div class = "buttons-with-margins jq-growl-' . $model->productSuppId . '" >';
+                                                    $approve_txt .= '<button id ="jq-growl-warning-noti-' . $model->productSuppId . '" class="btn btn-primary btn-xs" onclick="notifications(' . $model->productSuppId . ',1)">ต้องการแจ้งปรับปรุง</button>';
+                                                    $approve_txt .= '</div>';
+                                                    return $approve_txt;
+                                                }
+                                            ],
                                             [
                                                 'attribute' => 'ปลายทางรับสินค้า',
                                                 'format' => 'raw',
@@ -209,7 +208,100 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     ?>
                                 </div>
                             </div>
-                        </div>
+                        </div>.
+
+                        <div class="panel colourable">
+                            <div class="panel-heading" style="background-color: #1d89cf; padding: 5px 5px;">
+                                <span class="panel-title"> <h4 style=" color: #ffffff;">  รายการสินค้าที่ต้องการแก้ไข ของ <code>Cozxy.com</code> </h4></span>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="col-sm-12 system">
+                                    <?=
+                                    GridView::widget([
+                                        'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
+                                        'dataProvider' => $productSys,
+                                        'pager' => [
+                                            'options' => ['class' => 'pagination pagination-xs']
+                                        ],
+                                        'options' => [
+                                            'class' => 'table-light table-hover'
+                                        ],
+                                        'rowOptions' => function ($model, $index, $widget, $grid) {
+                                            return [
+                                                'id' => 'productId-' . $model['productId']
+                                            ];
+                                        },
+                                        'columns' => [
+                                            ['class' => 'yii\grid\SerialColumn'],
+                                            //'productId',
+                                            [
+                                                'attribute' => 'Suppliers',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    if (isset($model->userId)) {
+                                                        $userSuppliers = common\models\costfit\User::find()->where('userId = ' . $model->userId)->one();
+                                                        $firstname = $userSuppliers->firstname;
+                                                        $lastname = $userSuppliers->lastname;
+                                                    } else {
+                                                        $firstname = NULL;
+                                                        $lastname = NULL;
+                                                    }
+
+                                                    return 'คุณ' . $firstname . ' ' . $lastname;
+                                                }
+                                            ],
+                                            //'productGroupId',
+                                            //'isbn:ntext',
+                                            //'code',
+                                            //'title',
+                                            ['attribute' => 'title',
+                                                'label' => 'title',
+                                                'contentOptions' => ['style' => 'width:250px;  min-width:250px;  '],
+                                            ],
+                                            [
+                                                'attribute' => 'ตรวจสอบข้อมูล',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    return '<button class="btn btn-warning btn-xs investigate-approve" data-toggle="modal" data-bind="' . $model->productId . ',2">Product : <code>' . $model->productId . '</code></button>';
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'อนุมัติ',
+                                                'format' => 'raw',
+                                                'value' => function($model) {
+                                                    $type = 'supp';
+                                                    if (isset($model->price)) {
+                                                        $approve_txt = '<div id="switchers-colors-square" class="form-group-margin "  onchange="switchers(' . $model->productId . ', 2)">';
+                                                        if ($model->approve == 'new') {
+                                                            $approve_txt .= '<input type="checkbox"  id="switcher-example-1" data-class="switcher-warning" >';
+                                                        } else {
+                                                            $approve_txt .= '<input type="checkbox"   id="switcher-example-1"  data-class="switcher-warning"   checked="checked" >';
+                                                        }
+                                                        $approve_txt .= '</div>';
+                                                        return $approve_txt;
+                                                    } else {
+                                                        return '<span class="text-warning">ยังไม่ระบุราคา</span>';
+                                                    }
+                                                }
+                                            ],
+                                        /* ['class' => 'yii\grid\ActionColumn',
+                                          'header' => 'Actions',
+                                          'template' => '{view}',
+                                          'buttons' => [
+                                          'view' => function ($url, $model) {
+                                          return Html::a('<i class="fa fa-eye"></i>', $url, [
+                                          'title' => Yii::t('yii', 'view'),
+                                          ]);
+                                          }
+                                          ]
+                                          ], */
+                                        ],
+                                    ]);
+                                    ?>
+                                </div>
+                            </div>
+                        </div>.
                         <?php Pjax::end(); ?>
                     </div> <!-- / .tab-pane -->
 

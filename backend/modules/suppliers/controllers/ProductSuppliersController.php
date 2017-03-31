@@ -293,4 +293,10 @@ class ProductSuppliersController extends SuppliersMasterController {
         return json_encode($product->attributes);
     }
 
+    public function actionShowDetail() {
+
+        return $this->render('/show-detail/index', [
+        ]);
+    }
+
 }
