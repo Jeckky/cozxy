@@ -61,13 +61,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
             <div class="panel-body" style="padding: 5px;">
                 <ul id="uidemo-tabs-default-demo" class="nav nav-tabs">
                     <li >
-                        <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/pending" class="uidemo-tabs-default-demo-home" data-toggle="tab">รออนุมัติ</a>
+                        <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/pending" class="uidemo-tabs-default-demo-home">รออนุมัติ</a>
                     </li>
                     <li class="">
-                        <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/approved" class="uidemo-tabs-default-demo-profile" data-toggle="tab">อนุมัติแล้ว </a>
+                        <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/approved" class="uidemo-tabs-default-demo-profile">อนุมัติแล้ว </a>
                     </li>
                     <li class="active">
-                        <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/modify" class="uidemo-tabs-default-demo-modify" data-toggle="tab">แก้ไขที่อนุมัติแล้ว</a>
+                        <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/modify" class="uidemo-tabs-default-demo-modify">แก้ไขที่อนุมัติแล้ว</a>
                     </li>
                 </ul>
 
@@ -121,7 +121,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             //'title',
                                             ['attribute' => 'title',
                                                 'label' => 'title',
-                                                'contentOptions' => ['style' => 'width:250px;  min-width:250px;  '],
+                                                'contentOptions' => ['style' => 'width:200px;  min-width:200px;  '],
                                             ],
                                             'quantity',
                                             [
@@ -155,7 +155,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 }
                                             ],
                                             [
-                                                'attribute' => 'ปลายทางรับสินค้',
+                                                'attribute' => 'ปลายทางรับสินค้า',
                                                 'format' => 'raw',
                                                 'value' => function($model) {
                                                     $product_price_suppliers = common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId =' . $model->productSuppId . ' and status =1')->one();

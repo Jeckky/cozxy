@@ -60,19 +60,19 @@ $this->params['pageHeader'] = Html::encode($this->title);
         <div class="panel" style="border: 0px solid transparent;">
             <div class="panel-body" style="padding: 5px;">
                 <ul id="uidemo-tabs-default-demo" class="nav nav-tabs">
-                    <li >
-                        <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/pending" class="uidemo-tabs-default-demo-home" data-toggle="tab">รออนุมัติ</a>
+                    <li>
+                        <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/pending" class="uidemo-tabs-default-demo-home">รออนุมัติ</a>
                     </li>
                     <li class="active">
-                        <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/approved" class="uidemo-tabs-default-demo-profile" data-toggle="tab">อนุมัติแล้ว </a>
+                        <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/approved" class="uidemo-tabs-default-demo-approved">อนุมัติแล้ว </a>
                     </li>
                     <li class="">
-                        <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/modify" class="uidemo-tabs-default-demo-modify" data-toggle="tab">แก้ไขที่อนุมัติแล้ว</a>
+                        <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/modify" class="uidemo-tabs-default-demo-modify">แก้ไขที่อนุมัติแล้ว</a>
                     </li>
                 </ul>
 
                 <div class="tab-content tab-content-bordered">
-                    <div class="tab-pane fade" id="uidemo-tabs-default-demo-profile">
+                    <div class="tab-pane fade active in" id="uidemo-tabs-default-demo-approved">
                         <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
                         <div class="panel colourable" id="switcher-examples">
                             <div class="panel-heading" style="background-color: #1d89cf; padding: 5px 5px; ">
@@ -106,7 +106,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             //'title',
                                             ['attribute' => 'title',
                                                 'label' => 'title',
-                                                'contentOptions' => ['style' => 'width:300px;  min-width:300px;  '],
+                                                'contentOptions' => ['style' => 'width:200px;  min-width:200px;  '],
                                             ],
                                             //'quantity',
                                             [

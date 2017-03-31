@@ -72,13 +72,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     </li>
                     -->
                     <li class="active">
-                        <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/pending" class="uidemo-tabs-default-demo-home" data-toggle="tab">รออนุมัติ</a>
+                        <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/pending" class="uidemo-tabs-default-demo-home">รออนุมัติ</a>
                     </li>
                     <li class="">
-                        <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/approved" class="uidemo-tabs-default-demo-profile" data-toggle="tab">อนุมัติแล้ว </a>
+                        <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/approved" class="uidemo-tabs-default-demo-profile">อนุมัติแล้ว </a>
                     </li>
-                    <li class="">
-                        <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/modify" class="uidemo-tabs-default-demo-modify" data-toggle="tab">แก้ไขที่อนุมัติแล้ว</a>
+                    <li>
+                        <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/modify" class="uidemo-tabs-default-demo-modify">แก้ไขที่อนุมัติแล้ว</a>
                     </li>
                 </ul>
 
@@ -132,7 +132,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             //'title',
                                             ['attribute' => 'title',
                                                 'label' => 'title',
-                                                'contentOptions' => ['style' => 'width:250px;  min-width:250px;  '],
+                                                'contentOptions' => ['style' => 'width:200px;  min-width:200px;  '],
                                             ],
                                             'quantity',
                                             [
@@ -177,7 +177,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                         $point_type .= "
                                                                         <div class=\"radio\">
                                                                             <label>
-                                                                                <input type=\"radio\" name=\"jq-validation-radios-$model->productSuppId\" id=\"approveReceiveType-$model->productSuppId\" onchange=\"approveReceiveType($model->productSuppId,$value->pptId)\" data-bind=" . $model->productSuppId . " value=" . $value->pptId . " class=\"px\">
+                                                                                <input type=\"radio\"  checked=\"checked\" name=\"jq-validation-radios-$model->productSuppId\" id=\"approveReceiveType-$model->productSuppId\" onchange=\"approveReceiveType($model->productSuppId,$value->pptId)\" data-bind=" . $model->productSuppId . " value=" . $value->pptId . " class=\"px\">
                                                                                 <span class=\"lbl\">" . $value->name . "</span>
                                                                             </label>
                                                                         </div>
