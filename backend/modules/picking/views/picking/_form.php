@@ -12,7 +12,7 @@ use yii\helpers\Url;
 //use kartik\depdrop\DepDropAsset;
 //use kartik\widgets\DepDrop;
 //use kartik\widgets\Select2;
-use kartik\widgets\DepDrop;
+use kartik\depdrop\DepDrop;
 use kartik\widgets\Select2;
 
 /* @var $this yii\web\View */
