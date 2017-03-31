@@ -79,7 +79,7 @@ $logo = common\models\costfit\ContentGroup::find()->where("lower(title)='logoima
             <h2><span style="color: #c50f1c">ขออภัยในความไม่สะดวก ขณะนี้เว็บไซต์กำลังทำการปรับปรุง </span> </h2>
             <br>
             <h3>** <span style="color: #fcd113">กำลังปรับให้ ระบบ Gen Code Product ให้ Auto. </span></h3>
-            <h4>** <span style="color: #c50f1c">ตั้งแต่ วันที่ 31 มีนาคม 2560 เวลา 10:00 น. - 13:00 น.</span> </h4>
+            <h4>** <span style="color: #c50f1c">ตั้งแต่ วันที่ 31 มีนาคม 2560 เวลา 10:00 น. - 14:00 น.</span> </h4>
             <!-- / Form -->
 
             <!-- "Sign In with" block -->
