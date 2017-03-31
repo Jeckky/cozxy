@@ -23,7 +23,7 @@ class Product {
 
     //put your code here
     public static function generateProductCode() {
-        $lastCode = ProductSuppliers::find()->where("1")->orderBy("productSuppId DESC")->one();
+        $lastCode = ProductSuppliers::find()->where("1")->orderBy("code DESC")->one();
         if (isset($lastCode) && !empty($lastCode) && $lastCode->code != '' && $lastCode->code != null) {
             $char = $lastCode->code;
         } else {
