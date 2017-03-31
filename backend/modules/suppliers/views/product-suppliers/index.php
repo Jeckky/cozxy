@@ -59,9 +59,17 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                             return isset($model->category) ? $model->category->title : NULL;
                         }
                     ],
-                    'isbn:ntext',
+                    //'isbn',
+                    ['attribute' => 'isbn',
+                        'label' => 'title',
+                        'contentOptions' => ['style' => 'width:120px;  min-width:120px;  '],
+                    ],
                     'code',
-                    'title',
+                    //'title',
+                    ['attribute' => 'title',
+                        'label' => 'title',
+                        'contentOptions' => ['style' => 'width:200px;  min-width:200px;  '],
+                    ],
                     // 'optionName',
                     // 'shortDescription:ntext',
                     // 'description:ntext',
@@ -122,8 +130,16 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                         'attribute' => 'image',
                         'format' => 'html',
                         'value' => function($model) {
-                            return Html::a('<i class="fa fa-picture-o"></i> รูปภาพ', Yii::$app->homeUrl . "suppliers/product-suppliers/image-form?productSuppId=" . $model->productSuppId, [
-                                'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
+                            $productImageSupplers = common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $model->productSuppId)->orderBy('productImageId')->limit(1)->one();
+                            if (isset($productImageSupplers)) {
+                                //echo $productImageSupplers->imageThumbnail2;
+                                return Html::img(Yii::$app->homeUrl . $productImageSupplers->imageThumbnail2, ['style' => 'width:137px;height:130px', 'class' => 'img-responsive'])
+                                . Html::a('<i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มรูปภาพ <i class="fa fa-picture-o"></i>', Yii::$app->homeUrl . "suppliers/product-suppliers/image-form?productSuppId=" . $model->productSuppId, [
+                                    'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
+                            } else {
+                                return Html::a('<i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มรูปภาพ <i class="fa fa-picture-o"></i>', Yii::$app->homeUrl . "suppliers/product-suppliers/image-form?productSuppId=" . $model->productSuppId, [
+                                    'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
+                            }
                         }
                     ],
                     /*
