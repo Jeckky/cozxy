@@ -69,6 +69,7 @@ class RegisterController extends MasterController {
             $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
             $model->status = 0;
             $model->token = Yii::$app->security->generateRandomString(10);
+            $model->lastvisitDate = new \yii\db\Expression("NOW()");
             $model->createDateTime = new \yii\db\Expression("NOW()");
             if ($_POST["User"]['password'] == $_POST["User"]['confirmPassword']) {
                 if (!isset($_POST["User"]['acceptTerm'])) {
