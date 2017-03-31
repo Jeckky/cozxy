@@ -108,11 +108,11 @@ class ProductSuppliersController extends SuppliersMasterController {
     public function actionGens() {
         $productSupp = ProductSuppliers::find()->where("1")->all();
         foreach ($productSupp as $supp) {
-            $productCozxy = Product::find()->where('productId=' . $productSupp->productId)->one();
+            $productCozxy = Product::find()->where('productId=' . $supp->productId)->one();
             $supp->code = \common\helpers\Product::generateProductCode($supp->productSuppId);
             //$supp->code = null;
+            $productCozxy->code = \common\helpers\Product::generateProductCodeCozxy($supp->productSuppId);
             $supp->save(false);
-            $productCozxy->code = \common\helpers\Product::generateProductCode($supp->productSuppId);
             $productCozxy->save(false);
         }
     }
