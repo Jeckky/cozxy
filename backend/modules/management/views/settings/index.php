@@ -143,7 +143,7 @@ use leandrogehlen\treegrid\TreeGrid;
                     <div class="panel panel-default panel-dark panel-body-colorful widget-profile widget-profile-centered">
                         <div class="panel-heading">
                             <div class="widget-profile-header">
-                                <a href="<?php echo Yii::$app->homeUrl; ?>management/approve" class="btn" style="color: #000;">
+                                <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/pending" class="btn" style="color: #000;">
                                     <i class="fa fa-tasks list-group-icon text-danger"></i> อนุมัติรายการสินค้า </a><br>
                             </div>
                         </div> <!-- / .panel-heading -->
