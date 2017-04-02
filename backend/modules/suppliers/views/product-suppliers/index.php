@@ -140,7 +140,8 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                                 return Html::a('<i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มรูปภาพใหม่ <i class="fa fa-picture-o"></i>', Yii::$app->homeUrl . "suppliers/product-suppliers/image-form?productSuppId=" . $model->productSuppId, [
                                     'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
                             }
-                        }
+                        },
+                        'contentOptions' => ['style' => 'width:137px;  min-width:130px;  '],
                     ],
                     /*
                       [
