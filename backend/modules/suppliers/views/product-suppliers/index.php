@@ -135,7 +135,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                                 //echo $productImageSupplers->imageThumbnail2;
                                 return Html::a('<i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มรูปภาพใหม่ <i class="fa fa-picture-o"></i>', Yii::$app->homeUrl . "suppliers/product-suppliers/image-form?productSuppId=" . $model->productSuppId, [
                                     'title' => Yii::t('app', 'image'), 'class' => 'text-center']) .
-                                Html::img(Yii::$app->homeUrl . $productImageSupplers->imageThumbnail2, ['style' => 'width:50px;height:50px', 'class' => 'img-responsive']);
+                                Html::img(Yii::$app->homeUrl . $productImageSupplers->imageThumbnail2, ['style' => 'width:100px;height:100px', 'class' => 'img-responsive']);
                             } else {
                                 return Html::a('<i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มรูปภาพใหม่ <i class="fa fa-picture-o"></i>', Yii::$app->homeUrl . "suppliers/product-suppliers/image-form?productSuppId=" . $model->productSuppId, [
                                     'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
