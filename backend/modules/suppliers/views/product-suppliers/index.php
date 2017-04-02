@@ -62,7 +62,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                     //'isbn',
                     ['attribute' => 'isbn',
                         'label' => 'isbn',
-                    //'contentOptions' => ['style' => 'width:120px;  min-width:120px;  '],
+                        'contentOptions' => ['style' => 'width:100px;  min-width:100px;  '],
                     ],
                     'code',
                     //'title',
