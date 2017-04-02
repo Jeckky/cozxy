@@ -40,26 +40,31 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => 'Country',
                     'format' => 'html',
                     'value' => function($model, $key, $index, $column) {
-                        return isset($model->countrie) ? 'ประเทศ' . $model->countrie->localName : NULL;
+                        $countrie = isset($model->countrie) ? 'ประเทศ :' . $model->countrie->localName : NULL;
+                        $state = isset($model->state) ? 'จังหวัด :' . $model->state->localName : NULL;
+                        $citie = isset($model->citie) ? 'อำเภอ :' . $model->citie->localName : NULL;
+
+                        return $countrie . '<br>' . $state . '<br>' . $citie;
                     }
                 ],
                 //'provinceId',
-                [ // รวมคอลัมน์
-                    'label' => 'Province',
-                    'format' => 'html',
-                    'value' => function($model, $key, $index, $column) {
-                        //return $model->state->localName;
-                        return isset($model->state) ? $model->state->localName : NULL;
-                    }
-                ],
-                //'amphurId',
-                [ // รวมคอลัมน์
-                    'label' => 'Amphur',
-                    'format' => 'html',
-                    'value' => function($model, $key, $index, $column) {
-                        return isset($model->citie) ? $model->citie->localName : NULL;
-                    }
-                ],
+                /* [ // รวมคอลัมน์
+                  'label' => 'Province',
+                  'format' => 'html',
+                  'value' => function($model, $key, $index, $column) {
+                  //return $model->state->localName;
+
+                  return isset($model->state) ? $model->state->localName : NULL;
+                  }
+                  ],
+                  //'amphurId',
+                  [ // รวมคอลัมน์
+                  'label' => 'Amphur',
+                  'format' => 'html',
+                  'value' => function($model, $key, $index, $column) {
+                  return isset($model->citie) ? $model->citie->localName : NULL;
+                  }
+                  ], */
                 'ip',
                 'macAddress',
                 'authCode',
