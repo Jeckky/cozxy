@@ -141,7 +141,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                                     'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
                             }
                         },
-                        'contentOptions' => ['style' => 'width:137px;  min-width:130px;  '],
+                        'contentOptions' => ['style' => 'width:100px;  min-width:100px;  '],
                     ],
                     /*
                       [
