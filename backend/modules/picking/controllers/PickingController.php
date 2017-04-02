@@ -137,7 +137,29 @@ class PickingController extends PickingMasterController {
             } else {
                 echo 'No';
             }
+            if ($receive != 3) {
+                $PickingPointFormat = \common\models\costfit\PickingPointFormatLockers::find()->all();
+            } else {
+                $PickingPointFormat = \common\models\costfit\PickingPointFormatBooth::find()->all();
+            }
+            //echo Yii::$app->db->lastInsertID;
+            //exit();
+
             if ($model->save(FALSE)) {
+                $pickingId = Yii::$app->db->getLastInsertID();
+                foreach ($PickingPointFormat as $value) {
+
+                    //$ppi = \common\models\costfit\PickingPointItems::find()->one();
+                    $ppItems = new \common\models\costfit\PickingPointItems();
+                    $ppItems->pickingId = $pickingId;
+                    $ppItems->code = $value->code;
+                    $ppItems->name = $value->name;
+                    $ppItems->portIndex = $value->portIndex;
+                    $ppItems->height = $value->height;
+                    $ppItems->status = $value->status;
+                    $ppItems->createDateTime = new \yii\db\Expression("NOW()");
+                    $ppItems->save();
+                }
                 //return $this->redirect(['index']);
                 return $this->redirect(['view', 'id' => $model->pickingId, 'receive' => $receive]);
             }

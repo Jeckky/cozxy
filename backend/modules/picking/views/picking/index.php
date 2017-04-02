@@ -65,9 +65,17 @@ $this->params['breadcrumbs'][] = $this->title;
                   return isset($model->citie) ? $model->citie->localName : NULL;
                   }
                   ], */
-                'ip',
-                'macAddress',
-                'authCode',
+                //'ip',
+                //'macAddress',
+                //'authCode',
+                [
+                    'attribute' => 'Detail',
+                    'format' => 'html',
+                    'value' => function($model) {
+                        return 'ip :' . $model->ip . '<br>macAddress:' . $model->macAddress . '<br>authCode:' . $model->authCode;
+                        ;
+                    }
+                ],
                 [
                     'attribute' => 'mapImages',
                     'format' => 'html',
