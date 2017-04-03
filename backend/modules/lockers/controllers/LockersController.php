@@ -17,6 +17,7 @@ use common\components\AccessRule;
 use common\models\User;
 use common\helpers\Lockers;
 use common\helpers\Local;
+use common\helpers\PickingPoint;
 
 class LockersController extends LockersMasterController {
 
@@ -383,6 +384,8 @@ class LockersController extends LockersMasterController {
                     //\common\models\costfit\Order::updateAll(['status' => 14], ['orderId' => $orderId]);
                     //$this->generatePassword($orderId);
                     //$this->sendEmail($orderId);
+                    //LockersChannel($pickingId);
+                    $OpenChannel = \common\helpers\PickingPoint::LockersChannel($boxcode);
                     return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $boxcode);
                 } elseif ($status == 'latter') {
                     \common\models\costfit\PickingPointItems::updateAll(['status' => 1], ['pickingItemsId' => $listPointItems->pickingItemsId]);
@@ -417,6 +420,7 @@ class LockersController extends LockersMasterController {
                     \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderItemId' => $OrderItemPacking->orderItemId]);
                     //$this->generatePassword($orderId);
                     //$this->sendEmail($orderId);
+                    $OpenChannel = \common\helpers\PickingPoint::LockersChannel($boxcode);
                     return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $boxcode);
                 } elseif ($status == 'latter') {
                     \common\models\costfit\PickingPointItems::updateAll(['status' => 1], ['pickingItemsId' => $listPointItems->pickingItemsId]);

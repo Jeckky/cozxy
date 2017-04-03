@@ -31,12 +31,12 @@ class SiteController extends MasterController {
                 'class' => AccessControl::className(),
                 'only' => ['logout', 'signup'],
                 'rules' => [
-                        [
+                    [
                         'actions' => ['signup'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
-                        [
+                    [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -113,7 +113,7 @@ class SiteController extends MasterController {
             return $this->goBack();
         } else {
             return $this->render('login', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -146,7 +146,7 @@ class SiteController extends MasterController {
             return $this->refresh();
         } else {
             return $this->render('contact', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -176,7 +176,7 @@ class SiteController extends MasterController {
         }
 
         return $this->render('signup', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -198,7 +198,7 @@ class SiteController extends MasterController {
         }
 
         return $this->render('requestPasswordResetToken', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -223,7 +223,7 @@ class SiteController extends MasterController {
         }
 
         return $this->render('resetPassword', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -305,10 +305,10 @@ class SiteController extends MasterController {
         $html = '<div id="products-save-cat" class="category col-lg-2 col-md-2 col-sm-4 col-xs-6"> </div>';
         $categoryId = Yii::$app->request->post('categoryId');
         $query = Category::find()
-                ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
-                ->where('sc.type = 1 and sc.categoryId not in(' . $ids . ")")
-                ->limit(6)
-                ->all();
+        ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
+        ->where('sc.type = 1 and sc.categoryId not in(' . $ids . ")")
+        ->limit(6)
+        ->all();
 
         $i = 0;
 

@@ -110,8 +110,16 @@ class PickingPoint {
         }
     }
 
-    public static function OpenLockers($param) {
-        $pickingPointItems = \common\models\costfit\PickingPointItems::find()->where()->one();
+    public static function LockersChannel($pickingId) {
+        $pickingPointItems = \common\models\costfit\PickingPointItems::find()->where('pickingId=1 and status = 0 ')->all();
+        $pickingItemsIdChannel = [];
+        foreach ($pickingPointItems as $value) {
+            $pickingItemsIdChannel[] = $value['pickingItemsId'];
+        }
+        //return $pickingItemsIdChannel;
+
+        $response = \common\helpers\Locker::Open($pickingPointItems, $pickingItemsIdChannel);
+        return $response;
     }
 
 }
