@@ -184,6 +184,7 @@ class LockersController extends LockersMasterController
         $listPointItems = Lockers::GetPickingPointItemsParameters($boxcode, $channel);
         $channelArray = [];
         $channelArray[0] = $channel;
+        throw new \yii\base\Exception($channelArray);
         \common\helpers\Locker::Open($listPoint, $channelArray);
         /* Customize Date 25/01/2017 , By Taninut.Bm */
         $localNamecitie = Local::Cities($listPoint->amphurId);
