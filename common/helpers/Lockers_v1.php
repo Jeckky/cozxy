@@ -22,7 +22,7 @@ use yii\data\ActiveDataProvider;
  * emial : taninut.b@cozxy.com , sodapew17@gmial.com
  *
  */
-class Lockers
+class Lockers_v1
 {
     /*
      * แสดงสถานที่ตั้งของ Lockers
