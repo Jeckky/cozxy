@@ -88,7 +88,7 @@ class PackingController extends StoreMasterController {
         if (isset($_GET['item'])) {
             $order = Order::find()->where("orderId=" . $_GET['orderId'])->one();
             $productId = Product::findProductSuppId($_GET['item'], $_GET['orderId']);
-            throw new \yii\base\Exception($productId);
+//            throw new \yii\base\Exception($productId);
             if (isset($order)) {
                 if (isset($productId) && !empty($productId)) {
                     //$items = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId . " and productId=" . $productId . " and status=" . \common\models\costfit\OrderItem::ORDERITEM_PICKED)->one();
