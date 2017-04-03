@@ -420,8 +420,22 @@ class ReceiveController extends MasterController
         $res["name"] = User::userName($order->userId);
         $res["orderId"] = $order->orderId;
         $res["OrderNo"] = $order->orderNo;
-        $res["tel"] = $_POST["tel"];
+        $user = \common\models\User::find()->where("userId =" . $order->userId)->one();
+        $res["tel"] = $user->tel;
         $res["refNo"] = $refNo;
+
+        $user = \common\models\User::find()->where("userId =" . $order->userId)->one();
+        $msg = 'รหัสเพื่อรับสินค้าจาก www.cozxy.com รหัส OTP คือ ' . $order->otp . " หมายเลขอ้างอิงคือ " . $order->refNo;
+        $url = "http://api.ants.co.th/sms/1/text/single";
+        $method = "POST";
+        $data = json_encode(array(
+            "from" => "COZXY.COM",
+//            "to" => ["66937419977", "66616539889", "66836134241"],
+            "to" => [$user->tel, "66836134241"],
+            "text" => $msg)
+        );
+
+        $response = \common\helpers\Sms::Send($method, $url, $data);
         //print_r(Json::encode($res));
         echo Json::encode($res);
         //return $refNo;
