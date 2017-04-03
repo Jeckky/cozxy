@@ -649,7 +649,7 @@ $("#place-order").on('click', function () {
         //$("#modal-cart-not-shipping").modal('show');
         //} else {
         if (_billing === undefined) {
-            $.post("checkout/burn-checkouts", {
+            $.post("checkout/burn-checkoutsx", {
                 shipping: _shipping,
                 payment01: _payment01,
                 placeUserId: _placeUserId,
@@ -666,7 +666,7 @@ $("#place-order").on('click', function () {
                 // window.location = 'checkout/order-thank';
             });
         } else if (_billing != undefined) {
-            $.post("checkout/burn-checkouts", {
+            $.post("checkout/burn-checkoutsx", {
                 shipping: _shipping,
                 billing: _billing,
                 payment01: _payment01,
