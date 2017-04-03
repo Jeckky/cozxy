@@ -198,7 +198,7 @@ class LockersController extends LockersMasterController {
              */
 
             /* Customize Date 25/01/2017 , By Taninut.Bm */
-            $queryOrderItemPackingId = Lockers::GetOrderItemPackingCheckLockersBagNo($bagNo, $boxcode);
+            $queryOrderItemPackingId = Lockers::GetOrderItemPackingCheckLockersBagNoNew($bagNo, $boxcode);
             //echo '<pre>';
             // print_r($queryOrderItemPackingId);
             // exit();
