@@ -673,7 +673,7 @@ $("#place-order").on('click', function () {
                 placeUserId: _placeUserId,
                 notes: _notes,
                 placeOrderId: _placeOrderId,
-                LcPickingid: LcPickingid,
+                LcPickingids: LcPickingids,
                 pickingId: ePickingid,
                 b_pickingid: b_pickingid,
                 receiveTypeLockers: receiveTypeLockers,
