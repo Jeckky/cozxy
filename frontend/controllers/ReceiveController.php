@@ -265,7 +265,7 @@ class ReceiveController extends MasterController
         $res = [];
         $i = 0;
         $time = false;
-        $receive = Receive::find()->where("otp='" . $_POST['otp'] . "' and orderId=" . $_POST['orderId'] . " and userId=" . $_POST['userId'] . " and password='" . $_POST['password'] . "' and refNo='" . $_POST['refNo'] . "' and status=1 and isUse=0 and error<" . Receive::ERROR_PASSWORD)->one();
+        $receive = Receive::find()->where("otp='" . $_POST['otp'] . "' and orderId=" . $_POST['orderId'] . " and userId=" . $_POST['userId'] . " and password='" . $_POST['password'] . "' and refNo='" . $_POST['refNo'] . "' and status=1 and isUse=0 and error<" . Receive::ERROR_PASSWORD . " ORDER BY receiveId DESC")->one();
         if (isset($receive) && !empty($receive)) {
             $time = $this->checkTime($receive->updateDateTime);
             if ($time == true) {//ถ้าเวลา ไม่เกิน 5 นาที
@@ -362,7 +362,7 @@ class ReceiveController extends MasterController
 //                        'ms' => $ms,
 //                        'refNo' => $_POST['refNo']
 //            ]);
-            $error = Receive::find()->where("orderId=" . $_POST['orderId'] . " and isUse=0 and userId=" . $_POST['userId'] . " and status=1")->one();
+            $error = Receive::find()->where("orderId=" . $_POST['orderId'] . " and isUse=0 and userId=" . $_POST['userId'] . " and status=1  ORDER BY receiveId DESC")->one();
             if (isset($error) && !empty($error)) {
                 $error->error += 1;
                 if ($error->error >= Receive::ERROR_PASSWORD) {
