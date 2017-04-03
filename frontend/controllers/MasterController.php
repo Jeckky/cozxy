@@ -654,7 +654,7 @@ class MasterController extends MasterCommonController {
              */
             if ($parents != null) {
                 $cat_id = $parents[0];
-                throw new \yii\base\Exception(print_r($depdrop_params, true));
+                //throw new \yii\base\Exception(print_r($depdrop_params, true));
                 $type = $depdrop_params[2];
                 $param1 = null;
                 $param2 = null;

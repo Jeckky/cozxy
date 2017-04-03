@@ -273,11 +273,11 @@ foreach ($GetOrderMastersGroup as $value) {
                 if ($ListOrderItemGroupLockersAction == 'isFalse') {
                     echo Html::hiddenInput('input-type-13', $pickingPointLockers->provinceId, ['id' => 'input-type-13']);
                     echo Html::hiddenInput('input-type-23', $pickingPointLockers->amphurId, ['id' => 'input-type-23']);
-                    echo Html::hiddenInput('lockers-input-type-33', '1', ['id' => 'lockers-input-type-33']);
+                    echo Html::hiddenInput('lockers-input-type-33', '2', ['id' => 'lockers-input-type-33']);
                 } else {
                     echo Html::hiddenInput('input-type-13', $ListpickpointLockersValueInLocation['pickingId'], ['id' => 'input-type-13']);
                     echo Html::hiddenInput('input-type-23', $ListpickpointLockersValueInLocation['pickingId'], ['id' => 'input-type-23']);
-                    echo Html::hiddenInput('lockers-input-type-33', '1', ['id' => 'lockers-input-type-33']);
+                    echo Html::hiddenInput('lockers-input-type-33', '2', ['id' => 'lockers-input-type-33']);
                 }
 
                 if ($yourbrowser != 'Safari') {
@@ -483,7 +483,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'depends' => ['LcamphurId'],
                             'url' => Url::to(['child-picking-point']),
                             'loadingText' => 'Loading picking point ...',
-                            'params' => ['input-type-13', 'input-type-23', 'lockers-input-type-33']
+                            'params' => ['input-type-13', 'input-type-23', 'lockers-cool-input-type-33']
                         ]
                     ])->label('เลือกจุดรับของ');
                 } else {
@@ -500,7 +500,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'depends' => ['LcamphurId'],
                             'url' => Url::to(['child-picking-point']),
                             'loadingText' => 'Loading picking point ...',
-                            'params' => ['input-type-13', 'input-type-23', 'lockers-input-type-33']
+                            'params' => ['input-type-13', 'input-type-23', 'lockers-cool-input-type-33']
                         ]
                     ])->label('เลือกจุดรับของ');
                 }
