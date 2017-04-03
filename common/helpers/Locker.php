@@ -26,6 +26,7 @@ class Locker
 
     public static function Open($locker, $num)
     {
+//        throw new \yii\base\Exception($locker->ip);
         $masterKey = \common\models\costfit\Configuration::find()->where("title = 'lockerMasterKey'")->one();
         $params = array('iLockerHQ17', // generalprofile lockercode
             'Cozxy Locker Demo', // generalprofile lockername
