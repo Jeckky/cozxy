@@ -441,13 +441,13 @@ class CheckoutController extends MasterController {
             if ($order->save(FALSE)) {
 
                 if ($receiveTypeLockersCool == 2) {
-                    \common\models\costfit\OrderItem::updateAll(['pickingId' => $Lcpickingid], ['orderId' => $placeOrderId, 'receiveType' => $receiveTypeLockers]);
+                    \common\models\costfit\OrderItem::updateAll(['pickingId' => $Lcpickingid], ['orderId' => $placeOrderId, 'receiveType' => $receiveTypeLockersCool]);
                 }
                 if ($receiveTypeBooth == 3) {
                     \common\models\costfit\OrderItem::updateAll(['pickingId' => $b_pickingid], ['orderId' => $placeOrderId, 'receiveType' => $receiveTypeBooth]);
                 }
                 if ($receiveTypeLockers == 1) {
-                    \common\models\costfit\OrderItem::updateAll(['pickingId' => $pickingId], ['orderId' => $placeOrderId, 'receiveType' => $receiveTypeBooth]);
+                    \common\models\costfit\OrderItem::updateAll(['pickingId' => $pickingId], ['orderId' => $placeOrderId, 'receiveType' => $receiveTypeLockers]);
                 }
                 if ($order->paymentType == 1) {
                     $this->redirect(Yii::$app->homeUrl . 'checkout/order-thank');
