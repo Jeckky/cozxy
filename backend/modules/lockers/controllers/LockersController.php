@@ -271,19 +271,6 @@ class LockersController extends LockersMasterController
                         $this->generatePassword($orderId);
                         $this->sendEmail($orderId, $OrderItemPacking->orderItemId);
                         //return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?close=no&model=' . $model . '&code=' . $channel . '&boxcode=' . $boxcode . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId . '&bagNo=' . $bagNo . '');
-//                        $boxcode = Yii::$app->request->get('boxcode');
-//        $channel = Yii::$app->request->get('code');
-//        $orderId = Yii::$app->request->get('orderId');
-//        $model = Yii::$app->request->get('model');
-//        $orderNo = Yii::$app->request->get('orderNo');
-//        $c = Yii::$app->request->get('c');
-//        $orderItemId = Yii::$app->request->get('orderItemId');
-//        $bagNo = Yii::$app->request->get('bagNo');
-//        $pickingItemsId = Yii::$app->request->get('pickingItemsId');
-//        $orderItemPackingId = Yii::$app->request->get('orderItemPackingId');
-//        $channels = Yii::$app->request->get('channels');
-//        $status = Yii::$app->request->get('status');
-//        $close = Yii::$app->request->get('close');
                         return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/close-channel?status=now&model=' . $model . '&code=' . $channel . '&boxcode=' . $boxcode . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId . '');
 
                         // }
