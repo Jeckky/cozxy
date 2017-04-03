@@ -116,7 +116,7 @@ class MasterController extends MasterCommonController {
         if ($cookies->has('orderToken')) {
             return $cookies->getValue('orderToken');
         } else {
-        	self::generateNewToken();
+            self::generateNewToken();
 //            $this->generateNewToken();
             $cookies = Yii::$app->request->cookies;
 //            echo print_r($cookies, true);
@@ -362,26 +362,26 @@ class MasterController extends MasterCommonController {
 
     public function actionMenuCategory() {
         $list = \common\models\costfit\Category::find()
-                ->andWhere('parentId  is null ')
-                ->andWhere('status  =1')
-                ->all();
+        ->andWhere('parentId  is null ')
+        ->andWhere('status  =1')
+        ->all();
 
         return $list;
     }
 
     public function actionMenuCategoryParentId($id) {
         $list = \common\models\costfit\Category::find()
-                ->andWhere('parentId  =' . $id)
-                ->andWhere('status  =1')
-                ->all();
+        ->andWhere('parentId  =' . $id)
+        ->andWhere('status  =1')
+        ->all();
         return $list;
     }
 
     public function actionMenuCategorySubParentId($id) {
         $list = \common\models\costfit\Category::find()
-                ->andWhere('parentId  =' . $id)
-                ->andWhere('status  =1')
-                ->all();
+        ->andWhere('parentId  =' . $id)
+        ->andWhere('status  =1')
+        ->all();
         return $list;
     }
 
@@ -573,8 +573,8 @@ class MasterController extends MasterCommonController {
     public function findPriceRange($categoryId) {
         $res = [];
         $product = \common\models\costfit\CategoryToProduct::find()->select("min(product_price.price) as  minPrice ,max(product_price.price) as maxPrice")
-                        ->join("LEFT JOIN", "product_price", "product_price.productId = category_to_product.productId")
-                        ->where("product_price.quantity = 1 AND category_to_product.categoryId=" . $categoryId)->one();
+        ->join("LEFT JOIN", "product_price", "product_price.productId = category_to_product.productId")
+        ->where("product_price.quantity = 1 AND category_to_product.categoryId=" . $categoryId)->one();
 
         if (isset($product)) {
             $res["min"] = $product['minPrice'];

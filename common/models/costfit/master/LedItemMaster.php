@@ -31,7 +31,7 @@ return 'led_item';
 public function rules()
 {
 return [
-            [['ledId', 'createDateTime'], 'required'],
+            [['ledId'], 'required'],
             [['ledId', 'color', 'sortOrder', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
         ];

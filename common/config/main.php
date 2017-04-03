@@ -14,6 +14,12 @@ return [
             ],
         // ...
         ],
+        /*  'urlManagerFrontend' => [
+          'class' => 'yii\web\urlManager',
+          'baseUrl' => '//contentbackend.cozxy.com/',
+          'enablePrettyUrl' => true,
+          'showScriptName' => false,
+          ], */
 //        'urlManagerFrontend' => [
 //            'class' => 'yii\web\urlManager',
 //            'baseUrl' => '/cost.fit-test/frontend/web',
