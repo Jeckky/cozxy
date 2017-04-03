@@ -560,7 +560,7 @@ foreach ($GetOrderMastersGroup as $value) {
      * ปลายทางรับของที่ Booth
      */
     if ($value->receiveType == '3') {//ประเภทปลายทางแบบบูธ
-        echo 'ประเภทปลายทางแบบล็อคเกอร์เย็น';
+        //echo 'ประเภทปลายทางแบบล็อคเกอร์เย็น';
         // Booth
         //$ListOrderItemGroupBoothValue = $CheckValuePickPoint['ListOrderItemGroupBoothValue'];
         //$ListOrderItemGroupBoothAction = $CheckValuePickPoint['ListOrderItemGroupBoothAction'];
