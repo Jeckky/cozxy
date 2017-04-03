@@ -232,7 +232,7 @@ class ReceiveController extends MasterController
                         $res["refNo"] = $ref;
                         // print_r(Json::encode($res));
 
-                        $msg = 'รหัสเพื่อรับสินค้าจาก www.cozxy.com รหัส OTP คือ' . $order->otp . " หมายเลขอ้างอิงคือ " . $order->refNo;
+                        $msg = 'รหัสเพื่อรับสินค้าจาก www.cozxy.com รหัส OTP คือ ' . $order->otp . " หมายเลขอ้างอิงคือ " . $order->refNo;
                         $url = "http://api.ants.co.th/sms/1/text/single";
                         $method = "POST";
                         $data = json_encode(array(
