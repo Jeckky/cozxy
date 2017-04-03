@@ -284,7 +284,7 @@ class ReceiveController extends MasterController
                             foreach ($lockers as $locker):
                                 $total = 0;
                                 $count = 0;
-                                $pickingLocker = PickingPointItems::find()->where("pickingItemsId=" . $locker->pickingItemsId . " and pickingId=" . $pickingPoint)->one();
+                                $pickingLocker = PickingPointItems::find()->where("pickingItemsId=" . $locker->pickingItemsId)->one();
                                 if (isset($pickingLocker)) {
                                     $flag = false;
                                     $flag = $this->check($check, $pickingLocker->pickingItemsId);
