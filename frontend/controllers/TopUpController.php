@@ -88,6 +88,9 @@ class TopUpController extends MasterController {
     public function actionGen() {
         /* $productSupp = \common\models\costfit\ProductSuppliers::find()->where("1")->one();
           $code = \common\helpers\Product::generateProductCode();
+          for ($i = 0; $i < 10000000; $i++):
+          $code++;
+          endfor;
           throw new \yii\base\Exception($code); */
         /* foreach ($productSupp as $supp) {
           $supp->code = \common\helpers\Product::generateProductCode($supp->productSuppId);
