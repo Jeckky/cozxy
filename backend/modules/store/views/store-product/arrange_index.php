@@ -74,7 +74,7 @@ foreach ($allProducts as $product):
         }else {
             ?>
             <tr>
-                <th style="vertical-align: middle;text-align: center;width: 5%;background-color:#cccccc;" colspan="4"><i><h4>ไม่มีรายการ PO ที่ยังไม่จัดเรียง/h4></i></th>
+                <th style="vertical-align: middle;text-align: center;width: 5%;background-color:#cccccc;" colspan="4"><i><h4>ไม่มีรายการ PO ที่ยังไม่จัดเรียง</h4></i></th>
             </tr>
         <?php } ?>
     </table>
