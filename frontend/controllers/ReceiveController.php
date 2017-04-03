@@ -92,7 +92,7 @@ class ReceiveController extends MasterController
 //                                'orderId' => $order->orderId
 //                    ]);
                         $res["status"] = 200; //success
-                        $res["tel"] = $tel;
+                        $res["tel"] = $user->tel;
                         $res["email"] = $user->email;
                         $res["name"] = $user->firstname . ' ' . $user->lastname;
                         $res["orderNo"] = $order->orderNo;
