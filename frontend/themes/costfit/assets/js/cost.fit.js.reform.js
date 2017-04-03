@@ -482,9 +482,9 @@ $("#place-order").on('click', function () {
     var LcProvinceid = $('select#LcprovinceId option:selected').val();
     if (LcProvinceid != null) {
 
-        var LcAmphurid = $('select#LcprovinceId option:selected').val();
+        var LcAmphurid = $('select#Lcamphurid option:selected').val();
 
-        var LcProvinceid = $('select#pickingpoint-provinceid option:selected').val();
+        var LcProvinceid = $('select#LcprovinceId option:selected').val();
 
         var LcPickingid = $('select#Lcpickingid option:selected').val();
 
@@ -569,10 +569,10 @@ $("#place-order").on('click', function () {
      */
     //var bAmphurid = document.getElementById("BamphurId");
     var bAmphurid = $('select#BamphurId option:selected').val();
-    if (LcProvinceid != null) {
-        var b_amphurid = $('select#LcprovinceId option:selected').val();
-        var b_provinceid = $('select#pickingpoint-provinceid option:selected').val();
-        var b_pickingid = $('select#bPickingid option:selected').val();
+    if (bAmphurid != null) {
+        var b_amphurid = $('select#BprovinceId option:selected').val();
+        var b_provinceid = $('select#BprovinceId option:selected').val();
+        var b_pickingid = $('select#BpickingId option:selected').val();
         var receiveTypeBooth = $('input[id=receiveTypeBooth]').val();
     } else {
         var b_amphurid = false;
