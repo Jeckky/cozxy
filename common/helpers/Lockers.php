@@ -75,7 +75,7 @@ class Lockers {
         ->joinWith(['orderItems'])
         ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
         ->where("order_item_packing.status = '" . \common\models\costfit\OrderItemPacking::PACKING_SENDING_PACKING_SHIPPING . "' "
-        . " and order_item_packing.bagNo ='" . $bagNo . "' and order.pickingId = '" . $boxcode . "' "
+        . " and order_item_packing.bagNo ='" . $bagNo . "' and order.pickingIds = '" . $boxcode . "' "
         //. " or order_item_packing.status = '" . \common\models\costfit\OrderItemPacking::PACKING_STATUS_EXPORT_TO_LOCKERS . "'  "
         //. " and order_item_packing.bagNo ='" . $bagNo . "' and order.pickingId = '" . $boxcode . "'  "
         //. " and order_item.receiveType = '1'"
