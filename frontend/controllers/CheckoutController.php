@@ -370,8 +370,6 @@ class CheckoutController extends MasterController {
           - status  = 2
          */
         $request = Yii::$app->request;
-        echo '<pre>';
-        print_r($request);
 
         if (isset($request)) {
             //$model->attributes = $_POST['Address'];
