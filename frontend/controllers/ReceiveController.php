@@ -274,7 +274,7 @@ class ReceiveController extends MasterController
                     //ยังไม่ได้เชค ว่า picking point ถูกต้องหรือไม่ ถ้าไม่ถูกให้บอกที่ถูก
                     $pickingPoint = $order->pickingId;
                     $orderItems = OrderItem::find()->where("orderId=" . $order->orderId)->all();
-                    if (isset($orderItems) && !empty($orderItems)) {
+                    if (isset($orderItems) && count($orderItems) > 0) {
                         foreach ($orderItems as $item):
                             $orderItem = $orderItem . $item->orderItemId . ",";
                         endforeach;
