@@ -280,7 +280,7 @@ class ReceiveController extends MasterController
                         endforeach;
                         $orderItem = substr($orderItem, 0, -1);
                         $lockers = OrderItemPacking::find()->where("orderItemId in($orderItem) and status=7")->all();
-                        if (isset($lockers) && !empty($lockers)) {
+                        if (isset($lockers))) {
                             foreach ($lockers as $locker):
                                 $total = 0;
                                 $count = 0;
