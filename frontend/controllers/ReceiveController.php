@@ -236,7 +236,7 @@ class ReceiveController extends MasterController
                         $url = "http://api.ants.co.th/sms/1/text/single";
                         $method = "POST";
                         $data = json_encode(array(
-                            "from" => "www.cozxy.com",
+                            "from" => "cozxy.com",
 //            "to" => ["66937419977", "66616539889", "66836134241"],
                             "to" => [$user->tel, "66836134241"],
                             "text" => $msg)
