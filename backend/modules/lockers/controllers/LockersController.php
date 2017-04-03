@@ -204,7 +204,7 @@ class LockersController extends LockersMasterController {
             // print_r($queryOrderItemPackingId);
             // exit();
             if (count($queryOrderItemPackingId) == 0) {
-                throw new \yii\base\Exception;
+//                throw new \yii\base\Exception;
                 return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?pickingItemsId=' . $pickingItemsId . '&boxcode=' . $boxcode . '&model=' . $model . '&code=' . $channel . '&orderId=' . $orderId . '&c=e');
             }
             $orderId = $queryOrderItemPackingId->orderId; // ได้ OrderId มาเพื่อหา ????
