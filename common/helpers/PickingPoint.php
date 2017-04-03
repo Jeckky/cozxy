@@ -110,4 +110,8 @@ class PickingPoint {
         }
     }
 
+    public static function OpenLockers($param) {
+        $pickingPointItems = \common\models\costfit\PickingPointItems::find()->where()->one();
+    }
+
 }

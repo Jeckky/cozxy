@@ -29,7 +29,7 @@ class Lockers {
      * By Taninut.BM
      */
 
-    //put your code here
+//put your code here
 
     /*
      * Get ข้อมูลของ PickingPoint
@@ -175,7 +175,7 @@ class Lockers {
         ->joinWith(['orderItems'])
         ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
         ->where("order_item_packing.status in (7,8) and  order_item_packing.orderItemId ='" . $orderItemId . "'  and order_item.receiveType = '1'")
-        //->where("order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "' ")
+//->where("order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "' ")
         ->groupBy(['order_item_packing.bagNo']);
         return $query1;
     }
@@ -202,7 +202,6 @@ class Lockers {
     }
 
     /* actionCloseChannel */
-
 
 
     /* actionReturnBag */
