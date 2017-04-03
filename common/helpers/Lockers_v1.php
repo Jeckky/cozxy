@@ -22,7 +22,8 @@ use yii\data\ActiveDataProvider;
  * emial : taninut.b@cozxy.com , sodapew17@gmial.com
  *
  */
-class Lockers {
+class Lockers
+{
     /*
      * แสดงสถานที่ตั้งของ Lockers
      * Create date : 16/1/2017
@@ -36,7 +37,8 @@ class Lockers {
      * Create Date : 25/01/2017
      * By : Taninut.Bm
      */
-    public static function GetPickingPoint($pickingId) {
+    public static function GetPickingPoint($pickingId)
+    {
         $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $pickingId . "'")->one();
         return isset($listPoint) ? $listPoint : NULL;
     }
@@ -47,7 +49,8 @@ class Lockers {
      * By : Taninut.Bm
      */
 
-    public static function GetPickingPointItems($pickingId) {
+    public static function GetPickingPointItems($pickingId)
+    {
         $query = \common\models\costfit\PickingPointItems::find()
         ->where("picking_point_items.pickingId = '" . $pickingId . "'");
         return $query;
@@ -55,7 +58,8 @@ class Lockers {
 
     /* actionScanBag */
 
-    public static function GetPickingPointItemsParameters($pickingId, $code) {
+    public static function GetPickingPointItemsParameters($pickingId, $code)
+    {
         $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $pickingId . "' and  code = '" . $code . "' ")->one();
         return $listPointItems;
     }
@@ -67,7 +71,8 @@ class Lockers {
      * By : Taninut.Bm
      */
 
-    public static function GetOrderItemPackingCheckLockersBagNo($bagNo, $boxcode) {
+    public static function GetOrderItemPackingCheckLockersBagNo($bagNo, $boxcode)
+    {
         $queryOrderItemPackingId = \common\models\costfit\OrderItemPacking::find()
         ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
         . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,'
@@ -82,7 +87,8 @@ class Lockers {
         return $queryOrderItemPackingId;
     }
 
-    public static function getQueryToViewScanBagNo($bagNo) {
+    public static function getQueryToViewScanBagNo($bagNo)
+    {
         $query = \common\models\costfit\OrderItemPacking::find()
         ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
         . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, '
@@ -96,7 +102,8 @@ class Lockers {
         return $query;
     }
 
-    public static function getQueryCountBag($bagNo) {
+    public static function getQueryCountBag($bagNo)
+    {
         $queryCountBag = \common\models\costfit\OrderItemPacking::find()
         ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
         . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, '
@@ -110,7 +117,8 @@ class Lockers {
         return $queryCountBag;
     }
 
-    public static function GetCountBag($orderId) {
+    public static function GetCountBag($orderId)
+    {
         $countBag = \common\models\costfit\OrderItemPacking::find()
         ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, order_item_packing.status')
         ->joinWith(['orderItems'])
@@ -120,12 +128,14 @@ class Lockers {
         return $countBag;
     }
 
-    public static function GetOrderItemPacking($orderItemPackingId) {
+    public static function GetOrderItemPacking($orderItemPackingId)
+    {
         $OrderItemPacking = \common\models\costfit\OrderItemPacking::find()->where(" orderItemPackingId = '" . $orderItemPackingId . "'")->one();
         return $OrderItemPacking;
     }
 
-    public static function GetPickingPointItemsPickingItems($boxcode, $channel, $pickingItemsId) {
+    public static function GetPickingPointItemsPickingItems($boxcode, $channel, $pickingItemsId)
+    {
         $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  "
         . "code = '" . $channel . "' and pickingItemsId  = '" . $pickingItemsId . "' ")->one();
         return $listPointItems;
@@ -135,7 +145,8 @@ class Lockers {
       Query ส่วนของแสดง Order ของถุงนี้ที่ ใส่เข้าช่องของ Lockers นี้แล้ว
      */
 
-    public static function GetOrderNoToBagNoOnChannelToLockers($orderItemId, $pickingItemsId, $bagNo) {
+    public static function GetOrderNoToBagNoOnChannelToLockers($orderItemId, $pickingItemsId, $bagNo)
+    {
         $query1 = \common\models\costfit\OrderItemPacking::find()
         ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.pickingItemsId, '
         . 'order_item_packing.bagNo, order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,'
@@ -151,7 +162,8 @@ class Lockers {
 
     /* แสดงจำนวนถุงของ Order นี้ทั้งหมด */
 
-    public static function GetOrderNoToBagNoOnChannelToLockersAll($orderId) {
+    public static function GetOrderNoToBagNoOnChannelToLockersAll($orderId)
+    {
         $queryAllOrder = \common\models\costfit\OrderItemPacking::find()
         ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
         . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, '
@@ -166,7 +178,8 @@ class Lockers {
 
     /* แสดง BagNo ที่ Scan Qr code */
 
-    public static function GetBagNo($orderItemId) {
+    public static function GetBagNo($orderItemId)
+    {
         $query1 = \common\models\costfit\OrderItemPacking::find()
         ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId,  order_item_packing.pickingItemsId,'
         . 'order_item_packing.bagNo, order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,'
@@ -180,7 +193,8 @@ class Lockers {
         return $query1;
     }
 
-    public static function GetOrderItemPackingGetOrderItem($orderId) {
+    public static function GetOrderItemPackingGetOrderItem($orderId)
+    {
         $query = \common\models\costfit\OrderItemPacking::find()
         ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, order_item_packing.status')
         ->joinWith(['orderItems'])
@@ -188,15 +202,16 @@ class Lockers {
         return $query;
     }
 
-    public static function GetOrderNoToBagNoOnChannelToLockersAllCheckParaBagNo($orderId) {
+    public static function GetOrderNoToBagNoOnChannelToLockersAllCheckParaBagNo($orderId)
+    {
         $queryAllOrder = \common\models\costfit\OrderItemPacking::find()
         ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
         . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, '
-        . 'order.orderNo, '
-        . 'order.orderId,order_item_packing.quantity')
+        . '`order`.orderNo, '
+        . '`order`.orderId,order_item_packing.quantity')
         ->joinWith(['orderItems'])
-        ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-        ->where("order_item_packing.status = 5 and order.orderId ='" . $orderId . "' ")
+        ->join('LEFT JOIN', '`order`', 'order_item.orderId = `order`.orderId')
+        ->where("order_item_packing.status = 5 and `order`.orderId ='" . $orderId . "' ")
         ->groupBy(['order_item_packing.bagNo']);
         return $queryAllOrder;
     }
