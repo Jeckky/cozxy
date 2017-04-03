@@ -486,14 +486,14 @@ $("#place-order").on('click', function () {
 
         var LcProvinceid = $('select#LcprovinceId option:selected').val();
 
-        var LcPickingid = $('select#Lcpickingid option:selected').val();
+        var LcPickingids = $('select#Lcpickingid option:selected').val();
 
         var receiveTypeLockersCool = $('input[id=receiveTypeLockersCool]').val();
     } else {
         var receiveTypeLockersCool = false;
         var LcAmphurid = false;
         var LcProvinceid = false;
-        var LcPickingid = false;
+        var LcPickingids = false;
 
     }
     /*
@@ -655,7 +655,7 @@ $("#place-order").on('click', function () {
                 placeUserId: _placeUserId,
                 notes: _notes,
                 placeOrderId: _placeOrderId,
-                LcPickingid: LcPickingid,
+                LcPickingids: LcPickingids,
                 pickingId: ePickingid,
                 b_pickingid: b_pickingid,
                 receiveTypeLockers: receiveTypeLockers,

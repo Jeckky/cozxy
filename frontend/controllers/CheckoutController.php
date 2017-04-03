@@ -378,7 +378,7 @@ class CheckoutController extends MasterController {
             $payment01 = Yii::$app->request->post('payment01');
             $pickingId = Yii::$app->request->post('pickingId');
             $b_pickingid = Yii::$app->request->post('b_pickingid');
-            $Lcpickingid = Yii::$app->request->post('Lcpickingid');
+            $Lcpickingid = Yii::$app->request->post('LcPickingids');
             $receiveTypeLockers = Yii::$app->request->post('receiveTypeLockers');
             $receiveTypeLockersCool = Yii::$app->request->post('receiveTypeLockersCool');
             $receiveTypeBooth = Yii::$app->request->post('receiveTypeBooth');
