@@ -95,8 +95,8 @@ class ReceiveController extends MasterController
                         $res["tel"] = $tel;
                         $res["email"] = $user->email;
                         $res["name"] = $user->firstname . ' ' . $user->lastname;
-                        $res["orderNo"] = $order->orderId;
-                        $res["orderId"] = $order->orderNo;
+                        $res["orderNo"] = $order->orderNo;
+                        $res["orderId"] = $order->orderId;
                         //print_r(Json::encode($res));
                         echo Json::encode($res);
                     } else {
