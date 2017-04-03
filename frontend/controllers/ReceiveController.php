@@ -314,7 +314,8 @@ class ReceiveController extends MasterController
 //                                        'ms' => $ms
 //                            ]);
                             $res["status"] = 200;
-                            $res["tel"] = $_POST['tel'];
+                            $user = \common\models\User::find()->where("userId = $order->userId")->one();
+                            $res["tel"] = $user->tel;
                             $res["userId"] = $_POST['userId'];
                             $res["orderId"] = $_POST['orderId'];
                             $res["numberLocker"] = $allLocker;
