@@ -649,15 +649,15 @@ $("#place-order").on('click', function () {
         //$("#modal-cart-not-shipping").modal('show');
         //} else {
         if (_billing === undefined) {
-            $.post("checkout/burn-checkoutsx", {
+            $.post("checkout/burn-checkouts", {
                 shipping: _shipping,
                 payment01: _payment01,
                 placeUserId: _placeUserId,
                 notes: _notes,
                 placeOrderId: _placeOrderId,
+                LcPickingid: LcPickingid,
                 pickingId: ePickingid,
                 b_pickingid: b_pickingid,
-                LcPickingid: LcPickingid,
                 receiveTypeLockers: receiveTypeLockers,
                 receiveTypeBooth: receiveTypeBooth,
                 receiveTypeLockersCool: receiveTypeLockersCool
@@ -666,16 +666,16 @@ $("#place-order").on('click', function () {
                 // window.location = 'checkout/order-thank';
             });
         } else if (_billing != undefined) {
-            $.post("checkout/burn-checkoutsx", {
+            $.post("checkout/burn-checkouts", {
                 shipping: _shipping,
                 billing: _billing,
                 payment01: _payment01,
                 placeUserId: _placeUserId,
                 notes: _notes,
                 placeOrderId: _placeOrderId,
+                LcPickingid: LcPickingid,
                 pickingId: ePickingid,
                 b_pickingid: b_pickingid,
-                LcPickingid: LcPickingid,
                 receiveTypeLockers: receiveTypeLockers,
                 receiveTypeBooth: receiveTypeBooth,
                 receiveTypeLockersCool: receiveTypeLockersCool
