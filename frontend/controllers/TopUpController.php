@@ -59,7 +59,7 @@ class TopUpController extends MasterController {
             $topUpDraf->updateDateTime = new \yii\db\Expression('NOW()');
             $topUpDraf->save(false);
             return $this->render('amount', [
-                'data' => $data
+                        'data' => $data
             ]);
         }
         if (isset($_POST["amount"]) && !empty($_POST["amount"])) {
@@ -74,24 +74,26 @@ class TopUpController extends MasterController {
                 return $this->redirect(['test-result', 'userId' => $user->userId, 'amount' => $_POST["amount"]]);
             } else {
                 return $this->render('index', [
-                    'data' => $data
+                            'data' => $data
                 ]);
             }
         } else {
             return $this->render('index', [
-                'data' => $data,
-                'ms' => $msg
+                        'data' => $data,
+                        'ms' => $msg
             ]);
         }
     }
 
     public function actionGen() {
-        $productSupp = \common\models\costfit\ProductSuppliers::find()->where("1")->all();
-        foreach ($productSupp as $supp) {
-            $supp->code = \common\helpers\Product::generateProductCode($supp->productSuppId);
-            //$supp->code = null;
-            $supp->save(false);
-        }
+        /* $productSupp = \common\models\costfit\ProductSuppliers::find()->where("1")->one();
+          $code = \common\helpers\Product::generateProductCode();
+          throw new \yii\base\Exception($code); */
+        /* foreach ($productSupp as $supp) {
+          $supp->code = \common\helpers\Product::generateProductCode($supp->productSuppId);
+          //$supp->code = null;
+          $supp->save(false);
+          } */
     }
 
     public function actionTestResult($userId, $amount) {
@@ -135,8 +137,8 @@ class TopUpController extends MasterController {
                 }
                 $type = 'success';
                 return $this->render('thank', [
-                    'currentPoint' => $currentPoint,
-                    'type' => $type,
+                            'currentPoint' => $currentPoint,
+                            'type' => $type,
                 ]);
             } else {
                 // go to error page
@@ -149,7 +151,7 @@ class TopUpController extends MasterController {
                 $topUp->save(false);
                 $type = 'fail';
                 return $this->render('thank', [
-                    'type' => $type]);
+                            'type' => $type]);
             }
         }
     }
@@ -167,7 +169,7 @@ class TopUpController extends MasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -183,7 +185,7 @@ class TopUpController extends MasterController {
             return $this->redirect(['view', 'id' => $model->topUpId]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -201,7 +203,7 @@ class TopUpController extends MasterController {
             return $this->redirect(['view', 'id' => $model->topUpId]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
