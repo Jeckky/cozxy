@@ -199,9 +199,9 @@ class LockersController extends LockersMasterController {
 
             /* Customize Date 25/01/2017 , By Taninut.Bm */
             $queryOrderItemPackingId = Lockers::GetOrderItemPackingCheckLockersBagNo($bagNo, $boxcode);
-            echo '<pre>';
-            print_r($queryOrderItemPackingId);
-            exit();
+            //echo '<pre>';
+            // print_r($queryOrderItemPackingId);
+            // exit();
             if (count($queryOrderItemPackingId) == 0) {
                 return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?pickingItemsId=' . $pickingItemsId . '&boxcode=' . $boxcode . '&model=' . $model . '&code=' . $channel . '&orderId=' . $orderId . '&c=e');
             }
