@@ -26,7 +26,7 @@ class PackingController extends StoreMasterController {
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
                     // allow authenticated users
-                        [
+                    [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -50,9 +50,9 @@ class PackingController extends StoreMasterController {
             return $this->redirect($baseUrl . '/auth');
         }
         $query = Order::find()
-                ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-                ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND (`order`.status = " . Order::ORDER_STATUS_PICKED . " OR `order`.status =" . Order::ORDER_STATUS_PACKED . " )")
-                ->orderBy("`order`.status ASC");
+        ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
+        ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND (`order`.status = " . Order::ORDER_STATUS_PICKED . " OR `order`.status =" . Order::ORDER_STATUS_PACKED . " )")
+        ->orderBy("`order`.status ASC");
 
         $ms = '';
         $dataProvider = new ActiveDataProvider([
@@ -62,18 +62,18 @@ class PackingController extends StoreMasterController {
             $order = Order::find()->where("orderNo='" . $_GET['orderNo'] . "' and status=12")->one();
             if (isset($order) && !empty($order)) {
                 return $this->render('show-orders', [
-                            'orderId' => $order->orderId,
+                    'orderId' => $order->orderId,
                 ]);
             } else {
                 $ms = 'ไม่พบออร์เดอร์นี้ หรือ ออร์เดอร์นี้ถูกแพ็คแล้ว';
                 return $this->render('index', [
-                            'dataProvider' => $dataProvider,
-                            'ms' => $ms
+                    'dataProvider' => $dataProvider,
+                    'ms' => $ms
                 ]);
             }
         } else {
             return $this->render('index', [
-                        'dataProvider' => $dataProvider,
+                'dataProvider' => $dataProvider,
             ]);
         }
     }
@@ -88,6 +88,7 @@ class PackingController extends StoreMasterController {
         if (isset($_GET['item'])) {
             $order = Order::find()->where("orderId=" . $_GET['orderId'])->one();
             $productId = Product::findProductSuppId($_GET['item'], $_GET['orderId']);
+            throw new \yii\base\Exception($productId);
             if (isset($order)) {
                 if (isset($productId) && !empty($productId)) {
                     //$items = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId . " and productId=" . $productId . " and status=" . \common\models\costfit\OrderItem::ORDERITEM_PICKED)->one();
@@ -139,8 +140,8 @@ class PackingController extends StoreMasterController {
                 $ms = 'ไม่เจอ Order Id นี้';
             }
             return $this->render('show-orders', [
-                        'orderId' => $order->orderId,
-                        'ms' => $ms
+                'orderId' => $order->orderId,
+                'ms' => $ms
             ]);
         }
     }
@@ -169,21 +170,21 @@ class PackingController extends StoreMasterController {
 
                 if ($full > 0) {//ถ้ายังไม่ครบทุก item กลับไปหน้าสแกนโปรดักใส่ถุง (เปิดถุงใหม่)
                     return $this->render('show-orders', [
-                                'orderId' => $_GET['orderId'],
-                                'ms' => $ms,
+                        'orderId' => $_GET['orderId'],
+                        'ms' => $ms,
                     ]);
                 } else {//กลับไปหน้า index เพื่อ เลือก order ถัดไป
                     $checkOrder = $this->checkSuccessOrder($_GET['orderId']);
                     if ($checkOrder == true) {
                         return $this->render('show-orders', [
-                                    'orderId' => $_GET['orderId'],
-                                    'ms' => $ms,
-                                    'success' => 'yes'
+                            'orderId' => $_GET['orderId'],
+                            'ms' => $ms,
+                            'success' => 'yes'
                         ]);
                     } else {
                         return $this->render('show-orders', [
-                                    'orderId' => $_GET['orderId'],
-                                    'ms' => $ms,
+                            'orderId' => $_GET['orderId'],
+                            'ms' => $ms,
                         ]);
                     }
                 }
@@ -197,8 +198,8 @@ class PackingController extends StoreMasterController {
             }
         } else {
             return $this->render('show-orders', [
-                        'orderId' => $_GET['orderId'],
-                        'ms' => $ms
+                'orderId' => $_GET['orderId'],
+                'ms' => $ms
             ]);
         }
     }
@@ -248,14 +249,14 @@ class PackingController extends StoreMasterController {
             if (isset($itemPacking) && !empty($itemPacking)) {
                 $itemPacking->delete();
                 return $this->render('show-orders', [
-                            'orderId' => $_GET['orderId'],
-                            'ms' => $_GET['ms']
+                    'orderId' => $_GET['orderId'],
+                    'ms' => $_GET['ms']
                 ]);
             } else {
                 $ms = 'ไม่มีรายการ';
                 return $this->render('show-orders', [
-                            'orderId' => $_GET['orderId'],
-                            'ms' => $ms
+                    'orderId' => $_GET['orderId'],
+                    'ms' => $ms
                 ]);
             }
         }
@@ -268,8 +269,8 @@ class PackingController extends StoreMasterController {
         $orderItem = OrderItemPacking::find()->where("bagNo='" . $bag . "'")->one();
         $order = OrderItem::find()->where("orderItemId=" . $orderItem->orderItemId)->one();
         return $this->renderPartial('bag_label', [
-                    'bagNo' => $bag,
-                    'orderId' => $order->orderId
+            'bagNo' => $bag,
+            'orderId' => $order->orderId
         ]);
     }
 
@@ -282,8 +283,8 @@ class PackingController extends StoreMasterController {
             $itemPacking->quantity = $itemPacking->quantity - 1;
             $itemPacking->save(false);
             return $this->render('show-orders', [
-                        'orderId' => $_GET['orderId'],
-                        'ms' => $_GET['ms']
+                'orderId' => $_GET['orderId'],
+                'ms' => $_GET['ms']
             ]);
         }
     }
