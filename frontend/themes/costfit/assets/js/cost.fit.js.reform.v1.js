@@ -408,15 +408,49 @@ $("#place-order").on('click', function () {
      * Lockers ร้อน
      */
     //var eProvinceid = $('input[id=pickingpoint-provinceid]').val();
-    var eProvinceid = $('select#pickingpoint-provinceid option:selected').val();
+    var eProvinceid = document.getElementById("pickingpoint-provinceid");
+    //;document.getElementById("pickingpoint-provinceid");
+    //alert('Lockers ร้อน :' + value);
     if (eProvinceid != null) {
+        var provinceid = eProvinceid.options[eProvinceid.selectedIndex].value;
 
-        var eAmphurid = $('select#pickingpoint-amphurid option:selected').val();
+        var eAmphurid = document.getElementById("pickingpoint-amphurid");
+        var amphurid = eAmphurid.options[eAmphurid.selectedIndex].value;
 
-        var eProvinceid = $('select#pickingpoint-provinceid option:selected').val();
+        var ePickingid = document.getElementById("pickingpoint-pickingid");
+        var pickingid = ePickingid.options[ePickingid.selectedIndex].value;
 
-        var ePickingid = $('select#pickingpoint-pickingid option:selected').val();
-
+        // pickingpoint amphurid //
+        var eAmphurid = document.getElementById("pickingpoint-amphurid");
+        var amphurid = eAmphurid.options[eAmphurid.selectedIndex].value;
+        if (amphurid > 0) {
+            var amphurid = ePickingid.options[ePickingid.selectedIndex].value;
+            //console.log(amphurid);
+        } else {
+            //console.log('Please select a pickingpoint amphurid list');
+            $('.field-pickingpoint-amphurid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+        }
+        // pickingpoint provinceid //
+        var eProvinceid = document.getElementById("pickingpoint-provinceid");
+        var provinceid = eProvinceid.options[eProvinceid.selectedIndex].value;
+        if (provinceid > 0) {
+            var provinceid = ePickingid.options[ePickingid.selectedIndex].value;
+            //console.log(provinceid);
+        } else {
+            //console.log('Please select a pickingpoint provinceid list');
+            $('.field-pickingpoint-provinceid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+        }
+        // pickingpoint pickingid //
+        var ePickingid = document.getElementById("pickingpoint-pickingid");
+        var pickingid = ePickingid.options[ePickingid.selectedIndex].value;
+        if (pickingid > 0) {
+            var pickingid = ePickingid.options[ePickingid.selectedIndex].value;
+            //console.log(pickingid);
+        } else {
+            //console.log('Please select a pickingpoint pickingid list');
+            $('.field-pickingpoint-pickingid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+            // exit();
+        }
         var receiveTypeLockers = $('input[id=receiveTypeLockers]').val();
     } else {
         var receiveTypeLockers = false;
@@ -425,125 +459,58 @@ $("#place-order").on('click', function () {
         var ePickingid = false;
 
     }
-    //;document.getElementById("pickingpoint-provinceid");
-    //alert('Lockers ร้อน :' + value);
-    /*if (eProvinceid != null) {
-     var provinceid = eProvinceid.options[eProvinceid.selectedIndex].value;
-
-     var eAmphurid = document.getElementById("pickingpoint-amphurid");
-     var amphurid = eAmphurid.options[eAmphurid.selectedIndex].value;
-
-     var ePickingid = document.getElementById("pickingpoint-pickingid");
-     var pickingid = ePickingid.options[ePickingid.selectedIndex].value;
-
-     // pickingpoint amphurid //
-     var eAmphurid = document.getElementById("pickingpoint-amphurid");
-     var amphurid = eAmphurid.options[eAmphurid.selectedIndex].value;
-     if (amphurid > 0) {
-     var amphurid = ePickingid.options[ePickingid.selectedIndex].value;
-     //console.log(amphurid);
-     } else {
-     //console.log('Please select a pickingpoint amphurid list');
-     $('.field-pickingpoint-amphurid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
-     }
-     // pickingpoint provinceid //
-     var eProvinceid = document.getElementById("pickingpoint-provinceid");
-     var provinceid = eProvinceid.options[eProvinceid.selectedIndex].value;
-     if (provinceid > 0) {
-     var provinceid = ePickingid.options[ePickingid.selectedIndex].value;
-     //console.log(provinceid);
-     } else {
-     //console.log('Please select a pickingpoint provinceid list');
-     $('.field-pickingpoint-provinceid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
-     }
-     // pickingpoint pickingid //
-     var ePickingid = document.getElementById("pickingpoint-pickingid");
-     var pickingid = ePickingid.options[ePickingid.selectedIndex].value;
-     if (pickingid > 0) {
-     var pickingid = ePickingid.options[ePickingid.selectedIndex].value;
-     //console.log(pickingid);
-     } else {
-     //console.log('Please select a pickingpoint pickingid list');
-     $('.field-pickingpoint-pickingid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
-     // exit();
-     }
-     var receiveTypeLockers = $('input[id=receiveTypeLockers]').val();
-     } else {
-     var receiveTypeLockers = false;
-     var eAmphurid = false;
-     var eProvinceid = false;
-     var ePickingid = false;
-
-     }*/
     /*
      *   Lockers เย็น
      */
-    //var LcProvinceid = document.getElementById("LcprovinceId");
-    var LcProvinceid = $('select#LcprovinceId option:selected').val();
+    var LcProvinceid = document.getElementById("LcprovinceId");
+    //var LcProvinceid = $('select#LcprovinceId option:selected').val();
     if (LcProvinceid != null) {
+        var provinceid = LcProvinceid.options[LcProvinceid.selectedIndex].value;
 
-        var LcAmphurid = $('select#LcprovinceId option:selected').val();
+        var LcAmphurid = document.getElementById("Lcamphurid");
+        var amphurid = LcAmphurid.options[LcAmphurid.selectedIndex].value;
 
-        var LcProvinceid = $('select#pickingpoint-provinceid option:selected').val();
+        var LcPickingid = document.getElementById("Lcpickingid");
+        var pickingid = LcPickingid.options[LcPickingid.selectedIndex].value;
 
-        var LcPickingid = $('select#Lcpickingid option:selected').val();
-
-        var receiveTypeLockers = $('input[id=receiveTypeLockers]').val();
+        // pickingpoint amphurid //
+        var LcAmphurid = document.getElementById("Lcamphurid");
+        var amphurid = LcAmphurid.options[LcAmphurid.selectedIndex].value;
+        if (amphurid > 0) {
+            var amphurid = LcPickingid.options[LcPickingid.selectedIndex].value;
+            //console.log(amphurid);
+        } else {
+            //console.log('Please select a pickingpoint amphurid list');
+            $('.field-pickingpoint-amphurid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+        }
+        // pickingpoint provinceid //
+        var LcProvinceid = document.getElementById("Lcprovinceid");
+        var provinceid = LcProvinceid.options[LcProvinceid.selectedIndex].value;
+        if (provinceid > 0) {
+            var provinceid = LcPickingid.options[LcPickingid.selectedIndex].value;
+            //console.log(provinceid);
+        } else {
+            //console.log('Please select a pickingpoint provinceid list');
+            $('.field-pickingpoint-provinceid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+        }
+        // pickingpoint pickingid //
+        var LcPickingid = document.getElementById("Lcpickingid");
+        var pickingid = LcPickingid.options[LcPickingid.selectedIndex].value;
+        if (pickingid > 0) {
+            var pickingid = LcPickingid.options[LcPickingid.selectedIndex].value;
+            //console.log(pickingid);
+        } else {
+            //console.log('Please select a pickingpoint pickingid list');
+            $('.field-pickingpoint-pickingid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+            // exit();
+        }
+        var receiveTypeLockersCool = $('input[id=receiveTypeLockersCool]').val();
     } else {
         var receiveTypeLockersCool = false;
         var LcAmphurid = false;
         var LcProvinceid = false;
         var LcPickingid = false;
-
     }
-    /*
-     if (LcProvinceid != null) {
-     var provinceid = LcProvinceid.options[LcProvinceid.selectedIndex].value;
-
-     var LcAmphurid = document.getElementById("Lcamphurid");
-     var amphurid = LcAmphurid.options[LcAmphurid.selectedIndex].value;
-
-     var LcPickingid = document.getElementById("Lcpickingid");
-     var pickingid = LcPickingid.options[LcPickingid.selectedIndex].value;
-
-     // pickingpoint amphurid //
-     var LcAmphurid = document.getElementById("Lcamphurid");
-     var amphurid = LcAmphurid.options[LcAmphurid.selectedIndex].value;
-     if (amphurid > 0) {
-     var amphurid = LcPickingid.options[LcPickingid.selectedIndex].value;
-     //console.log(amphurid);
-     } else {
-     //console.log('Please select a pickingpoint amphurid list');
-     $('.field-pickingpoint-amphurid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
-     }
-     // pickingpoint provinceid //
-     var LcProvinceid = document.getElementById("Lcprovinceid");
-     var provinceid = LcProvinceid.options[LcProvinceid.selectedIndex].value;
-     if (provinceid > 0) {
-     var provinceid = LcPickingid.options[LcPickingid.selectedIndex].value;
-     //console.log(provinceid);
-     } else {
-     //console.log('Please select a pickingpoint provinceid list');
-     $('.field-pickingpoint-provinceid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
-     }
-     // pickingpoint pickingid //
-     var LcPickingid = document.getElementById("Lcpickingid");
-     var pickingid = LcPickingid.options[LcPickingid.selectedIndex].value;
-     if (pickingid > 0) {
-     var pickingid = LcPickingid.options[LcPickingid.selectedIndex].value;
-     //console.log(pickingid);
-     } else {
-     //console.log('Please select a pickingpoint pickingid list');
-     $('.field-pickingpoint-pickingid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
-     // exit();
-     }
-     var receiveTypeLockersCool = $('input[id=receiveTypeLockersCool]').val();
-     } else {
-     var receiveTypeLockersCool = false;
-     var LcAmphurid = false;
-     var LcProvinceid = false;
-     var LcPickingid = false;
-     }*/
     //alert(pickingid);
     /*
      * Checkouts : Booth
@@ -569,60 +536,48 @@ $("#place-order").on('click', function () {
      */
     //var bAmphurid = document.getElementById("BamphurId");
     var bAmphurid = $('select#BamphurId option:selected').val();
-    if (LcProvinceid != null) {
-        var b_amphurid = $('select#LcprovinceId option:selected').val();
-        var b_provinceid = $('select#pickingpoint-provinceid option:selected').val();
-        var b_pickingid = $('select#bPickingid option:selected').val();
-        var receiveTypeLockers = $('input[id=receiveTypeLockers]').val();
+    if (bAmphurid != null) {
+
+        var bPickingid = document.getElementById("BpickingId");
+        var b_pickingid = bPickingid.options[bPickingid.selectedIndex].value;
+
+        var b_amphurid = bAmphurid.options[bAmphurid.selectedIndex].value;
+        if (b_amphurid > 0) {
+            var b_pickingid = bPickingid.options[bPickingid.selectedIndex].value;
+            //console.log(amphurid);
+        } else {
+            //console.log('Please select a pickingpoint amphurid list');
+            $('.field-BamphurId').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+        }
+        // pickingpoint provinceid //
+        var bProvinceid = document.getElementById("BprovinceId");
+        var b_provinceid = bProvinceid.options[bProvinceid.selectedIndex].value;
+        if (b_provinceid > 0) {
+            var b_pickingid = bPickingid.options[bPickingid.selectedIndex].value;
+            //console.log(provinceid);
+        } else {
+            //console.log('Please select a pickingpoint provinceid list');
+            $('.field-Bprovinceid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+        }
+
+        // pickingpoint pickingid //
+        var bPickingid = document.getElementById("BpickingId");
+        var b_pickingid = bPickingid.options[bPickingid.selectedIndex].value;
+        if (b_pickingid > 0) {
+            var b_pickingid = bPickingid.options[bPickingid.selectedIndex].value;
+            //console.log(pickingid);
+        } else {
+            //console.log('Please select a pickingpoint pickingid list');
+            $('.field-BpickingId').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
+            exit();
+        }
+        var receiveTypeBooth = $('input[id=receiveTypeBooth]').val();
     } else {
         var b_amphurid = false;
         var b_provinceid = false;
         var b_pickingid = false;
         var receiveTypeBooth = false;
-
     }
-    /*if (bAmphurid != null) {
-
-     var bPickingid = document.getElementById("BpickingId");
-     var b_pickingid = bPickingid.options[bPickingid.selectedIndex].value;
-
-     var b_amphurid = bAmphurid.options[bAmphurid.selectedIndex].value;
-     if (b_amphurid > 0) {
-     var b_pickingid = bPickingid.options[bPickingid.selectedIndex].value;
-     //console.log(amphurid);
-     } else {
-     //console.log('Please select a pickingpoint amphurid list');
-     $('.field-BamphurId').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
-     }
-     // pickingpoint provinceid //
-     var bProvinceid = document.getElementById("BprovinceId");
-     var b_provinceid = bProvinceid.options[bProvinceid.selectedIndex].value;
-     if (b_provinceid > 0) {
-     var b_pickingid = bPickingid.options[bPickingid.selectedIndex].value;
-     //console.log(provinceid);
-     } else {
-     //console.log('Please select a pickingpoint provinceid list');
-     $('.field-Bprovinceid').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
-     }
-
-     // pickingpoint pickingid //
-     var bPickingid = document.getElementById("BpickingId");
-     var b_pickingid = bPickingid.options[bPickingid.selectedIndex].value;
-     if (b_pickingid > 0) {
-     var b_pickingid = bPickingid.options[bPickingid.selectedIndex].value;
-     //console.log(pickingid);
-     } else {
-     //console.log('Please select a pickingpoint pickingid list');
-     $('.field-BpickingId').find('.select2-container--krajee').attr('style', 'width: 100%; border: 1px #ec3747 solid; ');
-     exit();
-     }
-     var receiveTypeBooth = $('input[id=receiveTypeBooth]').val();
-     } else {
-     var b_amphurid = false;
-     var b_provinceid = false;
-     var b_pickingid = false;
-     var receiveTypeBooth = false;
-     }*/
 
 
     //alert(b_pickingid);
@@ -655,7 +610,7 @@ $("#place-order").on('click', function () {
                 placeUserId: _placeUserId,
                 notes: _notes,
                 placeOrderId: _placeOrderId,
-                pickingId: ePickingid,
+                pickingId: pickingid,
                 b_pickingid: b_pickingid,
                 LcPickingid: LcPickingid,
                 receiveTypeLockers: receiveTypeLockers,
@@ -673,7 +628,7 @@ $("#place-order").on('click', function () {
                 placeUserId: _placeUserId,
                 notes: _notes,
                 placeOrderId: _placeOrderId,
-                pickingId: ePickingid,
+                pickingId: pickingid,
                 b_pickingid: b_pickingid,
                 LcPickingid: LcPickingid,
                 receiveTypeLockers: receiveTypeLockers,
