@@ -243,16 +243,15 @@ class ReceiveController extends MasterController
                         );
 
                         $response = \common\helpers\Sms::Send($method, $url, $data);
-                        echo Json::encode($res);
                     }
                 } else {//error
-                    $ms = 'ไม่พบผู้ใช้งาน';
+                    $res["error"] = 'ไม่พบผู้ใช้งาน';
                 }
             } else {
-                $ms = 'ไม่พบรายการพัสดุ';
+                $res["error"] = 'ไม่พบรายการพัสดุ';
             }
         }
-
+        echo Json::encode($res);
         //throw new \yii\base\Exception($_POST['tel']);
     }
 
