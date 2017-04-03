@@ -266,6 +266,7 @@ class ReceiveController extends MasterController
         $i = 0;
         $time = false;
         $receive = Receive::find()->where("otp='" . $_POST['otp'] . "' and orderId=" . $_POST['orderId'] . " and userId=" . $_POST['userId'] . " and password='" . $_POST['password'] . "' and refNo='" . $_POST['refNo'] . "' and status=1 and isUse=0 and error<" . Receive::ERROR_PASSWORD . " ORDER BY receiveId DESC")->one();
+        throw new \yii\base\Exception(print_r($receive->attributes, true));
         if (isset($receive) && !empty($receive)) {
             $time = $this->checkTime($receive->updateDateTime);
             if ($time == true) {//ถ้าเวลา ไม่เกิน 5 นาที
