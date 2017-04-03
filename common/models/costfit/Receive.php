@@ -19,21 +19,24 @@ use \common\models\costfit\master\ReceiveMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class Receive extends \common\models\costfit\master\ReceiveMaster {
+class Receive extends \common\models\costfit\master\ReceiveMaster
+{
 
     /**
      * @inheritdoc
      */
-    const ERROR_PASSWORD = 3;
+    const ERROR_PASSWORD = 9999;
 
-    public function rules() {
+    public function rules()
+    {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), []);
     }
 
