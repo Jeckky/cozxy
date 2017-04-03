@@ -258,7 +258,7 @@ class LockersController extends LockersMasterController {
                         \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderItemId' => $OrderItemPacking->orderItemId]);
                         \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $orderId]);
                         $this->generatePassword($orderId);
-                        $this->sendEmail($orderId);
+                        $this->sendEmail($orderId, $OrderItemPacking->orderItemId);
                         return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?close=no&model=' . $model . '&code=' . $channel . '&boxcode=' . $boxcode . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId . '&bagNo=' . $bagNo . '');
 
                         // }
@@ -503,8 +503,9 @@ class LockersController extends LockersMasterController {
         }
     }
 
-    static public function sendEmail($orderId) {
-        $order = Order::find()->where("orderId=" . $orderId)->one();
+    static public function sendEmail($orderId, $orderItemId) {
+        $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
+        $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
         if (isset($order) && !empty($order)) {
             $user = \common\models\costfit\User::find()->where("userId=" . $order->userId)->one();
             if (isset($user) && !empty($user)) {
@@ -512,7 +513,7 @@ class LockersController extends LockersMasterController {
                 $toMail = $user->email;
                 $userName = $user->firstname . " " . $user->lastname;
                 $password = $order->password;
-                $picking = PickingPoint::find()->where("pickingId=" . $order->pickingId)->one();
+                $picking = PickingPoint::find()->where("pickingId=" . $orderItem->pickingId)->one();
                 $location = $picking->title;
                 $email->mailSendPassword($toMail, $userName, $password, $location);
             }
