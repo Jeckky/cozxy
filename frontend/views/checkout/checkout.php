@@ -208,12 +208,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="payment-method">
                     <?php
                     $i = 1;
+                    //echo Yii::$app->homeUrl;
                     foreach ($paymentMethods as $paymentMethod):
                         ?>
                         <div class="radio light ">
                             <label>
                                 <input type="radio" name="Order[payment]" id="payment01" <?= ($i == 1) ? "checked" : "" ?> value="<?php echo $paymentMethod->paymentMethodId; ?>"> <?= $paymentMethod->title; ?>
-                                <p><?= Html::img(Yii::$app->homeUrl . $paymentMethod->image, ['style' => 'width:100%']); ?></p>
+                                <p><?= Html::img($paymentMethod->image, ['style' => 'width:100%']); ?></p>
                                 <p><?= $paymentMethod->description; ?></p>
                             </label>
                         </div>
