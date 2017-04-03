@@ -211,7 +211,7 @@ class LockersController extends LockersMasterController
             // exit();
 
             if (count($queryOrderItemPackingId) == 0) {
-                throw new \yii\base\Exception("Step 1");
+//                throw new \yii\base\Exception("Step 1");
                 return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?pickingItemsId=' . $pickingItemsId . '&boxcode=' . $boxcode . '&model=' . $model . '&code=' . $channel . '&orderId=' . $orderId . '&c=e');
             }
 //            throw new \yii\base\Exception(222);
@@ -238,7 +238,7 @@ class LockersController extends LockersMasterController
                 /*  Customize Date 25/01/2017 */
                 $OrderItemPacking = Lockers::GetOrderItemPacking($orderItemPackingId);
                 if ($countBag > 1) {
-                    throw new \yii\base\Exception("Count Bag > 1");
+//                    throw new \yii\base\Exception("Count Bag > 1");
                     if (count($listPointItems) > 0) {
                         \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'userId' => Yii::$app->user->identity->userId, 'pickingItemsId' => $listPointItems->pickingItemsId, 'shipDate' => new \yii\db\Expression("NOW()")], ['bagNo' => $bagNo]);
                         \common\models\costfit\OrderItem::updateAll(['status' => 14], ['orderItemId' => $OrderItemPacking->orderItemId]);
@@ -265,7 +265,7 @@ class LockersController extends LockersMasterController
 
                     if (count($listPointItems) > 0) {
                         // if ($close == 'yes') {
-                        throw new \yii\base\Exception("Count Bag = 1");
+//                        throw new \yii\base\Exception("Count Bag = 1");
                         \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'userId' => Yii::$app->user->identity->userId, 'pickingItemsId' => $listPointItems->pickingItemsId, 'shipDate' => new \yii\db\Expression("NOW()")], ['bagNo' => $bagNo]);
                         \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderItemId' => $OrderItemPacking->orderItemId]);
                         \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $orderId]);
