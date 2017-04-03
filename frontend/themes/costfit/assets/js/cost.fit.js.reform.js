@@ -488,7 +488,7 @@ $("#place-order").on('click', function () {
 
         var LcPickingid = $('select#Lcpickingid option:selected').val();
 
-        var receiveTypeLockers = $('input[id=receiveTypeLockers]').val();
+        var receiveTypeLockersCool = $('input[id=receiveTypeLockersCool]').val();
     } else {
         var receiveTypeLockersCool = false;
         var LcAmphurid = false;
@@ -573,7 +573,7 @@ $("#place-order").on('click', function () {
         var b_amphurid = $('select#LcprovinceId option:selected').val();
         var b_provinceid = $('select#pickingpoint-provinceid option:selected').val();
         var b_pickingid = $('select#bPickingid option:selected').val();
-        var receiveTypeLockers = $('input[id=receiveTypeLockers]').val();
+        var receiveTypeBooth = $('input[id=receiveTypeBooth]').val();
     } else {
         var b_amphurid = false;
         var b_provinceid = false;
@@ -677,7 +677,8 @@ $("#place-order").on('click', function () {
                 b_pickingid: b_pickingid,
                 LcPickingid: LcPickingid,
                 receiveTypeLockers: receiveTypeLockers,
-                receiveTypeBooth: receiveTypeBooth
+                receiveTypeBooth: receiveTypeBooth,
+                receiveTypeLockersCool: receiveTypeLockersCool
             }, function (data, status) {
                 //alert("Data: " + data + "\nStatus: " + status);
                 // window.location = 'checkout/order-thank';
