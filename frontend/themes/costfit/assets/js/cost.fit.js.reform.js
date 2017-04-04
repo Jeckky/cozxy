@@ -422,10 +422,10 @@ $("#place-order").on('click', function () {
         var ePickingid = false;
 
     }
-    console.log('Lockers ร้อน LcProvinceid : ' + eProvinceid);
-    console.log('Lockers ร้อน LcAmphurid :' + eAmphurid);
-    console.log('Lockers ร้อน LcPickingids :' + ePickingid);
-    console.log('Lockers ร้อน receiveTypeLockers :' + receiveTypeLockers);
+    //console.log('Lockers ร้อน LcProvinceid : ' + eProvinceid);
+    //console.log('Lockers ร้อน LcAmphurid :' + eAmphurid);
+    //console.log('Lockers ร้อน LcPickingids :' + ePickingid);
+    //console.log('Lockers ร้อน receiveTypeLockers :' + receiveTypeLockers);
     /*
      *   Lockers เย็น
      */
@@ -446,10 +446,10 @@ $("#place-order").on('click', function () {
         var LcPickingids = false;
 
     }
-    console.log('Lockers เย็น LcProvinceid : ' + LcProvinceid);
-    console.log('Lockers เย็น LcAmphurid :' + LcAmphurid);
-    console.log('Lockers เย็น LcPickingids :' + LcPickingids);
-    console.log('Lockers เย็น receiveTypeLockersCool :' + receiveTypeLockersCool);
+    //console.log('Lockers เย็น LcProvinceid : ' + LcProvinceid);
+    //console.log('Lockers เย็น LcAmphurid :' + LcAmphurid);
+    //console.log('Lockers เย็น LcPickingids :' + LcPickingids);
+    //console.log('Lockers เย็น receiveTypeLockersCool :' + receiveTypeLockersCool);
 
     // pickingpoint amphurid //
     /*
@@ -469,10 +469,10 @@ $("#place-order").on('click', function () {
         var receiveTypeBooth = false;
 
     }
-    console.log('Booth LcProvinceid : ' + b_provinceid);
-    console.log('Booth LcAmphurid :' + b_amphurid);
-    console.log('Booth LcPickingids :' + b_pickingid);
-    console.log('Booth receiveTypeBooth :' + receiveTypeBooth);
+    //console.log('Booth LcProvinceid : ' + b_provinceid);
+    //console.log('Booth LcAmphurid :' + b_amphurid);
+    //console.log('Booth LcPickingids :' + b_pickingid);
+    //console.log('Booth receiveTypeBooth :' + receiveTypeBooth);
 
     if (_countItems == '') {
         //alert('สินค้าในตะกร้า 0 รายการ');
