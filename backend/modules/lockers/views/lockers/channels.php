@@ -124,10 +124,11 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     <?php else: ?>
                                                         <?php
                                                         $Inspector = common\models\costfit\OrderItemPacking::checkInspector($row->pickingItemsId);
-
                                                         if ($row->status == 0) {
                                                             echo '<h4>ช่อง : ' . $row->name . '<br> ลูกค้ายังไม่มารับสินค้า</h4>';
                                                         } else {
+
+                                                            \common\helpers\Locker::Open($Inspector->pickingPoint, $Inspector->name);
                                                             ?>
                                                             <h4><strong> ช่อง : <?= $row->name; ?> ว่าง</strong></h4>
                                                             <?php
