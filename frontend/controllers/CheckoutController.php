@@ -383,12 +383,12 @@ class CheckoutController extends MasterController {
             $receiveTypeLockers = Yii::$app->request->post('receiveTypeLockers'); //receiveTypeLockers
             $receiveTypeLockersCool = Yii::$app->request->post('receiveTypeLockersCool'); //receiveTypeLockersCool
             $receiveTypeBooth = Yii::$app->request->post('receiveTypeBooth'); //receiveTypeBooth
-            //echo $pickingId . '<br>';
-            //echo $b_pickingid . '<br>';
-            //echo $Lcpickingid . '<br>';
-            //echo $receiveTypeLockers . '<br>';
-            //echo $receiveTypeLockersCool . '<br>';
-            //echo $receiveTypeBooth . '<br>';
+            echo $pickingId . '<br>';
+            echo $b_pickingid . '<br>';
+            echo $Lcpickingid . '<br>';
+            echo $receiveTypeLockers . '<br>';
+            echo $receiveTypeLockersCool . '<br>';
+            echo $receiveTypeBooth . '<br>';
             //exit();
 
             /*
