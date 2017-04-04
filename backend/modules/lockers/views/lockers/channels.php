@@ -144,22 +144,22 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                 ?>
                                                                 <div class="list-group search-content search-content-new-<?php echo $row->pickingItemsId; ?> <?php echo $bgWarning; ?>">
                                                                     <span class="list-group-item" style="color: #000;">
-                    <?php
-                    //$itemsOrderNo = common\models\costfit\PickingPointItems::OrderNoList8(" $items ");
-                    $icon_new = '<img src="' . Yii::$app->homeUrl . '/images/icon/1148820182.gif" alt=" " alt="Cost Fit" broder ="0" class="img-responsive"/>';
-                    if ($itemsOrderNo->status == 8 || $itemsOrderNo->status == 10) {
-                        $pickItem = \common\models\costfit\PickingPointItems::find()->where("pickingItemsId = $row->pickingItemsId")->one();
-                        \common\helpers\Locker::Open($pickItem->pickingPoint, [$pickItem->name]);
-                        if ($itemsOrderNo->status == 8) {
-                            echo '<p class="text-right">' . $icon_new . '<p>';
-                        }
-                        echo '<h5><strong>OrderNo : </strong>' . $itemsOrderNo->orderNo . '</h5><span class="text-success"> '
-                        . '(ลูกค้ามารับสินค้าแล้ว) </span><br> <span class="text-warning">เมื่อ ' .
-                        $this->context->dateThai($itemsOrderNo->updateDateTime, 1, '0000-00-00 00:00:00') . '</span>'
-                        . '<br> ถุงที่หยิบไป : ';
-                        echo $bagNo;
-                        echo '<hr>';
-                        ?>
+                                                                        <?php
+                                                                        //$itemsOrderNo = common\models\costfit\PickingPointItems::OrderNoList8(" $items ");
+                                                                        $icon_new = '<img src="' . Yii::$app->homeUrl . '/images/icon/1148820182.gif" alt=" " alt="Cost Fit" broder ="0" class="img-responsive"/>';
+                                                                        if ($itemsOrderNo->status == 8 || $itemsOrderNo->status == 10) {
+                                                                            $pickItem = \common\models\costfit\PickingPointItems::find()->where("pickingItemsId = $row->pickingItemsId")->one();
+                                                                            \common\helpers\Locker::Open($pickItem->pickingPoint, [$pickItem->name]);
+                                                                            if ($itemsOrderNo->status == 8) {
+                                                                                echo '<p class="text-right">' . $icon_new . '<p>';
+                                                                            }
+                                                                            echo '<h5><strong>OrderNo : </strong>' . $itemsOrderNo->orderNo . '</h5><span class="text-success"> '
+                                                                            . '(ลูกค้ามารับสินค้าแล้ว) </span><br> <span class="text-warning">เมื่อ ' .
+                                                                            $this->context->dateThai($itemsOrderNo->updateDateTime, 1, '0000-00-00 00:00:00') . '</span>'
+                                                                            . '<br> ถุงที่หยิบไป : ';
+                                                                            echo $bagNo;
+                                                                            echo '<hr>';
+                                                                            ?>
 
                                                                             <button class="btn btn-success remark-chanels-ok" data-bind="<?php echo $row->pickingItemsId; ?>,<?php echo $row->pickingId; ?>,<?php echo $itemsOrderNo->orderItemPackingId; ?>">
                                                                                 <span class="reset-<?php echo $row->pickingItemsId; ?> ">Ok</span></button>
@@ -167,14 +167,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                             <div class="form-group text-left text-muted">
                                                                                 อธิบาย<br> ปุ่ม Ok : กดปุ่มกรณีช่องเรียบร้อยเท่านั่น , ปุ่ม No : กดแจ้งปัญหาทุกกรณี
                                                                             </div> <!-- / .form-group -->
-                    <?php } ?>
+                                                                        <?php } ?>
 
                                                                     </span>
 
-                    <?php
-                    if ($itemsOrderNo->status == 8 || $itemsOrderNo->status == 10) {
-                        // isset($itemsOrderNo->remark) ? 'แจ้เงตือนอีกครั้ง' : 'submit'
-                        ?>
+                                                                    <?php
+                                                                    if ($itemsOrderNo->status == 8 || $itemsOrderNo->status == 10) {
+                                                                        // isset($itemsOrderNo->remark) ? 'แจ้เงตือนอีกครั้ง' : 'submit'
+                                                                        ?>
                                                                         <span class="list-group-item remark-chanels-form-<?php echo $row->pickingItemsId; ?> <?php
                                                                         if ($itemsOrderNo->status == 10) {
                                                                             echo 'show';
@@ -186,75 +186,75 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                                     <div class="radio">
                                                                                         <label>
                                                                                             <input type="radio" name="type-<?php echo $row->pickingItemsId; ?>" id="type-<?php echo $row->pickingItemsId; ?>" value="1" class="px" <?php
-                                                if ($itemsOrderNo->type == 1) {
-                                                    echo 'checked';
-                                                }
-                                                                        ?>>
+                                                                                            if ($itemsOrderNo->type == 1) {
+                                                                                                echo 'checked';
+                                                                                            }
+                                                                                            ?>>
                                                                                             <span class="lbl">กรณีช่องมีปัญหา</span>
                                                                                         </label>
                                                                                     </div> <!-- / .radio -->
                                                                                     <div class="radio">
                                                                                         <label>
                                                                                             <input type="radio" name="type-<?php echo $row->pickingItemsId; ?>" id="type-<?php echo $row->pickingItemsId; ?>" value="2" class="px" <?php
-                                                                    if ($itemsOrderNo->type == 2) {
-                                                                        echo 'checked';
-                                                                    }
-                                                                        ?>>
+                                                                                            if ($itemsOrderNo->type == 2) {
+                                                                                                echo 'checked';
+                                                                                            }
+                                                                                            ?>>
                                                                                             <span class="lbl">กรณีลูกค้าไม่มารับสินค้า</span>
                                                                                         </label>
                                                                                     </div> <!-- / .radio -->
                                                                                 </div> <!-- / .col-sm-10 -->
                                                                             </div> <!-- / .form-group -->
-                        <?php
-                        if ($itemsOrderNo->status == 10) {
-                            //echo $itemsOrderNo->orderItemPackingId;
-                            $orderItemPackingItems = \common\models\costfit\OrderItemPackingItems::find()->where('orderItemPackingId=' . $itemsOrderNo->orderItemPackingId . ' and pickingItemsId =' . $row->pickingItemsId)->all();
-                            //echo 'count ::' . count($orderItemPackingItems);
-                            echo '<div id="test-test" class="text-left col-sm-5 test-test"  data-bind="' . $row->pickingItemsId . ',' . $row->pickingId . ',' . $itemsOrderNo->orderItemPackingId . '" style="cursor: hand;">มีปัญหา<code>' . count($orderItemPackingItems) . '</code>ครั้ง (ดูเพิ่มเติม)</div>';
-                        }
-                        if ($itemsOrderNo->status != 8) {
-                            echo isset($itemsOrderNo->lastvisitDate) ? ' <div  class="text-right col-sm-7 ">ล่าสุด:' . $this->context->dateThai($itemsOrderNo->lastvisitDate, 1, TRUE) . '</div>' : '&nbsp;วันที่แจ้งปัญหา : 0000-00-00 00:00:00';
-                            //echo '<hr>';
-                        }
-                        if ($itemsOrderNo->status == 10) {
-                            echo '<div class="text-left col-sm-12" >&nbsp;</div>';
-                        }
-                        //echo '<div class="text-left col-sm-5"  data-toggle="modal" data-target="#uidemo-modals-alerts-info" data-bind="' . $row->pickingItemsId . ',' . $row->pickingId . ',' . $itemsOrderNo->orderItemPackingId . '" style="cursor: hand;">(ดูเพิ่มเติม)</div>';
-                        ?>
+                                                                            <?php
+                                                                            if ($itemsOrderNo->status == 10) {
+                                                                                //echo $itemsOrderNo->orderItemPackingId;
+                                                                                $orderItemPackingItems = \common\models\costfit\OrderItemPackingItems::find()->where('orderItemPackingId=' . $itemsOrderNo->orderItemPackingId . ' and pickingItemsId =' . $row->pickingItemsId)->all();
+                                                                                //echo 'count ::' . count($orderItemPackingItems);
+                                                                                echo '<div id="test-test" class="text-left col-sm-5 test-test"  data-bind="' . $row->pickingItemsId . ',' . $row->pickingId . ',' . $itemsOrderNo->orderItemPackingId . '" style="cursor: hand;">มีปัญหา<code>' . count($orderItemPackingItems) . '</code>ครั้ง (ดูเพิ่มเติม)</div>';
+                                                                            }
+                                                                            if ($itemsOrderNo->status != 8) {
+                                                                                echo isset($itemsOrderNo->lastvisitDate) ? ' <div  class="text-right col-sm-7 ">ล่าสุด:' . $this->context->dateThai($itemsOrderNo->lastvisitDate, 1, TRUE) . '</div>' : '&nbsp;วันที่แจ้งปัญหา : 0000-00-00 00:00:00';
+                                                                                //echo '<hr>';
+                                                                            }
+                                                                            if ($itemsOrderNo->status == 10) {
+                                                                                echo '<div class="text-left col-sm-12" >&nbsp;</div>';
+                                                                            }
+                                                                            //echo '<div class="text-left col-sm-5"  data-toggle="modal" data-target="#uidemo-modals-alerts-info" data-bind="' . $row->pickingItemsId . ',' . $row->pickingId . ',' . $itemsOrderNo->orderItemPackingId . '" style="cursor: hand;">(ดูเพิ่มเติม)</div>';
+                                                                            ?>
                                                                             <textarea class="form-control" rows="5" placeholder="แจ้งปัญหา" name="remarkDesc-<?php echo $row->pickingItemsId; ?>" id="remarkDesc-<?php echo $row->pickingItemsId; ?>" ><?= $itemsOrderNo->remark; ?></textarea><br>
                                                                             <input id="pickingItemsIdHidden" type="hidden" value="<?php echo $row->pickingItemsId; ?>">
                                                                             <input id="pickingIdHidden" type="hidden" value="<?php echo $row->pickingId; ?>">
                                                                             <button class="btn btn-warning btn-xs remark-submit" data-bind="<?php echo $row->pickingItemsId; ?>,<?php echo $row->pickingId; ?>,<?php echo $itemsOrderNo->orderItemPackingId; ?>"><?php echo isset($itemsOrderNo->remark) ? 'แจ้งเตือนอีกครั้ง' : 'submit' ?></button>
                                                                             <button class="btn btn-default btn-xs remark-cancel" data-bind="<?php echo $row->pickingItemsId; ?>,<?php echo $row->pickingId; ?>,<?php echo $itemsOrderNo->orderItemPackingId; ?>">cancel</button>
                                                                         </span>
-                    <?php } elseif ($itemsOrderNo->status == 9) { ?>
+                                                                    <?php } elseif ($itemsOrderNo->status == 9) { ?>
                                                                         <span class="list-group-item remark-chanels-form-<?php echo $row->pickingItemsId; ?>"  style="  text-align: center;">
-                                                                        <?php
-                                                                        echo '<h4>ตรวจสอบเรียบร้อย</h4>';
-                                                                        ?>
+                                                                            <?php
+                                                                            echo '<h4>ตรวจสอบเรียบร้อย</h4>';
+                                                                            ?>
                                                                         </span>
-                                                                        <?php } elseif ($itemsOrderNo->status == 10) { ?>
+                                                                    <?php } elseif ($itemsOrderNo->status == 10) { ?>
                                                                         <span class="list-group-item remark-chanels-form-<?php echo $row->pickingItemsId; ?>"  style="  text-align: center;">
-                                                                        <?php
-                                                                        echo '<h4><code>' . $itemsOrderNo->remark . '</code></h4>';
-                                                                        ?>
+                                                                            <?php
+                                                                            echo '<h4><code>' . $itemsOrderNo->remark . '</code></h4>';
+                                                                            ?>
                                                                         </span>
-                                                                        <?php } else { ?>
+                                                                    <?php } else { ?>
 
                                                                     <?php } ?>
                                                                 </div>
-                                                                    <?php
-                                                                }
+                                                                <?php
                                                             }
-                                                            ?>
+                                                        }
+                                                        ?>
                                                     <?php endif; ?>
 
                                                 </td>
                                             </tr>
-    <?php endforeach; ?>
+                                        <?php endforeach; ?>
                                     </table>
                                 </td>
-<?php endforeach; ?>
+                            <?php endforeach; ?>
                         </tr>
                     </tbody>
                 </table>
