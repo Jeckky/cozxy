@@ -485,7 +485,7 @@ $("#place-order").on('click', function () {
         //} else {
         if (_billing === undefined) {
 
-            $.post("checkout/burn-checkouts", {
+            $.post("checkout/burn-checkoutsxx", {
                 shipping: _shipping,
                 payment01: _payment01,
                 placeUserId: _placeUserId,
@@ -503,7 +503,7 @@ $("#place-order").on('click', function () {
             }, "json");
         } else if (_billing != undefined) {
 
-            $.post("checkout/burn-checkouts", {
+            $.post("checkout/burn-checkoutsxx", {
                 shipping: _shipping,
                 billing: _billing,
                 payment01: _payment01,
