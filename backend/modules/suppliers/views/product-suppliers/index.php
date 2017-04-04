@@ -56,6 +56,8 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                     [
                         'attribute' => 'category',
                         'value' => function($model) {
+                            //$category = \common\models\costfit\Category::find()->where('categoryId =' . $model->category->categoryId)->one();
+                            //return $model->category->parentId; //$category->title;
                             return isset($model->category) ? $model->category->title : NULL;
                         }
                     ],
