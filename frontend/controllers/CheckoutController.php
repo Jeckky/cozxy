@@ -371,6 +371,7 @@ class CheckoutController extends MasterController {
          */
         $request = Yii::$app->request;
 
+
         if (isset($request)) {
             //$model->attributes = $_POST['Address'];
             $shipping = Yii::$app->request->post('shipping');
@@ -379,9 +380,17 @@ class CheckoutController extends MasterController {
             $pickingId = Yii::$app->request->post('pickingId');
             $b_pickingid = Yii::$app->request->post('b_pickingid');
             $Lcpickingid = Yii::$app->request->post('LcPickingids');
-            $receiveTypeLockers = Yii::$app->request->post('receiveTypeLockers');
-            $receiveTypeLockersCool = Yii::$app->request->post('receiveTypeLockersCool');
-            $receiveTypeBooth = Yii::$app->request->post('receiveTypeBooth');
+            $receiveTypeLockers = Yii::$app->request->post('receiveTypeLockers'); //receiveTypeLockers
+            $receiveTypeLockersCool = Yii::$app->request->post('receiveTypeLockersCool'); //receiveTypeLockersCool
+            $receiveTypeBooth = Yii::$app->request->post('receiveTypeBooth'); //receiveTypeBooth
+            //echo $pickingId . '<br>';
+            //echo $b_pickingid . '<br>';
+            //echo $Lcpickingid . '<br>';
+            //echo $receiveTypeLockers . '<br>';
+            //echo $receiveTypeLockersCool . '<br>';
+            //echo $receiveTypeBooth . '<br>';
+            //exit();
+
             /*
               receiveTypeLockers: receiveTypeLockers,
               receiveTypeBooth: receiveTypeBooth
@@ -440,14 +449,14 @@ class CheckoutController extends MasterController {
               } */
             if ($order->save(FALSE)) {
 
-                if ($receiveTypeLockersCool == 2) {
-                    \common\models\costfit\OrderItem::updateAll(['pickingId' => $Lcpickingid], ['orderId' => $placeOrderId, 'receiveType' => $receiveTypeLockersCool]);
+                if ($receiveTypeLockersCool == 1) { // Lockes เย็น
+                    \common\models\costfit\OrderItem::updateAll(['pickingId' => $Lcpickingid], ['orderId' => $placeOrderId, 'receiveType' => 1]);
                 }
-                if ($receiveTypeBooth == 3) {
-                    \common\models\costfit\OrderItem::updateAll(['pickingId' => $b_pickingid], ['orderId' => $placeOrderId, 'receiveType' => $receiveTypeBooth]);
+                if ($receiveTypeBooth == 3) {// Booth
+                    \common\models\costfit\OrderItem::updateAll(['pickingId' => $b_pickingid], ['orderId' => $placeOrderId, 'receiveType' => 3]);
                 }
-                if ($receiveTypeLockers == 1) {
-                    \common\models\costfit\OrderItem::updateAll(['pickingId' => $pickingId], ['orderId' => $placeOrderId, 'receiveType' => $receiveTypeLockers]);
+                if ($receiveTypeLockers == 2) {// Lockes ร้อน
+                    \common\models\costfit\OrderItem::updateAll(['pickingId' => $pickingId], ['orderId' => $placeOrderId, 'receiveType' => 2]);
                 }
                 if ($order->paymentType == 1) {
                     $this->redirect(Yii::$app->homeUrl . 'checkout/order-thank');
