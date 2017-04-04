@@ -62,7 +62,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <ul id="uidemo-tabs-default-demo" class="nav nav-tabs">
                     <?= $this->render('menu', compact('pending', 'review', 'modify', 'approved', 'pending')) ?>
                 </ul>
-                </ul>
 
                 <div class="tab-content tab-content-bordered">
                     <div class="tab-pane fade active in" id="uidemo-tabs-default-demo-modify">

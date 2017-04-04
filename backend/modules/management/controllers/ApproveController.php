@@ -181,6 +181,7 @@ class ApproveController extends ManagementMasterController {
 
     public function actionPending() {
         $userId = Yii::$app->request->post('userId');
+        $pending = (Yii::$app->request->get('pending')) ? 'active' : 'active';
         if (isset($userId)) {
             $productSys = new ActiveDataProvider([
                 'query' => \common\models\costfit\Product:: find()
@@ -230,11 +231,12 @@ class ApproveController extends ManagementMasterController {
         }
 
         return $this->render('pending', [
-            'productSys' => $productSys, 'productSupp' => $productSupp
+            'productSys' => $productSys, 'productSupp' => $productSupp, 'pending' => $pending
         ]);
     }
 
     public function actionApproved() {
+        $approved = Yii::$app->request->get('approved');
         $userId = Yii::$app->request->post('userId');
         if (isset($userId)) {
             /*
@@ -291,12 +293,13 @@ class ApproveController extends ManagementMasterController {
         //print_r($productSuppApprove);
 
         return $this->render('approved', [
-            'productSysApprove' => $productSysApprove, 'productSuppApprove' => $productSuppApprove
+            'productSysApprove' => $productSysApprove, 'productSuppApprove' => $productSuppApprove, 'approved' => $approved
         ]);
     }
 
     public function actionModify() {
         $userId = Yii::$app->request->post('userId');
+        $modify = Yii::$app->request->get('modify');
         if (isset($userId)) {
             $productSys = new ActiveDataProvider([
                 'query' => \common\models\costfit\Product:: find()
@@ -322,7 +325,39 @@ class ApproveController extends ManagementMasterController {
         }
 
         return $this->render('modify', [
-            'productSys' => $productSys, 'productSupp' => $productSupp
+            'productSys' => $productSys, 'productSupp' => $productSupp, 'modify' => $modify
+        ]);
+    }
+
+    public function actionReview() {
+        $userId = Yii::$app->request->post('userId');
+        $review = Yii::$app->request->get('review');
+        if (isset($userId)) {
+            $productSys = new ActiveDataProvider([
+                'query' => \common\models\costfit\Product:: find()
+                ->where('approve = "approve"')
+                ->andWhere('userId =' . $userId)
+            ]);
+
+            $productSupp = new ActiveDataProvider([
+                'query' => \common\models\costfit\ProductSuppliers:: find()
+                ->where('approve in ("approve")')
+                ->andWhere('userId =' . $userId)
+            ]);
+        } else {
+            $productSys = new ActiveDataProvider([
+                'query' => \common\models\costfit\Product:: find()
+                ->where('approve = "approve"')
+            ]);
+
+            $productSupp = new ActiveDataProvider([
+                'query' => \common\models\costfit\ProductSuppliers:: find()
+                ->where('approve in ("approve")'),
+            ]);
+        }
+
+        return $this->render('review', [
+            'productSys' => $productSys, 'productSupp' => $productSupp, 'review' => $review
         ]);
     }
 

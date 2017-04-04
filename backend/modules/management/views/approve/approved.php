@@ -60,15 +60,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
         <div class="panel" style="border: 0px solid transparent;">
             <div class="panel-body" style="padding: 5px;">
                 <ul id="uidemo-tabs-default-demo" class="nav nav-tabs">
-                    <li>
-                        <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/pending" class="uidemo-tabs-default-demo-home">รออนุมัติ</a>
-                    </li>
-                    <li class="active">
-                        <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/approved" class="uidemo-tabs-default-demo-approved">อนุมัติแล้ว </a>
-                    </li>
-                    <li class="">
-                        <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/modify" class="uidemo-tabs-default-demo-modify">แก้ไขที่อนุมัติแล้ว</a>
-                    </li>
+                    <?= $this->render('menu', compact('pending', 'review', 'modify', 'approved', 'pending')) ?>
                 </ul>
 
                 <div class="tab-content tab-content-bordered">
