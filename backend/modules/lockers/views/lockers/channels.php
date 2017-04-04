@@ -129,7 +129,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                         } else {
 
                                                             $pickItem = \common\models\costfit\PickingPointItems::find()->where("pickingItemsId = $row->pickingItemsId")->one();
-                                                            \common\helpers\Locker::Open($pickItem->pickingPoint, $pickItem->name);
+                                                            \common\helpers\Locker::Open($pickItem->pickingPoint, [$pickItem->name]);
                                                             ?>
                                                             <h4><strong> ช่อง : <?= $row->name; ?> ว่าง</strong></h4>
                                                             <?php
