@@ -389,7 +389,7 @@ class CheckoutController extends MasterController {
             echo $receiveTypeLockers . '<br>';
             echo $receiveTypeLockersCool . '<br>';
             echo $receiveTypeBooth . '<br>';
-            //exit();
+            exit();
 
             /*
               receiveTypeLockers: receiveTypeLockers,
