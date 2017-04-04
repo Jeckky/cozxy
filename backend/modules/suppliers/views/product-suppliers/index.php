@@ -6,6 +6,35 @@ use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+$categories = array(
+    array('id' => 1, 'parent' => 0, 'name' => 'Category A'),
+    array('id' => 2, 'parent' => 0, 'name' => 'Category B'),
+    array('id' => 3, 'parent' => 0, 'name' => 'Category C'),
+    array('id' => 4, 'parent' => 0, 'name' => 'Category D'),
+    array('id' => 5, 'parent' => 0, 'name' => 'Category E'),
+    array('id' => 6, 'parent' => 2, 'name' => 'Subcategory F'),
+    array('id' => 7, 'parent' => 2, 'name' => 'Subcategory G'),
+    array('id' => 8, 'parent' => 3, 'name' => 'Subcategory H'),
+    array('id' => 9, 'parent' => 4, 'name' => 'Subcategory I'),
+    array('id' => 10, 'parent' => 9, 'name' => 'Subcategory J'),
+);
+
+function categoriesToTree(&$categories) {
+    $map = array(
+        0 => array('subcategories' => array())
+    );
+    foreach ($categories as &$category) {
+        $category['subcategories'] = array();
+        $map[$category['id']] = &$category;
+    }
+    foreach ($categories as &$category) {
+        $map[$category['parent']]['subcategories'][] = &$category;
+    }
+    return $map[0]['subcategories'];
+}
+
+$tree = categoriesToTree($categories);
+
 
 $this->title = 'Product Suppliers';
 $this->params['breadcrumbs'][] = $this->title;
@@ -56,8 +85,27 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                     [
                         'attribute' => 'category',
                         'value' => function($model) {
-                            //$category = \common\models\costfit\Category::find()->where('categoryId =' . $model->category->categoryId)->one();
-                            //return $model->category->parentId; //$category->title;
+
+                            /* if (isset($model->category->parentId)) {
+                              $category = \common\models\costfit\Category::find()->where('categoryId =' . $model->category->parentId)->all();
+                              //return count($category);
+                              $data = [];
+                              foreach ($category as $value) {
+                              $data = $value->title;
+                              }
+
+                              return $data;
+                              } else {
+                              //return isset($model->category) ? $model->category->title : NULL;
+                              } */
+                            //if (count($category) == NULL) {
+                            // $category = \common\models\costfit\Category::find()->where('categoryId =' . $model->category->categoryId)->all();
+                            //}
+                            //$data = [];
+                            //foreach ($category as $value) {
+                            // $data[] = $value->title;
+                            // }
+                            // return print_r($data); //$category->title;
                             return isset($model->category) ? $model->category->title : NULL;
                         }
                     ],

@@ -23,7 +23,7 @@ class Email {
         \Yii::$app->mail->compose('register_confirm', ['url' => $url])
         //Yii::$app->mail->compose('register_confirm', ['url' => $url])
         ->setTo($toMail)//tomail
-        ->setFrom('online@cozxy.com')
+        ->setFrom('cozxy@cozxy.com')
         ->setSubject('Cozxy Register Confirm')
         ->send();
     }
@@ -31,7 +31,7 @@ class Email {
     public static function mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType) {//ส่งรายการ Order ให้สมาชิก
         \Yii::$app->mail->compose('orderToMember', ['url' => $url, 'type' => $type, 'adress' => $adress, 'order' => $orderList, 'receiveType' => $receiveType])
         ->setTo($toMail)//tomail
-        ->setFrom('online@cozxy.com')
+        ->setFrom('cozxy@cozxy.com')
         ->setSubject($Subject)
         //->setHtmlBody($htmls)
         ->send();
