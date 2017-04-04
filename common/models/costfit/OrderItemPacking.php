@@ -17,7 +17,8 @@ use \common\models\costfit\master\OrderItemPackingMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMaster {
+class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMaster
+{
 
     const ORDER_STATUS_CLOSE_BAG = 4; //กำลังจัดส่ง
     const ORDER_STATUS_SENDING_PACKING_SHIPPING = 5; //กำลังจัดส่ง
@@ -44,7 +45,8 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return array_merge(parent::rules(), [
         ]);
     }
@@ -52,7 +54,8 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     /**
      * @inheritdoc
      */
-    public function attributes() {
+    public function attributes()
+    {
         return array_merge(parent::attributes(), [
             'bagNo',
             'status',
@@ -70,12 +73,14 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), [
         ]);
     }
 
-    static public function orderInPacking($orderId) {
+    static public function orderInPacking($orderId)
+    {
         $orderItems = OrderItem::find()->where("orderId=" . $orderId)->all();
 //throw new \yii\base\Exception(print_r($orderItems, true));
         $itemItemId = '';
@@ -97,7 +102,8 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
         }
     }
 
-    static public function itemInBag($bagNo) {
+    static public function itemInBag($bagNo)
+    {
         $items = '';
         $bags = OrderItemPacking::find()->where("bagNo='" . $bagNo . "'")->all();
         $oldBag = '';
@@ -127,7 +133,8 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
         }
     }
 
-    static public function createStatus($orderItemId) {
+    static public function createStatus($orderItemId)
+    {
         $result = 0;
         $totalInPacking = 0;
         $allQuantity = OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
@@ -143,10 +150,11 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
         return $result;
     }
 
-    static public function shipPacking($orderItemId) {
+    static public function shipPacking($orderItemId)
+    {
 
         $orderItem = OrderItem::find()
-                        ->where("orderItemId=" . $orderItemId)->one();
+        ->where("orderItemId=" . $orderItemId)->one();
 //throw new \yii\base\Exception($orderItem->order->status);
         if ($orderItem->status == 13) {
             $status = 4;
@@ -156,14 +164,15 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
 
         $result = OrderItemPacking::find()
 //->distinct('order_item_packing.bagNo')
-                ->join('LEFT JOIN', 'order_item oi', 'oi.orderItemId = order_item_packing.orderItemId')
-                ->where(['oi.orderId' => $orderItem->orderId, 'order_item_packing.status' => $status])
-                ->count();
+        ->join('LEFT JOIN', 'order_item oi', 'oi.orderItemId = order_item_packing.orderItemId')
+        ->where(['oi.orderId' => $orderItem->orderId, 'order_item_packing.status' => $status])
+        ->count();
 //throw new \yii\base\Exception($orderItemId);
         return $result;
     }
 
-    static public function findItemInBag($bagNo) {
+    static public function findItemInBag($bagNo)
+    {
         $orderItems = OrderItemPacking::find()->where("bagNo='" . $bagNo . "' and status=4")->all();
         if (isset($orderItems) && !empty($orderItems)) {
             return $orderItems;
@@ -172,27 +181,36 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
         }
     }
 
-    public function getOrderItems() {
+    public function getOrderItems()
+    {
         return $this->hasMany(OrderItem::className(), ['orderItemId' => 'orderItemId']); //[Order :: ปลายทาง ,  OrderItem :: ต้นทาง]
     }
 
-    static public function countBagNo($bagNo) {
+    public function getPickingPoint()
+    {
+        return $this->hasOne(PickingPoint::className(), ['pickingId' => 'pickingId']); //[Order :: ปลายทาง ,  OrderItem :: ต้นทาง]
+    }
+
+    static public function countBagNo($bagNo)
+    {
         $result = OrderItemPacking::find()
 //->distinct('order_item_packing.bagNo')
 //->join('LEFT JOIN', 'order_item oi', 'oi.orderItemId = order_item_packing.orderItemId')
-                ->where(['order_item_packing.bagNo' => $bagNo])
-                ->count();
+        ->where(['order_item_packing.bagNo' => $bagNo])
+        ->count();
         return $result;
     }
 
-    static public function countQuantity($bagNo) {
+    static public function countQuantity($bagNo)
+    {
         $result = OrderItemPacking::find()
-                ->where(['order_item_packing.bagNo' => $bagNo])
-                ->sum('order_item_packing.quantity');
+        ->where(['order_item_packing.bagNo' => $bagNo])
+        ->sum('order_item_packing.quantity');
         return $result;
     }
 
-    static public function checkBagNo($pickingItemsId) {
+    static public function checkBagNo($pickingItemsId)
+    {
         /*
           $queryOrderItemPackingId = \common\models\costfit\OrderItemPacking::find()
           ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
@@ -207,7 +225,7 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
           ->groupBy(['order_item_packing.bagNo'])->one(); */
 
         $queryOrderItemPackingId = \common\models\costfit\PickingPointItems::find()
-                        ->where("pickingItemsId= '" . $pickingItemsId . "' ")->one();
+        ->where("pickingItemsId= '" . $pickingItemsId . "' ")->one();
         if (count($queryOrderItemPackingId) == 0) {
             return $queryOrderItemPackingId['pickingItemsId']; // yes
         } else {
@@ -215,15 +233,17 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
         }
     }
 
-    static public function checkInspector($pickingItemsId) {
+    static public function checkInspector($pickingItemsId)
+    {
         $result = OrderItemPacking::find()
-                ->select('curdate(),date(shipdate) , (curdate() - date(shipdate)) AS DateOfPut , (date(updateDateTime) - date(shipdate)) AS DateOfReceive  , status ,remark ')
-                ->where(['order_item_packing.pickingItemsId' => $pickingItemsId])
-                ->one();
+        ->select('curdate(),date(shipdate) , (curdate() - date(shipdate)) AS DateOfPut , (date(updateDateTime) - date(shipdate)) AS DateOfReceive  , status ,remark ')
+        ->where(['order_item_packing.pickingItemsId' => $pickingItemsId])
+        ->one();
         return $result;
     }
 
-    public static function findOrderAtPoint($pickingPointId) {
+    public static function findOrderAtPoint($pickingPointId)
+    {
         $items = OrderItemPacking::find()->where("shipper=" . Yii::$app->user->identity->userId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)->all();
 
         $orderId = [];
@@ -251,12 +271,14 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
         }
     }
 
-    public static function findBagNo($orderItemId) {
+    public static function findBagNo($orderItemId)
+    {
         $orderItemId = OrderItemPacking::find()->where("orderItemId in ($orderItemId) and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)->all();
         return $orderItemId;
     }
 
-    public static function countBagAtPoint($pickingPoint) {
+    public static function countBagAtPoint($pickingPoint)
+    {
         $items = OrderItemPacking::find()->where("shipper=" . Yii::$app->user->identity->userId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)->all();
         $orderId = [];
         $orderIds = '';
