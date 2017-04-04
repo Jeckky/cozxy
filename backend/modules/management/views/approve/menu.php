@@ -1,5 +1,5 @@
 <li class="<?php echo isset($pending) ? $pending : ''; ?>">
-    <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/pending?pending=active" class="uidemo-tabs-default-demo-home">รออนุมัติ</a>
+    <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/pending?pending=active" class="uidemo-tabs-default-demo-home">รออนุมัติสินค้าใหม่</a>
 </li>
 <li class="<?php echo isset($approved) ? $approved : ''; ?>">
     <a href="<?php echo Yii::$app->homeUrl; ?>management/approve/approved?approved=active" class="uidemo-tabs-default-demo-profile">อนุมัติแล้ว </a>
