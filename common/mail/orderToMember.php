@@ -62,6 +62,9 @@
                 text-align: left;
                 line-height: 25px;
             }
+            #order > table, td, th {
+                border: 1px solid black;
+            }
         </style>
 
         <div class="main">
@@ -71,7 +74,7 @@
                 </div>
                 <div class="content" style="background-color: #f5f5f5;">
                     <center>
-                        <table width="100%"  text-align="center" style=" width:100% ; height: auto;  text-align: center;  ">
+                        <table width="100%"  text-align="center"  style=" width:100% ; height: auto;  text-align: center;">
                             <tr>
                                 <td>
                                     <p style="color: #ff9016; font-size: 20px; text-align: left;"><strong>เรียนคุณ <?php echo $type; ?></strong></p>
@@ -138,7 +141,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <table class="table table-list-order" style="padding: 10px;" >
+                                    <table id="order" class="table table-list-order"  border="0"  style="padding: 10px;" >
                                         <thead>
                                             <tr style="background-color: #f5f5f5;">
                                                 <th style="font-size: 13px;">ลำดับ</th>

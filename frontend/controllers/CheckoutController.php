@@ -764,7 +764,7 @@ class CheckoutController extends MasterController {
                       } else {
                       $GetBooth = FALSE;
                       } */
-                    //$orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType);
+                    $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType);
                     return $this->render('payment_result', compact('res'));
                 }
 
@@ -914,7 +914,8 @@ class CheckoutController extends MasterController {
                           }
                          */
                         $receiveType = [];
-                        $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType);
+                        $email = new Email();
+                        $email->mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, '');
                     }
 
                     /*

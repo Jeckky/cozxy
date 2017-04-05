@@ -176,6 +176,10 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
         return $this->hasMany(OrderItem::className(), ['orderItemId' => 'orderItemId']); //[Order :: ปลายทาง ,  OrderItem :: ต้นทาง]
     }
 
+    public function getPickingPoint() {
+        return $this->hasOne(PickingPoint::className(), ['pickingId' => 'pickingId']); //[Order :: ปลายทาง ,  OrderItem :: ต้นทาง]
+    }
+
     static public function countBagNo($bagNo) {
         $result = OrderItemPacking::find()
 //->distinct('order_item_packing.bagNo')
@@ -270,7 +274,6 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     }
 
     public static function countBagAtPoint($pickingPoint) {
-        //throw new \yii\base\Exception($pickingPoint);
         $items = OrderItemPacking::find()->where("shipper=" . Yii::$app->user->identity->userId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)->all();
         $orderId = [];
         $orderIds = '';

@@ -62,6 +62,7 @@ class ProductSuppliersController extends SuppliersMasterController {
             ->where('userId=' . Yii::$app->user->identity->userId)->orderBy('product_suppliers.productSuppId desc'),
         ]);
 
+
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);

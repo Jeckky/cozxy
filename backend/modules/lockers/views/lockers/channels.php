@@ -124,7 +124,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     <?php else: ?>
                                                         <?php
                                                         $Inspector = common\models\costfit\OrderItemPacking::checkInspector($row->pickingItemsId);
-
                                                         if ($row->status == 0) {
                                                             echo '<h4>ช่อง : ' . $row->name . '<br> ลูกค้ายังไม่มารับสินค้า</h4>';
                                                         } else {
@@ -149,6 +148,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                         //$itemsOrderNo = common\models\costfit\PickingPointItems::OrderNoList8(" $items ");
                                                                         $icon_new = '<img src="' . Yii::$app->homeUrl . '/images/icon/1148820182.gif" alt=" " alt="Cost Fit" broder ="0" class="img-responsive"/>';
                                                                         if ($itemsOrderNo->status == 8 || $itemsOrderNo->status == 10) {
+                                                                            $pickItem = \common\models\costfit\PickingPointItems::find()->where("pickingItemsId = $row->pickingItemsId")->one();
+                                                                            \common\helpers\Locker::Open($pickItem->pickingPoint, [$pickItem->name]);
                                                                             if ($itemsOrderNo->status == 8) {
                                                                                 echo '<p class="text-right">' . $icon_new . '<p>';
                                                                             }
