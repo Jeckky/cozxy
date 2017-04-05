@@ -76,7 +76,7 @@
                                 <td>
                                     <p style="color: #ff9016; font-size: 20px; text-align: left;"><strong>เรียนคุณ <?php echo $type; ?></strong></p>
 
-                                    <table class="x_col1of2" width="50%" border="1" cellpadding="0" cellspacing="0" align="left" style="border-spacing:0; border-collapse:collapse; font-size:14px">
+                                    <table class="x_col1of2" width="50%" border="0" cellpadding="0" cellspacing="0" align="left" style="border-spacing:0; border-collapse:collapse; font-size:14px">
                                         <tbody>
                                             <tr>
                                                 <td class="x_order-col x_pam" align="left" valign="top" style="border-collapse:collapse; padding-top:10px; padding-right:10px; padding-bottom:10px; padding-left:10px">
@@ -138,7 +138,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <table class="table table-list-order" style="padding: 10px;" >
+                                    <table class="table table-list-order"  border="0"  style="padding: 10px;" >
                                         <thead>
                                             <tr style="background-color: #f5f5f5;">
                                                 <th style="font-size: 13px;">ลำดับ</th>
