@@ -138,7 +138,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <table class="table table-list-order"  border="1"  style="padding: 10px;" >
+                                    <table class="table table-list-order"  border="1"  style="padding: 1px;" >
                                         <thead>
                                             <tr style="background-color: #f5f5f5;">
                                                 <th style="font-size: 13px;">ลำดับ</th>
