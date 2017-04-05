@@ -914,7 +914,8 @@ class CheckoutController extends MasterController {
                           }
                          */
                         $receiveType = [];
-                        $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType);
+
+                        $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, '');
                     }
 
                     /*
