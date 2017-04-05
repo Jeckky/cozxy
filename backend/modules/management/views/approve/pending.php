@@ -145,8 +145,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     $approve_txt .= '</div>';
                                                     return $approve_txt;
                                                 }
-                                            ],
-                                            [
+                                            ], [
                                                 'attribute' => 'ปลายทางรับสินค้',
                                                 'format' => 'raw',
                                                 'value' => function($model) {
@@ -158,7 +157,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                         $point_type .= "
                                                                         <div class=\"radio\">
                                                                             <label>
-                                                                                <input type=\"radio\"  checked=\"checked\" name=\"jq-validation-radios-$model->productSuppId\" id=\"approveReceiveType-$model->productSuppId\" onchange=\"approveReceiveType($model->productSuppId,$value->pptId)\" data-bind=" . $model->productSuppId . " value=" . $value->pptId . " class=\"px\">
+                                                                                <input type=\"radio\" name=\"jq-validation-radios-$model->productSuppId\" id=\"approveReceiveType-$model->productSuppId\" onchange=\"approveReceiveType($model->productSuppId,$value->pptId)\" data-bind=" . $model->productSuppId . " value=" . $value->pptId . " class=\"px\">
                                                                                 <span class=\"lbl\">" . $value->name . "</span>
                                                                             </label>
                                                                         </div>

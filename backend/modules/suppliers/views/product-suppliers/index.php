@@ -161,7 +161,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                         'format' => 'html',
                         'value' => function($model) {
                             return Html::a('<i class="fa fa-plus-circle" aria-hidden="true" class="success"></i>duplicate', Yii::$app->homeUrl . "suppliers/product-suppliers/duplicate-product?productSuppId=" . $model->productSuppId, [
-                                'title' => Yii::t('app', 'image'), 'class' => 'text-left']);
+                                'title' => Yii::t('app', 'duplicate product'), 'class' => 'text-left']);
                         }
                     ],
                     // 'unit',
