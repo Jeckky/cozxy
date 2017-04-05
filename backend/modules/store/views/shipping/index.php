@@ -87,7 +87,7 @@ if (isset($orderInCar) && !empty($orderInCar) && isset($pickingPoints) && !empty
                             $orderItems = Order::getItemString($orderId);
                             $bagNoes = OrderItemPacking::findBagNo($orderItems);
                             foreach ($bagNoes as $bagNo):
-                                echo '<div class="col-lg-12" style="margin-bottom:10px;"><b>' . $bagNo->bagNo . '</b></div>';
+                                echo '<div class="col-lg-12" style="margin-bottom:10px;"><b>' . $bagNo . '</b></div>';
                             endforeach;
                             ?>
 

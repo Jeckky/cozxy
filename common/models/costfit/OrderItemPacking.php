@@ -252,15 +252,30 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     }
 
     public static function findBagNo($orderItemId) {
+        $oldBag = [];
         $orderItemId = OrderItemPacking::find()->where("orderItemId in ($orderItemId) and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)->all();
-        return $orderItemId;
+        if (isset($orderItemId) && count($orderItemId) > 0) {
+            $i = 0;
+            foreach ($orderItemId as $item):
+                $flag = OrderItemPacking::checkBag($oldBag, $item->bagNo);
+                if ($flag == true) {
+                    $oldBag[$i] = $item->bagNo;
+                    $i++;
+                }
+            endforeach;
+            return $oldBag;
+        } else {
+            return '';
+        }
     }
 
     public static function countBagAtPoint($pickingPoint) {
+        //throw new \yii\base\Exception($pickingPoint);
         $items = OrderItemPacking::find()->where("shipper=" . Yii::$app->user->identity->userId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)->all();
         $orderId = [];
         $orderIds = '';
         $orderItemBag = '';
+        $oldBag = [];
         if (isset($items) && !empty($items)) {
             $i = 0;
             foreach ($items as $item):
@@ -287,10 +302,36 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
                 $orderItemBag .= $item->orderItemId . ",";
             endforeach;
             $orderItemBag = substr($orderItemBag, 0, -1);
-            $bag = OrderItemPacking::find()->where("orderItemId in ($orderItemBag) and shipper=" . Yii::$app->user->identity->userId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)->all();
-            return count($bag);
-        }else {
+            $bags = OrderItemPacking::find()->where("orderItemId in ($orderItemBag) and shipper=" . Yii::$app->user->identity->userId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)->all();
+            if (isset($bags) && count($bags) > 0) {
+                $i = 0;
+                foreach ($bags as $bag):
+                    $flag = OrderItemPacking::checkBag($oldBag, $bag->bagNo);
+                    if ($flag == true) {
+                        $oldBag[$i] = $bag->bagNo;
+                        $i++;
+                    }
+                endforeach;
+                return count($oldBag);
+            } else {
+                return '';
+            }
+        } else {
             return '';
+        }
+    }
+
+    public static function checkBag($olds, $new) {
+        $i = 0;
+        foreach ($olds as $old):
+            if ($new == $old) {
+                $i++;
+            }
+        endforeach;
+        if ($i == 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 

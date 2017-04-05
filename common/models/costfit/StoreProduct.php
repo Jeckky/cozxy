@@ -230,7 +230,7 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
         }
 
         $storeProduct->createDateTime = new yii\db\Expression("NOW()"); //อัพเดท store Product เพื่อ บอกว่า ดึง Id นี้ มาจัดเรียงแล้ว
-        $storeProduct->save();
+        $storeProduct->save(false);
         if ($haveSomeQuan) { // ถ้ามีของเหลือจากการจัดเรียง ($someQuan)
             //Change Status of store product  = to arrange แล้ว
             //$storeProduct->status = xx
@@ -263,7 +263,7 @@ class StoreProduct extends \common\models\costfit\master\StoreProductMaster {
                     }
                     $someQuan = $someQuan - $otherStoreProduct->importQuantity; //
                     $otherStoreProduct->createDateTime = new yii\db\Expression("NOW()");
-                    $otherStoreProduct->save();
+                    $otherStoreProduct->save(false);
                 } else {
                     //  $modelNew->quantity = $someQuan;
                     // $modelNew->save(false);
