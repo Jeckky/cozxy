@@ -76,49 +76,36 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                     //'productId',
                     //'userId',
                     //'productGroupId',
-                    [
-                        'attribute' => 'brand',
-                        'value' => function($model) {
-                            return isset($model->brand) ? $model->brand->title : NULL;
-                        }
-                    ],
-                    [
-                        'attribute' => 'category',
-                        'value' => function($model) {
-
-                            /* if (isset($model->category->parentId)) {
-                              $category = \common\models\costfit\Category::find()->where('categoryId =' . $model->category->parentId)->all();
-                              //return count($category);
-                              $data = [];
-                              foreach ($category as $value) {
-                              $data = $value->title;
-                              }
-
-                              return $data;
-                              } else {
-                              //return isset($model->category) ? $model->category->title : NULL;
-                              } */
-                            //if (count($category) == NULL) {
-                            // $category = \common\models\costfit\Category::find()->where('categoryId =' . $model->category->categoryId)->all();
-                            //}
-                            //$data = [];
-                            //foreach ($category as $value) {
-                            // $data[] = $value->title;
-                            // }
-                            // return print_r($data); //$category->title;
-                            return isset($model->category) ? $model->category->title : NULL;
-                        }
-                    ],
+                    /* [
+                      'attribute' => 'brand',
+                      'value' => function($model) {
+                      return isset($model->brand) ? $model->brand->title : NULL;
+                      }
+                      ],
+                      [
+                      'attribute' => 'category',
+                      'value' => function($model) {
+                      return isset($model->category) ? $model->category->title : NULL;
+                      }
+                      ], */
                     //'isbn',
                     ['attribute' => 'isbn',
                         'label' => 'isbn',
-                        'contentOptions' => ['style' => 'width:70px;  min-width:70px;  '],
+                    //'contentOptions' => ['style' => 'width:70px;  min-width:70px;  '],
                     ],
                     'code',
                     //'title',
-                    ['attribute' => 'title',
-                        'label' => 'title',
-                    //'contentOptions' => ['style' => 'width:200px;  min-width:200px;  '],
+                    [
+                        'attribute' => 'รายละเอียดสินค้า',
+                        'format' => 'html',
+                        'value' => function($model) {
+                            $title = $model->title;
+                            $category = isset($model->category) ? $model->category->title : NULL;
+                            $brand = isset($model->brand) ? $model->brand->title : NULL;
+                            return '<strong>Title : </strong>' . $title . '<br>'
+                            . '<strong>Category : </strong>' . $category . '<br>'
+                            . '<strong>Brand : </strong>' . $brand;
+                        }
                     ],
                     // 'optionName',
                     // 'shortDescription:ntext',
@@ -133,7 +120,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                         'attribute' => 'คงเหลือ',
                         'format' => 'html',
                         'value' => function($model) {
-                            return Html::a($model->result . ' ชิ้น(เพิ่ม)', Yii::$app->homeUrl . "suppliers/product-total-suppliers/create?productSuppId=" . $model->productSuppId . '&total=addup', [
+                            return Html::a($model->result . ' ชิ้น(<i class="fa fa-plus-circle" aria-hidden="true" class="success"></i>เพิ่มจำนวนสินค้า)', Yii::$app->homeUrl . "suppliers/product-total-suppliers/create?productSuppId=" . $model->productSuppId . '&total=addup', [
                                 'title' => Yii::t('app', 'เพิ่มจำนวนสินค้า'), 'class' => 'text-center']);
                         }
                     ],
@@ -148,13 +135,13 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                         'attribute' => 'ราคา',
                         'format' => 'html',
                         'value' => function($model) {
-                            return Html::a(' เพิ่มราคา', Yii::$app->homeUrl . "suppliers/product-price-suppliers?productSuppId=" . $model->productSuppId, [
-                                'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
+                            return Html::a('<i class="fa fa-plus-circle" aria-hidden="true" class="success"></i>เพิ่มราคาใหม่', Yii::$app->homeUrl . "suppliers/product-price-suppliers?productSuppId=" . $model->productSuppId, [
+                                'title' => Yii::t('app', 'เพิ่มราคาใหม่'), 'class' => 'text-center']);
                         }
                     ],
                     //'approve',
                     [
-                        'attribute' => 'approve',
+                        'attribute' => 'สถานะอนุมัติ',
                         'format' => 'html',
                         'value' => function($model) {
                             if ($model->approve == 'old') {
@@ -167,6 +154,14 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                                 $txt = '<span class="text-danger">แจ้งเจ้าหน้าที่ (' . common\helpers\CozxyUnity::TimeElapsedString($model->createDateTime) . ')</span>';
                             }
                             return $txt;
+                        }
+                    ],
+                    [
+                        'attribute' => 'Duplicates',
+                        'format' => 'html',
+                        'value' => function($model) {
+                            return Html::a('<i class="fa fa-plus-circle" aria-hidden="true" class="success"></i>duplicate', Yii::$app->homeUrl . "suppliers/product-suppliers/duplicate-product?productSuppId=" . $model->productSuppId, [
+                                'title' => Yii::t('app', 'image'), 'class' => 'text-left']);
                         }
                     ],
                     // 'unit',

@@ -300,4 +300,54 @@ class ProductSuppliersController extends SuppliersMasterController {
         ]);
     }
 
+    public function actionDuplicateProduct($productSuppId) {
+        //$productSuppId = '';
+        $modelx = $this->findModel($productSuppId);
+
+
+        $model = new ProductSuppliers();
+        $model->scenario = 'ProductSuppliers';
+        if (isset($_POST['ProductSuppliers'])) {
+            $model->attributes = $_POST["ProductSuppliers"];
+            $model->userId = Yii::$app->user->identity->userId;
+            $model->createDateTime = new \yii\db\Expression('NOW()');
+            //$model->approvecreateDateTime = $model->timestamp();
+            $model->approve = Yii::$app->request->post('approve');
+            $model->productId = Yii::$app->request->post('productIds');
+            $model->result = $_POST['ProductSuppliers']['quantity'];
+            $model->code = \common\helpers\Product::generateProductCode();
+            if ($model->save(FALSE)) {
+
+            }
+            //ECHO 'approve :' . Yii::$app->request->post('approve');
+            //ECHO '<BR> productIds:' . Yii::$app->request->post('productIds');
+            if (Yii::$app->request->post('approve') == 'new' && Yii::$app->request->post('productIds') == '') {
+                $modelSys = new Product();
+                $modelSys->attributes = $_POST["ProductSuppliers"];
+                $modelSys->userId = Yii::$app->user->identity->userId;
+                $modelSys->createDateTime = new \yii\db\Expression('NOW()');
+                $modelSys->approve = Yii::$app->request->post('approve');
+                $modelSys->productSuppId = $model->productSuppId;
+                $modelSys->code = $model->code;
+                if ($modelSys->save(FALSE)) {
+                    //throw new \yii\base\Exception(1);
+                    $productId = Yii::$app->db->lastInsertID; // idของProduct : ProductId
+                    \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $productId); //เพื่อให้รู้ว่าอยู่ภายใต้ Category ไหน
+                    $model->productId = $productId;
+                    $model->save(FALSE);
+                    //return $this->redirect('image-form?id=' . $model->productSuppId);
+                }
+            }
+            //return $this->redirect('image-form?productSuppId=' . $model->productSuppId);
+            //suppliers/product-price-suppliers
+            return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-price-suppliers/create?productSuppId=' . $model->productSuppId);
+        } else {
+            return $this->render('/duplicate/update', [
+                'model' => $modelx,
+            ]);
+        }
+        ///return $this->render('/duplicate/index', [
+        //]);
+    }
+
 }
