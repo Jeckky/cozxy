@@ -63,7 +63,7 @@
                 line-height: 25px;
             }
             #order > table, td, th {
-                border: 1px solid black;
+                // border: 1px solid black;
             }
         </style>
 
