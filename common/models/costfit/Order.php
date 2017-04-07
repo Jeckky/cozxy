@@ -135,7 +135,10 @@ class Order extends \common\models\costfit\master\OrderMaster
         $shipping = 0;
         $items = [];
         if (isset($order)) {
+            $receiveTypeArray = [];
             foreach ($order->orderItems as $item) {
+                $resceiveTitle = ($item->productSupplier->receiveType == 1) ? "COLD" : ($item->productSupplier->receiveType == 2 ? "HOT" : "BOOTH");
+                $receiveTypeArray[$resceiveTitle] = $item->productSupplier->receiveType;
                 $total += $item->total;
                 $quantity += $item->quantity;
                 $totalWithoutDiacount += $item->quantity * $item->priceOnePiece;
@@ -188,6 +191,7 @@ class Order extends \common\models\costfit\master\OrderMaster
             $res["totalItemDiscount"] = $totalItemDiscount;
             $res["totalItemDiscountText"] = number_format($totalItemDiscount, 2);
             $res["totalFormatText"] = number_format($order->total, 2);
+            $res["receiveTypeArray"] = $receiveTypeArray;
 
             if (isset($order->coupon)) {
                 if (Coupon::getCouponIsExpired($order->couponId)) {
