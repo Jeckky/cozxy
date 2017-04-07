@@ -102,7 +102,7 @@ class OrderController extends MasterController
             $cartArray = \common\models\costfit\Order::findCartArrayForMobile();
             $res["cart"] = $cartArray;
             $pQuan = 0;
-            foreach ($cartArray["items"] as $item) {
+            foreach ($cartArray["items"] as $receiveType => $item) {
                 if ($item["productSuppId"] == $_GET["id"]) {
                     $pQuan += $item["qty"];
                 }
