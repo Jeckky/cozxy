@@ -52,7 +52,7 @@ if (isset($listPointItems)) {
                     GridView::widget([
                         'dataProvider' => $dataProviderBag,
                         'columns' => [
-                            ['class' => 'yii\grid\SerialColumn'],
+                                ['class' => 'yii\grid\SerialColumn'],
                             'orderItemPackingId',
                             'orderNo',
                             'bagNo',
@@ -68,14 +68,14 @@ if (isset($listPointItems)) {
                                     //return isset($model->NumberOfBagNo) ? 'จำนวน ' . $model->NumberOfBagNo . ' ถุง' : ''; // status items 6 : แพ็คใส่ถุงแล้ว
                                 }
                             ],
-                            [
+                                [
                                 'attribute' => 'bagNo',
                                 'value' => function($model) {
                                     return 'จำนวน ' . \common\models\costfit\OrderItemPacking::countBagNo($model->bagNo) . "  ถุง";
                                     //return isset($model->NumberOfBagNo) ? 'จำนวน ' . $model->NumberOfBagNo . ' ถุง' : ''; // status items 6 : แพ็คใส่ถุงแล้ว
                                 }
                             ],
-                            [
+                                [
                                 'attribute' => 'status',
                                 'value' => function($model) {
                                     if ($model->status == 7) {
@@ -104,8 +104,8 @@ if (isset($listPointItems)) {
                                         //'title' => Yii::t('app', 'picking point'),]);
                                         if (\common\models\costfit\OrderItemPacking::checkBagNo($model->pickingItemsId) == Yii::$app->request->get('pickingItemsId')) {
 
-                                            return Html::a('ต้องการหยิบออกจากช่องนี้ ', Yii::$app->homeUrl . 'lockers/lockers/return-bag?model=' . Yii::$app->request->get('model') . '&code=' . Yii::$app->request->get('code') . '&boxcode=' . Yii::$app->request->get('boxcode') . '&pickingItemsId=' . Yii::$app->request->get('pickingItemsId') . '&orderId=' . Yii::$app->request->get('orderId') . '&orderItemPackingId=' . $model->orderItemPackingId . '&bagNo=' . $model->bagNo, [
-                                                'title' => Yii::t('app', 'ต้องการหยิบออกจากช่องนี้'),]);
+                                            return Html::a('ต้องการหยิบออกจากช่องนี้ ', Yii::$app->homeUrl . 'lockers/lockers/return-bag?model=' . Yii::$app->request->get('model') . '&code=' . Yii::$app->request->get('code') . '&boxcode=' . Yii::$app->request->get('boxcode') . '&pickingItemsId=' . Yii::$app->request->get('pickingItemsId') . '&orderId=' . Yii::$app->request->get('orderId') . '&orderItemPackingId=' . $model->orderItemPackingId . '&bagNo=' . $model->bagNo . '&orderItemId=' . $model->orderItemId, [
+                                                        'title' => Yii::t('app', 'ต้องการหยิบออกจากช่องนี้'),]);
                                         } else {
                                             return 'หยิบใส่ช่องแล้ว';
                                         }
@@ -145,8 +145,8 @@ if (isset($listPointItems)) {
                 <div class="panel colourable panel-info">
                     <?php
                     $form = ActiveForm::begin([
-                        'method' => 'GET',
-                        'action' => ['scan-bag?model=' . $model . '&code=' . $channel . '&boxcode=' . $listPoint->pickingId . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId],
+                                'method' => 'GET',
+                                'action' => ['scan-bag?model=' . $model . '&code=' . $channel . '&boxcode=' . $listPoint->pickingId . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId],
                     ]);
                     ?>
                     <div class="panel-heading">
@@ -181,7 +181,7 @@ if (isset($listPointItems)) {
                     <?php
                     if ($bagNo != '') {
                         ?>  <!--<a href="close-channel?status=latter&bagNo=<?php echo $bagNo; ?>&model=<?php echo $model; ?>&code=<?php echo $channel; ?>&boxcode=<?php echo $listPoint->pickingId; ?>&pickingItemsId=<?php echo $pickingItemsId; ?>&orderId=<?php echo $orderId; ?>&orderItemPackingId=<?php echo $orderItemPackingId; ?>" class="btn btn-info"><i class="fa fa-hand-o-up"></i> 1.หยิบใส่ช่อง <?php echo $channel; ?> , ถุง : <?php echo $bagNo; ?></a>
-                                                                          หรือ-->
+                                                                                              หรือ-->
                         <a href="close-channel?status=now&bagNo=<?php echo $bagNo; ?>&model=<?php echo $model; ?>&code=<?php echo $channel; ?>&boxcode=<?php echo $listPoint->pickingId; ?>&pickingItemsId=<?php echo $pickingItemsId; ?>&orderId=<?php echo $orderId; ?>&orderItemPackingId=<?php echo $orderItemPackingId; ?>" class="btn btn-danger"><i class="fa fa-hand-o-up"></i> คลิกตรงนี้ ต้องการปิดช่องนี้ทันที่ : หยิบใส่ช่อง <?php echo $channel; ?> , ถุง : <?php echo $bagNo; ?></a>
                     <?php } ?>
                 </center>
@@ -282,7 +282,7 @@ if (isset($listPointItems)) {
                         GridView::widget([
                             'dataProvider' => $dataProviderAllOrder,
                             'columns' => [
-                                ['class' => 'yii\grid\SerialColumn'],
+                                    ['class' => 'yii\grid\SerialColumn'],
                                 'orderItemPackingId',
                                 'orderNo',
                                 'bagNo',
@@ -300,14 +300,14 @@ if (isset($listPointItems)) {
                                         //return isset($model->NumberOfBagNo) ? 'จำนวน ' . $model->NumberOfBagNo . ' ถุง' : ''; // status items 6 : แพ็คใส่ถุงแล้ว
                                     }
                                 ],
-                                [
+                                    [
                                     'attribute' => 'bagNo',
                                     'value' => function($model) {
                                         return 'จำนวน ' . \common\models\costfit\OrderItemPacking::countBagNo($model->bagNo) . "  ถุง";
                                         //return  ;//isset($model->NumberOfBagNo) ? 'จำนวน ' . $model->NumberOfBagNo . ' ถุง' : ''; // status items 6 : แพ็คใส่ถุงแล้ว
                                     }
                                 ],
-                                [
+                                    [
                                     'attribute' => 'status',
                                     'value' => function($model) {
                                         if ($model->status == 4) {
@@ -354,7 +354,7 @@ if (isset($listPointItems)) {
                 <button type="button" class="close" data-dismiss="alert">×</button>
                 <strong>ไม่พบข้อมูล</strong> ชื่อช่องนี้ ลองใหม่อีกครั้ง...&nbsp; <img src="<?php echo Yii::$app->homeUrl; ?>/images/icon/default-loader.gif" height="30" >
             </div>
-            <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ?>">-->
+            <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ?>">-->
         </div>
         <?php
     }
