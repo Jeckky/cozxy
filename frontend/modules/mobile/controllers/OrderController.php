@@ -295,9 +295,8 @@ class OrderController extends MasterController
 
         $i = 0;
         foreach ($pickingPoints as $pp) {
-//            throw new \yii\base\Exception(print_r($pp->attributes, true));
             foreach ($pp->attributes as $attr => $v) {
-                $res[$i][$attr] = $pp->attributes[$attr];
+                $res[$i][$attr] = $v;
             }
             $i++;
         }
