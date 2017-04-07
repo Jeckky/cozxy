@@ -415,7 +415,7 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
                                 <p>Limo is the product </p>
                             </div>
                         <?php } ?>
-                    </section><!--Brands Carousel Close-->
+                    </section>
                 </div>
             </div>
         </div>

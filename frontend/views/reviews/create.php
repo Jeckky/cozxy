@@ -41,11 +41,27 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             // Your client options
                             ],
                         ]);
-                        ?>
-                        <br>
-                        <a href="/reviews/create-review?ref=" class="btn btn-black btn-sm" role="button" id="write-reviews">Write a review</a>
-                        <br><br><br>
+                        ?><br><br>
                     </div>
+                    <form id="reviews-form" method="post" novalidate="novalidate">
+
+                        <!--Left Column-->
+                        <div class="col-lg-8 col-md-8 col-sm-8">
+
+                            <div class="form-group">
+                                <label for="co-company-name">หัวข้อ</label>
+                                <input type="text" class="form-control" id="co-company-name" name="co-company-name" placeholder="Company name">
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="order-notes">รายละเอียด</label>
+                                <textarea class="form-control" name="order-notes" id="order-notes" rows="4" placeholder="Order notes"></textarea>
+                            </div>
+                            <a href="/reviews/save" class="btn btn-black btn-sm" role="button" id="write-reviews">Save a review</a>
+                            <br><br><br>
+                        </div>
+
+                    </form>
+
                 </div>
             </div>
 
