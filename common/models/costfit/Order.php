@@ -253,6 +253,138 @@ class Order extends \common\models\costfit\master\OrderMaster
         return $res;
     }
 
+    public static function findCartArrayForMobile()
+    {
+        $res = [];
+        $order = Order::getOrder();
+        $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
+        $total = 0;
+        $totalWithoutDiacount = 0;
+        $totalItemDiscount = 0;
+        $quantity = 0;
+        $shipping = 0;
+        $items = [];
+        if (isset($order)) {
+            $orderItems = OrderItem::find()->where("orderId=" . $order->orderId)->orderBy("receiveType ASC")->all();
+            foreach ($orderItems as $item) {
+                $resceiveTitle = ($item->productSupplier->receiveType == 1) ? "COLD" : ($item->productSupplier->receiveType == 2 ? "HOT" : "BOOTH");
+                $total += $item->total;
+                $quantity += $item->quantity;
+                $totalWithoutDiacount += $item->quantity * $item->priceOnePiece;
+//                $productPrice = ProductPrice::find()->where("productId = $item->productId AND quantity = $item->quantity")->one();
+                if (isset($item->discountValue) && $item->discountValue > 0) {
+                    $totalItemDiscount += $item->discountValue;
+                }
+
+                if (isset($item->shippingDiscountValue)) {
+                    $totalItemDiscount += $item->shippingDiscountValue;
+                }
+                $items[$resceiveTitle][$item->orderItemId] = [
+                    'orderItemId' => $item->orderItemId,
+                    'productId' => $item->productId,
+                    'productSuppId' => $item->productSuppId,
+                    'receiveType' => $item->productSupplier->receiveType,
+                    'receiveTypeTitle' => ($item->productSupplier->receiveType == 1) ? "COLD" : ($item->productSupplier->receiveType == 2 ? "HOT" : "BOOTH"),
+                    'title' => $item->productSupplier->title,
+                    'code' => $item->productSupplier->code,
+                    'qty' => $item->quantity,
+                    //'price' => $item->price,
+                    'price' => ProductSuppliers::productPriceSupplier($item->productSuppId),
+                    'priceText' => number_format($item->price, 2),
+                    'priceOnePiece' => $item->priceOnePiece,
+                    'priceOnePieceText' => number_format($item->priceOnePiece, 2),
+                    'priceMarket' => ProductSuppliers::productPriceSupplier($item->productSuppId),
+                    //'priceMarket' => $item->product->price,
+                    'sendDate' => $item->sendDate,
+                    'firstTimeSendDate' => $item->firstTimeSendDate,
+                    'sendDateNoDate' => isset($item->shippingType) ? $item->shippingType->date : NULL,
+                    'subTotal' => $item->subTotal,
+                    'shipDate' => $item->sendDate,
+                    'discountValue' => $item->discountValue,
+                    'shippingDiscountValue' => isset($item->shippingDiscountValue) ? $item->shippingDiscountValue : 0,
+                    'shippingDiscountValueText' => isset($item->shippingDiscountValue) ? number_format($item->shippingDiscountValue, 2) : number_format(0, 2),
+                    'total' => $item->total,
+                    'image' => isset($item->product->productImages[0]) ? \Yii::$app->homeUrl . $item->product->productImages[0]->image : $directoryAsset . "/img/catalog/shopping-cart-thumb.jpg",
+                ];
+            }
+            $order->save(); // For Update Total;
+            $res['orderId'] = $order->orderId;
+            $res['isSlowest'] = $order->isSlowest;
+            $res["totalExVat"] = $order->totalExVat;
+            $res["totalExVatFormatText"] = number_format($order->totalExVat, 2);
+            $res["vat"] = $order->vat;
+            $res["vatFormatText"] = number_format($order->vat, 2);
+            $res["total"] = $order->total;
+            $res["totalWithoutDiscount"] = $totalWithoutDiacount;
+            $res["totalWithoutDiscountText"] = number_format($totalWithoutDiacount, 2);
+            $res["totalItemDiscount"] = $totalItemDiscount;
+            $res["totalItemDiscountText"] = number_format($totalItemDiscount, 2);
+            $res["totalFormatText"] = number_format($order->total, 2);
+
+            if (isset($order->coupon)) {
+                if (Coupon::getCouponIsExpired($order->couponId)) {
+                    $order->orderMessage = "Coupon " . $order->coupon->code . " is expired.";
+                    $order->couponId = NULL;
+                    $order->save();
+                    $res["couponCode"] = NULL;
+                } else {
+                    $res["couponCode"] = $order->coupon->code;
+                }
+            } else {
+                $res["couponCode"] = NULL;
+            }
+            $res["discount"] = $order->discount;
+            $res["discountFormatText"] = number_format($order->discount, 2);
+            $res["shippingRate"] = $order->shippingRate;
+            $res["shippingRateFormatText"] = number_format($order->shippingRate, 2);
+            $res["summary"] = $order->summary;
+            $res["summaryFormatText"] = number_format($order->summary, 2);
+            $res["items"] = $items;
+            $res["qty"] = $quantity;
+            if (isset($order->orderMessage)) {
+                $res["orderMessage"] = $order->orderMessage;
+            }
+        } else {
+            $res = [
+                'total' => $total,
+                'isSlowest' => FALSE,
+                'totalFormatText' => number_format($total, 2),
+                'shippingRate' => $shipping,
+                'shippingRateFormatText' => number_format($shipping, 2),
+                'summary' => $total + $shipping,
+                'summaryFormatText' => number_format($total + $shipping, 2),
+                'totalWithoutDiscount' => $totalWithoutDiacount,
+                'totalItemDiscount' => $totalItemDiscount,
+                'qty' => $quantity,
+                'items' => [
+//                    [
+//                        'productId' => 0,
+//                        'title' => '-- No Item Found --',
+//                        'qty' => 0,
+//                        'price' => 0,
+//                    ],
+//                    [
+//                        'title' => 'Product 2',
+//                        'qty' => 6,
+//                        'price' => 11234,
+//                    ],
+//                    [
+//                        'title' => 'Product 3',
+//                        'qty' => 4,
+//                        'price' => 12234,
+//                    ],
+//                    [
+//                        'title' => 'Product 4',
+//                        'qty' => 2,
+//                        'price' => 51234,
+//                    ],
+                ]
+            ];
+        }
+//        throw new \yii\base\Exception(print_r($res, true));
+        return $res;
+    }
+
     public function getCoupon()
     {
         return $this->hasOne(Coupon::className(), ['couponId' => 'couponId']);

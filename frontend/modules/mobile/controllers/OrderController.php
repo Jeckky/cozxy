@@ -19,13 +19,13 @@ class OrderController extends MasterController
      */
     public function actionIndex()
     {
-	    $cartArray = \common\models\costfit\Order::findCartArray();
-	    print_r(\yii\helpers\Json::encode($cartArray));
+        $cartArray = \common\models\costfit\Order::findCartArrayForMobile();
+        print_r(\yii\helpers\Json::encode($cartArray));
     }
 
     public function actionFindCartArray()
     {
-        $cart = \common\models\costfit\Order::findCartArray();
+        $cart = \common\models\costfit\Order::findCartArrayForMobile();
 
         print_r(Json::encode($cart));
     }
@@ -99,7 +99,7 @@ class OrderController extends MasterController
             $order->save();
             $res["shoppingCart"] = $this->createShoppingCart($order->orderId);
             $res["orderItemId"] = $orderItemId;
-            $cartArray = \common\models\costfit\Order::findCartArray();
+            $cartArray = \common\models\costfit\Order::findCartArrayForMobile();
             $res["cart"] = $cartArray;
             $pQuan = 0;
             foreach ($cartArray["items"] as $item) {
@@ -136,7 +136,7 @@ class OrderController extends MasterController
             $res["error"] = NULL;
             $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
             $order->save(); // Save For Cal new total
-            $cartArray = \common\models\costfit\Order::findCartArray();
+            $cartArray = \common\models\costfit\Order::findCartArrayForMobile();
             $res["cart"] = $cartArray;
             $res["productSuppId"] = $orderItem->productSuppId;
             $res["deleteQnty"] = $qnty;
@@ -229,6 +229,62 @@ class OrderController extends MasterController
             $res["error"] = "ไม่สามารถลบรายการได้";
         }
         print_r(\yii\helpers\Json::encode($res));
+    }
+
+    public function actionUpdateCartItem()
+    {
+
+        $res = [];
+        $product = new \common\models\costfit\Product();
+        $price = $product->calProductPrice($_GET["productSuppId"], $_GET["quantity"], 1, $_GET["sendDate"], NULL);
+//        throw new \yii\base\Exception(print_r($price, true));
+        $maxQuantity = $product->findMaxQuantitySupplier($_GET["productSuppId"], 0);
+//        throw new \yii\base\Exception("max quantity=" . $maxQuantity);
+        if ($_GET["quantity"] <= $maxQuantity) {
+            if (isset($price)) {
+                $cart = \common\models\costfit\Order::findCartArrayForMobile();
+                $oi = \common\models\costfit\OrderItem::find()->where("productSuppId = " . $_GET["productSuppId"] . " AND orderId=" . $cart["orderId"] . " AND sendDate =" . $_GET["sendDate"])->one();
+                $oi->price = $price["price"];
+                $oi->quantity = $_GET["quantity"];
+                $oi->priceOnePiece = $oi->product->calProductPrice($_GET["productSuppId"], 1, 0, NULL, NULL);
+                $oi->subTotal = $oi->price * $_GET["quantity"];
+                $oi->discountValue = $price["discountValue"];
+                if (isset($price["shippingDiscountValue"])) {
+                    $oi->shippingDiscountValue = $price["shippingDiscountValue"];
+                    $oi->total = ($oi->quantity * $oi->price) - $oi->discountValue - $price["shippingDiscountValue"];
+                } else {
+                    $oi->total = ($oi->quantity * $oi->price) - $oi->discountValue;
+                }
+//                $oi->total = ($oi->price * $_POST["quantity"]) - $price["discountValue"];
+                $oi->save();
+                $cart = \common\models\costfit\Order::findCartArrayForMobile();
+                $res["status"] = TRUE;
+                $res["price"] = $price["price"];
+                $res["priceText"] = $price["priceText"];
+                $res["priceOnePiece"] = $oi->priceOnePiece;
+                $res["priceOnePieceText"] = number_format($oi->priceOnePiece, 2);
+                $res["saving"] = $price["discountValue"];
+                $res["savingText"] = number_format($price["discountValue"], 2);
+                $res["orderItemId"] = $oi->orderItemId;
+                $res["cart"] = $cart;
+                $res["discountType"] = $price["discountType"];
+                $res["discountValue"] = $price["discountValue"];
+                $res["shippingDiscountValue"] = isset($price["shippingDiscountValue"]) ? $price["shippingDiscountValue"] : 0;
+                $res["shippingDiscountValueText"] = isset($price["shippingDiscountValue"]) ? number_format($price["shippingDiscountValue"], 2) : number_format(0, 2);
+                $res["total"] = $oi->total;
+                $res["totalText"] = number_format($oi->total, 2);
+                $res["subTotal"] = $oi->subTotal;
+                $res["subTotalText"] = number_format($oi->subTotal, 2);
+            } else {
+                $res["status"] = FALSE;
+                $res['errorCode'] = 2;
+            }
+        } else {
+            $res["status"] = FALSE;
+            $res['errorCode'] = 1;
+        }
+
+        return \yii\helpers\Json::encode($res);
     }
 
 }
