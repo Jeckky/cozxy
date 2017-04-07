@@ -31,6 +31,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
             </div>
         </div>
+
     </div>
 </section><!--Wishlist Close-->
 
