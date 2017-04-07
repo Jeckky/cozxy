@@ -140,7 +140,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             },
                             'post' => function($url, $model) {
                                 return Html::a('<br><u>Post</u>', ['/suppliers/product-post', 'brandId' => $model->brandId], [
-                                    'title' => Yii::t('app', 'Change today\'s lists'),]);
+                                    'title' => Yii::t('app', 'Change today\'s lists'), 'target' => '_blank']);
                             },
                         ]
                     ],
