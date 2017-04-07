@@ -376,7 +376,7 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
                 ]);
                 ?>
                 <br>
-                <a href="/reviews/see-review?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>" class="btn btn-black btn-sm" role="button" id="write-reviews">Write a review</a>
+                <a href="/reviews/create-review?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>" class="btn btn-black btn-sm" role="button" id="write-reviews">Write a review</a>
             </div>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12">
@@ -387,7 +387,7 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
                     <p class="p-style3"> 2.Limo is the product which was born thanks to the involvement  </p>
                     <p class="p-style3"> 3.Limo is the product which was born thanks to the involvement  </p>
                 </div>
-                <a href="/reviews/see-review?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>"  role="button" class="panel-toggle" id="see-reviews" style="font-size: 14px;">See all .5,520 positive reviews <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                <a href="/reviews/see-review?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>"  role="button" class="panel-toggle" id="see-reviews" style="font-size: 14px;">See all 5,520 positive reviews <i class="fa fa-angle-right" aria-hidden="true"></i></a>
             </div>
         </div>
         <style>
