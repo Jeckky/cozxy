@@ -147,12 +147,12 @@ class Order extends \common\models\costfit\master\OrderMaster
                 if (isset($item->shippingDiscountValue)) {
                     $totalItemDiscount += $item->shippingDiscountValue;
                 }
-
                 $items[$item->orderItemId] = [
                     'orderItemId' => $item->orderItemId,
                     'productId' => $item->productId,
                     'productSuppId' => $item->productSuppId,
                     'receiveType' => $item->productSupplier->receiveType,
+                    'receiveTypeTitle' => ($item->productSupplier->receiveType == 1) ? "COLD" : ($item->productSupplier->receiveType == 2 ? "HOT" : "BOOTH"),
                     'title' => $item->productSupplier->title,
                     'code' => $item->productSupplier->code,
                     'qty' => $item->quantity,
