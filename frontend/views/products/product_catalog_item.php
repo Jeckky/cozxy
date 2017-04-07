@@ -406,9 +406,9 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
                     <p class="p-style3"> 3.Limo is the product which was born thanks to the involvement  </p>-->
                     <section class="brand-carousel-reviews">
                         <?php
-                        for ($i = 0; $i < 8; $i++) {
+                        for ($i = 0; $i < 6; $i++) {
                             ?>
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <a class="item" href="#">
                                     <img src="https://scontent.fbkk5-6.fna.fbcdn.net/v/t1.0-9/17191334_1577695832258523_1037615603835095665_n.jpg?oh=2b5cad8e920171b935e562ac380b5b2e&oe=594ED4C6" alt="" title="ขนาด : 164x120" width="164" height="120" class="img-responsive"/></a>
                                 <p>Pew</p>
