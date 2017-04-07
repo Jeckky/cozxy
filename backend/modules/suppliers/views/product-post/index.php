@@ -41,6 +41,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
         <div class="panel-body">
             <?//= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
 
+            <?= $form->field($model, 'status', ['options' => ['class' => 'row form-group']])->dropDownList(common\models\costfit\ProductPost::findStatusArray(), []) ?>
+
             <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
 
             <div class="form-group">

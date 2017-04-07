@@ -239,7 +239,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                             },
                             'post' => function($url, $model) {
                                 return Html::a('<br><u>Post</u>', ['/suppliers/product-post', 'productSuppId' => $model->productSuppId], [
-                                    'title' => Yii::t('app', 'Change today\'s lists'), 'target' => '_blank']);
+                                    'title' => Yii::t('app', 'Change today\'s lists'), 'target' => '_blank', 'data-pjax' => 0]);
                             },
                         ]
                     ],
