@@ -15,7 +15,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             foreach ($brands as $brand) {
 //                throw new yii\base\Exception(Yii::$app->basePath . "/web" . $brand->image);
                 if (file_exists(Yii::$app->basePath . "/web" . $brand->image) && !empty($brand->image)) {
-                    $image = Yii::$app->homeUrl . $brand->image;
+                    $image = $brand->image;
                 } else {
                     $image = Yii::$app->homeUrl . "images/no-image.jpg";
                 }

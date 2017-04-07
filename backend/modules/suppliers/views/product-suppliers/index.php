@@ -3,39 +3,45 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$categories = array(
-    array('id' => 1, 'parent' => 0, 'name' => 'Category A'),
-    array('id' => 2, 'parent' => 0, 'name' => 'Category B'),
-    array('id' => 3, 'parent' => 0, 'name' => 'Category C'),
-    array('id' => 4, 'parent' => 0, 'name' => 'Category D'),
-    array('id' => 5, 'parent' => 0, 'name' => 'Category E'),
-    array('id' => 6, 'parent' => 2, 'name' => 'Subcategory F'),
-    array('id' => 7, 'parent' => 2, 'name' => 'Subcategory G'),
-    array('id' => 8, 'parent' => 3, 'name' => 'Subcategory H'),
-    array('id' => 9, 'parent' => 4, 'name' => 'Subcategory I'),
-    array('id' => 10, 'parent' => 9, 'name' => 'Subcategory J'),
+
+$items = array(
+    array('id' => 42, 'parent_id' => 1),
+    array('id' => 43, 'parent_id' => 42),
+    array('id' => 1, 'parent_id' => 0),
+    array('id' => 43, 'parent_id' => 2),
+    array('id' => 45, 'parent_id' => 43),
+    array('id' => 2, 'parent_id' => 0),
+    array('id' => 46, 'parent_id' => 3),
+    array('id' => 3, 'parent_id' => 0),
 );
 
-function categoriesToTree(&$categories) {
-    $map = array(
-        0 => array('subcategories' => array())
-    );
-    foreach ($categories as &$category) {
-        $category['subcategories'] = array();
-        $map[$category['id']] = &$category;
-    }
-    foreach ($categories as &$category) {
-        $map[$category['parent']]['subcategories'][] = &$category;
-    }
-    return $map[0]['subcategories'];
+$childs = array();
+foreach ($items as &$item)
+    $childs[$item['parent_id']][] = &$item;
+unset($item);
+
+foreach ($items as &$item)
+    if (isset($childs[$item['id']]))
+        $item['childs'] = $childs[$item['id']];
+unset($item);
+
+//$tree = $childs[0];
+//echo '<pre>';
+//print_r($tree);
+//echo '<br>';
+//echo '555<br>';
+//foreach ($tree as $value) {
+$num = 1;
+foreach ($childs as $key => $value) {
+    //echo $value[$num++]['id'] . '<br>';
+    //echo $value['parent_id'] . '<br>';
+    //echo $value['childs'] . '<br>';
 }
-
-$tree = categoriesToTree($categories);
-
-
+//exit();
 $this->title = 'Product Suppliers';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
@@ -102,8 +108,21 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                             $title = $model->title;
                             $category = isset($model->category) ? $model->category->title : NULL;
                             $brand = isset($model->brand) ? $model->brand->title : NULL;
+                            $categoryL1P = common\models\costfit\Category::find()->where('categoryId = ' . $model->categoryId . ' and parentId is not null ')->one();
+
+                            /* if (count($categoryL1P) > 0) {
+                              //$categoryL1 = common\models\costfit\Category::find()->where('categoryId=' . $categoryL1P->categoryId)->one();
+                              $parentL1 = common\models\costfit\Category::find()->where('categoryId=' . $categoryL1P->parentId . ' ')->one();
+                              foreach ($parentL1 as $value) {
+                              $parentL2 = common\models\costfit\Category::find()->where('categoryId=' . $categoryL1P->parentId . ' ')->one();
+                              }
+                              $category = $parentId['title'] . '<b> > </b>' . $categoryL1P->title;
+                              } else {
+                              $category = '';
+                              } */
+
                             return '<strong>Title : </strong>' . $title . '<br>'
-                            . '<strong>Category : </strong>' . $category . '<br>'
+                            . '<strong>Category : </strong> ' . $category . '<br>'
                             . '<strong>Brand : </strong>' . $brand;
                         }
                     ],
