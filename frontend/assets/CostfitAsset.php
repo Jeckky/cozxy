@@ -24,8 +24,9 @@ class CostfitAsset extends AssetBundle {
         'css/styles.css',
         'css/colors/color-scheme6.css',
         'css/style-reform-cozxy.css', //Create By Taninut.B
-        'css/chat.css'//sak
+        'css/chat.css', //sak
     //'css/style-interpolate-cosxy', //Create By Taninut.B , Create Date : 16/1/2017
+    //'bootstrap-rating-master/jquery.rateyo.min.css',
     ];
     public $js = [
         'js/libs/jquery-1.11.1.min.js',
@@ -51,6 +52,8 @@ class CostfitAsset extends AssetBundle {
         'js/404.js',
         'js/plugins/smoothscroll.js',
         'js/plugins/jquery.placeholder.js',
+    //'bootstrap-rating-master/jquery.min.js',
+    //'bootstrap-rating-master/jquery.rateyo.js',
     ];
 
 }

@@ -6,6 +6,8 @@ use yii\bootstrap\ActiveForm;
 use common\models\costfit\Product;
 use common\models\costfit\ProductSuppliers;
 
+//use kartik\rating\StarRating;
+
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
@@ -89,7 +91,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <?= Html::hiddenInput("supplierId", $getPrductsSupplirs->userId, ['id' => 'supplierId']); ?>
     <?= Html::hiddenInput("productSuppId", $productSupplierId, ['id' => 'productSuppId']); ?>
     <?= Html::hiddenInput("receiveType", $getPrductsSupplirs->receiveType, ['id' => 'receiveType']); ?>
-    <?php // throw new \yii\base\Exception($fastId); ?>
+    <?php // throw new \yii\base\Exception($fastId);  ?>
     <div class="form-group">
         <?php if (isset($model->productGroup)): ?>
             <div class="select-style">
@@ -328,4 +330,38 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
     });
 </script>
 
+<div class="col-lg-6 col-md-6" id="productImage">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js"></script>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <h3>Customer Reviews</h3>
+            <div class="Reviews">&nbsp;
+                <div id="rateYo"></div>
+                <?php
+                // Usage with ActiveForm and model
+                //echo $form->field($model, 'rating')->widget(StarRating::classname(), [
+                //'pluginOptions' => ['size' => 'lg']
+                //]);
+// With model & without ActiveForm
+                // echo StarRating::widget([
+                //'name' => 'rating_1',
+                //'pluginOptions' => ['disabled' => true, 'showClear' => false]
+                //]);
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
 
+    $(function () {
+
+        $("#rateYo").rateYo({
+            starWidth: "40px"
+        });
+
+    });
+</script>
