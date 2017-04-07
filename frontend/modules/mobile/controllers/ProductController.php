@@ -73,7 +73,7 @@ class ProductController extends \common\controllers\MasterController
             $ps[$i]['brand'] = isset($pso->brand) ? $pso->brand->title : NULL;
             $ps[$i]['sale_price'] = false;
             $ps[$i]['on_wish_list'] = false;
-	        $ps[$i]['supplierId'] = $pso->userId;
+            $ps[$i]['supplierId'] = $pso->userId;
 
             $hash = [
                 'categoryId' => $pso->categoryId,
@@ -151,11 +151,6 @@ class ProductController extends \common\controllers\MasterController
 
         if (isset($p)) {
 
-<<<<<<< HEAD
-=======
-//            throw new \yii\base\Exception(print_r($p->attributes, true));
-
->>>>>>> origin/multi-suppliers
             $res['productId'] = $p->productId;
             $res['productSuppId'] = $p->productSuppId;
             $res['title'] = $p->title;
@@ -178,6 +173,7 @@ class ProductController extends \common\controllers\MasterController
             $res['sale_price'] = false;
             $res['on_wish_list'] = false;
             $res['supplierId'] = $p->userId;
+            $res['receiveType'] = $p->receiveType;
 
 
             $j = 0;

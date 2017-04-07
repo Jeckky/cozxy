@@ -284,7 +284,25 @@ class OrderController extends MasterController
             $res['errorCode'] = 1;
         }
 
-        return \yii\helpers\Json::encode($res);
+        print_r(\yii\helpers\Json::encode($res));
+    }
+
+    public function actionPickingPointByReceiveType()
+    {
+        $res = [];
+
+        $pickingPoints = \common\models\costfit\PickingPoint::find()->where("type =" . $_GET['receiveType'])->all();
+
+        $i = 0;
+        foreach ($pickingPoints as $pp) {
+//            throw new \yii\base\Exception(print_r($pp->attributes, true));
+            foreach ($pp->attributes as $attr => $v) {
+                $res[$i][$attr] = $pp->attributes[$attr];
+            }
+            $i++;
+        }
+
+        print_r(\yii\helpers\Json::encode($res));
     }
 
 }
