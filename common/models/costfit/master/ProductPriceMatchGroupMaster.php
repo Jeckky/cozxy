@@ -10,7 +10,7 @@ use Yii;
     * @property string $productPriceMatchGroupId
     * @property string $title
     * @property string $description
-    * @property string $discountPercent
+    * @property integer $discountPercent
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime

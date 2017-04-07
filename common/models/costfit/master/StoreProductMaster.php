@@ -11,13 +11,13 @@ use Yii;
     * @property string $storeProductGroupId
     * @property string $storeId
     * @property string $productId
-    * @property string $productSuppId
+    * @property integer $productSuppId
     * @property string $paletNo
-    * @property string $quantity
+    * @property integer $quantity
     * @property string $price
     * @property string $total
     * @property integer $shippingFromType
-    * @property string $importQuantity
+    * @property integer $importQuantity
     * @property string $remark
     * @property string $orderItemId
     * @property integer $status
@@ -40,7 +40,7 @@ return 'store_product';
 public function rules()
 {
 return [
-            [['storeProductGroupId', 'productId', 'shippingFromType', 'createDateTime'], 'required'],
+            [['storeProductGroupId', 'productId', 'createDateTime'], 'required'],
             [['storeProductGroupId', 'storeId', 'productId', 'productSuppId', 'quantity', 'shippingFromType', 'importQuantity', 'orderItemId', 'status'], 'integer'],
             [['paletNo', 'price', 'total'], 'number'],
             [['createDateTime', 'updateDateTime'], 'safe'],

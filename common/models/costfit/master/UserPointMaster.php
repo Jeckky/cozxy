@@ -8,12 +8,12 @@ use Yii;
 * This is the model class for table "user_point".
 *
     * @property string $userPointId
-    * @property string $userId
-    * @property string $currentPoint
-    * @property string $totalPoint
-    * @property string $totalMoney
+    * @property integer $userId
+    * @property integer $currentPoint
+    * @property integer $totalPoint
+    * @property integer $totalMoney
     * @property integer $status
-    * @property string $createDateTime
+    * @property string $createDateTime
     * @property string $updateDateTime
 */
 class UserPointMaster extends \common\models\ModelMaster
@@ -34,7 +34,7 @@ public function rules()
 return [
             [['userId', 'currentPoint', 'totalPoint', 'totalMoney'], 'required'],
             [['userId', 'currentPoint', 'totalPoint', 'totalMoney', 'status'], 'integer'],
-            [['createDateTime', 'updateDateTime'], 'safe'],
+            [['createDateTime', 'updateDateTime'], 'safe'],
         ];
 }
 
@@ -50,7 +50,7 @@ return [
     'totalPoint' => Yii::t('user_point', 'Total Point'),
     'totalMoney' => Yii::t('user_point', 'Total Money'),
     'status' => Yii::t('user_point', 'Status'),
-    'createDateTime' => Yii::t('user_point', 'Create Date Time'),
+    'createDateTime' => Yii::t('user_point', 'Create Date Time'),
     'updateDateTime' => Yii::t('user_point', 'Update Date Time'),
 ];
 }
