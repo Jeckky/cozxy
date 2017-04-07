@@ -354,7 +354,7 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
             </div>
         </div>
     </div>
-</div>
+</div> 
 <script type="text/javascript">
 
     $(function () {
