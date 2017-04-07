@@ -19,13 +19,13 @@ class OrderController extends MasterController
      */
     public function actionIndex()
     {
-        $cartArray = \common\models\costfit\Order::findCartArrayForMobile();
+        $cartArray = \common\models\costfit\Order::findCartArray();
         print_r(\yii\helpers\Json::encode($cartArray));
     }
 
     public function actionFindCartArray()
     {
-        $cart = \common\models\costfit\Order::findCartArrayForMobile();
+        $cart = \common\models\costfit\Order::findCartArray();
 
         print_r(Json::encode($cart));
     }
@@ -99,7 +99,7 @@ class OrderController extends MasterController
             $order->save();
             $res["shoppingCart"] = $this->createShoppingCart($order->orderId);
             $res["orderItemId"] = $orderItemId;
-            $cartArray = \common\models\costfit\Order::findCartArrayForMobile();
+            $cartArray = \common\models\costfit\Order::findCartArray();
             $res["cart"] = $cartArray;
             $pQuan = 0;
             foreach ($cartArray["items"] as $receiveType => $item) {
@@ -136,7 +136,7 @@ class OrderController extends MasterController
             $res["error"] = NULL;
             $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
             $order->save(); // Save For Cal new total
-            $cartArray = \common\models\costfit\Order::findCartArrayForMobile();
+            $cartArray = \common\models\costfit\Order::findCartArray();
             $res["cart"] = $cartArray;
             $res["productSuppId"] = $orderItem->productSuppId;
             $res["deleteQnty"] = $qnty;
@@ -242,7 +242,7 @@ class OrderController extends MasterController
 //        throw new \yii\base\Exception("max quantity=" . $maxQuantity);
         if ($_GET["quantity"] <= $maxQuantity) {
             if (isset($price)) {
-                $cart = \common\models\costfit\Order::findCartArrayForMobile();
+                $cart = \common\models\costfit\Order::findCartArray();
                 $oi = \common\models\costfit\OrderItem::find()->where("productSuppId = " . $_GET["productSuppId"] . " AND orderId=" . $cart["orderId"] . " AND sendDate =" . $_GET["sendDate"])->one();
                 $oi->price = $price["price"];
                 $oi->quantity = $_GET["quantity"];
@@ -257,7 +257,7 @@ class OrderController extends MasterController
                 }
 //                $oi->total = ($oi->price * $_POST["quantity"]) - $price["discountValue"];
                 $oi->save();
-                $cart = \common\models\costfit\Order::findCartArrayForMobile();
+                $cart = \common\models\costfit\Order::findCartArray();
                 $res["status"] = TRUE;
                 $res["price"] = $price["price"];
                 $res["priceText"] = $price["priceText"];
