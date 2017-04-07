@@ -348,7 +348,7 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
             }
         </style>
         <div class="col-lg-12 col-md-12 col-sm-12">
-            <h3>Customer Reviews</h3>
+            <h3 style="text-decoration: underline">Customer Reviews</h3>
             <div class="Reviews" style="margin-left: 10px;">
                 <h5>Rate this item</h5>
                 <?php
@@ -380,7 +380,7 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
             </div>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12">
-            <h3>My Post</h3>
+            <h3 style="text-decoration: underline">My Post</h3>
             <div class="Reviews" style="margin-left: 10px;">
                 <div class="post">
                     <p class="p-style3"> 1.Limo is the product which was born thanks to the involvement  </p>
@@ -398,7 +398,7 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
             }
         </style>
         <div class="col-lg-12 col-md-12 col-sm-12">
-            <h3>Other Post</h3>
+            <h3 style="text-decoration: underline">Other Post</h3>
             <div class="Reviews" style="margin-left: 10px;">
                 <div class="post">
                     <!--<p class="p-style3"> 1.Limo is the product which was born thanks to the involvement  </p>
