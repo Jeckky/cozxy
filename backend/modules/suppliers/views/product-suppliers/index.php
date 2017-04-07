@@ -218,7 +218,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                       ], */
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
-                        'template' => '{view} {update} {delete}',
+                        'template' => '{view} {update} {delete} {post}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-eye"></i>', $url, [
@@ -236,6 +236,10 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                                     'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
                                     'data-method' => 'post',
                                 ]);
+                            },
+                            'post' => function($url, $model) {
+                                return Html::a('<br><u>Post</u>', ['/suppliers/product-post', 'productSuppId' => $model->productSuppId], [
+                                    'title' => Yii::t('app', 'Change today\'s lists'),]);
                             },
                         ]
                     ],

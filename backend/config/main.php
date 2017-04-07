@@ -65,7 +65,7 @@ return [
         ],
         'redactor' => [
             'class' => 'yii\redactor\RedactorModule',
-            'uploadDir' => '@web/images',
+            'uploadDir' => '/Users/kpu/Dev/wwwroot/cozxy/frontend/web/images',
             'uploadUrl' => '@web/images',
             'imageAllowExtensions' => ['jpg', 'png', 'gif']
         ],

@@ -75,7 +75,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     // 'updateDateTime',
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
-                        'template' => '{view} {update} {delete}',
+                        'template' => '{view} {update} {delete} {post}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 $userType = common\models\costfit\Brand::find()->where('userId = ' . Yii::$app->user->identity->userId)->one();
@@ -137,6 +137,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         'data-method' => 'post',
                                     ]);
                                 }
+                            },
+                            'post' => function($url, $model) {
+                                return Html::a('<br><u>Post</u>', ['/suppliers/product-post', 'brandId' => $model->brandId], [
+                                    'title' => Yii::t('app', 'Change today\'s lists'),]);
                             },
                         ]
                     ],
