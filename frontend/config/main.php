@@ -23,7 +23,13 @@ return [
         ],
         'mobile' => [
             'class' => '\frontend\modules\mobile\Mobile'
-        ]
+        ],
+        'redactor' => [
+            'class' => 'yii\redactor\RedactorModule',
+            'uploadDir' => '/Users/kpu/Dev/wwwroot/cozxy/frontend/web/images',
+            'uploadUrl' => '@web/images',
+            'imageAllowExtensions' => ['jpg', 'png', 'gif']
+        ],
     ],
     'components' => [
         'user' => [
@@ -65,7 +71,7 @@ return [
                 'checkout/confirmation/<hash>' => 'checkout/confirmation',
 //                'checkout/reverse-order-to-cart/<hash>' => 'checkout/reverse-order-to-cart',
 //                'profile/picking-point/<hash>' => 'profile/picking-point',
-            //mobile
+//mobile
 //                'mobile/product/<hash>' => 'mobile/product',
 //                'mobile/product/product/<hash>' => 'mobile/product/product',
             ],

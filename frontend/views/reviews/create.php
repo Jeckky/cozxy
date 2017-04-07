@@ -24,44 +24,58 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <div class="row">
 
             <!--Items List-->
-            <div class="col-lg-9 col-md-9">
+            <div class="col-lg-12 col-md-12">
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                    <h3>Customer Reviews</h3>
-                    <div class="Reviews" style="margin-left: 10px;">
-                        <h5>Rate this item</h5>
-                        <?php
-                        echo \yii2mod\rating\StarRating::widget([
-                            'name' => "input_name",
-                            'value' => 5,
-                            'options' => [
-                                // Your additional tag options
-                                'id' => 'reviews-rate',
-                            ],
-                            'clientOptions' => [
-                            // Your client options
-                            ],
-                        ]);
-                        ?><br><br>
-                    </div>
-                    <form id="reviews-form" method="post" novalidate="novalidate">
+                    <h3>Product Post</h3>
 
-                        <!--Left Column-->
-                        <div class="col-lg-8 col-md-8 col-sm-8">
+                    <!--<form id="reviews-form" method="post" novalidate="novalidate">-->
+                    <?php
+                    $form = ActiveForm::begin([
+                        'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+                        'fieldConfig' => [
+                            'template' => '{label}<div class="col-sm-9">{input}</div>',
+                            'labelOptions' => [
+                                'class' => 'col-sm-3 control-label'
+                            ]
+                        ]
+                    ]);
+                    ?>
+                    <!--Left Column-->
+                    <div class="col-lg-8 col-md-8 col-sm-8">
 
-                            <div class="form-group">
-                                <label for="co-company-name">หัวข้อ</label>
-                                <input type="text" class="form-control" id="co-company-name" name="co-company-name" placeholder="Company name">
-                            </div>
-                            <div class="form-group">
-                                <label class="sr-only" for="order-notes">รายละเอียด</label>
-                                <textarea class="form-control" name="order-notes" id="order-notes" rows="4" placeholder="Order notes"></textarea>
-                            </div>
-                            <a href="/reviews/save" class="btn btn-black btn-sm" role="button" id="write-reviews">Save a review</a>
-                            <br><br><br>
+                        <!--                        <div class="form-group">
+                                                    <label class="sr-only" for="order-notes">Product Post</label>
+                                                    <textarea class="form-control" name="order-notes" id="order-notes" rows="4" placeholder="Order notes"></textarea>
+                                                </div>-->
+                        <?= $form->field($model, 'description', ['options' => ['class' => 'row col-lg-12']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
+
+                        <br><br><br>
+                        <h3>Rating This Post</h3>
+                        <div class="Reviews" style="margin-left: 10px;">
+                            <h5>Rate this item</h5>
+                            <?php
+                            echo \yii2mod\rating\StarRating::widget([
+                                'name' => "input_name",
+                                'value' => 1,
+                                'options' => [
+                                    // Your additional tag options
+                                    'id' => 'reviews-rate',
+                                ],
+                                'clientOptions' => [
+                                // Your client options
+                                ],
+                            ]);
+                            ?><br><br>
                         </div>
+                        <div class="form-group">
+                            <div class="col-sm-9 col-sm-offset-3">
+                                <?= Html::submitButton($model->isNewRecord ? 'Create a review' : 'Update a review', ['class' => "btn btn-black btn-sm"]) ?>
+                            </div>
+                        </div>
+                    </div>
 
-                    </form>
-
+                    <!--</form>-->
+                    <?php ActiveForm::end(); ?>
                 </div>
             </div>
 

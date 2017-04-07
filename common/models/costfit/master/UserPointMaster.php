@@ -8,10 +8,10 @@ use Yii;
 * This is the model class for table "user_point".
 *
     * @property string $userPointId
-    * @property integer $userId
-    * @property integer $currentPoint
-    * @property integer $totalPoint
-    * @property integer $totalMoney
+    * @property string $userId
+    * @property string $currentPoint
+    * @property string $totalPoint
+    * @property string $totalMoney
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
