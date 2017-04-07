@@ -108,7 +108,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                             $title = $model->title;
                             $category = isset($model->category) ? $model->category->title : NULL;
                             $brand = isset($model->brand) ? $model->brand->title : NULL;
-                            $categoryL1P = common\models\costfit\Category::find()->where('categoryId = ' . $model->categoryId . ' and parentId is not null ')->one();
+                            //$categoryL1P = common\models\costfit\Category::find()->where('categoryId = ' . $model->categoryId . ' and parentId is not null ')->one();
 
                             /* if (count($categoryL1P) > 0) {
                               //$categoryL1 = common\models\costfit\Category::find()->where('categoryId=' . $categoryL1P->categoryId)->one();
