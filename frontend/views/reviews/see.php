@@ -92,7 +92,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 //2.Usage without a model
                                 echo \yii2mod\rating\StarRating::widget([
                                     'name' => "input_name",
-                                    'value' => 5,
+                                    'value' => 1,
                                     'options' => [
                                         // Your additional tag options
                                         'id' => 'reviews-rate', 'class' => 'reviews-rate',
