@@ -191,8 +191,9 @@ class LockersController extends LockersMasterController {
          * Customize Date 25/01/2017
          * By Taninut.Bm
          */
-        $orderItemId = Lockers::GetOrderItemId($orderItemPackingId);
+
         if (isset($bagNo) && !empty($bagNo)) {
+            $orderItemId = Lockers::GetOrderItemId($orderItemPackingId);
             /*
              * Check ว่า BagNo. นี้ มีอยู่ใน Lockers และช่องนี้ยัง
              * End Check ว่า BagNo. นี้ มีอยู่ใน Lockers และช่องนี้ยั
