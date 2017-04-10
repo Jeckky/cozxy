@@ -342,7 +342,7 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
             /* #reviews-rate > img{
                 width: 50px;
             }*/
-            #reviews-rate > img {
+            .reviews-rate > img {
                 display: initial;
                 max-width: 100%;
                 height: auto;
@@ -371,10 +371,10 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
                         //2.Usage without a model
                         echo \yii2mod\rating\StarRating::widget([
                             'name' => "input_name",
-                            'value' => 0,
+                            'value' => 1,
                             'options' => [
                                 // Your additional tag options
-                                'id' => 'reviews-rate',
+                                'id' => 'reviews-rate', 'class' => 'reviews-rate'
                             ],
                             'clientOptions' => [
                             // Your client options

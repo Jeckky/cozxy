@@ -95,7 +95,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     'value' => 5,
                                     'options' => [
                                         // Your additional tag options
-                                        'id' => 'reviews-rate',
+                                        'id' => 'reviews-rate', 'class' => 'reviews-rate',
                                     ],
                                     'clientOptions' => [
                                     // Your client options
@@ -145,9 +145,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     <?php
                                     if (count($productPost) > 0) {
                                         foreach ($productPost as $key => $value) {
-                                            $rating_score = 0;
+                                            //$rating_score = 0;
                                             $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
-                                            // $rating = \common\models\costfit\ProductPostRating::find()->where('productPostId=' . $value['productPostId'] . ' and userId = ' . $value->userId)->all();
+                                            $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId);
+                                            $rating_member = \common\helpers\Reviews::RatingInMember($value->productSuppId);
+                                            //echo $rating_score . '::';
+                                            //echo $rating_member;
+                                            if ($rating_score == 0 && $rating_member == 0) {
+                                                $results_rating = 0;
+                                            } else {
+                                                $results_rating = $rating_score / $rating_member;
+                                            }
 
                                             $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
                                             foreach ($productPostList as $valuex) {
@@ -155,23 +163,21 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                 ?>
                                                 <div class="col-md-2">
                                                     <?php
-                                                    //$rating_score += $rating['score'];
-                                                    //throw new \yii\base\Exception($value['productPostId']);
-                                                    //$rating_score +=$rating_score;
                                                     echo \yii2mod\rating\StarRating::widget([
-                                                        'name' => "input_name",
-                                                        'value' => 0,
+                                                        'name' => "input_name_" . $value['productPostId'],
+                                                        'value' => $results_rating,
                                                         'options' => [
                                                             // Your additional tag options
-                                                            'id' => 'reviews-rate',
+                                                            'id' => 'reviews-rate-' . $value['productPostId'], 'class' => 'reviews-rate',
                                                         ],
                                                         'clientOptions' => [
                                                         // Your client options
                                                         ],
                                                     ]);
+                                                    echo '<span style="font-size: 12px;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน</span>';
                                                     ?>
                                                 </div>
-                                                <div class="col-md-9 text-left">
+                                                <div class="col-md-9 text-left" >
                                                     <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $valuex->productId, 'productSupplierId' => $valuex->productSuppId]) ?>"><?php echo $valuex->title; ?></a>
                                                 </div>
                                                 <div class="col-sm-12 text-center" style="margin-top: 10px;">
