@@ -371,7 +371,7 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
                         //2.Usage without a model
                         echo \yii2mod\rating\StarRating::widget([
                             'name' => "input_name",
-                            'value' => 5,
+                            'value' => 0,
                             'options' => [
                                 // Your additional tag options
                                 'id' => 'reviews-rate',
