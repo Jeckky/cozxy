@@ -130,7 +130,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             font-size: 14px;
                             text-align: left;
                         }
-
+                        blockquote {
+                            font-size: 14px;
+                        }
                     </style>
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <h3 style="text-decoration: underline">Other Post</h3>
@@ -162,7 +164,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                 <div class="col-md-9 text-left">
                                                     <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $valuex->productId, 'productSupplierId' => $valuex->productSuppId]) ?>"><?php echo $valuex->title; ?></a>
                                                 </div>
-
                                                 <div class="col-sm-12 text-center" style="margin-top: 10px;">
                                                     <a class="item" href="#">
                                                         <?php
@@ -188,7 +189,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                                     <a href="#"> <i class="fa fa-user"></i> <?php echo $member->firstname; ?><?php echo $member->userId; ?></a>
                                                                     <a href="#"> <i class="fa fa-calendar"></i> <?php echo $postx->createDateTime; ?></a>
                                                                 </div>
-                                                                <p class="p-style3">comments <?php echo $number++; ?>. <?php echo $postx->description; ?></p>
+                                                                <blockquote>
+                                                                    <p class="p-style3"><?php echo $postx->description; ?></p>
+                                                                    <!--<footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>-->
+                                                                </blockquote>
                                                             </footer>
                                                         </div>
                                                         <?php
@@ -199,6 +203,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             }
                                         }
                                         ?>
+                                        <hr>
                                         <?php
                                     }
                                     ?>
