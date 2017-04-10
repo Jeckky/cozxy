@@ -318,7 +318,7 @@ class LockersController extends LockersMasterController {
         }
 
         // echo $queryCountBag->NumberOfBagNo;
-        // throw new \yii\base\Exception($orderId);
+        throw new \yii\base\Exception(print_r($query1));
         $dataProviderAllOrder = new ActiveDataProvider([
             'query' => $queryAllOrder,
         ]);
