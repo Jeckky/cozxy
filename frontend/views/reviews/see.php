@@ -191,7 +191,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                         <div class="col-md-12 post" style="text-align: left;">
                                                             <footer>
                                                                 <div class="share">
-                                                                    <a href="#"> <i class="fa fa-user"></i> <?php echo $member->firstname; ?><?php echo $member->userId; ?></a>
+                                                                    <a href="#"> <i class="fa fa-user"></i> <?php echo $member->firstname; ?></a>
                                                                     <a href="#"> <i class="fa fa-calendar"></i> <?php echo $postx->createDateTime; ?></a>
                                                                 </div>
                                                                 <blockquote>
