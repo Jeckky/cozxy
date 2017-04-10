@@ -130,7 +130,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         blockquote {
                             font-size: 14px;
                         }
-                        #rating-score > img {
+                        .rating-score > img {
                             display: initial;
                             max-width: 100%;
                             height: auto;
@@ -188,25 +188,25 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                     <?php
                                                     $post = common\models\costfit\ProductPost::find()->where('productSuppId=' . $value['productSuppId'])->all();
                                                     $number = 1;
-                                                    foreach ($post as $postx) {
-                                                        $member = \common\models\costfit\User::find()->where('userId=' . $postx->userId)->one();
-                                                        $rating = common\models\costfit\ProductPostRating::find()->where('productPostId=' . $postx['productPostId'])->one();
+                                                    foreach ($post as $postxRating) {
+                                                        $member = \common\models\costfit\User::find()->where('userId=' . $postxRating->userId)->one();
+                                                        $rating = common\models\costfit\ProductPostRating::find()->where('productPostId=' . $postxRating['productPostId'] . ' and userId = ' . $postxRating->userId)->one();
                                                         ?>
                                                         <div class="col-md-12 post" style="text-align: left;">
                                                             <footer>
                                                                 <div class="share">
                                                                     <a href="#"> <i class="fa fa-user"></i> <?php echo $member->firstname; ?></a>
-                                                                    <a href="#"> <i class="fa fa-calendar"></i> <?php echo $postx->createDateTime; ?></a>
+                                                                    <a href="#"> <i class="fa fa-calendar"></i> <?php echo $postxRating->createDateTime; ?></a>
                                                                 </div>
                                                                 <blockquote>
                                                                     <p>
                                                                         <?php
                                                                         echo \yii2mod\rating\StarRating::widget([
-                                                                            'name' => "input_name",
+                                                                            'name' => "input_name_" . $rating['score'],
                                                                             'value' => $rating['score'],
                                                                             'options' => [
                                                                                 // Your additional tag options
-                                                                                'id' => 'rating-score',
+                                                                                'id' => 'rating-score-' . $rating['score'], 'class' => 'rating-score',
                                                                             ],
                                                                             'clientOptions' => [
                                                                             // Your client options
@@ -214,7 +214,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                                         ]);
                                                                         ?>
                                                                     </p>
-                                                                    <p class="p-style3"><?php echo $postx->description; ?></p>
+                                                                    <p class="p-style3"><?php echo $postxRating->description; ?></p>
                                                                     <!--<footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>-->
                                                                 </blockquote>
                                                             </footer>
