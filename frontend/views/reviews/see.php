@@ -73,7 +73,56 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <?php
                 if (Yii::$app->controller->action->id == 'see-review') {
                     ?>
-                    <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <?php
+                        if (\Yii::$app->user->id != '') {
+                            ?>
+                            <h3 style="text-decoration: underline">My Post</h3>
+                            <div class="Reviews" style="margin-left: 10px;">
+                                <div class="post">
+
+                                    <?php
+                                    //$post = common\models\costfit\ProductPost::find()->where('productSuppId=' . $value['productSuppId'])->all();
+                                    $number = 1;
+                                    foreach ($productPostViewMem as $postxRating) {
+                                        $member = \common\models\costfit\User::find()->where('userId=' . $postxRating->userId)->one();
+                                        $rating = common\models\costfit\ProductPostRating::find()->where('productPostId=' . $postxRating['productPostId'] . ' and userId = ' . $postxRating->userId)->one();
+                                        ?>
+                                        <div class="col-md-12 post" style="text-align: left;">
+                                            <footer>
+                                                <div class="share">
+                                                    <a href="#"> <i class="fa fa-user"></i> <?php echo $member->firstname; ?></a>
+                                                    <a href="#"> <i class="fa fa-calendar"></i> <?php echo $postxRating->createDateTime; ?></a>
+                                                </div>
+                                                <blockquote>
+                                                    <p>
+                                                        <?php
+                                                        echo \yii2mod\rating\StarRating::widget([
+                                                            'name' => "input_name_" . $rating['score'],
+                                                            'value' => $rating['score'],
+                                                            'options' => [
+                                                                // Your additional tag options
+                                                                'id' => 'rating-score-' . $rating['score'], 'class' => 'rating-score',
+                                                            ],
+                                                            'clientOptions' => [
+                                                            // Your client options
+                                                            ],
+                                                        ]);
+                                                        ?>
+                                                    </p>
+                                                    <p class="p-style3"><?php echo $postxRating->description; ?></p>
+                                                    <!--<footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>-->
+                                                </blockquote>
+                                            </footer>
+                                        </div>
+                                        <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
                         <h3 style="text-decoration: underline">Customer Reviews</h3>
                         <div class="Reviews" style="margin-left: 10px;">
                             <h5>Rate this item</h5>
