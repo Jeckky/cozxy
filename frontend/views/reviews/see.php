@@ -144,7 +144,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         foreach ($productPost as $key => $value) {
                                             $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
                                             foreach ($productPostList as $valuex) {
-                                                $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productImageId', 'desc')->limit(5)->one();
+                                                $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productImageId desc')->limit(4)->all();
                                                 ?>
                                                 <div class="col-md-2">
                                                     <?php
@@ -165,18 +165,23 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                     <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $valuex->productId, 'productSupplierId' => $valuex->productSuppId]) ?>"><?php echo $valuex->title; ?></a>
                                                 </div>
                                                 <div class="col-sm-12 text-center" style="margin-top: 10px;">
-                                                    <a class="item" href="#">
-                                                        <?php
-                                                        if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
-                                                            if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
-                                                                echo "<img class=\"ms-thumb\" src=\"/" . $productImages->imageThumbnail2 . "\" alt=\"1\" class=\"img-responsive img-thumbnail\"/>";
+                                                    <?php
+                                                    foreach ($productImages as $valueImages) {
+                                                        if (isset($valueImages['imageThumbnail2']) && !empty($valueImages['imageThumbnail2'])) {
+                                                            if (file_exists(Yii::$app->basePath . "/web/" . $valueImages['imageThumbnail2'])) {
+                                                                echo "<div class=\"col-sm-3\"><img class=\"ms-thumb\" src=\"/" . $valueImages['imageThumbnail2'] . "\" alt=\"1\" class=\"img-responsive img-thumbnail\"/></div>";
                                                             } else {
-                                                                echo "<img  class=\"ms-thumb\"  src=\"" . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive img-thumbnail\"/>";
+                                                                echo "<div class=\"col-sm-3\"><img  class=\"ms-thumb\"  src=\"" . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive img-thumbnail\"/></div>";
                                                             }
                                                         } else {
                                                             ?>
-                                                            <img class="ms-thumb" src="<?php echo "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
-                                                        <?php } ?> </a>
+                                                            <div class="col-sm-3">
+                                                                <img class="ms-thumb" src="<?php echo "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
+                                                            </div>
+                                                            <?php
+                                                        }
+                                                    }
+                                                    ?>
                                                     <?php
                                                     $post = common\models\costfit\ProductPost::find()->where('productSuppId=' . $value['productSuppId'])->all();
                                                     $number = 1;

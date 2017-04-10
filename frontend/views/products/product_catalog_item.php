@@ -408,7 +408,7 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
                                         ?>
                                         <p class="p-style3" >
                                             <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $valuex->productId, 'productSupplierId' => $valuex->productSuppId]) ?>">
-                                                <?php echo $nun++ . '.' . $valuex->title; ?> </a>
+                                                <?php echo $nun++ . '.' . strip_tags($value->description); ?> </a>
                                         </p>
                                         <?php
                                     }
@@ -443,22 +443,22 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
                                         //$productPostView['title'] = $valuex->title;
                                         $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
                                         //$productPostView['firstname'] = $member->firstname;
-                                        $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productImageId', 'desc')->limit(1)->one();
+                                        $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productImageId desc')->limit(1)->one();
                                         //$productPostView['imageThumbnail1'] = $productImages->imageThumbnail1;
                                         //$productPostView['description'] = $value->description;
                                         ?>
                                         <div class="col-sm-6 text-center">
                                             <?php
-                                            if (isset($value['imageThumbnail2']) && !empty($value['imageThumbnail2'])) {
-                                                if (file_exists(Yii::$app->basePath . "/web/" . $value['imageThumbnail2'])) {
-                                                    echo "<img class=\"ms-thumb\" src=\"" . $value['imageThumbnail2'] . "\" alt=\"1\" class=\"img-responsive img-thumbnail\"/>";
+                                            if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
+                                                if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
+                                                    echo "<img class=\"ms-thumb\" src=\"/" . $productImages->imageThumbnail2 . "\" alt=\"1\" class=\"img-responsive img-thumbnail\"/>";
                                                 } else {
-                                                    echo "<img  class=\"ms-thumb\"  src=\"" . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive img-thumbnail\"/>";
+                                                    echo "<img  class=\"ms-thumb\"  src=\"/" . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive img-thumbnail\"/>";
                                                 }
                                             } else {
                                                 ?>
                                                 <img class="ms-thumb" src="<?php echo "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
-                                            <?php } ?>  
+                                            <?php } ?>
                                             <p class="text-left"><?php echo $member->firstname; ?></p>
                                             <p class="text-left">
                                                 <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $valuex->productId, 'productSupplierId' => $valuex->productSuppId]) ?>"><?php echo substr($valuex->title, 0, 40); ?></a></p>

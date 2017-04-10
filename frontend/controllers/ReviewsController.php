@@ -38,10 +38,23 @@ class ReviewsController extends MasterController {
 
         $this->title = 'Cozxy.com | Create Review';
         $this->subTitle = 'ชื่อ content';
-
+        $productSupplierId = Yii::$app->request->get('productSupplierId');
+        $productId = Yii::$app->request->get('productId');
         $model = \common\models\costfit\ProductPost::find()->where("productSuppId=" . $_GET["productSupplierId"])->one();
-        if (!isset($model)) {
-            $model = new \common\models\costfit\ProductPost();
+
+        $model = new \common\models\costfit\ProductPost();
+        if (isset($_POST["ProductPost"])) {
+            $model->attributes = $_POST["ProductPost"];
+            $model->productSuppId = $productSupplierId;
+            $model->brandId = NULL;
+            $model->userId = Yii::$app->user->identity->userId;
+            $model->description = $_POST["ProductPost"]['description'];
+            $model->updateDateTime = new \yii\db\Expression('NOW()');
+            $model->createDateTime = new \yii\db\Expression('NOW()');
+            $model->save(FALSE);
+            return $this->redirect(Yii::$app->homeUrl . 'reviews/see-review?productSupplierId=' . $productSupplierId . '&productId=' . $productId . '');
+        } else {
+            //return $this->redirect(Yii::$app->homeUrl . 'reviews/see-review?productSupplierId=' . $productSupplierId . '&productId=' . $productId . '');
         }
 
         return $this->render('@app/views/reviews/create', compact("model"));
