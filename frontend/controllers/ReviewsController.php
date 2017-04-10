@@ -61,7 +61,13 @@ class ReviewsController extends MasterController {
          */
         $getPrductsSupplirs = Suppliers::GetProductSuppliersHelpers($productSupplierId);
         $supplierPrice = ProductSuppliers::productPriceSupplier($productSupplierId);
-
+        if (\Yii::$app->user->id != '') {
+            $productPost = \common\models\costfit\ProductPost::find()->limit(6)->all();
+            $productPostViewMem = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id)->limit(6)->all();
+        } else {
+            $productPostView = NULL;
+            $productPostViewMem = NULL;
+        }
         //echo '<pre>';
         //print_r($getPrductsSupplirs);
         //exit();
@@ -69,7 +75,7 @@ class ReviewsController extends MasterController {
         $this->title = 'Cozxy.com | Products';
         $this->subTitle = $model->attributes['title'];
         $this->subSubTitle = '';
-        return $this->render('@app/views/reviews/see', compact("model", "getPrductsSupplirs", "productSupplierId", "supplierPrice"));
+        return $this->render('@app/views/reviews/see', compact("productPostViewMem", "productPost", "model", "getPrductsSupplirs", "productSupplierId", "supplierPrice"));
     }
 
 }
