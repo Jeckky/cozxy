@@ -217,6 +217,15 @@ class Lockers {
         return $queryAllOrder;
     }
 
+    public static function GetOrderItemId($orderItemPacking) {
+        $orderItemId = \common\models\costfit\OrderItemPacking::find()->where("orderItemPackingId=" . $orderItemPacking)->one();
+        if (isset($orderItemId)) {
+            return $orderItemId->orderItemId;
+        } else {
+            return '';
+        }
+    }
+
     /* actionCloseChannel */
 
 
