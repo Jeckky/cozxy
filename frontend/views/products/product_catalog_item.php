@@ -411,7 +411,7 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
                                         $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
                                         ?>
                                         <p class="p-style3" > <a href="/reviews/see-review?productSupplierId=<?= $value->productSuppId ?>&productId=<?= $valuex->productId ?>"  role="button"   style="font-size: 14px;">
-                                                <?php echo $nun++ . '.' . strip_tags($value->description); ?> </a>
+                                                <?php echo $nun++ . '.' . strip_tags($value->description); ?> </a> 
                                         </p>
                                         <?php
                                     }
