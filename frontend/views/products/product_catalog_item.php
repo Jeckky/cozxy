@@ -384,7 +384,11 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
                     </div>
 
                     <div class="col-md-6">
-                        <a href="/reviews/create-review?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>" class="btn btn-black btn-xs" role="button" id="write-reviews">Write a review</a>
+                        <?php
+                        if (\Yii::$app->user->id != '') {
+                            ?>
+                            <a href="/reviews/create-review?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>" class="btn btn-black btn-xs" role="button" id="write-reviews">Write a review</a>
+                        <?php } ?>
                     </div>
 
                 </div>
