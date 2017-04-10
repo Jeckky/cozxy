@@ -290,6 +290,7 @@ class LockersController extends LockersMasterController {
 
             /*   Query ส่วนของแสดง Order ของถุงนี้ที่ ใส่เข้าช่องของ Lockers นี้แล้ว */
             /* Customize Date 25/01/2017 */
+            throw new \yii\base\Exception('orderItemId=> ' . $orderItemId . 'pickingItemId => ' . $pickingItemsId . 'bagNo =>' . $bagNo);
             $query1 = Lockers::GetOrderNoToBagNoOnChannelToLockers($orderItemId, $pickingItemsId, $bagNo);
 
             // OLD แสดงจำนวนถุงของ Order นี้ทั้งหมด
