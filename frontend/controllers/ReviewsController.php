@@ -39,6 +39,7 @@ class ReviewsController extends MasterController {
         $this->title = 'Cozxy.com | Create Review';
         $this->subTitle = 'ชื่อ content';
         $productSupplierId = Yii::$app->request->get('productSupplierId');
+        $score = Yii::$app->request->post('score');
         $productId = Yii::$app->request->get('productId');
         $model = \common\models\costfit\ProductPost::find()->where("productSuppId=" . $_GET["productSupplierId"])->one();
 
@@ -52,6 +53,14 @@ class ReviewsController extends MasterController {
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $model->save(FALSE);
+            $product_post_rating = new \common\models\costfit\ProductPostRating();
+            $productPostId = Yii::$app->db->lastInsertID;
+            $product_post_rating->productPostId = $productPostId;
+            $product_post_rating->userId = Yii::$app->user->identity->userId;
+            $product_post_rating->score = $score;
+            $product_post_rating->updateDateTime = new \yii\db\Expression('NOW()');
+            $product_post_rating->createDateTime = new \yii\db\Expression('NOW()');
+            $product_post_rating->save(FALSE);
             return $this->redirect(Yii::$app->homeUrl . 'reviews/see-review?productSupplierId=' . $productSupplierId . '&productId=' . $productId . '');
         } else {
             //return $this->redirect(Yii::$app->homeUrl . 'reviews/see-review?productSupplierId=' . $productSupplierId . '&productId=' . $productId . '');

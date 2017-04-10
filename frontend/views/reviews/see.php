@@ -68,9 +68,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <section class="wishlist">
     <div class="container">
         <div class="row">
-
-
-
             <div class="col-lg-12 col-md-12" >
 
                 <?php
@@ -133,6 +130,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         blockquote {
                             font-size: 14px;
                         }
+                        #rating-score > img {
+                            display: initial;
+                            max-width: 100%;
+                            height: auto;
+
+                        }
                     </style>
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <h3 style="text-decoration: underline">Other Post</h3>
@@ -150,7 +153,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                     <?php
                                                     echo \yii2mod\rating\StarRating::widget([
                                                         'name' => "input_name",
-                                                        'value' => 3,
+                                                        'value' => 0,
                                                         'options' => [
                                                             // Your additional tag options
                                                             'id' => 'reviews-rate',
@@ -187,6 +190,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                     $number = 1;
                                                     foreach ($post as $postx) {
                                                         $member = \common\models\costfit\User::find()->where('userId=' . $postx->userId)->one();
+                                                        $rating = common\models\costfit\ProductPostRating::find()->where('productPostId=' . $postx['productPostId'])->one();
                                                         ?>
                                                         <div class="col-md-12 post" style="text-align: left;">
                                                             <footer>
@@ -195,6 +199,21 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                                     <a href="#"> <i class="fa fa-calendar"></i> <?php echo $postx->createDateTime; ?></a>
                                                                 </div>
                                                                 <blockquote>
+                                                                    <p>
+                                                                        <?php
+                                                                        echo \yii2mod\rating\StarRating::widget([
+                                                                            'name' => "input_name",
+                                                                            'value' => $rating['score'],
+                                                                            'options' => [
+                                                                                // Your additional tag options
+                                                                                'id' => 'rating-score',
+                                                                            ],
+                                                                            'clientOptions' => [
+                                                                            // Your client options
+                                                                            ],
+                                                                        ]);
+                                                                        ?>
+                                                                    </p>
                                                                     <p class="p-style3"><?php echo $postx->description; ?></p>
                                                                     <!--<footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>-->
                                                                 </blockquote>
