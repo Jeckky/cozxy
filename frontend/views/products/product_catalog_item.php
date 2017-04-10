@@ -410,8 +410,7 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
                                     foreach ($productPostList as $valuex) {
                                         $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
                                         ?>
-                                        <p class="p-style3" >
-                                            <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $valuex->productId, 'productSupplierId' => $valuex->productSuppId]) ?>">
+                                        <p class="p-style3" > <a href="/reviews/see-review?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>"  role="button" class="panel-toggle" id="see-reviews" style="font-size: 14px;">
                                                 <?php echo $nun++ . '.' . strip_tags($value->description); ?> </a>
                                         </p>
                                         <?php
