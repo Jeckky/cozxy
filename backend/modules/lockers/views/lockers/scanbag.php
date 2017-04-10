@@ -146,7 +146,7 @@ if (isset($listPointItems)) {
                     <?php
                     $form = ActiveForm::begin([
                                 'method' => 'GET',
-                                'action' => ['scan-bag?model=' . $model . '&code=' . $channel . '&boxcode=' . $listPoint->pickingId . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId],
+                                'action' => ['scan-bag?model=' . $model . '&code=' . $channel . '&boxcode=' . $listPoint->pickingId . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId, 'orderItemId=' . $model->orderItemId],
                     ]);
                     ?>
                     <div class="panel-heading">
@@ -181,7 +181,7 @@ if (isset($listPointItems)) {
                     <?php
                     if ($bagNo != '') {
                         ?>  <!--<a href="close-channel?status=latter&bagNo=<?php echo $bagNo; ?>&model=<?php echo $model; ?>&code=<?php echo $channel; ?>&boxcode=<?php echo $listPoint->pickingId; ?>&pickingItemsId=<?php echo $pickingItemsId; ?>&orderId=<?php echo $orderId; ?>&orderItemPackingId=<?php echo $orderItemPackingId; ?>" class="btn btn-info"><i class="fa fa-hand-o-up"></i> 1.หยิบใส่ช่อง <?php echo $channel; ?> , ถุง : <?php echo $bagNo; ?></a>
-                                                                                              หรือ-->
+                                                                                                  หรือ-->
                         <a href="close-channel?status=now&bagNo=<?php echo $bagNo; ?>&model=<?php echo $model; ?>&code=<?php echo $channel; ?>&boxcode=<?php echo $listPoint->pickingId; ?>&pickingItemsId=<?php echo $pickingItemsId; ?>&orderId=<?php echo $orderId; ?>&orderItemPackingId=<?php echo $orderItemPackingId; ?>" class="btn btn-danger"><i class="fa fa-hand-o-up"></i> คลิกตรงนี้ ต้องการปิดช่องนี้ทันที่ : หยิบใส่ช่อง <?php echo $channel; ?> , ถุง : <?php echo $bagNo; ?></a>
                     <?php } ?>
                 </center>
@@ -354,7 +354,7 @@ if (isset($listPointItems)) {
                 <button type="button" class="close" data-dismiss="alert">×</button>
                 <strong>ไม่พบข้อมูล</strong> ชื่อช่องนี้ ลองใหม่อีกครั้ง...&nbsp; <img src="<?php echo Yii::$app->homeUrl; ?>/images/icon/default-loader.gif" height="30" >
             </div>
-            <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ?>">-->
+            <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ?>">-->
         </div>
         <?php
     }
