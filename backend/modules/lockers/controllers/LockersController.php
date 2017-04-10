@@ -305,7 +305,6 @@ class LockersController extends LockersMasterController {
             // แสดงจำนวนถุงของ Order นี้ทั้งหมด
             /* Customize Date 25/01/2017   */
             $queryAllOrder = Lockers::GetOrderNoToBagNoOnChannelToLockersAllCheckParaBagNo($orderId);
-
             //
             //Open Locker Channel
             $channelArray = [];
