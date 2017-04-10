@@ -27,7 +27,7 @@ class ProductsController extends MasterController {
                 'class' => \yii\filters\AccessControl::className(),
                 'only' => ['create', 'update'],
                 'rules' => [
-                    // deny all POST requests
+// deny all POST requests
                     [
                         'allow' => false,
                         'verbs' => ['POST']
@@ -49,8 +49,8 @@ class ProductsController extends MasterController {
      * @return mixed
      */
     public function actionIndex($hash) {
-        //throw new \yii\base\Exception('aaa');
-        //return Yii::$app->getResponse()->redirect('register/login');
+//throw new \yii\base\Exception('aaa');
+//return Yii::$app->getResponse()->redirect('register/login');
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
         $term = \common\models\costfit\ContentGroup::find()->where("lower(title)='term'")->one();
@@ -67,17 +67,26 @@ class ProductsController extends MasterController {
          */
         $getPrductsSupplirs = Suppliers::GetProductSuppliersHelpers($productSupplierId);
         $price = ProductSuppliers::productPriceSupplier($productSupplierId);
-        //echo '<pre>';
-        //print_r($getPrductsSupplirs);
-        //exit();
+
         if ($productId != '') {
             $model = \common\models\costfit\Product::find()->where("productId =" . $productId)->one();
+            if (\Yii::$app->user->id != '') {
+                $productPostView = \common\models\costfit\ProductPost::find()->limit(6)->all();
+                $productPostViewMem = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id)->limit(6)->all();
+            } else {
+                $productPostView = NULL;
+                $productPostViewMem = NULL;
+            }
+
+            //echo '<pre>';
+            //print_r($productPostView);
+            //exit();
             if (count($model) > 0) {
                 $this->title = 'Cozxy.com | Products';
                 $this->subTitle = $model->attributes['title'];
                 $this->subSubTitle = '';
                 return $this->render('products_all', ['model' => $model, 'term' => $terms, 'productSupplierId' => $productSupplierId, ''
-                    . 'getPrductsSupplirs' => $getPrductsSupplirs, 'supplierPrice' => $price]);
+                    . 'getPrductsSupplirs' => $getPrductsSupplirs, 'supplierPrice' => $price, 'productPost' => $productPostView, 'productPostViewMem' => $productPostViewMem]);
             } else {
                 return $this->render('@app/views/error/error');
             }
@@ -100,12 +109,12 @@ class ProductsController extends MasterController {
         $res["productImage"] = $this->renderPartial('_product_image_loadding', ['model' => $model]);
         //echo count($model->productImages);
         foreach ($model->productImages as $image) {
-            //$xx = '<div class="ms-slide-bgcont" style="height: 100%; opacity: 1;"><img src="/Cozxy.com-frontend//images/ProductImage/6FegsyR3cy.png" alt="e" style="height: 484px; width: 618.444px; margin-top: 0px; margin-left: -34px;"></div>';
-            $productImagex[] = '<img src="' . Yii::$app->homeUrl . $image->image . '" data-src="' . Yii::$app->homeUrl . $image->image . '" alt="' . $image->title . '"/>'
+            //$xx = '<div class = "ms-slide-bgcont" style = "height: 100%; opacity: 1;"><img src = "/Cozxy.com-frontend//images/ProductImage/6FegsyR3cy.png" alt = "e" style = "height: 484px; width: 618.444px; margin-top: 0px; margin-left: -34px;"></div>';
+            $productImagex[] = '<img src = "' . Yii::$app->homeUrl . $image->image . '" data-src = "' . Yii::$app->homeUrl . $image->image . '" alt = "' . $image->title . '"/>'
             ;
         }
         foreach ($model->productImages as $image) {
-            $productImagexx[] = '<img class="ms-thumb" src="' . Yii::$app->homeUrl . $image->imageThumbnail2 . '" data-src="' . Yii::$app->homeUrl . $image->imageThumbnail2 . '" alt="' . $image->title . '"/>'
+            $productImagexx[] = '<img class = "ms-thumb" src = "' . Yii::$app->homeUrl . $image->imageThumbnail2 . '" data-src = "' . Yii::$app->homeUrl . $image->imageThumbnail2 . '" alt = "' . $image->title . '"/>'
             ;
         }
         $res["image"] = $productImagex;
