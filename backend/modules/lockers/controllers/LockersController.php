@@ -193,7 +193,6 @@ class LockersController extends LockersMasterController {
          */
 
         if (isset($bagNo) && !empty($bagNo)) {
-            throw new \yii\base\Exception($bagNo);
             /*
              * Check ว่า BagNo. นี้ มีอยู่ใน Lockers และช่องนี้ยัง
              * End Check ว่า BagNo. นี้ มีอยู่ใน Lockers และช่องนี้ยั
@@ -208,7 +207,7 @@ class LockersController extends LockersMasterController {
 
             if (count($queryOrderItemPackingId) == 0) {
 //                throw new \yii\base\Exception("Step 1");
-                return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?pickingItemsId=' . $pickingItemsId . '&boxcode=' . $boxcode . '&model=' . $model . '&code=' . $channel . '&orderId=' . $orderId . '&c=e');
+                return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?pickingItemsId=' . $pickingItemsId . '&boxcode=' . $boxcode . '&model=' . $model . '&code=' . $channel . '&orderId=' . $orderId . '&c=e&bagNo=' . $bagNo);
             }
 //            throw new \yii\base\Exception(222);
             $orderId = $queryOrderItemPackingId->orderId; // ได้ OrderId มาเพื่อหา ????
