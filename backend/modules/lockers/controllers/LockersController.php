@@ -193,7 +193,6 @@ class LockersController extends LockersMasterController {
          */
 
         if (isset($bagNo) && !empty($bagNo)) {
-            throw new \yii\base\Exception($bagNo);
             /*
              * Check ว่า BagNo. นี้ มีอยู่ใน Lockers และช่องนี้ยัง
              * End Check ว่า BagNo. นี้ มีอยู่ใน Lockers และช่องนี้ยั
