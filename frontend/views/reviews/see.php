@@ -145,12 +145,19 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     <?php
                                     if (count($productPost) > 0) {
                                         foreach ($productPost as $key => $value) {
+                                            $rating_score = 0;
+                                            $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
+                                            // $rating = \common\models\costfit\ProductPostRating::find()->where('productPostId=' . $value['productPostId'] . ' and userId = ' . $value->userId)->all();
+
                                             $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
                                             foreach ($productPostList as $valuex) {
                                                 $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productImageId desc')->limit(4)->all();
                                                 ?>
                                                 <div class="col-md-2">
                                                     <?php
+                                                    //$rating_score += $rating['score'];
+                                                    //throw new \yii\base\Exception($value['productPostId']);
+                                                    //$rating_score +=$rating_score;
                                                     echo \yii2mod\rating\StarRating::widget([
                                                         'name' => "input_name",
                                                         'value' => 0,
