@@ -182,7 +182,7 @@ class Lockers {
     /* แสดง BagNo ที่ Scan Qr code */
 
     public static function GetBagNo($orderItemId) {
-        throw new \yii\base\Exception($orderItemId);
+        //throw new \yii\base\Exception($orderItemId);
         $query1 = \common\models\costfit\OrderItemPacking::find()
                 ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId,  order_item_packing.pickingItemsId,'
                         . 'order_item_packing.bagNo, order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,'

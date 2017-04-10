@@ -192,7 +192,7 @@ class LockersController extends LockersMasterController {
          * By Taninut.Bm
          */
 
-        if (isset($bagNo) && $bagNo != '') {
+        if (isset($bagNo) && !empty($bagNo)) {
             /*
              * Check ว่า BagNo. นี้ มีอยู่ใน Lockers และช่องนี้ยัง
              * End Check ว่า BagNo. นี้ มีอยู่ใน Lockers และช่องนี้ยั
