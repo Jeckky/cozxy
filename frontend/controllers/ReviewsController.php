@@ -48,7 +48,7 @@ class ReviewsController extends MasterController {
     }
 
     public function actionSeeReview() {
-
+        //echo Yii::$app->controller->action->id;
         $this->title = 'Cozxy.com | See Review';
         $this->subTitle = 'ชื่อ content';
 
@@ -61,8 +61,8 @@ class ReviewsController extends MasterController {
          */
         $getPrductsSupplirs = Suppliers::GetProductSuppliersHelpers($productSupplierId);
         $supplierPrice = ProductSuppliers::productPriceSupplier($productSupplierId);
+        $productPost = \common\models\costfit\ProductPost::find()->groupBy(['productSuppId'])->all();
         if (\Yii::$app->user->id != '') {
-            $productPost = \common\models\costfit\ProductPost::find()->limit(6)->all();
             $productPostViewMem = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id)->limit(6)->all();
         } else {
             $productPostView = NULL;

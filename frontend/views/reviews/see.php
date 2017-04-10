@@ -69,23 +69,147 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="container">
         <div class="row">
 
-            <!--Items List-->
-            <div class="col-lg-9 col-md-9">
-                <h3>My Post</h3>
-                <div class="Reviews" style="margin-left: 10px;">
-                    <div class="post">
-                        <p class="p-style3"> 1.Limo is the product which was born thanks to the involvement  </p>
-                        <p class="p-style3"> 2.Limo is the product which was born thanks to the involvement  </p>
-                        <p class="p-style3"> 3.Limo is the product which was born thanks to the involvement  </p>
+
+
+            <div class="col-lg-12 col-md-12" >
+
+                <?php
+                if (Yii::$app->controller->action->id == 'see-review') {
+                    ?>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <h3 style="text-decoration: underline">Customer Reviews</h3>
+                        <div class="Reviews" style="margin-left: 10px;">
+                            <h5>Rate this item</h5>
+                            <div class="col-md-3">
+                                <?php
+                                /* 1.Usage with ActiveForm and model
+                                  echo $form->field($model, 'attribute')->widget(\yii2mod\rating\StarRating::className(), [
+                                  'options' => [
+                                  // Your additional tag options
+                                  ],
+                                  'clientOptions' => [
+                                  // Your client options
+                                  ]
+                                  ]);
+                                 */
+                                //2.Usage without a model
+                                echo \yii2mod\rating\StarRating::widget([
+                                    'name' => "input_name",
+                                    'value' => 5,
+                                    'options' => [
+                                        // Your additional tag options
+                                        'id' => 'reviews-rate',
+                                    ],
+                                    'clientOptions' => [
+                                    // Your client options
+                                    ],
+                                ]);
+                                ?>
+                            </div>
+
+                            <div class="col-md-6 text-left">
+                                <a href="/reviews/create-review?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>" class="btn btn-black btn-xs" role="button" id="write-reviews">Write a review</a>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
-                <br><br>
+                    <style>
+                        .brand-carousel-reviews {
+                            padding: 24px 0 48px 0;
+                            border-top: 0px solid #e6e6e6;
+                            border-bottom: 0px solid #e6e6e6;
+                        }
+                        .post footer .meta {
+                            display: inline-flex;
+                            text-align: left;
+                        }
+                        .share > a{
+                            font-size: 12px;
+                        }
+                        .p-style3{
+                            font-size: 14px;
+                            text-align: left;
+                        }
+
+                    </style>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <h3 style="text-decoration: underline">Other Post</h3>
+                        <div class="Reviews" style="margin-left: 10px;">
+                            <div class="post">
+                                <section class="brand-carousel-reviews">
+                                    <?php
+                                    if (count($productPost) > 0) {
+                                        foreach ($productPost as $key => $value) {
+                                            $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
+                                            foreach ($productPostList as $valuex) {
+                                                $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productImageId', 'desc')->limit(5)->one();
+                                                ?>
+                                                <div class="col-md-2">
+                                                    <?php
+                                                    echo \yii2mod\rating\StarRating::widget([
+                                                        'name' => "input_name",
+                                                        'value' => 3,
+                                                        'options' => [
+                                                            // Your additional tag options
+                                                            'id' => 'reviews-rate',
+                                                        ],
+                                                        'clientOptions' => [
+                                                        // Your client options
+                                                        ],
+                                                    ]);
+                                                    ?>
+                                                </div>
+                                                <div class="col-md-9 text-left">
+                                                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $valuex->productId, 'productSupplierId' => $valuex->productSuppId]) ?>"><?php echo $valuex->title; ?></a>
+                                                </div>
+
+                                                <div class="col-sm-12 text-center" style="margin-top: 10px;">
+                                                    <a class="item" href="#">
+                                                        <?php
+                                                        if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
+                                                            if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
+                                                                echo "<img class=\"ms-thumb\" src=\"/" . $productImages->imageThumbnail2 . "\" alt=\"1\" class=\"img-responsive img-thumbnail\"/>";
+                                                            } else {
+                                                                echo "<img  class=\"ms-thumb\"  src=\"" . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive img-thumbnail\"/>";
+                                                            }
+                                                        } else {
+                                                            ?>
+                                                            <img class="ms-thumb" src="<?php echo "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
+                                                        <?php } ?> </a>
+                                                    <?php
+                                                    $post = common\models\costfit\ProductPost::find()->where('productSuppId=' . $value['productSuppId'])->all();
+                                                    $number = 1;
+                                                    foreach ($post as $postx) {
+                                                        $member = \common\models\costfit\User::find()->where('userId=' . $postx->userId)->one();
+                                                        ?>
+                                                        <div class="col-md-12 post" style="text-align: left;">
+                                                            <footer>
+                                                                <div class="share">
+                                                                    <a href="#"> <i class="fa fa-user"></i> <?php echo $member->firstname; ?><?php echo $member->userId; ?></a>
+                                                                    <a href="#"> <i class="fa fa-calendar"></i> <?php echo $postx->createDateTime; ?></a>
+                                                                </div>
+                                                                <p class="p-style3">comments <?php echo $number++; ?>. <?php echo $postx->description; ?></p>
+                                                            </footer>
+                                                        </div>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </div>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                        <?php
+                                    }
+                                    ?>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+
             </div>
 
-            <!--Sidebar-->
-            <div class="col-lg-3 col-md-3">
-
-            </div>
         </div>
 
     </div>

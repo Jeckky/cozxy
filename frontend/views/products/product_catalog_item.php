@@ -199,17 +199,19 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <a class="btn btn-primary btn-sm" id="addItemToCartUnity" href="#" <?= ($model->findMaxQuantity($model->productSuppId) <= 0) ? " disabled" : " " ?>><i class="icon-shopping-cart"></i>Add to cart</a>
         <a class="btn btn-black btn-sm" <?php if (\Yii::$app->user->isGuest == 1) { ?> id="GuestaddItemToWishlist" <?php } else { ?> id="addItemToWishlist" <?php } ?> href="#" <?= (\common\models\costfit\Wishlist::isExistingList($model->productSuppId)) ? " disabled" : " " ?>><i class="icon-heart"></i>Add to wishlist</a>
     </div>
-
-    <div class="row">
-        <div class="col-lg-8 col-md-8 col-sm-7">
-            <h3 style="text-decoration: underline">Description</h3>
-            <?php //$description = ProductSuppliers::productSupplierName($productSupplierId); ?>
-            <?= isset($getPrductsSupplirs) && !empty($getPrductsSupplirs) ? $getPrductsSupplirs->description : '' ?>
-            <h3 style="text-decoration: underline">Specification</h3>
-            <?= isset($getPrductsSupplirs) && !empty($getPrductsSupplirs) ? $getPrductsSupplirs->specification : '' ?>
+    <?php
+    if (Yii::$app->controller->action->id != 'see-review') {
+        ?>
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-7">
+                <h3 style="text-decoration: underline">Description</h3>
+                <?php //$description = ProductSuppliers::productSupplierName($productSupplierId); ?>
+                <?= isset($getPrductsSupplirs) && !empty($getPrductsSupplirs) ? $getPrductsSupplirs->description : '' ?>
+                <h3 style="text-decoration: underline">Specification</h3>
+                <?= isset($getPrductsSupplirs) && !empty($getPrductsSupplirs) ? $getPrductsSupplirs->specification : '' ?>
+            </div>
         </div>
-    </div>
-
+    <?php } ?>
     <div class="row">
         <!--
         <div class="col-lg-8 col-md-8 col-sm-7">
@@ -347,131 +349,135 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
 
             }
         </style>
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <h3 style="text-decoration: underline">Customer Reviews</h3>
-            <div class="Reviews" style="margin-left: 10px;">
-                <h5>Rate this item</h5>
-                <div class="col-md-6">
-                    <?php
-                    /* 1.Usage with ActiveForm and model
-                      echo $form->field($model, 'attribute')->widget(\yii2mod\rating\StarRating::className(), [
-                      'options' => [
-                      // Your additional tag options
-                      ],
-                      'clientOptions' => [
-                      // Your client options
-                      ]
-                      ]);
-                     */
-                    //2.Usage without a model
-                    echo \yii2mod\rating\StarRating::widget([
-                        'name' => "input_name",
-                        'value' => 5,
-                        'options' => [
-                            // Your additional tag options
-                            'id' => 'reviews-rate',
-                        ],
-                        'clientOptions' => [
-                        // Your client options
-                        ],
-                    ]);
-                    ?>
-                </div>
-
-                <div class="col-md-6">
-                    <a href="/reviews/create-review?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>" class="btn btn-black btn-xs" role="button" id="write-reviews">Write a review</a>
-                </div>
-
-            </div>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <?php
-            if (\Yii::$app->user->id != '') {
-                ?>
-                <h3 style="text-decoration: underline">My Post</h3>
+        <?php
+        if (Yii::$app->controller->action->id != 'see-review') {
+            ?>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <h3 style="text-decoration: underline">Customer Reviews</h3>
                 <div class="Reviews" style="margin-left: 10px;">
-                    <div class="post">
-
+                    <h5>Rate this item</h5>
+                    <div class="col-md-6">
                         <?php
-                        if (count($productPostViewMem) > 0) {
-                            $nun = 1;
-                            foreach ($productPostViewMem as $key => $value) {
-
-                                $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
-                                foreach ($productPostList as $valuex) {
-                                    $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
-                                    ?>
-                                    <p class="p-style3" >
-                                        <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $valuex->productId, 'productSupplierId' => $valuex->productSuppId]) ?>">
-                                            <?php echo $nun++ . '.' . $valuex->title; ?> </a>
-                                    </p>
-                                    <?php
-                                }
-                            }
-                        }
+                        /* 1.Usage with ActiveForm and model
+                          echo $form->field($model, 'attribute')->widget(\yii2mod\rating\StarRating::className(), [
+                          'options' => [
+                          // Your additional tag options
+                          ],
+                          'clientOptions' => [
+                          // Your client options
+                          ]
+                          ]);
+                         */
+                        //2.Usage without a model
+                        echo \yii2mod\rating\StarRating::widget([
+                            'name' => "input_name",
+                            'value' => 5,
+                            'options' => [
+                                // Your additional tag options
+                                'id' => 'reviews-rate',
+                            ],
+                            'clientOptions' => [
+                            // Your client options
+                            ],
+                        ]);
                         ?>
                     </div>
-                    <a href="/reviews/see-review?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>"  role="button" class="panel-toggle" id="see-reviews" style="font-size: 14px;">See all 5,520 positive reviews <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+
+                    <div class="col-md-6">
+                        <a href="/reviews/create-review?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>" class="btn btn-black btn-xs" role="button" id="write-reviews">Write a review</a>
+                    </div>
+
                 </div>
-            <?php } ?>
-        </div>
-        <style>
-            .brand-carousel-reviews {
-                padding: 24px 0 48px 0;
-                border-top: 0px solid #e6e6e6;
-                border-bottom: 0px solid #e6e6e6;
-            }
-        </style>
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <h3 style="text-decoration: underline">Other Post</h3>
-            <div class="Reviews" style="margin-left: 10px;">
-                <div class="post">
-                    <!--<p class="p-style3"> 1.Limo is the product which was born thanks to the involvement  </p>
-                    <p class="p-style3"> 2.Limo is the product which was born thanks to the involvement  </p>
-                    <p class="p-style3"> 3.Limo is the product which was born thanks to the involvement  </p>-->
-                    <section class="brand-carousel-reviews">
-                        <?php
-                        if (count($productPost) > 0) {
-                            foreach ($productPost as $key => $value) {
-                                $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
-                                foreach ($productPostList as $valuex) {
-                                    //$productPostView['title'] = $valuex->title;
-                                    $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
-                                    //$productPostView['firstname'] = $member->firstname;
-                                    $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productImageId', 'desc')->limit(1)->one();
-                                    //$productPostView['imageThumbnail1'] = $productImages->imageThumbnail1;
-                                    //$productPostView['description'] = $value->description;
-                                    ?>
-                                    <div class="col-sm-6 text-center">
-                                        <a class="item" href="#">
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <?php
+                if (\Yii::$app->user->id != '') {
+                    ?>
+                    <h3 style="text-decoration: underline">My Post</h3>
+                    <div class="Reviews" style="margin-left: 10px;">
+                        <div class="post">
+
+                            <?php
+                            if (count($productPostViewMem) > 0) {
+                                $nun = 1;
+                                foreach ($productPostViewMem as $key => $value) {
+
+                                    $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
+                                    foreach ($productPostList as $valuex) {
+                                        $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
+                                        ?>
+                                        <p class="p-style3" >
+                                            <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $valuex->productId, 'productSupplierId' => $valuex->productSuppId]) ?>">
+                                                <?php echo $nun++ . '.' . $valuex->title; ?> </a>
+                                        </p>
+                                        <?php
+                                    }
+                                }
+                            }
+                            ?>
+                        </div>
+                        <a href="/reviews/see-review?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>"  role="button" class="panel-toggle" id="see-reviews" style="font-size: 14px;">See all 5,520 positive reviews <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                    </div>
+                <?php } ?>
+            </div>
+            <style>
+                .brand-carousel-reviews {
+                    padding: 24px 0 48px 0;
+                    border-top: 0px solid #e6e6e6;
+                    border-bottom: 0px solid #e6e6e6;
+                }
+            </style>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <h3 style="text-decoration: underline">Other Post</h3>
+                <div class="Reviews" style="margin-left: 10px;">
+                    <div class="post">
+                        <!--<p class="p-style3"> 1.Limo is the product which was born thanks to the involvement  </p>
+                        <p class="p-style3"> 2.Limo is the product which was born thanks to the involvement  </p>
+                        <p class="p-style3"> 3.Limo is the product which was born thanks to the involvement  </p>-->
+                        <section class="brand-carousel-reviews">
+                            <?php
+                            if (count($productPost) > 0) {
+                                foreach ($productPost as $key => $value) {
+                                    $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
+                                    foreach ($productPostList as $valuex) {
+                                        //$productPostView['title'] = $valuex->title;
+                                        $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
+                                        //$productPostView['firstname'] = $member->firstname;
+                                        $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productImageId', 'desc')->limit(1)->one();
+                                        //$productPostView['imageThumbnail1'] = $productImages->imageThumbnail1;
+                                        //$productPostView['description'] = $value->description;
+                                        ?>
+                                        <div class="col-sm-6 text-center">
                                             <?php
                                             if (isset($value['imageThumbnail2']) && !empty($value['imageThumbnail2'])) {
                                                 if (file_exists(Yii::$app->basePath . "/web/" . $value['imageThumbnail2'])) {
-                                                    echo "<img class=\"ms-thumb\" src=\" " . $value['imageThumbnail2'] . "  \" alt=\"1\" class=\"img-responsive img-thumbnail\"/>";
+                                                    echo "<img class=\"ms-thumb\" src=\"" . $value['imageThumbnail2'] . "\" alt=\"1\" class=\"img-responsive img-thumbnail\"/>";
                                                 } else {
                                                     echo "<img  class=\"ms-thumb\"  src=\"" . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive img-thumbnail\"/>";
                                                 }
                                             } else {
                                                 ?>
                                                 <img class="ms-thumb" src="<?php echo "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
-                                            <?php } ?> </a>
-                                        <p class="text-left"><?php echo $member->firstname; ?></p>
-                                        <p class="text-left">
-                                            <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $valuex->productId, 'productSupplierId' => $valuex->productSuppId]) ?>"><?php echo substr($valuex->title, 0, 40); ?></a></p>
-                                    </div>
-                                    <?php
+                                            <?php } ?>  
+                                            <p class="text-left"><?php echo $member->firstname; ?></p>
+                                            <p class="text-left">
+                                                <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $valuex->productId, 'productSupplierId' => $valuex->productSuppId]) ?>"><?php echo substr($valuex->title, 0, 40); ?></a></p>
+                                        </div>
+                                        <?php
+                                    }
                                 }
+                                ?>
+                                <p>
+                                    <a href="#" class="btn btn-black btn-xs">see more</a>
+                                </p>
+                                <?php
                             }
                             ?>
-                            <p>
-                                <a href="#" class="btn btn-black btn-xs">see more</a>
-                            </p>
-                            <?php
-                        }
-                        ?>
-                    </section>
+                        </section>
+                    </div>
                 </div>
             </div>
-        </div>
+        <?php } ?>
     </div>
+
 </div>
