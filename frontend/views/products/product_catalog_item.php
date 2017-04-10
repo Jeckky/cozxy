@@ -420,7 +420,7 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
                             }
                             ?>
                         </div>
-                        <a href="/reviews/see-review?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>"  role="button" class="panel-toggle" id="see-reviews" style="font-size: 14px;">See all 5,520 positive reviews <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                        <a href="/reviews/see-review?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>"  role="button" class="panel-toggle" id="see-reviews" style="font-size: 14px;">See all  reviews <i class="fa fa-angle-right" aria-hidden="true"></i></a>
                     </div>
                 <?php } ?>
             </div>
