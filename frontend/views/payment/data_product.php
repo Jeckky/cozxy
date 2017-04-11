@@ -54,8 +54,27 @@ if (count($order) > 0) {
                     <td style="font-size: 12px; text-align: right;"><?php echo isset($value->quantity) ? $value->quantity : '-' ?></td>
                     <td style="font-size: 12px; text-align: right;"><?php echo isset($value->total) ? number_format($value->total, 2) : '-'; ?></td>
                 </tr>
+
                 <?php
             }
+            $GetOrder = common\models\costfit\OrderItem::find()->where('orderId=' . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'] . ' and receiveType=' . $value1->receiveType)->groupBy('orderId')->one();
+            ?>
+            <tr>
+                <td style="font-size: 12px;" colspan="7">
+                    <strong>สถานที่รับของ :</strong><br>
+                    <?php
+                    $picking_point = common\models\costfit\PickingPoint::find()->where('pickingId=' . $GetOrder->pickingId)->one();
+                    $Countries = common\models\dbworld\Countries::find()->where("countryId= '" . $picking_point->countryId . "' ")->one();
+                    $States = common\models\dbworld\States::find()->where("stateId='" . $picking_point->provinceId . "'")->one();
+                    $Cities = common\models\dbworld\Cities::find()->where("cityId='" . $picking_point->amphurId . "'")->one();
+                    echo '<b>จุดรับสินค้าที่ :</b>' . $picking_point->title;
+                    echo ', <b>ประเทศ :</b>' . $Countries->localName;
+                    echo ', ' . $States->localName;
+                    echo ', ' . $Cities->localName;
+                    ?>
+                </td>
+            </tr>
+            <?php
             //} /* $value1->receiveType == 1 : Lockers */
         }
     }
