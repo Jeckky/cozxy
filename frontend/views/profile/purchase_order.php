@@ -48,7 +48,24 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                             <tr>
                                 <td>
                                     <div class="col-sm-12" style="color: #000; font-size: 13px;">
-                                        <div class="col-sm-12"> วันที่จัดส่งสินค้า ภายในวันที่ Dates Month Years  </div>
+                                        <div class="col-sm-12">
+                                            <?php
+                                            $GetOrderItemShipping = \common\models\costfit\OrderItem::find()->where("orderId='" . $order->orderId . "' ")->groupBy(['sendDate'])->sum('sendDate');
+                                            //2017-04-03  วันที่จัดส่งสินค้า ภายในวันที่ Dates Month Years
+                                            if ($GetOrderItemShipping == 1) {  // 2 วัน
+                                                $shipping = 2;
+                                                $date = date("Y-m-d"); //"04-15-2013";
+                                                $date1 = str_replace('-', '/', $date);
+                                                $tomorrow = date('Y-m-d', strtotime($date1 . "+1 days"));
+                                                $date2 = str_replace('-', '/', $tomorrow);
+                                                $tomorrow_start = date('Y-m-d', strtotime($date2 . "+2 days"));
+                                                $tomorrow_end = date('Y-m-d', strtotime($date2 . "+5 days"));
+                                                echo 'วันที่จัดส่งสินค้า ภายในวันที่ ' . $this->context->dateThai($tomorrow, 1) . ' - ' . $this->context->dateThai($tomorrow_end, 1);
+                                            } else if ($GetOrderItemShipping == 3) { // 5 วัน
+                                                $shipping = 5;
+                                            }
+                                            ?>
+                                        </div>
                                         <div class="col-sm-12"><strong>หมายเหตุ</strong> หากมีการเปลียนวันจะแจ้งให้ทราบทาง Email และ SMS ในลำดับต่อไป</div>
                                     </div>
                                     <?php /*
@@ -56,10 +73,12 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
 
                                       $Cities = \common\models\dbworld\Cities::find()->where("cityId = '" . $order->pickingpoint->amphurId . "' ")->one();
                                       echo isset($Cities->attributes['localName']) ? $Cities->attributes['localName'] : '';
-                                      echo '&nbsp;';
+                                      echo ' & nbsp;
+                                      ';
                                       $States = \common\models\dbworld\States::find()->where("stateId = '" . $order->pickingpoint->provinceId . "' ")->one();
                                       echo isset($States->attributes['localName']) ? $States->attributes['localName'] : '';
-                                      echo '&nbsp;';
+                                      echo ' & nbsp;
+                                      ';
                                       $Countries = \common\models\dbworld\Countries::find()->where("countryId = '" . $order->pickingpoint->countryId . "' ")->one();
                                       echo isset($Countries->attributes['localName']) ? 'ประเทศ' . $Countries->attributes['localName'] : 'ประเทศ' . 'ไม่ระบุ';
                                       echo "<br>";

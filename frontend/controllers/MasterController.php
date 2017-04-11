@@ -262,7 +262,7 @@ class MasterController extends MasterCommonController {
         }
     }
 
-    public function dateThai($date, $format, $showTime = false) {
+    public static function dateThai($date, $format, $showTime = false) {
 // Full month array
         $monthFormat1 = array(
             "01" => "มกราคม",

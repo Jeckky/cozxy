@@ -86,7 +86,25 @@
                                                     <div class="x_order-status-inner">
                                                         <div class="x_color-grey" style="color:#646464">สินค้าจะจัดส่งถึงคุณภายใน:</div>
                                                         <div class="x_pts" style="margin-top:5px; margin-bottom:10px">
-                                                            <strong>การจัดส่ง # 1</strong>: Dates Month - Dates Month, Years <br>
+                                                            <strong>การจัดส่ง # 1</strong>:
+                                                            <?php
+                                                            $GetOrderItemShipping = \common\models\costfit\OrderItem::find()->where("orderId='" . $order->orderId . "' ")->groupBy(['sendDate'])->sum('sendDate');
+                                                            //2017-04-03  วันที่จัดส่งสินค้า ภายในวันที่ Dates Month Years
+                                                            if ($GetOrderItemShipping == 1) {  // 2 วัน
+                                                                $shipping = 2;
+                                                                $date = date("Y-m-d"); //"04-15-2013";
+                                                                $date1 = str_replace('-', '/', $date);
+                                                                $tomorrow = date('Y-m-d', strtotime($date1 . "+1 days"));
+                                                                $date2 = str_replace('-', '/', $tomorrow);
+                                                                $tomorrow_start = date('Y-m-d', strtotime($date2 . "+2 days"));
+                                                                $tomorrow_end = date('Y-m-d', strtotime($date2 . "+5 days"));
+
+                                                                echo 'วันที่จัดส่งสินค้า ภายในวันที่ ' . \frontend\controllers\MasterController::dateThai($tomorrow, 1) . ' - ' . \frontend\controllers\MasterController::dateThai($tomorrow_end, 1);
+                                                            } else if ($GetOrderItemShipping == 3) { // 5 วัน
+                                                                $shipping = 5;
+                                                            }
+                                                            ?>
+                                                            <br>
                                                             <strong>หมายเหตุ</strong> หากมีการเปลียนวันจะแจ้งให้ทราบทาง Email และ SMS ในลำดับต่อไป
                                                         </div>
                                                         <table width="100%" cellpadding="10" style="width:100%!important">
