@@ -201,7 +201,7 @@ class LockersController extends LockersMasterController {
             //throw new \yii\base\Exception($bagNo);
             /* Customize Date 25/01/2017 , By Taninut.Bm */
             $queryOrderItemPackingId = Lockers::GetOrderItemPackingCheckLockersBagNo($bagNo, $boxcode);
-
+            throw new \yii\base\Exception(print_r($queryOrderItemPackingId));
             //echo '<pre>';
             // print_r($queryOrderItemPackingId);
             // exit();
