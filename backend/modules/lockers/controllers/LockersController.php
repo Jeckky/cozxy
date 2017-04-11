@@ -193,7 +193,7 @@ class LockersController extends LockersMasterController {
          */
 
         if (isset($bagNo) && !empty($bagNo)) {
-            $orderItemId = Lockers::GetOrderItemId($orderItemPackingId);
+
             /*
              * Check ว่า BagNo. นี้ มีอยู่ใน Lockers และช่องนี้ยัง
              * End Check ว่า BagNo. นี้ มีอยู่ใน Lockers และช่องนี้ยั
@@ -206,11 +206,11 @@ class LockersController extends LockersMasterController {
             // print_r($queryOrderItemPackingId);
             // exit();
 
-            if (count($queryOrderItemPackingId) == 0) {
-                //throw new \yii\base\Exception("Step 1");
+            /* if (count($queryOrderItemPackingId) == 0) {
+              //throw new \yii\base\Exception("Step 1");
 
-                return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?pickingItemsId=' . $pickingItemsId . '&boxcode=' . $boxcode . '&model=' . $model . '&code=' . $channel . '&orderId=' . $orderId . '&c=e&orderItemPackingId=' . $orderItemPackingId . '&orderItemId=' . $orderItemId);
-            }
+              return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?pickingItemsId=' . $pickingItemsId . '&boxcode=' . $boxcode . '&model=' . $model . '&code=' . $channel . '&orderId=' . $orderId . '&c=e&orderItemPackingId=' . $orderItemPackingId . '&orderItemId=' . $orderItemId);
+              } by sak */
 //            throw new \yii\base\Exception(222);
             $orderId = $queryOrderItemPackingId->orderId; // ได้ OrderId มาเพื่อหา ????
             $orderItemId = $queryOrderItemPackingId->orderItemId; // ได้ OrderId มาเพื่อหา ????
@@ -292,7 +292,7 @@ class LockersController extends LockersMasterController {
 
             /*   Query ส่วนของแสดง Order ของถุงนี้ที่ ใส่เข้าช่องของ Lockers นี้แล้ว */
             /* Customize Date 25/01/2017 */
-            throw new \yii\base\Exception('orderItemId=> ' . $orderItemId . 'pickingItemId => ' . $pickingItemsId . 'bagNo =>' . $bagNo);
+            //throw new \yii\base\Exception('orderItemId=> ' . $orderItemId . 'pickingItemId => ' . $pickingItemsId . 'bagNo =>' . $bagNo);
             $query1 = Lockers::GetOrderNoToBagNoOnChannelToLockers($orderItemId, $pickingItemsId, $bagNo);
 
             // OLD แสดงจำนวนถุงของ Order นี้ทั้งหมด
