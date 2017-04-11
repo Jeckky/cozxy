@@ -24,11 +24,13 @@ use common\models\costfit\PointUsed;
 /**
  * Checkout controller
  */
-class CheckoutController extends MasterController {
+class CheckoutController extends MasterController
+{
 
     public $enableCsrfValidation = false;
 
-    public function beforeAction($action) {
+    public function beforeAction($action)
+    {
         if ($action->id == 'confirmation' || $action->id == 'confirm-checkout' || $action->id == 'edit-checkout') {
             $this->enableCsrfValidation = FALSE;
         }
@@ -43,7 +45,8 @@ class CheckoutController extends MasterController {
       - SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         //echo 'params :' . $this->params['cart']['orderId'] . '::' . $this->params['cart']['items'];
 
         if (Yii::$app->user->isGuest == 1) {
@@ -350,7 +353,8 @@ class CheckoutController extends MasterController {
         }
     }
 
-    public function actionOrderThank() {
+    public function actionOrderThank()
+    {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         }
@@ -360,7 +364,8 @@ class CheckoutController extends MasterController {
         return $this->render('order_thank');
     }
 
-    public function actionBurnCheckouts() {
+    public function actionBurnCheckouts()
+    {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         }
@@ -495,7 +500,8 @@ class CheckoutController extends MasterController {
         }
     }
 
-    public function actionGetAddress() {
+    public function actionGetAddress()
+    {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         }
@@ -508,7 +514,8 @@ class CheckoutController extends MasterController {
         echo json_encode($address->attributes);
     }
 
-    public function actionConfirmCheckout($hash) {
+    public function actionConfirmCheckout($hash)
+    {
         $k = base64_decode(base64_decode($hash));
         $params = ModelMaster::decodeParams($hash);
         $orderId = $params['orderId'];
@@ -518,7 +525,8 @@ class CheckoutController extends MasterController {
         return $this->render('_confirm_checkout', compact('model', 'ePayment'));
     }
 
-    public function actionEditCheckout($hash) {
+    public function actionEditCheckout($hash)
+    {
         $k = base64_decode(base64_decode($hash));
         $params = ModelMaster::decodeParams($hash);
         $orderId = $params['orderId'];
@@ -563,7 +571,8 @@ class CheckoutController extends MasterController {
         }
     }
 
-    public function actionEditCart($id) {
+    public function actionEditCart($id)
+    {
         // throw new \yii\base\Exception($id);
         $res = [];
         $order = \common\models\costfit\Order::getOrder();
@@ -637,7 +646,8 @@ class CheckoutController extends MasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionConfirmation($hash) {
+    public function actionConfirmation($hash)
+    {
 
         $k = base64_decode(base64_decode($hash));
         $params = ModelMaster::decodeParams($hash);
@@ -797,7 +807,8 @@ class CheckoutController extends MasterController {
         }
     }
 
-    public function actionResult() {
+    public function actionResult()
+    {
         $this->title = 'Cozxy.com | Order Thank';
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Order Thank';
@@ -942,7 +953,8 @@ class CheckoutController extends MasterController {
         return $this->render('payment_result', compact('res'));
     }
 
-    public function actionChangeQuantityItem() {
+    public function actionChangeQuantityItem()
+    {
         $res = [];
         $product = new \common\models\costfit\Product();
         $price = $product->calProductPrice($_POST["productId"], $_POST["quantity"], 1, NULL, NULL);
@@ -966,7 +978,8 @@ class CheckoutController extends MasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionReverseOrderToCart($hash) {
+    public function actionReverseOrderToCart($hash)
+    {
         $params = \common\models\ModelMaster::decodeParams($hash);
         $orderId = $params['orderId'];
         $order = Order::find()->where("orderId=" . $orderId)->one();
@@ -991,7 +1004,8 @@ class CheckoutController extends MasterController {
         return $this->redirect(['/cart']);
     }
 
-    public function updateSupplierStock($order) {
+    public function updateSupplierStock($order)
+    {
         //foreach ($order as $orderId):
         // throw new \yii\base\Exception($orderId->orderId);
         $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId)->all();
@@ -1014,7 +1028,8 @@ class CheckoutController extends MasterController {
         //endforeach;
     }
 
-    public function returnSupplierStock($order) {
+    public function returnSupplierStock($order)
+    {
         foreach ($order as $orderId):
             $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId->orderId)->all();
             foreach ($orderItems as $orderItem):
@@ -1026,7 +1041,8 @@ class CheckoutController extends MasterController {
         endforeach;
     }
 
-    function actionMapImages() {
+    function actionMapImages()
+    {
         //echo 'test map images';
         $pickingId = Yii::$app->request->post('pickingIds');
         //$pickingId = 1;
@@ -1041,7 +1057,8 @@ class CheckoutController extends MasterController {
         }
     }
 
-    public function checkEnoughtPoint($userId, $summary) {
+    public function checkEnoughtPoint($userId, $summary)
+    {
         $currentPoint = UserPoint::find()->where("userId=" . $userId)->one();
         if (isset($currentPoint) && !empty($currentPoint)) {
             if ($currentPoint->currentPoint >= $summary) {
@@ -1054,7 +1071,8 @@ class CheckoutController extends MasterController {
         }
     }
 
-    public function updateUserPoint($userId, $point, $orderId) {
+    public function updateUserPoint($userId, $point, $orderId)
+    {
         $userPoint = UserPoint::find()->where("userId=" . $userId)->one();
         $userPoint->currentPoint = $userPoint->currentPoint - $point;
         $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
@@ -1067,6 +1085,48 @@ class CheckoutController extends MasterController {
         $used->createDateTime = new \yii\db\Expression('NOW()');
         $used->updateDateTime = new \yii\db\Expression('NOW()');
         $used->save(false);
+    }
+
+    public function actionSendPayment()
+    {
+        $isMcc = TRUE;
+//        $model = \common\models\areawow\UserPayment::find()->where("userPaymentId=" . $_GET["id"])->one();
+//        $package = \common\models\areawow\Package::find()->where("packageId = $model->packageId")->one();
+        //URL Test
+        $sendUrl = "https://uatkpgw.kasikornbank.com/pgpayment/payment.aspx";
+        //URL Test
+        //
+        //Production URL
+        //$sendUrl = "https://rt05.kasikornbank.com/pgpayment/payment.aspx";
+        ////Production URL
+        //
+
+        // Standard Thai Bath
+        if (!$isMcc):
+            $merchantId = "401001605782521";
+            $terminalId = "70352178";
+        // Standard  Thai Bath
+        else:
+            //
+            // MCC USD
+            $merchantId = "402001605782521";
+            $terminalId = "70352180";
+        // MCC USD
+        endif;
+//        throw new \yii\base\Exception(str_replace(".", "", $package->price));
+//        $amount = str_replace(".", "", $package->price);
+        $amount = str_replace(".", "", 1000);
+        $url = "http://" . Yii::$app->getRequest()->serverName . "/user/payment-result";
+//        $url = "http://dev/areawow-frontend/user/payment-result";
+        $resUrl = "http://" . Yii::$app->getRequest()->serverName . "/user/payment-result";
+        $cusIp = Yii::$app->getRequest()->getUserIP();
+        $description = "Buy Package " . $package->title;
+//        $invoiceNo = $model->paymentNo;
+        $invoiceNo = "INV2017040001";
+        $fillSpace = "Y";
+        $md5Key = "SzabTAGU5fQYgHkVGU5f4re8pLw5423Q";
+        $checksum = md5($merchantId . $terminalId . $amount . $url . $resUrl . $cusIp . $description . $invoiceNo . $fillSpace . $md5Key);
+        return $this->render("//payment/_payment", compact('sendUrl', 'merchantId', 'terminalId', 'checksum', 'amount', 'invoiceNo', 'description', 'url', 'resUrl', 'cusIp', 'fillSpace'));
     }
 
 }
