@@ -301,8 +301,8 @@ class LockersController extends LockersMasterController {
         } else {
             //echo 'xx'; แสดง BagNo ที่ Scan Qr code
             /* Customize Date 25/01/2017  แสดง BagNo ที่ Scan Qr code */
-            $query1 = Lockers::GetBagNo($orderItemId);
-
+            //$query1 = Lockers::GetBagNo($orderItemId);
+            $query1 = Lockers::GetBagNo($pickingItemsId);
             /* Customize Date 25/01/2017   */
             $query = Lockers::GetOrderItemPackingGetOrderItem($orderId);
             // แสดงจำนวนถุงของ Order นี้ทั้งหมด

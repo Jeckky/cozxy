@@ -195,18 +195,19 @@ class Lockers {
 
     /* แสดง BagNo ที่ Scan Qr code */
 
-    public static function GetBagNo($orderItemId) {
+    public static function GetBagNo($pickingItemsId) {
         //throw new \yii\base\Exception($orderItemId);
-        $query1 = \common\models\costfit\OrderItemPacking::find()
-                ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId,  order_item_packing.pickingItemsId,'
-                        . 'order_item_packing.bagNo, order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,'
-                        . 'count(order_item_packing.quantity) AS NumberOfQuantity, order.orderNo, '
-                        . 'order.orderId ,order_item_packing.quantity')
-                ->joinWith(['orderItems'])
-                ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-                ->where("order_item_packing.status in (7,8) and  order_item_packing.orderItemId ='" . $orderItemId . "'  and order_item.receiveType = '1'")
-//->where("order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "' ")
-                ->groupBy(['order_item_packing.bagNo']);
+        /* $query1 = \common\models\costfit\OrderItemPacking::find()
+          ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId,  order_item_packing.pickingItemsId,'
+          . 'order_item_packing.bagNo, order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,'
+          . 'count(order_item_packing.quantity) AS NumberOfQuantity, order.orderNo, '
+          . 'order.orderId ,order_item_packing.quantity')
+          ->joinWith(['orderItems'])
+          ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
+          ->where("order_item_packing.status in (7,8) and  order_item_packing.orderItemId ='" . $orderItemId . "'  and order_item.receiveType = '1'")
+          //->where("order_item_packing.status = 5 and order_item_packing.bagNo ='" . $bagNo . "' ")
+          ->groupBy(['order_item_packing.bagNo']); */
+        $query1 = \common\models\costfit\OrderItemPacking::find()->where("status in (7,8) and userId=" . Yii::$app->user->identity->userId . " and pickingItemsId=" . $pickingItemsId);
         return $query1;
     }
 
