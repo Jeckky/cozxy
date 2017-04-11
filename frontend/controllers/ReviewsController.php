@@ -43,7 +43,7 @@ class ReviewsController extends MasterController {
         $productId = Yii::$app->request->get('productId');
         $model = \common\models\costfit\ProductPost::find()->where("productSuppId=" . $_GET["productSupplierId"])->one();
 
-        $model = new \common\models\costfit\ProductPost();
+        $model = new \common\models\costfit\ProductPost(['scenario' => 'review_post']);
         if (isset($_POST["ProductPost"])) {
             $model->attributes = $_POST["ProductPost"];
             $model->productSuppId = $productSupplierId;

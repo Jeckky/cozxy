@@ -17,8 +17,7 @@ use \common\models\costfit\master\ProductPostMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class ProductPost extends \common\models\costfit\master\ProductPostMaster
-{
+class ProductPost extends \common\models\costfit\master\ProductPostMaster {
 
     /**
      * @inheritdoc
@@ -26,22 +25,22 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster
     const STATUS_PRIVATE = 1;
     const STATUS_PUBLIC = 2;
     const STATUS_DELETE = 3;
+    const COZXY_POST_REVIRES = 'review_post';
 
-    public function rules()
-    {
-        return array_merge(parent::rules(), []);
+    public function rules() {
+        return array_merge(parent::rules(), [
+            [['description'], 'required', 'on' => self::COZXY_POST_REVIRES],
+        ]);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public static function findStatusArray()
-    {
+    public static function findStatusArray() {
         return [
             self::STATUS_PRIVATE => "ส่วนตัว",
             self::STATUS_PUBLIC => "สาธารณะ",
@@ -49,8 +48,7 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster
         ];
     }
 
-    public static function getStatusText($status)
-    {
+    public static function getStatusText($status) {
         $res = $this->findStatusArray();
         if (isset($res[$status])) {
             return $res[$status];
