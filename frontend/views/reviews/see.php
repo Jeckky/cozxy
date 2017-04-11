@@ -227,7 +227,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                     ?>
                                                 </div>
                                                 <div class="col-md-9 text-left" >
-                                                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $valuex->productId, 'productSupplierId' => $valuex->productSuppId]) ?>"><?php echo $valuex->title; ?></a>
+                                                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $valuex->productId, 'productSupplierId' => $valuex->productSuppId]) ?>" style="font-weight:bold; "><?php echo $valuex->title; ?></a>
                                                 </div>
                                                 <div class="col-sm-12 text-center" style="margin-top: 10px; border-bottom: 1px #e6e6e6 dotted;">
                                                     <?php
