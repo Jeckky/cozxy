@@ -49,8 +49,8 @@ class ProductsController extends MasterController {
      * @return mixed
      */
     public function actionIndex($hash) {
-//throw new \yii\base\Exception('aaa');
-//return Yii::$app->getResponse()->redirect('register/login');
+        //throw new \yii\base\Exception('aaa');
+        //return Yii::$app->getResponse()->redirect('register/login');
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
         $term = \common\models\costfit\ContentGroup::find()->where("lower(title)='term'")->one();
@@ -70,7 +70,7 @@ class ProductsController extends MasterController {
 
         if ($productId != '') {
             $model = \common\models\costfit\Product::find()->where("productId =" . $productId)->one();
-            $productPostView = \common\models\costfit\ProductPost::find()->orderBy('productPostId desc')->limit(6)->all();
+            $productPostView = \common\models\costfit\ProductPost::find()->groupBy(['productSuppId'])->orderBy('productPostId desc')->limit(6)->all();
             if (\Yii::$app->user->id != '') {
                 $productPostViewMem = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id)->orderBy('productPostId desc')->limit(6)->all();
             } else {

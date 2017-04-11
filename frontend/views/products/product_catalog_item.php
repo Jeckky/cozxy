@@ -411,7 +411,7 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
                                         $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
                                         ?>
                                         <p class="p-style3" > <a href="/reviews/see-review?productSupplierId=<?= $value->productSuppId ?>&productId=<?= $valuex->productId ?>"  role="button"   style="font-size: 14px;">
-                                                <?php echo $nun++ . '.' . strip_tags($value->description); ?> </a> 
+                                                <?php echo $nun++ . '.' . strip_tags($value->description); ?> </a>
                                         </p>
                                         <?php
                                     }
@@ -450,7 +450,7 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
                                         //$productPostView['imageThumbnail1'] = $productImages->imageThumbnail1;
                                         //$productPostView['description'] = $value->description;
                                         ?>
-                                        <div class="col-sm-6 text-center">
+                                        <div class="col-sm-6 text-center" style="border-bottom: 1px #e6e6e6 dotted; margin-bottom: 10px;">
                                             <?php
                                             if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
                                                 if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
@@ -462,16 +462,16 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
                                                 ?>
                                                 <img class="ms-thumb" src="<?php echo "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
                                             <?php } ?>
-                                            <p class="text-left"><?php echo $member->firstname; ?></p>
-                                            <p class="text-left">
-                                                <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $valuex->productId, 'productSupplierId' => $valuex->productSuppId]) ?>"><?php echo substr($valuex->title, 0, 40); ?></a></p>
+                                            <p class="text-left" style="margin-top: 5px;margin-bottom: 5px; font-size: 12px; color: rgb(144, 138, 138);">By <?php echo $member->firstname; ?></p>
+                                            <p class="text-left" style="margin-bottom: 0px;">
+                                                <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $valuex->productId, 'productSupplierId' => $valuex->productSuppId]) ?>"><?php echo substr($valuex->title, 0, 30); ?></a></p>
                                         </div>
                                         <?php
                                     }
                                 }
                                 ?>
                                 <p>
-                                    <a href="#" class="btn btn-black btn-xs">see more</a>
+                                    <a href="<?php echo Yii::$app->homeUrl; ?>reviews" class="btn btn-black btn-xs">see more</a>
                                 </p>
                                 <?php
                             }
