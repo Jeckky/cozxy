@@ -232,6 +232,20 @@ class Lockers {
         return $queryAllOrder;
     }
 
+    public static function ItemInLocker($pickingItemsId) {
+        $itemInBag = \common\models\costfit\OrderItemPacking::find()->whre("status in (7,8) and userId=" . Yii::$app->user->identity->userId . " and pickingItemsId=" . $pickingItemsId)->all();
+        if (isset($itemInBag) && count($itemInBag) > 0) {
+            $bagNo = '';
+            foreach ($itemInBag as $item):
+                $bagNo .= $item->bagNo . ',';
+            endforeach;
+            $bagNo = substr($bagNo, 0, -1);
+            return $bagNo;
+        } else {
+            return '';
+        }
+    }
+
     /* actionCloseChannel */
 
 
