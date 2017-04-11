@@ -1120,7 +1120,8 @@ class CheckoutController extends MasterController
 //        $url = "http://dev/areawow-frontend/user/payment-result";
         $resUrl = "http://" . Yii::$app->getRequest()->serverName . "/user/payment-result";
         $cusIp = Yii::$app->getRequest()->getUserIP();
-        $description = "Buy Package " . $package->title;
+//        $description = "Buy Package " . $package->title;
+        $description = "Buy Package 1";
 //        $invoiceNo = $model->paymentNo;
         $invoiceNo = "INV2017040001";
         $fillSpace = "Y";
