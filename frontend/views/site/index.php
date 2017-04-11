@@ -81,6 +81,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     </div>
 </section><!--Categories Close-->
 
+
+<!--Review Product-->
+<section class="catalog-grid">
+    <div class="container">
+        <h2>REVIEW PRODUCTS</h2>
+        <div class="row">
+
+        </div>
+    </div>
+</section><!--Review Product-->
+
 <!--Hero Slider Close-->
 <section class="cat-tiles" style="background-color: #f1efef;">
     <div class="container">
