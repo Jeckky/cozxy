@@ -34,6 +34,8 @@ class Reviews {
             endforeach;
             //throw new \yii\base\Exception($id);
             $id = substr($id, 0, -1);
+        }else {
+            $id = '';
         }
 
         $rating = \common\models\costfit\ProductPostRating::find()->where('productPostId in(' . $id . ')')
@@ -56,6 +58,8 @@ class Reviews {
             endforeach;
             //throw new \yii\base\Exception($id);
             $id = substr($id, 0, -1);
+        }else {
+            $id = '';
         }
 
         $rating = \common\models\costfit\ProductPostRating::find()->where('productPostId in(' . $id . ')')
