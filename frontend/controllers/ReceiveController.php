@@ -311,7 +311,7 @@ class ReceiveController extends MasterController {
                             $res["orderId"] = $_POST['orderId'];
                             $res["numberLocker"] = $allLocker;
                             $res["refNo"] = $order->refNo;
-                            throw new \yii\base\Exception(print_r($res, true));
+                            //throw new \yii\base\Exception(print_r($res, true));
                             //print_r(Json::encode($res));
                             echo Json::encode($res);
                         } else {
