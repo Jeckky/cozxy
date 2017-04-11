@@ -95,7 +95,8 @@ class SiteController extends MasterController {
         $popularCat = Category::findAllPopularCategory();
         $hotProduct = \common\models\costfit\ProductHot::findAllHotProducts();
 //$footer = "adfadf";
-        return $this->render('index', compact('saveCat', 'popularCat', 'bannerGroup', 'topOneContent', 'bottomContent', 'lastIndexContent', 'product', 'product2', 'footer', 'hotProduct'));
+        $productPost = \common\models\costfit\ProductPost::find()->groupBy(['productSuppId'])->limit(6)->all();
+        return $this->render('index', compact('productPost', 'saveCat', 'popularCat', 'bannerGroup', 'topOneContent', 'bottomContent', 'lastIndexContent', 'product', 'product2', 'footer', 'hotProduct'));
     }
 
     /**
