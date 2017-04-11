@@ -1123,11 +1123,11 @@ class CheckoutController extends MasterController
 //        $description = "Buy Package " . $package->title;
         $description = "Buy Package 1";
 //        $invoiceNo = $model->paymentNo;
-        $invoiceNo = "INV2017040001";
+        $invoiceNo = 1;
         $fillSpace = "Y";
         $md5Key = "SzabTAGU5fQYgHkVGU5f4re8pLw5423Q";
         $checksum = md5($merchantId . $terminalId . $amount . $url . $resUrl . $cusIp . $description . $invoiceNo . $fillSpace . $md5Key);
-        return $this->render("//payment/_payment", compact('sendUrl', 'merchantId', 'terminalId', 'checksum', 'amount', 'invoiceNo', 'description', 'url', 'resUrl', 'cusIp', 'fillSpace'));
+        return $this->render("@app/views/e_payment/_k_payment", compact('sendUrl', 'merchantId', 'terminalId', 'checksum', 'amount', 'invoiceNo', 'description', 'url', 'resUrl', 'cusIp', 'fillSpace'));
     }
 
 }
