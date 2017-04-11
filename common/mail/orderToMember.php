@@ -98,7 +98,6 @@
                                                                 $date2 = str_replace('-', '/', $tomorrow);
                                                                 $tomorrow_start = date('Y-m-d', strtotime($date2 . "+2 days"));
                                                                 $tomorrow_end = date('Y-m-d', strtotime($date2 . "+5 days"));
-
                                                                 echo 'วันที่จัดส่งสินค้า ภายในวันที่ ' . \frontend\controllers\MasterController::dateThai($tomorrow, 1) . ' - ' . \frontend\controllers\MasterController::dateThai($tomorrow_end, 1);
                                                             } else if ($GetOrderItemShipping == 3) { // 5 วัน
                                                                 $shipping = 5;
