@@ -94,8 +94,9 @@ class SiteController extends MasterController {
         $saveCat = Category::findAllSaveCategory();
         $popularCat = Category::findAllPopularCategory();
         $hotProduct = \common\models\costfit\ProductHot::findAllHotProducts();
-//$footer = "adfadf";
-        $productPost = \common\models\costfit\ProductPost::find()->groupBy(['productSuppId'])->limit(6)->all();
+        //$footer = "adfadf";
+        $productPost = \common\models\costfit\ProductPost::find()->groupBy(['productSuppId'])->orderBy('productPostId desc')->limit(6)->all();
+
         return $this->render('index', compact('productPost', 'saveCat', 'popularCat', 'bannerGroup', 'topOneContent', 'bottomContent', 'lastIndexContent', 'product', 'product2', 'footer', 'hotProduct'));
     }
 

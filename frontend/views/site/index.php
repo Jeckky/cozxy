@@ -122,6 +122,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
                         $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId);
                         $rating_member = \common\helpers\Reviews::RatingInMember($value->productSuppId);
+                        $rating_count = \common\models\costfit\ProductPost::find()->where('productSuppId=' . $value->productSuppId)->count('productSuppId');
                         //echo $rating_score . '::';
                         //echo $rating_member;
                         if ($rating_score == 0 && $rating_member == 0) {
@@ -147,11 +148,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     // Your client options
                                     ],
                                 ]);
-                                echo '<span style="font-size: 12px; color:#e26a00;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน</span>';
                                 ?>
                             </div>
-                            <div class="col-md-9 text-left">
+                            <div class="col-md-10 text-left">
                                 <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"><?php echo $valuex->title; ?></a>
+                            </div>
+                            <div class="col-md-12 text-left">
+                                <?php
+                                echo '<span style="font-size: 12px; color:#0066c0;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน , ' . $rating_count . ' reviews</span>';
+                                ?>
                             </div>
                             <div class="col-sm-12 text-center" style="margin-top: 10px; padding: 5px; border-bottom: 1px #e6e6e6 dotted;">
                                 <?php
@@ -296,9 +301,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         <div id="photos-bestseller-items-padding">
                                             <a class="media-link" href="<?php echo Yii::$app->homeUrl; ?>products/<?= $products->encodeParams(['productId' => $products->productId, 'productSupplierId' => $products->productSuppId]) ?>" id="media-link-bestseller">
                                                 <div class="badges" style="margin-top:20px;position: absolute;left: 0px">
-                                                    <?php //if (common\models\costfit\Product::isSmartItem($products->productId)):   ?>
+                                                    <?php //if (common\models\costfit\Product::isSmartItem($products->productId)):    ?>
                                                         <!--<span class="sale" style="background-color: #d2d042 !important;color:white;padding: 5px 10px 5px 10px;">SMART</span>-->
-                                                    <?php // endif;   ?>
+                                                    <?php // endif;    ?>
                                                 </div>
                                                 <div class="overlay">
                                                     <div class="descrx desc-bestseller">
@@ -345,9 +350,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         <div id="photos-bestseller-items-padding">
                                             <a class="media-link" href="<?php echo Yii::$app->homeUrl; ?>products/<?= $item->encodeParams(['productId' => $item->productId, 'productSupplierId' => $item->productSuppId]) ?>" id="media-link-bestseller">
                                                 <div class="badges" style="margin-top:20px;position: absolute;left: 0px">
-                                                    <?php //if (common\models\costfit\Product::isSmartItem($products->productId)):   ?>
+                                                    <?php //if (common\models\costfit\Product::isSmartItem($products->productId)):    ?>
                                                         <!--<span class="sale" style="background-color: #d2d042 !important;color:white;padding: 5px 10px 5px 10px;">SMART</span>-->
-                                                    <?php // endif;   ?>
+                                                    <?php // endif;    ?>
                                                 </div>
                                                 <div class="overlay">
                                                     <div class="descrx desc-bestseller">
