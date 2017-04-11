@@ -160,7 +160,7 @@ class PaymentController extends MasterController {
 
         $orderId = Yii::$app->request->get('OrderNo');
         $this->layout = "payment/content";
-        $this->title = 'ใบ​เสร็จ​/ใบ​กํากับ​ภา​ษี บริษัท​ คอ​ซซี่​ ดอทคอม​ จํากัด';
+        $this->title = 'ใบเสร็จรับเงิน/ใบกำกับภาษี บริษัท​ คอ​ซซี่​ ดอทคอม​ จํากัด';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Order Purchase";
         $orderId = $params['orderId'];
@@ -172,7 +172,7 @@ class PaymentController extends MasterController {
         }
 
         //$content = $this->renderPartial('purchase_order');
-        $title = 'ใบเสร็จ/ใบกำกับภาษี';
+        $title = 'ใบเสร็จรับเงิน/ใบกำกับภาษี';
         $heading = $this->renderPartial('@app/views/payment/heading_order', ['title' => $title]);
         $content = $this->renderPartial('@app/views/payment/receipt', compact('order'));
         //$this->actionMpdfDocument($content, $heading, $title);

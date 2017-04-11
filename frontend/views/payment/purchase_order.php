@@ -38,7 +38,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <td  colspan="3" style="text-align: left; vertical-align: text-top; padding: 5px; font-size: 12px; line-height: 20px;">
             <!--เลขที่ใบสั่งซื้อ PO No. : <?php echo $order->orderNo; ?><br>-->
             วันที่สั่งซื้อ : <?php echo $this->context->dateThai($order->createDateTime, 1); ?><br>
-            กำหนดชำระเงิน :
+            กำหนดวันที่ออกใบกำกับภาษี :
             <?php
             echo $this->context->dateThai($order->createDateTime, 1);
             ?>
@@ -92,7 +92,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </tr>
         -->
         <tr >
-            <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้าที่ต้องชำระเงินรวมภาษีมูลค่าเพิ่ม/Total Include VAT :</td>
+            <td colspan="6" class="text-right" class="foorter-purchase-order">ราคาสินค้าที่ต้องวันที่ออกใบกำกับภาษีรวมภาษีมูลค่าเพิ่ม/Total Include VAT :</td>
             <td class="bg-purchase-order"><?php echo number_format($order->summary, 2); ?></td>
         </tr>
 

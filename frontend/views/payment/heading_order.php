@@ -19,8 +19,8 @@ $logo = common\models\costfit\ContentGroup::find()->where("lower(title)='logoima
             <h2>
                 บริษัท คอซซี่ ดอทคอม จำกัด
             </h2>
-            <br> เลขประจำตัวผู้เสียภาษี : 0105546109903 <br>
-            สำนักงานใหญ่ เลขที่ 1 ซ.ลาดพร้าว 19 ถ.ลาดพร้าว <br>แขวงจอมพล เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900
+            <br> เลขประจำตัวผู้เสียภาษี : 0105553036789 <br>
+            ที่อยู่ : เลขที่  5 ซอยรามอินทรา 5 แยก 4  <br>แขวงอนุสวรีย์ เขตบางเขน กทม. 10220
         </td>
         <td colspan="2" style="vertical-align: text-top; text-align: right; "><br><br>
     <?php echo $title; ?><br><br><center> ต้นฉบับ</center>
