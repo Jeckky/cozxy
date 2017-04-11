@@ -200,8 +200,6 @@ class LockersController extends LockersMasterController {
              */
             //throw new \yii\base\Exception($bagNo);
             /* Customize Date 25/01/2017 , By Taninut.Bm */
-            $queryOrderItemPackingId = Lockers::GetOrderItemPackingCheckLockersBagNo($bagNo, $boxcode);
-
             //echo '<pre>';
             // print_r($queryOrderItemPackingId);
             // exit();
@@ -212,6 +210,7 @@ class LockersController extends LockersMasterController {
               return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?pickingItemsId=' . $pickingItemsId . '&boxcode=' . $boxcode . '&model=' . $model . '&code=' . $channel . '&orderId=' . $orderId . '&c=e&orderItemPackingId=' . $orderItemPackingId . '&orderItemId=' . $orderItemId);
               } by sak */
 //            throw new \yii\base\Exception(222);
+            $queryOrderItemPackingId = Lockers::GetOrderItemPackingCheckLockersBagNo($bagNo, $boxcode);
             $orderId = $queryOrderItemPackingId->orderId; // ได้ OrderId มาเพื่อหา ????
             $orderItemId = $queryOrderItemPackingId->orderItemId; // ได้ OrderId มาเพื่อหา ????
             $orderItemPackingId = $queryOrderItemPackingId->orderItemPackingId;
