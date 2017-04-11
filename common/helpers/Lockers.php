@@ -90,7 +90,7 @@ class Lockers {
                         ->where("(order_item_packing.status = '" . \common\models\costfit\OrderItemPacking::PACKING_SENDING_PACKING_SHIPPING . "' "
                                 . " and order_item_packing.bagNo ='" . $bagNo . "' and order_item.pickingId = '" . $boxcode . "' ) "
                                 . " or ( order_item_packing.status = '" . \common\models\costfit\OrderItemPacking::PACKING_STATUS_EXPORT_TO_LOCKERS . "'  "
-                                . " and order_item_packing.bagNo ='" . $bagNo . ") "
+                                . " and order_item_packing.bagNo ='" . $bagNo . "')"
 //        . " and order_item.receiveType = '1'"
                                 . "")
                         ->groupBy(['order_item_packing.bagNo'])->one();
