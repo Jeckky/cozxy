@@ -211,7 +211,7 @@ class LockersController extends LockersMasterController {
               } by sak */
 //            throw new \yii\base\Exception(222);
             $queryOrderItemPackingId = Lockers::GetOrderItemPackingCheckLockersBagNo($bagNo, $boxcode);
-            throw new \yii\base\Exception($queryOrderItemPackingId->orderId);
+            throw new \yii\base\Exception($boxcode);
             $orderId = $queryOrderItemPackingId->orderId; // ได้ OrderId มาเพื่อหา ????
             $orderItemId = $queryOrderItemPackingId->orderItemId; // ได้ OrderId มาเพื่อหา ????
             $orderItemPackingId = $queryOrderItemPackingId->orderItemPackingId;
