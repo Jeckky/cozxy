@@ -69,7 +69,7 @@ class Lockers {
 
     public static function GetOrderItemPackingCheckLockersBagNo($bagNo, $boxcode) {
         $queryOrderItemPackingId = \common\models\costfit\OrderItemPacking::find()
-                        ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
+                        ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemI, order_item_packing.bagNo, '
                                 . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,'
                                 . 'count(order_item_packing.quantity) AS NumberOfQuantity , `order`.orderNo, `order`.orderId , `order`.pickingId')
                         ->joinWith(['orderItems'])
