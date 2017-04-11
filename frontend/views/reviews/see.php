@@ -77,14 +77,45 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <?php
                         if (\Yii::$app->user->id != '') {
                             ?>
-                            <h3 style="text-decoration: underline">My Post</h3>
+                            <h3 style="text-decoration: underline">Post New</h3>
                             <div class="Reviews" style="margin-left: 10px;">
                                 <div class="post">
-
                                     <?php
                                     //$post = common\models\costfit\ProductPost::find()->where('productSuppId=' . $value['productSuppId'])->all();
                                     $number = 1;
+                                    $rating_score = \common\helpers\Reviews::RatingInProduct($_GET['productSupplierId']);
+                                    $rating_member = \common\helpers\Reviews::RatingInMember($_GET['productSupplierId']);
+                                    //echo $rating_score . '::';
+                                    //echo $rating_member;
+                                    if ($rating_score == 0 && $rating_member == 0) {
+                                        $results_rating = 0;
+                                    } else {
+                                        $results_rating = $rating_score / $rating_member;
+                                    }
+                                    ?>
+                                    <div class="col-md-3">
+                                        <?php
+                                        echo \yii2mod\rating\StarRating::widget([
+                                            'name' => "input_name_" . $_GET['productSupplierId'],
+                                            'value' => $results_rating,
+                                            'options' => [
+                                                // Your additional tag options
+                                                'id' => 'reviews-rate-' . $_GET['productSupplierId'], 'class' => 'reviews-rate',
+                                            ],
+                                            'clientOptions' => [
+                                            // Your client options
+                                            ],
+                                        ]);
+                                        ?>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <?php
+                                        echo '( <span style="font-size: 12px;color:#e26a00;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน</span> )';
+                                        ?>
+                                    </div>
+                                    <?php
                                     foreach ($productPostViewMem as $postxRating) {
+
                                         $member = \common\models\costfit\User::find()->where('userId=' . $postxRating->userId)->one();
                                         $rating = common\models\costfit\ProductPostRating::find()->where('productPostId=' . $postxRating['productPostId'] . ' and userId = ' . $postxRating->userId)->one();
                                         ?>
@@ -122,7 +153,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             </div>
                         <?php } ?>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-6 col-md-6 col-sm-12" style="border-top: 2px #e6e6e6 solid;">
                         <h3 style="text-decoration: underline">Customer Reviews</h3>
                         <div class="Reviews" style="margin-left: 10px;">
                             <h5>Rate this item</h5>

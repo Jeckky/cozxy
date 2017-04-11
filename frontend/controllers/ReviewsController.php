@@ -85,7 +85,8 @@ class ReviewsController extends MasterController {
         $supplierPrice = ProductSuppliers::productPriceSupplier($productSupplierId);
         $productPost = \common\models\costfit\ProductPost::find()->groupBy(['productSuppId'])->all();
         if (\Yii::$app->user->id != '') {
-            $productPostViewMem = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . ' and productSuppId=' . $productSupplierId)->limit(6)->all();
+            //$productPostViewMem = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . ' and productSuppId=' . $productSupplierId)->limit(6)->all();
+            $productPostViewMem = \common\models\costfit\ProductPost::find()->where('productSuppId=' . $productSupplierId)->limit(6)->all();
         } else {
             $productPostView = NULL;
             $productPostViewMem = NULL;
