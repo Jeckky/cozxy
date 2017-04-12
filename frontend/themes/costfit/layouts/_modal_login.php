@@ -2,8 +2,9 @@
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
+
 <!--Login Modal-->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 0px;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
