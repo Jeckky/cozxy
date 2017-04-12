@@ -550,8 +550,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         var modalImg = document.getElementById("img01");
         //console.log(modalImg);
         var captionText = document.getElementById("caption");
-        img.onclick = function () {
-            alert(111);
+        img.onchange = function () {
+            //alert(111);
             modal.style.display = "block";
             modalImg.src = srcs;
             captionText.innerHTML = this.alt;
