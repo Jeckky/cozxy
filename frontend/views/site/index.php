@@ -168,7 +168,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             //echo "<div class=\"col-sm-3\"><img id=\"myImg-" . $valueImages['productImageId'] . "\" onClick=\"reviews_click(" . $valueImages['productImageId'] . ',' . "xx" . ")\"   src=\"/" . $valueImages['imageThumbnail2'] . "\" alt=\"1\" class=\"img-responsive img-thumbnail myImg\"/></div>";
                                             ?>
                                             <div class="col-sm-3 col-lg-3 col-md-3">
-                                                <img id="myImg-<?php echo $valueImages['productImageId']; ?>" onclick="reviews_click(<?php echo $valueImages['productImageId']; ?>, '<?php echo $valueImages['image']; ?>')" src="<?php echo $valueImages['imageThumbnail2']; ?>" alt="1" class="img-responsive img-thumbnail myImg">
+                                                <img id="myImg-<?php echo $valueImages['productImageId']; ?>" onclick="reviews_click(<?php echo $valueImages['productImageId']; ?>, '<?php echo $valueImages['image']; ?>', '<?php echo $valuex->title; ?>')" src="<?php echo $valueImages['imageThumbnail2']; ?>" alt="1" class="img-responsive img-thumbnail myImg">
                                             </div>
                                             <?php
                                         } else {
@@ -530,19 +530,55 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <span class="close-reviews" onclick="document.getElementById('myModalReviews').style.display = 'none'">&times;</span>
 
     <!-- Modal Content (The Image) -->
-    <img class="modal-content" id="img01">
+    <div class="col-md-6">
+        <img class="modal-content" id="img01">
+    </div>
 
+    <div class="col-md-6">
+        <div class="col-md-9 text-left">
+            Title :
+        </div>
+        <div class="col-md-9 text-left">
+            <?php
+            for ($i = 0; $i < 7; $i++) {
+                echo "<div style=\"padding: 10px;font-size: 12px;\">Reviews #" . $i . " ทดสอบ " . $i . "</div>";
+            }
+            ?>
+        </div>
+        <div class="col-md-12 text-left">
+            Customer Reviews :
+        </div>
+        <div class="col-md-9 text-left">
+            <?php
+            //echo 'Rate this item : ';
+            echo \yii2mod\rating\StarRating::widget([
+                'name' => "input_name_reviews",
+                'value' => 1,
+                'options' => [
+                    // Your additional tag options
+                    'id' => 'reviews-rate-reviews', 'class' => 'reviews-rate',
+                ],
+                'clientOptions' => [
+                // Your client options
+                ],
+            ]);
+            ?>
+        </div>
+        <div class="col-md-9 text-left" style="margin-top: 5px;">
+            <textarea class="form-control col-lg-5" style="color: #ffffff;"></textarea>
+        </div>
+
+    </div>
     <!-- Modal Caption (Image Text) -->
     <div id="caption"></div>
 </div>
 <script>
 // Get the modal
 
-    function reviews_click(id, srcs) {
+    function reviews_click(id, srcs, title) {
 //        alert(11);
         //console.log(srcs);
         var modal = document.getElementById('myModalReviews');
-
         // Get the image and insert it inside the modal - use its "alt" text as a caption
         var img = document.getElementById('myImg-' + id);
         //var img = document.getElementById('myImgs');
@@ -550,17 +586,21 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         var modalImg = document.getElementById("img01");
         //console.log(modalImg);
         var captionText = document.getElementById("caption");
-        img.onchange = function () {
-            //alert(111);
-            modal.style.display = "block";
-            modalImg.src = srcs;
-            captionText.innerHTML = this.alt;
-        }
+        modal.style.display = "block";
+        modalImg.src = srcs;
+        //captionText.innerHTML = title;
+        //captionText.innerHTML = this.alt;
+        /*
+         img.onload = function () {
+         //alert(111);
+         modal.style.display = "block";
+         modalImg.src = srcs;
+         captionText.innerHTML = this.alt;
+         }*/
         //console.log(img);
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
-
         // When the user clicks on <span> (x), close the modal
         span.onclick = function () {
             modal.style.display = "none";
