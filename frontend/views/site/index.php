@@ -135,29 +135,35 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         foreach ($productPostList as $valuex) {
                             $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productImageId desc')->limit(4)->all();
                             ?>
-                            <div class="col-md-2">
-                                <?php
-                                echo \yii2mod\rating\StarRating::widget([
-                                    'name' => "input_name_" . $value['productPostId'],
-                                    'value' => $results_rating,
-                                    'options' => [
-                                        // Your additional tag options
-                                        'id' => 'reviews-rate-' . $value['productPostId'], 'class' => 'reviews-rate',
-                                    ],
-                                    'clientOptions' => [
-                                    // Your client options
-                                    ],
-                                ]);
-                                ?>
+                            <div class="col-md-12" style="padding: 5px;">
+                                <div class="col-md-2">
+                                    <?php
+                                    echo \yii2mod\rating\StarRating::widget([
+                                        'name' => "input_name_" . $value['productPostId'],
+                                        'value' => $results_rating,
+                                        'options' => [
+                                            // Your additional tag options
+                                            'id' => 'reviews-rate-' . $value['productPostId'], 'class' => 'reviews-rate',
+                                        ],
+                                        'clientOptions' => [
+                                        // Your client options
+                                        ],
+                                    ]);
+                                    ?>
+                                </div>
+
+                                <div class="col-md-10 text-left">
+                                    <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"><?php echo $valuex->title; ?></a>
+                                </div>
+                                <div class="col-md-12 text-left">
+                                    <?php
+                                    echo '<span style="font-size: 12px; color:#0066c0;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน  | ' . $rating_count . ' reviews</span>';
+                                    ?>
+                                </div>
                             </div>
-                            <div class="col-md-10 text-left">
-                                <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"><?php echo $valuex->title; ?></a>
-                            </div>
-                            <div class="col-md-12 text-left">
-                                <?php
-                                echo '<span style="font-size: 12px; color:#0066c0;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน , ' . $rating_count . ' reviews</span>';
-                                ?>
-                            </div>
+
+
+
                             <div class="col-sm-12 text-center" style="margin-top: 10px; padding: 5px; border-bottom: 1px #e6e6e6 dotted;">
                                 <?php
                                 foreach ($productImages as $valueImages) {
