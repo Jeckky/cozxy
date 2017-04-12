@@ -135,7 +135,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productImageId desc')->limit(4)->all();
                             ?>
                             <div class="col-md-12" style="padding: 5px;">
-                                <div class="col-md-2">
+                                <div class="col-md-2 text-left">
                                     <?php
                                     echo \yii2mod\rating\StarRating::widget([
                                         'name' => "input_name_" . $value['productPostId'],
