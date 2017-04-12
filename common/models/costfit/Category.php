@@ -18,32 +18,27 @@ use \common\models\costfit\master\CategoryMaster;
  *
  * @property Product[] $products
  */
-class Category extends \common\models\costfit\master\CategoryMaster
-{
+class Category extends \common\models\costfit\master\CategoryMaster {
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function getChilds()
-    {
+    public function getChilds() {
         return $this->hasMany(Category::className(), ['parentId' => 'categoryId']);
     }
 
-    public function getCategoryWithParentArray()
-    {
+    public function getCategoryWithParentArray() {
         $res = [];
         foreach ($this->find()->all() as $item) {
             $title = $item->title;
@@ -54,8 +49,7 @@ class Category extends \common\models\costfit\master\CategoryMaster
         return $res;
     }
 
-    public static function findAllSaveCategory($returnType = 1, $isRandom = TRUE, $limit = 6)
-    {
+    public static function findAllSaveCategory($returnType = 1, $isRandom = TRUE, $limit = 6) {
         if ($isRandom) {
             $query = Category::find()
             ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
@@ -80,8 +74,7 @@ class Category extends \common\models\costfit\master\CategoryMaster
         }
     }
 
-    public static function findAllPopularCategory($returnType = 1, $isRandom = TRUE, $limit = 6)
-    {
+    public static function findAllPopularCategory($returnType = 1, $isRandom = TRUE, $limit = 6) {
         if ($isRandom) {
             $query = Category::find()
             ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
@@ -107,21 +100,18 @@ class Category extends \common\models\costfit\master\CategoryMaster
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getParent()
-    {
+    public function getParent() {
         return $this->hasOne(Category::className(), ['categoryId' => 'parentId']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCategories()
-    {
+    public function getCategories() {
         return $this->hasMany(Category::className(), ['parentId' => 'categoryId']);
     }
 
-    public static function findAllLastLevelCategory()
-    {
+    public static function findAllLastLevelCategory() {
         $res = [];
         $cats = Category::find()->where("parentId is null")->all();
 
@@ -149,6 +139,41 @@ class Category extends \common\models\costfit\master\CategoryMaster
             } else {
                 $res[$cat->categoryId] = $cat->title;
             }
+        }
+
+        return $res;
+    }
+
+    public static function getRootText($categoryId, $isHtml = FALSE) {
+        $cat = Category::find()->where("categoryId = $categoryId")->one();
+        if ($isHtml) {
+            $text = "<span style='color:red;font-weight:bold'>" . $cat->title . "</span>";
+        } else {
+            $text = $cat->title;
+        }
+        $parent = $cat->parent;
+        for ($i = 0; $i <= 5; $i++) {
+
+            if (isset($parent)) {
+                $text = $parent->title . " > " . $text;
+                $parent = $parent->parent;
+            } else {
+                break;
+            }
+        }
+        return $text;
+    }
+
+    public static function findCategoryArrayWithMultiLevel() {
+        $res = [];
+        $cats = Category::find()
+        ->select("category.*")
+        ->join("LEFT JOIN", "category as parent1", "parent1.categoryId = category.parentId")
+        ->join("LEFT JOIN", "category as parent2", "parent2.categoryId = parent1.parentId")
+//        ->orderBy("parent2.title ASC , parent1.parentId ASC")
+        ->all();
+        foreach ($cats as $cat) {
+            $res[$cat->categoryId] = self::getRootText($cat->categoryId);
         }
 
         return $res;
