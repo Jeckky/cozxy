@@ -37,13 +37,17 @@ class Reviews {
         }else {
             $id = '';
         }
+        if ($id != '') {
+            $rating = \common\models\costfit\ProductPostRating::find()->where('productPostId in(' . $id . ')')
+            ->all();
+            $rating_score = 0;
+            foreach ($rating as $rate):
+                $rating_score+=$rate->score;
+            endforeach;
+        }else {
+            $rating_score = NULL;
+        }
 
-        $rating = \common\models\costfit\ProductPostRating::find()->where('productPostId in(' . $id . ')')
-        ->all();
-        $rating_score = 0;
-        foreach ($rating as $rate):
-            $rating_score+=$rate->score;
-        endforeach;
         return $rating_score;
     }
 
@@ -62,12 +66,12 @@ class Reviews {
             $id = '';
         }
 
-        $rating = \common\models\costfit\ProductPostRating::find()->where('productPostId in(' . $id . ')')
-        ->count('userId');
-        // $rating_score = 0;
-        //foreach ($rating as $rate):
-        // $rating_score+=$rate->score;
-        //endforeach;
+        if ($id != '') {
+            $rating = \common\models\costfit\ProductPostRating::find()->where('productPostId in(' . $id . ')')
+            ->count('userId');
+        } else {
+            $rating = NULL;
+        }
         return $rating;
     }
 

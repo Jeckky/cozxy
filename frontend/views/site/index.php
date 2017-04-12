@@ -539,7 +539,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 // Get the modal
 
     function reviews_click(id, srcs) {
-        //alert(id);
+//        alert(11);
         //console.log(srcs);
         var modal = document.getElementById('myModalReviews');
 
@@ -551,6 +551,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         //console.log(modalImg);
         var captionText = document.getElementById("caption");
         img.onclick = function () {
+            alert(111);
             modal.style.display = "block";
             modalImg.src = srcs;
             captionText.innerHTML = this.alt;
