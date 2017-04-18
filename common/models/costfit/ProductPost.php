@@ -36,8 +36,18 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster {
     /**
      * @inheritdoc
      */
+    public function attributes() {
+        return array_merge(parent::attributes(), [
+            'username',
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels() {
-        return array_merge(parent::attributeLabels(), []);
+        return array_merge(parent::attributeLabels(), [
+        ]);
     }
 
     public static function findStatusArray() {

@@ -168,7 +168,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             //echo "<div class=\"col-sm-3\"><img id=\"myImg-" . $valueImages['productImageId'] . "\" onClick=\"reviews_click(" . $valueImages['productImageId'] . ',' . "xx" . ")\"   src=\"/" . $valueImages['imageThumbnail2'] . "\" alt=\"1\" class=\"img-responsive img-thumbnail myImg\"/></div>";
                                             ?>
                                             <div class="col-sm-3 col-lg-3 col-md-3">
-                                                <img id="myImg-<?php echo $valueImages['productImageId']; ?>" onclick="reviews_click(<?php echo $valueImages['productImageId']; ?>, '<?php echo $valueImages['image']; ?>', '<?php echo $valuex->title; ?>')" src="<?php echo $valueImages['imageThumbnail2']; ?>" alt="1" class="img-responsive img-thumbnail myImg">
+                                                <img id="myImg-<?php echo $valueImages['productImageId']; ?>" onclick="reviews_click(<?php echo $valuex->productSuppId; ?>,<?php echo $valueImages['productImageId']; ?>, '<?php echo $valueImages['image']; ?>', '<?php echo $valuex->title; ?>')" src="<?php echo $valueImages['imageThumbnail2']; ?>" alt="1" class="img-responsive img-thumbnail myImg">
                                             </div>
                                             <?php
                                         } else {
@@ -305,7 +305,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             <div class="row">
                                 <div id="photos-bestseller-items">
                                     <?php
-// $i = 1;
+                                    // $i = 1;
                                     foreach ($product as $products) {
                                         ?>
                                         <div id="photos-bestseller-items-padding">
@@ -463,18 +463,20 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         display: block;
         width: 80%;
         max-width: 700px;
+        float: right;
     }
 
     /* Caption of Modal Image (Image Text) - Same Width as the Image */
     #caption {
         margin: auto;
         display: block;
-        width: 80%;
+        width: 100%;
         max-width: 700px;
         text-align: center;
         color: #ccc;
         padding: 10px 0;
         height: 150px;
+        text-align: right;
     }
 
     /* Add Animation - Zoom in the Modal */
@@ -535,38 +537,52 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     </div>
 
     <div class="col-md-6">
-        <div class="col-md-9 text-left">
-            Title :
+        <div class="col-md-9 text-left" style="color: #ffffff;">
+            Customer Reviews : <span class="titles-reviews"></span>
         </div>
         <div class="col-md-9 text-left">
             <?php
-            for ($i = 0; $i < 7; $i++) {
-                echo "<div style=\"padding: 10px;font-size: 12px;\">Reviews #" . $i . " ทดสอบ " . $i . "</div>";
-            }
+            /* for ($i = 1; $i < 7; $i++) {
+              echo "<div style=\"padding: 10px;font-size: 12px;\">Reviews #" . $i . " ทดสอบ " . $i;
+              echo \yii2mod\rating\StarRating::widget([
+              'name' => "input_name_reviews_" . $i,
+              'value' => 1,
+              'options' => [
+              // Your additional tag options
+              'id' => 'reviews-rate-reviews-' . $i, 'class' => 'reviews-rate',
+              ],
+              'clientOptions' => [
+              // Your client options
+              ],
+              ]);
+              echo "</div>";
+              } */
             ?>
+            <div class="test"></div>
         </div>
-        <div class="col-md-12 text-left">
+        <div class="col-md-12">&nbsp;</div>
+        <!--<div class="col-md-12 text-left" style="font-weight: bold; color: #fff;">
             Customer Reviews :
         </div>
         <div class="col-md-9 text-left">
-            <?php
-            //echo 'Rate this item : ';
-            echo \yii2mod\rating\StarRating::widget([
-                'name' => "input_name_reviews",
-                'value' => 1,
-                'options' => [
-                    // Your additional tag options
-                    'id' => 'reviews-rate-reviews', 'class' => 'reviews-rate',
-                ],
-                'clientOptions' => [
-                // Your client options
-                ],
-            ]);
-            ?>
+        <?php
+        //echo 'Rate this item : ';
+        /* echo \yii2mod\rating\StarRating::widget([
+          'name' => "input_name_reviews",
+          'value' => 1,
+          'options' => [
+          // Your additional tag options
+          'id' => 'reviews-rate-reviews', 'class' => 'reviews-rate',
+          ],
+          'clientOptions' => [
+          // Your client options
+          ],
+          ]); */
+        ?>
         </div>
         <div class="col-md-9 text-left" style="margin-top: 5px;">
             <textarea class="form-control col-lg-5" style="color: #ffffff;"></textarea>
-        </div>
+        </div>-->
 
     </div>
     <!-- Modal Caption (Image Text) -->
@@ -575,8 +591,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <script>
 // Get the modal
 
-    function reviews_click(id, srcs, title) {
-//        alert(11);
+    function reviews_click(productSuppId, id, srcs, title) {
+        //alert(productSuppId + '::' + id);
+        //alert(title);
         //console.log(srcs);
         var modal = document.getElementById('myModalReviews');
         // Get the image and insert it inside the modal - use its "alt" text as a caption
@@ -588,6 +605,34 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         var captionText = document.getElementById("caption");
         modal.style.display = "block";
         modalImg.src = srcs;
+        $('.titles-reviews').html(title);
+
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: $baseUrl + "site/reviews",
+            data: {productSuppId: productSuppId, productImageId: id},
+            success: function (data, status)
+            {
+                $('.test').html('');
+                if (status == "success") {
+                    var json = data;
+                    var rex = /(<([^>]+)>)/ig;
+                    //alert(txt.replace(rex, ""));
+                    var Num = 1;
+                    for (var i = 0; i < json.length; i++) {
+                        var obj = json[i];
+                        var description = obj.description;
+                        $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong><br>' + description.replace(rex, "") + ' \n\
+                        <br><span style=\" font-size: 12px;color: #b2b2b2;\">By ' + obj.username + '<span> </div>');
+                    }
+
+
+                }
+
+
+            }
+        });
         //captionText.innerHTML = title;
         //captionText.innerHTML = this.alt;
         /*
@@ -605,6 +650,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         span.onclick = function () {
             modal.style.display = "none";
         }
+
+
+
     }
 </script>
 <!--Subscription Widget-->

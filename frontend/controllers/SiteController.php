@@ -337,9 +337,20 @@ class SiteController extends MasterController {
             $i++;
         }
         echo $html;
-//echo '<pre>';
-// print_r($query);
-//return json_encode($query);
+        //echo '<pre>';
+        // print_r($query);
+        //return json_encode($query);
+    }
+
+    public function actionReviews() {
+        $productSuppId = Yii::$app->request->post('productSuppId');
+        $productImageId = Yii::$app->request->post('productImageId');
+        $reviews = \common\models\costfit\ProductPost::find()
+        ->select('product_post.productPostId, product_post.productSuppId,user.username , product_post.description ,product_post.createDateTime ')
+        ->join("LEFT JOIN", 'user', 'user.userId = product_post.userId')
+        ->where('product_post.productSuppId=' . $productSuppId)->all();
+
+        return \yii\helpers\Json::encode($reviews);
     }
 
 }
