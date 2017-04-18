@@ -39,8 +39,11 @@ class RegisterController extends MasterController {
         $loginForm = new \common\models\LoginForm();
         if ($loginForm->load(Yii::$app->request->post()) && $loginForm->login()) {
             \common\models\costfit\User::updateAll(['lastvisitDate' => new \yii\db\Expression("NOW()")], ['userId' => Yii::$app->user->identity->userId]);
+            //Detect special conditions devices
+            $devices = \common\helpers\GetBrowser::UserAgent();
             $article = new \common\models\costfit\UserVisit(); //Create an article and link it to the author
             $article->userId = Yii::$app->user->identity->userId;
+            $article->device = $devices;
             $article->lastvisitDate = new \yii\db\Expression('NOW()');
             $article->createDateTime = new \yii\db\Expression('NOW()');
             $article->save(FALSE);

@@ -47,4 +47,19 @@ class GetBrowser {
         return $ExactBrowserNameBR;
     }
 
+    public static function UserAgent() {
+        $iPod = strpos($_SERVER['HTTP_USER_AGENT'], "iPod");
+        $iPhone = strpos($_SERVER['HTTP_USER_AGENT'], "iPhone");
+        $iPad = strpos($_SERVER['HTTP_USER_AGENT'], "iPad");
+        $android = strpos($_SERVER['HTTP_USER_AGENT'], "Android");
+        //file_put_contents('./public/upload/install_log/agent', $_SERVER['HTTP_USER_AGENT']);
+        if ($iPad || $iPhone || $iPod || $android) {
+            return 'mobile';
+            //} else if ($android) {
+            //return 'android';
+        } else {
+            return 'computer';
+        }
+    }
+
 }
