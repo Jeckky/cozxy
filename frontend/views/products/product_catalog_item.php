@@ -70,9 +70,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         /* border-right-color: red !important;*/
 
     }
-
-
-
 </style>
 <div class="col-lg-6 col-md-6 text-left">
     <h1><?= $model->title; ?>

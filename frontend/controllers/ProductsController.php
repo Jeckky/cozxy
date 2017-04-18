@@ -61,6 +61,15 @@ class ProductsController extends MasterController {
         $productId = $params['productId'];
         $productSupplierId = $params['productSupplierId'];
         /*
+         * Product Views - Frontend
+         */
+        $productViews = new \common\models\costfit\ProductPageViews();
+        $productViews->productSuppId = $productSupplierId;
+        $productViews->userId = Yii::$app->user->identity->userId;
+        $productViews->updateDateTime = new \yii\db\Expression('NOW()');
+        $productViews->createDateTime = new \yii\db\Expression('NOW()');
+        $productViews->save(FALSE);
+        /*
          * Get Product Suppliers
          * create date : 14/01/2017
          * create by : taninut.bm
