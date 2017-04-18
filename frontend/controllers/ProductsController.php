@@ -65,7 +65,7 @@ class ProductsController extends MasterController {
          */
         $productViews = new \common\models\costfit\ProductPageViews();
         $productViews->productSuppId = $productSupplierId;
-        $productViews->userId = Yii::$app->user->identity->userId;
+        $productViews->userId = isset(Yii::$app->user->identity->userId) ? Yii::$app->user->identity->userId : '0';
         $productViews->updateDateTime = new \yii\db\Expression('NOW()');
         $productViews->createDateTime = new \yii\db\Expression('NOW()');
         $productViews->save(FALSE);
