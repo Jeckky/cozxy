@@ -65,11 +65,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <?php if (!Yii::$app->user->isGuest): ?>
         <li class="has-submenu pull-right"><a href="#">Account<i class="fa fa-chevron-down"></i></a>
             <ul class="submenu">
-                <li class="pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile" style="font-size: 12px;">My Profile</a></li>
-                <li class="pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order" style="font-size: 12px;">Order History</a></li>
-                <!--<li class="pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order" style="font-size: 12px;">คำขอคืนสินค้า</a></li>-->
-                <!--<li class="pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/payment">Payment Methods</a></li>
-                <li class="pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>history">Easy Re-Order</a></li>-->
+                <li class="pull-left"><a href="<?php echo Yii::$app->homeUrl; ?>profile" style="font-size: 12px;">My Profile</a></li>
+                <li class="pull-left"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order" style="font-size: 12px;">Order History</a></li>
+                <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/returning"><?= Yii::t('app', 'Product Returns') ?></a></li>
+               <!--<li class="pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order" style="font-size: 12px;">คำขอคืนสินค้า</a></li>-->
+               <!--<li class="pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/payment">Payment Methods</a></li>
+               <li class="pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>history">Easy Re-Order</a></li>-->
             </ul>
         </li>
     <?php endif; ?>
@@ -137,8 +138,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/returning"><?= Yii::t('app', 'Product Returns') ?></a></li>
-            <!--<li class="pill-right"><a href="<?php // echo Yii::$app->homeUrl;         ?>profile/payment">Payment Methods</a></li>
-            <li class="pull-right"><a href="<?php // echo Yii::$app->homeUrl;         ?>history">Easy Re-Order</a></li>-->
+            <!--<li class="pill-right"><a href="<?php // echo Yii::$app->homeUrl;           ?>profile/payment">Payment Methods</a></li>
+            <li class="pull-right"><a href="<?php // echo Yii::$app->homeUrl;           ?>history">Easy Re-Order</a></li>-->
         </ul>
     </li>
 <?php endif; ?>
