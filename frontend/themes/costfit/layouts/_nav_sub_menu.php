@@ -36,22 +36,22 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     foreach ($MenuCategory as $items) {
         $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items->categoryId]);
         ?>
-        <li class="has-submenu"><a href="#"><?php echo $items->title; ?><i class="fa fa-chevron-down"></i></a>
+        <li class="has-submenu"><a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items->createTitle() ?>/<?= $params ?>"><?php echo $items->title; ?><i class="fa fa-chevron-down"></i></a>
             <?php
             $MenuCategoryParentId = $this->context->actionMenuCategoryParentId($items->categoryId);
             foreach ($MenuCategoryParentId as $items_sub) {
                 $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items_sub->categoryId]);
                 ?>
                 <ul class="submenu">
-                    <li class="has-submenu">
-                        <a href="#" style="font-size: 12px; font-weight: bold;"><?php echo $items_sub->title; ?></a></li>
+                    <li class="has-submenu" style="text-align: left;">
+                        <a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub->createTitle() ?>/<?= $params ?>" style="font-size: 12px; font-weight: bold;"><?php echo $items_sub->title; ?></a></li>
                     <ul class="has-submenu">
                         <?php
                         $MenuCategorySubParentId = $this->context->actionMenuCategorySubParentId($items_sub->categoryId);
                         foreach ($MenuCategorySubParentId as $items_sub_parent) {
                             $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items_sub_parent->categoryId]);
                             ?>
-                            <li style="width: 100%;"><a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub_parent->createTitle() ?>/<?= $params ?>" style="font-size: 12px;"><?php echo '&nbsp;-&nbsp;' . $items_sub_parent->title; ?></a></li>
+                            <li style="width: 100%; text-align: left;"><a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items_sub_parent->createTitle() ?>/<?= $params ?>" style="font-size: 12px;"><?php echo '&nbsp;-&nbsp;' . $items_sub_parent->title; ?></a></li>
                         <?php } ?>
                     </ul>
                 </ul>
@@ -137,8 +137,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/returning"><?= Yii::t('app', 'Product Returns') ?></a></li>
-            <!--<li class="pill-right"><a href="<?php // echo Yii::$app->homeUrl;    ?>profile/payment">Payment Methods</a></li>
-            <li class="pull-right"><a href="<?php // echo Yii::$app->homeUrl;    ?>history">Easy Re-Order</a></li>-->
+            <!--<li class="pill-right"><a href="<?php // echo Yii::$app->homeUrl;        ?>profile/payment">Payment Methods</a></li>
+            <li class="pull-right"><a href="<?php // echo Yii::$app->homeUrl;        ?>history">Easy Re-Order</a></li>-->
         </ul>
     </li>
 <?php endif; ?>

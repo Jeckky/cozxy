@@ -588,3 +588,6 @@ a.panel-toggle {
 .shop-filters .filter-section .price-slider .values input {
     width: 95px;
 }
+.menu-toggle {
+    color: #3cc;
+}
