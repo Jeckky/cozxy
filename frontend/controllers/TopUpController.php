@@ -12,6 +12,7 @@ use yii\filters\VerbFilter;
 use common\models\costfit\User;
 use yii\helpers\Json;
 use common\models\costfit\UserPoint;
+use common\models\costfit\PaymentMethod;
 
 /**
  * TopUpController implements the CRUD actions for TopUp model.
@@ -41,6 +42,8 @@ class TopUpController extends MasterController {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
         $msg = '';
+        //$paymentMethod = PaymentMethod::find()->where("status=1")->all();
+        $paymentMethod = PaymentMethod::find()->where("status=1")->all();
         if (isset($_GET['ms'])) {
             $msg = $_GET['ms'];
         }
@@ -54,10 +57,18 @@ class TopUpController extends MasterController {
         if (isset($_POST["inputPass"]) && !empty($_POST["inputPass"])) {
             $topUpDraf = new TopUp();
             $topUpDraf->userId = Yii::$app->user->id;
+            if ($_POST["paymentType"] == 'credit') {
+                $topUpDraf->paymentMethod = 2; //
+                $data["paymentType"] = "ชำระผ่านบัตรเครดิต";
+            } else if ($_POST["paymentType"] == 'bill') {
+                $topUpDraf->paymentMethod = 1;
+                $data["paymentType"] = "โอนเงินผ่านธนาคาร";
+            }
             $topUpDraf->status = TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT;
             $topUpDraf->createDateTime = new \yii\db\Expression('NOW()');
             $topUpDraf->updateDateTime = new \yii\db\Expression('NOW()');
             $topUpDraf->save(false);
+
             return $this->render('amount', [
                         'data' => $data
             ]);
@@ -74,12 +85,14 @@ class TopUpController extends MasterController {
                 return $this->redirect(['test-result', 'userId' => $user->userId, 'amount' => $_POST["amount"]]);
             } else {
                 return $this->render('index', [
-                            'data' => $data
+                            'data' => $data,
+                            'paymentMethod' => $paymentMethod
                 ]);
             }
         } else {
             return $this->render('index', [
                         'data' => $data,
+                        'paymentMethod' => $paymentMethod,
                         'ms' => $msg
             ]);
         }
@@ -139,6 +152,7 @@ class TopUpController extends MasterController {
                     $currentPoint = $userPoint->currentPoint;
                 }
                 $type = 'success';
+
                 return $this->render('thank', [
                             'currentPoint' => $currentPoint,
                             'type' => $type,

@@ -272,9 +272,9 @@ class ReceiveController extends MasterController {
                         $orderItem = substr($orderItem, 0, -1);
                         $lockers = OrderItemPacking::find()->where("orderItemId in($orderItem) and status=7")->all();
                         if (isset($lockers)) {
+                            $count = 0;
                             foreach ($lockers as $locker):
                                 $total = 0;
-                                $count = 0;
                                 $pickingLocker = PickingPointItems::find()->where("pickingItemsId=" . $locker->pickingItemsId)->one();
                                 if (isset($pickingLocker)) {
                                     $flag = false;

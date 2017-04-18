@@ -17,6 +17,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 $form = ActiveForm::begin([
             'id' => 'top-up'
         ]);
+if (isset($paymentMethod) && count($paymentMethod) > 0) {
+    $count = count($paymentMethod);
+}
 ?>
 <div class="top-up-index" style="width: 80%;margin: auto;">
 
@@ -35,17 +38,57 @@ $form = ActiveForm::begin([
                 <td style="text-align: right;width:50%;">Email Account :</td>
                 <td style="text-align: left;width:50%;"><span style="margin-left: 20px;"><?= $data["email"] ?></span></td>
             </tr>
+
             <tr style="height: 50px;">
                 <td style="text-align: right;width:50%;">Name :</td>
                 <td style="text-align: left;width:50%;"><span style="margin-left: 20px;"><?= $data["name"] ?></span></td>
             </tr>
-            <tr style="height: 70px; vertical-align: middle">
-                <td style="text-align: right;width:50%;">Credit Card :</td>
-                <td style="text-align: left;width:50%;padding-left: 20px;">
-                    <img src="<?= $baseUrl . '/images/Bank/master.png' ?>" style="float: left;width:50px;height:30px;margin-right: 10px;border: #009999 thin solid;">
-                    <img src="<?= $baseUrl . '/images/Bank/visa.png' ?>" style="float: left;width:50px;height:30px;margin-right: 10px;border: #009999 thin solid;">
-                    <img src="<?= $baseUrl . '/images/Bank/jcb.png' ?>" style="float: left;width:50px;height:30px;margin-right: 10px;border: #009999 thin solid;">
-                </td>
+            <tr style="vertical-align: middle">
+                <td style="text-align: right;width:50%;vertical-align: middle;" rowspan="<?= $count ?>">Payment method :</td>
+                <?php
+                if (isset($paymentMethod) && count($paymentMethod) > 0) {
+                    foreach ($paymentMethod as $payment):
+                        if ($payment->type == 2) {//credit
+                            ?>
+                            <td style="text-align: left;">
+                                <div class="radio">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="checkout_select_address">
+                                            <input type="radio" name="paymentType"  id="paymentMethod" value="credit"<?= count($paymentMethod) == 1 ? 'checked' : '' ?>><?= $payment->title ?><br>
+                                            <img src="<?= $baseUrl . '/images/Bank/master.png' ?>" style="float: left;width:50px;height:30px;margin-right: 10px;border: #009999 thin solid;">
+                                            <img src="<?= $baseUrl . '/images/Bank/visa.png' ?>" style="float: left;width:50px;height:30px;margin-right: 10px;border: #009999 thin solid;">
+                                            <img src="<?= $baseUrl . '/images/Bank/jcb.png' ?>" style="float: left;width:50px;height:30px;margin-right: 10px;border: #009999 thin solid;">
+                                        </label>
+                                    </div>
+                                </div>
+                            </td>
+                            <?php
+                        }
+                    endforeach;
+                }
+                ?>
+            </tr>
+            <tr style="vertical-align: top;">
+
+                <?php
+                if (isset($paymentMethod) && count($paymentMethod) > 0) {
+                    foreach ($paymentMethod as $payment):
+                        if ($payment->type == 1) {//bill payment
+                            ?>
+                            <td style="text-align: left;">
+                                <div class="radio">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="checkout_select_address">
+                                            <input type="radio" name="paymentType"  id="paymentMethod2" value="bill"<?= count($paymentMethod) == 1 ? 'checked' : '' ?>><?= $payment->title ?>
+                                        </label>
+                                    </div>
+                                </div>
+                            </td>
+                            <?php
+                        }
+                    endforeach;
+                }
+                ?>
             </tr>
             <tr style="height: 50px;">
                 <td style="text-align: right;width:50%;">Password :</td>

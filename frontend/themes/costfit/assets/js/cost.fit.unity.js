@@ -415,6 +415,18 @@ $(document).ready(function (e) {
     $(document).on('click', '#checkBot', function () {//test
         var inputPass = $(this).parent().parent().parent().parent().find("#inputPass").val();
         var passPic = $(this).parent().parent().parent().parent().find("#passwordPic").val();
+        var creditVal = $(this).parent().parent().parent().parent().find("#paymentMethod").val();
+        var billVal = $(this).parent().parent().parent().parent().find("#paymentMethod2").val();
+        if (creditVal == 'credit') {
+            var creditCard = document.getElementById("paymentMethod").checked;
+        } else {
+            var creditCard = false;
+        }
+        if (billVal == 'bill') {
+            var billPayment = document.getElementById("paymentMethod2").checked;
+        } else {
+            var billPayment = false;
+        }
         if ((inputPass == '') || (inputPass != passPic)) {
             alert('Incorrect verify, please recheck.');
             $.ajax({
@@ -428,6 +440,8 @@ $(document).ready(function (e) {
                     }
                 }
             });
+        } else if (creditCard == false && billPayment == false) {
+            alert("Please select payment method.");
         } else {
             $("#top-up").submit();
         }

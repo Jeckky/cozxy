@@ -28,6 +28,7 @@ $(document).on('click', '#confirm-topup', function (e) {
 var amount = $(this).parent().parent().parent().parent().find('#amount').val();
    if(amount==''){
         alert('empty amount');
+         return false;
     }else{
         if(!confirm(':: Confirm Amount '+amount+' THB ?')){
             return false;
@@ -48,7 +49,7 @@ $this->registerJs($js);
 
             <tr style="height: 50px;">
                 <td style="text-align: right;width:50%;">Payment :</td>
-                <td style="text-align: left;width:50%;"><span style="margin-left: 20px;">Credit Card</span></td>
+                <td style="text-align: left;width:50%;"><span style="margin-left: 20px;"><?= $data["paymentType"] ?></span></td>
             </tr>
             <tr style="height: 50px;">
                 <td style="text-align: right;width:50%;">Name :</td>
