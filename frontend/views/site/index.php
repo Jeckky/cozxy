@@ -643,20 +643,21 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     for (var i = 0; i < json.length; i++) {
                         var obj = json[i];
                         var description = obj.description;
+                        var scores = obj.score;
                         /* $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
                          <div class="scores-reviews"><img alt="5" src="/images/star-off.png" title="gorgeous"> <img alt="1" src="/images/star-on.png" title="bad"></div> \n\
                          <br> ' + description.replace(rex, "") + ' \n\
                          <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',' + obj.score + '<span> </div>'
                          );*/
 
-                        for (score = 1; score <= obj.score; score++) {
+                        for (score = 1; score <= scores; score++) {
                             //console.log(obj.score);
                             $('.scores-reviews').append('<img src="/images/star-on.png">');
                         }
                         $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
                          <div class="scores-reviews"></div> \n\
                          <br> ' + description.replace(rex, "") + ' \n\
-                         <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',' + obj.score + '<span> </div>'
+                         <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',' + scores + '<span> </div>'
                                 );
 
                     }
