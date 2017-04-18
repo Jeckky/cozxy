@@ -558,7 +558,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
               echo "</div>";
               } */
             ?>
-            <div class="test"></div>
+            <div class="test">
+                <div class="title-reviews"></div>
+                <div class="score-reviews"></div>
+                <div class="content-reviews"></div>
+                <div class="username-reviews"></div>
+            </div>
         </div>
         <div class="col-md-12">&nbsp;</div>
         <!--<div class="col-md-12 text-left" style="font-weight: bold; color: #fff;">
@@ -623,14 +628,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     for (var i = 0; i < json.length; i++) {
                         var obj = json[i];
                         var description = obj.description;
-                        $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong><br>' + description.replace(rex, "") + ' \n\
-                        <br><span style=\" font-size: 12px;color: #b2b2b2;\">By ' + obj.username + '<span> </div>');
+                        $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
+                        <div class="scores-reviews"></div> \n\
+                        <br> ' + description.replace(rex, "") + ' \n\
+                        <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',' + obj.score + '<span> </div>'
+                                );
+                        //$('.title-reviews').append();
+                        //$('.score-reviews').append(obj.score);
+                        //$('.content-reviews').append(description.replace(rex, ""));
+                        //$('.username-reviews').append(obj.username);
                     }
-
-
                 }
-
-
             }
         });
         //captionText.innerHTML = title;

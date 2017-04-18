@@ -38,7 +38,7 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster {
      */
     public function attributes() {
         return array_merge(parent::attributes(), [
-            'username',
+            'username', 'score'
         ]);
     }
 
