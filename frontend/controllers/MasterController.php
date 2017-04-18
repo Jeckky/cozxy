@@ -78,6 +78,12 @@ class MasterController extends MasterCommonController {
             } else {
                 $this->view->params['currentPoint'] = 0;
             }
+            $device = \common\models\costfit\UserVisit::find()->where('userId=' . Yii::$app->user->id)->orderBy('visitId desc')->limit(1)->one();
+            if (count($device) > 0) {
+                $this->view->params['listDevice']['device'] = $device;
+            } else {
+                $this->view->params['listDevice']['device'] = NULL;
+            }
             $this->view->params['listDataProvider']['shipping'] = $dataProvider_picking_point;
             $this->view->params['listDataProvider']['billing'] = $dataProvider_billing;
         }

@@ -38,7 +38,20 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="row">
                 <!--Left Column-->
                 <div class="col-lg-12 col-md-12 col-sm-12 text-left">
-                    <h2 class="title">Hello , <?php echo Yii::$app->user->identity->firstname . '&nbsp;' . Yii::$app->user->identity->lastname ?></h2>
+                    <h2 class="title">Hello ,
+                        <?php echo Yii::$app->user->identity->firstname . '&nbsp;' . Yii::$app->user->identity->lastname ?>
+                        <?php
+                        if (isset($this->params['listDevice']['device'])) {
+                            if ($this->params['listDevice']['device']->device = 'computer') {
+                                echo ", <i class=\"fa fa-desktop \" aria-hidden=\"true\"  style=\"color: #3cc;\"></i>";
+                            } else {
+                                echo ", <i class=\"fa fa-mobile  \" aria-hidden=\"true\"  style=\"color: #3cc;\"></i>";
+                            }
+                        } else {
+
+                        }
+                        ?>
+                    </h2>
                 </div>
 
                 <div class="col-lg-8 col-md-8">
