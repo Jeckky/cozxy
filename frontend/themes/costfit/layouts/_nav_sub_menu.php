@@ -36,7 +36,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     foreach ($MenuCategory as $items) {
         $params = \common\models\ModelMaster::encodeParams(['categoryId' => $items->categoryId]);
         ?>
-        <li class="has-submenu"><a href="<?php echo Yii::$app->homeUrl; ?>search/<?= $items->createTitle() ?>/<?= $params ?>"><?php echo $items->title; ?><i class="fa fa-chevron-down"></i></a>
+        <li class="has-submenu"><a href="#"><?php echo $items->title; ?><i class="fa fa-chevron-down"></i></a>
             <?php
             $MenuCategoryParentId = $this->context->actionMenuCategoryParentId($items->categoryId);
             foreach ($MenuCategoryParentId as $items_sub) {
@@ -137,8 +137,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/returning"><?= Yii::t('app', 'Product Returns') ?></a></li>
-            <!--<li class="pill-right"><a href="<?php // echo Yii::$app->homeUrl;        ?>profile/payment">Payment Methods</a></li>
-            <li class="pull-right"><a href="<?php // echo Yii::$app->homeUrl;        ?>history">Easy Re-Order</a></li>-->
+            <!--<li class="pill-right"><a href="<?php // echo Yii::$app->homeUrl;         ?>profile/payment">Payment Methods</a></li>
+            <li class="pull-right"><a href="<?php // echo Yii::$app->homeUrl;         ?>history">Easy Re-Order</a></li>-->
         </ul>
     </li>
 <?php endif; ?>
