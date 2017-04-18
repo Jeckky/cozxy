@@ -652,7 +652,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
                         for (score = 1; score <= scores; score++) {
                             //console.log(obj.score);
-                            $('.scores-reviews').append('<img src="/images/star-on.png">');
+                            //$('.scores-reviews').append('<img src="/images/star-on.png">');
                         }
                         $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
                          <div class="scores-reviews"></div> \n\
