@@ -43,6 +43,7 @@ class RegisterController extends MasterController {
             $devices = \common\helpers\GetBrowser::UserAgent();
             $article = new \common\models\costfit\UserVisit(); //Create an article and link it to the author
             $article->userId = Yii::$app->user->identity->userId;
+
             $article->device = $devices;
             $article->lastvisitDate = new \yii\db\Expression('NOW()');
             $article->createDateTime = new \yii\db\Expression('NOW()');
