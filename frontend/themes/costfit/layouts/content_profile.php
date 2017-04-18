@@ -42,7 +42,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <?php echo Yii::$app->user->identity->firstname . '&nbsp;' . Yii::$app->user->identity->lastname ?>
                         <?php
                         if (isset($this->params['listDevice']['device'])) {
-                            if ($this->params['listDevice']['device']->device = 'computer') {
+                            if ($this->params['listDevice']['device']->device == 'computer') {
                                 echo ", <i class=\"fa fa-desktop \" aria-hidden=\"true\"  style=\"color: #3cc;\"></i>";
                             } else {
                                 echo ", <i class=\"fa fa-mobile  \" aria-hidden=\"true\"  style=\"color: #3cc;\"></i>";
