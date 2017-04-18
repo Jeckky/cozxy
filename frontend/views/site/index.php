@@ -649,7 +649,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                          <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',' + obj.score + '<span> </div>'
                          );*/
 
-                        for ($score = 1; $score <= obj.score; $score++) {
+                        for (score = 1; score <= obj.score; score++) {
                             //console.log(obj.score);
                             $('.scores-reviews').append('<img src="/images/star-on.png">');
                         }
