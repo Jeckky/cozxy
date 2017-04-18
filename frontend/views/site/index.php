@@ -634,6 +634,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             success: function (data, status)
             {
                 $('.test').html('');
+                $('.scores-reviews').html('');
                 if (status == "success") {
                     var json = data;
                     var rex = /(<([^>]+)>)/ig;
