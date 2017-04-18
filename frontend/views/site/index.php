@@ -655,7 +655,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
                          <div class="scores-reviews"></div> \n\
                          <br> ' + description.replace(rex, "") + ' \n\
-                         <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + '<span> </div>'
+                         <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',' + obj.score + '<span> </div>'
                                 );
 
                     }
