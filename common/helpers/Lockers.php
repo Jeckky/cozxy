@@ -153,6 +153,18 @@ class Lockers {
         return $OrderItemPacking;
     }
 
+    public static function GetOrderItem($bagNo) {
+        $orderItemPackings = \common\models\costfit\OrderItemPacking::find()->where("bagNo='" . $bagNo . "'")->all();
+        $orderItem = '';
+        if (isset($orderItemPackings) && count($orderItemPackings) > 0) {
+            foreach ($orderItemPackings as $item):
+                $orderItem .= $item->orderItem . ',';
+            endforeach;
+            $orderItem = substr($orderItem, 0, -1);
+        }
+        return $orderItem;
+    }
+
     public static function GetPickingPointItemsPickingItems($boxcode, $channel, $pickingItemsId) {
         $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  "
         . "code = '" . $channel . "' and pickingItemsId  = '" . $pickingItemsId . "' ")->one();

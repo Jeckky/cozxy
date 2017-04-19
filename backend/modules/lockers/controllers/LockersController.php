@@ -241,6 +241,7 @@ class LockersController extends LockersMasterController {
 
                 /*  Customize Date 25/01/2017 */
                 $OrderItemPacking = Lockers::GetOrderItemPacking($orderItemPackingId);
+                $orderItemId = Lockers::GetOrderItem($bagNo);
                 if ($countBag > 1) {
 //                    throw new \yii\base\Exception("Count Bag > 1");
                     if (count($listPointItems) > 0) {
@@ -271,7 +272,9 @@ class LockersController extends LockersMasterController {
                         // if ($close == 'yes') {
 //                        throw new \yii\base\Exception("Count Bag = 1");
                         \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'userId' => Yii::$app->user->identity->userId, 'pickingItemsId' => $listPointItems->pickingItemsId, 'shipDate' => new \yii\db\Expression("NOW()")], ['bagNo' => $bagNo]);
-                        \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderItemId' => $OrderItemPacking->orderItemId]);
+                        //\common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderItemId' => $OrderItemPacking->orderItemId]);
+                        //\common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderId' => $orderId]);
+                        $this->updateOrderId($orderItemId);
                         \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $orderId]);
                         $this->generatePassword($orderId);
                         $this->sendEmail($orderId, $OrderItemPacking->orderItemId);
@@ -748,6 +751,17 @@ class LockersController extends LockersMasterController {
             'response' => $response,
             'msg' => $msg,
         ]);
+    }
+
+    public function updateOrderItemId($orderItemId) {
+        $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId in ($orderItemId)")->all();
+        if (isset($orderItem) && count($orderItem) > 0) {
+            foreach ($orderItem as $item):
+                $item->status = 15;
+                $item->updateDateTime = new \yii\db\Expression('NOW()');
+                $item->save(false);
+            endforeach;
+        }
     }
 
 }
