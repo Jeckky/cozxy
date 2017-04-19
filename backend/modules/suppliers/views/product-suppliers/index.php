@@ -125,12 +125,12 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                             $title = $model->title;
                             $category = isset($model->category) ? \common\models\costfit\Category::getRootText($model->categoryId, TRUE) : NULL;
                             $brand = isset($model->brand) ? $model->brand->title : NULL;
-
+                            $url = isset($model->url) ? Html::a('url brand', $model->url, ['target' => '_blank', 'data-pjax' => "0"]) : 'ไม่ระบุ';
 
                             return '<strong>Title : </strong>' . $title . '<br>'
                             . '<strong>Category : </strong> ' . $category . '<br>'
                             . '<strong>Brand : </strong>' . $brand . '<br>'
-                            . '<strong>Url : </strong>' . Html::a('url brand', $model->url, ['target' => '_blank', 'data-pjax' => "0"])
+                            . '<strong>Url : </strong>' . $url
                             ;
                         }
                     ],
