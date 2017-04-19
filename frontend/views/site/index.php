@@ -651,9 +651,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                          <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',' + obj.score + '<span> </div>'
                          );*/
 
-                        for (score = 1; score <= scores; score++) {
+                        for (score = 1; score < scores; score++) {
                             console.log(obj.score);
-                            $('.scores-reviews').append('<img src="/images/star-on.png">');
+                            $('.scores-reviews').append('<img src="https://scontent.fbkk5-1.fna.fbcdn.net/v/t1.0-9/17904318_1619387854755987_6412607138319878578_n.jpg?oh=069406d5a43690bd9452e6fc69448809&oe=5952AADA">');
                         }
                         $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
                          <div class="scores-reviews"></div> \n\
