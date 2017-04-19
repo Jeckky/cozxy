@@ -413,6 +413,7 @@ foreach ($GetOrderMastersGroup as $value) {
                 // Child level 2
                 echo Html::hiddenInput('input-type-11', $ListpickpointLockersCoolValueInLocation['amphurId'], ['id' => 'input-type-11']);
                 echo Html::hiddenInput('input-type-22', $ListpickpointLockersCoolValueInLocation['amphurId'], ['id' => 'input-type-22']);
+                echo $yourbrowser;
                 if ($yourbrowser != 'Safari') {
                     echo $form->field($pickingPointLockersCool, 'amphurId')->widget(kartik\depdrop\DepDrop::classname(), [
                         //'data' => [9 => 'Savings'],
@@ -437,9 +438,9 @@ foreach ($GetOrderMastersGroup as $value) {
                         'attribute' => 'amphurId',
                         'options' => ['placeholder' => 'Select ...', 'id' => 'LcamphurId'],
                         //'type' => DepDrop::TYPE_SELECT2,
-                        'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                        'select2Options' => [ 'pluginOptions' => ['allowClear' => true]],
                         'pluginOptions' => [
-                            'class' => 'required form-control ',
+                            'class' => 'required form-control',
                             'initialize' => true,
                             'depends' => ['LcprovinceId'],
                             'url' => Url::to(['child-amphur-address-picking-point']),
