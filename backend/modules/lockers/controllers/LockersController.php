@@ -30,7 +30,7 @@ class LockersController extends LockersMasterController {
                 'only' => ['index', 'create', 'update', 'view', 'open-locker'],
                 'rules' => [
 // allow authenticated users
-                    [
+                        [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -133,13 +133,13 @@ class LockersController extends LockersMasterController {
             // $point = PickingPoint::find()->where("pickingId=" . $pickingId)->one();
             $typePickingPoint = \common\models\costfit\PickingPointType::find()->where('pptId=' . $listPoint->type)->one();
             return $this->render('lockers', [
-                'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
-                'citie' => $localNamecitie,
-                'countrie' => $localNamecountrie,
-                'state' => $localNamestate,
-                // 'point' => $point,
-                /* Customize Date 21/01/2017 , By Taninut.Bm */
-                'point' => $listPoint, 'typePickingPoint' => $typePickingPoint, 'PickingPoints' => $PickingPoints
+                        'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
+                        'citie' => $localNamecitie,
+                        'countrie' => $localNamecountrie,
+                        'state' => $localNamestate,
+                        // 'point' => $point,
+                        /* Customize Date 21/01/2017 , By Taninut.Bm */
+                        'point' => $listPoint, 'typePickingPoint' => $typePickingPoint, 'PickingPoints' => $PickingPoints
             ]);
         }
 
@@ -241,7 +241,7 @@ class LockersController extends LockersMasterController {
 
                 /*  Customize Date 25/01/2017 */
                 $OrderItemPacking = Lockers::GetOrderItemPacking($orderItemPackingId);
-                $orderItemId = Lockers::GetOrderItem($bagNo);
+
                 if ($countBag > 1) {
 //                    throw new \yii\base\Exception("Count Bag > 1");
                     if (count($listPointItems) > 0) {
@@ -253,14 +253,14 @@ class LockersController extends LockersMasterController {
                     } else {
 
                         return $this->render('location', [
-                            'warning' => 'bagerror',
-                            'model' => $model,
-                            'code' => $channel,
-                            'boxcode' => $boxcode,
-                            'pickingItemsId' => $pickingItemsId,
-                            'orderId' => $orderId,
-                            'orderItemPackingId' => $orderItemPackingId,
-                            'bagNo' => $OrderItemPacking->bagNo,
+                                    'warning' => 'bagerror',
+                                    'model' => $model,
+                                    'code' => $channel,
+                                    'boxcode' => $boxcode,
+                                    'pickingItemsId' => $pickingItemsId,
+                                    'orderId' => $orderId,
+                                    'orderItemPackingId' => $orderItemPackingId,
+                                    'bagNo' => $OrderItemPacking->bagNo,
                         ]);
                     }
                 } else if ($countBag == 1) {
@@ -272,9 +272,8 @@ class LockersController extends LockersMasterController {
                         // if ($close == 'yes') {
 //                        throw new \yii\base\Exception("Count Bag = 1");
                         \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'userId' => Yii::$app->user->identity->userId, 'pickingItemsId' => $listPointItems->pickingItemsId, 'shipDate' => new \yii\db\Expression("NOW()")], ['bagNo' => $bagNo]);
-                        //\common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderItemId' => $OrderItemPacking->orderItemId]);
+                        \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderItemId' => $OrderItemPacking->orderItemId]);
                         //\common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderId' => $orderId]);
-                        $this->updateOrderId($orderItemId);
                         \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $orderId]);
                         $this->generatePassword($orderId);
                         $this->sendEmail($orderId, $OrderItemPacking->orderItemId);
@@ -284,14 +283,14 @@ class LockersController extends LockersMasterController {
                     } else {
                         throw new \yii\base\Exception("Else");
                         return $this->render('location', [
-                            'warning' => 'bagerror',
-                            'model' => $model,
-                            'code' => $channel,
-                            'boxcode' => $boxcode,
-                            'pickingItemsId' => $pickingItemsId,
-                            'orderId' => $orderId,
-                            'orderItemPackingId' => $orderItemPackingId,
-                            'bagNo' => $OrderItemPacking->bagNo,
+                                    'warning' => 'bagerror',
+                                    'model' => $model,
+                                    'code' => $channel,
+                                    'boxcode' => $boxcode,
+                                    'pickingItemsId' => $pickingItemsId,
+                                    'orderId' => $orderId,
+                                    'orderItemPackingId' => $orderItemPackingId,
+                                    'bagNo' => $OrderItemPacking->bagNo,
                         ]);
                         // exit();
                     }
@@ -346,23 +345,23 @@ class LockersController extends LockersMasterController {
         // exit();
         $typePickingPoint = \common\models\costfit\PickingPointType::find()->where('pptId=' . $listPoint->type)->one();
         return $this->render('scanbag', [
-            'dataProviderAllOrder' => $dataProviderAllOrder,
-            'dataProviderBag' => $dataProviderBag,
-            'dataProvider' => $dataProvider,
-            'listPoint' => $listPoint,
-            'citie' => $localNamecitie,
-            'countrie' => $localNamecountrie,
-            'state' => $localNamestate,
-            'listPointItems' => $listPointItems,
-            'model' => $model,
-            'boxcode' => $boxcode,
-            'channel' => $channel,
-            'pickingItemsId' => $pickingItemsId,
-            'bagNo' => $bagNo,
-            'orderId' => $orderId,
-            'orderItemPackingId' => $orderItemPackingId,
-            'c' => $c, 'typePickingPoint' => $typePickingPoint,
-        //'VarBagDuplicate' => $BagDuplicate = 1,
+                    'dataProviderAllOrder' => $dataProviderAllOrder,
+                    'dataProviderBag' => $dataProviderBag,
+                    'dataProvider' => $dataProvider,
+                    'listPoint' => $listPoint,
+                    'citie' => $localNamecitie,
+                    'countrie' => $localNamecountrie,
+                    'state' => $localNamestate,
+                    'listPointItems' => $listPointItems,
+                    'model' => $model,
+                    'boxcode' => $boxcode,
+                    'channel' => $channel,
+                    'pickingItemsId' => $pickingItemsId,
+                    'bagNo' => $bagNo,
+                    'orderId' => $orderId,
+                    'orderItemPackingId' => $orderItemPackingId,
+                    'c' => $c, 'typePickingPoint' => $typePickingPoint,
+                        //'VarBagDuplicate' => $BagDuplicate = 1,
         ]);
         //}
     }
@@ -403,7 +402,7 @@ class LockersController extends LockersMasterController {
 
         /* Customize Date 25/01/2017   */
         $OrderItemPacking = Lockers::GetOrderItemPacking($orderItemPackingId);
-
+        $orderItemId = Lockers::GetOrderItem($bagNo);
         if ($countBag == 0) {
 
             /* Customize Date 25/01/2017   */
@@ -411,8 +410,9 @@ class LockersController extends LockersMasterController {
             if (count($listPointItems) > 0) {
                 if ($status == 'now') {
                     \common\models\costfit\PickingPointItems::updateAll(['status' => 0], ['pickingItemsId' => $listPointItems->pickingItemsId]);
-                    \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderItemId' => $OrderItemPacking->orderItemId]);
+                    //\common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderItemId' => $OrderItemPacking->orderItemId]);
                     //$Order = \common\models\costfit\OrderItem::find()->where("orderItemId = '" . $OrderItemPacking->orderItemId . "' ")->one();
+                    $this->updateOrderId($orderItemId);
                     //\common\models\costfit\Order::updateAll(['status' => 14], ['orderId' => $orderId]);
                     //$this->generatePassword($orderId);
                     //$this->sendEmail($orderId);
@@ -430,14 +430,14 @@ class LockersController extends LockersMasterController {
                 ///lockers/lockers/scan-bag?model=1&code=aa-010&boxcode=10&pickingItemsId=112&orderId=&orderItemPackingId=&bagNo=BG20161019-0000008
             } else {
                 return $this->render('location', [
-                    'warning' => 'bagerror',
-                    'model' => $model,
-                    'code' => $channel,
-                    'boxcode' => $boxcode,
-                    'pickingItemsId' => $pickingItemsId,
-                    'orderId' => $orderId,
-                    'orderItemPackingId' => $orderItemPackingId,
-                    'bagNo' => $OrderItemPacking->bagNo,
+                            'warning' => 'bagerror',
+                            'model' => $model,
+                            'code' => $channel,
+                            'boxcode' => $boxcode,
+                            'pickingItemsId' => $pickingItemsId,
+                            'orderId' => $orderId,
+                            'orderItemPackingId' => $orderItemPackingId,
+                            'bagNo' => $OrderItemPacking->bagNo,
                 ]);
             }
         } else if ($countBag == 1) {
@@ -464,14 +464,14 @@ class LockersController extends LockersMasterController {
             } else {
 
                 return $this->render('location', [
-                    'warning' => 'bagerror',
-                    'model' => $model,
-                    'code' => $channel,
-                    'boxcode' => $boxcode,
-                    'pickingItemsId' => $pickingItemsId,
-                    'orderId' => $orderId,
-                    'orderItemPackingId' => $orderItemPackingId,
-                    'bagNo' => $OrderItemPacking->bagNo,
+                            'warning' => 'bagerror',
+                            'model' => $model,
+                            'code' => $channel,
+                            'boxcode' => $boxcode,
+                            'pickingItemsId' => $pickingItemsId,
+                            'orderId' => $orderId,
+                            'orderItemPackingId' => $orderItemPackingId,
+                            'bagNo' => $OrderItemPacking->bagNo,
                 ]);
                 // exit();
             }
@@ -601,14 +601,14 @@ class LockersController extends LockersMasterController {
                     $PickingPoints['type'] = 'booth'; //ประเภทปลายทงในการรับสินค้า
                 }
                 return $this->render('channels', [
-                    'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
-                    'citie' => $localNamecitie,
-                    'countrie' => $localNamecountrie,
-                    'state' => $localNamestate,
-                    /* old */
-                    //'point' => $point,
-                    /* Customize Date 25/01/2017   */
-                    'point' => $listPoint, 'typePickingPoint' => $typePickingPoint, 'PickingPoints' => $PickingPoints
+                            'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
+                            'citie' => $localNamecitie,
+                            'countrie' => $localNamecountrie,
+                            'state' => $localNamestate,
+                            /* old */
+                            //'point' => $point,
+                            /* Customize Date 25/01/2017   */
+                            'point' => $listPoint, 'typePickingPoint' => $typePickingPoint, 'PickingPoints' => $PickingPoints
                 ]);
             }
         } else { // ถ้าช่องไหนครวจสอบผ่าน มีข้อมูล
@@ -636,8 +636,8 @@ class LockersController extends LockersMasterController {
             // echo 'ok';
             \common\models\costfit\OrderItemPacking::updateAll(['lastvisitDate' => new \yii\db\Expression("NOW()"), 'status' => 9, 'userId' => Yii::$app->user->identity->userId, 'remark' => NULL,], ['pickingItemsId' => $pickingItemsId, 'orderItemPackingId' => $orderItemPackingId]);
             $listOrderItemPacking = \common\models\costfit\OrderItemPacking::find()
-            ->where("pickingItemsId = '" . $pickingItemsId . "' ")
-            ->groupBy(['order_item_packing.bagNo'])->one();
+                            ->where("pickingItemsId = '" . $pickingItemsId . "' ")
+                            ->groupBy(['order_item_packing.bagNo'])->one();
             if (count($listOrderItemPacking) > 0) {
                 //$e->name = "sachin";
                 //$e->hobbies = "sports";
@@ -659,8 +659,8 @@ class LockersController extends LockersMasterController {
             //echo $remarkDesc;
             \common\models\costfit\OrderItemPacking::updateAll(['status' => 10, 'type' => $type, 'remark' => $remarkDesc, 'userId' => Yii::$app->user->identity->userId, 'lastvisitDate' => new \yii\db\Expression("NOW()")], ['pickingItemsId' => $pickingItemsId, 'orderItemPackingId' => $orderItemPackingId]);
             $listOrderItemPacking = \common\models\costfit\OrderItemPacking::find()
-            ->where("pickingItemsId = '" . $pickingItemsId . "' ")
-            ->groupBy(['order_item_packing.bagNo'])->one();
+                            ->where("pickingItemsId = '" . $pickingItemsId . "' ")
+                            ->groupBy(['order_item_packing.bagNo'])->one();
 
             // เก็บ Log แจ้งเตือนช่องของ Locker ต่างๆ //
             $remark = new \common\models\costfit\OrderItemPackingItems(); //Create an article and link it to the author
@@ -709,8 +709,8 @@ class LockersController extends LockersMasterController {
         $response = \common\helpers\Locker::Open($locker, $num);
 
         return $this->render('open_locker', [
-            'response' => $response,
-            'msg' => "",
+                    'response' => $response,
+                    'msg' => "",
         ]);
     }
 
@@ -748,12 +748,12 @@ class LockersController extends LockersMasterController {
         $response = \common\helpers\Sms::Send($method, $url, $data);
 
         return $this->render('sms', [
-            'response' => $response,
-            'msg' => $msg,
+                    'response' => $response,
+                    'msg' => $msg,
         ]);
     }
 
-    public function updateOrderItemId($orderItemId) {
+    public function updateOrderId($orderItemId) {
         $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId in ($orderItemId)")->all();
         if (isset($orderItem) && count($orderItem) > 0) {
             foreach ($orderItem as $item):
