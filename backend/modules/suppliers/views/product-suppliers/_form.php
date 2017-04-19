@@ -182,6 +182,7 @@ use yii\redactor\widgets\Redactor;
          * */
         ?>
         <?= $form->field($model, 'tags', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 255]) ?>
+        <?= $form->field($model, 'url', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 255])->label('url รูปเว็ปเจ้าของแบรนด์') ?>
 
         <br>
         <div class="form-group col-sm-12 text-center">

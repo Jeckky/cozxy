@@ -120,7 +120,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                     //'title',
                     [
                         'attribute' => 'รายละเอียดสินค้า',
-                        'format' => 'html',
+                        'format' => 'raw',
                         'value' => function($model) {
                             $title = $model->title;
                             $category = isset($model->category) ? \common\models\costfit\Category::getRootText($model->categoryId, TRUE) : NULL;
@@ -129,7 +129,9 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
 
                             return '<strong>Title : </strong>' . $title . '<br>'
                             . '<strong>Category : </strong> ' . $category . '<br>'
-                            . '<strong>Brand : </strong>' . $brand;
+                            . '<strong>Brand : </strong>' . $brand . '<br>'
+                            . '<strong>Url : </strong>' . Html::a('url brand', $model->url, ['target' => '_blank', 'data-pjax' => "0"])
+                            ;
                         }
                     ],
                     // 'optionName',

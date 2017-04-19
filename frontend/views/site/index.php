@@ -634,13 +634,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             success: function (data, status)
             {
                 $('.test').html('');
-                $('.scores-reviews').html('');
+
                 if (status == "success") {
                     var json = data;
                     var rex = /(<([^>]+)>)/ig;
                     //alert(txt.replace(rex, ""));
                     var Num = 1;
                     for (var i = 0; i < json.length; i++) {
+                        $('.scores-reviews').html('');
                         var obj = json[i];
                         var description = obj.description;
                         var scores = obj.score;
@@ -651,8 +652,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                          );*/
 
                         for (score = 1; score <= scores; score++) {
-                            //console.log(obj.score);
-                            //$('.scores-reviews').append('<img src="/images/star-on.png">');
+                            console.log(obj.score);
+                            $('.scores-reviews').append('<img src="/images/star-on.png">');
                         }
                         $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
                          <div class="scores-reviews"></div> \n\
