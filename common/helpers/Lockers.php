@@ -84,13 +84,14 @@ class Lockers {
         $queryOrderItemPackingId = \common\models\costfit\OrderItemPacking::find()
         ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
         . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,'
-        . 'count(order_item_packing.quantity) AS NumberOfQuantity , `order`.orderNo, `order`.orderId , `order`.pickingId')
+        . 'count(order_item_packing.quantity) AS NumberOfQuantity , `order`.orderNo, `order`.orderId , `order_item`.pickingId')
         ->joinWith(['orderItems'])
         ->join('LEFT JOIN', 'order', 'order_item.orderId = `order`.orderId')
         ->where("(order_item_packing.status = '" . \common\models\costfit\OrderItemPacking::PACKING_SENDING_PACKING_SHIPPING . "' "
         . " and order_item_packing.bagNo ='" . $bagNo . "' and order_item.pickingId = '" . $boxcode . "' ) "
         . " or ( order_item_packing.status = '" . \common\models\costfit\OrderItemPacking::PACKING_STATUS_EXPORT_TO_LOCKERS . "'  "
         . " and order_item_packing.bagNo ='" . $bagNo . "')"
+
 //        . " and order_item.receiveType = '1'"
         . "")
         ->groupBy(['order_item_packing.bagNo'])->one();
@@ -174,7 +175,8 @@ class Lockers {
           ->where("order_item_packing.status in (7,8) and  order_item.orderItemId ='" . $orderItemId . "' and order_item_packing.pickingItemsId = '" . $pickingItemsId . "'or order_item_packing.status in (7,8) "
           . "and  order_item_packing.bagNo ='" . $bagNo . "' and order_item_packing.pickingItemsId = '" . $pickingItemsId . "'  and order_item.receiveType = '1'")
           ->groupBy(['order_item_packing.bagNo']); */
-        $query1 = \common\models\costfit\OrderItemPacking::find()->where("status in (7,8) and userId=" . Yii::$app->user->identity->userId . " and pickingItemsId=" . $pickingItemsId);
+        $query1 = \common\models\costfit\OrderItemPacking::find()->where("status in (7,8) and userId=" . Yii::$app->user->identity->userId . " and pickingItemsId=" . $pickingItemsId)
+        ->groupBy('bagNo');
         return $query1;
     }
 

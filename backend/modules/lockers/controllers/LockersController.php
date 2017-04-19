@@ -211,12 +211,14 @@ class LockersController extends LockersMasterController {
               } by sak */
 //            throw new \yii\base\Exception(222);
             $queryOrderItemPackingId = Lockers::GetOrderItemPackingCheckLockersBagNo($bagNo, $boxcode);
+
             /* กรณีสแกนผิด ถุงผิด Lockers */
             if (count($queryOrderItemPackingId) == 0) {
                 $text = 'กรุณาตรวจสอบอีกครั้ง';
                 return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers?text=' . $text);
             }
             // throw new \yii\base\Exception(print_r($queryOrderItemPackingId, true));
+
             $orderId = $queryOrderItemPackingId->orderId; // ได้ OrderId มาเพื่อหา ????
             $orderItemId = $queryOrderItemPackingId->orderItemId; // ได้ OrderId มาเพื่อหา ????
             $orderItemPackingId = $queryOrderItemPackingId->orderItemPackingId;
