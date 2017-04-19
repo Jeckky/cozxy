@@ -413,7 +413,7 @@ foreach ($GetOrderMastersGroup as $value) {
                 // Child level 2
                 echo Html::hiddenInput('input-type-11', $ListpickpointLockersCoolValueInLocation['amphurId'], ['id' => 'input-type-11']);
                 echo Html::hiddenInput('input-type-22', $ListpickpointLockersCoolValueInLocation['amphurId'], ['id' => 'input-type-22']);
-                echo $yourbrowser;
+                //echo $yourbrowser;
                 if ($yourbrowser != 'Safari') {
                     echo $form->field($pickingPointLockersCool, 'amphurId')->widget(kartik\depdrop\DepDrop::classname(), [
                         //'data' => [9 => 'Savings'],
