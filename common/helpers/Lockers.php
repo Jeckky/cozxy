@@ -49,7 +49,7 @@ class Lockers {
 
     public static function GetPickingPointItems($pickingId) {
         $query = \common\models\costfit\PickingPointItems::find()
-                ->where("picking_point_items.pickingId = '" . $pickingId . "'");
+        ->where("picking_point_items.pickingId = '" . $pickingId . "'");
         return $query;
     }
 
@@ -82,68 +82,68 @@ class Lockers {
           . "")
           ->groupBy(['order_item_packing.bagNo'])->one(); */
         $queryOrderItemPackingId = \common\models\costfit\OrderItemPacking::find()
-                        ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
-                                . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,'
-                                . 'count(order_item_packing.quantity) AS NumberOfQuantity , `order`.orderNo, `order`.orderId , `order`.pickingId')
-                        ->joinWith(['orderItems'])
-                        ->join('LEFT JOIN', 'order', 'order_item.orderId = `order`.orderId')
-                        ->where("(order_item_packing.status = '" . \common\models\costfit\OrderItemPacking::PACKING_SENDING_PACKING_SHIPPING . "' "
-                                . " and order_item_packing.bagNo ='" . $bagNo . "' and order_item.pickingId = '" . $boxcode . "' ) "
-                                . " or ( order_item_packing.status = '" . \common\models\costfit\OrderItemPacking::PACKING_STATUS_EXPORT_TO_LOCKERS . "'  "
-                                . " and order_item_packing.bagNo ='" . $bagNo . "')"
+        ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
+        . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,'
+        . 'count(order_item_packing.quantity) AS NumberOfQuantity , `order`.orderNo, `order`.orderId , `order`.pickingId')
+        ->joinWith(['orderItems'])
+        ->join('LEFT JOIN', 'order', 'order_item.orderId = `order`.orderId')
+        ->where("(order_item_packing.status = '" . \common\models\costfit\OrderItemPacking::PACKING_SENDING_PACKING_SHIPPING . "' "
+        . " and order_item_packing.bagNo ='" . $bagNo . "' and order_item.pickingId = '" . $boxcode . "' ) "
+        . " or ( order_item_packing.status = '" . \common\models\costfit\OrderItemPacking::PACKING_STATUS_EXPORT_TO_LOCKERS . "'  "
+        . " and order_item_packing.bagNo ='" . $bagNo . "')"
 //        . " and order_item.receiveType = '1'"
-                                . "")
-                        ->groupBy(['order_item_packing.bagNo'])->one();
+        . "")
+        ->groupBy(['order_item_packing.bagNo'])->one();
         return $queryOrderItemPackingId;
     }
 
     public static function GetOrderItemPackingCheckLockersBagNoNew($bagNo, $boxcode) {
         $queryOrderItemPackingId = \common\models\costfit\OrderItemPacking::find()
-                        ->where("order_item_packing.status = '" . \common\models\costfit\OrderItemPacking::PACKING_SENDING_PACKING_SHIPPING . "' "
-                                . " and order_item_packing.bagNo ='" . $bagNo . "'  "
-                                //. " or order_item_packing.status = '" . \common\models\costfit\OrderItemPacking::PACKING_STATUS_EXPORT_TO_LOCKERS . "'  "
-                                //. " and order_item_packing.bagNo ='" . $bagNo . "' and order.pickingId = '" . $boxcode . "'  "
-                                //. " and order_item.receiveType = '1'"
-                                . "")
-                        ->groupBy(['order_item_packing.bagNo'])->one();
+        ->where("order_item_packing.status = '" . \common\models\costfit\OrderItemPacking::PACKING_SENDING_PACKING_SHIPPING . "' "
+        . " and order_item_packing.bagNo ='" . $bagNo . "'  "
+        //. " or order_item_packing.status = '" . \common\models\costfit\OrderItemPacking::PACKING_STATUS_EXPORT_TO_LOCKERS . "'  "
+        //. " and order_item_packing.bagNo ='" . $bagNo . "' and order.pickingId = '" . $boxcode . "'  "
+        //. " and order_item.receiveType = '1'"
+        . "")
+        ->groupBy(['order_item_packing.bagNo'])->one();
         return $queryOrderItemPackingId;
     }
 
     public static function getQueryToViewScanBagNo($bagNo) {
         $query = \common\models\costfit\OrderItemPacking::find()
-                ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
-                        . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, '
-                        . 'order.orderNo, '
-                        . 'order.orderId,order_item_packing.quantity')
-                ->joinWith(['orderItems'])
-                ->join(' LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-                ->where(" order_item_packing.status = '" . \common\models\costfit\OrderItemPacking::PACKING_SENDING_PACKING_SHIPPING . "' "
-                        . " and order_item_packing.bagNo ='" . $bagNo . "' and order_item.receiveType = '1'")
-                ->groupBy(['order_item_packing.bagNo']);
+        ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
+        . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, '
+        . 'order.orderNo, '
+        . 'order.orderId,order_item_packing.quantity')
+        ->joinWith(['orderItems'])
+        ->join(' LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
+        ->where(" order_item_packing.status = '" . \common\models\costfit\OrderItemPacking::PACKING_SENDING_PACKING_SHIPPING . "' "
+        . " and order_item_packing.bagNo ='" . $bagNo . "' ") //and order_item.receiveType = '1'
+        ->groupBy(['order_item_packing.bagNo']);
         return $query;
     }
 
     public static function getQueryCountBag($bagNo) {
         $queryCountBag = \common\models\costfit\OrderItemPacking::find()
-                        ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
-                                . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, '
-                                . 'order.orderNo, '
-                                . 'order.orderId,order_item_packing.quantity')
-                        ->joinWith(['orderItems'])
-                        ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-                        ->where("order_item_packing.status = '" . \common\models\costfit\OrderItemPacking::PACKING_SENDING_PACKING_SHIPPING . "'"
-                                . "  and order_item_packing.bagNo ='" . $bagNo . "' and order_item.receiveType = '1'")
-                        ->groupBy(['order_item_packing.bagNo'])->one();
+        ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
+        . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, '
+        . 'order.orderNo, '
+        . 'order.orderId,order_item_packing.quantity')
+        ->joinWith(['orderItems'])
+        ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
+        ->where("order_item_packing.status = '" . \common\models\costfit\OrderItemPacking::PACKING_SENDING_PACKING_SHIPPING . "'"
+        . "  and order_item_packing.bagNo ='" . $bagNo . "' ") //and order_item.receiveType = '1'
+        ->groupBy(['order_item_packing.bagNo'])->one();
         return $queryCountBag;
     }
 
     public static function GetCountBag($orderId) {
         $countBag = \common\models\costfit\OrderItemPacking::find()
-                ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, order_item_packing.status')
-                ->joinWith(['orderItems'])
-                ->where("order_item.orderId = '" . $orderId . "' and order_item_packing.status = '" . \common\models\costfit\OrderItemPacking::PACKING_SENDING_PACKING_SHIPPING . "' and order_item.receiveType = '1'")
-                ->groupBy(['order_item_packing.bagNo'])
-                ->count();
+        ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, order_item_packing.status')
+        ->joinWith(['orderItems'])
+        ->where("order_item.orderId = '" . $orderId . "' and order_item_packing.status = '" . \common\models\costfit\OrderItemPacking::PACKING_SENDING_PACKING_SHIPPING . "'") // and order_item.receiveType = '1'
+        ->groupBy(['order_item_packing.bagNo'])
+        ->count();
         return $countBag;
     }
 
@@ -154,7 +154,7 @@ class Lockers {
 
     public static function GetPickingPointItemsPickingItems($boxcode, $channel, $pickingItemsId) {
         $listPointItems = \common\models\costfit\PickingPointItems::find()->where("pickingId = '" . $boxcode . "' and  "
-                        . "code = '" . $channel . "' and pickingItemsId  = '" . $pickingItemsId . "' ")->one();
+        . "code = '" . $channel . "' and pickingItemsId  = '" . $pickingItemsId . "' ")->one();
         return $listPointItems;
     }
 
@@ -182,14 +182,14 @@ class Lockers {
 
     public static function GetOrderNoToBagNoOnChannelToLockersAll($orderId) {
         $queryAllOrder = \common\models\costfit\OrderItemPacking::find()
-                ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
-                        . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, '
-                        . 'order.orderNo, '
-                        . 'order.orderId,order_item_packing.quantity')
-                ->joinWith(['orderItems'])
-                ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-                ->where("order_item_packing.status = 5 and order.orderId ='" . $orderId . "'  and order_item.receiveType = '1'")
-                ->groupBy(['order_item_packing.bagNo']);
+        ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
+        . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, '
+        . 'order.orderNo, '
+        . 'order.orderId,order_item_packing.quantity')
+        ->joinWith(['orderItems'])
+        ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
+        ->where("order_item_packing.status = 5 and order.orderId ='" . $orderId . "'  ") //and order_item.receiveType = '1'
+        ->groupBy(['order_item_packing.bagNo']);
         return $queryAllOrder;
     }
 
@@ -213,22 +213,22 @@ class Lockers {
 
     public static function GetOrderItemPackingGetOrderItem($orderId) {
         $query = \common\models\costfit\OrderItemPacking::find()
-                ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, order_item_packing.status')
-                ->joinWith(['orderItems'])
-                ->where("order_item.orderId = '" . $orderId . "' and order_item_packing.status = 5  and order_item.receiveType = '1'");
+        ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, order_item_packing.status')
+        ->joinWith(['orderItems'])
+        ->where("order_item.orderId = '" . $orderId . "' and order_item_packing.status = 5  "); //and order_item.receiveType = '1'
         return $query;
     }
 
     public static function GetOrderNoToBagNoOnChannelToLockersAllCheckParaBagNo($orderId) {
         $queryAllOrder = \common\models\costfit\OrderItemPacking::find()
-                ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
-                        . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, '
-                        . 'order.orderNo, '
-                        . 'order.orderId,order_item_packing.quantity')
-                ->joinWith(['orderItems'])
-                ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
-                ->where("order_item_packing.status = 5 and order.orderId ='" . $orderId . "'  and order_item.receiveType = '1'")
-                ->groupBy(['order_item_packing.bagNo']);
+        ->select('order_item_packing.orderItemPackingId, order_item_packing.orderItemId, order_item_packing.bagNo, '
+        . 'order_item_packing.status , count(order_item_packing.bagNo) AS NumberOfBagNo ,count(order_item_packing.quantity) AS NumberOfQuantity, '
+        . 'order.orderNo, '
+        . 'order.orderId,order_item_packing.quantity')
+        ->joinWith(['orderItems'])
+        ->join('LEFT JOIN', 'order', 'order_item.orderId = order.orderId')
+        ->where("order_item_packing.status = 5 and order.orderId ='" . $orderId . "'  ")//and order_item.receiveType = '1'
+        ->groupBy(['order_item_packing.bagNo']);
         return $queryAllOrder;
     }
 
