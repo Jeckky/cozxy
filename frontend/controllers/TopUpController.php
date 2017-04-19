@@ -127,7 +127,7 @@ class TopUpController extends MasterController {
         $currentPoint = 0;
         if ($res == "ACCEPT") {
             $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->one();
-            if (isset($topUp) && !empty($topUp)) {
+            if (isset($topUp) && count($topUp) > 0) {
                 $topUp->status = TopUp::TOPUP_STATUS_E_PAYMENT_SUCCESS;
                 $topUp->updateDateTime = new \yii\db\Expression('NOW()');
                 $topUp->save(false);
@@ -158,6 +158,7 @@ class TopUpController extends MasterController {
                             'type' => $type,
                 ]);
             } else {
+                throw new \yii\base\Exception('1111');
                 // go to error page
             }
         } else {

@@ -634,7 +634,7 @@ class LockersController extends LockersMasterController {
 
         if ($status == 'ok') { //ตรวจสอบ OK
             // echo 'ok';
-            \common\models\costfit\OrderItemPacking::updateAll(['lastvisitDate' => new \yii\db\Expression("NOW()"), 'status' => 9, 'userId' => Yii::$app->user->identity->userId, 'remark' => NULL,], ['pickingItemsId' => $pickingItemsId, 'orderItemPackingId' => $orderItemPackingId]);
+            \common\models\costfit\OrderItemPacking::updateAll(['lastvisitDate' => new \yii\db\Expression("NOW()"), 'status' => 9, 'userId' => Yii::$app->user->identity->userId, 'remark' => NULL,], ['pickingItemsId' => $pickingItemsId, 'status' => 8]); //, 'orderItemPackingId' => $orderItemPackingId
             $listOrderItemPacking = \common\models\costfit\OrderItemPacking::find()
                             ->where("pickingItemsId = '" . $pickingItemsId . "' ")
                             ->groupBy(['order_item_packing.bagNo'])->one();
