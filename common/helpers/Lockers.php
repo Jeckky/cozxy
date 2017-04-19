@@ -174,7 +174,8 @@ class Lockers {
           ->where("order_item_packing.status in (7,8) and  order_item.orderItemId ='" . $orderItemId . "' and order_item_packing.pickingItemsId = '" . $pickingItemsId . "'or order_item_packing.status in (7,8) "
           . "and  order_item_packing.bagNo ='" . $bagNo . "' and order_item_packing.pickingItemsId = '" . $pickingItemsId . "'  and order_item.receiveType = '1'")
           ->groupBy(['order_item_packing.bagNo']); */
-        $query1 = \common\models\costfit\OrderItemPacking::find()->where("status in (7,8) and userId=" . Yii::$app->user->identity->userId . " and pickingItemsId=" . $pickingItemsId);
+        $query1 = \common\models\costfit\OrderItemPacking::find()->where("status in (7,8) and userId=" . Yii::$app->user->identity->userId . " and pickingItemsId=" . $pickingItemsId)
+                ->groupBy('bagNo');
         return $query1;
     }
 
