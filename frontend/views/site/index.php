@@ -640,26 +640,58 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     var rex = /(<([^>]+)>)/ig;
                     //alert(txt.replace(rex, ""));
                     var Num = 1;
+
                     for (var i = 0; i < json.length; i++) {
-                        $('.scores-reviews').html('');
+                        //$('.scores-reviews').html('');
                         var obj = json[i];
                         var description = obj.description;
                         var scores = obj.score;
-                        /* $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
-                         <div class="scores-reviews"><img alt="5" src="/images/star-off.png" title="gorgeous"> <img alt="1" src="/images/star-on.png" title="bad"></div> \n\
+                        
+                        if (scores == 1) {
+                            $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
+                         <div class="scores-reviews"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img alt="5" src="/images/star-off.png" title=""> </div> \n\
                          <br> ' + description.replace(rex, "") + ' \n\
-                         <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',' + obj.score + '<span> </div>'
-                         );*/
-
-                        for (score = scores; score <= 5; score++) {
-                            console.log(obj.score);
-                            //$('.scores-reviews').append('<img src="https://scontent.fbkk5-1.fna.fbcdn.net/v/t1.0-9/17904318_1619387854755987_6412607138319878578_n.jpg?oh=069406d5a43690bd9452e6fc69448809&oe=5952AADA"> ');
+                         <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ ' + scores + ' จาก 5 ดาว<span> </div>'
+                                    );
                         }
-                        $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
-                         <div class="scores-reviews"></div> \n\
+                        if (scores == 2) {
+                            $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
+                         <div class="scores-reviews"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img alt="5" src="/images/star-off.png" title=""> </div> \n\
                          <br> ' + description.replace(rex, "") + ' \n\
-                         <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',' + scores + '<span> </div>'
-                                );
+                         <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ ' + scores + ' จาก 5 ดาว<span> </div>'
+                                    );
+                        }
+                        if (scores == 3) {
+                            $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
+                         <div class="scores-reviews"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-off.png"><img alt="5" src="/images/star-off.png" title=""> </div> \n\
+                         <br> ' + description.replace(rex, "") + ' \n\
+                         <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ ' + scores + ' จาก 5 ดาว<span> </div>'
+                                    );
+                        }
+                        if (scores == 4) {
+                            $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
+                         <div class="scores-reviews"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img alt="5" src="/images/star-off.png" title=""> </div> \n\
+                         <br> ' + description.replace(rex, "") + ' \n\
+                         <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ ' + scores + ' จาก 5 ดาว<span> </div>'
+                                    );
+                        }
+                        if (scores == 5) {
+                            $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
+                         <div class="scores-reviews"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img alt="5" src="/images/star-on.png" title=""> </div> \n\
+                         <br> ' + description.replace(rex, "") + ' \n\
+                         <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ ' + scores + ' จาก 5 ดาว<span> </div>'
+                                    );
+                        }
+                        //alert(scores);
+                        if (scores == null) {
+                            $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
+                         <div class="scores-reviews"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img alt="5" src="/images/star-off.png" title=""> </div> \n\
+                         <br> ' + description.replace(rex, "") + ' \n\
+                         <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ 0 จาก 5 ดาว<span> </div>'
+                                    );
+                        }
+
+
 
                     }
                 }
