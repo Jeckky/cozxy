@@ -408,7 +408,7 @@ class LedController extends LedMasterController {
                 }
                 $id = $index + 1;
 //            file_get_contents('http://' . $item->ip . "/", FALSE, $context);
-                if (@ile_get_contents('http://' . $item->ip . "?id=$id&status=0", NULL, NULL, 0, 0) !== FALSE) {
+                if (ile_get_contents('http://' . $item->ip . "?id=$id&status=0", NULL, NULL, 0, 0) !== FALSE) {
 //            throw new \yii\base\Exception("?id=$id&status=$status&r=$r&g=$g&b=$b");
                     $statusText = "Turn Off ";
                     $led->status = 0;
@@ -467,7 +467,7 @@ class LedController extends LedMasterController {
                     $g = $color->g;
                     $b = $color->b;
                     $id = $index + 1;
-                    if (@file_get_contents('http://' . $item->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0) !== FALSE) {
+                    if (file_get_contents('http://' . $item->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0) !== FALSE) {
                         $statusText = "Turn On ";
                         $led->status = 1;
                         $led->save();
@@ -500,7 +500,7 @@ class LedController extends LedMasterController {
                 $g = $color->g;
                 $b = $color->b;
                 $id = $index + 1;
-                if (@file_get_contents('http://' . $item->ip . "?id=$id&status=0&r=$r&g=$g&b=$b", NULL, NULL, 0, 0) !== FALSE) {
+                if (file_get_contents('http://' . $item->ip . "?id=$id&status=0&r=$r&g=$g&b=$b", NULL, NULL, 0, 0) !== FALSE) {
                     $statusText = "Turn Off ";
                     $led->status = 0;
                     $led->save();
@@ -544,7 +544,7 @@ class LedController extends LedMasterController {
                         $r = $color->r;
                         $g = $color->g;
                         $b = $color->b;
-                        @file_get_contents('http://' . $model->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0);
+                        file_get_contents('http://' . $model->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0);
                         $item->status = 1;
                         $item->save();
                     } else {
@@ -553,7 +553,7 @@ class LedController extends LedMasterController {
                                 ->where("l.slot LIKE '$code%' AND l.slot != '$code' AND led_item.status = 1")
                                 ->count();
                         if ($countOpenLed == 0) {
-                            @file_get_contents('http://' . $model->ip . "?id=$id&status=0", NULL, NULL, 0, 0);
+                            file_get_contents('http://' . $model->ip . "?id=$id&status=0", NULL, NULL, 0, 0);
                             $item->status = 0;
                             $item->save();
                         }

@@ -13,6 +13,7 @@ use common\models\costfit\User;
 use yii\helpers\Json;
 use common\models\costfit\UserPoint;
 use common\models\costfit\PaymentMethod;
+use common\helpers\CozxyUnity;
 
 /**
  * TopUpController implements the CRUD actions for TopUp model.
@@ -178,6 +179,13 @@ class TopUpController extends MasterController {
         $res = [];
         $res["pass"] = rand('000000', '999999');
         return json_encode($res);
+    }
+
+    public function actionBillpay() {
+        $header = FALSE;
+        $title = FALSE;
+        $content = $this->renderPartial('content', compact('order'));
+        CozxyUnity::actionMpdfDocument($content, $header, $title);
     }
 
     /**

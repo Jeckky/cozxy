@@ -26,7 +26,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <h3 style="color: #009999;"><b> Top up :: SUCCESSFUL</b></h3>
             <h4>You have <?= $currentPoint ?> Points.</h4>
         </div>
-        <?php } else {
+    <?php } else {
         ?>
         <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="margin: auto;text-align: center;color: #000;margin-bottom: 20px;">
             <h3 style="color: #009999;"><b> Top up :: FAIL</b></h3>
@@ -34,3 +34,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
     <?php } ?>
 </div>
+<?php
+$bill = "window.open('" . Yii::$app->homeUrl . "' + 'top-up/billpay?bag=' + data, '_blank');";
+?>
+<?= $this->registerJs($bill); ?>
