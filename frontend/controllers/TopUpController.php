@@ -182,9 +182,10 @@ class TopUpController extends MasterController {
     }
 
     public function actionBillpay() {
-        $header = FALSE;
+        $header = $this->renderPartial('header');
         $title = FALSE;
-        $content = $this->renderPartial('content', compact('order'));
+        $content = $this->renderPartial('content');
+        //$content = '';
         CozxyUnity::actionMpdfDocument($content, $header, $title);
     }
 

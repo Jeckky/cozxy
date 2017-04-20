@@ -35,6 +35,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <?php } ?>
 </div>
 <?php
-$bill = "window.open('" . Yii::$app->homeUrl . "' + 'top-up/billpay?bag=' + data, '_blank');";
+$bill = "window.open('" . Yii::$app->homeUrl . "' + 'top-up/billpay','_blank');";
 ?>
 <?= $this->registerJs($bill); ?>
