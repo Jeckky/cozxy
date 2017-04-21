@@ -92,7 +92,7 @@ use yii\widgets\Pjax;
                                         . Html::hiddenInput('action' . $model->productImageId, $this->context->action->id)
                                         . Html::hiddenInput('followId' . $model->productImageId, $model->productSuppId)
                                         . Html::hiddenInput('followIdName' . $model->productImageId, "productSuppId")
-                                        . Html::submitButton("<i class='glyphicon glyphicon-check'></i>", ['class' => 'btn btn-success btn-xs'])
+                                        . Html::submitButton("<i class='fa fa-check'></i>", ['class' => 'btn btn-success btn-xs'])
                                         . "</form>";
                                     }
                                 ],
