@@ -86,7 +86,7 @@ use yii\widgets\Pjax;
                                     'format' => 'raw',
                                     'value' => function($model) {
 //                                        return "<form id='form$model->productImageId' name='form$model->productImageId' action='" . Yii::$app->homeUrl . "suppliers/product-image-suppliers/change-sort-order?id=$model->productImageId' method='POST'>"
-                                        $form = ActiveForm::begin([
+                                        return ActiveForm::begin([
                                             'options' => ['class' => 'panel panel-default form-horizontal ', 'enctype' => 'multipart/form-data', 'action' => Yii::$app->homeUrl . "suppliers/product-image-suppliers/change-sort-order?id=$model->productImageId"],
                                             'fieldConfig' => [
 //                                                'template' => '{label}<div class="col-sm-9">{input}</div>',
