@@ -139,7 +139,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             $productViews = common\models\costfit\ProductPageViews::find()->where('productSuppId=' . $value->productSuppId)->count();
                             ?>
                             <div class="col-md-12 text-center">
-                                <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>" style="font-size: 14px; margin-top: 5px;"><?php echo substr($valuex->title, 0, 30); ?></a>
+                                <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>" style="font-size: 14px; margin-top: 5px;">
+                                    <?php
+                                    //echo strlen($valuex->title) . '<br>';
+                                    if (strlen($valuex->title) >= 30) {
+                                        echo substr($valuex->title, 0, 30);
+                                    } else if (strlen($valuex->title) <= 30) {
+                                        echo substr($valuex->title, 0, 30) . '<br>';
+                                    }
+                                    ?></a>
                             </div>
                             <div class="col-md-12" style="padding: 5px; ">
                                 <div class="col-md-12 text-center">
