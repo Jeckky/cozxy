@@ -110,14 +110,23 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                       'value' => function($model) {
                       return isset($model->category) ? $model->category->title : NULL;
                       }
-                      ], */
-                    //'isbn',
-                    ['attribute' => 'isbn',
-                        'label' => 'isbn',
-                    //'contentOptions' => ['style' => 'width:70px;  min-width:70px;  '],
+                      ],
+                      //'isbn',
+                      ['attribute' => 'isbn',
+                      'label' => 'isbn',
+                      //'contentOptions' => ['style' => 'width:70px;  min-width:70px;  '],
+                      ],
+                      'code',
+                      //'title', */
+                    [
+                        'attribute' => 'isbn & code',
+                        'format' => 'html',
+                        'value' => function($model) {
+                            return '<strong>isbn : </strong>' . $model->isbn . '<br>'
+                            . '<strong>code : </strong> ' . $model->code . '<br>'
+                            ;
+                        }
                     ],
-                    'code',
-                    //'title',
                     [
                         'attribute' => 'รายละเอียดสินค้า',
                         'format' => 'raw',
@@ -246,7 +255,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                                 ]);
                             },
                             'post' => function($url, $model) {
-                                return Html::a('<br><u>Post</u>', ['/suppliers/product-post', 'productSuppId' => $model->productSuppId], [
+                                return Html::a('<br><u>Review</u>', ['/suppliers/product-post', 'productSuppId' => $model->productSuppId], [
                                     'title' => Yii::t('app', 'Change today\'s lists'), 'target' => '_blank', 'data-pjax' => 0]);
                             },
                         ]
