@@ -90,8 +90,8 @@ use yii\widgets\Pjax;
                                         . Html::hiddenInput('className' . $model->productImageId, $model::ClassName())
                                         . Html::hiddenInput('pkName' . $model->productImageId, $model->tableSchema->primaryKey[0])
                                         . Html::hiddenInput('action' . $model->productImageId, $this->context->action->id)
-                                        . Html::hiddenInput('followId' . $model->productImageId, $model->projectId)
-                                        . Html::hiddenInput('followIdName' . $model->productImageId, "projectId")
+                                        . Html::hiddenInput('followId' . $model->productImageId, $model->productSuppId)
+                                        . Html::hiddenInput('followIdName' . $model->productImageId, "productSuppId")
                                         . Html::submitButton("<i class='glyphicon glyphicon-check'></i>", ['class' => 'btn btn-success btn-xs'])
                                         . "</form>";
                                     }
