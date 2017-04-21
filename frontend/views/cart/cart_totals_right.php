@@ -8,10 +8,10 @@
         <td>Starting Subtotal</td>
         <td class="subtotal align-r"><?= number_format($this->params['cart']['totalWithoutDiscount'], 2) ?> ฿</td>
     </tr>
-    <tr style="color: red;">
+<!--    <tr style="color: red;">
         <td>Extra Savings</td>
         <td class="savings align-r">-<?= number_format($this->params['cart']['totalItemDiscount'], 2) ?> ฿</td>
-    </tr>
+    </tr>-->
     <tr>
         <td style="color: #000;">Subtotal</td>
         <td class="total align-r"><?= number_format($this->params['cart']['total'], 2) ?> ฿</td>
