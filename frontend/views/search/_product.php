@@ -28,7 +28,7 @@ if (isset($model->productId)):
                     // throw new \yii\base\Exception($suppliers->productId);
                     ?>
                 </div>
-                <div class="price-label"><?= isset($price) ? number_format($price, 2) : "Not Set"; ?> ฿</div>
+                <?php if ($price > 0) { ?><div class="price-label"><?= isset($price) ? number_format($price, 2) : "Not Set"; ?> ฿</div><?php } ?>
                 <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $suppliers->productId, 'productSupplierId' => $suppliers->productSuppId]) ?>" style="/*min-height: 210px; max-height: 210px;*/">
                     <?php
                     $image = ProductSuppliers::productImageSuppliers($suppliers->productSuppId);
@@ -52,7 +52,7 @@ if (isset($model->productId)):
                             <?= substr($suppliers->title, 0, 40);
                             ?></a>
                     </div>
-                    <span><?php //= $model->shortDescription;     ?></span>
+                    <span><?php //= $model->shortDescription;      ?></span>
                     <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $suppliers->encodeParams(['productId' => $suppliers->productId, 'productSupplierId' => $suppliers->productSuppId]) ?>"><button class="btn btn-primary" id="addItemToCart"><i class="fa fa-search"></i>View</button></a>
                 </div>
             </div>
