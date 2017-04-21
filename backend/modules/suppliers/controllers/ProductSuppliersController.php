@@ -307,12 +307,15 @@ class ProductSuppliersController extends SuppliersMasterController
             ]);
             $productTitle = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $productSuppId)->one();
 
-            if (isset($_POST["sortOrder"])) {
-                $id = $productSuppId;
+
+            if (isset($_POST["id"])) {
+
+//                throw new \yii\base\Exception(print_r($_POST, true));
+                $id = $_POST["id"];
                 $model = $_POST['className' . $id]::find()->where($_POST['pkName' . $id] . "=" . $id)->one();
 //            throw new \yii\base\Exception(print_r($model->attributes, true));
                 $model->ordering = $_POST["sortOrder" . $id];
-                if ($model->save()) {
+                if ($model->save(FALSE)) {
 //            throw new \yii\base\Exception(print_r($model->attributes, true));
                 } else {
                     throw new \yii\base\Exception(print_r($model->errors, true));
