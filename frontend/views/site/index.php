@@ -119,6 +119,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 if (count($productPost) > 0) {
                     foreach ($productPost as $key => $value) {
                         echo ' <div class="col-md-3">';
+                        echo ' <div class="col-md-12" style="border: 1px solid #b2b2b2;margin-bottom: 3px;">';
                         //$rating_score = 0;
                         $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
                         $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId);
@@ -140,7 +141,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             <div class="col-md-12 text-center">
                                 <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>" style="font-size: 12px;"><?php echo substr($valuex->title, 0, 30); ?></a>
                             </div>
-                            <div class="col-md-12" style="padding: 5px;">
+                            <div class="col-md-12" style="padding: 5px; ">
                                 <div class="col-md-12 text-center">
                                     <?php
                                     echo \yii2mod\rating\StarRating::widget([
@@ -163,16 +164,16 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             <div class="col-sm-12 col-lg-12 col-md-12 text-center" style="margin-top: 10px; padding: 5px;">
                                 <?php
                                 foreach ($productImages as $valueImages) {
-                                    if (isset($valueImages['imageThumbnail2']) && !empty($valueImages['imageThumbnail2'])) {
-                                        if (file_exists(Yii::$app->basePath . "/web/" . $valueImages['imageThumbnail2'])) {
+                                    if (isset($valueImages['imageThumbnail1']) && !empty($valueImages['imageThumbnail1'])) {
+                                        if (file_exists(Yii::$app->basePath . "/web/" . $valueImages['imageThumbnail1'])) {
                                             //echo "<div class=\"col-sm-3\"><img id=\"myImg-" . $valueImages['productImageId'] . "\" onClick=\"reviews_click(" . $valueImages['productImageId'] . ',' . "xx" . ")\"   src=\"/" . $valueImages['imageThumbnail2'] . "\" alt=\"1\" class=\"img-responsive img-thumbnail myImg\"/></div>";
                                             ?>
                                             <div class="col-sm-12 col-lg-12 col-md-12">
-                                                <img id="myImg-<?php echo $valueImages['productImageId']; ?>" onclick="reviews_click(<?php echo $valuex->productSuppId; ?>,<?php echo $valueImages['productImageId']; ?>, '<?php echo $valueImages['image']; ?>', '<?php echo $valuex->title; ?>')" src="<?php echo $valueImages['imageThumbnail2']; ?>" alt="1" class="img-responsive img-thumbnail myImg">
+                                                <img id="myImg-<?php echo $valueImages['productImageId']; ?>" onclick="reviews_click(<?php echo $valuex->productSuppId; ?>,<?php echo $valueImages['productImageId']; ?>, '<?php echo $valueImages['image']; ?>', '<?php echo $valuex->title; ?>')" src="<?php echo $valueImages['imageThumbnail1']; ?>" alt="1" class="img-responsive  myImg">
                                             </div>
                                             <?php
                                         } else {
-                                            echo "<div class=\"col-sm-12 col-lg-12 col-md-12\"><img  class=\"ms-thumb\"  src=\"" . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive img-thumbnail\"/></div>";
+                                            echo "<div class=\"col-sm-12 col-lg-12 col-md-12\"><img  class=\"ms-thumb\"  src=\"" . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive  \"/></div>";
                                         }
                                     } else {
                                         ?>
@@ -187,13 +188,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 //}
                                 ?>
                             </div>
-                            <div class="col-md-12 text-center" style=" border-bottom: 1px #e6e6e6 dotted;">
+                            <div class="col-md-12 text-center" style=" border-bottom: 0px #e6e6e6 dotted; border-top: 1px #bbb dotted;">
                                 <?php
                                 echo '<span style="font-size: 12px; color:#0066c0;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน<br>' . $rating_count . ' reviews | เข้าชม ' . $productViews . ' ครั้ง</span>';
                                 ?>
                             </div>
                             <?php
                         }
+                        echo '</div>';
                         echo '</div>';
                     }
                     ?>
