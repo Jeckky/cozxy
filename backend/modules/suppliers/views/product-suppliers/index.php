@@ -122,7 +122,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                         'attribute' => 'isbn & code',
                         'format' => 'html',
                         'value' => function($model) {
-                            return '<div class="col-sm-12"><strong>isbn : </strong>' . trim($model->isbn) . '</div>'
+                            return '<div class="col-sm-12"><strong>isbn : </strong>' . $model->isbn . '</div>'
                             . '<div class="col-sm-12"><strong>code : </strong> ' . $model->code . '</div>'
                             ;
                         }
