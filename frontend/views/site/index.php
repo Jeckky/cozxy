@@ -133,6 +133,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
                         foreach ($productPostList as $valuex) {
                             $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productImageId desc')->limit(4)->all();
+                            $productViews = common\models\costfit\ProductPageViews::find()->where('productSuppId=' . $value->productSuppId)->count();
                             ?>
                             <div class="col-md-12" style="padding: 5px;">
                                 <div class="col-md-2 text-left">
@@ -156,7 +157,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 </div>
                                 <div class="col-md-12 text-left">
                                     <?php
-                                    echo '<span style="font-size: 12px; color:#0066c0;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน  | ' . $rating_count . ' reviews</span>';
+                                    echo '<span style="font-size: 12px; color:#0066c0;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน  | ' . $rating_count . ' reviews | เข้าชม ' . $productViews . ' ครั้ง</span>';
                                     ?>
                                 </div>
                             </div>
@@ -311,9 +312,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         <div id="photos-bestseller-items-padding">
                                             <a class="media-link" href="<?php echo Yii::$app->homeUrl; ?>products/<?= $products->encodeParams(['productId' => $products->productId, 'productSupplierId' => $products->productSuppId]) ?>" id="media-link-bestseller">
                                                 <div class="badges" style="margin-top:20px;position: absolute;left: 0px">
-                                                    <?php //if (common\models\costfit\Product::isSmartItem($products->productId)):      ?>
+                                                    <?php //if (common\models\costfit\Product::isSmartItem($products->productId)):       ?>
                                                         <!--<span class="sale" style="background-color: #d2d042 !important;color:white;padding: 5px 10px 5px 10px;">SMART</span>-->
-                                                    <?php // endif;      ?>
+                                                    <?php // endif;       ?>
                                                 </div>
                                                 <div class="overlay">
                                                     <div class="descrx desc-bestseller">
@@ -360,9 +361,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         <div id="photos-bestseller-items-padding">
                                             <a class="media-link" href="<?php echo Yii::$app->homeUrl; ?>products/<?= $item->encodeParams(['productId' => $item->productId, 'productSupplierId' => $item->productSuppId]) ?>" id="media-link-bestseller">
                                                 <div class="badges" style="margin-top:20px;position: absolute;left: 0px">
-                                                    <?php //if (common\models\costfit\Product::isSmartItem($products->productId)):      ?>
+                                                    <?php //if (common\models\costfit\Product::isSmartItem($products->productId)):       ?>
                                                         <!--<span class="sale" style="background-color: #d2d042 !important;color:white;padding: 5px 10px 5px 10px;">SMART</span>-->
-                                                    <?php // endif;      ?>
+                                                    <?php // endif;       ?>
                                                 </div>
                                                 <div class="overlay">
                                                     <div class="descrx desc-bestseller">

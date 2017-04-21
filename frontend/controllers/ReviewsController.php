@@ -91,6 +91,15 @@ class ReviewsController extends MasterController {
             $productPostView = NULL;
             $productPostViewMem = NULL;
         }
+        /*
+         * Product Views - Frontend
+         */
+        $productViews = new \common\models\costfit\ProductPageViews();
+        $productViews->productSuppId = $productSupplierId;
+        $productViews->userId = isset(Yii::$app->user->identity->userId) ? Yii::$app->user->identity->userId : '0';
+        $productViews->updateDateTime = new \yii\db\Expression('NOW()');
+        $productViews->createDateTime = new \yii\db\Expression('NOW()');
+        $productViews->save(FALSE);
         //echo '<pre>';
         //print_r($getPrductsSupplirs);
         //exit();
