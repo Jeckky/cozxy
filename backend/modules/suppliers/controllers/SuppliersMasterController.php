@@ -106,7 +106,7 @@ class SuppliersMasterController extends \backend\controllers\BackendMasterContro
 
     public function actionChangeSortOrder($id)
     {
-//        throw new \yii\base\Exception($id . " " . $_POST['pkName' . $id]);
+        throw new \yii\base\Exception(print_r($_POST, true));
         $model = $_POST['className' . $id]::find()->where($_POST['pkName' . $id] . "=" . $id)->one();
 //            throw new \yii\base\Exception(print_r($model->attributes, true));
         $model->ordering = $_POST["sortOrder" . $id];
