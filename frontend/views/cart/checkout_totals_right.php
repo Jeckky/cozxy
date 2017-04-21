@@ -19,10 +19,10 @@
         <td>Price Subtotal</td>
         <td class="total align-r"><?= number_format($this->params['cart']['total'], 2) ?> ฿</td>
     </tr>
-    <tr style="color: red;">
+<!--    <tr style="color: red;">
         <td>Extra savings</td>
         <td class="total align-r"><?= number_format($this->params['cart']['totalItemDiscount'], 2) ?> ฿</td>
-    </tr>
+    </tr>-->
     <tr>
         <td>Shipping Free</td>
         <td class="total align-r"><?= (isset($this->params['cart']['shippingRate']) && $this->params['cart']['shippingRate'] == 0) ? "Free Shipping" : number_format($this->params['cart']['shippingRate'], 2) ?></td>

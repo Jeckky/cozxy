@@ -149,7 +149,7 @@ use common\models\ModelMaster;
                 <?php if (isset($this->params['cart']['items']) && !empty($this->params['cart']['items'])) { ?>
                     <div class="checkbox " id="showSlow">
                         <label style="color:rgba(255,212,36,.9">
-                            <input type="checkbox" id="slowest" name="slowest" <?= (isset($this->params['cart']) && $this->params['cart']['isSlowest']) ? " checked" : "" ?>>  ต้องการส่งสินค้าช้าที่สุดเพื่อประหยัดค่าใช้จ่าย
+                            <!--<input type="checkbox" id="slowest" name="slowest" <?//= (isset($this->params['cart']) && $this->params['cart']['isSlowest']) ? " checked" : "" ?>>  ต้องการส่งสินค้าช้าที่สุดเพื่อประหยัดค่าใช้จ่าย-->
                         </label>
                     </div>
                 <?php } ?>
