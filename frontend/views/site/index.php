@@ -114,9 +114,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </style>
         <div class="row">
             <section class="brand-carousel-reviews">
+
                 <?php
                 if (count($productPost) > 0) {
                     foreach ($productPost as $key => $value) {
+                        echo ' <div class="col-md-3">';
                         //$rating_score = 0;
                         $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
                         $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId);
@@ -132,11 +134,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
                         $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
                         foreach ($productPostList as $valuex) {
-                            $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productImageId desc')->limit(4)->all();
+                            $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productImageId desc')->limit(1)->all();
                             $productViews = common\models\costfit\ProductPageViews::find()->where('productSuppId=' . $value->productSuppId)->count();
                             ?>
+                            <div class="col-md-12 text-center">
+                                <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>" style="font-size: 12px;"><?php echo substr($valuex->title, 0, 30); ?></a>
+                            </div>
                             <div class="col-md-12" style="padding: 5px;">
-                                <div class="col-md-2 text-left">
+                                <div class="col-md-12 text-center">
                                     <?php
                                     echo \yii2mod\rating\StarRating::widget([
                                         'name' => "input_name_" . $value['productPostId'],
@@ -152,32 +157,26 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     ?>
                                 </div>
 
-                                <div class="col-md-10 text-left">
-                                    <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"><?php echo $valuex->title; ?></a>
-                                </div>
-                                <div class="col-md-12 text-left">
-                                    <?php
-                                    echo '<span style="font-size: 12px; color:#0066c0;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน  | ' . $rating_count . ' reviews | เข้าชม ' . $productViews . ' ครั้ง</span>';
-                                    ?>
-                                </div>
+
+
                             </div>
-                            <div class="col-sm-12 col-lg-12 col-md-12 text-center" style="margin-top: 10px; padding: 5px; border-bottom: 1px #e6e6e6 dotted;">
+                            <div class="col-sm-12 col-lg-12 col-md-12 text-center" style="margin-top: 10px; padding: 5px;">
                                 <?php
                                 foreach ($productImages as $valueImages) {
                                     if (isset($valueImages['imageThumbnail2']) && !empty($valueImages['imageThumbnail2'])) {
                                         if (file_exists(Yii::$app->basePath . "/web/" . $valueImages['imageThumbnail2'])) {
                                             //echo "<div class=\"col-sm-3\"><img id=\"myImg-" . $valueImages['productImageId'] . "\" onClick=\"reviews_click(" . $valueImages['productImageId'] . ',' . "xx" . ")\"   src=\"/" . $valueImages['imageThumbnail2'] . "\" alt=\"1\" class=\"img-responsive img-thumbnail myImg\"/></div>";
                                             ?>
-                                            <div class="col-sm-3 col-lg-3 col-md-3">
+                                            <div class="col-sm-12 col-lg-12 col-md-12">
                                                 <img id="myImg-<?php echo $valueImages['productImageId']; ?>" onclick="reviews_click(<?php echo $valuex->productSuppId; ?>,<?php echo $valueImages['productImageId']; ?>, '<?php echo $valueImages['image']; ?>', '<?php echo $valuex->title; ?>')" src="<?php echo $valueImages['imageThumbnail2']; ?>" alt="1" class="img-responsive img-thumbnail myImg">
                                             </div>
                                             <?php
                                         } else {
-                                            echo "<div class=\"col-sm-3 col-lg-3 col-md-3\"><img  class=\"ms-thumb\"  src=\"" . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive img-thumbnail\"/></div>";
+                                            echo "<div class=\"col-sm-12 col-lg-12 col-md-12\"><img  class=\"ms-thumb\"  src=\"" . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive img-thumbnail\"/></div>";
                                         }
                                     } else {
                                         ?>
-                                        <div class="col-sm-3 col-lg-3 col-md-3">
+                                        <div class="col-sm-12 col-lg-12 col-md-12">
                                             <img class="ms-thumb" src="<?php echo "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
                                         </div>
                                         <?php
@@ -185,19 +184,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 }
                                 ?>
                                 <?php
-                                //$post = common\models\costfit\ProductPost::find()->where('productSuppId = ' . $value['productSuppId'])->all();
-                                //$number = 1;
-                                //foreach ($post as $postxRating) {
-                                //$member = \common\models\costfit\User::find()->where('userId = ' . $postxRating->userId)->one();
-                                //$rating = common\models\costfit\ProductPostRating::find()->where('productPostId = ' . $postxRating['productPostId'] . ' and userId = ' . $postxRating->userId)->one();
-                                ?>
-
-                                <?php
                                 //}
+                                ?>
+                            </div>
+                            <div class="col-md-12 text-center" style=" border-bottom: 1px #e6e6e6 dotted;">
+                                <?php
+                                echo '<span style="font-size: 12px; color:#0066c0;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน<br>' . $rating_count . ' reviews | เข้าชม ' . $productViews . ' ครั้ง</span>';
                                 ?>
                             </div>
                             <?php
                         }
+                        echo '</div>';
                     }
                     ?>
                     <?php

@@ -1,64 +1,14 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-/*
-  $items = array(
-  array('id' => 1, 'parent_id' => 0, 'name' => 'Category A'),
-  array('id' => 2, 'parent_id' => 0, 'name' => 'Category B'),
-  array('id' => 3, 'parent_id' => 0, 'name' => 'Category C'),
-  array('id' => 4, 'parent_id' => 0, 'name' => 'Category D'),
-  array('id' => 5, 'parent_id' => 0, 'name' => 'Category E'),
-  array('id' => 6, 'parent_id' => 2, 'name' => 'Subcategory F'),
-  array('id' => 7, 'parent_id' => 2, 'name' => 'Subcategory G'),
-  array('id' => 8, 'parent_id' => 3, 'name' => 'Subcategory H'),
-  array('id' => 9, 'parent_id' => 4, 'name' => 'Subcategory I'),
-  array('id' => 10, 'parent_id' => 9, 'name' => 'Subcategory J'),
-  );
 
-  function buildTree($items) {
-
-  $childs = array();
-
-  foreach ($items as &$item)
-  $childs[$item['parent_id']][] = &$item;
-  unset($item);
-
-  foreach ($items as &$item)
-  if (isset($childs[$item['id']]))
-  $item['childs'] = $childs[$item['id']];
-
-  return $childs[0];
-  }
-
-  $tree = buildTree($items);
-  echo '<pre>';
-  print_r($tree);
-  foreach ($tree as $key => $value) {
-  echo $key . '::' . $value['name'] . '<br>';
-  if (isset($value['childs']) && count($value['childs']) > 0) {
-  foreach ($value['childs'] as $key => $item) {
-  echo '&nbsp;&nbsp; - ' . $item['name'] . '<br>';
-  if (isset($item['childs']) && count($item['childs']) > 0) {
-  foreach ($item['childs'] as $key => $items) {
-  echo '&nbsp;&nbsp;&nbsp; - ' . $items['name'] . '<br>';
-  if (isset($items['childs']) && count($items['childs']) > 0) {
-  foreach ($items['childs'] as $key => $itemss) {
-  echo '&nbsp;&nbsp;&nbsp;&nbsp; - ' . $itemss['name'] . '<br>';
-  }
-  }
-  }
-  }
-  }
-  }
-  } */
-
-//exit();
 $this->title = 'Product Suppliers';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
@@ -73,6 +23,67 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
 
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-default">
+        <div class="panel-body">
+            <?php
+            $form = ActiveForm::begin([
+                //'action' => '#',
+                'options' => ['class' => ' form-horizontal', 'enctype' => 'multipart/form-data'],
+                'fieldConfig' => [
+                    'template' => '{label}<div class="col-sm-9">{input}</div>',
+                    'labelOptions' => [
+                        'class' => 'col-sm-3 control-label  '
+                    ]
+                ]
+            ]);
+            ?>
+            <div class="row">
+                <div class="col-md-1">
+                    <h5>ค้นหา Category</h5>
+                </div>
+                <div class="col-md-3">
+                    <?php
+                    //echo '<label class="control-label">Provinces</label>';
+                    echo kartik\select2\Select2::widget([
+                        'name' => 'CategoryId',
+                        // 'value' => ['THA'], // initial value
+                        'data' => common\models\costfit\Category::findCategoryArrayWithMultiLevel(),
+                        //'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'),
+                        'options' => ['placeholder' => 'Select or Search User Category ...', 'id' => 'Category'], //, 'onchange' => 'this.form.submit()'
+                        'pluginOptions' => [
+                            'tags' => true,
+                            'placeholder' => 'Select or Search ...',
+                            'loadingText' => 'Loading Category ...',
+                            'initialize' => true,
+                        ],
+                    ]);
+                    ?>
+                </div>
+                <div class="col-md-1">
+                    <h5>ค้นหา Brand</h5>
+                </div>
+                <div class="col-md-3">
+                    <?php
+                    //echo '<label class="control-label">Provinces</label>';
+                    echo kartik\select2\Select2::widget([
+                        'name' => 'BrandId',
+                        // 'value' => ['THA'], // initial value
+                        'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Brand::find()->where('userId=' . Yii::$app->user->identity->userId)->all(), 'brandId', 'title'),
+                        'options' => ['placeholder' => 'Select or Search User Brand ...', 'id' => 'Brand'], //, 'onchange' => 'this.form.submit()'
+                        'pluginOptions' => [
+                            'tags' => true,
+                            'placeholder' => 'Select or Search ...',
+                            'loadingText' => 'Loading Brand ...',
+                            'initialize' => true,
+                        ],
+                    ]);
+                    ?>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-info" type="submit">Search Product Suppliers</button>
+                </div>
+            </div>
+            <?php ActiveForm::end(); ?>
+        </div>
         <div class="panel-heading">
             <div class="row">
                 <div class="col-md-6"><?= $this->title ?></div>
