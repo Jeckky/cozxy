@@ -85,16 +85,16 @@ use yii\widgets\Pjax;
                                     'attribute' => 'sortOrder',
                                     'format' => 'raw',
                                     'value' => function($model) {
-//                                        return "<form id='form$model->productImageId' name='form$model->productImageId' action='" . Yii::$app->homeUrl . "suppliers/product-image-suppliers/change-sort-order?id=$model->productImageId' method='POST'>"
-                                        return ActiveForm::begin([
-                                            'options' => ['class' => 'panel panel-default form-horizontal ', 'enctype' => 'multipart/form-data', 'action' => Yii::$app->homeUrl . "suppliers/product-image-suppliers/change-sort-order?id=$model->productImageId"],
-                                            'fieldConfig' => [
-//                                                'template' => '{label}<div class="col-sm-9">{input}</div>',
-                                                'labelOptions' => [
-                                                    'class' => 'col-sm-3 control-label'
-                                                ]
-                                            ]
-                                        ])
+                                        return "<form id='form$model->productImageId' name='form$model->productImageId' action='" . Yii::$app->homeUrl . "suppliers/product-image-suppliers/change-sort-order?id=$model->productImageId' method='POST'>"
+//                                        return ActiveForm::begin([
+//                                            'options' => ['class' => 'panel panel-default form-horizontal ', 'enctype' => 'multipart/form-data', 'action' => Yii::$app->homeUrl . "suppliers/product-image-suppliers/change-sort-order?id=$model->productImageId"],
+//                                            'fieldConfig' => [
+////                                                'template' => '{label}<div class="col-sm-9">{input}</div>',
+//                                                'labelOptions' => [
+//                                                    'class' => 'col-sm-3 control-label'
+//                                                ]
+//                                            ]
+//                                        ])
                                         . Html::dropDownList("sortOrder" . $model->productImageId, $model->ordering, [0 => 0, 1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6, 7 => 7, 8 => 8, 10 => 10, 11 => 11, 12 => 12, 13 => 13, 14 => 14, 15 => 15, 16 => 16, 17 => 17, 18 => 18, 19 => 19, 20 => 20, 21 => 21, 22 => 22, 23 => 23, 24 => 24, 25 => 25, 26 => 26, 27 => 27, 28 => 28, 29 => 29, 30 => 30])
                                         . Html::hiddenInput('className' . $model->productImageId, $model::ClassName())
                                         . Html::hiddenInput('pkName' . $model->productImageId, $model->tableSchema->primaryKey[0])
@@ -102,8 +102,8 @@ use yii\widgets\Pjax;
                                         . Html::hiddenInput('followId' . $model->productImageId, $model->productSuppId)
                                         . Html::hiddenInput('followIdName' . $model->productImageId, "productSuppId")
                                         . Html::submitButton("<i class='fa fa-check'></i>", ['class' => 'btn btn-success btn-xs'])
-//                                        . "</form>";
-                                        . ActiveForm::end();
+                                        . "</form>";
+//                                        . ActiveForm::end();
                                     }
                                 ],
                                 //'productImageId',
