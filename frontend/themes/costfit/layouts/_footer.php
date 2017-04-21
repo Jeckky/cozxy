@@ -38,7 +38,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     ?>
     <div class="container">
         <div class="row">
-            <div class="col-lg-5 col-md-5 col-sm-5">
+            <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="info">
                     <a class="logo" href="<?php echo $baseUrl; ?>"><img src="<?php echo $baseUrl . $logoImage->image; ?>" alt="footer Cozxy.com"></a>
                     <p><?php echo $logoImage->contents[0]->description; ?></p>
@@ -52,24 +52,24 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-4">
-                <h2>Latest news</h2>
-                <ul class="list-unstyled">
-                    <?php
-                    foreach ($news->contents as $allNew):
+            <!--<div class="col-lg-4 col-md-4 col-sm-4">
+              <h2>Latest news</h2>
+               <ul class="list-unstyled">
+            <?php
+            /* foreach ($news->contents as $allNew):
 
-                        if (isset($allNew) && !empty($allNew)) {
-                            if (date('Y-m-d H:i:s') <= $allNew->endDate):
-                                ?>
+              if (isset($allNew) && !empty($allNew)) {
+              if (date('Y-m-d H:i:s') <= $allNew->endDate):
+              ?>
 
-                                <li><?php echo $allNew->headTitle . " "; ?><a href="#"><?php echo $allNew->title; ?></a></li>
-                                <?php
-                            endif;
-                        }endforeach;
-                    ?>
-                </ul>
-            </div>
-            <div class="contacts col-lg-3 col-md-3 col-sm-3">
+              <li><?php echo $allNew->headTitle . " "; ?><a href="#"><?php echo $allNew->title; ?></a></li>
+              <?php
+              endif;
+              }endforeach; */
+            ?>
+               </ul>
+           </div>-->
+            <div class="contacts col-lg-6 col-md-6 col-sm-6">
                 <h2>Contacts</h2>
                 <p class="p-style3">
                     <?php

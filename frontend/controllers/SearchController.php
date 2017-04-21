@@ -113,7 +113,11 @@ class SearchController extends MasterController {
         } else {
             $idString = null;
         }
+
+        // echo 'Search Brands';
         //  $items_sub->createTitle()
+        //return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
+        //echo $this->redirect(Yii::$app->homeUrl . 'checkout/order-thank');
         return $this->redirect(['search/' . rawurlencode($cat->createTitle()) . "/" . ModelMaster::encodeParams(['categoryId' => $categoryId, 'brandId' => $idString])]);
     }
 

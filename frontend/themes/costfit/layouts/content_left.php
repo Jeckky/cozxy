@@ -120,6 +120,40 @@ $title = $this->params['title'];
 
     <!--Brands Carousel Widget-->
     <?php echo $this->render('@app/themes/costfit/layouts/_brand_carousel'); ?>
+    <?php
+    /* $k = base64_decode(base64_decode($hash));
+      $params = ModelMaster::decodeParams($hash);
+      $whereArray = [];
+      $whereArray["category_to_product.categoryId"] = $params['categoryId'];
+
+      $whereArray["product.approve"] = "approve";
+      $products = \common\models\costfit\CategoryToProduct::find()
+      ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+      ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+      ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+      //->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = category_to_product.productId")
+      ->where($whereArray);
+      //->andWhere("product.approve != 'new'");
+      if (isset($_POST["min"])) {
+      $products->andWhere("pps.price >=" . $_POST["min"]);
+      }
+      if (isset($_POST["max"])) {
+      $products->andWhere("pps.price <=" . $_POST["max"]);
+      }
+
+      if (isset($params['brandId'])) {
+      $idString = $params['brandId'];
+      $this->view->params['brandId'] = explode(",", $idString);
+      $products->andWhere("product.brandId in ($idString)");
+      }
+      //echo '<pre>';
+      //print_r($products);
+      $products = new \yii\data\ActiveDataProvider([
+      'query' => $products,
+      'pagination' => array('pageSize' => 9),
+      ]); */
+    ?>
+    <?php //echo $this->render('@app/views/search/search', compact('products')); ?>
 </div>
 <?php
 $logoImage = common\models\costfit\ContentGroup::find()->where("lower(title)='logoImage'")->one();

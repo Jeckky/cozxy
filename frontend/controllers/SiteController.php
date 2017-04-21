@@ -95,9 +95,20 @@ class SiteController extends MasterController {
         $popularCat = Category::findAllPopularCategory();
         $hotProduct = \common\models\costfit\ProductHot::findAllHotProducts();
         //$footer = "adfadf";
-        $productPost = \common\models\costfit\ProductPost::find()->groupBy(['productSuppId'])->orderBy('productPostId desc')->limit(6)->all();
+        $productPost = \common\models\costfit\ProductPost::find()->groupBy(['productSuppId'])->orderBy('productPostId desc')->limit(4)->all();
+        $productCanSell = new \yii\data\ActiveDataProvider([
+            'query' => \common\models\costfit\ProductSuppliers::find()->where('approve="approve" and result > 0'),
+        ]);
 
-        return $this->render('index', compact('productPost', 'saveCat', 'popularCat', 'bannerGroup', 'topOneContent', 'bottomContent', 'lastIndexContent', 'product', 'product2', 'footer', 'hotProduct'));
+
+        $NotSell = \common\models\costfit\ProductSuppliers::find()->where('result = 0');
+        $productNotSell = new \yii\data\ActiveDataProvider([
+            'query' => $NotSell, 'pagination' => [
+                'pageSize' => 4,
+            ],
+        ]);
+
+        return $this->render('index', compact('productNotSell', 'productCanSell', 'productPost', 'saveCat', 'popularCat', 'bannerGroup', 'topOneContent', 'bottomContent', 'lastIndexContent', 'product', 'product2', 'footer', 'hotProduct'));
     }
 
     /**
