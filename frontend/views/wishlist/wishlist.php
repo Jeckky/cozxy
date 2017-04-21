@@ -21,7 +21,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <p class="p-style3">"Nikon" was successfully added to your cart.</p>
                     <a class="btn-outlined-invert btn-black btn-sm" href="<?php echo Yii::$app->homeUrl; ?>cart">View cart</a>
                 </section><!--Shopping Cart Message Close-->
-                <table class="items-list" cellpadding="5">
+                <table class="items-list" >
 <!--                    <tr>
                         <th>&nbsp;</th>
                         <th>Product name</th>
@@ -39,8 +39,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 <?= Html::hiddenInput("productSuppId", $wishlist->productId, ['id' => 'productSuppId']); ?>
                             <input type="hidden" id="maxQnty<?= $wishlist->productId ?>" value="<?= $products->findMaxQuantitySupplier($wishlist->productId) ?>">
                             <td class="title hide" ><?= $wishlist->productSuppliers->title; ?></td>
-                            <td class="thumb"><a href="<?php echo Yii::$app->homeUrl ?>products/<?= $wishlist->encodeParams(['productId' => $wishlist->productSuppliers->productId, 'productSupplierId' => $wishlist->productId]) ?>"><img src="<?php echo Yii::$app->homeUrl . $wishlist->productSuppliers->images->image; ?>" alt="Lorem ipsum" class="img-responsive"/></a></td>
-                            <td class="name" style="font-size: 14px;"><a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $wishlist->encodeParams(['productId' => $wishlist->productSuppliers->productId, 'productSupplierId' => $wishlist->productId]) ?>"><?= $wishlist->productSuppliers->title; ?></a></td>
+                            <td class="thumb" style="padding:5px"><a href="<?php echo Yii::$app->homeUrl ?>products/<?= $wishlist->encodeParams(['productId' => $wishlist->productSuppliers->productId, 'productSupplierId' => $wishlist->productId]) ?>"><img src="<?php echo Yii::$app->homeUrl . $wishlist->productSuppliers->images->image; ?>" alt="Lorem ipsum" class="img-responsive"/></a></td>
+                            <td class="name" style="font-size: 14px;padding:5px"><a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $wishlist->encodeParams(['productId' => $wishlist->productSuppliers->productId, 'productSupplierId' => $wishlist->productId]) ?>"><?= $wishlist->productSuppliers->title; ?></a></td>
                             <td class="price"><?= number_format($products->calProductPrice($wishlist->productId, 1), 2); ?></td>
                             <td class="button">
                                 <?= Html::hiddenInput("quantity", 1, ['id' => 'quantity']); ?>
@@ -123,26 +123,26 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <div class="badges">
                             <span class="out">Out</span>
                         </div>
-                        <div class="price-label"><?php //echo $product[1]->price;                     ?></div>
-                        <div class="price-label old-price"><?php // echo $product[1]->price;                    ?></div>
-                        <a href="<?php // echo Yii::$app->homeUrl                    ?>products/<?//= $product[1]->encodeParams(['productId' => $product[1]->productId]) ?>">
+                        <div class="price-label"><?php //echo $product[1]->price;                        ?></div>
+                        <div class="price-label old-price"><?php // echo $product[1]->price;                       ?></div>
+                        <a href="<?php // echo Yii::$app->homeUrl                       ?>products/<?//= $product[1]->encodeParams(['productId' => $product[1]->productId]) ?>">
 <?php
 // if (isset($product[1]->productImages[0]->imageThumbnail1)) {
 ?>
-                                <img src="<?php // echo Yii::$app->homeUrl . $product[1]->productImages[0]->imageThumbnail1;                    ?>" alt="1"/>
+                                <img src="<?php // echo Yii::$app->homeUrl . $product[1]->productImages[0]->imageThumbnail1;                       ?>" alt="1"/>
 <?php
 // } else {
 ?>
-                                <img src="<?php // echo $baseUrl;                    ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1"/>
+                                <img src="<?php // echo $baseUrl;                       ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1"/>
 <?php
 //  }
 ?>
                             <span class="tile-overlay"></span>
                         </a>
                         <div class="footer">
-                            <a href="<?php // echo Yii::$app->homeUrl                     ?>products/<?//= $product[1]->encodeParams(['productId' => $product[1]->productId]) ?>"><?//= $product[1]->title ?></a>
+                            <a href="<?php // echo Yii::$app->homeUrl                        ?>products/<?//= $product[1]->encodeParams(['productId' => $product[1]->productId]) ?>"><?//= $product[1]->title ?></a>
                             <span></span>
-                            <a href="<?php // echo Yii::$app->homeUrl                     ?>products/<?//= $product[1]->encodeParams(['productId' => $product[1]->productId]) ?>"><button class="btn btn-primary">View</button></a>
+                            <a href="<?php // echo Yii::$app->homeUrl                        ?>products/<?//= $product[1]->encodeParams(['productId' => $product[1]->productId]) ?>"><button class="btn btn-primary">View</button></a>
                         </div>
                     </div>
                 </div>
@@ -152,26 +152,26 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <div class="badges">
                             <span class="best-seller">Best Saller</span>
                         </div>
-                        <div class="price-label"><?php // echo $product[2]->price;                    ?></div>
-                        <a href="<?php //echo Yii::$app->homeUrl                    ?>products/<?//= $product[2]->encodeParams(['productId' => $product[2]->productId]) ?>">
+                        <div class="price-label"><?php // echo $product[2]->price;                       ?></div>
+                        <a href="<?php //echo Yii::$app->homeUrl                       ?>products/<?//= $product[2]->encodeParams(['productId' => $product[2]->productId]) ?>">
 <?php
 //  if (isset($product[2]->productImages[0]->imageThumbnail1)) {
 //
 ?>
-                                <img src="<?php //echo Yii::$app->homeUrl . $product[2]->productImages[0]->imageThumbnail1;                   ?>" alt="1"/>
+                                <img src="<?php //echo Yii::$app->homeUrl . $product[2]->productImages[0]->imageThumbnail1;                      ?>" alt="1"/>
 <?php
 //   } else {
 ?>
-                                <img src="<?php // echo $baseUrl;                   ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1"/>
+                                <img src="<?php // echo $baseUrl;                      ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1"/>
 <?php
 // }
 ?>
                             <span class="tile-overlay"></span>
                         </a>
                         <div class="footer">
-                            <a href="<?php // echo Yii::$app->homeUrl                     ?>products/<?//= $product[2]->encodeParams(['productId' => $product[2]->productId]) ?>"><?//= $product[2]->title ?></a>
+                            <a href="<?php // echo Yii::$app->homeUrl                        ?>products/<?//= $product[2]->encodeParams(['productId' => $product[2]->productId]) ?>"><?//= $product[2]->title ?></a>
                             <span></span>
-                            <a href="<?php //echo Yii::$app->homeUrl                     ?>products/<?//= $product[2]->encodeParams(['productId' => $product[2]->productId]) ?>"><button class="btn btn-primary">View</button></a>
+                            <a href="<?php //echo Yii::$app->homeUrl                        ?>products/<?//= $product[2]->encodeParams(['productId' => $product[2]->productId]) ?>"><button class="btn btn-primary">View</button></a>
                         </div>
                     </div>
                 </div>
@@ -179,16 +179,16 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="tile">
 
-                        <div class="price-label"><?php //echo $product[3]->price;                    ?></div>
-                        <a href="<?php //echo Yii::$app->homeUrl                   ?>products/<?//= $product[3]->encodeParams(['productId' => $product[3]->productId]) ?>">
+                        <div class="price-label"><?php //echo $product[3]->price;                       ?></div>
+                        <a href="<?php //echo Yii::$app->homeUrl                      ?>products/<?//= $product[3]->encodeParams(['productId' => $product[3]->productId]) ?>">
 <?php
 /// if (isset($product[3]->productImages[0]->imageThumbnail1)) {
 ?>
-                                <img src="<?php //echo Yii::$app->homeUrl . $product[3]->productImages[0]->imageThumbnail1;                   ?>" alt="1"/>
+                                <img src="<?php //echo Yii::$app->homeUrl . $product[3]->productImages[0]->imageThumbnail1;                      ?>" alt="1"/>
 <?php
 // } else {
 ?>
-                                <img src="<?php //echo $baseUrl;                   ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1"/>
+                                <img src="<?php //echo $baseUrl;                      ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1"/>
 <?php
 //  }
 ?>
@@ -196,9 +196,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             <span class="tile-overlay"></span>
                         </a>
                         <div class="footer">
-                            <a href="<?php // echo Yii::$app->homeUrl                     ?>products/<?//= $product[3]->encodeParams(['productId' => $product[3]->productId]) ?>"><?//= $product[3]->title ?></a>
+                            <a href="<?php // echo Yii::$app->homeUrl                        ?>products/<?//= $product[3]->encodeParams(['productId' => $product[3]->productId]) ?>"><?//= $product[3]->title ?></a>
                             <span></span>
-                            <a href="<?php // echo Yii::$app->homeUrl                     ?>products/<?//= $product[3]->encodeParams(['productId' => $product[3]->productId]) ?>"><button class="btn btn-primary">View</button></a>
+                            <a href="<?php // echo Yii::$app->homeUrl                        ?>products/<?//= $product[3]->encodeParams(['productId' => $product[3]->productId]) ?>"><button class="btn btn-primary">View</button></a>
                         </div>
                     </div>
                 </div>-->
