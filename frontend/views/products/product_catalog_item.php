@@ -115,46 +115,46 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <?php } ?>
         <div class="price"><?= number_format($model->calProductPrice($productSupplierId, 1), 2) . " ฿" ?></div>
     </div>
-    <div class="buttons group products-buttons-group" style="margin-top: -18px;">
-        <div class="form-group" style="word-wrap: break-word;">
-            <label for="shopping-dollar" class="col-sm-1 " style="float: left; padding-right: 0px; padding-left: 0px; margin-bottom: 0px;">
-                <img  src="<?php echo Yii::$app->homeUrl; ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
-            </label>
-            <div class="col-sm-11 text-left discountPrice " style="float: left; padding: 0px; margin-left: 0px; margin-top: 15px;">
-                &nbsp;Add more than 1 item to your order
-            </div>
-        </div>
-    </div>
-    <div class="buttons group products-buttons-group">
-        <div class="form-group">
-            <label for="shopping-cart" class="col-sm-1" style="float: left; padding-right: 0px;  padding-left: 0px;  margin-bottom: 0px;">
-                <img  src="<?php echo Yii::$app->homeUrl; ?>images/icon/1.png" alt="thumb" class="img-responsive" width="38" height="38"/>
-            </label>
-            <div id="choose" class="col-sm-11 text-left " style="float: left; padding: 0px; margin-left: 0px; margin-top: 15px;">
-                &nbsp;ส่งสินค้าภายใน <?php echo Product::getShippingDate($model->productId, 1); ?> วัน
-            </div>
-            <div id="unchoose" class="col-sm-11 text-left " style="padding: 0px; margin-left: 0px; margin-top: 18px;text-decoration: line-through;color:#bbb;display: none;">
-                &nbsp;ส่งสินค้าภายใน <?php echo Product::getShippingDate($model->productId, 1); ?> วัน
-            </div>
-            <?php
-            $default = Product::getShippingDate($model->productId, 1);
-            $fast = Product::getShippingDate($model->productId, 2);
-            if ($fast != $default) {
-                ?>
-                <div class="form-group  col-lg-12" style="margin-bottom: 5px;">
-                    <div class="checkbox">
-                        <label style="color: red;">
-                            <input type="checkbox" id="lateShippingCheck" name="lateShippingCheck">  ต้องการส่งสินค้าราคาประหยัดอีก
-                            <?php
-                            $productPrice = $model->calProductPrice($productSupplierId, 1, 1, 2);
-                            echo $productPrice["shippingDiscountValue"];
-                            ?>  บาท (ส่งภายใน <?php echo Product::getShippingDate($model->productId, 2); ?> วัน)
-                        </label>
-                    </div>
+    <!--    <div class="buttons group products-buttons-group" style="margin-top: -18px;">
+            <div class="form-group" style="word-wrap: break-word;">
+                <label for="shopping-dollar" class="col-sm-1 " style="float: left; padding-right: 0px; padding-left: 0px; margin-bottom: 0px;">
+                    <img  src="<?php // echo Yii::$app->homeUrl;   ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
+                </label>
+                <div class="col-sm-11 text-left discountPrice " style="float: left; padding: 0px; margin-left: 0px; margin-top: 15px;">
+                    &nbsp;Add more than 1 item to your order
                 </div>
-            <?php } ?>
-        </div>
-    </div>
+            </div>
+        </div>-->
+    <!--    <div class="buttons group products-buttons-group">
+            <div class="form-group">
+                <label for="shopping-cart" class="col-sm-1" style="float: left; padding-right: 0px;  padding-left: 0px;  margin-bottom: 0px;">
+                    <img  src="<?php echo Yii::$app->homeUrl; ?>images/icon/1.png" alt="thumb" class="img-responsive" width="38" height="38"/>
+                </label>
+                <div id="choose" class="col-sm-11 text-left " style="float: left; padding: 0px; margin-left: 0px; margin-top: 15px;">
+                    &nbsp;ส่งสินค้าภายใน <?php echo Product::getShippingDate($model->productId, 1); ?> วัน
+                </div>
+                <div id="unchoose" class="col-sm-11 text-left " style="padding: 0px; margin-left: 0px; margin-top: 18px;text-decoration: line-through;color:#bbb;display: none;">
+                    &nbsp;ส่งสินค้าภายใน <?php echo Product::getShippingDate($model->productId, 1); ?> วัน
+                </div>
+    <?php
+//            $default = Product::getShippingDate($model->productId, 1);
+//            $fast = Product::getShippingDate($model->productId, 2);
+//            if ($fast != $default) {
+    ?>
+                    <div class="form-group  col-lg-12" style="margin-bottom: 5px;">
+                        <div class="checkbox">
+                            <label style="color: red;">
+                                <input type="checkbox" id="lateShippingCheck" name="lateShippingCheck">  ต้องการส่งสินค้าราคาประหยัดอีก
+    <?php
+//                            $productPrice = $model->calProductPrice($productSupplierId, 1, 1, 2);
+//                            echo $productPrice["shippingDiscountValue"];
+    ?>  บาท (ส่งภายใน <?php // echo Product::getShippingDate($model->productId, 2); ?> วัน)
+                            </label>
+                        </div>
+                    </div>
+    <?php // } ?>
+            </div>
+        </div>-->
     <!--    <div class="buttons group">
     <?php
     // $i = 0;
