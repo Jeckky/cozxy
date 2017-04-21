@@ -34,7 +34,26 @@ class TopUp extends \common\models\costfit\master\TopUpMaster {
      * @inheritdoc
      */
     public function attributeLabels() {
-        return array_merge(parent::attributeLabels(), []);
+        return array_merge(parent::attributeLabels(), [
+            'topUpNo' => 'No.',
+            'money' => 'Amount (BTH)',
+            'updateDateTime' => 'Date'
+        ]);
+    }
+
+    public static function statusText($status) {
+        switch ($status) {
+            case 2:
+                return 'Confirm Payment';
+                break;
+            case 3:
+                return 'Success';
+                break;
+            case 3:
+                return 'Not Success';
+                break;
+            default :return '';
+        }
     }
 
 }

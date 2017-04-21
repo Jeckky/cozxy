@@ -199,6 +199,7 @@ class TopUpController extends MasterController {
     }
 
     public function actionBillpay($epay) {
+
         $k = base64_decode(base64_decode($epay));
         $topUpId = \common\models\ModelMaster::decodeParams($epay);
         $header = $this->renderPartial('header');
@@ -281,6 +282,17 @@ class TopUpController extends MasterController {
                         'model' => $model,
             ]);
         }
+    }
+
+    public function actionHistory() {
+        $model = TopUp::find()->where("status >1 and userId=" . Yii::$app->user->id)->orderBy('updateDateTime DESC');
+        $dataProvider = new ActiveDataProvider([
+            'query' => $model,
+        ]);
+        return $this->render('history', [
+                    'model' => $model,
+                    'dataProvider' => $dataProvider
+        ]);
     }
 
     /**
