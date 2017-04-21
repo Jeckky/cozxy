@@ -109,7 +109,7 @@ class SuppliersMasterController extends \backend\controllers\BackendMasterContro
 //        throw new \yii\base\Exception($id . " " . $_POST['pkName' . $id]);
         $model = $_POST['className' . $id]::find()->where($_POST['pkName' . $id] . "=" . $id)->one();
 //            throw new \yii\base\Exception(print_r($model->attributes, true));
-        $model->sortOrder = $_POST["sortOrder" . $id];
+        $model->ordering = $_POST["sortOrder" . $id];
         if ($model->save()) {
 //            throw new \yii\base\Exception(print_r($model->attributes, true));
         } else {
