@@ -14,7 +14,7 @@ if (isset($model) && count($model->product) > 0) {
                     <!--<br><span class="sale" style="background-color: #d2d042 !important;">SMART</span>-->
                 <?php // endif;  ?>
             </div>
-            <div class="price-label" ><?php echo ($model->price > 0) ? number_format($model->price) : ""// number_format($model->calProductPrice($model->productId, 1, 0, 1), 2)                          ?> ฿</div>
+            <?php if ($model->price > 0) { ?><div class="price-label" ><?php echo number_format($model->price) // number_format($model->calProductPrice($model->productId, 1, 0, 1), 2)                           ?> ฿</div><?php } ?>
 
             <img src="<?= (isset($model->images[0])) ? Yii::$app->homeUrl . $model->images[0]->image : Yii::$app->homeUrl . "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1"/>
             <span class="tile-overlay"></span>
