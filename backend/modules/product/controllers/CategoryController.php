@@ -69,6 +69,7 @@ class CategoryController extends ProductMasterController {
      */
     public function actionCreate() {
         $model = new Category();
+        $model->status = true;
         if (isset($_POST["Category"])) {
             $model->attributes = $_POST["Category"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
