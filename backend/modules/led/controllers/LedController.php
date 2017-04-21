@@ -24,7 +24,7 @@ class LedController extends LedMasterController {
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
                     // allow authenticated users
-                    [
+                        [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -91,8 +91,8 @@ class LedController extends LedMasterController {
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'model' => $model
+                    'dataProvider' => $dataProvider,
+                    'model' => $model
         ]);
     }
 
@@ -103,7 +103,7 @@ class LedController extends LedMasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -127,7 +127,7 @@ class LedController extends LedMasterController {
             }
         } else {
             return $this->render('create', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -135,7 +135,7 @@ class LedController extends LedMasterController {
     public function actionIndexColor() {
         $model = \common\models\costfit\LedColor::find()->all();
         return $this->render('index_color', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -184,15 +184,15 @@ class LedController extends LedMasterController {
                 return $this->redirect('index-color');
             } else {
                 return $this->render('create_color', [
-                    'r' => $_POST['LedColor']['r'],
-                    'g' => $_POST['LedColor']['g'],
-                    'b' => $_POST['LedColor']['b'],
-                    'model' => $model,
+                            'r' => $_POST['LedColor']['r'],
+                            'g' => $_POST['LedColor']['g'],
+                            'b' => $_POST['LedColor']['b'],
+                            'model' => $model,
                 ]);
             }
         }
         return $this->render('create_color', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -246,20 +246,20 @@ class LedController extends LedMasterController {
                     return $this->redirect('index-color');
                 } else {
                     return $this->render('create_color', [
-                        'r' => $r,
-                        'g' => $g,
-                        'b' => $b,
-                        'model' => $model,
+                                'r' => $r,
+                                'g' => $g,
+                                'b' => $b,
+                                'model' => $model,
                     ]);
                 }
             } else {
                 return $this->render('create_color', [
-                    'model' => $model,
+                            'model' => $model,
                 ]);
             }
         } else {
             return $this->render('index_color', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -271,7 +271,7 @@ class LedController extends LedMasterController {
             return $this->redirect($baseUrl . '/led/led');
         } else {
             return $this->render('update', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -544,16 +544,16 @@ class LedController extends LedMasterController {
                         $r = $color->r;
                         $g = $color->g;
                         $b = $color->b;
-                        file_get_contents('http://' . $model->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0);
+                        @file_get_contents('http://' . $model->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0);
                         $item->status = 1;
                         $item->save();
                     } else {
                         $countOpenLed = \common\models\costfit\LedItem::find()
-                        ->join("LEFT JOIN", "led l", "led_item.ledId=l.ledId")
-                        ->where("l.slot LIKE '$code%' AND l.slot != '$code' AND led_item.status = 1")
-                        ->count();
+                                ->join("LEFT JOIN", "led l", "led_item.ledId=l.ledId")
+                                ->where("l.slot LIKE '$code%' AND l.slot != '$code' AND led_item.status = 1")
+                                ->count();
                         if ($countOpenLed == 0) {
-                            file_get_contents('http://' . $model->ip . "?id=$id&status=0", NULL, NULL, 0, 0);
+                            @file_get_contents('http://' . $model->ip . "?id=$id&status=0", NULL, NULL, 0, 0);
                             $item->status = 0;
                             $item->save();
                         }

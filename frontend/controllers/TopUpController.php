@@ -14,6 +14,7 @@ use yii\helpers\Json;
 use common\models\costfit\UserPoint;
 use common\models\costfit\PaymentMethod;
 use common\helpers\CozxyUnity;
+use common\helpers\IntToBath;
 
 /**
  * TopUpController implements the CRUD actions for TopUp model.
@@ -131,6 +132,7 @@ class TopUpController extends MasterController {
             if (isset($topUp) && count($topUp) > 0) {
                 $topUp->status = TopUp::TOPUP_STATUS_E_PAYMENT_SUCCESS;
                 $topUp->updateDateTime = new \yii\db\Expression('NOW()');
+                $topUp->topUpNo = $this->topUpNo();
                 $topUp->save(false);
                 $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
                 if (isset($userPoint) && !empty($userPoint)) {
@@ -155,11 +157,12 @@ class TopUpController extends MasterController {
                 $type = 'success';
 
                 return $this->render('thank', [
+                            'topUpId' => $topUp->topUpId,
                             'currentPoint' => $currentPoint,
                             'type' => $type,
                 ]);
             } else {
-                throw new \yii\base\Exception('1111');
+                return $this->redirect(Yii::$app->homeUrl . 'top-up');
                 // go to error page
             }
         } else {
@@ -175,18 +178,63 @@ class TopUpController extends MasterController {
         }
     }
 
+    public function topUpNo() {
+        $y = date('Y');
+        $m = date('m');
+        $ym = $y . '/' . $m;
+        $lastNo = TopUp::find()->where("topUpNo like '$ym%'")->orderBy('topUpNo DESC')->one();
+        if (isset($lastNo)) {
+            $topUpNo = $lastNo->topUpNo;
+            $topUpNo++;
+        } else {
+            $topUpNo = $ym . '/' . '00001';
+        }
+        return $topUpNo;
+    }
+
     public function actionRandomPass() {
         $res = [];
         $res["pass"] = rand('000000', '999999');
         return json_encode($res);
     }
 
-    public function actionBillpay() {
+    public function actionBillpay($epay) {
+        $k = base64_decode(base64_decode($epay));
+        $topUpId = \common\models\ModelMaster::decodeParams($epay);
         $header = $this->renderPartial('header');
         $title = FALSE;
-        $content = $this->renderPartial('content');
+        $topUp = TopUp::find()->where("topUpId=" . $topUpId)->one();
+        if (isset($topUp)) {
+            $customerName = User::userName($topUp->userId);
+            $address = User::userAddressText(User::supplierDetail($topUp->userId)->addressId, false);
+            $topUpNo = $topUp->topUpNo;
+            $subDate = substr($topUp->updateDateTime, 0, -9);
+            $date = $this->changDateFormat($subDate);
+            $amount = $topUp->money;
+            $point = $topUp->point;
+            $method = $topUp->paymentMethod;
+            $textBath = IntToBath::changeToBath(number_format($topUp->money, 2));
+        }
+        $content = $this->renderPartial('content', [
+            'customerName' => $customerName,
+            'address' => $address,
+            'topUpNo' => $topUpNo,
+            'date' => $date,
+            'point' => $point,
+            'amount' => $amount,
+            'method' => $method,
+            'textBath' => $textBath
+        ]);
         //$content = '';
         CozxyUnity::actionMpdfDocument($content, $header, $title);
+    }
+
+    public function changDateFormat($subDate) {
+        $d = substr($subDate, 8, 2);
+        $m = substr($subDate, 5, 2);
+        $y = substr($subDate, 0, 4);
+        $date = $d . '/' . $m . '/' . $y;
+        return $date;
     }
 
     /**

@@ -115,7 +115,7 @@ class ReturnProductController extends ReturnProductMasterController {
         $returnList = ReturnProduct::find()->where("orderId=" . $orderId . " and status=1")->all();
         $address = Address::find()->where("userId=" . $order->userId . " and isDefault=1")->one();
         if (isset($address) && !empty($address)) {
-            $addressText = User::userAddressText($address->addressId);
+            $addressText = User::userAddressText($address->addressId, true);
         }
         $pickingPoint = PickingPoint::find()->where("pickingId=" . $order->pickingId)->one();
         return $this->render('order_detail', [

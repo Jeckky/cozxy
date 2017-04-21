@@ -22,7 +22,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="container">
         <form class="subscr-form" role="form" autocomplete="off" novalidate="novalidate" method="post" action="<?php echo Yii::$app->homeUrl; ?>search-cost-fit">
             <div class="form-group">
-                <label class="sr-only" for="subscr-name">Search for produc</label>
+                <label class="sr-only" for="subscr-name">Search for product</label>
                 <input type="text" class="form-control" name="search_hd" id="search_hd" value="<?= isset($_POST['search_hd']) ? $_POST['search_hd'] : ($search_hd) ? $search_hd : '' ?>" placeholder="Search for product" required=""><label for="subscr-name" class="error" style="display: inline-block;">This field is required.</label>
                 <button class="subscr-next"><i class="icon-magnifier"></i></button>
             </div>

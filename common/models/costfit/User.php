@@ -58,7 +58,7 @@ class User extends \common\models\costfit\master\UserMaster {
      */
     public function rules() {
         return array_merge(parent::rules(), [
-            ['email', 'unique'],
+                ['email', 'unique'],
             'tel' => [['tel'], 'string'],
 //            ['email', 'uniqueEmail'],
             ['email', 'email'],
@@ -68,7 +68,7 @@ class User extends \common\models\costfit\master\UserMaster {
             ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"],
 //            ['email', 'exist']
             [
-                ['firstname', 'lastname', 'gender', 'tel' => [['tel'], 'integer'], 'birthDate', 'acceptTerm'],
+                    ['firstname', 'lastname', 'gender', 'tel' => [['tel'], 'integer'], 'birthDate', 'acceptTerm'],
                 'required', 'on' => self::COZXY_EDIT_PROFILE],
             // [['currentPassword', 'newPassword', 'rePassword'], 'required'],
             [['currentPassword', 'newPassword', 'rePassword'], 'required', 'on' => self::COZXY_PROFILE],
@@ -272,7 +272,7 @@ class User extends \common\models\costfit\master\UserMaster {
         }
     }
 
-    public static function userAddressText($addressId) {
+    public static function userAddressText($addressId, $tel = true) {
         $text = Address::find()->where("addressId=" . $addressId . " and isDefault=1")->one();
         if (isset($text) && !empty($text)) {
             $districtId = \common\models\dbworld\District::find()->where("districtId=" . $text->districtId)->one();
@@ -295,7 +295,11 @@ class User extends \common\models\costfit\master\UserMaster {
             } else {
                 $state = '';
             }
-            $address = $text->address . " " . $district . " " . $city . " " . $state . " " . $id . "<br>TEL. " . $text->tel . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fax. " . $text->fax;
+            if ($tel == true) {
+                $address = $text->address . " " . $district . " " . $city . " " . $state . " " . $id . "<br>TEL. " . $text->tel . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fax. " . $text->fax;
+            } else {
+                $address = $text->address . " " . $district . " " . $city . " " . $state . " " . $id;
+            }
             return $address;
         } else {
             return NULL;

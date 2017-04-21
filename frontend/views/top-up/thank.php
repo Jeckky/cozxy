@@ -35,6 +35,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <?php } ?>
 </div>
 <?php
-$bill = "window.open('" . Yii::$app->homeUrl . "' + 'top-up/billpay','_blank');";
-?>
-<?= $this->registerJs($bill); ?>
+if (isset($topUpId)) {
+    $epay = common\models\ModelMaster::encodeParams($topUpId);
+    $bill = "var topUpId='$epay';window.open('" . Yii::$app->homeUrl . "' + 'top-up/billpay?epay='+topUpId,'_blank');";
+    ?>
+    <?= $this->registerJs($bill); ?>
+<?php } ?>

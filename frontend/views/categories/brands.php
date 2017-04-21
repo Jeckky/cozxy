@@ -15,7 +15,8 @@ if (isset($categoryId)) {
     } else {
         $allCategory = $categoryId;
     }
-    $products = common\models\costfit\Product::find()->where("categoryId in (" . $allCategory . ")")->all();
+    //$products = common\models\costfit\Product::find()->where("categoryId in (" . $allCategory . ")")->all();
+    $products = common\models\costfit\ProductSuppliers::find()->where("categoryId in (" . $allCategory . ")")->all();
     foreach ($products as $product) {
         $flag = check($product->brandId, $allBrands);
         if ($flag == TRUE) {
@@ -37,7 +38,8 @@ if (isset($categoryId)) {
             foreach ($allBrands as $brand) {
                 if (isset($brand)) {
                     $brands = \common\models\costfit\Brand::find()->where("brandId=" . $brand)->one();
-                    $total = count(common\models\costfit\Product::find()->where("brandId=" . $brand . " and categoryId in (" . $allCategory . ")")->all());
+                    //$total = count(common\models\costfit\Product::find()->where("brandId=" . $brand . " and categoryId in (" . $allCategory . ")")->all());
+                    $total = count(common\models\costfit\ProductSuppliers::find()->where("brandId=" . $brand . " and categoryId in (" . $allCategory . ")")->all());
                     if (isset($brands)) {
                         ?>
                         <div class="checkbox">
