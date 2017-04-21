@@ -97,11 +97,13 @@ class SiteController extends MasterController {
         //$footer = "adfadf";
         $productPost = \common\models\costfit\ProductPost::find()->groupBy(['productSuppId'])->orderBy('productPostId desc')->limit(4)->all();
         $productCanSell = new \yii\data\ActiveDataProvider([
-            'query' => \common\models\costfit\ProductSuppliers::find()->where('approve="approve" and result > 0'),
+            'query' => \common\models\costfit\ProductSuppliers::find()->where('approve="approve" and result > 0 order by productSuppId DESC'), 'pagination' => [
+                'pageSize' => 4,
+            ],
         ]);
 
 
-        $NotSell = \common\models\costfit\ProductSuppliers::find()->where('result = 0');
+        $NotSell = \common\models\costfit\ProductSuppliers::find()->where('result = 0  order by productSuppId DESC');
         $productNotSell = new \yii\data\ActiveDataProvider([
             'query' => $NotSell, 'pagination' => [
                 'pageSize' => 4,
