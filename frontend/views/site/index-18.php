@@ -36,7 +36,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         </h2>
                         <?php
                         $desc = str_replace("<p>", " ", str_replace("</p>", " ", str_replace("</p><p>", "<br>", $banner->description)));
-                        //                        throw new \yii\base\Exception($banner->description . "----" . $desc);
+                        // throw new \yii\base\Exception($banner->description . "----" . $desc);
                         ?>
                         <p style="width: 456px; left: 110px; top: 210px;" class="dark-color ms-layer col-md-7 " data-effect="back(500)" data-duration="700" data-delay="500" data-ease="easeOutQuad"><?= $desc; ?></p>
                         <?php if (isset($banner->linkTitle) && !empty($banner->linkTitle)): ?>
@@ -55,31 +55,80 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     </div>
 </section><!--Hero Slider Close-->
 
-<!--Hero HotiTem-->
+
 <section class="catalog-grid">
     <div class="container">
-        <h2>HOT PRODUCTS</h2>
+        <h2>PRODUCTS</h2>
         <div class="row">
-            <!--Category-->
             <?php
             echo \yii\widgets\ListView::widget([
-                'dataProvider' => $hotProduct,
+                'dataProvider' => $productCanSell,
                 'options' => [
                     'tag' => 'div',
                     'class' => 'list-wrapper',
                     'id' => 'list-wrapper',
                 ],
                 'itemView' => function ($model, $key, $index, $widget) {
-                    return $this->render('_hot_product', ['model' => $model]);
+                    return $this->render('_productCanSell', ['model' => $model]);
                 },
                 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                //            'layout'=>"{summary}{pager}{items}"
+                //'layout'=>"{summary}{pager}{items}"
                 'layout' => "{items}"
             ])
             ?>
         </div>
     </div>
-</section><!--Categories Close-->
+</section>
+
+<section class="catalog-grid">
+    <div class="container">
+        <h2>PRODUCTS</h2>
+        <div class="row">
+            <?php
+            echo \yii\widgets\ListView::widget([
+                'dataProvider' => $productNotSell,
+                'options' => [
+                    'tag' => 'div',
+                    'class' => 'list-wrapper',
+                    'id' => 'list-wrapper',
+                ],
+                'itemView' => function ($model, $key, $index, $widget) {
+                    return $this->render('_productCanSell', ['model' => $model]);
+                },
+                'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                //'layout'=>"{summary}{pager}{items}"
+                'layout' => "{items}"
+            ])
+            ?>
+        </div>
+    </div>
+</section>
+
+<!--Hero HotiTem-
+<section class="catalog-grid">
+    <div class="container">
+        <h2>HOT PRODUCTS</h2>
+        <div class="row">
+
+<?php
+/* echo \yii\widgets\ListView::widget([
+  'dataProvider' => $hotProduct,
+  'options' => [
+  'tag' => 'div',
+  'class' => 'list-wrapper',
+  'id' => 'list-wrapper',
+  ],
+  'itemView' => function ($model, $key, $index, $widget) {
+  return $this->render('_hot_product', ['model' => $model]);
+  },
+  'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+  //            'layout'=>"{summary}{pager}{items}"
+  'layout' => "{items}"
+  ]) */
+?>
+        </div>
+    </div>
+</section> -Categories Close-->
 
 
 <!--Review Product-->
@@ -215,35 +264,34 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     </div>
 </section><!--Review Product-->
 
-<!--Hero Slider Close-->
+<!--
 <section class="cat-tiles" style="background-color: #f1efef;">
     <div class="container">
         <h2>SAVE ON EVERYDAY ESSENTIALS</h2>
         <div class="row" id="save-main-limit">
-            <!--SAVE ON EVERYDAY ESSENTIALS-->
-            <?php
-//echo 'saveCat : ' . $saveCat->getTotalCount();
-            echo \yii\widgets\ListView::widget([
-                'dataProvider' => $saveCat,
-                'itemView' => function ($model, $key, $index, $widget) {
-                    return $this->render('_save_cat', ['model' => $model]);
-                },
-                'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                //   'layout' => "{items}\n{pager}",
-                'layout' => "{items}"
-            ]);
-            ?>
-        </div>
-        <div class="row" id="save-main-limit"></div>
-        <?php if ($saveCat->getTotalCount() > 6): ?>
+
+<?php
+/* echo \yii\widgets\ListView::widget([
+  'dataProvider' => $saveCat,
+  'itemView' => function ($model, $key, $index, $widget) {
+  return $this->render('_save_cat', ['model' => $model]);
+  },
+  'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+  //   'layout' => "{items}\n{pager}",
+  'layout' => "{items}"
+  ]); */
+?>
+</div>
+<div class="row" id="save-main-limit"></div>
+<?php //if ($saveCat->getTotalCount() > 6): ?>
             <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
                 <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
             </div>
-        <?php endif; ?>
-    </div>
-</section><!--Categories Close-->
+<?php //endif; ?>
+</div>
+</section> Categories Close-->
 <!--Saved Category-->
-<!--Popular Category-->
+
 <section class="catalog-grid">
     <div class="container">
         <h2 class="dark-color">SHOP POPULAR CATEGORIES</h2>
@@ -265,7 +313,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             ?>
         </div>
     </div>
-</section><!--Catalog Grid Close-->
+</section>
 <!--Popular Category Close-->
 
 <section style="background-position: 50% 145.5px; background-color: #f5f5f5; " data-stellar-background-ratio="0.5">
@@ -293,116 +341,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <!--Tabs Widget-->
 
-<!--Tabs Widget-->
-<section class="tabs-widget">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#bestsel" data-toggle="tab">Bestseller items</a></li>
-                    <li><a href="#onsale" data-toggle="tab">Items on sale</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane fade in active" id="bestsel">
-                        <div class="container">
-                            <div class="row">
-                                <div id="photos-bestseller-items">
-                                    <?php
-                                    // $i = 1;
-                                    foreach ($product as $products) {
-                                        ?>
-                                        <div id="photos-bestseller-items-padding">
-                                            <a class="media-link" href="<?php echo Yii::$app->homeUrl; ?>products/<?= $products->encodeParams(['productId' => $products->productId, 'productSupplierId' => $products->productSuppId]) ?>" id="media-link-bestseller">
-                                                <div class="badges" style="margin-top:20px;position: absolute;left: 0px">
-                                                    <?php //if (common\models\costfit\Product::isSmartItem($products->productId)):       ?>
-                                                        <!--<span class="sale" style="background-color: #d2d042 !important;color:white;padding: 5px 10px 5px 10px;">SMART</span>-->
-                                                    <?php // endif;       ?>
-                                                </div>
-                                                <div class="overlay">
-                                                    <div class="descrx desc-bestseller">
-                                                        <div class="product-name"><?php echo $products->title; ?>
-                                                            <div class="bestseller-name-price"><?php echo isset($products->productOnePrice) ? number_format($products->productOnePrice->price) : number_format($products->price); ?></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <?php
-                                                //throw new \yii\base\Exception($products->imageSupp[0]->imageThumbnail1);
-                                                if (isset($products->imageSupp[0]->imageThumbnail1) && !empty($products->imageSupp[0]->imageThumbnail1)):
-                                                    // throw new \yii\base\Exception($products->imageSupp[0]->imageThumbnail1);
-                                                    ?>
-                                                    <?php
-                                                    $filename = $products->imageSupp[0]->imageThumbnail1;
-                                                    if (file_exists($filename)) {
-                                                        echo "<img src=\" " . Yii::$app->homeUrl . $products->imageSupp[0]->imageThumbnail1 . "  \" alt=\"1\"/>";
-                                                    } else {
-                                                        echo "<img src=\"" . $baseUrl . "/images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\"/>";
-                                                    }
-                                                    ?>
-                                                <?php else: ?>
-                                                    <img src="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1"/>
-                                                <?php endif; ?>
-                                            </a>
-                                        </div>
-
-                                        <?php
-                                    }
-                                    ?>
-                                </div>
-                            </div><!-- row zone 1 -->
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="onsale">
-                        <div class="container">
-                            <div class="row">
-                                <div id="photos-bestseller-items">
-                                    <?php
-                                    // $i = 1;
-                                    foreach ($product2 as $item) {
-                                        ?>
-                                        <div id="photos-bestseller-items-padding">
-                                            <a class="media-link" href="<?php echo Yii::$app->homeUrl; ?>products/<?= $item->encodeParams(['productId' => $item->productId, 'productSupplierId' => $item->productSuppId]) ?>" id="media-link-bestseller">
-                                                <div class="badges" style="margin-top:20px;position: absolute;left: 0px">
-                                                    <?php //if (common\models\costfit\Product::isSmartItem($products->productId)):       ?>
-                                                        <!--<span class="sale" style="background-color: #d2d042 !important;color:white;padding: 5px 10px 5px 10px;">SMART</span>-->
-                                                    <?php // endif;       ?>
-                                                </div>
-                                                <div class="overlay">
-                                                    <div class="descrx desc-bestseller">
-                                                        <div class="product-name"><?php echo $item->title; ?>
-                                                            <div class="bestseller-name-price"><?php echo isset($item->productOnePrice) ? number_format($item->productOnePrice->price) : number_format($item->price); ?></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <?php if (isset($item->imageSupp[0]->imageThumbnail1) && !empty($item->imageSupp[0]->imageThumbnail1)): ?>
-                                                    <?php
-                                                    $filename = $item->imageSupp[0]->imageThumbnail1;
-                                                    if (file_exists($filename)) {
-                                                        echo "<img src=\" " . Yii::$app->homeUrl . $item->imageSupp[0]->imageThumbnail1 . "  \" alt=\"1\" class=\"img-responsive\"/>";
-                                                    } else {
-                                                        echo "<img src=\"" . $baseUrl . "/images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" class=\"img-responsive\"/>";
-                                                    }
-                                                    ?>
-                                                <?php else: ?>
-                                                    <img src="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1" class="img-responsive"/>
-                                                <?php endif; ?>
-                                            </a>
-                                        </div>
-                                        <?php
-                                    }
-                                    ?>
-                                </div>
-                            </div><!-- row zone 1 -->
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</section><!--Tabs Widget Close-->
+-
 
 <!--Features Tabs-->
 <section class="feature-tabs">
@@ -725,7 +664,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     }
 </script>
 <!--Subscription Widget-->
-<?php echo $this->render('@app/themes/costfit/layouts/_subscription', compact('lastIndexContent')); ?>
+<?php //echo $this->render('@app/themes/costfit/layouts/_subscription', compact('lastIndexContent')); ?>
 <!--Brands Carousel Widget-->
 <?php echo $this->render('@app/themes/costfit/layouts/_brand_carousel'); ?>
 
