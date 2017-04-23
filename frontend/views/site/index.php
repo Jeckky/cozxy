@@ -36,7 +36,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         </h2>
                         <?php
                         $desc = str_replace("<p>", " ", str_replace("</p>", " ", str_replace("</p><p>", "<br>", $banner->description)));
-                        //                        throw new \yii\base\Exception($banner->description . "----" . $desc);
+                        //throw new \yii\base\Exception($banner->description . "----" . $desc);
                         ?>
                         <p style="width: 456px; left: 110px; top: 210px;" class="dark-color ms-layer col-md-7 " data-effect="back(500)" data-duration="700" data-delay="500" data-ease="easeOutQuad"><?= $desc; ?></p>
                         <?php if (isset($banner->linkTitle) && !empty($banner->linkTitle)): ?>
@@ -280,9 +280,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <div class="row" id="save-main-limit"></div>
 <?php if ($saveCat->getTotalCount() > 6): ?>
-                            <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
-                                <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
-                            </div>
+                                                            <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
+                                                                <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
+                                                            </div>
 <?php endif; ?>
     </div>
 </section> Categories Close-->
@@ -621,5 +621,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--Subscription Widget-->
 <?php //echo $this->render('@app/themes/costfit/layouts/_subscription', compact('lastIndexContent')); ?>
 <!--Brands Carousel Widget-->
-<?php echo $this->render('@app/themes/costfit/layouts/_brand_carousel'); ?>
-
+<?php
+//echo Yii::$app->controller->id;
+//if (Yii::$app->controller->id != "search") {
+echo $this->render('@app/themes/costfit/layouts/_brand_carousel');
+//}
+?>
