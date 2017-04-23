@@ -83,7 +83,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <section class="catalog-grid">
     <div class="container">
-        <h2>PRODUCTS New</h2>
+        <h2>PRODUCTS NEW</h2>
         <div class="row">
             <?php
             echo \yii\widgets\ListView::widget([

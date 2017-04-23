@@ -9,7 +9,7 @@ if (isset($model)) {
     <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="tile">
             <?php
-            $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $model->productId)->orderBy('productImageId desc')->limit(1)->one();
+            $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $model->productSuppId)->orderBy('productImageId desc')->limit(1)->one();
             ?>
             <img src="<?= (isset($productImages->image)) ? Yii::$app->homeUrl . $productImages->image : Yii::$app->homeUrl . "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1"/>
             <span class="tile-overlay"></span>
