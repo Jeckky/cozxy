@@ -436,7 +436,7 @@ class Product extends \common\models\costfit\master\ProductMaster {
     }
 
     public static function lowestPriceContent($productId) {
-        // throw new \yii\base\Exception($productId);
+        throw new \yii\base\Exception($productId);
         $products = ProductSuppliers::find()
         ->join("LEFT JOIN", 'product_price_suppliers pps', 'pps.productSuppId=product_suppliers.productSuppId')
         ->where("product_suppliers.productId=" . $productId . " and product_suppliers.approve='approve' and pps.status=1 and product_suppliers.result=0")
