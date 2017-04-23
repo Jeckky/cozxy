@@ -55,33 +55,79 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     </div>
 </section><!--Hero Slider Close-->
 
-<!--Hero HotiTem-->
+<!--
 <section class="catalog-grid">
     <div class="container">
         <h2>HOT PRODUCTS</h2>
         <div class="row">
-            <!--Category-->
+
+<?php
+/* echo \yii\widgets\ListView::widget([
+  'dataProvider' => $hotProduct,
+  'options' => [
+  'tag' => 'div',
+  'class' => 'list-wrapper',
+  'id' => 'list-wrapper',
+  ],
+  'itemView' => function ($model, $key, $index, $widget) {
+  return $this->render('_hot_product', ['model' => $model]);
+  },
+  'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+  //            'layout'=>"{summary}{pager}{items}"
+  'layout' => "{items}"
+  ]) */
+?>
+        </div>
+    </div>
+</section>-->
+
+<section class="catalog-grid">
+    <div class="container">
+        <h2>PRODUCTS New</h2>
+        <div class="row">
             <?php
             echo \yii\widgets\ListView::widget([
-                'dataProvider' => $hotProduct,
+                'dataProvider' => $productCanSell,
                 'options' => [
                     'tag' => 'div',
                     'class' => 'list-wrapper',
                     'id' => 'list-wrapper',
                 ],
                 'itemView' => function ($model, $key, $index, $widget) {
-                    return $this->render('_hot_product', ['model' => $model]);
+                    return $this->render('_productCanSell', ['model' => $model]);
                 },
                 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                //            'layout'=>"{summary}{pager}{items}"
+                //'layout'=>"{summary}{pager}{items}"
                 'layout' => "{items}"
             ])
             ?>
         </div>
     </div>
-</section><!--Categories Close-->
+</section>
 
-
+<section class="catalog-grid">
+    <div class="container">
+        <h2>PRODUCTS</h2>
+        <div class="row">
+            <?php
+            echo \yii\widgets\ListView::widget([
+                'dataProvider' => $productNotSell,
+                'options' => [
+                    'tag' => 'div',
+                    'class' => 'list-wrapper',
+                    'id' => 'list-wrapper',
+                ],
+                'itemView' => function ($model, $key, $index, $widget) {
+                    return $this->render('_productCanSell', ['model' => $model]);
+                },
+                'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                //'layout'=>"{summary}{pager}{items}"
+                'layout' => "{items}"
+            ])
+            ?>
+        </div>
+    </div>
+</section>
 <!--Review Product-->
 <section class="catalog-grid">
     <div class="container">
@@ -222,7 +268,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <div class="row" id="save-main-limit">
             <!--SAVE ON EVERYDAY ESSENTIALS-->
             <?php
-//echo 'saveCat : ' . $saveCat->getTotalCount();
             echo \yii\widgets\ListView::widget([
                 'dataProvider' => $saveCat,
                 'itemView' => function ($model, $key, $index, $widget) {
@@ -316,9 +361,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         <div id="photos-bestseller-items-padding">
                                             <a class="media-link" href="<?php echo Yii::$app->homeUrl; ?>products/<?= $products->encodeParams(['productId' => $products->productId, 'productSupplierId' => $products->productSuppId]) ?>" id="media-link-bestseller">
                                                 <div class="badges" style="margin-top:20px;position: absolute;left: 0px">
-                                                    <?php //if (common\models\costfit\Product::isSmartItem($products->productId)):       ?>
+                                                    <?php //if (common\models\costfit\Product::isSmartItem($products->productId)):        ?>
                                                         <!--<span class="sale" style="background-color: #d2d042 !important;color:white;padding: 5px 10px 5px 10px;">SMART</span>-->
-                                                    <?php // endif;       ?>
+                                                    <?php // endif;        ?>
                                                 </div>
                                                 <div class="overlay">
                                                     <div class="descrx desc-bestseller">
@@ -365,9 +410,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         <div id="photos-bestseller-items-padding">
                                             <a class="media-link" href="<?php echo Yii::$app->homeUrl; ?>products/<?= $item->encodeParams(['productId' => $item->productId, 'productSupplierId' => $item->productSuppId]) ?>" id="media-link-bestseller">
                                                 <div class="badges" style="margin-top:20px;position: absolute;left: 0px">
-                                                    <?php //if (common\models\costfit\Product::isSmartItem($products->productId)):       ?>
+                                                    <?php //if (common\models\costfit\Product::isSmartItem($products->productId)):        ?>
                                                         <!--<span class="sale" style="background-color: #d2d042 !important;color:white;padding: 5px 10px 5px 10px;">SMART</span>-->
-                                                    <?php // endif;       ?>
+                                                    <?php // endif;        ?>
                                                 </div>
                                                 <div class="overlay">
                                                     <div class="descrx desc-bestseller">
@@ -560,23 +605,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             Customer Reviews : <span class="titles-reviews"></span>
         </div>
         <div class="col-md-9 text-left">
-            <?php
-            /* for ($i = 1; $i < 7; $i++) {
-              echo "<div style=\"padding: 10px;font-size: 12px;\">Reviews #" . $i . " ทดสอบ " . $i;
-              echo \yii2mod\rating\StarRating::widget([
-              'name' => "input_name_reviews_" . $i,
-              'value' => 1,
-              'options' => [
-              // Your additional tag options
-              'id' => 'reviews-rate-reviews-' . $i, 'class' => 'reviews-rate',
-              ],
-              'clientOptions' => [
-              // Your client options
-              ],
-              ]);
-              echo "</div>";
-              } */
-            ?>
             <div class="test">
                 <div class="title-reviews"></div>
                 <div class="score-reviews"></div>
@@ -585,29 +613,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </div>
         </div>
         <div class="col-md-12">&nbsp;</div>
-        <!--<div class="col-md-12 text-left" style="font-weight: bold; color: #fff;">
-            Customer Reviews :
-        </div>
-        <div class="col-md-9 text-left">
-        <?php
-        //echo 'Rate this item : ';
-        /* echo \yii2mod\rating\StarRating::widget([
-          'name' => "input_name_reviews",
-          'value' => 1,
-          'options' => [
-          // Your additional tag options
-          'id' => 'reviews-rate-reviews', 'class' => 'reviews-rate',
-          ],
-          'clientOptions' => [
-          // Your client options
-          ],
-          ]); */
-        ?>
-        </div>
-        <div class="col-md-9 text-left" style="margin-top: 5px;">
-            <textarea class="form-control col-lg-5" style="color: #ffffff;"></textarea>
-        </div>-->
-
     </div>
     <!-- Modal Caption (Image Text) -->
     <div id="caption"></div>
