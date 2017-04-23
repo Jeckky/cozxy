@@ -97,7 +97,7 @@ class SiteController extends MasterController {
         //$footer = "adfadf";
         $productPost = \common\models\costfit\ProductPost::find()->groupBy(['productSuppId'])->orderBy('productPostId desc')->limit(4)->all();
         $productCanSell = new \yii\data\ActiveDataProvider([
-            'query' => \common\models\costfit\ProductSuppliers::find()->where('approve="approve"v and result > 0 order by productSuppId DESC'), 'pagination' => [
+            'query' => \common\models\costfit\ProductSuppliers::find()->where('approve="approve" and result > 0 order by productSuppId DESC'), 'pagination' => [
                 'pageSize' => 4,
             ],
         ]);
