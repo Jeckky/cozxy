@@ -374,10 +374,10 @@ foreach ($GetOrderMastersGroup as $value) {
         //echo 'ทดสอบการทำงาน : Locker';
         //echo '<img src=\"' . Yii::$app->homeUrl . '/images/picking-point/booth.jpeg\" class=\"img-responsive\">';
         if ($countType == 1) {
-            echo '<div id="booth-null" class="col-lg-12 col-md-12 col-sm-12">';
-            echo '<h5> <i class="fa fa-align-left" aria-hidden="true" style="color: rgba(255,212,36,.9);"></i> สินค้าสำหรับบางประเภท</h5>';
-            echo '<img src="' . $baseUrl . '/images/picking-point/lockers.png" class="img-responsive"  style="opacity: .4;">';
-            echo '</div>';
+            //echo '<div id="booth-null" class="col-lg-12 col-md-12 col-sm-12">';
+            //echo '<h5> <i class="fa fa-align-left" aria-hidden="true" style="color: rgba(255,212,36,.9);"></i> สินค้าสำหรับบางประเภท</h5>';
+            //echo '<img src="' . $baseUrl . '/images/picking-point/lockers.png" class="img-responsive"  style="opacity: .4;">';
+            //echo '</div>';
         }
     }
     if ($value->receiveType == '1') {//ประเภทปลายทางแบบล็อคเกอร์เย็น
@@ -735,10 +735,10 @@ foreach ($GetOrderMastersGroup as $value) {
         <?php
     } else {
         if ($countType == 1) {
-            echo '<div id="booth-null" class="col-lg-12 col-md-12 col-sm-12">';
-            echo '<h5> <i class="fa fa-align-left" aria-hidden="true" style="color: rgba(255,212,36,.9);"></i> สินค้าสำหรับบางประเภท</h5>';
-            echo '<img src="' . $baseUrl . '/images/picking-point/booth.png" class="img-responsive" style="opacity: .4;">';
-            echo '</div>';
+            //echo '<div id="booth-null" class="col-lg-12 col-md-12 col-sm-12">';
+            //echo '<h5> <i class="fa fa-align-left" aria-hidden="true" style="color: rgba(255,212,36,.9);"></i> สินค้าสำหรับบางประเภท</h5>';
+            //echo '<img src="' . $baseUrl . '/images/picking-point/booth.png" class="img-responsive" style="opacity: .4;">';
+            //echo '</div>';
         }
     }
 }
