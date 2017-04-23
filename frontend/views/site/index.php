@@ -280,347 +280,346 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <div class="row" id="save-main-limit"></div>
 <?php if ($saveCat->getTotalCount() > 6): ?>
-                                                                <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
-                                                                    <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
-                                                                </div>
+                                                                        <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
+                                                                            <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
+                                                                        </div>
 <?php endif; ?>
     </div>
 </section> Categories Close-->
 <!--Saved Category-->
-<!--Popular Category
+<!--Popular Category-->
 <section class="catalog-grid">
     <div class="container">
         <h2 class="dark-color">SHOP POPULAR CATEGORIES</h2>
         <div class="row">
-<?php
-/* echo \yii\widgets\ListView::widget([
-  'dataProvider' => $popularCat,
-  'options' => [
-  'tag' => 'div',
-  'class' => 'list-wrapper',
-  'id' => 'list-wrapper',
-  ],
-  'itemView' => function ($model, $key, $index, $widget) {
-  return $this->render('_popular_cat', ['model' => $model]);
-  },
-  'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-  'layout' => "{items}"
-  ]) */
-?>
+            <?php
+            echo \yii\widgets\ListView::widget([
+                'dataProvider' => $popularCat,
+                'options' => [
+                    'tag' => 'div',
+                    'class' => 'list-wrapper',
+                    'id' => 'list-wrapper',
+                ],
+                'itemView' => function ($model, $key, $index, $widget) {
+                    return $this->render('_popular_cat', ['model' => $model]);
+                },
+                'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                'layout' => "{items}"
+            ])
+            ?>
         </div>
     </div>
-</section> Catalog Grid Close-->
-<!--Popular Category Close-->
+    <!--Popular Category Close-->
 
-<section style="background-position: 50% 145.5px; background-color: #f5f5f5; " data-stellar-background-ratio="0.5">
-    <div class="container">
-        <div class="row" style="background-image: url('<?php echo $baseUrl . $topOneContent->image;
-?>');background-size: 100% 100%;">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-                <h2><?php echo $topOneContent->title; ?></h2>
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12" style="color: #fff;">
-                        <p class="p-style3" style="color: #fff;">
-                            <?php echo $topOneContent->description; ?>
-                        </p>
+    <section style="background-position: 50% 145.5px; background-color: #f5f5f5; " data-stellar-background-ratio="0.5">
+        <div class="container">
+            <div class="row" style="background-image: url('<?php echo $baseUrl . $topOneContent->image;
+            ?>');background-size: 100% 100%;">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
+                    <h2><?php echo $topOneContent->title; ?></h2>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12" style="color: #fff;">
+                            <p class="p-style3" style="color: #fff;">
+                                <?php echo $topOneContent->description; ?>
+                            </p>
+                        </div>
+                        <!--
+                        <div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 10px;">
+                            <button class="btn btn-black btn-xs">READ MORE</button>
+                        </div>
+                        -->
                     </div>
-                    <!--
-                    <div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 10px;">
-                        <button class="btn btn-black btn-xs">READ MORE</button>
-                    </div>
-                    -->
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!--Tabs Widget-->
+    <!--Tabs Widget-->
 
 
-<!--Features Tabs-->
-<section class="feature-tabs">
-    <div class="container">
-        <div class="row">
-            <div class="tabs-content col-lg-6 col-md-6">
-                <?php
-                $i = 1;
-                foreach ($bottomContent as $content) {
-                    if ($i > 3) {
-                        break;
+    <!--Features Tabs-->
+    <section class="feature-tabs">
+        <div class="container">
+            <div class="row">
+                <div class="tabs-content col-lg-6 col-md-6">
+                    <?php
+                    $i = 1;
+                    foreach ($bottomContent as $content) {
+                        if ($i > 3) {
+                            break;
+                        }
+                        ?>
+                        <div class="tabs-pane <?= ($i == 1) ? 'current' : '' ?>" id="tab<?= $i ?>">
+                            <!--<div class="tabs-pane current" id="tab-1">-->
+                            <h2 class="title-head">
+                                <?php echo $content->title; ?>
+                            </h2>
+                            <p class="p-style3"><?php echo $content->description; ?></p>
+                        </div>
+                        <?php
+                        $i++;
                     }
                     ?>
-                    <div class="tabs-pane <?= ($i == 1) ? 'current' : '' ?>" id="tab<?= $i ?>">
-                        <!--<div class="tabs-pane current" id="tab-1">-->
-                        <h2 class="title-head">
-                            <?php echo $content->title; ?>
-                        </h2>
-                        <p class="p-style3"><?php echo $content->description; ?></p>
-                    </div>
-                    <?php
-                    $i++;
-                }
-                ?>
-            </div>
-            <div class="tabs col-lg-6 col-md-6 group">
-                <span class="tab active" data-tab="#tab1"><i class="fa fa-archive"></i></span>
-                <span class="tab" data-tab="#tab2"><i class="fa fa-recycle"></i></span>
-                <span class="tab" data-tab="#tab3"><i class="fa fa-gift"></i></span>
+                </div>
+                <div class="tabs col-lg-6 col-md-6 group">
+                    <span class="tab active" data-tab="#tab1"><i class="fa fa-archive"></i></span>
+                    <span class="tab" data-tab="#tab2"><i class="fa fa-recycle"></i></span>
+                    <span class="tab" data-tab="#tab3"><i class="fa fa-gift"></i></span>
+                </div>
             </div>
         </div>
-    </div>
-</section>
-<style>
-    /* Style the Image Used to Trigger the Modal */
-    .myImg {
-        border-radius: 5px;
-        cursor: pointer;
-        transition: 0.3s;
+    </section>
+    <style>
+        /* Style the Image Used to Trigger the Modal */
+        .myImg {
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
 
-    }
-
-    .myImg:hover {opacity: 0.7;}
-
-    /* The Modal (background) */
-    .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        /*z-index: 1;  Sit on top */
-        padding-top: 100px; /* Location of the box */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
-    }
-
-    /* Modal Content (Image) */
-    .modal-content {
-        margin: auto;
-        display: block;
-        width: 80%;
-        max-width: 700px;
-        float: right;
-    }
-
-    /* Caption of Modal Image (Image Text) - Same Width as the Image */
-    #caption {
-        margin: auto;
-        display: block;
-        width: 100%;
-        max-width: 700px;
-        text-align: center;
-        color: #ccc;
-        padding: 10px 0;
-        height: 150px;
-        text-align: right;
-    }
-
-    /* Add Animation - Zoom in the Modal */
-    .modal-content, #caption {
-        -webkit-animation-name: zoom;
-        -webkit-animation-duration: 0.6s;
-        animation-name: zoom;
-        animation-duration: 0.6s;
-    }
-
-    @-webkit-keyframes zoom {
-        from {-webkit-transform:scale(0)}
-        to {-webkit-transform:scale(1)}
-    }
-
-    @keyframes zoom {
-        from {transform:scale(0)}
-        to {transform:scale(1)}
-    }
-
-    /* The Close Button */
-    .close-reviews {
-        position: absolute;
-        top: 50px;
-        right: 35px;
-        color: #f1f1f1;
-        font-size: 40px;
-        font-weight: bold;
-        transition: 0.3s;
-        color: #fff;
-    }
-
-    .close-reviews:hover,
-    .close-reviews:focus {
-        color: #bbb;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
-    /* 100% Image Width on Smaller Screens */
-    @media only screen and (max-width: 700px){
-        .modal-content {
-            width: 100%;
         }
-    }
-    .scores-reviews{
-        width: auto;
-    }
-    .scores-reviews >img{
-        display: initial;
-        max-width: 100%;
-        height: auto;
-    }
-    .test{
-        height: 350px;
-        overflow-y: scroll;
-        overflow-x: hidden;
-    }
 
-</style>
-<!-- Trigger the Modal -->
+        .myImg:hover {opacity: 0.7;}
 
-<!-- The Modal -->
-<div id="myModalReviews" class="modal">
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            /*z-index: 1;  Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+        }
 
-    <!-- The Close Button -->
-    <span class="close-reviews" onclick="document.getElementById('myModalReviews').style.display = 'none'">&times;</span>
+        /* Modal Content (Image) */
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            float: right;
+        }
 
-    <!-- Modal Content (The Image) -->
-    <div class="col-md-6">
-        <img class="modal-content" id="img01">
-    </div>
+        /* Caption of Modal Image (Image Text) - Same Width as the Image */
+        #caption {
+            margin: auto;
+            display: block;
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+            text-align: right;
+        }
 
-    <div class="col-md-6">
-        <div class="col-md-9 text-left" style="color: #ffffff;">
-            Customer Reviews : <span class="titles-reviews"></span>
+        /* Add Animation - Zoom in the Modal */
+        .modal-content, #caption {
+            -webkit-animation-name: zoom;
+            -webkit-animation-duration: 0.6s;
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        @-webkit-keyframes zoom {
+            from {-webkit-transform:scale(0)}
+            to {-webkit-transform:scale(1)}
+        }
+
+        @keyframes zoom {
+            from {transform:scale(0)}
+            to {transform:scale(1)}
+        }
+
+        /* The Close Button */
+        .close-reviews {
+            position: absolute;
+            top: 50px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            color: #fff;
+        }
+
+        .close-reviews:hover,
+        .close-reviews:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* 100% Image Width on Smaller Screens */
+        @media only screen and (max-width: 700px){
+            .modal-content {
+                width: 100%;
+            }
+        }
+        .scores-reviews{
+            width: auto;
+        }
+        .scores-reviews >img{
+            display: initial;
+            max-width: 100%;
+            height: auto;
+        }
+        .test{
+            height: 350px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+
+    </style>
+    <!-- Trigger the Modal -->
+
+    <!-- The Modal -->
+    <div id="myModalReviews" class="modal">
+
+        <!-- The Close Button -->
+        <span class="close-reviews" onclick="document.getElementById('myModalReviews').style.display = 'none'">&times;</span>
+
+        <!-- Modal Content (The Image) -->
+        <div class="col-md-6">
+            <img class="modal-content" id="img01">
         </div>
-        <div class="col-md-9 text-left">
-            <div class="test">
-                <div class="title-reviews"></div>
-                <div class="score-reviews"></div>
-                <div class="content-reviews"></div>
-                <div class="username-reviews"></div>
+
+        <div class="col-md-6">
+            <div class="col-md-9 text-left" style="color: #ffffff;">
+                Customer Reviews : <span class="titles-reviews"></span>
             </div>
+            <div class="col-md-9 text-left">
+                <div class="test">
+                    <div class="title-reviews"></div>
+                    <div class="score-reviews"></div>
+                    <div class="content-reviews"></div>
+                    <div class="username-reviews"></div>
+                </div>
+            </div>
+            <div class="col-md-12">&nbsp;</div>
         </div>
-        <div class="col-md-12">&nbsp;</div>
+        <!-- Modal Caption (Image Text) -->
+        <div id="caption"></div>
     </div>
-    <!-- Modal Caption (Image Text) -->
-    <div id="caption"></div>
-</div>
-<script>
-// Get the modal
+    <script>
+        // Get the modal
 
-    function reviews_click(productSuppId, id, srcs, title) {
-        //alert(productSuppId + '::' + id);
-        //alert(title);
-        //console.log(srcs);
-        var modal = document.getElementById('myModalReviews');
-        // Get the image and insert it inside the modal - use its "alt" text as a caption
-        var img = document.getElementById('myImg-' + id);
-        //var img = document.getElementById('myImgs');
-        //console.log(img);
-        var modalImg = document.getElementById("img01");
-        //console.log(modalImg);
-        var captionText = document.getElementById("caption");
-        modal.style.display = "block";
-        modalImg.src = srcs;
-        $('.titles-reviews').html(title);
+        function reviews_click(productSuppId, id, srcs, title) {
+            //alert(productSuppId + '::' + id);
+            //alert(title);
+            //console.log(srcs);
+            var modal = document.getElementById('myModalReviews');
+            // Get the image and insert it inside the modal - use its "alt" text as a caption
+            var img = document.getElementById('myImg-' + id);
+            //var img = document.getElementById('myImgs');
+            //console.log(img);
+            var modalImg = document.getElementById("img01");
+            //console.log(modalImg);
+            var captionText = document.getElementById("caption");
+            modal.style.display = "block";
+            modalImg.src = srcs;
+            $('.titles-reviews').html(title);
 
-        $.ajax({
-            type: "POST",
-            dataType: "JSON",
-            url: $baseUrl + "site/reviews",
-            data: {productSuppId: productSuppId, productImageId: id},
-            success: function (data, status)
-            {
-                $('.test').html('');
+            $.ajax({
+                type: "POST",
+                dataType: "JSON",
+                url: $baseUrl + "site/reviews",
+                data: {productSuppId: productSuppId, productImageId: id},
+                success: function (data, status)
+                {
+                    $('.test').html('');
 
-                if (status == "success") {
-                    var json = data;
-                    var rex = /(<([^>]+)>)/ig;
-                    //alert(txt.replace(rex, ""));
-                    var Num = 1;
+                    if (status == "success") {
+                        var json = data;
+                        var rex = /(<([^>]+)>)/ig;
+                        //alert(txt.replace(rex, ""));
+                        var Num = 1;
 
-                    for (var i = 0; i < json.length; i++) {
-                        //$('.scores-reviews').html('');
-                        var obj = json[i];
-                        var description = obj.description;
-                        var scores = obj.score;
+                        for (var i = 0; i < json.length; i++) {
+                            //$('.scores-reviews').html('');
+                            var obj = json[i];
+                            var description = obj.description;
+                            var scores = obj.score;
 
-                        if (scores == 1) {
-                            $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
-                         <div class="scores-reviews"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img alt="5" src="images/star-off.png" title=""> </div> \n\
-                         <br> ' + description.replace(rex, "") + ' \n\
-                         <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ ' + scores + ' จาก 5 ดาว<span> </div>'
-                                    );
+                            if (scores == 1) {
+                                $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
+                             <div class="scores-reviews"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img alt="5" src="images/star-off.png" title=""> </div> \n\
+                             <br> ' + description.replace(rex, "") + ' \n\
+                             <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ ' + scores + ' จาก 5 ดาว<span> </div>'
+                                        );
+                            }
+                            if (scores == 2) {
+                                $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
+                             <div class="scores-reviews"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img alt="5" src="images/star-off.png" title=""> </div> \n\
+                             <br> ' + description.replace(rex, "") + ' \n\
+                             <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ ' + scores + ' จาก 5 ดาว<span> </div>'
+                                        );
+                            }
+                            if (scores == 3) {
+                                $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
+                             <div class="scores-reviews"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-off.png"><img alt="5" src="images/star-off.png" title=""> </div> \n\
+                             <br> ' + description.replace(rex, "") + ' \n\
+                             <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ ' + scores + ' จาก 5 ดาว<span> </div>'
+                                        );
+                            }
+                            if (scores == 4) {
+                                $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
+                             <div class="scores-reviews"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img alt="5" src="images/star-off.png" title=""> </div> \n\
+                             <br> ' + description.replace(rex, "") + ' \n\
+                             <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ ' + scores + ' จาก 5 ดาว<span> </div>'
+                                        );
+                            }
+                            if (scores == 5) {
+                                $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
+                             <div class="scores-reviews"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img alt="5" src="images/star-on.png" title=""> </div> \n\
+                             <br> ' + description.replace(rex, "") + ' \n\
+                             <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ ' + scores + ' จาก 5 ดาว<span> </div>'
+                                        );
+                            }
+                            //alert(scores);
+                            if (scores == null) {
+                                $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
+                             <div class="scores-reviews"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img alt="5" src="/images/star-off.png" title=""> </div> \n\
+                             <br> ' + description.replace(rex, "") + ' \n\
+                             <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ 0 จาก 5 ดาว<span> </div>'
+                                        );
+                            }
+
+
+
                         }
-                        if (scores == 2) {
-                            $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
-                         <div class="scores-reviews"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img alt="5" src="images/star-off.png" title=""> </div> \n\
-                         <br> ' + description.replace(rex, "") + ' \n\
-                         <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ ' + scores + ' จาก 5 ดาว<span> </div>'
-                                    );
-                        }
-                        if (scores == 3) {
-                            $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
-                         <div class="scores-reviews"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-off.png"><img alt="5" src="images/star-off.png" title=""> </div> \n\
-                         <br> ' + description.replace(rex, "") + ' \n\
-                         <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ ' + scores + ' จาก 5 ดาว<span> </div>'
-                                    );
-                        }
-                        if (scores == 4) {
-                            $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
-                         <div class="scores-reviews"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img alt="5" src="images/star-off.png" title=""> </div> \n\
-                         <br> ' + description.replace(rex, "") + ' \n\
-                         <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ ' + scores + ' จาก 5 ดาว<span> </div>'
-                                    );
-                        }
-                        if (scores == 5) {
-                            $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
-                         <div class="scores-reviews"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img alt="5" src="images/star-on.png" title=""> </div> \n\
-                         <br> ' + description.replace(rex, "") + ' \n\
-                         <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ ' + scores + ' จาก 5 ดาว<span> </div>'
-                                    );
-                        }
-                        //alert(scores);
-                        if (scores == null) {
-                            $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
-                         <div class="scores-reviews"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img alt="5" src="/images/star-off.png" title=""> </div> \n\
-                         <br> ' + description.replace(rex, "") + ' \n\
-                         <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ 0 จาก 5 ดาว<span> </div>'
-                                    );
-                        }
-
-
-
                     }
                 }
-            }
-        });
-        //captionText.innerHTML = title;
-        //captionText.innerHTML = this.alt;
-        /*
-         img.onload = function () {
-         //alert(111);
-         modal.style.display = "block";
-         modalImg.src = srcs;
-         captionText.innerHTML = this.alt;
-         }*/
-        //console.log(img);
+            });
+            //captionText.innerHTML = title;
+            //captionText.innerHTML = this.alt;
+            /*
+             img.onload = function () {
+             //alert(111);
+             modal.style.display = "block";
+             modalImg.src = srcs;
+             captionText.innerHTML = this.alt;
+             }*/
+            //console.log(img);
 
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
-            modal.style.display = "none";
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
         }
-    }
-</script>
-<!--Subscription Widget-->
-<?php //echo $this->render('@app/themes/costfit/layouts/_subscription', compact('lastIndexContent')); ?>
-<!--Brands Carousel Widget-->
-<?php
+    </script>
+    <!--Subscription Widget-->
+    <?php //echo $this->render('@app/themes/costfit/layouts/_subscription', compact('lastIndexContent')); ?>
+    <!--Brands Carousel Widget-->
+    <?php
 //echo Yii::$app->controller->id;
 //if (Yii::$app->controller->id != "search") {
-echo $this->render('@app/themes/costfit/layouts/_brand_carousel');
+    echo $this->render('@app/themes/costfit/layouts/_brand_carousel');
 //}
-?>
+    ?>
