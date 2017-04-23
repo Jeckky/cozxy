@@ -6,7 +6,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 // throw new \yii\base\Exception(print_r($model->attributes, true));
 //echo 'products id : ' . $model->productId . '<br>';
-echo $model->productId;
+//echo $model->productId;
 ?>
 
 <!--Tile-->
@@ -53,7 +53,7 @@ if (isset($model->productId)):
                             <?= substr($suppliers->title, 0, 40);
                             ?></a>
                     </div>
-                    <span><?php //= $model->shortDescription;                            ?></span>
+                    <span><?php //= $model->shortDescription;                             ?></span>
                     <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $suppliers->encodeParams(['productId' => $suppliers->productId, 'productSupplierId' => $suppliers->productSuppId]) ?>"><button class="btn btn-primary" id="addItemToCart"><i class="fa fa-search"></i>View</button></a>
                 </div>
             </div>
