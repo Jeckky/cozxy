@@ -6,12 +6,13 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 // throw new \yii\base\Exception(print_r($model->attributes, true));
 //echo 'products id : ' . $model->productId . '<br>';
+//echo $model->productId;
 ?>
 
 <!--Tile-->
 <?php
 if (isset($model->productId)):
-    $suppliers = \common\models\costfit\Product::lowestPrice($model->productId);
+    $suppliers = \common\models\costfit\Product::lowestPriceContent($model->productId);
     if ($suppliers != NULL) {//ถ้ามีใน suppliers แสดงราคาที่ถูกที่สุด(กรณีมีหลายซัพ)
         ?>
         <div id="products-category-searc" class="col-lg-4 col-md-6 col-sm-12 ">
@@ -19,11 +20,11 @@ if (isset($model->productId)):
                 <div class="badges">
                     <span class="sale">Sale</span>
                     <?php
-                    if (common\models\costfit\Product::isSmartItem($suppliers->productId)):
-                        ?>
-                        <br><span class="sale" style="background-color: #d2d042 !important;">SMART</span>
-                        <?php
-                    endif;
+                    //if (common\models\costfit\Product::isSmartItem($suppliers->productId)):
+                    ?>
+                        <!--<br><span class="sale" style="background-color: #d2d042 !important;">SMART</span>-->
+                    <?php
+                    // endif;
                     $price = ProductSuppliers::productPrice($suppliers->productSuppId);
                     // throw new \yii\base\Exception($suppliers->productId);
                     ?>
@@ -52,7 +53,7 @@ if (isset($model->productId)):
                             <?= substr($suppliers->title, 0, 40);
                             ?></a>
                     </div>
-                    <span><?php //= $model->shortDescription;         ?></span>
+                    <span><?php //= $model->shortDescription;                        ?></span>
                     <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $suppliers->encodeParams(['productId' => $suppliers->productId, 'productSupplierId' => $suppliers->productSuppId]) ?>"><button class="btn btn-primary" id="addItemToCart"><i class="fa fa-search"></i>View</button></a>
                 </div>
             </div>

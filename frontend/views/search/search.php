@@ -146,17 +146,18 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <?php
                 echo \yii\widgets\ListView::widget([
                     'dataProvider' => $productNotSell,
-                    'options' => [
-                        'tag' => 'div',
-                        'class' => 'list-wrapper',
-                        'id' => 'list-wrapper',
-                    ],
                     'itemView' => function ($model, $key, $index, $widget) {
-                        return $this->render('@app/views/site/_productCanSell', ['model' => $model]);
+                        return $this->render('_productNotSell', ['model' => $model]);
                     },
                     'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                    //'layout'=>"{summary}{pager}{items}"
-                    'layout' => "{items}"
+                    'layout' => "{items}{pager}",
+                    //    'layout' => "{items}",
+                    'pager' => [
+                        'prevPageLabel' => '<span class="icon-arrow-left"></span>',
+                        'nextPageLabel' => '<span class="icon-arrow-right"></span>',
+                        'prevPageCssClass' => 'prev-page',
+                        'nextPageCssClass' => 'next-page',
+                    ],
                 ])
                 ?>
             </div>

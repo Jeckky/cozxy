@@ -38,7 +38,7 @@ class Product extends \common\models\costfit\master\ProductMaster {
      */
     public function rules() {
         return array_merge(parent::rules(), [
-                [['storeProductId'], 'safe'],
+            [['storeProductId'], 'safe'],
         ]);
     }
 
@@ -331,9 +331,9 @@ class Product extends \common\models\costfit\master\ProductMaster {
 
     static public function findProductSuppId($barcode, $orderId) {
         $productSupp = OrderItem::find()
-                        //->select('*.order_item,*.product_suppliers')
-                        ->join("LEFT JOIN", "product_suppliers ps", "order_item.productSuppId=ps.productSuppId")
-                        ->where("ps.isbn='" . $barcode . "' and order_item.orderId=" . $orderId . " and order_item.status=5")->one(); //เอาเฉพาะที่ status เป็น หยิบแล้ว
+        //->select('*.order_item,*.product_suppliers')
+        ->join("LEFT JOIN", "product_suppliers ps", "order_item.productSuppId=ps.productSuppId")
+        ->where("ps.isbn='" . $barcode . "' and order_item.orderId=" . $orderId . " and order_item.status=5")->one(); //เอาเฉพาะที่ status เป็น หยิบแล้ว
 
         if (isset($productSupp) && !empty($productSupp)) {
             return $productSupp->productSuppId;
@@ -387,9 +387,9 @@ class Product extends \common\models\costfit\master\ProductMaster {
         if (isset($cart['items']) && count($cart['items']) > 0) {
             foreach ($cart['items'] as $orderItemId => $item) {
                 $smartItems = ProductPriceMatchGroup::find()
-                        ->join("LEFT JOIN", 'product_price_match pm', 'pm.productPriceMatchGroupId=product_price_match_group.productPriceMatchGroupId')
-                        ->where("pm.productid =" . $item['productId'])
-                        ->one();
+                ->join("LEFT JOIN", 'product_price_match pm', 'pm.productPriceMatchGroupId=product_price_match_group.productPriceMatchGroupId')
+                ->where("pm.productid =" . $item['productId'])
+                ->one();
                 if (isset($smartItems)) {
                     foreach ($smartItems->productPriceMatchs as $ppm) {
                         if ($ppm->productId == $productId) {
@@ -406,9 +406,9 @@ class Product extends \common\models\costfit\master\ProductMaster {
 
     public static function createSupplierProductPrice($productId) {
         $products = ProductSuppliers::find()
-                        ->select('*')
-                        ->join("LEFT JOIN", 'product_price_suppliers pps', 'product_suppliers.productSuppId=pps.productSuppId')
-                        ->where("product_suppliers.productId=" . $productId . " and pps.status=1")->one();
+        ->select('*')
+        ->join("LEFT JOIN", 'product_price_suppliers pps', 'product_suppliers.productSuppId=pps.productSuppId')
+        ->where("product_suppliers.productId=" . $productId . " and pps.status=1")->one();
 
         if (isset($products) && !empty($products)) {
             return $products->price;
@@ -424,10 +424,24 @@ class Product extends \common\models\costfit\master\ProductMaster {
     public static function lowestPrice($productId) {
         // throw new \yii\base\Exception($productId);
         $products = ProductSuppliers::find()
-                ->join("LEFT JOIN", 'product_price_suppliers pps', 'pps.productSuppId=product_suppliers.productSuppId')
-                ->where("product_suppliers.productId=" . $productId . " and product_suppliers.approve='approve' and pps.status=1 and product_suppliers.result>0")
-                ->orderBy("pps.price ASC")
-                ->one();
+        ->join("LEFT JOIN", 'product_price_suppliers pps', 'pps.productSuppId=product_suppliers.productSuppId')
+        ->where("product_suppliers.productId=" . $productId . " and product_suppliers.approve='approve' and pps.status=1 and product_suppliers.result>0")
+        ->orderBy("pps.price ASC")
+        ->one();
+        if (isset($products) && !empty($products)) {
+            return $products;
+        } else {
+            return NULL;
+        }
+    }
+
+    public static function lowestPriceContent($productId) {
+        // throw new \yii\base\Exception($productId);
+        $products = ProductSuppliers::find()
+        ->join("LEFT JOIN", 'product_price_suppliers pps', 'pps.productSuppId=product_suppliers.productSuppId')
+        ->where("product_suppliers.productId=" . $productId . " and product_suppliers.approve='approve' and pps.status=1 and product_suppliers.result=0")
+        ->orderBy("pps.price ASC")
+        ->one();
         if (isset($products) && !empty($products)) {
             return $products;
         } else {
