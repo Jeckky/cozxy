@@ -14,7 +14,7 @@ if (isset($model)) {
             <img src="<?= (isset($productImages->image)) ? Yii::$app->homeUrl . $productImages->image : Yii::$app->homeUrl . "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1"/>
             <span class="tile-overlay"></span>
             <div class="footer" id="products-popular-footer" style="max-height: 320px;min-height: 80px;">
-                <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productSuppId]) ?>"><?= $model->title; ?></a>
+                <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productSuppId]) ?>"><?= substr($model->title, 0, 40); ?></a>
                 <span>
                     <small>in <?php echo $model->category->title; ?></small>
                 </span>
