@@ -74,7 +74,7 @@ class SearchController extends MasterController {
         $NotSell = \common\models\costfit\ProductSuppliers::find()->where('result = 0  order by productSuppId DESC');
         $productNotSell = new \yii\data\ActiveDataProvider([
             'query' => $NotSell, 'pagination' => [
-                'pageSize' => 9,
+            // 'pageSize' => 9,
             ],
         ]);
         return $this->render('search', ['products' => $products, 'productNotSell' => $productNotSell]);
