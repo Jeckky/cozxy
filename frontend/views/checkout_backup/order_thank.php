@@ -18,12 +18,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <section class="support">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12 col-md-12">
-                <div class="col-lg-4 col-md-4">
-                    <a class="logo" href="<?php echo $baseUrl; ?>"><img class="col-md-8" src="<?php echo Yii::$app->homeUrl; ?>images/logo/costfit.png" alt="Cozxy.com"></a>
-                    <br><br>
-                </div>
-            </div>
+
             <!--Left Column-->
             <div class="col-lg-1 col-md-1">
                 &nbsp;
