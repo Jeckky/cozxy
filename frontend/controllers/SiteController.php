@@ -103,7 +103,7 @@ class SiteController extends MasterController {
         ]);
 
 
-        $NotSell = \common\models\costfit\ProductSuppliers::find()->where('result = 0  order by productSuppId DESC');
+        $NotSell = \common\models\costfit\ProductSuppliers::find()->where('result = 0 and  approve="approve" order by productSuppId DESC');
         $productNotSell = new \yii\data\ActiveDataProvider([
             'query' => $NotSell, 'pagination' => [
                 'pageSize' => 4,
