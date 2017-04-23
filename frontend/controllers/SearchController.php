@@ -34,7 +34,7 @@ class SearchController extends MasterController {
         //return Yii::$app->getResponse()->redirect('register/login');
         $this->view->params['categoryId'] = $params['categoryId'];
         $this->view->params['title'] = $title;
-        $this->layout = "/content_left";
+        $this->layout = "/content";
         $this->title = 'Cozxy.com | Products';
         $this->subTitle = 'ชื่อ search';
 //        throw new \yii\base\Exception(print_r($_POST, true));
@@ -68,11 +68,16 @@ class SearchController extends MasterController {
         //print_r($products);
         $products = new \yii\data\ActiveDataProvider([
             'query' => $products,
-            'pagination' => array('pageSize' => 9),
+            'pagination' => array('pageSize' => 8),
         ]);
 
-
-        return $this->render('search', ['products' => $products]);
+        $NotSell = \common\models\costfit\ProductSuppliers::find()->where('result = 0  order by productSuppId DESC');
+        $productNotSell = new \yii\data\ActiveDataProvider([
+            'query' => $NotSell, 'pagination' => [
+                'pageSize' => 9,
+            ],
+        ]);
+        return $this->render('search', ['products' => $products, 'productNotSell' => $productNotSell]);
     }
 
     public function actionPop($category) {
