@@ -91,7 +91,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <div class="row products-searchs-brands">
                         <?php
                         Pjax::begin([
-                            ['options' => ['id' => "product-list", 'timeout' => 3000]]
+                            'id' => 'products'
                         ]);
                         ?>
                         <?php
@@ -178,7 +178,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <?php
                 Pjax::begin([
-                    ['options' => ['id' => "product-not-list", 'timeout' => 3000]]
+                    'id' => 'productsnotsale'
                 ]);
                 ?>
                 <?php
