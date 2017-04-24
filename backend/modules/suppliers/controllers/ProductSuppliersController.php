@@ -215,9 +215,10 @@ class ProductSuppliersController extends SuppliersMasterController {
                     $model->productId = $productId;
                     $model->save(FALSE);
                     //return $this->redirect('image-form?id=' . $model->productSuppId);
+                    $productPriceCozxy = \common\models\costfit\Product::updateAll(['price' => 0], ['productId' => $model->productId, 'productSuppId' => $model->productSuppId]);
                 }
             }
-            //return $this->redirect('image-form?productSuppId=' . $model->productSuppId);
+            //return $this->redirect('image-form?productSuppId = ' . $model->productSuppId);
             //suppliers/product-price-suppliers
             ///suppliers/product-suppliers/image-form?productSuppId=235
             if (Yii::$app->user->identity->type == 5) {
@@ -248,7 +249,7 @@ class ProductSuppliersController extends SuppliersMasterController {
         //print_r($model->attributes['productId']);
 
         if (isset($_POST["ProductSuppliers"])) {
-            $model1 = ProductSuppliers::find()->where('productSuppId=' . $id)->one();
+            $model1 = ProductSuppliers::find()->where('productSuppId = ' . $id)->one();
             $model->attributes = $_POST["ProductSuppliers"];
             $model->userId = Yii::$app->user->identity->userId;
             $model->createDateTime = new \yii\db\Expression('NOW()');
@@ -300,12 +301,12 @@ class ProductSuppliersController extends SuppliersMasterController {
         }
         $productSuppId = Yii::$app->request->get('productSuppId');
         if (isset($productSuppId)) {
-            //$model = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId =' . $id)->one();
+            //$model = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId = ' . $id)->one();
             $dataProvider = new ActiveDataProvider([
                 'query' => \common\models\costfit\ProductImageSuppliers:: find()
-                ->where('productSuppId =' . $productSuppId),
+                ->where('productSuppId = ' . $productSuppId),
             ]);
-            $productTitle = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $productSuppId)->one();
+            $productTitle = \common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $productSuppId)->one();
 
 
             if (isset($_POST["id"])) {
@@ -407,12 +408,12 @@ class ProductSuppliersController extends SuppliersMasterController {
                     \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $productId); //เพื่อให้รู้ว่าอยู่ภายใต้ Category ไหน
                     $model->productId = $productId;
                     $model->save(FALSE);
-                    //return $this->redirect('image-form?id=' . $model->productSuppId);
+                    //return $this->redirect('image-form?id = ' . $model->productSuppId);
                 }
             }
-            //return $this->redirect('image-form?productSuppId=' . $model->productSuppId);
+            //return $this->redirect('image-form?productSuppId = ' . $model->productSuppId);
             //suppliers/product-price-suppliers
-            return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-price-suppliers/create?productSuppId=' . $model->productSuppId);
+            return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-price-suppliers/create?productSuppId = ' . $model->productSuppId);
         } else {
             return $this->render('/duplicate/update', [
                 'model' => $modelx,

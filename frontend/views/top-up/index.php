@@ -15,8 +15,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <br><br>
 <?php
 $form = ActiveForm::begin([
-            'id' => 'top-up'
-        ]);
+    'id' => 'top-up'
+]);
 if (isset($paymentMethod) && count($paymentMethod) > 0) {
     $count = count($paymentMethod);
 }
@@ -41,7 +41,7 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
 
         <table style="width: 100%">
             <tr style="height: 50px;">
-                <td colspan="2" style="width: 70%;height: 60px;color: #006666;">กรุณาตรวจสอบรายละเอียดให้ถูกต้อง ระบบไม่สามารถแก้ไขได้ หากทำรายการเสร็จสิ้นแล้ว และบริษัทขอสงวนสิทธิ์ในการไม่คืนเงินไม่ว่ากรณีใดๆ ทั้งสิ้น</td>
+                <td colspan="2" style="width: 70%;height: 60px;color: #006666;">By placing your order, you agree to Cozxy's payment policy and condition of use.</td>
             </tr>
             <tr style="height: 50px;">
                 <td style="text-align: right;width:50%;">Email Account :</td>
