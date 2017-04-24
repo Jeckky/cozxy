@@ -26,7 +26,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </style>
 
 <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="font-size: 14px;">
-    <h3>รายการใบสั่งซื้อสินค้าทั้งหมด</h3>
+    <h3>Order History</h3>
 
     <?php
     echo GridView::widget([//   table-striped table-bordered  //
@@ -37,26 +37,26 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         ],
         'rowOptions' => function ($model, $index, $widget, $grid) {
 
-    if ($model->status == \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS) {
-        return ['class' => 'alert alert-success'];
-    } elseif ($model->status == \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_PENDING) {
-        return ['class' => 'alert alert-warning'];
-    } elseif ($model->status == \common\models\costfit\Order::ORDER_STATUS_FINANCE_REJECT) {
-        return ['class' => 'alert alert-danger'];
-    }
-},
+            if ($model->status == \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS) {
+                return ['class' => 'alert alert-success'];
+            } elseif ($model->status == \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_PENDING) {
+                return ['class' => 'alert alert-warning'];
+            } elseif ($model->status == \common\models\costfit\Order::ORDER_STATUS_FINANCE_REJECT) {
+                return ['class' => 'alert alert-danger'];
+            }
+        },
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             // Simple columns defined by the data contained in $dataProvider.
             // Data from the model's column will be used.
             [
-                'attribute' => 'orderNo',
+                'attribute' => 'order #',
                 'value' => function ($model) {
                     if ($model->total != null) {
                         if (!isset($model->invoiceNo) && empty($model->invoiceNo)) {
-                            return 'Order No : ' . $model->orderNo . '<br><span style ="font-size: 12px;"> ยอดรวม : ' . number_format($model->summary, 2) . ' THB</span>';
+                            return 'Order No : ' . $model->orderNo . '<br><span style ="font-size: 12px;"> Total : ' . number_format($model->summary, 2) . ' THB</span>';
                         } else {
-                            return '<span style="font-weught:bold;">Invoice No : ' . $model->invoiceNo . '</span><br><span style ="font-size: 12px;"> ยอดรวม : ' . number_format($model->summary, 2) . ' THB</span>';
+                            return '<span style="font-weught:bold;">Invoice No : ' . $model->invoiceNo . '</span><br><span style ="font-size: 12px;"> Total : ' . number_format($model->summary, 2) . ' THB</span>';
                         }
                         //or: return Html::encode($model->some_attribute)
                     } else {
@@ -67,9 +67,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 'filterInputOptions' => ['class' => 'form-control input-sm  col-sm-4', 'placeholder' => 'Search Order No ...'],
             ],
             [
-                'attribute' => 'วันที่สั่งซื้อ',
+                'attribute' => 'Order date',
                 'value' => function($model) {
-                    return $this->context->dateThai($model->createDateTime, 1);
+                    return $this->context->dateThai($model->createDateTime, 4);
                 },
                 'format' => 'raw',
                 'filter' => DatePicker::widget([
@@ -88,37 +88,37 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 ]),
             ],
             [
-                'attribute' => 'สถานะ',
+                'attribute' => 'Status',
                 'value' => function($model) {
-                    return $model->getStatusText($model->status);
+                    return $model->getStatusTextEn($model->status);
                 },
                 'format' => 'raw',
             ],
             // More complex one.
             ['class' => 'yii\grid\ActionColumn', 'options' => ['style' => ' width:120px; text-align: center;'],
-                'header' => 'จัดการ',
+                'header' => 'Manage',
                 'template' => ' {Order} ',
                 'buttons' => [
                     'Order' => function($url, $model, $baseUrl) {
                         if ($model->status < \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS || $model->status == \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_PENDING) { // ชำระเงินแล้ว
-                            return Html::a('ดูเพิ่มเติม', Yii::$app->homeUrl . "profile/purchase-order/" . $model->encodeParams(['orderId' => $model->orderId]), ['class' => 'btn btn-primary btn-xs'], [
-                                        'title' => Yii::t('app', ' '),]);
+                            return Html::a('See more', Yii::$app->homeUrl . "profile/purchase-order/" . $model->encodeParams(['orderId' => $model->orderId]), ['class' => 'btn btn-primary btn-xs'], [
+                                'title' => Yii::t('app', ' '),]);
                         } else {
-                            return Html::a('<i class="fa fa-print" aria-hidden="true"></i> ดูเพิ่มเติม', Yii::$app->homeUrl . "payment/print-receipt/" . $model->encodeParams(['orderId' => $model->orderId]) . '/' . $model->orderNo, ['class' => 'btn btn-black btn-xs', 'target' => '_blank'
-                                        , 'title' => Yii::t('app', ' ')]);
+                            return Html::a('<i class="fa fa-print" aria-hidden="true"></i> See more', Yii::$app->homeUrl . "payment/print-receipt/" . $model->encodeParams(['orderId' => $model->orderId]) . '/' . $model->orderNo, ['class' => 'btn btn-black btn-xs', 'target' => '_blank'
+                                , 'title' => Yii::t('app', ' ')]);
                         }
                     },
-                        ]
-                    ],
-                ], 'layout' => "{pager}\n{items}\n",
-                    /* 'pager' => [
-                      'firstPageLabel' => 'first',
-                      'lastPageLabel' => 'last',
-                      'nextPageLabel' => 'next',
-                      'prevPageLabel' => 'previous',
-                      'maxButtonCount' => 3,
-                      ], */
-            ]);
-            ?>
+                ]
+            ],
+        ], 'layout' => "{pager}\n{items}\n",
+    /* 'pager' => [
+      'firstPageLabel' => 'first',
+      'lastPageLabel' => 'last',
+      'nextPageLabel' => 'next',
+      'prevPageLabel' => 'previous',
+      'maxButtonCount' => 3,
+      ], */
+    ]);
+    ?>
 </div>
 

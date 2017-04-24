@@ -69,7 +69,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 Top Up
                             </a>
                             <a href="<?php echo Yii::$app->homeUrl ?>top-up/history"class = "btn" style = "background-color: #3cc; color: #fff;font-size: 12pt;">
-                                ประวัติ
+                                History
                             </a>
                         </div>
 

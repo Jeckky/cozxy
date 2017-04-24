@@ -350,7 +350,7 @@ class MasterController extends MasterCommonController {
             $strReturn = $d[2] . '/' . $monthFormat . '/' . ($d[0] + 543);
         } else if ($format == 4) {
             $monthFormat = $monthFormat4[$d[1]];
-            $strReturn = $monthFormat . '/' . ($d[0] + 543);
+            $strReturn = $d[2] . '/' . $monthFormat . '/' . ($d[0]);
             return $strReturn;
         } else {
             $monthFormat = $monthFormat4[$d[1]];
