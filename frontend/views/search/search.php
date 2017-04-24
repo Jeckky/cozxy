@@ -89,7 +89,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 </div><!--Filters-->
                 <div id="title-product-all" class="col-lg-9 col-md-9 col-sm-8">
                     <div class="row products-searchs-brands">
-                        <?php Pjax::begin(); ?>
+                        <?php
+                        Pjax::begin([
+                            'id' => 'products'
+                        ]);
+                        ?>
                         <?php
                         echo \yii\widgets\ListView::widget([
                             'id' => 'product-list',
@@ -172,7 +176,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </div>
 
             <div class="col-lg-12 col-md-12 col-sm-12">
-                <?php Pjax::begin(); ?>
+                <?php
+                Pjax::begin([
+                    'id' => 'productsnotsale'
+                ]);
+                ?>
                 <?php
                 echo \yii\widgets\ListView::widget([
                     'id' => 'product-notsell-list',
