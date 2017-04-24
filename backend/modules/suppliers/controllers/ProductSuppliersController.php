@@ -191,6 +191,7 @@ class ProductSuppliersController extends SuppliersMasterController {
             if ($model->save(FALSE)) {
 
             }
+
             $productSuppliersPrice = new \common\models\costfit\ProductPriceSuppliers();
             $productSuppliersPrice->productSuppId = $model->productSuppId;
             $productSuppliersPrice->price = 0;
