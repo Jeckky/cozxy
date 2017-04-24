@@ -118,7 +118,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <!--    <div class="buttons group products-buttons-group" style="margin-top: -18px;">
             <div class="form-group" style="word-wrap: break-word;">
                 <label for="shopping-dollar" class="col-sm-1 " style="float: left; padding-right: 0px; padding-left: 0px; margin-bottom: 0px;">
-                    <img  src="<?php // echo Yii::$app->homeUrl;                                                                                                                                                                   ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
+                    <img  src="<?php // echo Yii::$app->homeUrl;                                                                                                                                                                         ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
                 </label>
                 <div class="col-sm-11 text-left discountPrice " style="float: left; padding: 0px; margin-left: 0px; margin-top: 15px;">
                     &nbsp;Add more than 1 item to your order
@@ -464,40 +464,6 @@ if (Yii::$app->controller->action->id != 'see-review') {
                                 if (count($productPost) > 0) {
                                     foreach ($productPost as $key => $value) {
                                         $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
-                                        foreach ($productPostList as $valuex) {
-                                            $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
-                                            $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productImageId desc')->limit(1)->one();
-                                            ?>
-                                            <div class="text-center">
-                                                <?php
-                                                if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
-                                                    if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
-                                                        echo "<img class=\"ms-thumb\" src=\"/" . $productImages->imageThumbnail2 . "\" alt=\"1\" class=\"img-responsive img-thumbnail\"/>";
-                                                    } else {
-                                                        echo "<img  class=\"ms-thumb\"  src=\"/" . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive img-thumbnail\"/>";
-                                                    }
-                                                } else {
-                                                    ?>
-                                                    <img class="ms-thumb" src="<?php echo "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
-                                                <?php } ?>
-                                                <p class="text-left" style="margin-bottom: 0px;">
-                                                    <a href="<?php echo Yii::$app->homeUrl; ?>see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"
-                                                       role="button" class="panel-toggle" id="see-reviews" style="font-size: 14px;">read more <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                                </p>
-                                            </div>
-                                            <?php
-                                        }
-                                    }
-                                    ?>
-                                    <?php
-                                }
-                                ?>
-                            </div>
-                            <div class="inner">
-                                <?php
-                                if (count($productPost) > 0) {
-                                    foreach ($productPost as $key => $value) {
-                                        $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
                                         $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId);
                                         $rating_member = \common\helpers\Reviews::RatingInMember($value->productSuppId);
                                         //echo $rating_score . '::';
@@ -524,13 +490,17 @@ if (Yii::$app->controller->action->id != 'see-review') {
                                                     // Your client options
                                                     ],
                                                 ]);
-                                                echo '<span style="font-size: 12px;">' . number_format($results_rating, 3) . 'จาก 5 คะแนน </span>';
+                                                //echo '<span style="font-size: 12px;">' . number_format($results_rating, 3) . 'จาก 5 คะแนน </span>';
                                                 ?>
                                                 <p class="text-left" style="margin-bottom:2px;">
                                                     <a href="<?php echo Yii::$app->homeUrl; ?>see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"
                                                        style="font-size: 14px;"><?php echo $value->title; ?></a>
                                                 </p>
                                                 <p class="text-left" style="margin-bottom:2px;"> <?php echo $value->shortDescription; ?></a>
+                                                </p>
+                                                <p>
+                                                    <a href="#" role="button" class="panel-toggle" id="see-reviews" style="font-size: 14px;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+
                                                 </p>
                                             </div>
                                             <?php
