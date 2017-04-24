@@ -96,8 +96,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         ?>
                         <?php
                         echo \yii\widgets\ListView::widget([
-                            'id' => 'product-list',
                             'dataProvider' => $products,
+                            'options' => [
+                                'id' => 'product-list',
+                            ],
                             'itemView' => function ($model, $key, $index, $widget) {
                                 return $this->render('_product', ['model' => $model->product]);
                             },
@@ -183,7 +185,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 ?>
                 <?php
                 echo \yii\widgets\ListView::widget([
-                    'id' => 'product-notsell-list',
+                    'options' => [
+                        'id' => 'product-list-not-sale',
+                    ],
                     'dataProvider' => $productNotSell,
                     'itemView' => function ($model, $key, $index, $widget) {
                         return $this->render('_productNotSell', ['model' => $model]);
