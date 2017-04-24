@@ -189,14 +189,15 @@ class ProductSuppliersController extends SuppliersMasterController {
             $model->result = $_POST['ProductSuppliers']['quantity'];
             $model->code = \common\helpers\Product::generateProductCode();
             if ($model->save(FALSE)) {
-                $productSuppliersPrice = new \common\models\costfit\ProductPriceSuppliers();
-                $productSuppliersPrice->productSuppId = $model->productSuppId;
-                $productSuppliersPrice->price = 0;
-                $productSuppliersPrice->discountType = 1;
-                $productSuppliersPrice->createDateTime = new \yii\db\Expression('NOW()');
-                if ($productSuppliersPrice->save(FALSE)) {
 
-                }
+            }
+            $productSuppliersPrice = new \common\models\costfit\ProductPriceSuppliers();
+            $productSuppliersPrice->productSuppId = $model->productSuppId;
+            $productSuppliersPrice->price = 0;
+            $productSuppliersPrice->discountType = 1;
+            $productSuppliersPrice->createDateTime = new \yii\db\Expression('NOW()');
+            if ($productSuppliersPrice->save(FALSE)) {
+
             }
             //ECHO 'approve :' . Yii::$app->request->post('approve');
             //ECHO '<BR> productIds:' . Yii::$app->request->post('productIds');
