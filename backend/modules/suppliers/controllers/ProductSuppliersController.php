@@ -178,6 +178,7 @@ class ProductSuppliersController extends SuppliersMasterController {
         $searchProducts = \common\models\costfit\Product::find()->all();
         $model = new ProductSuppliers();
         $model->scenario = 'ProductSuppliers';
+        //$model->result = 0;
         if (isset($_POST['ProductSuppliers'])) {
             $model->attributes = $_POST["ProductSuppliers"];
             $model->userId = Yii::$app->user->identity->userId;
@@ -218,7 +219,12 @@ class ProductSuppliersController extends SuppliersMasterController {
             }
             //return $this->redirect('image-form?productSuppId=' . $model->productSuppId);
             //suppliers/product-price-suppliers
-            return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-price-suppliers/create?productSuppId=' . $model->productSuppId);
+            ///suppliers/product-suppliers/image-form?productSuppId=235
+            if (Yii::$app->user->identity->type == 5) {
+                return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-suppliers/image-form?productSuppId=' . $model->productSuppId);
+            } else {
+                return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-price-suppliers/create?productSuppId=' . $model->productSuppId);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model

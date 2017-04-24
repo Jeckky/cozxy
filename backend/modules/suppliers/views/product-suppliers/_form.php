@@ -144,17 +144,17 @@ use yii\redactor\widgets\Redactor;
 
         <?= $form->field($model, 'specification', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
 
-        <?= $form->field($model, 'width', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
+        <?= $form->field($model, 'width', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15, 'value' => isset($model->width) ? $model->width : '0']) ?>
 
-        <?= $form->field($model, 'height', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
+        <?= $form->field($model, 'height', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15, 'value' => isset($model->height) ? $model->height : '0']) ?>
 
-        <?= $form->field($model, 'depth', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
+        <?= $form->field($model, 'depth', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15, 'value' => isset($model->depth) ? $model->depth : '0']) ?>
 
-        <?= $form->field($model, 'weight', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
+        <?= $form->field($model, 'weight', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15, 'value' => isset($model->weight) ? $model->weight : '0']) ?>
 
         <?//= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
 
-        <?= $form->field($model, 'quantity', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15, 'value' => 0]) ?>
+        <?= $form->field($model, 'quantity', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15, 'value' => isset($model->quantity) ? $model->quantity : '0']) ?>
 
         <?php
         echo $form->field($model, 'unit')->widget(kartik\select2\Select2::classname(), [
