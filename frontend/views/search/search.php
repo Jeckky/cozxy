@@ -207,12 +207,28 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 ?>
             </div>
             <?php Pjax::end(); ?>
-        </div>
 
-    </section><!--catalog-grid-->
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <?php Pjax::begin(); ?>
+                    <?= Html::a("Generate Random String", ['search/multiple'], ['class' => 'btn btn-lg btn-primary']) ?>
+                    <h3><?= $randomString ?></h3>
+                    <?php Pjax::end(); ?>
+                </div>
 
-    <!--Brands Carousel Widget-->
+                <div class="col-sm-12 col-md-6">
+                    <?php Pjax::begin(); ?>
+                    <?= Html::a("Generate Random Key", ['search/multiple'], ['class' => 'btn btn-lg btn-primary']) ?>
+                    <h3><?= $randomKey ?><h3>
+                            <?php Pjax::end(); ?>
+                            </div>
+                            </div>
+                            </div>
 
-    <!--title-product-all-->
+                            </section><!--catalog-grid-->
 
-</div>
+                            <!--Brands Carousel Widget-->
+
+                            <!--title-product-all-->
+
+                            </div>
