@@ -92,6 +92,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <?php Pjax::begin(); ?>
                         <?php
                         echo \yii\widgets\ListView::widget([
+                            'id' => 'product-list',
                             'dataProvider' => $products,
                             'itemView' => function ($model, $key, $index, $widget) {
                                 return $this->render('_product', ['model' => $model->product]);
@@ -174,6 +175,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <?php Pjax::begin(); ?>
                 <?php
                 echo \yii\widgets\ListView::widget([
+                    'id' => 'product-notsell-list',
                     'dataProvider' => $productNotSell,
                     'itemView' => function ($model, $key, $index, $widget) {
                         return $this->render('_productNotSell', ['model' => $model]);
