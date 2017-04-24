@@ -131,15 +131,4 @@ class SearchController extends MasterController
         return $this->redirect(['search/' . rawurlencode($cat->createTitle()) . "/" . ModelMaster::encodeParams(['categoryId' => $categoryId, 'brandId' => $idString])]);
     }
 
-    public function actionMultiple()
-    {
-        $security = new Security();
-        $randomString = $security->generateRandomString();
-        $randomKey = $security->generateRandomKey();
-        return $this->render('multiple', [
-            'randomString' => $randomString,
-            'randomKey' => $randomKey,
-        ]);
-    }
-
 }
