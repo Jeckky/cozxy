@@ -88,12 +88,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </div>
                 </div><!--Filters-->
                 <div id="title-product-all" class="col-lg-9 col-md-9 col-sm-8">
+                    <?php
+                    Pjax::begin([
+                        'id' => 'products'
+                    ]);
+                    ?>
                     <div class="row products-searchs-brands">
-                        <?php
-                        Pjax::begin([
-                            'id' => 'products'
-                        ]);
-                        ?>
+
                         <?php
                         echo \yii\widgets\ListView::widget([
                             'dataProvider' => $products,
@@ -130,7 +131,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             ],
                         ])
                         ?>
-                        <?php Pjax::end(); ?>
+
                         <!--    <ul class="pagination">
                                 <li class="prev-page"><a class="icon-arrow-left" href="#"></a></li>
                                 <li class="active"><a href="#">1</a></li>
@@ -140,6 +141,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 <li class="next-page"><a class="icon-arrow-right" href="#"></a></li>
                             </ul>-->
                     </div>
+                    <?php Pjax::end(); ?>
                     <!--Pagination-->
                     <br><br><br>
                 </div><!--title-product-all-->
@@ -176,13 +178,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </div>
                 </section><!--Brands Carousel Close-->
             </div>
-
+            <?php
+            Pjax::begin([
+                'id' => 'productsnotsale'
+            ]);
+            ?>
             <div class="col-lg-12 col-md-12 col-sm-12">
-                <?php
-                Pjax::begin([
-                    'id' => 'productsnotsale'
-                ]);
-                ?>
+
                 <?php
                 echo \yii\widgets\ListView::widget([
                     'options' => [
@@ -203,9 +205,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     ],
                 ])
                 ?>
-                <?php Pjax::end(); ?>
             </div>
-
+            <?php Pjax::end(); ?>
         </div>
 
     </section><!--catalog-grid-->
