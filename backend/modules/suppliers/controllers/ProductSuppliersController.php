@@ -192,6 +192,7 @@ class ProductSuppliersController extends SuppliersMasterController {
                 $productSuppliersPrice->productSuppId = $model->productSuppId;
                 $productSuppliersPrice->price = 0;
                 $productSuppliersPrice->discountType = 1;
+                $productSuppliersPrice->createDateTime = new \yii\db\Expression('NOW()');
                 if ($productSuppliersPrice->save(FALSE)) {
 
                 }
