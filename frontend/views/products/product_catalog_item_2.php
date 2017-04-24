@@ -118,7 +118,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <!--    <div class="buttons group products-buttons-group" style="margin-top: -18px;">
             <div class="form-group" style="word-wrap: break-word;">
                 <label for="shopping-dollar" class="col-sm-1 " style="float: left; padding-right: 0px; padding-left: 0px; margin-bottom: 0px;">
-                    <img  src="<?php // echo Yii::$app->homeUrl;                                                                                                                                                                   ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
+                    <img  src="<?php // echo Yii::$app->homeUrl;                                                    ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
                 </label>
                 <div class="col-sm-11 text-left discountPrice " style="float: left; padding: 0px; margin-left: 0px; margin-top: 15px;">
                     &nbsp;Add more than 1 item to your order
@@ -442,106 +442,42 @@ if (Yii::$app->controller->action->id != 'see-review') {
         }
     </style>
     <div class="col-sm-12">
-        <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;">
+        <div class="col-lg-12 col-md-12 col-sm-12">
             <h3>Post <i class="fa fa-plus-circle" aria-hidden="true"></i></h3>
-            <div class="Reviews" >
+            <div class="Reviews" style="margin-left: 10px;">
                 <div class="post">
-                    <!--Post & Reviews Carousel Widget-->
-                    <style>
-                        #brand-carousel-reviews {
-                            padding: 24px 0 48px 0;
-                            border-top: 0px solid #e6e6e6;
-                            border-bottom: 0px solid #e6e6e6;
-                        }
-                        #brand-carousel-reviews  .owl-prev, #brand-carousel-reviews  .owl-next {
-                            color: #000 !important;
-                        }
-                    </style>
-                    <section class="brand-carousel" id="brand-carousel-reviews">
-                        <div class="container">
-                            <div class="inner">
-                                <?php
-                                if (count($productPost) > 0) {
-                                    foreach ($productPost as $key => $value) {
-                                        $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
-                                        foreach ($productPostList as $valuex) {
-                                            $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
-                                            $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productImageId desc')->limit(1)->one();
-                                            ?>
-                                            <div class="text-center">
-                                                <?php
-                                                if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
-                                                    if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
-                                                        echo "<img class=\"ms-thumb\" src=\"/" . $productImages->imageThumbnail2 . "\" alt=\"1\" class=\"img-responsive img-thumbnail\"/>";
-                                                    } else {
-                                                        echo "<img  class=\"ms-thumb\"  src=\"/" . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive img-thumbnail\"/>";
-                                                    }
-                                                } else {
-                                                    ?>
-                                                    <img class="ms-thumb" src="<?php echo "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
-                                                <?php } ?>
-                                                <p class="text-left" style="margin-bottom: 0px;">
-                                                    <a href="<?php echo Yii::$app->homeUrl; ?>see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"
-                                                       role="button" class="panel-toggle" id="see-reviews" style="font-size: 14px;">read more <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                                </p>
-                                            </div>
-                                            <?php
-                                        }
-                                    }
+                    <section class="brand-carousel-reviews">
+                        <?php
+                        if (count($productPost) > 0) {
+                            foreach ($productPost as $key => $value) {
+                                $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
+                                foreach ($productPostList as $valuex) {
+                                    $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
+                                    $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productImageId desc')->limit(1)->one();
                                     ?>
-                                    <?php
-                                }
-                                ?>
-                            </div>
-                            <div class="inner">
-                                <?php
-                                if (count($productPost) > 0) {
-                                    foreach ($productPost as $key => $value) {
-                                        $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
-                                        $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId);
-                                        $rating_member = \common\helpers\Reviews::RatingInMember($value->productSuppId);
-                                        //echo $rating_score . '::';
-                                        //echo $rating_member;
-                                        if ($rating_score == 0 && $rating_member == 0) {
-                                            $results_rating = 0;
+                                    <div class="col-sm-3 text-center" style="border-bottom: 1px #e6e6e6 dotted; margin-bottom: 10px;">
+                                        <?php
+                                        if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
+                                            if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
+                                                echo "<img class=\"ms-thumb\" src=\"/" . $productImages->imageThumbnail2 . "\" alt=\"1\" class=\"img-responsive img-thumbnail\"/>";
+                                            } else {
+                                                echo "<img  class=\"ms-thumb\"  src=\"/" . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive img-thumbnail\"/>";
+                                            }
                                         } else {
-                                            $results_rating = $rating_score / $rating_member;
-                                        }
-                                        //echo $value->title;
-                                        foreach ($productPostList as $valuex) {
-                                            $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
                                             ?>
-                                            <div class="text-center" id="reviews-rate-show-<?php echo $value['productPostId']; ?>" style=" margin-left: 2px;border: 1px #e6e6e6 solid; max-height: 160px; min-height: 160px; padding: 5px;">
-                                                <?php
-                                                echo \yii2mod\rating\StarRating::widget([
-                                                    'name' => "input_name_" . $value['productPostId'],
-                                                    'value' => $results_rating,
-                                                    'options' => [
-                                                        // Your additional tag options
-                                                        'id' => 'reviews-rate-' . $value['productPostId'], 'class' => 'reviews-rate',
-                                                    ],
-                                                    'clientOptions' => [
-                                                    // Your client options
-                                                    ],
-                                                ]);
-                                                echo '<span style="font-size: 12px;">' . number_format($results_rating, 3) . 'จาก 5 คะแนน </span>';
-                                                ?>
-                                                <p class="text-left" style="margin-bottom:2px;">
-                                                    <a href="<?php echo Yii::$app->homeUrl; ?>see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"
-                                                       style="font-size: 14px;"><?php echo $value->title; ?></a>
-                                                </p>
-                                                <p class="text-left" style="margin-bottom:2px;"> <?php echo $value->shortDescription; ?></a>
-                                                </p>
-                                            </div>
-                                            <?php
-                                        }
-                                    }
-                                    ?>
+                                            <img class="ms-thumb" src="<?php echo "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
+                                        <?php } ?>
+                                        <p class="text-left" style="margin-top: 5px;margin-bottom: 5px; font-size: 12px; color: rgb(144, 138, 138);">By <?php echo $member->firstname; ?></p>
+                                        <p class="text-left" style="margin-bottom: 0px;">
+                                            <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $valuex->productId, 'productSupplierId' => $valuex->productSuppId]) ?>see-review?productPostId=29&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"><?php echo substr($valuex->title, 0, 30); ?></a></p>
+                                    </div>
                                     <?php
                                 }
-                                ?>
-                            </div>
-                        </div>
+                            }
+                            ?>
+                            <?php
+                        }
+                        ?>
                     </section>
                 </div>
             </div>

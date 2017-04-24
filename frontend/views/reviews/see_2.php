@@ -174,7 +174,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                         ]);
                                                         ?>
                                                     </p>
-                                                    <p class="p-style3"><?php //echo $postxRating->description;                  ?></p>
+                                                    <p class="p-style3"><?php //echo $postxRating->description;              ?></p>
                                                     <!--<footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>-->
                                                 </blockquote>
                                             </footer>
@@ -263,7 +263,117 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
                         }
                     </style>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <h3 style="text-decoration: underline">Post</h3>
+                        <div class="Reviews" style="margin-left: 10px;">
+                            <div class="post">
+                                <section class="brand-carousel-reviews">
+                                    <?php
+                                    if (count($productPost) > 0) {
+                                        foreach ($productPost as $key => $value) {
+                                            //$rating_score = 0;
+                                            $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
+                                            $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId);
+                                            $rating_member = \common\helpers\Reviews::RatingInMember($value->productSuppId);
+                                            //echo $rating_score . '::';
+                                            //echo $rating_member;
+                                            if ($rating_score == 0 && $rating_member == 0) {
+                                                $results_rating = 0;
+                                            } else {
+                                                $results_rating = $rating_score / $rating_member;
+                                            }
 
+                                            $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
+                                            foreach ($productPostList as $valuex) {
+                                                $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productImageId desc')->limit(4)->all();
+                                                ?>
+                                                <div class="col-md-2">555++
+                                                    <?php
+                                                    echo \yii2mod\rating\StarRating::widget([
+                                                        'name' => "input_name_" . $value['productPostId'],
+                                                        'value' => $results_rating,
+                                                        'options' => [
+                                                            // Your additional tag options
+                                                            'id' => 'reviews-rate-' . $value['productPostId'], 'class' => 'reviews-rate',
+                                                        ],
+                                                        'clientOptions' => [
+                                                        // Your client options
+                                                        ],
+                                                    ]);
+                                                    echo '<span style="font-size: 12px;color:#e26a00;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน</span>';
+                                                    ?>
+                                                </div>
+                                                <div class="col-md-9 text-left" >
+                                                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $valuex->productId, 'productSupplierId' => $valuex->productSuppId]) ?>" style="font-weight:bold; "><?php echo $valuex->title; ?></a>
+                                                </div>
+                                                <div class="col-sm-12 text-center" style="margin-top: 10px; border-bottom: 1px #e6e6e6 dotted;">
+                                                    <?php
+                                                    foreach ($productImages as $valueImages) {
+                                                        if (isset($valueImages['imageThumbnail2']) && !empty($valueImages['imageThumbnail2'])) {
+                                                            if (file_exists(Yii::$app->basePath . "/web/" . $valueImages['imageThumbnail2'])) {
+                                                                echo "<div class=\"col-sm-3\"><img class=\"ms-thumb\" src=\"/" . $valueImages['imageThumbnail2'] . "\" alt=\"1\" class=\"img-responsive img-thumbnail\"/></div>";
+                                                            } else {
+                                                                echo "<div class=\"col-sm-3\"><img  class=\"ms-thumb\"  src=\"" . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive img-thumbnail\"/></div>";
+                                                            }
+                                                        } else {
+                                                            ?>
+                                                            <div class="col-sm-3">
+                                                                <img class="ms-thumb" src="<?php echo "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
+                                                            </div>
+                                                            <?php
+                                                        }
+                                                    }
+                                                    ?>
+                                                    <?php
+                                                    $post = common\models\costfit\ProductPost::find()->where('productSuppId=' . $value['productSuppId'])->all();
+                                                    $number = 1;
+                                                    foreach ($post as $postxRating) {
+                                                        $member = \common\models\costfit\User::find()->where('userId=' . $postxRating->userId)->one();
+                                                        $rating = common\models\costfit\ProductPostRating::find()->where('productPostId=' . $postxRating['productPostId'] . ' and userId = ' . $postxRating->userId)->one();
+                                                        ?>
+                                                        <div class="col-md-12 post" style="text-align: left;">
+                                                            <footer>
+                                                                <div class="share">
+                                                                    <a href="#"> <i class="fa fa-user"></i> <?php echo $member->firstname; ?></a>
+                                                                    <a href="#"> <i class="fa fa-calendar"></i> <?php echo $postxRating->createDateTime; ?></a>
+                                                                </div>
+                                                                <blockquote>
+                                                                    <p>
+                                                                        <?php
+                                                                        echo \yii2mod\rating\StarRating::widget([
+                                                                            'name' => "input_name_" . $rating['score'],
+                                                                            'value' => $rating['score'],
+                                                                            'options' => [
+                                                                                // Your additional tag options
+                                                                                'id' => 'rating-score-' . $rating['score'], 'class' => 'rating-score',
+                                                                            ],
+                                                                            'clientOptions' => [
+                                                                            // Your client options
+                                                                            ],
+                                                                        ]);
+                                                                        ?>
+                                                                    </p>
+                                                                    <p class="p-style3"><?php echo $postxRating->description; ?></p>
+                                                                    <!--<footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>-->
+                                                                </blockquote>
+                                                            </footer>
+                                                        </div>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </div>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                        <hr>
+                                        <?php
+                                    }
+                                    ?>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
                 <?php } ?>
 
             </div>

@@ -29,7 +29,7 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster {
 
     public function rules() {
         return array_merge(parent::rules(), [
-            [['description'], 'required', 'on' => self::COZXY_POST_REVIRES],
+            [['title', 'shortDescription', 'description'], 'required', 'on' => self::COZXY_POST_REVIRES],
         ]);
     }
 

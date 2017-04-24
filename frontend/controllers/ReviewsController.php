@@ -41,6 +41,40 @@ class ReviewsController extends MasterController {
         $productSupplierId = Yii::$app->request->get('productSupplierId');
         $score = Yii::$app->request->post('score');
         $productId = Yii::$app->request->get('productId');
+        $productPostId = Yii::$app->request->get('productPostId');
+        $model = \common\models\costfit\ProductPost::find()->where("productSuppId=" . $_GET["productSupplierId"])->one();
+
+        //$model = new \common\models\costfit\ProductPost(['scenario' => 'review_post']);
+        $product_post_rating = new \common\models\costfit\ProductPostRating(['scenario' => 'review_post']);
+        if (isset($score)) {
+            $productPostId = Yii::$app->db->lastInsertID;
+            $product_post_rating->productPostId = $productPostId;
+            $product_post_rating->userId = Yii::$app->user->identity->userId;
+            $product_post_rating->score = $score;
+            $product_post_rating->updateDateTime = new \yii\db\Expression('NOW()');
+            $product_post_rating->createDateTime = new \yii\db\Expression('NOW()');
+            $product_post_rating->save(FALSE);
+
+            return $this->redirect(Yii::$app->homeUrl . 'reviews/see-review?productPostId=' . $productPostId . '&productSupplierId=' . $productSupplierId . '&productId=' . $productId . '');
+        } else {
+            //return $this->redirect(Yii::$app->homeUrl . 'reviews/see-review?productSupplierId=' . $productSupplierId . '&productId=' . $productId . '');
+        }
+
+        return $this->render('@app/views/reviews/create', compact("model"));
+    }
+
+    public function actionCreatePost() {
+
+        $this->title = 'Cozxy.com | Create Review';
+        $this->subTitle = 'ชื่อ content';
+        $productSupplierId = Yii::$app->request->get('productSupplierId');
+        $score = Yii::$app->request->post('score');
+        $productId = Yii::$app->request->get('productId');
+        //$k = base64_decode(base64_decode($productSupplierId));
+        //$params = \common\models\ModelMaster::encodeParams(['productSupplierId' => $productSupplierId]);
+        //echo '<pre>';
+        //print_r($params);
+        //exit();
         $model = \common\models\costfit\ProductPost::find()->where("productSuppId=" . $_GET["productSupplierId"])->one();
 
         $model = new \common\models\costfit\ProductPost(['scenario' => 'review_post']);
@@ -53,15 +87,18 @@ class ReviewsController extends MasterController {
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $model->save(FALSE);
-            $product_post_rating = new \common\models\costfit\ProductPostRating();
-            $productPostId = Yii::$app->db->lastInsertID;
-            $product_post_rating->productPostId = $productPostId;
-            $product_post_rating->userId = Yii::$app->user->identity->userId;
-            $product_post_rating->score = $score;
-            $product_post_rating->updateDateTime = new \yii\db\Expression('NOW()');
-            $product_post_rating->createDateTime = new \yii\db\Expression('NOW()');
-            $product_post_rating->save(FALSE);
-            return $this->redirect(Yii::$app->homeUrl . 'reviews/see-review?productSupplierId=' . $productSupplierId . '&productId=' . $productId . '');
+            /* $product_post_rating = new \common\models\costfit\ProductPostRating();
+              $productPostId = Yii::$app->db->lastInsertID;
+              $product_post_rating->productPostId = $productPostId;
+              $product_post_rating->userId = Yii::$app->user->identity->userId;
+              $product_post_rating->score = $score;
+              $product_post_rating->updateDateTime = new \yii\db\Expression('NOW()');
+              $product_post_rating->createDateTime = new \yii\db\Expression('NOW()');
+              $product_post_rating->save(FALSE);
+             *
+             */
+            return $this->redirect(Yii::$app->homeUrl . 'reviews/see-review?productPostId=' . Yii::$app->db->lastInsertID . '&productSupplierId=' . $productSupplierId . '&productId=' . $productId . '');
+            //return $this->redirect(Yii::$app->homeUrl . 'products/' . $params['productSupplierId']);
         } else {
             //return $this->redirect(Yii::$app->homeUrl . 'reviews/see-review?productSupplierId=' . $productSupplierId . '&productId=' . $productId . '');
         }
@@ -76,6 +113,8 @@ class ReviewsController extends MasterController {
 
         $productId = $_GET['productId'];
         $productSupplierId = $_GET['productSupplierId'];
+        $productPostId = $_GET['productPostId'];
+
         /*
          * Get Product Suppliers
          * create date : 14/01/2017
@@ -86,7 +125,7 @@ class ReviewsController extends MasterController {
         $productPost = \common\models\costfit\ProductPost::find()->where('productSuppId !=' . $productSupplierId)->groupBy(['productSuppId'])->all();
         if (\Yii::$app->user->id != '') {
             //$productPostViewMem = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . ' and productSuppId=' . $productSupplierId)->limit(6)->all();
-            $productPostViewMem = \common\models\costfit\ProductPost::find()->where('productSuppId=' . $productSupplierId)->limit(6)->all();
+            $productPostViewMem = \common\models\costfit\ProductPost::find()->where('productSuppId=' . $productSupplierId . ' and productPostId=' . $productPostId)->all();
         } else {
             $productPostView = NULL;
             $productPostViewMem = NULL;
@@ -107,7 +146,7 @@ class ReviewsController extends MasterController {
         $this->title = 'Cozxy.com | Products';
         $this->subTitle = $model->attributes['title'];
         $this->subSubTitle = '';
-        return $this->render('@app/views/reviews/see', compact("productPostViewMem", "productPost", "model", "getPrductsSupplirs", "productSupplierId", "supplierPrice"));
+        return $this->render('@app/views/reviews/see', compact("productPostId", "productPostViewMem", "productPost", "model", "getPrductsSupplirs", "productSupplierId", "supplierPrice"));
     }
 
 }

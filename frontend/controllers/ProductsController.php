@@ -27,7 +27,7 @@ class ProductsController extends MasterController {
                 'class' => \yii\filters\AccessControl::className(),
                 'only' => ['create', 'update'],
                 'rules' => [
-// deny all POST requests
+                    // deny all POST requests
                     [
                         'allow' => false,
                         'verbs' => ['POST']
@@ -81,7 +81,7 @@ class ProductsController extends MasterController {
             $model = \common\models\costfit\Product::find()->where("productId =" . $productId)->one();
             $productPostView = \common\models\costfit\ProductPost::find()->groupBy(['productSuppId'])->orderBy('productPostId desc')->limit(6)->all();
             if (\Yii::$app->user->id != '') {
-                $productPostViewMem = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . ' and productSuppId=' . $productSupplierId)->orderBy('productPostId desc')->limit(6)->all();
+                $productPostViewMem = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . ' and productSuppId=' . $productSupplierId)->orderBy('productPostId desc')->all();
             } else {
                 $productPostView = NULL;
                 $productPostViewMem = NULL;
