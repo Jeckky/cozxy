@@ -118,7 +118,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <!--    <div class="buttons group products-buttons-group" style="margin-top: -18px;">
             <div class="form-group" style="word-wrap: break-word;">
                 <label for="shopping-dollar" class="col-sm-1 " style="float: left; padding-right: 0px; padding-left: 0px; margin-bottom: 0px;">
-                    <img  src="<?php // echo Yii::$app->homeUrl;                                                                                                                                                                         ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
+                    <img  src="<?php // echo Yii::$app->homeUrl;                                                                                                                                                                            ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
                 </label>
                 <div class="col-sm-11 text-left discountPrice " style="float: left; padding: 0px; margin-left: 0px; margin-top: 15px;">
                     &nbsp;Add more than 1 item to your order
@@ -410,9 +410,9 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
                                         ?>
                                         <p class="p-style3" style="border-bottom: 1px #e6e6e6 dotted;">
                                             <a href="/reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?= $value->productSuppId ?>&productId=<?= $valuex->productId ?>"  role="button"   style="font-size: 14px;">
-                                                <?php echo 'Title : ' . strip_tags($value->title); ?></a>
+                                                <?php echo strip_tags($value->title); ?></a>
                                             <br>
-                                            <?php echo 'Short Desc : ' . strip_tags($value->shortDescription); ?>
+                                            <?php echo strip_tags($value->shortDescription); ?>
                                         </p>
                                         <?php
                                     }
@@ -420,7 +420,6 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
                             }
                             ?>
                         </div>
-                        <a href="/reviews/see-review?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>"  role="button" class="panel-toggle" id="see-reviews" style="font-size: 14px;">See all  reviews <i class="fa fa-angle-right" aria-hidden="true"></i></a>
                     </div>
                 <?php } ?>
             </div>
@@ -499,7 +498,7 @@ if (Yii::$app->controller->action->id != 'see-review') {
                                                 <p class="text-left" style="margin-bottom:2px;"> <?php echo $value->shortDescription; ?></a>
                                                 </p>
                                                 <p>
-                                                    <a href="#" role="button" class="panel-toggle" id="see-reviews" style="font-size: 14px;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                                    <a role="button" class="panel-toggle" id="see-reviews" style="font-size: 14px;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
 
                                                 </p>
                                             </div>
