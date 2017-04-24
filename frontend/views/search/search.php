@@ -3,6 +3,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\widgets\Pjax;
 
 $categoryId = $this->params['categoryId'];
 $title = $this->params['title'];
@@ -88,6 +89,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 </div><!--Filters-->
                 <div id="title-product-all" class="col-lg-9 col-md-9 col-sm-8">
                     <div class="row products-searchs-brands">
+                        <?php Pjax::begin(); ?>
                         <?php
                         echo \yii\widgets\ListView::widget([
                             'dataProvider' => $products,
@@ -121,6 +123,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             ],
                         ])
                         ?>
+                        <?php Pjax::end(); ?>
                         <!--    <ul class="pagination">
                                 <li class="prev-page"><a class="icon-arrow-left" href="#"></a></li>
                                 <li class="active"><a href="#">1</a></li>
@@ -168,6 +171,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </div>
 
             <div class="col-lg-12 col-md-12 col-sm-12">
+                <?php Pjax::begin(); ?>
                 <?php
                 echo \yii\widgets\ListView::widget([
                     'dataProvider' => $productNotSell,
@@ -185,6 +189,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     ],
                 ])
                 ?>
+                <?php Pjax::end(); ?>
             </div>
 
         </div>
