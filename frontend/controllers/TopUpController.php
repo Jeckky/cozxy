@@ -44,10 +44,14 @@ class TopUpController extends MasterController {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
         $msg = '';
+        $needMore = 0;
         //$paymentMethod = PaymentMethod::find()->where("status=1")->all();
         $paymentMethod = PaymentMethod::find()->where("status=1")->all();
         if (isset($_GET['ms'])) {
             $msg = $_GET['ms'];
+        }
+        if (isset($_GET['needMore'])) {
+            $needMore = $_GET['needMore'];
         }
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Top up';
@@ -57,8 +61,16 @@ class TopUpController extends MasterController {
         $data["name"] = $user->firstname . ' ' . $user->lastname;
         $data["number"] = rand('000000', '999999');
         if (isset($_POST["inputPass"]) && !empty($_POST["inputPass"])) {
-            $topUpDraf = new TopUp();
-            $topUpDraf->userId = Yii::$app->user->id;
+            $fromCheckout = 'no';
+            $needMore = 0;
+            $isOld = TopUp::find()->where("userId='" . Yii::$app->user->id . "' and status=" . TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT)->one();
+            if (isset($isOld)) {
+                $topUpDraf = $isOld;
+            } else {
+                $topUpDraf = new TopUp();
+                $topUpDraf->userId = Yii::$app->user->id;
+            }
+
             if ($_POST["paymentType"] == 'credit') {
                 $topUpDraf->paymentMethod = 2; //
                 $data["paymentType"] = "ชำระผ่านบัตรเครดิต";
@@ -66,25 +78,41 @@ class TopUpController extends MasterController {
                 $topUpDraf->paymentMethod = 1;
                 $data["paymentType"] = "โอนเงินผ่านธนาคาร";
             }
+            if (isset($_POST["checkout"]) && $_POST["checkout"] != '') {
+                $fromCheckout = 'yes';
+            }
+            if (isset($_POST["needMore"]) && $_POST["needMore"] != 0) {
+                $needMore = $_POST["needMore"];
+            }
             $topUpDraf->status = TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT;
             $topUpDraf->createDateTime = new \yii\db\Expression('NOW()');
             $topUpDraf->updateDateTime = new \yii\db\Expression('NOW()');
             $topUpDraf->save(false);
 
             return $this->render('amount', [
-                        'data' => $data
+                        'data' => $data,
+                        'fromCheckout' => $fromCheckout,
+                        'needMore' => $needMore
             ]);
         }
         if (isset($_POST["amount"]) && !empty($_POST["amount"])) {
             $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT)->one();
             $amount = $_POST["amount"];
             if (isset($topUp) && !empty($topUp)) {
+                $fromCheckout = 'no';
+                if (isset($_POST["fromCheckout"]) && $_POST["fromCheckout"] != 'no') {
+                    $fromCheckout = 'yes';
+                }
                 $topUp->money = $amount;
                 $topUp->point = $amount; //รอ คิด
                 $topUp->status = TopUp::TOPUP_STATUS_COMFIRM_PAYMENT;
                 $topUp->updateDateTime = new \yii\db\Expression('NOW()');
                 $topUp->save(false);
-                return $this->redirect(['test-result', 'userId' => $user->userId, 'amount' => $_POST["amount"]]);
+                return $this->redirect(['test-result',
+                            'userId' => $user->userId,
+                            'amount' => $_POST["amount"],
+                            'fromCheckout' => $fromCheckout
+                ]);
             } else {
                 return $this->render('index', [
                             'data' => $data,
@@ -95,7 +123,8 @@ class TopUpController extends MasterController {
             return $this->render('index', [
                         'data' => $data,
                         'paymentMethod' => $paymentMethod,
-                        'ms' => $msg
+                        'ms' => $msg,
+                        'needMore' => $needMore
             ]);
         }
     }
@@ -114,7 +143,7 @@ class TopUpController extends MasterController {
           } */
     }
 
-    public function actionTestResult($userId, $amount) {
+    public function actionTestResult($userId, $amount, $fromCheckout) {
         $flag = true; //test
         $response = [];
         if ($flag == true) {//เติมเงินสำเร็จ
@@ -122,10 +151,13 @@ class TopUpController extends MasterController {
         } else {//เติมเงินไม่สำเร็จ
             $response["decision"] = "DISCLAIM";
         }
-        return $this->redirect(['result', 'res' => $response["decision"]]);
+        return $this->redirect(['result',
+                    'res' => $response["decision"],
+                    'fromCheckout' => $fromCheckout
+        ]);
     }
 
-    public function actionResult($res) {
+    public function actionResult($res, $fromCheckout) {
         $currentPoint = 0;
         if ($res == "ACCEPT") {
             $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->one();
@@ -155,11 +187,17 @@ class TopUpController extends MasterController {
                     $currentPoint = $userPoint->currentPoint;
                 }
                 $type = 'success';
-
+                if ($fromCheckout == 'yes') {// มาจากหน้า check out หรือไม่
+                    $order = \common\models\costfit\Order::find()->where("userId='" . Yii::$app->user->id . "' and status='" . \common\models\costfit\Order::ORDER_STATUS_DRAFT . "'")->one();
+                } else {
+                    $order = '';
+                }
                 return $this->render('thank', [
                             'topUpId' => $topUp->topUpId,
                             'currentPoint' => $currentPoint,
                             'type' => $type,
+                            'fromCheckout' => $fromCheckout,
+                            'order' => $order
                 ]);
             } else {
                 return $this->redirect(Yii::$app->homeUrl . 'top-up');
@@ -173,7 +211,9 @@ class TopUpController extends MasterController {
                 $topUp->save(false);
                 $type = 'fail';
                 return $this->render('thank', [
-                            'type' => $type]);
+                            'type' => $type,
+                            'fromCheckout' => 'no'
+                ]);
             }
         }
     }

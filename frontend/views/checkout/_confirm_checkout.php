@@ -15,8 +15,8 @@ $form = ActiveForm::begin([
 <section class="support">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                <h3>ยินยันชำระเงิน</h3>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <h3>ยืนยันชำระเงิน</h3>
 
                 <?php echo $this->render("//profile/purchase_order", ['order' => $model]); ?>
                 <?php
@@ -25,16 +25,55 @@ $form = ActiveForm::begin([
                     'ePayment' => $ePayment));
                 ?>
             </div>
-            <div class="col-lg-2"></div>
-        </div>
-        <div class="row">
-            <h4 style="text-align: center;">* ระบบจะทำการชำระเงินด้วย Point หลังจากกด ปุ่ม "ยืนยันการชำระเงิน"</h4><br><br><!--sak-->
-            <div class="col-lg-12 text-right">
-                <?php echo Html::submitButton("ยืนยันชำระเงิน", ['class' => 'btn btn-primary']) ?>
-                <?php echo Html::a("ย้อนกลับ", Yii::$app->homeUrl . "checkout/reverse-order-to-cart/" . common\models\ModelMaster::encodeParams(['orderId' => $model->orderId]), ['class' => 'btn btn-warning']); ?>
+            <div class="col-lg-3 col-md-3 col-xs-12">
+                <h3>Point</h3>
+                <div class="col-lg-12 text-center" style="border: 1px solid #ddd;padding: 20px;">
+                    <table style="width: 100%;color: #000;">
+                        <tr style="height: 40px;">
+                            <td style="text-align: left;">Current Point</td><td style="text-align: right;"><?= number_format($userPoint->currentPoint, 2) ?></td>
+                        </tr>
+                        <tr style="height: 40px;">
+                            <td style="text-align: left;">This order use</td><td style="text-align: right;"><?= number_format($model->summary, 2) ?></td>
+                        </tr>
+                        <tr style="height: 40px;">
+                            <?php
+                            if ($userPoint->currentPoint >= $model->summary) {
+                                ?>
+                                <td style="text-align: left;">Balance</td><td style="text-align: right;"><?= number_format($userPoint->currentPoint - $model->summary, 2) ?></td>
+                            <?php } else { ?>
+                                <td style="text-align: left;">Need more</td><td style="text-align: right;"><?= number_format($model->summary - $userPoint->currentPoint, 2) ?></td>
+
+                            <?php }
+                            ?>
+                        </tr>
+                        <?php
+                        if ($userPoint->currentPoint < $model->summary) {
+                            ?>
+                            <tr style="height: 40px;">
+                                <td style="text-align: left;">Amount</td><td style="text-align: right;"><?= number_format($model->summary - $userPoint->currentPoint, 2) . ' THB.' ?></td>
+                            </tr>
+                        <?php } ?>
+                        <tr style="height: 60px;">
+                            <td colspan="2">
+                                <?php
+                                if ($userPoint->currentPoint >= $model->summary) {
+                                    echo '* ระบบจะตัด Points หลังจากกด ยืนยันชำระเงิน';
+                                    echo Html::submitButton("ยืนยันชำระเงิน", ['class' => 'btn btn-md btn-primary']);
+                                } else {
+                                    echo Html::submitButton("Top up", ['class' => 'btn btn-md btn-primary']);
+                                }
+                                ?>
+                            </td>
+                        <tr style="height: 60px;">
+                            <td colspan="2" style="text-align: center;">
+                                <?php echo Html::a("ย้อนกลับ", Yii::$app->homeUrl . "checkout/reverse-order-to-cart/" . common\models\ModelMaster::encodeParams(['orderId' => $model->orderId]), ['class' => 'btn btn-warning']); ?>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-            <div class = "col-lg-2"></div>
         </div>
+
     </div>
 </section>
 

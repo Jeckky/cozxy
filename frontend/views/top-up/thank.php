@@ -25,7 +25,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="margin: auto;text-align: center;color: #000;margin-bottom: 20px;">
             <h3 style="color: #009999;"><b> Top up :: SUCCESSFUL</b></h3>
             <h4>You have <?= $currentPoint ?> Points.</h4>
+            <?php if ($fromCheckout == 'yes') {
+                ?>
+                <a href="<?= Yii::$app->homeUrl . 'checkout/confirm-checkout/' . $order->encodeParams(['orderId' => $order->orderId]) ?>" class = "btn" style = "background-color: #3cc; color: #fff;font-size: 12pt;">
+                    Check out
+                </a>
+            <?php } ?>
         </div>
+
     <?php } else {
         ?>
         <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="margin: auto;text-align: center;color: #000;margin-bottom: 20px;">

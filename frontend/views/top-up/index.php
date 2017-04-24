@@ -25,9 +25,18 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
 
     <div class="bs-example" data-example-id="btn-tags" style="margin: auto;background-color:#3cc;height:45px; padding: 10px 12px; color: #fff; border-width: 1px;  border-radius: 4px 4px 0 0; -webkit-box-shadow: none; box-shadow: none;">
         <span style="float: left; text-align: left;"><?= $this->title ?></span>
-        <span style="float: right; text-align: right;"><?= isset($ms) ? $ms : '' ?></span>
+        <span style="float: right; text-align: right;"><?php
+            if (isset($ms) && $ms != '') {
+                echo $ms . ' ' . $needMore . ' Points เป็นเงิน ' . number_format($needMore, 2) . ' บาท';
+            }
+            ?>
+        </span>
     </div>
-
+    <?php if (isset($ms) && $ms != '') { ?>
+        <input type="hidden" name="checkout" value="checkout">
+        <input type="hidden" name="needMore" value="<?= $needMore ?>">
+    <?php }
+    ?>
     <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="margin: auto;text-align: center;color: #000;margin-bottom: 20px;">
 
         <table style="width: 100%">
@@ -91,7 +100,7 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
                 ?>
             </tr>
             <tr style="height: 50px;">
-                <td style="text-align: right;width:50%;">Password :</td>
+                <td style="text-align: right;width:50%;">Captcha :</td>
                 <td style="text-align: left;width:50%;">
                     <span style="margin-left: 20px;">
                         <input type="text" id="inputPass" name="inputPass" maxlength="6" style="width: 100px;text-align: center;" required="true">
