@@ -33,7 +33,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
     <ol class="breadcrumb">
         <li><a href="<?php echo Yii::$app->homeUrl; ?>">Home</a></li>
-
     </ol><!--Breadcrumbs Close-->
 
     <section class="catalog-grid">
@@ -78,7 +77,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <section class="filter-section">
                             <h3>Filter by price</h3>
                             <?php echo $this->render('@app/views/filter/filterbyprice', ['categoryId' => $categoryId, 'title' => $title]); ?>
-
                         </section>
 
                         <!--Categories Section-->
@@ -139,7 +137,34 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <!--</div>container-->
 
             <div class="col-lg-12 col-md-12 col-sm-12">
-                <?php echo $this->render('@app/themes/costfit/layouts/_brand_carousel'); ?>
+                <?php
+                //echo $this->render('@app/themes/costfit/layouts/_brand_carousel');
+                ?>
+                <!--Brands Carousel Widget-->
+                <section class="brand-carousel">
+                    <div class="container">
+                        <h2>Brands in our shop</h2>
+                        <div class="inner">
+                            <?php
+                            /*
+                              $brands = common\models\costfit\Brand::find()->all();
+                              foreach ($brands as $brand) {
+                              //throw new yii\base\Exception(Yii::$app->basePath . "/web" . $brand->image);
+                              if (file_exists(Yii::$app->basePath . "/web" . $brand->image) && !empty($brand->image)) {
+                              $image = $brand->image;
+                              } else {
+                              $image = Yii::$app->homeUrl . "images/no-image.jpg";
+                              }
+                              ?>
+                              <a class="item" href="#"><img src="<?php echo $image; ?>" alt="" title="ขนาด : 164x120" width="164" height="120" class="img-responsive"/></a>
+                              <?php
+                              } */
+                            ?>
+                            <?php echo $this->render('@app/views/categories/brands_product_suppliers', ['categoryId' => $categoryId, 'title' => $title, 'brandIds' => isset($this->params['categoryId']) ? $this->params['categoryId'] : NULL]); ?>
+
+                        </div>
+                    </div>
+                </section><!--Brands Carousel Close-->
             </div>
 
             <div class="col-lg-12 col-md-12 col-sm-12">

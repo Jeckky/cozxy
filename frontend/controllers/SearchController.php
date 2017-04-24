@@ -77,7 +77,8 @@ class SearchController extends MasterController {
                 'pageSize' => 9,
             ],
         ]);
-        return $this->render('search', ['products' => $products, 'productNotSell' => $productNotSell]);
+
+        return $this->render('search', ['products' => $products, 'productNotSell' => $productNotSell, 'categoryIdBrand' => $params['categoryId']]);
     }
 
     public function actionPop($category) {
