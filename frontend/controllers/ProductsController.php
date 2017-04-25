@@ -84,8 +84,8 @@ class ProductsController extends MasterController {
             if (\Yii::$app->user->id != '') {
                 $productPostViewMem = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . '  and productSuppId=' . $productSupplierId)->orderBy('productPostId desc')->all();
             } else {
-                $productPostView = NULL;
-                $productPostViewMem = NULL;
+                //$productPostView = NULL;
+                $productPostViewMem = \common\models\costfit\ProductPost::find()->where('productSuppId = ' . $productSupplierId)->orderBy('productPostId desc')->all();
             }
 
             //echo '<pre>';
@@ -106,7 +106,9 @@ class ProductsController extends MasterController {
     }
 
     public function actionChangeOption() {
-        $productId = Yii::$app->request->post('productId');
+        $productId = Yii::$app->request->post('
+
+                productId');
         $model = \common\models\costfit\Product::find()->where("productId = " . $productId)->one();
         $res = [];
         $res["productId"] = $model->productId;
@@ -153,7 +155,11 @@ class ProductsController extends MasterController {
     }
 
     public function actionGetDefultProductShippingPrice() {
-        $productId = Yii::$app->request->post('productId');
+        $productId = Yii::$app->request->post('productId
+
+
+
+                ');
         $default = \common\models\costfit\Product::getShippingTypeId($productId);
         echo $default;
     }
