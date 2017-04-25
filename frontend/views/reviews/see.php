@@ -314,7 +314,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             foreach ($productPostList as $valuex) {
                                                 $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
                                                 ?>
-                                                <div class="text-center" id="reviews-rate-show-<?php echo $value['productPostId']; ?>" style=" margin-left: 2px;border: 1px #e6e6e6 solid; max-height: 160px; min-height: 160px; padding: 5px;">
+                                                <div class="text-center" id="reviews-rate-show-<?php echo $value['productPostId']; ?>" style=" margin-left: 2px;border: 1px #e6e6e6 solid; max-height: 460px; min-height: 160px; padding: 5px;">
                                                     <?php
                                                     echo \yii2mod\rating\StarRating::widget([
                                                         'name' => "input_name_" . $value['productPostId'],
