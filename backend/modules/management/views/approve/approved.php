@@ -65,7 +65,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
                 <div class="tab-content tab-content-bordered">
                     <div class="tab-pane fade active in" id="uidemo-tabs-default-demo-approved">
-                        <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
+                        <?php //Pjax::begin(['id' => 'employee-grid-view']); ?>
                         <div class="panel colourable" id="switcher-examples">
                             <div class="panel-heading" style="background-color: #1d89cf; padding: 5px 5px; ">
                                 <span class = "panel-title"> <h4 style = " color: #ffffff;"> รายการสินค้าที่ Approve ของ <code>Suppliers</code> </h4></span>
@@ -259,7 +259,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 </div>
                             </div>
                         </div>.
-                        <?php Pjax::end(); ?>
+                        <?php //Pjax::end(); ?>
                     </div> <!-- / .tab-pane -->
 
                 </div> <!-- / .tab-content -->

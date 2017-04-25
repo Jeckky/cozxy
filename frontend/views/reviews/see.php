@@ -62,6 +62,64 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <div class="row" id="productItem">
             <?php echo $this->render('@app/views/products/product_catalog_item', ['productPostViewMem' => $productPostViewMem, 'productPost' => $productPost, 'model' => $model, 'productSupplierId' => $productSupplierId, 'getPrductsSupplirs' => $getPrductsSupplirs, 'supplierPrice' => $supplierPrice]); ?>
         </div>
+        <div class="col-lg-12 col-md-12 col-sm-12" style="border-top: 2px #e6e6e6 solid; padding: 10px; text-align: center;">
+            <style type="text/css">
+                .reviews-rate-see > img {
+                    display: initial;
+                    max-width: 100%;
+                    height: auto;
+                    zoom: 1.5;
+                }
+            </style>
+            <?php
+            $form = ActiveForm::begin([
+                'options' => ['class' => 'form-horizontal', 'enctype' => 'multipart/form-data', 'src' => '/reviews/create-review'],
+                'fieldConfig' => [
+                    'template' => '{label}<div class="col-sm-9">{input}</div>',
+                    'labelOptions' => [
+                        'class' => 'col-sm-3 control-label'
+                    ]
+                ]
+            ]);
+            ?>
+            <div class="Reviews text-center" style="  margin-top: 10px; ">
+                <h5>Rate this item</h5>
+                <div class="col-md-12">
+                    <?php
+                    //2.Usage without a model
+                    echo \yii2mod\rating\StarRating::widget([
+                        'name' => "input_name",
+                        'value' => 1,
+                        'options' => [
+                            // Your additional tag options
+                            'id' => 'reviews-rate', 'class' => 'reviews-rate-see',
+                        ],
+                        'clientOptions' => [
+                        // Your client options
+                        ],
+                    ]);
+                    ?>
+                </div>
+
+                <div class="col-md-12 text-center"><br> 
+                    <?php
+                    if (\Yii::$app->user->id != '') {
+                        //echo $form->field($model, 'productPostId')->hiddenInput(['value' => $productPostId])->label(false);
+                        //echo $form->field($model, 'productSupplierId')->hiddenInput(['value' => $productSupplierId])->label(false);
+                        //echo $form->field($model, 'productId')->hiddenInput(['value' => $model->productId])->label(false);
+                        echo Html::hiddenInput('productPostId', $productPostId);
+                        echo Html::hiddenInput('productSupplierId', $productSupplierId);
+                        echo Html::hiddenInput('productId', $model->productId);
+                        ?>
+                        <button class="btn btn-black btn-xs" role="button" id="write-reviews">Write a review</button>
+                    <?php } else { ?>
+                        <a href="#" class="btn btn-black btn-xs" role="button" id="write-reviews">Member Only</a>
+                    <?php } ?>
+                </div>
+
+            </div>
+            <?php ActiveForm::end(); ?>
+        </div>
         <div class="col-lg-12 col-md-12 col-sm-12">
             <?php
             if (\Yii::$app->user->id != '') {
@@ -178,56 +236,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             </section>
                         <?php } ?>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12" style="border-top: 2px #e6e6e6 solid;">
-                        <?php
-                        $form = ActiveForm::begin([
-                            'options' => ['class' => 'form-horizontal', 'enctype' => 'multipart/form-data', 'src' => '/reviews/create-review'],
-                            'fieldConfig' => [
-                                'template' => '{label}<div class="col-sm-9">{input}</div>',
-                                'labelOptions' => [
-                                    'class' => 'col-sm-3 control-label'
-                                ]
-                            ]
-                        ]);
-                        ?>
-                        <div class="Reviews" style="margin-left: 10px; margin-top: 10px;">
-                            <h5>Rate this item</h5>
-                            <div class="col-md-3">
-                                <?php
-                                //2.Usage without a model
-                                echo \yii2mod\rating\StarRating::widget([
-                                    'name' => "input_name",
-                                    'value' => 1,
-                                    'options' => [
-                                        // Your additional tag options
-                                        'id' => 'reviews-rate', 'class' => 'reviews-rate',
-                                    ],
-                                    'clientOptions' => [
-                                    // Your client options
-                                    ],
-                                ]);
-                                ?>
-                            </div>
 
-                            <div class="col-md-6 text-left">
-                                <?php
-                                if (\Yii::$app->user->id != '') {
-                                    //echo $form->field($model, 'productPostId')->hiddenInput(['value' => $productPostId])->label(false);
-                                    //echo $form->field($model, 'productSupplierId')->hiddenInput(['value' => $productSupplierId])->label(false);
-                                    //echo $form->field($model, 'productId')->hiddenInput(['value' => $model->productId])->label(false);
-                                    echo Html::hiddenInput('productPostId', $productPostId);
-                                    echo Html::hiddenInput('productSupplierId', $productSupplierId);
-                                    echo Html::hiddenInput('productId', $model->productId);
-                                    ?>
-                                    <button class="btn btn-black btn-xs" role="button" id="write-reviews">Write a review</button>
-                                <?php } else { ?>
-                                    <a href="#" class="btn btn-black btn-xs" role="button" id="write-reviews">Member Only</a>
-                                <?php } ?>
-                            </div>
-
-                        </div>
-                        <?php ActiveForm::end(); ?>
-                    </div>
                     <style>
                         .brand-carousel-reviews {
                             padding: 24px 0 48px 0;
