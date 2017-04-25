@@ -76,13 +76,13 @@ class ProductsController extends MasterController {
          */
         $getPrductsSupplirs = Suppliers::GetProductSuppliersHelpers($productSupplierId);
         $price = ProductSuppliers::productPriceSupplier($productSupplierId);
-
+        $productPostId = Yii::$app->request->get('productPostId');
         if ($productId != '') {
             $model = \common\models\costfit\Product::find()->where("productId =" . $productId)->one();
             //$productPostView = \common\models\costfit\ProductPost::find()->groupBy(['productSuppId'])->orderBy('productPostId desc')->limit(6)->all();
             $productPostView = \common\models\costfit\ProductPost::find()->where('productSuppId =' . $productSupplierId)->all();
             if (\Yii::$app->user->id != '') {
-                $productPostViewMem = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . ' and productSuppId=' . $productSupplierId)->orderBy('productPostId desc')->all();
+                $productPostViewMem = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . '  and productSuppId=' . $productSupplierId)->orderBy('productPostId desc')->all();
             } else {
                 $productPostView = NULL;
                 $productPostViewMem = NULL;

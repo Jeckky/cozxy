@@ -118,7 +118,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <!--    <div class="buttons group products-buttons-group" style="margin-top: -18px;">
             <div class="form-group" style="word-wrap: break-word;">
                 <label for="shopping-dollar" class="col-sm-1 " style="float: left; padding-right: 0px; padding-left: 0px; margin-bottom: 0px;">
-                    <img  src="<?php // echo Yii::$app->homeUrl;                                                                                                                       ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
+                    <img  src="<?php // echo Yii::$app->homeUrl;                                                                                                                                   ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
                 </label>
                 <div class="col-sm-11 text-left discountPrice " style="float: left; padding: 0px; margin-left: 0px; margin-top: 15px;">
                     &nbsp;Add more than 1 item to your order
@@ -206,6 +206,34 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <?php } ?>
         <a class="btn btn-black btn-sm" <?php if (\Yii::$app->user->isGuest == 1) { ?> id="GuestaddItemToWishlist" <?php } else { ?> id="addItemToWishlist" <?php } ?> href="#" <?= (\common\models\costfit\Wishlist::isExistingList($model->productSuppId)) ? " disabled" : " " ?>><i class="icon-heart"></i>Add to wishlist</a>
     </div>
+    <?php
+    if (Yii::$app->controller->action->id == 'see-review') {
+        ?>
+        <div class="buttons group">
+            <h4>My Post</h4>
+            <div class="post">
+                <?php
+                if (count($productPostViewMem) > 0) {
+                    $nun = 1;
+                    foreach ($productPostViewMem as $key => $value) {
+                        $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
+                        foreach ($productPostList as $valuex) {
+                            $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
+                            ?>
+                            <p class="p-style3" style="border-bottom: 1px #e6e6e6 dotted;">
+                                <a href="/reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?= $value->productSuppId ?>&productId=<?= $valuex->productId ?>"  role="button"   style="font-size: 14px; font-weight: bold;">
+                                    <?php echo $nun++ ?>).<i class="fa fa-pencil" aria-hidden="true"></i><?php echo strip_tags($value->title); ?></a>
+                                <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo strip_tags($value->shortDescription); ?>
+                            </p>
+                            <?php
+                        }
+                    }
+                }
+                ?>
+            </div>
+        </div>
+    <?php } ?>
     <?php
     if (Yii::$app->controller->action->id != 'see-review') {
         ?>
@@ -401,16 +429,15 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
 
                             <?php
                             if (count($productPostViewMem) > 0) {
-                                $nun = 1;
+                                $num = 1;
                                 foreach ($productPostViewMem as $key => $value) {
-
                                     $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
                                     foreach ($productPostList as $valuex) {
                                         $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
                                         ?>
                                         <p class="p-style3" style="border-bottom: 1px #e6e6e6 dotted;">
                                             <a href="/reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?= $value->productSuppId ?>&productId=<?= $valuex->productId ?>"  role="button"   style="font-size: 14px;">
-                                                <i class="fa fa-pencil" aria-hidden="true"></i> <?php echo strip_tags($value->title); ?></a>
+                                                <?php echo $num++ ?>). <?php echo strip_tags($value->title); ?></a>
                                             <br>
                                             &nbsp;&nbsp;&nbsp;&nbsp;<?php echo strip_tags($value->shortDescription); ?>
                                         </p>
@@ -461,6 +488,7 @@ if (Yii::$app->controller->action->id != 'see-review') {
                             <div class="inner">
                                 <?php
                                 if (count($productPost) > 0) {
+
                                     foreach ($productPost as $key => $value) {
                                         $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
                                         $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId, $value->productPostId);

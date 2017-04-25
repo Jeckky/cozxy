@@ -162,23 +162,23 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="Reviews" style="margin-left: 10px;">
                 <div class="post">
                     <?php
-                    if (count($productPostViewMem) > 0) {
-                        $nun = 1;
-                        foreach ($productPostViewMem as $key => $value) {
-                            $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
-                            foreach ($productPostList as $valuex) {
-                                $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
-                                ?>
-                                <p class="p-style3" style="border-bottom: 1px #e6e6e6 dotted;">
-                                    <a href="/reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?= $value->productSuppId ?>&productId=<?= $valuex->productId ?>"  role="button"   style="font-size: 14px;">
-                                        <?php echo strip_tags($value->title); ?></a>
-                                    <br>
-                                    <?php echo strip_tags($value->shortDescription); ?>
-                                </p>
-                                <?php
-                            }
-                        }
-                    }
+                    /* if (count($productPostViewMem) > 0) {
+                      $nun = 1;
+                      foreach ($productPostViewMem as $key => $value) {
+                      $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
+                      foreach ($productPostList as $valuex) {
+                      $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
+                      ?>
+                      <p class="p-style3" style="border-bottom: 1px #e6e6e6 dotted;">
+                      <a href="/reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?= $value->productSuppId ?>&productId=<?= $valuex->productId ?>"  role="button"   style="font-size: 14px; font-weight: bold;">
+                      <?php echo $nun++ ?>).<i class="fa fa-pencil" aria-hidden="true"></i><?php echo strip_tags($value->title); ?></a>
+                      <br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo strip_tags($value->shortDescription); ?>
+                      </p>
+                      <?php
+                      }
+                      }
+                      } */
                     ?>
                 </div>
                 <div class="Reviews" style="margin-left: 10px;">
@@ -232,13 +232,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             $member = \common\models\costfit\User::find()->where('userId=' . $postxRating->userId)->one();
                             ?>
                             <div class="col-md-12 post" style="text-align: left;">
+
                                 <footer>
                                     <div class="share">
                                         <a href="#"> <i class="fa fa-user"></i> <?php echo $member->firstname; ?></a>
                                         <a href="#"> <i class="fa fa-calendar"></i> <?php echo $postxRating->createDateTime; ?></a>
                                     </div>
                                     <blockquote>
-
                                         <?php
                                         //echo $rating['score'];
                                         echo \yii2mod\rating\StarRating::widget([
@@ -256,8 +256,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         <?php
                                         echo '( <span style="font-size: 12px;color:#e26a00;">' . number_format($postxRating['score'], 3) . ' จาก 5 คะแนน</span> )';
                                         ?>
-
-
                                     </blockquote>
                                 </footer>
                             </div>
@@ -387,6 +385,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
     </div>
 </section><!--Wishlist Close-->
-
+<?php echo $this->render('@app/themes/costfit/layouts/_brand_carousel'); ?>
 <!--Catalog Grid-->
 
