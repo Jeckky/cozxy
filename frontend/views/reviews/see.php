@@ -285,9 +285,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     color: #000 !important;
                                 }
                             </style>
-
-
-
                             <section class="brand-carousel" id="brand-carousel-reviews">
                                 <div class="container">
                                     <div class="inner">
@@ -331,14 +328,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                         </p>
                                                         <p>
                                                             <a role="button" class="panel-toggle" id="see-reviews" style="font-size: 14px;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
-
                                                         </p>
                                                     </div>
                                                     <?php
                                                 }
                                             }
-                                            ?>
-                                            <?php
                                         }
                                         ?>
                                     </div>

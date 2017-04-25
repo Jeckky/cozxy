@@ -118,7 +118,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <!--    <div class="buttons group products-buttons-group" style="margin-top: -18px;">
             <div class="form-group" style="word-wrap: break-word;">
                 <label for="shopping-dollar" class="col-sm-1 " style="float: left; padding-right: 0px; padding-left: 0px; margin-bottom: 0px;">
-                    <img  src="<?php // echo Yii::$app->homeUrl;     ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
+                    <img  src="<?php // echo Yii::$app->homeUrl;             ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
                 </label>
                 <div class="col-sm-11 text-left discountPrice " style="float: left; padding: 0px; margin-left: 0px; margin-top: 15px;">
                     &nbsp;Add more than 1 item to your order
@@ -476,7 +476,7 @@ if (Yii::$app->controller->action->id != 'see-review') {
                                         foreach ($productPostList as $valuex) {
                                             $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
                                             ?>
-                                            <div class="text-center" id="reviews-rate-show-<?php echo $value['productPostId']; ?>" style=" margin-left: 2px;border: 1px #e6e6e6 solid; max-height: 160px; min-height: 160px; padding: 5px;">
+                                            <div class="text-center" id="reviews-rate-show-<?php echo $value['productPostId']; ?>" style=" margin-left: 2px;border: 1px #e6e6e6 solid; max-height: 460px; min-height: 200px; padding: 5px;">
                                                 <?php
                                                 echo \yii2mod\rating\StarRating::widget([
                                                     'name' => "input_name_" . $value['productPostId'],
@@ -495,11 +495,9 @@ if (Yii::$app->controller->action->id != 'see-review') {
                                                     <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"
                                                        style="font-size: 14px;"><?php echo $value->title; ?></a>
                                                 </p>
-                                                <p class="text-left" style="margin-bottom:2px;"> <?php echo $value->shortDescription; ?></a>
-                                                </p>
+                                                <p class="text-left" style="margin-bottom:2px;"> <?php echo $value->shortDescription; ?></p>
                                                 <p>
-                                                    <a role="button" class="panel-toggle" id="see-reviews" style="font-size: 14px;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
-
+                                                    <a role="button" class="panel-toggle" id="see-reviews" style="font-size: 14px; border-bottom: 0px dashed #292c2e;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
                                                 </p>
                                             </div>
                                             <?php

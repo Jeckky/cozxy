@@ -29,16 +29,20 @@ if (isset($categoryId)) {
         foreach ($allBrands as $brand) {
             if (isset($brand)) {
                 $brands = \common\models\costfit\Brand::find()->where("brandId=" . $brand)->one();
-                $total = count(common\models\costfit\ProductSuppliers::find()->where("brandId=" . $brand . " and categoryId in (" . $allCategory . ")")->all());
-                if (file_exists(Yii::$app->basePath . "/web" . $brands->image) && !empty($brands->image)) {
-                    $image = $brands->image;
+                if (count($brands) > 0) {
+                    $total = count(common\models\costfit\ProductSuppliers::find()->where("brandId=" . $brand . " and categoryId in (" . $allCategory . ")")->all());
+                    if (file_exists(Yii::$app->basePath . "/web" . $brands->image) && !empty($brands->image)) {
+                        $image = $brands->image;
+                    } else {
+                        $image = Yii::$app->homeUrl . "images/no-image.jpg";
+                    }
+                    if (isset($brands)) {
+                        ?>
+                        <a class="item" href="#"><img src="<?php echo $image; ?>" alt="" title="ขนาด : 164x120" width="164" height="120" class="img-responsive"/></a>
+                        <?php
+                    }
                 } else {
                     $image = Yii::$app->homeUrl . "images/no-image.jpg";
-                }
-                if (isset($brands)) {
-                    ?>
-                    <a class="item" href="#"><img src="<?php echo $image; ?>" alt="" title="ขนาด : 164x120" width="164" height="120" class="img-responsive"/></a>
-                    <?php
                 }
             }
         }
