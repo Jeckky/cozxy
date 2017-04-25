@@ -73,7 +73,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </style>
             <?php
             $form = ActiveForm::begin([
-                'options' => ['class' => 'form-horizontal', 'enctype' => 'multipart/form-data', 'src' => '/reviews/create-review'],
+                'action' => '/reviews/create-review',
+                'options' => ['class' => 'form-horizontal', 'enctype' => 'multipart/form-data'],
                 'fieldConfig' => [
                     'template' => '{label}<div class="col-sm-9">{input}</div>',
                     'labelOptions' => [
@@ -101,7 +102,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     ?>
                 </div>
 
-                <div class="col-md-12 text-center"><br> 
+                <div class="col-md-12 text-center"><br>
                     <?php
                     if (\Yii::$app->user->id != '') {
                         //echo $form->field($model, 'productPostId')->hiddenInput(['value' => $productPostId])->label(false);
@@ -122,36 +123,106 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12">
             <?php
-            if (\Yii::$app->user->id != '') {
-                ?>
-                <h3 style="text-decoration: underline">My Post :</h3>
+            //if (\Yii::$app->user->id != '') {
+            ?>
+            <h3 style="text-decoration: underline">Review Post :</h3>
+            <div class="Reviews" style="margin-left: 10px;">
+                <div class="post">
+                    <?php
+                    if (count($productPostViewMem) > 0) {
+                        $nun = 1;
+                        foreach ($productPostViewMem as $key => $value) {
+                            $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
+                            foreach ($productPostList as $valuex) {
+                                $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
+                                ?>
+                                <p class="p-style3" style="border-bottom: 1px #e6e6e6 dotted;">
+                                    <a href="/reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?= $value->productSuppId ?>&productId=<?= $valuex->productId ?>"  role="button"   style="font-size: 14px;">
+                                        <?php echo 'Title : ' . strip_tags($value->title); ?></a>
+                                    <br>
+                                    <?php echo 'Short Desc : ' . strip_tags($value->shortDescription); ?>
+                                </p>
+                                <?php
+                            }
+                        }
+                    }
+                    ?>
+                </div>
                 <div class="Reviews" style="margin-left: 10px;">
                     <div class="post">
-
                         <?php
-                        if (count($productPostViewMem) > 0) {
-                            $nun = 1;
-                            foreach ($productPostViewMem as $key => $value) {
+                        //$post = common\models\costfit\ProductPost::find()->where('productSuppId=' . $value['productSuppId'])->all();
+                        $number = 1;
+                        $rating_score = \common\helpers\Reviews::RatingInProduct($_GET['productSupplierId']);
+                        $rating_member = \common\helpers\Reviews::RatingInMember($_GET['productSupplierId']);
+                        //echo $rating_score . '::';
+                        //echo $rating_member;
+                        if ($rating_score == 0 && $rating_member == 0) {
+                            $results_rating = 0;
+                        } else {
+                            $results_rating = $rating_score / $rating_member;
+                        }
+                        ?>
+                        <div class="col-md-3">
+                            <?php
+                            echo \yii2mod\rating\StarRating::widget([
+                                'name' => "input_name_" . $_GET['productSupplierId'],
+                                'value' => $results_rating,
+                                'options' => [
+                                    // Your additional tag options
+                                    'id' => 'reviews-rate-' . $_GET['productSupplierId'], 'class' => 'reviews-rate',
+                                ],
+                                'clientOptions' => [
+                                // Your client options
+                                ],
+                            ]);
+                            ?>
+                        </div>
+                        <div class="col-md-9">
+                            <?php
+                            echo '( <span style="font-size: 12px;color:#e26a00;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน</span> )';
+                            ?>
+                        </div>
+                        <?php
+                        $rating = common\models\costfit\ProductPostRating::find()->where('productPostId=' . $_GET['productPostId'])->all();
+                        foreach ($rating as $postxRating) {
+                            $member = \common\models\costfit\User::find()->where('userId=' . $postxRating->userId)->one();
+                            ?>
+                            <div class="col-md-12 post" style="text-align: left;">
+                                <footer>
+                                    <div class="share">
+                                        <a href="#"> <i class="fa fa-user"></i> <?php echo $member->firstname; ?></a>
+                                        <a href="#"> <i class="fa fa-calendar"></i> <?php echo $postxRating->createDateTime; ?></a>
+                                    </div>
+                                    <blockquote>
+                                        <p>
+                                            <?php
+                                            //echo $rating['score'];
+                                            echo \yii2mod\rating\StarRating::widget([
+                                                'name' => "input_name_" . $postxRating['score'],
+                                                'value' => $postxRating['score'],
+                                                'options' => [
+                                                    // Your additional tag options
+                                                    'id' => 'rating-score-' . $postxRating['score'], 'class' => 'rating-score',
+                                                ],
+                                                'clientOptions' => [
+                                                // Your client options
+                                                ],
+                                            ]);
+                                            ?>
+                                        </p>
 
-                                $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
-                                foreach ($productPostList as $valuex) {
-                                    $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
-                                    ?>
-                                    <p class="p-style3" style="border-bottom: 1px #e6e6e6 dotted;">
-                                        <a href="/reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?= $value->productSuppId ?>&productId=<?= $valuex->productId ?>"  role="button"   style="font-size: 14px;">
-                                            <?php echo 'Title : ' . strip_tags($value->title); ?></a>
-                                        <br>
-                                        <?php echo 'Short Desc : ' . strip_tags($value->shortDescription); ?>
-                                    </p>
-                                    <?php
-                                }
-                            }
+                                    </blockquote>
+                                </footer>
+                            </div>
+                            <?php
                         }
                         ?>
                     </div>
-                    <a href="/reviews/see-review?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>"  role="button" class="panel-toggle" id="see-reviews" style="font-size: 14px;">See all  reviews <i class="fa fa-angle-right" aria-hidden="true"></i></a>
                 </div>
-            <?php } ?>
+                <!--<a href="/reviews/see-review?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>"  role="button" class="panel-toggle" id="see-reviews" style="font-size: 14px;">See all  reviews <i class="fa fa-angle-right" aria-hidden="true"></i></a>-->
+            </div>
+            <?php //}  ?>
         </div>
     </div>
 </section>
@@ -178,6 +249,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     color: #000 !important;
                                 }
                             </style>
+
+
+
                             <section class="brand-carousel" id="brand-carousel-reviews">
                                 <div class="container">
                                     <div class="inner">

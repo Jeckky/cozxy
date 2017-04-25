@@ -38,16 +38,16 @@ class ReviewsController extends MasterController {
 
         $this->title = 'Cozxy.com | Create Review';
         $this->subTitle = 'ชื่อ content';
-        $productSupplierId = Yii::$app->request->get('productSupplierId');
+        $productSupplierId = Yii::$app->request->post('productSupplierId');
         $score = Yii::$app->request->post('score');
-        $productId = Yii::$app->request->get('productId');
-        $productPostId = Yii::$app->request->get('productPostId');
-        $model = \common\models\costfit\ProductPost::find()->where("productSuppId=" . $_GET["productSupplierId"])->one();
-
+        $productId = Yii::$app->request->post('productId');
+        $productPostId = Yii::$app->request->post('productPostId');
+        //$model = \common\models\costfit\ProductPost::find()->where("productSuppId=" . $productSupplierId)->one();
         //$model = new \common\models\costfit\ProductPost(['scenario' => 'review_post']);
         $product_post_rating = new \common\models\costfit\ProductPostRating(['scenario' => 'review_post']);
         if (isset($score)) {
-            $productPostId = Yii::$app->db->lastInsertID;
+            //echo $score;
+            //$productPostId = $productPostId;
             $product_post_rating->productPostId = $productPostId;
             $product_post_rating->userId = Yii::$app->user->identity->userId;
             $product_post_rating->score = $score;
@@ -60,7 +60,7 @@ class ReviewsController extends MasterController {
             //return $this->redirect(Yii::$app->homeUrl . 'reviews/see-review?productSupplierId=' . $productSupplierId . '&productId=' . $productId . '');
         }
 
-        return $this->render('@app/views/reviews/create', compact("model"));
+        //return $this->render('@app/views/reviews/create', compact("model"));
     }
 
     public function actionCreatePost() {
@@ -114,18 +114,13 @@ class ReviewsController extends MasterController {
         $productId = $_GET['productId'];
         $productSupplierId = $_GET['productSupplierId'];
         $productPostId = $_GET['productPostId'];
-
-        /*
-         * Get Product Suppliers
-         * create date : 14/01/2017
-         * create by : taninut.bm
-         */
         $getPrductsSupplirs = Suppliers::GetProductSuppliersHelpers($productSupplierId);
         $supplierPrice = ProductSuppliers::productPriceSupplier($productSupplierId);
-        $productPost = \common\models\costfit\ProductPost::find()->where('productSuppId !=' . $productSupplierId)->groupBy(['productSuppId'])->all();
+        $productPost = \common\models\costfit\ProductPost::find()->where('productSuppId =' . $productSupplierId)->all();
+        //$productPost = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId)->all();
         if (\Yii::$app->user->id != '') {
-            //$productPostViewMem = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . ' and productSuppId=' . $productSupplierId)->limit(6)->all();
-            $productPostViewMem = \common\models\costfit\ProductPost::find()->where('productSuppId=' . $productSupplierId . ' and productPostId=' . $productPostId)->all();
+            $productPostViewMem = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . ' and productSuppId=' . $productSupplierId)->limit(6)->all();
+            //$productPostViewMem = \common\models\costfit\ProductPostRating::find()->where('productPostId=' . $productPostId)->all();
         } else {
             $productPostView = NULL;
             $productPostViewMem = NULL;
@@ -143,6 +138,7 @@ class ReviewsController extends MasterController {
         //print_r($getPrductsSupplirs);
         //exit();
         $model = \common\models\costfit\Product::find()->where("productId =" . $productId)->one();
+
         $this->title = 'Cozxy.com | Products';
         $this->subTitle = $model->attributes['title'];
         $this->subSubTitle = '';
