@@ -67,9 +67,19 @@ class ReviewsController extends MasterController {
 
         $this->title = 'Cozxy.com | Create Review';
         $this->subTitle = 'ชื่อ content';
-        $productSupplierId = Yii::$app->request->get('productSupplierId');
+        $request = Yii::$app->request;
+
+        if ($request->isGet) { /*  ตรวจสอบว่าเป็น GET */
+            $productSupplierId = Yii::$app->request->get('productSupplierId');
+            $productId = Yii::$app->request->get('productId');
+        }
+        if ($request->isPost) { /* ตรวจสอบว่าเป็น POST */
+            $productSupplierId = Yii::$app->request->post('productSupplierId');
+            $productId = Yii::$app->request->post('productId');
+        }
+
         $score = Yii::$app->request->post('score');
-        $productId = Yii::$app->request->get('productId');
+
         //$k = base64_decode(base64_decode($productSupplierId));
         //$params = \common\models\ModelMaster::encodeParams(['productSupplierId' => $productSupplierId]);
         //echo '<pre>';

@@ -143,9 +143,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     //echo $form->field($model, 'productPostId')->hiddenInput(['value' => $productPostId])->label(false);
                     //echo $form->field($model, 'productSupplierId')->hiddenInput(['value' => $productSupplierId])->label(false);
                     //echo $form->field($model, 'productId')->hiddenInput(['value' => $model->productId])->label(false);
-                    echo Html::hiddenInput('productPostId', $productPostId);
-                    echo Html::hiddenInput('productSupplierId', $productSupplierId);
-                    echo Html::hiddenInput('productId', $model->productId);
+                    echo Html::hiddenInput('productPostId', $_GET['productPostId']);
+                    echo Html::hiddenInput('productSupplierId', $_GET['productSupplierId']);
+                    echo Html::hiddenInput('productId', $_GET['productId']);
                     ?>
                     <button class="btn btn-black btn-xs" role="button" id="write-reviews">Submit Post</button>
                 <?php } else { ?>
