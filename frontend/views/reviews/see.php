@@ -183,7 +183,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 </div>
                 <div class="Reviews" style="margin-left: 10px;">
                     <br>
-                    <h5 style="text-decoration: underline; font-size:14px; ">ค่าเฉลี่ยของคะแนนที่ได้จากลูกค้า:</h5>
+                    <h5 style="text-decoration: underline; font-size:14px;">ค่าเฉลี่ยของคะแนนที่ได้จากลูกค้า:</h5>
                     <div class="post">
                         <?php
                         $post = common\models\costfit\ProductPostRating::find()->where('productPostId=' . $_GET['productPostId'])->count();
@@ -201,14 +201,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             }
                             ?>
                             <div style="padding: 5px;">
-                                <div class="col-md-3">
+                                <div class="col-md-12">
                                     <?php
                                     echo \yii2mod\rating\StarRating::widget([
                                         'name' => "input_name_" . $_GET['productSupplierId'],
                                         'value' => $results_rating,
                                         'options' => [
                                             // Your additional tag options
-                                            'id' => 'reviews-rate-' . $_GET['productSupplierId'], 'class' => 'reviews-rate',
+                                            'id' => 'reviews-rate-' . $_GET['productSupplierId'], 'class' => 'reviews-rate-see',
                                         ],
                                         'clientOptions' => [
                                         // Your client options
@@ -216,10 +216,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     ]);
                                     ?>
                                 </div>
-                                <div class="col-md-9">
+                                <div class="col-md-12">
                                     <?php
-                                    echo '( <span style="font-size: 12px;color:#e26a00;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน</span> )';
+                                    echo '<div class="col-md-12" style="font-size: 12px;color:#e26a00; padding: 5px;"><span style="font-size: 14px; color:#000;">' . number_format($results_rating, 3) . '</span> จาก 5 คะแนน </div>';
+                                    echo '<div class="col-md-12" style="font-size: 12px;color:#e26a00;padding: 5px;">' . number_format($rating_score, 3) . '  คะแนน </div>';
                                     ?>
+                                    <br>
                                 </div>
                             </div>
                             <hr>
@@ -236,25 +238,25 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         <a href="#"> <i class="fa fa-calendar"></i> <?php echo $postxRating->createDateTime; ?></a>
                                     </div>
                                     <blockquote>
-                                        <p>
-                                            <?php
-                                            //echo $rating['score'];
-                                            echo \yii2mod\rating\StarRating::widget([
-                                                'name' => "input_name_" . $postxRating['score'],
-                                                'value' => $postxRating['score'],
-                                                'options' => [
-                                                    // Your additional tag options
-                                                    'id' => 'rating-score-' . $postxRating['score'], 'class' => 'rating-score',
-                                                ],
-                                                'clientOptions' => [
-                                                // Your client options
-                                                ],
-                                            ]);
-                                            ?>
-                                            <?php
-                                            echo '( <span style="font-size: 12px;color:#e26a00;">' . number_format($postxRating['score'], 3) . ' จาก 5 คะแนน</span> )';
-                                            ?>
-                                        </p>
+
+                                        <?php
+                                        //echo $rating['score'];
+                                        echo \yii2mod\rating\StarRating::widget([
+                                            'name' => "input_name_" . $postxRating['score'],
+                                            'value' => $postxRating['score'],
+                                            'options' => [
+                                                // Your additional tag options
+                                                'id' => 'rating-score-' . $postxRating['score'], 'class' => 'rating-score',
+                                            ],
+                                            'clientOptions' => [
+                                            // Your client options
+                                            ],
+                                        ]);
+                                        ?>
+                                        <?php
+                                        echo '( <span style="font-size: 12px;color:#e26a00;">' . number_format($postxRating['score'], 3) . ' จาก 5 คะแนน</span> )';
+                                        ?>
+
 
                                     </blockquote>
                                 </footer>
