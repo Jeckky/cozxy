@@ -320,14 +320,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                         ]);
                                                         //echo '<span style="font-size: 12px;">' . number_format($results_rating, 3) . 'จาก 5 คะแนน </span>';
                                                         ?>
-                                                        <p class="text-left" style="margin-bottom:2px;">
+                                                        <p class="text-left" style="margin-bottom:2px; border-bottom: 1px #e6e6e6 dashed;">
                                                             <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"
-                                                               style="font-size: 14px;"><?php echo $value->title; ?></a>
+                                                               style="font-size: 14px;"><i class="fa fa-pencil" aria-hidden="true"></i> <?php echo $value->title; ?></a>
                                                         </p>
-                                                        <p class="text-left" style="margin-bottom:2px;"> <?php echo $value->shortDescription; ?></a>
-                                                        </p>
-                                                        <p>
-                                                            <a role="button" class="panel-toggle" id="see-reviews" style="font-size: 14px;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                                        <p class="text-left" style="margin-bottom:2px; font-size: 12px;">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $value->shortDescription; ?></p>
+                                                        <p style="text-align: right;">
+                                                            <a role="button"  onclick="views_click('<?php echo $value->productPostId ?>', '<?php echo $valuex->productSuppId; ?>', '<?php echo $valuex->productId; ?>')"  class="panel-toggle" id="see-reviews" style="font-size: 14px; border-bottom: 0px dashed #292c2e;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
                                                         </p>
                                                     </div>
                                                     <?php

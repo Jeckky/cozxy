@@ -145,4 +145,17 @@ class ReviewsController extends MasterController {
         return $this->render('@app/views/reviews/see', compact("productPostId", "productPostViewMem", "productPost", "model", "getPrductsSupplirs", "productSupplierId", "supplierPrice"));
     }
 
+    public function actionViewsPosts() {
+        //productPostId: productPostId, productSuppId: productSuppId, productId: productId
+        $productPostId = Yii::$app->request->post('productPostId');
+        $productSuppId = Yii::$app->request->post('productSuppId');
+        $productId = Yii::$app->request->post('productId');
+        $txt = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId . ' and productSuppId=' . $productSuppId)->one();
+        //echo '<pre>';
+        //print_r($txt['attributes']);
+        //exit();
+        return \yii\helpers\Json::encode($txt['attributes']);
+        //echo 'test';
+    }
+
 }

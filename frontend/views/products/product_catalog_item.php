@@ -118,7 +118,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <!--    <div class="buttons group products-buttons-group" style="margin-top: -18px;">
             <div class="form-group" style="word-wrap: break-word;">
                 <label for="shopping-dollar" class="col-sm-1 " style="float: left; padding-right: 0px; padding-left: 0px; margin-bottom: 0px;">
-                    <img  src="<?php // echo Yii::$app->homeUrl;                       ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
+                    <img  src="<?php // echo Yii::$app->homeUrl;                                                                                                        ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
                 </label>
                 <div class="col-sm-11 text-left discountPrice " style="float: left; padding: 0px; margin-left: 0px; margin-top: 15px;">
                     &nbsp;Add more than 1 item to your order
@@ -410,9 +410,9 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
                                         ?>
                                         <p class="p-style3" style="border-bottom: 1px #e6e6e6 dotted;">
                                             <a href="/reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?= $value->productSuppId ?>&productId=<?= $valuex->productId ?>"  role="button"   style="font-size: 14px;">
-                                                <?php echo strip_tags($value->title); ?></a>
+                                                <i class="fa fa-pencil" aria-hidden="true"></i> <?php echo strip_tags($value->title); ?></a>
                                             <br>
-                                            <?php echo strip_tags($value->shortDescription); ?>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<?php echo strip_tags($value->shortDescription); ?>
                                         </p>
                                         <?php
                                     }
@@ -491,13 +491,13 @@ if (Yii::$app->controller->action->id != 'see-review') {
                                                 ]);
                                                 //echo '<span style="font-size: 12px;">' . number_format($results_rating, 3) . 'จาก 5 คะแนน </span>';
                                                 ?>
-                                                <p class="text-left" style="margin-bottom:2px;">
+                                                <p class="text-left" style="margin-bottom:2px; border-bottom: 1px #e6e6e6 dashed;">
                                                     <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"
-                                                       style="font-size: 14px;"><?php echo $value->title; ?></a>
+                                                       style="font-size: 14px;"><i class="fa fa-pencil" aria-hidden="true"></i> <?php echo $value->title; ?></a>
                                                 </p>
-                                                <p class="text-left" style="margin-bottom:2px;"> <?php echo $value->shortDescription; ?></p>
-                                                <p>
-                                                    <a role="button" onclick="views_click(<?php echo $value->productPostId ?>)"  class="panel-toggle" id="see-reviews" style="font-size: 14px; border-bottom: 0px dashed #292c2e;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                                <p class="text-left" style="margin-bottom:2px; font-size: 12px;">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $value->shortDescription; ?></p>
+                                                <p style="text-align: right;">
+                                                    <a role="button"  onclick="views_click('<?php echo $value->productPostId ?>', '<?php echo $valuex->productSuppId; ?>', '<?php echo $valuex->productId; ?>')"  class="panel-toggle" id="see-reviews" style="font-size: 14px; border-bottom: 0px dashed #292c2e;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
                                                 </p>
                                             </div>
                                             <?php
@@ -516,10 +516,56 @@ if (Yii::$app->controller->action->id != 'see-review') {
     </div>
 <?php }
 ?>
-
+<!-- Modal -->
+<div id="myModal" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><div class="views-title"></div></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="views-shortDescription" style="font-size: 14px; color: #292c2e;"></div>
+                <hr>
+                <div class="views-description" style="font-size: 14px; color: #292c2e;"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn btn-black btn-xs" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     // Get the modal
-    function views_click(productPostId) {
+    function views_click(productPostId, productSuppId, productId) {
         //alert(productPostId);
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: $baseUrl + "reviews/views-posts",
+            data: {productPostId: productPostId, productSuppId: productSuppId, productId: productId},
+            success: function (data, status)
+            {
+                //alert(status);
+                if (status == "success") {
+                    //var json = data;
+                    var rex = /(<([^>]+)>)/ig;
+                    //alert(txt.replace(rex, ""));
+                    //var Num = 1;
+                    console.log(data.title);
+                    var title = data.title;
+                    var shortDescription = data.shortDescription;
+                    var description = data.description;
+                    $('.views-title').html('<i class="fa fa-pencil" aria-hidden="true"></i> ' + title);
+                    $('.views-shortDescription').html(shortDescription);
+                    $('.views-description').html(description.replace(rex, ""));
+                }
+            }
+        });
+        $('#myModal').modal('show')
     }
+
+
 </script>
