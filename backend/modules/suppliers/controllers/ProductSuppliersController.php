@@ -306,7 +306,7 @@ class ProductSuppliersController extends SuppliersMasterController {
             //$model = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId = ' . $id)->one();
             $dataProvider = new ActiveDataProvider([
                 'query' => \common\models\costfit\ProductImageSuppliers:: find()
-                ->where('productSuppId = ' . $productSuppId),
+                ->where('productSuppId = ' . $productSuppId . ' order by ordering asc'),
             ]);
             $productTitle = \common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $productSuppId)->one();
 
