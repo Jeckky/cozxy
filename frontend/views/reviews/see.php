@@ -151,39 +151,42 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="Reviews" style="margin-left: 10px;">
                     <div class="post">
                         <?php
-                        //$post = common\models\costfit\ProductPost::find()->where('productSuppId=' . $value['productSuppId'])->all();
-                        $number = 1;
-                        $rating_score = \common\helpers\Reviews::RatingInProduct($_GET['productSupplierId']);
-                        $rating_member = \common\helpers\Reviews::RatingInMember($_GET['productSupplierId']);
-                        //echo $rating_score . '::';
-                        //echo $rating_member;
-                        if ($rating_score == 0 && $rating_member == 0) {
-                            $results_rating = 0;
-                        } else {
-                            $results_rating = $rating_score / $rating_member;
+                        $post = common\models\costfit\ProductPostRating::find()->where('productPostId=' . $_GET['productPostId'])->count();
+
+                        if ($post > 0) {
+                            $number = 1;
+                            $rating_score = \common\helpers\Reviews::RatingInProduct($_GET['productSupplierId']);
+                            $rating_member = \common\helpers\Reviews::RatingInMember($_GET['productSupplierId']);
+                            //echo $rating_score . '::';
+                            //echo $rating_member;
+                            if ($rating_score == 0 && $rating_member == 0) {
+                                $results_rating = 0;
+                            } else {
+                                $results_rating = $rating_score / $rating_member;
+                            }
+                            ?>
+                            <div class="col-md-3">
+                                <?php
+                                echo \yii2mod\rating\StarRating::widget([
+                                    'name' => "input_name_" . $_GET['productSupplierId'],
+                                    'value' => $results_rating,
+                                    'options' => [
+                                        // Your additional tag options
+                                        'id' => 'reviews-rate-' . $_GET['productSupplierId'], 'class' => 'reviews-rate',
+                                    ],
+                                    'clientOptions' => [
+                                    // Your client options
+                                    ],
+                                ]);
+                                ?>
+                            </div>
+                            <div class="col-md-9">
+                                <?php
+                                echo '( <span style="font-size: 12px;color:#e26a00;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน</span> )';
+                                ?>
+                            </div>
+                            <?php
                         }
-                        ?>
-                        <div class="col-md-3">
-                            <?php
-                            echo \yii2mod\rating\StarRating::widget([
-                                'name' => "input_name_" . $_GET['productSupplierId'],
-                                'value' => $results_rating,
-                                'options' => [
-                                    // Your additional tag options
-                                    'id' => 'reviews-rate-' . $_GET['productSupplierId'], 'class' => 'reviews-rate',
-                                ],
-                                'clientOptions' => [
-                                // Your client options
-                                ],
-                            ]);
-                            ?>
-                        </div>
-                        <div class="col-md-9">
-                            <?php
-                            echo '( <span style="font-size: 12px;color:#e26a00;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน</span> )';
-                            ?>
-                        </div>
-                        <?php
                         $rating = common\models\costfit\ProductPostRating::find()->where('productPostId=' . $_GET['productPostId'])->all();
                         foreach ($rating as $postxRating) {
                             $member = \common\models\costfit\User::find()->where('userId=' . $postxRating->userId)->one();
