@@ -185,7 +185,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <div class="post">
                         <?php
                         $post = common\models\costfit\ProductPostRating::find()->where('productPostId=' . $_GET['productPostId'])->count();
-
+                        // /see-review?productPostId=218&productSupplierId=218&productId=145
                         if ($post > 0) {
                             $number = 1;
                             $rating_score = \common\helpers\Reviews::RatingInProduct($_GET['productSupplierId'], $_GET['productPostId']);
