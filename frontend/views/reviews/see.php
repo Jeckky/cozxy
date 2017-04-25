@@ -179,11 +179,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                       }
                       }
                       } */
+                    $productPostList = \common\models\costfit\ProductPost::find()->where('productPostId =' . $_GET['productPostId'])->one();
                     ?>
                 </div>
                 <div class="Reviews" style="margin-left: 10px;">
                     <br>
-                    <h5 style="text-decoration: underline; font-size:14px;">ค่าเฉลี่ยของคะแนนที่ได้จากลูกค้า:</h5>
+                    <h5 style="text-decoration: underline; font-size:14px;">ค่าเฉลี่ยของคะแนนที่ได้จากลูกค้า :
+                        <small style="color: #0000ff">( Post : <?php echo $productPostList->title; ?> )</small>
+                    </h5>
                     <div class="post">
                         <?php
                         $post = common\models\costfit\ProductPostRating::find()->where('productPostId=' . $_GET['productPostId'])->count();
