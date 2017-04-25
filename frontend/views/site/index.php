@@ -191,7 +191,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     if (strlen($valuex->title) >= 40) {
                                         echo substr($valuex->title, 0, 40);
                                     } else if (strlen($valuex->title) < 40) {
-                                        echo substr($valuex->title, 0, 40) . '<br><br>';
+                                        echo substr($valuex->title, 0, 35) . '<br><br>';
                                     }
                                     ?></a>
                             </div>
@@ -280,9 +280,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <div class="row" id="save-main-limit"></div>
 <?php if ($saveCat->getTotalCount() > 6): ?>
-                                                                            <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
-                                                                                <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
-                                                                            </div>
+                                                                                        <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
+                                                                                            <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
+                                                                                        </div>
 <?php endif; ?>
     </div>
 </section> Categories Close-->
