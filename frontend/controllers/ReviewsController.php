@@ -29,9 +29,9 @@ class ReviewsController extends MasterController {
      */
     public function actionIndex() {
 
-        $this->title = 'Cozxy.com | content';
-        $this->subTitle = 'ชื่อ content';
-        return $this->render('@app/views/content/content');
+        $this->title = 'Cozxy.com | reviews';
+        $this->subTitle = 'ชื่อ reviews';
+        return $this->render('@app/views/reviews/reviews');
     }
 
     public function actionCreateReview() {
