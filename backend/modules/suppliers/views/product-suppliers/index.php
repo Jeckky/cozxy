@@ -21,7 +21,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
 <div class="product-suppliers-index">
 
 
-    <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
+<?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-default">
         <div class="panel-body">
             <?php
@@ -82,14 +82,14 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                     <button class="btn btn-info" type="submit">Search Product Suppliers</button>
                 </div>
             </div>
-            <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
         </div>
         <div class="panel-heading">
             <div class="row">
                 <div class="col-md-6"><?= $this->title ?></div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
-                        <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Product Suppliers', ['create'], ['class' => 'btn btn-success btn-xs']) ?>
+<?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Product Suppliers', ['create'], ['class' => 'btn btn-success btn-xs']) ?>
                     </div>
                 </div>
             </div>
@@ -148,7 +148,8 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                             $url = isset($model->url) ? Html::a('url brand', $model->url, ['target' => '_blank', 'data-pjax' => "0"]) : 'ไม่ระบุ';
                             //$count = common\models\costfit\ProductPageViews::find()->where('productSuppId=' . $model->productSuppId)->count();
 
-                            return '<strong>Title : </strong>' . $title . '<br>'
+                            return '<strong>Title : </strong><a href="http://www2.cozxy.com/products/' . $model->encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productSuppId])
+                            . '">' . $title . '</a><br>'
                             . '<strong>Category : </strong> ' . $category . '<br>'
                             . '<strong>Brand : </strong>' . $brand . '<br>'
                             . '<strong>Url : </strong>' . $url . '<br>'
@@ -278,5 +279,5 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
             ?>
         </div>
     </div>
-    <?php Pjax::end(); ?>
+<?php Pjax::end(); ?>
 </div>
