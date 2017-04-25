@@ -158,7 +158,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <?php
             //if (\Yii::$app->user->id != '') {
             ?>
-            <h3 style="text-decoration: underline">ให้คะแนน:</h3>
+
             <div class="Reviews" style="margin-left: 10px;">
                 <div class="post">
                     <?php
@@ -182,6 +182,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     ?>
                 </div>
                 <div class="Reviews" style="margin-left: 10px;">
+                    <br>
+                    <h5 style="text-decoration: underline; font-size:14px; ">ค่าเฉลี่ยของคะแนนที่ได้จากลูกค้า:</h5>
                     <div class="post">
                         <?php
                         $post = common\models\costfit\ProductPostRating::find()->where('productPostId=' . $_GET['productPostId'])->count();
@@ -198,26 +200,29 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 $results_rating = $rating_score / $rating_member;
                             }
                             ?>
-                            <div class="col-md-3">
-                                <?php
-                                echo \yii2mod\rating\StarRating::widget([
-                                    'name' => "input_name_" . $_GET['productSupplierId'],
-                                    'value' => $results_rating,
-                                    'options' => [
-                                        // Your additional tag options
-                                        'id' => 'reviews-rate-' . $_GET['productSupplierId'], 'class' => 'reviews-rate',
-                                    ],
-                                    'clientOptions' => [
-                                    // Your client options
-                                    ],
-                                ]);
-                                ?>
+                            <div style="padding: 5px;">
+                                <div class="col-md-3">
+                                    <?php
+                                    echo \yii2mod\rating\StarRating::widget([
+                                        'name' => "input_name_" . $_GET['productSupplierId'],
+                                        'value' => $results_rating,
+                                        'options' => [
+                                            // Your additional tag options
+                                            'id' => 'reviews-rate-' . $_GET['productSupplierId'], 'class' => 'reviews-rate',
+                                        ],
+                                        'clientOptions' => [
+                                        // Your client options
+                                        ],
+                                    ]);
+                                    ?>
+                                </div>
+                                <div class="col-md-9">
+                                    <?php
+                                    echo '( <span style="font-size: 12px;color:#e26a00;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน</span> )';
+                                    ?>
+                                </div>
                             </div>
-                            <div class="col-md-9">
-                                <?php
-                                echo '( <span style="font-size: 12px;color:#e26a00;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน</span> )';
-                                ?>
-                            </div>
+                            <hr>
                             <?php
                         }
                         $rating = common\models\costfit\ProductPostRating::find()->where('productPostId=' . $_GET['productPostId'])->all();
@@ -245,6 +250,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                 // Your client options
                                                 ],
                                             ]);
+                                            ?>
+                                            <?php
+                                            echo '( <span style="font-size: 12px;color:#e26a00;">' . number_format($postxRating['score'], 3) . ' จาก 5 คะแนน</span> )';
                                             ?>
                                         </p>
 
