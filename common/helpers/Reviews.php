@@ -22,17 +22,17 @@ use common\models\costfit\ProductPostRating;
  */
 class Reviews {
 
-    //put your code here
-    public static function RatingInProduct($productSuppId) {
+//put your code here
+    public static function RatingInProduct($productSuppId, $productPostId) {
         $rating_score = 0;
-        $productPos = ProductPost::find()->where("productSuppId=" . $productSuppId)->all();
+        $productPos = ProductPost::find()->where("productSuppId=" . $productSuppId . ' and productPostId =' . $productPostId)->all();
         if (isset($productPos) && count($productPos) > 0) {
             $id = '';
             foreach ($productPos as $pos):
                 $id .= $pos->productPostId . ',';
-                //  $rate = common\models\costfit\ProductPostRating::find()->where()->all();
+//  $rate = common\models\costfit\ProductPostRating::find()->where()->all();
             endforeach;
-            //throw new \yii\base\Exception($id);
+//throw new \yii\base\Exception($id);
             $id = substr($id, 0, -1);
         }else {
             $id = '';
@@ -51,16 +51,16 @@ class Reviews {
         return $rating_score;
     }
 
-    public static function RatingInMember($productSuppId) {
+    public static function RatingInMember($productSuppId, $productPostId) {
         $rating_score = 0;
-        $productPos = ProductPost::find()->where("productSuppId=" . $productSuppId)->all();
+        $productPos = ProductPost::find()->where("productSuppId=" . $productSuppId . ' and productPostId =' . $productPostId)->all();
         if (isset($productPos) && count($productPos) > 0) {
             $id = '';
             foreach ($productPos as $pos):
                 $id .= $pos->productPostId . ',';
-                //  $rate = common\models\costfit\ProductPostRating::find()->where()->all();
+//  $rate = common\models\costfit\ProductPostRating::find()->where()->all();
             endforeach;
-            //throw new \yii\base\Exception($id);
+//throw new \yii\base\Exception($id);
             $id = substr($id, 0, -1);
         }else {
             $id = '';

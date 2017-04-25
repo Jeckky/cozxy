@@ -155,8 +155,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
                         if ($post > 0) {
                             $number = 1;
-                            $rating_score = \common\helpers\Reviews::RatingInProduct($_GET['productSupplierId']);
-                            $rating_member = \common\helpers\Reviews::RatingInMember($_GET['productSupplierId']);
+                            $rating_score = \common\helpers\Reviews::RatingInProduct($_GET['productSupplierId'], $_GET['productPostId']);
+                            $rating_member = \common\helpers\Reviews::RatingInMember($_GET['productSupplierId'], $_GET['productPostId']);
                             //echo $rating_score . '::';
                             //echo $rating_member;
                             if ($rating_score == 0 && $rating_member == 0) {
@@ -262,8 +262,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         if (count($productPost) > 0) {
                                             foreach ($productPost as $key => $value) {
                                                 $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
-                                                $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId);
-                                                $rating_member = \common\helpers\Reviews::RatingInMember($value->productSuppId);
+                                                $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId, $value->productPostId);
+                                                $rating_member = \common\helpers\Reviews::RatingInMember($value->productSuppId, $value->productPostId);
                                                 //echo $rating_score . '::';
                                                 //echo $rating_member;
                                                 if ($rating_score == 0 && $rating_member == 0) {

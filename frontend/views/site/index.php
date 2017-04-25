@@ -168,8 +168,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         echo ' <div class="col-md-12" style="border: 1px solid #b2b2b2;margin-bottom: 3px;">';
                         //$rating_score = 0;
                         $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
-                        $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId);
-                        $rating_member = \common\helpers\Reviews::RatingInMember($value->productSuppId);
+                        $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId, $value->productPostId);
+                        $rating_member = \common\helpers\Reviews::RatingInMember($value->productSuppId, $value->productPostId);
                         $rating_count = \common\models\costfit\ProductPost::find()->where('productSuppId=' . $value->productSuppId)->count('productSuppId');
                         //echo $rating_score . '::';
                         //echo $rating_member;
@@ -280,9 +280,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <div class="row" id="save-main-limit"></div>
 <?php if ($saveCat->getTotalCount() > 6): ?>
-                                                                                                                                                <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
-                                                                                                                                                    <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
-                                                                                                                                                </div>
+                                                                                                                                                        <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
+                                                                                                                                                            <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
+                                                                                                                                                        </div>
 <?php endif; ?>
     </div>
 </section> Categories Close-->
