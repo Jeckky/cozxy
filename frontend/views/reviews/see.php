@@ -147,7 +147,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     echo Html::hiddenInput('productSupplierId', $productSupplierId);
                     echo Html::hiddenInput('productId', $model->productId);
                     ?>
-                    <button class="btn btn-black btn-xs" role="button" id="write-reviews">Post</button>
+                    <button class="btn btn-black btn-xs" role="button" id="write-reviews">Submit Post</button>
                 <?php } else { ?>
                     <a href="#" class="btn btn-black btn-xs" role="button" id="write-reviews">Member Only</a>
                 <?php } ?>
