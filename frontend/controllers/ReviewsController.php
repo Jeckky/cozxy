@@ -78,8 +78,8 @@ class ReviewsController extends MasterController {
             $productId = Yii::$app->request->post('productId');
         }
 
-        //echo $productSupplierId . '<br>';
-        //echo $productId;
+        echo $productSupplierId . '<br>';
+        echo $productId;
         //exit();
         $score = Yii::$app->request->post('score');
 
@@ -88,7 +88,7 @@ class ReviewsController extends MasterController {
         //echo '<pre>';
         //print_r($params);
         //exit();
-        //$model = \common\models\costfit\ProductPost::find()->where("productSuppId=" . $productSupplierId)->one();
+        $model = \common\models\costfit\ProductPost::find()->where("productSuppId=" . $productSupplierId)->one();
 
         $model = new \common\models\costfit\ProductPost(['scenario' => 'review_post']);
         if (isset($_POST["ProductPost"])) {
@@ -110,13 +110,14 @@ class ReviewsController extends MasterController {
               $product_post_rating->save(FALSE);
              *
              */
+
             return $this->redirect(Yii::$app->homeUrl . 'reviews/see-review?productPostId=' . Yii::$app->db->lastInsertID . '&productSupplierId=' . $productSupplierId . '&productId=' . $productId . '');
             //return $this->redirect(Yii::$app->homeUrl . 'products/' . $params['productSupplierId']);
         } else {
             //return $this->redirect(Yii::$app->homeUrl . 'reviews/see-review?productSupplierId=' . $productSupplierId . '&productId=' . $productId . '');
         }
 
-        return $this->render('@app/views/reviews/create', compact("model"));
+        return $this->render('@app/views/reviews/create', compact("model", "productSupplierId", "productId"));
     }
 
     public function actionSeeReview() {

@@ -46,6 +46,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 100]) ?>
                             <?= $form->field($model, 'shortDescription', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
                             <?= $form->field($model, 'description', ['options' => ['class' => 'row col-lg-12']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
+                            <?php
+                            //echo Html::hiddenInput('productPostId', $productPostId);
+                            echo Html::hiddenInput('productSupplierId', $productSupplierId);
+                            echo Html::hiddenInput('productId', $productId);
+                            ?>
                         <?php } ?>
                         <?php
                         if (Yii::$app->controller->action->id == 'create-review') {
