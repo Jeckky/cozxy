@@ -138,9 +138,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 ?>
                                 <p class="p-style3" style="border-bottom: 1px #e6e6e6 dotted;">
                                     <a href="/reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?= $value->productSuppId ?>&productId=<?= $valuex->productId ?>"  role="button"   style="font-size: 14px;">
-                                        <?php echo 'Title : ' . strip_tags($value->title); ?></a>
+                                        <?php echo strip_tags($value->title); ?></a>
                                     <br>
-                                    <?php echo 'Short Desc : ' . strip_tags($value->shortDescription); ?>
+                                    <?php echo strip_tags($value->shortDescription); ?>
                                 </p>
                                 <?php
                             }
