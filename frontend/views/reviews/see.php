@@ -219,7 +219,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 <div class="col-md-12">
                                     <?php
                                     echo '<div class="col-md-12" style="font-size: 12px;color:#e26a00; padding: 5px;"><span style="font-size: 14px; color:#000;">' . number_format($results_rating, 3) . '</span> จาก 5 คะแนน </div>';
-                                    echo '<div class="col-md-12" style="font-size: 12px;color:#e26a00;padding: 5px;">' . number_format($rating_score) . '  คะแนนของPostนี้ </div>';
+                                    echo '<div class="col-md-12" style="font-size: 12px;color:#e26a00;padding: 5px;">' . number_format($rating_score) . '  คะแนนของPostนี้จาก ' . $post . ' รีวิว</div>';
                                     ?>
                                     <br>
                                 </div>
