@@ -41,18 +41,11 @@ $form = ActiveForm::begin([
                                 ?>
                                 <td style="text-align: left;">Balance</td><td style="text-align: right;"><?= number_format($userPoint->currentPoint - $model->summary, 2) ?></td>
                             <?php } else { ?>
-                                <td style="text-align: left;">Need more</td><td style="text-align: right;"><?= number_format($model->summary - $userPoint->currentPoint, 2) ?></td>
+                                <td style="text-align: left;">Balance</td><td style="text-align: right;color: #ff0033;"> - <?= number_format($model->summary - $userPoint->currentPoint, 2) ?></td>
 
                             <?php }
                             ?>
                         </tr>
-                        <?php
-                        if ($userPoint->currentPoint < $model->summary) {
-                            ?>
-                            <tr style="height: 40px;">
-                                <td style="text-align: left;">Amount</td><td style="text-align: right;"><?= number_format($model->summary - $userPoint->currentPoint, 2) . ' THB.' ?></td>
-                            </tr>
-                        <?php } ?>
                         <tr style="height: 60px;">
                             <td colspan="2">
                                 <?php
