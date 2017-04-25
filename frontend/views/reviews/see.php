@@ -125,7 +125,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <?php
             //if (\Yii::$app->user->id != '') {
             ?>
-            <h3 style="text-decoration: underline">Review Post :</h3>
+            <h3 style="text-decoration: underline">ให้คะแนน:</h3>
             <div class="Reviews" style="margin-left: 10px;">
                 <div class="post">
                     <?php

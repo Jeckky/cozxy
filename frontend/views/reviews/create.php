@@ -70,7 +70,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         </div>
                         <div class="form-group">
                             <div class="col-sm-9 col-sm-offset-3">
-                                <?= Html::submitButton($model->isNewRecord ? 'Create a review' : 'Update a review', ['class' => "btn btn-black btn-sm"]) ?>
+                                <?= Html::submitButton($model->isNewRecord ? 'Create a post' : 'Update a post', ['class' => "btn btn-black btn-sm"]) ?>
                             </div>
                         </div>
                     </div>
