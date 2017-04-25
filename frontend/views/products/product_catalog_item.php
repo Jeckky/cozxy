@@ -560,7 +560,7 @@ if (Yii::$app->controller->action->id != 'see-review') {
                     var description = data.description;
                     $('.views-title').html('<i class="fa fa-pencil" aria-hidden="true"></i> ' + title);
                     $('.views-shortDescription').html(shortDescription);
-                    $('.views-description').html(description;
+                    $('.views-description').html(description);
                 }
             }
         });
