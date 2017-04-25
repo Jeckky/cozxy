@@ -78,8 +78,8 @@ class ReviewsController extends MasterController {
             $productId = Yii::$app->request->post('productId');
         }
 
-        echo $productSupplierId . '<br>';
-        echo $productId;
+        //echo $productSupplierId . '<br>';
+        //echo $productId;
         //exit();
         $score = Yii::$app->request->post('score');
 
