@@ -291,7 +291,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                         //echo '<span style="font-size: 12px;">' . number_format($results_rating, 3) . 'จาก 5 คะแนน </span>';
                                                         ?>
                                                         <p class="text-left" style="margin-bottom:2px;">
-                                                            <a href="<?php echo Yii::$app->homeUrl; ?>see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"
+                                                            <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"
                                                                style="font-size: 14px;"><?php echo $value->title; ?></a>
                                                         </p>
                                                         <p class="text-left" style="margin-bottom:2px;"> <?php echo $value->shortDescription; ?></a>

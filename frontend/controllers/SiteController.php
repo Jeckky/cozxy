@@ -359,7 +359,7 @@ class SiteController extends MasterController {
         $productSuppId = Yii::$app->request->post('productSuppId');
         $productImageId = Yii::$app->request->post('productImageId');
         $reviews = \common\models\costfit\ProductPost::find()
-        ->select('product_post.productPostId, product_post.productSuppId,user.username ,product_post_rating.score, product_post.description ,product_post.createDateTime')
+        ->select('product_post.productPostId, product_post.productSuppId,user.username ,product_post_rating.score, product_post.title , product_post.description ,product_post.createDateTime')
         ->join("LEFT JOIN", 'user', 'user.userId = product_post.userId')
         ->join("LEFT JOIN", 'product_post_rating', 'product_post_rating.productPostId = product_post.productPostId')
         ->where('product_post.productSuppId=' . $productSuppId)

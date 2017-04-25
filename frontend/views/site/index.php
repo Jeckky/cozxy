@@ -280,9 +280,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <div class="row" id="save-main-limit"></div>
 <?php if ($saveCat->getTotalCount() > 6): ?>
-                                                                                    <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
-                                                                                        <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
-                                                                                    </div>
+                                                                                                                                                <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
+                                                                                                                                                    <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
+                                                                                                                                                </div>
 <?php endif; ?>
     </div>
 </section> Categories Close-->
@@ -546,46 +546,40 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             var scores = obj.score;
 
                             if (scores == 1) {
-                                $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
-                             <div class="scores-reviews"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img alt="5" src="images/star-off.png" title=""> </div> \n\
-                             <br> ' + description.replace(rex, "") + ' \n\
-                             <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ ' + scores + ' จาก 5 ดาว<span> </div>'
+                                $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Post #' + Num++ + '\n\ :</strong> ' + description.replace(rex, "") + ' \n\
+                             <div class="scores-reviews">&nbsp;&nbsp;<img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img alt="5" src="images/star-off.png" title=""> (Recent Reviews)</div> \n\
+                               <span style=\"font-size: 12px;color: #b2b2b2;\">&nbsp;&nbsp;&nbsp;By ' + obj.username + ' <span> </div>'
                                         );
                             }
                             if (scores == 2) {
-                                $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
-                             <div class="scores-reviews"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img alt="5" src="images/star-off.png" title=""> </div> \n\
-                             <br> ' + description.replace(rex, "") + ' \n\
-                             <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ ' + scores + ' จาก 5 ดาว<span> </div>'
+                                $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Post #' + Num++ + '\n\ :</strong> ' + description.replace(rex, "") + ' \n\
+                             <div class="scores-reviews">&nbsp;&nbsp;<img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img alt="5" src="images/star-off.png" title=""> (Recent Reviews)</div> \n\
+                             <span style=\"font-size: 12px;color: #b2b2b2;\">&nbsp;&nbsp;&nbsp;By ' + obj.username + '<span> </div>'
                                         );
                             }
                             if (scores == 3) {
-                                $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
-                             <div class="scores-reviews"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-off.png"><img alt="5" src="images/star-off.png" title=""> </div> \n\
-                             <br> ' + description.replace(rex, "") + ' \n\
-                             <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ ' + scores + ' จาก 5 ดาว<span> </div>'
+                                $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Post #' + Num++ + '\n\ :</strong> ' + description.replace(rex, "") + '\n\
+                             <div class="scores-reviews">&nbsp;&nbsp;<img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-off.png"><img alt="5" src="images/star-off.png" title=""> (Recent Reviews)</div> \n\
+                              <span style=\"font-size: 12px;color: #b2b2b2;\">&nbsp;&nbsp;&nbsp;By ' + obj.username + '<span> </div>'
                                         );
                             }
                             if (scores == 4) {
-                                $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
-                             <div class="scores-reviews"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img alt="5" src="images/star-off.png" title=""> </div> \n\
-                             <br> ' + description.replace(rex, "") + ' \n\
-                             <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ ' + scores + ' จาก 5 ดาว<span> </div>'
+                                $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Post #' + Num++ + '\n\ :</strong> ' + description.replace(rex, "") + '\n\
+                             <div class="scores-reviews">&nbsp;&nbsp;<img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img alt="5" src="images/star-off.png" title=""> (Recent Reviews)</div> \n\
+                              <span style=\"font-size: 12px;color: #b2b2b2;\">&nbsp;&nbsp;&nbsp;By ' + obj.username + '<span> </div>'
                                         );
                             }
                             if (scores == 5) {
-                                $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
-                             <div class="scores-reviews"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img alt="5" src="images/star-on.png" title=""> </div> \n\
-                             <br> ' + description.replace(rex, "") + ' \n\
-                             <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ ' + scores + ' จาก 5 ดาว<span> </div>'
+                                $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Post #' + Num++ + '\n\ :</strong> ' + description.replace(rex, "") + ' \n\
+                             <div class="scores-reviews">&nbsp;&nbsp;<img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-on.png"><img alt="5" src="images/star-on.png" title=""> (Recent Reviews)</div> \n\
+                             <span style=\"font-size: 12px;color: #b2b2b2;\">&nbsp&nbsp;nbsp;By ' + obj.username + '<span> </div>'
                                         );
                             }
                             //alert(scores);
                             if (scores == null) {
-                                $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Reviews #' + Num++ + '\n\ :</strong> \n\
-                             <div class="scores-reviews"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img alt="5" src="/images/star-off.png" title=""> </div> \n\
-                             <br> ' + description.replace(rex, "") + ' \n\
-                             <br> <span style=\"font-size: 12px;color: #b2b2b2;\">By ' + obj.username + ',ให้ 0 จาก 5 ดาว<span> </div>'
+                                $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Post #' + Num++ + '\n\ :</strong> ' + description.replace(rex, "") + '\n\
+                             <div class="scores-reviews"></div> \n\
+                             <span style=\"font-size: 12px;color: #b2b2b2;\">&nbsp;&nbsp;&nbsp;By ' + obj.username + '<span> </div>'
                                         );
                             }
 
