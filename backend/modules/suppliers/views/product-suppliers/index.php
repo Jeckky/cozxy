@@ -146,11 +146,13 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                             $category = isset($model->category) ? \common\models\costfit\Category::getRootText($model->categoryId, TRUE) : NULL;
                             $brand = isset($model->brand) ? $model->brand->title : NULL;
                             $url = isset($model->url) ? Html::a('url brand', $model->url, ['target' => '_blank', 'data-pjax' => "0"]) : 'ไม่ระบุ';
+                            //$count = common\models\costfit\ProductPageViews::find()->where('productSuppId=' . $model->productSuppId)->count();
 
                             return '<strong>Title : </strong>' . $title . '<br>'
                             . '<strong>Category : </strong> ' . $category . '<br>'
                             . '<strong>Brand : </strong>' . $brand . '<br>'
-                            . '<strong>Url : </strong>' . $url
+                            . '<strong>Url : </strong>' . $url . '<br>'
+                            . '<strong>เข้าชม : </strong>' . common\models\costfit\ProductPageViews::find()->where('productSuppId=' . $model->productSuppId)->count() . ' ครั้ง'
                             ;
                         }
                     ],

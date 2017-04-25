@@ -241,7 +241,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             </div>
                             <div class="col-md-12 text-center" style=" border-bottom: 0px #e6e6e6 dotted; border-top: 1px #bbb dotted;">
                                 <?php
-                                echo '<span style="font-size: 12px; color:#0066c0;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน<br>' . $rating_count . ' reviews | เข้าชม ' . $productViews . ' ครั้ง</span>';
+                                echo '<span style="font-size: 12px; color:#0066c0;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน<br>' . $rating_count . ' post  </span>';
                                 ?>
                             </div>
                             <?php
@@ -280,9 +280,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <div class="row" id="save-main-limit"></div>
 <?php if ($saveCat->getTotalCount() > 6): ?>
-                                                                                                                                                        <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
-                                                                                                                                                            <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
-                                                                                                                                                        </div>
+                <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
+                    <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
+                </div>
 <?php endif; ?>
     </div>
 </section> Categories Close-->
