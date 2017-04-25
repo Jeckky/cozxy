@@ -85,7 +85,7 @@ class ReviewsController extends MasterController {
         //echo '<pre>';
         //print_r($params);
         //exit();
-        $model = \common\models\costfit\ProductPost::find()->where("productSuppId=" . $_GET["productSupplierId"])->one();
+        $model = \common\models\costfit\ProductPost::find()->where("productSuppId=" . $productSupplierId)->one();
 
         $model = new \common\models\costfit\ProductPost(['scenario' => 'review_post']);
         if (isset($_POST["ProductPost"])) {
