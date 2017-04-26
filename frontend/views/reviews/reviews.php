@@ -107,6 +107,11 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                                     ]);
                                     ?>
                                 </div>
+                                <div class="col-md-12 text-center" style=" border-bottom: 0px #e6e6e6 dotted; border-bottom: 1px #bbb dotted;">
+                                    <?php
+                                    echo '<span style="font-size: 12px; color:#0066c0;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน </span>';
+                                    ?>
+                                </div>
                             </div>
                             <div class="col-sm-12 col-lg-12 col-md-12 text-center" style="margin-top: 10px; padding: 5px;">
                                 <?php
@@ -135,11 +140,7 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                                 //}
                                 ?>
                             </div>
-                            <div class="col-md-12 text-center" style=" border-bottom: 0px #e6e6e6 dotted; border-top: 1px #bbb dotted;">
-                                <?php
-                                echo '<span style="font-size: 12px; color:#0066c0;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน </span>';
-                                ?>
-                            </div>
+
                             <?php
                         }
                         echo '</div>';
