@@ -56,7 +56,7 @@ class MasterController extends MasterCommonController {
         $this->view->params['cart'] = \common\models\costfit\Order::findCartArray();
 
         // - SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
-        if ((!Yii::$app->user->isGuest) && $this->id == "profile" || $this->id == "reviews") {
+        if ((!Yii::$app->user->isGuest) && $this->id == "profile") {
             $dataProvider_shipping_bk = new \yii\data\ActiveDataProvider([
                 'query' => \common\models\costfit\Address::find()->where("userId ='" . Yii::$app->user->id . "' and type = 3 ")->orderBy('addressId DESC'),
                 'pagination' => false,
@@ -86,6 +86,14 @@ class MasterController extends MasterCommonController {
             }
             $this->view->params['listDataProvider']['shipping'] = $dataProvider_picking_point;
             $this->view->params['listDataProvider']['billing'] = $dataProvider_billing;
+        }
+        if ((!Yii::$app->user->isGuest) && $this->id == "reviews") {
+            $user_point = \common\models\costfit\UserPoint::find()->where("userId='" . Yii::$app->user->id . "'")->one();
+            if (isset($user_point) && !empty($user_point)) {
+                $this->view->params['currentPoint'] = $user_point->currentPoint;
+            } else {
+                $this->view->params['currentPoint'] = 0;
+            }
         }
         if ($this->id == 'products') {
             $uri = explode('/', $_SERVER["REQUEST_URI"]);
