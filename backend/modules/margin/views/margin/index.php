@@ -4,6 +4,8 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\widgets\Pjax;
+use kartik\widgets\DepDrop;
+use yii\helpers\Url;
 ?>
 
 
@@ -102,6 +104,66 @@ use yii\widgets\Pjax;
                 </h4>
             </div>
             <div id="collapse1" class="panel-body">
+                <?php
+                // echo '<pre>';
+                //print_r(yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'countryName'));
+                // Top most parent
+                echo $form->field($model, 'categoryId')->widget(kartik\select2\Select2::classname(), [
+                    'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Brand::find()->where("status = 1")->asArray()->all(), 'brandId', 'title'),
+                    'pluginOptions' => [
+                        // 'placeholder' => 'Select...',
+                        'loadingText' => 'Loading brand ...',
+                    //'data' => ['THA' => 'ไทย'],
+                    //'initialize' => true,
+                    ],
+                    'options' => [
+                        //'placeholder' => 'Select country ...',
+                        'id' => 'countryId',
+                        'class' => 'required'
+                    ],
+                ])->label('ประเทศ');
+                ?>
+                <?php
+                // Child level 1
+                //echo Html::hiddenInput('model_id1', '2526', ['id' => 'model_id1']);
+                echo Html::hiddenInput('input-type-1', $model->brandId, ['id' => 'input-type-1']);
+                echo Html::hiddenInput('input-type-2', $model->brandId, ['id' => 'input-type-2']);
+                //echo Html::hiddenInput('input-type-3', $hash, ['id' => 'input-type-3']);
+                echo $form->field($model, 'categoryId')->widget(DepDrop::classname(), [
+                    'options' => ['placeholder' => 'Select ...', 'id' => 'categoryId'],
+                    'type' => DepDrop::TYPE_SELECT2,
+                    'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                    'pluginOptions' => [
+                        'depends' => ['countryId'],
+                        'url' => Url::to(['child-states-address']),
+                        'loadingText' => 'Loading province ...',
+                        // 'tags' => '2526',
+                        'initialize' => true,
+                        //'params' => ['model_id1']
+                        'params' => ['input-type-1', 'input-type-2']
+                    ]
+                ])->label('จังหวัด');
+                ?>
+
+                <?php
+                // Child level 2
+                //echo Html::hiddenInput('model_id2', '79745', ['id' => 'model_id2']);
+                echo Html::hiddenInput('input-type-11', $model->categoryId, ['id' => 'input-type-11']);
+                echo Html::hiddenInput('input-type-22', $model->categoryId, ['id' => 'input-type-22']);
+                // echo Html::hiddenInput('input-type-33', $hash, ['id' => 'input-type-33']);
+                echo $form->field($model, 'categoryId')->widget(DepDrop::classname(), [
+                    'options' => ['placeholder' => 'Select ...', 'id' => 'amphurId'],
+                    'type' => DepDrop::TYPE_SELECT2,
+                    'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                    'pluginOptions' => [
+                        'depends' => ['provinceId'],
+                        'url' => Url::to(['child-amphur-address']),
+                        'loadingText' => 'Loading amphur ...',
+                        'params' => ['input-type-11', 'input-type-22']
+                    //'initialize' => true,
+                    ]
+                ])->label('เขต/อำเภอ');
+                ?>
                 <?php
                 $historys = \common\models\costfit\Margin::find()->where("brandId is NULL AND categoryId is NULL AND supplierId is NULL")->orderBy("createDateTime DESC")->all();
                 ?>
