@@ -286,7 +286,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <?php
                         //if (\Yii::$app->user->id != '') {
                         ?>
-                        <div onclick="ViewsShows()">
+                        <div onclick="ViewsShows()"  class="add-new-icon">
                             <h3 style="text-decoration: underline">Post <i class="fa fa-plus-circle" aria-hidden="true" style="zoom: .7"></i></h3>
                         </div>
                         <style>
