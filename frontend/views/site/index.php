@@ -282,9 +282,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <div class="row" id="save-main-limit"></div>
 <?php if ($saveCat->getTotalCount() > 6): ?>
-                                                                                                                                                                                                                                                                <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
-                                                                                                                                                                                                                                                                    <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
-                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                    <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
+                                                                                                                                                                                                                                                                        <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
+                                                                                                                                                                                                                                                                    </div>
 <?php endif; ?>
     </div>
 </section> Categories Close-->
@@ -446,7 +446,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             font-size: 40px;
             font-weight: bold;
             transition: 0.3s;
-            color: #fff;
+            color: rgba(255,212,36,.9);
         }
 
         .close-reviews:hover,
