@@ -185,7 +185,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->limit(1)->all();
                             $productViews = common\models\costfit\ProductPageViews::find()->where('productSuppId=' . $value->productSuppId)->count();
                             ?>
-                            <div class="col-md-12 text-center">
+                            <div class="col-md-12 text-center" style="padding-left: 0px;  padding-right: 0px;">
                                 <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>" style="font-size: 14px; margin-top: 5px;">
                                     <?php
                                     //echo strlen($valuex->title) . '<br>';
@@ -220,16 +220,16 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         if (file_exists(Yii::$app->basePath . "/web/" . $valueImages['imageThumbnail1'])) {
                                             //echo "<div class=\"col-sm-3\"><img id=\"myImg-" . $valueImages['productImageId'] . "\" onClick=\"reviews_click(" . $valueImages['productImageId'] . ',' . "xx" . ")\"   src=\"/" . $valueImages['imageThumbnail2'] . "\" alt=\"1\" class=\"img-responsive img-thumbnail myImg\"/></div>";
                                             ?>
-                                            <div class="col-sm-12 col-lg-12 col-md-12">
+                                            <div class="col-sm-12 col-lg-12 col-md-12" style="padding-left: 0px;  padding-right: 0px;">
                                                 <img id="myImg-<?php echo $valueImages['productImageId']; ?>" onclick="reviews_click(<?php echo $valuex->productSuppId; ?>,<?php echo $valueImages['productImageId']; ?>, '<?php echo $valueImages['image']; ?>', '<?php echo $valuex->title; ?>')" src="<?php echo $valueImages['imageThumbnail1']; ?>" alt="1" class="img-responsive  myImg">
                                             </div>
                                             <?php
                                         } else {
-                                            echo "<div class=\"col-sm-12 col-lg-12 col-md-12\"><img  class=\"ms-thumb\"  src=\"" . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive  \"/></div>";
+                                            echo "<div class=\"col-sm-12 col-lg-12 col-md-12\" style=\"padding-left: 0px; padding-right: 0px; \"><img  class=\"ms-thumb\"  src=\"" . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive  \"/></div>";
                                         }
                                     } else {
                                         ?>
-                                        <div class="col-sm-12 col-lg-12 col-md-12">
+                                        <div class="col-sm-12 col-lg-12 col-md-12" style="padding-left: 0px;  padding-right: 0px;">
                                             <img class="ms-thumb" src="<?php echo "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
                                         </div>
                                         <?php
@@ -240,7 +240,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 //}
                                 ?>
                             </div>
-                            <div class="col-md-12 text-center" style=" border-bottom: 0px #e6e6e6 dotted; border-top: 1px #bbb dotted;">
+                            <div class="col-md-12 text-center" style=" border-bottom: 0px #e6e6e6 dotted; border-top: 1px #bbb dotted;padding-left: 0px;  padding-right: 0px; ">
                                 <?php
                                 echo '<span style="font-size: 12px; color:#0066c0;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน | ' . $rating_count . ' post  </span>';
                                 ?>
@@ -281,9 +281,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <div class="row" id="save-main-limit"></div>
 <?php if ($saveCat->getTotalCount() > 6): ?>
-                                                                                                                                                                                                                        <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
-                                                                                                                                                                                                                            <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
-                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
+                                                                                                                                                                                                                                                    <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
+                                                                                                                                                                                                                                                </div>
 <?php endif; ?>
     </div>
 </section> Categories Close-->
