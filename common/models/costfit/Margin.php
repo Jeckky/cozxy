@@ -36,6 +36,16 @@ class Margin extends \common\models\costfit\master\MarginMaster
         return array_merge(parent::attributeLabels(), []);
     }
 
+    public static function getSystemMargin()
+    {
+        $model = \common\models\costfit\Margin::find()->where("brandId is NULL AND categoryId is null AND supplierId is null AND status = 1")->orderBy("marginId DESC")->one();
+        if (isset($model)) {
+            return $model;
+        } else {
+            return NULL;
+        }
+    }
+
     public static function getSupplierMargin($supplierId, $returnText = FALSE)
     {
         $res = NULL;
