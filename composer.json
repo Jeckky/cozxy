@@ -26,7 +26,8 @@
         "kartik-v/yii2-widget-depdrop": "@dev",
         "kartik-v/yii2-widget-select2": "@dev",
         "miloschuman/yii2-highcharts-widget": "dev-master",
-        "yiisoft/yii2-authclient": "^2.1"
+        "yiisoft/yii2-authclient": "^2.1",
+        "yii2mod/yii2-star-rating": "*"
 
     },
     "require-dev": {

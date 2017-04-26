@@ -14,7 +14,7 @@ class CheckoutController extends Controller
 
     public function actionSendPayment()
     {
-        $isMcc = TRUE;
+        $isMcc = false;
 //        $model = \common\models\areawow\UserPayment::find()->where("userPaymentId=" . $_GET["id"])->one();
 //        $package = \common\models\areawow\Package::find()->where("packageId = $model->packageId")->one();
         //URL Test
@@ -40,7 +40,7 @@ class CheckoutController extends Controller
         endif;
 //        throw new \yii\base\Exception(str_replace(".", "", $package->price));
 //        $amount = str_replace(".", "", $package->price);
-        $amount = str_replace(".", "", 1000);
+        $amount = str_replace(".", "", 100000);
         $url = "http://" . Yii::$app->getRequest()->serverName . "/user/payment-result";
 //        $url = "http://dev/areawow-frontend/user/payment-result";
         $resUrl = "http://" . Yii::$app->getRequest()->serverName . "/user/payment-result";

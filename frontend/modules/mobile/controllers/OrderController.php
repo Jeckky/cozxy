@@ -3,6 +3,7 @@
 namespace frontend\modules\mobile\controllers;
 
 use Yii;
+use yii\db\Exception;
 use yii\web\Controller;
 use \yii\helpers\Json;
 use frontend\controllers\MasterController;
@@ -12,6 +13,14 @@ use frontend\controllers\MasterController;
  */
 class OrderController extends MasterController
 {
+//	public function beforeAction($action)
+//	{
+//		if ($action->id == 'add-to-cart') {
+//			$this->enableCsrfValidation = false;
+//		}
+//
+//		return parent::beforeAction($action);
+//	}
 
     /**
      * Renders the index view for the module
@@ -51,30 +60,33 @@ class OrderController extends MasterController
             $order->token = $this->getToken();
             $order->status = \common\models\costfit\Order::ORDER_STATUS_DRAFT;
             $order->createDateTime = new \yii\db\Expression("NOW()");
-            if (!$order->save(FALSE)) {
-                throw new \yii\base\Exception("Can't Save Order");
+            $order->paymentType = 2;
+            if (!$order->save()) {
+                throw new \yii\base\Exception(print_r($order->errors, true));
             }
+            $this->writeToFile('/tmp/mobile-newOrder', print_r($order->token, true));
         }
 
 
         $res['token'] = $order->token;
+	    $this->writeToFile('/tmp/mobile-token', print_r($order->token, true));
 
         //throw new \yii\base\Exception('fastId=' . $id);
-        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_GET['productSuppId'] . " and sendDate=" . $_GET['fastId'])->one();
+        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_REQUEST['productSuppId'] . " and sendDate=" . $_REQUEST['fastId'])->one();
         if (!isset($orderItem)) {
             $orderItem = new \common\models\costfit\OrderItem();
-            $orderItem->quantity = $_GET["quantity"];
+            $orderItem->quantity = $_REQUEST["quantity"];
         } else {
-            $orderItem->quantity = $orderItem->quantity + $_GET["quantity"];
+            $orderItem->quantity = $orderItem->quantity + $_REQUEST["quantity"];
         }
         $product = new \common\models\costfit\Product();
-        $orderItem->sendDate = $_GET["fastId"];
-        $orderItem->firstTimeSendDate = $_GET["fastId"];
-        $orderItem->supplierId = $_GET['supplierId'];
+        $orderItem->sendDate = $_REQUEST["fastId"];
+        $orderItem->firstTimeSendDate = $_REQUEST["fastId"];
+        $orderItem->supplierId = $_REQUEST['supplierId'];
         $orderItem->orderId = $order->orderId;
-        $orderItem->productId = $_GET["id"];
-        $orderItem->productSuppId = $_GET['productSuppId'];
-        $productPrice = $product->calProductPrice($orderItem->productSuppId, $orderItem->quantity, 1, $_GET['fastId'], NULL);
+        $orderItem->productId = $_REQUEST["id"];
+        $orderItem->productSuppId = $_REQUEST['productSuppId'];
+        $productPrice = $product->calProductPrice($orderItem->productSuppId, $orderItem->quantity, 1, $_REQUEST['fastId'], NULL);
         $orderItem->priceOnePiece = $orderItem->product->calProductPrice($orderItem->productSuppId, 1, 0, NULL, NULL);
         //$orderItem->priceOnePiece = $orderItem->product->calProductPrice($id, 1, 0, NULL, 'add');
         //$orderItem->priceOnePiece = $orderItem->product->calProductPrice($id, 1);
@@ -102,13 +114,15 @@ class OrderController extends MasterController
             $cartArray = \common\models\costfit\Order::findCartArray();
             $res["cart"] = $cartArray;
             $pQuan = 0;
+
             foreach ($cartArray["items"] as $receiveType => $item) {
                 if ($item["productSuppId"] == $_GET["id"]) {
+
                     $pQuan += $item["qty"];
                 }
             }
             $product = new \common\models\costfit\Product();
-            $maxQuantity = $product->findMaxQuantity($_GET['productSuppId']);
+            $maxQuantity = $product->findMaxQuantity($_REQUEST['productSuppId']);
             if ($pQuan >= $maxQuantity) {
                 $res["isMaxQuantity"] = TRUE;
             } else {
@@ -148,6 +162,11 @@ class OrderController extends MasterController
         print_r(\yii\helpers\Json::encode($res));
     }
 
+    public function actionGetToken()
+    {
+    	$this->getToken();
+    }
+
     public function getToken()
     {
         $cookies = Yii::$app->request->cookies;
@@ -162,6 +181,7 @@ class OrderController extends MasterController
 //            if (!isset($cookies['orderToken'])) {
 //                $cookies = Yii::$app->request->cookies;
 //        }
+	        $this->writeToFile('/tmp/mobile-getToken', print_r($cookies, true));
             return $cookies->getValue('orderToken');
         }
     }

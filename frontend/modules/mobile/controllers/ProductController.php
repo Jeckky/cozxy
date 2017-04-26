@@ -150,7 +150,6 @@ class ProductController extends \common\controllers\MasterController
         ->one();
 
         if (isset($p)) {
-
             $res['productId'] = $p->productId;
             $res['productSuppId'] = $p->productSuppId;
             $res['title'] = $p->title;

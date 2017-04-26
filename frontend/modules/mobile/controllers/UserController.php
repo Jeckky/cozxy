@@ -4,12 +4,22 @@ namespace frontend\modules\mobile\controllers;
 
 use yii\web\Controller;
 use \yii\helpers\Json;
+use Yii;
+use common\models\LoginForm;
 
 /**
  * Default controller for the `mobile` module
  */
 class UserController extends Controller
 {
+	public function beforeAction($action)
+	{
+		if ($action->id == 'login') {
+			$this->enableCsrfValidation = false;
+		}
+
+		return parent::beforeAction($action);
+	}
 
     /**
      * Renders the index view for the module
@@ -25,7 +35,16 @@ class UserController extends Controller
         $res = [];
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+
+        $model->email = 'nattawoot@cozxy.com';
+//	    $model->username = 'nattawoot@cozxy.com';
+        $model->password = 'ktkt1234';
+//        $_POST['LoginForm']['username'] = 'nattawoot@cozxy.com';
+//	    $_POST['LoginForm']['email'] = 'nattawoot@cozxy.com';
+//	    $_POST['LoginForm']['password'] = 'ktkt1234';
+
+//        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+	    if ($model->login()) {
             if (\Yii::$app->user->identity->type == 1 || \Yii::$app->user->identity->type == 3) {
                 $res["email"] = Yii::$app->user->identity->email;
                 $res["firstname"] = Yii::$app->user->identity->firstname;
@@ -34,11 +53,19 @@ class UserController extends Controller
                 $res["gender"] = Yii::$app->user->identity->gender;
                 $res["passportNo"] = Yii::$app->user->identity->passportNo;
                 $res["passportImage"] = Yii::$app->user->identity->passportImage;
+                $res['result'] = true;
+
+                /**
+                 * return cart array
+                 */
+
             } else {
                 $res["error"] = "บัญชีของท่านไม่มีสิทธิ์เข้าใช้งาน";
+	            $res['result'] = false;
             }
         } else {
             $res["error"] = "อีเมล์ หรือ รหัสผ่าน ไม่ถูกต้อง";
+		    $res['result'] = false;
         }
 //        return $this->render('index');
         print_r(Json::encode($res));

@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "07495778a1652703d896fb654a71881e",
-    "content-hash": "d4f6dc79e9d13e6ea6540b679ce81564",
+    "content-hash": "32df37c64589dc7e62031613ea260e32",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -57,6 +56,25 @@
             ]
         },
         {
+            "name": "bower-asset/highcharts",
+            "version": "v5.0.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/highcharts/highcharts-dist.git",
+                "reference": "08edd9b09ed73af0826941b322c29b89ffdb742f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/highcharts/highcharts-dist/zipball/08edd9b09ed73af0826941b322c29b89ffdb742f",
+                "reference": "08edd9b09ed73af0826941b322c29b89ffdb742f",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "highcharts.js"
+            }
+        },
+        {
             "name": "bower-asset/jquery",
             "version": "2.2.4",
             "source": {
@@ -92,12 +110,12 @@
             "version": "3.2.7",
             "source": {
                 "type": "git",
-                "url": "https://github.com/RobinHerbots/jquery.inputmask.git",
+                "url": "https://github.com/RobinHerbots/Inputmask.git",
                 "reference": "5a72c563b502b8e05958a524cdfffafe9987be38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobinHerbots/jquery.inputmask/zipball/5a72c563b502b8e05958a524cdfffafe9987be38",
+                "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/5a72c563b502b8e05958a524cdfffafe9987be38",
                 "reference": "5a72c563b502b8e05958a524cdfffafe9987be38",
                 "shasum": ""
             },
@@ -160,6 +178,52 @@
                     "package.json"
                 ]
             }
+        },
+        {
+            "name": "bower-asset/raty",
+            "version": "v2.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wbotelhos/raty.git",
+                "reference": "28482f3e0ed9a662d72e1e55ad44fbb47aec9f50"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wbotelhos/raty/zipball/28482f3e0ed9a662d72e1e55ad44fbb47aec9f50",
+                "reference": "28482f3e0ed9a662d72e1e55ad44fbb47aec9f50",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": "~2"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "lib/jquery.raty.js",
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "spec",
+                    "vendor"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "jQuery Raty - A Star Rating Plugin",
+            "keywords": [
+                "classificacao",
+                "classificar",
+                "javascript",
+                "jquery",
+                "library",
+                "plugin",
+                "rating",
+                "raty",
+                "star",
+                "staring",
+                "votar",
+                "voto"
+            ]
         },
         {
             "name": "bower-asset/yii2-pjax",
@@ -253,7 +317,7 @@
                 "markdown",
                 "markdown-extra"
             ],
-            "time": "2015-03-06 05:28:07"
+            "time": "2015-03-06T05:28:07+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -297,7 +361,7 @@
             "keywords": [
                 "html"
             ],
-            "time": "2015-08-05 01:03:42"
+            "time": "2015-08-05T01:03:42+00:00"
         },
         {
             "name": "kartik-v/dependent-dropdown",
@@ -339,7 +403,7 @@
                 "option",
                 "select"
             ],
-            "time": "2015-12-16 18:15:01"
+            "time": "2015-12-16T18:15:01+00:00"
         },
         {
             "name": "kartik-v/yii2-krajee-base",
@@ -390,7 +454,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-05-07 19:45:52"
+            "time": "2016-05-07T19:45:52+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-depdrop",
@@ -439,7 +503,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-01-10 17:30:48"
+            "time": "2016-01-10T17:30:48+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-select2",
@@ -447,12 +511,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-select2.git",
-                "reference": "35b527b524cb79d62bb4f9a6e8befe8ea74e5f2e"
+                "reference": "03f202e9e2415f4c84e93a64074d85677fd0cc51"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/35b527b524cb79d62bb4f9a6e8befe8ea74e5f2e",
-                "reference": "35b527b524cb79d62bb4f9a6e8befe8ea74e5f2e",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/03f202e9e2415f4c84e93a64074d85677fd0cc51",
+                "reference": "03f202e9e2415f4c84e93a64074d85677fd0cc51",
                 "shasum": ""
             },
             "require": {
@@ -492,7 +556,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-08-03 07:34:56"
+            "time": "2017-04-12T09:00:24+00:00"
         },
         {
             "name": "miloschuman/yii2-highcharts-widget",
@@ -500,15 +564,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/miloschuman/yii2-highcharts.git",
-                "reference": "6951fef6cc72273f8e4278154eb756416d5caab4"
+                "reference": "ba5e5c4ccfa31e8265998d0fe980780821beebef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/miloschuman/yii2-highcharts/zipball/6951fef6cc72273f8e4278154eb756416d5caab4",
-                "reference": "6951fef6cc72273f8e4278154eb756416d5caab4",
+                "url": "https://api.github.com/repos/miloschuman/yii2-highcharts/zipball/ba5e5c4ccfa31e8265998d0fe980780821beebef",
+                "reference": "ba5e5c4ccfa31e8265998d0fe980780821beebef",
                 "shasum": ""
             },
             "require": {
+                "bower-asset/highcharts": "5.0.*",
                 "yiisoft/yii2": "*"
             },
             "require-dev": {
@@ -540,7 +605,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-05-26 17:42:51"
+            "time": "2017-03-17T15:30:28+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -593,7 +658,47 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2016-05-01 08:45:47"
+            "time": "2016-05-01T08:45:47+00:00"
+        },
+        {
+            "name": "yii2mod/yii2-star-rating",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yii2mod/yii2-star-rating.git",
+                "reference": "4bf825b0385bacc5b8e1bc9fb8550ad875381bf4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yii2mod/yii2-star-rating/zipball/4bf825b0385bacc5b8e1bc9fb8550ad875381bf4",
+                "reference": "4bf825b0385bacc5b8e1bc9fb8550ad875381bf4",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/raty": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "yii2mod\\rating\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Igor Chepurnoy",
+                    "email": "igorzfort@gmail.com"
+                }
+            ],
+            "description": "Star rating widget based on jQuery Raty https://github.com/wbotelhos/raty",
+            "keywords": [
+                "module",
+                "yii2"
+            ],
+            "time": "2016-03-21T15:38:36+00:00"
         },
         {
             "name": "yiisoft/yii2",
@@ -687,7 +792,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2016-07-11 13:36:42"
+            "time": "2016-07-11T13:36:42+00:00"
         },
         {
             "name": "yiisoft/yii2-authclient",
@@ -735,7 +840,7 @@
                 "oauth",
                 "yii2"
             ],
-            "time": "2016-08-04 13:41:57"
+            "time": "2016-08-04T13:41:57+00:00"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -785,7 +890,7 @@
                 "bootstrap",
                 "yii2"
             ],
-            "time": "2016-03-17 03:29:28"
+            "time": "2016-03-17T03:29:28+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -832,7 +937,7 @@
                 "extension installer",
                 "yii2"
             ],
-            "time": "2016-02-06 00:49:24"
+            "time": "2016-02-06T00:49:24+00:00"
         },
         {
             "name": "yiisoft/yii2-httpclient",
@@ -879,7 +984,7 @@
                 "httpclient",
                 "yii2"
             ],
-            "time": "2016-08-04 13:29:03"
+            "time": "2016-08-04T13:29:03+00:00"
         },
         {
             "name": "yiisoft/yii2-swiftmailer",
@@ -929,7 +1034,7 @@
                 "swiftmailer",
                 "yii2"
             ],
-            "time": "2016-03-17 03:58:49"
+            "time": "2016-03-17T03:58:49+00:00"
         }
     ],
     "packages-dev": [
@@ -1006,7 +1111,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2016-04-29 12:21:54"
+            "time": "2016-04-29T12:21:54+00:00"
         },
         {
             "name": "phpspec/php-diff",
@@ -1044,7 +1149,7 @@
                 }
             ],
             "description": "A comprehensive library for generating differences between two hashable objects (strings or arrays).",
-            "time": "2016-04-07 12:29:16"
+            "time": "2016-04-07T12:29:16+00:00"
         },
         {
             "name": "yiisoft/yii2-codeception",
@@ -1089,7 +1194,8 @@
                 "codeception",
                 "yii2"
             ],
-            "time": "2016-03-17 03:41:26"
+            "abandoned": "codeception/codeception",
+            "time": "2016-03-17T03:41:26+00:00"
         },
         {
             "name": "yiisoft/yii2-debug",
@@ -1136,7 +1242,7 @@
                 "debugger",
                 "yii2"
             ],
-            "time": "2016-03-17 03:50:19"
+            "time": "2016-03-17T03:50:19+00:00"
         },
         {
             "name": "yiisoft/yii2-faker",
@@ -1183,7 +1289,7 @@
                 "faker",
                 "yii2"
             ],
-            "time": "2015-03-01 06:22:44"
+            "time": "2015-03-01T06:22:44+00:00"
         },
         {
             "name": "yiisoft/yii2-gii",
@@ -1236,7 +1342,7 @@
                 "gii",
                 "yii2"
             ],
-            "time": "2016-03-18 14:09:46"
+            "time": "2016-03-18T14:09:46+00:00"
         }
     ],
     "aliases": [],

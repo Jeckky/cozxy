@@ -153,7 +153,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
                     'receiveTypeTitle' => ($item->productSupplier->receiveType == 1) ? "COLD" : ($item->productSupplier->receiveType == 2 ? "HOT" : "BOOTH"),
                     'title' => $item->productSupplier->title,
                     'code' => $item->productSupplier->code,
-                    'qty' => $item->quantity,
+                    'qty' => intval($item->quantity),
                     //'price' => $item->price,
                     'price' => ProductSuppliers::productPriceSupplier($item->productSuppId),
                     'priceText' => number_format($item->price, 2),
