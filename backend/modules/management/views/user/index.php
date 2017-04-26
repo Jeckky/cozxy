@@ -96,6 +96,21 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     // 'gender',
                     // 'tel',
                     //'status',ยืนยันใช้งาน
+                    ['attribute' => 'Magin',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            $margin = \common\models\costfit\Margin::getSupplierMargin($model->userId, TRUE);
+                            if (isset($margin)) {
+                                return $margin . " %";
+                            } else {
+                                if ($model->type == 4) {
+                                    return "<span class='label label-danger'>Not Set</span>";
+                                } else {
+                                    return "";
+                                }
+                            }
+                        }
+                    ],
                     ['attribute' => 'status',
                         'format' => 'raw',
                         'value' => function($model) {
@@ -116,6 +131,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             //}
                         }
                     ], /*
+                     *
                       [
                       'attribute' => 'createDateTime',
                       'format' => 'raw',
@@ -140,7 +156,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             },
                             'margin' => function ($url, $model) {
                                 if ($model->type == 4) {
-                                    return "<br>" . Html::a('<i class="fa fa-dollar"></i> Margin', Yii::$app->homeUrl . "management/address/?userId=" . $model->userId, [
+                                    return "<br>" . Html::a('<i class="fa fa-dollar"></i> Margin', Yii::$app->homeUrl . "management/user/margin?supplierId=" . $model->userId, [
                                         'title' => Yii::t('app', 'ผลกำไร'), 'class' => 'text-center']);
                                 }
                             },
