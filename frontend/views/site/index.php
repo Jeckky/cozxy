@@ -20,14 +20,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     }
 </style>
 <!--Hero Slider-->
-<section class="hero-slider" style="background-color: #f1efef;margin-top: -10px">
+<section class="hero-slider" style="background-color: #f1efef;margin-top: -10px ;">
     <div class="master-slider" id="hero-slider">
         <?php
         foreach ($bannerGroup->contents as $banner) {
             //throw new Exception($banner->linkTitle);
             ?>
             <!--Slide 1-->
-            <div class="ms-slide" data-delay="7">
+            <div class="ms-slide" data-delay="7" style="background-image: url('<?= $baseUrl . $banner->image ?>');background-size: 100% 100%;">
                 <div class="overlay"></div>
                 <div class="ms-anim-layers">
                     <div class="ms-layer text-block" style="margin: 50px; padding: 108px 0px 0px 25px; font-size: 16px; line-height: 22px;">
@@ -46,13 +46,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <?php endif; ?>
                         <!--<a class="btn btn-black" href="#">Browse all</a>-->
                     </div>
-                    <img style="right: 200px;" class="ms-layer img-block" src="<?= $baseUrl . $banner->image ?>" alt="1" data-effect="back(500)" data-duration="800" data-delay="350" data-ease="easeOutQuad"/>
+                    <!--<img style="right: 200px;" class="ms-layer img-block" src="<?= $baseUrl . $banner->image ?>" alt="1" data-effect="back(500)" data-duration="800" data-delay="350" data-ease="easeOutQuad"/>-->
                 </div>
             </div>
             <?php
         }
         ?>
     </div>
+
 </section><!--Hero Slider Close-->
 
 <!--
@@ -280,9 +281,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <div class="row" id="save-main-limit"></div>
 <?php if ($saveCat->getTotalCount() > 6): ?>
-                                                                                                        <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
-                                                                                                            <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
-                                                                                                        </div>
+                                                                                                                                                                            <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
+                                                                                                                                                                                <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
+                                                                                                                                                                            </div>
 <?php endif; ?>
     </div>
 </section> Categories Close-->
