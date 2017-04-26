@@ -11,25 +11,25 @@
             <div class="panel-heading">
                 <span class="panel-title">เปลี่ยนรหัสผ่าน</span>
             </div>
-            <div class="panel-body">
+            <div class="panel-body"><!--
                 <div class="row form-group">
                     <label class="col-sm-4 control-label">รหัสผ่านปัจจุบัน</label>
                     <div class="col-sm-8">
-                        <input type="text" name="name" class="form-control">
+                        <input type="password" name="newpassword" class="form-control">
                     </div>
                 </div>
                 <div class="row form-group">
                     <label class="col-sm-4 control-label">รหัสผ่านใหม่</label>
                     <div class="col-sm-8">
-                        <input type="email" name="email" class="form-control">
+                        <input type="password" name="newpassword" class="form-control">
                     </div>
                 </div>
                 <div class="row form-group">
                     <label class="col-sm-4 control-label">ยืนยันรหัสผ่าน</label>
                     <div class="col-sm-8">
-                        <input type="email" name="email" class="form-control">
+                        <input type="password" name="newpassword" class="form-control">
                     </div>
-                </div>
+                </div>-->
             </div>
             <div class="panel-footer text-right">
                 <button class="btn btn-primary">Submit</button>
