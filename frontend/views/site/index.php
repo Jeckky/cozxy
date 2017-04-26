@@ -196,23 +196,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     }
                                     ?></a>
                             </div>
-                            <div class="col-md-12" style="padding: 5px; ">
-                                <div class="col-md-12 text-center">
-                                    <?php
-                                    echo \yii2mod\rating\StarRating::widget([
-                                        'name' => "input_name_" . $value['productPostId'],
-                                        'value' => $results_rating,
-                                        'options' => [
-                                            // Your additional tag options
-                                            'id' => 'reviews-rate-' . $value['productPostId'], 'class' => 'reviews-rate',
-                                        ],
-                                        'clientOptions' => [
-                                        // Your client options
-                                        ],
-                                    ]);
-                                    ?>
-                                </div>
-                            </div>
+
                             <div class="col-sm-12 col-lg-12 col-md-12 text-center" style="margin-top: 10px; padding: 5px;">
                                 <?php
                                 foreach ($productImages as $valueImages) {
@@ -239,6 +223,23 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 <?php
                                 //}
                                 ?>
+                            </div>
+                            <div class="col-md-12" style="padding: 5px; ">
+                                <div class="col-md-12 text-center">
+                                    <?php
+                                    echo \yii2mod\rating\StarRating::widget([
+                                        'name' => "input_name_" . $value['productPostId'],
+                                        'value' => $results_rating,
+                                        'options' => [
+                                            // Your additional tag options
+                                            'id' => 'reviews-rate-' . $value['productPostId'], 'class' => 'reviews-rate',
+                                        ],
+                                        'clientOptions' => [
+                                        // Your client options
+                                        ],
+                                    ]);
+                                    ?>
+                                </div>
                             </div>
                             <div class="col-md-12 text-center" style=" border-bottom: 0px #e6e6e6 dotted; border-top: 1px #bbb dotted;padding-left: 0px;  padding-right: 0px; ">
                                 <?php
@@ -281,9 +282,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <div class="row" id="save-main-limit"></div>
 <?php if ($saveCat->getTotalCount() > 6): ?>
-                                                                                                                                                                                                                                                <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
-                                                                                                                                                                                                                                                    <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
-                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                    <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
+                                                                                                                                                                                                                                                        <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
+                                                                                                                                                                                                                                                    </div>
 <?php endif; ?>
     </div>
 </section> Categories Close-->
