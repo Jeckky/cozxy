@@ -192,14 +192,7 @@ class ProductSuppliersController extends SuppliersMasterController {
 
             }
 
-            $productSuppliersPrice = new \common\models\costfit\ProductPriceSuppliers();
-            $productSuppliersPrice->productSuppId = $model->productSuppId;
-            $productSuppliersPrice->price = 0;
-            $productSuppliersPrice->discountType = 1;
-            $productSuppliersPrice->createDateTime = new \yii\db\Expression('NOW()');
-            if ($productSuppliersPrice->save(FALSE)) {
 
-            }
             //ECHO 'approve :' . Yii::$app->request->post('approve');
             //ECHO '<BR> productIds:' . Yii::$app->request->post('productIds');
             if (Yii::$app->request->post('approve') == 'new' && Yii::$app->request->post('productIds') == '') {
@@ -219,6 +212,15 @@ class ProductSuppliersController extends SuppliersMasterController {
                 $model->save(FALSE);
                 //return $this->redirect('image-form?id=' . $model->productSuppId);
                 $productPriceCozxy = \common\models\costfit\Product::updateAll(['price' => 0], ['productId' => $model->productId, 'productSuppId' => $model->productSuppId]);
+
+                $productSuppliersPrice = new \common\models\costfit\ProductPriceSuppliers();
+                $productSuppliersPrice->productSuppId = $model->productSuppId;
+                $productSuppliersPrice->price = 0;
+                $productSuppliersPrice->discountType = 1;
+                $productSuppliersPrice->createDateTime = new \yii\db\Expression('NOW()');
+                if ($productSuppliersPrice->save(FALSE)) {
+
+                }
             }
             //return $this->redirect('image-form?productSuppId = ' . $model->productSuppId);
             //suppliers/product-price-suppliers
