@@ -12,14 +12,15 @@ use common\models\LoginForm;
  */
 class UserController extends Controller
 {
-	public function beforeAction($action)
-	{
-		if ($action->id == 'login') {
-			$this->enableCsrfValidation = false;
-		}
 
-		return parent::beforeAction($action);
-	}
+    public function beforeAction($action)
+    {
+        if ($action->id == 'login') {
+            $this->enableCsrfValidation = false;
+        }
+
+        return parent::beforeAction($action);
+    }
 
     /**
      * Renders the index view for the module
@@ -42,9 +43,8 @@ class UserController extends Controller
 //        $_POST['LoginForm']['username'] = 'nattawoot@cozxy.com';
 //	    $_POST['LoginForm']['email'] = 'nattawoot@cozxy.com';
 //	    $_POST['LoginForm']['password'] = 'ktkt1234';
-
 //        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-	    if ($model->login()) {
+        if ($model->login()) {
             if (\Yii::$app->user->identity->type == 1 || \Yii::$app->user->identity->type == 3) {
                 $res["email"] = Yii::$app->user->identity->email;
                 $res["firstname"] = Yii::$app->user->identity->firstname;
@@ -58,14 +58,15 @@ class UserController extends Controller
                 /**
                  * return cart array
                  */
-
+                $cartArray = \common\models\costfit\Order::findCartArray();
+                $res["cart"] = $cartArray;
             } else {
                 $res["error"] = "บัญชีของท่านไม่มีสิทธิ์เข้าใช้งาน";
-	            $res['result'] = false;
+                $res['result'] = false;
             }
         } else {
             $res["error"] = "อีเมล์ หรือ รหัสผ่าน ไม่ถูกต้อง";
-		    $res['result'] = false;
+            $res['result'] = false;
         }
 //        return $this->render('index');
         print_r(Json::encode($res));
