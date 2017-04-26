@@ -132,7 +132,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--Review Product-->
 <section class="catalog-grid">
     <div class="container">
-        <h2>REVIEW PRODUCTS</h2>
+        <h2>MY POST & REVIEWS RATING POST PRODUCTS</h2>
         <style>
             .brand-carousel-reviews {
                 padding: 24px 0 48px 0;
@@ -282,9 +282,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <div class="row" id="save-main-limit"></div>
 <?php if ($saveCat->getTotalCount() > 6): ?>
-                                                                                                                                                                                                                                                    <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
-                                                                                                                                                                                                                                                        <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
-                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
+                                                                                                                                                                                                                                                                    <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
+                                                                                                                                                                                                                                                                </div>
 <?php endif; ?>
     </div>
 </section> Categories Close-->

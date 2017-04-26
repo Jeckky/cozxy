@@ -93,7 +93,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         'value' => 1,
                         'options' => [
                             // Your additional tag options
-                            'id' => 'reviews-rate', 'class' => 'reviews-rate-see',
+                            'id' => 'reviews-rate', 'class' => 'reviews-rate-see'
                         ],
                         'clientOptions' => [
                         // Your client options
@@ -219,12 +219,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     ]);
                                     ?>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <?php
                                     echo '<div class="col-md-12" style="font-size: 12px;color:#e26a00; padding: 5px;"><span style="font-size: 14px; color:#000;">' . number_format($results_rating, 3) . '</span> จาก 5 คะแนน </div>';
                                     echo '<div class="col-md-12" style="font-size: 12px;color:#e26a00;padding: 5px;">' . number_format($rating_score) . '  คะแนนของPostนี้จาก ' . $post . ' รีวิว</div>';
                                     ?>
                                     <br>
+                                </div>
+                                <div class="col-md-6">
+
                                 </div>
                             </div>
                             <hr>
@@ -345,9 +348,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                            style="font-size: 13px;"><i class="fa fa-pencil" aria-hidden="true"></i> <?php echo $value->title; ?></a>
                                                     </div>
                                                     <div class="text-left test" style="margin-bottom:2px; font-size: 12px; height: 120px;">
-
                                                         &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $value->shortDescription; ?>
-
                                                     </div>
                                                     <div style="text-align: right;">
                                                         <a role="button"  onclick="views_click('<?php echo $value->productPostId ?>', '<?php echo $valuex->productSuppId; ?>', '<?php echo $valuex->productId; ?>')"  class="panel-toggle" id="see-reviews" style="font-size: 14px; border-bottom: 0px dashed #292c2e;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
