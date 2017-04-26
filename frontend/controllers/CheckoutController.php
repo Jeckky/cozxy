@@ -467,7 +467,20 @@ class CheckoutController extends MasterController {
                 }
 
                 if ($order->paymentType == 1) {
-                    $this->redirect(Yii::$app->homeUrl . 'checkout/order-thank');
+                    // $this->redirect(Yii::$app->homeUrl . 'checkout/order-thank');
+                    $enough = \common\models\costfit\OrderItem::enoughtProductSupp($order);
+                    // throw new \yii\base\Exception($enough);
+                    if ($enough != '') {//ถ้าไม่พอ
+                        //$this->updateSupplierStock($order);
+                        ///throw new \yii\base\Exception('aaaaaa');
+                        $this->redirect(Yii::$app->homeUrl . 'checkout/edit-checkout/' . $order->encodeParams(['orderId' => $order->orderId, 'id' => $enough]));
+                    } else {
+                        //$this->updateSupplierStock($order);
+                        //$order->status = Order::ORDER_STATUS_CHECKOUTS;
+                        $order->save(false);
+                        //throw new \yii\base\Exception($order->orderId);
+                        $this->redirect(Yii::$app->homeUrl . 'checkout/confirm-checkout/' . $order->encodeParams(['orderId' => $order->orderId]));
+                    }
                 } else {
                     //throw new \yii\base\Exception(print_r($order, true));
                     // $order->encodeParams(['orderId'=>$orderId->orderId])
@@ -516,7 +529,15 @@ class CheckoutController extends MasterController {
         //$model = \common\models\costfit\Order::find()->where("orderId=" . $_GET["orderId"])->one();
         $ePayment = \common\models\costfit\EPayment::find()->where("PaymentMethodId = 2 AND type =" . \Yii::$app->params['ePaymentServerType'])->one();
         $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
-        return $this->render('_confirm_checkout', compact('model', 'ePayment', 'userPoint'));
+        if (isset($userPoint) && count($userPoint) > 0) {
+            return $this->render('_confirm_checkout', compact('model', 'ePayment', 'userPoint'));
+        } else {
+            $needMore = $model->summary;
+            $ms = 'จำนวน Point ของคุณไม่พอ กรุณาเติม Point อีก';
+            return $this->redirect([Yii::$app->homeUrl . '/top-up',
+                        'ms' => $ms,
+                        'needMore' => $needMore]);
+        }
     }
 
     public function actionEditCheckout($hash) {
