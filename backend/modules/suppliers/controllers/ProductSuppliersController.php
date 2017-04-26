@@ -212,13 +212,13 @@ class ProductSuppliersController extends SuppliersMasterController {
                 $modelSys->code = $model->code;
                 if ($modelSys->save(FALSE)) {
                     //throw new \yii\base\Exception(1);
-                    $productId = Yii::$app->db->lastInsertID; // idของProduct : ProductId
-                    \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $productId); //เพื่อให้รู้ว่าอยู่ภายใต้ Category ไหน
-                    $model->productId = $productId;
-                    $model->save(FALSE);
-                    //return $this->redirect('image-form?id=' . $model->productSuppId);
-                    $productPriceCozxy = \common\models\costfit\Product::updateAll(['price' => 0], ['productId' => $model->productId, 'productSuppId' => $model->productSuppId]);
                 }
+                $productId = Yii::$app->db->lastInsertID; // idของProduct : ProductId
+                \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $productId); //เพื่อให้รู้ว่าอยู่ภายใต้ Category ไหน
+                $model->productId = $productId;
+                $model->save(FALSE);
+                //return $this->redirect('image-form?id=' . $model->productSuppId);
+                $productPriceCozxy = \common\models\costfit\Product::updateAll(['price' => 0], ['productId' => $model->productId, 'productSuppId' => $model->productSuppId]);
             }
             //return $this->redirect('image-form?productSuppId = ' . $model->productSuppId);
             //suppliers/product-price-suppliers
