@@ -281,9 +281,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <div class="row" id="save-main-limit"></div>
 <?php if ($saveCat->getTotalCount() > 6): ?>
-                                                                                                                                                                                                        <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
-                                                                                                                                                                                                            <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
-                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
+                                                                                                                                                                                                                    <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
+                                                                                                                                                                                                                </div>
 <?php endif; ?>
     </div>
 </section> Categories Close-->
@@ -491,7 +491,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
         <div class="col-md-6">
             <div class="col-md-9 text-left" style="color: #ffffff;">
-                Post : <span class="titles-reviews"></span>
+                <strong>Post</strong> : <span class="titles-reviews" style="color: #e2dfdf;"></span>
                 <hr>
             </div>
             <div class="col-md-9 text-left">
