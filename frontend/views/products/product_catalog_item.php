@@ -118,7 +118,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <!--    <div class="buttons group products-buttons-group" style="margin-top: -18px;">
             <div class="form-group" style="word-wrap: break-word;">
                 <label for="shopping-dollar" class="col-sm-1 " style="float: left; padding-right: 0px; padding-left: 0px; margin-bottom: 0px;">
-                    <img  src="<?php // echo Yii::$app->homeUrl;                                                                                                                                       ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
+                    <img  src="<?php // echo Yii::$app->homeUrl;                                                                                                                                          ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
                 </label>
                 <div class="col-sm-11 text-left discountPrice " style="float: left; padding: 0px; margin-left: 0px; margin-top: 15px;">
                     &nbsp;Add more than 1 item to your order
@@ -486,7 +486,7 @@ if (Yii::$app->controller->action->id != 'see-review') {
                             overflow-y: scroll;
                             overflow-x: hidden;
                             height: 150px;
-
+                            color: #635d5d;
                         }
                     </style>
                     <section class="brand-carousel" id="brand-carousel-reviews">
@@ -527,7 +527,7 @@ if (Yii::$app->controller->action->id != 'see-review') {
                                                 ?>
                                                 <div class="text-left" style="margin-bottom:2px; border-bottom: 1px #e6e6e6 dashed;">
                                                     <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"
-                                                       style="font-size: 14px;"><i class="fa fa-pencil" aria-hidden="true"></i> <?php echo $value->title; ?></a>
+                                                       style="font-size: 13px;"><i class="fa fa-pencil" aria-hidden="true"></i> <?php echo $value->title; ?></a>
                                                 </div>
                                                 <div class="text-left test" style="margin-bottom:2px; font-size: 12px;">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $value->shortDescription; ?></div>
                                                 <div style="text-align: right;">

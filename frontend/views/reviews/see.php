@@ -300,7 +300,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 overflow-y: scroll;
                                 overflow-x: hidden;
                                 height: 150px;
-
+                                color: #635d5d;
                             }
                         </style>
                         <section class="brand-carousel" id="brand-carousel-reviews">
@@ -340,7 +340,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                     ?>
                                                     <div class="text-left" style="margin-bottom:2px; border-bottom: 1px #e6e6e6 dashed;">
                                                         <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"
-                                                           style="font-size: 14px;"><i class="fa fa-pencil" aria-hidden="true"></i> <?php echo $value->title; ?></a>
+                                                           style="font-size: 13px;"><i class="fa fa-pencil" aria-hidden="true"></i> <?php echo $value->title; ?></a>
                                                     </div>
                                                     <div class="text-left test" style="margin-bottom:2px; font-size: 12px; ">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $value->shortDescription; ?></div>
                                                     <div style="text-align: right;">
