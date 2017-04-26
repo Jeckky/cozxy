@@ -118,7 +118,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <!--    <div class="buttons group products-buttons-group" style="margin-top: -18px;">
             <div class="form-group" style="word-wrap: break-word;">
                 <label for="shopping-dollar" class="col-sm-1 " style="float: left; padding-right: 0px; padding-left: 0px; margin-bottom: 0px;">
-                    <img  src="<?php // echo Yii::$app->homeUrl;                                                                                                                                          ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
+                    <img  src="<?php // echo Yii::$app->homeUrl;                                                                                                                                                                                                                      ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
                 </label>
                 <div class="col-sm-11 text-left discountPrice " style="float: left; padding: 0px; margin-left: 0px; margin-top: 15px;">
                     &nbsp;Add more than 1 item to your order
@@ -364,8 +364,7 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
                 }
             }
         });
-    });
-</script>
+    });</script>
 
 <div class="col-lg-6 col-md-6" id="productImage">
     <!-- Latest compiled and minified CSS -->
@@ -469,7 +468,9 @@ if (Yii::$app->controller->action->id != 'see-review') {
     </style>
     <div class="col-sm-12">
         <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;">
-            <h3 style="text-decoration: underline;">Post <i class="fa fa-plus-circle" aria-hidden="true"></i></h3>
+            <div onclick="ViewsShows()">
+                <h3 style="text-decoration: underline;">Post <i class="fa fa-plus-circle" aria-hidden="true" style="zoom: .7"></i></h3>
+            </div>
             <div class="Reviews" >
                 <div class="post">
                     <!--Post & Reviews Carousel Widget-->
@@ -601,6 +602,24 @@ if (Yii::$app->controller->action->id != 'see-review') {
             }
         });
         $('#myModal').modal('show')
+    }
+
+
+    function ViewsShows() {
+        var x = document.getElementById("brand-carousel-reviews").classList;
+        //alert(x);
+        if (x == 'brand-carousel') {
+            $('#brand-carousel-reviews').removeClass("show");
+            $('#brand-carousel-reviews').addClass("hide");
+        } else if (x == 'brand-carousel show') {
+            $('#brand-carousel-reviews').removeClass("show");
+            $('#brand-carousel-reviews').addClass("hide");
+        } else {
+            $('#brand-carousel-reviews').removeClass("hide");
+            $('#brand-carousel-reviews').addClass("show");
+        }
+
+        //$("#brand-carousel-reviews").removeClass("hide");
     }
 
 

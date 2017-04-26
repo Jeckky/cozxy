@@ -286,7 +286,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <?php
                         //if (\Yii::$app->user->id != '') {
                         ?>
-                        <h3 style="text-decoration: underline">Post</h3>
+                        <div onclick="ViewsShows()">
+                            <h3 style="text-decoration: underline">Post <i class="fa fa-plus-circle" aria-hidden="true" style="zoom: .7"></i></h3>
+                        </div>
                         <style>
                             #brand-carousel-reviews {
                                 padding: 24px 0 48px 0;
