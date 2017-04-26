@@ -8,9 +8,9 @@ use Yii;
 * This is the model class for table "point_used".
 *
     * @property string $pointUsedId
-    * @property string $userId
-    * @property string $orderId
-    * @property string $point
+    * @property integer $userId
+    * @property integer $orderId
+    * @property integer $point
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime

@@ -13,9 +13,11 @@ use common\helpers\Upload;
 /**
  * UserController implements the CRUD actions for User model.
  */
-class UserController extends ManagementMasterController {
+class UserController extends ManagementMasterController
+{
 
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
@@ -42,9 +44,15 @@ class UserController extends ManagementMasterController {
      * Lists all User models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
+        if (isset($_POST["type"]) && $_POST["type"] != 0) {
+            $query = User::find()->where("type = " . $_POST["type"])->orderBy("type ASC");
+        } else {
+            $query = User::find()->orderBy("type ASC");
+        }
         $dataProvider = new ActiveDataProvider([
-            'query' => User::find(),
+            'query' => $query,
         ]);
 
         return $this->render('index', [
@@ -57,7 +65,8 @@ class UserController extends ManagementMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
 
         $modelUser = $this->findModel($id);
         //echo $modelUser->user_group_Id;
@@ -98,7 +107,8 @@ class UserController extends ManagementMasterController {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
 
         $model = new User(['scenario' => 'user_backend']);
 
@@ -164,7 +174,8 @@ class UserController extends ManagementMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $model = $this->findModel($id);
         if (isset($_POST["User"])) {
             $model->attributes = $_POST["User"];
@@ -194,7 +205,8 @@ class UserController extends ManagementMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -206,7 +218,8 @@ class UserController extends ManagementMasterController {
      * @param
      * @return
      */
-    public function actionGroup($id) {
+    public function actionGroup($id)
+    {
         $model = $this->findModel($id);
         if (isset($_POST["ViewLevels"])) {
             $model->attributes = $_POST["ViewLevels"];
@@ -237,7 +250,8 @@ class UserController extends ManagementMasterController {
      * @param
      * @return
      */
-    public function actionAccess($id) {
+    public function actionAccess($id)
+    {
         $model = $this->findModel($id);
         if (isset($_POST["Access"])) {
             $model->attributes = $_POST["Access"];
@@ -258,7 +272,8 @@ class UserController extends ManagementMasterController {
      * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id) {
+    protected function findModel($id)
+    {
         if (($model = User::findOne($id)) !== null) {
             return $model;
         } else {

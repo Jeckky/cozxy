@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use \yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -27,6 +28,32 @@ $this->params['pageHeader'] = Html::encode($this->title);
             </div>
         </div>
         <div class="panel-body">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-12">Search</div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <?php
+                    $form = ActiveForm::begin([
+                        'options' => ['class' => 'form-horizontal', 'enctype' => 'multipart/form-data'],
+                    ]);
+                    ?>
+                    <div class = "input-append col-lg-4">
+                    <!--<input type = "text" class = "search-query" placeholder = "Search"> -->
+                        <?= Html::dropDownList("type", isset($_POST["type"]) ? $_POST["type"] : NULL, ['0' => 'All', '1' => 'Frontend', '2' => 'Backend', '3' => 'Frontend and Backend', '4' => 'Suppliers', '5' => 'Content'], ['class' => 'form-control'])
+                        ?>
+
+                    </div>
+                    <div class="col-lg-8">
+                        <button type="submit" class="btn"><i class="fa fa-search"></i></button>
+                    </div>
+                    <?php ActiveForm::end(); ?>
+
+                </div>
+            </div>
+
             <?=
             GridView::widget([
                 'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
@@ -98,7 +125,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                       ], */
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
-                        'template' => '{view} {address}',
+                        'template' => '{view} {address} {margin}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-pencil"></i> ตั้งค่าสมาชิก', $url, [
@@ -107,8 +134,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             },
                             'address' => function ($url, $model) {
                                 if ($model->type == 4) {
-                                    return Html::a('<i class="fa fa-pencil"></i> สถานที่ suppliers', Yii::$app->homeUrl . "management/address/?userId=" . $model->userId, [
+                                    return "<br>" . Html::a('<i class="fa fa-home"></i> ที่อยู่ suppliers', Yii::$app->homeUrl . "management/address/?userId=" . $model->userId, [
                                         'title' => Yii::t('app', 'สถานที่'), 'class' => 'text-center']);
+                                }
+                            },
+                            'margin' => function ($url, $model) {
+                                if ($model->type == 4) {
+                                    return "<br>" . Html::a('<i class="fa fa-dollar"></i> Margin', Yii::$app->homeUrl . "management/address/?userId=" . $model->userId, [
+                                        'title' => Yii::t('app', 'ผลกำไร'), 'class' => 'text-center']);
                                 }
                             },
                             'update' => function ($url, $model) {
