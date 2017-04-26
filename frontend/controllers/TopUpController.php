@@ -15,6 +15,7 @@ use common\models\costfit\UserPoint;
 use common\models\costfit\PaymentMethod;
 use common\helpers\CozxyUnity;
 use common\helpers\IntToBath;
+use kartik\mpdf\Pdf;
 
 /**
  * TopUpController implements the CRUD actions for TopUp model.
@@ -63,9 +64,21 @@ class TopUpController extends MasterController {
         if (isset($_POST["inputPass"]) && !empty($_POST["inputPass"])) {
             $fromCheckout = 'no';
             $needMore = 0;
-            $isOld = TopUp::find()->where("userId='" . Yii::$app->user->id . "' and status=" . TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT)->one();
+            if ($_POST["paymentType"] == 'credit') {
+                $paymentMethods = 2; //
+            } else if ($_POST["paymentType"] == 'bill') {
+                $paymentMethods = 1;
+            }
+            $isOld = TopUp::find()->where("userId='" . Yii::$app->user->id . "' and status=" . TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT . " or status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=" . $paymentMethods)->one();
             if (isset($isOld)) {
-                $topUpDraf = $isOld;
+                $ms = 'ไม่สามารถทำรายการได้เนื่องจากคุณมีรายการที่รอชำระเงินค้างอยู่ กรุณาชำระเงิน หรือ ยกเลิกรายการที่ค้างอยู่';
+                return $this->render('index', [
+                            'data' => $data,
+                            'paymentMethod' => $paymentMethod,
+                            'ms' => $ms,
+                            'needMore' => $needMore
+                ]);
+                //$topUpDraf = $isOld;
             } else {
                 $topUpDraf = new TopUp();
                 $topUpDraf->userId = Yii::$app->user->id;
@@ -84,6 +97,7 @@ class TopUpController extends MasterController {
             if (isset($_POST["needMore"]) && $_POST["needMore"] != 0) {
                 $needMore = $_POST["needMore"];
             }
+
             $topUpDraf->status = TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT;
             $topUpDraf->createDateTime = new \yii\db\Expression('NOW()');
             $topUpDraf->updateDateTime = new \yii\db\Expression('NOW()');
@@ -98,7 +112,7 @@ class TopUpController extends MasterController {
         if (isset($_POST["amount"]) && !empty($_POST["amount"])) {
             $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT)->one();
             $amount = $_POST["amount"];
-            if (isset($topUp) && !empty($topUp)) {
+            if (isset($topUp) && count($topUp) > 0) {
                 $fromCheckout = 'no';
                 if (isset($_POST["fromCheckout"]) && $_POST["fromCheckout"] != 'no') {
                     $fromCheckout = 'yes';
@@ -108,11 +122,19 @@ class TopUpController extends MasterController {
                 $topUp->status = TopUp::TOPUP_STATUS_COMFIRM_PAYMENT;
                 $topUp->updateDateTime = new \yii\db\Expression('NOW()');
                 $topUp->save(false);
-                return $this->redirect(['test-result',
-                            'userId' => $user->userId,
-                            'amount' => $_POST["amount"],
-                            'fromCheckout' => $fromCheckout
-                ]);
+                if ($topUp->paymentMethod == 2) {//Payment Method เป็น การชำระด้วยบัตรเครดิต
+                    return $this->redirect(['test-result',
+                                'userId' => $user->userId,
+                                'amount' => $_POST["amount"],
+                                'fromCheckout' => $fromCheckout
+                    ]);
+                } else if ($topUp->paymentMethod = 1) {//Payment Method เป็นการชำระด้วย Bill payment
+                    return $this->redirect(['print-payment-form',
+                                'userId' => $user->userId,
+                                'amount' => $_POST["amount"],
+                                'fromCheckout' => $fromCheckout
+                    ]);
+                }
             } else {
                 return $this->render('index', [
                             'data' => $data,
@@ -155,6 +177,50 @@ class TopUpController extends MasterController {
                     'res' => $response["decision"],
                     'fromCheckout' => $fromCheckout
         ]);
+    }
+
+    public function actionPrintPaymentForm($userId, $amount, $fromCheckout) {
+        $customerName = User::userName($userId);
+        $customerTel = User::userTel($userId);
+        $taxId = '0105553036789';
+        $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->one();
+        if (($topUp->topUpNo == NULL) && ($topUp->topUpNo == '')) {
+            $topUp->topUpNo = $this->topUpNo();
+        }
+        $topUp->save(false);
+        $tel = str_replace("-", "", $customerTel);
+        $topUpCut = str_replace("/", "", $topUp->topUpNo);
+
+        $amount1 = str_replace(",", "", number_format($amount, 2));
+        $amount2 = str_replace(".", "", $amount1);
+        $barCode = $taxId . $topUpCut . $tel . $amount2;
+        $data = "| " . $taxId . " " . $topUpCut . " " . $tel . " " . $amount2;
+        //throw new \yii\base\Exception($amount);
+        return $this->render('billpayment', [
+                    'amount' => $amount,
+                    'customerName' => $customerName,
+                    'customerTel' => $customerTel,
+                    'topUpNo' => $topUp->topUpNo,
+                    'taxId' => $taxId,
+                    'barCode' => $barCode,
+                    'data' => $data
+        ]);
+    }
+
+    public function actionPrintPaymentFormTopdf() {
+        $header = FALSE;
+        //$header = $this->renderPartial('header');
+        $content = $this->renderPartial('bill_form', [
+            'amount' => $_GET["amount"],
+            'customerName' => $_GET["customerName"],
+            'customerTel' => $_GET["customerTel"],
+            'topUpNo' => $_GET["topUpNo"],
+            'taxId' => $_GET["taxId"],
+            'barCode' => $_GET["barCode"],
+            'data' => $_GET["data"]
+        ]);
+        $title = FALSE;
+        $this->actionMpdfDocument($content, $header, $title);
     }
 
     public function actionResult($res, $fromCheckout) {
@@ -221,13 +287,15 @@ class TopUpController extends MasterController {
     public function topUpNo() {
         $y = date('Y');
         $m = date('m');
-        $ym = $y . '/' . $m;
+        $y = substr($y, 2, 2);
+        $ym = $y . $m;
+        // throw new \yii\base\Exception($ym);
         $lastNo = TopUp::find()->where("topUpNo like '$ym%'")->orderBy('topUpNo DESC')->one();
         if (isset($lastNo)) {
             $topUpNo = $lastNo->topUpNo;
             $topUpNo++;
         } else {
-            $topUpNo = $ym . '/' . '00001';
+            $topUpNo = $ym . '00001';
         }
         return $topUpNo;
     }
@@ -360,6 +428,98 @@ class TopUpController extends MasterController {
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public static function GetMpdfDocument($content, $setHeader = FALSE, $setFooter = FALSE, $marginTop = FALSE) {
+        //$orderId = Yii::$app->request->get('OrderNo');
+        // $orderId = $params['orderId'];
+        // get your HTML raw content without any layouts or scripts
+        // $content = $this->renderPartial('purchase_order');
+        // $model = YourModel::findOne($id);
+        // $content = $this->renderPartial('print', [ 'model' => $model]);
+        // setup kartik\mpdf\Pdf component
+        $pdf = new Pdf([
+            // set to use core fonts only
+            'mode' => Pdf::MODE_UTF8,
+            // A4 paper format
+            'format' => Pdf::FORMAT_A4,
+            // portrait orientation
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            // stream to browser inline
+            'destination' => Pdf::DEST_BROWSER,
+            // your html content input
+            'content' => $content,
+            // format content from your own css file if needed or use the
+            // enhanced bootstrap css built by Krajee for mPDF formatting
+            'cssFile' => '@frontend/web/css/pdf.css',
+            // any css to be embedded if required
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            //'cssInline' => 'body{font-size:9px}',
+            // set mPDF properties on the fly
+            'options' => ['title' => 'Cozxy.com Print Purchase Order',],
+            // call mPDF methods on the fly
+            //'marginTop' => isset($marginTop) ? $marginTop : 35,
+            'methods' => [
+                //'SetHeader' => ['Cozxy.com Print Purchase Order'], //Krajee Report Header
+                //'SetFooter' => ['{PAGENO}'],
+                'SetHeader' => $setHeader, //Krajee Report Header
+                'SetFooter' => $setFooter,
+            ]
+        ]);
+
+
+        // return the pdf output as per the destination setting
+        return $pdf->render();
+    }
+
+    // Privacy statement output demo
+    /*
+     * ส่วนของ Frontend 10/1/2017
+     * url ที่เรียกใช้ : payment/print-receipt/..........
+     * By Taninut.Bm
+     * email : taninut.bm@cozxy.com , sodapew17@gmail.com
+     */
+    public static function actionMpdfDocument($content, $header, $title) {
+
+        $pdf = new Pdf([
+            // set to use core fonts only
+            'mode' => Pdf::MODE_UTF8,
+            // A4 paper format
+            'format' => Pdf::FORMAT_A4,
+            // portrait orientation
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            // stream to browser inline
+            'destination' => Pdf::DEST_BROWSER,
+            // your html content input
+            'content' => $content,
+            // format content from your own css file if needed or use the
+            // enhanced bootstrap css built by Krajee for mPDF formatting
+            'cssFile' => '@frontend/web/css/pdf.css',
+            // any css to be embedded if required
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            //'cssInline' => 'body{font-size:9px}',
+            // set mPDF properties on the fly
+            // 'defaultFontSize' => 3,
+            // 'marginLeft' => 10,
+            // 'marginRight' => 10,
+            'marginTop' => 20,
+            // 'marginBottom' => 11,
+            //'marginHeader' => 6,
+            //'marginFooter' => 6,
+            // 'options' => ['title' => 'Cozxy.com Print ' . $title],
+            // call mPDF methods on the fly
+            'methods' => [
+                'SetHeader' => [$header], //Krajee Report Header
+            // 'SetFooter' => ['{PAGENO}'],
+            // 'SetHeader' => FALSE, //Krajee Report Header
+            /* 'SetFooter' => ['{PAGENO} / {nbpg}'
+              ], */
+            ]
+        ]);
+
+
+        // return the pdf output as per the destination setting
+        return $pdf->render();
     }
 
 }

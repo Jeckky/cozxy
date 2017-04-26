@@ -22,7 +22,7 @@ class TopUp extends \common\models\costfit\master\TopUpMaster {
      * @inheritdoc
      */
     const TOPUP_STATUS_E_PAYMENT_DRAFT = 1; //สร้าง
-    const TOPUP_STATUS_COMFIRM_PAYMENT = 2; //ยืนยันการจ่ายเงิน
+    const TOPUP_STATUS_COMFIRM_PAYMENT = 2; //รอยืนยันการจ่ายเงิน
     const TOPUP_STATUS_E_PAYMENT_SUCCESS = 3; //ผ่าน
     const TOPUP_STATUS_E_PAYMENT_DISCLAIM = 4; //ตัดบัตไม่ผ่าน
 

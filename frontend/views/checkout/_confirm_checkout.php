@@ -39,27 +39,28 @@ $form = ActiveForm::begin([
                             <?php
                             if ($userPoint->currentPoint >= $model->summary) {
                                 ?>
-                                <td style="text-align: left;">Balance</td><td style="text-align: right;"><?= number_format($userPoint->currentPoint - $model->summary, 2) ?></td>
+                                <td style="text-align: left;color: #33cc00;">Balance</td><td style="text-align: right;color: #33cc00;"><?= number_format($userPoint->currentPoint - $model->summary, 2) ?></td>
                             <?php } else { ?>
-                                <td style="text-align: left;">Balance</td><td style="text-align: right;color: #ff0033;"> - <?= number_format($model->summary - $userPoint->currentPoint, 2) ?></td>
+                                <td style="text-align: left;color: #ff0033;">Balance</td><td style="text-align: right;color: #ff0033;"> - <?= number_format($model->summary - $userPoint->currentPoint, 2) ?></td>
 
                             <?php }
                             ?>
                         </tr>
-                        <tr style="height: 60px;">
+                        <tr style="height: 80px;">
                             <td colspan="2">
                                 <?php
                                 if ($userPoint->currentPoint >= $model->summary) {
-                                    echo '* ระบบจะตัด Points หลังจากกด ยืนยันชำระเงิน';
-                                    echo Html::submitButton("ยืนยันชำระเงิน", ['class' => 'btn btn-md btn-primary']);
+                                    echo '<br><br>* ระบบจะตัด Points หลังจากกด "Confirm"<br><br><br>';
+                                    echo Html::submitButton("Confirm", ['class' => 'btn btn-md btn-primary col-lg-12']);
                                 } else {
-                                    echo Html::submitButton("Top up", ['class' => 'btn btn-md btn-primary']);
+                                    echo '<br><br><br>';
+                                    echo Html::submitButton("Top up", ['class' => 'btn btn-md btn-primary col-lg-12']);
                                 }
                                 ?>
                             </td>
-                        <tr style="height: 60px;">
+                        <tr style="height: 80px;">
                             <td colspan="2" style="text-align: center;">
-                                <?php echo Html::a("ย้อนกลับ", Yii::$app->homeUrl . "checkout/reverse-order-to-cart/" . common\models\ModelMaster::encodeParams(['orderId' => $model->orderId]), ['class' => 'btn btn-warning']); ?>
+                                <?php echo Html::a("Back", Yii::$app->homeUrl . "checkout/reverse-order-to-cart/" . common\models\ModelMaster::encodeParams(['orderId' => $model->orderId]), ['class' => 'btn btn-warning col-lg-12']); ?>
                             </td>
                         </tr>
                     </table>
