@@ -281,4 +281,18 @@ class UserController extends ManagementMasterController
         }
     }
 
+    public function actionMargin()
+    {
+        $model = new \common\models\costfit\Margin();
+
+        if (isset($_POST["Margin"])) {
+            $model->attributes = $_POST["Margin"];
+            $model->createDateTime = new \yii\db\Expression("NOW()");
+            $model->save();
+        }
+        return $this->render('margin', [
+            'model' => $model,
+        ]);
+    }
+
 }

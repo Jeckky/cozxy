@@ -180,13 +180,30 @@ use leandrogehlen\treegrid\TreeGrid;
                         <div class="panel-heading">
                             <div class="widget-profile-header">
                                 <a href="<?php echo Yii::$app->homeUrl; ?>suppliers/average" class="btn" style="color: #000;">
-                                    <i class="fa fa-tasks list-group-icon text-danger"></i> จำนวนสินค้าที่ขายได้ของ Suppliers. </a><br>
+                                    <i class="fa fa-tasks list-group-icon text-danger"></i> จำนวนสินค้าที่ขายได้ของ Suppliers </a><br>
                             </div>
                         </div> <!-- / .panel-heading -->
                         <div class="panel-body text-left">
                             <div class="widget-profile-text" style="padding: 0;">
                                 <p class="text-success">อธิบาย</p>
                                 -  ค่าเฉลี่ยการค้า/จำนวนสินค้าที่ขายได้
+                            </div>
+                        </div>
+                    </div> <!-- / .panel -->
+                </div>
+                <div class="col-md-3">
+
+                    <div class="panel panel-default panel-dark panel-body-colorful widget-profile widget-profile-centered">
+                        <div class="panel-heading">
+                            <div class="widget-profile-header">
+                                <a href="<?php echo Yii::$app->homeUrl; ?>suppliers/average" class="btn" style="color: #000;">
+                                    <i class="fa fa-tasks list-group-icon text-danger"></i> Cozxy Margin </a><br>
+                            </div>
+                        </div> <!-- / .panel-heading -->
+                        <div class="panel-body text-left">
+                            <div class="widget-profile-text" style="padding: 0;">
+                                <p class="text-success">อธิบาย</p>
+                                -  การตั้งค่า Margin ของระบบ โดยเป็นค่ามาตราฐาน เมื่อไม่มีการตั้งค่าของแต่ละ Supplier ระบบ จะนำค่านี้ไปคำนวณ
                             </div>
                         </div>
                     </div> <!-- / .panel -->
