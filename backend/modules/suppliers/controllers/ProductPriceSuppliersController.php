@@ -101,43 +101,47 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
             header("location: /auth");
             exit(0);
         }
-        $model = new ProductPriceSuppliers();
-        //$rankingPrice = \common\models\costfit\ProductPriceSuppliers::rankingPrice();
-        $rankOne = $this->SearchProductSuppliers($_GET['productSuppId']); //\common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $_GET['productSuppId'])->one();
-        /*
-         * แสดงข้อมูลที่อยู่ใน brand , category เดียวกัน
-         * ทุก Suppliers
-         */
+        if (isset($_GET['productSuppId'])) {
+            $model = new ProductPriceSuppliers();
+            //$rankingPrice = \common\models\costfit\ProductPriceSuppliers::rankingPrice();
+            $rankOne = $this->SearchProductSuppliers($_GET['productSuppId']); //\common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $_GET['productSuppId'])->one();
+            /*
+             * แสดงข้อมูลที่อยู่ใน brand , category เดียวกัน
+             * ทุก Suppliers
+             */
 
-        $rankingPrice = Suppliers::GetPriceSuppliersSame($rankOne->brandId, $rankOne->categoryId, $_GET['productSuppId']);
+            $rankingPrice = Suppliers::GetPriceSuppliersSame($rankOne->brandId, $rankOne->categoryId, $_GET['productSuppId']);
 
-        if (isset($_POST["ProductPriceSuppliers"])) {
-            $model->attributes = $_POST["ProductPriceSuppliers"];
-            \common\models\costfit\ProductPriceSuppliers::updateAll(['status' => 0], ['productSuppId' => $_GET['productSuppId']]);
-            $model->status = 1;
-            $model->createDateTime = new \yii\db\Expression('NOW()');
-            if ($model->save()) {
-                $productPriceCozxy = \common\models\costfit\Product::updateAll(['price' => $_POST["ProductPriceSuppliers"]['price']], ['productSuppId' => $_GET['productSuppId']]);
+            if (isset($_POST["ProductPriceSuppliers"])) {
+                $model->attributes = $_POST["ProductPriceSuppliers"];
+                \common\models\costfit\ProductPriceSuppliers::updateAll(['status' => 0], ['productSuppId' => $_GET['productSuppId']]);
+                $model->status = 1;
+                $model->createDateTime = new \yii\db\Expression('NOW()');
+                if ($model->save()) {
+                    $productPriceCozxy = \common\models\costfit\Product::updateAll(['price' => $_POST["ProductPriceSuppliers"]['price']], ['productSuppId' => $_GET['productSuppId']]);
 
-                //return $this->redirect(['product-price-suppliers/index?productSuppId = ' . $_GET['productSuppId']]);
-                return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-suppliers/image-form?productSuppId=' . $model->productSuppId);
-                //return $this->redirect('/suppliers/product-price-suppliers/create?productSuppId=' . $model->productSuppId);
+                    //return $this->redirect(['product-price-suppliers/index?productSuppId = ' . $_GET['productSuppId']]);
+                    return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-suppliers/image-form?productSuppId=' . $model->productSuppId);
+                    //return $this->redirect('/suppliers/product-price-suppliers/create?productSuppId=' . $model->productSuppId);
+                }
             }
+
+            $productSupp = \common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $_GET['productSuppId'])->one();
+
+            $productLastDay = Suppliers::LastDay($_GET['productSuppId']);
+            $productLastWeek = Suppliers::LastWeek($_GET['productSuppId']);
+            $product14LastWeek = Suppliers::LastWeek14($_GET['productSuppId']);
+            $orderLastMONTH = Suppliers::LastMonth($_GET['productSuppId']);
+            return $this->render('create', [
+                'model' => $model, 'rankingPrice' => $rankingPrice, 'titleSuppliers' => $rankOne
+                , 'productLastDay' => $productLastDay
+                , 'productLastWeek' => $productLastWeek
+                , 'orderLastMONTH' => $orderLastMONTH
+                , 'product14LastWeek' => $product14LastWeek
+            ]);
+        } else {
+            return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-suppliers');
         }
-
-        $productSupp = \common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $_GET['productSuppId'])->one();
-
-        $productLastDay = Suppliers::LastDay($_GET['productSuppId']);
-        $productLastWeek = Suppliers::LastWeek($_GET['productSuppId']);
-        $product14LastWeek = Suppliers::LastWeek14($_GET['productSuppId']);
-        $orderLastMONTH = Suppliers::LastMonth($_GET['productSuppId']);
-        return $this->render('create', [
-            'model' => $model, 'rankingPrice' => $rankingPrice, 'titleSuppliers' => $rankOne
-            , 'productLastDay' => $productLastDay
-            , 'productLastWeek' => $productLastWeek
-            , 'orderLastMONTH' => $orderLastMONTH
-            , 'product14LastWeek' => $product14LastWeek
-        ]);
     }
 
     /**
