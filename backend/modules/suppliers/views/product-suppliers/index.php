@@ -21,7 +21,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
 <div class="product-suppliers-index">
 
 
-<?php Pjax::begin(['id' => 'employee-grid-view']); ?>
+    <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-default">
         <div class="panel-body">
             <?php
@@ -82,14 +82,14 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                     <button class="btn btn-info" type="submit">Search Product Suppliers</button>
                 </div>
             </div>
-<?php ActiveForm::end(); ?>
+            <?php ActiveForm::end(); ?>
         </div>
         <div class="panel-heading">
             <div class="row">
                 <div class="col-md-6"><?= $this->title ?></div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
-<?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Product Suppliers', ['create'], ['class' => 'btn btn-success btn-xs']) ?>
+                        <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Product Suppliers', ['create'], ['class' => 'btn btn-success btn-xs']) ?>
                     </div>
                 </div>
             </div>
@@ -225,7 +225,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                         'attribute' => 'image',
                         'format' => 'html',
                         'value' => function($model) {
-                            $productImageSupplers = common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $model->productSuppId)->orderBy('productImageId')->limit(1)->one();
+                            $productImageSupplers = common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $model->productSuppId)->orderBy('ordering asc')->limit(1)->one();
                             if (isset($productImageSupplers)) {
                                 //echo $productImageSupplers->imageThumbnail2;
                                 return Html::a('<i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มรูปภาพใหม่ <i class="fa fa-picture-o"></i>', Yii::$app->homeUrl . "suppliers/product-suppliers/image-form?productSuppId=" . $model->productSuppId, [
@@ -279,5 +279,5 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
             ?>
         </div>
     </div>
-<?php Pjax::end(); ?>
+    <?php Pjax::end(); ?>
 </div>

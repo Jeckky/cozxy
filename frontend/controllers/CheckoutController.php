@@ -68,8 +68,8 @@ class CheckoutController extends MasterController {
             if (isset($_POST['Address'])) {
                 //print_r($_POST['Address']);
                 $address = \common\models\costfit\Address::find()
-                        ->where('userId =' . \Yii::$app->user->id . ' and addressId=' . $addressId . ' and  type = 1')
-                        ->one();
+                ->where('userId =' . \Yii::$app->user->id . ' and addressId=' . $addressId . ' and  type = 1')
+                ->one();
 
                 $address->attributes = $_POST['Address'];
                 $address->countryId = (isset($_POST['Address']['countryId']) ? $_POST['Address']['countryId'] : '');
@@ -85,20 +85,20 @@ class CheckoutController extends MasterController {
             //echo 'no hidden ';
             if (\Yii::$app->user->isGuest) {
                 $address_shipping = \common\models\costfit\Address::find()->where('userId=' . 0 . ' and type = 2  ')
-                        ->orderBy('isDefault desc ')
-                        ->all();
+                ->orderBy('isDefault desc ')
+                ->all();
 
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . 0 . ' and type = 1  ')
-                        ->orderBy('isDefault desc  ')
-                        ->all();
+                ->orderBy('isDefault desc  ')
+                ->all();
             } else {
                 $address_shipping = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 2  ')
-                        ->orderBy('isDefault desc ')
-                        ->all();
+                ->orderBy('isDefault desc ')
+                ->all();
 
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 1  ')
-                        ->orderBy('isDefault desc  ')
-                        ->all();
+                ->orderBy('isDefault desc  ')
+                ->all();
                 //$address_billing['scenario'] = 'shipping_address';
             }
 
@@ -409,8 +409,8 @@ class CheckoutController extends MasterController {
 
             if (isset($billing)) {
                 $address_billing = \common\models\costfit\Address::find()->where('userId = ' . $placeUserId . ' and addressId = ' . $billing)
-                        ->orderBy('addressId desc')
-                        ->one();
+                ->orderBy('addressId desc')
+                ->one();
                 //$address_shipping = \common\models\costfit\Address::find()->where('userId = ' . $placeUserId . ' and addressId = ' . $shipping)
                 // ->orderBy('addressId desc')
                 // ->one();
@@ -419,8 +419,8 @@ class CheckoutController extends MasterController {
                 //->orderBy('addressId desc')
                 //->one();
                 $address_billing = \common\models\costfit\Address::find()->where('userId = ' . $placeUserId . ' and addressId = ' . $shipping)
-                        ->orderBy('addressId desc')
-                        ->one();
+                ->orderBy('addressId desc')
+                ->one();
             }
             $order = \common\models\costfit\Order::find()->where('userId = ' . $placeUserId . ' and orderId = ' . $placeOrderId)->one();
             //check ก่อนว่า มี ITEMS ครบตามจำนวนที่ต้องการหรือไม่ ถ้า ไม่ครบให้บอกจำนวนที่เหลือ พร้อมถามว่าต้องการหรือป่าว ถ้าต้องการเปลี่ยนในตารางorderItemแล้วคำนวณราคาใหม่
@@ -514,8 +514,8 @@ class CheckoutController extends MasterController {
         }
         $addressId = Yii::$app->request->post('address');
         $address = \common\models\costfit\Address::find()->where('addressId = ' . $addressId)
-                ->orderBy('isDefault desc, updateDateTime desc')
-                ->one();
+        ->orderBy('isDefault desc, updateDateTime desc')
+        ->one();
         //echo '<pre>';
         //print_r($address->attributes);
         echo json_encode($address->attributes);
@@ -821,8 +821,8 @@ class CheckoutController extends MasterController {
             $needMore = $model->summary - $currentPoint;
             $ms = 'จำนวน Point ของคุณไม่พอ กรุณาเติม Point อีก';
             return $this->redirect([$baseUrl . '/top-up',
-                        'ms' => $ms,
-                        'needMore' => $needMore
+                'ms' => $ms,
+                'needMore' => $needMore
             ]);
         }
     }

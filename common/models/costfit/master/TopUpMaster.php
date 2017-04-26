@@ -8,9 +8,10 @@ use Yii;
 * This is the model class for table "top_up".
 *
     * @property string $topUpId
-    * @property integer $userId
-    * @property integer $money
-    * @property integer $point
+    * @property string $userId
+    * @property string $money
+    * @property string $point
+    * @property integer $paymentMethod
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -31,7 +32,7 @@ return 'top_up';
 public function rules()
 {
 return [
-            [['userId', 'money', 'point', 'status'], 'integer'],
+            [['userId', 'money', 'point', 'paymentMethod', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
         ];
 }
@@ -46,6 +47,7 @@ return [
     'userId' => Yii::t('top_up', 'User ID'),
     'money' => Yii::t('top_up', 'Money'),
     'point' => Yii::t('top_up', 'Point'),
+    'paymentMethod' => Yii::t('top_up', 'Payment Method'),
     'status' => Yii::t('top_up', 'Status'),
     'createDateTime' => Yii::t('top_up', 'Create Date Time'),
     'updateDateTime' => Yii::t('top_up', 'Update Date Time'),
