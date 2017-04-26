@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <th style="vertical-align: middle;text-align: center;"><h4><b>Upload file .xls,csv : </b></h4></th>
                         <td>
                             <?= \yii\helpers\Html::textInput('fileName', NULL, ['class' => 'input-lg', 'autofocus' => 'autofocus']); ?><?= isset($ms) && $ms != '' ? ' <code> ' . $ms . '</code>' : '' ?>
+
                         </td>
                     </tr>
                 </tbody>
