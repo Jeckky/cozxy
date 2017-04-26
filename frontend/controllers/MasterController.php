@@ -56,7 +56,7 @@ class MasterController extends MasterCommonController {
         $this->view->params['cart'] = \common\models\costfit\Order::findCartArray();
 
         // - SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
-        if ((!Yii::$app->user->isGuest) && $this->id == "profile") {
+        if ((!Yii::$app->user->isGuest) && $this->id == "profile" || $this->id == "reviews") {
             $dataProvider_shipping_bk = new \yii\data\ActiveDataProvider([
                 'query' => \common\models\costfit\Address::find()->where("userId ='" . Yii::$app->user->id . "' and type = 3 ")->orderBy('addressId DESC'),
                 'pagination' => false,

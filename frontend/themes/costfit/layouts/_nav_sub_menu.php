@@ -68,6 +68,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <li class="pull-left"><a href="<?php echo Yii::$app->homeUrl; ?>profile" style="font-size: 12px;">My Profile</a></li>
                 <li class="pull-left"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order" style="font-size: 12px;">Order History</a></li>
                 <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/returning"><?= Yii::t('app', 'Product Returns') ?></a></li>
+                <li><a href="<?php echo Yii::$app->homeUrl; ?>reviews" style="font-size: 12px;">My Reviews</a></li>
                <!--<li class="pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order" style="font-size: 12px;">คำขอคืนสินค้า</a></li>-->
                <!--<li class="pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/payment">Payment Methods</a></li>
                <li class="pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>history">Easy Re-Order</a></li>-->
@@ -84,7 +85,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         //echo Html::a(Html::img($baseUrl . '/images/flags/flag_en.jpg'), Url::current(['language' => 'en-US']), ['class' => (Yii::$app->request->cookies['language'] == 'en-US' ? 'active' : ''), 'style' => ' margin-top: 5px']);
         ?>
     </li>
-    <!--<li class="has-submenu pull-right"><a href="<?php //echo Yii::$app->homeUrl;  ?>coupon">Super special offers</a></li>ข้อเสนอพิเศษจากพาร์ทเนอร์-->
+    <!--<li class="has-submenu pull-right"><a href="<?php //echo Yii::$app->homeUrl;         ?>coupon">Super special offers</a></li>ข้อเสนอพิเศษจากพาร์ทเนอร์-->
     <li class="has-submenu pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works">How Works</a></li>
 
 
@@ -138,8 +139,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
             <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/returning"><?= Yii::t('app', 'Product Returns') ?></a></li>
-            <!--<li class="pill-right"><a href="<?php // echo Yii::$app->homeUrl;              ?>profile/payment">Payment Methods</a></li>
-            <li class="pull-right"><a href="<?php // echo Yii::$app->homeUrl;              ?>history">Easy Re-Order</a></li>-->
+            <li><a href="<?php echo Yii::$app->homeUrl; ?>reviews">My Reviews</a></li>
+           <!--<li class="pill-right"><a href="<?php // echo Yii::$app->homeUrl;                     ?>profile/payment">Payment Methods</a></li>
+           <li class="pull-right"><a href="<?php // echo Yii::$app->homeUrl;                     ?>history">Easy Re-Order</a></li>-->
         </ul>
     </li>
 <?php endif; ?>

@@ -24,10 +24,10 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
             <p>Member since
                 <span class="member-since"><?php echo $createDateTime; ?></span><!--Apr 9,2016 -->
             </p>
-            <hr>
+            <!--<hr>
             <p class="col-lg-6 col-md-6 col-sm-6 text-left" style="padding-left: 0px;">You've Saved</p>
             <p class="col-lg-6 col-md-6 col-sm-6 text-right">THB 0.00</p>
-            <br>
+            <br>-->
         </div>
 
         <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup">

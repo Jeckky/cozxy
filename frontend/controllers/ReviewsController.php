@@ -29,9 +29,19 @@ class ReviewsController extends MasterController {
      */
     public function actionIndex() {
 
-        $this->title = 'Cozxy.com | reviews';
-        $this->subTitle = 'ชื่อ reviews';
-        return $this->render('@app/views/reviews/reviews');
+        if (Yii::$app->user->isGuest == 1) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
+
+        $this->layout = "/content_profile";
+        $this->title = 'Cozxy.com | My Reviews';
+        $this->subTitle = 'reviews';
+        $this->subSubTitle = "My reviews";
+
+        $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
+        $model->scenario = 'profile';
+
+        return $this->render('reviews', ['model' => $model]);
     }
 
     public function actionCreateReview() {
