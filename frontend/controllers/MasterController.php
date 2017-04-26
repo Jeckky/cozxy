@@ -88,12 +88,35 @@ class MasterController extends MasterCommonController {
             $this->view->params['listDataProvider']['billing'] = $dataProvider_billing;
         }
         if ((!Yii::$app->user->isGuest) && $this->id == "reviews") {
+            $dataProvider_shipping_bk = new \yii\data\ActiveDataProvider([
+                'query' => \common\models\costfit\Address::find()->where("userId ='" . Yii::$app->user->id . "' and type = 3 ")->orderBy('addressId DESC'),
+                'pagination' => false,
+            ]);
+            $dataProvider_picking_point = new \yii\data\ActiveDataProvider([
+                'query' => \common\models\costfit\PickingPoint::find()->where("userId ='" . Yii::$app->user->id . "' and type = 1 ")->orderBy('pickingId DESC'),
+                'pagination' => false,
+            ]);
+            // $this->view->params['cart']
+            // - BILLING = 1; // ที่อยู่จัดส่งเอกสาร
+            //echo Yii::$app->user->id;
+            $dataProvider_billing = new \yii\data\ActiveDataProvider([
+                'query' => \common\models\costfit\Address::find()->where("userId ='" . Yii::$app->user->id . "' and type = 1 ")->orderBy('addressId DESC'),
+                'pagination' => false,
+            ]);
             $user_point = \common\models\costfit\UserPoint::find()->where("userId='" . Yii::$app->user->id . "'")->one();
             if (isset($user_point) && !empty($user_point)) {
                 $this->view->params['currentPoint'] = $user_point->currentPoint;
             } else {
                 $this->view->params['currentPoint'] = 0;
             }
+            $device = \common\models\costfit\UserVisit::find()->where('userId=' . Yii::$app->user->id)->orderBy('visitId desc')->limit(1)->one();
+            if (count($device) > 0) {
+                $this->view->params['listDevice']['device'] = $device;
+            } else {
+                $this->view->params['listDevice']['device'] = NULL;
+            }
+            $this->view->params['listDataProvider']['shipping'] = $dataProvider_picking_point;
+            $this->view->params['listDataProvider']['billing'] = $dataProvider_billing;
         }
         if ($this->id == 'products') {
             $uri = explode('/', $_SERVER["REQUEST_URI"]);
