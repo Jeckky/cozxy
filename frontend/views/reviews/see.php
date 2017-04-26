@@ -344,10 +344,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                         <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"
                                                            style="font-size: 13px;"><i class="fa fa-pencil" aria-hidden="true"></i> <?php echo $value->title; ?></a>
                                                     </div>
-                                                    <div class="text-left" style="margin-bottom:2px; font-size: 12px; height: 120px;">
-                                                        <div class="test">
-                                                            &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $value->shortDescription; ?>
-                                                        </div>
+                                                    <div class="text-left test" style="margin-bottom:2px; font-size: 12px; height: 120px;">
+
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $value->shortDescription; ?>
+
                                                     </div>
                                                     <div style="text-align: right;">
                                                         <a role="button"  onclick="views_click('<?php echo $value->productPostId ?>', '<?php echo $valuex->productSuppId; ?>', '<?php echo $valuex->productId; ?>')"  class="panel-toggle" id="see-reviews" style="font-size: 14px; border-bottom: 0px dashed #292c2e;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
