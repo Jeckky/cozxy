@@ -41,18 +41,24 @@ $this->registerJs($js);
 
     <div class="bs-example" data-example-id="btn-tags" style="margin: auto;background-color:#3cc;height:85px;color: #fff; border-width: 1px;  border-radius: 4px 4px 0 0; -webkit-box-shadow: none; box-shadow: none;">
         <span style="float: left; text-align: left;width: 30%;">Cozxy.com</span>
-        <span style="float: right; text-align: right;width: 70%;"><?php
-            if (isset($needMore) && $needMore != 0) {
-                echo 'ต้องเติมอีก ' . $needMore . ' Points เป็นเงิน ' . number_format($needMore, 2) . ' บาท';
-            }
-            ?>
-        </span>
     </div>
     <?php if (isset($fromCheckout) && $fromCheckout != 'no') { ?>
         <input type="hidden" name="fromCheckout" value="yes">
     <?php } ?>
     <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="margin: auto;text-align: center;color: #000;margin-bottom: 20px;">
-        <h3 style="text-align: left;color: #009999;"><b>:: Top up</b></h3><hr>
+        <div class="row">
+            <div class="col-lg-3 pull-left text-left" style="text-align: left;color: #009999;">
+                <h3 style="text-align: left;color: #009999;"><b>:: Top up</b></h3>
+            </div>
+            <div class="col-lg-9 pull-right text-right" style="text-align: right;margin-top: 25px;">
+                <?php
+                if (isset($needMore) && $needMore != 0) {
+                    echo '<h4 style="color: #006666;">ต้องเติมอีก ' . $needMore . ' Points เป็นเงิน ' . number_format($needMore, 2) . ' บาท</h4>';
+                }
+                ?>
+            </div>
+        </div>
+        <hr>
         <table style="width: 100%">
 
             <tr style="height: 50px;">

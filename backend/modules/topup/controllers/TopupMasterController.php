@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\suppliers\controllers;
+namespace backend\modules\topup\controllers;
 
 use Yii;
 use yii\helpers\Url;
@@ -13,7 +13,7 @@ use common\models\costfit;
 /**
  * Suppliers Prodcut controller
  */
-class TopController extends \backend\controllers\BackendMasterController {
+class TopupMasterController extends \backend\controllers\BackendMasterController {
 
     public $breadcrumbs = [];
     public $layout = '/cl1';
