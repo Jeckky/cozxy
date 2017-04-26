@@ -31,10 +31,10 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                 }
                 ?>
                 <div class="btn-group">
-                    <a href="<?php echo $baseUrl; ?>notification/inbox" class="btn btn-xs btn-primary btn-outline dark"><i class="fa fa-envelope"></i></a>
-                    <a href="<?php echo $baseUrl; ?>profile" class="btn btn-xs btn-primary btn-outline dark"><i class="fa fa-user"></i></a>
-                    <a href="<?php echo $baseUrl; ?>profile" class="btn btn-xs btn-primary btn-outline dark"><i class="fa fa-cog"></i></a>
-                    <a href="<?php echo $baseUrl; ?>auth/auth/logout" class="btn btn-xs btn-danger btn-outline dark"><i class="fa fa-power-off"></i></a>
+                    <a href="<?php echo $baseUrl; ?>/notification/inbox" class="btn btn-xs btn-primary btn-outline dark"><i class="fa fa-envelope"></i></a>
+                    <a href="<?php echo $baseUrl; ?>/profile" class="btn btn-xs btn-primary btn-outline dark"><i class="fa fa-user"></i></a>
+                    <a href="<?php echo $baseUrl; ?>/profile" class="btn btn-xs btn-primary btn-outline dark"><i class="fa fa-cog"></i></a>
+                    <a href="<?php echo $baseUrl; ?>/auth/auth/logout" class="btn btn-xs btn-danger btn-outline dark"><i class="fa fa-power-off"></i></a>
                 </div>
                 <a href="#" class="close">&times;</a>
             </div>
@@ -168,14 +168,14 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             ?>
             <!--
             <li>
-                <a href="<?php //echo $baseUrl;                                                                                                                                                                                                                                   ?>/dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
+                <a href="<?php //echo $baseUrl;                                                                                                                                                                                                                                    ?>/dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
             </li>
 
             <li class="mm-dropdown">
                 <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูล User</span><span class="label label-warning">Updated</span></a>
                 <ul>
                     <li>
-                        <a tabindex="-1" href="<?php //echo $baseUrl;                                                                                                                                                                                                                                                                    ?>/user/user"><i class="fa fa-square"></i> <span class="mm-text">สมาชิก</span></a>
+                        <a tabindex="-1" href="<?php //echo $baseUrl;                                                                                                                                                                                                                                                                     ?>/user/user"><i class="fa fa-square"></i> <span class="mm-text">สมาชิก</span></a>
                     </li>
                 </ul>
             </li>-->
