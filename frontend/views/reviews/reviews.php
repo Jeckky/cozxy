@@ -60,7 +60,7 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                 <?php
                 if (count($productPost) > 0) {
                     foreach ($productPost as $key => $value) {
-                        echo ' <div class="col-md-4">';
+                        echo ' <div class="col-md-6">';
                         echo ' <div class="col-md-12" style="border: 1px solid #b2b2b2;margin-bottom: 3px;">';
                         //$rating_score = 0;
                         $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
@@ -80,7 +80,7 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                             $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productImageId desc')->limit(1)->all();
                             $productViews = common\models\costfit\ProductPageViews::find()->where('productSuppId=' . $value->productSuppId)->count();
                             ?>
-                            <div class="col-md-12 text-center">
+                            <div class="col-md-12 text-center" style="padding-left: 0px; padding-right: 0px;">
                                 <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>" style="font-size: 14px; margin-top: 5px;">
                                     <?php
                                     //echo strlen($valuex->title) . '<br>';
