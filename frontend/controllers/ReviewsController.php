@@ -37,11 +37,11 @@ class ReviewsController extends MasterController {
         $this->title = 'Cozxy.com | My Reviews';
         $this->subTitle = 'reviews';
         $this->subSubTitle = "My reviews";
-
+        $productPost = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id)->groupBy(['productSuppId'])->orderBy('productPostId desc')->all();
         $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
         $model->scenario = 'profile';
 
-        return $this->render('reviews', ['model' => $model]);
+        return $this->render('reviews', ['model' => $model, 'productPost' => $productPost]);
     }
 
     public function actionCreateReview() {
