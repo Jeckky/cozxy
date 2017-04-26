@@ -27,7 +27,7 @@ use yii\widgets\Pjax;
             ?>
             <?= $form->errorSummary($systemMargin) ?>
 
-            <h1 class="col-lg-offset-3">The System Margin of <?= isset($systemMargin->percent) ? "<span class='label label-success'>$systemMargin->percent</span>" : "<span class='label label-danger'>Not Set</span>" ?></h1>
+            <h1 class="col-lg-offset-3" style="color:blue;font-weight: bold">The System Margin of <?= isset($systemMargin->percent) ? " <span class='label label-success' style='font-weight: bold'>$systemMargin->percent</span>" : "<span class='label label-danger'>Not Set</span>" ?></h1>
             <hr>
             <?= $form->field($systemMargin, 'percent', ['options' => ['class' => 'row form-group ']])->textInput(['maxlength' => 13])->label('Update System Margin (%)') ?>
             <div class="col-lg-offset-3 ">
@@ -94,7 +94,55 @@ use yii\widgets\Pjax;
             </div>
         </div>
     </div>
-
+    <div class="row">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <span class="panel-title">Other Margin</span>
+                </h4>
+            </div>
+            <div id="collapse1" class="panel-body">
+                <?php
+                $historys = \common\models\costfit\Margin::find()->where("brandId is NULL AND categoryId is NULL AND supplierId is NULL")->orderBy("createDateTime DESC")->all();
+                ?>
+                <table class="table table-bordered table-hover ">
+                    <thead>
+                        <tr>
+                            <th>Seq</th>
+                            <th>Percent</th>
+                            <th>Create Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if (count($historys) > 0):
+                            $seq = 1;
+                            foreach ($historys as $his):
+                                if ($his->marginId == $systemMargin->marginId) {
+                                    continue;
+                                }
+                                ?>
+                                <tr>
+                                    <td><?= $seq; ?></td>
+                                    <td><?= $his->percent; ?></td>
+                                    <td><?= $this->context->dateThai($his->createDateTime, 2, TRUE); ?></td>
+                                </tr>
+                                <?php
+                                $seq++;
+                            endforeach;
+                        else:
+                            ?>
+                            <tr>
+                                <td colspan="3" style="text-align: center;color:red">
+                                    --No have history--
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 
     <?php ActiveForm::end(); ?>
