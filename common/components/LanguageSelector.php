@@ -6,13 +6,11 @@ use yii\base\BootstrapInterface;
 use yii\web\Cookie;
 use yii\base\Exception;
 
-class LanguageSelector implements BootstrapInterface
-{
+class LanguageSelector implements BootstrapInterface {
 
     public $supportedLanguages = [];
 
-    public function bootstrap($app)
-    {
+    public function bootstrap($app) {
         $cookies = $app->response->cookies; //กำหนด cookie
         $languageNew = $app->request->get('language'); //ตรวจสอบว่ามีการ request language หรือเปล่า
 
@@ -31,7 +29,7 @@ class LanguageSelector implements BootstrapInterface
             //echo 'test1';
         } else {
 
-            $preferedLanguage = isset($app->request->cookies['language']) ? (string) $app->request->cookies['language'] : 'th-TH'; // 'th-TH' or 'en-US' หากยังไม่ได้เลือกภาษาให้เป็นภาษาไทยก่อน
+            $preferedLanguage = isset($app->request->cookies['language']) ? (string) $app->request->cookies['language'] : 'en-US'; // 'th-TH' or 'en-US' หากยังไม่ได้เลือกภาษาให้เป็นภาษาไทยก่อน
 
             if (empty($preferedLanguage)) {
                 $preferedLanguage = $app->request->getPreferedLanguage($this->supportedLanguages); //หากยังไม่เลือกภาษา ให้ตรวจสอบว่าอยู่ในรายการหรือเปล่า
