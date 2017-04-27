@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\costfit\UserPoint;
 
 /**
  * TopupController implements the CRUD actions for Topup model.
@@ -52,20 +53,44 @@ class TopupController extends TopupMasterController {
                 $upload = $file->saveAs($uploadPath . '/' . $newFileName);
                 if ($upload) {
 
-                    //define('CSV_PATH', $uploadPath);
-                    //$csv_file = CSV_PATH . '/' . $newFileName;
-                    $csv_file = $uploadPath . '/' . $newFileName;
-                    // throw new \yii\base\Exception($csv_file);
+                    define('CSV_PATH', $uploadPath);
+                    $csv_file = CSV_PATH . '/' . $newFileName;
                     $fcsv = fopen($csv_file, "r");
                     if ($fcsv) {
-                        $r = 1;
+                        $r = 0;
                         $data = [];
-                        while (!feof($fcsv)) {
-                            throw new \yii\base\Exception(print_r($fcsv, true));
+                        while (($objArr = fgetcsv($fcsv, 1000, ",")) !== FALSE) {
+                            //$data[$r] = $objArr[0];
+                            if ($r != 0) {//first record is title
+                                $data[$r][1] = $objArr[0];
+                                $data[$r][1] = $objArr[1];
+                                $data[$r][2] = $objArr[2];
+                                $data[$r][3] = $objArr[3];
+                                $data[$r][4] = $objArr[4];
+                                $data[$r][5] = $objArr[5];
+                            }
+                            $r++;
+                        }
+                        fclose($fcsv);
+                        if (count($data) > 0) {
+                            $dataChange = $this->updateBillpayment($data);
+                            if ($dataChange != '') {
+                                $dataProviderChange = new ActiveDataProvider([
+                                    'query' => TopUp::find()->where("topUpId in($dataChange)")
+                                ]);
+                                $topUps = 'yes';
+                            } else {
+                                $topUps = '';
+                            }
+                            return $this->render('index', [
+                                        'dataProviderChange' => $dataProviderChange,
+                                        'dataProvider' => $dataProvider,
+                                        'dataChange' => $topUps
+                            ]);
                         }
                     }
                 }
-                fclose($fcsv);
+
                 return $this->render('index', [
                             'dataProvider' => $dataProvider,
                             'data' => $data
@@ -138,6 +163,46 @@ class TopupController extends TopupMasterController {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function updateBillpayment($data) {
+        /* foreach ($data as $record)://รอไฟล์ จากธนาคาร
+          foreach ($record as $info):
+
+          endforeach;
+          endforeach; */
+        $changeId = '';
+        $topUp = TopUp::find()
+                ->where("status=" . \common\models\costfit\TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=1")
+                ->all();
+        if (isset($topUp) && count($topUp) > 0) {
+            foreach ($topUp as $topup):
+                $topup->status = 3;
+                $topup->save(false);
+                $userPoint = UserPoint::find()->where("userId=" . $topup->userId)->one();
+                if (isset($userPoint)) {
+                    $userPoint->currentPoint = $topup->point;
+                    $userPoint->totalPoint += $topup->point;
+                    $userPoint->currentPoint += $topup->money;
+                    $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
+                    $userPoint->save(false);
+                } else {
+                    $userPoint = new UserPoint();
+                    $userPoint->userId = Yii::$app->user->id;
+                    $userPoint->currentPoint = $topup->point;
+                    $userPoint->totalPoint += $topup->point;
+                    $userPoint->totalMoney = $topup->money;
+                    $userPoint->createDateTime = new \yii\db\Expression('NOW()');
+                    $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
+                    $userPoint->save(false);
+                }
+                $changeId = $changeId . $topup->topUpId . ',';
+            endforeach;
+        }
+        if ($changeId != '') {
+            $changeId = substr($changeId, 0, -1);
+        }
+        return $changeId;
     }
 
     /**

@@ -84,33 +84,59 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
         </div>
     </div>
-</div>
-<?php
-if (isset($data)) {
-    ?>
-    <table width="600" border="1">
-        <tr>
-
-            <th width="91"> <div align="center">CustomerID </div></th>
-
-            <th width="98"> <div align="center">Name </div></th>
-
-            <th width="198"> <div align="center">Email </div></th>
-
-            <th width="97"> <div align="center">CountryCode </div></th>
-
-            <th width="59"> <div align="center">Budget </div></th>
-
-            <th width="71"> <div align="center">Used </div></th>
-
-        </tr>
-        <?php
-        throw new \yii\base\Exception(print_r($data, true));
-        foreach ($data as $a):
+    <?php
+    if (isset($dataChange)) {
         ?>
+        <div class="panel-heading"  style="background-color: #000;vertical-align: middle;">
+            <span class="panel-title"><h3 style="color:#ffcc00;">รายการที่ชำระเงินแล้ว</h3></span>
+        </div>
+        <div class="panel-body">
+            <?=
+            GridView::widget([
+                'dataProvider' => $dataProviderChange,
+                'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
+                        [
+                        'attribute' => 'User',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            return User::userName($model->userId);
+                        }
+                    ],
+                        [
+                        'attribute' => 'Point',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            return $model->point;
+                        }
+                    ],
+                        [
+                        'attribute' => 'Money',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            return number_format($model->money, 2);
+                        }
+                    ],
+                        [
+                        'attribute' => 'Date Time',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            return $this->context->dateThai($model->createDateTime, 2);
+                        }
+                    ],
+                        [
+                        'attribute' => 'status',
+                        'format' => 'raw',
+                        'value' => function($model) {
 
-        <?php endforeach;
-        ?>
-    </table>
-
+                            return \common\models\costfit\TopUp::statusText($model->status);
+                        }
+                    ],
+                // 'updateDateTime',
+                //  ['class' => 'yii\grid\ActionColumn'],
+                ],
+            ]);
+            ?>
+        </div>
+    </div>
 <?php } ?>
