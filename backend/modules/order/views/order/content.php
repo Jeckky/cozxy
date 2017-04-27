@@ -108,7 +108,7 @@ foreach ($storeProductGroupId as $id):
                 echo '<td><center>' . $item->quantity . '</center></td>';
                 $unit = \common\models\costfit\Unit::unitName($item->productSuppId);
                 echo '<td><center>' . $unit . '</center></td>';
-                $price = ProductSuppliers::productPriceSupplier($item->productSuppId);
+                $price = $item->marginPrice;
                 echo '<td style="text-align: right;">' . $price . '</td>';
                 echo '<td style="text-align: right;">' . number_format($price * $item->quantity, 2) . '</td>';
                 echo '</tr>';

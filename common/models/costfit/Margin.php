@@ -96,7 +96,7 @@ class Margin extends \common\models\costfit\master\MarginMaster
         return $res;
     }
 
-    public static function getCalProductSuppMargin($productSuppId)
+    public static function getProductSuppMargin($productSuppId)
     {
         $res = NULL;
         $model = ProductSuppliers::find()->where("approve = 'approve' AND productSuppId = $productSuppId")->one();

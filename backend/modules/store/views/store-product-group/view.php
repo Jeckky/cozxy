@@ -36,7 +36,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
             </div>
             <div class="row">
                 <div class="col-lg-3" style="font-weight: bold">PO Date</div>
-                <div class="col-lg-9"><?= $this->context->dateThai($model->receiveDate, 1) ?></div>
+                <div class="col-lg-9"><?= isset($model->receiveDate) ? $this->context->dateThai($model->receiveDate, 1) : "-" ?></div>
             </div>
             <div class="row">
                 <div class="col-lg-3" style="font-weight: bold">Supplier</div>
@@ -61,6 +61,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         <thead>
                             <tr>
                                 <th>Seq</th>
+                                <th>Code</th>
                                 <th>Description</th>
                                 <th>Quantity</th>
                                 <th>Price</th>
@@ -71,13 +72,15 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             <?php
                             $i = 1;
                             foreach ($model->storeProducts as $item):
+                                $productSupp = common\models\costfit\ProductSuppliers::productSupplierName($item->productSuppId);
                                 ?>
                                 <tr>
                                     <td><?= $i ?></td>
-                                    <td><?= $item->product->title; ?></td>
+                                    <td><?= $productSupp->code; ?></td>
+                                    <td><?= $productSupp->title; ?></td>
                                     <td><?= number_format($item->quantity); ?></td>
-                                    <td><?= number_format($item->price); ?></td>
-                                    <td><?= number_format($item->total); ?></td>
+                                    <td><?= number_format($item->marginPrice, 2); ?></td>
+                                    <td><?= number_format($item->total, 2); ?></td>
                                 </tr>
                                 <?php
                                 $i++;
@@ -87,7 +90,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         <tfoot>
                             <tr>
                                 <td colspan="4" class="text-right" style="font-weight: bold">Summary</td>
-                                <td style="color: red;font-weight: bold"><?= number_format($model->summary) ?></td>
+                                <td style="color: red;font-weight: bold"><?= number_format($model->summary, 2) ?></td>
                             </tr>
                         </tfoot>
                     </table>

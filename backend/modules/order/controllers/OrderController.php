@@ -20,9 +20,11 @@ use common\helpers\PaymentPrint;
 /**
  * OrderController implements the CRUD actions for Order model.
  */
-class OrderController extends OrderMasterController {
+class OrderController extends OrderMasterController
+{
 
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
@@ -49,7 +51,8 @@ class OrderController extends OrderMasterController {
      * Lists all Order models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $dataProvider = new ActiveDataProvider([
             'query' => Order::find()->where("status >" . Order::ORDER_STATUS_REGISTER_USER . "")->orderBy("updateDateTime DESC"),
         ]);
@@ -64,7 +67,8 @@ class OrderController extends OrderMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionView($hash) {
+    public function actionView($hash)
+    {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
         $order = \common\models\costfit\Order::find()->where('orderId = "' . $params['id'] . '" ')
@@ -77,7 +81,8 @@ class OrderController extends OrderMasterController {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $model = new Order();
         if (isset($_POST["Order"])) {
             $model->attributes = $_POST["Order"];
@@ -97,7 +102,8 @@ class OrderController extends OrderMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $model = $this->findModel($id);
         if (isset($_POST["Order"])) {
             $model->attributes = $_POST["Order"];
@@ -117,7 +123,8 @@ class OrderController extends OrderMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -130,7 +137,8 @@ class OrderController extends OrderMasterController {
      * @return Order the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id) {
+    protected function findModel($id)
+    {
         if (($model = Order::findOne($id)) !== null) {
             return $model;
         } else {
@@ -138,7 +146,8 @@ class OrderController extends OrderMasterController {
         }
     }
 
-    public function actionPrintPurchaseOrder($hash, $title) {
+    public function actionPrintPurchaseOrder($hash, $title)
+    {
 
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
@@ -171,7 +180,8 @@ class OrderController extends OrderMasterController {
         CozxyUnity::actionMpdfDocument($content, $heading, $title);
     }
 
-    public function actionPrintPayIn() {
+    public function actionPrintPayIn()
+    {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
@@ -184,7 +194,8 @@ class OrderController extends OrderMasterController {
         return $this->render('payment');
     }
 
-    public function actionPaymentHistory() {
+    public function actionPaymentHistory()
+    {
 //  throw new \yii\base\Exception($_GET['orderId']);
         if (isset($_GET['orderId'])) {
             $order = Order::find()->where("orderId='" . $_GET['orderId'] . "'")->one();
@@ -201,7 +212,8 @@ class OrderController extends OrderMasterController {
         }
     }
 
-    public function actionDetail2() {
+    public function actionDetail2()
+    {
         $orders = \common\models\costfit\OrderItem::find()->where("orderId=" . $_POST['orderId'] . " and status=" . $_POST['status'])->all();
         $show = '';
         $pic = '';
@@ -230,7 +242,8 @@ class OrderController extends OrderMasterController {
         }
     }
 
-    public function actionPurchaseOrder() {
+    public function actionPurchaseOrder()
+    {
         $ms = '';
         $model = Order::find()->where("status=" . Order::ORDER_STATUS_E_PAYMENT_SUCCESS)->all();
         if (!isset($model)) {
@@ -245,7 +258,8 @@ class OrderController extends OrderMasterController {
         }
     }
 
-    public function actionCreatePo() {
+    public function actionCreatePo()
+    {
         $supplierId[0] = 0;
         $i = 0;
         $r = 0;
@@ -310,7 +324,8 @@ class OrderController extends OrderMasterController {
         }
     }
 
-    public function actionReprintPo() {
+    public function actionReprintPo()
+    {
         $storeProductGroup = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId=" . $_GET['storeProductGroupId'])->one();
         $header = $this->renderPartial('header', ['ms' => 'Reprint']);
         $content = $this->renderPartial('content2', [
@@ -319,7 +334,8 @@ class OrderController extends OrderMasterController {
         $this->printPdf($content, $header);
     }
 
-    public function actionRealTime() {
+    public function actionRealTime()
+    {
         echo '<table class="table">';
         echo '<tr style="height: 50px;background-color: #F0FFFF;">';
         echo '<th style="vertical-align: middle;text-align: center;width: 10%;">ลำดับที่</th>';
@@ -352,7 +368,8 @@ class OrderController extends OrderMasterController {
         }
     }
 
-    public function actionReprintRealTime() {
+    public function actionReprintRealTime()
+    {
         $show = '<table class="table" >' .
         '<tr style="height: 50px;background-color: #ffffcc;">' .
         '<th style="vertical-align: middle;text-align: center;width: 10%;">ลำดับที่</th>' .
@@ -387,7 +404,8 @@ class OrderController extends OrderMasterController {
         return $show;
     }
 
-    public static function checkDupplicateId($array, $newIndex) {
+    public static function checkDupplicateId($array, $newIndex)
+    {
         $check = 0;
 //throw new \yii\base\Exception(print_r($array, true));
         foreach ($array as $old):
@@ -403,7 +421,8 @@ class OrderController extends OrderMasterController {
         }
     }
 
-    static function printPdf($content, $header) {
+    static function printPdf($content, $header)
+    {
         $pdf = new Pdf([
 // set to use core fonts only
             'mode' => Pdf::MODE_UTF8,
@@ -444,7 +463,8 @@ class OrderController extends OrderMasterController {
         return $pdf->render();
     }
 
-    public static function checkOrderStatus($orderId) {
+    public static function checkOrderStatus($orderId)
+    {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (isset($order) && !empty($order)) {
             if ($order->status == Order::ORDER_STATUS_E_PAYMENT_SUCCESS) {
@@ -457,20 +477,22 @@ class OrderController extends OrderMasterController {
         }
     }
 
-    public static function saveStoreProduct($orders, $supplierId) {
+    public static function saveStoreProduct($orders, $supplierId)
+    {
         $storeProductGroupId = [];
         $i = 0;
         foreach ($supplierId as $suppId):
             $storeProductGroup = new \common\models\costfit\StoreProductGroup();
             $storeProductGroup->supplierId = $suppId;
             $storeProductGroup->poNo = \common\models\costfit\StoreProductGroup::genPoNo();
-            $storeProductGroup->summary = \common\models\costfit\OrderItem::summarySupplier($suppId, $orders);
+
             $storeProductGroup->createDateTime = new \yii\db\Expression('NOW()');
             $storeProductGroup->updateDateTime = new \yii\db\Expression('NOW()');
             $storeProductGroup->save(false);
             $lastStoreProductGroupId = Yii::$app->db->getLastInsertID();
             $storeProductGroupId[$i] = $lastStoreProductGroupId;
             $productSuppId = \common\models\costfit\OrderItem::supplierItems($suppId, $orders);
+            $stpgSum = 0;
             foreach ($productSuppId as $pSuppId):
                 $storeProducts = new \common\models\costfit\StoreProduct();
                 $storeProducts->storeProductGroupId = $lastStoreProductGroupId;
@@ -480,11 +502,18 @@ class OrderController extends OrderMasterController {
                 $storeProducts->paletNo = 1;
                 $storeProducts->quantity = \common\models\costfit\OrderItem::totalSupplierItem($suppId, $pSuppId, $orders);
                 $storeProducts->price = \common\models\costfit\ProductSuppliers::productPriceSupplier($pSuppId);
-                $storeProducts->total = $storeProducts->price * $storeProducts->quantity;
+                $storeProducts->marginPercent = \common\models\costfit\Margin::getProductSuppMargin($pSuppId);
+                $storeProducts->marginValue = $storeProducts->price * (($storeProducts->marginPercent) / 100);
+                $storeProducts->marginPrice = $storeProducts->price - $storeProducts->marginValue;
+                $storeProducts->total = $storeProducts->marginPrice * $storeProducts->quantity;
+                $stpgSum+=$storeProducts->total;
                 $storeProducts->createDateTime = new \yii\db\Expression('NOW()');
                 $storeProducts->updateDateTime = new \yii\db\Expression('NOW()');
                 $storeProducts->save(false);
             endforeach;
+
+            $storeProductGroup->summary = $stpgSum;
+            $storeProductGroup->save(false);
             $i++;
         endforeach;
         return $storeProductGroupId;
