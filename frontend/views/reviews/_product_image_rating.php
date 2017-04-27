@@ -7,12 +7,12 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
     //$images = \common\models\costfit\ProductSuppliers::productImagesSuppliers($productSupplierId);
     $images = \common\models\costfit\ProductImageSuppliers::find()->where("productSuppId=" . $productSupplierId . " and status=1")->orderBy("ordering ASC")->one();
 
-    if (count($images->attributes) > 0) {
+    if (isset($images)) {
         ?>
         <div class="ms-slide-reviews col-lg-12 col-md-12 text-center">
             <center>
                 <img  src="<?php echo Yii::$app->homeUrl . $images['image']; ?>" data-src="<?php echo Yii::$app->homeUrl . $images['image']; ?>" alt="" class="img-responsive"/>
-            </center> 
+            </center>
         </div>
         <?php
     } else {

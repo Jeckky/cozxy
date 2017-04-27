@@ -17,7 +17,8 @@ use \common\models\costfit\master\ProductPostMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class ProductPost extends \common\models\costfit\master\ProductPostMaster {
+class ProductPost extends \common\models\costfit\master\ProductPostMaster
+{
 
     /**
      * @inheritdoc
@@ -27,7 +28,8 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster {
     const STATUS_DELETE = 3;
     const COZXY_POST_REVIRES = 'review_post';
 
-    public function rules() {
+    public function rules()
+    {
         return array_merge(parent::rules(), [
             [['title', 'shortDescription', 'description'], 'required', 'on' => self::COZXY_POST_REVIRES],
         ]);
@@ -36,7 +38,8 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster {
     /**
      * @inheritdoc
      */
-    public function attributes() {
+    public function attributes()
+    {
         return array_merge(parent::attributes(), [
             'username', 'score'
         ]);
@@ -45,12 +48,14 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster {
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), [
         ]);
     }
 
-    public static function findStatusArray() {
+    public static function findStatusArray()
+    {
         return [
             self::STATUS_PRIVATE => "ส่วนตัว",
             self::STATUS_PUBLIC => "สาธารณะ",
@@ -58,13 +63,19 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster {
         ];
     }
 
-    public static function getStatusText($status) {
+    public static function getStatusText($status)
+    {
         $res = $this->findStatusArray();
         if (isset($res[$status])) {
             return $res[$status];
         } else {
             return NULL;
         }
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['userId' => 'userId']);
     }
 
 }

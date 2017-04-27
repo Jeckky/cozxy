@@ -31,7 +31,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <!--Items List-->
             <div class="col-lg-12 col-md-12">
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                    <h3>Product Post</h3>
+                    <h3>Product Story</h3>
                     <!--<form id="reviews-form" method="post" novalidate="novalidate">-->
                     <?php
                     $form = ActiveForm::begin([
@@ -82,7 +82,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <?php
                         if (Yii::$app->controller->action->id == 'create-review') {
                             ?>
-                            <h3>Rating This Post</h3>
+                            <h3>Rating This Story</h3>
                             <div class="Reviews" style="margin-left: 10px;">
                                 <h5>Rate this item</h5>
                                 <?php
@@ -102,7 +102,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         </div>
                         <div class="form-group">
                             <div class="col-sm-9 col-sm-offset-3">
-                                <?= Html::submitButton($model->isNewRecord ? 'Create a post' : 'Update a post', ['class' => "btn btn-black btn-sm"]) ?>
+                                <?= Html::submitButton($model->isNewRecord ? 'Create a story' : 'Update a story', ['class' => "btn btn-black btn-sm"]) ?>
                             </div>
                         </div>
                     </div>
