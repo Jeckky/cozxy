@@ -88,16 +88,8 @@ class ReviewsController extends MasterController {
             $productId = Yii::$app->request->post('productId');
         }
 
-        //echo $productSupplierId . '<br>';
-        //echo $productId;
-        //exit();
         $score = Yii::$app->request->post('score');
 
-        //$k = base64_decode(base64_decode($productSupplierId));
-        //$params = \common\models\ModelMaster::encodeParams(['productSupplierId' => $productSupplierId]);
-        //echo '<pre>';
-        //print_r($params);
-        //exit();
         $model = \common\models\costfit\ProductPost::find()->where("productSuppId=" . $productSupplierId)->one();
 
         $model = new \common\models\costfit\ProductPost(['scenario' => 'review_post']);
@@ -110,16 +102,6 @@ class ReviewsController extends MasterController {
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $model->save(FALSE);
-            /* $product_post_rating = new \common\models\costfit\ProductPostRating();
-              $productPostId = Yii::$app->db->lastInsertID;
-              $product_post_rating->productPostId = $productPostId;
-              $product_post_rating->userId = Yii::$app->user->identity->userId;
-              $product_post_rating->score = $score;
-              $product_post_rating->updateDateTime = new \yii\db\Expression('NOW()');
-              $product_post_rating->createDateTime = new \yii\db\Expression('NOW()');
-              $product_post_rating->save(FALSE);
-             *
-             */
 
             return $this->redirect(Yii::$app->homeUrl . 'reviews/see-review?productPostId=' . Yii::$app->db->lastInsertID . '&productSupplierId=' . $productSupplierId . '&productId=' . $productId . '');
             //return $this->redirect(Yii::$app->homeUrl . 'products/' . $params['productSupplierId']);
@@ -168,6 +150,7 @@ class ReviewsController extends MasterController {
         $this->title = 'Cozxy.com | Products';
         $this->subTitle = $model->attributes['title'];
         $this->subSubTitle = '';
+
         return $this->render('@app/views/reviews/see', compact("productPostId", "productPostViewMem", "productPost", "model", "getPrductsSupplirs", "productSupplierId", "supplierPrice"));
     }
 
