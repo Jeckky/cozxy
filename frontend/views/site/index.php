@@ -129,107 +129,105 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
     </div>
 </section>
+<style>
+    .brand-carousel-reviews {
+        padding: 24px 0 48px 0;
+        border-top: 0px solid #e6e6e6;
+        border-bottom: 0px solid #e6e6e6;
+    }
+    .post footer .meta {
+        display: inline-flex;
+        text-align: left;
+    }
+    .share > a{
+        font-size: 12px;
+    }
+    .p-style3{
+        font-size: 14px;
+        text-align: left;
+    }
+    blockquote {
+        font-size: 14px;
+    }
+    .reviews-rate > img {
+        display: initial;
+        max-width: 100%;
+        height: auto;
+    }
 
-<section class="brand-carousel" id="-brand-carousel-reviews">
+</style>
+
+<section class="catalog-grid">
     <div class="container">
         <h2>Products' Stories</h2>
-        <style>
-            .brand-carousel-reviews {
-                padding: 24px 0 48px 0;
-                border-top: 0px solid #e6e6e6;
-                border-bottom: 0px solid #e6e6e6;
-            }
-            .post footer .meta {
-                display: inline-flex;
-                text-align: left;
-            }
-            .share > a{
-                font-size: 12px;
-            }
-            .p-style3{
-                font-size: 14px;
-                text-align: left;
-            }
-            blockquote {
-                font-size: 14px;
-            }
-            .reviews-rate > img {
-                display: initial;
-                max-width: 100%;
-                height: auto;
-            }
-        </style>
-        <div class="inner">
-            <?php
-            if (count($productPost) > 0) {
-                foreach ($productPost as $key => $value) {
-                    //echo ' <div class="col-md-12">';
-                    echo ' <div class="col-md-12" style="border: 1px solid #b2b2b2;margin-bottom: 3px;    margin-left: 10px;">';
-                    //$rating_score = 0;
-                    $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
-                    $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId, $value->productPostId);
-                    $rating_member = \common\helpers\Reviews::RatingInMember($value->productSuppId, $value->productPostId);
-                    $rating_count = \common\models\costfit\ProductPost::find()->where('productSuppId=' . $value->productSuppId)->count('productSuppId');
-                    //echo $rating_score . '::';
-                    //echo $rating_member;
-                    if ($rating_score == 0 && $rating_member == 0) {
-                        $results_rating = 0;
-                    } else {
-                        $results_rating = $rating_score / $rating_member;
-                    }
+        <section class="brand-carousel" id="brand-carousel-reviews" style=" border-top: 0px ;  border-bottom: 0px ;">
+            <div class="container">
+                <div class="inner">
+                    <?php
+                    if (count($productPost) > 0) {
+                        foreach ($productPost as $key => $value) {
 
-                    $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
-                    foreach ($productPostList as $valuex) {
-                        $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->limit(1)->all();
-                        $productViews = common\models\costfit\ProductPageViews::find()->where('productSuppId=' . $value->productSuppId)->count();
-                        ?>
-                        <div class="col-md-12 text-center" style="padding-left: 0px;  padding-right: 0px;">
-                            <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>" style="font-size: 14px; margin-top: 5px;">
-                                <?php
-                                //echo strlen($valuex->title) . '<br>';
-                                if (strlen($valuex->title) >= 40) {
-                                    echo substr($valuex->title, 0, 40);
-                                } else if (strlen($valuex->title) < 40) {
-                                    echo substr(ltrim(rtrim($valuex->title)), 0, 35) . '<br>';
-                                }
-                                ?></a>
-                        </div>
+                            $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
+                            $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId, $value->productPostId);
+                            $rating_member = \common\helpers\Reviews::RatingInMember($value->productSuppId, $value->productPostId);
+                            $rating_count = \common\models\costfit\ProductPost::find()->where('productSuppId=' . $value->productSuppId)->count('productSuppId');
 
-                        <div class="col-sm-12 col-lg-12 col-md-12 text-center" style="margin-top: 10px; padding: 5px;">
-                            <?php
-                            foreach ($productImages as $valueImages) {
-                                if (isset($valueImages['imageThumbnail1']) && !empty($valueImages['imageThumbnail1'])) {
-                                    if (file_exists(Yii::$app->basePath . "/web/" . $valueImages['imageThumbnail1'])) {
-                                        //echo "<div class=\"col-sm-3\"><img id=\"myImg-" . $valueImages['productImageId'] . "\" onClick=\"reviews_click(" . $valueImages['productImageId'] . ',' . "xx" . ")\"   src=\"/" . $valueImages['imageThumbnail2'] . "\" alt=\"1\" class=\"img-responsive img-thumbnail myImg\"/></div>";
-                                        ?>
-                                        <div class="col-sm-12 col-lg-12 col-md-12" style="padding-left: 0px;  padding-right: 0px;">
-                                            <!--<img id="myImg-<?php // echo $valueImages['productImageId'];                           ?>" onclick="reviews_click(<?php // echo $valuex->productSuppId;                           ?>,<?php // echo $valueImages['productImageId'];                           ?>, '<?php // echo $valueImages['image'];                           ?>', '<?php // echo $valuex->title;                           ?>')" src="<?php // echo $valueImages['imageThumbnail1'];                           ?>" alt="1" class="img-responsive  myImg">-->
-                                            <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>" style="font-size: 14px; margin-top: 5px;">
-                                                <img  src="<?php echo $valueImages['imageThumbnail1']; ?>" alt="1" class="img-responsive  myImg">
-                                            </a>
-                                        </div>
-                                        <?php
-                                    } else {
-                                        echo "<div class=\"col-sm-12 col-lg-12 col-md-12\" style=\"padding-left: 0px; padding-right: 0px; \"><img  class=\"ms-thumb\"  src=\"" . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive  \"/></div>";
-                                    }
-                                } else {
-                                    ?>
-                                    <div class="col-sm-12 col-lg-12 col-md-12" style="padding-left: 0px;  padding-right: 0px;">
-                                        <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>" style="font-size: 14px; margin-top: 5px;">
-                                            <img class="ms-thumb" src="<?php echo "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
-                                        </a>
-                                    </div>
-                                    <?php
-                                }
+                            if ($rating_score == 0 && $rating_member == 0) {
+                                $results_rating = 0;
+                            } else {
+                                $results_rating = $rating_score / $rating_member;
                             }
-                            ?>
-                            <?php
-                            //}
-                            ?>
-                        </div>
-                        <div class="col-md-12" style="padding: 5px; ">
-                            <div class="col-md-12 text-center">
-                                <?php
+
+                            $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
+                            foreach ($productPostList as $valuex) {
+                                $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->limit(1)->all();
+                                $productViews = common\models\costfit\ProductPageViews::find()->where('productSuppId=' . $value->productSuppId)->count();
+                                ?>
+                                <div class="col-md-12 text-center" style=" /* margin-left: 2px; */border: 0px #e6e6e6 solid;/* padding: 5px; */ padding-left: 0px; padding-left: 0px;">
+                                    <div class="col-sm-12 col-lg-12 col-md-12 text-center" style="padding: 0px; border: 1px #e2dfdf solid; ">
+                                        <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>" style="font-size: 14px; margin-top: 5px;">
+                                            <?php
+                                            //echo strlen($valuex->title) . '<br>';
+                                            if (strlen($valuex->title) >= 35) {
+                                                echo substr($valuex->title, 0, 35);
+                                            } else if (strlen($valuex->title) < 35) {
+                                                echo substr(ltrim(rtrim($valuex->title)), 0, 35) . '<br>';
+                                            }
+                                            ?></a>
+                                        <div class="col-sm-12 col-lg-12 col-md-12 text-center" style="margin-top: 10px; padding: 5px; border: 0px #e6e6e6 solid;">
+                                            <?php
+                                            foreach ($productImages as $valueImages) {
+                                                if (isset($valueImages['imageThumbnail1']) && !empty($valueImages['imageThumbnail1'])) {
+                                                    if (file_exists(Yii::$app->basePath . "/web/" . $valueImages['imageThumbnail1'])) {
+                                                        //echo "<div class=\"col-sm-3\"><img id=\"myImg-" . $valueImages['productImageId'] . "\" onClick=\"reviews_click(" . $valueImages['productImageId'] . ',' . "xx" . ")\"   src=\"/" . $valueImages['imageThumbnail2'] . "\" alt=\"1\" class=\"img-responsive img-thumbnail myImg\"/></div>";
+                                                        ?>
+                                                        <div class="col-sm-12 col-lg-12 col-md-12" style="padding-left: 0px;  padding-right: 0px;">
+                                                            <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>" style="font-size: 14px; margin-top: 5px;">
+                                                                <img  src="<?php echo $valueImages['imageThumbnail1']; ?>" alt="1" class="img-responsive  myImg">
+                                                            </a>
+                                                        </div>
+                                                        <?php
+                                                    } else {
+                                                        echo "<div class=\"col-sm-12 col-lg-12 col-md-12\" style=\"padding-left: 0px; padding-right: 0px; \"><img  class=\"ms-thumb\"  src=\"" . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive  \"/></div>";
+                                                    }
+                                                } else {
+                                                    ?>
+                                                    <div class="col-sm-12 col-lg-12 col-md-12" style="padding-left: 0px;  padding-right: 0px;">
+                                                        <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>" style="font-size: 14px; margin-top: 5px;">
+                                                            <img class="ms-thumb" src="<?php echo "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
+                                                        </a>
+                                                    </div>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+                                            <?php
+                                            //}
+                                            ?>
+                                        </div>
+                                        <!--<div class="col-md-12" style="padding: 5px; ">
+                                            <div class="col-md-12 text-center">
+                                        <?php
 //                                    echo \yii2mod\rating\StarRating::widget([
 //                                        'name' => "input_name_" . $value['productPostId'],
 //                                        'value' => $results_rating,
@@ -241,31 +239,37 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 //                                        // Your client options
 //                                        ],
 //                                    ]);
-                                ?>
-                            </div>
-                        </div>
-                        <div class="col-md-12 text-center" style=" border-bottom: 0px #e6e6e6 dotted; border-top: 1px #bbb dotted;padding-left: 0px;  padding-right: 0px; ">
-                            <?php
-                            //echo '<span style="font-size: 12px; color:#0066c0;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน | ' . $rating_count . ' post  </span>';
-                            echo ($rating_count == 1) ? '<span style="font-size: 12px; color:#0066c0;">' . $rating_count . ' Story  </span>' : '<span style="font-size: 12px; color:#0066c0;">' . $rating_count . ' Stories  </span>';
-                            ?>
-                        </div>
+                                        ?>
+                                            </div>
+                                        </div>-->
+                                        <div class="col-md-12 text-center" style=" border-bottom: 0px #e6e6e6 dotted; border-top: 1px #bbb dotted;padding-left: 0px;  padding-right: 0px; ">
+                                            <?php
+                                            //echo '<span style="font-size: 12px; color:#0066c0;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน | ' . $rating_count . ' post  </span>';
+                                            echo ($rating_count == 1) ? '<span style="font-size: 12px; color:#0066c0;">' . $rating_count . ' Story  </span>' : '<span style="font-size: 12px; color:#0066c0;">' . $rating_count . ' Stories  </span>';
+                                            ?>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <?php
+                            }
+                            //echo '</div>';
+                            //echo '</div>';
+                        }
+                        ?>
                         <?php
                     }
-                    echo '</div>';
-                    //echo '</div>';
-                }
-                ?>
-                <?php
-            }
-            //echo '<hr>';
-            ?>
+                    //echo '<hr>';
+                    ?>
 
 
 
-        </div>
+                </div>
+            </div>
+        </section>
     </div>
 </section>
+
 <!--Hero Slider Close
 <section class="cat-tiles" style="background-color: #f1efef;">
     <div class="container">
@@ -285,15 +289,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <div class="row" id="save-main-limit"></div>
 <?php if ($saveCat->getTotalCount() > 6): ?>
-                                                                        <<<<<<< HEAD
-                                                                                                                                                                                                                                                                                                                                                            <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
-                                                                                                                                                                                                                                                                                                                                                                <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
-                                                                                                                                                                                                                                                                                                                                                            </div>
-                                                                        =======
-                                                                                                                                                                                                                                                                                                                                                                                            <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
-                                                                                                                                                                                                                                                                                                                                                                                                <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
-                                                                                                                                                                                                                                                                                                                                                                                            </div>
-                                                                        >>>>>>> origin/multi-suppliers
+                                                                                                                                                                                                                                                                                    <<<<<<< HEAD
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                    =======
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                    >>>>>>> origin/multi-suppliers
 <?php endif; ?>
     </div>
 </section> Categories Close-->
