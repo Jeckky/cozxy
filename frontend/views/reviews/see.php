@@ -97,6 +97,56 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     <div class="container">
                                         <div class="inner">
                                             <?php
+                                            if (count($productPostViewMem) > 0) {
+                                                foreach ($productPostViewMem as $key => $value) {
+                                                    $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
+                                                    $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId, $value->productPostId);
+                                                    $rating_member = \common\helpers\Reviews::RatingInMember($value->productSuppId, $value->productPostId);
+                                                    //echo $rating_score . '::';
+                                                    //echo $rating_member;
+                                                    if ($rating_score == 0 && $rating_member == 0) {
+                                                        $results_rating = 0;
+                                                    } else {
+                                                        $results_rating = $rating_score / $rating_member;
+                                                    }
+                                                    //echo $value->title;
+                                                    foreach ($productPostList as $valuex) {
+                                                        $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
+                                                        $userDatabase = $value->userId;
+                                                        $userLogin = Yii::$app->user->identity->userId;
+                                                        ?>
+                                                        <div class="text-center  " id="reviews-rate-show-<?php echo $value['productPostId']; ?>" style=" margin-left: 2px;border: 1px rgba(255,212,36,.9) solid; max-height: 460px; min-height: 160px; padding: 5px;">
+                                                            <?php
+                                                            echo \yii2mod\rating\StarRating::widget([
+                                                                'name' => "input_name_" . $value['productPostId'],
+                                                                'value' => $results_rating,
+                                                                'options' => [
+                                                                    // Your additional tag options
+                                                                    'id' => 'reviews-rate-' . $value['productPostId'], 'class' => 'reviews-rate',
+                                                                ],
+                                                                'clientOptions' => [
+                                                                // Your client options
+                                                                ],
+                                                            ]);
+                                                            //echo '<span style="font-size: 12px;">' . number_format($results_rating, 3) . 'จาก 5 คะแนน </span>';
+                                                            ?>
+                                                            <div class="text-left" style="margin-bottom:2px; border-bottom: 1px #e6e6e6 dashed;">
+                                                                <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-rating?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"
+                                                                   style="font-size: 13px;"><i class="fa fa-pencil" aria-hidden="true"></i> <?php echo $value->title; ?></a>
+                                                            </div>
+                                                            <div class="text-left test" style="margin-bottom:2px; font-size: 12px; height: 120px;">
+                                                                &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $value->shortDescription; ?>
+                                                            </div>
+                                                            <div style="text-align: right;">
+                                                                <a role="button"  onclick="views_click('<?php echo $value->productPostId ?>', '<?php echo $valuex->productSuppId; ?>', '<?php echo $valuex->productId; ?>')"  class="panel-toggle" id="see-reviews" style="font-size: 14px; border-bottom: 0px dashed #292c2e;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                                            </div>
+                                                        </div>
+                                                        <?php
+                                                    }
+                                                }
+                                            }
+                                            ?>
+                                            <?php
                                             if (count($productPost) > 0) {
                                                 foreach ($productPost as $key => $value) {
                                                     $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
@@ -112,6 +162,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                     //echo $value->title;
                                                     foreach ($productPostList as $valuex) {
                                                         $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
+                                                        $userDatabase = $value->userId;
+                                                        $userLogin = Yii::$app->user->identity->userId;
                                                         ?>
                                                         <div class="text-center  " id="reviews-rate-show-<?php echo $value['productPostId']; ?>" style=" margin-left: 2px;border: 1px #e6e6e6 solid; max-height: 460px; min-height: 160px; padding: 5px;">
                                                             <?php
@@ -147,7 +199,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         </div>
                                     </div>
                                 </section>
-                                <?php //} ?>
+                                <?php //}  ?>
                             </div>
 
                         <?php } ?>

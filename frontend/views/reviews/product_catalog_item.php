@@ -125,7 +125,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <a class="btn btn-black btn-sm" <?php if (\Yii::$app->user->isGuest == 1) { ?> id="GuestaddItemToWishlist" <?php } else { ?> id="addItemToWishlist" <?php } ?> href="#" <?= (\common\models\costfit\Wishlist::isExistingList($model->productSuppId)) ? " disabled" : " " ?>><i class="icon-heart"></i>Add to wishlist</a>
     </div>
     <?php
-    if (Yii::$app->controller->action->id == 'see-review') {
+    if (Yii::$app->controller->action->id == 'xxxsee-review') {
         ?>
         <div class="buttons group">
             <h4>My Post</h4>
