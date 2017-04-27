@@ -115,7 +115,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                         $userDatabase = $value->userId;
                                                         $userLogin = Yii::$app->user->identity->userId;
                                                         ?>
-                                                        <div class="text-center col-sm-2" id="reviews-rate-show-<?php echo $value['productPostId']; ?>" style="margin-bottom: 2px; margin-left: 2px;border: 1px rgba(255,212,36,.9) solid; max-height: 460px; min-height: 160px; padding: 5px;">
+                                                        <div class="text-center col-sm-2" id="reviews-rate-show-<?php echo $value['productPostId']; ?>" style="margin-bottom: 2px; margin-left: 2px;border: 1px rgba(255,212,36,.9) solid; background-color: #f8f8f8; max-height: 460px; min-height: 160px; padding: 5px;">
                                                             <?php
                                                             echo \yii2mod\rating\StarRating::widget([
                                                                 'name' => "input_name_" . $value['productPostId'],
