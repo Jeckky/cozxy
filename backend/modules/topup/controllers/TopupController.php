@@ -3,7 +3,7 @@
 namespace backend\modules\topup\controllers;
 
 use Yii;
-use common\models\costfit\Topup;
+use common\models\costfit\TopUp;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -35,7 +35,7 @@ class TopupController extends TopupMasterController {
      */
     public function actionIndex() {
         $dataProvider = new ActiveDataProvider([
-            'query' => Topup::find()
+            'query' => TopUp::find()
                     ->where("status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=1")
                 ,
         ]);
