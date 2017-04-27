@@ -44,13 +44,13 @@ class TopUp extends \common\models\costfit\master\TopUpMaster {
     public static function statusText($status) {
         switch ($status) {
             case 2:
-                return 'Confirm Payment';
+                return 'waiting for approval';
                 break;
             case 3:
-                return 'Success';
+                return 'Successful';
                 break;
-            case 3:
-                return 'Not Success';
+            case 4:
+                return 'Unsuccessful, Please ';
                 break;
             default :return '';
         }
