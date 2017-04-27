@@ -71,7 +71,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
     }
 </style>
-<div class="col-lg-6 col-md-6 text-left">
+<div class="col-lg-9 col-md-9 text-left">
     <h1><?= $model->title; ?>
         <div class="badges">
             <?php if (common\models\costfit\Product::isSmartItem($model->productId)): ?>
@@ -158,7 +158,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <!--Product Gallery-->
 
-<div class="col-lg-6 col-md-6" id="productImage">
+<div class="col-lg-3 col-md-3" id="productImage">
     <?php echo $this->render('_product_image', ['model' => $model, 'productSupplierId' => $productSupplierId]); ?>
 </div>
 

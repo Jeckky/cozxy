@@ -129,17 +129,14 @@ class ReviewsController extends MasterController {
         $productPostId = $_GET['productPostId'];
         $getPrductsSupplirs = Suppliers::GetProductSuppliersHelpers($productSupplierId);
         $supplierPrice = ProductSuppliers::productPriceSupplier($productSupplierId);
-        $productPost = \common\models\costfit\ProductPost::find()->where('productSuppId =' . $productSupplierId . ' and userId !=' . Yii::$app->user->identity->userId)->all();
+        $productPost = \common\models\costfit\ProductPost::find()->where('productSuppId =' . $productSupplierId)->orderBy('(CASE WHEN userId = ' . Yii::$app->user->id . ' THEN 1 ELSE 2 END)');
+        $productPost = new \yii\data\ActiveDataProvider([
+            'query' => $productPost,
+            'pagination' => array('pageSize' => 10),
+        ]);
         //$productPost = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId)->all();
         $productPostId = Yii::$app->request->get('productPostId');
 
-        if (\Yii::$app->user->id != '') {
-            $productPostViewMem = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . '  and productPostId = ' . $productPostId . ' and productSuppId=' . $productSupplierId)->all();
-            //$productPostViewMem = \common\models\costfit\ProductPostRating::find()->where('productPostId=' . $productPostId)->all();
-        } else {
-            $productPostView = NULL;
-            $productPostViewMem = NULL;
-        }
         /*
          * Product Views - Frontend
          */
@@ -158,7 +155,7 @@ class ReviewsController extends MasterController {
         $this->subTitle = $model->attributes['title'];
         $this->subSubTitle = '';
 
-        return $this->render('@app/views/reviews/see', compact("productPostId", "productPostViewMem", "productPost", "model", "getPrductsSupplirs", "productSupplierId", "supplierPrice"));
+        return $this->render('@app/views/reviews/see', compact("productPostId", "productPost", "model", "getPrductsSupplirs", "productSupplierId", "supplierPrice"));
     }
 
     public function actionViewsPosts() {

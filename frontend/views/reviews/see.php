@@ -60,7 +60,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <section class="catalog-single">
     <div class="container" >
         <div class="row" id="productItem">
-            <?php echo $this->render('product_catalog_item', ['productPostViewMem' => $productPostViewMem, 'productPost' => $productPost, 'model' => $model, 'productSupplierId' => $productSupplierId, 'getPrductsSupplirs' => $getPrductsSupplirs, 'supplierPrice' => $supplierPrice]); ?>
+            <?php echo $this->render('product_catalog_item', [ 'productPost' => $productPost, 'model' => $model, 'productSupplierId' => $productSupplierId, 'getPrductsSupplirs' => $getPrductsSupplirs, 'supplierPrice' => $supplierPrice]); ?>
         </div>
         <section class="wishlist">
             <div class="container">
@@ -76,13 +76,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 ?>
                                 <div class="col-lg-12 col-md-12 col-sm-12" style="background-color: rgba(255,212,36,.9); margin-bottom: 5px;">
                                     <div onclick="ViewsShows()"  class="add-new-icon col-md-6 " style="padding: 1px;">
-                                        <h3 style="text-decoration: underline; margin-left: 2px;">All Post <i class="fa fa-plus-circle" aria-hidden="true" style="zoom: .7"></i></h3>
+                                        <h3 style="text-decoration: underline; margin-left: 2px;">All Post </h3>
                                     </div>
                                     <div class="col-md-6 text-right">
                                         <?php
                                         if (\Yii::$app->user->id != '') {
                                             ?>
-                                            <a href="<?= Yii::$app->homeUrl ?>reviews/create-post?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>" class="btn btn-black btn-xs" role="button" id="write-reviews" style="margin-top: 10px;">Story a post</a>
+                                            <a href="<?= Yii::$app->homeUrl ?>reviews/create-post?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>" class="btn btn-black btn-xs" role="button" id="write-reviews" style="margin-top: 10px;">Create a story</a>
                                         <?php } ?>
                                     </div>
                                 </div>
@@ -106,118 +106,42 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 <section class="brand-carouselx" id="brand-carousel-reviews">
                                     <div class="container-reviews">
                                         <div class="inner-reviews">
+
                                             <?php
-                                            if (count($productPostViewMem) > 0) {
-                                                foreach ($productPostViewMem as $key => $value) {
-                                                    $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
-                                                    $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId, $value->productPostId);
-                                                    $rating_member = \common\helpers\Reviews::RatingInMember($value->productSuppId, $value->productPostId);
-                                                    //echo $rating_score . '::';
-                                                    //echo $rating_member;
-                                                    if ($rating_score == 0 && $rating_member == 0) {
-                                                        $results_rating = 0;
-                                                    } else {
-                                                        $results_rating = $rating_score / $rating_member;
-                                                    }
-                                                    //echo $value->title;
-                                                    foreach ($productPostList as $valuex) {
-                                                        $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
-                                                        $userDatabase = $value->userId;
-                                                        $userLogin = Yii::$app->user->identity->userId;
-                                                        ?>
-                                                        <div class="text-center col-sm-2" id="reviews-rate-show-<?php echo $value['productPostId']; ?>" style="margin-bottom: 2px; margin-left: 2px;border: 1px rgba(255,212,36,.9) solid; background-color: #f8f8f8; max-height: 460px; min-height: 160px; padding: 5px;">
-                                                            <?php
-                                                            echo \yii2mod\rating\StarRating::widget([
-                                                                'name' => "input_name_" . $value['productPostId'],
-                                                                'value' => $results_rating,
-                                                                'options' => [
-                                                                    // Your additional tag options
-                                                                    'id' => 'reviews-rate-' . $value['productPostId'], 'class' => 'reviews-rate',
-                                                                ],
-                                                                'clientOptions' => [
-                                                                // Your client options
-                                                                ],
-                                                            ]);
-                                                            //echo '<span style="font-size: 12px;">' . number_format($results_rating, 3) . 'จาก 5 คะแนน </span>';
-                                                            ?>
-                                                            <div class="text-left" style="margin-bottom:2px; border-bottom: 1px #e6e6e6 dashed;">
-                                                                <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-rating?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"
-                                                                   style="font-size: 13px;"><i class="fa fa-pencil" aria-hidden="true"></i> <?php echo $value->title; ?></a>
-                                                            </div>
-                                                            <div class="text-left test" style="margin-bottom:2px; font-size: 12px; height: 120px;">
-                                                                &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $value->shortDescription; ?>
-                                                            </div>
-                                                            <div class="text-center" style="margin-bottom:2px; border-bottom: 1px #e6e6e6 dashed;">
-                                                                <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-rating?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"
-                                                                   style="font-size: 13px;" class="btn btn-primary btn-xs">View</a>
-                                                            </div>
-                                                            <div style="text-align: right;">
-                                                                <a role="button"  onclick="views_click('<?php echo $value->productPostId ?>', '<?php echo $valuex->productSuppId; ?>', '<?php echo $valuex->productId; ?>')"  class="panel-toggle" id="see-reviews" style="font-size: 14px; border-bottom: 0px dashed #292c2e;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <?php
-                                                    }
-                                                }
-                                            }
-                                            ?>
-                                            <?php
-                                            if (count($productPost) > 0) {
-                                                foreach ($productPost as $key => $value) {
-                                                    $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
-                                                    $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId, $value->productPostId);
-                                                    $rating_member = \common\helpers\Reviews::RatingInMember($value->productSuppId, $value->productPostId);
-                                                    //echo $rating_score . '::';
-                                                    //echo $rating_member;
-                                                    if ($rating_score == 0 && $rating_member == 0) {
-                                                        $results_rating = 0;
-                                                    } else {
-                                                        $results_rating = $rating_score / $rating_member;
-                                                    }
-                                                    //echo $value->title;
-                                                    foreach ($productPostList as $valuex) {
-                                                        $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
-                                                        $userDatabase = $value->userId;
-                                                        $userLogin = Yii::$app->user->identity->userId;
-                                                        if ($userDatabase == $userLogin) {
-                                                            $css = 'border: 1px rgba(255,212,36,.9) solid; background-color: #f8f8f8;';
-                                                        } else {
-                                                            $css = '';
-                                                        }
-                                                        ?>
-                                                        <div class="text-center col-sm-2" id="reviews-rate-show-<?php echo $value['productPostId']; ?>" style="margin-bottom: 2px; margin-left: 2px;border: 1px #e6e6e6 solid; max-height: 460px; min-height: 160px; padding: 5px;<?php echo $css ?>">
-                                                            <?php
-                                                            echo \yii2mod\rating\StarRating::widget([
-                                                                'name' => "input_name_" . $value['productPostId'],
-                                                                'value' => $results_rating,
-                                                                'options' => [
-                                                                    // Your additional tag options
-                                                                    'id' => 'reviews-rate-' . $value['productPostId'], 'class' => 'reviews-rate',
-                                                                ],
-                                                                'clientOptions' => [
-                                                                // Your client options
-                                                                ],
-                                                            ]);
-                                                            //echo '<span style="font-size: 12px;">' . number_format($results_rating, 3) . 'จาก 5 คะแนน </span>';
-                                                            ?>
-                                                            <div class="text-left" style="margin-bottom:2px; border-bottom: 1px #e6e6e6 dashed;">
-                                                                <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-rating?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"
-                                                                   style="font-size: 13px;"><i class="fa fa-pencil" aria-hidden="true"></i> <?php echo $value->title; ?></a>
-                                                            </div>
-                                                            <div class="text-left test" style="margin-bottom:2px; font-size: 12px; height: 120px;">
-                                                                &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $value->shortDescription; ?>
-                                                            </div>
-                                                            <div class="text-center" style="margin-bottom:2px; border-bottom: 1px #e6e6e6 dashed;">
-                                                                <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-rating?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"
-                                                                   style="font-size: 13px;" class="btn btn-primary btn-xs">View</a>
-                                                            </div>
-                                                            <div style="text-align: right;">
-                                                                <a role="button"  onclick="views_click('<?php echo $value->productPostId ?>', '<?php echo $valuex->productSuppId; ?>', '<?php echo $valuex->productId; ?>')"  class="panel-toggle" id="see-reviews" style="font-size: 14px; border-bottom: 0px dashed #292c2e;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <?php
-                                                    }
-                                                }
-                                            }
+                                            echo \yii\widgets\ListView::widget([
+                                                'dataProvider' => $productPost,
+                                                'options' => [
+                                                    'id' => 'story-list',
+                                                ],
+                                                'itemView' => function ($model, $key, $index, $widget) {
+                                                    return $this->render('_story', ['model' => $model]);
+                                                },
+                                                'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                                                'layout' => "{items}{pager}",
+                                                //    'layout' => "{items}",
+                                                'pager' => [
+                                                    //            'firstPageLabel' => 'first',
+                                                    //            'lastPageLabel' => 'last',
+                                                    'prevPageLabel' => '<span class="icon-arrow-left"></span>',
+                                                    'nextPageLabel' => '<span class="icon-arrow-right"></span>',
+                                                    //            'maxButtonCount' => 3,
+                                                    // Customzing options for pager container tag
+                                                    //            'options' => [
+                                                    //                'tag' => 'div',
+                                                    //                'class' => 'pager-wrapper',
+                                                    //                'id' => 'pager-container',
+                                                    //            ],
+                                                    // Customzing CSS class for pager link
+                                                    //            'linkOptions' => ['class' => 'mylink'],
+                                                    //            'activePageCssClass' => 'active',
+                                                    //            'disabledPageCssClass' => 'mydisable',
+                                                    // Customzing CSS class for navigating link
+                                                    'prevPageCssClass' => 'prev-page',
+                                                    'nextPageCssClass' => 'next-page',
+                                                //            'firstPageCssClass' => 'myfirst',
+                                                //            'lastPageCssClass' => 'mylast',
+                                                ],
+                                            ])
                                             ?>
                                         </div>
                                     </div>

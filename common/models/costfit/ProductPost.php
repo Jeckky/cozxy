@@ -78,4 +78,9 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster
         return $this->hasOne(User::className(), ['userId' => 'userId']);
     }
 
+    public function getProductSupp()
+    {
+        return $this->hasOne(ProductSuppliers::className(), ['productSuppId' => 'productSuppId']);
+    }
+
 }

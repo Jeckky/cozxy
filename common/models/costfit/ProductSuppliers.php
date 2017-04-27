@@ -242,4 +242,9 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         return ProductSuppliers::find()->where("approve='approve' and result>0")->orderBy("rand()")->limit(6)->all();
     }
 
+    public function getProduct()
+    {
+        return $this->hasOne(Product::className(), ['productId' => 'productId']);
+    }
+
 }
