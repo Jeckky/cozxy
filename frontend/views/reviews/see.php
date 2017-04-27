@@ -70,7 +70,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         //echo '555:' . Yii::$app->controller->action->id;
                         if (Yii::$app->controller->action->id == 'see-review') {
                             ?>
-                            <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12" style="padding-left: 0px; padding-right: 0px;">
                                 <?php
                                 //if (\Yii::$app->user->id != '') {
                                 ?>
@@ -93,9 +93,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         color: #635d5d;
                                     }
                                 </style>
-                                <section class="brand-carousel" id="brand-carousel-reviews">
-                                    <div class="container">
-                                        <div class="inner">
+                                <section class="brand-carouselx" id="brand-carousel-reviews">
+                                    <div class="container-reviews">
+                                        <div class="inner-reviews">
                                             <?php
                                             if (count($productPostViewMem) > 0) {
                                                 foreach ($productPostViewMem as $key => $value) {
@@ -115,7 +115,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                         $userDatabase = $value->userId;
                                                         $userLogin = Yii::$app->user->identity->userId;
                                                         ?>
-                                                        <div class="text-center  " id="reviews-rate-show-<?php echo $value['productPostId']; ?>" style=" margin-left: 2px;border: 1px rgba(255,212,36,.9) solid; max-height: 460px; min-height: 160px; padding: 5px;">
+                                                        <div class="text-center col-sm-2" id="reviews-rate-show-<?php echo $value['productPostId']; ?>" style="margin-bottom: 2px; margin-left: 2px;border: 1px rgba(255,212,36,.9) solid; max-height: 460px; min-height: 160px; padding: 5px;">
                                                             <?php
                                                             echo \yii2mod\rating\StarRating::widget([
                                                                 'name' => "input_name_" . $value['productPostId'],
@@ -165,7 +165,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                         $userDatabase = $value->userId;
                                                         $userLogin = Yii::$app->user->identity->userId;
                                                         ?>
-                                                        <div class="text-center  " id="reviews-rate-show-<?php echo $value['productPostId']; ?>" style=" margin-left: 2px;border: 1px #e6e6e6 solid; max-height: 460px; min-height: 160px; padding: 5px;">
+                                                        <div class="text-center col-sm-2" id="reviews-rate-show-<?php echo $value['productPostId']; ?>" style="margin-bottom: 2px; margin-left: 2px;border: 1px #e6e6e6 solid; max-height: 460px; min-height: 160px; padding: 5px;">
                                                             <?php
                                                             echo \yii2mod\rating\StarRating::widget([
                                                                 'name' => "input_name_" . $value['productPostId'],
