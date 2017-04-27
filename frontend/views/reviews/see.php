@@ -60,7 +60,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <section class="catalog-single">
     <div class="container" >
         <div class="row" id="productItem">
-            <?php echo $this->render('@app/views/products/product_catalog_item', ['productPostViewMem' => $productPostViewMem, 'productPost' => $productPost, 'model' => $model, 'productSupplierId' => $productSupplierId, 'getPrductsSupplirs' => $getPrductsSupplirs, 'supplierPrice' => $supplierPrice]); ?>
+            <?php echo $this->render('product_catalog_item', ['productPostViewMem' => $productPostViewMem, 'productPost' => $productPost, 'model' => $model, 'productSupplierId' => $productSupplierId, 'getPrductsSupplirs' => $getPrductsSupplirs, 'supplierPrice' => $supplierPrice]); ?>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6" style="border-top: 1px #e6e6e6 solid; padding: 10px; text-align: center; border-bottom: 1px #e6e6e6 solid;">
             <style type="text/css">

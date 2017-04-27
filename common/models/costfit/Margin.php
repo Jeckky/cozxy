@@ -20,6 +20,10 @@ use \common\models\costfit\master\MarginMaster;
 class Margin extends \common\models\costfit\master\MarginMaster
 {
 
+    public $category1Id;
+    public $category2Id;
+    public $category3Id;
+
     /**
      * @inheritdoc
      */
