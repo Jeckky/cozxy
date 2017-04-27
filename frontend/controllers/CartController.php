@@ -74,6 +74,12 @@ class CartController extends MasterController {
             }
         }
         //throw new \yii\base\Exception('fastId=' . $id);
+        if (isset($_POST['fastId'])) {
+            $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . "")->one();
+        } else {
+            $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . ""
+            . " and sendDate=" . $_POST['fastId'])->one();
+        }
         $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . ""
         . " and sendDate=" . $_POST['fastId'])->one();
         if (!isset($orderItem)) {
