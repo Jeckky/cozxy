@@ -209,9 +209,15 @@ class ReviewsController extends MasterController
         /*
          * Product Views - Frontend
          */
-        $productViews = new \common\models\costfit\ProductPageViews();
-        $productViews->productSuppId = $productSupplierId;
-        $productViews->userId = isset(Yii::$app->user->identity->userId) ? Yii::$app->user->identity->userId : '0';
+        $productViews = new \common\models\costfit\ProductPostView();
+        $productViews->productPostId = $productPostId;
+        $productViews->userId = isset(Yii::$app->user->identity->userId) ? Yii::$app->user->identity->userId : NULL;
+        $cookies = Yii::$app->request->cookies;
+        if (isset($cookies['orderToken'])) {
+            $productViews->token = $cookies['orderToken']->value;
+        } else {
+            $productViews->token = NULL;
+        }
         $productViews->updateDateTime = new \yii\db\Expression('NOW()');
         $productViews->createDateTime = new \yii\db\Expression('NOW()');
         $productViews->save(FALSE);

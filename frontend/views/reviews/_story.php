@@ -17,10 +17,11 @@ if ($model->userId == $userLogin) {
     </div>
     <div class="text-center" style="margin-bottom:2px; border-bottom: 1px #e6e6e6 dashed;">
         <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-rating?productPostId=<?php echo $model->productPostId; ?>&productSupplierId=<?php echo $model->productSuppId; ?>&productId=<?php echo $model->productSupp->product->productId; ?>"
-           style="font-size: 13px;" class="btn btn-primary btn-xs">View</a>
+           style="font-size: 13px;" class="btn btn-primary btn-xs">see more</a>
     </div>
     <div style="text-align: right;">
-        <a role="button"  onclick="views_click('<?php echo $model->productPostId ?>', '<?php echo $model->productSuppId; ?>', '<?php echo $model->productSupp->product->productId; ?>')"  class="panel-toggle" id="see-reviews" style="font-size: 14px; border-bottom: 0px dashed #292c2e;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+        <span class="pull-left"><i class="fa fa-eye "></i> <?= number_format(\common\models\costfit\ProductPost::getCountViews($model->productPostId)); ?> Views</span>
+        <!--<a role="button"  onclick="views_click('<?php // echo $model->productPostId          ?>', '<?php // echo $model->productSuppId;          ?>', '<?php // echo $model->productSupp->product->productId;          ?>')"  class="panel-toggle" id="see-reviews" style="font-size: 14px; border-bottom: 0px dashed #292c2e;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>-->
     </div>
 </div>
 <?php

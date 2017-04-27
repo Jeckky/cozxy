@@ -11,6 +11,8 @@ use Yii;
     * @property string $productSuppId
     * @property string $brandId
     * @property string $userId
+    * @property string $title
+    * @property string $shortDescription
     * @property string $description
     * @property integer $status
     * @property string $createDateTime
@@ -33,9 +35,11 @@ public function rules()
 {
 return [
             [['productSuppId', 'brandId', 'userId', 'status'], 'integer'],
-            [['userId', 'createDateTime'], 'required'],
+            [['userId', 'title', 'shortDescription', 'createDateTime'], 'required'],
             [['description'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
+            [['title'], 'string', 'max' => 100],
+            [['shortDescription'], 'string', 'max' => 200],
         ];
 }
 
@@ -49,6 +53,8 @@ return [
     'productSuppId' => Yii::t('product_post', 'Product Supp ID'),
     'brandId' => Yii::t('product_post', 'Brand ID'),
     'userId' => Yii::t('product_post', 'User ID'),
+    'title' => Yii::t('product_post', 'Title'),
+    'shortDescription' => Yii::t('product_post', 'Short Description'),
     'description' => Yii::t('product_post', 'Description'),
     'status' => Yii::t('product_post', 'Status'),
     'createDateTime' => Yii::t('product_post', 'Create Date Time'),

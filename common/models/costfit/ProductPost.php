@@ -84,4 +84,9 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster
         return $this->hasOne(ProductSuppliers::className(), ['productSuppId' => 'productSuppId']);
     }
 
+    public static function getCountViews($productPostId)
+    {
+        return ProductPostView::find()->where("productPostId=" . $productPostId)->count();
+    }
+
 }
