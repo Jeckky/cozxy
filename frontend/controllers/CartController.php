@@ -204,7 +204,7 @@ class CartController extends MasterController {
         '><tr><th>Items</th><th>Quantity</th><th>Price</th></tr>";
             $footer = "</table>";
             foreach ($showOrder as $item):
-                $produc t Supp = \common\models\costfit\ProductSuppliers::productSupplierName($item->pr oductSuppId);
+                $productSupp = \common\models\costfit\ProductSuppliers::productSupplierName($item->productSuppId);
                 $text = $text . '<tr class = "item" id = "item' . $item->orderItemId . '">'
                 . '<td><div class = "delete"><input type = "hidden" id = "orderItemId" value = "' . $item->orderItemId . '"></div><a href = "' . Yii::$app->homeUrl . 'products/' . \common\models\ModelMaster::encodeParams(["productId" => $item->productId, "productSupplierId" => $item->productSuppId]) . '">' . $productSupp->title . '</a></td>'
                 . '<td class = "qty"><input type = "text" id = "qty" value = "' . $item->quantity . '" readonly = "true"></td>'
