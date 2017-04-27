@@ -123,6 +123,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <?php } else { ?>
                         <a href="#" class="btn btn-black btn-xs" role="button" id="write-reviews">Member Only</a>
                     <?php } ?>
+                    <?php
+                    if (\Yii::$app->user->id != '') {
+                        ?>
+                        <a href="<?= Yii::$app->homeUrl ?>reviews/create-post?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>" class="btn btn-success btn-xs" role="button" id="write-reviews" style="margin-top: 10px;">Create your story</a>
+                    <?php } ?>
                 </div>
 
             </div>

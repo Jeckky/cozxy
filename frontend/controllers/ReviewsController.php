@@ -231,7 +231,7 @@ class ReviewsController extends MasterController
     public function actionSeeMore()
     {
         $productPost = new \yii\data\ActiveDataProvider([
-            'query' => \common\models\costfit\ProductPost::find()
+            'query' => \common\models\costfit\ProductPost::find()->where("status = 1")->orderBy('(CASE WHEN userId = ' . Yii::$app->user->id . ' THEN 1 ELSE 2 END)')
         ]);
         //$this->title = 'Cozxy.com | Products';
         //$this->subTitle = $model->attributes['title'];

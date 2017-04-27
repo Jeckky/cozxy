@@ -102,9 +102,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         </div>
                         <div class="form-group">
                             <div class="col-sm-9 col-sm-offset-3">
-                                <?php // if ($model->isNewRecord): ?>
-                                <?= Html::submitButton("Save Draft", ['class' => "btn btn-black btn-sm", 'name' => 'action', 'value' => 'draft']) ?>
-                                <?php // endif; ?>
+                                <?php if ($model->isNewRecord): ?>
+                                    <?= Html::submitButton("Save Draft", ['class' => "btn btn-success btn-sm", 'name' => 'action', 'value' => 'draft']) ?>
+                                <?php endif; ?>
                                 <?= Html::submitButton($model->isNewRecord ? 'Publish your story' : 'Update your story', ['class' => "btn btn-black btn-sm"]) ?>
                             </div>
                         </div>

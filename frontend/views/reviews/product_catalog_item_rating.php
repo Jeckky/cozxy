@@ -89,6 +89,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <?= $productPost->description; ?>
     </div>
 </div>
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <span class="pull-right label label-danger">Last update :<?= $this->context->dateThai($productPost->updateDateTime, 2, true) ?></span>
+    </div>
+</div>
 
 
 
