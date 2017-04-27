@@ -74,12 +74,11 @@ class CartController extends MasterController {
             }
         }
         //throw new \yii\base\Exception('fastId=' . $id);
-        if ($_POST['fastId'] == '') {
-            $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . "")->one();
-        } else {
-            $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . ""
-            . " and sendDate=" . $_POST['fastId'])->one();
-        }
+        $fastid = isset($_POST['fastId']) ? $_POST['fastId'] : 1;
+
+        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . ""
+        . " and sendDate=" . $fastid)->one();
+
 
         if (!isset($orderItem)) {
             $orderItem = new \common\models\costfit\OrderItem();
@@ -95,7 +94,7 @@ class CartController extends MasterController {
         $orderItem->productId = $id;
         $orderItem->productSuppId = $_POST['productSuppId'];
         $orderItem->receiveType = $_POST['receiveType'];
-        $productPrice = $product->calProductPrice($orderItem->productSuppId, $orderItem->quantity, 1, $_POST['fastId'], NULL);
+        $productPrice = $product->calProductPrice($orderItem->productSuppId, $orderItem->quantity, 1, $fastid, NULL);
         $orderItem->priceOnePiece = $orderItem->product->calProductPrice($orderItem->productSuppId, 1, 0, NULL, NULL);
         //$orderItem->priceOnePiece = $orderItem->product->calProductPrice($id, 1, 0, NULL, 'add');
         //$orderItem->priceOnePiece = $orderItem->product->calProductPrice($id, 1);
