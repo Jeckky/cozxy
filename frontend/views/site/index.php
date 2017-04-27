@@ -132,7 +132,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--Review Product-->
 <section class="catalog-grid">
     <div class="container">
-        <h2>MY POST & REVIEWS RATING POST PRODUCTS</h2>
+        <h2>PRODUCTS POST</h2>
         <style>
             .brand-carousel-reviews {
                 padding: 24px 0 48px 0;
@@ -161,7 +161,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </style>
         <div class="row">
             <section class="brand-carousel-reviews">
-
                 <?php
                 if (count($productPost) > 0) {
                     foreach ($productPost as $key => $value) {
@@ -186,7 +185,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             $productViews = common\models\costfit\ProductPageViews::find()->where('productSuppId=' . $value->productSuppId)->count();
                             ?>
                             <div class="col-md-12 text-center" style="padding-left: 0px;  padding-right: 0px;">
-                                <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>" style="font-size: 14px; margin-top: 5px;">
+                                <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $valuex->encodeParams(['productId' => $valuex->productId, 'productSupplierId' => $valuex->productSuppId]) ?>" style="font-size: 14px; margin-top: 5px;">
                                     <?php
                                     //echo strlen($valuex->title) . '<br>';
                                     if (strlen($valuex->title) >= 40) {
@@ -282,9 +281,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <div class="row" id="save-main-limit"></div>
 <?php if ($saveCat->getTotalCount() > 6): ?>
-                                                                                                                                                                                                                                                                    <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
-                                                                                                                                                                                                                                                                        <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
-                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                    <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
+                                                                                                                                                                                                                                                                                        <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
+                                                                                                                                                                                                                                                                                    </div>
 <?php endif; ?>
     </div>
 </section> Categories Close-->
