@@ -80,8 +80,7 @@ class CartController extends MasterController {
             $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . ""
             . " and sendDate=" . $_POST['fastId'])->one();
         }
-        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . ""
-        . " and sendDate=" . $_POST['fastId'])->one();
+
         if (!isset($orderItem)) {
             $orderItem = new \common\models\costfit\OrderItem();
             $orderItem->quantity = $_POST["quantity"];
