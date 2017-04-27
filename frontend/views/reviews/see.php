@@ -164,8 +164,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                         $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
                                                         $userDatabase = $value->userId;
                                                         $userLogin = Yii::$app->user->identity->userId;
+                                                        if ($userDatabase == $userLogin) {
+                                                            $css = 'border: 1px rgba(255,212,36,.9) solid; background-color: #f8f8f8;';
+                                                        } else {
+                                                            $css = '';
+                                                        }
                                                         ?>
-                                                        <div class="text-center col-sm-2" id="reviews-rate-show-<?php echo $value['productPostId']; ?>" style="margin-bottom: 2px; margin-left: 2px;border: 1px #e6e6e6 solid; max-height: 460px; min-height: 160px; padding: 5px;">
+                                                        <div class="text-center col-sm-2" id="reviews-rate-show-<?php echo $value['productPostId']; ?>" style="margin-bottom: 2px; margin-left: 2px;border: 1px #e6e6e6 solid; max-height: 460px; min-height: 160px; padding: 5px;<?php echo $css ?>">
                                                             <?php
                                                             echo \yii2mod\rating\StarRating::widget([
                                                                 'name' => "input_name_" . $value['productPostId'],
@@ -199,7 +204,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         </div>
                                     </div>
                                 </section>
-                                <?php //}  ?>
+                                <?php //}   ?>
                             </div>
 
                         <?php } ?>
