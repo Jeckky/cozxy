@@ -30,7 +30,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 </div>
                 <div class="form-group">
                     <?= yii\helpers\Html::submitButton('Login', ['class' => 'btn btn-black', 'name' => 'login-button']) ?>
-                    <button id="login_register_btn" type="button" class="no btn btn-danger hide">Not You ?</button>
+                    <a href="<?php echo $baseUrl; ?>/register/login" class="btn btn-black">Register</a>
+                    <button id="login_register_btn"  type="button" class="no btn btn-danger hide">Not You ?</button>
                 </div>
                 <?php yii\bootstrap\ActiveForm::end(); ?>
             </div>
