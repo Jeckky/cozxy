@@ -11,13 +11,16 @@ use Yii;
     * @property string $storeProductGroupId
     * @property string $storeId
     * @property string $productId
-    * @property string $productSuppId
+    * @property integer $productSuppId
     * @property string $paletNo
-    * @property string $quantity
+    * @property integer $quantity
     * @property string $price
+    * @property string $subTotal
+    * @property string $marginPercent
+    * @property string $marginValue
     * @property string $total
     * @property integer $shippingFromType
-    * @property string $importQuantity
+    * @property integer $importQuantity
     * @property string $remark
     * @property string $orderItemId
     * @property integer $status
@@ -42,7 +45,7 @@ public function rules()
 return [
             [['storeProductGroupId', 'productId', 'createDateTime'], 'required'],
             [['storeProductGroupId', 'storeId', 'productId', 'productSuppId', 'quantity', 'shippingFromType', 'importQuantity', 'orderItemId', 'status'], 'integer'],
-            [['paletNo', 'price', 'total'], 'number'],
+            [['paletNo', 'price', 'subTotal', 'marginPercent', 'marginValue', 'total'], 'number'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['remark'], 'string', 'max' => 255],
         ];
@@ -62,6 +65,9 @@ return [
     'paletNo' => Yii::t('store_product', 'Palet No'),
     'quantity' => Yii::t('store_product', 'Quantity'),
     'price' => Yii::t('store_product', 'Price'),
+    'subTotal' => Yii::t('store_product', 'Sub Total'),
+    'marginPercent' => Yii::t('store_product', 'Margin Percent'),
+    'marginValue' => Yii::t('store_product', 'Margin Value'),
     'total' => Yii::t('store_product', 'Total'),
     'shippingFromType' => Yii::t('store_product', 'Shipping From Type'),
     'importQuantity' => Yii::t('store_product', 'Import Quantity'),

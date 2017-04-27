@@ -27,17 +27,17 @@ use yii\helpers\Url;
                 ]
             ]);
             ?>
-            <?= $form->errorSummary($systemMargin) ?>
+            <?= $form->errorSummary($model) ?>
 
-            <h1 class="col-lg-offset-3" style="color:blue;font-weight: bold">The System Margin of <?= isset($systemMargin->percent) ? " <span class='label label-success' style='font-weight: bold'>$systemMargin->percent</span>" : "<span class='label label-danger'>Not Set</span>" ?></h1>
+            <h1 class="col-lg-offset-3" style="color:blue;font-weight: bold">The <?= (new ReflectionClass($updateModel))->getShortName() . " <u>" . $updateModel->title . "</u>"; ?> Margin of <?= isset($model->percent) ? " <span class='label label-success' style='font-weight: bold'>$model->percent</span>" : "<span class='label label-danger'>Not Set</span>" ?></h1>
             <hr>
-            <?= $form->field($systemMargin, 'percent', ['options' => ['class' => 'row form-group ']])->textInput(['maxlength' => 13])->label('Update System Margin (%)') ?>
+            <?= $form->field($model, 'percent', ['options' => ['class' => 'row form-group ']])->textInput(['maxlength' => 13])->label('Update ' . (new ReflectionClass($updateModel))->getShortName() . ' Margin (%)') ?>
             <div class="col-lg-offset-3 ">
-                <span class="label label-warning"><?= isset($systemMargin->createDateTime) ? "วันที่แก้ไขล่าสุด " . $this->context->dateThai($systemMargin->createDateTime, 2, true) : "วันที่แก้ไขล่าสุด -"; ?></span>
+                <span class="label label-warning"><?= isset($model->createDateTime) ? "วันที่แก้ไขล่าสุด " . $this->context->dateThai($model->createDateTime, 2, true) : "วันที่แก้ไขล่าสุด -"; ?></span>
             </div><br>
             <div class="form-group">
                 <div class="col-sm-9 col-sm-offset-3">
-                    <?= Html::submitButton($systemMargin->isNewRecord ? 'Create' : 'Update', ['class' => $systemMargin->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                    <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                 </div>
             </div>
             <?php ActiveForm::end(); ?>
@@ -53,9 +53,6 @@ use yii\helpers\Url;
                             </h4>
                         </div>
                         <div id="collapse1" class="panel-collapse collapse">
-                            <?php
-                            $historys = \common\models\costfit\Margin::find()->where("brandId is NULL AND categoryId is NULL AND supplierId is NULL")->orderBy("createDateTime DESC")->all();
-                            ?>
                             <table class="table table-bordered table-hover ">
                                 <thead>
                                     <tr>
@@ -69,7 +66,7 @@ use yii\helpers\Url;
                                     if (count($historys) > 0):
                                         $seq = 1;
                                         foreach ($historys as $his):
-                                            if ($his->marginId == $systemMargin->marginId) {
+                                            if ($his->marginId == $model->marginId) {
                                                 continue;
                                             }
                                             ?>
@@ -95,6 +92,20 @@ use yii\helpers\Url;
                     </div>
 
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <?php
+                $form = ActiveForm::begin([
+                    'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+                    'action' => Yii::$app->homeUrl . "/margin/margin/" . strtolower((new ReflectionClass($updateModel))->getShortName()) . "-margin",
+                    'method' => 'POST'
+                ]);
+                ?>
+                <?= Html::hiddenInput("searchText", $beforeSearch); ?>
+                <?= Html::submitButton("Back", ['class' => 'btn btn-danger pull-right']) ?>
+                <?php ActiveForm::end(); ?>
             </div>
         </div>
     </div>

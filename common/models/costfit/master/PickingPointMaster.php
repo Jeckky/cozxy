@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "picking_point".
 *
-    * @property string $pickingId
+    * @property integer $pickingId
     * @property string $title
     * @property string $code
     * @property string $description
@@ -19,8 +19,6 @@ use Yii;
     * @property string $macAddress
     * @property string $authCode
     * @property integer $status
-    * @property string $longitude
-    * @property string $latitude
     * @property string $mapImages
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -48,7 +46,6 @@ return [
             [['code'], 'string', 'max' => 30],
             [['description'], 'string', 'max' => 250],
             [['ip', 'macAddress', 'authCode'], 'string', 'max' => 100],
-            [['longitude', 'latitude'], 'string', 'max' => 50],
             [['mapImages'], 'string', 'max' => 150],
         ];
 }
@@ -71,8 +68,6 @@ return [
     'macAddress' => Yii::t('picking_point', 'Mac Address'),
     'authCode' => Yii::t('picking_point', 'Auth Code'),
     'status' => Yii::t('picking_point', 'Status'),
-    'longitude' => Yii::t('picking_point', 'Longitude'),
-    'latitude' => Yii::t('picking_point', 'Latitude'),
     'mapImages' => Yii::t('picking_point', 'Map Images'),
     'createDateTime' => Yii::t('picking_point', 'Create Date Time'),
     'updateDateTime' => Yii::t('picking_point', 'Update Date Time'),

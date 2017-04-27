@@ -8,8 +8,7 @@ use Yii;
 * This is the model class for table "user_visit".
 *
     * @property string $visitId
-    * @property string $userId
-    * @property string $device
+    * @property integer $userId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -31,10 +30,9 @@ return 'user_visit';
 public function rules()
 {
 return [
-            [['userId', 'createDateTime', 'lastvisitDate'], 'required'],
+            [['userId', 'createDateTime'], 'required'],
             [['userId', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime', 'lastvisitDate'], 'safe'],
-            [['device'], 'string', 'max' => 45],
         ];
 }
 
@@ -46,7 +44,6 @@ public function attributeLabels()
 return [
     'visitId' => Yii::t('user_visit', 'Visit ID'),
     'userId' => Yii::t('user_visit', 'User ID'),
-    'device' => Yii::t('user_visit', 'Device'),
     'status' => Yii::t('user_visit', 'Status'),
     'createDateTime' => Yii::t('user_visit', 'Create Date Time'),
     'updateDateTime' => Yii::t('user_visit', 'Update Date Time'),
