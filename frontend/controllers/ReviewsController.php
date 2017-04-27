@@ -129,7 +129,7 @@ class ReviewsController extends MasterController {
         $productPostId = $_GET['productPostId'];
         $getPrductsSupplirs = Suppliers::GetProductSuppliersHelpers($productSupplierId);
         $supplierPrice = ProductSuppliers::productPriceSupplier($productSupplierId);
-        $productPost = \common\models\costfit\ProductPost::find()->where('productSuppId =' . $productSupplierId)->all();
+        $productPost = \common\models\costfit\ProductPost::find()->where('productSuppId =' . $productSupplierId . ' and userId !=' . Yii::$app->user->identity->userId)->all();
         //$productPost = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId)->all();
         $productPostId = Yii::$app->request->get('productPostId');
 
