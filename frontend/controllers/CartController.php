@@ -415,7 +415,7 @@ class CartController extends MasterController {
         $id = '';
         if (isset($allProducts) && !empty($allProducts) && ($allProducts != '')) {
             foreach ($allProducts as $item):
-                $id = $id . $item . ", ";
+                $id = $id . $item . ",";
             endforeach;
             $id = substr($id, 0, -1);
             $products = \common\models\costfit\ProductSuppliers::find()
