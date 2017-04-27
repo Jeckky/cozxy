@@ -18,7 +18,8 @@ use common\models\costfit\ProductSuppliers;
 /**
  * Coupon controller
  */
-class ReviewsController extends MasterController {
+class ReviewsController extends MasterController
+{
 
     public $enableCsrfValidation = false;
 
@@ -27,7 +28,8 @@ class ReviewsController extends MasterController {
      *
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
 
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
@@ -44,7 +46,8 @@ class ReviewsController extends MasterController {
         return $this->render('reviews', ['model' => $model, 'productPost' => $productPost]);
     }
 
-    public function actionCreateReview() {
+    public function actionCreateReview()
+    {
 
         $this->title = 'Cozxy.com | Create Review';
         $this->subTitle = 'ชื่อ content';
@@ -73,12 +76,20 @@ class ReviewsController extends MasterController {
         //return $this->render('@app/views/reviews/create', compact("model"));
     }
 
-    public function actionCreatePost() {
+    public function actionCreatePost()
+    {
 
         $this->title = 'Cozxy.com | Create Review';
         $this->subTitle = 'ชื่อ content';
         $request = Yii::$app->request;
-
+        $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/story/';
+        if (!file_exists($urlFolder)) {
+            mkdir($urlFolder, 0777);
+        }
+        $urlFolderUser = \Yii::$app->getBasePath() . '/web/' . 'images/story/' . Yii::$app->user->id . "/";
+        if (!file_exists($urlFolderUser)) {
+            mkdir($urlFolderUser, 0777);
+        }
         if ($request->isGet) { /*  ตรวจสอบว่าเป็น GET */
             $productSupplierId = Yii::$app->request->get('productSupplierId');
             $productId = Yii::$app->request->get('productId');
@@ -112,7 +123,8 @@ class ReviewsController extends MasterController {
         return $this->render('@app/views/reviews/create', compact("model", "productSupplierId", "productId"));
     }
 
-    public function actionSeeReview() {
+    public function actionSeeReview()
+    {
         //echo Yii::$app->controller->action->id;
         $this->title = 'Cozxy.com | See Review';
         $this->subTitle = 'ชื่อ content';
@@ -154,7 +166,8 @@ class ReviewsController extends MasterController {
         return $this->render('@app/views/reviews/see', compact("productPostId", "productPostViewMem", "productPost", "model", "getPrductsSupplirs", "productSupplierId", "supplierPrice"));
     }
 
-    public function actionViewsPosts() {
+    public function actionViewsPosts()
+    {
         //productPostId: productPostId, productSuppId: productSuppId, productId: productId
         $productPostId = Yii::$app->request->post('productPostId');
         $productSuppId = Yii::$app->request->post('productSuppId');
@@ -167,7 +180,8 @@ class ReviewsController extends MasterController {
         //echo 'test';
     }
 
-    public function actionSeeRating() {
+    public function actionSeeRating()
+    {
         $this->title = 'Cozxy.com | See Review';
         $this->subTitle = 'ชื่อ content';
 

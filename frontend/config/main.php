@@ -26,9 +26,9 @@ return [
         ],
         'redactor' => [
             'class' => 'yii\redactor\RedactorModule',
-            'uploadDir' => '/Users/kpu/Dev/wwwroot/cozxy/frontend/web/images',
-            'uploadUrl' => '@web/images',
-            'imageAllowExtensions' => ['jpg', 'png', 'gif']
+            'uploadDir' => '@webroot/images/story',
+            'uploadUrl' => '@web/images/story',
+            'imageAllowExtensions' => ['jpg', 'png', 'gif', 'jpeg'],
         ],
     ],
     'components' => [

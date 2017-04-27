@@ -30,22 +30,43 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <?php
                     $form = ActiveForm::begin([
                         'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
-                        'fieldConfig' => [
-                            'template' => '{label}<div class="col-sm-9">{input}</div>',
-                            'labelOptions' => [
-                                'class' => 'col-sm-3 control-label'
-                            ]
-                        ]
+//                        'fieldConfig' => [
+//                            'template' => '{label}<div class="col-sm-9">{input}</div>',
+//                            'labelOptions' => [
+//                                'class' => 'col-sm-3 control-label'
+//                            ]
+//                        ]
                     ]);
                     ?>
                     <!--Left Column-->
-                    <div class="col-lg-8 col-md-8 col-sm-8"><br>
+                    <div class="col-lg-12 col-md-12 col-sm-12"><br>
                         <?php
                         if (Yii::$app->controller->action->id == 'create-post') {
                             ?>
-                            <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 100]) ?>
-                            <?= $form->field($model, 'shortDescription', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
-                            <?= $form->field($model, 'description', ['options' => ['class' => 'row col-lg-12']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
+                            <?= $form->field($model, 'title', ['options' => ['class' => 'row  col-lg-12']])->textInput(['maxlength' => 100]) ?>
+                            <?= $form->field($model, 'shortDescription', ['options' => ['class' => 'row col-lg-12']])->textInput(['maxlength' => 200]) ?>
+                            <?=
+                            $form->field($model, 'description', ['options' => ['class' => 'row col-lg-12']])->widget(\yii\redactor\widgets\Redactor::className([
+                                'settings' => [
+                                    'uploadDir' => ['@webroot/images/story/' . Yii::$app->user->id],
+                                    'uploadUrl' => ['@web/images/story/' . Yii::$app->user->id],
+                                ]
+                            ]), [
+                                'clientOptions' => [
+                                    'minHeight' => 1000,
+                                    'lang' => 'en',
+                                    'clipboardUpload' => true,
+                                    'plugins' => ['fullscreen', 'fontfamily', 'fontcolor', 'fontsize', 'imagemanager',],
+                                    'buttons' => [
+                                        'formatting', '|', 'bold', 'italic', 'underline', 'deleted', '|',
+                                        'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
+                                        'image', 'file', 'table', 'link', '|',
+                                        'alignment', '|', 'horizontalrule',
+                                        '|', '|', 'alignleft', 'aligncenter', 'alignright', 'justify'
+                                    ],
+                                ]
+                            ], ['style' => 'height:1000px;'])
+                            ?>
                             <?php
                             //echo Html::hiddenInput('productPostId', $productPostId);
                             echo Html::hiddenInput('productSupplierId', $productSupplierId);
