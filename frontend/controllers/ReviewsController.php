@@ -18,8 +18,7 @@ use common\models\costfit\ProductSuppliers;
 /**
  * Coupon controller
  */
-class ReviewsController extends MasterController
-{
+class ReviewsController extends MasterController {
 
     public $enableCsrfValidation = false;
 
@@ -28,8 +27,7 @@ class ReviewsController extends MasterController
      *
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
 
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
@@ -46,8 +44,7 @@ class ReviewsController extends MasterController
         return $this->render('reviews', ['model' => $model, 'productPost' => $productPost]);
     }
 
-    public function actionCreateReview()
-    {
+    public function actionCreateReview() {
 
         $this->title = 'Cozxy.com | Create Review';
         $this->subTitle = 'ชื่อ content';
@@ -76,8 +73,7 @@ class ReviewsController extends MasterController
         //return $this->render('@app/views/reviews/create', compact("model"));
     }
 
-    public function actionCreatePost()
-    {
+    public function actionCreatePost() {
 
         $this->title = 'Cozxy.com | Create Review';
         $this->subTitle = 'ชื่อ content';
@@ -112,8 +108,8 @@ class ReviewsController extends MasterController
             $model->brandId = NULL;
             $model->userId = Yii::$app->user->identity->userId;
             $model->description = $_POST["ProductPost"]['description'];
-            if ($_POST['action'] == "draft") {
-
+            $action = isset($_POST['action']) ? $_POST['action'] : NULL;
+            if ($action == "draft") {
                 $model->status = \common\models\costfit\ProductPost::STATUS_DRAFT;
             } else {
                 $model->status = \common\models\costfit\ProductPost::STATUS_PUBLIC;
@@ -131,8 +127,7 @@ class ReviewsController extends MasterController
         return $this->render('@app/views/reviews/create', compact("model", "productSupplierId", "productId"));
     }
 
-    public function actionSeeReview()
-    {
+    public function actionSeeReview() {
         //echo Yii::$app->controller->action->id;
         $this->title = 'Cozxy.com | See Review';
         $this->subTitle = 'ชื่อ content';
@@ -171,8 +166,7 @@ class ReviewsController extends MasterController
         return $this->render('@app/views/reviews/see', compact("productPostId", "productPost", "model", "getPrductsSupplirs", "productSupplierId", "supplierPrice"));
     }
 
-    public function actionViewsPosts()
-    {
+    public function actionViewsPosts() {
         //productPostId: productPostId, productSuppId: productSuppId, productId: productId
         $productPostId = Yii::$app->request->post('productPostId');
         $productSuppId = Yii::$app->request->post('productSuppId');
@@ -185,8 +179,7 @@ class ReviewsController extends MasterController
         //echo 'test';
     }
 
-    public function actionSeeRating()
-    {
+    public function actionSeeRating() {
         $productId = $_GET['productId'];
         $productSupplierId = $_GET['productSupplierId'];
         $productPostId = $_GET['productPostId'];
@@ -228,8 +221,7 @@ class ReviewsController extends MasterController
         return $this->render('@app/views/reviews/rating', compact("productPostId", "productPostViewMem", "productPost", "model", "productSupplierId"));
     }
 
-    public function actionSeeMore()
-    {
+    public function actionSeeMore() {
         $productPost = new \yii\data\ActiveDataProvider([
             'query' => \common\models\costfit\ProductPost::find()->where("status = 1")->orderBy('(CASE WHEN userId = ' . Yii::$app->user->id . ' THEN 1 ELSE 2 END)')
         ]);
