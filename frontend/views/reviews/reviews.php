@@ -19,7 +19,7 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
 
         <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup">
             <h4 class="profile-title-head">
-                <span class="profile-title-head">My Post & Reviews Rating</span>
+                <span class="profile-title-head">My Products' Stories</span>
             </h4>
 
             <hr>
