@@ -9,7 +9,7 @@ if (isset($model)) {
     <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="tile">
             <?php
-            $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $model->productSuppId)->orderBy('productImageId asc')->one();
+            $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $model->productSuppId)->orderBy('ordering asc')->one();
             $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $model->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
             ?>
             <div class="badges" >
