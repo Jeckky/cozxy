@@ -161,13 +161,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <div class="col-lg-6 col-md-6" id="productImage">
     <?php echo $this->render('_product_image', ['model' => $model, 'productSupplierId' => $productSupplierId]); ?>
 </div>
-<div class="col-md-12 text-left">
-    <?php
-    if (\Yii::$app->user->id != '') {
-        ?>
-        <a href="<?= Yii::$app->homeUrl ?>reviews/create-post?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>" class="btn btn-black btn-xs" role="button" id="write-reviews">Write a post</a>
-    <?php } ?>
-</div>
+
 <?php
 $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' => [frontend\assets\AppAsset::className()]]);
 ?>

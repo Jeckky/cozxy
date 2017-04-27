@@ -74,9 +74,19 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 <?php
                                 //if (\Yii::$app->user->id != '') {
                                 ?>
-                                <div onclick="ViewsShows()"  class="add-new-icon" style="background-color: rgba(255,212,36,.9); padding: 1px;">
-                                    <h3 style="text-decoration: underline; margin-left: 2px;">All Post <i class="fa fa-plus-circle" aria-hidden="true" style="zoom: .7"></i></h3>
+                                <div class="col-lg-12 col-md-12 col-sm-12" style="background-color: rgba(255,212,36,.9); margin-bottom: 5px;">
+                                    <div onclick="ViewsShows()"  class="add-new-icon col-md-6 " style="padding: 1px;">
+                                        <h3 style="text-decoration: underline; margin-left: 2px;">All Post <i class="fa fa-plus-circle" aria-hidden="true" style="zoom: .7"></i></h3>
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <?php
+                                        if (\Yii::$app->user->id != '') {
+                                            ?>
+                                            <a href="<?= Yii::$app->homeUrl ?>reviews/create-post?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>" class="btn btn-black btn-xs" role="button" id="write-reviews" style="margin-top: 10px;">Story a post</a>
+                                        <?php } ?>
+                                    </div>
                                 </div>
+
                                 <style>
                                     #brand-carousel-reviews {
                                         padding: 24px 0 48px 0;
@@ -137,6 +147,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                             <div class="text-left test" style="margin-bottom:2px; font-size: 12px; height: 120px;">
                                                                 &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $value->shortDescription; ?>
                                                             </div>
+                                                            <div class="text-center" style="margin-bottom:2px; border-bottom: 1px #e6e6e6 dashed;">
+                                                                <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-rating?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"
+                                                                   style="font-size: 13px;" class="btn btn-primary btn-xs">View</a>
+                                                            </div>
                                                             <div style="text-align: right;">
                                                                 <a role="button"  onclick="views_click('<?php echo $value->productPostId ?>', '<?php echo $valuex->productSuppId; ?>', '<?php echo $valuex->productId; ?>')"  class="panel-toggle" id="see-reviews" style="font-size: 14px; border-bottom: 0px dashed #292c2e;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
                                                             </div>
@@ -191,6 +205,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                             </div>
                                                             <div class="text-left test" style="margin-bottom:2px; font-size: 12px; height: 120px;">
                                                                 &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $value->shortDescription; ?>
+                                                            </div>
+                                                            <div class="text-center" style="margin-bottom:2px; border-bottom: 1px #e6e6e6 dashed;">
+                                                                <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-rating?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"
+                                                                   style="font-size: 13px;" class="btn btn-primary btn-xs">View</a>
                                                             </div>
                                                             <div style="text-align: right;">
                                                                 <a role="button"  onclick="views_click('<?php echo $value->productPostId ?>', '<?php echo $valuex->productSuppId; ?>', '<?php echo $valuex->productId; ?>')"  class="panel-toggle" id="see-reviews" style="font-size: 14px; border-bottom: 0px dashed #292c2e;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
