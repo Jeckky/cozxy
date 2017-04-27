@@ -6,6 +6,7 @@ use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
 use common\models\costfit\TopUp;
 use common\models\costfit\User;
+use jlorente\remainingcharacters\RemainingCharacters;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -24,7 +25,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="col-md-6">Payment History</div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
-                        <?//= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Order', ['create'], ['class' => 'btn btn-success btn-xs']) ?>
+                        Now you have <?= $currentPoint ?> variable oint.
                     </div>
                 </div>
             </div>
@@ -58,10 +59,30 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         }
                     ],
                         [
+                        'attribute' => 'Payment Type',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            if ($model->paymentMethod == 1) {
+                                if ($model->image == NULL) {
+                                    return 'Bill payment<br><i class="fa fa-upload" aria-hidden="true"></i>'
+                                            . '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#upload' . $model->topUpId . '">'
+                                            . ' Upload payment slip </a>';
+                                } else {
+                                    return 'Bill payment<br><i class="fa fa-file-image-o" aria-hidden="true"></i>'
+                                            . '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#seePic' . $model->topUpId . '"><i> Image </i></a> or ' .
+                                            '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#upload' . $model->topUpId . '">'
+                                            . ' change </a>';
+                                }
+                            } else {
+                                return 'Credit card';
+                            }
+                        }
+                    ],
+                        [
                         'attribute' => 'status',
                         'format' => 'raw',
                         'value' => function($model) {
-                            if ($model->status == TopUp::TOPUP_STATUS_COMFIRM_PAYMENT && $model->paymentMethod == 1) {
+                            if (($model->status == TopUp::TOPUP_STATUS_COMFIRM_PAYMENT) || ($model->status == TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)) {
                                 $customerName = User::userName($model->userId);
                                 $customerTel = User::userTel($model->userId);
                                 $taxId = '0105553036789';
@@ -89,7 +110,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             'view' => function( $url, $model) {
                                 if ($model->status == TopUp::TOPUP_STATUS_E_PAYMENT_SUCCESS) {
                                     $topUpId = common\models\ModelMaster::encodeParams($model->topUpId);
-                                    return Html::a('<span class = "btn btn-sm">Print</span>', [Yii::$app->homeUrl . 'top-up/billpay?epay = ' . $topUpId], [
+                                    return Html::a('<span class = "btn btn-sm">Print</span>', [Yii::$app->homeUrl . 'top-up/billpay?epay=' . $topUpId], [
                                                 'target' => '_blank'
                                                     ]
                                     );
@@ -102,4 +123,60 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
     </div>
 </div>
+<?php
+if (isset($topUps) && count($topUps) > 0) {
+    foreach ($topUps as $topUp):
+        ?>
 
+        <div class="modal fade" id="upload<?= $topUp->topUpId ?>" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 0px;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i>
+                        </button>
+                        <h2>Upload payment slip for "<?= $topUp->topUpNo ?>"</h2>
+                    </div>
+                    <div class="modal-body">
+                        <?php
+                        $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']
+                        ]);
+                        ?>
+                        <div class="form-group text-center" style="width:100%;height: 100px;border: #ffcc00 solid 0.5px;padding: 10px;color:#000;">
+                            <input type="file" name="slipUpload[image]" class="btn btn-lg btn-warning"style="width: 525px;font-size: 10pt;height:75px;" required="true">
+                            <input type="hidden" name="topUpId" value="<?= $topUp->topUpId ?>">
+                        </div>
+                        <div class="form-group text-center">
+                            <?= yii\helpers\Html::submitButton('Upload', ['class' => 'btn btn-black', 'name' => 'Upload-button']) ?>
+                        </div>
+                        <?php ActiveForm::end(); ?>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+    <?php endforeach; ?>
+
+<?php }
+?>
+<?php
+if (isset($topUps) && count($topUps) > 0) {
+    foreach ($topUps as $topUp):
+        ?>
+
+        <div class="modal fade" id="seePic<?= $topUp->topUpId ?>" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 0px;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i>
+                        </button>
+                        <h3><?= $topUp->topUpNo ?></h3>
+                    </div>
+                    <div class="modal-body" style="padding-left: 120px;">
+                        <img src="<?= $baseUrl . '/' . $topUp->image ?>" style="width:300px;height: 400px;">
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+    <?php endforeach; ?>
+
+<?php }
+?>

@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use common\models\costfit\User;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -17,17 +18,25 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <div class="panel-body">
+            <?php
+            $form = ActiveForm::begin([
+                        'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+            ]);
+            ?>
             <table class="table table-bordered">
                 <tbody>
                     <tr>
                         <th style="vertical-align: middle;text-align: center;"><h4><b>Upload file .xls,csv : </b></h4></th>
                         <td>
-                            <?= \yii\helpers\Html::textInput('fileName', NULL, ['class' => 'input-lg', 'autofocus' => 'autofocus']); ?><?= isset($ms) && $ms != '' ? ' <code> ' . $ms . '</code>' : '' ?>
+                            <input class="btn btn-lg btn-warning" type="file" name="fileCsv[csv]" value="Upload" style="float: left;" required="true">
 
+                            &nbsp;&nbsp;&nbsp;<button  class="btn btn-lg btn-primary" type="submit">Update</button>
+                            <input type="hidden" name="check" value="update">
                         </td>
                     </tr>
                 </tbody>
             </table>
+            <?php ActiveForm::end(); ?>
             <?=
             GridView::widget([
                 'dataProvider' => $dataProvider,
@@ -54,9 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             return number_format($model->money, 2);
                         }
                     ],
-                    // 'topUpNo',
-                    // 'status',
-                    [
+                        [
                         'attribute' => 'Date Time',
                         'format' => 'raw',
                         'value' => function($model) {
@@ -78,3 +85,55 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<?php
+if (isset($csvFile)) {
+
+    $file = fopen($csvFile, "r");
+    print_r(fgetcsv($file));
+    fclose($file);
+
+// throw new \yii\base\Exception(print_r($csvFile, true));
+    $objCSV = fopen($csvFile, "r");
+    ?>
+    <table width="600" border="1">
+        <tr>
+
+            <th width="91"> <div align="center">CustomerID </div></th>
+
+            <th width="98"> <div align="center">Name </div></th>
+
+            <th width="198"> <div align="center">Email </div></th>
+
+            <th width="97"> <div align="center">CountryCode </div></th>
+
+            <th width="59"> <div align="center">Budget </div></th>
+
+            <th width="71"> <div align="center">Used </div></th>
+
+        </tr>
+        <?php
+        while (($objArr = fgetcsv($objCSV, 1000, ",")) !== FALSE) {
+            ?>
+
+            <tr>
+
+                <td><div align="center"><?php echo $objArr[0]; ?></div></td>
+
+                <td><?php echo $objArr[1]; ?></td>
+
+                <td><?php echo $objArr[2]; ?></td>
+
+                <td><div align="center"><?php echo $objArr[3]; ?></div></td>
+
+                <td align="right"><?php echo $objArr[4]; ?></td>
+
+                <td align="right"><?php echo $objArr[5]; ?></td>
+
+            </tr>
+
+            <?php
+        }
+        fclose($objCSV);
+        ?>
+    </table>
+<?php } ?>

@@ -38,10 +38,17 @@ class TopupController extends TopupMasterController {
                     ->where("status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=1")
                 ,
         ]);
+        if (isset($_POST["fileCsv"]["csv"])) {
 
-        return $this->render('index', [
-                    'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                        'dataProvider' => $dataProvider,
+                        'csvFile' => $_POST["fileCsv"]["csv"],
+            ]);
+        } else {
+            return $this->render('index', [
+                        'dataProvider' => $dataProvider,
+            ]);
+        }
     }
 
     /**

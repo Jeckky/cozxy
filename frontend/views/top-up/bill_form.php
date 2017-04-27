@@ -47,11 +47,11 @@ for ($i = 1; $i < 3; $i++):
             เงินสด
         </div>
         <div style="border: #cccccc solid 0.5px;height: 65px;width: 450px;font-size: 7pt;margin-left: 81px;margin-top: -65px;text-align: center;">
-            <b> <?= \common\helpers\IntToBath::changeToBath(number_format($amount, 2)) ?></b><hr style="size: 3pt;">
+            <b> <?= \common\helpers\IntToBath::changeToBath(number_format($amount, 2)) ?></b><hr style="size: 1pt;">
             จำนวนเงินเป็นตัวอักษร
         </div>
         <div  style="border: #cccccc solid 0.5px;width: 200px;height: 65px;font-size: 7pt;margin-left: 532px;margin-top: -65px;text-align: center;">
-            <b><?= number_format($amount, 2) ?></b><hr style="size: 3pt;">
+            <b><?= number_format($amount, 2) ?></b><hr style="size: 1pt;">
             จำนวนเงิน(บาท)
         </div>
         <div style="margin-top: 20px;">

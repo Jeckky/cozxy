@@ -187,7 +187,7 @@ class TopUpController extends MasterController {
         $customerName = User::userName($userId);
         $customerTel = User::userTel($userId);
         $taxId = '0105553036789';
-        $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->one();
+        $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->one(); //status=2
         if (($topUp->topUpNo == NULL) && ($topUp->topUpNo == '')) {
             $topUp->topUpNo = $this->topUpNo();
         }
@@ -230,7 +230,7 @@ class TopUpController extends MasterController {
     public function actionResult($res, $fromCheckout) {
         $currentPoint = 0;
         if ($res == "ACCEPT") {
-            $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->one();
+            $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=2")->one();
             if (isset($topUp) && count($topUp) > 0) {
                 $topUp->status = TopUp::TOPUP_STATUS_E_PAYMENT_SUCCESS;
                 $topUp->updateDateTime = new \yii\db\Expression('NOW()');
@@ -310,10 +310,10 @@ class TopUpController extends MasterController {
         return json_encode($res);
     }
 
-    public function actionBillpay($epay) {
+    public function actionBillpay() {
 
-        $k = base64_decode(base64_decode($epay));
-        $topUpId = \common\models\ModelMaster::decodeParams($epay);
+        $k = base64_decode(base64_decode($_GET["epay"]));
+        $topUpId = \common\models\ModelMaster::decodeParams($_GET["epay"]);
         $header = $this->renderPartial('header');
         $title = FALSE;
         $topUp = TopUp::find()->where("topUpId=" . $topUpId)->one();
@@ -398,13 +398,50 @@ class TopUpController extends MasterController {
 
     public function actionHistory() {
         $model = TopUp::find()->where("status >1 and userId=" . Yii::$app->user->id)->orderBy('updateDateTime DESC');
+        $topUps = TopUp::find()->where("status >1 and userId=" . Yii::$app->user->id)->orderBy('updateDateTime DESC')->all();
+        $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
+        $currentPoint = 0;
+        if (isset($userPoint) && count($userPoint) > 0) {
+            $currentPoint = $userPoint->currentPoint;
+        }
         $dataProvider = new ActiveDataProvider([
             'query' => $model,
         ]);
-        return $this->render('history', [
-                    'model' => $model,
-                    'dataProvider' => $dataProvider
-        ]);
+        if (isset($_POST["topUpId"])) {
+
+            $topUpId = $_POST["topUpId"];
+            $uploadTo = TopUp::find()->where("topUpId=$topUpId")->one();
+            $imageObj = \yii\web\UploadedFile::getInstanceByName("slipUpload[image]");
+            if (isset($imageObj) && !empty($imageObj)) {
+                $folderName = "slip";
+                $file = $imageObj->name;
+                $filenameArray = explode('.', $file);
+                $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
+                $fileName = \Yii::$app->security->generateRandomString(10) . '.' . $filenameArray[1];
+                $urlFile = $urlFolder . $fileName;
+                $uploadTo->image = 'images/' . $folderName . "/" . $fileName;
+                if (!file_exists($urlFolder)) {
+                    mkdir($urlFolder, 0777);
+                }
+                $imageObj->saveAs($urlFile);
+                $uploadTo->save(false);
+                //   }
+
+                return $this->render('history', [
+                            'model' => $model,
+                            'dataProvider' => $dataProvider,
+                            'topUps' => $topUps,
+                            'currentPoint' => $currentPoint
+                ]);
+            }
+        } else {
+            return $this->render('history', [
+                        'model' => $model,
+                        'dataProvider' => $dataProvider,
+                        'topUps' => $topUps,
+                        'currentPoint' => $currentPoint
+            ]);
+        }
     }
 
     /**
