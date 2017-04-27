@@ -144,69 +144,72 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <?php Pjax::end(); ?>
                     <!--Pagination-->
                     <br><br><br>
+
+
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <?php
+                        //echo $this->render('@app/themes/costfit/layouts/_brand_carousel');
+                        ?>
+                        <!--Brands Carousel Widget-->
+                        <section class="brand-carousel">
+                            <div class="container-search">
+                                <h2>Brands in our shop</h2>
+                                <div class="inner">
+                                    <?php
+                                    /*
+                                      $brands = common\models\costfit\Brand::find()->all();
+                                      foreach ($brands as $brand) {
+                                      //throw new yii\base\Exception(Yii::$app->basePath . "/web" . $brand->image);
+                                      if (file_exists(Yii::$app->basePath . "/web" . $brand->image) && !empty($brand->image)) {
+                                      $image = $brand->image;
+                                      } else {
+                                      $image = Yii::$app->homeUrl . "images/no-image.jpg";
+                                      }
+                                      ?>
+                                      <a class="item" href="#"><img src="<?php echo $image; ?>" alt="" title="ขนาด : 164x120" width="164" height="120" class="img-responsive"/></a>
+                                      <?php
+                                      } */
+                                    ?>
+                                    <?php echo $this->render('@app/views/categories/brands_product_suppliers', ['categoryId' => $categoryId, 'title' => $title, 'brandIds' => isset($this->params['categoryId']) ? $this->params['categoryId'] : NULL]); ?>
+
+                                </div>
+                            </div>
+                        </section><!--Brands Carousel Close-->
+                    </div>
+                    <?php
+                    Pjax::begin([
+                        'id' => 'productsnotsale'
+                    ]);
+                    ?>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                        <?php
+                        echo \yii\widgets\ListView::widget([
+                            'options' => [
+                                'id' => 'product-list-not-sale',
+                            ],
+                            'dataProvider' => $productNotSell,
+                            'itemView' => function ($model, $key, $index, $widget) {
+                                return $this->render('_productNotSell', ['model' => $model]);
+                            },
+                            'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                            'layout' => "{items}{pager}",
+                            //    'layout' => "{items}",
+                            'pager' => [
+                                'prevPageLabel' => '<span class="icon-arrow-left"></span>',
+                                'nextPageLabel' => '<span class="icon-arrow-right"></span>',
+                                'prevPageCssClass' => 'prev-page',
+                                'nextPageCssClass' => 'next-page',
+                            ],
+                        ])
+                        ?>
+                    </div>
+                    <?php Pjax::end(); ?>
+
                 </div><!--title-product-all-->
             </div><!--row-->
             <!--</div>container-->
 
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                <?php
-                //echo $this->render('@app/themes/costfit/layouts/_brand_carousel');
-                ?>
-                <!--Brands Carousel Widget-->
-                <section class="brand-carousel">
-                    <div class="container">
-                        <h2>Brands in our shop</h2>
-                        <div class="inner">
-                            <?php
-                            /*
-                              $brands = common\models\costfit\Brand::find()->all();
-                              foreach ($brands as $brand) {
-                              //throw new yii\base\Exception(Yii::$app->basePath . "/web" . $brand->image);
-                              if (file_exists(Yii::$app->basePath . "/web" . $brand->image) && !empty($brand->image)) {
-                              $image = $brand->image;
-                              } else {
-                              $image = Yii::$app->homeUrl . "images/no-image.jpg";
-                              }
-                              ?>
-                              <a class="item" href="#"><img src="<?php echo $image; ?>" alt="" title="ขนาด : 164x120" width="164" height="120" class="img-responsive"/></a>
-                              <?php
-                              } */
-                            ?>
-                            <?php echo $this->render('@app/views/categories/brands_product_suppliers', ['categoryId' => $categoryId, 'title' => $title, 'brandIds' => isset($this->params['categoryId']) ? $this->params['categoryId'] : NULL]); ?>
-
-                        </div>
-                    </div>
-                </section><!--Brands Carousel Close-->
-            </div>
-            <?php
-            Pjax::begin([
-                'id' => 'productsnotsale'
-            ]);
-            ?>
-            <div class="col-lg-12 col-md-12 col-sm-12">
-
-                <?php
-                echo \yii\widgets\ListView::widget([
-                    'options' => [
-                        'id' => 'product-list-not-sale',
-                    ],
-                    'dataProvider' => $productNotSell,
-                    'itemView' => function ($model, $key, $index, $widget) {
-                        return $this->render('_productNotSell', ['model' => $model]);
-                    },
-                    'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                    'layout' => "{items}{pager}",
-                    //    'layout' => "{items}",
-                    'pager' => [
-                        'prevPageLabel' => '<span class="icon-arrow-left"></span>',
-                        'nextPageLabel' => '<span class="icon-arrow-right"></span>',
-                        'prevPageCssClass' => 'prev-page',
-                        'nextPageCssClass' => 'next-page',
-                    ],
-                ])
-                ?>
-            </div>
-            <?php Pjax::end(); ?>
 
         </div>
 
