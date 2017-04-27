@@ -17,6 +17,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         height: auto;
 
     }
+    #redactor-modal header {
+        padding: 30px 40px 5px 250px;
+        display: none;
+        font-size: 18px;
+        font-weight: bold;
+    }
 </style>
 <!--Wishlist-->
 <section class="wishlist">
