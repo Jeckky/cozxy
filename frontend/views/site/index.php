@@ -257,17 +257,24 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             //echo '</div>';
                         }
                         ?>
-                        <?php
-                    }
-                    //echo '<hr>';
-                    ?>
+                        <div class="col-md-12 text-center" style="border: 0px #e6e6e6 solid;padding-left: 0px; padding-left: 0px;">
+                            <div class="col-sm-12 col-lg-12 col-md-12 text-center" style="padding: 0px; border: 1px #e2dfdf solid; ">
+                                <a href="<?php echo Yii::$app->homeUrl; ?>reviews/" style="font-size: 14px; margin-top: 5px;">See more</a>
+                                <img class="ms-thumb" src="<?php echo "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+                //echo '<hr>';
+                ?>
 
 
 
-                </div>
             </div>
-        </section>
     </div>
+</section>
+</div>
 </section>
 
 <!--Hero Slider Close
@@ -289,15 +296,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <div class="row" id="save-main-limit"></div>
 <?php if ($saveCat->getTotalCount() > 6): ?>
-                                                                                                                                                                                                                                                                                    <<<<<<< HEAD
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                                                                                    =======
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                                                                                    >>>>>>> origin/multi-suppliers
+                                                                                                                                                                                                                                                                                                                                    <<<<<<< HEAD
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                                    =======
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                                    >>>>>>> origin/multi-suppliers
 <?php endif; ?>
     </div>
 </section> Categories Close-->

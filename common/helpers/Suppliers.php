@@ -208,6 +208,11 @@ class Suppliers {
         return $user;
     }
 
+    public static function GetUserContents() {
+        $user = \common\models\costfit\User::find()->where('type =' . \common\models\costfit\User::USER_TYPE_CONTENT)->all();
+        return $user;
+    }
+
     public static function GetCountProduct($userId) {
         $count = \common\models\costfit\ProductSuppliers::find()->where('userId=' . $userId)->count();
         return $count;
