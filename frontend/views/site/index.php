@@ -132,7 +132,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--Review Product-->
 <section class="catalog-grid">
     <div class="container">
-
         <h2>Products' Stories</h2>
         <style>
             .brand-carousel-reviews {
@@ -186,7 +185,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             $productViews = common\models\costfit\ProductPageViews::find()->where('productSuppId=' . $value->productSuppId)->count();
                             ?>
                             <div class="col-md-12 text-center" style="padding-left: 0px;  padding-right: 0px;">
-                                <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $valuex->encodeParams(['productId' => $valuex->productId, 'productSupplierId' => $valuex->productSuppId]) ?>" style="font-size: 14px; margin-top: 5px;">
+                                <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>" style="font-size: 14px; margin-top: 5px;">
                                     <?php
                                     //echo strlen($valuex->title) . '<br>';
                                     if (strlen($valuex->title) >= 40) {
@@ -205,7 +204,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             //echo "<div class=\"col-sm-3\"><img id=\"myImg-" . $valueImages['productImageId'] . "\" onClick=\"reviews_click(" . $valueImages['productImageId'] . ',' . "xx" . ")\"   src=\"/" . $valueImages['imageThumbnail2'] . "\" alt=\"1\" class=\"img-responsive img-thumbnail myImg\"/></div>";
                                             ?>
                                             <div class="col-sm-12 col-lg-12 col-md-12" style="padding-left: 0px;  padding-right: 0px;">
-                                                <!--<img id="myImg-<?php // echo $valueImages['productImageId'];          ?>" onclick="reviews_click(<?php // echo $valuex->productSuppId;          ?>,<?php // echo $valueImages['productImageId'];          ?>, '<?php // echo $valueImages['image'];          ?>', '<?php // echo $valuex->title;          ?>')" src="<?php // echo $valueImages['imageThumbnail1'];          ?>" alt="1" class="img-responsive  myImg">-->
+                                                <!--<img id="myImg-<?php // echo $valueImages['productImageId'];             ?>" onclick="reviews_click(<?php // echo $valuex->productSuppId;             ?>,<?php // echo $valueImages['productImageId'];             ?>, '<?php // echo $valueImages['image'];             ?>', '<?php // echo $valuex->title;             ?>')" src="<?php // echo $valueImages['imageThumbnail1'];             ?>" alt="1" class="img-responsive  myImg">-->
                                                 <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>" style="font-size: 14px; margin-top: 5px;">
                                                     <img  src="<?php echo $valueImages['imageThumbnail1']; ?>" alt="1" class="img-responsive  myImg">
                                                 </a>
@@ -288,7 +287,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <div class="row" id="save-main-limit"></div>
 <?php if ($saveCat->getTotalCount() > 6): ?>
-
+                <<<<<<< HEAD
+                                                                                                                                                                                                                                                                                                    <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
+                                                                                                                                                                                                                                                                                                        <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
+                                                                                                                                                                                                                                                                                                    </div>
+                =======
+                                                                                                                                                                                                                                                                                                                                    <div class="row see-more-x col-md-12 text-right" style="margin-bottom: 15px">
+                                                                                                                                                                                                                                                                                                                                        <span id="btn-see-more" class="btn btn-primary btn-xs ">See more</span>
+                                                                                                                                                                                                                                                                                                                                    </div>
+                >>>>>>> origin/multi-suppliers
 <?php endif; ?>
     </div>
 </section> Categories Close-->

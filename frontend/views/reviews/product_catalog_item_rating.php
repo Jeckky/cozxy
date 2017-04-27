@@ -71,7 +71,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
     }
 </style>
-<div class="col-lg-6 col-md-6 text-left">
+
+<div class="col-lg-12 col-md-12" id="productImage">
+    <?php echo $this->render('_product_image_rating', ['model' => $model, 'productSupplierId' => $productSupplierId]); ?>
+</div>
+<div class="col-lg-12 col-md-12 text-left">
     <h1><?= $model->title; ?>
         <div class="badges">
             <?php if (common\models\costfit\Product::isSmartItem($model->productId)): ?>
@@ -89,20 +93,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <?= Html::hiddenInput("productSuppId", $productSupplierId, ['id' => 'productSuppId']); ?>
     <?= Html::hiddenInput("receiveType", $getPrductsSupplirs->receiveType, ['id' => 'receiveType']); ?>
     <?php // throw new \yii\base\Exception($fastId);  ?>
-
-    <div class="buttons group products-buttons-group">
-        <?php
-        //$supplierPrice = ProductSuppliers::productPriceSupplier($productSupplierId);
-        //$supplierPrice = $price->price;
-        //$trueId = Suppliers::productSuppliersId($productSupplierId);
-        $oldPrice = (isset($supplierPrice) && !empty($supplierPrice)) ? number_format($supplierPrice, 2) : "815.00";
-        $newPrice = number_format($model->calProductPrice($productSupplierId, 1), 2);
-        if ($oldPrice != $newPrice) {
-            ?>
-            <div class="old-price"><?= (isset($supplierPrice) && !empty($supplierPrice)) ? number_format($supplierPrice, 2) . " ฿" : "815.00 $" ?></div>
-        <?php } ?>
-        <div class="price"><?= number_format($model->calProductPrice($productSupplierId, 1), 2) . " ฿" ?></div>
-    </div>
 
     <div class="buttons group">
         <input type="hidden" id="maxQnty" value="<?= $model->findMaxQuantitySupplier($model->productSuppId) ?>">
@@ -122,7 +112,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             ?>
             <a class="btn btn-primary btn-sm" id="addItemToCartUnity" href="#" <?= ($model->findMaxQuantity($model->productSuppId) <= 0) ? " disabled" : " " ?>><i class="icon-shopping-cart"></i>Add to cart</a>
         <?php } ?>
-        <a class="btn btn-black btn-sm" <?php if (\Yii::$app->user->isGuest == 1) { ?> id="GuestaddItemToWishlist" <?php } else { ?> id="addItemToWishlist" <?php } ?> href="#" <?= (\common\models\costfit\Wishlist::isExistingList($model->productSuppId)) ? " disabled" : " " ?>><i class="icon-heart"></i>Add to wishlist</a>
     </div>
     <?php
     if (Yii::$app->controller->action->id == 'see-review') {
@@ -158,9 +147,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <!--Product Gallery-->
 
-<div class="col-lg-6 col-md-6" id="productImage">
-    <?php echo $this->render('_product_image', ['model' => $model, 'productSupplierId' => $productSupplierId]); ?>
-</div>
 <?php
 $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' => [frontend\assets\AppAsset::className()]]);
 ?>

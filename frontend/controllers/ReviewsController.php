@@ -167,4 +167,45 @@ class ReviewsController extends MasterController {
         //echo 'test';
     }
 
+    public function actionSeeRating() {
+        $this->title = 'Cozxy.com | See Review';
+        $this->subTitle = 'ชื่อ content';
+
+        $productId = $_GET['productId'];
+        $productSupplierId = $_GET['productSupplierId'];
+        $productPostId = $_GET['productPostId'];
+        $getPrductsSupplirs = Suppliers::GetProductSuppliersHelpers($productSupplierId);
+        $supplierPrice = ProductSuppliers::productPriceSupplier($productSupplierId);
+        $productPost = \common\models\costfit\ProductPost::find()->where('productSuppId =' . $productSupplierId)->all();
+        //$productPost = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId)->all();
+        $productPostId = Yii::$app->request->get('productPostId');
+
+        if (\Yii::$app->user->id != '') {
+            $productPostViewMem = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . '  and productPostId = ' . $productPostId . ' and productSuppId=' . $productSupplierId)->limit(6)->all();
+            //$productPostViewMem = \common\models\costfit\ProductPostRating::find()->where('productPostId=' . $productPostId)->all();
+        } else {
+            $productPostView = NULL;
+            $productPostViewMem = NULL;
+        }
+        /*
+         * Product Views - Frontend
+         */
+        $productViews = new \common\models\costfit\ProductPageViews();
+        $productViews->productSuppId = $productSupplierId;
+        $productViews->userId = isset(Yii::$app->user->identity->userId) ? Yii::$app->user->identity->userId : '0';
+        $productViews->updateDateTime = new \yii\db\Expression('NOW()');
+        $productViews->createDateTime = new \yii\db\Expression('NOW()');
+        $productViews->save(FALSE);
+        //echo '<pre>';
+        //print_r($getPrductsSupplirs);
+        //exit();
+        $model = \common\models\costfit\Product::find()->where("productId =" . $productId)->one();
+
+        $this->title = 'Cozxy.com | Products';
+        $this->subTitle = $model->attributes['title'];
+        $this->subSubTitle = '';
+
+        return $this->render('@app/views/reviews/rating', compact("productPostId", "productPostViewMem", "productPost", "model", "getPrductsSupplirs", "productSupplierId", "supplierPrice"));
+    }
+
 }

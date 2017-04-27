@@ -2,17 +2,17 @@
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 //$baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
-<div class="prod-gal master-slider-reviews" id="prod-gal-reviews">
+<div class="master-slider-reviews" id="prod-gal-reviews">
     <?php
     //$images = \common\models\costfit\ProductSuppliers::productImagesSuppliers($productSupplierId);
     $images = \common\models\costfit\ProductImageSuppliers::find()->where("productSuppId=" . $productSupplierId . " and status=1")->orderBy("ordering ASC")->one();
-    // echo '<pre>';
-    // print_r($images->attributes);
-    //exit();
+
     if (count($images->attributes) > 0) {
         ?>
-        <div class="ms-slide-reviews">
-            <img src="<?php echo Yii::$app->homeUrl . $images['image']; ?>" data-src="<?php echo Yii::$app->homeUrl . $images['image']; ?>" alt="" class="img-responsive"/>
+        <div class="ms-slide-reviews col-lg-12 col-md-12 text-center">
+            <center>
+                <img  src="<?php echo Yii::$app->homeUrl . $images['image']; ?>" data-src="<?php echo Yii::$app->homeUrl . $images['image']; ?>" alt="" class="img-responsive"/>
+            </center> 
         </div>
         <?php
     } else {
