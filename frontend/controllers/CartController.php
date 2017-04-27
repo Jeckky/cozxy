@@ -383,7 +383,7 @@ class CartController extends MasterController {
         if (isset($products) && !empty($products)) {
             $i = 0;
             foreach ($products as $product):
-                $productSuppliers = \common\models\costfit\ProductSuppliers::fin d()->where("productId = " . $product->productId . " and approve = 'approve'")->all();
+                $productSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productId = " . $product->productId . " and approve = 'approve'")->all();
                 if (isset($productSuppliers) && !empty($productSuppliers)) {
                     $id = '';
                     foreach ($productSuppliers as $productSupplier):
