@@ -38,12 +38,43 @@ class TopupController extends TopupMasterController {
                     ->where("status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=1")
                 ,
         ]);
-        if (isset($_POST["fileCsv"]["csv"])) {
+        if (isset($_POST["fileCsv"])) {
+            $folderName = "file"; //  folderName
+            $folderThumbnail = "billpayment"; //  folderName
+            $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . '/' . $folderThumbnail; // Path
+            $file = \yii\web\UploadedFile::getInstanceByName('fileCsv[csv]');
+            $newFileName = \Yii::$app->security->generateRandomString(10) . '.' . $file->extension;
+            $ext = explode('.', $file->name);
+            if (end($ext) == 'csv') {
+                if (!file_exists($uploadPath)) {
+                    mkdir($uploadPath, 0777);
+                }
+                $upload = $file->saveAs($uploadPath . '/' . $newFileName);
+                if ($upload) {
 
-            return $this->render('index', [
-                        'dataProvider' => $dataProvider,
-                        'csvFile' => $_POST["fileCsv"]["csv"],
-            ]);
+                    //define('CSV_PATH', $uploadPath);
+                    //$csv_file = CSV_PATH . '/' . $newFileName;
+                    $csv_file = $uploadPath . '/' . $newFileName;
+                    // throw new \yii\base\Exception($csv_file);
+                    $fcsv = fopen($csv_file, "r");
+                    if ($fcsv) {
+                        $r = 1;
+                        $data = [];
+                        while (!feof($fcsv)) {
+                            throw new \yii\base\Exception(print_r($fcsv, true));
+                        }
+                    }
+                }
+                fclose($fcsv);
+                return $this->render('index', [
+                            'dataProvider' => $dataProvider,
+                            'data' => $data
+                ]);
+            } else {
+                return $this->render('index', [
+                            'dataProvider' => $dataProvider,
+                ]);
+            }
         } else {
             return $this->render('index', [
                         'dataProvider' => $dataProvider,

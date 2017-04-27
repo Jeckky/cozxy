@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <th style="vertical-align: middle;text-align: center;"><h4><b>Upload file .xls,csv : </b></h4></th>
                         <td>
                             <input class="btn btn-lg btn-warning" type="file" name="fileCsv[csv]" value="Upload" style="float: left;" required="true">
-
+                            <input type="hidden" name="fileCsv[csv]" value="">
                             &nbsp;&nbsp;&nbsp;<button  class="btn btn-lg btn-primary" type="submit">Update</button>
                             <input type="hidden" name="check" value="update">
                         </td>
@@ -86,14 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 <?php
-if (isset($csvFile)) {
-
-    $file = fopen($csvFile, "r");
-    print_r(fgetcsv($file));
-    fclose($file);
-
-// throw new \yii\base\Exception(print_r($csvFile, true));
-    $objCSV = fopen($csvFile, "r");
+if (isset($data)) {
     ?>
     <table width="600" border="1">
         <tr>
@@ -112,28 +105,12 @@ if (isset($csvFile)) {
 
         </tr>
         <?php
-        while (($objArr = fgetcsv($objCSV, 1000, ",")) !== FALSE) {
-            ?>
+        throw new \yii\base\Exception(print_r($data, true));
+        foreach ($data as $a):
+        ?>
 
-            <tr>
-
-                <td><div align="center"><?php echo $objArr[0]; ?></div></td>
-
-                <td><?php echo $objArr[1]; ?></td>
-
-                <td><?php echo $objArr[2]; ?></td>
-
-                <td><div align="center"><?php echo $objArr[3]; ?></div></td>
-
-                <td align="right"><?php echo $objArr[4]; ?></td>
-
-                <td align="right"><?php echo $objArr[5]; ?></td>
-
-            </tr>
-
-            <?php
-        }
-        fclose($objCSV);
+        <?php endforeach;
         ?>
     </table>
+
 <?php } ?>

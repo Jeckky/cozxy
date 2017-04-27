@@ -20,7 +20,7 @@ class ImporterController extends ManagementMasterController {
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
                     // allow authenticated users
-                    [
+                        [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -60,12 +60,12 @@ class ImporterController extends ManagementMasterController {
                     //return $this->render('category');
                     $notify = 'warning';
                     return $this->render('brand', [
-                        'notify' => $notify
+                                'notify' => $notify
                     ]);
                 } else if ($newFileName == 'success') {
                     $notify = 'success';
                     return $this->render('brand', [
-                        'notify' => $notify
+                                'notify' => $notify
                     ]);
                 }
             }
@@ -73,7 +73,7 @@ class ImporterController extends ManagementMasterController {
             //return $this->render('brand');
             $notify = '';
             return $this->render('brand', [
-                'notify' => $notify
+                        'notify' => $notify
             ]);
         }
     }
@@ -91,19 +91,19 @@ class ImporterController extends ManagementMasterController {
                     //return $this->render('category');
                     $notify = 'warning';
                     return $this->render('category', [
-                        'notify' => $notify
+                                'notify' => $notify
                     ]);
                 } else if ($newFileName == 'success') {
                     $notify = 'success';
                     return $this->render('category', [
-                        'notify' => $notify
+                                'notify' => $notify
                     ]);
                 }
             }
         } else {
             $notify = '';
             return $this->render('category', [
-                'notify' => $notify
+                        'notify' => $notify
             ]);
         }
     }
@@ -122,12 +122,12 @@ class ImporterController extends ManagementMasterController {
                     //return $this->render('category');
                     $notify = 'warning';
                     return $this->render('product', [
-                        'notify' => $notify
+                                'notify' => $notify
                     ]);
                 } else if ($newFileName == 'success') {
                     $notify = 'success';
                     return $this->render('product', [
-                        'notify' => $notify
+                                'notify' => $notify
                     ]);
                 }
             }
@@ -135,7 +135,7 @@ class ImporterController extends ManagementMasterController {
             //return $this->render('product');
             $notify = '';
             return $this->render('product', [
-                'notify' => $notify
+                        'notify' => $notify
             ]);
         }
     }
@@ -149,7 +149,7 @@ class ImporterController extends ManagementMasterController {
         $model = \common\models\costfit\ImportBrand::deleteAll();
         //$model->deleteAll();
         return $this->render('clear_error', [
-            'title' => $title
+                    'title' => $title
         ]);
     }
 
@@ -159,7 +159,7 @@ class ImporterController extends ManagementMasterController {
         //$model->deleteAll();
         $notify = 'success';
         return $this->render('clear_error', [
-            'title' => $title, 'notify' => $notify
+                    'title' => $title, 'notify' => $notify
         ]);
     }
 
@@ -169,7 +169,7 @@ class ImporterController extends ManagementMasterController {
         //$model->deleteAll();
         $notify = 'success';
         return $this->render('clear_error', [
-            'title' => $title, 'notify' => $notify
+                    'title' => $title, 'notify' => $notify
         ]);
     }
 

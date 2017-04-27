@@ -224,18 +224,14 @@ class ReviewsController extends MasterController
 
     public function actionSeeMore()
     {
-        $productId = $_GET['productId'];
-        $productSupplierId = $_GET['productSupplierId'];
-        $productPostId = $_GET['productPostId'];
+        $productPost = new \yii\data\ActiveDataProvider([
+            'query' => \common\models\costfit\ProductPost::find()
+        ]);
+        //$this->title = 'Cozxy.com | Products';
+        //$this->subTitle = $model->attributes['title'];
+        //$this->subSubTitle = '';
 
-        $model = \common\models\costfit\Product::find()->where("productId =" . $productId)->one();
-        $this->title = 'Cozxy.com | Products';
-        $this->subTitle = $model->attributes['title'];
-        $this->subSubTitle = '';
-
-
-
-        return $this->render('@app/views/reviews/see-all');
+        return $this->render('@app/views/reviews/see-all', compact("productPost"));
     }
 
 }
