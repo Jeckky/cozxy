@@ -283,15 +283,30 @@ class UserController extends ManagementMasterController
 
     public function actionMargin()
     {
-        $model = new \common\models\costfit\Margin();
+        $title = "Supplier margin setting";
+        if (isset($_GET['supplierId'])) {
+            $model = \common\models\costfit\Margin::getSupplierMargin($_GET['supplierId']);
+        }
+        if (!isset($model)) {
+            $model = new \common\models\costfit\Margin();
+        }
 
-        if (isset($_POST["Margin"])) {
+
+        if (isset($_POST["Margin"]) && $_POST["Margin"]["percent"] != $model->percent) {
+
+            $model = new \common\models\costfit\Margin();
+            $model->supplierId = $_GET['supplierId'];
             $model->attributes = $_POST["Margin"];
             $model->createDateTime = new \yii\db\Expression("NOW()");
-            $model->save();
+            if ($model->save()) {
+                $lastId = Yii::$app->db->lastInsertID;
+
+                \common\models\costfit\Margin::updateAll(['status' => 0], "marginId <> $lastId AND supplierId = " . $_GET['supplierId']);
+                $model = \common\models\costfit\Margin::find()->where("marginId = $lastId")->orderBy("marginId DESC")->one();
+            }
         }
         return $this->render('margin', [
-            'model' => $model,
+            'model' => $model, 'title' => $title
         ]);
     }
 

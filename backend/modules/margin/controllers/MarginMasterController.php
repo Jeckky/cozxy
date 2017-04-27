@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\topup\controllers;
+namespace backend\modules\margin\controllers;
 
 use Yii;
 use yii\helpers\Url;
@@ -11,23 +11,24 @@ use common\models\costfit\master;
 use common\models\costfit;
 
 /**
- * Suppliers Prodcut controller
+ * Site controller
  */
-class TopupMasterController extends \backend\controllers\BackendMasterController {
+class MarginMasterController extends \backend\controllers\BackendMasterController
+{
 
     public $breadcrumbs = [];
     public $layout = '/cl1';
     public $nav = [];
-    public $title = 'Title';
-    public $subTitle = 'Sub Title';
 
-    public function writeToFile($fileName, $string, $mode = 'w+') {
+    public function writeToFile($fileName, $string, $mode = 'w+')
+    {
         $handle = fopen($fileName, $mode);
         fwrite($handle, $string);
         fclose($handle);
     }
 
-    public function saveModelLang($mainModel, $langModel) {
+    public function saveModelLang($mainModel, $langModel)
+    {
         $result = [];
         $langClassName = (new \ReflectionClass($langModel))->getShortName();
         $mainModelClassName = (new \ReflectionClass($mainModel))->getShortName();
@@ -99,28 +100,6 @@ class TopupMasterController extends \backend\controllers\BackendMasterController
             }
         }
         return $result;
-    }
-
-    public function actionChangeSortOrder($id) {
-        throw new \yii\base\Exception(print_r($_POST, true));
-        $model = $_POST['className' . $id]::find()->where($_POST['pkName' . $id] . "=" . $id)->one();
-//            throw new \yii\base\Exception(print_r($model->attributes, true));
-        $model->ordering = $_POST["sortOrder" . $id];
-        if ($model->save()) {
-//            throw new \yii\base\Exception(print_r($model->attributes, true));
-        } else {
-            throw new \yii\base\Exception(print_r($model->errors, true));
-        }
-
-        $params = [$_POST['action' . $id]];
-        if (isset($_POST['followIdName' . $id])) {
-            $params[$_POST['followIdName' . $id]] = $_POST['followId' . $id];
-        }
-        if (isset($_POST['followId2Name' . $id])) {
-            $params[$_POST['followId2Name' . $id]] = $_POST['followId2' . $id];
-        }
-//        throw new \yii\base\Exception(print_r($_POST, true));
-        return $this->redirect($params);
     }
 
 }

@@ -71,13 +71,17 @@ class TopUpController extends MasterController {
             }
             $isOld = TopUp::find()->where("userId='" . Yii::$app->user->id . "' and status=" . TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT . " or status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=" . $paymentMethods)->one();
             if (isset($isOld)) {
-                $ms = 'ไม่สามารถทำรายการได้เนื่องจากคุณมีรายการที่รอชำระเงินค้างอยู่ กรุณาชำระเงิน หรือ ยกเลิกรายการที่ค้างอยู่';
-                return $this->render('index', [
-                            'data' => $data,
-                            'paymentMethod' => $paymentMethod,
-                            'ms' => $ms,
-                            'needMore' => $needMore
-                ]);
+                if ($isOld->status == TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT) {
+                    $topUpDraf = $isOld;
+                } else {
+                    $ms = 'ไม่สามารถทำรายการได้เนื่องจากคุณมีรายการที่รอชำระเงินค้างอยู่ กรุณาชำระเงิน หรือ ยกเลิกรายการที่ค้างอยู่';
+                    return $this->render('index', [
+                                'data' => $data,
+                                'paymentMethod' => $paymentMethod,
+                                'ms' => $ms,
+                                'needMore' => $needMore
+                    ]);
+                }
                 //$topUpDraf = $isOld;
             } else {
                 $topUpDraf = new TopUp();
