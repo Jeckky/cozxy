@@ -11,7 +11,7 @@ if (isset($model)) {
             <?php
             $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $model->productSuppId)->orderBy('productImageId asc')->all();
             ?>
-            <img src="<?= (isset($productImages->image)) ? Yii::$app->homeUrl . $productImages->image : Yii::$app->homeUrl . "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1"/>
+            <img src="<?= (isset($productImages->image)) ? $productImages->image : Yii::$app->homeUrl . "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1"/>
             <span class="tile-overlay"></span>
             <div class="footer" id="products-popular-footer" style="max-height: 320px;min-height: 80px;">
                 <div style="height: 60px;">
