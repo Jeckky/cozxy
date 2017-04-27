@@ -94,7 +94,12 @@ class ProductShippingPrice extends \common\models\costfit\master\ProductShipping
 //            throw new \yii\base\Exception;
             $shippingTypeId = $fastId;
         }
-        $shippingDisCount = ProductShippingPrice::find()->where("productId=" . $productId . " AND shippingTypeId = " . $shippingTypeId)->one();
+        $shippingTypeIds = isset($shippingTypeId) ? $shippingTypeId : '';
+        if ($shippingTypeIds != '') {
+            $shippingDisCount = ProductShippingPrice::find()->where("productId=" . $productId . " AND shippingTypeId = " . $shippingTypeId)->one();
+        } else {
+            $shippingDisCount = ProductShippingPrice::find()->where("productId=" . $productId . " AND shippingTypeId ='' ")->one();
+        }
 
         //throw new \yii\base\Exception($productId . " " . $shippingTypeId);
         if (isset($cart) && $cart['isSlowest'] == 0) {//
