@@ -82,7 +82,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                         <?php
                                         if (\Yii::$app->user->id != '') {
                                             ?>
-                                            <a href="<?= Yii::$app->homeUrl ?>reviews/create-post?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>" class="btn btn-black btn-xs" role="button" id="write-reviews" style="margin-top: 10px;">Create a story</a>
+                                            <a href="<?= Yii::$app->homeUrl ?>reviews/create-post?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>" class="btn btn-black btn-xs" role="button" id="write-reviews" style="margin-top: 10px;">Create your story</a>
                                         <?php } ?>
                                     </div>
                                 </div>

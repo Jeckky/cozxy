@@ -80,7 +80,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </style>
             <?php
             $form = ActiveForm::begin([
-                'action' => '/reviews/create-review',
+                'action' => Yii::$app->homeUrl . '/reviews/create-review',
                 'options' => ['class' => 'form-horizontal', 'enctype' => 'multipart/form-data'],
                 'fieldConfig' => [
                     'template' => '{label}<div class="col-sm-9">{input}</div>',
@@ -119,7 +119,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         echo Html::hiddenInput('productSupplierId', $productSupplierId);
                         echo Html::hiddenInput('productId', $model->productId);
                         ?>
-                        <button class="btn btn-black btn-xs " role="button" id="write-reviews">Write a Post</button>
+                        <button class="btn btn-black btn-xs " role="button" id="write-reviews">rate !!</button>
                     <?php } else { ?>
                         <a href="#" class="btn btn-black btn-xs" role="button" id="write-reviews">Member Only</a>
                     <?php } ?>
