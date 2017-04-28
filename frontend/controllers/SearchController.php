@@ -44,7 +44,7 @@ class SearchController extends MasterController
         $whereArray["category_to_product.categoryId"] = $params['categoryId'];
 
         $whereArray["product.approve"] = "approve";
-        $whereArray["product_suppliers.result"] = " > 0";
+        $whereArray["ps.result"] = " > 0";
         //
         //$whereArray["product_price.quantity"] = 1;
         //$whereArray["pps.status"] = 1;
