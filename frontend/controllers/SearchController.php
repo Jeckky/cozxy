@@ -117,7 +117,7 @@ class SearchController extends MasterController
 
     public function actionSearchBrands()
     {
-//        throw new \yii\base\Exception(print_r($_REQUEST, true));
+        throw new \yii\base\Exception(print_r(Yii::$app->request->post(), true));
         $this->layout = "/content_left";
         $this->title = 'Cozxy.com | Products';
         $this->subTitle = 'ชื่อ search';
