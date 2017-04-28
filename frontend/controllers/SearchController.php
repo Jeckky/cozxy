@@ -120,7 +120,7 @@ class SearchController extends MasterController
         $this->layout = "/content_left";
         $this->title = 'Cozxy.com | Products';
         $this->subTitle = 'ชื่อ search';
-        $categoryId = $_POST['search-brands-categoryId'];
+        $categoryId = $_POST['categoryId'];
         $cat = \common\models\costfit\Category::find()->where("categoryId=" . $categoryId)->one();
         if (isset($_POST['brandId'])) {
             $idString = implode(",", $_POST['brandId']);
