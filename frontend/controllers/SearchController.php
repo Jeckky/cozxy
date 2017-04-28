@@ -73,7 +73,7 @@ class SearchController extends MasterController
         //print_r($products);
         $products = new \yii\data\ActiveDataProvider([
             'query' => $products,
-            'pagination' => array('pageSize' => 8),
+            'pagination' => array('pageSize' => 9),
         ]);
 
         $NotSell = \common\models\costfit\ProductSuppliers::find()->where('result = 0 and approve ="approve" and categoryId=' . $params['categoryId'] . ' '
