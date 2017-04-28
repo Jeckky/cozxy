@@ -14,12 +14,13 @@ if (isset($model)) {
             <img src="<?= (isset($productImages->image)) ? $productImages->image : Yii::$app->homeUrl . "images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1"/>
             <span class="tile-overlay"></span>
             <div class="footer" id="products-popular-footer" style="max-height: 320px;min-height: 80px;">
-                <div style="height: 60px;">
-                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productSuppId]) ?>"><?= substr($model->title, 0, 40); ?></a>
-                </div>
                 <span>
                     <small>in <?php echo $model->category->title; ?></small>
                 </span>
+                <div style="height: 60px;">
+                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productSuppId]) ?>"><?= substr($model->title, 0, 40); ?></a>
+                </div>
+
                 <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productSuppId]) ?>"><button class="btn btn-primary btn-sm">view</button></a>
             </div>
         </div>
