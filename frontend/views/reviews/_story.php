@@ -1,8 +1,12 @@
 <?php
 //echo $value->title;
-$userLogin = Yii::$app->user->identity->userId;
-if ($model->userId == $userLogin) {
-    $css = 'border: 1px rgba(255,212,36,.9) solid; background-color: #f8f8f8;';
+if (isset(Yii::$app->user->identity->userId)) {
+    $userLogin = Yii::$app->user->identity->userId;
+    if ($model->userId == $userLogin) {
+        $css = 'border: 1px rgba(255,212,36,.9) solid; background-color: #f8f8f8;';
+    } else {
+        $css = '';
+    }
 } else {
     $css = '';
 }
@@ -21,7 +25,7 @@ if ($model->userId == $userLogin) {
     </div>
     <div style="text-align: right;">
         <span class="pull-left"><i class="fa fa-eye "></i> <?= number_format(\common\models\costfit\ProductPost::getCountViews($model->productPostId)); ?> Views</span>
-        <!--<a role="button"  onclick="views_click('<?php // echo $model->productPostId          ?>', '<?php // echo $model->productSuppId;          ?>', '<?php // echo $model->productSupp->product->productId;          ?>')"  class="panel-toggle" id="see-reviews" style="font-size: 14px; border-bottom: 0px dashed #292c2e;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>-->
+        <!--<a role="button"  onclick="views_click('<?php // echo $model->productPostId             ?>', '<?php // echo $model->productSuppId;             ?>', '<?php // echo $model->productSupp->product->productId;             ?>')"  class="panel-toggle" id="see-reviews" style="font-size: 14px; border-bottom: 0px dashed #292c2e;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>-->
     </div>
 </div>
 <?php
