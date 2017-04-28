@@ -254,6 +254,8 @@ class ProductSuppliersController extends SuppliersMasterController {
 
         if (isset($_POST["ProductSuppliers"])) {
             $model1 = ProductSuppliers::find()->where('productSuppId = ' . $id)->one();
+            //$productId = (Yii::$app->request->post('productIds') != '') ? Yii::$app->request->post('productIds') : $model->attributes['productId'];
+            $model1 = ProductSuppliers::find()->where('productSuppId = ' . $id)->one();
             $model->attributes = $_POST["ProductSuppliers"];
             $model->userId = Yii::$app->user->identity->userId;
             $model->createDateTime = new \yii\db\Expression('NOW()');
@@ -263,6 +265,19 @@ class ProductSuppliersController extends SuppliersMasterController {
             $model->result = $model1->result - $_POST['ProductSuppliers']['quantity'];
             if ($model->save()) {
                 \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $model->productId);
+                $product = \common\models\costfit\Product::updateAll(
+                [
+                    'isbn' => $_POST['ProductSuppliers']['isbn'],
+                    'title' => $_POST['ProductSuppliers']['title'],
+                    'shortDescription' => $_POST['ProductSuppliers']['shortDescription'],
+                    'description' => $_POST['ProductSuppliers']['description'],
+                    'specification' => $_POST['ProductSuppliers']['specification'],
+                    'width' => $_POST['ProductSuppliers']['width'],
+                    'height' => $_POST['ProductSuppliers']['height'],
+                    'depth' => $_POST['ProductSuppliers']['depth'],
+                    'weight' => $_POST['ProductSuppliers']['weight'],
+                    'tags' => $_POST['ProductSuppliers']['tags'],
+                ], ['productId' => $model1->productId, 'productSuppId' => $id]);
                 return $this->redirect(['index']);
             }
         }

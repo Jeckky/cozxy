@@ -79,6 +79,8 @@ class ProductsController extends MasterController {
         $productPostId = Yii::$app->request->get('productPostId');
         if ($productId != '') {
             $model = \common\models\costfit\Product::find()->where("productId =" . $productId)->one();
+
+            // $model = \common\models\costfit\ProductSuppliers::find()->where("productSuppId =" . $productSupplierId)->one();
             //$productPostView = \common\models\costfit\ProductPost::find()->groupBy(['productSuppId'])->orderBy('productPostId desc')->limit(6)->all();
             $productPostView = \common\models\costfit\ProductPost::find()->where('productSuppId =' . $productSupplierId)->all();
             if (\Yii::$app->user->id != '') {
