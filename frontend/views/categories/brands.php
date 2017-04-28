@@ -43,7 +43,8 @@ if (isset($categoryId)) {
                     if (isset($brands)) {
                         ?>
                         <div class="checkbox">
-                            <input type="checkbox" <?= (in_array($brands->brandId, isset($this->params['brandId']) ? $this->params['brandId'] : [])) ? " checked " : " " ?> class="search-brands" id="search-brands" name="search-brands[]" value="<?php echo $brands->brandId; ?>"><?php echo $brands->title . " (" . $total . ")"; ?>
+                            <input type="checkbox" <?= (in_array($brands->brandId, isset($this->params['brandId']) ? $this->params['brandId'] : [])) ? " checked " : " " ?> class="search-brands" id="search-brands-<?= $brands->brandId ?>" name="search-brands[]" value="<?php echo $brands->brandId; ?>">
+                            <label for="search-brands-<?= $brands->brandId ?>"><?php echo $brands->title . " (" . $total . ")"; ?></label>
                         </div>
                         <?php
                     }
@@ -56,7 +57,8 @@ if (isset($categoryId)) {
     <?php
 }
 
-function check($brandId, $allBrands) {
+function check($brandId, $allBrands)
+{
     $check = 0;
     foreach ($allBrands as $old) {
         if ($old == $brandId) {
