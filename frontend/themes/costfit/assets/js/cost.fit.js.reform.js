@@ -945,8 +945,10 @@ $('#slowest').on('ifUnchecked', function (event) {
 $('.search-brands').on('ifChecked', function (event) {
     //var sendDate = $(this).parent().parent().parent().parent().parent().parent().find("#sendDate");
 //    alert($(".subscr-form").find(".checkbox").find('.icheckbox').find('.search-brands').val());
-//    var categoryId = $('input[id=search-brands-categoryId]').val();
+    var categoryIdOld = $('input[id=search-brands-categoryId]').val();
     var categoryId = $('#search-brands-categoryId').val();
+
+    alert("old =" + categoryIdOld + " new=" + categoryId);
 
     var ids = [];
     $(".subscr-form").find(".checkbox").find('.icheckbox').each(function () {
