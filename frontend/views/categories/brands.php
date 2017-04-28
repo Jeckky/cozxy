@@ -1,6 +1,9 @@
 
 <!--sorting-->
 <?php
+
+use yii\bootstrap\ActiveForm;
+
 if (isset($categoryId)) {
     $allBrands = [];
     $allCategory = "";
