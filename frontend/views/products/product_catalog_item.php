@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
@@ -628,15 +628,15 @@ if (Yii::$app->controller->action->id != 'see-review') {
         if (x == 'brand-carousel') {
             $('#brand-carousel-reviews').removeClass("show");
             $('#brand-carousel-reviews').addClass("hide");
-            $('.add-new-icon').html('<h3 style="text-decoration: underline;">>My story <i class="fa fa-minus-circle" aria-hidden="true" style="zoom: .7"></i></h3>');
+            $('.add-new-icon').html('<h3 style="text-decoration: underline;">>Story <i class="fa fa-minus-circle" aria-hidden="true" style="zoom: .7"></i></h3>');
         } else if (x == 'brand-carousel show') {
             $('#brand-carousel-reviews').removeClass("show");
             $('#brand-carousel-reviews').addClass("hide"); //fa fa-minus-circle
-            $('.add-new-icon').html('<h3 style="text-decoration: underline;">>My story <i class="fa fa-minus-circle" aria-hidden="true" style="zoom: .7"></i></h3>');
+            $('.add-new-icon').html('<h3 style="text-decoration: underline;">>Story <i class="fa fa-minus-circle" aria-hidden="true" style="zoom: .7"></i></h3>');
         } else {
             $('#brand-carousel-reviews').removeClass("hide");
             $('#brand-carousel-reviews').addClass("show");
-            $('.add-new-icon').html('<h3 style="text-decoration: underline;">>My story <i class="fa fa-plus-circle" aria-hidden="true" style="zoom: .7"></i></h3>');
+            $('.add-new-icon').html('<h3 style="text-decoration: underline;">>Story <i class="fa fa-plus-circle" aria-hidden="true" style="zoom: .7"></i></h3>');
         }
 
         //$("#brand-carousel-reviews").removeClass("hide");
