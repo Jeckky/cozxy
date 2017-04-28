@@ -45,6 +45,7 @@ class SearchController extends MasterController
 
         $whereArray["product.approve"] = "approve";
         $whereArray["ps.result"] = " > 0";
+        $whereArray["pps.status"] = "1";
         //
         //$whereArray["product_price.quantity"] = 1;
         //$whereArray["pps.status"] = 1;
