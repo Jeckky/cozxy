@@ -15,7 +15,7 @@ if (isset($model->productId)) {
     <div id="products-category-searc" class="col-lg-3 col-md-4 col-sm-12 ">
         <div class="tile">
             <div class="badges">
-                <span class="sale">Sale</span>
+                <!--<span class="sale">Sale</span>-->
                 <?php
                 if (common\models\costfit\Product::isSmartItem($model->productId)):
                     ?>
@@ -50,7 +50,7 @@ if (isset($model->productId)) {
                         <?= substr($model->title, 0, 40);
                         ?></a>
                 </div>
-                <span><?php //= $model->shortDescription;              ?></span>
+                <span><?php //= $model->shortDescription;               ?></span>
                 <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productSuppId]) ?>"><button class="btn btn-primary" id="addItemToCart"><i class="fa fa-search"></i>View</button></a>
             </div>
         </div>
