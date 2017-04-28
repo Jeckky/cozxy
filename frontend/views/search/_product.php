@@ -17,19 +17,19 @@ if (isset($model->productId)) {
             <div class="badges">
                 <span class="sale">Sale</span>
                 <?php
-                if (common\models\costfit\Product::isSmartItem($suppliers->productId)):
+                if (common\models\costfit\Product::isSmartItem($model->productId)):
                     ?>
                     <br><span class="sale" style="background-color: #d2d042 !important;">SMART</span>
                     <?php
                 endif;
-                $price = ProductSuppliers::productPrice($suppliers->productSuppId);
-                // throw new \yii\base\Exception($suppliers->productId);
+                $price = ProductSuppliers::productPrice($model->productSuppId);
+                // throw new \yii\base\Exception($model->productId);
                 ?>
             </div>
             <?php if ($price > 0) { ?><div class="price-label"><?= isset($price) ? number_format($price, 2) : "Not Set"; ?> ฿</div><?php } ?>
-            <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $suppliers->productId, 'productSupplierId' => $suppliers->productSuppId]) ?>" style="/*min-height: 210px; max-height: 210px;*/">
+            <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productSuppId]) ?>" style="/*min-height: 210px; max-height: 210px;*/">
                 <?php
-                $image = ProductSuppliers::productImageSuppliers($suppliers->productSuppId);
+                $image = ProductSuppliers::productImageSuppliers($model->productSuppId);
                 //throw new \yii\base\Exception($image);
                 if (isset($image) && !empty($image)):
                     $filename = $image;
@@ -46,12 +46,12 @@ if (isset($model->productId)) {
             </a>
             <div class="footer search-category-footer">
                 <div class="" style="max-height: 50px; min-height: 50px;">
-                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $suppliers->encodeParams(['productId' => $suppliers->productId, 'productSupplierId' => $suppliers->productSuppId]) ?>">
-                        <?= substr($suppliers->title, 0, 40);
+                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productSuppId]) ?>">
+                        <?= substr($model->title, 0, 40);
                         ?></a>
                 </div>
-                <span><?php //= $model->shortDescription;            ?></span>
-                <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $suppliers->encodeParams(['productId' => $suppliers->productId, 'productSupplierId' => $suppliers->productSuppId]) ?>"><button class="btn btn-primary" id="addItemToCart"><i class="fa fa-search"></i>View</button></a>
+                <span><?php //= $model->shortDescription;             ?></span>
+                <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productSuppId]) ?>"><button class="btn btn-primary" id="addItemToCart"><i class="fa fa-search"></i>View</button></a>
             </div>
         </div>
     </div>
