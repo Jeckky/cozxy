@@ -80,7 +80,7 @@ class SearchController extends MasterController
         . ' order by productSuppId DESC');
         $productNotSell = new \yii\data\ActiveDataProvider([
             'query' => $NotSell, 'pagination' => [
-                'pageSize' => 9,
+                'pageSize' => 12,
             ],
         ]);
 
