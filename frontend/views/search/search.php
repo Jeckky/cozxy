@@ -38,7 +38,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
     <section class="catalog-grid">
         <div class="container">
-            <h2 class="with-sorting">Show results for</h2>
+            <h2 class="with-sorting">Showing results for</h2>
             <div class="sorting">
                 <a href="#">Sort by name</a>
                 <a href="#">Sort by price</a>
