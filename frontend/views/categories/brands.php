@@ -31,7 +31,7 @@ if (isset($categoryId)) {
     <!--<form class="subscr-form" >-->
     <?php
     $form = ActiveForm::begin([
-        'options' => ['class' => 'panel panel-default form-horizontal subscr-form', 'enctype' => 'multipart/form-data'],
+        'options' => ['class' => 'subscr-form', 'enctype' => 'multipart/form-data'],
 //                        'fieldConfig' => [
 //                            'template' => '{label}<div class="col-sm-9">{input}</div>',
 //                            'labelOptions' => [
