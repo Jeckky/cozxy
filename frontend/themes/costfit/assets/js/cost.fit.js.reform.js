@@ -394,8 +394,8 @@ $("#place-order").on('click', function () {
     var _placeOrderId = $('input[id=placeOrderId]').val();
     var _countItems = $('input[id=countItems]').val();
     var _notes = $("#order-notes").val();
-    alert(_billing);
-    if (_billing == 'undefined') {
+    //alert(_billing);
+    if (_billing === undefined) {
         alert('Click for Billing to a different adress?');
         window.location = $baseUrl + 'profile/billings-address/add';
     }
