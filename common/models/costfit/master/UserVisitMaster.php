@@ -13,6 +13,7 @@ use Yii;
     * @property string $createDateTime
     * @property string $updateDateTime
     * @property string $lastvisitDate
+    * @property string $device
 */
 class UserVisitMaster extends \common\models\ModelMaster
 {
@@ -33,6 +34,7 @@ return [
             [['userId', 'createDateTime'], 'required'],
             [['userId', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime', 'lastvisitDate'], 'safe'],
+            [['device'], 'string', 'max' => 100],
         ];
 }
 
@@ -48,6 +50,7 @@ return [
     'createDateTime' => Yii::t('user_visit', 'Create Date Time'),
     'updateDateTime' => Yii::t('user_visit', 'Update Date Time'),
     'lastvisitDate' => Yii::t('user_visit', 'Lastvisit Date'),
+    'device' => Yii::t('user_visit', 'Device'),
 ];
 }
 }

@@ -73,7 +73,9 @@ foreach ($storeProductGroupId as $id):
         <thead>
             <tr style="background-color: #cccccc;">
                 <th><center>ลำดับที่.</center></th>
+    <th><center>รหัส</center></th>
     <th><center>รหัสสินค้า</center></th>
+    <th><center>รหัสสินค้าผู้ขาย</center></th>
     <th><center>รายละเอียดสินค้า</center></th>
     <th><center>จำนวน</center></th>
     <th><center>หน่วย</center></th>
@@ -85,6 +87,8 @@ foreach ($storeProductGroupId as $id):
         <tr style="background-color: #f1f0f0;">
             <th><center>No.</center></th>
     <th><center>Code</center></th>
+    <th><center>Product code</center></th>
+    <th><center>Merchant code</center></th>
     <th><center>Description</center></th>
     <th><center>Quantity</center></th>
     <th><center>Unit</center></th>
@@ -103,6 +107,8 @@ foreach ($storeProductGroupId as $id):
                 echo '<td><center>' . $i . '</center></td>';
                 $productSupp = ProductSuppliers::productSupplierName($item->productSuppId);
                 echo '<td><center>' . $productSupp->code . '</center></td>';
+                echo '<td><center>' . $productSupp->suppCode . '</center></td>';
+                echo '<td><center>' . $productSupp->merchantCode . '</center></td>';
                 echo '<td> ' . $productSupp->title . '</td>';
                 // $total = \common\models\costfit\OrderItem::totalSupplierItem($suppId, $item, $orders);
                 echo '<td><center>' . $item->quantity . '</center></td>';

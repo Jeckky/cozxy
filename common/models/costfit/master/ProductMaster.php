@@ -14,6 +14,8 @@ use Yii;
     * @property string $categoryId
     * @property string $isbn
     * @property string $code
+    * @property string $suppCode
+    * @property string $merchantCode
     * @property string $title
     * @property string $optionName
     * @property string $shortDescription
@@ -59,7 +61,7 @@ return [
             [['title', 'createDateTime'], 'required'],
             [['width', 'height', 'depth', 'weight', 'price'], 'number'],
             [['createDateTime', 'updateDateTime', 'approvecreateDateTime'], 'safe'],
-            [['code'], 'string', 'max' => 100],
+            [['code', 'suppCode', 'merchantCode'], 'string', 'max' => 100],
             [['title', 'optionName'], 'string', 'max' => 200],
             [['tags'], 'string', 'max' => 255],
             [['approve'], 'string', 'max' => 10],
@@ -80,6 +82,8 @@ return [
     'categoryId' => Yii::t('product', 'Category ID'),
     'isbn' => Yii::t('product', 'Isbn'),
     'code' => Yii::t('product', 'Code'),
+    'suppCode' => Yii::t('product', 'Supp Code'),
+    'merchantCode' => Yii::t('product', 'Merchant Code'),
     'title' => Yii::t('product', 'Title'),
     'optionName' => Yii::t('product', 'Option Name'),
     'shortDescription' => Yii::t('product', 'Short Description'),
