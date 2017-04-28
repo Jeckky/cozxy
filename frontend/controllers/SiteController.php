@@ -105,7 +105,7 @@ class SiteController extends MasterController {
 
         //$NotSell = \common\models\costfit\ProductSuppliers::find()->where('result = 0 and  approve="approve" and RAND() order by productSuppId DESC');
         $productNotSell = new \yii\data\ActiveDataProvider([
-            'query' => \common\models\costfit\ProductSuppliers::find()->where('result = 0 and  approve="approve" and RAND() order by productSuppId ASC')
+            'query' => \common\models\costfit\ProductSuppliers::find()->where('result = 0 and  approve="approve"')->orderBy(new \yii\db\Expression('rand()'))
             , 'pagination' => [
                 'pageSize' => 4,
             ],
