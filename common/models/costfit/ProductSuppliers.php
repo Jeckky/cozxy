@@ -175,7 +175,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     public static function productImageSuppliers($productId)
     {
         //throw new \yii\base\Exception($productSuppId);
-        $image = ProductImageSuppliers::find()->where("productSuppId=" . $productId . " and status=1")->one();
+        $image = ProductImageSuppliers::find()->where("productSuppId=" . $productId . " and status=1")->orderBy("ordering ASC")->one();
         if (isset($image) && !empty($image)) {
             return $image->imageThumbnail1;
         } else {
