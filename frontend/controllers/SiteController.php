@@ -98,7 +98,7 @@ class SiteController extends MasterController {
         $productPost = \common\models\costfit\ProductPost::find()->groupBy(['productSuppId'])->orderBy('productPostId desc')->limit(20)->all();
         $productCanSell = new \yii\data\ActiveDataProvider([
             'query' => \common\models\costfit\ProductSuppliers::find()->where('approve="approve" and result > 0 and RAND() order by productSuppId DESC'), 'pagination' => [
-                'pageSize' => 4,
+                'pageSize' => 8,
             ],
         ]);
 
@@ -107,7 +107,7 @@ class SiteController extends MasterController {
         $productNotSell = new \yii\data\ActiveDataProvider([
             'query' => \common\models\costfit\ProductSuppliers::find()->where('result = 0 and  approve="approve" and RAND()')
             , 'pagination' => [
-                'pageSize' => 4,
+                'pageSize' => 8,
             ],
         ]);
 
