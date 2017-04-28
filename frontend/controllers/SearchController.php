@@ -117,15 +117,16 @@ class SearchController extends MasterController
 
     public function actionSearchBrands()
     {
-        $data = Yii::$app->request->post();
+        $categoryId = Yii::$app->request->post('categoryId');
+        $brandIds = Yii::$app->request->post('brandId');
 //        throw new \yii\base\Exception(print_r($data, true));
         $this->layout = "/content_left";
         $this->title = 'Cozxy.com | Products';
         $this->subTitle = 'ชื่อ search';
-        $categoryId = $data['categoryId'];
+//        $categoryId = $data['categoryId'];
         $cat = \common\models\costfit\Category::find()->where("categoryId=" . $categoryId)->one();
-        if (isset($data['brandId'])) {
-            $idString = implode(",", $data['brandId']);
+        if (isset($brandIds)) {
+            $idString = implode(",", $brandIds);
         } else {
             $idString = null;
         }
