@@ -31,7 +31,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--Filters Toggle-->
 <div class="filter-toggle" data-toggle="modal" data-target="#filterModal"><i class="fa fa-filter"></i></div>
 <div class="page-content">
-
     <ol class="breadcrumb">
         <li><a href="<?php echo Yii::$app->homeUrl; ?>">Home</a></li>
     </ol><!--Breadcrumbs Close-->
