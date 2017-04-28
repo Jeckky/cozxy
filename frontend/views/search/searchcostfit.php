@@ -65,7 +65,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     <span class="tile-overlay"></span>
                                 </a>
                                 <div class="footer search-category-footer">
-                                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $item->productId, 'productSupplierId' => $item->productSuppId]) ?>"><?= $item->title; ?></a>
+                                    <div style="height:60px;">
+                                        <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $item->productId, 'productSupplierId' => $item->productSuppId]) ?>">
+                                            <?= substr($item->title, 0, 40); ?></a>
+                                    </div>
                                     <!--<span>by Pirate3d</span>-->
                                     <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $item->productId, 'productSupplierId' => $item->productSuppId]) ?>">View <?= $item->productSuppId ?></a>
                                     <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $item->productId, 'productSupplierId' => $item->productSuppId]) ?>"><button class="btn btn-primary">View</button></a>
