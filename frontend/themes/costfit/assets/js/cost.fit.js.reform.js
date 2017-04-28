@@ -394,6 +394,10 @@ $("#place-order").on('click', function () {
     var _placeOrderId = $('input[id=placeOrderId]').val();
     var _countItems = $('input[id=countItems]').val();
     var _notes = $("#order-notes").val();
+    if (_billing == '') {
+        alert('Click for Billing to a different adress?');
+        window.location = $baseUrl + 'profile/billings-address/add';
+    }
     if (_placeUserId == '') {
         $("#modal-cart-not-item").modal('show');
     }
@@ -1146,4 +1150,3 @@ $('#pickingpoint-pickingid').change(function (event, id, value) {
     });
 });
 
- 
