@@ -10,7 +10,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--Shopping Cart Message-->
 <section class="cart-message">
     <i class="fa fa-check-square"></i>
-    <p class="p-style3">"Nikon" was successfully added to your cart.</p>
+    <p class="p-style3"><!--"Nikon" was--> successfully added to your cart.</p>
     <a class="btn-outlined-invert btn-success btn-sm" href="shopping-cart.html">View cart</a>
 </section><!--Shopping Cart Message Close-->
 

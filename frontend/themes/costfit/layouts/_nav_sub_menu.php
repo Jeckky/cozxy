@@ -67,8 +67,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <ul class="submenu">
                 <li class="pull-left"><a href="<?php echo Yii::$app->homeUrl; ?>profile" style="font-size: 12px;">My Profile</a></li>
                 <li class="pull-left"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order" style="font-size: 12px;">Order History</a></li>
-                <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/returning"><?= Yii::t('app', 'Product Returns') ?></a></li>
-                <li><a href="<?php echo Yii::$app->homeUrl; ?>reviews" style="font-size: 12px;">My Stories</a></li>
+                <li class="pull-left"><a href="<?php echo Yii::$app->homeUrl; ?>profile/returning"><?= Yii::t('app', 'Product Returns') ?></a></li>
+                <li class="pull-left"><a href="<?php echo Yii::$app->homeUrl; ?>reviews" style="font-size: 12px;">My Stories</a></li>
                <!--<li class="pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/order" style="font-size: 12px;">คำขอคืนสินค้า</a></li>-->
                <!--<li class="pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>profile/payment">Payment Methods</a></li>
                <li class="pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>history">Easy Re-Order</a></li>-->
@@ -85,7 +85,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         //echo Html::a(Html::img($baseUrl . '/images/flags/flag_en.jpg'), Url::current(['language' => 'en-US']), ['class' => (Yii::$app->request->cookies['language'] == 'en-US' ? 'active' : ''), 'style' => ' margin-top: 5px']);
         ?>
     </li>
-    <!--<li class="has-submenu pull-right"><a href="<?php //echo Yii::$app->homeUrl;             ?>coupon">Super special offers</a></li>ข้อเสนอพิเศษจากพาร์ทเนอร์-->
+    <!--<li class="has-submenu pull-right"><a href="<?php //echo Yii::$app->homeUrl;                           ?>coupon">Super special offers</a></li>ข้อเสนอพิเศษจากพาร์ทเนอร์-->
     <li class="has-submenu pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works">Why shop on Cozxy?</a></li>
 
 
@@ -93,7 +93,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <!-- Show For Desktop -->
 <ul class="catalog hidden-xs hidden-sm " id="catalog_new" style="width: 100%;">
-    <li class="has-submenu pull-left"><a href="#"><?= Yii::t('app', 'Categories') ?><i class="fa fa-chevron-down open"></i></a>
+    <li class="has-submenu pull-left"><a href="#" style="color: rgba(255,212,36,.9);"><?= Yii::t('app', 'Categories') ?><i class="fa fa-chevron-down open"></i></a>
         <ul class="submenu">
             <?php
             // $list_menu_category = $this->Me
@@ -132,31 +132,31 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </ul>
 </li>
 <?php if (!Yii::$app->user->isGuest): ?>
-    <li class="has-submenu  ">
+    <!--<li class="has-submenu  ">
         <span class="sorting" id="sortingAccount" style="padding: 1px 1px 1px 1px;">
-            <a href="#" class="sorting" style="padding: 1px 1px 1px 5px;"><?= Yii::t('app', 'Account') ?></a></span>
+            <a href="#" class="sorting" style="padding: 1px 1px 1px 5px;"><?//= Yii::t('app', 'Account') ?></a></span>
         <ul class="submenu" id="submenu-sorting-account" style="margin-top: -1px;">
-            <li><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
-            <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>
-            <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/returning"><?= Yii::t('app', 'Product Returns') ?></a></li>
-            <li><a href="<?php echo Yii::$app->homeUrl; ?>reviews">My Stories</a></li>
-           <!--<li class="pill-right"><a href="<?php // echo Yii::$app->homeUrl;                         ?>profile/payment">Payment Methods</a></li>
-           <li class="pull-right"><a href="<?php // echo Yii::$app->homeUrl;                         ?>history">Easy Re-Order</a></li>-->
+            <li><a href="<?php //echo Yii::$app->homeUrl;              ?>profile">My Profile</a></li>
+            <li><a href="<?php //echo Yii::$app->homeUrl;              ?>profile/order">Order History</a></li>
+            <li><a href="<?php //echo Yii::$app->homeUrl;              ?>profile/returning"><?//s= Yii::t('app', 'Product Returns') ?></a></li>
+            <li><a href="<?php //echo Yii::$app->homeUrl;              ?>reviews">My Stories</a></li>
+           <li class="pill-right"><a href="<?php // echo Yii::$app->homeUrl;                                       ?>profile/payment">Payment Methods</a></li>
+           <li class="pull-right"><a href="<?php // echo Yii::$app->homeUrl;                                       ?>history">Easy Re-Order</a></li>
         </ul>
-    </li>
+    </li>-->
 <?php endif; ?>
 <li class="has-submenu pull-right">
     <?php
-    //echo Html::a(Html::img($baseUrl . '/images/flags/flag_th.jpg'), Url::current(['language' => 'th-TH']), ['class' => (Yii::$app->request->cookies['language'] == 'th-TH' ? 'active' : ''), 'style' => ' margin-top: 5px']);
+//echo Html::a(Html::img($baseUrl . '/images/flags/flag_th.jpg'), Url::current(['language' => 'th-TH']), ['class' => (Yii::$app->request->cookies['language'] == 'th-TH' ? 'active' : ''), 'style' => ' margin-top: 5px']);
     ?>
 </li>
 <li class="has-submenu pull-right">
     <?php
-    //echo Html::a(Html::img($baseUrl . '/images/flags/flag_en.jpg'), Url::current(['language' => 'en-US']), ['class' => (Yii::$app->request->cookies['language'] == 'en-US' ? 'active' : ''), 'style' => ' margin-top: 5px']);
+//echo Html::a(Html::img($baseUrl . '/images/flags/flag_en.jpg'), Url::current(['language' => 'en-US']), ['class' => (Yii::$app->request->cookies['language'] == 'en-US' ? 'active' : ''), 'style' => ' margin-top: 5px']);
     ?>
 </li>
-<li class="has-submenu pull-right"><a href="#">โทร 02-000-0000</a></li>
-<li class="has-submenu pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works"><?= Yii::t('app', 'Why shop on Cozxy?') ?></a></li>
+<li class="has-submenu pull-right"><a href="#"  style="color: rgba(255,212,36,.9);">โทร 02-000-0000</a></li>
+<li class="has-submenu pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>how-cost-fit-works"   style="color: rgba(255,212,36,.9);"><?= Yii::t('app', 'Why shop on Cozxy?') ?></a></li>
 <!--<li class="has-submenu pull-right"><a href="<?php echo Yii::$app->homeUrl; ?>coupon"><?= Yii::t('app', 'Super special offers') ?></a></li>ข้อเสนอพิเศษจากพาร์ทเนอร์-->
 
 

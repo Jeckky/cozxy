@@ -15,7 +15,7 @@ $check_item = count($this->params['cart']['items']);
         <b id="cartTotal"><?= number_format($this->params['cart']['total'], 2) ?></b>
     </a>
     <!--Cart Dropdown-->
-    <div class="cart-dropdown" style="margin-top: -15px; font-size: 14px;">
+    <div class="cart-dropdown" style="/*margin-top: -15px; */font-size: 14px;">
         <span></span><!--Small rectangle to overlap Cart button-->
         <div class="body">
             <table id="cartTable">
@@ -41,11 +41,11 @@ $check_item = count($this->params['cart']['items']);
                 <?php
                 if (\Yii::$app->user->isGuest == 1) {
                     ?>
-                        <!--<a class="btn btn-outlined-invert" href="<?= Yii::$app->homeUrl ?>register/login"><i class="icon-download"></i>Checkout</a>-->
+                            <!--<a class="btn btn-outlined-invert" href="<?= Yii::$app->homeUrl ?>register/login"><i class="icon-download"></i>Checkout</a>-->
                     <?php
                 } else {
                     ?>
-                        <!--<a class = "btn btn-outlined-invert" onclick = "itemzero(<?php //echo $check_item;   ?>, 'checkout')"><i class = "icon-download"></i>Checkout</a>-->
+                            <!--<a class = "btn btn-outlined-invert" onclick = "itemzero(<?php //echo $check_item;    ?>, 'checkout')"><i class = "icon-download"></i>Checkout</a>-->
                 <?php }
                 ?>
                 <a class="btn btn-outlined-invert" onclick="itemzero(<?php echo $check_item; ?>, 'cart')">
