@@ -146,16 +146,18 @@ class Category extends \common\models\costfit\master\CategoryMaster {
 
     public static function getRootText($categoryId, $isHtml = FALSE) {
         $cat = Category::find()->where("categoryId = $categoryId")->one();
+        $params = \common\models\ModelMaster::encodeParams(['categoryId' => $categoryId]);
         if ($isHtml) {
-            $text = "<span style='color:red;font-weight:bold'>" . $cat->title . "</span>";
+            //$text = "<span style='color:red;font-weight:bold'>" . $cat->title . "</span>";
+            $text = '<a href="' . Yii::$app->homeUrl . 'search/' . $cat->createTitle() . '/' . $params . '" style="color:red; font-weight:bold">' . $cat->title . '</a>';
         } else {
-            $text = $cat->title;
+            $text = '<a href="' . Yii::$app->homeUrl . 'search/' . $cat->createTitle() . '/' . $params . '">' . $cat->title . '</a>';
         }
         $parent = $cat->parent;
         for ($i = 0; $i <= 5; $i++) {
-
+            //$params_parent = \common\models\ModelMaster::encodeParams(['categoryId' => $parent]);
             if (isset($parent)) {
-                $text = $parent->title . " > " . $text;
+                $text = '<a href="' . Yii::$app->homeUrl . 'search/' . $parent->createTitle() . '/' . $params . '">' . $parent->title . '</a>' . " > " . $text;
                 $parent = $parent->parent;
             } else {
                 break;

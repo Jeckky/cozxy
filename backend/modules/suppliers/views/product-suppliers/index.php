@@ -19,8 +19,6 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
 }
 ?>
 <div class="product-suppliers-index">
-
-
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-default">
         <div class="panel-body">

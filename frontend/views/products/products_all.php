@@ -6,6 +6,9 @@ use yii\bootstrap\ActiveForm;
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+$category = \common\models\costfit\Category::getRootText($model->categoryId);
+
+//echo 'category :' . $category;
 ?>
 <style>
     .wishlist-message {
@@ -56,10 +59,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     }
 </style>
 <!--Breadcrumbs-->
-<ol class="breadcrumb">
-    <li><a href="<?php echo Yii::$app->homeUrl; ?>">Home</a></li>
-    <li><a href="<?php echo Yii::$app->homeUrl . Yii::$app->controller->id; ?>?productId=<?php echo $model->productId; ?>"><?= isset($this->context->subTitle) ? $this->context->subTitle : "subTitle" ?></a></li>
-
+<ol class="breadcrumb" style="text-align: left;">
+    <!--<li><a href="<?php echo Yii::$app->homeUrl; ?>">Home</a></li>-->
+    <li>
+        <a href="<?php echo Yii::$app->homeUrl; ?>">Home</a> >
+        <?php echo isset($category) ? $category : 'not set'; ?> >
+        <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productSuppId]) ?>">
+            <?= isset($this->context->subTitle) ? $this->context->subTitle : "subTitle" ?></a>
+    </li>
+    <!--
+    <li><a href="<?php //echo Yii::$app->homeUrl . Yii::$app->controller->id;      ?>?productId=<?php //echo $model->productId;    ?>">
+    <?//= isset($this->context->subTitle) ? $this->context->subTitle : "subTitle" ?></a></li>-->
 </ol><!--Breadcrumbs Close-->
 
 <!--Shopping Cart Message-->
