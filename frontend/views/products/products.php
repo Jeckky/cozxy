@@ -57,7 +57,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </style>
 <!--Breadcrumbs-->
 <ol class="breadcrumb">
-    <li><a href="<?php echo Yii::$app->homeUrl; ?>">Home</a></li> 
+    <li><a href="<?php echo Yii::$app->homeUrl; ?>">Home</a></li>
     <li><a href="<?php echo Yii::$app->homeUrl . Yii::$app->controller->id; ?>?productId=<?php echo $model->productId; ?>"><?= isset($this->context->subTitle) ? $this->context->subTitle : "subTitle" ?></a></li>
 </ol><!--Breadcrumbs Close-->
 
@@ -70,7 +70,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <section class="wishlist-message">
     <i class="fa fa-check-square"></i>
-    <p class="p-style3">"Nikon" was successfully added to your wishlist.</p>
+    <p class="p-style3"><!--"Nikon" was--> successfully added to your wishlist.</p>
     <a class="btn-outlined-invert btn-black btn-sm" href="<?php echo Yii::$app->homeUrl; ?>wishlist">View Wishlist</a>
 </section>
 
