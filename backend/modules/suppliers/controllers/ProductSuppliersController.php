@@ -253,7 +253,8 @@ class ProductSuppliersController extends SuppliersMasterController {
         //print_r($model->attributes['productId']);
 
         if (isset($_POST["ProductSuppliers"])) {
-            $model1 = ProductSuppliers::find()->where('productSuppId = ' . $id)->one();
+
+            // $model1 = ProductSuppliers::find()->where('productSuppId = ' . $id)->one();
             //$productId = (Yii::$app->request->post('productIds') != '') ? Yii::$app->request->post('productIds') : $model->attributes['productId'];
             $model1 = ProductSuppliers::find()->where('productSuppId = ' . $id)->one();
             $model->attributes = $_POST["ProductSuppliers"];
