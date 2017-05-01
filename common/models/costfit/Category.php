@@ -181,4 +181,41 @@ class Category extends \common\models\costfit\master\CategoryMaster {
         return $res;
     }
 
+    public static function getRootTextBackend($categoryId, $isHtml = FALSE) {
+        $cat = Category::find()->where("categoryId = $categoryId")->one();
+        $params = \common\models\ModelMaster::encodeParams(['categoryId' => $categoryId]);
+        if ($isHtml) {
+            $text = "<span style='color:red;font-weight:bold'>" . $cat->title . "</span>";
+            //$text = '<a href="' . Yii::$app->homeUrl . 'search/' . $cat->createTitle() . '/' . $params . '" style="color:red; font-weight:bold">' . $cat->title . '</a>';
+        } else {
+            $text = $cat->title;
+        }
+        $parent = $cat->parent;
+        for ($i = 0; $i <= 5; $i++) {
+            //$params_parent = \common\models\ModelMaster::encodeParams(['categoryId' => $parent]);
+            if (isset($parent)) {
+                $text = $parent->title . ' > ' . $text;
+                $parent = $parent->parent;
+            } else {
+                break;
+            }
+        }
+        return $text;
+    }
+
+    public static function findCategoryArrayWithMultiLevelBackend() {
+        $res = [];
+        $cats = Category::find()
+        ->select("category.*")
+        ->join("LEFT JOIN", "category as parent1", "parent1.categoryId = category.parentId")
+        ->join("LEFT JOIN", "category as parent2", "parent2.categoryId = parent1.parentId")
+//        ->orderBy("parent2.title ASC , parent1.parentId ASC")
+        ->all();
+        foreach ($cats as $cat) {
+            $res[$cat->categoryId] = self::getRootTextBackend($cat->categoryId);
+        }
+
+        return $res;
+    }
+
 }

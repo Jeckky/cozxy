@@ -49,7 +49,7 @@ use yii\redactor\widgets\Redactor;
         <?//= $form->field($model, 'parentId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'), ['prompt' => '-- Select Parent --']) ?>
         <?php
         echo $form->field($model, 'parentId')->widget(kartik\select2\Select2::classname(), [
-            'data' => common\models\costfit\Category::findCategoryArrayWithMultiLevel(),
+            'data' => common\models\costfit\Category::findCategoryArrayWithMultiLevelBackend(),
             'pluginOptions' => [
                 'loadingText' => '-- Select Category System --',
             //'params' => ['input-type-1', 'input-type-2']

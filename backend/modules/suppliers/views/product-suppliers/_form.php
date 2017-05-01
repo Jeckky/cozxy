@@ -105,7 +105,7 @@ use yii\redactor\widgets\Redactor;
         //echo Html::hiddenInput('input-type-2', $model->categoryId, ['id' => 'input-type-2']);
         echo $form->field($model, 'categoryId')->widget(kartik\select2\Select2::classname(), [
 //            'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'),
-            'data' => Category::findCategoryArrayWithMultiLevel(),
+            'data' => Category::findCategoryArrayWithMultiLevelBackend(),
             'pluginOptions' => [
                 'loadingText' => '-- Select Category System --',
             //'params' => ['input-type-1', 'input-type-2']

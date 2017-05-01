@@ -44,7 +44,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                     echo kartik\select2\Select2::widget([
                         'name' => 'CategoryId',
                         // 'value' => ['THA'], // initial value
-                        'data' => common\models\costfit\Category::findCategoryArrayWithMultiLevel(),
+                        'data' => common\models\costfit\Category::findCategoryArrayWithMultiLevelBackend(),
                         //'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'),
                         'options' => ['placeholder' => 'Select or Search User Category ...', 'id' => 'Category'], //, 'onchange' => 'this.form.submit()'
                         'pluginOptions' => [
