@@ -130,6 +130,10 @@ use yii\redactor\widgets\Redactor;
         ?>
         <?//= $form->field($model, 'categoryId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(Category::find()->all(), 'categoryId', 'title'), ['prompt' => '-- Select Category --']) ?>
 
+        <?= $form->field($model, 'suppCode', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 100]) ?>
+
+        <?= $form->field($model, 'merchantCode', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 100]) ?>
+
         <?= $form->field($model, 'isbn', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 100]) ?>
 
         <?//= $form->field($model, 'code', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 100]) ?>
