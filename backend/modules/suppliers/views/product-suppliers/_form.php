@@ -185,8 +185,34 @@ use yii\redactor\widgets\Redactor;
           ]); //->label('Small Unit');
          * */
         ?>
-        <?= $form->field($model, 'warranty', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 255]) ?>
-        <?= $form->field($model, 'warrantyPeriod', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 255]) ?>
+        <?php
+        echo $form->field($model, 'warrantyType')->widget(kartik\select2\Select2::classname(), [
+//            'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'),
+            'data' => common\models\costfit\WarrantyType::find()->all(),
+            'pluginOptions' => [
+                'loadingText' => '-- Select Warranty Type --',
+            //'params' => ['input-type-1', 'input-type-2']
+            ],
+            'options' => [
+                'placeholder' => 'Select Warranty Type ...',
+                'id' => 'WarrantyType',
+                'class' => 'required'
+            ],
+        ]); //->label('Category');
+        echo $form->field($model, 'warrantyPeriod')->widget(kartik\select2\Select2::classname(), [
+//            'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'),
+            'data' => common\models\costfit\WarrantyPeriod::find()->all(),
+            'pluginOptions' => [
+                'loadingText' => '-- Select Category System --',
+            //'params' => ['input-type-1', 'input-type-2']
+            ],
+            'options' => [
+                'placeholder' => 'Select Warranty Period ...',
+                'id' => 'WarrantyPeriod',
+                'class' => 'required'
+            ],
+        ]); //->label('Category');
+        ?>
         <?= $form->field($model, 'tags', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 255]) ?>
         <?= $form->field($model, 'url', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 255])->label('url รูปเว็ปเจ้าของแบรนด์') ?>
 
