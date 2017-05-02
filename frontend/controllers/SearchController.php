@@ -117,9 +117,10 @@ class SearchController extends MasterController
 
     public function actionSearchBrands()
     {
+//    	$this->writeToFile('/tmp/sreachbrand', print_r($_POST['brandId'], true));
         $categoryId = Yii::$app->request->post('categoryId');
         $brandIds = Yii::$app->request->post('brandId');
-        throw new \yii\base\Exception(print_r($_POST, true));
+//        throw new \yii\base\Exception(print_r($_POST, true));
 //        throw new \yii\base\Exception($categoryId);
         $this->layout = "/content_left";
         $this->title = 'Cozxy.com | Products';
@@ -136,7 +137,8 @@ class SearchController extends MasterController
         //  $items_sub->createTitle()
         //return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         //echo $this->redirect(Yii::$app->homeUrl . 'checkout/order-thank');
-        return $this->redirect(['search/' . rawurlencode($cat->createTitle()) . "/" . ModelMaster::encodeParams(['categoryId' => $categoryId, 'brandId' => $idString])]);
+//	    return $this->redirect(['search/' . rawurlencode($cat->createTitle()) . "/" . ModelMaster::encodeParams(['categoryId' => $categoryId, 'brandId' => $idString])]);
+        echo Yii::$app->homeUrl.'search/' . rawurlencode($cat->createTitle()) . "/" . ModelMaster::encodeParams(['categoryId' => $categoryId, 'brandId' => $idString]);
     }
 
 }
