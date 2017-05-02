@@ -46,7 +46,11 @@ use common\models\costfit\Supplier;
 
         <?= $form->field($model, 'accName', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 300]) ?>
 
-        <?= $form->field($model, 'accType', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 100]) ?>
+        <?//= $form->field($model, 'accType', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 100]) ?>
+
+        <?= $form->field($model, 'accType', ['options' => ['class' => 'row form-group']])->dropDownList(common\models\costfit\BankTransfer::findAccountTypeArray(), ['prompt' => '-- Select Account Type --']) ?>
+
+        <?= $form->field($model, 'type', ['options' => ['class' => 'row form-group']])->dropDownList(common\models\costfit\BankTransfer::findTypeArray(), ['prompt' => '-- Select Type --']) ?>
 
         <?= $form->field($model, 'compCode', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 5]) ?>
 

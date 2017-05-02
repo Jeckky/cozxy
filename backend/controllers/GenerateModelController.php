@@ -11,13 +11,13 @@ class GenerateModelController extends \yii\web\Controller
     public function actionIndex()
     {
         //Uncomment For Generate Cozxy DB
-        //$dbName = "db"; // Change Other For Generate Model Of Other DB
-        //$folderName = 'costfit';
+        $dbName = "db"; // Change Other For Generate Model Of Other DB
+        $folderName = 'costfit';
         //Uncomment For Generate Cozxy DB
         //
         //Uncomment For Generate DBWorld
-        $dbName = "dbWorld"; // Change Other For Generate Model Of Other DB World
-        $folderName = 'dbworld'; // folder for dbWorld
+//        $dbName = "dbWorld"; // Change Other For Generate Model Of Other DB World
+//        $folderName = 'dbworld'; // folder for dbWorld
         //Uncomment For Generate DBWorld
         //
 
