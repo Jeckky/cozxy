@@ -90,10 +90,10 @@ class TopUpController extends MasterController {
 
             if ($_POST["paymentType"] == 'credit') {
                 $topUpDraf->paymentMethod = 2; //
-                $data["paymentType"] = "ชำระผ่านบัตรเครดิต";
+                $data["paymentType"] = "Credit card";
             } else if ($_POST["paymentType"] == 'bill') {
                 $topUpDraf->paymentMethod = 1;
-                $data["paymentType"] = "โอนเงินผ่านธนาคาร";
+                $data["paymentType"] = "Bill payment";
             }
             if (isset($_POST["checkout"]) && $_POST["checkout"] != '') {
                 $fromCheckout = 'yes';
@@ -113,9 +113,18 @@ class TopUpController extends MasterController {
                         'needMore' => $needMore
             ]);
         }
+        $amount = '';
         if (isset($_POST["amount"]) && !empty($_POST["amount"])) {
-            $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT)->one();
             $amount = $_POST["amount"];
+        }
+        if (isset($_POST["currentAmount"]) && !empty($_POST["currentAmount"])) {
+            $amount = $_POST["currentAmount"];
+        }
+        if (isset($_POST["otherAmount"]) && !empty($_POST["otherAmount"])) {
+            $amount = $_POST["otherAmount"];
+        }
+        if ($amount != '') {
+            $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT)->one();
             if (isset($topUp) && count($topUp) > 0) {
                 $fromCheckout = 'no';
                 if (isset($_POST["fromCheckout"]) && $_POST["fromCheckout"] != 'no') {
@@ -129,13 +138,13 @@ class TopUpController extends MasterController {
                 if ($topUp->paymentMethod == 2) {//Payment Method เป็น การชำระด้วยบัตรเครดิต
                     return $this->redirect(['test-result',
                                 'userId' => $user->userId,
-                                'amount' => $_POST["amount"],
+                                'amount' => $amount,
                                 'fromCheckout' => $fromCheckout
                     ]);
                 } else if ($topUp->paymentMethod = 1) {//Payment Method เป็นการชำระด้วย Bill payment
                     return $this->redirect(['print-payment-form',
                                 'userId' => $user->userId,
-                                'amount' => $_POST["amount"],
+                                'amount' => $amount,
                                 'fromCheckout' => $fromCheckout
                     ]);
                 }
