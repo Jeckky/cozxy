@@ -188,7 +188,7 @@ use yii\redactor\widgets\Redactor;
         <?php
         echo $form->field($model, 'warrantyType')->widget(kartik\select2\Select2::classname(), [
 //            'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'),
-            'data' => common\models\costfit\WarrantyType::find()->all(),
+            'data' => yii\helpers\ArrayHelper::map(common\models\costfit\WarrantyType::find()->all(), 'warrantyTypeId', 'title'),
             'pluginOptions' => [
                 'loadingText' => '-- Select Warranty Type --',
             //'params' => ['input-type-1', 'input-type-2']
@@ -201,7 +201,7 @@ use yii\redactor\widgets\Redactor;
         ]); //->label('Category');
         echo $form->field($model, 'warrantyPeriod')->widget(kartik\select2\Select2::classname(), [
 //            'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'),
-            'data' => common\models\costfit\WarrantyPeriod::find()->all(),
+            'data' => yii\helpers\ArrayHelper::map(common\models\costfit\WarrantyPeriod::find()->all(), 'warrantyPeriodId', 'title'),
             'pluginOptions' => [
                 'loadingText' => '-- Select Category System --',
             //'params' => ['input-type-1', 'input-type-2']
