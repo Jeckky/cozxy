@@ -96,9 +96,11 @@ class SiteController extends MasterController {
         $hotProduct = \common\models\costfit\ProductHot::findAllHotProducts();
         //$footer = "adfadf";
         $productPost = \common\models\costfit\ProductPost::find()->groupBy(['productSuppId'])->orderBy('productPostId desc')->limit(20)->all();
+        $pCanSale = \common\models\costfit\ProductSuppliers::find()
+        ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
+        ->where('product_suppliers.approve="approve" and product_suppliers.result > 0 AND product_price_suppliers.status =1 AND product_price_suppliers.price > 0')->orderBy(new \yii\db\Expression('rand()'));
         $productCanSell = new \yii\data\ActiveDataProvider([
-            'query' => \common\models\costfit\ProductSuppliers::find()->where('approve="approve" and result > 0 ')
-            ->orderBy(new \yii\db\Expression('rand()')), 'pagination' => [
+            'query' => $pCanSale, 'pagination' => [
                 'pageSize' => 8,
             ],
         ]);
