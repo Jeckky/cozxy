@@ -230,7 +230,8 @@ class ProductSuppliersController extends SuppliersMasterController {
             //suppliers/product-price-suppliers
             ///suppliers/product-suppliers/image-form?productSuppId=235
             if (Yii::$app->user->identity->type == 5) {
-                return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-suppliers/image-form?productSuppId=' . $model->productSuppId);
+                //return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-suppliers/image-form?productSuppId=' . $model->productSuppId);
+                return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-price-suppliers/create?productSuppId=' . $model->productSuppId);
             } else {
                 return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-price-suppliers/create?productSuppId=' . $model->productSuppId);
             }

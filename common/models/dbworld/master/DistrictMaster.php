@@ -7,13 +7,11 @@ use Yii;
 /**
 * This is the model class for table "district".
 *
-    * @property integer $districtId
-    * @property string $code
+    * @property string $districtId
     * @property string $districtName
     * @property string $localName
     * @property integer $cityId
-    * @property integer $stateId
-    * @property integer $geographyId
+    * @property string $stateId
     * @property string $countryId
     * @property double $latitude
     * @property double $longitude
@@ -43,9 +41,8 @@ public function rules()
 {
 return [
             [['districtId', 'cityId'], 'required'],
-            [['districtId', 'cityId', 'stateId', 'geographyId'], 'integer'],
+            [['districtId', 'cityId', 'stateId'], 'integer'],
             [['latitude', 'longitude'], 'number'],
-            [['code'], 'string', 'max' => 45],
             [['districtName'], 'string', 'max' => 50],
             [['localName'], 'string', 'max' => 100],
             [['countryId'], 'string', 'max' => 3],
@@ -60,12 +57,10 @@ public function attributeLabels()
 {
 return [
     'districtId' => Yii::t('district', 'District ID'),
-    'code' => Yii::t('district', 'Code'),
     'districtName' => Yii::t('district', 'District Name'),
     'localName' => Yii::t('district', 'Local Name'),
     'cityId' => Yii::t('district', 'City ID'),
     'stateId' => Yii::t('district', 'State ID'),
-    'geographyId' => Yii::t('district', 'Geography ID'),
     'countryId' => Yii::t('district', 'Country ID'),
     'latitude' => Yii::t('district', 'Latitude'),
     'longitude' => Yii::t('district', 'Longitude'),
