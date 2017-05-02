@@ -41,7 +41,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     ['class' => 'yii\grid\SerialColumn'],
                     'warrantyTypeId',
                     'title',
-                    'defimition:ntext',
+                    'defimition:html',
                     'status',
                     'createDateTime',
                     // 'updateDateTime',
