@@ -209,13 +209,13 @@ foreach ($GetOrderMastersGroup as $value) {
                 echo $form->field($pickingPointLockers, 'provinceId')->widget(kartik\select2\Select2::classname(), [
                     'model' => $pickingId,
                     'attribute' => 'provinceId',
-                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'stateName'),
+                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'localName'),
                     'pluginOptions' => [
                         'placeholder' => 'Select...',
-                        'loadingText' => 'Loading states ...',
+                        'loadingText' => 'Loading province ...',
                         'params' => ['input-type-1', 'input-type-2']
                     ],
-                    'options' => ['placeholder' => 'Select states ...']
+                    'options' => ['placeholder' => 'Select province ...']
                 ])->label('เลือกจังหวัด');
                 ?>
                 <?php
@@ -395,13 +395,13 @@ foreach ($GetOrderMastersGroup as $value) {
                 echo $form->field($pickingPointLockersCool, 'provinceId')->widget(kartik\select2\Select2::classname(), [
                     'model' => $pickingId,
                     'attribute' => 'provinceId',
-                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'stateName'),
+                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'localName'),
                     'pluginOptions' => [
                         'placeholder' => 'Select...',
-                        'loadingText' => 'Loading states ...',
+                        'loadingText' => 'Loading province ...',
                         'params' => ['input-type-1', 'input-type-2']
                     ],
-                    'options' => ['placeholder' => 'Select states ...', 'id' => 'LcprovinceId']
+                    'options' => ['placeholder' => 'Select province ...', 'id' => 'LcprovinceId']
                 ])->label('เลือกจังหวัด');
                 ?>
                 <?php
