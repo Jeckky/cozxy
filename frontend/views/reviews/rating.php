@@ -81,7 +81,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </style>
             <?php
             $form = ActiveForm::begin([
-                'action' => Yii::$app->homeUrl . '/reviews/create-review',
+                'action' => Yii::$app->homeUrl . 'reviews/create-review',
                 'options' => ['class' => 'form-horizontal', 'enctype' => 'multipart/form-data'],
                 'fieldConfig' => [
                     'template' => '{label}<div class="col-sm-9">{input}</div>',

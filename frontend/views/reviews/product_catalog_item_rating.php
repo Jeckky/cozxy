@@ -83,7 +83,36 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="col-lg-12 col-md-6 text-center">
                 <br>
                 <h4>  <?= $model->title; ?></h4>
+                <?php
+                //if ($modelSupp->result != 0) {
+                ?>
 
+                <?//= Html::hiddenInput("fastId", $fastId = common\models\costfit\Product::getShippingTypeId($model->productId), ['id' => 'fastId']); ?>
+                <?//= Html::hiddenInput("productId", $model->productId, ['id' => 'productId']); ?>
+                <?//= Html::hiddenInput("supplierId", $modelSupp->userId, ['id' => 'supplierId']); ?>
+                <?//= Html::hiddenInput("productSuppId", $model->productSuppId, ['id' => 'productSuppId']); ?>
+                <?//= Html::hiddenInput("receiveType", $modelSupp->receiveType, ['id' => 'receiveType']); ?>
+                <!--<div class="buttons group">
+                    <input type="hidden" id="maxQnty" value="<?= $model->findMaxQuantitySupplier($model->productSuppId) ?>">
+                <?php
+                //if ($modelSupp->result != 0) {
+                ?>
+                            <div class="qnt-count">
+                                <a class="incr-btn" href="#">-</a>
+                                <input id="quantity" class="form-control" type="text" value="<?= ($model->findMaxQuantity($model->productSuppId) == 0) ? 0 : 1 ?>">
+                                <a class="incr-btn" href="#" data-toggle="popover" data-content="Max Quantity For this Item" data-placement="bottom">+</a>
+                            </div>
+                <?php
+                //}
+                ?>
+                <?php
+                //if ($modelSupp->result != 0) {
+                ?>
+                            <a class="btn btn-primary btn-sm" id="addItemToCartUnity" href="#" <?//= ($model->findMaxQuantity($model->productSuppId) <= 0) ? " disabled" : " " ?>><i class="icon-shopping-cart"></i>Add to cart</a>
+                <?php //} ?>
+                <a class="btn btn-black btn-sm" <?php //if (\Yii::$app->user->isGuest == 1) {         ?> id="GuestaddItemToWishlist" <?php //} else {         ?> id="addItemToWishlist" <?php //}         ?> href="#" <?//= (\common\models\costfit\Wishlist::isExistingList($model->productSuppId)) ? " disabled" : " " ?>><i class="icon-heart"></i>Add to wishlist</a>
+                </div>-->
+                <?php //} ?>
                 <hr>
                 <!--<h5 class="text-right">  Story by : <?//= $productPost->user->email; ?></h5>-->
                 <h2><?= $productPost->title; ?></h2>
