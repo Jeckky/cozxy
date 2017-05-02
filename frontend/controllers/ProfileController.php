@@ -246,7 +246,7 @@ class ProfileController extends MasterController {
             $day = $_POST['User']['day'];
             $month = $_POST['User']['month'];
             $year = $_POST['User']['years'];
-            $date = isset($year) ? $year : '00' . '-' . isset($month) ? $month : '00' . '-' . isset($day) ? $day : '0000' . ' 00:00:00';
+            $date = isset($year) ? $year : '0000' . '-' . isset($month) ? $month : '00' . '-' . isset($day) ? $day : '00' . ' 00:00:00';
             // format 2016-10-11 00:00:00
             $model->birthDate = $date;
             //$model->birthDate = $_POST["User"]['birthDate'];
