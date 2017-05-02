@@ -119,7 +119,7 @@ class SearchController extends MasterController
     {
         $categoryId = Yii::$app->request->post('categoryId');
         $brandIds = Yii::$app->request->post('brandId');
-//        throw new \yii\base\Exception(print_r($_POST, true));
+        throw new \yii\base\Exception(print_r($_POST, true));
 //        throw new \yii\base\Exception($categoryId);
         $this->layout = "/content_left";
         $this->title = 'Cozxy.com | Products';
