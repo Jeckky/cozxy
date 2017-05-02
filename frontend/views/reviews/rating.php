@@ -61,7 +61,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
     <div class="container" >
         <div class="row" id="productItem">
-            <?php echo $this->render('product_catalog_item_rating', ['productPostViewMem' => $productPostViewMem, 'productPost' => $productPost, 'model' => $model, 'productSupplierId' => $productSupplierId]); ?>
+            <?php echo $this->render('product_catalog_item_rating', ['modelSuppPrice' => $modelSuppPrice, 'modelSupp' => $modelSupp, 'productPostViewMem' => $productPostViewMem, 'productPost' => $productPost, 'model' => $model, 'productSupplierId' => $productSupplierId]); ?>
         </div>
         <section class="wishlist">
             <div class="container">
@@ -130,7 +130,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <?php
                     if (\Yii::$app->user->id != '') {
                         ?>
-                        <a href="<?= Yii::$app->homeUrl ?>reviews/create-post?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>" class="btn btn-success btn-xs" role="button" id="write-reviews" style="margin-top: 10px;">Create your story</a>
+                        <a href="<?= Yii::$app->homeUrl ?>reviews/create-post?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>" class="btn btn-success btn-xs" role="button" id="write-reviews">Create your story</a>
                     <?php } ?>
                 </div>
 

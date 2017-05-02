@@ -74,7 +74,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12" style="background-color: rgba(255,212,36,.9); text-align: right; color: #000000; padding: 5px;"> Story by : <?= $productPost->user->email; ?></div>
-
     <div class="col-lg-12 col-md-12" style="margin-top: 10px;">
         <?php echo $this->render('_product_image_rating', ['model' => $model, 'productSupplierId' => $productSupplierId]); ?>
     </div>
@@ -84,6 +83,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="col-lg-12 col-md-6 text-center">
                 <br>
                 <h4>  <?= $model->title; ?></h4>
+
                 <hr>
                 <!--<h5 class="text-right">  Story by : <?//= $productPost->user->email; ?></h5>-->
                 <h2><?= $productPost->title; ?></h2>
@@ -92,7 +92,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="col-lg-12 col-md-3 text-center"></div>
         </div>
     </div>
-
 </div>
 <div class="row">
     <div class="col-lg-12 col-md-12">
