@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\Warrantytype\controllers;
+namespace backend\modules\warrantyperiod\controllers;
 
 use Yii;
 use yii\helpers\Url;

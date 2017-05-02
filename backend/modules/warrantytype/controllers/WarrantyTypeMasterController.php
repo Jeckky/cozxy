@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\supplier\controllers;
+namespace backend\modules\warrantytype\controllers;
 
 use Yii;
 use yii\helpers\Url;
@@ -13,7 +13,7 @@ use common\models\costfit;
 /**
  * Supplier controller
  */
-class SupplierMasterController extends \backend\controllers\BackendMasterController {
+class WarrantyTypeMasterController extends \backend\controllers\BackendMasterController {
 
     public $breadcrumbs = [];
     public $layout = '/cl1';

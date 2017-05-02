@@ -90,6 +90,12 @@ return [
         'margin' => [
             'class' => 'backend\modules\margin\margin',
         ],
+        'warrantytype' => [
+            'class' => 'backend\modules\warrantytype\WarrantyType',
+        ],
+        'warrantyperiod' => [
+            'class' => 'backend\modules\warrantyperiod\WarrantyPeriod',
+        ],
     ],
     'components' => [
         'user' => [
