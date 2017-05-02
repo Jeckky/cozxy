@@ -59,7 +59,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 'id' => 'product-list',
                             ],
                             'itemView' => function ($model, $key, $index, $widget) {
-                                return $this->render('_product', ['model' => $model->product]);
+                                return $this->render('_product_search', ['model' => $model->product]);
                             },
                             'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             'layout' => "{items}{pager}",

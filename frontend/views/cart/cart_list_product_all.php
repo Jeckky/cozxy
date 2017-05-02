@@ -85,7 +85,7 @@ use common\models\ModelMaster;
         <div class="row">
             <!--Items List-->
             <div class="col-lg-9 col-md-9">
-                <h2 class="title">รายการสินค้าทั้งหมด</h2>
+                <h2 class="title">Cart subtotal:</h2>
                 <table class="items-list">
                     <!--<tr>
                         <th>&nbsp;</th>
@@ -100,7 +100,7 @@ use common\models\ModelMaster;
                             ?>
                             <tr style=" font-size: 12px; ">
                                 <td colspan="3" >
-                                    <h4 class="title"><i class="fa fa-truck" aria-hidden="true"></i>&nbsp;สถานที่รับของ : ปลายทางที่ล็อคเกอร์เย็น </h4>
+                                    <h4 class="title"><i class="fa fa-truck" aria-hidden="true"></i>&nbsp;Shipping destination: CozxyBox </h4>
                                 </td>
                             </tr>
                             <?php
@@ -113,7 +113,7 @@ use common\models\ModelMaster;
                                     <?= Html::hiddenInput("sendDate", $value1["sendDate"], ['id' => 'sendDate']); ?>
                                     <td class="thumb"><a href="<?php echo Yii::$app->homeUrl; ?>products/<?php echo ModelMaster::encodeParams(['productId' => $value1["productId"], 'productSupplierId' => $value1['productSuppId']]); ?>"><img src="<?php echo Yii::$app->homeUrl . common\models\costfit\ProductSuppliers::productImageSuppliers($value1['productSuppId']); ?>" alt="Lorem ipsum" width="152" height="119"/></a></td>
                                     <td class="name" style="width:55%">
-                                        <a href="<?php echo Yii::$app->homeUrl; ?>products/<?php echo ModelMaster::encodeParams(['productId' => $value1["productId"], 'productSupplierId' => $value1['productSuppId']]); ?>" style="font-size:14px;word-wrap: break-word; "><?= $product["title"] ?></a>&nbsp;&nbsp;<span style="color: #ff9016; font-size: 14px;">(จำนวน <?= $value1["quantity"] ?> ชิ้น)</span>
+                                        <a href="<?php echo Yii::$app->homeUrl; ?>products/<?php echo ModelMaster::encodeParams(['productId' => $value1["productId"], 'productSupplierId' => $value1['productSuppId']]); ?>" style="font-size:14px;word-wrap: break-word; "><?= $product["title"] ?></a>&nbsp;&nbsp;<span style="color: #ff9016; font-size: 14px;">(<?= $value1["quantity"] ?> items)</span>
                                     </td>
                                     <td class="text-right">
                                         <span class="price" style="font-weight: bold; color: #000;"><?= number_format($value1["priceOnePiece"], 2) . " ฿" ?></span> <br>
