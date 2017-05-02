@@ -225,6 +225,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                         ?>> <span class="lbl">Content</span>
                                                     </label>
                                                 </div>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="radio" name="Access[jq-validation-radios]" class="px" value="6" <?php
+                                                        if ($model->type == 6) {
+                                                            echo "checked";
+                                                        }
+                                                        ?>> <span class="lbl">บัญชี</span>
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                         <?php
