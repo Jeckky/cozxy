@@ -216,7 +216,7 @@ foreach ($GetOrderMastersGroup as $value) {
                         'params' => ['input-type-1', 'input-type-2']
                     ],
                     'options' => ['placeholder' => 'Select states ...']
-                ])->label('เลือกจังหวัด');
+                ])->label('Province');
                 ?>
                 <?php
                 //echo Html::hiddenInput("statesDDId", $stateId, ['id' => "statesDDId"]);
@@ -243,7 +243,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'loadingText' => 'Loading amphur ...',
                             'params' => ['input-type-11', 'input-type-22']
                         ]
-                    ])->label('เลือกอำเภอ/เขต');
+                    ])->label('Amphur');
                 } else {
                     echo $form->field($pickingPointLockers, 'amphurId')->widget(kartik\depdrop\DepDrop::classname(), [
                         //'data' => [9 => 'Savings'],
@@ -260,7 +260,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'loadingText' => 'Loading amphur ...',
                             'params' => ['input-type-11', 'input-type-22']
                         ]
-                    ])->label('เลือกอำเภอ/เขต');
+                    ])->label('Amphur');
                 }
                 ?>
                 <?php
@@ -402,7 +402,7 @@ foreach ($GetOrderMastersGroup as $value) {
                         'params' => ['input-type-1', 'input-type-2']
                     ],
                     'options' => ['placeholder' => 'Select states ...', 'id' => 'LcprovinceId']
-                ])->label('เลือกจังหวัด');
+                ])->label('Province');
                 ?>
                 <?php
                 //echo Html::hiddenInput("statesDDId", $stateId, ['id' => "statesDDId"]);
@@ -430,7 +430,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'loadingText' => 'Loading amphur ...',
                             'params' => ['input-type-11', 'input-type-22']
                         ]
-                    ])->label('เลือกอำเภอ/เขต');
+                    ])->label('Amphur');
                 } else {
                     echo $form->field($pickingPointLockersCool, 'amphurId')->widget(kartik\depdrop\DepDrop::classname(), [
                         //'data' => [9 => 'Savings'],
@@ -447,7 +447,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'loadingText' => 'Loading amphur ...',
                             'params' => ['input-type-11', 'input-type-22']
                         ]
-                    ])->label('เลือกอำเภอ/เขต');
+                    ])->label('Amphur');
                 }
                 ?>
                 <?php
@@ -589,7 +589,7 @@ foreach ($GetOrderMastersGroup as $value) {
                         'params' => ['booth-input-type-1', 'booth-input-type-2']
                     ],
                     'options' => ['placeholder' => 'Select states ...', 'id' => 'BprovinceId']
-                ])->label('เลือกจังหวัด');
+                ])->label('Province');
                 ?>
                 <?php
                 //echo Html::hiddenInput("statesDDId", $stateId, ['id' => "statesDDId"]);
@@ -617,7 +617,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'loadingText' => 'Loading amphur ...',
                             'params' => ['booth-input-type-11', 'booth-input-type-22']
                         ]
-                    ])->label('เลือกอำเภอ/เขต');
+                    ])->label('Amphur');
                 } else {
                     echo $form->field($pickingPointBooth, 'amphurId')->widget(kartik\depdrop\DepDrop::classname(), [
                         //'data' => [9 => 'Savings'],
@@ -634,7 +634,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'loadingText' => 'Loading amphur ...',
                             'params' => ['booth-input-type-11', 'booth-input-type-22']
                         ]
-                    ])->label('เลือกอำเภอ/เขต');
+                    ])->label('Amphur');
                 }
                 ?>
                 <?php
