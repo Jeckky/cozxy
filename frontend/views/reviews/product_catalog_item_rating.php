@@ -90,17 +90,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <h3><?= $productPost->shortDescription; ?></h3>
             </div>
             <div class="col-lg-12 col-md-3 text-center"></div>
-
         </div>
     </div>
-
 
 </div>
 <div class="row">
     <div class="col-lg-12 col-md-12">
         <div class="col-lg-12 col-md-3 text-center"></div>
         <div class="col-lg-12 col-md-6 text-center">
-            <?= $productPost->description; ?> 
+            <?= $productPost->description; ?>
         </div>
         <div class="col-lg-12 col-md-3 text-center"></div>
     </div>
