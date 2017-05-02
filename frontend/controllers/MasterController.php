@@ -243,7 +243,7 @@ class MasterController extends MasterCommonController
             if ($id != null && count($list) > 0) {
                 $selected = '';
                 foreach ($list as $i => $account) {
-                    $out[] = ['id' => $account['stateId'], 'name' => $account['stateName']];
+                    $out[] = ['id' => $account['stateId'], 'name' => $account['localName']];
                     if ($i == 0) {
                         $selected = $account['stateId'];
                     }
@@ -268,7 +268,7 @@ class MasterController extends MasterCommonController
             if ($id != null && count($list) > 0) {
                 $selected = '';
                 foreach ($list as $i => $account) {
-                    $out[] = ['id' => $account['cityId'], 'name' => $account['cityName']];
+                    $out[] = ['id' => $account['cityId'], 'name' => $account['localName']];
                     if ($i == 0) {
                         $selected = $account['cityId'];
                     }
