@@ -78,19 +78,31 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="col-lg-12 col-md-12" style="margin-top: 10px;">
         <?php echo $this->render('_product_image_rating', ['model' => $model, 'productSupplierId' => $productSupplierId]); ?>
     </div>
-    <div class="col-lg-12 col-md-12 text-center">
-        <br>
-        <h4>  <?= $model->title; ?></h4>
-        <hr>
-        <!--<h5 class="text-right">  Story by : <?//= $productPost->user->email; ?></h5>-->
-        <h2><?= $productPost->title; ?></h2>
-        <h3><?= $productPost->shortDescription; ?></h3>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 text-center">
+            <div class="col-lg-12 col-md-3 text-center"></div>
+            <div class="col-lg-12 col-md-6 text-center">
+                <br>
+                <h4>  <?= $model->title; ?></h4>
+                <hr>
+                <!--<h5 class="text-right">  Story by : <?//= $productPost->user->email; ?></h5>-->
+                <h2><?= $productPost->title; ?></h2>
+                <h3><?= $productPost->shortDescription; ?></h3>
+            </div>
+            <div class="col-lg-12 col-md-3 text-center"></div>
+
+        </div>
     </div>
+
 
 </div>
 <div class="row">
     <div class="col-lg-12 col-md-12">
-        <?= $productPost->description; ?>
+        <div class="col-lg-12 col-md-3 text-center"></div>
+        <div class="col-lg-12 col-md-6 text-center">
+            <?= $productPost->description; ?> 
+        </div>
+        <div class="col-lg-12 col-md-3 text-center"></div>
     </div>
 </div>
 <div class="row">
