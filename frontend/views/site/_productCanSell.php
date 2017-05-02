@@ -13,7 +13,9 @@ if (isset($model)) {
             $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $model->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
             ?>
             <div class="badges" >
-                <span class="sale" style="background-color: red !important;"><?php echo number_format($productPrice->price, 2); ?> <i class="fa fa-star"></i></span>
+                <?php if ($productPrice->price > 0): ?>
+                    <span class="sale" style="background-color: red !important;"><?php echo number_format($productPrice->price, 2); ?> <i class="fa fa-star"></i></span>
+                <?php endif; ?>
                 <?php // if (common\models\costfit\Product::isSmartItem($model->productId)):  ?>
                     <!--<br><span class="sale" style="background-color: #d2d042 !important;">SMART</span>-->
                 <?php // endif;  ?>
