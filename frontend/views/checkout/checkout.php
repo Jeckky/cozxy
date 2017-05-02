@@ -207,7 +207,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="col-lg-3 col-lg-offset-1 col-md-4 col-sm-4">
                 <h3>Your order</h3>
                 <?php echo $this->render('@app/views/cart/checkout_totals_right'); ?>
-                <div class="payment-method">
+                <div class="payment-method hide">
                     <?php
                     $i = 1;
                     //echo Yii::$app->homeUrl;
