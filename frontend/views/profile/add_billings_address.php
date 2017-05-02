@@ -21,15 +21,19 @@ if ($model->isDefault == '1') {
 <p style="font-size: 12px; background-color: <?php echo $bg; ?>">
     <?php
     echo ++$index . '. ';
-    echo ($model->firstname) ? 'คุณ' . $model->firstname : '-';
-    echo ($model->lastname) ? '&nbsp;' . $model->lastname : '-';
+    if (isset($model->company)) {
+        echo ($model->company) ? $model->company : $model->company . ' , ';
+    } else {
+        echo ($model->firstname) ? 'คุณ ' . $model->firstname : ' - ';
+        echo ($model->lastname) ? '&nbsp;' . $model->lastname : ' - ';
+    }
     echo '<br>';
-    echo ($model->company) ? $model->company : $model->company . ' ,';
-    echo ($model->address) ? $model->address : '' . ' ,';
-    echo ($model->district['localName']) ? $model->district['localName'] : '' . ' ,';
-    echo ($model->cities['cityName']) ? $model->cities['cityName'] : '' . ' ,';
-    echo ($model->states['stateName']) ? $model->states['stateName'] : '' . ' ,';
-    echo '<br>' . ($model->countries['localName']) ? $model->countries['localName'] : '' . ' ,';
+
+    echo ($model->address) ? "Address : " . $model->address . "<br>" : '' . ' , ';
+    echo ($model->district['localName']) ? $model->district['localName'] . ", " : '' . ' , ';
+    echo ($model->cities['localName']) ? $model->cities['localName'] . ", " : '' . ' , ';
+    echo ($model->states['localName']) ? $model->states['localName'] . ", " : '' . ' , ';
+    echo '<br>' . ($model->countries['localName']) ? $model->countries['localName'] : '' . ' , ';
     echo '<br>Zipcode ' . $model->zipcode;
     echo '&nbsp;<a href="' . Yii::$app->homeUrl . 'profile/billings-address/' . \common\models\ModelMaster::encodeParams(['addressId' => $model->addressId]) . '"><span style ="color:#b11010; cursor: hand;" >( <i class="fa fa-pencil-square-o" aria-hidden="true"></i> ,</span></a>';
     echo '<span class= "obutton feature2"  data-id="' . $model->addressId . '" data-toggle="modal" data-target="#modal-delete-item">'
