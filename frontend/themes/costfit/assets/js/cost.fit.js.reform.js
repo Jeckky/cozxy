@@ -959,7 +959,7 @@ $('.search-brands').on('ifChecked', function (event) {
     //alert(categoryId);
     $.ajax({
         type: "POST",
-        //dataType: "JSON",
+        dataType: "JSON",
         url: $baseUrl + 'search/search-brands',
         data: {'brandId': ids, 'categoryId': categoryId},
         success: function (data)
@@ -985,7 +985,7 @@ $('.search-brands').on('ifUnchecked', function (event) {
     //alert(categoryId);
     $.ajax({
         type: "POST",
-        //dataType: "JSON",
+        dataType: "JSON",
         url: $baseUrl + 'search/search-brands',
         data: {'brandId': ids, 'categoryId': categoryId},
         success: function (data)
