@@ -338,7 +338,41 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     }
     ?>
 
-    <?php echo $form->field($model, 'zipcode'); ?>
+    <?php
+    //echo $form->field($model, 'zipcode');
+    echo Html::hiddenInput('input-type-14', $model->districtId, ['id' => 'input-type-14']);
+    if ($yourbrowser != 'Safari') {
+        echo $form->field($model, 'zipcode')->widget(DepDrop::classname(), [
+            //'data' => [12 => 'Savings A/C 2'],
+            'options' => ['placeholder' => 'Select ...'],
+            'type' => DepDrop::TYPE_SELECT2,
+            'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+            'pluginOptions' => [
+                'depends' => ['address-districtid'],
+                //'initialize' => true,
+                //'initDepends' => ['address-countryid'],
+                'url' => Url::to(['child-zipcode-address']),
+                'loadingText' => 'Loading zipcode ...',
+                'params' => ['input-type-14']
+            ]
+        ])->label('Zipcode');
+    } else {
+        echo $form->field($model, 'zipcode')->widget(DepDrop::classname(), [
+            //'data' => [12 => 'Savings A/C 2'],
+            'options' => ['placeholder' => 'Select ...'],
+            //'type' => DepDrop::TYPE_SELECT2,
+            'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+            'pluginOptions' => [
+                'depends' => ['address-districtid'],
+                //'initialize' => true,
+                //'initDepends' => ['address-countryid'],
+                'url' => Url::to(['child-zipcode-address']),
+                'loadingText' => 'Loading zipcode ...',
+                'params' => ['input-type-14']
+            ]
+        ])->label('Zipcode');
+    }
+    ?>
     <?php echo $form->field($model, 'email'); ?>
     <?php echo $form->field($model, 'tel'); ?>
     <?php echo $form->field($model, 'isDefault')->radioList([1 => 'Yes', 0 => 'No'], ['itemOptions' => ['class' => 'radio']])->label('Default address') ?>

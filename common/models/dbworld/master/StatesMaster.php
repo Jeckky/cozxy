@@ -8,8 +8,10 @@ use Yii;
 * This is the model class for table "states".
 *
     * @property integer $stateId
+    * @property string $code
     * @property string $stateName
     * @property string $localName
+    * @property integer $geographyId
     * @property string $countryId
     * @property double $latitude
     * @property double $longitude
@@ -38,8 +40,10 @@ return 'states';
 public function rules()
 {
 return [
+            [['geographyId'], 'integer'],
             [['countryId'], 'required'],
             [['latitude', 'longitude'], 'number'],
+            [['code'], 'string', 'max' => 45],
             [['stateName'], 'string', 'max' => 50],
             [['localName'], 'string', 'max' => 100],
             [['countryId'], 'string', 'max' => 3],
@@ -53,8 +57,10 @@ public function attributeLabels()
 {
 return [
     'stateId' => Yii::t('states', 'State ID'),
+    'code' => Yii::t('states', 'Code'),
     'stateName' => Yii::t('states', 'State Name'),
     'localName' => Yii::t('states', 'Local Name'),
+    'geographyId' => Yii::t('states', 'Geography ID'),
     'countryId' => Yii::t('states', 'Country ID'),
     'latitude' => Yii::t('states', 'Latitude'),
     'longitude' => Yii::t('states', 'Longitude'),
