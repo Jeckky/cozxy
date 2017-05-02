@@ -247,17 +247,17 @@ class ProfileController extends MasterController {
             $month = $_POST['User']['month'];
             $year = $_POST['User']['years'];
             if ($day == '') {
-                $day_n = '0';
+                $day_n = '1';
             } else {
                 $day_n = $_POST['User']['day'];
             }
             if ($year == '') {
-                $year_n = '0000';
+                $year_n = '1927';
             } else {
                 $year_n = $_POST['User']['years'];
             }
             if ($month == '') {
-                $month_n = '00';
+                $month_n = '01';
             } else {
                 $month_n = $_POST['User']['month'];
             }
