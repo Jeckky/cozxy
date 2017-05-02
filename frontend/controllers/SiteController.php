@@ -20,14 +20,12 @@ use common\models\costfit\ContentGroup;
 /**
  * Site controller
  */
-class SiteController extends MasterController
-{
+class SiteController extends MasterController {
 
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -57,8 +55,7 @@ class SiteController extends MasterController
     /**
      * @inheritdoc
      */
-    public function actions()
-    {
+    public function actions() {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -79,8 +76,7 @@ class SiteController extends MasterController
      *
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
 //        throw new \yii\base\Exception(print_r(\Yii::$app->user->identity, true));
         $this->title = 'My Cozxy.com';
         $bannerGroup = ContentGroup::find()->where("lower(title) = 'banner' and status=1")->one();
@@ -126,8 +122,7 @@ class SiteController extends MasterController
      *
      * @return mixed
      */
-    public function actionLogin()
-    {
+    public function actionLogin() {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -147,8 +142,7 @@ class SiteController extends MasterController
      *
      * @return mixed
      */
-    public function actionLogout()
-    {
+    public function actionLogout() {
         Yii::$app->user->logout();
 
         return $this->goHome();
@@ -159,8 +153,7 @@ class SiteController extends MasterController
      *
      * @return mixed
      */
-    public function actionContact()
-    {
+    public function actionContact() {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
@@ -182,8 +175,7 @@ class SiteController extends MasterController
      *
      * @return mixed
      */
-    public function actionAbout()
-    {
+    public function actionAbout() {
         return $this->render('about');
     }
 
@@ -192,8 +184,7 @@ class SiteController extends MasterController
      *
      * @return mixed
      */
-    public function actionSignup()
-    {
+    public function actionSignup() {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
@@ -213,8 +204,7 @@ class SiteController extends MasterController
      *
      * @return mixed
      */
-    public function actionRequestPasswordReset()
-    {
+    public function actionRequestPasswordReset() {
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
@@ -238,8 +228,7 @@ class SiteController extends MasterController
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token)
-    {
+    public function actionResetPassword($token) {
         try {
             $model = new ResetPasswordForm($token);
         } catch (InvalidParamException $e) {
@@ -257,13 +246,11 @@ class SiteController extends MasterController
         ]);
     }
 
-    public function actionRegister()
-    {
+    public function actionRegister() {
         return $this->render('register');
     }
 
-    public function successCallback($client)
-    {
+    public function successCallback($client) {
         $attributes = $client->getUserAttributes();
         $auth_type = '';
         // throw new \yii\base\Exception(print_r($attributes, true));
@@ -331,8 +318,7 @@ class SiteController extends MasterController
         }
     }
 
-    public function actionSaveAppend()
-    {
+    public function actionSaveAppend() {
 //$saveCat = Category::findAllSaveCategory();
         $ids = implode(",", $_POST['ids']);
         $html = '<div id="products-save-cat" class="category col-lg-2 col-md-2 col-sm-4 col-xs-6"> </div>';
@@ -373,8 +359,7 @@ class SiteController extends MasterController
         //return json_encode($query);
     }
 
-    public function actionReviews()
-    {
+    public function actionReviews() {
         $productSuppId = Yii::$app->request->post('productSuppId');
         $productImageId = Yii::$app->request->post('productImageId');
         $reviews = \common\models\costfit\ProductPost::find()

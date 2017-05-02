@@ -250,7 +250,7 @@ class TopupController extends TopupMasterController {
     public function actionAllBillpayment() {
         $dataProvider = new ActiveDataProvider([
             'query' => TopUp::find()
-                    ->where("status>" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)
+                    ->where("status>" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->orderBy('updateDateTime DESC')
         ]);
         $readyData = TopUp::find()->where("status>" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->all();
         return $this->render('alltopup', [
