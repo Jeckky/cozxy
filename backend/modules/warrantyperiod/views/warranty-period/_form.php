@@ -34,16 +34,16 @@ use common\models\costfit\WarrantyPeriod;
     <div class="panel-body">
         <?= $form->errorSummary($model) ?>
 
-        <?= $form->field($model, 'warrantyPeriodId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(WarrantyPeriod::find()->all(), 'warrantyPeriodId', 'title'), ['prompt' => '-- Select WarrantyPeriod --']) ?>
+        <?//= $form->field($model, 'warrantyPeriodId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(WarrantyPeriod::find()->all(), 'warrantyPeriodId', 'title'), ['prompt' => '-- Select WarrantyPeriod --']) ?>
 
-<?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 45]) ?>
+        <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 45]) ?>
 
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
-<?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>
         </div>
     </div>
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
 
 </div>
