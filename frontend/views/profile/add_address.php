@@ -118,7 +118,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
     echo $form->field($model, 'countryId')->widget(kartik\select2\Select2::classname(), [
         //'options' => ['id' => 'address-countryid'],
-        'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'countryName'),
+        'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'localName'),
         'pluginOptions' => [
             'placeholder' => 'Select...',
             'loadingText' => 'Loading country ...',
