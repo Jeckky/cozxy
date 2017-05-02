@@ -384,7 +384,7 @@ foreach ($GetOrderMastersGroup as $value) {
         //echo 'ประเภทปลายทางแบบล็อคเกอร์เย็น';
         ?>
         <div id="lockers-cool-status-1" class="col-lg-12 col-md-12 col-sm-12">
-            <h5><i class="fa fa-align-justify" aria-hidden="true"></i> เลือกสถานที่รับของ : ปลายทางที่ล็อคเกอร์เย็น</h5>
+            <h5><i class="fa fa-align-justify" aria-hidden="true"></i> Shipping destination: CozxyBox</h5>
             <hr>
             <div id="lockers-province" class="form-group col-lg-6 col-md-6 col-sm-6">
                 <?php
@@ -515,7 +515,7 @@ foreach ($GetOrderMastersGroup as $value) {
             if ($LockersCoolHistoryLockersNoti == 'isTrue') {
                 ?>
                 <div class="col-md-12 history-lockers-cool-null">
-                    <h5 class="cs-heading" style="font-size: 14px; color: #166db9;"><i class="fa fa-bullhorn" aria-hidden="true" style="color: #166db9;"></i> แจ้งเตือนประวัติสถานที่รับสินค้า : ปลายทางที่ล็อคเกอร์เย็น </h5>
+                    <h5 class="cs-heading" style="font-size: 14px; color: #166db9;"><i class="fa fa-bullhorn" aria-hidden="true" style="color: #166db9;"></i> History   : Shipping destination: CozxyBox </h5>
                     <blockquote style="font-size: 16px;">
                         <p style="color: #8c8c8c;">สถานที่รับสินค้าล่าสุดที่ลูกค้าเคยเลือกไว้ หากลูกค้าต้องการเปลียนจุดรับสินค้า สามารถเปลียนได้จากด้านบน.</p>
                         <footer style="color: rgba(255,212,36,.9);">Cozxy.Com</footer>
@@ -527,7 +527,7 @@ foreach ($GetOrderMastersGroup as $value) {
                     ?>
                     <div class="col-md-12">
                         <h5 class="cs-heading" style="font-size: 14px;color: #166db9;">
-                            <i class="fa fa-map-marker" aria-hidden="true" style="color: #166db9;"></i> แผนที่ : ปลายทางที่ล็อคเกอร์เย็น  (<span class="name-lockers-cool" style="color: #2ca02c;"></span>) </h5>
+                            <i class="fa fa-map-marker" aria-hidden="true" style="color: #166db9;"></i> Map : Shipping destination: CozxyBox  (<span class="name-lockers-cool" style="color: #2ca02c;"></span>) </h5>
                         <blockquote style="font-size: 16px;">
                             <p class="description-lockers-cool" style="color: #000000;"></p>
                             <p class="view-map-images-lockers-cool" style="color: #8c8c8c;">
