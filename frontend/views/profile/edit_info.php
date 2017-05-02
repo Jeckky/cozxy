@@ -23,7 +23,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <label class="control-label col-md-12 " style="padding-left: 0px;">Birthdate</label>
         <div class="day col-md-4 col-xs-12">
             <?=
-            Html::dropDownList('User[day]', NULL, $birthdate['dates'], ['prompt' => '---Select month---', 'class' => 'form-control'
+            Html::dropDownList('User[day]', NULL, $birthdate['dates'], ['prompt' => '---Select day---', 'class' => 'form-control'
                 , 'options' =>
                 [
                     $historyBirthDate['day'] => ['selected' => true]//['Selected' => 'selected']
