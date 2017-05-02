@@ -11,7 +11,7 @@ use yii\widgets\ListView;
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
-$createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDateTime, 1);
+$createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDateTime, 4);
 ?>
 
 <div class="row cs-page">
@@ -37,8 +37,8 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
             </p>
             <p>Name : <?php echo (isset($model->firstname) && isset($model->lastname)) ? $model->firstname . '&nbsp;' . $model->lastname : "<span style='color:red'>Please update you name</span>" ?></p>
             <p>Email : <?php echo $model->email; ?></p>
-            <p>Gender : <?php echo isset($model->gender) ? $model->getGenderText($model->gender) : "<span style='color:red'>Please update you gender</span>"; ?></p>
-            <p>Birth Date : <?php echo isset($model->birthDate) ? $this->context->dateThai($model->birthDate, 2) : "<span style='color:red'>Please update you Birth Date</span>"; ?></p>
+            <p>Gender : <?php echo isset($model->gender) ? $model->getGenderTextEn($model->gender) : "<span style='color:red'>Please update you gender</span>"; ?></p>
+            <p>Birth Date : <?php echo isset($model->birthDate) ? $this->context->dateThai($model->birthDate, 4) : "<span style='color:red'>Please update you Birth Date</span>"; ?></p>
             <p>Tel. : <?php echo isset($model->tel) ? $model->tel : "<span style='color:red'>Please update you Tel</span>"; ?></p>
             <hr>
             <h5>
