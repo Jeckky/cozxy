@@ -91,10 +91,10 @@ return [
             'class' => 'backend\modules\margin\margin',
         ],
         'warrantytype' => [
-            'class' => 'backend\modules\warrantytype\WarrantyType',
+            'class' => 'backend\modules\warrantytype\Warrantytype',
         ],
         'warrantyperiod' => [
-            'class' => 'backend\modules\warrantyperiod\WarrantyPeriod',
+            'class' => 'backend\modules\warrantyperiod\Warrantyperiod',
         ],
     ],
     'components' => [
