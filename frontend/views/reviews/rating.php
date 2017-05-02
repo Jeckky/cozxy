@@ -91,21 +91,24 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             ]);
             ?>
             <div class="Reviews text-center" style="  margin-top: 10px; ">
-                <h5>Rate this item</h5>
+                <h5>Rate this story</h5>
+
                 <div class="col-md-12">
                     <?php
-                    //2.Usage without a model
-                    echo \yii2mod\rating\StarRating::widget([
-                        'name' => "input_name",
-                        'value' => 1,
-                        'options' => [
-                            // Your additional tag options
-                            'id' => 'reviews-rate', 'class' => 'reviews-rate-see'
-                        ],
-                        'clientOptions' => [
-                        // Your client options
-                        ],
-                    ]);
+                    if (\Yii::$app->user->id != '') {
+                        //2.Usage without a model
+                        echo \yii2mod\rating\StarRating::widget([
+                            'name' => "input_name",
+                            'value' => 1,
+                            'options' => [
+                                // Your additional tag options
+                                'id' => 'reviews-rate', 'class' => 'reviews-rate-see'
+                            ],
+                            'clientOptions' => [
+                            // Your client options
+                            ],
+                        ]);
+                    }
                     ?>
                 </div>
 
