@@ -65,10 +65,29 @@ class SearchController extends MasterController
             $products->andWhere("pps.price <=" . $_POST["max"]);
         }
 
+
+
+        $whereArray2 = [];
+        $whereArray2["category_to_product.categoryId"] = $params['categoryId'];
+
+        $whereArray2["product.approve"] = "approve";
+        $whereArray2["ps.result"] = "0";
+        $whereArray2["pps.status"] = "1";
+
+        $NotSell = \common\models\costfit\CategoryToProduct::find()
+        ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+        ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+        ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+        //->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = category_to_product.productId")
+        ->where($whereArray2);
+//        ->orderBy("pps.price ASC");
+//        $NotSell = \common\models\costfit\ProductSuppliers::find()->where('result = 0 and approve ="approve" and categoryId=' . $params['categoryId'])->orderBy("productSuppId DESC");
+
         if (isset($params['brandId'])) {
             $idString = $params['brandId'];
             $this->view->params['brandId'] = explode(",", $idString);
             $products->andWhere("product.brandId in ($idString)");
+            $NotSell->andWhere("product.brandId in ($idString)");
         }
         //echo '<pre>';
         //print_r($products);
@@ -76,8 +95,6 @@ class SearchController extends MasterController
             'query' => $products,
             'pagination' => array('pageSize' => 8),
         ]);
-
-        $NotSell = \common\models\costfit\ProductSuppliers::find()->where('result = 0 and approve ="approve" and categoryId=' . $params['categoryId'])->orderBy("productSuppId DESC");
         $productNotSell = new \yii\data\ActiveDataProvider([
             'query' => $NotSell, 'pagination' => [
                 'pageSize' => 12,
