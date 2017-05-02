@@ -213,20 +213,30 @@ class ProductSuppliersController extends SuppliersMasterController {
                 //return $this->redirect('image-form?id=' . $model->productSuppId);
                 $productPriceCozxy = \common\models\costfit\Product::updateAll(['price' => 0], ['productId' => $model->productId, 'productSuppId' => $model->productSuppId]);
 
-                $productSuppliersPrice = new \common\models\costfit\ProductPriceSuppliers();
-                $productSuppliersPrice->productSuppId = $model->productSuppId;
-                $productSuppliersPrice->price = 0;
-                $productSuppliersPrice->discountType = 1;
-                $productSuppliersPrice->createDateTime = new \yii\db\Expression('NOW()');
-                if ($productSuppliersPrice->save(FALSE)) {
+                /* $productSuppliersPrice = new \common\models\costfit\ProductPriceSuppliers();
+                  $productSuppliersPrice->productSuppId = $model->productSuppId;
+                  $productSuppliersPrice->price = 0;
+                  $productSuppliersPrice->discountType = 1;
+                  $productSuppliersPrice->createDateTime = new \yii\db\Expression('NOW()');
+                  if ($productSuppliersPrice->save(FALSE)) {
 
-                }
+                  } */
+            } else {
+                /* $productSuppliersPrice = new \common\models\costfit\ProductPriceSuppliers();
+                  $productSuppliersPrice->productSuppId = $model->productSuppId;
+                  $productSuppliersPrice->price = 0;
+                  $productSuppliersPrice->discountType = 1;
+                  $productSuppliersPrice->createDateTime = new \yii\db\Expression('NOW()');
+                  if ($productSuppliersPrice->save(FALSE)) {
+
+                  } */
             }
             //return $this->redirect('image-form?productSuppId = ' . $model->productSuppId);
             //suppliers/product-price-suppliers
             ///suppliers/product-suppliers/image-form?productSuppId=235
             if (Yii::$app->user->identity->type == 5) {
-                return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-suppliers/image-form?productSuppId=' . $model->productSuppId);
+                //return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-suppliers/image-form?productSuppId=' . $model->productSuppId);
+                return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-price-suppliers/create?productSuppId=' . $model->productSuppId);
             } else {
                 return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-price-suppliers/create?productSuppId=' . $model->productSuppId);
             }
