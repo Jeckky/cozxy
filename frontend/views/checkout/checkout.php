@@ -154,7 +154,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                                 <?php echo '<br>Zipcode ' . $value->zipcode; ?>
                                                             </div>
                                                             <div class="footer-cost-fit">
-                                                                <a class="panel-toggle" href="#NewShipping"><!--address1-->
+                                                                <a class="panel-toggle" href="#billing"><!--#NewShipping-address1-->
                                                                     <div class="radio light">
                                                                         <div class="btn-group" data-toggle="buttons">
                                                                             <label class="btn btn-sm btn-info checkout_select_address<?= ($value->type == 1) ? "_billing" : "_shipping" ?>">
@@ -167,7 +167,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                                             </label>
                                                                             <label class="btn btn-sm btn-black edit_select checkout_update_address<?= ($value->type == 1) ? "_billing" : "_shipping" ?>" style="width: 38%;">
                                                                                 <input type="hidden" id="edit-form-biiling-checkout" name="edit-form-biiling-checkout" value="<?php echo $value->addressId; ?>">
-                                                                                <!--<input type="radio" id="edit-form-biiling-checkout" name="edit-form-biiling-checkout" value="<?//php echo $value->addressId; ?>">-->แก้ไข<span class="pp-label"></span>
+                                                                                <!--<input type="radio" id="edit-form-biiling-checkout" name="edit-form-biiling-checkout" value="<?//php echo $value->addressId; ?>">-->
+                                                                                แก้ไข
+                                                                                <span class="pp-label"></span>
                                                                             </label>
                                                                         </div>
                                                                     </div>
