@@ -52,18 +52,23 @@ class SearchCostFitController extends MasterController {
             if (isset($search_hd)) {
                 //$products = \common\models\costfit\Product::find()
                 $products = \common\models\costfit\ProductSuppliers::find()
-                        ->where("result>0 and status=1 and approve='approve'")
-                        ->andFilterWhere(['OR',
-                                ['LIKE', 'product_suppliers.title', trim($search_hd)],
-                                ['LIKE', 'product_suppliers.description', trim($search_hd)],
-                                ['LIKE', 'product_suppliers.specification', trim($search_hd)]
-                        ])
-                        //->orderBy("title $sortName , price $sortPrice")
-                        ->orderBy("title $sortName")
-                        ->all();
+                ->where("result>0 and status=1 and approve='approve'")
+                ->andFilterWhere(['OR',
+                    ['LIKE', 'product_suppliers.title', trim($search_hd)],
+                    ['LIKE', 'product_suppliers.description', trim($search_hd)],
+                    ['LIKE', 'product_suppliers.specification', trim($search_hd)]
+                ])
+                //->orderBy("title $sortName , price $sortPrice")
+                ->orderBy("title $sortName");
+                //->all();
             } else {
                 $products = array();
             }
+
+            $products = new \yii\data\ActiveDataProvider([
+                'query' => $products,
+                'pagination' => array('pageSize' => 8),
+            ]);
         }
 
         if ($request->isPost) { /* the request method is POST */
@@ -77,15 +82,19 @@ class SearchCostFitController extends MasterController {
             }
 
             $products = \common\models\costfit\ProductSuppliers::find()
-                    ->where("result>0 and status=1 and approve='approve'")
-                    ->andFilterWhere(['OR',
-                            ['LIKE', 'product_suppliers.title', $_POST['search_hd']],
-                            ['LIKE', 'product_suppliers.description', $_POST['search_hd']],
-                            ['LIKE', 'product_suppliers.specification', $_POST['search_hd']]
-                    ])
-                    //->orderBy("title $sortName , price $sortPrice")
-                    ->orderBy("title $sortName")
-                    ->all();
+            ->where("result>0 and status=1 and approve='approve'")
+            ->andFilterWhere(['OR',
+                ['LIKE', 'product_suppliers.title', $_POST['search_hd']],
+                ['LIKE', 'product_suppliers.description', $_POST['search_hd']],
+                ['LIKE', 'product_suppliers.specification', $_POST['search_hd']]
+            ])
+            //->orderBy("title $sortName , price $sortPrice")
+            ->orderBy("title $sortName");
+            //->all();
+            $products = new \yii\data\ActiveDataProvider([
+                'query' => $products,
+                'pagination' => array('pageSize' => 12),
+            ]);
         }
 
         // echo '<pre>';

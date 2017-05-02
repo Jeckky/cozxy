@@ -3,6 +3,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\widgets\Pjax;
 use common\models\costfit\ProductSuppliers;
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
@@ -45,54 +46,61 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="row">
                     <?php
-                    foreach ($products as $item) {
-                        $price = ProductSuppliers::productPrice($item->productSuppId);
-                        $image = ProductSuppliers::productImageSuppliers($item->productSuppId);
-                        ?>
-                        <!--Tile-->
-                        <div id="products-category-search" class="col-lg-3 col-md-3 col-sm-6">
-                            <div class="tile">
-                                <div class="search-category-badges-price">
-                                    <div class="badges">
-                                        <span class="sale">Sale</span>
-                                    </div>
-                                    <div class="price-label"><?= $price ?> ฿</div>
-                                </div>
-                                <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $item->productId, 'productSupplierId' => $item->productSuppId]) ?>" style="min-height: 210px; max-height: 210px;">
-                                    <?php if ($image != ''): ?>
-                                        <img src="<?php echo Yii::$app->homeUrl . $image; ?>" alt="1"/>
-                                    <?php endif; ?>
-                                    <span class="tile-overlay"></span>
-                                </a>
-                                <div class="footer search-category-footer">
-                                    <div style="height:60px;">
-                                        <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $item->productId, 'productSupplierId' => $item->productSuppId]) ?>">
-                                            <?= substr($item->title, 0, 40); ?></a>
-                                    </div>
-                                    <!--<span>by Pirate3d</span>-->
-                                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $item->productId, 'productSupplierId' => $item->productSuppId]) ?>">View <?= $item->productSuppId ?></a>
-                                    <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $item->productId, 'productSupplierId' => $item->productSuppId]) ?>"><button class="btn btn-primary">View</button></a>
-                                </div>
-                            </div>
-                        </div>
-                        <?php
-                    }
+                    Pjax::begin([
+                        'id' => 'products'
+                    ]);
                     ?>
+                    <div class="row products-searchs-brands">
+
+                        <?php
+                        echo \yii\widgets\ListView::widget([
+                            'dataProvider' => $products,
+                            'options' => [
+                                'id' => 'product-list',
+                            ],
+                            'itemView' => function ($model, $key, $index, $widget) {
+                                return $this->render('_product', ['model' => $model->product]);
+                            },
+                            'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                            'layout' => "{items}{pager}",
+                            //    'layout' => "{items}",
+                            'pager' => [
+                                //            'firstPageLabel' => 'first',
+                                //            'lastPageLabel' => 'last',
+                                'prevPageLabel' => '<span class="icon-arrow-left"></span>',
+                                'nextPageLabel' => '<span class="icon-arrow-right"></span>',
+                                //            'maxButtonCount' => 3,
+                                // Customzing options for pager container tag
+                                //            'options' => [
+                                //                'tag' => 'div',
+                                //                'class' => 'pager-wrapper',
+                                //                'id' => 'pager-container',
+                                //            ],
+                                // Customzing CSS class for pager link
+                                //            'linkOptions' => ['class' => 'mylink'],
+                                //            'activePageCssClass' => 'active',
+                                //            'disabledPageCssClass' => 'mydisable',
+                                // Customzing CSS class for navigating link
+                                'prevPageCssClass' => 'prev-page',
+                                'nextPageCssClass' => 'next-page',
+                            //            'firstPageCssClass' => 'myfirst',
+                            //            'lastPageCssClass' => 'mylast',
+                            ],
+                        ])
+                        ?>
+
+                        <!--    <ul class="pagination">
+                                <li class="prev-page"><a class="icon-arrow-left" href="#"></a></li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li class="next-page"><a class="icon-arrow-right" href="#"></a></li>
+                            </ul>-->
+                    </div>
+                    <?php Pjax::end(); ?>
                 </div>
-                <!--Pagination
-                <div class="col-md-12 text-center">
-                    <button type="button" id="see-more-search-cost-fit" data-loading-text="Loading..." class="btn btn-black" autocomplete="off">
-                        See More
-                    </button>
-                </div>-->
-                <!--<ul class="pagination">
-                    <li class="prev-page"><a class="icon-arrow-left" href="#"></a></li>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li class="next-page"><a class="icon-arrow-right" href="#"></a></li>
-                </ul>-->
+
             </div>
         </div>
     </div>
