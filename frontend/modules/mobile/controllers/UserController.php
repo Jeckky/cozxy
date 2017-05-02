@@ -46,13 +46,13 @@ class UserController extends Controller
 //        if ($model->load(Yii::$app->request->post()) && $model->login()) {
         if ($model->login()) {
             if (\Yii::$app->user->identity->type == 1 || \Yii::$app->user->identity->type == 3) {
-                $res["email"] = Yii::$app->user->identity->email;
-                $res["firstname"] = Yii::$app->user->identity->firstname;
-                $res["lastname"] = Yii::$app->user->identity->lastname;
-                $res["type"] = Yii::$app->user->identity->type;
-                $res["gender"] = Yii::$app->user->identity->gender;
-                $res["passportNo"] = Yii::$app->user->identity->passportNo;
-                $res["passportImage"] = Yii::$app->user->identity->passportImage;
+                $res['user']["email"] = Yii::$app->user->identity->email;
+                $res['user']["firstname"] = Yii::$app->user->identity->firstname;
+                $res['user']["lastname"] = Yii::$app->user->identity->lastname;
+                $res['user']["type"] = Yii::$app->user->identity->type;
+                $res['user']["gender"] = Yii::$app->user->identity->gender;
+                $res['user']["passportNo"] = Yii::$app->user->identity->passportNo;
+                $res['user']["passportImage"] = Yii::$app->user->identity->passportImage;
                 $res['result'] = true;
 
                 /**
