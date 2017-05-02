@@ -203,14 +203,16 @@ $('.new-address-form ').on('click', function () {
     $('#formBilling').show();
 });
 $('.checkout_update_address_billing').on('click', function () {
-//alert('Id Name : ' + $(this).find('input').attr('id'));
-//alert('Value : ' + $(this).find('input').val());
+    //alert('Id Name : ' + $(this).find('input').attr('id'));
+    //alert('Value : ' + $(this).find('input').val());
     var edit_shipping = $(this).find('input').val();
     //$('.actionFormEditShipping').show();
     $('.actionFormBillingNew').hide();
     //$('.actionFormEditBilling').hide();
     $('.actionFormEditShipping').hide();
     $('.actionFormEditBilling').show();
+    //$('.actionFormEditBilling').removeClass('expanded');
+    //alert('test');
     $.post("checkout/get-address", {
         address: edit_shipping
     }, function (data, status) {
