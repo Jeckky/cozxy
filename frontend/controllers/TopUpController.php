@@ -197,6 +197,7 @@ class TopUpController extends MasterController {
         $customerTel = User::userTel($userId);
         $taxId = '0105553036789';
         $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->one(); //status=2
+        $allBank = \common\models\costfit\BankTransfer::find()->where("paymentMethodId=1")->all();
         if (($topUp->topUpNo == NULL) && ($topUp->topUpNo == '')) {
             $topUp->topUpNo = $this->topUpNo();
         }
@@ -216,21 +217,24 @@ class TopUpController extends MasterController {
                     'topUpNo' => $topUp->topUpNo,
                     'taxId' => $taxId,
                     'barCode' => $barCode,
-                    'data' => $data
+                    'data' => $data,
+                    'allBank' => $allBank
         ]);
     }
 
     public function actionPrintPaymentFormTopdf() {
         $header = FALSE;
         //$header = $this->renderPartial('header');
-        $content = $this->renderPartial('bill_form', [
+        $allBank = \common\models\costfit\BankTransfer::find()->where("paymentMethodId=1")->all();
+        $content = $this->renderPartial('bill_form1', [
             'amount' => $_GET["amount"],
             'customerName' => $_GET["customerName"],
             'customerTel' => $_GET["customerTel"],
             'topUpNo' => $_GET["topUpNo"],
             'taxId' => $_GET["taxId"],
             'barCode' => $_GET["barCode"],
-            'data' => $_GET["data"]
+            'data' => $_GET["data"],
+            'allBank' => $allBank
         ]);
         $title = FALSE;
         $this->actionMpdfDocument($content, $header, $title);

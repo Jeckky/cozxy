@@ -27,7 +27,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
     <div class="col-lg-12">
         <?=
-        $this->render('forbank', [
+        $this->render('forbank1', [
             'title' => 'ส่วนที่ 1 สำหรับธนาคาร',
             'amount' => $amount,
             'customerName' => $customerName,
@@ -35,25 +35,27 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             'topUpNo' => $topUpNo,
             'taxId' => $taxId,
             'barCode' => $barCode,
-            'data' => $data
+            'data' => $data,
+            'allBank' => $allBank
         ]);
         ?>
     </div>
-    <div class="col-lg-12" style="margin-top: 20px;">
-        <p style="margin-left:20px"><image src = "<?= $baseUrl . '/images/Bank/payin-cut.png' ?>" style = "width: 100%;height: 30px;" /><p>
-    </div>
-    <div class="col-lg-12" style="margin-top: 30px;">
-        <?=
-        $this->render('forcustomer', [
-            'title' => 'ส่วนที่ 2 สำหรับลูกค้า',
-            'amount' => $amount,
-            'customerName' => $customerName,
-            'customerTel' => $customerTel,
-            'topUpNo' => $topUpNo,
-            'taxId' => $taxId,
-            'barCode' => $barCode,
-            'data' => $data
-        ]);
-        ?>
-    </div>
+    <!--    <div class="col-lg-12" style="margin-top: 20px;">
+            <p style="margin-left:20px"><image src = "<?php // $baseUrl . '/images/Bank/payin-cut.png'   ?>" style = "width: 100%;height: 30px;" /><p>
+        </div>-->
+    <!--    <div class="col-lg-12" style="margin-top: 30px;">
+    <?php /*
+      $this->render('forcustomer1', [
+      'title' => 'ส่วนที่ 2 สำหรับลูกค้า',
+      'amount' => $amount,
+      'customerName' => $customerName,
+      'customerTel' => $customerTel,
+      'topUpNo' => $topUpNo,
+      'taxId' => $taxId,
+      'barCode' => $barCode,
+      'data' => $data,
+      'allBank' => $allBank
+      ]); */
+    ?>
+        </div>-->
 </div>
