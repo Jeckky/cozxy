@@ -118,7 +118,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <!--    <div class="buttons group products-buttons-group" style="margin-top: -18px;">
             <div class="form-group" style="word-wrap: break-word;">
                 <label for="shopping-dollar" class="col-sm-1 " style="float: left; padding-right: 0px; padding-left: 0px; margin-bottom: 0px;">
-                    <img  src="<?php // echo Yii::$app->homeUrl;                                                                                                                                                                                                                                                                                       ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
+                    <img  src="<?php // echo Yii::$app->homeUrl;                                                                                                                                                                                                                                                                                                             ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
                 </label>
                 <div class="col-sm-11 text-left discountPrice " style="float: left; padding: 0px; margin-left: 0px; margin-top: 15px;">
                     &nbsp;Add more than 1 item to your order
@@ -416,13 +416,7 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
                     ?>
                     </div>-->
 
-                    <div class="col-md-12 text-right">
-                        <?php
-                        if (\Yii::$app->user->id != '') {
-                            ?>
-                            <a href="<?= Yii::$app->homeUrl ?>reviews/create-post?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>" class="btn btn-black btn-xs" role="button" id="write-reviews">Write a post</a>
-                        <?php } ?>
-                    </div>
+
 
                 </div>
             </div>
@@ -430,8 +424,18 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
                 <?php
                 if (\Yii::$app->user->id != '') {
                     ?>
-                    <div style="background-color: rgba(255,212,36,.9); margin-bottom: 5px;">
-                        <h3 style="text-decoration: underline">My story :</h3>
+                    <div style="background-color: rgba(255,212,36,.9); margin-bottom: 5px; padding: 3px; margin-top: 5px; height: 50px;">
+                        <div class="col-md-6 text-left">
+                            <h3 style="text-decoration: underline">My story :</h3>
+                        </div>
+
+                        <div class="col-md-6 text-right">
+                            <?php
+                            if (\Yii::$app->user->id != '') {
+                                ?>
+                                <a href="<?= Yii::$app->homeUrl ?>reviews/create-post?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>" class="btn btn-black btn-xs" role="button" id="write-reviews" style="margin-top: 8px;">Write a story</a>
+                            <?php } ?>
+                        </div>
                     </div>
 
                     <div class="Reviews" style="margin-left: 10px;">
@@ -479,7 +483,7 @@ if (Yii::$app->controller->action->id != 'see-review') {
     </style>
     <div class="col-sm-12">
         <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;">
-            <div onclick="ViewsShows()" class="add-new-icon">
+            <div onclick="ViewsShows()" class="add-new-icon" style="background-color: rgba(255,212,36,.9); padding: 3px;">
                 <h3 style="text-decoration: underline;">Story <i class="fa fa-plus-circle" aria-hidden="true" style="zoom: .7"></i></h3>
             </div>
             <div class="Reviews" >
@@ -628,15 +632,15 @@ if (Yii::$app->controller->action->id != 'see-review') {
         if (x == 'brand-carousel') {
             $('#brand-carousel-reviews').removeClass("show");
             $('#brand-carousel-reviews').addClass("hide");
-            $('.add-new-icon').html('<h3 style="text-decoration: underline;">>Story <i class="fa fa-minus-circle" aria-hidden="true" style="zoom: .7"></i></h3>');
+            $('.add-new-icon').html('<h3 style="text-decoration: underline;">Story <i class="fa fa-minus-circle" aria-hidden="true" style="zoom: .7"></i></h3>');
         } else if (x == 'brand-carousel show') {
             $('#brand-carousel-reviews').removeClass("show");
             $('#brand-carousel-reviews').addClass("hide"); //fa fa-minus-circle
-            $('.add-new-icon').html('<h3 style="text-decoration: underline;">>Story <i class="fa fa-minus-circle" aria-hidden="true" style="zoom: .7"></i></h3>');
+            $('.add-new-icon').html('<h3 style="text-decoration: underline;">Story <i class="fa fa-minus-circle" aria-hidden="true" style="zoom: .7"></i></h3>');
         } else {
             $('#brand-carousel-reviews').removeClass("hide");
             $('#brand-carousel-reviews').addClass("show");
-            $('.add-new-icon').html('<h3 style="text-decoration: underline;">>Story <i class="fa fa-plus-circle" aria-hidden="true" style="zoom: .7"></i></h3>');
+            $('.add-new-icon').html('<h3 style="text-decoration: underline;">Story <i class="fa fa-plus-circle" aria-hidden="true" style="zoom: .7"></i></h3>');
         }
 
         //$("#brand-carousel-reviews").removeClass("hide");
