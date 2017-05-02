@@ -29,8 +29,8 @@ return 'warranty_period';
 public function rules()
 {
 return [
-            [['warrantyPeriodId', 'createDateTime'], 'required'],
-            [['warrantyPeriodId', 'status'], 'integer'],
+            [['status'], 'integer'],
+            [['createDateTime'], 'required'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 45],
         ];

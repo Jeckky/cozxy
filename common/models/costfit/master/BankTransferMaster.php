@@ -15,7 +15,6 @@ use Yii;
     * @property string $accName
     * @property string $accType
     * @property string $compCode
-    * @property integer $type
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -37,7 +36,7 @@ public function rules()
 {
 return [
             [['paymentMethodId', 'bankId', 'branch', 'accNo', 'accName', 'accType', 'createDateTime'], 'required'],
-            [['paymentMethodId', 'bankId', 'type', 'status'], 'integer'],
+            [['paymentMethodId', 'bankId', 'status'], 'integer'],
             [['accNo'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['branch'], 'string', 'max' => 25],
@@ -61,7 +60,6 @@ return [
     'accName' => Yii::t('bank_transfer', 'Acc Name'),
     'accType' => Yii::t('bank_transfer', 'Acc Type'),
     'compCode' => Yii::t('bank_transfer', 'Comp Code'),
-    'type' => Yii::t('bank_transfer', 'Type'),
     'status' => Yii::t('bank_transfer', 'Status'),
     'createDateTime' => Yii::t('bank_transfer', 'Create Date Time'),
     'updateDateTime' => Yii::t('bank_transfer', 'Update Date Time'),
