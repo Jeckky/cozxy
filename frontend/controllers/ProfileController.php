@@ -249,7 +249,7 @@ class ProfileController extends MasterController {
             echo $day . '-' . $month . '-' . $year;
 
             $date = isset($year) ? $year : '0000' . '-' . isset($month) ? $month : '00' . '-' . isset($day) ? $day : '00' . ' 00:00:00';
-            echo $date;
+            echo '555: ' . $date;
             exit();
             // format 2016-10-11 00:00:00
             $model->birthDate = $date;
