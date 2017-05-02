@@ -8,7 +8,7 @@
 $i = 0;
 if (count($order) > 0) {
     $listOrderItems = common\models\costfit\OrderItem::find()
-    ->select('orderId,productSuppId,supplierId,receiveType')->where('orderId=' . $order->orderId)->groupBy('supplierId')->all();
+                    ->select('orderId,productSuppId,supplierId,receiveType')->where('orderId=' . $order->orderId)->groupBy('supplierId')->all();
     foreach ($listOrderItems as $value1) {
         /*
          * # แยก Suppliers ไม่ซ้ำกัน
@@ -27,11 +27,11 @@ if (count($order) > 0) {
             <tr style="background-color:#f1f1f1 ; border-bottom: 1px #000000 solid; height: 25px; text-align: left; color: #166db9;">
                 <td style="font-size: 12px; " colspan="7"><?php
                     if ($value1->receiveType == 1) {
-                        echo 'สถานที่รับของ : ปลายทางที่ <strong><span style="color: #0286c2;">Lockers เย็น</span></strong>';
+                        echo 'Pickup location: ปลายทางที่ <strong><span style="color: #0286c2;">Lockers เย็น</span></strong>';
                     } elseif ($value1->receiveType == 2) {
-                        echo 'สถานที่รับของ : ปลายทางที่ <strong><span style="color: #0286c2;">Lockers ร้อน</span></strong>';
+                        echo 'Pickup location : ปลายทางที่ <strong><span style="color: #0286c2;">Lockers ร้อน</span></strong>';
                     } elseif ($value1->receiveType == 3) {
-                        echo 'สถานที่รับของ : ปลายทางที่ <strong><span style="color: #0286c2;">Booth</span></strong>';
+                        echo 'Pickup location : ปลายทางที่ <strong><span style="color: #0286c2;">Booth</span></strong>';
                     }
                     ?></td>
             </tr>
@@ -68,8 +68,8 @@ if (count($order) > 0) {
                         $Countries = common\models\dbworld\Countries::find()->where("countryId= '" . $picking_point->countryId . "' ")->one();
                         $States = common\models\dbworld\States::find()->where("stateId='" . $picking_point->provinceId . "'")->one();
                         $Cities = common\models\dbworld\Cities::find()->where("cityId='" . $picking_point->amphurId . "'")->one();
-                        echo '<b>จุดรับสินค้าที่ :</b>' . $picking_point->title;
-                        echo ', <b>ประเทศ :</b>' . $Countries->localName;
+                        echo '<b>Pickup location :</b>' . $picking_point->title;
+                        echo ', <b>Country :</b>' . $Countries->localName;
                         echo ', ' . $States->localName;
                         echo ', ' . $Cities->localName;
                     }

@@ -35,14 +35,14 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
 </style>
 
 <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup">
-    <h3><i class="fa fa-file-text" aria-hidden="true"></i> ใบสั่งซื้อเลขที่ <?php echo $order->orderNo; ?></h3>
+    <h3><i class="fa fa-file-text" aria-hidden="true"></i> PO# <?php echo $order->orderNo; ?></h3>
     <!--Support-->
     <section class="support">
         <div class="row">
             <!--Left Column-->
             <div class="col-lg-12 col-md-12 ">
                 <div class="col-lg-6 col-md-6 ">
-                    <h5>วันที่จัดส่งสินค้า<!--Picking Point--></h5>
+                    <h5>Send Date<!--Picking Point--></h5>
                     <table class="table">
                         <tbody>
                             <tr>
@@ -66,7 +66,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                                             }
                                             ?>
                                         </div>
-                                        <div class="col-sm-12"><strong>หมายเหตุ</strong> หากมีการเปลียนวันจะแจ้งให้ทราบทาง Email และ SMS ในลำดับต่อไป</div>
+                                        <div class="col-sm-12"><strong>Note:</strong> You will be notified via Email and SMS for any changes in delivery schedule.</div>
                                     </div>
                                     <?php /*
                                       if ($order->attributes['pickingId'] != '') {
@@ -92,7 +92,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                     </table>
                 </div>
                 <div class = "col-lg-6 col-md-6 " style="border-left: 1px #f5f5f5 solid;">
-                    <h5>Billing to a different adress</h5>
+                    <h5>Billing  adress</h5>
                     <table class="table">
                         <tbody>
                             <tr>
@@ -150,13 +150,13 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                 <table class="table table-list-order" style="padding: 10px;" >
                     <thead>
                         <tr style="background-color: #f5f5f5;">
-                            <th style="font-size: 13px;">ลำดับ</th>
-                            <th style="font-size: 13px;">รหัสสินค้า</th>
-                            <th style="font-size: 13px;">รายการ</th>
-                            <th style="font-size: 13px;">หน่วย</th>
-                            <th style="font-size: 13px;">ราคา/หน่วย</th>
-                            <th style="font-size: 13px;">จำนวน</th>
-                            <th style="font-size: 13px;">มูลค่าสินค้ารวมภาษี</th>
+                            <th style="font-size: 13px;">#</th>
+                            <th style="font-size: 13px;">Product code</th>
+                            <th style="font-size: 13px;">Items</th>
+                            <th style="font-size: 13px;">Unit</th>
+                            <th style="font-size: 13px;">Price/Unit</th>
+                            <th style="font-size: 13px;">Quantity</th>
+                            <th style="font-size: 13px;">Total include tax</th>
                         </tr>
                     </thead>
                     <tbody>

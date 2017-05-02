@@ -16,7 +16,7 @@ $form = ActiveForm::begin([
     <div class="container">
         <div class="row">
             <div class="col-lg-9 col-md-9 col-xs-12">
-                <h3>ยืนยันชำระเงิน</h3>
+                <h3>Confirm Payment</h3>
 
                 <?php echo $this->render("//profile/purchase_order", ['order' => $model]); ?>
                 <?php
@@ -33,7 +33,7 @@ $form = ActiveForm::begin([
                             <td style="text-align: left;">Current Point</td><td style="text-align: right;"><?= number_format($userPoint->currentPoint, 2) ?></td>
                         </tr>
                         <tr style="height: 40px;">
-                            <td style="text-align: left;">This order use</td><td style="text-align: right;"><?= number_format($model->summary, 2) ?></td>
+                            <td style="text-align: left;">Order subtotal</td><td style="text-align: right;"><?= number_format($model->summary, 2) ?></td>
                         </tr>
                         <tr style="height: 40px;">
                             <?php
