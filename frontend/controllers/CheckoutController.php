@@ -727,8 +727,8 @@ class CheckoutController extends MasterController
                     endforeach;
                 } else {
                     foreach ($order->orderItems as $item):
-                        $date = \common\models\costfit\ShippingType::find()->where('shippingTypeId=' . $item->sendDate)->one();
-                        $item->sendDateTime = date('Y-m-d', strtotime("+$date->date day"));
+                        //$date = \common\models\costfit\ShippingType::find()->where('shippingTypeId=' . $item->sendDate)->one();
+                        $item->sendDateTime = date('Y-m-d', strtotime("+1 day"));
                         $item->save();
                     endforeach;
                 }
@@ -1150,7 +1150,7 @@ class CheckoutController extends MasterController
 //            $merchantId = "402001605782521";
 //            $terminalId = "70352180";
         // For AreaWIW
-        // MCC USD  
+        // MCC USD
         endif;
 //        throw new \yii\base\Exception(str_replace(".", "", $package->price));
 //        $amount = str_replace(".", "", $package->price);
