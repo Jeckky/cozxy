@@ -56,7 +56,7 @@ use common\models\costfit\ContentGroup;
             'language' => 'th',
             'dateFormat' => 'yyyy-MM-dd',]);
         ?>
-        <?= (isset($model->image) && !empty($model->image)) ? Html::img(Yii::$app->homeUrl . $model->image, ['style' => 'width:150px', 'class' => 'col-lg-offset-3']) : ''; ?>
+        <?= (isset($model->image) && !empty($model->image)) ? Html::img($model->image, ['style' => 'width:150px', 'class' => 'col-lg-offset-3']) : ''; ?>
 
         <?= $form->field($model, 'image', ['options' => ['class' => 'row form-group']])->fileInput() ?>
 
@@ -84,7 +84,7 @@ use common\models\costfit\ContentGroup;
                     codemirror: {
                         theme: 'monokai'
                     }
-                }); 
+                });
 
             }
 
