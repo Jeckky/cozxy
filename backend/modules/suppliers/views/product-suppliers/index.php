@@ -46,7 +46,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                         // 'value' => ['THA'], // initial value
                         'data' => common\models\costfit\Category::findCategoryArrayWithMultiLevelBackend(),
                         //'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'),
-                        'options' => ['placeholder' => 'Select or Search User Category ...', 'id' => 'Category'], //, 'onchange' => 'this.form.submit()'
+                        'options' => ['placeholder' => 'Select or Search User Category ...', 'id' => 'CategoryId'], //, 'onchange' => 'this.form.submit()'
                         'pluginOptions' => [
                             'tags' => true,
                             'placeholder' => 'Select or Search ...',
@@ -66,7 +66,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                         'name' => 'BrandId',
                         // 'value' => ['THA'], // initial value
                         'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Brand::find()->where('userId=' . Yii::$app->user->identity->userId)->all(), 'brandId', 'title'),
-                        'options' => ['placeholder' => 'Select or Search User Brand ...', 'id' => 'Brand'], //, 'onchange' => 'this.form.submit()'
+                        'options' => ['placeholder' => 'Select or Search User Brand ...', 'id' => 'BrandId'], //, 'onchange' => 'this.form.submit()'
                         'pluginOptions' => [
                             'tags' => true,
                             'placeholder' => 'Select or Search ...',
