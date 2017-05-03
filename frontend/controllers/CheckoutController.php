@@ -276,7 +276,7 @@ class CheckoutController extends MasterController
             // print_r($GetOrderItemrGroupLockersMaster->attributes);
 
             $CheckValuePickPoint = [];
-            if (isset($GetOrderItemrGroupLockersMaster[0]->attributes['pickingId'])) {
+            if (isset($GetOrderItemrGroupLockersMaster[0]) && isset($GetOrderItemrGroupLockersMaster[0]->attributes['pickingId'])) {
                 //echo '1';
                 $CheckValuePickPoint['ListOrderItemGroupLockersValue'] = $GetOrderItemrGroupLockersMaster[0]->attributes['pickingId'];
                 $pickpointLockersValueInLocation = \common\models\costfit\PickingPoint::find()->where('pickingId = ' . $CheckValuePickPoint['ListOrderItemGroupLockersValue'])->one();

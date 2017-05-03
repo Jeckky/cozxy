@@ -24,6 +24,7 @@ $cityId = rand(0, 9999);
 $districtId = rand(0, 9999);
 $pickingId = rand(0, 9999);
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+preg_match("/dbname=([^;]*)/", Yii::$app->get("db")->dsn, $dbName);
 ?>
 <style type="text/css">
     .main-title-picking-point{
@@ -190,6 +191,7 @@ foreach ($GetOrderMastersGroup as $value) {
     /*
      * ปลายทางรับของที่ Lockers เย็น
      */
+
     if ($value->receiveType == '2') {//ประเภทปลายทางแบบล็อคเกอร์ร้อน
 // Lockers
 // = $CheckValuePickPoint['ListOrderItemGroupLockersValue'];
@@ -202,6 +204,7 @@ foreach ($GetOrderMastersGroup as $value) {
             <hr>
             <div id="lockers-province" class="form-group col-lg-6 col-md-6 col-sm-6">
                 <?php
+//                $dbName = Yii::$app->get("db")->dsn;
                 // Child level 1
                 // Additional input fields passed as params to the child dropdown's pluginOptions
                 echo Html::hiddenInput('input-type-1', $ListpickpointLockersValueInLocation['provinceId'], ['id' => 'input-type-1']);
@@ -209,7 +212,9 @@ foreach ($GetOrderMastersGroup as $value) {
                 echo $form->field($pickingPointLockers, 'provinceId')->widget(kartik\select2\Select2::classname(), [
                     'model' => $pickingId,
                     'attribute' => 'provinceId',
-                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'localName'),
+                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()
+                    ->join("RIGHT JOIN", "$dbName[1].picking_point", "picking_point.provinceId = states.stateId ")
+                    ->where("states.countryId = 'THA'")->asArray()->all(), 'stateId', 'localName'),
                     'pluginOptions' => [
                         'placeholder' => 'Select...',
                         'loadingText' => 'Loading province ...',
@@ -395,7 +400,9 @@ foreach ($GetOrderMastersGroup as $value) {
                 echo $form->field($pickingPointLockersCool, 'provinceId')->widget(kartik\select2\Select2::classname(), [
                     'model' => $pickingId,
                     'attribute' => 'provinceId',
-                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'localName'),
+                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()
+                    ->join("RIGHT JOIN", "$dbName[1].picking_point", "picking_point.provinceId = states.stateId ")
+                    ->where("states.countryId = 'THA'")->asArray()->all(), 'stateId', 'localName'),
                     'pluginOptions' => [
                         'placeholder' => 'Select...',
                         'loadingText' => 'Loading province ...',
@@ -582,7 +589,9 @@ foreach ($GetOrderMastersGroup as $value) {
                 echo $form->field($pickingPointBooth, 'provinceId')->widget(kartik\select2\Select2::classname(), [
                     'model' => $pickingId,
                     'attribute' => 'provinceId',
-                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'stateName'),
+                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()
+                    ->join("RIGHT JOIN", "$dbName[1].picking_point", "picking_point.provinceId = states.stateId ")
+                    ->where("states.countryId = 'THA'")->asArray()->all(), 'stateId', 'localName'),
                     'pluginOptions' => [
                         'placeholder' => 'Select...',
                         'loadingText' => 'Loading states ...',

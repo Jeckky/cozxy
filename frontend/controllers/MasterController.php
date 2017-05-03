@@ -641,7 +641,7 @@ class MasterController extends MasterCommonController
     public function actionChildAmphurAddressPickingPoint()
     {
         $out = [];
-
+        preg_match("/dbname=([^;]*)/", Yii::$app->get("db")->dsn, $dbName);
         if (isset($_POST['depdrop_parents'])) {
             $parents = ($_POST['depdrop_parents']);
 
@@ -655,7 +655,9 @@ class MasterController extends MasterCommonController
                     $param2 = $params[1]; // get the value of input-type-2
                 }
 
-                $list = \common\models\dbworld\Cities::find()->andWhere(['stateId' => $cat_id])->asArray()->all();
+                $list = \common\models\dbworld\Cities::find()
+                ->join("RIGHT JOIN", "$dbName[1].picking_point", "picking_point.amphurId = cities.cityId ")
+                ->andWhere(['cities.stateId' => $cat_id])->asArray()->all();
 
                 $selected = null;
                 if ($cat_id != null && count($list) > 0) {
@@ -685,7 +687,7 @@ class MasterController extends MasterCommonController
     public function actionChildPickingPoint()
     {
         $out = [];
-
+        preg_match("/dbname=([^;]*)/", Yii::$app->get("db")->dsn, $dbName);
         if (isset($_POST['depdrop_parents'])) {
             $parents = ($_POST['depdrop_parents']);
             $depdrop_params = $_POST['depdrop_params'];
@@ -724,7 +726,8 @@ class MasterController extends MasterCommonController
                     // echo $type;
                 }
 
-                $list = \common\models\costfit\PickingPoint::find()->andWhere(['amphurId' => $cat_id, 'type' => $type])->asArray()->all();
+                $list = \common\models\costfit\PickingPoint::find()
+                ->andWhere(['amphurId' => $cat_id, 'type' => $type])->asArray()->all();
 
                 $selected = null;
                 if ($cat_id != null && count($list) > 0) {
