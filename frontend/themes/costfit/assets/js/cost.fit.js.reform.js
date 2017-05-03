@@ -713,17 +713,24 @@ $addToWishlistBtn.click(function () {
         {
             if (data.status)
             {
-                $('#addItemToWishlist').attr('disabled', true);
-                alert("This item has been successfully added to your wishlist");
+                //alert(111);
+                //$('#addItemToWishlist').attr('visible', true);
+                $('.wishlist-message').addClass('visible');
+                //$('.page-content').find(".wishlist-message").html('2017 !!');
+                //alert("This item has been successfully added to your wishlist");
             } else
             {
+                //alert(222);
                 alert(data.message);
             }
         }
     });
 });
+
+
 $(".addWishlistItemToCart").click(function () {
     event.preventDefault();
+    //$addedToCartMessage.removeClass('visible');
     $addedToCartMessage.removeClass('visible');
     var $itemName = $(this).parent().parent().find('.title').html();
     var $itemId = $(this).parent().parent().find('#productId').val();

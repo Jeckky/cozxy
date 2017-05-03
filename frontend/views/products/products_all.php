@@ -68,7 +68,7 @@ $category = \common\models\costfit\Category::getRootText($model->categoryId);
             <?= isset($this->context->subTitle) ? $this->context->subTitle : "subTitle" ?></a>
     </li>
     <!--
-    <li><a href="<?php //echo Yii::$app->homeUrl . Yii::$app->controller->id;        ?>?productId=<?php //echo $model->productId;      ?>">
+    <li><a href="<?php //echo Yii::$app->homeUrl . Yii::$app->controller->id;           ?>?productId=<?php //echo $model->productId;         ?>">
     <?//= isset($this->context->subTitle) ? $this->context->subTitle : "subTitle" ?></a></li>-->
 </ol><!--Breadcrumbs Close-->
 
