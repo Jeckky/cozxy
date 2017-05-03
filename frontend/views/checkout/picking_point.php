@@ -214,7 +214,7 @@ foreach ($GetOrderMastersGroup as $value) {
                     'attribute' => 'provinceId',
                     'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()
                     ->join("RIGHT JOIN", "$dbName[1].picking_point", "picking_point.provinceId = states.stateId ")
-                    ->where("states.countryId = 'THA'")->asArray()->all(), 'stateId', 'localName'),
+                    ->where("states.countryId = 'THA' AND picking_point.type = 2")->asArray()->all(), 'stateId', 'localName'),
                     'pluginOptions' => [
                         'placeholder' => 'Select...',
                         'loadingText' => 'Loading province ...',
@@ -402,7 +402,7 @@ foreach ($GetOrderMastersGroup as $value) {
                     'attribute' => 'provinceId',
                     'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()
                     ->join("RIGHT JOIN", "$dbName[1].picking_point", "picking_point.provinceId = states.stateId ")
-                    ->where("states.countryId = 'THA'")->asArray()->all(), 'stateId', 'localName'),
+                    ->where("states.countryId = 'THA' AND picking_point.type = 1")->asArray()->all(), 'stateId', 'localName'),
                     'pluginOptions' => [
                         'placeholder' => 'Select...',
                         'loadingText' => 'Loading province ...',
@@ -591,7 +591,7 @@ foreach ($GetOrderMastersGroup as $value) {
                     'attribute' => 'provinceId',
                     'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()
                     ->join("RIGHT JOIN", "$dbName[1].picking_point", "picking_point.provinceId = states.stateId ")
-                    ->where("states.countryId = 'THA'")->asArray()->all(), 'stateId', 'localName'),
+                    ->where("states.countryId = 'THA' AND picking_point.type = 3")->asArray()->all(), 'stateId', 'localName'),
                     'pluginOptions' => [
                         'placeholder' => 'Select...',
                         'loadingText' => 'Loading states ...',
