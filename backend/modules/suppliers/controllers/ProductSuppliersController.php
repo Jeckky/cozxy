@@ -98,7 +98,9 @@ class ProductSuppliersController extends SuppliersMasterController {
         }
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider, 'pagination' => [
+                'pageSize' => 8,
+            ],
         ]);
     }
 

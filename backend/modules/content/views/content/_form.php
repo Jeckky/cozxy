@@ -40,11 +40,13 @@ use common\models\costfit\ContentGroup;
     <div class="panel-body">
         <?= $form->errorSummary($model) ?>
 
-        <?= $form->field($model, 'headTitle', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
+        <?//= $form->field($model, 'headTitle', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
 
-        <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
+        <?//= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
 
         <?//= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
+        <?= $form->field($model, 'headTitle', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
+        <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
         <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
         <?=
         $form->field($model, 'startDate')->textInput()->widget(\yii\jui\DatePicker::classname(), ['options' => ['class' => 'form-control'],
@@ -79,6 +81,20 @@ use common\models\costfit\ContentGroup;
            init.push(function () {
             if (!$('html').hasClass('ie8')) {
                 $('#content-description').summernote({
+                    height: 200,
+                    tabsize: 2,
+                    codemirror: {
+                        theme: 'monokai'
+                    }
+                });
+                 $('#content-headtitle').summernote({
+                    height: 200,
+                    tabsize: 2,
+                    codemirror: {
+                        theme: 'monokai'
+                    }
+                });
+                 $('#content-title').summernote({
                     height: 200,
                     tabsize: 2,
                     codemirror: {
