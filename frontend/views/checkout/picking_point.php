@@ -191,11 +191,11 @@ foreach ($GetOrderMastersGroup as $value) {
      * ปลายทางรับของที่ Lockers เย็น
      */
     if ($value->receiveType == '2') {//ประเภทปลายทางแบบล็อคเกอร์ร้อน
-        // Lockers
-        // = $CheckValuePickPoint['ListOrderItemGroupLockersValue'];
-        // = $CheckValuePickPoint['ListOrderItemGroupLockersAction'];
-        // = $CheckValuePickPoint['ListpickpointLockersValueInLocation'];
-        //echo 'ประเภทปลายทางแบบล็อคเกอร์ร้อน';
+// Lockers
+// = $CheckValuePickPoint['ListOrderItemGroupLockersValue'];
+// = $CheckValuePickPoint['ListOrderItemGroupLockersAction'];
+// = $CheckValuePickPoint['ListpickpointLockersValueInLocation'];
+//echo 'ประเภทปลายทางแบบล็อคเกอร์ร้อน';
         ?>
         <div id="lockers-hot-status-2" class="col-lg-12 col-md-12 col-sm-12">
             <h5><i class="fa fa-align-justify" aria-hidden="true"></i> เลือกสถานที่รับของ : ปลายทางที่ล็อคเกอร์ร้อน</h5>
@@ -209,14 +209,14 @@ foreach ($GetOrderMastersGroup as $value) {
                 echo $form->field($pickingPointLockers, 'provinceId')->widget(kartik\select2\Select2::classname(), [
                     'model' => $pickingId,
                     'attribute' => 'provinceId',
-                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'stateName'),
+                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'localName'),
                     'pluginOptions' => [
                         'placeholder' => 'Select...',
-                        'loadingText' => 'Loading states ...',
+                        'loadingText' => 'Loading province ...',
                         'params' => ['input-type-1', 'input-type-2']
                     ],
                     'options' => ['placeholder' => 'Select states ...']
-                ])->label('เลือกจังหวัด');
+                ])->label('Province');
                 ?>
                 <?php
                 //echo Html::hiddenInput("statesDDId", $stateId, ['id' => "statesDDId"]);
@@ -243,7 +243,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'loadingText' => 'Loading amphur ...',
                             'params' => ['input-type-11', 'input-type-22']
                         ]
-                    ])->label('เลือกอำเภอ/เขต');
+                    ])->label('Amphur');
                 } else {
                     echo $form->field($pickingPointLockers, 'amphurId')->widget(kartik\depdrop\DepDrop::classname(), [
                         //'data' => [9 => 'Savings'],
@@ -260,7 +260,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'loadingText' => 'Loading amphur ...',
                             'params' => ['input-type-11', 'input-type-22']
                         ]
-                    ])->label('เลือกอำเภอ/เขต');
+                    ])->label('Amphur');
                 }
                 ?>
                 <?php
@@ -384,7 +384,7 @@ foreach ($GetOrderMastersGroup as $value) {
         //echo 'ประเภทปลายทางแบบล็อคเกอร์เย็น';
         ?>
         <div id="lockers-cool-status-1" class="col-lg-12 col-md-12 col-sm-12">
-            <h5><i class="fa fa-align-justify" aria-hidden="true"></i> เลือกสถานที่รับของ : ปลายทางที่ล็อคเกอร์เย็น</h5>
+            <h5><i class="fa fa-align-justify" aria-hidden="true"></i> Shipping destination: CozxyBox</h5>
             <hr>
             <div id="lockers-province" class="form-group col-lg-6 col-md-6 col-sm-6">
                 <?php
@@ -395,14 +395,14 @@ foreach ($GetOrderMastersGroup as $value) {
                 echo $form->field($pickingPointLockersCool, 'provinceId')->widget(kartik\select2\Select2::classname(), [
                     'model' => $pickingId,
                     'attribute' => 'provinceId',
-                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'stateName'),
+                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'localName'),
                     'pluginOptions' => [
                         'placeholder' => 'Select...',
-                        'loadingText' => 'Loading states ...',
+                        'loadingText' => 'Loading province ...',
                         'params' => ['input-type-1', 'input-type-2']
                     ],
                     'options' => ['placeholder' => 'Select states ...', 'id' => 'LcprovinceId']
-                ])->label('เลือกจังหวัด');
+                ])->label('Province');
                 ?>
                 <?php
                 //echo Html::hiddenInput("statesDDId", $stateId, ['id' => "statesDDId"]);
@@ -430,7 +430,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'loadingText' => 'Loading amphur ...',
                             'params' => ['input-type-11', 'input-type-22']
                         ]
-                    ])->label('เลือกอำเภอ/เขต');
+                    ])->label('Amphur');
                 } else {
                     echo $form->field($pickingPointLockersCool, 'amphurId')->widget(kartik\depdrop\DepDrop::classname(), [
                         //'data' => [9 => 'Savings'],
@@ -447,7 +447,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'loadingText' => 'Loading amphur ...',
                             'params' => ['input-type-11', 'input-type-22']
                         ]
-                    ])->label('เลือกอำเภอ/เขต');
+                    ])->label('Amphur');
                 }
                 ?>
                 <?php
@@ -515,7 +515,7 @@ foreach ($GetOrderMastersGroup as $value) {
             if ($LockersCoolHistoryLockersNoti == 'isTrue') {
                 ?>
                 <div class="col-md-12 history-lockers-cool-null">
-                    <h5 class="cs-heading" style="font-size: 14px; color: #166db9;"><i class="fa fa-bullhorn" aria-hidden="true" style="color: #166db9;"></i> แจ้งเตือนประวัติสถานที่รับสินค้า : ปลายทางที่ล็อคเกอร์เย็น </h5>
+                    <h5 class="cs-heading" style="font-size: 14px; color: #166db9;"><i class="fa fa-bullhorn" aria-hidden="true" style="color: #166db9;"></i> History   : Shipping destination: CozxyBox </h5>
                     <blockquote style="font-size: 16px;">
                         <p style="color: #8c8c8c;">สถานที่รับสินค้าล่าสุดที่ลูกค้าเคยเลือกไว้ หากลูกค้าต้องการเปลียนจุดรับสินค้า สามารถเปลียนได้จากด้านบน.</p>
                         <footer style="color: rgba(255,212,36,.9);">Cozxy.Com</footer>
@@ -527,7 +527,7 @@ foreach ($GetOrderMastersGroup as $value) {
                     ?>
                     <div class="col-md-12">
                         <h5 class="cs-heading" style="font-size: 14px;color: #166db9;">
-                            <i class="fa fa-map-marker" aria-hidden="true" style="color: #166db9;"></i> แผนที่ : ปลายทางที่ล็อคเกอร์เย็น  (<span class="name-lockers-cool" style="color: #2ca02c;"></span>) </h5>
+                            <i class="fa fa-map-marker" aria-hidden="true" style="color: #166db9;"></i> Map : Shipping destination: CozxyBox  (<span class="name-lockers-cool" style="color: #2ca02c;"></span>) </h5>
                         <blockquote style="font-size: 16px;">
                             <p class="description-lockers-cool" style="color: #000000;"></p>
                             <p class="view-map-images-lockers-cool" style="color: #8c8c8c;">
@@ -589,7 +589,7 @@ foreach ($GetOrderMastersGroup as $value) {
                         'params' => ['booth-input-type-1', 'booth-input-type-2']
                     ],
                     'options' => ['placeholder' => 'Select states ...', 'id' => 'BprovinceId']
-                ])->label('เลือกจังหวัด');
+                ])->label('Province');
                 ?>
                 <?php
                 //echo Html::hiddenInput("statesDDId", $stateId, ['id' => "statesDDId"]);
@@ -617,7 +617,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'loadingText' => 'Loading amphur ...',
                             'params' => ['booth-input-type-11', 'booth-input-type-22']
                         ]
-                    ])->label('เลือกอำเภอ/เขต');
+                    ])->label('Amphur');
                 } else {
                     echo $form->field($pickingPointBooth, 'amphurId')->widget(kartik\depdrop\DepDrop::classname(), [
                         //'data' => [9 => 'Savings'],
@@ -634,7 +634,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'loadingText' => 'Loading amphur ...',
                             'params' => ['booth-input-type-11', 'booth-input-type-22']
                         ]
-                    ])->label('เลือกอำเภอ/เขต');
+                    ])->label('Amphur');
                 }
                 ?>
                 <?php

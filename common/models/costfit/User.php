@@ -43,6 +43,7 @@ class User extends \common\models\costfit\master\UserMaster {
     const USER_TYPE_FRONTEND_BACKEND = 3;
     const USER_TYPE_SUPPLIERS = 4;
     const USER_TYPE_CONTENT = 5;
+    const USER_TYPE_MYACCOUNT = 6;
     //const USER_STATUS_CHECKOUTS = 2;
     //const USER_STATUS_E_PAYMENT_DRAFT = 3;
     //const USER_STATUS_COMFIRM_PAYMENT = 4;
@@ -58,7 +59,7 @@ class User extends \common\models\costfit\master\UserMaster {
      */
     public function rules() {
         return array_merge(parent::rules(), [
-                ['email', 'unique'],
+            ['email', 'unique'],
             'tel' => [['tel'], 'string'],
 //            ['email', 'uniqueEmail'],
             ['email', 'email'],
@@ -68,7 +69,7 @@ class User extends \common\models\costfit\master\UserMaster {
             ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"],
 //            ['email', 'exist']
             [
-                    ['firstname', 'lastname', 'gender', 'tel' => [['tel'], 'integer'], 'birthDate', 'acceptTerm'],
+                ['firstname', 'lastname', 'gender', 'tel' => [['tel'], 'integer'], 'birthDate', 'acceptTerm'],
                 'required', 'on' => self::COZXY_EDIT_PROFILE],
             // [['currentPassword', 'newPassword', 'rePassword'], 'required'],
             [['currentPassword', 'newPassword', 'rePassword'], 'required', 'on' => self::COZXY_PROFILE],
@@ -156,6 +157,22 @@ class User extends \common\models\costfit\master\UserMaster {
         }
     }
 
+    public function findAllGenderArrayEn() {
+        return [
+            self::USER_STATUS_GENDER_Female => "Female",
+            self::USER_STATUS_GENDER_Male => "Male",
+        ];
+    }
+
+    public function getGenderTextEn($status) {
+        $res = $this->findAllGenderArrayEn($status);
+        if (isset($res[$status])) {
+            return $res[$status];
+        } else {
+            return NULL;
+        }
+    }
+
     // USER TYPE
     public function findAllTypeArray() {
         return [
@@ -166,7 +183,8 @@ class User extends \common\models\costfit\master\UserMaster {
             self::USER_TYPE_BACKEND => "<span class='text-success'>backend</span>",
             self::USER_TYPE_FRONTEND_BACKEND => "<span class='text-warning'>frontend and backend</span>",
             self::USER_TYPE_SUPPLIERS => "<span class='text-info'>Suppliers</span>",
-            self::USER_TYPE_CONTENT => "<span class='text-info'>Content</span>"
+            self::USER_TYPE_CONTENT => "<span class='text-info'>Content</span>",
+            self::USER_TYPE_MYACCOUNT => "<span class='text-info'>ACCOUNT</span>"
         ];
     }
 

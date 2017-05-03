@@ -168,7 +168,7 @@ class ContentController extends ContentMasterController {
     public function actionDelete($id) {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/content/content?contentGroupId=' . $_GET['contentGroupId']]);
     }
 
     /**

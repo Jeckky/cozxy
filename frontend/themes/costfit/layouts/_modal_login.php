@@ -11,12 +11,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i>
                 </button>
                 <h2><a href="<?php echo $baseUrl; ?>/register/login">Login</a> <span class="regis">or <a href="<?php echo $baseUrl; ?>/register/login">Register</a></span></h2>
-                <p class="large">Use social accounts</p>
+                <!--<p class="large">Use social accounts</p>-->
                 <div class="social-login">
 <!--                    <a class="facebook" href="#"><i class="fa fa-facebook-square"></i></a>
                     <a class="google" href="#"><i class="fa fa-google-plus-square"></i></a>
                     <a class="twitter" href="#"><i class="fa fa-twitter-square"></i></a>-->
-                    <?= common\yii2\authclient\widgets\AuthChoice::widget(['baseAuthUrl' => ['site/auth']]) ?>
+                    <?//= common\yii2\authclient\widgets\AuthChoice::widget(['baseAuthUrl' => ['site/auth']]) ?>
                 </div>
             </div>
             <div class="modal-body">
@@ -60,7 +60,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="modal-footer" style="border-top: 1px solid #03a9f4;">
                 <div id="div-login-msg ">
                     <?php
-                    $token = $this->context->getToken();
+                    $token = \common\helpers\Token::getToken();
                     $order = \common\models\costfit\Order::find()->where("token ='" . $token . "' AND status=" . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
                     ?>
                     <h4 class="text-center">คุณใช่ <span class="email"><?= isset($order->user) ? $order->user->email : "-" ?></span> หรือไม่ </h4>

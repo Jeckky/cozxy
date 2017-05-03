@@ -20,11 +20,9 @@ use common\helpers\Upload;
 /**
  * ProductSuppliersController implements the CRUD actions for ProductSuppliers model.
  */
-class ProductSuppliersController extends SuppliersMasterController
-{
+class ProductSuppliersController extends SuppliersMasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
@@ -51,8 +49,7 @@ class ProductSuppliersController extends SuppliersMasterController
      * Lists all ProductSuppliers models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5) {
             header("location: /auth");
             exit(0);
@@ -110,8 +107,7 @@ class ProductSuppliersController extends SuppliersMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5) {
             header("location: /auth");
             exit(0);
@@ -126,8 +122,7 @@ class ProductSuppliersController extends SuppliersMasterController
         ]);
     }
 
-    public function actionGen()
-    {
+    public function actionGen() {
         $productSupp = ProductSuppliers::find()->where("1")->all();
         foreach ($productSupp as $supp) {
             $supp->code = \common\helpers\Product::generateProductCode($supp->productSuppId);
@@ -136,8 +131,7 @@ class ProductSuppliersController extends SuppliersMasterController
         }
     }
 
-    public function actionGenCozxy()
-    {
+    public function actionGenCozxy() {
         $productSupp = Product::find()->where("1")->all();
         foreach ($productSupp as $supp) {
             //$supp->code = \common\helpers\Product::generateProductCode($supp->productSuppId);
@@ -146,8 +140,7 @@ class ProductSuppliersController extends SuppliersMasterController
         }
     }
 
-    public function actionGenCozxy2()
-    {
+    public function actionGenCozxy2() {
         $productSupp = ProductSuppliers::find()->where("1")->all();
         foreach ($productSupp as $products):
             if ($products->productId != '' && $products->productId != null) {
@@ -160,8 +153,7 @@ class ProductSuppliersController extends SuppliersMasterController
         endforeach;
     }
 
-    public function actionGens()
-    {
+    public function actionGens() {
         $productSupp = ProductSuppliers::find()->where("1")->all();
         foreach ($productSupp as $supp) {
             $productCozxy = Product::find()->where('productId=' . $supp->productId)->one();
@@ -178,8 +170,7 @@ class ProductSuppliersController extends SuppliersMasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5) {
             header("location: /auth");
             exit(0);
@@ -209,6 +200,8 @@ class ProductSuppliersController extends SuppliersMasterController
                 $modelSys->attributes = $_POST["ProductSuppliers"];
                 $modelSys->userId = Yii::$app->user->identity->userId;
                 $modelSys->createDateTime = new \yii\db\Expression('NOW()');
+                $modelSys->suppCode = $_POST["ProductSuppliers"]['suppCode'];
+                $modelSys->merchantCode = $_POST["ProductSuppliers"]['merchantCode'];
                 $modelSys->approve = Yii::$app->request->post('approve');
                 $modelSys->productSuppId = $model->productSuppId;
                 $modelSys->code = $model->code;
@@ -237,7 +230,8 @@ class ProductSuppliersController extends SuppliersMasterController
             //suppliers/product-price-suppliers
             ///suppliers/product-suppliers/image-form?productSuppId=235
             if (Yii::$app->user->identity->type == 5) {
-                return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-suppliers/image-form?productSuppId=' . $model->productSuppId);
+                //return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-suppliers/image-form?productSuppId=' . $model->productSuppId);
+                return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-price-suppliers/create?productSuppId=' . $model->productSuppId);
             } else {
                 return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-price-suppliers/create?productSuppId=' . $model->productSuppId);
             }
@@ -254,8 +248,7 @@ class ProductSuppliersController extends SuppliersMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5) {
             header("location: /auth");
             exit(0);
@@ -290,6 +283,8 @@ class ProductSuppliersController extends SuppliersMasterController
                     'depth' => $_POST['ProductSuppliers']['depth'],
                     'weight' => $_POST['ProductSuppliers']['weight'],
                     'tags' => $_POST['ProductSuppliers']['tags'],
+                    'suppCode' => $_POST['ProductSuppliers']['suppCode'],
+                //'merchantCode' => $_POST['ProductSuppliers']['merchantCode'],
                 ], ['productId' => $model1->productId, 'productSuppId' => $id]);
                 return $this->redirect(['index']);
             }
@@ -305,8 +300,7 @@ class ProductSuppliersController extends SuppliersMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -319,8 +313,7 @@ class ProductSuppliersController extends SuppliersMasterController
      * @return ProductSuppliers the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = ProductSuppliers::findOne($id)) !== null) {
             return $model;
         } else {
@@ -328,8 +321,7 @@ class ProductSuppliersController extends SuppliersMasterController
         }
     }
 
-    public function actionImageForm()
-    {
+    public function actionImageForm() {
         if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5) {
             header("location: /auth");
             exit(0);
@@ -377,8 +369,7 @@ class ProductSuppliersController extends SuppliersMasterController
         ]);
     }
 
-    public function actionUpload()
-    {
+    public function actionUpload() {
         if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5) {
             header("location: /auth");
             exit(0);
@@ -395,8 +386,7 @@ class ProductSuppliersController extends SuppliersMasterController
         Upload::UploadSuppliers($model);
     }
 
-    public function actionProductsSystem()
-    {
+    public function actionProductsSystem() {
         //productId
         $productId = Yii::$app->request->post('productId');
         $product = \common\models\costfit\Product::find()->where('productId = ' . $productId)->one();
@@ -404,15 +394,13 @@ class ProductSuppliersController extends SuppliersMasterController
         return json_encode($product->attributes);
     }
 
-    public function actionShowDetail()
-    {
+    public function actionShowDetail() {
 
         return $this->render('/show-detail/index', [
         ]);
     }
 
-    public function actionDuplicateProduct($productSuppId)
-    {
+    public function actionDuplicateProduct($productSuppId) {
         //$productSuppId = '';
         $modelx = $this->findModel($productSuppId);
 

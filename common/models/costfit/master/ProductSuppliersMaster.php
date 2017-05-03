@@ -31,13 +31,16 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-    * @property integer $quantity
-    * @property integer $result
+    * @property string $quantity
+    * @property string $result
     * @property string $approve
-    * @property integer $productId
+    * @property string $productId
     * @property string $approveCreateBy
     * @property string $approvecreateDateTime
     * @property string $receiveType
+    * @property string $url
+    * @property string $warrantyType
+    * @property string $warrantyPeriod
 */
 class ProductSuppliersMaster extends \common\models\ModelMaster
 {
@@ -55,14 +58,14 @@ return 'product_suppliers';
 public function rules()
 {
 return [
-            [['userId', 'productGroupId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'quantity', 'result', 'productId', 'approveCreateBy'], 'integer'],
+            [['userId', 'productGroupId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'quantity', 'result', 'productId', 'approveCreateBy', 'warrantyType', 'warrantyPeriod'], 'integer'],
             [['isbn', 'shortDescription', 'description', 'specification'], 'string'],
             [['title', 'createDateTime', 'quantity', 'result'], 'required'],
             [['width', 'height', 'depth', 'weight'], 'number'],
             [['createDateTime', 'updateDateTime', 'approvecreateDateTime'], 'safe'],
             [['code', 'suppCode', 'merchantCode'], 'string', 'max' => 100],
             [['title', 'optionName'], 'string', 'max' => 200],
-            [['tags'], 'string', 'max' => 255],
+            [['tags', 'url'], 'string', 'max' => 255],
             [['approve'], 'string', 'max' => 10],
             [['receiveType'], 'string', 'max' => 45],
         ];
@@ -105,6 +108,9 @@ return [
     'approveCreateBy' => Yii::t('product_suppliers', 'Approve Create By'),
     'approvecreateDateTime' => Yii::t('product_suppliers', 'Approvecreate Date Time'),
     'receiveType' => Yii::t('product_suppliers', 'Receive Type'),
+    'url' => Yii::t('product_suppliers', 'Url'),
+    'warrantyType' => Yii::t('product_suppliers', 'Warranty Type'),
+    'warrantyPeriod' => Yii::t('product_suppliers', 'Warranty Period'),
 ];
 }
 }

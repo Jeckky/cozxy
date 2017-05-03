@@ -57,7 +57,7 @@ class OrderController extends MasterController
         $order = \common\models\costfit\Order::getOrder();
         if (!isset($order)) {
             $order = new \common\models\costfit\Order();
-            $order->token = $this->getToken();
+            $order->token = \common\helpers\Token::getToken();
             $order->status = \common\models\costfit\Order::ORDER_STATUS_DRAFT;
             $order->createDateTime = new \yii\db\Expression("NOW()");
             $order->paymentType = 2;
@@ -69,7 +69,7 @@ class OrderController extends MasterController
 
 
         $res['token'] = $order->token;
-	    $this->writeToFile('/tmp/mobile-token', print_r($order->token, true));
+        $this->writeToFile('/tmp/mobile-token', print_r($order->token, true));
 
         //throw new \yii\base\Exception('fastId=' . $id);
         $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_REQUEST['productSuppId'] . " and sendDate=" . $_REQUEST['fastId'])->one();
@@ -164,26 +164,7 @@ class OrderController extends MasterController
 
     public function actionGetToken()
     {
-    	$this->getToken();
-    }
-
-    public function getToken()
-    {
-        $cookies = Yii::$app->request->cookies;
-        if ($cookies->has('orderToken')) {
-
-            return $cookies->getValue('orderToken');
-        } else {
-            $this->generateNewToken();
-            $cookies = Yii::$app->request->cookies;
-//            echo print_r($cookies, true);
-//            throw new \yii\base\Exception(111);
-//            if (!isset($cookies['orderToken'])) {
-//                $cookies = Yii::$app->request->cookies;
-//        }
-	        $this->writeToFile('/tmp/mobile-getToken', print_r($cookies, true));
-            return $cookies->getValue('orderToken');
-        }
+        \common\helpers\Token::getToken();
     }
 
     public function createShoppingCart($orderId)

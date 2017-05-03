@@ -100,6 +100,7 @@ $countryId = rand(0, 9999);
 $stateId = rand(0, 9999);
 $cityId = rand(0, 9999);
 $districtId = rand(0, 9999);
+$zipcodeId = rand(0, 9999);
 ?>
 <div id="formBilling">
     <h3>Billing address</h3>
@@ -124,7 +125,7 @@ $districtId = rand(0, 9999);
                 'id' => $countryId,
                 'class' => 'required'
             ],
-        ])->label('ประเทศ');
+        ])->label('Country');
         ?>
         <?php
         echo Html::hiddenInput("countryDDId", $countryId, ['id' => "countryDDId"]);
@@ -136,23 +137,23 @@ $districtId = rand(0, 9999);
     ?>
     <div class="row">
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
-            <label for="co-first-name">ชื่อ *</label>
+            <label for="co-first-name">Firstname *</label>
             <?= Html::textInput("Address[firstname]", NULL, ["class" => "form-control input-sm required", 'placeHolder' => 'First name', 'id' => 'firstname']) ?>
             <?php
 //            echo $form->field($address, 'firstname')->textInput();
             ?>
         </div>
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
-            <label for="co-last-name">นามสกุล *</label>
+            <label for="co-last-name">Lastname *</label>
             <?= Html::textInput("Address[lastname]", NULL, ["class" => "form-control input-sm required", 'placeHolder' => 'Last name', 'id' => 'lastname']) ?>
         </div>
     </div>
     <div class="form-group">
-        <label for="co-company-name">บริษัท</label>
+        <label for="co-company-name">Company</label>
         <?= Html::textInput("Address[company]", NULL, ["class" => "form-control input-sm required", 'placeHolder' => 'Company name', 'id' => 'company']) ?>
     </div>
     <div class="form-group">
-        <label for="co-str-adress">ที่อยู่ *</label>
+        <label for="co-str-adress">Address *</label>
         <?= Html::textarea("Address[address]", NULL, ["class" => "form-control input-sm required", 'rows' => 3, 'placeHolder' => 'Address', 'id' => 'address']) ?>
     </div>
 
@@ -177,7 +178,7 @@ $districtId = rand(0, 9999);
                 //'initialize' => true,
                 //'params' => ['model_id1']
                 ]
-            ])->label('จังหวัด');
+            ])->label('Province');
             ?>
             <?php
             echo Html::hiddenInput("statesDDId", $stateId, ['id' => "statesDDId"]);
@@ -198,7 +199,7 @@ $districtId = rand(0, 9999);
                     'loadingText' => 'Loading amphur ...',
                 //'initialize' => true,
                 ]
-            ])->label('เขต/อำเภอ');
+            ])->label('Amphur');
             ?>
             <?php
             echo Html::hiddenInput("amphurDDId", $cityId, ['id' => "amphurDDId"]);
@@ -224,24 +225,41 @@ $districtId = rand(0, 9999);
                     'loadingText' => 'Loading district ...',
                 //'initialize' => true,
                 ]
-            ])->label('แขวง/ตำบล');
+            ])->label('District');
             ?>
             <?php
             echo Html::hiddenInput("districtDDId", $districtId, ['id' => "districtDDId"]);
             ?>
         </div>
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
-            <?php echo $form->field($address, 'zipcode')->textInput(['class' => 'form-control input-sm required', 'id' => 'zipcode'])->label('รหัสไปรษณีย์'); ?>
+            <?php
+            // echo $form->field($address, 'zipcode')->textInput(['class' => 'form-control input-sm required', 'id' => 'zipcode'])->label('รหัสไปรษณีย์');
+            echo Html::hiddenInput('input-type-14', $districtId, ['id' => 'input-type-14']);
+            echo $form->field($address, 'zipcode')->widget(DepDrop::classname(), [
+                //'data' => [12 => 'Savings A/C 2'],
+                'options' => ['placeholder' => 'Select ...', 'id' => $zipcodeId],
+                'type' => DepDrop::TYPE_SELECT2,
+                'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                'pluginOptions' => [
+                    'depends' => [$districtId],
+                    //'initialize' => true,
+                    //'initDepends' => ['address-countryid'],
+                    'url' => Url::to(['child-zipcode-address']),
+                    'loadingText' => 'Loading zipcode ...',
+//                    'params' => ['input-type-14']
+                ]
+            ])->label('Zipcode');
+            ?>
         </div>
     </div>
     <div class="row">
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
 
             <?//= Html::textInput("Address[email]", NULL, ["class" => "form-control input-sm", 'placeHolder' => 'Email adress', 'id' => 'email']) ?>
-            <?php echo $form->field($address, 'email')->textInput(['class' => 'form-control input-sm required', 'id' => 'email'])->label('อีเมล์'); ?>
+            <?php echo $form->field($address, 'email')->textInput(['class' => 'form-control input-sm required', 'id' => 'email'])->label('Email'); ?>
         </div>
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
-            <?php echo $form->field($address, 'tel')->textInput(['class' => 'form-control input-sm required', 'id' => 'tel'])->label('โทร'); ?>
+            <?php echo $form->field($address, 'tel')->textInput(['class' => 'form-control input-sm required', 'id' => 'tel'])->label('Tel'); ?>
         </div>
 
     </div>

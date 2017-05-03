@@ -30,13 +30,13 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
                 if ($needMore == 0) {
                     echo $ms;
                 } else {
-                    echo $ms . ' ' . $needMore . ' Points เป็นเงิน ' . number_format($needMore, 2) . ' บาท';
+                    echo $ms . ' ' . $needMore . ' Points Please ' . number_format($needMore, 2) . ' THB';
                 }
             }
             ?>
         </span>
     </div>
-    <?php if (isset($ms) && $ms != '') { ?>
+<?php if (isset($ms) && $ms != '') { ?>
         <input type="hidden" name="checkout" value="checkout">
         <input type="hidden" name="needMore" value="<?= $needMore ?>">
     <?php }
@@ -57,7 +57,7 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
                 <td style="text-align: left;width:50%;"><span style="margin-left: 20px;"><?= $data["name"] ?></span></td>
             </tr>
             <tr style="vertical-align: middle">
-                <td style="text-align: right;width:50%;vertical-align: middle;" rowspan="<?= $count ?>">Payment method :</td>
+                <td style="text-align: right;width:50%;vertical-align: top; padding-top: 10px;" rowspan="<?= $count == 1 ? 0 : $count ?>">Payment method :</td>
                 <?php
                 if (isset($paymentMethod) && count($paymentMethod) > 0) {
                     foreach ($paymentMethod as $payment):
@@ -79,15 +79,18 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
                         }
                     endforeach;
                 }
-                ?>
-            </tr>
-            <tr style="vertical-align: top;">
-
+                if ($count != 1) {
+                    ?>
+                </tr>
                 <?php
-                if (isset($paymentMethod) && count($paymentMethod) > 0) {
-                    foreach ($paymentMethod as $payment):
-                        if ($payment->type == 1) {//bill payment
+            }
+            if (isset($paymentMethod) && count($paymentMethod) > 0) {
+                foreach ($paymentMethod as $payment):
+                    if ($payment->type == 1) {//bill payment
+                        if ($count != 1) {
                             ?>
+                            <tr style="vertical-align: top;">
+            <?php } ?>
                             <td style="text-align: left;">
                                 <div class="radio">
                                     <div class="btn-group" data-toggle="buttons">
@@ -97,12 +100,15 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
                                     </div>
                                 </div>
                             </td>
+                        <?php if ($count != 1) { ?>
+                            </tr>
                             <?php
                         }
-                    endforeach;
-                }
-                ?>
-            </tr>
+                    }
+                endforeach;
+            }
+            ?>
+
             <tr style="height: 50px;">
                 <td style="text-align: right;width:50%;">Captcha :</td>
                 <td style="text-align: left;width:50%;">

@@ -25,7 +25,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="col-md-6">Payment History</div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
-                        Now you have <?= $currentPoint ?> variable oint.
+                        Now you have <?= $currentPoint ?> variable point.
                     </div>
                 </div>
             </div>

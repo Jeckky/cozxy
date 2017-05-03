@@ -85,10 +85,16 @@ return [
             'class' => 'backend\modules\booth\Booth',
         ],
         'topup' => [
-            'class' => 'backend\modules\topup\topup',
+            'class' => 'backend\modules\topup\Topup',
         ],
         'margin' => [
-            'class' => 'backend\modules\margin\margin',
+            'class' => 'backend\modules\margin\Margin',
+        ],
+        'warrantytype' => [
+            'class' => 'backend\modules\warrantytype\Warrantytype',
+        ],
+        'warrantyperiod' => [
+            'class' => 'backend\modules\warrantyperiod\Warrantyperiod',
         ],
     ],
     'components' => [

@@ -17,8 +17,7 @@ use frontend\models\ContactForm;
 /**
  * Search controller
  */
-class SearchController extends MasterController
-{
+class SearchController extends MasterController {
 
     public $enableCsrfValidation = false;
 
@@ -27,8 +26,7 @@ class SearchController extends MasterController
      *
      * @return mixed
      */
-    public function actionIndex($title, $hash)
-    {
+    public function actionIndex($title, $hash) {
         //throw new \yii\base\Exception($title);
         $k = base64_decode(base64_decode($hash));
         $params = ModelMaster::decodeParams($hash);
@@ -44,7 +42,7 @@ class SearchController extends MasterController
         $whereArray["category_to_product.categoryId"] = $params['categoryId'];
 
         $whereArray["product.approve"] = "approve";
-        $whereArray["ps.result"] = " > 0";
+//        $whereArray["ps.results"] = "> 0";
         $whereArray["pps.status"] = "1";
         //
         //$whereArray["product_price.quantity"] = 1;
@@ -55,6 +53,7 @@ class SearchController extends MasterController
         ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
         //->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = category_to_product.productId")
         ->where($whereArray)
+        ->andWhere([">", "ps.result", 0])
         ->orderBy("pps.price ASC");
         //->andWhere("product.approve != 'new'");
         if (isset($_POST["min"])) {
@@ -64,10 +63,29 @@ class SearchController extends MasterController
             $products->andWhere("pps.price <=" . $_POST["max"]);
         }
 
+
+
+        $whereArray2 = [];
+        $whereArray2["category_to_product.categoryId"] = $params['categoryId'];
+
+        $whereArray2["product.approve"] = "approve";
+        $whereArray2["ps.result"] = "0";
+        $whereArray2["pps.status"] = "1";
+
+        $NotSell = \common\models\costfit\CategoryToProduct::find()
+        ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+        ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+        ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+        //->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = category_to_product.productId")
+        ->where($whereArray2);
+//        ->orderBy("pps.price ASC");
+//        $NotSell = \common\models\costfit\ProductSuppliers::find()->where('result = 0 and approve ="approve" and categoryId=' . $params['categoryId'])->orderBy("productSuppId DESC");
+
         if (isset($params['brandId'])) {
             $idString = $params['brandId'];
             $this->view->params['brandId'] = explode(",", $idString);
             $products->andWhere("product.brandId in ($idString)");
+            $NotSell->andWhere("product.brandId in ($idString)");
         }
         //echo '<pre>';
         //print_r($products);
@@ -75,9 +93,6 @@ class SearchController extends MasterController
             'query' => $products,
             'pagination' => array('pageSize' => 8),
         ]);
-
-        $NotSell = \common\models\costfit\ProductSuppliers::find()->where('result = 0 and approve ="approve" and categoryId=' . $params['categoryId'] . ' '
-        . ' order by productSuppId DESC');
         $productNotSell = new \yii\data\ActiveDataProvider([
             'query' => $NotSell, 'pagination' => [
                 'pageSize' => 12,
@@ -87,8 +102,7 @@ class SearchController extends MasterController
         return $this->render('search', ['products' => $products, 'productNotSell' => $productNotSell, 'categoryIdBrand' => $params['categoryId']]);
     }
 
-    public function actionPop($category)
-    {
+    public function actionPop($category) {
         //throw new \yii\base\Exception($category);
         $this->layout = "/content_left";
         $this->title = 'Cozxy.com | Products';
@@ -115,9 +129,13 @@ class SearchController extends MasterController
         return $this->render('search', compact('products'));
     }
 
+<<<<<<< HEAD
     public function actionSearchBrands()
     {
 //    	$this->writeToFile('/tmp/sreachbrand', print_r($_POST['brandId'], true));
+=======
+    public function actionSearchBrands() {
+>>>>>>> origin/multi-suppliers
         $categoryId = Yii::$app->request->post('categoryId');
         $brandIds = Yii::$app->request->post('brandId');
 //        throw new \yii\base\Exception(print_r($_POST, true));
@@ -137,8 +155,12 @@ class SearchController extends MasterController
         //  $items_sub->createTitle()
         //return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         //echo $this->redirect(Yii::$app->homeUrl . 'checkout/order-thank');
+<<<<<<< HEAD
 //	    return $this->redirect(['search/' . rawurlencode($cat->createTitle()) . "/" . ModelMaster::encodeParams(['categoryId' => $categoryId, 'brandId' => $idString])]);
         echo Yii::$app->homeUrl.'search/' . rawurlencode($cat->createTitle()) . "/" . ModelMaster::encodeParams(['categoryId' => $categoryId, 'brandId' => $idString]);
+=======
+        echo Yii::$app->homeUrl . 'search/' . rawurlencode($cat->createTitle()) . "/" . ModelMaster::encodeParams(['categoryId' => $categoryId, 'brandId' => $idString]);
+>>>>>>> origin/multi-suppliers
     }
 
 }

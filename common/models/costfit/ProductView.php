@@ -56,7 +56,7 @@ class ProductView extends \common\models\costfit\master\ProductViewMaster
             $model->productId = $productId;
             $strAnd = " ";
             if (\Yii::$app->user->isGuest) {
-                $model->token = \frontend\controllers\MasterController::getTokenToAnothor();
+                $model->token = \common\helpers\Token::getTokenToAnothor();
                 $strAnd.=" AND token = '$model->token' ";
             } else {
                 $model->userId = \Yii::$app->user->id;

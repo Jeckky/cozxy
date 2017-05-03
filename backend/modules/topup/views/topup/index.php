@@ -77,6 +77,28 @@ $this->params['breadcrumbs'][] = $this->title;
                             return 'กำลังชำระเงิน';
                         }
                     ],
+                        [
+                        'attribute' => 'Image',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            $imgLink = '<a href="#"  data-toggle="modal" data-target="#seePic' . $model->topUpId . '">Image</a>';
+                            $img = '<img src="' . Yii::$app->homeUrl . $model->image . '">';
+                            if (($model->image == '') || ($model->image == null)) {
+                                return '<i> No pic.</i>';
+                            } else {
+                                return $imgLink;
+                            }
+                        }
+                    ],
+                        [
+                        'attribute' => 'Confirm',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            $accept = '<a href="' . Yii::$app->homeUrl . 'topup/topup/accept-billpayment?id=' . $model->topUpId . ' "class="btn btn-success" onclick="return ConfirmCheck()">Accept</a>';
+                            $notAccept = '<a href="' . Yii::$app->homeUrl . 'topup/topup/not-accept-billpayment?id=' . $model->topUpId . '" class="btn btn-danger" onclick="return ConfirmCheck2()">Not accept</a>';
+                            return $accept . ' ' . $notAccept;
+                        }
+                    ],
                 // 'updateDateTime',
                 //  ['class' => 'yii\grid\ActionColumn'],
                 ],
@@ -132,6 +154,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             return \common\models\costfit\TopUp::statusText($model->status);
                         }
                     ],
+                        [
+                        'attribute' => 'Image',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            $img = '<img src="' . Yii::$app->homeUrl . $model->image . '">';
+                            return $img;
+                        }
+                    ],
                 // 'updateDateTime',
                 //  ['class' => 'yii\grid\ActionColumn'],
                 ],
@@ -140,3 +170,47 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 <?php } ?>
+<?php
+if (isset($readyData) && count($readyData) > 0) {
+    foreach ($readyData as $ready):
+        ?>
+
+        <div class="modal fade" id="seePic<?= $ready->topUpId ?>" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 0px;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i>
+                        </button>
+                        <h3><?= $ready->topUpNo ?></h3>
+                        <h3 class="pull-right" style="margin-top: -30px;"><?= User::userName($ready->userId) ?></h3>
+                    </div>
+                    <div class="modal-body" style="padding-left: 120px;">
+                        <img src="<?= Yii::$app->homeUrl . $ready->image ?>" style="width:300px;height: 400px;">
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+    <?php endforeach; ?>
+
+<?php }
+?>
+<script type="text/javascript">
+    function ConfirmCheck()
+    {
+        if (confirm('Are you sure to accept?'))
+        {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function ConfirmCheck2()
+    {
+        if (confirm('Are you sure to refuse?'))
+        {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>

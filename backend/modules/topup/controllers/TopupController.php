@@ -37,8 +37,8 @@ class TopupController extends TopupMasterController {
         $dataProvider = new ActiveDataProvider([
             'query' => TopUp::find()
                     ->where("status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=1")
-                ,
         ]);
+        $readyData = TopUp::find()->where("status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=1 and image!=''")->all();
         if (isset($_POST["fileCsv"])) {
             $folderName = "file"; //  folderName
             $folderThumbnail = "billpayment"; //  folderName
@@ -85,7 +85,8 @@ class TopupController extends TopupMasterController {
                             return $this->render('index', [
                                         'dataProviderChange' => $dataProviderChange,
                                         'dataProvider' => $dataProvider,
-                                        'dataChange' => $topUps
+                                        'dataChange' => $topUps,
+                                        'readyData' => $readyData
                             ]);
                         }
                     }
@@ -93,18 +94,60 @@ class TopupController extends TopupMasterController {
 
                 return $this->render('index', [
                             'dataProvider' => $dataProvider,
-                            'data' => $data
+                            'data' => $data,
+                            'readyData' => $readyData
                 ]);
             } else {
                 return $this->render('index', [
                             'dataProvider' => $dataProvider,
+                            'readyData' => $readyData
                 ]);
             }
         } else {
             return $this->render('index', [
                         'dataProvider' => $dataProvider,
+                        'readyData' => $readyData
             ]);
         }
+    }
+
+    public function actionAcceptBillpayment($id) {
+        $topUp = TopUp::find()->where("topUpId=" . $id)->one();
+        if (isset($topUp)) {
+            $topUp->status = TopUp::TOPUP_STATUS_E_PAYMENT_SUCCESS;
+            $topUp->updateDateTime = new \yii\db\Expression('NOW()');
+            $topUp->save(false);
+            $topUp = TopUp::find()->where("topUpId=" . $id)->one();
+            $userPoint = UserPoint::find()->where("userId=" . $topUp->userId)->one();
+            if (isset($userPoint)) {
+                $userPoint->currentPoint += $topUp->point;
+                $userPoint->totalPoint += $topUp->point;
+                $userPoint->totalMoney += $topUp->money;
+                $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
+                $userPoint->save(false);
+            } else {
+                $userPoint = new UserPoint();
+                $userPoint->userId = Yii::$app->user->id;
+                $userPoint->currentPoint = $topUp->point;
+                $userPoint->totalPoint += $topUp->point;
+                $userPoint->totalMoney = $topUp->money;
+                $userPoint->status = 1;
+                $userPoint->createDateTime = new \yii\db\Expression('NOW()');
+                $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
+                $userPoint->save(false);
+            }
+        }
+        return $this->redirect(['index']);
+    }
+
+    public function actionNotAcceptBillpayment($id) {
+        $topUp = TopUp::find()->where("topUpId=" . $id)->one();
+        if (isset($topUp)) {
+            $topUp->status = TopUp::TOPUP_STATUS_E_PAYMENT_DISCLAIM;
+            $topUp->updateDateTime = new \yii\db\Expression('NOW()');
+            $topUp->save(false);
+        }
+        return $this->redirect(['index']);
     }
 
     /**
@@ -173,17 +216,17 @@ class TopupController extends TopupMasterController {
           endforeach; */
         $changeId = '';
         $topUp = TopUp::find()
-                ->where("status=" . \common\models\costfit\TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=1")
+                ->where("status=" . \common\models\costfit\TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=1")//
                 ->all();
         if (isset($topUp) && count($topUp) > 0) {
             foreach ($topUp as $topup):
-                $topup->status = 3;
+                $topup->status = TopUp::TOPUP_STATUS_E_PAYMENT_SUCCESS;
                 $topup->save(false);
                 $userPoint = UserPoint::find()->where("userId=" . $topup->userId)->one();
                 if (isset($userPoint)) {
-                    $userPoint->currentPoint = $topup->point;
+                    $userPoint->currentPoint += $topup->point;
                     $userPoint->totalPoint += $topup->point;
-                    $userPoint->currentPoint += $topup->money;
+                    $userPoint->totalMoney += $topup->money;
                     $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
                     $userPoint->save(false);
                 } else {
@@ -192,6 +235,7 @@ class TopupController extends TopupMasterController {
                     $userPoint->currentPoint = $topup->point;
                     $userPoint->totalPoint += $topup->point;
                     $userPoint->totalMoney = $topup->money;
+                    $userPoint->status = 1;
                     $userPoint->createDateTime = new \yii\db\Expression('NOW()');
                     $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
                     $userPoint->save(false);
@@ -203,6 +247,18 @@ class TopupController extends TopupMasterController {
             $changeId = substr($changeId, 0, -1);
         }
         return $changeId;
+    }
+
+    public function actionAllBillpayment() {
+        $dataProvider = new ActiveDataProvider([
+            'query' => TopUp::find()
+                    ->where("status>" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->orderBy('updateDateTime DESC')
+        ]);
+        $readyData = TopUp::find()->where("status>" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->all();
+        return $this->render('alltopup', [
+                    'dataProvider' => $dataProvider,
+                    'readyData' => $readyData
+        ]);
     }
 
     /**

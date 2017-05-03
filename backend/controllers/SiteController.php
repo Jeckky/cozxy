@@ -63,9 +63,13 @@ class SiteController extends \backend\controllers\BackendMasterController {
           throw new \yii\base\Exception('cc');
           return $this->goHome();
           } */
+
+
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             //throw new \yii\base\Exception(Yii::$app->user->identity->userId);
+            //echo Yii::$app->user->identity->type;
+            //exit();
             if (Yii::$app->user->identity->type != 1) {
                 \common\models\costfit\User::updateAll(['lastvisitDate' => new \yii\db\Expression("NOW()")], ['userId' => Yii::$app->user->identity->userId]);
                 return $this->redirect(Yii::$app->homeUrl . 'dashboard');
@@ -84,7 +88,7 @@ class SiteController extends \backend\controllers\BackendMasterController {
             /* return $this->redirect('../auth', [
               'model' => $model,
               ]); */
-            return $this->redirect(Yii::$app->homeUrl . 'auth');
+            //return $this->redirect(Yii::$app->homeUrl . 'auth');
         }
     }
 

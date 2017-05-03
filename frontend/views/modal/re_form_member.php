@@ -16,7 +16,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="modal-header" style="border-bottom-color:#fff;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
                 <span class="text-left">
-                    <!--<a class="logo col-md-3" href="<?php //echo Yii::$app->homeUrl;           ?>"><img src="<?php //echo Yii::$app->homeUrl;           ?>images/logo/costfit.png" alt="Cozxy.com" style="zoom:.2;" class="img-responsive"></a>-->
+                    <!--<a class="logo col-md-3" href="<?php //echo Yii::$app->homeUrl;            ?>"><img src="<?php //echo Yii::$app->homeUrl;            ?>images/logo/costfit.png" alt="Cozxy.com" style="zoom:.2;" class="img-responsive"></a>-->
                 </span>
             </div>
             <br>
@@ -38,7 +38,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="modal-footer" style="border-top: 1px solid #03a9f4;">
                 <div class="text-center">
                     <a href="<?php echo Yii::$app->homeUrl; ?>profile" class="yes btn btn-primary">Update Info</a>
-                    <a href="#" class="no btn btn-danger" data-dismiss="modal" id="no-thank">No Thank</a>
+                    <a href="#" class="no btn btn-danger" data-dismiss="modal" id="no-thank">No thanks</a>
                 </div>
             </div>
         </div>

@@ -7,10 +7,10 @@ use Yii;
 /**
 * This is the model class for table "cities".
 *
-    * @property integer $cityId
+    * @property string $cityId
     * @property string $cityName
     * @property string $localName
-    * @property integer $stateId
+    * @property string $stateId
     * @property string $countryId
     * @property double $latitude
     * @property double $longitude

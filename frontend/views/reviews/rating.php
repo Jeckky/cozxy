@@ -58,9 +58,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--Wishlist-->
 
 <section class="catalog-single">
+
     <div class="container" >
         <div class="row" id="productItem">
-            <?php echo $this->render('product_catalog_item_rating', ['productPostViewMem' => $productPostViewMem, 'productPost' => $productPost, 'model' => $model, 'productSupplierId' => $productSupplierId]); ?>
+            <?php echo $this->render('product_catalog_item_rating', ['modelSuppPrice' => $modelSuppPrice, 'modelSupp' => $modelSupp, 'productPostViewMem' => $productPostViewMem, 'productPost' => $productPost, 'model' => $model, 'productSupplierId' => $productSupplierId]); ?>
         </div>
         <section class="wishlist">
             <div class="container">
@@ -80,7 +81,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </style>
             <?php
             $form = ActiveForm::begin([
-                'action' => Yii::$app->homeUrl . '/reviews/create-review',
+                'action' => Yii::$app->homeUrl . 'reviews/create-review',
                 'options' => ['class' => 'form-horizontal', 'enctype' => 'multipart/form-data'],
                 'fieldConfig' => [
                     'template' => '{label}<div class="col-sm-9">{input}</div>',
@@ -91,21 +92,24 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             ]);
             ?>
             <div class="Reviews text-center" style="  margin-top: 10px; ">
-                <h5>Rate this item</h5>
+                <h5>Rate this story</h5>
+
                 <div class="col-md-12">
                     <?php
-                    //2.Usage without a model
-                    echo \yii2mod\rating\StarRating::widget([
-                        'name' => "input_name",
-                        'value' => 1,
-                        'options' => [
-                            // Your additional tag options
-                            'id' => 'reviews-rate', 'class' => 'reviews-rate-see'
-                        ],
-                        'clientOptions' => [
-                        // Your client options
-                        ],
-                    ]);
+                    if (\Yii::$app->user->id != '') {
+                        //2.Usage without a model
+                        echo \yii2mod\rating\StarRating::widget([
+                            'name' => "input_name",
+                            'value' => 1,
+                            'options' => [
+                                // Your additional tag options
+                                'id' => 'reviews-rate', 'class' => 'reviews-rate-see'
+                            ],
+                            'clientOptions' => [
+                            // Your client options
+                            ],
+                        ]);
+                    }
                     ?>
                 </div>
 
@@ -121,12 +125,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         ?>
                         <button class="btn btn-black btn-xs " role="button" id="write-reviews">rate !!</button>
                     <?php } else { ?>
-                        <a href="#" class="btn btn-black btn-xs" role="button" id="write-reviews">Member Only</a>
+                        <a href="#" class="btn btn-black btn-xs" href="#" data-toggle="modal" data-target="#loginModal" role="button" id="write-reviews" style="background:rgba(255,212,36,.9);">Member Only</a>
                     <?php } ?>
                     <?php
                     if (\Yii::$app->user->id != '') {
                         ?>
-                        <a href="<?= Yii::$app->homeUrl ?>reviews/create-post?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>" class="btn btn-success btn-xs" role="button" id="write-reviews" style="margin-top: 10px;">Create your story</a>
+                        <a href="<?= Yii::$app->homeUrl ?>reviews/create-post?productSupplierId=<?= $productSupplierId ?>&productId=<?= $model->productId ?>" class="btn btn-success btn-xs" role="button" id="write-reviews">Create your story</a>
                     <?php } ?>
                 </div>
 

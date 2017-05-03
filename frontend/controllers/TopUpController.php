@@ -69,18 +69,10 @@ class TopUpController extends MasterController {
             } else if ($_POST["paymentType"] == 'bill') {
                 $paymentMethods = 1;
             }
-            $isOld = TopUp::find()->where("userId='" . Yii::$app->user->id . "' and status=" . TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT . " or status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=" . $paymentMethods)->one();
+            $isOld = TopUp::find()->where("userId='" . Yii::$app->user->id . "' and status=" . TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT . " and paymentMethod=" . $paymentMethods)->one();
             if (isset($isOld)) {
                 if ($isOld->status == TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT) {
                     $topUpDraf = $isOld;
-                } else {
-                    $ms = 'ไม่สามารถทำรายการได้เนื่องจากคุณมีรายการที่รอชำระเงินค้างอยู่ กรุณาชำระเงิน หรือ ยกเลิกรายการที่ค้างอยู่';
-                    return $this->render('index', [
-                                'data' => $data,
-                                'paymentMethod' => $paymentMethod,
-                                'ms' => $ms,
-                                'needMore' => $needMore
-                    ]);
                 }
                 //$topUpDraf = $isOld;
             } else {
@@ -90,10 +82,10 @@ class TopUpController extends MasterController {
 
             if ($_POST["paymentType"] == 'credit') {
                 $topUpDraf->paymentMethod = 2; //
-                $data["paymentType"] = "ชำระผ่านบัตรเครดิต";
+                $data["paymentType"] = "Credit card";
             } else if ($_POST["paymentType"] == 'bill') {
                 $topUpDraf->paymentMethod = 1;
-                $data["paymentType"] = "โอนเงินผ่านธนาคาร";
+                $data["paymentType"] = "Bill payment";
             }
             if (isset($_POST["checkout"]) && $_POST["checkout"] != '') {
                 $fromCheckout = 'yes';
@@ -113,9 +105,18 @@ class TopUpController extends MasterController {
                         'needMore' => $needMore
             ]);
         }
+        $amount = '';
         if (isset($_POST["amount"]) && !empty($_POST["amount"])) {
-            $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT)->one();
             $amount = $_POST["amount"];
+        }
+        if (isset($_POST["currentAmount"]) && !empty($_POST["currentAmount"])) {
+            $amount = $_POST["currentAmount"];
+        }
+        if (isset($_POST["otherAmount"]) && !empty($_POST["otherAmount"])) {
+            $amount = $_POST["otherAmount"];
+        }
+        if ($amount != '') {
+            $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT)->one();
             if (isset($topUp) && count($topUp) > 0) {
                 $fromCheckout = 'no';
                 if (isset($_POST["fromCheckout"]) && $_POST["fromCheckout"] != 'no') {
@@ -129,13 +130,13 @@ class TopUpController extends MasterController {
                 if ($topUp->paymentMethod == 2) {//Payment Method เป็น การชำระด้วยบัตรเครดิต
                     return $this->redirect(['test-result',
                                 'userId' => $user->userId,
-                                'amount' => $_POST["amount"],
+                                'amount' => $amount,
                                 'fromCheckout' => $fromCheckout
                     ]);
                 } else if ($topUp->paymentMethod = 1) {//Payment Method เป็นการชำระด้วย Bill payment
                     return $this->redirect(['print-payment-form',
                                 'userId' => $user->userId,
-                                'amount' => $_POST["amount"],
+                                'amount' => $amount,
                                 'fromCheckout' => $fromCheckout
                     ]);
                 }
@@ -187,7 +188,10 @@ class TopUpController extends MasterController {
         $customerName = User::userName($userId);
         $customerTel = User::userTel($userId);
         $taxId = '0105553036789';
-        $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->one(); //status=2
+        $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)
+                ->orderBy('updateDateTime DESC')
+                ->one(); //status=2
+        $allBank = \common\models\costfit\BankTransfer::find()->where("paymentMethodId=1")->all();
         if (($topUp->topUpNo == NULL) && ($topUp->topUpNo == '')) {
             $topUp->topUpNo = $this->topUpNo();
         }
@@ -207,21 +211,24 @@ class TopUpController extends MasterController {
                     'topUpNo' => $topUp->topUpNo,
                     'taxId' => $taxId,
                     'barCode' => $barCode,
-                    'data' => $data
+                    'data' => $data,
+                    'allBank' => $allBank
         ]);
     }
 
     public function actionPrintPaymentFormTopdf() {
         $header = FALSE;
         //$header = $this->renderPartial('header');
-        $content = $this->renderPartial('bill_form', [
+        $allBank = \common\models\costfit\BankTransfer::find()->where("paymentMethodId=1")->all();
+        $content = $this->renderPartial('bill_form1', [
             'amount' => $_GET["amount"],
             'customerName' => $_GET["customerName"],
             'customerTel' => $_GET["customerTel"],
             'topUpNo' => $_GET["topUpNo"],
             'taxId' => $_GET["taxId"],
             'barCode' => $_GET["barCode"],
-            'data' => $_GET["data"]
+            'data' => $_GET["data"],
+            'allBank' => $allBank
         ]);
         $title = FALSE;
         $this->actionMpdfDocument($content, $header, $title);
@@ -237,7 +244,7 @@ class TopUpController extends MasterController {
                 $topUp->topUpNo = $this->topUpNo();
                 $topUp->save(false);
                 $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
-                if (isset($userPoint) && !empty($userPoint)) {
+                if (isset($userPoint)) {
                     $userPoint->currentPoint += $topUp->point;
                     $userPoint->totalPoint += $topUp->point;
                     $userPoint->totalMoney += $topUp->money;

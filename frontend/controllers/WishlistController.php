@@ -30,7 +30,10 @@ class WishlistController extends MasterController {
      */
     public function actionIndex() {
         //return Yii::$app->getResponse()->redirect('register/login');
-
+        if (\Yii::$app->user->id == '') {
+            header("location: /");
+            exit(0);
+        }
         $this->layout = 'content_right';
         $this->title = 'Cozxy.com | wishlist';
         $this->subTitle = 'Wishlist';
@@ -48,15 +51,15 @@ class WishlistController extends MasterController {
             endforeach;
             $id = substr($id, 0, -1);
             $notInWislist = ProductSuppliers::find()
-                    ->where("productSuppId in ($id) and productSuppId not in ($wishlistId) and approve='approve'")
-                    ->orderBy(new \yii\db\Expression('rand()'))
-                    ->limit(4)
-                    ->all();
+            ->where("productSuppId in ($id) and productSuppId not in ($wishlistId) and approve='approve'")
+            ->orderBy(new \yii\db\Expression('rand()'))
+            ->limit(4)
+            ->all();
         } else {
             $notInWislist = ProductSuppliers::find()->where("approve='approve'")
-                    ->orderBy(new \yii\db\Expression('rand()'))
-                    ->limit(4)
-                    ->all();
+            ->orderBy(new \yii\db\Expression('rand()'))
+            ->limit(4)
+            ->all();
         }
 
         return $this->render('wishlist', compact('wishlists', 'product', 'products', 'notInWislist'));

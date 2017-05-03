@@ -22,20 +22,42 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <section class="catalog-grid">
     <div class="container">
         <form class="subscr-form" role="form" autocomplete="off" novalidate="novalidate" method="post" action="<?php echo Yii::$app->homeUrl; ?>search-cost-fit">
+            <?php
+//        $form = ActiveForm::begin([
+//            'method' => 'POST',
+//            'id' => 'default-shipping-address',
+//            'options' => ['class' => 'subscr-form'],
+//        ]);
+            ?>
             <div class="form-group">
                 <label class="sr-only" for="subscr-name">Search for product</label>
                 <input type="text" class="form-control" name="search_hd" id="search_hd" value="<?= isset($_POST['search_hd']) ? $_POST['search_hd'] : ($search_hd) ? $search_hd : '' ?>" placeholder="Search for product" required=""><label for="subscr-name" class="error" style="display: inline-block;">This field is required.</label>
                 <button class="subscr-next"><i class="icon-magnifier"></i></button>
+                <?php
+//                echo kartik\select2\Select2::widget([
+//                    'name' => 'search_hd',
+//                    'data' => yii\helpers\ArrayHelper::map(common\models\costfit\ProductSuppliers::find()
+//                    ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
+//                    ->where("product_suppliers.status=1 and product_suppliers.approve='approve'")->asArray()->all(), 'title', 'title'),
+//                    'pluginOptions' => [
+//                        'loadingText' => 'Search for product ...',
+//                    ],
+//                    'options' => [
+//                        'placeholder' => 'Search for product ...',
+//                        'value' => isset($_POST['search_hd']) ? $_POST['search_hd'] : ($search_hd) ? $search_hd : '',
+//                        'multiple' => true,
+//                    ],
+//                ]);
+//                echo Html::submitButton("<i class='icon-magnifier'></i>");
+                ?>
+
             </div>
         </form>
+        <?php // ActiveForm::end();   ?>
 
         <h2 class="with-sorting">Showing results for "<?= isset($_POST['search_hd']) ? $_POST['search_hd'] : ($search_hd) ? $search_hd : '' ?>"</h2>
         <form class="sort-form sorting" role="form" autocomplete="off" novalidate="novalidate" method="post" action="<?php echo Yii::$app->homeUrl; ?>search-cost-fit">
-            <?php if (isset($_POST['search_hd'])) { ?>
-                <input type="hidden" value="<?= $_POST['search_hd'] ?>" name="search_hd">
-            <?php } else { ?>
-                <input type="hidden" value="<?= $search_hd ?>" name="search_hd">
-            <?php } ?>
+            <input type="hidden" value="<?= $search_hd ?>" name="search_hd">
             <input type="hidden" value="ASC" name="sortName" id="sortName">
             <input type="hidden" value="ASC" name="sortPrice" id="sortPrice">
             <a href="#" onclick="<?= ($sortName == "ASC") ? "$('#sortName').val('DESC');" : "$('#sortName').val('ASC');" ?>$('.sort-form').submit()" <?= ($sortName == "ASC") ? " " : " class='sorted'" ?>>Sort by name</a>
@@ -59,7 +81,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 'id' => 'product-list',
                             ],
                             'itemView' => function ($model, $key, $index, $widget) {
-                                return $this->render('_product', ['model' => $model->product]);
+                                return $this->render('_product_search', ['model' => $model->product]);
                             },
                             'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             'layout' => "{items}{pager}",

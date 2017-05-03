@@ -446,6 +446,24 @@ $(document).ready(function (e) {
             $("#top-up").submit();
         }
     });
+    $(document).on('click', '#confirm-topup', function (e) {
+        var amount = $(this).parent().parent().parent().parent().find('#amount').val();
+        var currentAmount = $(this).parent().parent().parent().parent().parent().find('#currentAmount').val();
+        if (amount == '') {
+            if (currentAmount == '') {
+                alert('empty amount');
+                return false;
+            } else {
+                if (!confirm(':: Confirm Amount ' + currentAmount + ' THB ?')) {
+                    return false;
+                }
+            }
+        } else {
+            if (!confirm(':: Confirm Amount ' + amount + ' THB ?')) {
+                return false;
+            }
+        }
+    });
 });/*Document Ready End*//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

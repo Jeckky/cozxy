@@ -58,9 +58,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <li class="has-submenu">
         <?php if (!Yii::$app->user->isGuest) { ?>
             <span class="sorting" id="sortingAccount">
-                <a href="#" class="sorting" style="color: #000 !important;"><span>A</span>count<i class="fa fa-chevron-down"></i></a></span>
-    <!--<a href="#"><span>A</span>count<i class="fa fa-chevron-down"></i></a>
-    Class "has-submenu" for proper highlighting and dropdown-->
+                <a href="#" class="sorting" style="color: #000 !important;"><span>A</span>ccount<i class="fa fa-chevron-down"></i></a></span>
+                <!--<a href="#"><span>A</span>count<i class="fa fa-chevron-down"></i></a>
+                Class "has-submenu" for proper highlighting and dropdown-->
             <ul class="submenu" id="submenu-sorting-account">
                 <li><a href="<?php echo Yii::$app->homeUrl; ?>profile">My Profile</a></li>
                 <li><a href="<?php echo Yii::$app->homeUrl; ?>profile/order">Order History</a></li>

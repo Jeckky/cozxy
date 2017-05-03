@@ -203,14 +203,16 @@ $('.new-address-form ').on('click', function () {
     $('#formBilling').show();
 });
 $('.checkout_update_address_billing').on('click', function () {
-//alert('Id Name : ' + $(this).find('input').attr('id'));
-//alert('Value : ' + $(this).find('input').val());
+    //alert('Id Name : ' + $(this).find('input').attr('id'));
+    //alert('Value : ' + $(this).find('input').val());
     var edit_shipping = $(this).find('input').val();
     //$('.actionFormEditShipping').show();
     $('.actionFormBillingNew').hide();
     //$('.actionFormEditBilling').hide();
     $('.actionFormEditShipping').hide();
     $('.actionFormEditBilling').show();
+    //$('.actionFormEditBilling').removeClass('expanded');
+    //alert('test');
     $.post("checkout/get-address", {
         address: edit_shipping
     }, function (data, status) {
@@ -711,17 +713,24 @@ $addToWishlistBtn.click(function () {
         {
             if (data.status)
             {
-                $('#addItemToWishlist').attr('disabled', true);
-                alert("Sucees to add wishlist");
+                //alert(111);
+                //$('#addItemToWishlist').attr('visible', true);
+                $('.wishlist-message').addClass('visible');
+                //$('.page-content').find(".wishlist-message").html('2017 !!');
+                //alert("This item has been successfully added to your wishlist");
             } else
             {
+                //alert(222);
                 alert(data.message);
             }
         }
     });
 });
+
+
 $(".addWishlistItemToCart").click(function () {
     event.preventDefault();
+    //$addedToCartMessage.removeClass('visible');
     $addedToCartMessage.removeClass('visible');
     var $itemName = $(this).parent().parent().find('.title').html();
     var $itemId = $(this).parent().parent().find('#productId').val();
@@ -959,7 +968,11 @@ $('.search-brands').on('ifChecked', function (event) {
     //alert(categoryId);
     $.ajax({
         type: "POST",
+<<<<<<< HEAD
         // dataType: "JSON",
+=======
+//        dataType: "JSON",
+>>>>>>> origin/multi-suppliers
         url: $baseUrl + 'search/search-brands',
         data: {'brandId': ids, 'categoryId': categoryId},
         success: function (data)
@@ -985,12 +998,20 @@ $('.search-brands').on('ifUnchecked', function (event) {
     //alert(categoryId);
     $.ajax({
         type: "POST",
+<<<<<<< HEAD
         // dataType: "JSON",
+=======
+//        dataType: "JSON",
+>>>>>>> origin/multi-suppliers
         url: $baseUrl + 'search/search-brands',
         data: {'brandId': ids, 'categoryId': categoryId},
         success: function (data)
         {
+<<<<<<< HEAD
 	        window.location = data;
+=======
+            window.location = data;
+>>>>>>> origin/multi-suppliers
         }
 
     });

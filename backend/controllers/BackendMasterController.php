@@ -378,4 +378,49 @@ class BackendMasterController extends MasterController
         echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
     }
 
+    public function actionChildZipcodeAddress()
+    {
+        $out = [];
+
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = ($_POST['depdrop_parents']);
+//            throw new \yii\base\Exception(print_r($parents, true));
+            if ($parents != null) {
+                $districtId = $parents[0];
+                $param1 = null;
+                $param2 = null;
+                if (!empty($_POST['depdrop_params'])) {
+                    $params = $_POST['depdrop_params'];
+                    $param1 = $params[0]; // get the value of input-type-1
+//                    $param2 = $params[1]; // get the value of input-type-2
+                }
+
+                $district = \common\models\dbworld\District::find()->where("districtId = $districtId")->one();
+//                throw new Exception($district->code);
+                $list = \common\models\dbworld\Zipcodes::find()->andWhere(['districtCode' => $district->code])->asArray()->all();
+                $selected = null;
+                if ($districtId != null && count($list) > 0) {
+                    $selected = '';
+                    foreach ($list as $i => $account) {
+                        $out[] = ['id' => $account['zipcode'], 'name' => $account['zipcode']];
+                        $param1 = ($param1 != '') ? $param1 : $account['zipcode'];
+                        if ($i == 0) {
+                            $selected = $param1; //$account['stateId'];
+                        } else {
+                            $selected = $param1;
+                        }
+                    }
+
+                    // Shows how you can preselect a value
+                    echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
+                    return;
+                }
+            }
+
+            //echo 'no';
+        }
+
+        echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
+    }
+
 }

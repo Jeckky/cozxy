@@ -78,13 +78,13 @@ class Category extends \common\models\costfit\master\CategoryMaster {
         if ($isRandom) {
             $query = Category::find()
             ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
-            ->where('sc.type = 2')
+            ->where('sc.type = 2')->orderBy(new \yii\db\Expression('rand()'))
             ->limit($limit);
             //->orderBy(new \yii\db\Expression('rand()'));
         } else {
             $query = Category::find()
             ->join("INNER JOIN", 'show_category sc', 'sc.categoryId = category.categoryId')
-            ->where('sc.type = 2')
+            ->where('sc.type = 2')->orderBy(new \yii\db\Expression('rand()'))
             ->limit($limit);
         }
 

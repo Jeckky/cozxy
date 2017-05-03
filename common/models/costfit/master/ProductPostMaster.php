@@ -35,10 +35,10 @@ public function rules()
 {
 return [
             [['productSuppId', 'brandId', 'userId', 'status'], 'integer'],
-            [['userId', 'title', 'shortDescription', 'createDateTime'], 'required'],
+            [['userId', 'createDateTime'], 'required'],
             [['description'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['title'], 'string', 'max' => 100],
+            [['title'], 'string', 'max' => 150],
             [['shortDescription'], 'string', 'max' => 200],
         ];
 }

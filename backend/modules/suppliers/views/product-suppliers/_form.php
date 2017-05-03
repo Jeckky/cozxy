@@ -130,6 +130,10 @@ use yii\redactor\widgets\Redactor;
         ?>
         <?//= $form->field($model, 'categoryId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(Category::find()->all(), 'categoryId', 'title'), ['prompt' => '-- Select Category --']) ?>
 
+        <?= $form->field($model, 'suppCode', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 100]) ?>
+
+        <?= $form->field($model, 'merchantCode', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 100]) ?>
+
         <?= $form->field($model, 'isbn', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 100]) ?>
 
         <?//= $form->field($model, 'code', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 100]) ?>
@@ -180,6 +184,34 @@ use yii\redactor\widgets\Redactor;
           ],
           ]); //->label('Small Unit');
          * */
+        ?>
+        <?php
+        echo $form->field($model, 'warrantyType')->widget(kartik\select2\Select2::classname(), [
+//            'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'),
+            'data' => yii\helpers\ArrayHelper::map(common\models\costfit\WarrantyType::find()->all(), 'warrantyTypeId', 'title'),
+            'pluginOptions' => [
+                'loadingText' => '-- Select Warranty Type --',
+            //'params' => ['input-type-1', 'input-type-2']
+            ],
+            'options' => [
+                'placeholder' => 'Select Warranty Type ...',
+                'id' => 'WarrantyType',
+                'class' => 'required'
+            ],
+        ]); //->label('Category');
+        echo $form->field($model, 'warrantyPeriod')->widget(kartik\select2\Select2::classname(), [
+//            'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'),
+            'data' => yii\helpers\ArrayHelper::map(common\models\costfit\WarrantyPeriod::find()->all(), 'warrantyPeriodId', 'title'),
+            'pluginOptions' => [
+                'loadingText' => '-- Select Category System --',
+            //'params' => ['input-type-1', 'input-type-2']
+            ],
+            'options' => [
+                'placeholder' => 'Select Warranty Period ...',
+                'id' => 'WarrantyPeriod',
+                'class' => 'required'
+            ],
+        ]); //->label('Category');
         ?>
         <?= $form->field($model, 'tags', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 255]) ?>
         <?= $form->field($model, 'url', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 255])->label('url รูปเว็ปเจ้าของแบรนด์') ?>
