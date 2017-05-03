@@ -16,7 +16,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--                    <a class="facebook" href="#"><i class="fa fa-facebook-square"></i></a>
                     <a class="google" href="#"><i class="fa fa-google-plus-square"></i></a>
                     <a class="twitter" href="#"><i class="fa fa-twitter-square"></i></a>-->
-                    <?= common\yii2\authclient\widgets\AuthChoice::widget(['baseAuthUrl' => ['site/auth']]) ?>
+                    <?//= common\yii2\authclient\widgets\AuthChoice::widget(['baseAuthUrl' => ['site/auth']]) ?>
                 </div>
             </div>
             <div class="modal-body">
