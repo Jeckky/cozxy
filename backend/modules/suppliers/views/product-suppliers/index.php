@@ -18,6 +18,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
     exit(0);
 }
 ?>
+<script> $.pjax.reload({container: '#employee-grid-view'});</script>
 <div class="product-suppliers-index">
     <?php
     //Pjax::begin(['id' => 'employee-grid-view']);
