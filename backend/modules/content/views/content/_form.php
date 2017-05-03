@@ -17,13 +17,13 @@ use common\models\costfit\ContentGroup;
 
     <?php
     $form = ActiveForm::begin([
-                'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
-                'fieldConfig' => [
-                    'template' => '{label}<div class="col-sm-9">{input}</div>',
-                    'labelOptions' => [
-                        'class' => 'col-sm-3 control-label'
-                    ]
-                ]
+        'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+        'fieldConfig' => [
+            'template' => '{label}<div class="col-sm-9">{input}</div>',
+            'labelOptions' => [
+                'class' => 'col-sm-3 control-label'
+            ]
+        ]
     ]);
     ?>
 
@@ -44,8 +44,8 @@ use common\models\costfit\ContentGroup;
 
         <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
 
-        <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
-
+        <?//= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
+        <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
         <?=
         $form->field($model, 'startDate')->textInput()->widget(\yii\jui\DatePicker::classname(), ['options' => ['class' => 'form-control'],
             'language' => 'th',
@@ -75,3 +75,19 @@ use common\models\costfit\ContentGroup;
     <?php ActiveForm::end(); ?>
 
 </div>
+<?php $this->registerJs("
+           init.push(function () {
+            if (!$('html').hasClass('ie8')) {
+                $('#content-description').summernote({
+                    height: 200,
+                    tabsize: 2,
+                    codemirror: {
+                        theme: 'monokai'
+                    }
+                }); 
+
+            }
+
+        });
+
+", \yii\web\View::POS_END); ?>
