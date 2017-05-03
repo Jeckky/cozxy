@@ -71,7 +71,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                             'tags' => true,
                             'placeholder' => 'Select or Search ...',
                             'loadingText' => 'Loading Brand ...',
-                            'initialize' => true,
+                        //'initialize' => true,
                         ],
                     ]);
                     ?>
