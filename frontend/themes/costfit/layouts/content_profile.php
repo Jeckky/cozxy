@@ -63,7 +63,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <span style="float: left; width: 70%; text-align: left;">Point</span>
                     </div>
                     <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="margin: 0 0 ;text-align: center;color: #000;">
-                        You have &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><?= $this->params['currentPoint'] ?></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Point.<!-- $this->params['currentPoint'] is in frontend/controllers/MasterController-->
+                        You have &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><?= $this->params['currentPoint'] ?></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Points.<!-- $this->params['currentPoint'] is in frontend/controllers/MasterController-->
                         <div style="margin-top: 20px;">
                             <a href="<?php echo Yii::$app->homeUrl ?>top-up"class = "btn" style = "background-color: #3cc; color: #fff;font-size: 12pt;">
                                 Top Up
@@ -123,7 +123,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         </div>
                         <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="margin: 0 0 ">
                             <?php
-                            if (isset($this->params['listDataProvider']['billing'])):
+                            if (isset($this->params['listDataProvider']['billing'])) {
                                 echo \yii\widgets\ListView::widget([
                                     'dataProvider' => $this->params['listDataProvider']['billing'],
                                     'options' => [
@@ -135,8 +135,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     'itemView' => function ($model, $key, $index, $widget) {
                                         return $this->render('@frontend/views/profile/add_billings_address', ['model' => $model, 'index' => $index]);
                                     },
+                                    'emptyText' => 'Please add your billing address',
                                 ]);
-                            endif;
+                            } else {
+                                echo 'Please add your billing address';
+                            }
                             ?>
                         </div>
                     <?php } ?>

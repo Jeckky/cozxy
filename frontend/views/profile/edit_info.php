@@ -18,9 +18,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     ?>
     <?= $form->field($model, 'firstname') ?>
     <?= $form->field($model, 'lastname') ?>
-    <?= $form->field($model, 'gender', ['radioTemplate' => '<label class="gender-head">{label}</label><label class="signup-radio">{input}</label>'])->radioList($model->findAllGenderArray(), ['separator' => '', 'tabindex' => 3]); ?>
+    <?= $form->field($model, 'gender', ['radioTemplate' => '<label class="gender-head">{label}</label><label class="signup-radio">{input}</label>'])->radioList($model->findAllGenderArrayEn(), ['separator' => '', 'tabindex' => 3]); ?>
     <div class="form-group field-user-birthDate">
-        <label class="control-label col-md-12 " style="padding-left: 0px;">Birthdate</label>
+        <label class="control-label col-md-12 " style="padding-left: 0px;">Date of birth</label>
         <div class="day col-md-4 col-xs-12">
             <?=
             Html::dropDownList('User[day]', NULL, $birthdate['dates'], ['prompt' => '---Select day---', 'class' => 'form-control'
@@ -45,7 +45,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <div class="year col-md-4 col-xs-12">
             <?=
-            Html::dropDownList('User[years]', NULL, $birthdate['years'], ['prompt' => '---Select years---', 'class' => 'form-control'
+            Html::dropDownList('User[years]', NULL, $birthdate['years'], ['prompt' => '---Select year---', 'class' => 'form-control'
                 , 'options' =>
                 [
                     $historyBirthDate['year'] => ['selected' => true]//['Selected' => 'selected']

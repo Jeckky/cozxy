@@ -17,8 +17,7 @@ use frontend\models\ContactForm;
 /**
  * Search controller
  */
-class SearchController extends MasterController
-{
+class SearchController extends MasterController {
 
     public $enableCsrfValidation = false;
 
@@ -27,8 +26,7 @@ class SearchController extends MasterController
      *
      * @return mixed
      */
-    public function actionIndex($title, $hash)
-    {
+    public function actionIndex($title, $hash) {
         //throw new \yii\base\Exception($title);
         $k = base64_decode(base64_decode($hash));
         $params = ModelMaster::decodeParams($hash);
@@ -104,8 +102,7 @@ class SearchController extends MasterController
         return $this->render('search', ['products' => $products, 'productNotSell' => $productNotSell, 'categoryIdBrand' => $params['categoryId']]);
     }
 
-    public function actionPop($category)
-    {
+    public function actionPop($category) {
         //throw new \yii\base\Exception($category);
         $this->layout = "/content_left";
         $this->title = 'Cozxy.com | Products';
@@ -132,8 +129,7 @@ class SearchController extends MasterController
         return $this->render('search', compact('products'));
     }
 
-    public function actionSearchBrands()
-    {
+    public function actionSearchBrands() {
         $categoryId = Yii::$app->request->post('categoryId');
         $brandIds = Yii::$app->request->post('brandId');
 //        throw new \yii\base\Exception(print_r($_POST, true));
