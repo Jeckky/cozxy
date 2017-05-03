@@ -80,7 +80,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                    </ul>
                </div>-->
                 <div class="contacts col-lg-6 col-md-6 col-sm-6">
-                    <h2>Contacts</h2>
+                    <h2>Contact Us</h2>
                     <p class="p-style3">
                         <?php
                         echo $footerContact->contents[0]->description;
