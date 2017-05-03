@@ -75,7 +75,7 @@ class ProductSuppliersController extends SuppliersMasterController {
                 ->select('`product_suppliers`.* ,  (SELECT product_price_suppliers.price  FROM product_price_suppliers
             where product_price_suppliers.productSuppId = product_suppliers.productSuppId and product_price_suppliers.status = 1  limit 1)
             AS `priceSuppliers`')
-                ->where('brandId = ' . $BrandId . ' and userId=' . Yii::$app->user->identity->userId)
+                ->where('brandId = "' . $BrandId . '"  and userId=' . Yii::$app->user->identity->userId)
                 ->orderBy('product_suppliers.productSuppId desc'),
             ]);
         } else if ($BrandId != '' && $CategoryId != '') {
@@ -84,7 +84,7 @@ class ProductSuppliersController extends SuppliersMasterController {
                 ->select('`product_suppliers`.* ,  (SELECT product_price_suppliers.price  FROM product_price_suppliers
             where product_price_suppliers.productSuppId = product_suppliers.productSuppId and product_price_suppliers.status = 1  limit 1)
             AS `priceSuppliers`')
-                ->where('brandId = ' . $BrandId . ' and categoryId = ' . $CategoryId . '  and userId=' . Yii::$app->user->identity->userId)
+                ->where('brandId = "' . $BrandId . '" and categoryId = ' . $CategoryId . '  and userId=' . Yii::$app->user->identity->userId)
                 ->orderBy('product_suppliers.productSuppId desc'),
             ]);
         } else {
