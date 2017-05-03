@@ -58,14 +58,19 @@
                         <table background="https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-9/13627169_1304244949603614_4827214866156693546_n.jpg?oh=7f153e886b70ba02a5139fd2821c1c5f&oe=583185F8sxxx"  width="100%" height="260" text-align="center" style=" height:260px; width:100% ;  text-align: center;  ">
                             <tr>
                                 <td>
-                                    <p style="color: #ff9016; font-size: 20px;"><strong>ขอบคุณที่ลงทะเบียนกับ Cozxy</strong></p>
-
-                                    <p style="color: #CE3C2D; font-size: 16px;">
-                                        <b>กรุณากด</b>
-                                        <a href="<?php echo $url ?>" style="color: #ff9016; font-size: 16px;"><?php echo $url ?></a> เพื่อยืนยันการสมัคร
+                                    <p style="color: #000000; font-size: 20px;">
+                                        <strong>
+                                            Thank you joining us on Cozxy<br>
+                                            Please click the following link to verify your account
+                                        </strong>
                                     </p>
 
-                                    <p style="color: #ff9016; font-size: 16px;">อีเมลฉบับนี้เป็นการแจ้งข้อมูลโดยอัตโนมัติ กรุณาอย่าตอบกลับ</p>
+                                    <p style="color: #CE3C2D; font-size: 16px;">
+                                        <b>Click</b>
+                                        <a href="<?php echo $url ?>" style="color: #ff9016; font-size: 16px;"><?php echo $url ?></a> <!--เพื่อยืนยันการสมัคร-->
+                                    </p>
+
+                                    <p style="color: #ff9016; font-size: 16px;">This email is an auto-generated email. <br> Please do not reply.</p>
                                 </td>
                             </tr>
                         </table>

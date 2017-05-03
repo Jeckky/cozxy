@@ -15,8 +15,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <br><br>
 <?php
 $form = ActiveForm::begin([
-            'id' => 'top-up'
-        ]);
+    'id' => 'top-up'
+]);
 if (isset($paymentMethod) && count($paymentMethod) > 0) {
     $count = count($paymentMethod);
 }
@@ -30,7 +30,7 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
                 if ($needMore == 0) {
                     echo $ms;
                 } else {
-                    echo $ms . ' ' . $needMore . ' Points เป็นเงิน ' . number_format($needMore, 2) . ' บาท';
+                    echo $ms . ' ' . $needMore . ' Points Please ' . number_format($needMore, 2) . ' THB';
                 }
             }
             ?>
