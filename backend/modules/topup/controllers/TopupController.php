@@ -127,7 +127,7 @@ class TopupController extends TopupMasterController {
                 $userPoint->save(false);
             } else {
                 $userPoint = new UserPoint();
-                $userPoint->userId = Yii::$app->user->id;
+                $userPoint->userId = $topUp->userId;
                 $userPoint->currentPoint = $topUp->point;
                 $userPoint->totalPoint += $topUp->point;
                 $userPoint->totalMoney = $topUp->money;
@@ -242,7 +242,7 @@ class TopupController extends TopupMasterController {
                     $userPoint->save(false);
                 } else {
                     $userPoint = new UserPoint();
-                    $userPoint->userId = Yii::$app->user->id;
+                    $userPoint->userId = $topup->userId;
                     $userPoint->currentPoint = $topup->point;
                     $userPoint->totalPoint += $topup->point;
                     $userPoint->totalMoney = $topup->money;
