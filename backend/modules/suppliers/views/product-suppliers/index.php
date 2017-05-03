@@ -20,10 +20,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
 ?>
 <script> $.pjax.reload({container: '#employee-grid-view'});</script>
 <div class="product-suppliers-index">
-    <?php
-    //Pjax::begin(['id' => 'employee-grid-view']);
-    Pjax::begin(['id' => 'employee-grid-view', 'enablePushState' => FALSE, 'clientOptions' => ['method' => 'POST']]);
-    ?>
+
     <div class="panel panel-default">
         <div class="panel-body">
             <?php
@@ -97,6 +94,10 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
             </div>
         </div>
         <div class="panel-body">
+            <?php
+            //Pjax::begin(['id' => 'employee-grid-view']);
+            Pjax::begin(['id' => 'employee-grid-view', 'enablePushState' => FALSE, 'clientOptions' => ['method' => 'POST']]);
+            ?>
             <?=
             GridView::widget([
                 'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
@@ -279,7 +280,8 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                 ],
             ]);
             ?>
+            <?php Pjax::end(); ?>
         </div>
     </div>
-    <?php Pjax::end(); ?>
+
 </div>
