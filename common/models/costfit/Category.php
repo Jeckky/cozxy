@@ -90,7 +90,8 @@ class Category extends \common\models\costfit\master\CategoryMaster {
 
         if ($returnType == 1) {
             return new \yii\data\ActiveDataProvider([
-                'query' => $query,
+                'query' => $query, 'pagination' => [
+                    'pageSize' => 8]
             ]);
         } else {
             return $query->all();
