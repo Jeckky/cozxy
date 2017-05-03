@@ -714,7 +714,7 @@ $addToWishlistBtn.click(function () {
             if (data.status)
             {
                 $('#addItemToWishlist').attr('disabled', true);
-                alert("Sucees to add wishlist");
+                alert("This item has been successfully added to your wishlist");
             } else
             {
                 alert(data.message);
