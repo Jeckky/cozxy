@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'User',
                         'format' => 'raw',
                         'value' => function($model) {
-                            return User::userName($model->userId);
+                            return common\models\costfit\Address::userName($model->userId);
                         }
                     ],
                         [
