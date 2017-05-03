@@ -58,7 +58,7 @@ class ProductSuppliersController extends SuppliersMasterController {
         $CategoryId = Yii::$app->request->post('CategoryId');
         $BrandId = Yii::$app->request->post('BrandId');
         //echo $CategoryId . '<br>';
-        //echo $BrandId;
+        echo $BrandId;
 
         if ($CategoryId != '' && $BrandId == '') {
             $dataProvider = new ActiveDataProvider([
