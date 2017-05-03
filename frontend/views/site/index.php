@@ -43,9 +43,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         ?>
                         <p style="width: 756px; left: 110px; top: 250px; text-align: left;" class="dark-color ms-layer col-md-7 " data-effect="back(500)" data-duration="700" data-delay="500" data-ease="easeOutQuad"><?= $desc; ?></p>
                         <?php if (isset($banner->linkTitle) && !empty($banner->linkTitle)): ?>
-                                                                    <!--<p style="width: 456px; left: 20px; top: 170px;" class="dark-color col-md-7">
-                                                                        <a class="btn btn-primary" href="<?//= $banner->link; ?>"><?//= $banner->linkTitle ?></a>
-                                                                    </p>-->
+                                                                            <!--<p style="width: 456px; left: 20px; top: 170px;" class="dark-color col-md-7">
+                                                                                <a class="btn btn-primary" href="<?//= $banner->link; ?>"><?//= $banner->linkTitle ?></a>
+                                                                            </p>-->
                         <?php endif; ?>
                         <!--<a class="btn btn-black" href="#">Browse all</a>-->
                     </div>
@@ -87,7 +87,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <section class="catalog-grid">
     <div class="container">
-        <h2 class="dark-color">EXPLORE</h2>
+        <h2 class="dark-color"><!--EXPLORE--> RECOMMENDED </h2>
         <div class="row">
             <?php
             echo \yii\widgets\ListView::widget([
