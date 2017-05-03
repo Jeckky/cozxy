@@ -13,7 +13,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <div class="row">
     <div class="col-lg-6 text-left pull-left" style="padding-left: 45px;color:#000;">
         - กรุณาตรวจสอบข้อมูลให้ถูกต้อง จากนั้นกด Print เพื่อนำใบ Bill payment ไปชำระเงิน<br>
-        - กรุณาตรวจสอบรายละเอียดจาก Email ที่ลงทะเบียนไว้
+        - กรุณาตรวจสอบรายละเอียดจาก Email ที่ลงทะเบียนไว้<br>
         - เมื่อชำระเงินเรียบร้อยคุณจะใช้  point จากการเติมเงินได้ภายใน 24 ชั่วโมง
 
     </div>
@@ -43,7 +43,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         ?>
     </div>
     <!--    <div class="col-lg-12" style="margin-top: 20px;">
-            <p style="margin-left:20px"><image src = "<?php // $baseUrl . '/images/Bank/payin-cut.png'   ?>" style = "width: 100%;height: 30px;" /><p>
+            <p style="margin-left:20px"><image src = "<?php // $baseUrl . '/images/Bank/payin-cut.png'    ?>" style = "width: 100%;height: 30px;" /><p>
         </div>
         <div class="col-lg-12" style="margin-top: 30px;">
     <?php /*
