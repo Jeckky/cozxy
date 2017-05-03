@@ -96,7 +96,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
         <div class="panel-body">
             <?php
             //Pjax::begin(['id' => 'employee-grid-view']);
-            Pjax::begin(['id' => 'employee-grid-view', 'enablePushState' => FALSE, 'clientOptions' => ['method' => 'POST', 'action' => '&BrandId=16']]);
+            Pjax::begin(['id' => 'employee-grid-view', 'enablePushState' => FALSE, 'clientOptions' => ['method' => 'POST']]);
             ?>
             <?=
             GridView::widget([
