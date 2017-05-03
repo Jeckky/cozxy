@@ -46,7 +46,7 @@ class CartController extends Controller
         $order = \common\models\costfit\Order::getOrder();
         if (!isset($order)) {
             $order = new \common\models\costfit\Order();
-            $order->token = $this->getToken();
+            $order->token = \common\helpers\Token::getToken();
             $order->status = \common\models\costfit\Order::ORDER_STATUS_DRAFT;
             $order->createDateTime = new \yii\db\Expression("NOW()");
             if (!$order->save(FALSE)) {
@@ -138,23 +138,6 @@ class CartController extends Controller
         }
 
         print_r(\yii\helpers\Json::encode($res));
-    }
-
-    public function getToken()
-    {
-        $cookies = Yii::$app->request->cookies;
-        if ($cookies->has('orderToken')) {
-            return $cookies->getValue('orderToken');
-        } else {
-            $this->generateNewToken();
-            $cookies = Yii::$app->request->cookies;
-//            echo print_r($cookies, true);
-//            throw new \yii\base\Exception(111);
-//            if (!isset($cookies['orderToken'])) {
-//                $cookies = Yii::$app->request->cookies;
-//        }
-            return $cookies->getValue('orderToken');
-        }
     }
 
     public function createShoppingCart($orderId)

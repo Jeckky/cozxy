@@ -60,7 +60,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="modal-footer" style="border-top: 1px solid #03a9f4;">
                 <div id="div-login-msg ">
                     <?php
-                    $token = $this->context->getToken();
+                    $token = \common\helpers\Token::getToken();
                     $order = \common\models\costfit\Order::find()->where("token ='" . $token . "' AND status=" . \common\models\costfit\Order::ORDER_STATUS_DRAFT)->one();
                     ?>
                     <h4 class="text-center">คุณใช่ <span class="email"><?= isset($order->user) ? $order->user->email : "-" ?></span> หรือไม่ </h4>
