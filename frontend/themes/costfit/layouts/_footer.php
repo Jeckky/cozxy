@@ -51,7 +51,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="info">
                         <a class="logo" href="<?php echo $baseUrl; ?>"><img src="<?php echo $baseUrl . $logoImage->image; ?>" alt="footer Cozxy.com"></a>
-                        <p><?php echo $logoImage->contents[0]->description; ?></p>
+                        <p><?php echo isset($logoImage->contents[0]) ? $logoImage->contents[0]->description : ""; ?></p>
                         <div class="social">
                             <a href="#" target="_blank"><i class="fa fa-instagram"></i></a>
                             <a href="#" target="_blank"><i class="fa fa-youtube-square"></i></a>
