@@ -94,7 +94,11 @@ class Category extends \common\models\costfit\master\CategoryMaster {
                     'pageSize' => 8]
             ]);
         } else {
-            return $query->all();
+            //return $query->all();
+            return new \yii\data\ActiveDataProvider([
+                'query' => $query, 'pagination' => [
+                    'pageSize' => 8]
+            ]);
         }
     }
 

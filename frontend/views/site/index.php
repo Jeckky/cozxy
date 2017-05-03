@@ -43,9 +43,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         ?>
                         <p style="width: 756px; left: 110px; top: 250px; text-align: left;" class="dark-color ms-layer col-md-7 " data-effect="back(500)" data-duration="700" data-delay="500" data-ease="easeOutQuad"><?= $desc; ?></p>
                         <?php if (isset($banner->linkTitle) && !empty($banner->linkTitle)): ?>
-                                                            <!--<p style="width: 456px; left: 20px; top: 170px;" class="dark-color col-md-7">
-                                                                <a class="btn btn-primary" href="<?//= $banner->link; ?>"><?//= $banner->linkTitle ?></a>
-                                                            </p>-->
+                                                                    <!--<p style="width: 456px; left: 20px; top: 170px;" class="dark-color col-md-7">
+                                                                        <a class="btn btn-primary" href="<?//= $banner->link; ?>"><?//= $banner->linkTitle ?></a>
+                                                                    </p>-->
                         <?php endif; ?>
                         <!--<a class="btn btn-black" href="#">Browse all</a>-->
                     </div>
@@ -286,7 +286,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <div class="row" id="save-main-limit"></div>
 <?php if ($saveCat->getTotalCount() > 6): ?>
-                
+
 <?php endif; ?>
     </div>
 </section> Categories Close-->
@@ -308,7 +308,29 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     return $this->render('_popular_cat', ['model' => $model]);
                 },
                 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                'layout' => "{items}"
+                'layout' => "{items}{pager}",
+                'pager' => [
+                    //            'firstPageLabel' => 'first',
+                    //            'lastPageLabel' => 'last',
+                    'prevPageLabel' => '<span class="icon-arrow-left"></span>',
+                    'nextPageLabel' => '<span class="icon-arrow-right"></span>',
+                    //            'maxButtonCount' => 3,
+                    // Customzing options for pager container tag
+                    //            'options' => [
+                    //                'tag' => 'div',
+                    //                'class' => 'pager-wrapper',
+                    //                'id' => 'pager-container',
+                    //            ],
+                    // Customzing CSS class for pager link
+                    //            'linkOptions' => ['class' => 'mylink'],
+                    //            'activePageCssClass' => 'active',
+                    //            'disabledPageCssClass' => 'mydisable',
+                    // Customzing CSS class for navigating link
+                    'prevPageCssClass' => 'prev-page',
+                    'nextPageCssClass' => 'next-page',
+                //            'firstPageCssClass' => 'myfirst',
+                //            'lastPageCssClass' => 'mylast',
+                ],
             ])
             ?>
         </div>
