@@ -41,9 +41,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         ?>
     </div>
     <!--    <div class="col-lg-12" style="margin-top: 20px;">
-            <p style="margin-left:20px"><image src = "<?php // $baseUrl . '/images/Bank/payin-cut.png'   ?>" style = "width: 100%;height: 30px;" /><p>
-        </div>-->
-    <!--    <div class="col-lg-12" style="margin-top: 30px;">
+            <p style="margin-left:20px"><image src = "<?php // $baseUrl . '/images/Bank/payin-cut.png'  ?>" style = "width: 100%;height: 30px;" /><p>
+        </div>
+        <div class="col-lg-12" style="margin-top: 30px;">
     <?php /*
       $this->render('forcustomer1', [
       'title' => 'ส่วนที่ 2 สำหรับลูกค้า',
@@ -55,7 +55,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
       'barCode' => $barCode,
       'data' => $data,
       'allBank' => $allBank
-      ]); */
-    ?>
+      ]);
+     */ ?>
         </div>-->
 </div>

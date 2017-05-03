@@ -120,7 +120,7 @@ class TopupController extends TopupMasterController {
             $topUp = TopUp::find()->where("topUpId=" . $id)->one();
             $userPoint = UserPoint::find()->where("userId=" . $topUp->userId)->one();
             if (isset($userPoint)) {
-                $userPoint->currentPoint = $topUp->point;
+                $userPoint->currentPoint += $topUp->point;
                 $userPoint->totalPoint += $topUp->point;
                 $userPoint->totalMoney += $topUp->money;
                 $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
@@ -131,6 +131,7 @@ class TopupController extends TopupMasterController {
                 $userPoint->currentPoint = $topUp->point;
                 $userPoint->totalPoint += $topUp->point;
                 $userPoint->totalMoney = $topUp->money;
+                $userPoint->status = 1;
                 $userPoint->createDateTime = new \yii\db\Expression('NOW()');
                 $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
                 $userPoint->save(false);
@@ -219,11 +220,11 @@ class TopupController extends TopupMasterController {
                 ->all();
         if (isset($topUp) && count($topUp) > 0) {
             foreach ($topUp as $topup):
-                $topup->status = 3;
+                $topup->status = TopUp::TOPUP_STATUS_E_PAYMENT_SUCCESS;
                 $topup->save(false);
                 $userPoint = UserPoint::find()->where("userId=" . $topup->userId)->one();
                 if (isset($userPoint)) {
-                    $userPoint->currentPoint = $topup->point;
+                    $userPoint->currentPoint += $topup->point;
                     $userPoint->totalPoint += $topup->point;
                     $userPoint->totalMoney += $topup->money;
                     $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
@@ -234,6 +235,7 @@ class TopupController extends TopupMasterController {
                     $userPoint->currentPoint = $topup->point;
                     $userPoint->totalPoint += $topup->point;
                     $userPoint->totalMoney = $topup->money;
+                    $userPoint->status = 1;
                     $userPoint->createDateTime = new \yii\db\Expression('NOW()');
                     $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
                     $userPoint->save(false);

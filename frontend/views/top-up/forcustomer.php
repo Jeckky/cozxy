@@ -61,7 +61,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     </div>
     <div class="row text-center" style="margin: 15px;">
         <div class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
-            <img src="<?= $baseUrl . '/images/logo/cozxy.png' ?>" style="float: left;width: 100px;height: 80px;" />
+            <img src="<?= $baseUrl . '/images/ContentGroup/zWnWm6Z1PY.png' ?>" style="float: left;width: 100px;height: 80px;" />
         </div>
         <div class="col-lg-10 col-md-10 col-xs-10 col-sm-10 text-right" style="height: 80px;padding: 10px;">
             ชื่อผู้นำฝาก/Desposit by_______________________โทร/Tel_____________________เจ้าหน้าที่ธนาคาร_________________________

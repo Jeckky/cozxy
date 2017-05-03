@@ -69,18 +69,10 @@ class TopUpController extends MasterController {
             } else if ($_POST["paymentType"] == 'bill') {
                 $paymentMethods = 1;
             }
-            $isOld = TopUp::find()->where("userId='" . Yii::$app->user->id . "' and status=" . TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT . " or status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=" . $paymentMethods)->one();
+            $isOld = TopUp::find()->where("userId='" . Yii::$app->user->id . "' and status=" . TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT . " and paymentMethod=" . $paymentMethods)->one();
             if (isset($isOld)) {
                 if ($isOld->status == TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT) {
                     $topUpDraf = $isOld;
-                } else {
-                    $ms = 'ไม่สามารถทำรายการได้เนื่องจากคุณมีรายการที่รอชำระเงินค้างอยู่ กรุณาชำระเงิน หรือ ยกเลิกรายการที่ค้างอยู่';
-                    return $this->render('index', [
-                                'data' => $data,
-                                'paymentMethod' => $paymentMethod,
-                                'ms' => $ms,
-                                'needMore' => $needMore
-                    ]);
                 }
                 //$topUpDraf = $isOld;
             } else {
@@ -196,7 +188,9 @@ class TopUpController extends MasterController {
         $customerName = User::userName($userId);
         $customerTel = User::userTel($userId);
         $taxId = '0105553036789';
-        $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->one(); //status=2
+        $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)
+                ->orderBy('updateDateTime DESC')
+                ->one(); //status=2
         $allBank = \common\models\costfit\BankTransfer::find()->where("paymentMethodId=1")->all();
         if (($topUp->topUpNo == NULL) && ($topUp->topUpNo == '')) {
             $topUp->topUpNo = $this->topUpNo();
@@ -250,7 +244,7 @@ class TopUpController extends MasterController {
                 $topUp->topUpNo = $this->topUpNo();
                 $topUp->save(false);
                 $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
-                if (isset($userPoint) && !empty($userPoint)) {
+                if (isset($userPoint)) {
                     $userPoint->currentPoint += $topUp->point;
                     $userPoint->totalPoint += $topUp->point;
                     $userPoint->totalMoney += $topUp->money;

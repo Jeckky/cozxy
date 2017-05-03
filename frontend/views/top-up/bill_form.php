@@ -55,7 +55,7 @@ for ($i = 1; $i < 3; $i++):
             จำนวนเงิน(บาท)
         </div>
         <div style="margin-top: 20px;">
-            <img src="<?= $baseUrl . '/images/logo/cozxy.png' ?>" style="float: left;width: 80px;height: 50px;" />
+            <img src="<?= $baseUrl . '/images/ContentGroup/zWnWm6Z1PY.png' ?>" style="float: left;width: 80px;height: 50px;" />
         </div>
         <div style="height: 80px;padding: 10px;text-align: right;font-size: 7pt;margin-top: -40px;">
             ชื่อผู้นำฝาก/Desposit by_______________________โทร/Tel_____________________เจ้าหน้าที่ธนาคาร_________________________
