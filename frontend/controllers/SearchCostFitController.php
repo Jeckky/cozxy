@@ -62,7 +62,7 @@ class SearchCostFitController extends MasterController
         //$products = \common\models\costfit\Product::find()
         $products = \common\models\costfit\ProductSuppliers::find()
         ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
-        ->where("product_suppliers.status=1 and product_suppliers.approve='approve' AND product_price_suppliers.status = 1")
+        ->where("product_suppliers.status=1 and product_suppliers.approve='approve' ")
         ->andFilterWhere(['OR',
             ['REGEXP', 'product_suppliers.title', trim($search_hd)],
             ['REGEXP', 'product_suppliers.description', trim($search_hd)],
