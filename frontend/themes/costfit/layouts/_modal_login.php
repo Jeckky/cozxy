@@ -11,7 +11,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i>
                 </button>
                 <h2><a href="<?php echo $baseUrl; ?>/register/login">Login</a> <span class="regis">or <a href="<?php echo $baseUrl; ?>/register/login">Register</a></span></h2>
-                <p class="large">Use social accounts</p>
+                <!--<p class="large">Use social accounts</p>-->
                 <div class="social-login">
 <!--                    <a class="facebook" href="#"><i class="fa fa-facebook-square"></i></a>
                     <a class="google" href="#"><i class="fa fa-google-plus-square"></i></a>
