@@ -121,7 +121,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <!--    <div class="buttons group products-buttons-group" style="margin-top: -18px;">
             <div class="form-group" style="word-wrap: break-word;">
                 <label for="shopping-dollar" class="col-sm-1 " style="float: left; padding-right: 0px; padding-left: 0px; margin-bottom: 0px;">
-                    <img  src="<?php // echo Yii::$app->homeUrl;                                                                                                                                                                                                                                                                                                                   ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
+                    <img  src="<?php // echo Yii::$app->homeUrl;                                                                                                                                                                                                                                                                                                                    ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
                 </label>
                 <div class="col-sm-11 text-left discountPrice " style="float: left; padding: 0px; margin-left: 0px; margin-top: 15px;">
                     &nbsp;Add more than 1 item to your order
@@ -533,17 +533,17 @@ if (Yii::$app->controller->action->id != 'see-review') {
                                             ?>
                                             <div class="text-center" id="reviews-rate-show-<?php echo $value['productPostId']; ?>" style=" margin-left: 2px;border: 1px #e6e6e6 solid; max-height: 460px; min-height: 200px; padding: 5px;">
                                                 <?php
-                                                echo \yii2mod\rating\StarRating::widget([
-                                                    'name' => "input_name_" . $value['productPostId'],
-                                                    'value' => $results_rating,
-                                                    'options' => [
-                                                        // Your additional tag options
-                                                        'id' => 'reviews-rate-' . $value['productPostId'], 'class' => 'reviews-rate',
-                                                    ],
-                                                    'clientOptions' => [
-                                                    // Your client options
-                                                    ],
-                                                ]);
+                                                /* echo \yii2mod\rating\StarRating::widget([
+                                                  'name' => "input_name_" . $value['productPostId'],
+                                                  'value' => $results_rating,
+                                                  'options' => [
+                                                  // Your additional tag options
+                                                  'id' => 'reviews-rate-' . $value['productPostId'], 'class' => 'reviews-rate',
+                                                  ],
+                                                  'clientOptions' => [
+                                                  // Your client options
+                                                  ],
+                                                  ]); */
                                                 //echo '<span style="font-size: 12px;">' . number_format($results_rating, 3) . 'จาก 5 คะแนน </span>';
                                                 ?>
                                                 <div class="text-left" style="margin-bottom:2px; border-bottom: 1px #e6e6e6 dashed;">
