@@ -96,7 +96,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
         <div class="panel-body">
             <?php
             //Pjax::begin(['id' => 'employee-grid-view']);
-            Pjax::begin(['id' => 'employee-grid-view', 'enablePushState' => FALSE, 'clientOptions' => ['method' => 'POST']]);
+            Pjax::begin(['id' => 'employee-grid-view', 'enablePushState' => FALSE, 'clientOptions' => ['method' => 'POST', 'action' => '&BrandId=16']]);
             ?>
             <?=
             GridView::widget([
@@ -128,7 +128,9 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                       //'isbn',
                       ['attribute' => 'isbn',
                       'label' => 'isbn',
-                      //'contentOptions' => ['style' => 'width:70px;  min-width:70px;  '],
+                      //'contentOptions' => ['style' => 'width:70px;
+                      min-width:70px;
+                      '],
                       ],
                       'code',
                       //'title', */
@@ -136,8 +138,8 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                         'attribute' => 'isbn & code',
                         'format' => 'html',
                         'value' => function($model) {
-                            return '<div class="col-sm-12"><strong>isbn : </strong>' . $model->isbn . '</div>'
-                            . '<div class="col-sm-12"><strong>code : </strong> ' . $model->code . '</div>'
+                            return '<div class = "col-sm-12"><strong>isbn : </strong>' . $model->isbn . '</div>'
+                            . '<div class = "col-sm-12"><strong>code : </strong> ' . $model->code . '</div>'
                             ;
                         }
                     ],
@@ -151,7 +153,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                             $url = isset($model->url) ? Html::a('url brand', $model->url, ['target' => '_blank', 'data-pjax' => "0"]) : 'ไม่ระบุ';
                             //$count = common\models\costfit\ProductPageViews::find()->where('productSuppId=' . $model->productSuppId)->count();
 
-                            return '<strong>Title : </strong><a href="http://www2.cozxy.com/products/' . $model->encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productSuppId])
+                            return '<strong>Title : </strong><a href="http://www2.cozxy.com/products/' . $model->encodeParams([ 'productId' => $model->productId, 'productSupplierId' => $model->productSuppId])
                             . '">' . $title . '</a><br>'
                             . '<strong>Category : </strong> ' . $category . '<br>'
                             . '<strong>Brand : </strong>' . $brand . '<br>'
