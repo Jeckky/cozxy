@@ -1,6 +1,9 @@
 <?php
-defined('YII_DEBUG') or define('YII_DEBUG', true);
-defined('YII_ENV') or define('YII_ENV', 'dev');
+if($_SERVER['HTTP_HOST'] != 'www.cozxy.com')
+{
+	defined('YII_DEBUG') or define('YII_DEBUG', true);
+	defined('YII_ENV') or define('YII_ENV', 'dev');
+}
 
 require(__DIR__ . '/../../vendor/autoload.php');
 require(__DIR__ . '/../../vendor/yiisoft/yii2/Yii.php');
