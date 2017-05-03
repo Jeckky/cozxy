@@ -65,7 +65,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                     echo kartik\select2\Select2::widget([
                         'name' => 'BrandId',
                         // 'value' => ['THA'], // initial value
-                        'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Brand::find()->where('userId=' . Yii::$app->user->identity->userId)->all(), 'brandId', 'title'),
+                        'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Brand::find()->all(), 'brandId', 'title'),
                         'options' => ['placeholder' => 'Select or Search User Brand ...', 'id' => 'BrandId'], //, 'onchange' => 'this.form.submit()'
                         'pluginOptions' => [
                             'tags' => true,
