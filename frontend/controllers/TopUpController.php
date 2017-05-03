@@ -204,6 +204,18 @@ class TopUpController extends MasterController {
         $barCode = $taxId . $topUpCut . $tel . $amount2;
         $data = "| " . $taxId . " " . $topUpCut . " " . $tel . " " . $amount2;
         //throw new \yii\base\Exception($amount);
+        $customer = User::find()->where("userId=" . Yii::$app->user->id)->one();
+        if (isset($customer)) {
+            $Subject = "Confirm payment : #" . $topUp->topUpNo;
+            $username = User::userName($customer->userId);
+            $toMail = $customer->email;
+            $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "top-up/history";
+            $point = $topUp->point;
+            $money = $topUp->money;
+            $paymentMethod = $topUp->paymentMethod;
+            $bank = \common\models\costfit\BankTransfer::find()->where("paymentMethodId=1")->all();
+            $topUpEmail = \common\helpers\Email::topUpBillpayment($Subject, $username, $toMail, $url, $point, $money, $paymentMethod, $bank);
+        }
         return $this->render('billpayment', [
                     'amount' => $amount,
                     'customerName' => $customerName,
@@ -269,6 +281,20 @@ class TopUpController extends MasterController {
                 } else {
                     $order = '';
                 }
+                //sent Email
+                $customer = User::find()->where("userId=" . Yii::$app->user->id)->one();
+                if (isset($customer)) {
+                    $Subject = "Top up successful : #" . $topUp->topUpNo;
+                    $username = User::userName($customer->userId);
+                    $toMail = $customer->email;
+                    $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "top-up/history";
+                    $point = $topUp->point;
+                    $money = $topUp->money;
+                    $paymentMethod = $topUp->paymentMethod;
+                    $topUpEmail = \common\helpers\Email::topUpSuccess($Subject, $username, $toMail, $url, $point, $money, $paymentMethod);
+                }
+
+                //
                 return $this->render('thank', [
                             'topUpId' => $topUp->topUpId,
                             'currentPoint' => $currentPoint,
@@ -278,7 +304,6 @@ class TopUpController extends MasterController {
                 ]);
             } else {
                 return $this->redirect(Yii::$app->homeUrl . 'top-up');
-                // go to error page
             }
         } else {
             $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->one();
@@ -294,6 +319,30 @@ class TopUpController extends MasterController {
             }
         }
     }
+
+    /* public function actionMail() {
+      $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=2")->one();
+      $customer = User::find()->where("userId=" . Yii::$app->user->id)->one();
+      if (isset($customer)) {
+      $Subject = "Top up successful : #" . $topUp->topUpNo;
+      $username = User::userName($customer->userId);
+      $toMail = $customer->email;
+      $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "top-up/history";
+      $point = $topUp->point;
+      $money = $topUp->money;
+      $paymentMethod = $topUp->paymentMethod;
+      // $topUpEmail = \common\helpers\Email::topUpSuccess($Subject, $username, $toMail, $url, $point, $money, $paymentMethod);
+      }
+      return $this->render('topupSuccess', [
+      'Subject' => $Subject,
+      'username' => $username,
+      'toMail' => $toMail,
+      'url' => $url,
+      'point' => $point,
+      'money' => $money,
+      'paymentMethod' => $paymentMethod,
+      ]);
+      } */
 
     public function topUpNo() {
         $y = date('Y');

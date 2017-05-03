@@ -136,6 +136,17 @@ class TopupController extends TopupMasterController {
                 $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
                 $userPoint->save(false);
             }
+            $customer = \common\models\costfit\User::find()->where("userId=" . $topUp->userId)->one();
+            if (isset($customer)) {
+                $Subject = "Top up successful : #" . $topUp->topUpNo;
+                $username = \common\models\costfit\User::userName($customer->userId);
+                $toMail = $customer->email;
+                $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "top-up/history";
+                $point = $topUp->point;
+                $money = $topUp->money;
+                $paymentMethod = $topUp->paymentMethod;
+                $topUpEmail = \common\helpers\Email::topUpSuccess($Subject, $username, $toMail, $url, $point, $money, $paymentMethod);
+            }
         }
         return $this->redirect(['index']);
     }
@@ -239,6 +250,17 @@ class TopupController extends TopupMasterController {
                     $userPoint->createDateTime = new \yii\db\Expression('NOW()');
                     $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
                     $userPoint->save(false);
+                }
+                $customer = User::find()->where("userId=" . $topup->userId)->one();
+                if (isset($customer)) {
+                    $Subject = "Top up successful : #" . $topup->topUpNo;
+                    $username = User::userName($customer->userId);
+                    $toMail = $customer->email;
+                    $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "top-up/history";
+                    $point = $topup->point;
+                    $money = $topup->money;
+                    $paymentMethod = $topup->paymentMethod;
+                    $topUpEmail = \common\helpers\Email::topUpSuccess($Subject, $username, $toMail, $url, $point, $money, $paymentMethod);
                 }
                 $changeId = $changeId . $topup->topUpId . ',';
             endforeach;

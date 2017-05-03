@@ -21,20 +21,38 @@ class Email {
     //put your code here
     public static function mailRegisterConfirm($toMail, $url) {//ส่งถึงสมาชิกให้ยืนยันอีเมล์
         \Yii::$app->mail->compose('register_confirm', ['url' => $url])
-        //Yii::$app->mail->compose('register_confirm', ['url' => $url])
-        ->setTo($toMail)//tomail
-        ->setFrom('cozxy@cozxy.com')
-        ->setSubject('Cozxy Register Confirm')
-        ->send();
+                //Yii::$app->mail->compose('register_confirm', ['url' => $url])
+                ->setTo($toMail)//tomail
+                ->setFrom('cozxy@cozxy.com')
+                ->setSubject('Cozxy Register Confirm')
+                ->send();
     }
 
     public static function mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType) {//ส่งรายการ Order ให้สมาชิก
         \Yii::$app->mail->compose('orderToMember', ['url' => $url, 'type' => $type, 'adress' => $adress, 'order' => $orderList, 'receiveType' => $receiveType])
-        ->setTo($toMail)//tomail
-        ->setFrom('cozxy@cozxy.com')
-        ->setSubject($Subject)
-        //->setHtmlBody($htmls)
-        ->send();
+                ->setTo($toMail)//tomail
+                ->setFrom('cozxy@cozxy.com')
+                ->setSubject($Subject)
+                //->setHtmlBody($htmls)
+                ->send();
+    }
+
+    public static function topUpSuccess($Subject, $username, $toMail, $url, $point, $money, $paymentMethod) {
+        \Yii::$app->mail->compose('topupSuccess', ['url' => $url, 'username' => $username, 'point' => $point, 'money' => $money, 'paymentMethod' => $paymentMethod])
+                ->setTo($toMail)//tomail
+                ->setFrom('cozxy@cozxy.com')
+                ->setSubject($Subject)
+                //->setHtmlBody($htmls)
+                ->send();
+    }
+
+    public static function topUpBillpayment($Subject, $username, $toMail, $url, $point, $money, $paymentMethod, $bank) {
+        \Yii::$app->mail->compose('billpaymentTopup', ['url' => $url, 'username' => $username, 'point' => $point, 'money' => $money, 'paymentMethod' => $paymentMethod, 'bank' => $bank])
+                ->setTo($toMail)//tomail
+                ->setFrom('cozxy@cozxy.com')
+                ->setSubject($Subject)
+                //->setHtmlBody($htmls)
+                ->send();
     }
 
 }
