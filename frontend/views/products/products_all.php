@@ -68,20 +68,20 @@ $category = \common\models\costfit\Category::getRootText($model->categoryId);
             <?= isset($this->context->subTitle) ? $this->context->subTitle : "subTitle" ?></a>
     </li>
     <!--
-    <li><a href="<?php //echo Yii::$app->homeUrl . Yii::$app->controller->id;           ?>?productId=<?php //echo $model->productId;         ?>">
+    <li><a href="<?php //echo Yii::$app->homeUrl . Yii::$app->controller->id;              ?>?productId=<?php //echo $model->productId;            ?>">
     <?//= isset($this->context->subTitle) ? $this->context->subTitle : "subTitle" ?></a></li>-->
 </ol><!--Breadcrumbs Close-->
 
 <!--Shopping Cart Message-->
 <section class="cart-message">
     <i class="fa fa-check-square"></i>
-    <p class="p-style3"><!--"Nikon" was--> successfully added to your cart.</p>
+    <p class="p-style3"><!--"Nikon" was--> This item has been successfully added to your cart.</p>
     <a class="btn-outlined-invert btn-black btn-sm" href="<?php echo Yii::$app->homeUrl; ?>cart">View cart</a>
 </section><!--Shopping Cart Message Close-->
 
 <section class="wishlist-message">
     <i class="fa fa-check-square"></i>
-    <p class="p-style3"><!--"Nikon" was--> successfully added to your wishlist.</p>
+    <p class="p-style3"><!--"Nikon" was This item has been successfully added to your wishlist--> This item has been successfully added to your wishlist.</p>
     <a class="btn-outlined-invert btn-black btn-sm" href="<?php echo Yii::$app->homeUrl; ?>wishlist">View Wishlist</a>
 </section>
 
