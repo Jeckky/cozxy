@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h4>* มีรายการสั่งสินค้าจากทาง Cozxy dot com ถึง <b><?= Address::CompanyName(Yii::$app->user->identity->userId) ?></b></h4>
                 <h4> กรุณาเตรียมสินค้าตามรายด้านล่าง ทาง Cozxy dot com จะดำเนินการส่ง Po ตามมาภายหลัง </h4>
                 <br>
-            <?php } ?>
+<?php } ?>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -63,8 +63,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </tr>
                     </tbody>
-                <?php } ?>
+<?php } ?>
             </table>
         </div>
     </div>
 </div>
+

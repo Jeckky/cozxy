@@ -24,15 +24,15 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
         <div class="panel-body">
             <?php
             $form = ActiveForm::begin([
-                        'method' => 'GET',
-                        //'action' => '#',
-                        'options' => ['class' => ' form-horizontal', 'enctype' => 'multipart/form-data'],
-                        'fieldConfig' => [
-                            'template' => '{label}<div class="col-sm-9">{input}</div>',
-                            'labelOptions' => [
-                                'class' => 'col-sm-3 control-label  '
-                            ]
-                        ]
+                'method' => 'GET',
+                //'action' => '#',
+                'options' => ['class' => ' form-horizontal', 'enctype' => 'multipart/form-data'],
+                'fieldConfig' => [
+                    'template' => '{label}<div class="col-sm-9">{input}</div>',
+                    'labelOptions' => [
+                        'class' => 'col-sm-3 control-label  '
+                    ]
+                ]
             ]);
             ?>
             <div class="row">
@@ -62,23 +62,23 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                     <h5>ค้นหา Brand</h5>
                 </div>
                 <div class="col-md-3">
-<?php
-$brandId = isset($_POST["BrandId"]) ? $_POST["BrandId"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
+                    <?php
+                    $brandId = isset($_POST["BrandId"]) ? $_POST["BrandId"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
 //echo '<label class="control-label">Provinces</label>';
-echo kartik\select2\Select2::widget([
-    'name' => 'BrandId',
-    'value' => [$brandId], // initial value
-    'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Brand::find()->all(), 'brandId', 'title'),
-    'value' => $brandId == '' ? '' : $brandId,
-    'options' => ['placeholder' => 'Select or Search User Brand ...', 'id' => 'BrandId'], //, 'onchange' => 'this.form.submit()'
-    'pluginOptions' => [
-        'tags' => true,
-        'placeholder' => 'Select or Search ...',
-        'loadingText' => 'Loading Brand ...',
-    //'initialize' => true,
-    ],
-]);
-?>
+                    echo kartik\select2\Select2::widget([
+                        'name' => 'BrandId',
+                        'value' => [$brandId], // initial value
+                        'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Brand::find()->all(), 'brandId', 'title'),
+                        'value' => $brandId == '' ? '' : $brandId,
+                        'options' => ['placeholder' => 'Select or Search User Brand ...', 'id' => 'BrandId'], //, 'onchange' => 'this.form.submit()'
+                        'pluginOptions' => [
+                            'tags' => true,
+                            'placeholder' => 'Select or Search ...',
+                            'loadingText' => 'Loading Brand ...',
+                        //'initialize' => true,
+                        ],
+                    ]);
+                    ?>
                 </div>
                 <div class="col-md-2">
                     <button class="btn btn-info" type="submit">Search Product Suppliers</button>
@@ -91,18 +91,18 @@ echo kartik\select2\Select2::widget([
                 <div class="col-md-6"><?= $this->title ?></div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
-<?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Product Suppliers', ['create'], ['class' => 'btn btn-success btn-xs']) ?>
+                        <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Product Suppliers', ['create'], ['class' => 'btn btn-success btn-xs']) ?>
                     </div>
                 </div>
             </div>
         </div>
         <div class="panel-body">
             <script> $.pjax.reload({container: '#employee-grid-view'});</script>
-<?php
+            <?php
 //Pjax::begin(['id' => 'employee-grid-view']);
-Pjax::begin(['id' => 'employee-grid-view', 'enablePushState' => FALSE, 'clientOptions' => [
-        'method' => 'POST']]);
-?>
+            Pjax::begin(['id' => 'employee-grid-view', 'enablePushState' => FALSE, 'clientOptions' => [
+                    'method' => 'POST']]);
+            ?>
             <?=
             GridView::widget([
                 'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
@@ -115,7 +115,7 @@ Pjax::begin(['id' => 'employee-grid-view', 'enablePushState' => FALSE, 'clientOp
                     'class' => 'table-light'
                 ],
                 'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
+                    ['class' => 'yii\grid\SerialColumn'],
                     //'productId',
                     //'userId',
                     //'productGroupId',
@@ -140,16 +140,16 @@ Pjax::begin(['id' => 'employee-grid-view', 'enablePushState' => FALSE, 'clientOp
                       ],
                       'code',
                       //'title', */
-                        [
+                    [
                         'attribute' => 'isbn & code',
                         'format' => 'html',
                         'value' => function($model) {
                             return '<div class = "col-sm-12"><strong>isbn : </strong>' . $model->isbn . '</div>'
-                                    . '<div class = "col-sm-12"><strong>code : </strong> ' . $model->code . '</div>'
+                            . '<div class = "col-sm-12"><strong>code : </strong> ' . $model->code . '</div>'
                             ;
                         }
                     ],
-                        [
+                    [
                         'attribute' => 'รายละเอียดสินค้า',
                         'format' => 'raw',
                         'value' => function($model) {
@@ -160,11 +160,11 @@ Pjax::begin(['id' => 'employee-grid-view', 'enablePushState' => FALSE, 'clientOp
                             //$count = common\models\costfit\ProductPageViews::find()->where('productSuppId=' . $model->productSuppId)->count();
 
                             return '<strong>Title : </strong><a href="http://www2.cozxy.com/products/' . $model->encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productSuppId])
-                                    . '">' . $title . '</a><br>'
-                                    . '<strong>Category : </strong> ' . $category . '<br>'
-                                    . '<strong>Brand : </strong>' . $brand . '<br>'
-                                    . '<strong>Url : </strong>' . $url . '<br>'
-                                    . '<strong>เข้าชม : </strong>' . common\models\costfit\ProductPageViews::find()->where('productSuppId=' . $model->productSuppId)->count() . ' ครั้ง'
+                            . '">' . $title . '</a><br>'
+                            . '<strong>Category : </strong> ' . $category . '<br>'
+                            . '<strong>Brand : </strong>' . $brand . '<br>'
+                            . '<strong>Url : </strong>' . $url . '<br>'
+                            . '<strong>เข้าชม : </strong>' . common\models\costfit\ProductPageViews::find()->where('productSuppId=' . $model->productSuppId)->count() . ' ครั้ง'
                             ;
                         }
                     ],
@@ -177,27 +177,27 @@ Pjax::begin(['id' => 'employee-grid-view', 'enablePushState' => FALSE, 'clientOp
                     // 'depth',
                     // 'weight',
                     'quantity',
-                        [
+                    [
                         'attribute' => 'คงเหลือ',
                         'format' => 'html',
                         'value' => function($model) {
                             return Html::a($model->result . ' ชิ้น(<i class="fa fa-plus-circle" aria-hidden="true" class="success"></i>เพิ่มจำนวนสินค้า)', Yii::$app->homeUrl . "suppliers/product-total-suppliers/create?productSuppId=" . $model->productSuppId . '&total=addup', [
-                                        'title' => Yii::t('app', 'เพิ่มจำนวนสินค้า'), 'class' => 'text-center']);
+                                'title' => Yii::t('app', 'เพิ่มจำนวนสินค้า'), 'class' => 'text-center']);
                         }
                     ],
-                        [
+                    [
                         'attribute' => 'ราคาล่าสุด',
                         'format' => 'html',
                         'value' => function($model) {
                             return $model->priceSuppliers;
                         }
                     ],
-                        [
+                    [
                         'attribute' => 'ราคา',
                         'format' => 'html',
                         'value' => function($model) {
                             return Html::a('<i class="fa fa-plus-circle" aria-hidden="true" class="success"></i>เพิ่มราคาใหม่', Yii::$app->homeUrl . "suppliers/product-price-suppliers?productSuppId=" . $model->productSuppId, [
-                                        'title' => Yii::t('app', 'เพิ่มราคาใหม่'), 'class' => 'text-center']);
+                                'title' => Yii::t('app', 'เพิ่มราคาใหม่'), 'class' => 'text-center']);
                         }
                     ],
                     //'approve',
@@ -217,12 +217,12 @@ Pjax::begin(['id' => 'employee-grid-view', 'enablePushState' => FALSE, 'clientOp
                             return $txt;
                         }
                     ],
-                        [
+                    [
                         'attribute' => 'Duplicates',
                         'format' => 'html',
                         'value' => function($model) {
                             return Html::a('<i class="fa fa-plus-circle" aria-hidden="true" class="success"></i>duplicate', Yii::$app->homeUrl . "suppliers/product-suppliers/duplicate-product?productSuppId=" . $model->productSuppId, [
-                                        'title' => Yii::t('app', 'duplicate product'), 'class' => 'text-left']);
+                                'title' => Yii::t('app', 'duplicate product'), 'class' => 'text-left']);
                         }
                     ],
                     // 'unit',
@@ -240,11 +240,11 @@ Pjax::begin(['id' => 'employee-grid-view', 'enablePushState' => FALSE, 'clientOp
                             if (isset($productImageSupplers)) {
                                 //echo $productImageSupplers->imageThumbnail2;
                                 return Html::a('<i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มรูปภาพใหม่ <i class="fa fa-picture-o"></i>', Yii::$app->homeUrl . "suppliers/product-suppliers/image-form?productSuppId=" . $model->productSuppId, [
-                                            'title' => Yii::t('app', 'image'), 'class' => 'text-center']) .
-                                        Html::img(Yii::$app->homeUrl . $productImageSupplers->imageThumbnail2, ['style' => 'width:137px;height:130px', 'class' => 'img-responsive']);
+                                    'title' => Yii::t('app', 'image'), 'class' => 'text-center']) .
+                                Html::img(Yii::$app->homeUrl . $productImageSupplers->imageThumbnail2, ['style' => 'width:137px;height:130px', 'class' => 'img-responsive']);
                             } else {
                                 return Html::a('<i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มรูปภาพใหม่ <i class="fa fa-picture-o"></i>', Yii::$app->homeUrl . "suppliers/product-suppliers/image-form?productSuppId=" . $model->productSuppId, [
-                                            'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
+                                    'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
                             }
                         },
                         'contentOptions' => ['style' => 'width:100px;  min-width:100px;  '],
@@ -258,30 +258,30 @@ Pjax::begin(['id' => 'employee-grid-view', 'enablePushState' => FALSE, 'clientOp
                       'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
                       }
                       ], */
-                        ['class' => 'yii\grid\ActionColumn',
+                    ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
                         'template' => '{view} {update} {delete} {post}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-eye"></i>', $url, [
-                                            'title' => Yii::t('yii', 'view'),
+                                    'title' => Yii::t('yii', 'view'),
                                 ]);
                             },
                             'update' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-pencil"></i>', $url, [
-                                            'title' => Yii::t('yii', 'update'),
+                                    'title' => Yii::t('yii', 'update'),
                                 ]);
                             },
                             'delete' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-trash-o"></i>', $url, [
-                                            'title' => Yii::t('yii', 'Delete'),
-                                            'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
-                                            'data-method' => 'post',
+                                    'title' => Yii::t('yii', 'Delete'),
+                                    'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+                                    'data-method' => 'post',
                                 ]);
                             },
                             'post' => function($url, $model) {
                                 return Html::a('<br><u>Post</u>', ['/suppliers/product-post', 'productSuppId' => $model->productSuppId], [
-                                            'title' => Yii::t('app', 'Change today\'s lists'), 'target' => '_blank', 'data-pjax' => 0]);
+                                    'title' => Yii::t('app', 'Change today\'s lists'), 'target' => '_blank', 'data-pjax' => 0]);
                             },
                         ]
                     ],
@@ -291,5 +291,5 @@ Pjax::begin(['id' => 'employee-grid-view', 'enablePushState' => FALSE, 'clientOp
             <?php Pjax::end(); ?>
         </div>
     </div>
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
 </div>
