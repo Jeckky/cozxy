@@ -27,7 +27,7 @@ class RegisterController extends MasterController {
      * @return mixed
      */
     public function actionIndex() {
-//return Yii::$app->getResponse()->redirect('register/login');
+        //return Yii::$app->getResponse()->redirect('register/login');
         $this->title = 'Cozxy.com | Register Login';
         $this->subTitle = 'Register Login';
         return $this->render('register/Login');
@@ -72,6 +72,7 @@ class RegisterController extends MasterController {
             $user = new \common\models\User();
             $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
             $model->status = 0;
+            //$model->password = NULL;
             $model->token = Yii::$app->security->generateRandomString(10);
             $model->lastvisitDate = new \yii\db\Expression("NOW()");
             $model->createDateTime = new \yii\db\Expression("NOW()");
@@ -79,8 +80,11 @@ class RegisterController extends MasterController {
                 if (!isset($_POST["User"]['acceptTerm'])) {
                     $model->addError("acceptTerm", 'Please Accept Term&Condition');
                 } else {
+
                     if ($model->save()) {
                         //$emailSend = new \frontend\controllers\EmailSend();
+                        //\common\models\costfit\User::find()->where('userId=' . Yii::$app->db->lastInsertID)->one();
+                        \common\models\costfit\User::updateAll(['password' => NULL], ['userId' => Yii::$app->db->lastInsertID]);
                         $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "register/confirm?token=" . $model->token;
                         $toMail = $model->email;
                         $emailSend = Email::mailRegisterConfirm($toMail, $url);
