@@ -28,9 +28,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tr>
                         <th style="vertical-align: middle;text-align: center;"><h4><b>Upload file .xls,csv : </b></h4></th>
                         <td>
-                            <input class="btn btn-lg btn-warning" type="file" name="fileCsv[csv]" value="Upload" style="float: left;" required="true">
+                            <input class="btn btn-lg btn-warning" type="file" name="fileCsv[csv]" value="Upload" style="float: left;" required="true" disabled="true">
                             <input type="hidden" name="fileCsv[csv]" value="">
-                            &nbsp;&nbsp;&nbsp;<button  class="btn btn-lg btn-primary" type="submit">Update</button>
+                            &nbsp;&nbsp;&nbsp;<button  class="btn btn-lg btn-primary" type="submit" disabled="true">Update</button>
                             <input type="hidden" name="check" value="update">
                         </td>
                     </tr>

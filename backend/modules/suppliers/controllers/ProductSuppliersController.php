@@ -453,20 +453,23 @@ class ProductSuppliersController extends SuppliersMasterController {
     }
 
     public function actionOrderList() {
-        $orderLastMonth = \common\models\costfit\Order::find()
-        ->select(' sum(`order`.`summary`) as summaryPrice ,'
-        . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as conutProduct , '
-        . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
-        // ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
-        //->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
-        //->where('`order`.status >= 5 and MONTH(curdate()) = MONTH(order.createDateTime) and year(order.createDateTime) = year(curdate())   ')
-        ->where('`order`.`status` >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . '  and userId=' . Yii::$app->user->identity->userId);
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $orderLastMonth,
-        ]);
+        $ms = '';
+        $model = \common\models\costfit\Order::find()
+        ->select(['`order`.*', '`product_suppliers`.*', '`order_item`.*'])
+        ->join('LEFT JOIN', 'order_item', 'order.orderId = order_item.orderId')
+        ->join('LEFT JOIN', 'product_suppliers', 'order_item.productSuppId = product_suppliers.productSuppId')
+        ->where('`order`.status = ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . '  '
+        . 'and `product_suppliers`.userId =' . Yii::$app->user->identity->userId)
+        ->all();
+        /* $model = ProductSuppliers::find()
+          ->join('LEFT JOIN', 'order_item', 'order_item.productSuppId = product_suppliers.productSuppId')
+          ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
+          ->where('`order`.status = ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and `product_suppliers`.userId =' . Yii::$app->user->identity->userId)
+          ->all(); */
+        // throw new \yii\base\Exception(print_r($model, true));
         return $this->render('/order-list/index', [
-            'model' => $dataProvider,
+            'model' => $model,
         ]);
     }
 

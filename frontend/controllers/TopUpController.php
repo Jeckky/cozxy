@@ -370,7 +370,12 @@ class TopUpController extends MasterController {
 
         $k = base64_decode(base64_decode($_GET["epay"]));
         $topUpId = \common\models\ModelMaster::decodeParams($_GET["epay"]);
-        $header = $this->renderPartial('header');
+        $logo = \common\models\costfit\ContentGroup::find()->where("title='logoImageTop'")->one();
+        $image = '';
+        if (isset($logo)) {
+            $image = $logo->image;
+        }
+        $header = $this->renderPartial('header', ['logo' => $image]);
         $title = FALSE;
         $topUp = TopUp::find()->where("topUpId=" . $topUpId)->one();
         if (isset($topUp)) {

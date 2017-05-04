@@ -100,8 +100,9 @@ class Order extends \common\models\costfit\master\OrderMaster {
             /* use helpers/suppliers by Taninut.Bm ,Create date 24/01/2017 */
             'avgNum',
             'summaryPrice',
-            'conutProduct'
-        /* use end */
+            'conutProduct',
+            'productSuppId'
+                /* use end */
         ]);
     }
 
@@ -730,7 +731,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
     public function search($params) {
 
         $query = \common\models\costfit\Order::find()
-        ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "");
+                ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "");
         //  and orderNo  is not null order by orderId desc
 
         $dataProvider = new ActiveDataProvider([
@@ -746,7 +747,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
         }
 
         $query->andFilterWhere(['like', 'createDateTime', $this->createDateTime])
-        ->andFilterWhere(['like', 'orderNo', $this->orderNo]);
+                ->andFilterWhere(['like', 'orderNo', $this->orderNo]);
 
         return $dataProvider;
     }

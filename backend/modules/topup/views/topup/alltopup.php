@@ -28,11 +28,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'User',
                         'format' => 'raw',
                         'value' => function($model) {
-                            return User::userName($model->userId);
+                            return common\models\costfit\Address::userName($model->userId);
                         }
                     ],
                         [
-                        'attribute' => 'Point',
+                        'attribute' => 'Cozxy coins',
                         'format' => 'raw',
                         'value' => function($model) {
                             return $model->point;
@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'status',
                         'format' => 'raw',
                         'value' => function($model) {
-                            return 'กำลังชำระเงิน';
+                            return \common\models\costfit\TopUp::statusText($model->status);
                         }
                     ],
                         [
@@ -80,6 +80,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return '<i> No pic.</i>';
                             } else {
                                 return $imgLink;
+                            }
+                        }
+                    ],
+                        [
+                        'attribute' => 'Bill',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            if ($model->status == \common\models\costfit\TopUp::TOPUP_STATUS_E_PAYMENT_SUCCESS) {
+                                return Html::a('สำเนาใบเสร็จ', [Yii::$app->homeUrl . 'topup/topup/bill-pay?epay=' . $model->topUpId], [
+                                            'target' => '_blank'
+                                                ]
+                                );
                             }
                         }
                     ],
@@ -102,7 +114,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i>
                             </button>
                             <h3><?= $ready->topUpNo ?></h3>
-                            <h3 class="pull-right" style="margin-top: -30px;"><?= User::userName($ready->userId) ?></h3>
+                            <h3 class="pull-right" style="margin-top: -30px;"><?= common\models\costfit\Address::userName($ready->userId) ?></h3>
                         </div>
                         <div class="modal-body" style="padding-left: 120px;">
                             <img src="<?= Yii::$app->homeUrl . $ready->image ?>" style="width:300px;height: 400px;">
