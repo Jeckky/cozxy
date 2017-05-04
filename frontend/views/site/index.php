@@ -339,7 +339,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <!--Info Block with Image Background-->
 
     <section style="background-image: url(<?php echo $baseUrl . $topOneContent->image; ?>);" class="info-block-image" data-stellar-background-ratio="0.5" style="background-repeat:no-repeat;
-             background-position:center;">
+             background-position:center; background-size: 100% 100%; width: 100%; height: 205px;">
         <!--<div class="overlay"></div>-->
         <div class="container">
             <div class="row">
@@ -366,7 +366,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                  background-size:  cover;
                  background-color: #999;">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-                    <h2 class="dark-color"><?php //echo $topOneContent->title;                        ?></h2>
+                    <h2 class="dark-color"><?php //echo $topOneContent->title;                           ?></h2>
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12" style="color: #fff;">
                             <p class="p-style3" style="color: #fff;">
