@@ -60,7 +60,7 @@ class ProductSuppliersController extends SuppliersMasterController {
         //echo $CategoryId . '<br>';
         //echo $BrandId;
 
-        if ($BrandId == '') {
+        if ($CategoryId != '' && $BrandId == '') {
             $dataProvider = new ActiveDataProvider([
                 'query' => ProductSuppliers::find()
                 ->select('`product_suppliers`.* ,  (SELECT product_price_suppliers.price  FROM product_price_suppliers
@@ -69,7 +69,7 @@ class ProductSuppliersController extends SuppliersMasterController {
                 ->where('categoryId = ' . $CategoryId . ' and userId=' . Yii::$app->user->identity->userId)
                 ->orderBy('product_suppliers.productSuppId desc'),
             ]);
-        } else if ($CategoryId == '') {
+        } else if ($BrandId != '' && $CategoryId == '') {
             $dataProvider = new ActiveDataProvider([
                 'query' => ProductSuppliers::find()
                 ->select('`product_suppliers`.* ,  (SELECT product_price_suppliers.price  FROM product_price_suppliers
