@@ -343,7 +343,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
                     <h2><?php echo $topOneContent->title; ?></h2>
-                    <div class="row"> 
+                    <div class="row">
+                        <div class="icon col-lg-4 col-md-4 col-sm-4">
+                            &nbsp;
+                        </div>
                         <div class="col-lg-8 col-md-8 col-sm-8">
                             <p class="p-style3"><?php echo $topOneContent->description; ?></p>
                         </div>
