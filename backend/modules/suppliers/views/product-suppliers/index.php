@@ -98,7 +98,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
         <div class="panel-body">
             <?php
             //Pjax::begin(['id' => 'employee-grid-view']);
-            //Pjax::begin(['id' => 'employee-grid-view', 'enablePushState' => FALSE, 'clientOptions' => ['method' => 'POST']]);
+            Pjax::begin(['id' => 'employee-grid-view', 'enablePushState' => FALSE, 'clientOptions' => ['method' => 'POST']]);
             ?>
             <?=
             GridView::widget([
@@ -284,7 +284,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                 ],
             ]);
             ?>
-            <?php //Pjax::end(); ?>
+            <?php Pjax::end(); ?>
         </div>
     </div>
     <?php ActiveForm::end(); ?>
