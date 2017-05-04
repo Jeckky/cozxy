@@ -274,6 +274,7 @@ body {
 
 .menu .catalog-block {
     background-color: #000000;
+    margin-top: -2px;
 }
 .menu .catalog li a {
     color: rgba(255,212,36,.9);/* #ddff00;*/
