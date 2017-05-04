@@ -261,9 +261,12 @@ use common\models\ModelMaster;
                                 ?>
                                 <span class="tile-overlay"></span>
                             </a>
-                            <div class="footer">
-                                <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product->encodeParams(['productId' => $product->productId, 'productSupplierId' => $product->productSuppId]) ?>"><?= $product->title ?></a>
-                                <span>by Cozxy.com</span>
+                            <div class="footer"> 
+                                <div style="height: 60px">
+                                    <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product->encodeParams(['productId' => $product->productId, 'productSupplierId' => $product->productSuppId]) ?>">
+                                        <?= substr($product->title, 0, 35); ?>
+                                    </a>
+                                </div>
                                 <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product->encodeParams(['productId' => $product->productId, 'productSupplierId' => $product->productSuppId]) ?>"><button class="btn btn-primary">View</button></a>
                             </div>
                         </div>
