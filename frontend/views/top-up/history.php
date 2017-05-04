@@ -25,7 +25,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="col-md-6">Payment History</div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
-                        Now you have <?= $currentPoint ?> variable point.
+                        You currently have <?= $currentPoint ?> Cozxy coins
                     </div>
                 </div>
             </div>
@@ -44,7 +44,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
                     'topUpNo',
-                    'point',
+                        [
+                        'attribute' => 'Cozxy Coins',
+                        'value' => function($model) {
+
+                            return $model->point;
+                        }
+                    ],
                         [
                         'attribute' => 'money',
                         'value' => function($model) {
