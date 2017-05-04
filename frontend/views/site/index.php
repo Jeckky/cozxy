@@ -43,9 +43,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         ?>
                         <p style="width: 756px; left: 110px; top: 250px; text-align: left;" class="dark-color ms-layer col-md-7 " data-effect="back(500)" data-duration="700" data-delay="500" data-ease="easeOutQuad"><?= $desc; ?></p>
                         <?php if (isset($banner->linkTitle) && !empty($banner->linkTitle)): ?>
-                                                                                                                                                    <!--<p style="width: 456px; left: 20px; top: 170px;" class="dark-color col-md-7">
-                                                                                                                                                        <a class="btn btn-primary" href="<?//= $banner->link; ?>"><?//= $banner->linkTitle ?></a>
-                                                                                                                                                    </p>-->
+                                                                                                                                                        <!--<p style="width: 456px; left: 20px; top: 170px;" class="dark-color col-md-7">
+                                                                                                                                                            <a class="btn btn-primary" href="<?//= $banner->link; ?>"><?//= $banner->linkTitle ?></a>
+                                                                                                                                                        </p>-->
                         <?php endif; ?>
                         <!--<a class="btn btn-black" href="#">Browse all</a>-->
                     </div>
@@ -343,10 +343,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
                     <h2><?php echo $topOneContent->title; ?></h2>
-                    <div class="row">
-                        <div class="icon col-lg-4 col-md-4 col-sm-4">
-                            <i class="fa fa-recycle"></i>
-                        </div>
+                    <div class="row"> 
                         <div class="col-lg-8 col-md-8 col-sm-8">
                             <p class="p-style3"><?php echo $topOneContent->description; ?></p>
                         </div>
@@ -364,7 +361,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                  background-size:  cover;
                  background-color: #999;">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-                    <h2 class="dark-color"><?php //echo $topOneContent->title;      ?></h2>
+                    <h2 class="dark-color"><?php //echo $topOneContent->title;       ?></h2>
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12" style="color: #fff;">
                             <p class="p-style3" style="color: #fff;">
