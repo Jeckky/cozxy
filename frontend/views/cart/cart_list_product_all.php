@@ -237,7 +237,16 @@ use common\models\ModelMaster;
                     ?>
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="tile">
-                            <div class="price-label"><?php echo number_format($product->price, 2); ?></div>
+
+                            <?php
+                            //echo number_format($product->price, 2);
+                            if (number_format($product->price, 2) == '0.00') {
+                                echo '';
+                            } else {
+                                echo '<div class="price-label">' . number_format($product->price, 2) . ' </div>';
+                            }
+                            ?>
+
                             <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product->encodeParams(['productId' => $product->productId, 'productSupplierId' => $product->productSuppId]) ?>">
                                 <?php
                                 if (isset($product->images->imageThumbnail1)) {
@@ -252,9 +261,12 @@ use common\models\ModelMaster;
                                 ?>
                                 <span class="tile-overlay"></span>
                             </a>
-                            <div class="footer">
-                                <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product->encodeParams(['productId' => $product->productId, 'productSupplierId' => $product->productSuppId]) ?>"><?= $product->title ?></a>
-                                <span>by Cozxy.com</span>
+                            <div class="footer"> 
+                                <div style="height: 60px">
+                                    <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product->encodeParams(['productId' => $product->productId, 'productSupplierId' => $product->productSuppId]) ?>">
+                                        <?= substr($product->title, 0, 35); ?>
+                                    </a>
+                                </div>
                                 <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product->encodeParams(['productId' => $product->productId, 'productSupplierId' => $product->productSuppId]) ?>"><button class="btn btn-primary">View</button></a>
                             </div>
                         </div>

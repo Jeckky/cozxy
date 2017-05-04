@@ -73,3 +73,35 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
     </div>
 </div><!-- /.modal -->
+
+
+<!--Click for Billing to a different adress?-->
+
+
+
+<div class="modal fade" id="billing-different-adress" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 0px;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> </button>
+                <h2>Click for Billing to a different adress? </h2>
+                <!--<p class="large">Use social accounts</p>-->
+                <div class="social-login">
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body">
+                    <div id="div-login-msg">
+                        <h4>Please top-up your balance to proceeed to checkout</h4>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="form-group">
+                <a href="<?php echo $baseUrl; ?>profile/billings-address/add?t=checkout" class="btn btn-black">Yes</a>
+                <a href="#" class="no btn btn-danger" data-dismiss="modal" id="no-thank">No thanks</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

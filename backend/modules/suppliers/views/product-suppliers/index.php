@@ -42,10 +42,10 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                 <div class="col-md-3">
                     <?php
                     //echo '<label class="control-label">Provinces</label>';
+                    $CategoryId = isset($_POST["CategoryId"]) ? $_POST["CategoryId"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
                     echo kartik\select2\Select2::widget([
                         'name' => 'CategoryId',
                         'value' => $categoryId == '' ? '' : $categoryId,
-                        // 'value' => ['THA'], // initial value
                         'data' => common\models\costfit\Category::findCategoryArrayWithMultiLevelBackend(),
                         //'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'),
                         'options' => ['placeholder' => 'Select or Search User Category ...', 'id' => 'CategoryId'], //, 'onchange' => 'this.form.submit()'
@@ -62,46 +62,47 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                     <h5>ค้นหา Brand</h5>
                 </div>
                 <div class="col-md-3">
-                    <?php
-                    //echo '<label class="control-label">Provinces</label>';
-                    echo kartik\select2\Select2::widget([
-                        'name' => 'BrandId',
-                        // 'value' => ['THA'], // initial value
-                        'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Brand::find()->all(), 'brandId', 'title'),
-                        'value' => $brandId == '' ? '' : $brandId,
-                        'options' => ['placeholder' => 'Select or Search User Brand ...', 'id' => 'BrandId'], //, 'onchange' => 'this.form.submit()'
-                        'pluginOptions' => [
-                            'tags' => true,
-                            'placeholder' => 'Select or Search ...',
-                            'loadingText' => 'Loading Brand ...',
-                        //'initialize' => true,
-                        ],
-                    ]);
-                    ?>
+<?php
+$brandId = isset($_POST["BrandId"]) ? $_POST["BrandId"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
+//echo '<label class="control-label">Provinces</label>';
+echo kartik\select2\Select2::widget([
+    'name' => 'BrandId',
+    'value' => [$brandId], // initial value
+    'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Brand::find()->all(), 'brandId', 'title'),
+    'value' => $brandId == '' ? '' : $brandId,
+    'options' => ['placeholder' => 'Select or Search User Brand ...', 'id' => 'BrandId'], //, 'onchange' => 'this.form.submit()'
+    'pluginOptions' => [
+        'tags' => true,
+        'placeholder' => 'Select or Search ...',
+        'loadingText' => 'Loading Brand ...',
+    //'initialize' => true,
+    ],
+]);
+?>
                 </div>
                 <div class="col-md-2">
                     <button class="btn btn-info" type="submit">Search Product Suppliers</button>
                 </div>
             </div>
-            <?php ActiveForm::end(); ?>
+
         </div>
         <div class="panel-heading">
             <div class="row">
                 <div class="col-md-6"><?= $this->title ?></div>
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
-                        <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Product Suppliers', ['create'], ['class' => 'btn btn-success btn-xs']) ?>
+<?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Product Suppliers', ['create'], ['class' => 'btn btn-success btn-xs']) ?>
                     </div>
                 </div>
             </div>
         </div>
         <div class="panel-body">
             <script> $.pjax.reload({container: '#employee-grid-view'});</script>
-            <?php
-            //Pjax::begin(['id' => 'employee-grid-view']);
-            Pjax::begin(['id' => 'employee-grid-view', 'enablePushState' => FALSE, 'clientOptions' => [
-                    'method' => 'POST']]);
-            ?>
+<?php
+//Pjax::begin(['id' => 'employee-grid-view']);
+Pjax::begin(['id' => 'employee-grid-view', 'enablePushState' => FALSE, 'clientOptions' => [
+        'method' => 'POST']]);
+?>
             <?=
             GridView::widget([
                 'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
@@ -290,5 +291,5 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
             <?php Pjax::end(); ?>
         </div>
     </div>
-
+<?php ActiveForm::end(); ?>
 </div>
