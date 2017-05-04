@@ -114,7 +114,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         ?>
                         <button class="btn btn-black btn-xs " role="button" id="write-reviews">Write a review</button>
                     <?php } else { ?>
-                        <a href="#" class="btn btn-black btn-xs" role="button" id="write-reviews">Member Only</a>
+                        <a href="#" class="btn btn-black btn-xs" role="button" id="write-reviews">Members Only</a>
                     <?php } ?>
                 </div>
 
@@ -149,7 +149,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     ?>
                     <button class="btn btn-black btn-xs" role="button" id="write-reviews">Submit Post</button>
                 <?php } else { ?>
-                    <a href="#" class="btn btn-black btn-xs" role="button" id="write-reviews">Member Only</a>
+                    <a href="#" class="btn btn-black btn-xs" role="button" id="write-reviews">Members Only</a>
                 <?php } ?>
             </div>
             <?php ActiveForm::end(); ?>
