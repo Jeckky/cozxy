@@ -20,21 +20,21 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
 ?>
 <script> $.pjax.reload({container: '#employee-grid-view'});</script>
 <div class="product-suppliers-index">
-
+    <?php
+    $form = ActiveForm::begin([
+        //'action' => '#',
+        'options' => ['class' => ' form-horizontal', 'enctype' => 'multipart/form-data'],
+        'fieldConfig' => [
+            'template' => '{label}<div class="col-sm-9">{input}</div>',
+            'labelOptions' => [
+                'class' => 'col-sm-3 control-label  '
+            ]
+        ]
+    ]);
+    ?>
     <div class="panel panel-default">
         <div class="panel-body">
-            <?php
-            $form = ActiveForm::begin([
-                //'action' => '#',
-                'options' => ['class' => ' form-horizontal', 'enctype' => 'multipart/form-data'],
-                'fieldConfig' => [
-                    'template' => '{label}<div class="col-sm-9">{input}</div>',
-                    'labelOptions' => [
-                        'class' => 'col-sm-3 control-label  '
-                    ]
-                ]
-            ]);
-            ?>
+
             <div class="row">
                 <div class="col-md-1">
                     <h5>ค้นหา Category</h5>
@@ -83,7 +83,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                     <button class="btn btn-info" type="submit">Search Product Suppliers</button>
                 </div>
             </div>
-            <?php ActiveForm::end(); ?>
+
         </div>
         <div class="panel-heading">
             <div class="row">
@@ -287,5 +287,5 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
             <?php Pjax::end(); ?>
         </div>
     </div>
-
+    <?php ActiveForm::end(); ?>
 </div>
