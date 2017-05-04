@@ -154,7 +154,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             return $model->getDiscountTypeText($model->discountType);
                         }
                     ],
-                    //'discountValue',
+                    'discountValue',
                     // 'description:ntext',
                     // 'status',
                     // 'createDateTime',
