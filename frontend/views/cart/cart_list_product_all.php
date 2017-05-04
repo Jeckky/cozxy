@@ -237,7 +237,16 @@ use common\models\ModelMaster;
                     ?>
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="tile">
-                            <div class="price-label"><?php echo number_format($product->price, 2); ?></div>
+
+                            <?php
+                            //echo number_format($product->price, 2);
+                            if (number_format($product->price, 2) == '0.00') {
+                                echo '';
+                            } else {
+                                echo '<div class="price-label">' . number_format($product->price, 2) . ' </div>';
+                            }
+                            ?>
+
                             <a href="<?php echo Yii::$app->homeUrl ?>products/<?= $product->encodeParams(['productId' => $product->productId, 'productSupplierId' => $product->productSuppId]) ?>">
                                 <?php
                                 if (isset($product->images->imageThumbnail1)) {
