@@ -42,9 +42,10 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                 <div class="col-md-3">
                     <?php
                     //echo '<label class="control-label">Provinces</label>';
+                    $CategoryId = isset($_POST["CategoryId"]) ? $_POST["CategoryId"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
                     echo kartik\select2\Select2::widget([
                         'name' => 'CategoryId',
-                        // 'value' => ['THA'], // initial value
+                        'value' => [$CategoryId], // initial value
                         'data' => common\models\costfit\Category::findCategoryArrayWithMultiLevelBackend(),
                         //'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'),
                         'options' => ['placeholder' => 'Select or Search User Category ...', 'id' => 'CategoryId'], //, 'onchange' => 'this.form.submit()'
@@ -62,10 +63,11 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                 </div>
                 <div class="col-md-3">
                     <?php
+                    $brandId = isset($_POST["BrandId"]) ? $_POST["BrandId"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
                     //echo '<label class="control-label">Provinces</label>';
                     echo kartik\select2\Select2::widget([
                         'name' => 'BrandId',
-                        // 'value' => ['THA'], // initial value
+                        'value' => [$brandId], // initial value
                         'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Brand::find()->all(), 'brandId', 'title'),
                         'options' => ['placeholder' => 'Select or Search User Brand ...', 'id' => 'BrandId'], //, 'onchange' => 'this.form.submit()'
                         'pluginOptions' => [
