@@ -92,8 +92,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $imgBrand;
                     }
                 ],
-                // 'status',
-                // 'type',
+                'longitude',
+                'latitude',
                 // 'createDateTime',
                 // 'updateDateTime',
                 /* ['class' => 'yii\grid\ActionColumn'], */

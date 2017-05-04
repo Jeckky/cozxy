@@ -136,6 +136,8 @@ use kartik\widgets\Select2;
             <?= $form->field($model, 'ip')->textInput(['maxlength' => 100]) ?>
             <?= $form->field($model, 'macAddress')->textInput(['maxlength' => 100]) ?>
             <?= $form->field($model, 'authCode')->textInput(['maxlength' => 100]) ?>
+            <?= $form->field($model, 'longitude')->textInput(['maxlength' => 100]) ?>
+            <?= $form->field($model, 'latitude')->textInput(['maxlength' => 100]) ?>
             <?= $form->field($model, 'mapImages', ['options' => ['class' => 'row form-group']])->fileInput() ?>
 
             <?= (isset($model->mapImages) && !empty($model->mapImages)) ? Html::hiddenInput((new ReflectionClass($model))->getShortName() . '[imageOld]', $model->mapImages) : ''; ?>

@@ -453,11 +453,20 @@ class ProductSuppliersController extends SuppliersMasterController {
     }
 
     public function actionOrderList() {
-        $ms = '';
-        $model = Order::find()->where("status=" . Order::ORDER_STATUS_E_PAYMENT_SUCCESS)->all();
+        $orderLastMonth = \common\models\costfit\Order::find()
+        ->select(' sum(`order`.`summary`) as summaryPrice ,'
+        . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as conutProduct , '
+        . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
+        // ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
+        //->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
+        //->where('`order`.status >= 5 and MONTH(curdate()) = MONTH(order.createDateTime) and year(order.createDateTime) = year(curdate())   ')
+        ->where('`order`.`status` >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . '  and userId=' . Yii::$app->user->identity->userId);
 
+        $dataProvider = new ActiveDataProvider([
+            'query' => $orderLastMonth,
+        ]);
         return $this->render('/order-list/index', [
-            'model' => $model,
+            'model' => $dataProvider,
         ]);
     }
 
