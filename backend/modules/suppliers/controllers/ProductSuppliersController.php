@@ -461,15 +461,41 @@ class ProductSuppliersController extends SuppliersMasterController {
                 ->where('`order`.status = ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . '  '
                         . 'and `product_suppliers`.userId =' . Yii::$app->user->identity->userId)
                 ->all();
-        /* $model = ProductSuppliers::find()
-          ->join('LEFT JOIN', 'order_item', 'order_item.productSuppId = product_suppliers.productSuppId')
-          ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
-          ->where('`order`.status = ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and `product_suppliers`.userId =' . Yii::$app->user->identity->userId)
-          ->all(); */
-        // throw new \yii\base\Exception(print_r($model, true));
+        $productSuppIds = [];
+        $old = [];
+        if (isset($model) && count($model) > 0) {
+
+            $i = 0;
+            $count = 0;
+            foreach ($model as $productSuppId):
+                $check = false;
+                $check = $this->productSuppId($productSuppId->productSuppId, $old);
+                if ($check == true) {
+                    $old[$i] = $productSuppId->productSuppId;
+                    $i++;
+                }
+            endforeach;
+        }
+        if (count($old) > 0) {
+            $productSuppIds = $old;
+        }
         return $this->render('/order-list/index', [
-                    'model' => $model,
+                    'productSuppIds' => $productSuppIds
         ]);
+    }
+
+    public function productSuppId($new, $olds) {
+        $i = 0;
+        foreach ($olds as $old):
+            if ($old == $new) {
+                $i++;
+            }
+        endforeach;
+        if ($i == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

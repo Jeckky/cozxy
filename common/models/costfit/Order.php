@@ -101,7 +101,10 @@ class Order extends \common\models\costfit\master\OrderMaster {
             'avgNum',
             'summaryPrice',
             'conutProduct',
-            'productSuppId'
+            'productSuppId',
+            'quantity',
+            'isbn',
+            'title'
                 /* use end */
         ]);
     }

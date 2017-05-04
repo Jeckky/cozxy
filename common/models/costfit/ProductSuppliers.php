@@ -200,6 +200,21 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         }
     }
 
+    public static function productOrder($productSuppId) {
+        $model = Order::find()
+                ->select(['`order`.*', '`product_suppliers`.*', '`order_item`.*'])
+                ->join('LEFT JOIN', 'order_item', 'order.orderId = order_item.orderId')
+                ->join('LEFT JOIN', 'product_suppliers', 'order_item.productSuppId = product_suppliers.productSuppId')
+                ->where('`order`.status = ' . Order::ORDER_STATUS_E_PAYMENT_SUCCESS . '  '
+                        . 'and `product_suppliers`.userId =' . Yii::$app->user->identity->userId . ' and `product_suppliers`.productSuppId=' . $productSuppId)
+                ->all();
+        if (isset($model) && count($model) > 0) {
+            return $model;
+        } else {
+            return '';
+        }
+    }
+
     public static function productImagesSuppliers($productSuppId) {
         //throw new \yii\base\Exception($productSuppId);
         $image = ProductImageSuppliers::find()->where("productSuppId=" . $productSuppId . " and status=1")->orderBy("ordering ASC")->all();
