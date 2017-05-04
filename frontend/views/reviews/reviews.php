@@ -84,9 +84,9 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                                 <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>" style="font-size: 14px; margin-top: 5px;">
                                     <?php
                                     //echo strlen($valuex->title) . '<br>';
-                                    if (strlen($valuex->title) >= 40) {
-                                        echo substr($valuex->title, 0, 40);
-                                    } else if (strlen($valuex->title) < 40) {
+                                    if (strlen($valuex->title) >= 35) {
+                                        echo substr($valuex->title, 0, 35);
+                                    } else if (strlen($valuex->title) < 35) {
                                         echo substr(ltrim(rtrim($valuex->title)), 0, 35) . '<br>';
                                     }
                                     ?></a>
@@ -94,17 +94,17 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                             <div class="col-md-12" style="padding: 5px; ">
                                 <div class="col-md-12 text-center">
                                     <?php
-                                    echo \yii2mod\rating\StarRating::widget([
-                                        'name' => "input_name_" . $value['productPostId'],
-                                        'value' => $results_rating,
-                                        'options' => [
-                                            // Your additional tag options
-                                            'id' => 'reviews-rate-' . $value['productPostId'], 'class' => 'reviews-rate',
-                                        ],
-                                        'clientOptions' => [
-                                        // Your client options
-                                        ],
-                                    ]);
+                                    /* echo \yii2mod\rating\StarRating::widget([
+                                      'name' => "input_name_" . $value['productPostId'],
+                                      'value' => $results_rating,
+                                      'options' => [
+                                      // Your additional tag options
+                                      'id' => 'reviews-rate-' . $value['productPostId'], 'class' => 'reviews-rate',
+                                      ],
+                                      'clientOptions' => [
+                                      // Your client options
+                                      ],
+                                      ]); */
                                     ?>
                                 </div>
                                 <div class="col-md-12 text-center" style=" border-bottom: 0px #e6e6e6 dotted; border-bottom: 1px #bbb dotted;">
