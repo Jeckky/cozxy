@@ -9,6 +9,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\costfit\UserPoint;
+use common\models\costfit\User;
+use common\helpers\IntToBath;
+use common\helpers\CozxyUnity;
 
 /**
  * TopupController implements the CRUD actions for Topup model.
@@ -61,7 +64,7 @@ class TopupController extends TopupMasterController {
                         $data = [];
                         while (($objArr = fgetcsv($fcsv, 1000, ",")) !== FALSE) {
                             //$data[$r] = $objArr[0];
-                            if ($r != 0) {//first record is title
+                            if ($r != 0) {//first record is title//////////////////////////wait forbank
                                 $data[$r][1] = $objArr[0];
                                 $data[$r][1] = $objArr[1];
                                 $data[$r][2] = $objArr[2];
@@ -136,10 +139,10 @@ class TopupController extends TopupMasterController {
                 $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
                 $userPoint->save(false);
             }
-            $customer = \common\models\costfit\User::find()->where("userId=" . $topUp->userId)->one();
+            $customer = User::find()->where("userId=" . $topUp->userId)->one();
             if (isset($customer)) {
                 $Subject = "Top up successful : #" . $topUp->topUpNo;
-                $username = \common\models\costfit\User::userName($customer->userId);
+                $username = User::userName($customer->userId);
                 $toMail = $customer->email;
                 $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "top-up/history";
                 $point = $topUp->point;
@@ -271,7 +274,7 @@ class TopupController extends TopupMasterController {
         return $changeId;
     }
 
-    public function actionAllBillpayment() {
+    public function actionAllBillPayment() {
         $dataProvider = new ActiveDataProvider([
             'query' => TopUp::find()
                     ->where("status>" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->orderBy('updateDateTime DESC')
@@ -281,6 +284,50 @@ class TopupController extends TopupMasterController {
                     'dataProvider' => $dataProvider,
                     'readyData' => $readyData
         ]);
+    }
+
+    public function actionBillPay() {
+        $topUpId = $_GET["epay"];
+        $logo = \common\models\costfit\ContentGroup::find()->where("title='logoImageTop'")->one();
+        $image = '';
+        if (isset($logo)) {
+            $image = $logo->image;
+        }
+        $header = $this->renderPartial('header', ['logo' => $image]);
+        $title = FALSE;
+        $topUp = TopUp::find()->where("topUpId=" . $topUpId)->one();
+
+        if (isset($topUp)) {
+            $customerName = User::userName($topUp->userId);
+            $address = User::userAddressText(User::supplierDetail($topUp->userId)->addressId, false);
+            $topUpNo = $topUp->topUpNo;
+            $subDate = substr($topUp->updateDateTime, 0, -9);
+            $date = $this->changDateFormat($subDate);
+            $amount = $topUp->money;
+            $point = $topUp->point;
+            $method = $topUp->paymentMethod;
+            $textBath = IntToBath::changeToBath(number_format($topUp->money, 2));
+        }
+        $content = $this->renderPartial('content', [
+            'customerName' => $customerName,
+            'address' => $address,
+            'topUpNo' => $topUpNo,
+            'date' => $date,
+            'point' => $point,
+            'amount' => $amount,
+            'method' => $method,
+            'textBath' => $textBath
+        ]);
+        //$content = '';
+        CozxyUnity::actionMpdfDocument($content, $header, $title);
+    }
+
+    public function changDateFormat($subDate) {
+        $d = substr($subDate, 8, 2);
+        $m = substr($subDate, 5, 2);
+        $y = substr($subDate, 0, 4);
+        $date = $d . '/' . $m . '/' . $y;
+        return $date;
     }
 
     /**

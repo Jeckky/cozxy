@@ -16,16 +16,19 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <img src="<?= $baseUrl . $logo ?>" style="width: 80px;height: 50px;">
 
         </td>
-        <td style="width: 50%;text-align: center;"> <h3>บริษัท คอซซี่ดอทคอม จำกัด</h3></td>
-        <td style="width: 25%;">
+        <td style="width: 50%;text-align: center;"><h3>บริษัท คอซซี่ดอทคอม จำกัด</h3></td>
+        <td style="width: 25%;text-align: center;">
             <h3>
                 ใบเสร็จรับเงินล่วงหน้า
+            </h3>
+            <h3 style="color: #999999;">
+                ( สำเนา )
             </h3>
         </td>
     </tr>
     <tr>
         <td colspan="4" style="text-align: left;font-size: 9pt;">
-            สำนักงานใหญ่ :  สำนักงานใหญ่ : เลขที่ 1 อาคารเก้าพูลทรัพย์ ซอย 19 ถนน.ลาดพร้าว แขวงจอมพล เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900
+            สำนักงานใหญ่ : เลขที่ 1 อาคารเก้าพูลทรัพย์ ซอย 19 ถนน.ลาดพร้าว แขวงจอมพล เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900
         </td>
     </tr>
     <tr>
