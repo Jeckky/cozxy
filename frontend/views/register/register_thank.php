@@ -49,11 +49,11 @@ $logoImage = common\helpers\Content::ContentLogo('logoImage');
                                     echo ' Please check your email to confirm your registration.';
                                 }
                             } else {
-                                echo ' กรุณาตรวจสอบอีเมล์ที่ลงสมัครไว้ เพื่อยืนยันการเป็นสมัครสมาชิก';
+                                echo ' Please check your email to confirm your registration.';
                             }
                             ?>
                         </h4>
-                        <p>อีเมลฉบับนี้เป็นการแจ้งข้อมูลโดยอัตโนมัติ กรุณาอย่าตอบกลับ</p>
+                        <p><!--อีเมลฉบับนี้เป็นการแจ้งข้อมูลโดยอัตโนมัติ กรุณาอย่าตอบกลับ--></p>
                     </div>
                 </div>
             </div>
