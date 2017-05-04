@@ -30,7 +30,7 @@ $logoImage = common\helpers\Content::ContentLogo('logoImage');
                 &nbsp;
             </div>
             <div class="col-lg-6 col-md-6">
-                <h2 class="title">ขอบคุณที่ลงทะเบียนกับ Cozxy.com</h2>
+                <h2 class="title">Thank your for joining us at Cozxy.com </h2>
                 <div class="row space-top">
                     <div class="clo-lg-12 col-md-12 col-sm-12 space-bottom">
                         <h4 class="light-weight uppercase">
@@ -40,13 +40,13 @@ $logoImage = common\helpers\Content::ContentLogo('logoImage');
                             //echo $_GET['status'];
                             if (isset($_GET['status'])) {
                                 if ($_GET['status'] == 1) {
-                                    echo '<span style="color: red">อีเมล์มีอยู่ในระบบแล้ว</span> กรุณาตรวจสอบอีเมล์อีกครั้ง ';
+                                    echo '<span style="color: red">Email is already in the system </span> please again ';
                                 } else if ($_GET['status'] == 2) {
-                                    echo '<span style="color: red">อีเมล์มีอยู่ในระบบแล้ว</span> กรุณาตรวจสอบอีเมล์อีกครั้ง ';
+                                    echo '<span style="color: red">Email is already in the system </span> please again ';
                                 } else if ($_GET['status'] == 3) {
-                                    echo ' กรุณาตรวจสอบอีเมล์ที่ลงสมัครไว้ เพื่อยืนยันการเป็นสมัครสมาชิก';
+                                    echo ' Please check your email to confirm your registration.';
                                 } else {
-                                    echo ' กรุณาตรวจสอบอีเมล์ที่ลงสมัครไว้ เพื่อยืนยันการเป็นสมัครสมาชิก';
+                                    echo ' Please check your email to confirm your registration.';
                                 }
                             } else {
                                 echo ' กรุณาตรวจสอบอีเมล์ที่ลงสมัครไว้ เพื่อยืนยันการเป็นสมัครสมาชิก';
