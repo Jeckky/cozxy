@@ -164,6 +164,8 @@ class ProfileController extends MasterController {
         $this->title = 'Cozxy.com | Default Shipping Assdress';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Default Shipping Assdress";
+
+
         if ($hash != 'add') {
             $model = \common\models\costfit\Address::find()->where("addressId ='" . $addressId . "'")->one();
             $model->scenario = 'shipping_address';
@@ -188,7 +190,11 @@ class ProfileController extends MasterController {
             $model->userId = Yii::$app->user->id;
             $model->createDateTime = new \yii\db\Expression("NOW()");
             if ($model->save(FALSE)) {
-                $this->redirect(Yii::$app->homeUrl . 'profile');
+                if (isset($_GET['t']) && !empty($_GET['t'])) {
+                    $this->redirect(Yii::$app->homeUrl . 'checkout');
+                } else {
+                    $this->redirect(Yii::$app->homeUrl . 'profile');
+                }
             }
         }
         return $this->render('@app/views/profile/add_address', ['model' => $model, 'label' => $label, 'hash' => $hash]);

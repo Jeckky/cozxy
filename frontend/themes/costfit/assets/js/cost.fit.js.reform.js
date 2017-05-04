@@ -398,8 +398,9 @@ $("#place-order").on('click', function () {
     var _notes = $("#order-notes").val();
     //alert(_billing);
     if (_billing === undefined) {
-        alert('Click for Billing to a different adress?');
-        window.location = $baseUrl + 'profile/billings-address/add';
+        //alert('Click for Billing to a different adress?');
+        //window.location = $baseUrl + 'profile/billings-address/add';
+        $("#billing-different-adress").modal('show');
     }
     if (_placeUserId == '') {
         $("#modal-cart-not-item").modal('show');

@@ -11,6 +11,11 @@ $yourbrowser = GetBrowser::Browser();
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 // https://github.com/kartik-v/yii2-widget-depdrop //
+//t=checkout
+
+if (isset($_GET['t']) && !empty($_GET['t'])) {
+    echo '<br><h4><span style="color: #CC0000">" Please top-up your balance to proceeed to checkout "</span></h4>';
+}
 ?>
 <style type="text/css">
     .selection{
