@@ -43,9 +43,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         ?>
                         <p style="width: 756px; left: 110px; top: 250px; text-align: left;" class="dark-color ms-layer col-md-7 " data-effect="back(500)" data-duration="700" data-delay="500" data-ease="easeOutQuad"><?= $desc; ?></p>
                         <?php if (isset($banner->linkTitle) && !empty($banner->linkTitle)): ?>
-                                                                                                                                                                                                <!--<p style="width: 456px; left: 20px; top: 170px;" class="dark-color col-md-7">
-                                                                                                                                                                                                    <a class="btn btn-primary" href="<?//= $banner->link; ?>"><?//= $banner->linkTitle ?></a>
-                                                                                                                                                                                                </p>-->
+                                                                                                                                                                                                                <!--<p style="width: 456px; left: 20px; top: 170px;" class="dark-color col-md-7">
+                                                                                                                                                                                                                <a class="btn btn-primary" href="<?//= $banner->link; ?>"><?//= $banner->linkTitle ?></a>
+                                                                                                                                                                                                                </p>-->
                         <?php endif; ?>
                         <!--<a class="btn btn-black" href="#">Browse all</a>-->
                     </div>
@@ -339,7 +339,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <!--Info Block with Image Background-->
 
     <section style="background-image: url(<?php echo $baseUrl . $topOneContent->image; ?>);" class="info-block-image" data-stellar-background-ratio="0.5" style="background-repeat:no-repeat;
-             background-size:contain;
              background-position:center;">
         <!--<div class="overlay"></div>-->
         <div class="container">
@@ -367,7 +366,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                  background-size:  cover;
                  background-color: #999;">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-                    <h2 class="dark-color"><?php //echo $topOneContent->title;                 ?></h2>
+                    <h2 class="dark-color"><?php //echo $topOneContent->title;                        ?></h2>
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12" style="color: #fff;">
                             <p class="p-style3" style="color: #fff;">
