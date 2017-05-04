@@ -304,7 +304,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'loadingText' => 'Loading picking point ...',
                             'params' => ['input-type-13', 'input-type-23', 'lockers-input-type-33']
                         ]
-                    ])->label('picking point');
+                    ])->label('Picking point');
                 } else {
                     echo $form->field($pickingPointLockers, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
                         //'data' => [9 => 'Savings'],
@@ -321,7 +321,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'loadingText' => 'Loading picking point ...',
                             'params' => ['input-type-13', 'input-type-23', 'lockers-input-type-33']
                         ]
-                    ])->label('picking point');
+                    ])->label('Picking point');
                 }
                 ?>
                 <?php
@@ -493,7 +493,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'loadingText' => 'Loading picking point ...',
                             'params' => ['input-type-13', 'input-type-23', 'lockers-cool-input-type-33']
                         ]
-                    ])->label('picking point');
+                    ])->label('Picking point');
                 } else {
                     echo $form->field($pickingPointLockersCool, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
                         //'data' => [9 => 'Savings'],
@@ -510,7 +510,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'loadingText' => 'Loading picking point ...',
                             'params' => ['input-type-13', 'input-type-23', 'lockers-cool-input-type-33']
                         ]
-                    ])->label('picking point');
+                    ])->label('Picking point');
                 }
                 ?>
                 <?php
@@ -682,7 +682,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'loadingText' => 'Loading picking point ...',
                             'params' => ['booth-input-type-13', 'booth-input-type-23', 'booth-input-type-33']
                         ]
-                    ])->label('picking point');
+                    ])->label('Picking point');
                 } else {
                     echo $form->field($pickingPointBooth, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
                         //'data' => [9 => 'Savings'],
@@ -701,7 +701,7 @@ foreach ($GetOrderMastersGroup as $value) {
                             'loadingText' => 'Loading picking point ...',
                             'params' => ['booth-input-type-13', 'booth-input-type-23', 'booth-input-type-33']
                         ]
-                    ])->label('picking point');
+                    ])->label('Picking point');
                 }
                 ?>
                 <?php
