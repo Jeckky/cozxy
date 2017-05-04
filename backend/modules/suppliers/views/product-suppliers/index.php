@@ -23,7 +23,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
     <?php
     $form = ActiveForm::begin([
         //'action' => '#',
-        'options' => ['class' => ' form-horizontal', 'enctype' => 'multipart/form-data'],
+        'options' => ['class' => ' form-horizontal', 'enctype' => 'multipart/form-data', 'method' => 'post'],
         'fieldConfig' => [
             'template' => '{label}<div class="col-sm-9">{input}</div>',
             'labelOptions' => [
