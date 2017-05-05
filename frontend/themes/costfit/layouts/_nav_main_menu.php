@@ -42,7 +42,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     }
     .menu .main .submenu {
         border-color: #2b2727;
-        margin-top: 6px;
+        margin-top: 4px;
     }
     .menu .main, .menu .catalog {
         display: block;

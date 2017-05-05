@@ -13764,7 +13764,7 @@ header .search-form .close-search:hover {
 
 .info-block-image {
     position: relative;
-    width: 100%;
+    /* width: 100%;*/
     padding: 72px 0 60px 0;
     overflow: hidden;
     color: #fff;

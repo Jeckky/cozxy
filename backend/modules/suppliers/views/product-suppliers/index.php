@@ -17,6 +17,9 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
     header("location: /auth");
     exit(0);
 }
+
+
+//throw new \yii\base\Exception($categoryId);
 ?>
 <div class="product-suppliers-index">
 
@@ -42,7 +45,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                 <div class="col-md-3">
                     <?php
                     //echo '<label class="control-label">Provinces</label>';
-                    $CategoryId = isset($_POST["CategoryId"]) ? $_POST["CategoryId"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
+                    $CategoryId = isset($_GET["CategoryId"]) ? $_GET["CategoryId"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
                     echo kartik\select2\Select2::widget([
                         'name' => 'CategoryId',
                         'value' => $categoryId == '' ? '' : $categoryId,
@@ -63,7 +66,7 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                 </div>
                 <div class="col-md-3">
                     <?php
-                    $brandId = isset($_POST["BrandId"]) ? $_POST["BrandId"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
+                    $brandId = isset($_GET["BrandId"]) ? $_GET["BrandId"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
 //echo '<label class="control-label">Provinces</label>';
                     echo kartik\select2\Select2::widget([
                         'name' => 'BrandId',
@@ -263,17 +266,53 @@ if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5
                         'template' => '{view} {update} {delete} {post}',
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                return Html::a('<i class="fa fa-eye"></i>', $url, [
+                                if (isset($_GET['BrandId']) && !empty($_GET['BrandId'])) {
+                                    $brandId = $_GET['BrandId'];
+                                } else {
+
+                                    $brandId = '';
+                                }
+                                if (isset($_GET['CategoryId']) && !empty($_GET['CategoryId'])) {
+                                    $categoryId = $_GET['CategoryId'];
+                                } else {
+
+                                    $categoryId = '';
+                                }
+                                return Html::a('<i class="fa fa-eye"></i>', $url . '&CategoryId=' . $categoryId . '&BrandId=' . $brandId, [
                                     'title' => Yii::t('yii', 'view'),
                                 ]);
                             },
                             'update' => function ($url, $model) {
-                                return Html::a('<i class="fa fa-pencil"></i>', $url, [
+                                if (isset($_GET['BrandId']) && !empty($_GET['BrandId'])) {
+                                    $brandId = $_GET['BrandId'];
+                                } else {
+
+                                    $brandId = '';
+                                }
+                                if (isset($_GET['CategoryId']) && !empty($_GET['CategoryId'])) {
+                                    $categoryId = $_GET['CategoryId'];
+                                } else {
+
+                                    $categoryId = '';
+                                }
+                                return Html::a('<i class="fa fa-pencil"></i>', $url . '&CategoryId=' . $categoryId . '&BrandId=' . $brandId, [
                                     'title' => Yii::t('yii', 'update'),
                                 ]);
                             },
                             'delete' => function ($url, $model) {
-                                return Html::a('<i class="fa fa-trash-o"></i>', $url, [
+                                if (isset($_GET['BrandId']) && !empty($_GET['BrandId'])) {
+                                    $brandId = $_GET['BrandId'];
+                                } else {
+
+                                    $brandId = '';
+                                }
+                                if (isset($_GET['CategoryId']) && !empty($_GET['CategoryId'])) {
+                                    $categoryId = $_GET['CategoryId'];
+                                } else {
+
+                                    $categoryId = '';
+                                }
+                                return Html::a('<i class="fa fa-trash-o"></i>', $url . '&CategoryId=' . $categoryId . '&BrandId=' . $brandId, [
                                     'title' => Yii::t('yii', 'Delete'),
                                     'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
                                     'data-method' => 'post',

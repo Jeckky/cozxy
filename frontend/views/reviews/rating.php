@@ -125,7 +125,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         ?>
                         <button class="btn btn-black btn-xs " role="button" id="write-reviews">rate !!</button>
                     <?php } else { ?>
-                        <a href="#" class="btn btn-black btn-xs" href="#" data-toggle="modal" data-target="#loginModal" role="button" id="write-reviews" style="background:rgba(255,212,36,.9);">Member Only</a>
+                        <a href="#" class="btn btn-black btn-xs" href="#" data-toggle="modal" data-target="#loginModal" role="button" id="write-reviews" style="background:rgba(255,212,36,.9);">Members Only</a>
                     <?php } ?>
                     <?php
                     if (\Yii::$app->user->id != '') {
