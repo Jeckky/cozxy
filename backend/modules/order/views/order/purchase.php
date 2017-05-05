@@ -15,8 +15,7 @@ $js = "
 $(function () {
     var url = 'real-time';
     setInterval(function () { // เขียนฟังก์ชัน javascript ให้ทำงานทุก ๆ 30 วินาที
-        // 1 วินาที่ เท่า 1000
-        // คำสั่งที่ต้องการให้ทำงาน ทุก ๆ 3 วินาที
+        // 1 วินาที่ เท่ากับ 1000
         var getData = $.ajax({// ใช้ ajax ด้วย jQuery ดึงข้อมูลจากฐานข้อมูล
             url: url,
             data: 'rev=1',

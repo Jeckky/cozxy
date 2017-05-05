@@ -134,39 +134,39 @@ foreach ($storeProductGroupId as $id):
                 พร้อมทั้งให้แนบใบสั่งซื้อทุกครั้งที่มีการวางบิล และถ้าหากมีรายการเปลี่ยนแปลงนอกเหนือจากนี้<br> กรุณาติดต่อแผนกจัดซื้อ"
             </td>
             <td colspan="2" style="background-color: #cccccc;"><b>รวม / Sub Total</b></td>
-            <td style="text-align: right;"><?= number_format($allTotal, 2) ?></td>
+            <td style="text-align: right;" colspan="3"><?= number_format($allTotal, 2) ?></td>
         </tr>
         <tr>
             <td colspan="2" style="background-color: #cccccc;"><b>ภาษีมูลค่าเพิ่ม / Vat (%)</b></td>
 
-            <td style="text-align: right;"><?= number_format($vat, 2) ?></td>
+            <td style="text-align: right;" colspan="3"><?= number_format($vat, 2) ?></td>
         </tr>
         <tr>
             <td colspan="2" style="background-color: #cccccc;"><b>ราคารวมทั้งสิ้น / (Total)</b></td>
-            <td style="text-align: right;"><?= number_format($vat + $allTotal, 2) ?></td>
+            <td style="text-align: right;" colspan="3"><?= number_format($vat + $allTotal, 2) ?></td>
         </tr>
     </tbody>
     </table>
-    <div style="width: 100%;height: 80px; border:solid 0.5px #000000;border-radius:10px; padding-left: 20px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;font-size: 10px;">
-        Description:
-    </div>
-    <div style="width: 100%;height: 120px; border:solid 0.5px #000000;border-radius:10px; padding-left: 20px;border-top-right-radius: 0px;border-top-left-radius: 0px;font-size: 10px;">
-        ผู้มีอำนาจลงนาม
-        <table class="table_noborder" cellpadding="0" cellspacing="0" style="margin-left: -20px;margin-top: 60px;font-size: 10px;">
-            <tr>
+    <!--    <div style="width: 100%;height: 80px; border:solid 0.5px #000000;border-radius:10px; padding-left: 20px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;font-size: 10px;">
+            Description:
+        </div>
+        <div style="width: 100%;height: 120px; border:solid 0.5px #000000;border-radius:10px; padding-left: 20px;border-top-right-radius: 0px;border-top-left-radius: 0px;font-size: 10px;">
+            ผู้มีอำนาจลงนาม
+            <table class="table_noborder" cellpadding="0" cellspacing="0" style="margin-left: -20px;margin-top: 60px;font-size: 10px;">
+                <tr>
+                    <td><center>......................................</center></td>
                 <td><center>......................................</center></td>
-            <td><center>......................................</center></td>
-            <td><center>......................................</center></td>
-            <td><center>......................................</center></td>
-            </tr>
-            <tr>
-                <td><center>กรรมการผู้จัดการอนุมัติ</center></td>
-            <td><center>ผู้จัดการฝ่าย</center></td>
-            <td><center>งบประมาณบัญชี</center></td>
-            <td><center>เจ้าหน้าที่จัดซื้อ</center></td>
-            </tr>
-        </table>
-    </div>
+                <td><center>......................................</center></td>
+                <td><center>......................................</center></td>
+                </tr>
+                <tr>
+                    <td><center>กรรมการผู้จัดการอนุมัติ</center></td>
+                <td><center>ผู้จัดการฝ่าย</center></td>
+                <td><center>งบประมาณบัญชี</center></td>
+                <td><center>เจ้าหน้าที่จัดซื้อ</center></td>
+                </tr>
+            </table>
+        </div>-->
     <?php if ($j < count($storeProductGroupId)) {
         ?>
         <pagebreak />

@@ -288,7 +288,10 @@ class ProductSuppliersController extends SuppliersMasterController {
                             'suppCode' => $_POST['ProductSuppliers']['suppCode'],
                                 //'merchantCode' => $_POST['ProductSuppliers']['merchantCode'],
                                 ], ['productId' => $model1->productId, 'productSuppId' => $id]);
-                return $this->redirect(['index']);
+                return $this->redirect(['index',
+                            'CategoryId' => $model->categoryId,
+                            'BrandId' => $model->brandId
+                ]);
             }
         }
         return $this->render('update', [
