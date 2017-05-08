@@ -16,17 +16,26 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <!--Login / Register-->
 <section class="log-reg container">
     <h2>Login/ register</h2>
-    <h4>Use social accounts</h4> <code><?= isset($ms) ? $ms : ''; ?></code>
+    <!--<h4>Use social accounts</h4>-->
+    <code><?= isset($ms) ? $ms : ''; ?></code>
     <div class="social-login">
-<!--        <a class="facebook" href="#"><i class="fa fa-facebook-square"></i></a>
-        <a class="google" href="#"><i class="fa fa-google-plus-square"></i></a>
-        <a class="twitter" href="#"><i class="fa fa-twitter-square"></i></a>-->
-        <?= common\yii2\authclient\widgets\AuthChoice::widget(['baseAuthUrl' => ['site/auth']]) ?>
+
+        <?php
+        if (isset($_GET['verification'])) {
+            echo '<h2><span style="color: #115d08;">Verification complete. Please log in </span></h2>';
+        }
+        ?>
+        <!--
+            <a class="facebook" href="#"><i class="fa fa-facebook-square"></i></a>
+            <a class="google" href="#"><i class="fa fa-google-plus-square"></i></a>
+            <a class="twitter" href="#"><i class="fa fa-twitter-square"></i></a>
+        -->
+        <?//= common\yii2\authclient\widgets\AuthChoice::widget(['baseAuthUrl' => ['site/auth']]) ?>
     </div>
     <div class="row">
         <!--Login-->
         <div class="col-lg-5 col-md-5 col-sm-5">
-<!--            <form method="post" class="login-form" action="<?php echo $baseUrl; ?>/register/login">
+            <!--<form method="post" class="login-form" action="<?//php echo $baseUrl; ?>/register/login">
                 <div class="form-group group">
                     <label for="log-email2">Email</label>
                     <input type="email" class="form-control" name="LoginForm[email]" id="log-email2" placeholder="Enter your email" required>
