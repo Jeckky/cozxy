@@ -18,7 +18,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="sticky-btns">
         <form class="quick-contact" method="post" name="quick-contact" action="<?= $baseUrl ?>/contact-us">
             <h3>Contact us</h3>
-            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do.</p>
+            <p class="text-muted">
+                For customer services, please leave your email and message below, or call us at 064-184-7414 (Thailand)
+            </p>
             <div class="form-group">
                 <label for="qc-name">Full name</label>
                 <input class="form-control input-sm" type="text" name="name" id="qc-name" placeholder="Enter full name" required="true">
