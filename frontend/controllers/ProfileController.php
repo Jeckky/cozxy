@@ -53,6 +53,7 @@ class ProfileController extends MasterController {
             $model->password = $_POST["User"]['newPassword'];  // Normal Password
             $model->password_hash = Yii::$app->security->generatePasswordHash($model->password); // Convert Password
             if ($model->save(FALSE)) {
+                \common\models\costfit\User::updateAll(['password' => NULL], ['userId' => Yii::$app->user->id]);
                 $this->redirect(Yii::$app->homeUrl . 'profile');
             }
         }

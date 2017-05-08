@@ -48,6 +48,7 @@ class RegisterController extends MasterController {
             $article->lastvisitDate = new \yii\db\Expression('NOW()');
             $article->createDateTime = new \yii\db\Expression('NOW()');
             $article->save(FALSE);
+
             //exit();
             //return $this->redirect(['site/index']);
             return $this->redirect(Yii::$app->homeUrl);
