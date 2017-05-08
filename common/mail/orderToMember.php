@@ -91,7 +91,7 @@
                         if (isset($billingCompany)) {
                             //echo 'คุณ' . $billingFirstname . ' ' . $billingLastname . '<br>';
                         } else {
-                            echo $billingCompany . ' เลขประจำตัวผู้เสียภาษีอากร : ' . $billingTax . '<br>';
+                            echo $billingCompany . ' Tax : ' . $billingTax . '<br>';
                         }
                         echo $billingAddress . ' ' . $billingDistrictId . ' ' . $billingAmphurId . '  ' . $billingProvinceId . '  ' . $billingCountryId . '  ' . $billingZipcode;
                         ?> <br>
@@ -161,10 +161,33 @@
                                                     foreach ($GetOrderItemMasters as $value1) {
                                                         //if ($value1->receiveType == 1) {
                                                         ?>
+
+                                                        <?php
+                                                        $GetOrder = common\models\costfit\OrderItem::find()->where('orderId=' . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'] . ' and receiveType=' . $value1->receiveType)->all();
+                                                        $num = 0;
+                                                        foreach ($GetOrder as $value) {
+                                                            /*
+                                                             * # แสดงข้อมูล Product ของแต่ละ Suppliers
+                                                             * # เงือนไขของ Product Suppliers
+                                                             */
+                                                            $listOrderItemsShow = common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $value['productSuppId'] . ' and receiveType=' . $value1->receiveType)->one();
+                                                            ?>
+                                                            <tr style=" border-bottom: 1px #000000 solid; text-align: left;">
+                                                                <td style="font-size: 12px;text-align: left;"><?php echo ++$i; ?></td>
+                                                                <td style="font-size: 12px;text-align: left;"><?php echo isset($listOrderItemsShow['code']) ? $listOrderItemsShow['code'] : '-'; ?></td>
+                                                                <td style="font-size: 12px; width: 40%;text-align: left;"><?php echo isset($listOrderItemsShow['title']) ? $listOrderItemsShow['title'] : '-'; ?></td>
+                                                                <td style="font-size: 12px;"><?php echo isset($listOrderItemsShow['unit']) ? $listOrderItemsShow->units->title : '-'; ?></td>
+                                                                <td style="font-size: 12px; text-align: right;"><?php echo isset($value->price) ? number_format($value->price, 2) : '-'; ?></td>
+                                                                <td style="font-size: 12px; text-align: right;"><?php echo isset($value->quantity) ? $value->quantity : '-' ?></td>
+                                                                <td style="font-size: 12px; text-align: right;"><?php echo isset($value->total) ? number_format($value->total, 2) : '-'; ?></td>
+                                                            </tr>
+                                                            <?php
+                                                        }
+                                                        ?>
                                                         <tr style="background-color:#f1f1f1 ; border-bottom: 1px #000000 solid; height: 25px; text-align: left; color: #166db9;">
                                                             <td style="font-size: 12px;" colspan="7">
                                                                 <?php
-                                                                $GetOrder = common\models\costfit\OrderItem::find()->where('orderId=' . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'] . ' and receiveType=' . $value1->receiveType)->groupBy('orderId')->one();
+                                                                // $GetOrder = common\models\costfit\OrderItem::find()->where('orderId=' . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'] . ' and receiveType=' . $value1->receiveType)->groupBy('orderId')->one();
                                                                 if (isset($GetOrder->pickingId)) {
                                                                     $picking_point = common\models\costfit\PickingPoint::find()->where('pickingId=' . $GetOrder->pickingId)->one();
                                                                     if (count($picking_point) > 0) {
@@ -217,26 +240,6 @@
                                                             </td>
                                                         </tr>
                                                         <?php
-                                                        $GetOrder = common\models\costfit\OrderItem::find()->where('orderId=' . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'] . ' and receiveType=' . $value1->receiveType)->all();
-                                                        $num = 0;
-                                                        foreach ($GetOrder as $value) {
-                                                            /*
-                                                             * # แสดงข้อมูล Product ของแต่ละ Suppliers
-                                                             * # เงือนไขของ Product Suppliers
-                                                             */
-                                                            $listOrderItemsShow = common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $value['productSuppId'] . ' and receiveType=' . $value1->receiveType)->one();
-                                                            ?>
-                                                            <tr style=" border-bottom: 1px #000000 solid; text-align: left;">
-                                                                <td style="font-size: 12px;text-align: left;"><?php echo ++$i; ?></td>
-                                                                <td style="font-size: 12px;text-align: left;"><?php echo isset($listOrderItemsShow['code']) ? $listOrderItemsShow['code'] : '-'; ?></td>
-                                                                <td style="font-size: 12px; width: 40%;text-align: left;"><?php echo isset($listOrderItemsShow['title']) ? $listOrderItemsShow['title'] : '-'; ?></td>
-                                                                <td style="font-size: 12px;"><?php echo isset($listOrderItemsShow['unit']) ? $listOrderItemsShow->units->title : '-'; ?></td>
-                                                                <td style="font-size: 12px; text-align: right;"><?php echo isset($value->price) ? number_format($value->price, 2) : '-'; ?></td>
-                                                                <td style="font-size: 12px; text-align: right;"><?php echo isset($value->quantity) ? $value->quantity : '-' ?></td>
-                                                                <td style="font-size: 12px; text-align: right;"><?php echo isset($value->total) ? number_format($value->total, 2) : '-'; ?></td>
-                                                            </tr>
-                                                            <?php
-                                                        }
                                                     }
                                                 }
                                             } else {
