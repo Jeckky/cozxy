@@ -49,8 +49,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <div class="container">
             <h2 class="with-sorting dark-color">Showing results for</h2>
             <div class="sorting">
-                <a href="#">Sort by popularity</a>
-                <a href="#">Sort by price</a>
+                <!--                <a href="#">Sort by popularity</a>
+                                <a href="#">Sort by price</a>-->
             </div><!--sorting-->
 
             <div class="row">
@@ -78,9 +78,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     </ul>
                                 </div>
                             <?php } ?>
-                            <div class="sorting">
-                                <a href="#cate">LESS</a>
-                            </div><!--sorting-->
+                            <!--                            <div class="sorting">
+                                                            <a href="#cate">LESS</a>
+                                                        </div>sorting-->
                         </section>
 
                         <!--Price Section-->
