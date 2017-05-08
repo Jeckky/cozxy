@@ -53,12 +53,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <a class="logo" href="<?php echo $baseUrl; ?>"><img src="<?php echo $baseUrl . $logoImage->image; ?>" alt="footer Cozxy.com"></a>
                         <p><?php echo isset($logoImage->contents[0]) ? $logoImage->contents[0]->description : ""; ?></p>
                         <div class="social">
-                            <a href="#" target="_blank"><i class="fa fa-instagram"></i></a>
-                            <a href="#" target="_blank"><i class="fa fa-youtube-square"></i></a>
+                            <a href="https://www.instagram.com/cozxy_thailand/" target="_blank"><i class="fa fa-instagram"></i></a>
+                            <!--<a href="#" target="_blank"><i class="fa fa-youtube-square"></i></a>
                             <a href="#" target="_blank"><i class="fa fa-tumblr-square"></i></a>
                             <a href="#" target="_blank"><i class="fa fa-vimeo-square"></i></a>
-                            <a href="#" target="_blank"><i class="fa fa-pinterest-square"></i></a>
-                            <a href="#" target="_blank"><i class="fa fa-facebook-square"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-pinterest-square"></i></a>-->
+                            <a href="https://www.facebook.com/cozxydotcom/" target="_blank"><i class="fa fa-facebook-square"></i></a>
                         </div>
                     </div>
                 </div>
@@ -96,11 +96,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-5">
                         <div class="payment">
-                            <img src="<?php echo $directoryAsset; ?>/img/payment/visa.png" alt="Visa"/>
-                            <img src="<?php echo $directoryAsset; ?>/img/payment/paypal.png" alt="PayPal"/>
-                            <img src="<?php echo $directoryAsset; ?>/img/payment/master.png" alt="Master Card"/>
-                            <img src="<?php echo $directoryAsset; ?>/img/payment/discover.png" alt="Discover"/>
-                            <img src="<?php echo $directoryAsset; ?>/img/payment/amazon.png" alt="Amazon"/>
+                           <!-- <img src="<?//php echo $directoryAsset; ?>/img/payment/visa.png" alt="Visa"/>
+                            <img src="<?//php echo $directoryAsset; ?>/img/payment/paypal.png" alt="PayPal"/>
+                            <img src="<?//php echo $directoryAsset; ?>/img/payment/master.png" alt="Master Card"/>
+                            <img src="<?//php echo $directoryAsset; ?>/img/payment/discover.png" alt="Discover"/>
+                            <img src="<?//php echo $directoryAsset; ?>/img/payment/amazon.png" alt="Amazon"/>
+                            -->
                         </div>
                     </div>
                 </div>
