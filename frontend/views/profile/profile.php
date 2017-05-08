@@ -59,7 +59,7 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                 'inputTemplate' => '<div class="input-group">{input}<span class="input-group-addon"><button class="reveal_current" type="button">
                             <span class="reveal-title-current">Show</span>
                         </button></span></div>',
-            ])->passwordInput()->textInput(['class' => 'form-control pwd1', 'onchange' => '
+            ])->passwordInput()->textInput(['type' => 'password', 'class' => 'form-control pwd1', 'onchange' => '
                 $.post( "' . $baseUrl . '/profile/reset", {token: $(this).val()}, function( data ) {
                   //$( "#suborders-product_price" ).val( data );
                     if(data == 1){
@@ -81,14 +81,14 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                 'inputTemplate' => '<div class="input-group">{input}<span class="input-group-addon"><button class="reveal_new" type="button">
                             <span class="reveal-title-new">Show</span>
                         </button></span></div>',
-            ])->passwordInput()->textInput(['class' => 'form-control pwd2', 'disabled' => true]);
+            ])->passwordInput()->textInput(['class' => 'form-control pwd2', 'disabled' => true, 'type' => 'password']);
             ?>
             <?=
             $form->field($model, 'rePassword', [
                 'inputTemplate' => '<div class="input-group">{input}<span class="input-group-addon"><button class="reveal_re" type="button">
                             <span class="reveal-title-re">Show</span>
                         </button></span></div>',
-            ])->passwordInput()->textInput(['class' => 'form-control pwd3', 'disabled' => true]);
+            ])->passwordInput()->textInput(['class' => 'form-control pwd3', 'disabled' => true, 'type' => 'password']);
             ?>
             <?= Html::submitButton('Update Password', ['class' => 'btn btn-primary', 'name' => 'contact-info', 'style' => 'background-color: #3cc; color: #fff;']) ?>
             <?php ActiveForm::end(); ?>

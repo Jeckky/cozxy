@@ -46,7 +46,10 @@ class ProfileController extends MasterController {
         $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
         $model->scenario = 'profile';
         if (isset($_POST["User"])) {
-            $model->attributes = $_POST['User'];
+            //echo '<pre>';
+            //print_r($_POST["User"]);
+            //exit();
+            // $model->attributes = $_POST['User'];
             $model->password = $_POST["User"]['newPassword'];  // Normal Password
             $model->password_hash = Yii::$app->security->generatePasswordHash($model->password); // Convert Password
             if ($model->save(FALSE)) {
