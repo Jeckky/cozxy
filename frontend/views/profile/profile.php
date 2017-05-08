@@ -47,7 +47,13 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
             <h4>
                 Change password
             </h4>
-
+            <div class="col-md-12 text-center">
+                <?php
+                if (isset($_GET['verification'])) {
+                    echo '<h4><span style="color: #115d08;">Change password successfully.</span></h4>';
+                }
+                ?>
+            </div>
             <?php
             $form = ActiveForm::begin([
                 'id' => 'password-form',
