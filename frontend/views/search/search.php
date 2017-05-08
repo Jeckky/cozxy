@@ -142,6 +142,7 @@ $category = \common\models\costfit\Category::getRootText($categoryIdBrand);
                             //            'firstPageCssClass' => 'myfirst',
                             //            'lastPageCssClass' => 'mylast',
                             ],
+                            'emptyText' => '',
                         ])
                         ?>
 
@@ -214,6 +215,7 @@ $category = \common\models\costfit\Category::getRootText($categoryIdBrand);
                                 'prevPageCssClass' => 'prev-page',
                                 'nextPageCssClass' => 'next-page',
                             ],
+                            'emptyText' => '',
                         ])
                         ?>
                     </div>
