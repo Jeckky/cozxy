@@ -185,8 +185,8 @@ class TopUpController extends MasterController {
     }
 
     public function actionPrintPaymentForm($userId, $amount, $fromCheckout) {
-        $customerName = User::userName($userId);
-        $customerTel = User::userTel($userId);
+        $customerName = \common\models\costfit\Address::userName($userId);
+        $customerTel = \common\models\costfit\Address::userTel($userId);
         $taxId = '0105553036789';
         $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)
                 ->orderBy('updateDateTime DESC')
@@ -207,7 +207,7 @@ class TopUpController extends MasterController {
         $customer = User::find()->where("userId=" . Yii::$app->user->id)->one();
         if (isset($customer)) {
             $Subject = "Confirm payment : #" . $topUp->topUpNo;
-            $username = User::userName($customer->userId);
+            $username = \common\models\costfit\Address::userName($customer->userId);
             $toMail = $customer->email;
             $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "top-up/history";
             $point = $topUp->point;
@@ -285,7 +285,7 @@ class TopUpController extends MasterController {
                 $customer = User::find()->where("userId=" . Yii::$app->user->id)->one();
                 if (isset($customer)) {
                     $Subject = "Top up successful : #" . $topUp->topUpNo;
-                    $username = User::userName($customer->userId);
+                    $username = \common\models\costfit\Address::userName($customer->userId);
                     $toMail = $customer->email;
                     $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "top-up/history";
                     $point = $topUp->point;
@@ -379,7 +379,7 @@ class TopUpController extends MasterController {
         $title = FALSE;
         $topUp = TopUp::find()->where("topUpId=" . $topUpId)->one();
         if (isset($topUp)) {
-            $customerName = User::userName($topUp->userId);
+            $customerName = \common\models\costfit\Address::userName($topUp->userId);
             $address = User::userAddressText(User::supplierDetail($topUp->userId)->addressId, false);
             $topUpNo = $topUp->topUpNo;
             $subDate = substr($topUp->updateDateTime, 0, -9);

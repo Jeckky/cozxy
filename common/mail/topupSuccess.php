@@ -63,19 +63,19 @@
                         <table width="100%"  text-align="center"  style=" width:100% ; height: auto;  text-align: center;">
                             <tr>
                                 <td>
-                                    <p style="color: #ff9016; font-size: 20px; text-align: left;"><strong>เรียนคุณ <?php echo $username; ?></strong></p>
+                                    <p style="color: #ff9016; font-size: 20px; text-align: left;"><strong>Hello <?php echo $username; ?></strong></p>
 
                                     <table class="x_col1of2" width="50%" border="0" cellpadding="0" cellspacing="0" align="left" style="border-spacing:0; border-collapse:collapse; font-size:14px">
                                         <tbody>
                                             <tr>
                                                 <td class="x_order-col x_pam" align="left" valign="top" style="border-collapse:collapse; padding-top:10px; padding-right:10px; padding-bottom:10px; padding-left:10px">
                                                     <div class="x_order-status-inner">
-                                                        <div class="x_color-grey" style="color:#646464">คุณได้เติมเงินเข้าเว็บไซต์ cozxy.com ผ่านทาง <b><?= $paymentMethod == 1 ? 'Bill payment' : 'Credit card' ?></b> เพื่อซื้อ Point.</div>
+                                                        <div class="x_color-grey" style="color:#646464">You can review your top-up history at: <b><?= $paymentMethod == 1 ? 'Bill payment' : 'Credit card' ?></b></div>
                                                         <div class="x_pts" style="margin-top:5px; margin-bottom:10px">
-                                                            <strong>จำนวน : <?= $point ?> Point</strong>
+                                                            <strong>Total coins received : <?= $point ?> CozxyCoins</strong>
                                                             <br>
-                                                            <strong>คิดเป็นเงิน : <?= number_format($money, 2) ?> Bath</strong><br>
-                                                            สามารถตรวจสอบประวัติการเติมเงินได้ที่ : <a href="<?= $url ?>"><?= $url ?></a>
+                                                            <strong>Amount : <?= number_format($money, 2) ?> THB</strong><br>
+                                                            You can review your top-up history at : <a href="<?= $url ?>"><?= $url ?></a>
                                                             <br><br>
                                                             <?php
                                                             if ($paymentMethod == 1) {
@@ -94,13 +94,13 @@
                         </table>
                     </center>
                     <br><br>
-                    <p style="color: #ff9016; font-size: 12px;">*** อีเมลฉบับนี้เป็นการแจ้งข้อมูลโดยอัตโนมัติ กรุณาอย่าตอบกลับ</p>
+                    <p style="color: #ff9016; font-size: 12px;">*** This email is automatically reported. Please do not reply.</p>
                 </div>
                 <div class="foorter title"  style="background-color: #000000; color: rgba(255,212,36,.9); padding: 20px;">
-                    บริษัท​ คอ​ซซี่​ ดอทคอม​ จํากัด​<br>
-                    เลขประจำตัวผู้เสียภาษี : 0105553036789 <br>
-                    สำนักงานใหญ่เลขที่  5 ซอยรามอินทรา 5 แยก 4  <br>แขวงอนุสวรีย์ เขตบางเขน กทม. 10220
-                    T: , F: <br>
+                    Cozxy Dot C Co., Ltd<br>
+                    Tax Identification Number 0105553036789 <br>
+                    5 Ram Intra Soi 5 Yeak4, Anusawari, Khet Bang Ken, Bangkok,10220
+                    Tel: 02-101-0689 , Fax: 02-101-0689<br>
                 </div>
             </div>
         </div>

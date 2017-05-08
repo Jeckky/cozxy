@@ -7,9 +7,9 @@ use common\models\costfit\ProductSuppliers;
 <br><br>
 <div style="width: 100%;font-size: 10px;margin-top: 2px;margin-bottom: 10px;">
     <div style="width: 70%;height: 90px;border:solid 0.5px #000000;padding-left: 10px;padding-top: 3px;">
-        ชื่อลูกค้า/ Customers : <b><?= $customerName ?></b><br>
-        ที่อยู่ / Address : <b><?= $address ?></b><br>
-        เลขประจำตัวผู้เสียภาษีอากร : <b>( ไม่มีข้อมูล )</b>
+        Customers Name: <b><?= $customerName ?></b><br>
+        Address : <b><?= $address ?></b><br>
+        Tax Identification Number : <b></b>
     </div>
     <div style="width: 30%;height: 90px;border:solid 0.5px #000000;padding-left: 10px;margin-left: 500px;margin-top: -93px;padding-top: 3px;">
 
@@ -21,7 +21,7 @@ use common\models\costfit\ProductSuppliers;
 </div>
 <table class="table_bordered" width="100%"  cellpadding="2" cellspacing="0">
     <tr>
-        <td style="text-align: center;font-size: 8pt;width: 10%">ลำดับที่<br>Item</td>
+        <td style="text-align: center;font-size: 8pt;width: 10%">#<br>Item</td>
         <td style="text-align: center;font-size: 8pt;width: 50%">รายการ<br>Description</td>
         <td style="text-align: center;font-size: 8pt;">จำนวน<br>Value</td>
         <td style="text-align: center;font-size: 8pt;width: 10%">หน่วย<br>Unit</td>
@@ -37,8 +37,8 @@ use common\models\costfit\ProductSuppliers;
     <tr>
         <td colspan="2" style="font-size: 7pt;padding-top: 10px;padding-left: 10px;padding-bottom: 10px;">
             รายการรับชำระเงิน
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" <?= $method == 1 ? 'checked="true"' : '' ?>> เงินโอน
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" <?= $method == 2 ? 'checked="true"' : '' ?>> บัตรเครดิต<br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" <?= $method == 1 ? 'checked="true"' : '' ?>> Bill Payment
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" <?= $method == 2 ? 'checked="true"' : '' ?>> Credit Card<br><br>
 
         </td>
         <td colspan="2" style="font-size: 8pt;text-align: center;background-color: #cccccc;vertical-align: middle;"><b>รวมเงิน/Total</b></td>

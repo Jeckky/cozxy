@@ -20,14 +20,14 @@ if (isset($tickets) && !empty($tickets)) {// LEFT
 
             <div class="bs-callout bs-callout-warning">
                 <h4 class="profile-title-head">
-                    <span class="profile-title-head">แบบคำขอคืนสินค้า ( * กรุณากรอกข้อมูลให้ครบทุกช่อง )</span>
+                    <span class="profile-title-head">Request a return ( * Please fill in the form below. )</span>
                 </h4>
                 Invoice Nunber <input type="text" name="invoiceNo" id="invoiceNo" class="form-control" disabled="true">
                 <br>
-                หัวข้อ <input type="text" name="tickeTitle" id="tickeTitle" class="form-control" disabled="true">
+                Why are you returning it: <input type="text" name="tickeTitle" id="tickeTitle" class="form-control" disabled="true">
                 <br>
-                คำอธิบายเพิ่มเติม <textarea name="ticketDescription" id="description" class="form-control input-lg" style="height: 100px;" disabled="true"></textarea>
-                <br><a class="btn btn-black pull-right" id="sendTicket" disabled="true">ส่งแบบคำขอคืนสินค้า</a><br><br>
+                Please describe further detail: <textarea name="ticketDescription" id="description" class="form-control input-lg" style="height: 100px;" disabled="true"></textarea>
+                <br><a class="btn btn-black pull-right" id="sendTicket" disabled="true">Submit</a><br><br>
             </div>
             <?php
         } else {
@@ -40,14 +40,14 @@ if (isset($tickets) && !empty($tickets)) {// LEFT
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div class="bs-callout bs-callout-warning">
                         <h4 class="profile-title-head">
-                            <span class="profile-title-head">แบบคำขอคืนสินค้า ( * กรุณากรอกข้อมูลให้ครบทุกช่อง )</span>
+                            <span class="profile-title-head">Request a return ( * Please fill in the form below. )</span>
                         </h4>
                         Invoice Nunber <input type="text" name="invoiceNo" id="invoiceNo" class="form-control">
                         <br>
-                        หัวข้อ <input type="text" name="tickeTitle" id="tickeTitle" class="form-control">
+                        Why are you returning it: <input type="text" name="tickeTitle" id="tickeTitle" class="form-control">
                         <br>
-                        คำอธิบายเพิ่มเติม <textarea name="ticketDescription" id="description" class="form-control input-lg" style="height: 100px;"></textarea>
-                        <br><a class="btn btn-black pull-right" id="sendTicket">ส่งแบบคำขอคืนสินค้า</a><br><br>
+                        Please describe further detail: <textarea name="ticketDescription" id="description" class="form-control input-lg" style="height: 100px;"></textarea>
+                        <br><a class="btn btn-black pull-right" id="sendTicket">Submit</a><br><br>
                     </div>
 
                     <?php
@@ -66,11 +66,11 @@ if (isset($tickets) && !empty($tickets)) {// LEFT
                         if ($tickets->status == Ticket::TICKET_STATUS_CREATE) {
                             ?>
                             <div class="text-center" style="color: #000;">
-                                <h3>อยู่ระหว่างการดำเนินการ <i class="fa fa-spinner" aria-hidden="true"></i></h3>
+                                <h3>Pending <i class="fa fa-spinner" aria-hidden="true"></i></h3>
                                 <hr>
                                 <div class="text-center">
-                                    <h2> กรุณารอการติดต่อกลับจากทาง COZXY </h2>
-                                    <h3> คำขอคืนสินค้าเลขที่ : "<?= $tickets->ticketNo ?>" </h3>
+                                    <h2> Please wait for COZXY contact</h2>
+                                    <h3> Request No : "<?= $tickets->ticketNo ?>" </h3>
                                 </div>
                             </div>
                         <?php } else if ($tickets->status == Ticket::TICKET_STATUS_APPROVED) {
@@ -94,7 +94,7 @@ if (isset($tickets) && !empty($tickets)) {// LEFT
                             <?php
                         } else if ($tickets->status == Ticket::TICKET_STATUS_NOT_APPROVE) {
                             ?>
-                            <h4>รายการ " <?= $tickets->ticketNo ?> " ไม่ผ่านการอนุมัติ</h4>
+                            <h4>รายการ " <?= $tickets->ticketNo ?> " Reject</h4>
                             <div style="color: #000;font-size: 12pt;">Remark</div>
                             <div style="width:100%;background-color: #ffffcc;border: #ff9900 solid thin;min-height: 200px;padding-top: 5px;padding-left: 10px;color:#666666;">
                                 <?= $tickets->remark ?>
@@ -102,7 +102,7 @@ if (isset($tickets) && !empty($tickets)) {// LEFT
                         <?php } else {
                             ?>
                             <div class="text-center" style="color: #000;">
-                                <h4>ขั้นตอนและเงื่อนไขในการขอคืนสินค้า</h4>
+                                <h4>Process and condition</h4>
                                 <div class="text-left">
                                     <p>1.</p>
                                     <p>2.</p>
@@ -117,15 +117,15 @@ if (isset($tickets) && !empty($tickets)) {// LEFT
                 </div>
                 <div class="bs-callout bs-callout-warning">
                     <h4 class="profile-title-head">
-                        <span class="profile-title-head">ประวัติการคืนสินค้า</span>
+                        <span class="profile-title-head">Return History</span>
                     </h4>
                     <table class="table" style="color: #000;">
                         <tr>
-                            <td style="text-align: center">No.</td>
-                            <td style="text-align: center">Invoice</td>
-                            <td style="text-align: center">เลขที่ขอคืน</td>
-                            <td style="text-align: center">สถานะ</td>
-                            <td style="text-align: center">รายละเอียด</td>
+                            <td style="text-align: center">#</td>
+                            <td style="text-align: center">Invoice #</td>
+                            <td style="text-align: center">Request</td>
+                            <td style="text-align: center">Status</td>
+                            <td style="text-align: center">Details</td>
                         </tr>
                         <?php
                         if (isset($histories) && !empty($histories)) {
@@ -144,7 +144,7 @@ if (isset($tickets) && !empty($tickets)) {// LEFT
                             endforeach;
                         } else {
                             ?>
-                            <td style="text-align: center" colspan="5">ไม่พบประวัติการคืนสินค้า</td>
+                            <td style="text-align: center" colspan="5">You do not have any returns</td>
                         <?php }
                         ?>
                     </table>

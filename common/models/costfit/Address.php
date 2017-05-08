@@ -130,4 +130,14 @@ class Address extends \common\models\costfit\master\AddressMaster {
         }
     }
 
+    public static function userTel($userId) {
+        $address = Address::find()->where("userId=" . $userId . " and status=1 and isDefault=1")->one();
+        if (isset($address)) {
+            $tel = $address->firstname . ' ' . $address->lastname;
+            return $tel;
+        } else {
+            return '';
+        }
+    }
+
 }

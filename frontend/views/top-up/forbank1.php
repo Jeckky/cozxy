@@ -7,7 +7,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <div style="margin: 10px;padding: 10px;border: #000 solid 2px;color: #000;">
     <div class="row">
         <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8 text-left"  style="font-size: 14pt;">
-            <b>แบบฟอร์มสำหรับชำระเงิน (Bill Payment / Pay-inSlip)</b>
+            <b>Bill payment/ Pay-in Slip (แบบฟอร์มสำหรับการชำระเงิน)</b>
         </div>
         <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 text-right"  style="font-size: 12pt;">
 
@@ -15,8 +15,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     </div>
     <div class="row">
         <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8 text-left">
-            <b  style="font-size: 12pt;">เพื่อนำเข้าบัญชี บริษัท คอซซี่ดอทคอม จำกัด / เลขประจำตัวผู้เสียภาษี <?= $taxId ?></b><br>
-            <span style="font-size: 11pt;">สำนักงานใหญ่ เลขที่ 5 ซอยรามอินทรา 5 แยก 4 แขวงอนุสาวรีย์ เขตบางเขน กรุงเทพมหานคร 10220 โทร. 02-101-0689</span>
+            <b  style="font-size: 12pt;">Deposit for Cozxy Dot Com Co., Ltd / Tax Identification Number <?= $taxId ?></b><br>
+            <b  style="font-size: 10pt;">เพื่อนำเข้าบัญชี บริษัท คอซซี่ดอทคอม จำกัด/เลขที่ประจำตัวผู้เสียภาษีอากร <?= $taxId ?></b><br>
+            <span style="font-size: 11pt;">5 Ram intra Sou 5 Yeak4, Anusawari, Khet Bangken, Bangkok 10220 Tel. 02-101-0689</span>
             <?php
             if (isset($allBank) && count($allBank) > 0) {
                 foreach ($allBank as $bank):
@@ -33,10 +34,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             ?>
         </div>
         <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3 pull-right text-left" style="border: #000 solid 2px;margin-right: 15px;padding: 5px;">
-            สาขา_______________วันที่_______________<br>
-            ชื่อลูกค้า : <b><?= $customerName ?></b><br>
-            เลขที่(Ref.1) : <b><?= $topUpNo ?></b><br>
-            เบอร์โทรศัพท์(Ref.2) :<b><?= $customerTel ?></b>
+            Branch:___________Date:___________<br>
+            Customer name : <b><?= $customerName ?></b><br>
+            Number(Ref.1) : <b><?= $topUpNo ?></b><br>
+            Telephone(Ref.2) :<b><?= $customerTel ?></b>
         </div>
     </div>
 
@@ -64,7 +65,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
       $generator = new \Picqer\Barcode\BarcodeGeneratorHTML();
       echo $generator->getBarcode($barCode, $generator::TYPE_CODE_128);
      */ ?>
-                    <center> <?php // $data    ?></center>
+                    <center> <?php // $data         ?></center>
                 </div>
             </div>
 

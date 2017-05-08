@@ -113,7 +113,7 @@ $this->registerJs($js);
                 <td style="text-align: left;width:50%;">
                     <span style="margin-left: 20px;">
                         <button type="submit" class = "btn" style = "background-color: #3cc; color: #fff;font-size: 12pt;" id="confirm-topup">
-                            ยืนยัน
+                            Confirm
                         </button>
                     </span>
                 </td>
