@@ -98,11 +98,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-5">
                         <div class="payment">
-                           <!-- <img src="<?//php echo $directoryAsset; ?>/img/payment/visa.png" alt="Visa"/>
-                            <img src="<?//php echo $directoryAsset; ?>/img/payment/paypal.png" alt="PayPal"/>
+                            <img src="<?//php echo $directoryAsset; ?>/img/payment/visa.png" alt="Visa"/>
                             <img src="<?//php echo $directoryAsset; ?>/img/payment/master.png" alt="Master Card"/>
-                            <img src="<?//php echo $directoryAsset; ?>/img/payment/discover.png" alt="Discover"/>
-                            <img src="<?//php echo $directoryAsset; ?>/img/payment/amazon.png" alt="Amazon"/>
+                             <!-- <img src="<?//php echo $directoryAsset; ?>/img/payment/paypal.png" alt="PayPal"/>
+
+                             <img src="<?//php echo $directoryAsset; ?>/img/payment/discover.png" alt="Discover"/>
+                             <img src="<?//php echo $directoryAsset; ?>/img/payment/amazon.png" alt="Amazon"/>
                             -->
                         </div>
                     </div>
