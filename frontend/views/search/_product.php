@@ -43,7 +43,7 @@ if (isset($model->productId)) {
                         ?>
                         <img src="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1" class="img-responsive"/>
                     <?php endif; ?>
-                    <span class="tile-overlay tile-overlay-cozxy"></span>
+                    <span class="tile-overlay"></span>
                 </a>
             </div>
 
@@ -59,7 +59,7 @@ if (isset($model->productId)) {
                         <?= substr($model->title, 0, 35);
                         ?></a>
                 </div>
-                <span><?php //= $model->shortDescription;                     ?></span>
+                <span><?php //= $model->shortDescription;                      ?></span>
                 <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productSuppId]) ?>"><button class="btn btn-primary" id="addItemToCart"><i class="fa fa-search"></i>View</button></a>
             </div>
         </div>
