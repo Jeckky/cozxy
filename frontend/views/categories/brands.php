@@ -40,11 +40,11 @@ if (isset($categoryId)) {
 //                        ]
     ]);
     ?>
-    <div class="form-group">
-        <label class="sr-only" for="subscr-name">Enter name</label>
-        <input type="text" class="form-control input-sm" name="subscr-name" id="subscr-name" placeholder="Search by Brand" required="">
-        <button class="subscr-next" style="top:4px;"><i class="icon-magnifier"></i></button>
-    </div>
+    <!--    <div class="form-group">
+            <label class="sr-only" for="subscr-name">Enter name</label>
+            <input type="text" class="form-control input-sm" name="subscr-name" id="subscr-name" placeholder="Search by Brand" required="">
+            <button class="subscr-next" style="top:4px;"><i class="icon-magnifier"></i></button>
+        </div>-->
 
     <?php
 //        throw new \yii\base\Exception(print_r($this->params['brandId'], true));
@@ -72,7 +72,8 @@ if (isset($categoryId)) {
     <?php
 }
 
-function check($brandId, $allBrands) {
+function check($brandId, $allBrands)
+{
     $check = 0;
     foreach ($allBrands as $old) {
         if ($old == $brandId) {
