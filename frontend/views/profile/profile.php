@@ -5,7 +5,10 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yi\web\view;
 use yii\widgets\ListView;
+// add this in your view
+use kartik\password\PasswordInput;
 
+//use kartik\widgets\ActiveForm; // optional
 //use kartik\;
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
@@ -82,12 +85,24 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
             ?>
             <p id="suborders-product_price">
             </p>
+            <?//=
+            $form->field($model, 'newPassword', [
+            'inputTemplate' => '<div class="input-group">{input}<span class="input-group-addon"><button class="reveal_new" type="button">
+            <span class="reveal-title-new">Show</span>
+            </button></span></div>',
+            ])->passwordInput()->textInput(['class' => 'form-control pwd2', 'disabled' => true, 'type' => 'password']);
+            ?>
             <?=
             $form->field($model, 'newPassword', [
                 'inputTemplate' => '<div class="input-group">{input}<span class="input-group-addon"><button class="reveal_new" type="button">
                             <span class="reveal-title-new">Show</span>
                         </button></span></div>',
-            ])->passwordInput()->textInput(['class' => 'form-control pwd2', 'disabled' => true, 'type' => 'password']);
+            ])->widget(PasswordInput::classname(), [
+                'pluginOptions' => [
+                    'showMeter' => true,
+                    'toggleMask' => false
+                ]
+            ])->textInput(['class' => 'form-control pwd2', 'disabled' => true, 'type' => 'password']);
             ?>
             <?=
             $form->field($model, 'rePassword', [
@@ -96,6 +111,8 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                         </button></span></div>',
             ])->passwordInput()->textInput(['class' => 'form-control pwd3', 'disabled' => true, 'type' => 'password']);
             ?>
+
+
             <?= Html::submitButton('Update Password', ['class' => 'btn btn-primary', 'name' => 'contact-info', 'style' => 'background-color: #3cc; color: #fff;']) ?>
             <?php ActiveForm::end(); ?>
 

@@ -14,7 +14,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <div class="modal-header" style="border-bottom-color:#fff;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
                 <span class="text-left">
-                    รายการ Wishlist
+                    List Wishlist
                 </span>
             </div>
             <br>
@@ -23,7 +23,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <center>
                        <!-- <i class="icon-shopping-cart-content" style="zoom:8;"></i> -->
                     </center>
-                </span><br><center><code>สำหรับสมาชิกเท่านั่น  <span id="test"></span></code></center>
+                </span><br><center><code>Members only  <span id="test"></span></code></center>
                 <p class="large text-center">
                 </p>
             </div>
