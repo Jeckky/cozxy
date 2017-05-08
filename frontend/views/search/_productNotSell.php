@@ -8,7 +8,19 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 //echo 'products id : ' . $model->productId . '<br>';
 //echo $model->productId;
 ?>
-
+<style type="text/css">
+    .catalog-grid .tile a .tile-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: 263px;
+        min-height: 100%;
+        z-index: 10;
+        transition: all .3s;
+    }
+</style>
 <!--Tile-->
 <?php
 if (isset($model->productId)):
@@ -46,7 +58,8 @@ if (isset($model->productId)):
                             ?>
                             <img src="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1" class="img-responsive"/>
                         <?php endif; ?>
-                        <span class="tile-overlay" style="height: 263px"></span>
+
+                        <span class="tile-overlay"></span>
                     </a>
                 </div>
                 <div class="footer search-category-footer">
@@ -67,7 +80,7 @@ if (isset($model->productId)):
                             <?= substr($suppliers->title, 0, 35);
                             ?></a>
                     </div>
-                    <span><?php //= $model->shortDescription;                     ?></span>
+                    <span><?php //= $model->shortDescription;                        ?></span>
                     <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $suppliers->encodeParams(['productId' => $suppliers->productId, 'productSupplierId' => $suppliers->productSuppId]) ?>"><button class="btn btn-primary" id="addItemToCart"><i class="fa fa-search"></i>View</button></a>
                 </div>
             </div>
