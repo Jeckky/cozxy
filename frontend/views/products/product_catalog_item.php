@@ -102,6 +102,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </div>
         <?php endif; ?>
     </div>
+    <div class="buttons group products-buttons-group" style="color: #e6e6e6;">
+        <?php
+        echo isset($getPrductsSupplirs->brand) ? 'Brand by ' . $getPrductsSupplirs->brand->title : 'Brand by';
+        ?>
+    </div>
     <div class="buttons group products-buttons-group">
         <?php
         //$supplierPrice = ProductSuppliers::productPriceSupplier($productSupplierId);
@@ -121,7 +126,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <!--    <div class="buttons group products-buttons-group" style="margin-top: -18px;">
             <div class="form-group" style="word-wrap: break-word;">
                 <label for="shopping-dollar" class="col-sm-1 " style="float: left; padding-right: 0px; padding-left: 0px; margin-bottom: 0px;">
-                    <img  src="<?php // echo Yii::$app->homeUrl;                                                                                                                                                                                                                                                                                                                       ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
+                    <img  src="<?php // echo Yii::$app->homeUrl;                                                                                                                                                                                                                                                                                                                                        ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
                 </label>
                 <div class="col-sm-11 text-left discountPrice " style="float: left; padding: 0px; margin-left: 0px; margin-top: 15px;">
                     &nbsp;Add more than 1 item to your order
@@ -155,7 +160,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             </label>
                         </div>
                     </div>
-    <?php // } ?>
+    <?php // }  ?>
             </div>
         </div>-->
     <!--    <div class="buttons group">
@@ -244,7 +249,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-7">
                 <h3 style="text-decoration: underline">Description</h3>
-                <?php //$description = ProductSuppliers::productSupplierName($productSupplierId);  ?>
+                <?php //$description = ProductSuppliers::productSupplierName($productSupplierId);   ?>
                 <?= isset($getPrductsSupplirs) && !empty($getPrductsSupplirs) ? $getPrductsSupplirs->description : '' ?>
                 <h3 style="text-decoration: underline">Specification</h3>
                 <?= isset($getPrductsSupplirs) && !empty($getPrductsSupplirs) ? $getPrductsSupplirs->specification : '' ?>
