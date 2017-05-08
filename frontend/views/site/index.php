@@ -239,7 +239,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                     }
                                                     ?></a>
                                             </div>
-                                            <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"><button class="btn btn-primary btn-sm">view</button></a>
+                                            <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"><button class="btn btn-primary btn-sm">View story</button></a>
                                         </div>
                                     </div>
                                 </div>
@@ -383,7 +383,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                  background-size:  cover;
                  background-color: #999;">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-                    <h2 class="dark-color"><?php //echo $topOneContent->title;                                                                             ?></h2>
+                    <h2 class="dark-color"><?php //echo $topOneContent->title;                                                                               ?></h2>
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12" style="color: #fff;">
                             <p class="p-style3" style="color: #fff;">
