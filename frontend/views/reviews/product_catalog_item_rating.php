@@ -110,7 +110,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     ?>
                     <a class="btn btn-primary btn-sm" id="addItemToCartUnity" href="#" <?= ($model->findMaxQuantity($model->productSuppId) <= 0) ? " disabled" : " " ?>><i class="icon-shopping-cart"></i>Add to cart</a>
                     <?php //} ?>
-                    <!--<a class="btn btn-black btn-sm" <?php //if (\Yii::$app->user->isGuest == 1) {              ?> id="GuestaddItemToWishlist" <?php //} else {              ?> id="addItemToWishlist" <?php //}              ?> href="#" <?//= (\common\models\costfit\Wishlist::isExistingList($model->productSuppId)) ? " disabled" : " " ?>><i class="icon-heart"></i>Add to wishlist</a>-->
+                    <!--<a class="btn btn-black btn-sm" <?php //if (\Yii::$app->user->isGuest == 1) {               ?> id="GuestaddItemToWishlist" <?php //} else {               ?> id="addItemToWishlist" <?php //}               ?> href="#" <?//= (\common\models\costfit\Wishlist::isExistingList($model->productSuppId)) ? " disabled" : " " ?>><i class="icon-heart"></i>Add to wishlist</a>-->
                 </div>
                 <?php //} ?>
                 <hr>
@@ -313,15 +313,15 @@ $this->registerJsFile($directoryAsset . "/js/plugins/icheck.min.js", ['depends' 
         if (x == 'brand-carousel') {
             $('#brand-carousel-reviews').removeClass("show");
             $('#brand-carousel-reviews').addClass("hide");
-            $('.add-new-icon').html('<h3 style="text-decoration: underline;">All Post <i class="fa fa-minus-circle" aria-hidden="true" style="zoom: .7"></i></h3>');
+            $('.add-new-icon').html('<h3 style="text-decoration: underline;">All Story <i class="fa fa-minus-circle" aria-hidden="true" style="zoom: .7"></i></h3>');
         } else if (x == 'brand-carousel show') {
             $('#brand-carousel-reviews').removeClass("show");
             $('#brand-carousel-reviews').addClass("hide"); //fa fa-minus-circle
-            $('.add-new-icon').html('<h3 style="text-decoration: underline;">All Post <i class="fa fa-minus-circle" aria-hidden="true" style="zoom: .7"></i></h3>');
+            $('.add-new-icon').html('<h3 style="text-decoration: underline;">All Story <i class="fa fa-minus-circle" aria-hidden="true" style="zoom: .7"></i></h3>');
         } else {
             $('#brand-carousel-reviews').removeClass("hide");
             $('#brand-carousel-reviews').addClass("show");
-            $('.add-new-icon').html('<h3 style="text-decoration: underline;">All Post <i class="fa fa-plus-circle" aria-hidden="true" style="zoom: .7"></i></h3>');
+            $('.add-new-icon').html('<h3 style="text-decoration: underline;">All Story <i class="fa fa-plus-circle" aria-hidden="true" style="zoom: .7"></i></h3>');
         }
 
         //$("#brand-carousel-reviews").removeClass("hide");
