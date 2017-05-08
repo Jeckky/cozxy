@@ -72,7 +72,7 @@
                 <div class="head title" style=" background-color: #000000; color: rgba(255,212,36,.9); padding: 20px;">
                     <span style="color:  rgba(255,212,36,.9); ">COZXY</span>
                 </div>
-                <div class="content" style="background-color: #f5f5f5;">
+                <div class="content" style="background-color: #f5f5f5; padding: 30px;">
                     <p>
                         <strong>Hello <?php echo $type; ?></strong>
                     </p>
@@ -86,14 +86,14 @@
                         </a>
                     </p>
                     <p>
-                        Billing address :<br>
+                        <strong>Billing address :</strong> <br>
                         <?php
                         if (isset($billingCompany)) {
-                            echo 'คุณ' . $billingFirstname . ' ' . $billingLastname . '<br>';
+                            //echo 'คุณ' . $billingFirstname . ' ' . $billingLastname . '<br>';
                         } else {
                             echo $billingCompany . ' เลขประจำตัวผู้เสียภาษีอากร : ' . $billingTax . '<br>';
                         }
-                        echo $billingAddress . '<br> ' . $billingDistrictId . ' <br>' . $billingAmphurId . ' <br> ' . $billingProvinceId . ' <br> ' . $billingCountryId . ' <br> ' . $billingZipcode;
+                        echo $billingAddress . ' ' . $billingDistrictId . ' ' . $billingAmphurId . '  ' . $billingProvinceId . '  ' . $billingCountryId . '  ' . $billingZipcode;
                         ?> <br>
                         Tel: <?php echo $billingTel; ?>
                     </p>
@@ -116,14 +116,14 @@
                         ?>
                     </p>
                     <center>
-                        <table width="100%"  text-align="center"  style=" width:100% ; height: auto;  text-align: center;">
+                        <table width="100%"  text-align="center"  style=" width:100% ; height: auto;  text-align: center; margin-left: 20px;">
                             <tr>
                                 <td>
                                 </td>
                             </tr>
                             <tr>
                                 <td align="left" style="border-collapse:collapse; padding:0">
-                                    <div style="margin-top:20px; margin-bottom:10px; margin-right:10px"><strong>รายละเอียดของคำสั่งซื้อ:</strong></div>
+                                    <div style="margin-top:20px; margin-bottom:10px; margin-right:10px"><strong>detail:</strong></div>
                                 </td>
                             </tr>
                             <tr>

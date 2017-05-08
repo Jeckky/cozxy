@@ -70,11 +70,11 @@
                     <br><br>
                 </div>
                 <div class="foorter title"  style="background-color: #000000; color: rgba(255,212,36,.9); padding: 20px;">
-                    บริษัท​ คอ​ซซี่​ ดอทคอม​ จํากัด​<br>
-                    เลขประจำตัวผู้เสียภาษี : 0105546109903 <br>
-                    สำนักงานใหญ่ เลขที่ 1 ซ.ลาดพร้าว 19 ถ.ลาดพร้าว <br>
-                    แขวงจอมพล เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900<br>
-                    T: , F: <br>
+                    Cozxy Dot Com Co.,Ltd.<br>
+                    5 Soi Ram Intra 5 Yeak 4, Anusawari, Bang Ken,<br>
+                    Bangkok 10220<br>
+                    info@cozxy.com<br>
+                    064-184-7414 | 9.00-18.00 <br>
                 </div>
             </div>
         </div>
