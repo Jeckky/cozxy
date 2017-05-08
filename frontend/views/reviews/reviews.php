@@ -61,7 +61,7 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                 if (count($productPost) > 0) {
                     foreach ($productPost as $key => $value) {
                         echo ' <div class="col-md-6">';
-                        echo ' <div class="col-md-12" style="border: 1px solid #b2b2b2;margin-bottom: 3px;">';
+                        echo ' <div class="col-md-12" style="border: 1px solid rgba(178, 178, 178, 0.06) ;margin-bottom: 3px;">';
                         //$rating_score = 0;
                         $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
                         $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId, $value->productPostId);
@@ -82,18 +82,22 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                             ?>
                             <div class="col-md-12 text-center" style="padding-left: 0px; padding-right: 0px;">
                                 <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>" style="font-size: 14px; margin-top: 5px;">
-                                    <?php
-                                    //echo strlen($valuex->title) . '<br>';
-                                    if (strlen($valuex->title) >= 35) {
-                                        echo substr($valuex->title, 0, 35);
-                                    } else if (strlen($valuex->title) < 35) {
-                                        echo substr(ltrim(rtrim($valuex->title)), 0, 35) . '<br>';
-                                    }
-                                    ?></a>
+                                    <h4>
+                                        <?php
+                                        //echo strlen($valuex->title) . '<br>';
+                                        if (strlen($valuex->title) >= 35) {
+                                            echo substr($valuex->title, 0, 35);
+                                        } else if (strlen($valuex->title) < 35) {
+                                            echo substr(ltrim(rtrim($valuex->title)), 0, 35) . '<br>';
+                                        }
+                                        ?>
+                                    </h4>
+                                </a>
                             </div>
                             <div class="col-md-12" style="padding: 5px; ">
                                 <div class="col-md-12 text-center">
                                     <?php
+                                    //echo 'This has been rated: ' . $results_rating . '/ 5  ';
                                     /* echo \yii2mod\rating\StarRating::widget([
                                       'name' => "input_name_" . $value['productPostId'],
                                       'value' => $results_rating,
@@ -109,28 +113,34 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                                 </div>
                                 <div class="col-md-12 text-center" style=" border-bottom: 0px #e6e6e6 dotted; border-bottom: 1px #bbb dotted;">
                                     <?php
-                                    echo '<span style="font-size: 12px; color:#0066c0;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน </span>';
+                                    echo '<span style="font-size: 12px; color:#3c3434;">This has been rated: ' . number_format($results_rating, 3) . '/5</span>';
                                     ?>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-lg-12 col-md-12 text-center" style="margin-top: 10px; padding: 5px;">
+                            <div class="col-sm-12 col-lg-12 col-md-12 text-center" style="margin-top: 10px; padding: 5px;height: 228px;">
                                 <?php
                                 foreach ($productImages as $valueImages) {
                                     if (isset($valueImages['imageThumbnail1']) && !empty($valueImages['imageThumbnail1'])) {
                                         if (file_exists(Yii::$app->basePath . "/web/" . $valueImages['imageThumbnail1'])) {
                                             //echo "<div class=\"col-sm-3\"><img id=\"myImg-" . $valueImages['productImageId'] . "\" onClick=\"reviews_click(" . $valueImages['productImageId'] . ',' . "xx" . ")\"   src=\"/" . $valueImages['imageThumbnail2'] . "\" alt=\"1\" class=\"img-responsive img-thumbnail myImg\"/></div>";
                                             ?>
-                                            <div class="col-sm-12 col-lg-12 col-md-12">
-                                                <img id="myImg-<?php echo $valueImages['productImageId']; ?>" onclick="reviews_click(<?php echo $valuex->productSuppId; ?>,<?php echo $valueImages['productImageId']; ?>, '<?php echo $valueImages['image']; ?>', '<?php echo $valuex->title; ?>')" src="<?php echo $valueImages['imageThumbnail1']; ?>" alt="1" class="img-responsive  myImg">
+                                            <div class="col-sm-12 col-lg-12 col-md-12 text-center">
+                                                <center>
+                                                    <img id="myImg-<?php echo $valueImages['productImageId']; ?>" onclick="reviews_click(<?php echo $valuex->productSuppId; ?>,<?php echo $valueImages['productImageId']; ?>, '<?php echo $valueImages['image']; ?>', '<?php echo $valuex->title; ?>')" src="<?php echo $valueImages['imageThumbnail1']; ?>" alt="1" class="img-responsive  myImg">
+                                                </center>
                                             </div>
                                             <?php
                                         } else {
-                                            echo "<div class=\"col-sm-12 col-lg-12 col-md-12\"><img  class=\"ms-thumb\"  src=\"" . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive  \"/></div>";
+                                            echo "<div class=\"col-sm-12 col-lg-12 col-md-12  text-center\">"
+                                            . " <center> <img  class=\"ms-thumb\"  src=\"" . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive  \"/>"
+                                            . " </center></div>";
                                         }
                                     } else {
                                         ?>
-                                        <div class="col-sm-12 col-lg-12 col-md-12">
-                                            <img class="ms-thumb" src="<?php echo "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
+                                        <div class="col-sm-12 col-lg-12 col-md-12 text-center">
+                                            <center>
+                                                <img class="ms-thumb" src="<?php echo "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
+                                            </center>
                                         </div>
                                         <?php
                                     }
