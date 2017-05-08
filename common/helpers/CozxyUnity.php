@@ -259,11 +259,32 @@ class CozxyUnity {
         //);
     }
 
+    public static function getMonthEn($month) {
+        $month = array(
+            "01" => "January",
+            "02" => "February",
+            "03" => "March",
+            "04" => "April",
+            "05" => "May",
+            "06" => "June",
+            "07" => "July",
+            "08" => "August",
+            "09" => "September",
+            "10" => "October",
+            "11" => "November",
+            "12" => "December");
+        return $month;
+        //return array(
+        // 01 => 01,
+        // 02 => 02,
+        //);
+    }
+
     public static function getYears($years) {
         // $year_diff = date("Y");
         $years = [];
         for ($index = 1927; $index < date("Y"); $index++) {
-            $years[$index] = $index + 543;
+            $years[$index] = $index;
         }
         return $years;
         //return array(
