@@ -1045,7 +1045,7 @@ $('#BpickingId').change(function (event, id, value) {
                 //if (JSONObject.title != '') {
                 //$('.history-booth-null').html('');
                 //}
-                $('.description-booth').html('ที่อยู่:' + JSONObject.description);
+                $('.description-booth').html('address :' + JSONObject.description);
                 if (JSONObject.mapImages == null) {
                     $('.view-map-images-booth').html('<div class="col-sm-12" style="padding: 5px;">\n\
                        <img class="img-responsive" src="' + $baseUrl + 'images/picking-point/No_map.png' + '" alt="" style="width:100%;">\n\
@@ -1087,7 +1087,7 @@ $('#LcpickingId').change(function (event, id, value) {
                 //$('.history-lockers-null').html('');
                 //}
                 //alert(JSONObject.mapImages);
-                $('.description-lockers-cool').html('ที่อยู่:' + JSONObject.description);
+                $('.description-lockers-cool').html('address :' + JSONObject.description);
                 if (JSONObject.mapImages == null) {
                     $('.view-map-images-lockers-cool').html('<div class="col-sm-12" style="padding: 5px;">\n\
                        <img class="img-responsive" src="' + $baseUrl + 'images/picking-point/No_map.png' + '" alt="" style="width:100%;">\n\
@@ -1129,7 +1129,7 @@ $('#pickingpoint-pickingid').change(function (event, id, value) {
                 //$('.history-lockers-null').html('');
                 //}
                 //alert(JSONObject.mapImages);
-                $('.description-lockers').html('ที่อยู่:' + JSONObject.description);
+                $('.description-lockers').html('address :' + JSONObject.description);
                 if (JSONObject.mapImages == null) {
                     $('.view-map-images-lockers').html('<div class="col-sm-12" style="padding: 5px;">\n\
                        <img class="img-responsive" src="' + $baseUrl + 'images/picking-point/No_map.png' + '" alt="" style="width:100%;">\n\

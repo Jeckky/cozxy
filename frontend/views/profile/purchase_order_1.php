@@ -166,7 +166,9 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                             <td >&nbsp;</td>
                         </tr>
                         <tr>
-                            <td colspan="6" class="text-right" class="foorter-purchase-order">Total Before VAT:</td>
+                            <td colspan="6" class="text-right" class="foorter-purchase-order"><!--ราคาสินค้าไม่รวมภาษี/Sub Total excluded VAT :-->
+                                Total Before VAT:
+                            </td>
                             <td class="bg-purchase-order text-right"><?php echo number_format($order->totalExVat, 2); ?></td>
                         </tr>
 
@@ -177,11 +179,17 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         </tr>
                         -->
                         <tr>
-                            <td colspan="6" class="text-right" class="foorter-purchase-order">VAT 7%: </td>
+                            <td colspan="6" class="text-right" class="foorter-purchase-order">
+                                <!--ภาษีมูลค่าเพิ่ม/VAT 7 % :-->
+                                VAT 7%:
+                            </td>
                             <td class="bg-purchase-order text-right"><?php echo number_format($order->vat, 2); ?></td>
                         </tr>
                         <tr>
-                            <td colspan="6" class="text-right" class="foorter-purchase-order">Discount Coupons:</td>
+                            <td colspan="6" class="text-right" class="foorter-purchase-order">
+                                <!--ราคาสินค้ารวมภาษีมูลค่าเพิ่ม / sub Total Included VAT :-->
+                                Discount Coupons:
+                            </td>
                             <td class="bg-purchase-order text-right"><?php echo number_format($order->total, 2); ?></td>
                         </tr>
                         <!--<tr>
@@ -189,13 +197,20 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                             <td class="bg-purchase-order text-right"><//?php echo number_format($order->discount, 2); ?></td>
                         </tr>-->
                         <tr>
-                            <td colspan="6" class="text-right" class="foorter-purchase-order">Shipping:</td>
+                            <td colspan="6" class="text-right" class="foorter-purchase-order">
+                                <!--ค่าจัดส่ง / Shipping :-->
+                                Shipping:
+                            </td>
                             <td class="bg-purchase-order text-right"><?php echo ($order->shippingRate > 0) ? number_format($order->shippingRate, 2) : "Free"; ?></td>
                         </tr>
                         <tr >
-                            <td colspan="6" class="text-right" class="foorter-purchase-order">Order Total:</td>
+                            <td colspan="6" class="text-right" class="foorter-purchase-order">
+                                <!--ราคาสินค้าที่ต้องชำระเงินรวมภาษีมูลค่าเพิ่ม/Total excluded VAT :-->
+                                Order Total:
+                            </td>
                             <td class="bg-purchase-order text-right"><?php echo number_format($order->summary, 2); ?></td>
                         </tr>
+
                     </tbody>
                 </table>
             </div>

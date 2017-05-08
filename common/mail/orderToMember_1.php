@@ -73,52 +73,82 @@
                     <span style="color:  rgba(255,212,36,.9); ">COZXY</span>
                 </div>
                 <div class="content" style="background-color: #f5f5f5;">
-                    <p>
-                        <strong>Hello <?php echo $type; ?></strong>
-                    </p>
-                    <p>
-                        Thank you for shopping with us. Please check your order below. We'll send a confirmation with your code to open your locker once your items are in! <br>
-                        If there are any changes, will will notify you via email and SMS.
-                    </p>
-                    <p>
-                        <a href="http://www.cozxy.com/profile/order">
-                            <input class="btn btn-black" type="submit" value=" Order status"  style=" background-color:#f1fa8c;text-align:center; !important">
-                        </a>
-                    </p>
-                    <p>
-                        Billing address :<br>
-                        <?php
-                        if (isset($billingCompany)) {
-                            echo 'คุณ' . $billingFirstname . ' ' . $billingLastname . '<br>';
-                        } else {
-                            echo $billingCompany . ' เลขประจำตัวผู้เสียภาษีอากร : ' . $billingTax . '<br>';
-                        }
-                        echo $billingAddress . '<br> ' . $billingDistrictId . ' <br>' . $billingAmphurId . ' <br> ' . $billingProvinceId . ' <br> ' . $billingCountryId . ' <br> ' . $billingZipcode;
-                        ?> <br>
-                        Tel: <?php echo $billingTel; ?>
-                    </p>
-                    <p>
-                        <?php
-                        /* $GetOrderItemShipping = \common\models\costfit\OrderItem::find()->where("orderId='" . $order->orderId . "' ")->groupBy(['sendDate'])->sum('sendDate');
-                          //2017-04-03  วันที่จัดส่งสินค้า ภายในวันที่ Dates Month Years
-                          if ($GetOrderItemShipping == 1) {  // 2 วัน
-                          $shipping = 2;
-                          $date = date("Y-m-d"); //"04-15-2013";
-                          $date1 = str_replace('-', '/', $date);
-                          $tomorrow = date('Y-m-d', strtotime($date1 . "+1 days"));
-                          $date2 = str_replace('-', '/', $tomorrow);
-                          $tomorrow_start = date('Y-m-d', strtotime($date2 . "+2 days"));
-                          $tomorrow_end = date('Y-m-d', strtotime($date2 . "+5 days"));
-                          echo 'วันที่จัดส่งสินค้า ภายในวันที่ ' . \frontend\controllers\MasterController::dateThai($tomorrow, 1) . ' - ' . \frontend\controllers\MasterController::dateThai($tomorrow_end, 1);
-                          } else if ($GetOrderItemShipping == 3) { // 5 วัน
-                          $shipping = 5;
-                          } */
-                        ?>
-                    </p>
                     <center>
                         <table width="100%"  text-align="center"  style=" width:100% ; height: auto;  text-align: center;">
                             <tr>
                                 <td>
+                                    <p style="color: #ff9016; font-size: 20px; text-align: left;"><strong>Hello <?php echo $type; ?></strong></p>
+
+                                    <table class="x_col1of2" width="50%" border="0" cellpadding="0" cellspacing="0" align="left" style="border-spacing:0; border-collapse:collapse; font-size:14px">
+                                        <tbody>
+                                            <tr>
+                                                <td class="x_order-col x_pam" align="left" valign="top" style="border-collapse:collapse; padding-top:10px; padding-right:10px; padding-bottom:10px; padding-left:10px">
+                                                    <div class="x_order-status-inner">
+                                                        <div class="x_color-grey" style="color:#646464">สินค้าจะจัดส่งถึงคุณภายใน:</div>
+                                                        <div class="x_pts" style="margin-top:5px; margin-bottom:10px">
+                                                            <strong>การจัดส่ง # 1</strong>:
+                                                            <?php
+                                                            $GetOrderItemShipping = \common\models\costfit\OrderItem::find()->where("orderId='" . $order->orderId . "' ")->groupBy(['sendDate'])->sum('sendDate');
+                                                            //2017-04-03  วันที่จัดส่งสินค้า ภายในวันที่ Dates Month Years
+                                                            if ($GetOrderItemShipping == 1) {  // 2 วัน
+                                                                $shipping = 2;
+                                                                $date = date("Y-m-d"); //"04-15-2013";
+                                                                $date1 = str_replace('-', '/', $date);
+                                                                $tomorrow = date('Y-m-d', strtotime($date1 . "+1 days"));
+                                                                $date2 = str_replace('-', '/', $tomorrow);
+                                                                $tomorrow_start = date('Y-m-d', strtotime($date2 . "+2 days"));
+                                                                $tomorrow_end = date('Y-m-d', strtotime($date2 . "+5 days"));
+                                                                echo 'วันที่จัดส่งสินค้า ภายในวันที่ ' . \frontend\controllers\MasterController::dateThai($tomorrow, 1) . ' - ' . \frontend\controllers\MasterController::dateThai($tomorrow_end, 1);
+                                                            } else if ($GetOrderItemShipping == 3) { // 5 วัน
+                                                                $shipping = 5;
+                                                            }
+                                                            ?>
+                                                            <br>
+                                                            <strong>หมายเหตุ</strong> หากมีการเปลียนวันจะแจ้งให้ทราบทาง Email และ SMS ในลำดับต่อไป
+                                                        </div>
+                                                        <table width="100%" cellpadding="10" style="width:100%!important">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td valign="middle" align="center" style="background-color:#f1fa8c; text-align:center; width:100%!important">
+                                                                        <a href="<?php echo $url; ?>" target="_blank" class="x_btn-orange" style="display:inline-block; text-decoration:none; color:#000000; width:100%!important">สถานะของคำสั่งซื้อ</a> </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <table class="x_col1of2" width="50%" border="0" cellpadding="0" cellspacing="0" align="left" style="border-spacing:0; border-collapse:collapse; font-size:14px">
+                                        <tbody>
+                                            <tr>
+                                                <td class="x_order-col x_pam x_txt-left" valign="top" style="border-collapse:collapse; padding-top:10px; padding-right:10px; padding-bottom:10px; padding-left:10px; text-align:left">
+                                                    <div class="x_order-status-inner">
+                                                        <div class="x_color-grey" style="color:#646464"><!--สินค้าของคุณจะได้รับการจัดส่งไปยัง-->ที่อยู่ในการจัดส่งบิล:</div>
+                                                        <div class="x_mts" style="margin-top:5px">
+                                                            <strong class="x_color-orange" style="color:#f36f21"> <?php echo $type; ?></strong>
+                                                        </div>
+                                                        <div class="x_mts" style="margin-top:5px">
+                                                            <strong>
+                                                                <?php
+                                                                if (isset($billingCompany)) {
+                                                                    echo 'คุณ' . $billingFirstname . ' ' . $billingLastname;
+                                                                } else {
+                                                                    echo $billingCompany . ' เลขประจำตัวผู้เสียภาษีอากร : ' . $billingTax;
+                                                                }
+                                                                echo $billingAddress . ' ' . $billingDistrictId . ' / ' . $billingAmphurId . ' / ' . $billingProvinceId . ' / ' . $billingCountryId . ' / ' . $billingZipcode;
+                                                                ?><!--บริษัท สยาม แอดมินนิสเทรทีฟ แมเนจเม้นท์
+                                                                เลขที่ 313 อาคารมคธ ซ.รามคำแหง 21 (นวศรี)
+                                                                แขวงวังทองหลาง กรุงเทพมหานคร/ Bangkok-วังทองหลาง/ Wang Thonglang-10310 10310 --><br>
+                                                                Phone: <?php echo $billingTel; ?> </strong>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
                                 </td>
                             </tr>
                             <tr>
@@ -131,13 +161,13 @@
                                     <table id="order" class="table table-list-order"  border="0"  style="padding: 0px;" >
                                         <thead>
                                             <tr style="background-color: #f5f5f5;">
-                                                <th style="font-size: 13px;">#</th>
-                                                <th style="font-size: 13px;">Product code</th>
-                                                <th style="font-size: 13px;">Items</th>
-                                                <th style="font-size: 13px;">Unit</th>
-                                                <th style="font-size: 13px;">Price/Unit</th>
-                                                <th style="font-size: 13px;">Quantity</th>
-                                                <th style="font-size: 13px;">Total include tax</th>
+                                                <th style="font-size: 13px;">ลำดับ</th>
+                                                <th style="font-size: 13px;">รหัสสินค้า</th>
+                                                <th style="font-size: 13px;">รายการ</th>
+                                                <th style="font-size: 13px;">หน่วย</th>
+                                                <th style="font-size: 13px;">ราคา/หน่วย</th>
+                                                <th style="font-size: 13px;">จำนวน</th>
+                                                <th style="font-size: 13px;">มูลค่าสินค้ารวมภาษี</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -192,14 +222,14 @@
                                                                     }
                                                                     if ($value1->receiveType == 1) {
                                                                         //echo 'Pickup location: ปลายทางที่ <strong><span style="color: #0286c2;">Lockers เย็น</span></strong>';
-                                                                        echo 'Pickup location : <br>' . $picking_pointName;
-                                                                        echo '<br> ' . $CountriesName;
+                                                                        echo 'Pickup location : ' . $picking_pointName;
+                                                                        echo ', ' . $CountriesName;
                                                                         echo ', ' . $StateslocalName;
                                                                         echo ', ' . $CitieslocalName;
                                                                     } elseif ($value1->receiveType == 2) {
-                                                                        //echo 'Pickup location : ปลายทางที่ <strong><span style="color: #0286c2;">Lockers ร้อน</span></strong>';
+                                                                        echo 'Pickup location : ปลายทางที่ <strong><span style="color: #0286c2;">Lockers ร้อน</span></strong>';
                                                                     } elseif ($value1->receiveType == 3) {
-                                                                        //echo 'Pickup location : ปลายทางที่ <strong><span style="color: #0286c2;">Booth</span></strong>';
+                                                                        echo 'Pickup location : ปลายทางที่ <strong><span style="color: #0286c2;">Booth</span></strong>';
                                                                     }
                                                                 }
 
@@ -237,6 +267,25 @@
                                                             </tr>
                                                             <?php
                                                         }
+                                                        //$GetOrder = common\models\costfit\OrderItem::find()->where('orderId=' . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'] . ' and receiveType=' . $value1->receiveType)->groupBy('orderId')->one();
+                                                        ?>
+                                    <!--<tr>
+                                        <td style="font-size: 12px; text-align: left;" colspan="7">
+                                            <strong>สถานที่รับของ :</strong><br>
+                                                        <?php
+                                                        /* $picking_point = common\models\costfit\PickingPoint::find()->where('pickingId=' . $GetOrder->pickingId)->one();
+                                                          $Countries = common\models\dbworld\Countries::find()->where("countryId= '" . $picking_point->countryId . "' ")->one();
+                                                          $States = common\models\dbworld\States::find()->where("stateId='" . $picking_point->provinceId . "'")->one();
+                                                          $Cities = common\models\dbworld\Cities::find()->where("cityId='" . $picking_point->amphurId . "'")->one();
+                                                          echo '<b>จุดรับสินค้าที่ :</b>' . $picking_point->title;
+                                                          echo ', <b>ประเทศ :</b>' . $Countries->localName;
+                                                          echo ', ' . $States->localName;
+                                                          echo ', ' . $Cities->localName; */
+                                                        ?>
+                                        </td>
+                                    </tr>-->
+                                                        <?php
+                                                        //} /* $value1->receiveType == 1 : Lockers */
                                                     }
                                                 }
                                             } else {
@@ -252,27 +301,27 @@
                                                 <td >&nbsp;</td>
                                             </tr>
                                             <tr style="font-size: 12px;">
-                                                <td colspan="6" style="text-align: right;">Total Before VAT:</td>
+                                                <td colspan="6" style="text-align: right;">ราคาสินค้าไม่รวมภาษี/Sub Total excluded VAT :</td>
                                                 <td style="text-align: right;"><?php echo number_format($order->totalExVat, 2); ?></td>
                                             </tr>
                                             <tr style="font-size: 12px;">
-                                                <td colspan="6" style="text-align: right;">VAT 7%:</td>
+                                                <td colspan="6" style="text-align: right;">ภาษีมูลค่าเพิ่ม/VAT 7 % :</td>
                                                 <td style="text-align: right;"><?php echo number_format($order->vat, 2); ?></td>
                                             </tr>
                                             <tr style="font-size: 12px;">
-                                                <td colspan="6" style="text-align: right;">Discount Coupons:</td>
+                                                <td colspan="6" style="text-align: right;">ราคาสินค้ารวมภาษีมูลค่าเพิ่ม / sub Total Included VAT :</td>
                                                 <td style="text-align: right;"><?php echo number_format($order->total, 2); ?></td>
                                             </tr>
-                                            <!--<tr style="font-size: 12px;">
-                                                <td colspan="6" style="text-align: right;"><!ส่วนลดพิเศษ / Extra Saving :</td>
-                                                <td style="text-align: right;"><?//php echo number_format($order->discount, 2); ?></td>
-                                            </tr>-->
                                             <tr style="font-size: 12px;">
-                                                <td colspan="6" style="text-align: right;">Shipping Free:</td>
+                                                <td colspan="6" style="text-align: right;">ส่วนลดพิเศษ / Extra Saving :</td>
+                                                <td style="text-align: right;"><?php echo number_format($order->discount, 2); ?></td>
+                                            </tr>
+                                            <tr style="font-size: 12px;">
+                                                <td colspan="6" style="text-align: right;">ค่าจัดส่ง / Shipping :</td>
                                                 <td style="text-align: right;"><?php echo ($order->shippingRate > 0) ? number_format($order->shippingRate, 2) : "Free"; ?></td>
                                             </tr>
                                             <tr style="font-size: 12px;">
-                                                <td colspan="6" style="text-align: right;"> Order Total: </td>
+                                                <td colspan="6" style="text-align: right;">ราคาสินค้าที่ต้องชำระเงินรวมภาษีมูลค่าเพิ่ม/Total excluded VAT :</td>
                                                 <td style="text-align: right;"><?php echo number_format($order->summary, 2); ?></td>
                                             </tr>
                                         </tbody>
@@ -282,18 +331,33 @@
                         </table>
                     </center>
                     <br><br>
-                    <!--<p style="color: #ff9016; font-size: 12px;">*** อีเมลฉบับนี้เป็นการแจ้งข้อมูลโดยอัตโนมัติ กรุณาอย่าตอบกลับ</p>-->
+                    <p style="color: #ff9016; font-size: 12px;">*** อีเมลฉบับนี้เป็นการแจ้งข้อมูลโดยอัตโนมัติ กรุณาอย่าตอบกลับ</p>
                 </div>
                 <div class="foorter title"  style="background-color: #000000; color: rgba(255,212,36,.9); padding: 20px;">
-                    Cozxy Dot Com Co.,Ltd.<br>
-                    5 Soi Ram Intra 5 Yeak 4, Anusawari, Bang Ken,<br>
-                    Bangkok 10220<br>
-                    info@cozxy.com<br>
-                    064-184-7414 | 9.00-18.00 <br>
+                    บริษัท​ คอ​ซซี่​ ดอทคอม​ จํากัด​<br>
+                    เลขประจำตัวผู้เสียภาษี : 0105553036789 <br>
+                    สำนักงานใหญ่เลขที่  5 ซอยรามอินทรา 5 แยก 4  <br>แขวงอนุสวรีย์ เขตบางเขน กทม. 10220
+                    T: , F: <br>
                 </div>
             </div>
         </div>
         <br><br><br>
+       <!-- <table class="table" style="width: 100%; height: auto;">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>แผ่นที่ : ปลายทางที่ Locker</th>
+                    <th>แผ่นที่ : ปลายทางที่ Booth</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="active">
+                    <th scope="row">1</th>
+                    <td>Column content map image lockers</td>
+                    <td>Column content map image Booth</td>
+                </tr>
+            </tbody>
+        </table>-->
     </body>
 </html>
 
