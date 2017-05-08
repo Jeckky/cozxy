@@ -31,7 +31,7 @@ if (isset($model->productId)):
                     ?>
                 </div>
                 <?php if ($price > 0) { ?><div class="price-label"><?= isset($price) ? number_format($price, 2) : "Not Set"; ?> ฿</div><?php } ?>
-                <div style="height: 283px; width: 100%;">
+                <div class="img-height-cozxy" style="height: 263px; width: 100%;">
                     <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $suppliers->productId, 'productSupplierId' => $suppliers->productSuppId]) ?>">
                         <?php
                         $image = ProductSuppliers::productImageSuppliers($suppliers->productSuppId);
@@ -47,7 +47,7 @@ if (isset($model->productId)):
                             ?>
                             <img src="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1" class="img-responsive"/>
                         <?php endif; ?>
-                        <span class="tile-overlay"></span>
+                        <span class="tile-overlay tile-overlay-cozxy"></span>
                     </a>
                 </div>
                 <div class="footer search-category-footer">
@@ -68,7 +68,7 @@ if (isset($model->productId)):
                             <?= substr($suppliers->title, 0, 35);
                             ?></a>
                     </div>
-                    <span><?php //= $model->shortDescription;                                  ?></span>
+                    <span><?php //= $model->shortDescription;                                          ?></span>
                     <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $suppliers->encodeParams(['productId' => $suppliers->productId, 'productSupplierId' => $suppliers->productSuppId]) ?>"><button class="btn btn-primary" id="addItemToCart"><i class="fa fa-search"></i>View</button></a>
                 </div>
             </div>

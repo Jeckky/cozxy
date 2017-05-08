@@ -17,7 +17,16 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     .page-content {
         padding-top: 60px;
     }
-
+    .catalog-grid .img-height-cozxy .tile-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        min-height: 100%;
+        z-index: 10;
+        transition: all .3s;
+    }
 </style>
 <div class="modal fade" id="filterModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
