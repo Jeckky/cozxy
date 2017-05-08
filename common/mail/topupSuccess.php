@@ -101,6 +101,7 @@
                     Tax Identification Number 0105553036789 <br>
                     5 Ram Intra Soi 5 Yeak4, Anusawari, Khet Bang Ken, Bangkok,10220
                     Tel: 02-101-0689 , Fax: 02-101-0689<br>
+
                 </div>
             </div>
         </div>

@@ -740,6 +740,7 @@ class CheckoutController extends MasterController {
                     $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "profile/order";
                     $type = $member->firstname . ' ' . $member->lastname;
                     $Subject = 'Your Cozxy.com Order ' . $order->invoiceNo;
+
                     /*
                      * `billingFirstname`, `billingLastname`, `billingCompany`, `billingTax`,
                      * `billingAddress`, `billingCountryId`, `billingProvinceId`, `billingAmphurId`,
@@ -891,7 +892,7 @@ class CheckoutController extends MasterController {
                         $toMail = $toMails;
                         $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "profile/order";
                         $type = $member->firstname . ' ' . $member->lastname;
-                        $Subject = 'ยืนยันคำสั่งซื้อหมายเลข ' . $order->invoiceNo;
+                        $Subject = 'Topic: Your Cozxy.com Order  ' . $order->invoiceNo;
                         /*
                          * `billingFirstname`, `billingLastname`, `billingCompany`, `billingTax`,
                          * `billingAddress`, `billingCountryId`, `billingProvinceId`, `billingAmphurId`,

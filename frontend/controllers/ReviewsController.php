@@ -34,7 +34,7 @@ class ReviewsController extends MasterController {
         }
 
         $this->layout = "/content_profile";
-        $this->title = 'Cozxy.com | My Reviews';
+        $this->title = 'Cozxy.com | My stories';
         $this->subTitle = 'reviews';
         $this->subSubTitle = "My reviews";
         $productPost = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id)->groupBy(['productSuppId'])->orderBy('productPostId desc')->all();

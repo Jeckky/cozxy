@@ -103,11 +103,11 @@ if (isset($_GET['t']) && !empty($_GET['t'])) {
     ]);
     ?>
     <div class="form-group">
-        <label for="co-organization">รูปแบบขององค์ *</label>
+        <label for="co-organization">Billing type *</label>
         <div class="select-style">
             <select name="co-organization" id="co-country" class="valid" onchange="organization(this)">
-                <option value="personal">บุคคลทั่วไป</option>
-                <option value="company">บริษัท</option>
+                <option value="personal">Individual </option>
+                <option value="company">Legal Entity (Company)</option>
             </select>
         </div>
     </div>

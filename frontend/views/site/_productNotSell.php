@@ -17,7 +17,7 @@ if (isset($model)) {
             <span class="tile-overlay"></span>
             <div class="footer" id="products-popular-footer" style="max-height: 320px;min-height: 80px;">
                 <span>
-                    <small>in <?php echo $model->category->title; ?></small>
+                    <small>in <?php echo $model->category->title; ?> by <?php echo $model->brand->title; ?></small>
                 </span>
                 <div style="height: 60px;">
                     <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productSuppId]) ?>"><?= substr($model->title, 0, 35); ?></a>
