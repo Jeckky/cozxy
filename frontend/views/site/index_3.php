@@ -239,39 +239,98 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                     }
                                                     ?></a>
                                             </div>
-                                            <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>"><button class="btn btn-primary btn-sm">view</button></a>
+                                            <a href="/products/V52KtMKZH6RkAOgLSXcBcRJLWqFq6zJxIV3-VL6W2j8-clhu-3zVCzQSUZ9UqxRY"><button class="btn btn-primary btn-sm">view</button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-center" style=" border: 0px #e6e6e6 solid;  padding-left: 0px; padding-left: 0px;">
+
+                                    <div class="tile col-sm-12 col-lg-12 col-md-12 text-center" style="padding: 0px; border: 1px #e2dfdf solid; ">
+                                        <br>
+                                        <div style="height: 60px;">
+                                            <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>" style="font-size: 14px; margin-top: 5px;">
+                                                <?php
+                                                //echo strlen($valuex->title) . '<br>';
+                                                if (strlen($valuex->title) >= 35) {
+                                                    echo substr($valuex->title, 0, 35);
+                                                } else if (strlen($valuex->title) < 35) {
+                                                    echo substr(ltrim(rtrim($valuex->title)), 0, 35) . '<br>';
+                                                }
+                                                ?></a>
+                                        </div>
+
+                                        <div class="col-sm-12 col-lg-12 col-md-12 text-center" style="margin-top: 10px; padding: 5px; border: 0px #e6e6e6 solid;">
+                                            <?php
+                                            foreach ($productImages as $valueImages) {
+                                                if (isset($valueImages['imageThumbnail1']) && !empty($valueImages['imageThumbnail1'])) {
+                                                    if (file_exists(Yii::$app->basePath . "/web/" . $valueImages['imageThumbnail1'])) {
+                                                        //echo "<div class=\"col-sm-3\"><img id=\"myImg-" . $valueImages['productImageId'] . "\" onClick=\"reviews_click(" . $valueImages['productImageId'] . ',' . "xx" . ")\"   src=\"/" . $valueImages['imageThumbnail2'] . "\" alt=\"1\" class=\"img-responsive img-thumbnail myImg\"/></div>";
+                                                        ?>
+                                                        <div class="col-sm-12 col-lg-12 col-md-12" style="padding-left: 0px;  padding-right: 0px; height: 228px;">
+                                                            <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>" style="font-size: 14px; margin-top: 5px;">
+                                                                <img  src="<?php echo $valueImages['imageThumbnail1']; ?>" alt="1" class="img-responsive  myImg">
+                                                            </a>
+                                                        </div>
+                                                        <?php
+                                                    } else {
+                                                        echo "<div class=\"col-sm-12 col-lg-12 col-md-12\" style=\"padding-left: 0px; padding-right: 0px; height: 228px; \">"
+                                                        . "<center><img  class=\"ms-thumb\"  src=\"" . "images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" width=\"137\" height=\"130\" class=\"img-responsive  \"/></center>"
+                                                        . "</div>";
+                                                    }
+                                                } else {
+                                                    ?>
+                                                    <div class="col-sm-12 col-lg-12 col-md-12" style="padding-left: 0px;  padding-right: 0px; height: 228px;">
+                                                        <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-review?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $valuex->productSuppId; ?>&productId=<?php echo $valuex->productId; ?>" style="font-size: 14px; margin-top: 5px;">
+                                                            <img class="ms-thumb" src="<?php echo "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
+                                                        </a>
+                                                    </div>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+                                        </div>
+                                        <span class="tile-overlay"></span>
+                                        <div class="footer" id="products-popular-footer" style="max-height: 320px;min-height: 80px;">
+                                            <div class="col-md-12 text-center" style=" border-bottom: 0px #e6e6e6 dotted; border-top: 0px #bbb dotted;padding-left: 0px;  padding-right: 0px; ">
+                                                <?php
+                                                //echo '<span style="font-size: 12px; color:#0066c0;">' . number_format($results_rating, 3) . ' จาก 5 คะแนน | ' . $rating_count . ' post  </span>';
+                                                echo ($rating_count == 1) ? '<span style="font-size: 12px; color:#0066c0;">' . $rating_count . ' Story  </span>' : '<span style="font-size: 12px; color:#0066c0;">' . $rating_count . ' Stories  </span>';
+                                                ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <?php
                             }
+                            //echo '</div>';
+                            //echo '</div>';
                         }
                         ?>
-                        <div class="col-lg-12 col-md-12 col-sm-12">
-                            <div class="tile">
-                                <div style="height: 228px; width: 100%;">
+                        <div class="col-md-12 text-center" style=" /* margin-left: 2px; */border: 0px #e6e6e6 solid;/* padding: 5px; */ padding-left: 0px; padding-left: 0px;">
+                            <div class="col-sm-12 col-lg-12 col-md-12 text-center" style="padding: 0px; border: 1px #e2dfdf solid; ">
+                                <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-more" style="font-size: 14px; margin-top: 5px;">
+                                    See more
+                                </a>
+                                <div class="col-sm-12 col-lg-12 col-md-12 text-center" style="margin-top: 10px; padding: 5px; border: 0px #e6e6e6 solid;height: 228px;">
                                     <img class="ms-thumb" src="<?php echo "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1" width="137" height="130" class="img-responsive img-thumbnail"/>
                                 </div>
-                                <span class="tile-overlay"></span>
-                                <div class="footer" id="products-popular-footer" style="max-height: 320px;min-height: 80px;">
-                                    <span>
-                                        <small>&nbsp;</small>
-                                    </span>
-                                    <div style="height: 60px;">
-                                        &nbsp;
-                                    </div>
-                                    <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-more"><button class="btn btn-primary btn-sm">See more</button></a>
+                                <div class="col-md-12 text-center" style=" border-bottom: 0px #e6e6e6 dotted; border-top: 1px #bbb dotted;padding-left: 0px;  padding-right: 0px; ">
+                                    <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-more" style="font-size: 12px; margin-top: 5px;">
+                                        See more
+                                    </a>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <?php
                 }
+                //echo '<hr>';
                 ?>
             </div>
-            <!-- </div>-->
-        </section>
     </div>
+</section>
+</div>
 </section>
 
 <!--Hero Slider Close
@@ -383,7 +442,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                  background-size:  cover;
                  background-color: #999;">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-                    <h2 class="dark-color"><?php //echo $topOneContent->title;                                                                             ?></h2>
+                    <h2 class="dark-color"><?php //echo $topOneContent->title;                                                            ?></h2>
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12" style="color: #fff;">
                             <p class="p-style3" style="color: #fff;">
