@@ -276,7 +276,7 @@ class OrderController extends OrderMasterController {
             if (isset($orderIds) && !empty($orderIds)) {
                 $storeProductGroupId = $this->saveStoreProduct($orderIds, $supplierId);
                 /* ######################################## SEND EMAIL TO SUPPLIERS ################################ */
-                //$this->sendEmail($storeProductGroupId);
+                $this->sendEmail($storeProductGroupId);
                 /* ######################################## END SEND EMAIL TO SUPPLIERS ############################ */
                 $header = $this->renderPartial('header');
                 $content = $this->renderPartial('content', [
@@ -390,6 +390,16 @@ class OrderController extends OrderMasterController {
         return $show;
     }
 
+    public function actionNewPo() {
+        $purchase = \common\models\costfit\StoreProductGroup::find()->where("status=1")->orderBy('updateDateTime');
+        $dataProvider = new ActiveDataProvider([
+            'query' => $purchase
+        ]);
+        return $this->render('newPo', [
+                    'dataProvider' => $dataProvider
+        ]);
+    }
+
     public static function checkDupplicateId($array, $newIndex) {
         $check = 0;
 //throw new \yii\base\Exception(print_r($array, true));
@@ -501,21 +511,33 @@ class OrderController extends OrderMasterController {
         return $storeProductGroupId;
     }
 
-    /* public function sendEmail($storeProductGroupId) {
-      foreach ($storeProductGroupId as $id):
-      $po = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId=" . $id)->one();
-      if (isset($po)) {
-      $supplier = \common\models\costfit\User::find()->where("userId=" . $po->supplierId)->one();
-      if (isset($supplier)) {
-      $Subject = "Purchase Order";
-      $username = \common\models\costfit\User::userName($customer->userId);
-      $toMail = $customer->email;
-      $urlFroCozxy = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "top-up/history";
-      $urlFroSupplier = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "top-up/history";
+    public function sendEmail($storeProductGroupId) {
+        foreach ($storeProductGroupId as $id):
+            $po = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId=" . $id)->one();
+            if (isset($po)) {
+                $supplier = \common\models\costfit\User::find()->where("userId=" . $po->supplierId)->one();
+                if (isset($supplier)) {
+                    $username = \common\models\costfit\Address::CompanyName($supplier->userId);
+                    $toMailSupp = $supplier->email;
+                    $SubjectSupp = "Purchase Order from Cozxy.com";
+                    $urlFroSupplier = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "top-up/history";
+                    $topUpEmail = \common\helpers\Email::mailPoToSupplier($SubjectSupp, $username, $toMailSupp, $urlFroSupplier);
+                }
+            }
+        endforeach;
+        $acc = \common\models\costfit\Configuration::find()->where("title='accounting'")->one(); //email ฝ่ายบัญชี
+        $director = \common\models\costfit\Configuration::find()->where("title='director'")->one(); //email กรรมการผู้จัดการ
+        $purchase = \common\models\costfit\Configuration::find()->where("title='purchasing'")->one(); //email ฝ่ายจัดซื้อ
+        $SubjectCozxy = "Purchase Order to suppliers.";
+        $toMailAcc = $acc->value;
+        $toMailDirector = $director->value;
+        $toMailPurchase = $purchase->value;
+        $mailToCozxy = $toMailAcc . "," . $toMailDirector . "," . $toMailPurchase;
+        $arrayMail = explode(",", $mailToCozxy);
+        $urlFroCozxy = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "order/order/new-po";
+        foreach ($arrayMail as $mail):
+            $topUpEmail = \common\helpers\Email::mailPoToCozxy($SubjectCozxy, $mail, $urlFroCozxy);
+        endforeach;
+    }
 
-      //$topUpEmail = \common\helpers\Email::topUpSuccess($Subject, $username, $toMail, $url, $point, $money, $paymentMethod);
-      }
-      }
-      endforeach;
-      } */
 }

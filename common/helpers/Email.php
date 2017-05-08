@@ -33,7 +33,6 @@ class Email {
                 ->setTo($toMail)//tomail
                 ->setFrom('cozxy@cozxy.com')
                 ->setSubject($Subject)
-                //->setHtmlBody($htmls)
                 ->send();
     }
 
@@ -42,7 +41,6 @@ class Email {
                 ->setTo($toMail)//tomail
                 ->setFrom('cozxy@cozxy.com')
                 ->setSubject($Subject)
-                //->setHtmlBody($htmls)
                 ->send();
     }
 
@@ -51,7 +49,22 @@ class Email {
                 ->setTo($toMail)//tomail
                 ->setFrom('cozxy@cozxy.com')
                 ->setSubject($Subject)
-                //->setHtmlBody($htmls)
+                ->send();
+    }
+
+    public static function mailPoToCozxy($SubjectCozxy, $mailToCozxy, $urlFroCozxy) {
+        \Yii::$app->mail->compose('poToCozxy', ['url' => $urlFroCozxy])
+                ->setTo($mailToCozxy)//tomail
+                ->setFrom('cozxy@cozxy.com')
+                ->setSubject($SubjectCozxy)
+                ->send();
+    }
+
+    public static function mailPoToSupplier($SubjectSupp, $username, $toMailSupp, $urlFroSupplier) {
+        \Yii::$app->mail->compose('poToSupplier', ['url' => $urlFroSupplier, 'username' => $username])
+                ->setTo($toMailSupp)//tomail
+                ->setFrom('cozxy@cozxy.com')
+                ->setSubject($SubjectSupp)
                 ->send();
     }
 
