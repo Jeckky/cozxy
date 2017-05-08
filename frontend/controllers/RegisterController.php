@@ -125,7 +125,7 @@ class RegisterController extends MasterController {
         if (isset($user)) {
             $user->status = 1;
             $user->save(FALSE);
-            return $this->redirect(['login']);
+            return $this->redirect(['login?verification=complete']);
         } else {
 
         }
