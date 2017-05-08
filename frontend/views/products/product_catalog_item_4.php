@@ -126,7 +126,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <!--    <div class="buttons group products-buttons-group" style="margin-top: -18px;">
             <div class="form-group" style="word-wrap: break-word;">
                 <label for="shopping-dollar" class="col-sm-1 " style="float: left; padding-right: 0px; padding-left: 0px; margin-bottom: 0px;">
-                    <img  src="<?php // echo Yii::$app->homeUrl;                                                                                                                                                                                                                                                                                                                                                          ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
+                    <img  src="<?php // echo Yii::$app->homeUrl;                                                                                                                                                                                                                                                                                                                                        ?>images/icon/Untitled-2-50-48.png" alt="thumb" class="img-responsive img-circle-thumbnail" width="38" height="38" style="background-color: #eee;"/>
                 </label>
                 <div class="col-sm-11 text-left discountPrice " style="float: left; padding: 0px; margin-left: 0px; margin-top: 15px;">
                     &nbsp;Add more than 1 item to your order
@@ -491,21 +491,9 @@ if (Yii::$app->controller->action->id != 'see-review') {
     </style>
     <div class="col-sm-12">
         <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;">
-            <div class="col-lg-12 col-md-12 col-sm-12" style="background-color: rgba(255,212,36,.9); margin-bottom: 5px;">
-                <div onclick="ViewsShows()"  class="add-new-icon col-md-6 " style="padding: 1px;">
-                    <h3 style="text-decoration: underline; margin-left: 2px;">All Story </h3>
-                </div>
-                <div class="col-md-6 text-right">
-                    <?php
-                    //if (\Yii::$app->user->id != '') {
-                    ?>
-                        <!--<a href="<?//= Yii::$app->homeUrl ?>reviews/create-post?productSupplierId=<?//= $productSupplierId ?>&productId=<?//= $model->productId ?>" class="btn btn-black btn-xs" role="button" id="write-reviews" style="margin-top: 10px;">Create your story</a>-->
-                    <?php //} ?>
-                </div>
+            <div onclick="ViewsShows()" class="add-new-icon" style="background-color: rgba(255,212,36,.9); padding: 3px;">
+                <h3 style="text-decoration: underline;">Story <i class="fa fa-plus-circle" aria-hidden="true" style="zoom: .7"></i></h3>
             </div>
-            <!--<div onclick="ViewsShows()" class="add-new-icon" style="background-color: rgba(255,212,36,.9); padding: 3px;">
-                <h3 style="text-decoration: underline;">Story </h3>
-            </div>-->
             <div class="Reviews" >
                 <div class="post">
                     <!--Post & Reviews Carousel Widget-->
@@ -527,7 +515,7 @@ if (Yii::$app->controller->action->id != 'see-review') {
                             color: #635d5d;
                         }
                     </style>
-                    <section class="brand-carousel-xx" id="brand-carousel-reviews">
+                    <section class="brand-carousel" id="brand-carousel-reviews">
                         <div class="container">
                             <div class="inner">
                                 <?php
@@ -548,7 +536,7 @@ if (Yii::$app->controller->action->id != 'see-review') {
                                         foreach ($productPostList as $valuex) {
                                             $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
                                             ?>
-                                            <div class="text-center col-sm-2" id="reviews-rate-show-<?php echo $value['productPostId']; ?>" style="border: 1px #e6e6e6 solid; max-height: 460px; min-height: 200px; padding: 5px;">
+                                            <div class="text-center" id="reviews-rate-show-<?php echo $value['productPostId']; ?>" style=" margin-left: 2px;border: 1px #e6e6e6 solid; max-height: 460px; min-height: 200px; padding: 5px;">
                                                 <?php
                                                 /* echo \yii2mod\rating\StarRating::widget([
                                                   'name' => "input_name_" . $value['productPostId'],
@@ -568,17 +556,14 @@ if (Yii::$app->controller->action->id != 'see-review') {
                                                        style="font-size: 13px;"><i class="fa fa-pencil" aria-hidden="true"></i> <?php echo $value->title; ?></a>
                                                 </div>
                                                 <div class="text-left test" style="margin-bottom:2px; font-size: 12px; height: 120px;">
+
                                                     &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $value->shortDescription; ?>
-                                                </div>
-                                                <div class="text-center" style="margin-bottom:2px; border-bottom: 1px #e6e6e6 dashed;">
-                                                    <a href="<?php echo Yii::$app->homeUrl; ?>reviews/see-rating?productPostId=<?php echo $value->productPostId; ?>&productSupplierId=<?php echo $value->productSuppId; ?>&productId=<?php echo $value->productSupp->product->productId; ?>"
-                                                       style="font-size: 13px;" class="btn btn-primary btn-xs">see more</a>
+
                                                 </div>
                                                 <div style="text-align: right;">
-                                                    <span class="pull-left"><i class="fa fa-eye "></i> <?= number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)); ?> Views</span>
+                                                   <!-- <a role="button"  onclick="views_click('<?//php echo $value->productPostId ?>', '<?//php echo $valuex->productSuppId; ?>', '<?//php echo $valuex->productId; ?>')"  class="panel-toggle" id="see-reviews" style="font-size: 14px; border-bottom: 0px dashed #292c2e;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>-->
                                                 </div>
                                             </div>
-
                                             <?php
                                         }
                                     }
@@ -595,6 +580,8 @@ if (Yii::$app->controller->action->id != 'see-review') {
     </div>
 <?php }
 ?>
+
+
 <!-- Modal -->
 <div id="myModal" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
