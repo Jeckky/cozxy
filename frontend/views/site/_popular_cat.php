@@ -7,18 +7,16 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <span class="sale">Sale</span>
         </div>
         <div class="price-label">715,00 $</div>-->
-
-        <img src="<?=
-        (isset($model->image) && !empty($model->image)) ? $baseUrl . $model->image : "/images/ContentGroup/DUHWYsdXVc.png";
-        ?>" alt="1"/>
+        <div style="height: 285px; width: 100%;">
+            <img src="<?= (isset($model->image) && !empty($model->image)) ? $baseUrl . $model->image : "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1"/>
+        </div>
         <span class="tile-overlay"></span>
-
         <div class="footer" id="products-popular-footer" >
             <a href="<?php echo $baseUrl; ?>/search/<?= $model->createTitle() ?>/<?= $model->encodeParams(['categoryId' => $model->categoryId]) ?>"><?= $model->title; ?></a>
             <span>
                 <small><?= $model->title; ?></small>
             </span>
-            <a href="<?php echo $baseUrl; //Yii::$app->homeUrl;        ?>/search/<?= $model->createTitle() ?>/<?= $model->encodeParams(['categoryId' => $model->categoryId]) ?>"><button class="btn btn-primary btn-sm">view</button></a>
+            <a href="<?php echo $baseUrl; //Yii::$app->homeUrl;           ?>/search/<?= $model->createTitle() ?>/<?= $model->encodeParams(['categoryId' => $model->categoryId]) ?>"><button class="btn btn-primary btn-sm">view</button></a>
         </div>
     </div>
 </div>

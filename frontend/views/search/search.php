@@ -17,6 +17,16 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     .page-content {
         padding-top: 60px;
     }
+    .catalog-grid .img-height-cozxy .tile-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        min-height: 100%;
+        z-index: 10;
+        transition: all .3s;
+    }
 </style>
 <div class="modal fade" id="filterModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
@@ -39,8 +49,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <div class="container">
             <h2 class="with-sorting dark-color">Showing results for</h2>
             <div class="sorting">
-                <a href="#">Sort by popularity</a>
-                <a href="#">Sort by price</a>
+                <!--                <a href="#">Sort by popularity</a>
+                                <a href="#">Sort by price</a>-->
             </div><!--sorting-->
 
             <div class="row">
@@ -68,9 +78,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     </ul>
                                 </div>
                             <?php } ?>
-                            <div class="sorting">
-                                <a href="#cate">LESS</a>
-                            </div><!--sorting-->
+                            <!--                            <div class="sorting">
+                                                            <a href="#cate">LESS</a>
+                                                        </div>sorting-->
                         </section>
 
                         <!--Price Section-->

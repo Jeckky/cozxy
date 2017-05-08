@@ -103,7 +103,7 @@ class RegisterController extends MasterController {
     }
 
     public function actionThank() {
-        $this->title = 'Cozxy.com | Register Thank';
+        $this->title = 'Cozxy.com | Register New';
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Register Thank';
         return $this->render('register_thank');

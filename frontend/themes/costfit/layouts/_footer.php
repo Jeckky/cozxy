@@ -18,7 +18,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <div class="sticky-btns">
         <form class="quick-contact" method="post" name="quick-contact" action="<?= $baseUrl ?>/contact-us">
             <h3>Contact us</h3>
-            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do.</p>
+            <p class="text-muted">
+                For customer services, please leave your email and message below, or call us at 064-184-7414 (Thailand)
+            </p>
             <div class="form-group">
                 <label for="qc-name">Full name</label>
                 <input class="form-control input-sm" type="text" name="name" id="qc-name" placeholder="Enter full name" required="true">
@@ -53,12 +55,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <a class="logo" href="<?php echo $baseUrl; ?>"><img src="<?php echo $baseUrl . $logoImage->image; ?>" alt="footer Cozxy.com"></a>
                         <p><?php echo isset($logoImage->contents[0]) ? $logoImage->contents[0]->description : ""; ?></p>
                         <div class="social">
-                            <a href="#" target="_blank"><i class="fa fa-instagram"></i></a>
-                            <a href="#" target="_blank"><i class="fa fa-youtube-square"></i></a>
+                            <a href="https://www.instagram.com/cozxy_thailand/" target="_blank"><i class="fa fa-instagram"></i></a>
+                            <!--<a href="#" target="_blank"><i class="fa fa-youtube-square"></i></a>
                             <a href="#" target="_blank"><i class="fa fa-tumblr-square"></i></a>
                             <a href="#" target="_blank"><i class="fa fa-vimeo-square"></i></a>
-                            <a href="#" target="_blank"><i class="fa fa-pinterest-square"></i></a>
-                            <a href="#" target="_blank"><i class="fa fa-facebook-square"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-pinterest-square"></i></a>-->
+                            <a href="https://www.facebook.com/cozxydotcom/" target="_blank"><i class="fa fa-facebook-square"></i></a>
                         </div>
                     </div>
                 </div>
@@ -96,11 +98,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-5">
                         <div class="payment">
-                            <img src="<?php echo $directoryAsset; ?>/img/payment/visa.png" alt="Visa"/>
-                            <img src="<?php echo $directoryAsset; ?>/img/payment/paypal.png" alt="PayPal"/>
-                            <img src="<?php echo $directoryAsset; ?>/img/payment/master.png" alt="Master Card"/>
-                            <img src="<?php echo $directoryAsset; ?>/img/payment/discover.png" alt="Discover"/>
-                            <img src="<?php echo $directoryAsset; ?>/img/payment/amazon.png" alt="Amazon"/>
+                           <!-- <img src="<?//php echo $directoryAsset; ?>/img/payment/visa.png" alt="Visa"/>
+                            <img src="<?//php echo $directoryAsset; ?>/img/payment/paypal.png" alt="PayPal"/>
+                            <img src="<?//php echo $directoryAsset; ?>/img/payment/master.png" alt="Master Card"/>
+                            <img src="<?//php echo $directoryAsset; ?>/img/payment/discover.png" alt="Discover"/>
+                            <img src="<?//php echo $directoryAsset; ?>/img/payment/amazon.png" alt="Amazon"/>
+                            -->
                         </div>
                     </div>
                 </div>

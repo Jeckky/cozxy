@@ -27,23 +27,26 @@ if (isset($model->productId)) {
                 ?>
             </div>
             <?php if ($price > 0) { ?><div class="price-label"><?= isset($price) ? number_format($price, 2) : "Not Set"; ?> ฿</div><?php } ?>
-            <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productSuppId]) ?>" style="/*min-height: 210px; max-height: 210px;*/">
-                <?php
-                $image = ProductSuppliers::productImageSuppliers($model->productSuppId);
-                //throw new \yii\base\Exception($image);
-                if (isset($image) && !empty($image)):
-                    $filename = $image;
-                    if (file_exists($filename)) {
-                        echo "<img class=\"ms-thumb\" src=\" " . Yii::$app->homeUrl . $image . "  \" alt=\"1\" class=\"img-responsive\"/>";
-                    } else {
-                        echo "<img  class=\"ms-thumb\"  src=\"" . $baseUrl . "/images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" class=\"img-responsive\"/>";
-                    }
-                else:
-                    ?>
-                    <img src="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1" class="img-responsive"/>
-                <?php endif; ?>
-                <span class="tile-overlay"></span>
-            </a>
+            <div style="height: 263px; width: 100%;">
+                <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= common\models\ModelMaster::encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productSuppId]) ?>">
+                    <?php
+                    $image = ProductSuppliers::productImageSuppliers($model->productSuppId);
+                    //throw new \yii\base\Exception($image);
+                    if (isset($image) && !empty($image)):
+                        $filename = $image;
+                        if (file_exists($filename)) {
+                            echo "<img class=\"ms-thumb\" src=\" " . Yii::$app->homeUrl . $image . "  \" alt=\"1\" class=\"img-responsive\"/>";
+                        } else {
+                            echo "<img  class=\"ms-thumb\"  src=\"" . $baseUrl . "/images/ContentGroup/DUHWYsdXVc.png\" alt=\"1\" class=\"img-responsive\"/>";
+                        }
+                    else:
+                        ?>
+                        <img src="<?php echo $baseUrl; ?>/images/ContentGroup/DUHWYsdXVc.png" alt="1" class="img-responsive"/>
+                    <?php endif; ?>
+                    <span class="tile-overlay  tile-overlay-cozxy"></span>
+                </a>
+            </div>
+
             <div class="footer search-category-footer">
                 <span>
                     <small>in <?php
@@ -56,7 +59,7 @@ if (isset($model->productId)) {
                         <?= substr($model->title, 0, 35);
                         ?></a>
                 </div>
-                <span><?php //= $model->shortDescription;        ?></span>
+                <span><?php //= $model->shortDescription;                         ?></span>
                 <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $model->encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productSuppId]) ?>"><button class="btn btn-primary" id="addItemToCart"><i class="fa fa-search"></i>View</button></a>
             </div>
         </div>

@@ -76,7 +76,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 ?>
                                 <div class="col-lg-12 col-md-12 col-sm-12" style="background-color: rgba(255,212,36,.9); margin-bottom: 5px;">
                                     <div onclick="ViewsShows()"  class="add-new-icon col-md-6 " style="padding: 1px;">
-                                        <h3 style="text-decoration: underline; margin-left: 2px;">All Post </h3>
+                                        <h3 style="text-decoration: underline; margin-left: 2px;">All Story </h3>
                                     </div>
                                     <div class="col-md-6 text-right">
                                         <?php

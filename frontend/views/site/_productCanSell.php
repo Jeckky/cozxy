@@ -20,7 +20,9 @@ if (isset($model)) {
     <!--<br><span class="sale" style="background-color: #d2d042 !important;">SMART</span>-->
                 <?php // endif;  ?>
             </div>
-            <img src="<?= (isset($productImages->image)) ? Yii::$app->homeUrl . $productImages->image : Yii::$app->homeUrl . "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1"/>
+            <div style="height: 228px; width: 100%;">
+                <img src="<?= (isset($productImages->image)) ? Yii::$app->homeUrl . $productImages->image : Yii::$app->homeUrl . "/images/ContentGroup/DUHWYsdXVc.png"; ?>" alt="1"/>
+            </div>
             <span class="tile-overlay"></span>
             <div class="footer" id="products-popular-footer" style="max-height: 320px;min-height: 80px;">
                 <span>
