@@ -56,6 +56,8 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     const APPROVE_RECEIVE_LvsB = '4'; //Lockers and Booth
     const ADD_NEW_PRODUCT_SUPPLIERS = 'ProductSuppliers';
 
+    public $productPrice;
+
     /**
      * @inheritdoc
      */
@@ -89,6 +91,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
             'bTitle' => 'Brand',
             'cTitle' => 'Category',
             'sUser' => 'Suppliers', 'pTitle' => 'หัวข้อสินค้า',
+	        'productPrice' => 'Product Price'
         ]);
     }
 
