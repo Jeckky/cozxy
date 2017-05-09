@@ -132,7 +132,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ]);
                         },
                         'items' => function($url, $model) {
-                            return Html::a('<i class = "fa fa-sign-in"></i> ', Yii::$app->homeUrl . "picking/picking-point-items/index?receive=" . $model->type . "&pickingId=" . $model->pickingId, [
+                            return Html::a('<i class="fa fa-folder-open" aria-hidden="true"></i> ', Yii::$app->homeUrl . "picking/picking-point-items/index?receive=" . $model->type . "&pickingId=" . $model->pickingId, [
                                 'title' => Yii::t('app', 'picking point items'),]);
                         },
                     ],
