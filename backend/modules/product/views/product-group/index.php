@@ -15,13 +15,21 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
 
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
-    <div class="panel panel-default">
-        <div class="panel-heading">
+
+
+
+    <div class="panel panel-default" >
+        <div class="panel-heading" style="background-color: #000;vertical-align: middle;">
             <div class="row">
-                <div class="col-md-6"><?= $this->title ?></div>
                 <div class="col-md-6">
-                    <div class="btn-group pull-right">
-                        <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Product Group', ['create'], ['class' => 'btn btn-success btn-xs']) ?>
+                    <span class="panel-title"><h3 style="color:#ffcc00;vertical-align: middle;"><?= $this->title ?></h3></span>
+                </div>
+                <div class="col-md-6" style="vertical-align: bottom;">
+                    <div class="btn-group pull-right" >
+                        <?=
+                        Html::a('Create Product Group', ['create'], ['class' => 'btn btn-success',
+                            'style' => 'height:35px;color:#FFF;'])
+                        ?>
                     </div>
                 </div>
             </div>
@@ -38,7 +46,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     'class' => 'table-light'
                 ],
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                        ['class' => 'yii\grid\SerialColumn'],
 //                    'productGroupId',
                     'title',
                     'description:ntext',
@@ -54,24 +62,24 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             'title' => Yii::t('yii', 'view'),
                                 ]);
                             },
-                                    'update' => function ($url, $model) {
+                            'update' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-pencil"></i>', $url, [
                                             'title' => Yii::t('yii', 'update'),
                                 ]);
                             },
-                                    'delete' => function ($url, $model) {
+                            'delete' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-trash-o"></i>', $url, [
                                             'title' => Yii::t('yii', 'Delete'),
                                             'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
                                             'data-method' => 'post',
                                 ]);
                             },
-                                ]
-                            ],
-                        ],
-                    ]);
-                    ?>
-                </div>
-            </div>
-            <?php Pjax::end(); ?>
+                        ]
+                    ],
+                ],
+            ]);
+            ?>
+        </div>
+    </div>
+    <?php Pjax::end(); ?>
 </div>

@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 
-
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\ProductGroup */
 
@@ -13,9 +12,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <div class="product-group-create">
 
-    <?= $this->render('_form', [
+    <?=
+    $this->render('_form', [
         'model' => $model,
-        'title' => Html::encode($this->title)
-    ]) ?>
+        'title' => Html::encode($this->title),
+        'ms' => $ms,
+        'title' => isset($title) ? $title : false,
+        'description' => isset($description) ? $description : false
+    ])
+    ?>
 
 </div>

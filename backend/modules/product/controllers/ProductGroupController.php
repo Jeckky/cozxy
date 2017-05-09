@@ -21,7 +21,7 @@ class ProductGroupController extends ProductMasterController {
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
                     // allow authenticated users
-                    [
+                        [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -43,11 +43,12 @@ class ProductGroupController extends ProductMasterController {
      */
     public function actionIndex() {
         $dataProvider = new ActiveDataProvider([
-            'query' => ProductGroup::find(),
+            'query' => ProductGroup::find()
+                    ->where("userId=" . Yii::$app->user->identity->userId . " and status=1"),
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -58,7 +59,7 @@ class ProductGroupController extends ProductMasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -69,15 +70,30 @@ class ProductGroupController extends ProductMasterController {
      */
     public function actionCreate() {
         $model = new ProductGroup();
+        $ms = '';
         if (isset($_POST["ProductGroup"])) {
-            $model->attributes = $_POST["ProductGroup"];
-            $model->createDateTime = new \yii\db\Expression('NOW()');
-            if ($model->save()) {
-                return $this->redirect(['index']);
+            $productGroup = ProductGroup::find()->where("title='" . $_POST["ProductGroup"]["title"] . "'")->one();
+            if (!isset($productGroup)) {
+                $model->userId = Yii::$app->user->identity->userId;
+                $model->title = $_POST["ProductGroup"]["title"];
+                $model->description = strip_tags($_POST["ProductGroup"]["description"]);
+                $model->status = 1;
+                $model->updateDateTime = new \yii\db\Expression('NOW()');
+                $model->createDateTime = new \yii\db\Expression('NOW()');
+                if ($model->save(false)) {
+                    return $this->redirect(['index']);
+                }
+            } else {
+                $ms = 'This title already exists.';
+                $title = $_POST["ProductGroup"]["title"];
+                $description = $_POST["ProductGroup"]["description"];
             }
         }
         return $this->render('create', [
-            'model' => $model,
+                    'model' => $model,
+                    'ms' => $ms,
+                    'title' => isset($title) ? $title : false,
+                    'description' => isset($description) ? $description : false
         ]);
     }
 
@@ -88,6 +104,7 @@ class ProductGroupController extends ProductMasterController {
      * @return mixed
      */
     public function actionUpdate($id) {
+        $ms = '';
         $model = $this->findModel($id);
         if (isset($_POST["ProductGroup"])) {
             $model->attributes = $_POST["ProductGroup"];
@@ -100,7 +117,9 @@ class ProductGroupController extends ProductMasterController {
             }
         }
         return $this->render('update', [
-            'model' => $model,
+                    'model' => $model,
+                    'description' => $model->description,
+                    'ms' => $ms,
         ]);
     }
 

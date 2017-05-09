@@ -14,33 +14,40 @@ use yii\jui\DatePicker;
 
 <div class="product-group-form">
 
-    <?php $form = ActiveForm::begin([
-    'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
-    'fieldConfig' => [
-    'template' => '{label}<div class="col-sm-9">{input}</div>',
-    'labelOptions'=>[
-    'class'=>'col-sm-3 control-label'
-    ]
-    ]
-    ]); ?>
+    <?php
+    $form = ActiveForm::begin([
+                'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+                'fieldConfig' => [
+                    'template' => '{label}<div class="col-sm-9">{input}</div>',
+                    'labelOptions' => [
+                        'class' => 'col-sm-3 control-label'
+                    ]
+                ]
+    ]);
+    ?>
 
-    <div class="panel-heading">
-        <span class="panel-title"><?=$title?></span>
-    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading"  style="background-color: #000;vertical-align: middle;">
+            <span class="panel-title"><h3 style="color:#ffcc00;"><?= $title ?></h3></span>
+        </div>
 
-    <div class="panel-body">
-        		<?= $form->errorSummary($model)?>
+        <div class="panel-body">
+            <?= $form->errorSummary($model) ?>
 
-		<?= $form->field($model, 'title',['options'=>['class'=>'row form-group']])->textInput(['maxlength' => 200]) ?>
+            <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200, 'value' => isset($title) ? $title : false]) ?>
 
-		<?= $form->field($model, 'description',['options'=>['class'=>'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
+            <?=
+                    $form->field($model, 'description', ['options' => ['class' => 'row form-group']])
+                    ->textarea(['value' => isset($description) ? $description : false, 'style' => 'height:150px;'])
+            ?>
 
-                <div class="form-group">
-            <div class="col-sm-9 col-sm-offset-3">
-                <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <div class="form-group">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <?= $ms != '' ? '<i style="color:#ff0000;">* ' . $ms . '</i>' : '' ?><br>
+                    <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                </div>
             </div>
         </div>
-    </div>
-    <?php ActiveForm::end(); ?>
+        <?php ActiveForm::end(); ?>
 
-</div>
+    </div>
