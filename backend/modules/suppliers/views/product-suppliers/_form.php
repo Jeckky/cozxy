@@ -88,7 +88,7 @@ use yii\redactor\widgets\Redactor;
         <?//= $form->field($model, 'productGroupId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(ProductGroup::find()->all(), 'productGroupId', 'title'), ['prompt' => '-- Select ProductGroup --']) ?>
         <?php
         echo $form->field($model, 'productGroupId')->widget(kartik\select2\Select2::classname(), [
-            'data' => yii\helpers\ArrayHelper::map(common\models\costfit\ProductGroup::find()->all(), 'productGroupId', 'title'),
+            'data' => yii\helpers\ArrayHelper::map(common\models\costfit\ProductGroup::find()->where('userId=' . Yii::$app->user->identity->userId)->all(), 'productGroupId', 'title'),
             'pluginOptions' => [
                 'loadingText' => '-- Select Product group --',
             //'params' => ['input-type-1', 'input-type-2']
