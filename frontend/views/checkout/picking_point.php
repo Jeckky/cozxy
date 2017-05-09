@@ -519,6 +519,7 @@ foreach ($GetOrderMastersGroup as $value) {
                 ?>
             </div>
             <?php
+            //echo $LockersCoolHistoryLockersNoti;
             if ($LockersCoolHistoryLockersNoti == 'isTrue') {
                 ?>
                 <div class="col-md-12 history-lockers-cool-null">
@@ -530,6 +531,7 @@ foreach ($GetOrderMastersGroup as $value) {
                 </div>
                 <?php
                 $mapImages = $ListpickpointLockersCoolValueInLocation['mapImages'];
+                //echo $mapImages;
                 if (isset($mapImages)) {
                     ?>
                     <div class="col-md-12">
@@ -559,6 +561,22 @@ foreach ($GetOrderMastersGroup as $value) {
                             <footer style="color: rgba(255,212,36,.9);">Cozxy.Com</footer>
                         </blockquote>
                     </div>-->
+                <?php } else { ?>
+                    <div class="col-md-12">
+                        <h5 class="cs-heading" style="font-size: 14px;color: #166db9;">
+                            <i class="fa fa-map-marker" aria-hidden="true" style="color: #166db9;"></i> Map : Shipping destination: CozxyBox  (<span class="name-lockers-cool" style="color: #2ca02c;"></span>) </h5>
+                        <blockquote style="font-size: 16px;">
+                            <p class="description-lockers-cool" style="color: #000000;"></p>
+                            <p class="view-map-images-lockers-cool" style="color: #8c8c8c;">
+                                <?php
+                                echo '<img src="' . $baseUrl . '/images/icon/loader.gif" class="img-responsive">';
+                                //echo 'mapImages :' . $mapImages;
+                                //echo '<img src="' . $baseUrl . $mapImages . '" class="img-responsive" style="width: 45% ">';
+                                ?>
+                            </p>
+                            <footer style="color: rgba(255,212,36,.9);">Cozxy.Com</footer>
+                        </blockquote>
+                    </div>
                 <?php } ?>
             <?php } ?>
         </div>

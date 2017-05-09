@@ -1093,6 +1093,7 @@ $('#LcpickingId').change(function (event, id, value) {
                        <img class="img-responsive" src="' + $baseUrl + 'images/picking-point/No_map.png' + '" alt="" style="width:100%;">\n\
                 </div>');
                 } else {
+                    //alert('xx');
                     $('.view-map-images-lockers-cool').html('<div class="col-sm-12" style="padding: 5px;">\n\
                         <img class="img-responsive" src="' + $baseUrl + JSONObject.mapImages + '" alt="" style="width:100%;">\n\
                 </div>');
