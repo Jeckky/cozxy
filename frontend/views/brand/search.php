@@ -19,7 +19,7 @@ $category = ''; //\common\models\costfit\Category::getRootText($categoryIdBrand)
     .page-content {
         padding-top: 60px;
     }
-    .catalog-grid .img-height-cozxy .tile-overlay {
+    .catalog-grid .img-height-cozxy .tile-overlay-cozxy {
         position: absolute;
         top: 0;
         left: 0;

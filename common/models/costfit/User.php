@@ -61,7 +61,8 @@ class User extends \common\models\costfit\master\UserMaster {
         return array_merge(parent::rules(), [
             ['email', 'unique'],
             'tel' => [['tel'], 'string'], //, 'min' => 8
-            ['newPassword', 'string', 'length' => 8],
+            ['newPassword', 'string', 'min' => 8],
+            ['password', 'string', 'min' => 8],
 //            ['email', 'uniqueEmail'],
             ['email', 'email'],
 //            ['email', 'exist', 'targetAttribute' => 'username', 'targetClass' => '\common\models\cosfit\User'],
