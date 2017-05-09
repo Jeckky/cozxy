@@ -63,6 +63,7 @@ class BrandController extends MasterController {
         ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
         ->where($whereArray)
         ->andWhere([">", "ps.result", 0])
+        ->groupBy('ps.productSuppId')
         ->orderBy("pps.price ASC");
         if (isset($_POST["min"])) {
             $products->andWhere("pps.price >=" . $_POST["min"]);
@@ -70,8 +71,6 @@ class BrandController extends MasterController {
         if (isset($_POST["max"])) {
             $products->andWhere("pps.price <=" . $_POST["max"]);
         }
-
-
 
         $whereArray2 = [];
         $whereArray2["ps.brandId"] = $params['brandId'];
@@ -84,7 +83,8 @@ class BrandController extends MasterController {
         ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
         ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
         ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
-        ->where($whereArray2);
+        ->where($whereArray2)
+        ->groupBy('ps.productSuppId');
 
         if (isset($params['brandId'])) {
             $idString = $params['brandId'];
