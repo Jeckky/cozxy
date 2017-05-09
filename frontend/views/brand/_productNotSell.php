@@ -16,7 +16,7 @@ if (isset($model->productId)):
     $suppliers = \common\models\costfit\Product::lowestPriceContent($model->productId);
     if ($suppliers != NULL) {//ถ้ามีใน suppliers แสดงราคาที่ถูกที่สุด(กรณีมีหลายซัพ)
         ?>
-        <div id="products-category-searc" class="col-lg-4 col-md-6 col-sm-12 ">
+        <div id="products-category-searc" class="col-lg-3 col-md-4 col-sm-12 ">
             <div class="tile">
                 <div class="badges">
                     <!--<span class="sale">Sale</span>-->
@@ -68,7 +68,7 @@ if (isset($model->productId)):
                             <?= substr($suppliers->title, 0, 35);
                             ?></a>
                     </div>
-                    <span><?php //= $model->shortDescription;                                          ?></span>
+                    <span><?php //= $model->shortDescription;                                            ?></span>
                     <a href="<?php echo Yii::$app->homeUrl; ?>products/<?= $suppliers->encodeParams(['productId' => $suppliers->productId, 'productSupplierId' => $suppliers->productSuppId]) ?>"><button class="btn btn-primary" id="addItemToCart"><i class="fa fa-search"></i>View</button></a>
                 </div>
             </div>
