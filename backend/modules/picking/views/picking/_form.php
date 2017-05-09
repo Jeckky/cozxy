@@ -136,6 +136,13 @@ use kartik\widgets\Select2;
             <?= $form->field($model, 'ip')->textInput(['maxlength' => 100]) ?>
             <?= $form->field($model, 'macAddress')->textInput(['maxlength' => 100]) ?>
             <?= $form->field($model, 'authCode')->textInput(['maxlength' => 100]) ?>
+            <div class="form-group field-pickingpoint-status">
+                <label class="col-sm-3 control-label" for="pickingpoint-status">Status</label>
+                <div class="col-sm-9">
+                    <?= $form->field($model, 'status')->checkbox([ 'label' => '']) ?>
+                </div>
+            </div>
+
             <?= $form->field($model, 'longitude')->textInput(['maxlength' => 100]) ?>
             <?= $form->field($model, 'latitude')->textInput(['maxlength' => 100]) ?>
             <?= $form->field($model, 'mapImages', ['options' => ['class' => 'row form-group']])->fileInput() ?>

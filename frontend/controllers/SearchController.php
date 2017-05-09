@@ -22,6 +22,14 @@ class SearchController extends MasterController {
     public $enableCsrfValidation = false;
 
     /**
+     * @inheritdoc
+     */
+    public function behaviors() {
+        return [
+        ];
+    }
+
+    /**
      * Displays homepage.
      *
      * @return mixed

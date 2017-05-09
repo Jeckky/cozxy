@@ -92,6 +92,19 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $imgBrand;
                     }
                 ],
+                [
+                    'attribute' => 'status',
+                    'format' => 'raw',
+                    'value' => function($model) {
+                        if ($model->status == 1) {
+                            $approve_txt = '<span style="color: #5ebd5e;"><strong>Active</strong></span>';
+                        } else {
+                            $approve_txt = '<span style="color: #ec0831;"><strong>Inactive</strong></span>';
+                        }
+                        // $approve_txt .= '</div><span class="text-switcher-warning-' . $model->pickingId . ' text-danger">ยังไม่เลือกปลายทางรับสินค้า</span>';
+                        return $approve_txt;
+                    }
+                ],
                 'longitude',
                 'latitude',
                 // 'createDateTime',
@@ -128,6 +141,17 @@ $this->params['breadcrumbs'][] = $this->title;
         ]);
         ?>
     </div>
+    <script>
+
+        init.push(function () {
+            $('#switchers-colors-square > input').switcher(function (e, data) {
+
+            });
+            //alert(switcherEl.switcher('setValue', true));
+            //console.log($('#switchers-colors-square').switcher({}));
+        });
+
+    </script>
     <script>
         init.push(function () {
             $('#bs-x-editable-username').editable({

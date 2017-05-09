@@ -115,18 +115,10 @@ class PickingController extends PickingMasterController {
         $folderName = "map"; //  Size 553 x 484
         $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . 'picking-point/' . $folderName;
         $model = new PickingPoint();
-        /*
-          if ($model->load(Yii::$app->request->post()) && $model->save()) {
-          // return $this->redirect(['view', 'id' => $model->pickingId]);
-          } else {
-          return $this->render('create', [
-          'model' => $model,
-          ]);
-          //echo 'test 2';
-          } */
+
         if (isset($_POST["PickingPoint"])) {
 
-            $model->attributes = $_POST["PickingPoint"];
+            $model->status = $_POST["PickingPoint"]['status'];
             $model->type = $receive;
             $model->createDateTime = new \yii\db\Expression('NOW()');
 
