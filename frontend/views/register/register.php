@@ -75,7 +75,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <?= $form->field($model, 'password')->passwordInput() ?>
             <?= $form->field($model, 'confirmPassword')->passwordInput() ?>
             <div class="checkbox">
-                <label><input type="checkbox" name="User[acceptTerm]" id="agreePolicy" value="no"> I have read and agree with the <a href="#" data-toggle="modal" data-target="#terms"> terms</a></label>
+                <label><input type="checkbox" name="User[acceptTerm]" id="agreePolicy"> I have read and agree with the <a href="#" data-toggle="modal" data-target="#terms"> terms</a></label>
             </div>
             <div class="form-group">
                 <?php // Html::submitButton('Register', ['class' => 'btn btn-black', 'name' => 'login-button']) ?>

@@ -464,27 +464,27 @@ $(document).ready(function (e) {
     });
     $(document).on('click', '#regis-button', function () {
         var password = $(this).parent().parent().find('#user-password').val();
-        var agree = $(this).parent().parent().find('#agreePolicy').val();
-        alert(agree);
-        $.ajax({
-            type: 'POST',
-            dataType: 'JSON',
-            url: $baseUrl + '/register/check-password',
-            data: {password: password},
-            success: function (data) {
-                if (data.status == true) {
-                    alert(data.ms);
-                } else {
-                    $('#register-form').submit();
-                    //alert(data.ms);
+        var agree = $(this).parent().parent().find('#agreePolicy');
+        if ($("#agreePolicy").is(':checked') == false) {
+            alert('Please check, you have read and agree with the term.');
+        } else {
+            $.ajax({
+                type: 'POST',
+                dataType: 'JSON',
+                url: $baseUrl + '/register/check-password',
+                data: {password: password},
+                success: function (data) {
+                    if (data.status == true) {
+                        alert(data.ms);
+                    } else {
+                        $('#register-form').submit();
+                        //alert(data.ms);
+                    }
                 }
-            }
-        });
+            });
+        }
     });
-    $(document).on('click', '#agreePolicy', function () {
-        $('#agreePolicy').val('yes');
-        alert('#agreePolicy');
-    });
+
 });/*Document Ready End*//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
