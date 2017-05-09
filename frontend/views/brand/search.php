@@ -48,7 +48,7 @@ $category = ''; //\common\models\costfit\Category::getRootText($categoryIdBrand)
             <a href="<?php echo Yii::$app->homeUrl; ?>">Home</a>
         </li>
         <li>
-            brand
+            Brand
         </li>
         <li>
             <?php echo $title; ?>
