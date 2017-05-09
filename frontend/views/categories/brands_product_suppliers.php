@@ -39,8 +39,8 @@ if (isset($categoryId)) {
                     }
                     if (isset($brands)) {
                         ?>
-                        <a class="item" href="<?php echo Yii::$app->homeUrl; ?>search/brand/<?= $brands->createTitle() ?>/<?php echo $params; ?>">
-                            <img src="<?php echo $image; ?>" alt="" title="ขนาด : 164x120" width="164" height="120" class="img-responsive"/>
+                        <a class="item" href="<?php echo Yii::$app->homeUrl; ?>brand/<?= $brands->createTitle() ?>/<?php echo $params; ?>">
+                            <img src="<?php echo $image; ?>" alt="" title="<?php echo $brands->title; ?>" width="164" height="120" class="img-responsive"/>
                         </a>
                         <?php
                     }
