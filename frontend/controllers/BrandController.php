@@ -89,8 +89,8 @@ class BrandController extends MasterController {
         if (isset($params['brandId'])) {
             $idString = $params['brandId'];
             $this->view->params['brandId'] = explode(",", $idString);
-            $products->andWhere("product.brandId in ($idString)");
-            $NotSell->andWhere("product.brandId in ($idString)");
+            //$products->andWhere("product.brandId in ($idString)");
+            //$NotSell->andWhere("product.brandId in ($idString)");
         }
 
         $products = new \yii\data\ActiveDataProvider([
