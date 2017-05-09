@@ -30,6 +30,7 @@ if (isset($categoryId)) {
             if (isset($brand)) {
                 $brands = \common\models\costfit\Brand::find()->where("brandId=" . $brand)->one();
                 if (count($brands) > 0) {
+                    $params = \common\models\ModelMaster::encodeParams(['brandId' => $brands->brandId]);
                     $total = count(common\models\costfit\ProductSuppliers::find()->where("brandId=" . $brand . " and categoryId in (" . $allCategory . ")")->all());
                     if (file_exists(Yii::$app->basePath . "/web" . $brands->image) && !empty($brands->image)) {
                         $image = $brands->image;
@@ -38,7 +39,9 @@ if (isset($categoryId)) {
                     }
                     if (isset($brands)) {
                         ?>
-                        <a class="item" href="#"><img src="<?php echo $image; ?>" alt="" title="ขนาด : 164x120" width="164" height="120" class="img-responsive"/></a>
+                        <a class="item" href="<?php echo Yii::$app->homeUrl; ?>search/brand/<?= $brands->createTitle() ?>/<?php echo $params; ?>">
+                            <img src="<?php echo $image; ?>" alt="" title="ขนาด : 164x120" width="164" height="120" class="img-responsive"/>
+                        </a>
                         <?php
                     }
                 } else {

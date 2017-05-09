@@ -58,6 +58,7 @@ return [
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<hash>' => '<controller>/<action>',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<hash>/<title>' => '<controller>/<action>',
                 'products/<hash>' => 'products/index',
+                'search/brand/<title>/<hash>' => 'search/brand',
                 //Custom Rule
                 'profile/purchase-order/<hash>' => 'profile/purchase-order',
                 'profile/transfer-confirm/<hash>' => 'profile/transfer-confirm',
