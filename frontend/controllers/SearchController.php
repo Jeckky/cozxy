@@ -35,8 +35,8 @@ class SearchController extends MasterController {
         $this->view->params['categoryId'] = $params['categoryId'];
         $this->view->params['title'] = $title;
         $this->layout = "/content";
-        $this->title = 'Cozxy.com | Products';
-        $this->subTitle = 'ชื่อ search';
+        $this->title = 'Cozxy.com | search';
+        $this->subTitle = 'search';
 //        throw new \yii\base\Exception(print_r($_POST, true));
         $whereArray = [];
         $whereArray["category_to_product.categoryId"] = $params['categoryId'];
@@ -44,7 +44,11 @@ class SearchController extends MasterController {
         $whereArray["product.approve"] = "approve";
 //        $whereArray["ps.results"] = "> 0";
         $whereArray["pps.status"] = "1";
-//
+
+        if (isset($_GET['search'])) {
+            $whereArray["ps.title"] = "%" . $_GET['search'] . "%";
+        }
+
 //$whereArray["product_price.quantity"] = 1;
 //$whereArray["pps.status"] = 1;
         $products = \common\models\costfit\CategoryToProduct::find()
