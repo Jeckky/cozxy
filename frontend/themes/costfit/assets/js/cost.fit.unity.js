@@ -39,7 +39,6 @@ $(document).ready(function (e) {
         var itemQty = $(this).parent().parent().find(".qty").find("#qty").val();
         var $maxQnty = parseInt($('#maxQnty').val());
         var $productSuppId = $(this).parent().parent().find("#productSuppId").val();
-
         var $wmaxQnty = parseInt($('#maxQnty' + $productSuppId).val());
         $.ajax({
             type: "POST",
@@ -93,7 +92,6 @@ $(document).ready(function (e) {
             }
         });
     });
-
     /*Shopping Cart Page
      *******************************************/
     //Deleting Items
@@ -464,8 +462,30 @@ $(document).ready(function (e) {
             }
         }
     });
+    $(document).on('click', '#regis-button', function () {
+        var password = $(this).parent().parent().find('#user-password').val();
+        var agree = $(this).parent().parent().find('#agreePolicy').val();
+        alert(agree);
+        $.ajax({
+            type: 'POST',
+            dataType: 'JSON',
+            url: $baseUrl + '/register/check-password',
+            data: {password: password},
+            success: function (data) {
+                if (data.status == true) {
+                    alert(data.ms);
+                } else {
+                    $('#register-form').submit();
+                    //alert(data.ms);
+                }
+            }
+        });
+    });
+    $(document).on('click', '#agreePolicy', function () {
+        $('#agreePolicy').val('yes');
+        alert('#agreePolicy');
+    });
 });/*Document Ready End*//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 
 /************************************************************************/

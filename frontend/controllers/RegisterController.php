@@ -132,4 +132,32 @@ class RegisterController extends MasterController {
         }
     }
 
+    public function actionCheckPassword() {
+        $password = $_POST['password'];
+        $res = [];
+        $letter = 0;
+        $number = 0;
+        // throw new \yii\base\Exception($password[3]);
+        $res["status"] = FALSE;
+        $passwordLength = strlen($password);
+        for ($i = 0; $i < $passwordLength; $i++):
+            $char = substr($password, $i, 1);
+            if (is_numeric($char)) {
+                $number++;
+            } else {
+                $letter++;
+            }
+        endfor;
+        // throw new \yii\base\Exception("number=>" . $number . " letter=>" . $letter);
+        if ($passwordLength < 8) {
+            $res["status"] = true;
+            //$res["ms="] = $passwordLength;
+            $res["ms"] = 'Password must be at least 8 characters.';
+        } else if (($number == 0) || ($letter == 0)) {
+            $res["status"] = true;
+            $res["ms"] = 'Password must contain  numbers and letters.';
+        }
+        return \yii\helpers\Json::encode($res);
+    }
+
 }
