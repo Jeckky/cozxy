@@ -154,10 +154,16 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     $picking_point_type = common\models\costfit\PickingPointType::find()->all();
                                                     $point_type = "<div class=\"col-sm-12\">";
                                                     foreach ($picking_point_type as $value) {
+                                                        $checked = $value->pptId;
+                                                        if ($checked == 1) {
+                                                            $checkeds = 'checked';
+                                                        } else {
+                                                            $checkeds = '';
+                                                        }
                                                         $point_type .= "
                                                                         <div class=\"radio\">
                                                                             <label>
-                                                                                <input type=\"radio\" name=\"jq-validation-radios-$model->productSuppId\" id=\"approveReceiveType-$model->productSuppId\" onchange=\"approveReceiveType($model->productSuppId,$value->pptId)\" data-bind=" . $model->productSuppId . " value=" . $value->pptId . " class=\"px\">
+                                                                                <input type=\"radio\" $checkeds  name=\"jq-validation-radios-$model->productSuppId\" id=\"approveReceiveType-$model->productSuppId\" onchange=\"approveReceiveType($model->productSuppId,$value->pptId)\" data-bind=" . $model->productSuppId . " value=" . $value->pptId . " class=\"px\">
                                                                                 <span class=\"lbl\">" . $value->name . "</span>
                                                                             </label>
                                                                         </div>
@@ -180,14 +186,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     $product_price_suppliers = common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId =' . $model->productSuppId . ' and status =1')->one();
                                                     //echo '<pre>';
                                                     //print_r($product_price_suppliers);
-                                                    if (isset($product_price_suppliers->price)) {
-                                                        $approve_txt = '<div id="switchers-colors-square" class="form-group-margin  hidden  switchers-xx-' . $model->productSuppId . '"  onchange="switchers(' . $model->productSuppId . ',1)">';
+                                                    if (isset($product_price_suppliers->price)) { //
+                                                        $approve_txt = '<div id="switchers-colors-square" class="form-group-margin  <!--hidden-->  switchers-xx-' . $model->productSuppId . '"  onchange="switchers(' . $model->productSuppId . ',1)">';
                                                         if ($model->approve != 'approve') {
                                                             $approve_txt .= '<input type="checkbox" data-class="switcher-warning" >';
                                                         } else {
                                                             $approve_txt .= '<input type="checkbox" data-class="switcher-warning"   checked="checked" >';
                                                         }
-                                                        $approve_txt .= '</div><span class="text-switcher-warning-' . $model->productSuppId . ' text-danger">ยังไม่เลือกปลายทางรับสินค้า</span>';
+                                                        //$approve_txt .= '</div><span class="text-switcher-warning-' . $model->productSuppId . ' text-danger">ยังไม่เลือกปลายทางรับสินค้า</span>';
                                                         return $approve_txt;
                                                     } else {
                                                         return '<span class="text-warning">ยังไม่ระบุราคา</span>';

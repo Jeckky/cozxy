@@ -160,10 +160,11 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     $picking_point_type = common\models\costfit\PickingPointType::find()->all();
                                                     $point_type = "<div class=\"col-sm-12\">";
                                                     foreach ($picking_point_type as $value) {
+
                                                         $point_type .= "
                                                                         <div class=\"radio\">
                                                                             <label>
-                                                                                <input type=\"radio\" name=\"jq-validation-radios-$model->productSuppId\" id=\"approveReceiveType-$model->productSuppId\" onchange=\"approveReceiveType($model->productSuppId,$value->pptId)\" data-bind=" . $model->productSuppId . " value=" . $value->pptId . " class=\"px\">
+                                                                                <input type=\"radio\"  name=\"jq-validation-radios-$model->productSuppId\" id=\"approveReceiveType-$model->productSuppId\" onchange=\"approveReceiveType($model->productSuppId,$value->pptId)\" data-bind=" . $model->productSuppId . " value=" . $value->pptId . " class=\"px\">
                                                                                 <span class=\"lbl\">" . $value->name . "</span>
                                                                             </label>
                                                                         </div>
