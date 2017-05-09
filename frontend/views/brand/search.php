@@ -66,7 +66,7 @@ $category = ''; //\common\models\costfit\Category::getRootText($categoryIdBrand)
             <div class="row">
 
                 <div id="title-product-all" class="col-lg-12 col-md-12 col-sm-12">
-                    <h4>&nbsp;&nbsp;&nbsp;RECOMMENDED</h4>
+                    <!--<h4>&nbsp;&nbsp;&nbsp;RECOMMENDED</h4>-->
                     <?php
                     Pjax::begin([
                         'id' => 'products'
@@ -131,7 +131,7 @@ $category = ''; //\common\models\costfit\Category::getRootText($categoryIdBrand)
                     ]);
                     ?>
                     <div class="col-lg-12 col-md-12 col-sm-12">
-                        <h4>PRODUCT</h4>
+                        <!--<h4>PRODUCT</h4>-->
                         <br><br>
                         <?php
                         echo \yii\widgets\ListView::widget([
