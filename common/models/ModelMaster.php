@@ -118,4 +118,14 @@ class ModelMaster extends \yii\db\ActiveRecord {
         return json_decode(trim($enc), true);
     }
 
+    public static function encodeParamsBrand($params) {
+//        return urlencode(base64_encode(base64_encode(Yii::$app->getSecurity()->encryptByPassword(json_encode($params), Yii::$app->params['secureKey']))));
+
+        $text = json_encode($params);
+        $enc = mcrypt_encrypt(MCRYPT_BLOWFISH, Yii::$app->params['secureKey'], $text, MCRYPT_MODE_ECB, Yii::$app->params['secureVi']);
+        $enc = str_replace(array('+', '/'), array('-', '_'), base64_encode($enc));
+        //$enc = str_replace('-', '_', base64_encode(str_replace(array('+', '/'), array('-', ''), $enc)));
+        return rawurlencode($enc);
+    }
+
 }

@@ -44,10 +44,10 @@ class BrandController extends MasterController {
         $this->layout = "/content";
         $this->title = 'Cozxy.com | search';
         $this->subTitle = 'search';
-        //echo 'Search Brand';
+        //echo 'Search Brand :' . $params['brandId'];
         //throw new \yii\base\Exception(print_r($_POST, true));
         $whereArray = [];
-        $whereArray["product_price_suppliers.brandId"] = $params['brandId'];
+        $whereArray["ps.brandId"] = $params['brandId'];
 
         $whereArray["product.approve"] = "approve";
         //        $whereArray["ps.results"] = "> 0";
@@ -70,8 +70,11 @@ class BrandController extends MasterController {
         if (isset($_POST["max"])) {
             $products->andWhere("pps.price <=" . $_POST["max"]);
         }
+
+
+
         $whereArray2 = [];
-        $whereArray2["product_price_suppliers.brandId"] = $params['brandId'];
+        $whereArray2["ps.brandId"] = $params['brandId'];
 
         $whereArray2["product.approve"] = "approve";
         $whereArray2["ps.result"] = "0";
@@ -100,7 +103,7 @@ class BrandController extends MasterController {
             ],
         ]);
 
-        return $this->render('search', ['products' => $products, 'productNotSell' => $productNotSell, 'categoryIdBrand' => $params['categoryId']]);
+        return $this->render('search', ['products' => $products, 'productNotSell' => $productNotSell, 'categoryIdBrand' => $params['brandId']]);
     }
 
 }
