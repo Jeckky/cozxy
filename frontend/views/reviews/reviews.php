@@ -75,7 +75,7 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
 
                         $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
                         foreach ($productPostList as $valuex) {
-                            $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productImageId desc')->limit(1)->all();
+                            $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->limit(1)->all();
                             $productViews = common\models\costfit\ProductPageViews::find()->where('productSuppId=' . $value->productSuppId)->count();
                             ?>
                             <div class="col-md-12 text-center" style="padding-left: 0px; padding-right: 0px; height: 60px;"><br>
