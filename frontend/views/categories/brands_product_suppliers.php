@@ -39,7 +39,7 @@ if (isset($categoryId)) {
                     }
                     if (isset($brands)) {
                         ?>
-                        <a class="item" href="">
+                        <a class="item" href="<?php echo Yii::$app->homeUrl; ?>brand/<?= $brands->createTitle() ?>/<?php echo $params; ?>">
                             <img src="<?php echo $image; ?>" alt="" title="<?php echo $brands->title; ?>" width="164" height="120" class="img-responsive"/>
                         </a>
                         <?php

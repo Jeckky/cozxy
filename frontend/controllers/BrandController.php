@@ -41,9 +41,9 @@ class BrandController extends MasterController {
         //throw new \yii\base\Exception(print_r($params, true));
         $this->view->params['brandId'] = $params['brandId'];
         $this->view->params['title'] = $title;
-        $this->layout = "/content";
-        $this->title = 'Cozxy.com | search';
-        $this->subTitle = 'search';
+        //$this->layout = "/content";
+        //$this->title = 'Cozxy.com | search';
+        //$this->subTitle = 'search';
         //echo 'Search Brand :' . $params['brandId'];
         //throw new \yii\base\Exception(print_r($_POST, true));
         $whereArray = [];

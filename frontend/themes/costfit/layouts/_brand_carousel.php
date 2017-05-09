@@ -21,7 +21,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     $image = Yii::$app->homeUrl . "images/no-image.jpg";
                 }
                 ?>
-                <a class="" href="">
+                <a class="" href="<?php echo Yii::$app->homeUrl; ?>brand/<?= $brand->createTitle() ?>/<?php echo \common\models\ModelMaster::encodeParamsBrand(['brandId' => $brand->brandId]); ?>">
                     <img src="<?php echo $image; ?>" alt="" title="ขนาด : 164x120" width="164" height="120" class="img-responsive"/></a>
                     <?php
                 }

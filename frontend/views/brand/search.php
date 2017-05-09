@@ -10,7 +10,7 @@ $brandId = $this->params['brandId'];
 $title = $this->params['title'];
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
-$category = \common\models\costfit\Category::getRootText($categoryIdBrand);
+$category = ''; //\common\models\costfit\Category::getRootText($categoryIdBrand);
 ?>
 <style>
     .pagination>.disabled>span{
@@ -45,50 +45,28 @@ $category = \common\models\costfit\Category::getRootText($categoryIdBrand);
 <div class="page-content">
     <ol class="breadcrumb" style="text-align: left;">
         <li>
-            <?php echo isset($category) ? $category : 'not set'; ?> >
             <a href="<?php echo Yii::$app->homeUrl; ?>">Home</a>
+        </li>
+        <li>
+            brand
+        </li>
+        <li>
+            <?php echo $title; ?>
         </li>
     </ol><!--Breadcrumbs Close-->
 
     <section class="catalog-grid">
         <div class="container">
-            <h2 class="with-sorting dark-color">Showing results for</h2>
-            <div class="sorting">
-                <!--                <a href="#">Sort by popularity</a>
-                                <a href="#">Sort by price</a>-->
-            </div><!--sorting-->
+            <!--<h2 class="with-sorting dark-color">Showing results for</h2>-->
+            <!--<div class="sorting">
+            <!--                <a href="#">Sort by popularity</a>
+                            <a href="#">Sort by price</a>-->
+            <!--</div>--><!--sorting-->
 
             <div class="row">
-                <!--Filters-->
-                <div class="filters-mobile col-lg-3 col-md-3 col-sm-4">
-                    <div class="shop-filters">
-                        <!--Category Section-->
-                        <section class="filter-section" id="cate">
-                            <h3><a href="#"><?php //echo $value->title;       ?>xxx</a></h3>
-                            <div class="cont-info-widget">
-                                <ul>
-                                    <li>&nbsp;&nbsp;<a href=""><?php echo $title; ?></a></li>
-                                </ul>
-                            </div>
-                            <!--                            <div class="sorting">
-                                                            <a href="#cate">LESS</a>
-                                                        </div>sorting-->
-                        </section>
 
-                        <!--Price Section-->
-                        <section class="filter-section">
-                            <h3>Filter by price</h3>
-                            <?php //echo $this->render('@app/views/filter/filterbyprice', ['categoryId' => $categoryId, 'title' => $title]); ?>
-                        </section>
-
-                        <!--Categories Section-->
-                        <section class="filter-section">
-                            <h3>Brands</h3>
-                            <?php //echo $this->render('@app/views/categories/brands', ['categoryId' => $categoryId, 'title' => $title, 'brandIds' => isset($this->params['categoryId']) ? $this->params['categoryId'] : NULL]); ?>
-                        </section>
-                    </div>
-                </div><!--Filters-->
-                <div id="title-product-all" class="col-lg-9 col-md-9 col-sm-8">
+                <div id="title-product-all" class="col-lg-12 col-md-12 col-sm-12">
+                    <h4>&nbsp;&nbsp;&nbsp;RECOMMENDED</h4>
                     <?php
                     Pjax::begin([
                         'id' => 'products'
@@ -145,46 +123,16 @@ $category = \common\models\costfit\Category::getRootText($categoryIdBrand);
                     </div>
                     <?php Pjax::end(); ?>
                     <!--Pagination-->
-                    <br><br><br>
+                    <br>
 
-
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                        <?php
-                        //echo $this->render('@app/themes/costfit/layouts/_brand_carousel');
-                        ?>
-                        <!--Brands Carousel Widget-->
-                        <section class="brand-carousel">
-                            <div class="container-search">
-                                <h2>Brands in our shop</h2>
-                                <div class="inner">
-                                    <?php
-                                    /*
-                                      $brands = common\models\costfit\Brand::find()->all();
-                                      foreach ($brands as $brand) {
-                                      //throw new yii\base\Exception(Yii::$app->basePath . "/web" . $brand->image);
-                                      if (file_exists(Yii::$app->basePath . "/web" . $brand->image) && !empty($brand->image)) {
-                                      $image = $brand->image;
-                                      } else {
-                                      $image = Yii::$app->homeUrl . "images/no-image.jpg";
-                                      }
-                                      ?>
-                                      <a class="item" href="#"><img src="<?php echo $image; ?>" alt="" title="ขนาด : 164x120" width="164" height="120" class="img-responsive"/></a>
-                                      <?php
-                                      } */
-                                    ?>
-                                    <?php //echo $this->render('@app/views/categories/brands_product_suppliers', ['categoryId' => $categoryId, 'title' => $title, 'brandIds' => isset($this->params['categoryId']) ? $this->params['categoryId'] : NULL]); ?>
-
-                                </div>
-                            </div>
-                        </section><!--Brands Carousel Close-->
-                    </div>
                     <?php
                     Pjax::begin([
                         'id' => 'productsnotsale'
                     ]);
                     ?>
                     <div class="col-lg-12 col-md-12 col-sm-12">
-
+                        <h4>PRODUCT</h4>
+                        <br><br>
                         <?php
                         echo \yii\widgets\ListView::widget([
                             'options' => [
