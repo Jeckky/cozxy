@@ -58,6 +58,11 @@ class ProductSuppliersController extends SuppliersMasterController {
         $CategoryId = Yii::$app->request->get('CategoryId');
         $BrandId = Yii::$app->request->get('BrandId');
         $productGroupId = Yii::$app->request->get('productGroupId');
+        if (isset($productGroupId)) {
+            $groupId = " and productGroupId=" . $productGroupId;
+        } else {
+            $groupId = "";
+        }
         //echo $CategoryId . '<br>';
         //echo $BrandId;
         //throw new \yii\base\Exception($BrandId);
@@ -67,7 +72,7 @@ class ProductSuppliersController extends SuppliersMasterController {
                         ->select('`product_suppliers`.* ,  (SELECT product_price_suppliers.price  FROM product_price_suppliers
             where product_price_suppliers.productSuppId = product_suppliers.productSuppId and product_price_suppliers.status = 1  limit 1)
             AS `priceSuppliers`')
-                        ->where('categoryId = ' . $CategoryId . ' and userId=' . Yii::$app->user->identity->userId . ' and productGroupId=' . $productGroupId)
+                        ->where('categoryId = ' . $CategoryId . ' and userId=' . Yii::$app->user->identity->userId . $groupId)
                         ->orderBy('product_suppliers.productSuppId desc'),
             ]);
         } else if ($BrandId != '' && $CategoryId == '') {
@@ -76,7 +81,7 @@ class ProductSuppliersController extends SuppliersMasterController {
                         ->select('`product_suppliers`.* ,  (SELECT product_price_suppliers.price  FROM product_price_suppliers
             where product_price_suppliers.productSuppId = product_suppliers.productSuppId and product_price_suppliers.status = 1  limit 1)
             AS `priceSuppliers`')
-                        ->where('brandId = "' . $BrandId . '"  and userId=' . Yii::$app->user->identity->userId . ' and productGroupId=' . $productGroupId)
+                        ->where('brandId = "' . $BrandId . '"  and userId=' . Yii::$app->user->identity->userId . $groupId)
                         ->orderBy('product_suppliers.productSuppId desc'),
             ]);
         } else if ($BrandId != '' && $CategoryId != '') {
@@ -85,7 +90,7 @@ class ProductSuppliersController extends SuppliersMasterController {
                         ->select('`product_suppliers`.* ,  (SELECT product_price_suppliers.price  FROM product_price_suppliers
             where product_price_suppliers.productSuppId = product_suppliers.productSuppId and product_price_suppliers.status = 1  limit 1)
             AS `priceSuppliers`')
-                        ->where('brandId = "' . $BrandId . '" and categoryId = ' . $CategoryId . '  and userId=' . Yii::$app->user->identity->userId . ' and productGroupId=' . $productGroupId)
+                        ->where('brandId = "' . $BrandId . '" and categoryId = ' . $CategoryId . '  and userId=' . Yii::$app->user->identity->userId . $groupId)
                         ->orderBy('product_suppliers.productSuppId desc'),
             ]);
         } else {
@@ -94,7 +99,7 @@ class ProductSuppliersController extends SuppliersMasterController {
                         ->select('`product_suppliers`.* ,  (SELECT product_price_suppliers.price  FROM product_price_suppliers
             where product_price_suppliers.productSuppId = product_suppliers.productSuppId and product_price_suppliers.status = 1  limit 1)
             AS `priceSuppliers`')
-                        ->where('userId=' . Yii::$app->user->identity->userId . ' and productGroupId=' . $productGroupId)->orderBy('product_suppliers.productSuppId desc'),
+                        ->where('userId=' . Yii::$app->user->identity->userId . $groupId)->orderBy('product_suppliers.productSuppId desc'),
             ]);
         }
 
@@ -262,7 +267,11 @@ class ProductSuppliersController extends SuppliersMasterController {
         //print_r($model->attributes['productId']);
         $CategoryId = Yii::$app->request->get('CategoryId');
         $BrandId = Yii::$app->request->get('BrandId');
-        $productGroupId = Yii::$app->request->get('productGroupId');
+        if (Yii::$app->request->get('productGroupId') == '') {
+            $productGroupId = '';
+        } else {
+            $productGroupId = '&productGroupId=' . Yii::$app->request->get('productGroupId');
+        }
         if (isset($_POST["ProductSuppliers"])) {
 
             // $model1 = ProductSuppliers::find()->where('productSuppId = ' . $id)->one();
@@ -292,7 +301,7 @@ class ProductSuppliersController extends SuppliersMasterController {
                             'suppCode' => $_POST['ProductSuppliers']['suppCode'],
                                 //'merchantCode' => $_POST['ProductSuppliers']['merchantCode'],
                                 ], ['productId' => $model1->productId, 'productSuppId' => $id]);
-                return $this->redirect(['index?BrandId=' . $BrandId . '&CategoryId=' . $CategoryId . '&productGroupId=' . $productGroupId]);
+                return $this->redirect(['index?BrandId=' . $BrandId . '&CategoryId=' . $CategoryId . $productGroupId]);
             }
         }
         return $this->render('update', [
@@ -309,10 +318,14 @@ class ProductSuppliersController extends SuppliersMasterController {
     public function actionDelete($id) {
         $CategoryId = Yii::$app->request->get('CategoryId');
         $BrandId = Yii::$app->request->get('BrandId');
-        $productGroupId = Yii::$app->request->get('productGroupId');
-        $this->findModel($id)->delete();
+        if (Yii::$app->request->get('productGroupId') == '') {
+            $productGroupId = '';
+        } else {
+            $productGroupId = '&productGroupId=' . Yii::$app->request->get('productGroupId');
+        }
+        //$this->findModel($id)->delete();
 
-        return $this->redirect(['index?BrandId=' . $BrandId . '&CategoryId=' . $CategoryId . '&productGroupId=' . $productGroupId]);
+        return $this->redirect(['index?BrandId=' . $BrandId . '&CategoryId=' . $CategoryId . $productGroupId]);
     }
 
     /**
