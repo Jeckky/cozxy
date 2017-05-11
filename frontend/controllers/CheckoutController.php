@@ -24,13 +24,11 @@ use common\models\costfit\PointUsed;
 /**
  * Checkout controller
  */
-class CheckoutController extends MasterController
-{
+class CheckoutController extends MasterController {
 
     public $enableCsrfValidation = false;
 
-    public function beforeAction($action)
-    {
+    public function beforeAction($action) {
         if ($action->id == 'confirmation' || $action->id == 'confirm-checkout' || $action->id == 'edit-checkout') {
             $this->enableCsrfValidation = FALSE;
         }
@@ -45,8 +43,7 @@ class CheckoutController extends MasterController
       - SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         //echo 'params :' . $this->params['cart']['orderId'] . '::' . $this->params['cart']['items'];
 
         if (Yii::$app->user->isGuest == 1) {
@@ -71,8 +68,8 @@ class CheckoutController extends MasterController
             if (isset($_POST['Address'])) {
                 //print_r($_POST['Address']);
                 $address = \common\models\costfit\Address::find()
-                ->where('userId =' . \Yii::$app->user->id . ' and addressId=' . $addressId . ' and  type = 1')
-                ->one();
+                        ->where('userId =' . \Yii::$app->user->id . ' and addressId=' . $addressId . ' and  type = 1')
+                        ->one();
 
                 $address->attributes = $_POST['Address'];
                 $address->countryId = (isset($_POST['Address']['countryId']) ? $_POST['Address']['countryId'] : '');
@@ -88,20 +85,20 @@ class CheckoutController extends MasterController
             //echo 'no hidden ';
             if (\Yii::$app->user->isGuest) {
                 $address_shipping = \common\models\costfit\Address::find()->where('userId=' . 0 . ' and type = 2  ')
-                ->orderBy('isDefault desc ')
-                ->all();
+                        ->orderBy('isDefault desc ')
+                        ->all();
 
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . 0 . ' and type = 1  ')
-                ->orderBy('isDefault desc  ')
-                ->all();
+                        ->orderBy('isDefault desc  ')
+                        ->all();
             } else {
                 $address_shipping = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 2  ')
-                ->orderBy('isDefault desc ')
-                ->all();
+                        ->orderBy('isDefault desc ')
+                        ->all();
 
                 $address_billing = \common\models\costfit\Address::find()->where('userId=' . \Yii::$app->user->id . ' and type = 1  ')
-                ->orderBy('isDefault desc  ')
-                ->all();
+                        ->orderBy('isDefault desc  ')
+                        ->all();
                 //$address_billing['scenario'] = 'shipping_address';
             }
 
@@ -353,8 +350,7 @@ class CheckoutController extends MasterController
         }
     }
 
-    public function actionOrderThank()
-    {
+    public function actionOrderThank() {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         }
@@ -364,8 +360,7 @@ class CheckoutController extends MasterController
         return $this->render('order_thank');
     }
 
-    public function actionBurnCheckouts()
-    {
+    public function actionBurnCheckouts() {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         }
@@ -414,8 +409,8 @@ class CheckoutController extends MasterController
 
             if (isset($billing)) {
                 $address_billing = \common\models\costfit\Address::find()->where('userId = ' . $placeUserId . ' and addressId = ' . $billing)
-                ->orderBy('addressId desc')
-                ->one();
+                        ->orderBy('addressId desc')
+                        ->one();
                 //$address_shipping = \common\models\costfit\Address::find()->where('userId = ' . $placeUserId . ' and addressId = ' . $shipping)
                 // ->orderBy('addressId desc')
                 // ->one();
@@ -424,8 +419,8 @@ class CheckoutController extends MasterController
                 //->orderBy('addressId desc')
                 //->one();
                 $address_billing = \common\models\costfit\Address::find()->where('userId = ' . $placeUserId . ' and addressId = ' . $shipping)
-                ->orderBy('addressId desc')
-                ->one();
+                        ->orderBy('addressId desc')
+                        ->one();
             }
             $order = \common\models\costfit\Order::find()->where('userId = ' . $placeUserId . ' and orderId = ' . $placeOrderId)->one();
             //check ก่อนว่า มี ITEMS ครบตามจำนวนที่ต้องการหรือไม่ ถ้า ไม่ครบให้บอกจำนวนที่เหลือ พร้อมถามว่าต้องการหรือป่าว ถ้าต้องการเปลี่ยนในตารางorderItemแล้วคำนวณราคาใหม่
@@ -513,22 +508,20 @@ class CheckoutController extends MasterController
         }
     }
 
-    public function actionGetAddress()
-    {
+    public function actionGetAddress() {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl . 'register/login');
         }
         $addressId = Yii::$app->request->post('address');
         $address = \common\models\costfit\Address::find()->where('addressId = ' . $addressId)
-        ->orderBy('isDefault desc, updateDateTime desc')
-        ->one();
+                ->orderBy('isDefault desc, updateDateTime desc')
+                ->one();
         //echo '<pre>';
         //print_r($address->attributes);
         echo json_encode($address->attributes);
     }
 
-    public function actionConfirmCheckout($hash)
-    {
+    public function actionConfirmCheckout($hash) {
         $k = base64_decode(base64_decode($hash));
         $params = ModelMaster::decodeParams($hash);
         $orderId = $params['orderId'];
@@ -543,13 +536,12 @@ class CheckoutController extends MasterController
             //$ms = 'จำนวน Point ของคุณไม่พอ กรุณาเติม Point อีก';
             $ms = 'Please top-up your current balance to continue to checkout.';
             return $this->redirect([Yii::$app->homeUrl . 'top-up',
-                'ms' => $ms,
-                'needMore' => $needMore]);
+                        'ms' => $ms,
+                        'needMore' => $needMore]);
         }
     }
 
-    public function actionEditCheckout($hash)
-    {
+    public function actionEditCheckout($hash) {
         $k = base64_decode(base64_decode($hash));
         $params = ModelMaster::decodeParams($hash);
         $orderId = $params['orderId'];
@@ -594,8 +586,7 @@ class CheckoutController extends MasterController
         }
     }
 
-    public function actionEditCart($id)
-    {
+    public function actionEditCart($id) {
         // throw new \yii\base\Exception($id);
         $res = [];
         $order = \common\models\costfit\Order::getOrder();
@@ -669,8 +660,7 @@ class CheckoutController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionConfirmation($hash)
-    {
+    public function actionConfirmation($hash) {
 
         $k = base64_decode(base64_decode($hash));
         $params = ModelMaster::decodeParams($hash);
@@ -823,7 +813,7 @@ class CheckoutController extends MasterController
             //Order::saveOrderPaymentHistory($order, $_REQUEST["decision"], $_POST["reason_code"], 1);
             //end sak pay with points
         } else {//ถ้ามี point ไม่พอให้กลับไปเติม//
-            $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+            // $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
             if (isset($userPoint)) {
                 $currentPoint = $userPoint->currentPoint;
@@ -833,15 +823,14 @@ class CheckoutController extends MasterController
             $needMore = $model->summary - $currentPoint;
             //$ms = 'จำนวน Point ของคุณไม่พอ กรุณาเติม Point อีก';
             $ms = 'Please top-up your current balance to continue to checkout.';
-            return $this->redirect([$baseUrl . '/top-up',
-                'ms' => $ms,
-                'needMore' => $needMore
+            return $this->redirect([Yii::$app->homeUrl . 'top-up',
+                        'ms' => $ms,
+                        'needMore' => $needMore
             ]);
         }
     }
 
-    public function actionResult()
-    {
+    public function actionResult() {
         throw new \yii\base\Exception(print_r($_REQUEST, true));
         $this->title = 'Cozxy.com | Order Thank';
         $this->subTitle = 'Home';
@@ -987,8 +976,7 @@ class CheckoutController extends MasterController
         return $this->render('payment_result', compact('res'));
     }
 
-    public function actionChangeQuantityItem()
-    {
+    public function actionChangeQuantityItem() {
         $res = [];
         $product = new \common\models\costfit\Product();
         $price = $product->calProductPrice($_POST["productId"], $_POST["quantity"], 1, NULL, NULL);
@@ -1012,8 +1000,7 @@ class CheckoutController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionReverseOrderToCart($hash)
-    {
+    public function actionReverseOrderToCart($hash) {
         $params = \common\models\ModelMaster::decodeParams($hash);
         $orderId = $params['orderId'];
         $order = Order::find()->where("orderId=" . $orderId)->one();
@@ -1038,8 +1025,7 @@ class CheckoutController extends MasterController
         return $this->redirect(['/cart']);
     }
 
-    public function updateSupplierStock($order)
-    {
+    public function updateSupplierStock($order) {
         //foreach ($order as $orderId):
         // throw new \yii\base\Exception($orderId->orderId);
         $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $order->orderId)->all();
@@ -1062,8 +1048,7 @@ class CheckoutController extends MasterController
         //endforeach;
     }
 
-    public function returnSupplierStock($order)
-    {
+    public function returnSupplierStock($order) {
         foreach ($order as $orderId):
             $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId->orderId)->all();
             foreach ($orderItems as $orderItem):
@@ -1075,8 +1060,7 @@ class CheckoutController extends MasterController
         endforeach;
     }
 
-    function actionMapImages()
-    {
+    function actionMapImages() {
         //echo 'test map images';
         $pickingId = Yii::$app->request->post('pickingIds');
         //$pickingId = 1;
@@ -1091,8 +1075,7 @@ class CheckoutController extends MasterController
         }
     }
 
-    public function checkEnoughtPoint($userId, $summary)
-    {
+    public function checkEnoughtPoint($userId, $summary) {
         $currentPoint = UserPoint::find()->where("userId=" . $userId)->one();
         if (isset($currentPoint) && !empty($currentPoint)) {
             if ($currentPoint->currentPoint >= $summary) {
@@ -1105,8 +1088,7 @@ class CheckoutController extends MasterController
         }
     }
 
-    public function updateUserPoint($userId, $point, $orderId)
-    {
+    public function updateUserPoint($userId, $point, $orderId) {
         $userPoint = UserPoint::find()->where("userId=" . $userId)->one();
         $userPoint->currentPoint = $userPoint->currentPoint - $point;
         $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
@@ -1121,8 +1103,7 @@ class CheckoutController extends MasterController
         $used->save(false);
     }
 
-    public function actionSendPayment()
-    {
+    public function actionSendPayment() {
         $isMcc = TRUE;
 //        $model = \common\models\areawow\UserPayment::find()->where("userPaymentId=" . $_GET["id"])->one();
 //        $package = \common\models\areawow\Package::find()->where("packageId = $model->packageId")->one();

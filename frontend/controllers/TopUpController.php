@@ -20,14 +20,12 @@ use kartik\mpdf\Pdf;
 /**
  * TopUpController implements the CRUD actions for TopUp model.
  */
-class TopUpController extends MasterController
-{
+class TopUpController extends MasterController {
 
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -38,8 +36,7 @@ class TopUpController extends MasterController
         ];
     }
 
-    public function beforeAction($action)
-    {
+    public function beforeAction($action) {
         if ($action->id == 'result') {
             $this->enableCsrfValidation = false;
         }
@@ -51,8 +48,7 @@ class TopUpController extends MasterController
      * Lists all TopUp models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
@@ -113,9 +109,9 @@ class TopUpController extends MasterController
             $topUpDraf->save(false);
 
             return $this->render('amount', [
-                'data' => $data,
-                'fromCheckout' => $fromCheckout,
-                'needMore' => $needMore
+                        'data' => $data,
+                        'fromCheckout' => $fromCheckout,
+                        'needMore' => $needMore
             ]);
         }
         $amount = '';
@@ -145,35 +141,34 @@ class TopUpController extends MasterController
                 $topUp->save(false);
                 if ($topUp->paymentMethod == 2) {//Payment Method เป็น การชำระด้วยบัตรเครดิต
                     return $this->redirect(['top-up/send-payment/' . $topUp->encodeParams(['userId' => $user->userId,
-                            'amount' => $amount,
-                            'fromCheckout' => $fromCheckout,
-                            'topUpNo' => $topUp->topUpNo,])
+                                    'amount' => $amount,
+                                    'fromCheckout' => $fromCheckout,
+                                    'topUpNo' => $topUp->topUpNo,])
                     ]);
                 } else if ($topUp->paymentMethod = 1) {//Payment Method เป็นการชำระด้วย Bill payment
                     return $this->redirect(['print-payment-form',
-                        'userId' => $user->userId,
-                        'amount' => $amount,
-                        'fromCheckout' => $fromCheckout
+                                'userId' => $user->userId,
+                                'amount' => $amount,
+                                'fromCheckout' => $fromCheckout
                     ]);
                 }
             } else {
                 return $this->render('index', [
-                    'data' => $data,
-                    'paymentMethod' => $paymentMethod
+                            'data' => $data,
+                            'paymentMethod' => $paymentMethod
                 ]);
             }
         } else {
             return $this->render('index', [
-                'data' => $data,
-                'paymentMethod' => $paymentMethod,
-                'ms' => $msg,
-                'needMore' => $needMore
+                        'data' => $data,
+                        'paymentMethod' => $paymentMethod,
+                        'ms' => $msg,
+                        'needMore' => $needMore
             ]);
         }
     }
 
-    public function actionGen()
-    {
+    public function actionGen() {
         /* $productSupp = \common\models\costfit\ProductSuppliers::find()->where("1")->one();
           $code = \common\helpers\Product::generateProductCode();
           for ($i = 0; $i < 10000000; $i++):
@@ -187,8 +182,7 @@ class TopUpController extends MasterController
           } */
     }
 
-    public function actionSendPayment($hash)
-    {
+    public function actionSendPayment($hash) {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
         $userId = $params["userId"];
@@ -265,14 +259,13 @@ class TopUpController extends MasterController
         return $this->render("@app/views/e_payment/_k_payment", compact('sendUrl', 'merchantId', 'terminalId', 'checksum', 'amount', 'invoiceNo', 'description', 'url', 'resUrl', 'cusIp', 'fillSpace'));
     }
 
-    public function actionPrintPaymentForm($userId, $amount, $fromCheckout)
-    {
+    public function actionPrintPaymentForm($userId, $amount, $fromCheckout) {
         $customerName = \common\models\costfit\Address::userName($userId);
         $customerTel = \common\models\costfit\Address::userTel($userId);
         $taxId = '0105553036789';
         $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)
-        ->orderBy('updateDateTime DESC')
-        ->one(); //status=2
+                ->orderBy('updateDateTime DESC')
+                ->one(); //status=2
         $allBank = \common\models\costfit\BankTransfer::find()->where("paymentMethodId=1")->all();
 //        if (($topUp->topUpNo == NULL) && ($topUp->topUpNo == '')) {
 //            $topUp->topUpNo = $this->topUpNo();
@@ -299,19 +292,18 @@ class TopUpController extends MasterController
             $topUpEmail = \common\helpers\Email::topUpBillpayment($Subject, $username, $toMail, $url, $point, $money, $paymentMethod, $bank);
         }
         return $this->render('billpayment', [
-            'amount' => $amount,
-            'customerName' => $customerName,
-            'customerTel' => $customerTel,
-            'topUpNo' => $topUp->topUpNo,
-            'taxId' => $taxId,
-            'barCode' => $barCode,
-            'data' => $data,
-            'allBank' => $allBank
+                    'amount' => $amount,
+                    'customerName' => $customerName,
+                    'customerTel' => $customerTel,
+                    'topUpNo' => $topUp->topUpNo,
+                    'taxId' => $taxId,
+                    'barCode' => $barCode,
+                    'data' => $data,
+                    'allBank' => $allBank
         ]);
     }
 
-    public function actionPrintPaymentFormTopdf()
-    {
+    public function actionPrintPaymentFormTopdf() {
         $header = FALSE;
         //$header = $this->renderPartial('header');
         $allBank = \common\models\costfit\BankTransfer::find()->where("paymentMethodId=1")->all();
@@ -329,8 +321,7 @@ class TopUpController extends MasterController
         $this->actionMpdfDocument($content, $header, $title);
     }
 
-    public function actionResult()
-    {
+    public function actionResult() {
         $currentPoint = 0;
         if (isset($_POST["HOSTRESP"]) == "00") {
             $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=2")->one();
@@ -380,11 +371,11 @@ class TopUpController extends MasterController
 
                 //
                 return $this->render('thank', [
-                    'topUpId' => $topUp->topUpId,
-                    'currentPoint' => $currentPoint,
-                    'type' => $type,
-                    'fromCheckout' => ($topUp->isFromCheckout == 1) ? "yes" : "no",
-                    'order' => $order
+                            'topUpId' => $topUp->topUpId,
+                            'currentPoint' => $currentPoint,
+                            'type' => $type,
+                            'fromCheckout' => ($topUp->isFromCheckout == 1) ? "yes" : "no",
+                            'order' => $order
                 ]);
             } else {
                 return $this->redirect(Yii::$app->homeUrl . 'top-up');
@@ -397,8 +388,8 @@ class TopUpController extends MasterController
                 $topUp->save(false);
                 $type = 'fail';
                 return $this->render('thank', [
-                    'type' => $type,
-                    'fromCheckout' => 'no'
+                            'type' => $type,
+                            'fromCheckout' => 'no'
                 ]);
             }
         }
@@ -428,8 +419,7 @@ class TopUpController extends MasterController
       ]);
       } */
 
-    public function topUpNo()
-    {
+    public function topUpNo() {
         $y = date('Y');
         $m = date('m');
         $y = substr($y, 2, 2);
@@ -445,15 +435,13 @@ class TopUpController extends MasterController
         return $topUpNo;
     }
 
-    public function actionRandomPass()
-    {
+    public function actionRandomPass() {
         $res = [];
         $res["pass"] = rand('000000', '999999');
         return json_encode($res);
     }
 
-    public function actionBillpay()
-    {
+    public function actionBillpay() {
 
         $k = base64_decode(base64_decode($_GET["epay"]));
         $topUpId = \common\models\ModelMaster::decodeParams($_GET["epay"]);
@@ -490,8 +478,7 @@ class TopUpController extends MasterController
         CozxyUnity::actionMpdfDocument($content, $header, $title);
     }
 
-    public function changDateFormat($subDate)
-    {
+    public function changDateFormat($subDate) {
         $d = substr($subDate, 8, 2);
         $m = substr($subDate, 5, 2);
         $y = substr($subDate, 0, 4);
@@ -504,10 +491,9 @@ class TopUpController extends MasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -516,15 +502,14 @@ class TopUpController extends MasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new TopUp();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->topUpId]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -535,21 +520,19 @@ class TopUpController extends MasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->topUpId]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
 
-    public function actionHistory()
-    {
+    public function actionHistory() {
         $model = TopUp::find()->where("status >1 and userId=" . Yii::$app->user->id)->orderBy('updateDateTime DESC');
         $topUps = TopUp::find()->where("status >1 and userId=" . Yii::$app->user->id)->orderBy('updateDateTime DESC')->all();
         $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
@@ -581,18 +564,18 @@ class TopUpController extends MasterController
                 //   }
 
                 return $this->render('history', [
-                    'model' => $model,
-                    'dataProvider' => $dataProvider,
-                    'topUps' => $topUps,
-                    'currentPoint' => $currentPoint
+                            'model' => $model,
+                            'dataProvider' => $dataProvider,
+                            'topUps' => $topUps,
+                            'currentPoint' => $currentPoint
                 ]);
             }
         } else {
             return $this->render('history', [
-                'model' => $model,
-                'dataProvider' => $dataProvider,
-                'topUps' => $topUps,
-                'currentPoint' => $currentPoint
+                        'model' => $model,
+                        'dataProvider' => $dataProvider,
+                        'topUps' => $topUps,
+                        'currentPoint' => $currentPoint
             ]);
         }
     }
@@ -603,8 +586,7 @@ class TopUpController extends MasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -617,8 +599,7 @@ class TopUpController extends MasterController
      * @return TopUp the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = TopUp::findOne($id)) !== null) {
             return $model;
         } else {
@@ -626,8 +607,7 @@ class TopUpController extends MasterController
         }
     }
 
-    public static function GetMpdfDocument($content, $setHeader = FALSE, $setFooter = FALSE, $marginTop = FALSE)
-    {
+    public static function GetMpdfDocument($content, $setHeader = FALSE, $setFooter = FALSE, $marginTop = FALSE) {
         //$orderId = Yii::$app->request->get('OrderNo');
         // $orderId = $params['orderId'];
         // get your HTML raw content without any layouts or scripts
@@ -676,8 +656,7 @@ class TopUpController extends MasterController
      * By Taninut.Bm
      * email : taninut.bm@cozxy.com , sodapew17@gmail.com
      */
-    public static function actionMpdfDocument($content, $header, $title)
-    {
+    public static function actionMpdfDocument($content, $header, $title) {
 
         $pdf = new Pdf([
             // set to use core fonts only
