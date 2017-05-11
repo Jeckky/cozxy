@@ -73,6 +73,7 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                   //$( "#suborders-product_price" ).val( data );
                     if(data == 1){
                         $("#user-newpassword").prop("disabled", false);
+                        $("#user-newpassword").focus();
                         $("#user-repassword").prop("disabled", false);
                         $("#suborders-product_price").html("").css("color", "#a94442");
                     }else{
