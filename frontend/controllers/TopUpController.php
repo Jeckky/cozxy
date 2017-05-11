@@ -198,19 +198,21 @@ class TopUpController extends MasterController
         $isMcc = TRUE;
 //        $model = \common\models\areawow\UserPayment::find()->where("userPaymentId=" . $_GET["id"])->one();
 //        $package = \common\models\areawow\Package::find()->where("packageId = $model->packageId")->one();
-        //URL Test
-        $sendUrl = "https://uatkpgw.kasikornbank.com/pgpayment/payment.aspx";
-        //URL Test
-        //
-        //Production URL
-//        $sendUrl = "https://rt05.kasikornbank.com/pgpayment/payment.aspx";
-        ////Production URL
-        //
-        //
+        if (Yii::$app->params["ePaymentServerType"] == 1) {
+            //URL Test
+            $sendUrl = "https://uatkpgw.kasikornbank.com/pgpayment/payment.aspx";
+            //URL Test
+        } else {
+            //Production URL
+            $sendUrl = "https://rt05.kasikornbank.com/pgpayment/payment.aspx";
+            ////Production URL
+            //
         //Mobile URL
 //        $sendUrl = "https://rt05.kasikornbank.com/mobilepay/payment.aspx";
-        ////Mobile URL
+            ////Mobile URL
         //
+        }
+
 
         // Standard Thai Bath
         if (!$isMcc):
@@ -223,14 +225,19 @@ class TopUpController extends MasterController
         else:
             //
             // MCC USD
-            //For Cozxy
-//            $merchantId = "451005319527001";
-//            $terminalId = "74428381";
-            //For Cozxy
-            // For AreaWIW
-            $merchantId = "402001605782521";
-            $terminalId = "70352180";
-        // For AreaWIW
+
+
+            if (Yii::$app->params["ePaymentServerType"] == 1) {
+                // For Test
+                $merchantId = "402001605782521";
+                $terminalId = "70352180";
+                // For Test
+            } else {
+                //For Cozxy
+                $merchantId = "451005319527001";
+                $terminalId = "74428381";
+                //For Cozxy
+            }
         // MCC USD
         endif;
 //        throw new \yii\base\Exception(str_replace(".", "", $package->price));
