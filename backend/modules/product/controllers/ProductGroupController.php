@@ -72,7 +72,7 @@ class ProductGroupController extends ProductMasterController {
         $model = new ProductGroup();
         $ms = '';
         if (isset($_POST["ProductGroup"])) {
-            $productGroup = ProductGroup::find()->where("title='" . $_POST["ProductGroup"]["title"] . "'")->one();
+            $productGroup = ProductGroup::find()->where("title='" . $_POST["ProductGroup"]["title"] . "' and status=1")->one();
             if (!isset($productGroup)) {
                 $model->userId = Yii::$app->user->identity->userId;
                 $model->title = $_POST["ProductGroup"]["title"];
