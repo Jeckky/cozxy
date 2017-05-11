@@ -324,7 +324,9 @@ class TopUpController extends MasterController {
     public function actionResult() {
         $currentPoint = 0;
         if (isset($_POST["HOSTRESP"]) == "00") {
-            $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=2")->one();
+//            throw new \yii\base\Exception(substr($_POST["RETURNINV"], 3));
+            $topUpNo = substr($_POST["RETURNINV"], 3);
+            $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " AND topUpNo = '" . $topUpNo . "'" . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=2")->one();
             if (isset($topUp) && count($topUp) > 0) {
                 $topUp->status = TopUp::TOPUP_STATUS_E_PAYMENT_SUCCESS;
                 $topUp->updateDateTime = new \yii\db\Expression('NOW()');
@@ -453,6 +455,7 @@ class TopUpController extends MasterController {
         $header = $this->renderPartial('header', ['logo' => $image]);
         $title = FALSE;
         $topUp = TopUp::find()->where("topUpId=" . $topUpId)->one();
+
         if (isset($topUp)) {
             $customerName = \common\models\costfit\Address::userName($topUp->userId);
             $address = User::userAddressText(User::supplierDetail($topUp->userId)->addressId, false);
