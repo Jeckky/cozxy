@@ -8,7 +8,7 @@ use \common\models\costfit\master\ZipcodesMaster;
 /**
 * This is the model class for table "zipcodes".
 *
-    * @property integer $zipCodeId
+    * @property string $zipcodeId
     * @property string $districtCode
     * @property string $zipcode
 */

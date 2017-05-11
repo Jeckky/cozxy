@@ -51,7 +51,7 @@ return 'import_product';
 public function rules()
 {
 return [
-            [['productId', 'title', 'createDateTime', 'approvecreateDateTime'], 'required'],
+            [['productId', 'title', 'createDateTime'], 'required'],
             [['productId', 'userId', 'productGroupId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'productSuppId', 'approveCreateBy'], 'integer'],
             [['isbn', 'shortDescription', 'description', 'specification'], 'string'],
             [['width', 'height', 'depth', 'weight', 'price'], 'number'],

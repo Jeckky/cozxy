@@ -8,7 +8,6 @@ use Yii;
 * This is the model class for table "upload".
 *
     * @property string $uploadId
-    * @property string $userId
     * @property string $name
     * @property integer $status
     * @property string $createDateTime
@@ -30,8 +29,8 @@ return 'upload';
 public function rules()
 {
 return [
-            [['userId', 'createDateTime'], 'required'],
-            [['userId', 'status'], 'integer'],
+            [['status'], 'integer'],
+            [['createDateTime'], 'required'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['name'], 'string', 'max' => 225],
         ];
@@ -44,7 +43,6 @@ public function attributeLabels()
 {
 return [
     'uploadId' => Yii::t('upload', 'Upload ID'),
-    'userId' => Yii::t('upload', 'User ID'),
     'name' => Yii::t('upload', 'Name'),
     'status' => Yii::t('upload', 'Status'),
     'createDateTime' => Yii::t('upload', 'Create Date Time'),

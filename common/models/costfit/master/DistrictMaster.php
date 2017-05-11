@@ -8,15 +8,16 @@ use Yii;
 * This is the model class for table "district".
 *
     * @property string $districtId
-    * @property string $districtCode
+    * @property string $code
     * @property string $districtName
-    * @property integer $amphurId
-    * @property integer $provinceId
-    * @property integer $geographyId
-    *
-            * @property OrderGroup[] $orderGroups
-            * @property Supplier[] $suppliers
-    */
+    * @property string $localName
+    * @property integer $cityId
+    * @property string $stateId
+    * @property string $geographyId
+    * @property string $countryId
+    * @property double $latitude
+    * @property double $longitude
+*/
 class DistrictMaster extends \common\models\ModelMaster
 {
 /**
@@ -27,16 +28,28 @@ public static function tableName()
 return 'district';
 }
 
+    /**
+    * @return \yii\db\Connection the database connection used by this AR class.
+    */
+    public static function getDb()
+    {
+    return Yii::$app->get('dbWorld');
+    }
+
 /**
 * @inheritdoc
 */
 public function rules()
 {
 return [
-            [['districtCode', 'districtName'], 'required'],
-            [['amphurId', 'provinceId', 'geographyId'], 'integer'],
-            [['districtCode'], 'string', 'max' => 6],
-            [['districtName'], 'string', 'max' => 150],
+            [['districtId', 'cityId'], 'required'],
+            [['districtId', 'cityId', 'stateId', 'geographyId'], 'integer'],
+            [['latitude', 'longitude'], 'number'],
+            [['code'], 'string', 'max' => 45],
+            [['districtName'], 'string', 'max' => 50],
+            [['localName'], 'string', 'max' => 100],
+            [['countryId'], 'string', 'max' => 3],
+            [['districtId'], 'unique'],
         ];
 }
 
@@ -47,27 +60,15 @@ public function attributeLabels()
 {
 return [
     'districtId' => Yii::t('district', 'District ID'),
-    'districtCode' => Yii::t('district', 'District Code'),
+    'code' => Yii::t('district', 'Code'),
     'districtName' => Yii::t('district', 'District Name'),
-    'amphurId' => Yii::t('district', 'Amphur ID'),
-    'provinceId' => Yii::t('district', 'Province ID'),
+    'localName' => Yii::t('district', 'Local Name'),
+    'cityId' => Yii::t('district', 'City ID'),
+    'stateId' => Yii::t('district', 'State ID'),
     'geographyId' => Yii::t('district', 'Geography ID'),
+    'countryId' => Yii::t('district', 'Country ID'),
+    'latitude' => Yii::t('district', 'Latitude'),
+    'longitude' => Yii::t('district', 'Longitude'),
 ];
 }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getOrderGroups()
-    {
-    return $this->hasMany(OrderGroupMaster::className(), ['shippingDistrictId' => 'districtId']);
-    }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getSuppliers()
-    {
-    return $this->hasMany(SupplierMaster::className(), ['districtId' => 'districtId']);
-    }
 }

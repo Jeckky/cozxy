@@ -14,7 +14,7 @@ class GenerateModelController extends \yii\web\Controller {
         //Uncomment For Generate Cozxy DB
         //
         //Uncomment For Generate DBWorld
-        $dbName = "dbWorld"; // Change Other For Generate Model Of Other DB World
+        //$dbName = "dbWorld"; // Change Other For Generate Model Of Other DB World
         //$folderName = 'dbworld'; // folder for dbWorld
         //Uncomment For Generate DBWorld
         //

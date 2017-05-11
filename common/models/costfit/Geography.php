@@ -8,8 +8,9 @@ use \common\models\costfit\master\GeographyMaster;
 /**
 * This is the model class for table "geography".
 *
-    * @property integer $geographyId
-    * @property string $geographyName
+    * @property string $geographyId
+    * @property string $name
+    * @property string $nameEn
 */
 
 class Geography extends \common\models\costfit\master\GeographyMaster{

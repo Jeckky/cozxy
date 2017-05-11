@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "zipcodes".
 *
-    * @property integer $zipCodeId
+    * @property string $zipcodeId
     * @property string $districtCode
     * @property string $zipcode
 */
@@ -21,6 +21,14 @@ public static function tableName()
 return 'zipcodes';
 }
 
+    /**
+    * @return \yii\db\Connection the database connection used by this AR class.
+    */
+    public static function getDb()
+    {
+    return Yii::$app->get('dbWorld');
+    }
+
 /**
 * @inheritdoc
 */
@@ -28,8 +36,7 @@ public function rules()
 {
 return [
             [['districtCode', 'zipcode'], 'required'],
-            [['districtCode'], 'string', 'max' => 6],
-            [['zipcode'], 'string', 'max' => 5],
+            [['districtCode', 'zipcode'], 'string', 'max' => 20],
         ];
 }
 
@@ -39,7 +46,7 @@ return [
 public function attributeLabels()
 {
 return [
-    'zipCodeId' => Yii::t('zipcodes', 'Zip Code ID'),
+    'zipcodeId' => Yii::t('zipcodes', 'Zipcode ID'),
     'districtCode' => Yii::t('zipcodes', 'District Code'),
     'zipcode' => Yii::t('zipcodes', 'Zipcode'),
 ];

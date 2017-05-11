@@ -7,8 +7,9 @@ use Yii;
 /**
 * This is the model class for table "geography".
 *
-    * @property integer $geographyId
-    * @property string $geographyName
+    * @property string $geographyId
+    * @property string $name
+    * @property string $nameEn
 */
 class GeographyMaster extends \common\models\ModelMaster
 {
@@ -20,14 +21,21 @@ public static function tableName()
 return 'geography';
 }
 
+    /**
+    * @return \yii\db\Connection the database connection used by this AR class.
+    */
+    public static function getDb()
+    {
+    return Yii::$app->get('dbWorld');
+    }
+
 /**
 * @inheritdoc
 */
 public function rules()
 {
 return [
-            [['geographyName'], 'required'],
-            [['geographyName'], 'string', 'max' => 255],
+            [['name', 'nameEn'], 'string', 'max' => 200],
         ];
 }
 
@@ -38,7 +46,8 @@ public function attributeLabels()
 {
 return [
     'geographyId' => Yii::t('geography', 'Geography ID'),
-    'geographyName' => Yii::t('geography', 'Geography Name'),
+    'name' => Yii::t('geography', 'Name'),
+    'nameEn' => Yii::t('geography', 'Name En'),
 ];
 }
 }

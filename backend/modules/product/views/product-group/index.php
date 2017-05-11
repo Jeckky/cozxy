@@ -50,8 +50,11 @@ $this->params['pageHeader'] = Html::encode($this->title);
 //                    'productGroupId',
                     'title',
                     'description:ntext',
-                    'status',
-                    'createDateTime',
+                        ['attribute' => 'Create Date Time',
+                        'value' => function ($model) {
+                            return $this->context->dateThai($model->createDateTime, 1);
+                        }
+                    ],
                     // 'updateDateTime',
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',

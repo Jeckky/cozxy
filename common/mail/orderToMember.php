@@ -93,7 +93,7 @@
                         } else {
                             echo $billingCompany . ' Tax : ' . $billingTax . '<br>';
                         }
-                        echo $billingAddress . ' ' . $billingDistrictId . ' ' . $billingAmphurId . '  ' . $billingProvinceId . '  ' . $billingCountryId . '  ' . $billingZipcode;
+                        echo $billingAddress . ', ' . $billingDistrictId . ' ,' . $billingAmphurId . ' , ' . $billingProvinceId . ' , ' . $billingCountryId . ' , ' . $billingZipcode;
                         ?> <br>
                         Tel: <?php echo $billingTel; ?>
                     </p>
@@ -145,7 +145,7 @@
                                             $i = 0;
                                             if (count($order) > 0) {
                                                 $listOrderItems = common\models\costfit\OrderItem::find()
-                                                                ->select('orderId,productSuppId,supplierId,receiveType')->where('orderId=' . $order->orderId)->groupBy('supplierId')->all();
+                                                ->select('orderId,productSuppId,supplierId,receiveType')->where('orderId=' . $order->orderId)->groupBy('supplierId')->all();
                                                 foreach ($listOrderItems as $value1) {
                                                     /*
                                                      * # แยก Suppliers ไม่ซ้ำกัน

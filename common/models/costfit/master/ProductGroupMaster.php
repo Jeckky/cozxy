@@ -31,8 +31,8 @@ return 'product_group';
 public function rules()
 {
 return [
-            [['productGroupId', 'userId', 'title', 'createDateTime'], 'required'],
-            [['productGroupId', 'userId', 'status'], 'integer'],
+            [['userId', 'title', 'createDateTime'], 'required'],
+            [['userId', 'status'], 'integer'],
             [['description'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 200],

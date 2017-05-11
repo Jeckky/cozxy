@@ -31,7 +31,7 @@ return 'user_visit';
 public function rules()
 {
 return [
-            [['userId', 'createDateTime', 'lastvisitDate'], 'required'],
+            [['userId', 'createDateTime'], 'required'],
             [['userId', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime', 'lastvisitDate'], 'safe'],
             [['device'], 'string', 'max' => 45],
