@@ -5,16 +5,18 @@ namespace backend\controllers;
 use Yii;
 use common\gii\templates\model\Generator;
 
-class GenerateModelController extends \yii\web\Controller {
+class GenerateModelController extends \yii\web\Controller
+{
 
-    public function actionIndex() {
+    public function actionIndex()
+    {
         //Uncomment For Generate Cozxy DB
         $dbName = "db"; // Change Other For Generate Model Of Other DB
         $folderName = 'costfit';
         //Uncomment For Generate Cozxy DB
         //
         //Uncomment For Generate DBWorld
-        $dbName = "dbWorld"; // Change Other For Generate Model Of Other DB World
+//        $dbName = "dbWorld"; // Change Other For Generate Model Of Other DB World
         //$folderName = 'dbworld'; // folder for dbWorld
         //Uncomment For Generate DBWorld
         //

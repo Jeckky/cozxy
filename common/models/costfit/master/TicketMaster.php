@@ -8,8 +8,8 @@ use Yii;
 * This is the model class for table "ticket".
 *
     * @property string $ticketId
-    * @property string $orderId
-    * @property string $userId
+    * @property integer $orderId
+    * @property integer $userId
     * @property string $title
     * @property string $description
     * @property string $ticketNo

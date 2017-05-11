@@ -11,7 +11,7 @@ use Yii;
     * @property string $title
     * @property string $description
     * @property string $image
-    * @property string $parentId
+    * @property integer $parentId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime

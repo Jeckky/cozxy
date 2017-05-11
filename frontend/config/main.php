@@ -70,6 +70,7 @@ return [
                 'checkout/confirm-checkout/<hash>' => 'checkout/confirm-checkout',
 //                'checkout/edit-checkout/<hash>' => 'checkout/edit-checkout',
                 'checkout/confirmation/<hash>' => 'checkout/confirmation',
+                'top-up/send-payment/<hash>' => 'top-up/send-payment',
 //                'checkout/reverse-order-to-cart/<hash>' => 'checkout/reverse-order-to-cart',
 //                'profile/picking-point/<hash>' => 'profile/picking-point',
 //mobile
