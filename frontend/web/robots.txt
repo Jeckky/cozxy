@@ -1,3 +1,3 @@
 User-agent: *
 Disallow:
-Sitemap: http://www.costfit.com/sitemap.xml
+Sitemap: http://www.cozxy.com/sitemap.xml
