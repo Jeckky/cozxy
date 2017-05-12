@@ -260,7 +260,7 @@ class CartController extends MasterController {
         } else {
             $res["status"] = FALSE;
             $res['errorCode'] = 1;
-            $res["message"] = "Exits product in Wishlist";
+            $res["message"] = "This item is already in your Wishlist";
         }
         return \yii\helpers\Json::encode($res);
     }
