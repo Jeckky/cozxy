@@ -175,21 +175,21 @@ use leandrogehlen\treegrid\TreeGrid;
                     </div> <!-- / .panel -->
                 </div>
                 <div class="col-md-3">
-
+                    <!--
                     <div class="panel panel-default panel-dark panel-body-colorful widget-profile widget-profile-centered">
                         <div class="panel-heading">
                             <div class="widget-profile-header">
                                 <a href="<?php echo Yii::$app->homeUrl; ?>suppliers/average" class="btn" style="color: #000;">
                                     <i class="fa fa-tasks list-group-icon text-danger"></i> จำนวนสินค้าที่ขายได้ของ Suppliers </a><br>
                             </div>
-                        </div> <!-- / .panel-heading -->
+                        </div>
                         <div class="panel-body text-left">
                             <div class="widget-profile-text" style="padding: 0;">
                                 <p class="text-success">อธิบาย</p>
                                 -  ค่าเฉลี่ยการค้า/จำนวนสินค้าที่ขายได้
                             </div>
                         </div>
-                    </div> <!-- / .panel -->
+                    </div>--> <!-- / .panel -->
                 </div>
             </div>
         </div>
