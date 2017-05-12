@@ -24,7 +24,7 @@ class UserController extends UserMasterController {
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
                     // allow authenticated users
-                    [
+                        [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -55,8 +55,8 @@ class UserController extends UserMasterController {
             'query' => $query,
         ]);
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'model' => $model,
+                    'dataProvider' => $dataProvider,
+                    'model' => $model,
         ]);
     }
 
@@ -67,7 +67,7 @@ class UserController extends UserMasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -83,7 +83,7 @@ class UserController extends UserMasterController {
             return $this->redirect(['view', 'id' => $model->userId]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -101,7 +101,7 @@ class UserController extends UserMasterController {
             return $this->redirect(['index', 'id' => $model->userId]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -126,6 +126,25 @@ class UserController extends UserMasterController {
             $model->save(false);
             return $this->redirect(['index']);
         }
+    }
+
+    public function actionConfiguration() {
+        $dataProvider = new ActiveDataProvider([
+            'query' => \common\models\costfit\Configuration::find()->where("1"),
+        ]);
+        return $this->render('config', [
+                    'dataProvider' => $dataProvider
+        ]);
+    }
+
+    public function actionUpdateConfig() {
+        if (isset($_GET["id"])) {
+            $id = $_GET["id"];
+            $configutation = \common\models\costfit\Configuration::find()->where("configurationId=" . $id)->one();
+        }
+        return $this->render('updateConfig', [
+                    'configutation' => isset($configutation) ? $configutation : false
+        ]);
     }
 
     /**
@@ -160,8 +179,8 @@ class UserController extends UserMasterController {
         $user = User::find()->where("userId=" . $userId)->one();
         $model = \common\models\costfit\Order::find()->where("userId=" . $userId . " order by createDateTime DESC")->all();
         return $this->render('order', [
-            'model' => $model,
-            'userName' => $user->firstname . " " . $user->lastname
+                    'model' => $model,
+                    'userName' => $user->firstname . " " . $user->lastname
         ]);
     }
 

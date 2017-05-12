@@ -17,16 +17,16 @@ class Suppliers {
      */
     public function rules() {
         return [
-        //
+                //
         ];
     }
 
     public static function LastAverage($avgNum, $date) {
         $productLastDay = \common\models\costfit\OrderItem::find()
-        ->select('count(`order_item`.`productId`) as conutProduct , sum(`order`.`summary`) as  summaryPrice ,count(`order_item`.`productId`)/1 as avgNum')
-        ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
-        ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId ')
-        ->where('order.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and date(order.createDateTime) >= date_add(curdate(),interval  0 day) ')->one();
+                        ->select('count(`order_item`.`productId`) as conutProduct , sum(`order`.`summary`) as  summaryPrice ,count(`order_item`.`productId`)/1 as avgNum')
+                        ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
+                        ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId ')
+                        ->where('order.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and date(order.createDateTime) >= date_add(curdate(),interval  0 day) ')->one();
         return $productLastDay;
     }
 
@@ -42,19 +42,19 @@ class Suppliers {
             $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $productSuppId)->one();
             $parentsProductId = $rankOne->attributes['productId'];
             $productLastDay = \common\models\costfit\Order::find()
-            ->select(' sum(`order`.`summary`) as summaryPrice, '
-            . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= 5 limit 1) as conutProduct, '
-            . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= 5 limit 1) as avgNum')
-            ->join('LEFT JOIN', 'order_item', '`order_item`.orderId = `order`.orderId')
-            ->join('LEFT JOIN', 'product_suppliers', '`product_suppliers`.productSuppId = `order_item`.productId')
-            ->where('`order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and date(order.createDateTime) >= date_add(curdate(),interval  0 day) '
-            . 'and `product_suppliers`.productId =' . $parentsProductId . ' ')->one();
+                            ->select(' sum(`order`.`summary`) as summaryPrice, '
+                                    . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= 5 limit 1) as conutProduct, '
+                                    . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= 5 limit 1) as avgNum')
+                            ->join('LEFT JOIN', 'order_item', '`order_item`.orderId = `order`.orderId')
+                            ->join('LEFT JOIN', 'product_suppliers', '`product_suppliers`.productSuppId = `order_item`.productId')
+                            ->where('`order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and date(order.createDateTime) >= date_add(curdate(),interval  0 day) '
+                                    . 'and `product_suppliers`.productId =' . $parentsProductId . ' ')->one();
         } else {
             $productLastDay = \common\models\costfit\Order::find()
-            ->select(' sum(`order`.`summary`) as summaryPrice, '
-            . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as conutProduct, '
-            . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
-            ->where('order.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and date(order.createDateTime) >= date_add(curdate(),interval  0 day) ')->one();
+                            ->select(' sum(`order`.`summary`) as summaryPrice, '
+                                    . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as conutProduct, '
+                                    . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
+                            ->where('order.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and date(order.createDateTime) >= date_add(curdate(),interval  0 day) ')->one();
         }
         return $productLastDay;
     }
@@ -72,21 +72,21 @@ class Suppliers {
             $parentsProductId = $rankOne->attributes['productId'];
 
             $productLastWeek = \common\models\costfit\Order::find()
-            ->select(' sum(`order`.`summary`) as summaryPrice, '
-            . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as conutProduct, '
-            . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
-            ->join('LEFT JOIN', 'order_item', '`order_item`.orderId = `order`.orderId')
-            ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
-            ->where('`order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and order.createDateTime BETWEEN (NOW() - INTERVAL 7 DAY) AND NOW() '
-            . 'and product_suppliers.productId =' . $parentsProductId . ' ')->one();
+                            ->select(' sum(`order`.`summary`) as summaryPrice, '
+                                    . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as conutProduct, '
+                                    . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
+                            ->join('LEFT JOIN', 'order_item', '`order_item`.orderId = `order`.orderId')
+                            ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
+                            ->where('`order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and order.createDateTime BETWEEN (NOW() - INTERVAL 7 DAY) AND NOW() '
+                                    . 'and product_suppliers.productId =' . $parentsProductId . ' ')->one();
         } else {
             $productLastWeek = \common\models\costfit\Order::find()
-            ->select('sum(`order`.`summary`) as summaryPrice, '
-            . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as conutProduct, '
-            . '(select count(`order_item`.`productId`)/7 from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
-            //->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
-            //->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
-            ->where('`order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and order.createDateTime BETWEEN (NOW() - INTERVAL 7 DAY) AND NOW() ')->one();
+                            ->select('sum(`order`.`summary`) as summaryPrice, '
+                                    . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as conutProduct, '
+                                    . '(select count(`order_item`.`productId`)/7 from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
+                            //->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
+                            //->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
+                            ->where('`order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and order.createDateTime BETWEEN (NOW() - INTERVAL 7 DAY) AND NOW() ')->one();
         }
         return $productLastWeek;
     }
@@ -104,21 +104,21 @@ class Suppliers {
             $parentsProductId = $rankOne->attributes['productId'];
 
             $product14LastWeek = \common\models\costfit\Order::find()
-            ->select(' sum(`order`.`summary`) as summaryPrice, '
-            . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as conutProduct, '
-            . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
-            ->join('LEFT JOIN', 'order_item', '`order_item`.orderId = `order`.orderId')
-            ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
-            ->where('`order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and order.createDateTime BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW()'
-            . 'and product_suppliers.productId =' . $parentsProductId . ' ')->one();
+                            ->select(' sum(`order`.`summary`) as summaryPrice, '
+                                    . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as conutProduct, '
+                                    . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
+                            ->join('LEFT JOIN', 'order_item', '`order_item`.orderId = `order`.orderId')
+                            ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
+                            ->where('`order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and order.createDateTime BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW()'
+                                    . 'and product_suppliers.productId =' . $parentsProductId . ' ')->one();
         } else {
             $product14LastWeek = \common\models\costfit\Order::find()
-            ->select(' sum(`order`.`summary`) as summaryPrice, '
-            . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as conutProduct, '
-            . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
-            //->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
-            //->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
-            ->where('`order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and order.createDateTime BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW()')->one();
+                            ->select(' sum(`order`.`summary`) as summaryPrice, '
+                                    . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as conutProduct, '
+                                    . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
+                            //->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
+                            //->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
+                            ->where('`order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and order.createDateTime BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW()')->one();
         }
         return $product14LastWeek;
     }
@@ -135,23 +135,23 @@ class Suppliers {
             $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $productSuppId)->one();
             $parentsProductId = $rankOne->attributes['productId'];
             $orderLastMonth = \common\models\costfit\Order::find()
-            ->select(' sum(`order`.`summary`) as summaryPrice, '
-            . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as conutProduct, '
-            . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
-            ->join('LEFT JOIN', 'order_item', '`order_item`.orderId = `order`.orderId')
-            ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
-            ->where('`order`.`status` >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and (NOW() - INTERVAL 1 MONTH) <= (NOW() )'
-            . 'and product_suppliers.productId =' . $parentsProductId . ' ')->one();
+                            ->select(' sum(`order`.`summary`) as summaryPrice, '
+                                    . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as conutProduct, '
+                                    . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
+                            ->join('LEFT JOIN', 'order_item', '`order_item`.orderId = `order`.orderId')
+                            ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
+                            ->where('`order`.`status` >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and (NOW() - INTERVAL 1 MONTH) <= (NOW() )'
+                                    . 'and product_suppliers.productId =' . $parentsProductId . ' ')->one();
         } else {
             $orderLastMonth = \common\models\costfit\Order::find()
-            ->select(' sum(`order`.`summary`) as summaryPrice ,'
-            . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as conutProduct , '
-            . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
-            // ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
-            //->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
-            //->where('`order`.status >= 5 and MONTH(curdate()) = MONTH(order.createDateTime) and year(order.createDateTime) = year(curdate())   ')
-            ->where('`order`.`status` >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and (NOW() - INTERVAL 1 MONTH) <= (NOW() ) ')
-            ->one();
+                    ->select(' sum(`order`.`summary`) as summaryPrice ,'
+                            . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as conutProduct , '
+                            . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
+                    // ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
+                    //->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
+                    //->where('`order`.status >= 5 and MONTH(curdate()) = MONTH(order.createDateTime) and year(order.createDateTime) = year(curdate())   ')
+                    ->where('`order`.`status` >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and (NOW() - INTERVAL 1 MONTH) <= (NOW() ) ')
+                    ->one();
         }
         return $orderLastMonth;
     }
@@ -165,11 +165,11 @@ class Suppliers {
         $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $productSuppId)->one();
         $parentsProductId = $rankOne->attributes['productId'];
         $rankTwo = \common\models\costfit\ProductSuppliers::find()
-        ->select('`product_suppliers`.*, product_suppliers.title as pTitle, product_price_suppliers.price as priceSuppliers '
-        . ', product_price_suppliers.price as priceSuppliers')
-        ->join('LEFT JOIN', 'product_price_suppliers', 'product_price_suppliers.productSuppId = product_suppliers.productSuppId')
-        ->where('product_price_suppliers.status = 1 and product_price_suppliers.price != "" and product_suppliers.productId = ' . $parentsProductId)
-        ->orderBy(' product_price_suppliers.price asc');
+                ->select('`product_suppliers`.*, product_suppliers.title as pTitle, product_price_suppliers.price as priceSuppliers '
+                        . ', product_price_suppliers.price as priceSuppliers')
+                ->join('LEFT JOIN', 'product_price_suppliers', 'product_price_suppliers.productSuppId = product_suppliers.productSuppId')
+                ->where('product_price_suppliers.status = 1 and product_price_suppliers.price != "" and product_suppliers.productId = ' . $parentsProductId)
+                ->orderBy(' product_price_suppliers.price asc');
 
         $rankingPrice = new ActiveDataProvider([
             'query' => $rankTwo
@@ -188,12 +188,12 @@ class Suppliers {
         $rankOne = \common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $productSuppId)->one();
         $parentsProductId = $rankOne->attributes['productId'];
         $rankTwo = \common\models\costfit\ProductSuppliers::find()
-        ->select('`product_suppliers`.*, product_suppliers.title as pTitle, product_price_suppliers.price as priceSuppliers '
-        . ', product_price_suppliers.price as priceSuppliers')
-        ->join('LEFT JOIN', 'product_price_suppliers', 'product_price_suppliers.productSuppId = product_suppliers.productSuppId')
-        ->where('product_price_suppliers.status = 1 and product_price_suppliers.price != "" and '
-        . ' product_suppliers.productId = ' . $parentsProductId . ' and product_price_suppliers.price <=' . $price)
-        ->count();
+                ->select('`product_suppliers`.*, product_suppliers.title as pTitle, product_price_suppliers.price as priceSuppliers '
+                        . ', product_price_suppliers.price as priceSuppliers')
+                ->join('LEFT JOIN', 'product_price_suppliers', 'product_price_suppliers.productSuppId = product_suppliers.productSuppId')
+                ->where('product_price_suppliers.status = 1 and product_price_suppliers.price != "" and '
+                        . ' product_suppliers.productId = ' . $parentsProductId . ' and product_price_suppliers.price <=' . $price)
+                ->count();
 
         return $rankTwo;
     }

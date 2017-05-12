@@ -16,7 +16,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 Purchase Order
             </h2>
             <h3>Cozxy Dot Com Co.,Ltd.</h3>
-            เ5 Soi Ram Intra 5 Yeak 4, Anusawari, Bang Ken, Bangkok 10220 TEL.02-101-0689 (Auto) FAX.02-101-0689
+            5 Soi Ram Intra 5 Yeak 4, Anusawari, Bang Ken, Bangkok 10220 TEL.02-101-0689 (Auto) FAX.02-101-0689
         </td>
     </tr>
 </table>
