@@ -520,7 +520,7 @@ class OrderController extends OrderMasterController {
                     $username = \common\models\costfit\Address::CompanyName($supplier->userId);
                     $toMailSupp = $supplier->email;
                     $SubjectSupp = "Purchase Order from Cozxy.com";
-                    $urlFroSupplier = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "top-up/history";
+                    $urlFroSupplier = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "suppliers/po";
                     $topUpEmail = \common\helpers\Email::mailPoToSupplier($SubjectSupp, $username, $toMailSupp, $urlFroSupplier);
                 }
             }

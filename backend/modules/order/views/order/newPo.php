@@ -57,8 +57,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => 'raw',
                         'value' => function($model) {
 
-                            return Html::a('รายละเอียด', [Yii::$app->homeUrl . 'topup/topup/bill-pay?epay='], [
-                                        'target' => '_blank'
+                            return Html::a('รายละเอียด', [Yii::$app->homeUrl . 'order/order/reprint-po?storeProductGroupId=' . $model->storeProductGroupId], [
+                                        'target' => '_blank',
                                             ]
                             );
                         }

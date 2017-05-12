@@ -13,11 +13,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <tr>
         <td colspan="2" style="padding: 5px; vertical-align: text-top; text-align: center;border:solid 0px #ffffff;">
             <h2>
-                ใบสั่งซื้อ / Purchase Order
+                Purchase Order
             </h2>
-            <h3>บริษัท คอซซี่ ดอทคอม จำกัด</h3>
-            เลขที่ 1 ซ.ลาดพร้าว 19 ถ.ลาดพร้าว แขวงจอมพล เขตจตุจักร จังหวัดกรุงเทพฯ 10900 โทร.02-938-3463 (Auto) โทรสาร.02-938-3463
+            <h3>Cozxy Dot Com Co.,Ltd.</h3>
+            เ5 Soi Ram Intra 5 Yeak 4, Anusawari, Bang Ken, Bangkok 10220 TEL.02-101-0689 (Auto) FAX.02-101-0689
         </td>
     </tr>
 </table>
-
