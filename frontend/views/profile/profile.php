@@ -43,7 +43,7 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                 <p>Email : <?php echo $model->email; ?></p>
                 <p>Gender : <?php echo isset($model->gender) ? $model->getGenderTextEn($model->gender) : "<span style='color:red'>Please update you gender</span>"; ?></p>
                 <p>Date of Birth : <?php echo isset($model->birthDate) ? $this->context->dateThai($model->birthDate, 4) : "<span style='color:red'>Please update your date-of-birth</span>"; ?></p>
-                <p>Tel. : <?php echo isset($model->tel) ? $model->tel : "<span style='color:red'>Please update you Tel</span>"; ?></p>
+                <p>Mobile Number : <?php echo isset($model->tel) ? $model->tel : "<span style='color:red'>Please update you Tel</span>"; ?></p>
             </div>
 
             <hr>

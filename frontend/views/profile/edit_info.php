@@ -56,7 +56,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <br><br><br>
     </div>
-    <?= $form->field($model, 'tel')->label('Please update your mobile number') ?>
+    <?= $form->field($model, 'tel')->label('Mobile Number') ?>
     <?= Html::submitButton('Update Contact Information ', ['class' => 'btn btn-primary', 'name' => 'contact-info ']) ?>
     <?php ActiveForm::end(); ?>
 </div>
