@@ -131,29 +131,37 @@ class TopUpController extends MasterController
         if ($amount != '') {
             $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT)->one();
             if (isset($topUp) && count($topUp) > 0) {
-                $fromCheckout = 'no';
-                if (isset($_POST["fromCheckout"]) && $_POST["fromCheckout"] != 'no') {
-                    $fromCheckout = 'yes';
-                }
-                if (($topUp->topUpNo == NULL) && ($topUp->topUpNo == '')) {
-                    $topUp->topUpNo = $this->topUpNo();
-                }
-                $topUp->money = $amount;
-                $topUp->point = $amount; //รอ คิด
-                $topUp->status = TopUp::TOPUP_STATUS_COMFIRM_PAYMENT;
-                $topUp->updateDateTime = new \yii\db\Expression('NOW()');
-                $topUp->save(false);
-                if ($topUp->paymentMethod == 2) {//Payment Method เป็น การชำระด้วยบัตรเครดิต
-                    return $this->redirect(['top-up/send-payment/' . $topUp->encodeParams(['userId' => $user->userId,
+                if ($amount > 100) {
+                    $fromCheckout = 'no';
+                    if (isset($_POST["fromCheckout"]) && $_POST["fromCheckout"] != 'no') {
+                        $fromCheckout = 'yes';
+                    }
+                    if (($topUp->topUpNo == NULL) && ($topUp->topUpNo == '')) {
+                        $topUp->topUpNo = $this->topUpNo();
+                    }
+                    $topUp->money = $amount;
+                    $topUp->point = $amount; //รอ คิด
+                    $topUp->status = TopUp::TOPUP_STATUS_COMFIRM_PAYMENT;
+                    $topUp->updateDateTime = new \yii\db\Expression('NOW()');
+                    $topUp->save(false);
+                    if ($topUp->paymentMethod == 2) {//Payment Method เป็น การชำระด้วยบัตรเครดิต
+                        return $this->redirect(['top-up/send-payment/' . $topUp->encodeParams(['userId' => $user->userId,
+                                'amount' => $amount,
+                                'fromCheckout' => $fromCheckout,
+                                'topUpNo' => $topUp->topUpNo,])
+                        ]);
+                    } else if ($topUp->paymentMethod = 1) {//Payment Method เป็นการชำระด้วย Bill payment
+                        return $this->redirect(['print-payment-form',
+                            'userId' => $user->userId,
                             'amount' => $amount,
-                            'fromCheckout' => $fromCheckout,
-                            'topUpNo' => $topUp->topUpNo,])
-                    ]);
-                } else if ($topUp->paymentMethod = 1) {//Payment Method เป็นการชำระด้วย Bill payment
-                    return $this->redirect(['print-payment-form',
-                        'userId' => $user->userId,
-                        'amount' => $amount,
-                        'fromCheckout' => $fromCheckout
+                            'fromCheckout' => $fromCheckout
+                        ]);
+                    }
+                } else {
+                    return $this->render('index', [
+                        'data' => $data,
+//                        'ms' => $msg, // ขั้นต่ำ 100 บาท
+                        'paymentMethod' => $paymentMethod
                     ]);
                 }
             } else {
