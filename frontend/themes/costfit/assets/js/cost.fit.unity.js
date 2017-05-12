@@ -444,24 +444,6 @@ $(document).ready(function (e) {
             $("#top-up").submit();
         }
     });
-    $(document).on('click', '#confirm-topup', function (e) {
-        var amount = $(this).parent().parent().parent().parent().find('#amount').val();
-        var currentAmount = $(this).parent().parent().parent().parent().parent().find('#currentAmount').val();
-        if (amount == '') {
-            if (currentAmount == '') {
-                alert('empty amount');
-                return false;
-            } else {
-                if (!confirm(':: Confirm Amount ' + currentAmount + ' THB ?')) {
-                    return false;
-                }
-            }
-        } else {
-            if (!confirm(':: Confirm Amount ' + amount + ' THB ?')) {
-                return false;
-            }
-        }
-    });
     $(document).on('click', '#regis-button', function () {
         var password = $(this).parent().parent().find('#user-password').val();
         var agree = $(this).parent().parent().find('#agreePolicy');
@@ -484,7 +466,47 @@ $(document).ready(function (e) {
             });
         }
     });
-
+    $(document).on('keypress', '#amount', function (e) {
+        var code = e.keyCode ? e.keyCode : e.which;
+        if (code > 57) {
+            return false;
+        } else if (code < 48 && code != 8) {
+            return false;
+        }
+    });
+    $(document).on('click', '#confirm-topup', function (e) {
+        var amount = $(this).parent().parent().parent().parent().find('#amount').val();
+        var currentAmount = $(this).parent().parent().parent().parent().parent().find('#currentAmount').val();
+        if (amount == '') {
+            alert('123123');
+            if (currentAmount == '') {
+                alert('empty amount');
+                return false;
+            } else {
+                if (parseInt(currentAmount) < 100) {
+                    alert("Amount must not less than 100 THB.");
+                    return false;
+                } else {
+                    if (confirm(':: Confirm Amount ' + currentAmount + ' THB ?')) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        } else {
+            if (parseInt(amount) < 100) {
+                alert("Amount must not less than 100 THB.");
+                return false;
+            } else {
+                if (confirm(':: Confirm Amount ' + amount + ' THB ?')) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+    });
 });/*Document Ready End*//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

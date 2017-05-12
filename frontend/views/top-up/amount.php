@@ -14,34 +14,34 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <br><br>
 <?php
-$js = "$(document).on('keypress', '#amount', function (e) {
-    var code = e.keyCode ? e.keyCode : e.which;
-    if (code > 57) {
-        return false;
-    } else if (code < 48 && code != 8) {
-        return false;
-    }
-});
-$(document).on('click', '#confirm-topup', function (e) {
-var amount = $(this).parent().parent().parent().parent().find('#amount').val();
-var currentAmount = $(this).parent().parent().parent().parent().parent().find('#currentAmount').val();
-   if(amount==''){
-        if(currentAmount==''){
-            alert('empty amount');
-           //amount.focus();
-            return false;
-        }else{
-            if(!confirm(':: Confirm Amount '+currentAmount+' THB ?')){
-                return false;
-            }
-        }
-    }else{
-        if(!confirm(':: Confirm Amount '+amount+' THB ?')){
-            return false;
-        }
-    }
-});";
-$this->registerJs($js);
+/* $js = "$(document).on('keypress', '#amount', function (e) {
+  var code = e.keyCode ? e.keyCode : e.which;
+  if (code > 57) {
+  return false;
+  } else if (code < 48 && code != 8) {
+  return false;
+  }
+  });
+  $(document).on('click', '#confirm-topup', function (e) {
+  var amount = $(this).parent().parent().parent().parent().find('#amount').val();
+  var currentAmount = $(this).parent().parent().parent().parent().parent().find('#currentAmount').val();
+  if(amount==''){
+  if(currentAmount==''){
+  alert('empty amount');
+  //amount.focus();
+  return false;
+  }else{
+  if(!confirm(':: Confirm Amount '+currentAmount+' THB ?')){
+  return false;
+  }
+  }
+  }else{
+  if(!confirm(':: Confirm Amount '+amount+' THB ?')){
+  return false;
+  }
+  }
+  });";
+  $this->registerJs($js); */
 $form = ActiveForm::begin([
         ]);
 ?>
