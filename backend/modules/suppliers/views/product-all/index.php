@@ -78,14 +78,24 @@ use yii\widgets\Pjax;
             // 'createDateTime',
             // 'updateDateTime',
             //'image',
-
-
+            [
+                'attribute' => 'view',
+                'format' => 'html',
+                'value' => function($model) {
+                    $views = common\models\costfit\ProductPageViews::find()->where('productSuppId=' . $model->productSuppId)->count();
+                    if (isset($views)) {
+                        return $views . ' ครั้ง';
+                    } else {
+                        return 0 . ' ครั้ง';
+                    }
+                }
+            ],
             /*
               [
               'attribute' => 'Smart',
               'format' => 'html',
               'value' => function($model) {
-              return Html::a('<i class="fa fa-btc"></i> เพิ่มราคาขายและราคาค่าจัดส่ง', Yii::$app->homeUrl . "suppliers/product-price-suppliers?productSuppId=" . $model->productSuppId, [
+              return Html::a('<i class = "fa fa-btc"></i> เพิ่มราคาขายและราคาค่าจัดส่ง', Yii::$app->homeUrl . "suppliers/product-price-suppliers?productSuppId=" . $model->productSuppId,[
               'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
               }
               ], */

@@ -33,7 +33,7 @@ if (Yii::$app->controller->id == 'products') {
         <title><?= Html::encode(isset($title) ? $title . ' COZXY.COM LOWEST PRICE PRODUCTS' : "COZXY.COM LOWEST PRICE PRODUCTS") ?></title>
         <meta http-equiv="Cache-Control" content="no-store">
         <meta http-equiv="Pragma" content="no-cache">
-        <meta name="KeyWords" content="<?= Html::encode(isset($keyWords) ? $keyWords . ' : cozxy.com' : "My cozxy.com") ?>">
+        <meta name="KeyWords" content="<?= Html::encode(isset($keyWords) ? $keyWords . ' cozxy.com' : "My cozxy.com") ?>">
         <meta name="author" content="cozxy.com">
         <meta itemprop="name" content="cozxy.com">
         <meta itemprop="description" content="<?= Html::encode(isset($description) ? $description . ' : cozxy.com' : "My cozxy.com") ?>">
