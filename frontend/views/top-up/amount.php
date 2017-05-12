@@ -14,8 +14,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <br><br>
 <?php
-$form = ActiveForm::begin([
-        ]);
 $js = "$(document).on('keypress', '#amount', function (e) {
     var code = e.keyCode ? e.keyCode : e.which;
     if (code > 57) {
@@ -30,6 +28,7 @@ var currentAmount = $(this).parent().parent().parent().parent().parent().find('#
    if(amount==''){
         if(currentAmount==''){
             alert('empty amount');
+           //amount.focus();
             return false;
         }else{
             if(!confirm(':: Confirm Amount '+currentAmount+' THB ?')){
@@ -43,6 +42,8 @@ var currentAmount = $(this).parent().parent().parent().parent().parent().find('#
     }
 });";
 $this->registerJs($js);
+$form = ActiveForm::begin([
+        ]);
 ?>
 <div class="top-up-index" style="width: 80%;margin: auto;">
 
