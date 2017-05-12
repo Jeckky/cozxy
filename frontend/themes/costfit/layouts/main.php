@@ -49,7 +49,6 @@ if (Yii::$app->controller->id == 'products') {
         <meta name="distribution" content="global">
         <meta name="rating" content="general">
         <meta name="content-Language" content="th">
-        <script src="//load.sumome.com/" data-sumo-site-id="08811738013d5bac1e1d66a5e5961d630a1bb78273bc74e520758d8bf79ea40e" async="async"></script>
         <?php $this->head() ?>
     </head>
     <body class="">
