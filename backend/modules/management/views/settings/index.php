@@ -195,7 +195,7 @@ use leandrogehlen\treegrid\TreeGrid;
         </div>
 
 
-        <div class="panel ">
+        <!--<div class="panel ">
             <div class="panel-heading ">
                 <span class="panel-title"><i class="fa fa-th-large"></i> CSV Importer to Database</span>
             </div>
@@ -207,7 +207,7 @@ use leandrogehlen\treegrid\TreeGrid;
                                 <a href="<?php echo Yii::$app->homeUrl; ?>management/importer" class="btn" style="color: #000;">
                                     <i class="fa fa-tasks list-group-icon text-danger"></i> Importer </a><br>
                             </div>
-                        </div> <!-- / .panel-heading -->
+                        </div>
                         <div class="panel-body text-left">
                             <div class="widget-profile-text" style="padding: 0;">
                                 <p class="text-success">อธิบาย</p>
@@ -216,7 +216,7 @@ use leandrogehlen\treegrid\TreeGrid;
                                 - Importer product
                             </div>
                         </div>
-                    </div> <!-- / .panel -->
+                    </div>
                 </div>
                 <div class="col-md-3">
                     <div class="panel panel-default panel-dark panel-body-colorful widget-profile widget-profile-centered">
@@ -225,7 +225,7 @@ use leandrogehlen\treegrid\TreeGrid;
                                 <a href="<?php echo Yii::$app->homeUrl; ?>management/importer/clear" class="btn" style="color: #000;">
                                     <i class="fa fa-tasks list-group-icon text-danger"></i> Clear Error Importer </a><br>
                             </div>
-                        </div> <!-- / .panel-heading -->
+                        </div>
                         <div class="panel-body text-left">
                             <div class="widget-profile-text" style="padding: 0;">
                                 <p class="text-success">อธิบาย</p>
@@ -234,10 +234,10 @@ use leandrogehlen\treegrid\TreeGrid;
                                 - Clear Error Importer product
                             </div>
                         </div>
-                    </div> <!-- / .panel -->
+                    </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
 
     </div> <!-- / .row -->
