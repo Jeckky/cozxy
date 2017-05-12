@@ -63,17 +63,22 @@
                         <table width="100%"  text-align="center"  style=" width:100% ; height: auto;  text-align: center;">
                             <tr>
                                 <td>
-                                    <p style="color: #ff9016; font-size: 20px; text-align: left;"><strong>เรียนคุณ <?php echo $username; ?></strong></p>
+                                    <p style="color: #ff9016; font-size: 20px; text-align: left;"><strong>Dear <?php echo $username; ?></strong></p>
 
                                     <table class="x_col1of2" width="50%" border="0" cellpadding="0" cellspacing="0" align="left" style="border-spacing:0; border-collapse:collapse; font-size:14px">
                                         <tbody>
                                             <tr>
                                                 <td class="x_order-col x_pam" align="left" valign="top" style="border-collapse:collapse; padding-top:10px; padding-right:10px; padding-bottom:10px; padding-left:10px">
                                                     <div class="x_order-status-inner">
-                                                        <div class="x_color-grey" style="color:#646464"> มีรายการสั่งซื้อสินค้าจาก Cozxy ส่งถึงคุณ</div>
+                                                        <div class="x_color-grey" style="color:#646464"> Purchase Order from cozxy.com</div>
+                                                        <div class="x_color-grey" style="color:#000">
+                                                            You have received an order from Coxzy! Please check your purchase order in your account through the following link
+                                                        </div>
                                                         <div class="x_pts" style="margin-top:5px; margin-bottom:10px">
-                                                            สามารถตรวจสอบรายการสั่งซื้อที่ส่งถึงคุณได้ที่ : <a href="<?= $url ?>"><?= $url ?></a>
-                                                            <br><br>
+                                                            <a href="<?= $url ?>"><?= $url ?></a>
+                                                            <br>
+                                                            Contact our Partner Care at partnercare@cozxy.com or call 02-1010689 for any questions or concerns. Thank you.
+                                                            <br>
                                                             <br>
                                                         </div>
                                                     </div>
@@ -87,7 +92,7 @@
                         </table>
                     </center>
                     <br><br>
-                    <p style="color: #ff9016; font-size: 12px;">*** อีเมลฉบับนี้เป็นการแจ้งข้อมูลโดยอัตโนมัติ กรุณาอย่าตอบกลับ</p>
+                    <p style="color: #ff9016; font-size: 12px;">*** This email is an auto-generated email. <br> Please do not reply.</p>
                 </div>
                 <div class="foorter title"  style="background-color: #000000; color: rgba(255,212,36,.9); padding: 20px;">
                     Cozxy Dot C Co., Ltd<br>
