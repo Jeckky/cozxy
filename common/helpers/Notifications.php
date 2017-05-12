@@ -107,7 +107,7 @@ class Notifications {
     public static function DashboarMovementuserVisit() {
         $userVisit = \common\models\costfit\UserVisit::find()->select('count(user_visit.visitId) as countVisit ,user_visit.userId ,`oi`.firstname , `oi`.lastname, `oi`.email')
         ->join('LEFT JOIN', 'user oi', 'oi.userId = user_visit.userId')
-        ->where(' date(user_visit.lastvisitDate)>=date_add(curdate(),interval  0 day)  group by user_visit.userId  order by  COUNT(user_visit.visitId) desc limit 5')->all();
+        ->where(' date(user_visit.lastvisitDate)>=date_add(curdate(),interval  0 day)  group by user_visit.userId  order by  COUNT(user_visit.visitId) desc limit 20')->all();
         return $userVisit;
     }
 
