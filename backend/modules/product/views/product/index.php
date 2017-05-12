@@ -15,6 +15,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
 
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
+    <?php /*
     <div class="panel panel-default">
         <div class="well">
             <form method="post">
@@ -39,7 +40,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 </div>
             </form>
         </div>
-
+    */?>
         <div class="panel-heading">
             <div class="row">
                 <div class="col-md-6"><?= $this->title ?></div>
@@ -57,6 +58,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
             GridView::widget([
                 'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
                 'dataProvider' => $dataProvider,
+                'filterModel'=>$searchModel,
                 'pager' => [
                     'options' => ['class' => 'pagination pagination-xs']
                 ],
@@ -76,7 +78,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'attribute' => 'brandId',
                         'value' => function($model) {
                             return isset($model->brand) ? $model->brand->title : NULL;
-                        }
+                        },
+                        'filter' => \yii\helpers\ArrayHelper::map(\common\models\costfit\Brand::find()->asArray()->all(), 'brandId', 'title'),
                     ],
                     [
                         'attribute' => 'categoryId',
@@ -89,12 +92,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'attribute' => 'productGroupId',
                         'value' => function($model) {
                             return isset($model->productGroup) ? $model->productGroup->title : NULL;
-                        }
-                    ],
-                    [
-                        'attribute' => 'categoryId',
-                        'value' => function($model) {
-                            return isset($model->category) ? $model->category->title : NULL;
                         }
                     ],
                     'isbn',

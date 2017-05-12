@@ -50,6 +50,7 @@ class ProductController extends ProductMasterController {
      * @return mixed
      */
     public function actionIndex() {
+        /*
         $model = new Product();
         $query = Product::find();
         if (isset($_POST['Product'])) {
@@ -66,9 +67,22 @@ class ProductController extends ProductMasterController {
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+        */
+        $params = [];
+        if(Yii::$app->request->queryParams !== []) {
+            $params = Yii::$app->request->queryParams;
+            Yii::$app->session['ProductSearch'] = $params;
+        } else if(isset(Yii::$app->session['ProductSearch'])){
+            $params = Yii::$app->session['ProductSearch'];
+            $_GET['page'] = isset($params['page']) ? $params['page'] : '';
+        }
+
+        $searchModel = new \common\models\costfit\search\Product();
+        $dataProvider = $searchModel->search($params);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel
         ]);
     }
 

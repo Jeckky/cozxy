@@ -491,4 +491,19 @@ class Product extends \common\models\costfit\master\ProductMaster
         }
     }
 
+    /**
+     * Relations
+     */
+    public function getBrand()
+    {
+        return $this->hasOne(Brand::className(), ['brandId'=>'brandId']);
+    }
+    public function getCategory()
+    {
+        return $this->hasOne(Category::className(), ['categoryId'=>'categoryId']);
+    }
+    public function getProductGroup()
+    {
+        return $this->hasOne(ProductGroup::className(), ['productGroupId'=>'productGroupId']);
+    }
 }

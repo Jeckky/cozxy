@@ -17,7 +17,7 @@ class Product extends ProductModel {
      */
     public function rules() {
         return [
-                [['productId', 'userId', 'productGroupId', 'categoryId', 'status'], 'integer'],
+                [['productId', 'userId', 'productGroupId', 'brandId', 'categoryId', 'status'], 'integer'],
                 [['code', 'title', 'description', 'createDateTime', 'updateDateTime'], 'safe'],
                 [['width', 'height', 'depth', 'weight'], 'number'],
         ];
@@ -60,6 +60,7 @@ class Product extends ProductModel {
             'productId' => $this->productId,
             'userId' => $this->userId,
             'productGroupId' => $this->productGroupId,
+            'brandId'=>$this->brandId,
             'categoryId' => $this->categoryId,
             'width' => $this->width,
             'height' => $this->height,
