@@ -39,10 +39,10 @@ public function rules()
 return [
             [['contentGroupId', 'headTitle', 'createDateTime'], 'required'],
             [['contentGroupId', 'status'], 'integer'],
-            [['headTitle', 'title', 'description'], 'string'],
+            [['description'], 'string'],
             [['startDate', 'endDate', 'createDateTime', 'updateDateTime'], 'safe'],
+            [['headTitle', 'title', 'linkTitle', 'link'], 'string', 'max' => 200],
             [['image'], 'string', 'max' => 255],
-            [['linkTitle', 'link'], 'string', 'max' => 200],
         ];
 }
 

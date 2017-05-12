@@ -8,7 +8,6 @@ use Yii;
 * This is the model class for table "product_group".
 *
     * @property string $productGroupId
-    * @property string $userId
     * @property string $title
     * @property string $description
     * @property integer $status
@@ -31,9 +30,9 @@ return 'product_group';
 public function rules()
 {
 return [
-            [['userId', 'title', 'createDateTime'], 'required'],
-            [['userId', 'status'], 'integer'],
+            [['title', 'createDateTime'], 'required'],
             [['description'], 'string'],
+            [['status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 200],
         ];
@@ -46,7 +45,6 @@ public function attributeLabels()
 {
 return [
     'productGroupId' => Yii::t('product_group', 'Product Group ID'),
-    'userId' => Yii::t('product_group', 'User ID'),
     'title' => Yii::t('product_group', 'Title'),
     'description' => Yii::t('product_group', 'Description'),
     'status' => Yii::t('product_group', 'Status'),

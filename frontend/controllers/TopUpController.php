@@ -334,14 +334,19 @@ class TopUpController extends MasterController
 
     public function actionResult()
     {
+//        throw new \yii\base\Exception(print_r($_POST, true));
         $currentPoint = 0;
-        if (isset($_POST["HOSTRESP"]) == "00") {
-//            throw new \yii\base\Exception(substr($_POST["RETURNINV"], 3));
+        if (isset($_POST["HOSTRESP"]) && $_POST["HOSTRESP"] == "00") {
+//            throw new \yii\base\Exception(111);
             $topUpNo = substr($_POST["RETURNINV"], 3);
             $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " AND topUpNo = '" . $topUpNo . "'" . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=2")->one();
             if (isset($topUp) && count($topUp) > 0) {
                 $topUp->status = TopUp::TOPUP_STATUS_E_PAYMENT_SUCCESS;
                 $topUp->updateDateTime = new \yii\db\Expression('NOW()');
+                $topUp->resultCode = $_POST["HOSTRESP"];
+                $message = \common\helpers\KPayment::getResultMessage($_POST["HOSTRESP"]);
+                $topUp->resultMessageEn = $message[0];
+                $topUp->resultMessageTh = $message[1];
 //                $topUp->topUpNo = $this->topUpNo();
                 $topUp->save(false);
                 $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
@@ -395,10 +400,17 @@ class TopUpController extends MasterController
                 return $this->redirect(Yii::$app->homeUrl . 'top-up');
             }
         } else {
-            $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->one();
+//            throw new \yii\base\Exception(222);
+            $topUpNo = substr($_POST["RETURNINV"], 3);
+//            $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->one();
+            $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " AND topUpNo = '" . $topUpNo . "'" . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=2")->one();
             if (isset($topUp) && !empty($topUp)) {
                 $topUp->status = TopUp::TOPUP_STATUS_E_PAYMENT_DISCLAIM;
                 $topUp->updateDateTime = new \yii\db\Expression('NOW()');
+                $topUp->resultCode = $_POST["HOSTRESP"];
+                $message = \common\helpers\KPayment::getResultMessage($_POST["HOSTRESP"]);
+                $topUp->resultMessageEn = $message[0];
+                $topUp->resultMessageTh = $message[1];
                 $topUp->save(false);
                 $type = 'fail';
                 return $this->render('thank', [
