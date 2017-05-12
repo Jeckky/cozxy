@@ -203,14 +203,16 @@ class TopUpController extends MasterController
             $sendUrl = "https://uatkpgw.kasikornbank.com/pgpayment/payment.aspx";
             //URL Test
         } else {
-            //Production URL
-            $sendUrl = "https://rt05.kasikornbank.com/pgpayment/payment.aspx";
-            ////Production URL
-            //
-        //Mobile URL
-//        $sendUrl = "https://rt05.kasikornbank.com/mobilepay/payment.aspx";
-            ////Mobile URL
-        //
+            $devices = \common\helpers\GetBrowser::UserAgent();
+            if ($devices != "mobile") {
+                //Production URL
+                $sendUrl = "https://rt05.kasikornbank.com/pgpayment/payment.aspx";
+                ////Production URL
+            } else {
+                //Mobile URL
+                $sendUrl = "https://rt05.kasikornbank.com/mobilepay/payment.aspx";
+                ////Mobile URL
+            }
         }
 
 
