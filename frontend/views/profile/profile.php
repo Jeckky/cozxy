@@ -110,7 +110,8 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                 'inputTemplate' => '<div class="input-group">{input}<span class="input-group-addon"><button class="reveal_re" type="button">
                             <span class="reveal-title-re">Show</span>
                         </button></span></div>',
-            ])->passwordInput()->textInput(['class' => 'form-control pwd3', 'disabled' => true, 'type' => 'password']);
+            ])->passwordInput()->textInput(['class' => 'form-control pwd3', 'disabled' => true, 'type' => 'password'])
+            ->label('Reenter New Password');
             ?>
 
 
