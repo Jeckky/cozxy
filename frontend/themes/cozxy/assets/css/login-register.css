@@ -1,0 +1,9 @@
+.btn-black-s, .btn-yellow, btn-facebook {
+    padding: 12px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.hr-margin {
+    margin-top: 8px;
+    border-top: 1px solid #999;
+}

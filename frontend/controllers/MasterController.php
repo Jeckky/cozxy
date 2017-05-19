@@ -15,7 +15,7 @@ use common\controllers\MasterController as MasterCommonController;
  */
 class MasterController extends MasterCommonController {
 
-    public $layout = '/content';
+    //public $layout = '/content';
     public $title = 'Title';
     public $subTitle = 'Sub Title';
     public $subSubTitle = 'Sub Sub Title';

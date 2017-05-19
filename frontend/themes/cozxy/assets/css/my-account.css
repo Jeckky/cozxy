@@ -1,0 +1,38 @@
+.btn-black-s, .btn-yellow, btn-facebook {
+    padding: 12px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.hr-margin {
+    margin-top: 8px;
+    border-top: 1px solid #999;
+}
+.p-edit {
+    margin-top: -4px;
+    padding: 4px 16px;
+}
+.order-list th {
+    padding-bottom: 16px !important;
+}
+.order-list td {
+    padding-bottom: 8px !important;
+}
+.order-list tbody tr:nth-of-type(1) td {
+    padding-top: 16px !important;
+}
+.track-list .tk-head {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background-color: #ececec;
+}
+.track-list .tk-body {
+    padding-top: 64px;
+    padding-bottom: 64px;
+    background-color: #fafafa;
+}
+.track-list .tk-desc .row {
+    padding: 8px;
+    margin-right: 0;
+    margin-left: 0;
+    background-color: #fafafa;
+}

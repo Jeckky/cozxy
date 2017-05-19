@@ -9,15 +9,19 @@ use yii\web\AssetBundle;
  */
 class AppAsset extends AssetBundle
 {
+
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
+    //'css/site.css',
     ];
     public $js = [
     ];
     public $depends = [
-        'frontend\assets\CozxyAsset',
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
+        'frontend\assets\CostfitHeadAsset',
+        'frontend\assets\CostfitAsset',
     ];
+
 }

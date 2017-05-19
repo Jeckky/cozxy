@@ -1,0 +1,7 @@
+input.quantity {
+    width: 48px; text-align: center;
+    padding: 4px 2px;
+    border: 0;
+    font-size: 18px;
+    color: #000;
+}

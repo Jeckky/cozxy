@@ -1,0 +1,14 @@
+@font-face {
+	font-family: 'Maledpan';
+	src: url('Maledpan-Regular.woff2') format('woff2'), url('Maledpan-Regular.woff') format('woff'), url('Maledpan-Regular.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Maledpan';
+	src: url('Maledpan-Bold.eot');
+	src: url('Maledpan-Bold.eot?#iefix') format('embedded-opentype'), url('Maledpan-Bold.woff') format('woff'), url('Maledpan-Bold.ttf') format('truetype'), url('Maledpan-Bold.svg#Maledpan Bold') format('svg');
+	font-weight: 700;
+	font-style: normal;
+}

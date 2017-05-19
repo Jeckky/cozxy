@@ -81,9 +81,43 @@ return [
         /**
          * Theme
          */
+        /* 'view' => [
+          'theme' => [
+          'pathMap' => ['@app/views' => '@app/themes/costfit'],
+          'baseUrl' => '@web'
+          ]
+          ], */
+        /**
+         * Assert Manager
+         */
+        /*  'assetManager' => [
+          'bundles' => [
+          'yii\web\JqueryAsset' => [
+          'js' => [],
+          'depends' => ['\frontend\assets\CostfitAsset']
+          ],
+          'yii\bootstrap\BootstrapPluginAsset' => [
+          'js' => []
+          ],
+          'yii\bootstrap\BootstrapAsset' => [
+          'css' => [],
+          'js' => []
+          ],
+          'yii\web\YiiAsset' => [
+          'depends' => [
+          'frontend\assets\CostfitAsset',
+          ]
+          ]
+          ],
+          //            'forceCopy' => TRUE
+          ], */
+
+        /**
+         * Theme
+         */
         'view' => [
             'theme' => [
-                'pathMap' => ['@app/views' => '@app/themes/costfit'],
+                'pathMap' => ['@app/views' => '@app/themes/cozxy'],
                 'baseUrl' => '@web'
             ]
         ],
@@ -94,7 +128,7 @@ return [
             'bundles' => [
                 'yii\web\JqueryAsset' => [
                     'js' => [],
-                    'depends' => ['\frontend\assets\CostfitAsset']
+                    'depends' => ['\frontend\assets\CozxyAsset']
                 ],
                 'yii\bootstrap\BootstrapPluginAsset' => [
                     'js' => []
@@ -105,7 +139,7 @@ return [
                 ],
                 'yii\web\YiiAsset' => [
                     'depends' => [
-                        'frontend\assets\CostfitAsset',
+                        'frontend\assets\CozxyAsset',
                     ]
                 ]
             ],
