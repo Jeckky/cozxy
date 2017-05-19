@@ -29,7 +29,7 @@
     <div class="col-sm-12 col-md-2">Your Balance:</div>
     <div class="col-sm-12 col-md-10">8,888</div>
     <div class="col-sm-12 col-md-2">Last update:</div>
-    <div class="col-sm-12 col-md-10"><?=date('Y-m-d H:i:s')?></div>
+    <div class="col-sm-12 col-md-10"><?= date('Y-m-d H:i:s') ?></div>
     <div class="col-sm-12 col-md-2">Method:</div>
     <div class="col-sm-12 col-md-10">Credit Card</div>
     <div class="size12">&nbsp;</div>
@@ -38,22 +38,22 @@
 
 <?php
 /*
-<div class="row">
-    <div class="col-lg-3 col-md-4 col-sm-6">Shipping
-        Address<a href="javascript:edit_profile(2);" class="pull-right btn-g999 p-edit">Edit</a></div>
-    <div class="col-xs-12 size6">&nbsp;</div>
-</div>
-<div class="row fc-g999">
-    <div class="col-sm-12 col-md-2">Name:</div>
-    <div class="col-sm-12 col-md-10">Inthanon Panyasopa</div>
-    <div class="col-sm-12 col-md-2">Address:</div>
-    <div class="col-sm-12 col-md-10">123 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-        eiusmod tempor incididunt ut labore et dolore magna aliqua 50000
-    </div>
-    <div class="size12">&nbsp;</div>
-    <div class="size32 hr-margin">&nbsp;</div>
-</div>
-*/
+  <div class="row">
+  <div class="col-lg-3 col-md-4 col-sm-6">Shipping
+  Address<a href="javascript:edit_profile(2);" class="pull-right btn-g999 p-edit">Edit</a></div>
+  <div class="col-xs-12 size6">&nbsp;</div>
+  </div>
+  <div class="row fc-g999">
+  <div class="col-sm-12 col-md-2">Name:</div>
+  <div class="col-sm-12 col-md-10">Inthanon Panyasopa</div>
+  <div class="col-sm-12 col-md-2">Address:</div>
+  <div class="col-sm-12 col-md-10">123 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+  eiusmod tempor incididunt ut labore et dolore magna aliqua 50000
+  </div>
+  <div class="size12">&nbsp;</div>
+  <div class="size32 hr-margin">&nbsp;</div>
+  </div>
+ */
 ?>
 
 <div class="row">
@@ -91,7 +91,7 @@
                     </div>
                 </div>
             </div>
-            <?php endfor;?>
+            <?php //endfor;?>
         </div>
     </div>
     <div class="size12">&nbsp;</div>
