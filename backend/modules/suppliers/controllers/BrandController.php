@@ -79,7 +79,7 @@ class BrandController extends SuppliersMasterController {
             //echo 'xxx : ' . isset($_POST["Brand"]['image']) ? 'Yes' : 'No';
             $imageObj = \yii\web\UploadedFile::getInstanceByName("Brand[image]");
             if (isset($imageObj) && !empty($imageObj)) {
-                $newFileName = Upload::UploadBasic('Brand[image]', $folderName, $uploadPath, '164', '120');
+                $newFileName = Upload::UploadBasic('Brand[image]', $folderName, $uploadPath, '112', '64');
                 $model->image = '/' . 'images/' . $folderName . "/" . $newFileName;
             } else {
                 echo 'No';
