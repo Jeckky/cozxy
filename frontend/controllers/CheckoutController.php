@@ -13,5 +13,8 @@ class CheckoutController extends \yii\web\Controller
     {
         return $this->render('summary');
     }
-
+public function actionThanks()
+    {
+        return $this->render('thanks');
+    }
 }
