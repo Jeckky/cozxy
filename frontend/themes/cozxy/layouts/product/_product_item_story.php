@@ -5,11 +5,11 @@
         </div>
         <div class="product-txt">
             <p class="size16 fc-g666"><?= $model['brand'] ?></p>
-            <p class="size14 b"><a href="<?=$model['url']?>" class="fc-black"><?= $model['title'] ?></a></p>
+            <p class="size14 b"><a href="<?= $model['url'] ?>" class="fc-black"><?= $model['title'] ?></a></p>
         </div>
         <div class="row text-center">
-            <div class="col-md-6"><i class="fa fa-eye"></i> <?=$model['views']?></div>
-            <div class="col-md-6"><i class="fa fa-star"></i> <?=$model['star']?></div>
+            <div class="col-md-6"><i class="fa fa-eye"></i> <?= $model['views'] ?></div>
+            <div class="col-md-6"><i class="fa fa-star"></i> <?= $model['star'] ?></div>
         </div>
     </div>
 </div>

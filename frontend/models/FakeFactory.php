@@ -18,7 +18,7 @@ class FakeFactory extends Model {
         ->where(' product_suppliers.approve="approve" and product_suppliers.result > 0 AND product_price_suppliers.status =1 AND '
         . ' product_price_suppliers.price > 0')
         ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
-
+        //$model->encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productSuppId])
         foreach ($pCanSale as $value) {
             $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
             $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
@@ -26,7 +26,8 @@ class FakeFactory extends Model {
             $price = number_format($productPrice->price, 2);
             $products[$value->productSuppId] = [
                 'image' => $productImages->image,
-                'url' => 'product?id=' . $value->productSuppId,
+                //'url' => 'product?id=' . $value->productSuppId,
+                'url' => 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
                 'brand' => isset($value->brand) ? $value->brand->title : '',
                 'title' => $value->title,
                 'price_s' => $price_s,
@@ -62,7 +63,8 @@ class FakeFactory extends Model {
             $price = number_format($productPrice->price, 2);
             $products[$value->productSuppId] = [
                 'image' => $productImages->image,
-                'url' => 'product?id=' . $value->productSuppId,
+                //'url' => 'product?id=' . $value->productSuppId,
+                'url' => 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
                 'brand' => isset($value->brand) ? $value->brand->title : '',
                 'title' => $value->title,
                 'price_s' => $price_s,
@@ -146,6 +148,52 @@ class FakeFactory extends Model {
                 'description' => $items->description
             ];
         }
+        return $products;
+    }
+
+    public static function productViews($productSuppId) {
+        $products = [];
+        $imagAll = [];
+        $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
+        foreach ($GetProductSuppliers as $items) {
+            /*
+             * รูปสินค้า
+             */
+            $productImagesOneTop = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSuppId)->orderBy('ordering asc')->one();
+            $productImagesAll = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSuppId . ' and productImageId !='
+            . $productImagesOneTop->productImageId)->orderBy('ordering asc')->all();
+            foreach ($productImagesAll as $items) {
+                $imagAll[$items['productImageId']] = [
+                    //'image' => $items['image'],
+                    'imageThumbnail1' => $items['imageThumbnail1'],
+                //'imageThumbnail2' => $items['imageThumbnail2']
+                ];
+            }
+            $GetCategory = \common\models\costfit\Category::find()->where("categoryId=" . $GetProductSuppliers['categoryId'])->one();
+            /*
+             * ราคาสินค้า
+             */
+            $price = \common\models\costfit\ProductSuppliers::productPriceSupplier($productSuppId);
+            $products[$GetProductSuppliers['productSuppId']] = [
+                'productSuppId' => '',
+                'productId' => '',
+                'userId' => '',
+                'productGroupId' => '',
+                'brandId' => '',
+                'categoryId' => '',
+                'title' => isset($GetProductSuppliers['title']) ? $GetProductSuppliers['title'] : '',
+                'shortDescription' => isset($GetProductSuppliers['shortDescription']) ? $GetProductSuppliers['shortDescription'] : '',
+                'description' => isset($GetProductSuppliers['description']) ? $GetProductSuppliers['description'] : '',
+                'specification' => isset($GetProductSuppliers['specification']) ? $GetProductSuppliers['specification'] : '',
+                'quantity' => isset($GetProductSuppliers['quantity']) ? $GetProductSuppliers['quantity'] : '',
+                'result' => isset($GetProductSuppliers['result']) ? $GetProductSuppliers['result'] : '',
+                'price' => isset($price) ? number_format($price, 2) : '',
+                'category' => isset($GetCategory->title) ? $GetCategory->title : '',
+                'image' => $productImagesOneTop['image'],
+                'images' => $imagAll
+            ];
+        }
+
         return $products;
     }
 

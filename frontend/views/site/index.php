@@ -100,8 +100,6 @@ $this->title = 'My Yii Application';
                         <?php
                         $brands = common\models\costfit\Brand::find()->all();
                         foreach ($brands as $brand) {
-                            //$params = \common\models\ModelMaster::encodeParams(['brandId' => trim($brand->brandId)]);
-                            //echo $brand->brandId . '<br>';
                             if (file_exists(Yii::$app->basePath . "/web" . $brand->image) && !empty($brand->image)) {
                                 $image = $brand->image;
                             } else {

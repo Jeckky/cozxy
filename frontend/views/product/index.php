@@ -46,12 +46,42 @@ $(window).resize(function() { descSet(); });
 <div class="container">
     <div class="row">
         <div class="col-md-9">
-            <div class="size48">&nbsp;</div>
-            <?=$this->render('@app/themes/cozxy/layouts/product/_product_detail')?>
-
+            <div class="size48">&nbsp;</div> 
+            <?php
+            echo \yii\widgets\ListView::widget([
+                'dataProvider' => $productViews,
+                'options' => [
+                    'tag' => false,
+                ],
+                'itemView' => function ($model, $key, $index, $widget) {
+                    return $this->render('@app/themes/cozxy/layouts/product/_product_detail', ['model' => $model]);
+                },
+//                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                //'layout'=>"{summary}{pager}{items}"
+                'layout' => "{items}",
+                'itemOptions' => [
+                    'tag' => false,
+                ],
+            ]);
+            ?>
             <div class="size24">&nbsp;</div>
-            <?=$this->render('@app/themes/cozxy/layouts/product/_product_detail_tab')?>
-
+            <?php
+            echo \yii\widgets\ListView::widget([
+                'dataProvider' => $productViews,
+                'options' => [
+                    'tag' => false,
+                ],
+                'itemView' => function ($model, $key, $index, $widget) {
+                    return $this->render('@app/themes/cozxy/layouts/product/_product_detail_tab', ['model' => $model]);
+                },
+//                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                //'layout'=>"{summary}{pager}{items}"
+                'layout' => "{items}",
+                'itemOptions' => [
+                    'tag' => false,
+                ],
+            ]);
+            ?>
             <div class="size24">&nbsp;</div>
 
             <div class="row">
@@ -64,7 +94,7 @@ $(window).resize(function() { descSet(); });
                             'tag' => false,
                         ],
                         'itemView' => function ($model, $key, $index, $widget) {
-                            return $this->render('@app/themes/cozxy/layouts/product/_product_item', ['model' => $model, 'colSize'=>'3']);
+                            return $this->render('@app/themes/cozxy/layouts/product/_product_item', ['model' => $model, 'colSize' => '3']);
                         },
 //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                         //'layout'=>"{summary}{pager}{items}"
@@ -81,9 +111,9 @@ $(window).resize(function() { descSet(); });
         <div class="col-md-3">
             <div class="size48">&nbsp;</div>
 
-            <?=$this->render('@app/themes/cozxy/layouts/story/_panel_your_story')?>
-            <?=$this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories')?>
+            <?= $this->render('@app/themes/cozxy/layouts/story/_panel_your_story') ?>
+            <?= $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories') ?>
 
-       </div>
+        </div>
     </div>
 </div>

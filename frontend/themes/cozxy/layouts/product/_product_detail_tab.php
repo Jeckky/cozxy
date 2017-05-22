@@ -9,14 +9,12 @@
         <div class="size18 size14-xs">&nbsp;</div>
         <div class="tab-content">
             <div id="menu1" class="tab-pane fade in active">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua.</p>
-                <h3>Menu 1</h3>
+                <p><?php echo $model['description'] ?></p>
+
             </div>
             <div id="menu2" class="tab-pane fade">
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                    commodo consequat.</p>
-                <h3>Menu 2</h3>
+                <p><?php echo $model['specification'] ?></p>
+
             </div>
             <div id="menu3" class="tab-pane fade">
                 <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
