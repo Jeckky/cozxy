@@ -91,7 +91,7 @@
                     </div>
                 </div>
             </div>
-            <?php //endfor;?>
+            <?php endfor; ?>
         </div>
     </div>
     <div class="size12">&nbsp;</div>
