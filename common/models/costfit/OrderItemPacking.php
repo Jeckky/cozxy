@@ -19,7 +19,7 @@ use \common\models\costfit\master\OrderItemPackingMaster;
  */
 class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMaster {
 
-    const ORDER_STATUS_CLOSE_BAG = 4; //กำลังจัดส่ง
+    const ORDER_STATUS_CLOSE_BAG = 4; //แพ็คเสร็จ
     const ORDER_STATUS_SENDING_PACKING_SHIPPING = 5; //กำลังจัดส่ง
 
     /* Customize Date 25/01/2017 , By Taninut.Bm */
@@ -97,6 +97,19 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
         }
     }
 
+    public static function strBag($orderItemPacking) {
+        $bagNo = '';
+        if (isset($orderItemPacking) && count($orderItemPacking) > 0) {
+            foreach ($orderItemPacking as $bag):
+                $bagNo .= $bag->bagNo . ",";
+            endforeach;
+            if ($bagNo != '') {
+                $bagNo = substr($bagNo, 0, -1);
+            }
+        }
+        return $bagNo;
+    }
+
     static public function itemInBag($bagNo) {
         $items = '';
         $bags = OrderItemPacking::find()->where("bagNo='" . $bagNo . "'")->all();
@@ -124,6 +137,28 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
             return $items;
         } else {
             return '';
+        }
+    }
+
+    public static function bagInOrderToShip($orderId) {
+        $orderItems = OrderItem::find()->where("orderId=" . $orderId . " and status=13")->all();
+//throw new \yii\base\Exception(print_r($orderItems, true));
+        $itemItemId = '';
+        foreach ($orderItems as $orderItem):
+            $itemItemId = $itemItemId . $orderItem->orderItemId . ",";
+        endforeach;
+        if ($itemItemId != '') {
+            $itemItemId = substr($itemItemId, 0, -1);
+            $orderItemPackings = OrderItemPacking::find()->where("orderItemId in ($itemItemId) and status=4")
+                    ->groupBy("bagNo")
+                    ->all();
+            if (isset($orderItemPackings) && count($orderItemPackings) > 0) {
+                return $orderItemPackings;
+            } else {
+                return '1';
+            }
+        } else {
+            return '2';
         }
     }
 
@@ -158,6 +193,7 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
 //->distinct('order_item_packing.bagNo')
                 ->join('LEFT JOIN', 'order_item oi', 'oi.orderItemId = order_item_packing.orderItemId')
                 ->where(['oi.orderId' => $orderItem->orderId, 'order_item_packing.status' => $status])
+                ->groupBy("order_item_packing.bagNo")
                 ->count();
 //throw new \yii\base\Exception($orderItemId);
         return $result;
@@ -322,6 +358,27 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
         } else {
             return '';
         }
+    }
+
+    public static function bagInLocker($pickingItemsId) {//ที่มีการจองไว้
+        $orderItemPackings = OrderItemPacking::find()->where("pickingItemsId=" . $pickingItemsId . " and status=5")->all();
+        $bag = '';
+        if (isset($orderItemPackings) && count($orderItemPackings) > 0) {
+            foreach ($orderItemPackings as $picking):
+                $bag .= $picking->bagNo . "<br>";
+            endforeach;
+        }
+        return $bag;
+    }
+
+    public static function sameOrder($pickingItemsId) {//ที่มีการจองไว้
+        $orderItemPackings = OrderItemPacking::find()->where("pickingItemsId=" . $pickingItemsId . " and status=5")->one();
+        $orderId = '';
+        if (isset($orderItemPackings)) {
+            $orderItem = OrderItem::find()->where("orderItemId=" . $orderItemPackings->orderItemId)->one();
+            $orderId = $orderItem->orderId;
+        }
+        return $orderId;
     }
 
     public static function checkBag($olds, $new) {
