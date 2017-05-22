@@ -94,10 +94,12 @@ class Upload {
             $thumbFile2 = $uploadPath2 . '/' . $newFileName; // Size 356 x 390
             $thumbFile3 = $uploadPath3 . '/' . $newFileName; // Size 137 x 130
 
-            $saveThumb0 = Image::thumbnail($originalFile, 553, 484)->save($thumbFile0, ['quality' => 80]);
-            //$saveThumb1 = Image::thumbnail($originalFile, 553, 484)->save($thumbFile1, ['quality' => 80]); // thumbnail file
-            $saveThumb2 = Image::thumbnail($originalFile, 356, 390)->save($thumbFile2, ['quality' => 80]); // thumbnail file
-            $saveThumb3 = Image::thumbnail($originalFile, 137, 130)->save($thumbFile3, ['quality' => 80]); // thumbnail file
+            /* $saveThumb0 = Image::thumbnail($originalFile, 553, 484)->save($thumbFile0, ['quality' => 80]);
+              $saveThumb2 = Image::thumbnail($originalFile, 356, 390)->save($thumbFile2, ['quality' => 80]); // thumbnail file
+              $saveThumb3 = Image::thumbnail($originalFile, 137, 130)->save($thumbFile3, ['quality' => 80]); // thumbnail file */
+            $saveThumb0 = Image::thumbnail($originalFile, 750, 460)->save($thumbFile0, ['quality' => 80]);
+            $saveThumb2 = Image::thumbnail($originalFile, 262, 262)->save($thumbFile2, ['quality' => 80]); // thumbnail file
+            $saveThumb3 = Image::thumbnail($originalFile, 131, 131)->save($thumbFile3, ['quality' => 80]); // thumbnail file
             //mage::getImagine()->open($originalFile)->thumbnail(new Box(553, 484))->save($thumbFile1, ['quality' => 90]);
 
             $model->image = 'images/' . $folderName . '/' . $newFileName; // Size 553 x 484

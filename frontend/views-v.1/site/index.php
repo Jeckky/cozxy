@@ -4,46 +4,6 @@
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 //throw new \yii\base\Exception($baseUrl);
-\frontend\assets\HomePageAsset::register($this);
-$this->registerCss('
-.mca {
-	padding: 10px 10px 6px;
-	font-size: 16px;
-	background-color: #fff;
-}
-/* Banner Parade */
-#logoParade {
-	position: relative;
-	width: 100%;
-	height: 64px;
-	margin: 24px 0;
-	padding: 0 48px;
-}
-#logoParade div.scrollableArea a {
-	display: block;
-	float: left;
-	margin: 0 8px;
-	padding: 0 8px;
-}
-#logoParade .scrollingHotSpotLeft, #logoParade .scrollingHotSpotRight {
-	display: block !important;
-	opacity: 1 !important;
-}
-#logoParade .scrollingHotSpotLeft {
-	background: #fff url(imgs/ban-arrow-left.png) center no-repeat;
-}
-#logoParade .scrollingHotSpotRight {
-	background: #fff url(imgs/ban-arrow-right.png) center no-repeat;
-}
-');
-
-$this->registerJs('
-$(function() {
-	$("#logoParade").smoothDivScroll({
-		manualContinuousScrolling: true
-	});
-});
-');
 ?>
 <style type="text/css">
     .cat-tiles h2
@@ -60,18 +20,56 @@ $(function() {
     .catalog-grid h2 {
         color: #292c2e;
     }
+    .brand-carousel .owl-prev {
+        left: -40px;
+    }
+    .brand-carousel .owl-next {
+        right: -25px;
+    }
 </style>
 <!--Hero Slider-->
+<section class="hero-slider" style="background-color: #f1efef;margin-top: -10px ;">
+    <div class="master-slider" id="hero-slider">
+        <?php
+        foreach ($bannerGroup->contents as $banner) {
+            //throw new Exception($banner->linkTitle);
+            ?>
+            <!--Slide 1-->
+            <div class="ms-slide" data-delay="7" style="background-image: url('<?= $baseUrl . $banner->image ?>');background-size: 100% 100%;">
+                <div class="overlay"></div>
+                <div class="ms-anim-layers">
+                    <div class="ms-layer text-block" style="margin: 50px; padding: 108px 0px 0px 25px; font-size: 16px; line-height: 22px;">
+                        <h2 style="width: 756px; left: 110px; top: 110px;text-align: left;" class="dark-color ms-layer" data-effect="top(50,true)" data-duration="700" data-delay="250" data-ease="easeOutQuad">
+                            <?= $banner->headTitle ?><br>
+                            <?= $banner->title ?>
+                        </h2>
+                        <?php
+                        $desc = str_replace("<p>", " ", str_replace("</p>", " ", str_replace("</p><p>", "<br>", $banner->description)));
+                        //throw new \yii\base\Exception($banner->description . "----" . $desc);
+                        ?>
+                        <p style="width: 756px; left: 110px; top: 250px; text-align: left;" class="dark-color ms-layer col-md-7 " data-effect="back(500)" data-duration="700" data-delay="500" data-ease="easeOutQuad"><?= $desc; ?></p>
+                        <?php if (isset($banner->linkTitle) && !empty($banner->linkTitle)): ?>
+                                                                                                                                                                                                                <!--<p style="width: 456px; left: 20px; top: 170px;" class="dark-color col-md-7">
+                                                                                                                                                                                                                <a class="btn btn-primary" href="<?//= $banner->link; ?>"><?//= $banner->linkTitle ?></a>
+                                                                                                                                                                                                                </p>-->
+                        <?php endif; ?>
+                        <!--<a class="btn btn-black" href="#">Browse all</a>-->
+                    </div>
+                    <!--<img style="right: 200px;" class="ms-layer img-block" src="<?= $baseUrl . $banner->image ?>" alt="1" data-effect="back(500)" data-duration="800" data-delay="350" data-ease="easeOutQuad"/>-->
+                </div>
+            </div>
+            <?php
+        }
+        ?>
+    </div>
 
-<?= $this->render('@app/themes/cozxy/layouts/_slide', ['models' => $bannerGroup->contents]); ?>
-
+</section><!--Hero Slider Close-->
 
 <!--
 <section class="catalog-grid">
     <div class="container">
         <h2>HOT PRODUCTS</h2>
         <div class="row">
-
 <?php
 /* echo \yii\widgets\ListView::widget([
   'dataProvider' => $hotProduct,
@@ -164,7 +162,6 @@ $(function() {
         max-width: 100%;
         height: auto;
     }
-
 </style>
 
 <section class="catalog-grid">
@@ -177,18 +174,15 @@ $(function() {
                     <?php
                     if (count($productPost) > 0) {
                         foreach ($productPost as $key => $value) {
-
                             $member = \common\models\costfit\User::find()->where('userId=' . $value->userId)->one();
                             $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId, $value->productPostId);
                             $rating_member = \common\helpers\Reviews::RatingInMember($value->productSuppId, $value->productPostId);
                             $rating_count = \common\models\costfit\ProductPost::find()->where('productSuppId=' . $value->productSuppId)->count('productSuppId');
-
                             if ($rating_score == 0 && $rating_member == 0) {
                                 $results_rating = 0;
                             } else {
                                 $results_rating = $rating_score / $rating_member;
                             }
-
                             $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
                             foreach ($productPostList as $valuex) {
                                 $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->limit(1)->all();
@@ -300,7 +294,6 @@ $(function() {
         </div>
         <div class="row" id="save-main-limit"></div>
 <?php if ($saveCat->getTotalCount() > 6): ?>
-
 <?php endif; ?>
     </div>
 </section> Categories Close-->
@@ -390,11 +383,11 @@ $(function() {
                  background-size:  cover;
                  background-color: #999;">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-                    <h2 class="dark-color"><?php //echo $topOneContent->title;                                                                                   ?></h2>
+                    <h2 class="dark-color"><?php //echo $topOneContent->title;                                                                                      ?></h2>
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12" style="color: #fff;">
                             <p class="p-style3" style="color: #fff;">
-    <?php //echo $topOneContent->description;  ?>
+    <?php //echo $topOneContent->description; ?>
                             </p>
                         </div>
     <!--
@@ -444,11 +437,8 @@ $(function() {
             border-radius: 5px;
             cursor: pointer;
             transition: 0.3s;
-
         }
-
         .myImg:hover {opacity: 0.7;}
-
         /* The Modal (background) */
         .modal {
             display: none; /* Hidden by default */
@@ -463,7 +453,6 @@ $(function() {
             background-color: rgb(0,0,0); /* Fallback color */
             background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
         }
-
         /* Modal Content (Image) */
         .modal-content {
             margin: auto;
@@ -472,7 +461,6 @@ $(function() {
             max-width: 700px;
             float: right;
         }
-
         /* Caption of Modal Image (Image Text) - Same Width as the Image */
         #caption {
             margin: auto;
@@ -485,7 +473,6 @@ $(function() {
             height: 150px;
             text-align: right;
         }
-
         /* Add Animation - Zoom in the Modal */
         .modal-content, #caption {
             -webkit-animation-name: zoom;
@@ -493,17 +480,14 @@ $(function() {
             animation-name: zoom;
             animation-duration: 0.6s;
         }
-
         @-webkit-keyframes zoom {
             from {-webkit-transform:scale(0)}
             to {-webkit-transform:scale(1)}
         }
-
         @keyframes zoom {
             from {transform:scale(0)}
             to {transform:scale(1)}
         }
-
         /* The Close Button */
         .close-reviews {
             position: absolute;
@@ -515,14 +499,12 @@ $(function() {
             transition: 0.3s;
             color: rgba(255,212,36,.9);
         }
-
         .close-reviews:hover,
         .close-reviews:focus {
             color: #bbb;
             text-decoration: none;
             cursor: pointer;
         }
-
         /* 100% Image Width on Smaller Screens */
         @media only screen and (max-width: 700px){
             .modal-content {
@@ -542,7 +524,6 @@ $(function() {
             overflow-y: scroll;
             overflow-x: hidden;
         }
-
     </style>
     <!-- Trigger the Modal -->
 
@@ -577,7 +558,6 @@ $(function() {
     </div>
     <script>
         // Get the modal
-
         function reviews_click(productSuppId, id, srcs, title) {
             //alert(productSuppId + '::' + id);
             //alert(title);
@@ -593,7 +573,6 @@ $(function() {
             modal.style.display = "block";
             modalImg.src = srcs;
             $('.titles-reviews').html(title);
-
             $.ajax({
                 type: "POST",
                 dataType: "JSON",
@@ -602,19 +581,16 @@ $(function() {
                 success: function (data, status)
                 {
                     $('.test').html('');
-
                     if (status == "success") {
                         var json = data;
                         var rex = /(<([^>]+)>)/ig;
                         //alert(txt.replace(rex, ""));
                         var Num = 1;
-
                         for (var i = 0; i < json.length; i++) {
                             //$('.scores-reviews').html('');
                             var obj = json[i];
                             var description = obj.title;
                             var scores = obj.score;
-
                             if (scores == 1) {
                                 $('.test').append('<div style=\"padding: 10px;font-size: 14px;\"><strong>Post #' + Num++ + '\n\ :</strong> ' + description.replace(rex, "") + ' \n\
                              <div class="scores-reviews">&nbsp;&nbsp;<img title="' + scores + '" src="images/star-on.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img title="' + scores + '" src="images/star-off.png"><img alt="5" src="images/star-off.png" title=""> (Recent Reviews)</div> \n\
@@ -652,9 +628,6 @@ $(function() {
                              <span style=\"font-size: 12px;color: #b2b2b2;\">&nbsp;&nbsp;&nbsp;By ' + obj.username + '<span> </div>'
                                         );
                             }
-
-
-
                         }
                     }
                 }
@@ -669,7 +642,6 @@ $(function() {
              captionText.innerHTML = this.alt;
              }*/
             //console.log(img);
-
             // Get the <span> element that closes the modal
             var span = document.getElementsByClassName("close")[0];
             // When the user clicks on <span> (x), close the modal
@@ -679,7 +651,7 @@ $(function() {
         }
     </script>
     <!--Subscription Widget-->
-    <?php //echo $this->render('@app/themes/costfit/layouts/_subscription', compact('lastIndexContent'));   ?>
+    <?php //echo $this->render('@app/themes/costfit/layouts/_subscription', compact('lastIndexContent'));  ?>
     <!--Brands Carousel Widget-->
     <?php
 //echo Yii::$app->controller->id;

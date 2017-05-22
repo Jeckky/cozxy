@@ -15,17 +15,18 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use common\models\costfit\Content;
+use common\models\costfit\ContentGroup;
 
 /**
  * Site controller
  */
-class SiteController extends Controller
-{
+class SiteController extends Controller {
+
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -55,8 +56,7 @@ class SiteController extends Controller
     /**
      * @inheritdoc
      */
-    public function actions()
-    {
+    public function actions() {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -73,12 +73,12 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex()
-    {
-        $productCanSell = new ArrayDataProvider(['allModels'=>FakeFactory::productForSale(6)]);
-        $productNotSell = new ArrayDataProvider(['allModels'=>FakeFactory::productForSale(6)]);
-        $productStory = new ArrayDataProvider(['allModels'=>FakeFactory::productStory(3)]);
-        return $this->render('index', compact('productCanSell', 'productNotSell', 'productStory'));
+    public function actionIndex() {
+        $bannerGroup = ContentGroup::find()->where("lower(title) = 'banner' and status=1")->all();
+        $productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(6, 'yes')]);
+        $productNotSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(6, 'no')]);
+        $productStory = new ArrayDataProvider(['allModels' => FakeFactory::productStory(3)]);
+        return $this->render('index', compact('productCanSell', 'productNotSell', 'productStory', 'bannerGroup'));
     }
 
     /**
@@ -86,8 +86,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionLogin()
-    {
+    public function actionLogin() {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -108,8 +107,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionLogout()
-    {
+    public function actionLogout() {
         Yii::$app->user->logout();
 
         return $this->goHome();
@@ -120,8 +118,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionContact()
-    {
+    public function actionContact() {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
@@ -143,8 +140,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionAbout()
-    {
+    public function actionAbout() {
         return $this->render('about');
     }
 
@@ -153,8 +149,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionSignup()
-    {
+    public function actionSignup() {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
@@ -174,8 +169,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionRequestPasswordReset()
-    {
+    public function actionRequestPasswordReset() {
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
@@ -199,8 +193,7 @@ class SiteController extends Controller
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token)
-    {
+    public function actionResetPassword($token) {
         try {
             $model = new ResetPasswordForm($token);
         } catch (InvalidParamException $e) {
@@ -217,4 +210,5 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
 }

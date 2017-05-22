@@ -1,5 +1,4 @@
 <?php
-
 /* @var $this yii\web\View */
 
 \frontend\assets\HomePageAsset::register($this);
@@ -64,6 +63,7 @@ $this->title = 'My Yii Application';
                         <a href="#"><img src="imgs/banner06.png" alt=""></a>
                         <a href="#"><img src="imgs/banner07.png" alt=""></a>
                         <a href="#"><img src="imgs/banner08.png" alt=""></a>
+
                     </div>
                     <!--<a class="align-middle fc-g999 size24 scrollingHotSpotRight" href="#" style="padding-top:8px;right:0"><span class="glyphicon glyphicon-menu-right"></span></a>-->
                 </div>
