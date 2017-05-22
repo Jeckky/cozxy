@@ -45,7 +45,41 @@ $(function() {
 $this->title = 'My Yii Application';
 ?>
 
-<?= $this->render('@app/themes/cozxy/layouts/_slide') ?>
+<div class="bg-white rela">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <?php
+            echo \yii\widgets\ListView::widget([
+                'dataProvider' => $slideGroup,
+                'options' => [
+                    'tag' => false,
+                ],
+                'itemView' => function ($model, $key, $index, $widget) {
+                    return $this->render('@app/themes/cozxy/layouts/_slide', ['model' => $model, 'index' => $index]);
+                },
+//                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                //'layout'=>"{summary}{pager}{items}"
+                'layout' => "{items}",
+                'itemOptions' => [
+                    'tag' => false,
+                ],
+            ]);
+            ?>
+
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="align-middle fc-black mca" href="#myCarousel" data-slide="prev" style="left:0">
+            <span class="glyphicon glyphicon-menu-left"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="align-middle fc-black mca" href="#myCarousel" data-slide="next" style="right:0">
+            <span class="glyphicon glyphicon-menu-right"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
 
 <!--Brands-->
 <div class="bg-white" style="border-bottom:1px solid #eaeaea">
@@ -55,15 +89,30 @@ $this->title = 'My Yii Application';
                 <div class="rela" style="height:96px">
                     <!--<a class="align-middle fc-g999 size24 scrollingHotSpotLeft" href="#" style="padding-top:8px;left:0"><span class="glyphicon glyphicon-menu-left"></span></a>-->
                     <div id="logoParade">
-                        <a href="#"><img src="imgs/banner01.png" alt=""></a>
+                        <!--<a href="#"><img src="imgs/banner01.png" alt=""></a>
                         <a href="#"><img src="imgs/banner02.png" alt=""></a>
                         <a href="#"><img src="imgs/banner03.png" alt=""></a>
                         <a href="#"><img src="imgs/banner04.png" alt=""></a>
                         <a href="#"><img src="imgs/banner05.png" alt=""></a>
                         <a href="#"><img src="imgs/banner06.png" alt=""></a>
                         <a href="#"><img src="imgs/banner07.png" alt=""></a>
-                        <a href="#"><img src="imgs/banner08.png" alt=""></a>
-
+                        <a href="#"><img src="imgs/banner08.png" alt=""></a>-->
+                        <?php
+                        $brands = common\models\costfit\Brand::find()->all();
+                        foreach ($brands as $brand) {
+                            //$params = \common\models\ModelMaster::encodeParams(['brandId' => trim($brand->brandId)]);
+                            //echo $brand->brandId . '<br>';
+                            if (file_exists(Yii::$app->basePath . "/web" . $brand->image) && !empty($brand->image)) {
+                                $image = $brand->image;
+                            } else {
+                                $image = Yii::$app->homeUrl . "images/no-image.jpg";
+                            }
+                            ?>
+                            <a class="" href="<?php echo Yii::$app->homeUrl; ?>brand/<?= $brand->createTitle() ?>/<?php echo \common\models\ModelMaster::encodeParamsBrand(['brandId' => $brand->brandId]); ?>">
+                                <img src="<?php echo $image; ?>" alt="" class="img-responsive"/></a>
+                            <?php
+                        }
+                        ?>
                     </div>
                     <!--<a class="align-middle fc-g999 size24 scrollingHotSpotRight" href="#" style="padding-top:8px;right:0"><span class="glyphicon glyphicon-menu-right"></span></a>-->
                 </div>

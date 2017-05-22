@@ -99,4 +99,21 @@ class FakeFactory extends Model {
         return $products;
     }
 
+    public static function productSlideGroup($n, $status) {
+        $products = [];
+        $slideGroup = \common\models\costfit\ContentGroup::find()->where("lower(title) = 'banner' and status=1")->one();
+        $content = \common\models\costfit\Content::find()->where("contentGroupId =" . $slideGroup['contentGroupId'])->all();
+        foreach ($content as $items) {
+            $products[$items->contentId] = [
+                'code' => $items->contentId,
+                'image' => $items->image,
+                'url' => '',
+                'head' => $items->headTitle,
+                'title' => $items->title,
+                'description' => $items->description
+            ];
+        }
+        return $products;
+    }
+
 }

@@ -74,11 +74,11 @@ class SiteController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
-        $bannerGroup = ContentGroup::find()->where("lower(title) = 'banner' and status=1")->all();
+        $slideGroup = new ArrayDataProvider(['allModels' => FakeFactory::productSlideGroup('', '')]);
         $productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(6, 'yes')]);
         $productNotSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(6, 'no')]);
         $productStory = new ArrayDataProvider(['allModels' => FakeFactory::productStory(3)]);
-        return $this->render('index', compact('productCanSell', 'productNotSell', 'productStory', 'bannerGroup'));
+        return $this->render('index', compact('productCanSell', 'productNotSell', 'productStory', 'slideGroup'));
     }
 
     /**
