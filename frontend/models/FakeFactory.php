@@ -27,7 +27,7 @@ class FakeFactory extends Model {
             $products[$value->productSuppId] = [
                 'image' => $productImages->image,
                 //'url' => 'product?id=' . $value->productSuppId,
-                'url' => 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
+                'url' => '/product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
                 'brand' => isset($value->brand) ? $value->brand->title : '',
                 'title' => $value->title,
                 'price_s' => $price_s,
