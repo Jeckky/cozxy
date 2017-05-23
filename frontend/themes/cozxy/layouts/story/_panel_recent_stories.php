@@ -4,7 +4,7 @@
     <div class="panel-body">
         <?php
         echo \yii\widgets\ListView::widget([
-            'dataProvider' => $recentStories,
+            'dataProvider' => $this->params['recentStories'],
             'options' => [
                 'tag' => false,
             ],

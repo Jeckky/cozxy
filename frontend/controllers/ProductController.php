@@ -11,7 +11,7 @@ use yii\filters\AccessControl;
 use yii\data\ArrayDataProvider;
 use frontend\models\FakeFactory;
 
-class ProductController extends \yii\web\Controller {
+class ProductController extends MasterController {
 
     public function actionIndex($hash) {
         $k = base64_decode(base64_decode($hash));
@@ -31,8 +31,7 @@ class ProductController extends \yii\web\Controller {
 
         $productViews = new ArrayDataProvider(['allModels' => FakeFactory::productViews($productSupplierId)]);
         $productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(4)]);
-        $recentStories = new ArrayDataProvider(['allModels' => FakeFactory::productStory(6)]);
-        return $this->render('index', compact('productCanSell', 'productViews', 'recentStories'));
+        return $this->render('index', compact('productCanSell', 'productViews'));
     }
 
 }

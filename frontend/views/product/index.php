@@ -112,7 +112,7 @@ $(window).resize(function() { descSet(); });
             <div class="size48">&nbsp;</div>
 
             <?= $this->render('@app/themes/cozxy/layouts/story/_panel_your_story') ?>
-            <?= $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories', compact('recentStories')) ?>
+            <?= $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories') ?>
 
 
 
