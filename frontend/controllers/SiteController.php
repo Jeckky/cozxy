@@ -154,10 +154,12 @@ class SiteController extends Controller {
         $model = new SignupForm(['scenario' => 'register']);
 
         if (isset($_POST["SignupForm"])) {
-            echo '<pre>';
-            print_r(Yii::$app->request->post());
-            exit();
+
             if ($model->load(Yii::$app->request->post())) {
+                $model->attributes = $_POST["SignupForm"];
+                $model->birthDate = $_POST["SignupForm"]['yyyy'] . '-' . $_POST["SignupForm"]['dd'] . '-' . $_POST["SignupForm"]['dd'];
+                //echo $model->birthDate;
+                //exit();
                 if ($user = $model->signup()) {
                     if (Yii::$app->getUser()->login($user)) {
                         return $this->goHome();

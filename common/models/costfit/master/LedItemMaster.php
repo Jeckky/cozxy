@@ -8,7 +8,7 @@ use Yii;
 * This is the model class for table "led_item".
 *
     * @property string $ledItemId
-    * @property integer $ledId
+    * @property string $ledId
     * @property integer $color
     * @property integer $sortOrder
     * @property integer $status
@@ -31,7 +31,7 @@ return 'led_item';
 public function rules()
 {
 return [
-            [['ledId'], 'required'],
+            [['ledId', 'createDateTime'], 'required'],
             [['ledId', 'color', 'sortOrder', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
         ];

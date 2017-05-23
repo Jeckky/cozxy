@@ -20,12 +20,16 @@ class SignupForm extends Model {
     public $gender;
     public $birthDate;
     public $confirmPassword;
+    public $yyyy;
+    public $mm;
+    public $dd;
 
     /**
      * @inheritdoc
      */
     public function rules() {
         return [
+
             ['firstname', 'required'],
             ['lastname', 'required'],
             ['username', 'trim'],
@@ -36,16 +40,18 @@ class SignupForm extends Model {
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            //['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
-            ['email', 'unique'], 'tel' => [['tel'], 'string'],
+            //['email', 'unique'],
+            'tel' => [['tel'], 'string'],
             ['newPassword', 'string', 'min' => 8],
             ['password', 'string', 'min' => 8],
             ['rePassword', 'required', 'message' => 'Re Password must be equal to "New Password".'],
-            ['email', 'email'],
             [['firstname', 'lastname', 'email', 'password', 'confirmPassword'], 'required', 'on' => self::COZXY_REGIS],
             ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"],
+            ['email', 'uniqueEmail', 'message' => 'This email address has already been taken.'
+            ],
         ];
     }
 
@@ -68,21 +74,26 @@ class SignupForm extends Model {
      * @return User|null the saved model or null if saving fails
      */
     public function signup() {
-        if (!$this->validate()) {
-            return null;
-        }
+        /* if (!$this->validate()) {
+          return null;
+          } */
 
         $user = new User();
         $user->firstname = $this->firstname;
         $user->lastname = $this->lastname;
-        $user->username = $this->username;
+        $user->username = $this->email;
+        $user->setPassword($this->password);
+        $user->password_hash = \Yii::$app->security->generatePasswordHash($this->password);
+        $user->email = $this->email;
         $user->gender = $this->gender;
         $user->birthDate = $this->birthDate;
-        $user->email = $this->email;
-        $user->setPassword($this->password);
+        $user->status = 0;
+        $user->token = \Yii::$app->security->generateRandomString(10);
+        $user->lastvisitDate = new \yii\db\Expression("NOW()");
+        $user->createDateTime = new \yii\db\Expression("NOW()");
         $user->generateAuthKey();
 
-        return $user->save() ? $user : null;
+        return $user->save(FALSE) ? $user : null;
     }
 
 }
