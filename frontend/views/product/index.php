@@ -112,25 +112,9 @@ $(window).resize(function() { descSet(); });
             <div class="size48">&nbsp;</div>
 
             <?= $this->render('@app/themes/cozxy/layouts/story/_panel_your_story') ?>
-            <?= $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories') ?>
+            <?= $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories', compact('recentStories')) ?>
 
-            <?php
-            echo \yii\widgets\ListView::widget([
-                'dataProvider' => $recentStories,
-                'options' => [
-                    'tag' => false,
-                ],
-                'itemView' => function ($model, $key, $index, $widget) {
-                    return $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories', ['model' => $model]);
-                },
-//                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                //'layout'=>"{summary}{pager}{items}"
-                'layout' => "{items}",
-                'itemOptions' => [
-                    'tag' => false,
-                ],
-            ]);
-            ?>
+
 
 
         </div>
