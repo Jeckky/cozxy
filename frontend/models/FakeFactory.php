@@ -10,15 +10,28 @@ use yii\base\Model;
  */
 class FakeFactory extends Model {
 
-    public static function productForSale($n) {
+    public static function productForSale($n, $cat = FALSE) {
         $products = [];
+        $whereArray = [];
+        if ($cat != FALSE) {
 
-        $pCanSale = \common\models\costfit\ProductSuppliers::find()
-        ->join(" LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
-        ->where(' product_suppliers.approve="approve" and product_suppliers.result > 0 AND product_price_suppliers.status =1 AND '
-        . ' product_price_suppliers.price > 0')
-        ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
-        //$model->encodeParams(['productId' => $model->productId, 'productSupplierId' => $model->productSuppId])
+            $whereArray["category_to_product.categoryId"] = $cat;
+            $whereArray["product_suppliers.approve"] = "approve";
+
+            $pCanSale = \common\models\costfit\ProductSuppliers::find()
+            ->join(" LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
+            ->join("LEFT JOIN", "category_to_product", "category_to_product.categoryId = product_suppliers.categoryId")
+            ->where(' product_suppliers.approve ="approve" and product_suppliers.result > 0 AND product_price_suppliers.status =1 AND '
+            . ' product_price_suppliers.price > 0')
+            ->andWhere($whereArray)
+            ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
+        } else {
+            $pCanSale = \common\models\costfit\ProductSuppliers::find()
+            ->join(" LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
+            ->where(' product_suppliers.approve="approve" and product_suppliers.result > 0 AND product_price_suppliers.status =1 AND '
+            . ' product_price_suppliers.price > 0')
+            ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
+        }
         foreach ($pCanSale as $value) {
             $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
             $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();

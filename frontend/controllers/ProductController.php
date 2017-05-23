@@ -30,7 +30,7 @@ class ProductController extends MasterController {
         $productViews->save(FALSE);
 
         $productViews = new ArrayDataProvider(['allModels' => FakeFactory::productViews($productSupplierId)]);
-        $productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(4)]);
+        $productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(4, FALSE)]);
         return $this->render('index', compact('productCanSell', 'productViews'));
     }
 
