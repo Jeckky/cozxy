@@ -56,7 +56,7 @@
                             <div class="col-sm-6 size18 b">QUANTITY</div>
                             <div class="col-sm-6 text-right quantity-sel size18">
                                 <a href="javascript:;" class="q-minus"><i class="fa fa-minus-circle" aria-hidden="true" style="color: #000"></i></a>
-                                <input type="text" name="quantity" class="quantity" value="<?php // echo $model['result']                                                  ?>">
+                                <input type="text" name="quantity" class="quantity" value="1">
                                 <a href="javascript:;" class="q-plus"><i class="fa fa-plus-circle" aria-hidden="true" style="color: #000"></i></a>
                             </div>
                         </div>
