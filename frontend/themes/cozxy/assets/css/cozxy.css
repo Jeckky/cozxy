@@ -272,6 +272,16 @@ label {
 	margin-bottom: 8px;
 	color: #666;
 }
+.login-box select {
+	text-overflow: '';
+	overflow: hidden;
+	white-space: nowrap;
+	border: 1px solid #999;
+	padding: 11px 10px 12px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	color: #666;
+}
 .smallTop {
 	position: fixed;
 	bottom: 24px;
