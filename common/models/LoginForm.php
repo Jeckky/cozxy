@@ -15,6 +15,8 @@ class LoginForm extends Model {
     public $password;
     public $rememberMe = true;
     private $_user;
+    public $firstname;
+    public $lastname;
 
     /**
      * @inheritdoc
@@ -22,7 +24,7 @@ class LoginForm extends Model {
     public function rules() {
         return [
             // username and password are both required
-            [['email', 'password'], 'required'],
+            [['email', 'password', 'firstname', 'lastname'], 'required'],
             ['email', 'email'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],

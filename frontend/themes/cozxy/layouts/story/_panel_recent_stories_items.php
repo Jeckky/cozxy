@@ -1,6 +1,6 @@
 <div class="media">
     <div class="media-left">
-        <a href="#">
+        <a href="<?php echo $model['url']; ?>">
             <img alt="64x64" class="media-object img-circle" data-src="holder.js/64x64" src="<?= $model['image'] ?>" data-holder-rendered="true" style="width: 64px; height: 64px;">
         </a>
     </div>
