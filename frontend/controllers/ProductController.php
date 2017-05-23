@@ -31,9 +31,8 @@ class ProductController extends \yii\web\Controller {
 
         $productViews = new ArrayDataProvider(['allModels' => FakeFactory::productViews($productSupplierId)]);
         $productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(4)]);
-
-
-        return $this->render('index', compact('productCanSell', 'productViews'));
+        $recentStories = new ArrayDataProvider(['allModels' => FakeFactory::productStory(20)]);
+        return $this->render('index', compact('productCanSell', 'productViews', 'recentStories'));
     }
 
 }

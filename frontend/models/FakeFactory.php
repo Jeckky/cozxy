@@ -25,7 +25,7 @@ class FakeFactory extends Model {
             $price_s = number_format($productPrice->price, 2);
             $price = number_format($productPrice->price, 2);
             $products[$value->productSuppId] = [
-                'image' => $productImages->image,
+                'image' => $productImages->imageThumbnail1,
                 //'url' => 'product?id=' . $value->productSuppId,
                 'url' => '/product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
                 'brand' => isset($value->brand) ? $value->brand->title : '',
@@ -62,7 +62,7 @@ class FakeFactory extends Model {
             $price_s = number_format($productPrice->price, 2);
             $price = number_format($productPrice->price, 2);
             $products[$value->productSuppId] = [
-                'image' => $productImages->image,
+                'image' => $productImages->imageThumbnail1,
                 //'url' => 'product?id=' . $value->productSuppId,
                 'url' => 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
                 'brand' => isset($value->brand) ? $value->brand->title : '',
@@ -105,7 +105,7 @@ class FakeFactory extends Model {
                     $results_rating = $rating_score / $rating_member;
                 }
                 $products[$value->productSuppId] = [
-                    'image' => $productImages->image,
+                    'image' => $productImages->imageThumbnail1,
                     'url' => 'product?id=' . $items->productSuppId,
                     'brand' => isset($items->brand) ? $items->brand->title : '',
                     'title' => $items->title,
@@ -116,21 +116,7 @@ class FakeFactory extends Model {
                 ];
             }
         }
-        /*
-          for ($i = 1; $i <= $n; $i++) {
-          $price_s = rand(30000, 40000);
-          $price = rand(45000, 80000);
-          $products[$i] = [
-          'image' => 'imgs/product0' . ($i + 3) . '.jpg',
-          'url' => 'product?id=' . $i,
-          'brand' => 'PRADA',
-          'title' => 'QUILTED NAPPA GANSEVOORT FLAP SHOULDER BAG',
-          'price_s' => $price_s,
-          'price' => $price,
-          'views' => rand(555, 888),
-          'star' => rand(0.01, 5.00),
-          ];
-          } */
+
         return $products;
     }
 
