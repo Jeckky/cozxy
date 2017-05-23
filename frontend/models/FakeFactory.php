@@ -4,6 +4,8 @@ namespace frontend\models;
 
 use Yii;
 use yii\base\Model;
+use yii\db\ActiveRecord;
+use yii\data\ActiveDataProvider;
 
 /**
  * ContactForm is the model behind the contact form.
@@ -14,16 +16,19 @@ class FakeFactory extends Model {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE) {
-
+            $whereArray = [];
             $whereArray["category_to_product.categoryId"] = $cat;
-            $whereArray["product_suppliers.approve"] = "approve";
 
-            $pCanSale = \common\models\costfit\ProductSuppliers::find()
-            ->join(" LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
-            ->join("LEFT JOIN", "category_to_product", "category_to_product.categoryId = product_suppliers.categoryId")
-            ->where(' product_suppliers.approve ="approve" and product_suppliers.result > 0 AND product_price_suppliers.status =1 AND '
-            . ' product_price_suppliers.price > 0')
-            ->andWhere($whereArray)
+            $whereArray["product.approve"] = "approve";
+            $whereArray["pps.status"] = "1";
+
+            $pCanSale = \common\models\costfit\CategoryToProduct::find()
+            ->select('*')
+            ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+            ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+            ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+            ->where($whereArray)
+            ->andWhere([">", "ps.result", 0])
             ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
         } else {
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
@@ -32,11 +37,15 @@ class FakeFactory extends Model {
             . ' product_price_suppliers.price > 0')
             ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
         }
+
+        //echo '<pre>';
+        //print_r($pCanSale);
+        //exit();
         foreach ($pCanSale as $value) {
             $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
-            $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
-            $price_s = number_format($productPrice->price, 2);
-            $price = number_format($productPrice->price, 2);
+            //$productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
+            $price_s = number_format($value->price, 2);
+            $price = number_format($value->price, 2);
             $products[$value->productSuppId] = [
                 'image' => Yii::$app->homeUrl . $productImages->imageThumbnail1,
                 //'url' => 'product?id=' . $value->productSuppId,
@@ -66,14 +75,27 @@ class FakeFactory extends Model {
     public static function productForNotSale($n) {
         $products = [];
 
-        $pCanSale = \common\models\costfit\ProductSuppliers::find()->where('result = 0 and  approve="approve"')->orderBy(new \yii\db\Expression('rand()'))
-        ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
+        /* $pCanSale = \common\models\costfit\ProductSuppliers::find()->where('result = 0 and  approve="approve"')->orderBy(new \yii\db\Expression('rand()'))
+          ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
+         */
+        $whereArray2 = [];
+        $whereArray2["category_to_product.categoryId"] = $params['categoryId'];
 
-        foreach ($pCanSale as $value) {
+        $whereArray2["product.approve"] = "approve";
+        $whereArray2["ps.result"] = "0";
+        $whereArray2["pps.status"] = "1";
+        $product = \common\models\costfit\CategoryToProduct::find()
+        ->select('*')
+        ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+        ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+        ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+        ->where($whereArray2)
+        ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
+        foreach ($product as $value) {
             $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
-            $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
-            $price_s = number_format($productPrice->price, 2);
-            $price = number_format($productPrice->price, 2);
+            //$productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
+            $price_s = number_format($value->price, 2);
+            $price = number_format($value->price, 2);
             $products[$value->productSuppId] = [
                 'image' => Yii::$app->homeUrl . $productImages->imageThumbnail1,
                 //'url' => 'product?id=' . $value->productSuppId,
