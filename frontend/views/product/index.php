@@ -114,9 +114,6 @@ $(window).resize(function() { descSet(); });
             <?= $this->render('@app/themes/cozxy/layouts/story/_panel_your_story') ?>
             <?= $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories') ?>
 
-
-
-
         </div>
     </div>
 </div>

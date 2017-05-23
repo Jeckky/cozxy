@@ -109,6 +109,7 @@ class FakeFactory extends Model {
                     'url' => 'product?id=' . $items->productSuppId,
                     'brand' => isset($items->brand) ? $items->brand->title : '',
                     'title' => $items->title,
+                    'head' => $value->title,
                     'price_s' => $price_s,
                     'price' => $price,
                     'views' => number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)),
