@@ -6,7 +6,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 for ($i = 1; $i < 3; $i++):
     ?>
 
-    <div style="padding: 10px;border: #000 solid 1px;color: #000;">
+    <div style="padding: 37.795276px;border: #000 solid 1px;color: #000;"><!--ตัวหนังสือห่างจากขอบ 1 cm-->
         <div style="font-size: 8pt;">
             <b>Bill payment/ Pay-in Slip (แบบฟอร์มสำหรับการชำระเงิน)</b>
         </div>
@@ -70,7 +70,7 @@ for ($i = 1; $i < 3; $i++):
         </div>
     </div><br>
     <?php if ($i == 1) { ?>
-        <img src = "<?= $baseUrl . '/images/Bank/payin-cut.png' ?>" style = "width:100%;height: 15px;margin-bottom: 70px;margin-top: -10px;" /><br>
+        <img src = "<?= $baseUrl . '/images/Bank/payin-cut.png' ?>" style = "width:100%;height: 15px;margin-bottom: 56.692913px;margin-top: -10px;" /><br>
     <?php }
     ?>
 <?php endfor; ?>
