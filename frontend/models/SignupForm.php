@@ -29,7 +29,8 @@ class SignupForm extends Model {
      */
     public function rules() {
         return [
-
+            //['email', 'uniqueEmail'],
+            //['email', 'email'],
             ['firstname', 'required'],
             ['lastname', 'required'],
             ['username', 'trim'],
@@ -38,9 +39,9 @@ class SignupForm extends Model {
             ['username', 'string', 'min' => 2, 'max' => 255],
             ['email', 'trim'],
             ['email', 'required'],
-            ['email', 'email'],
+            // ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            //['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            //['email', 'unique', 'targetClass' => '\common\models\costfit\User', 'message' => 'This email address has already been taken.'],
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
             //['email', 'unique'],
@@ -50,22 +51,25 @@ class SignupForm extends Model {
             ['rePassword', 'required', 'message' => 'Re Password must be equal to "New Password".'],
             [['firstname', 'lastname', 'email', 'password', 'confirmPassword'], 'required', 'on' => self::COZXY_REGIS],
             ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"],
-            ['email', 'uniqueEmail', 'message' => 'This email address has already been taken.'
-            ],
+            ['email', 'email', 'message' => "The email isn't correct"],
+            [
+                'email', 'uniqueEmail'
+            ]
         ];
     }
 
     public function scenarios() {
         return [
-            self::COZXY_REGIS => ['firstname', 'lastname', 'email', 'password', 'confirmPassword', 'acceptTerm'],
+            self::COZXY_REGIS => ['firstname', 'lastname', 'email', 'password', 'confirmPassword'],
         ];
     }
 
     public function uniqueEmail($attribute, $email) {
-        // throw new \yii\base\Exception($email);
+
         $user = static::findOne(['email' => Yii::$app->encrypter->encrypt($email)]);
-        if (count($user) > 0)
+        if (count($user) > 0) {
             $this->addError($attribute, 'This email is already in use".');
+        }
     }
 
     /**

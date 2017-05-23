@@ -27,11 +27,9 @@ use yii\bootstrap\ActiveForm;
                     <?= $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'EMAIL ADDRESS'])->label(false); ?>
                     <div class="row">
                         <div class="col-md-6">
-                            <!--<input type="password" name="password" class="fullwidth" placeholder="PASSWORD" required>-->
                             <?= $form->field($model, 'password')->passwordInput(['class' => 'fullwidth', 'placeholder' => 'PASSWORD'])->label(false); ?>
                         </div>
                         <div class="col-md-6">
-                            <!--<input type="password" name="password2" class="fullwidth" placeholder="CONFIRM PASSWORD" required>-->
                             <?= $form->field($model, 'confirmPassword')->passwordInput(['class' => 'fullwidth', 'placeholder' => 'CONFIRM PASSWORD"'])->label(false); ?>
                         </div>
                     </div>
@@ -39,10 +37,6 @@ use yii\bootstrap\ActiveForm;
                         <div class="col-md-3">
                             <p>Gender</p>
                             <?= $form->field($model, 'gender', ['radioTemplate' => '<label class="gender-head">{label}</label><label class="signup-radio">{input}</label>'])->inline()->radioList([1 => 'Male', 0 => 'Female'], ['separator' => '', 'tabindex' => 3])->label(false); ?>
-
-                            <!--<input type="radio" name="gender" value="M"> &nbsp; Male &nbsp;
-                            <input type="radio" name="gender" value="F"> &nbsp; Female &nbsp;
-                            -->
                         </div>
                         <div class="col-md-3">
                             <p>Birthday</p>
