@@ -8,7 +8,7 @@ use common\models\User;
 /**
  * Signup form
  */
-class SignupForm extends Model {
+class SignupForm1 extends Model {
 
     public $firstname;
     public $lastname;

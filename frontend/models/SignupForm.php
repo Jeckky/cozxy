@@ -10,6 +10,8 @@ use common\models\User;
  */
 class SignupForm extends Model {
 
+    const COZXY_REGIS = 'register';
+
     public $firstname;
     public $lastname;
     public $username;
@@ -17,12 +19,15 @@ class SignupForm extends Model {
     public $password;
     public $gender;
     public $birthDate;
+    public $confirmPassword;
 
     /**
      * @inheritdoc
      */
     public function rules() {
         return [
+            ['firstname', 'required'],
+            ['lastname', 'required'],
             ['username', 'trim'],
             ['username', 'required'],
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
@@ -34,8 +39,27 @@ class SignupForm extends Model {
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
-            ['firstname', 'required'], ['lastname', 'required'],
+            ['email', 'unique'], 'tel' => [['tel'], 'string'],
+            ['newPassword', 'string', 'min' => 8],
+            ['password', 'string', 'min' => 8],
+            ['rePassword', 'required', 'message' => 'Re Password must be equal to "New Password".'],
+            ['email', 'email'],
+            [['firstname', 'lastname', 'email', 'password', 'confirmPassword'], 'required', 'on' => self::COZXY_REGIS],
+            ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"],
         ];
+    }
+
+    public function scenarios() {
+        return [
+            self::COZXY_REGIS => ['firstname', 'lastname', 'email', 'password', 'confirmPassword', 'acceptTerm'],
+        ];
+    }
+
+    public function uniqueEmail($attribute, $email) {
+        // throw new \yii\base\Exception($email);
+        $user = static::findOne(['email' => Yii::$app->encrypter->encrypt($email)]);
+        if (count($user) > 0)
+            $this->addError($attribute, 'This email is already in use".');
     }
 
     /**

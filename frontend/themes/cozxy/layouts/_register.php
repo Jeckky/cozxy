@@ -15,7 +15,7 @@ use yii\bootstrap\ActiveForm;
                     <p class="size18">CREATE ACCOUNT</p>
                     <div class="size14 hr-margin">&nbsp;</div>
                     <!--<form method="post" action="">-->
-                    <?php $form = ActiveForm::begin(['id' => 'register-form', 'action' => Yii::$app->homeUrl . 'site/register', 'options' => ['class' => 'registr-form']]); ?>
+                    <?php $form = ActiveForm::begin(['id' => 'register-form', 'action' => Yii::$app->homeUrl . 'site/signup', 'options' => ['class' => 'registr-form']]); ?>
                     <div class="row">
                         <div class="col-md-6">
                             <?= $form->field($model, 'firstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
@@ -26,20 +26,29 @@ use yii\bootstrap\ActiveForm;
                     </div>
                     <?= $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'EMAIL ADDRESS'])->label(false); ?>
                     <div class="row">
-                        <div class="col-md-6"><input type="password" name="password" class="fullwidth" placeholder="PASSWORD" required></div>
-                        <div class="col-md-6"><input type="password" name="password2" class="fullwidth" placeholder="CONFIRM PASSWORD" required></div>
+                        <div class="col-md-6">
+                            <!--<input type="password" name="password" class="fullwidth" placeholder="PASSWORD" required>-->
+                            <?= $form->field($model, 'password')->passwordInput(['class' => 'fullwidth', 'placeholder' => 'PASSWORD'])->label(false); ?>
+                        </div>
+                        <div class="col-md-6">
+                            <!--<input type="password" name="password2" class="fullwidth" placeholder="CONFIRM PASSWORD" required>-->
+                            <?= $form->field($model, 'confirmPassword')->passwordInput(['class' => 'fullwidth', 'placeholder' => 'CONFIRM PASSWORD"'])->label(false); ?>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3">
                             <p>Gender</p>
-                            <input type="radio" name="gender" value="M"> &nbsp; Male &nbsp;
+                            <?= $form->field($model, 'gender', ['radioTemplate' => '<label class="gender-head">{label}</label><label class="signup-radio">{input}</label>'])->inline()->radioList([1 => 'Male', 0 => 'Female'], ['separator' => '', 'tabindex' => 3])->label(false); ?>
+
+                            <!--<input type="radio" name="gender" value="M"> &nbsp; Male &nbsp;
                             <input type="radio" name="gender" value="F"> &nbsp; Female &nbsp;
+                            -->
                         </div>
                         <div class="col-md-3">
                             <p>Birthday</p>
-                            <input type="number" name="dd" min="1" max="31" placeholder="31" style="width: 26%">
-                            <input type="number" name="mm" min="1" max="12" placeholder="12" style="width: 26%">
-                            <input type="number" name="yyyy" min="1800" max="2020" placeholder="1999" style="width: 40%">
+                            <input type="number" name="SignupForm[dd]" min="1" max="31" placeholder="31" style="width: 26%">
+                            <input type="number" name="SignupForm[mm]" min="1" max="12" placeholder="12" style="width: 26%">
+                            <input type="number" name="SignupForm[yyyy]" min="1800" max="2020" placeholder="1999" style="width: 40%">
                         </div>
                         <div class="col-md-6"><input type="submit" class="btn-yellow fullwidth" value="CREATE ACCOUNT"></div>
                     </div>

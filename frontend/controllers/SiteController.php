@@ -150,14 +150,22 @@ class SiteController extends Controller {
      * @return mixed
      */
     public function actionSignup() {
-        $model = new SignupForm();
+        //$model_verdifile = new \common\models\costfit\User(['scenario' => 'register']);
+        $model = new SignupForm(['scenario' => 'register']);
 
-        if ($model->load(Yii::$app->request->post())) {
-            if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
+        if (isset($_POST["SignupForm"])) {
+            echo '<pre>';
+            print_r(Yii::$app->request->post());
+            exit();
+            if ($model->load(Yii::$app->request->post())) {
+                if ($user = $model->signup()) {
+                    if (Yii::$app->getUser()->login($user)) {
+                        return $this->goHome();
+                    }
                 }
             }
+        } else {
+
         }
 
         return $this->render('@app/themes/cozxy/layouts/_register', [
