@@ -105,7 +105,7 @@ class FakeFactory extends Model {
                     $results_rating = $rating_score / $rating_member;
                 }
                 $products[$value->productSuppId] = [
-                    'image' => $productImages->imageThumbnail1,
+                    'image' => Yii::$app->homeUrl . $productImages->imageThumbnail2,
                     'url' => 'product?id=' . $items->productSuppId,
                     'brand' => isset($items->brand) ? $items->brand->title : '',
                     'title' => $items->title,
