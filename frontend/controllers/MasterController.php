@@ -134,35 +134,6 @@ class MasterController extends MasterCommonController {
         }
     }
 
-    public function actionDynamicState() {
-        $dataArray = ArrayHelper::map(\common\models\dbworld\States::find()->all(), 'stateId', 'stateName');
-        echo $this->renderPartial('ddl', [
-            'dataArray' => $dataArray,
-            'prompt' => '-- Select State --',
-            'name' => 'Search[stateId]',
-            'onChange' => 'dynamicCity(this)'
-        ]);
-    }
-
-    public function actionDynamicCity() {
-        $dataArray = ArrayHelper::map(\common\models\dbworld\Cities::find()->where("stateId = " . $_GET["stateId"])->all(), 'cityId', 'cityName');
-        echo $this->renderPartial('ddl', [
-            'dataArray' => $dataArray,
-            'prompt' => '-- Select City --',
-            'name' => 'Search[cityId]',
-            'onChange' => 'dynamicDistrict(this)'
-        ]);
-    }
-
-    public function actionDynamicDistrict() {
-        $dataArray = ArrayHelper::map(\common\models\dbworld\District::find()->where("cityId = " . $_GET["cityId"])->all(), 'districtId', 'localName');
-        echo $this->renderPartial('ddl', [
-            'dataArray' => $dataArray,
-            'prompt' => '-- Select District --',
-            'name' => 'Search[disctictId]'
-        ]);
-    }
-
     // CONTROLLER 15/07/2016 Create By Taninut
     public function actionChildStates() {
         $out = [];
