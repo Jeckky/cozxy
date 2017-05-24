@@ -31,7 +31,7 @@ MyAccountAsset::register($this);
                     <?= $this->render('_order_history') ?>
                 </div>
                 <div role="tabpanel" class="tab-pane fade in" id="wish-list">
-                    <?= $this->render('_wish_list') ?>
+                    <?= $this->render('_wish_list', compact('wishList')) ?>
                 </div>
                 <div role="tabpanel" class="tab-pane fade in" id="tracking">
                     <?= $this->render('_tracking') ?>

@@ -10,6 +10,8 @@ use common\models\costfit\Address;
 use common\models\costfit\User;
 use common\models\costfit\UserPoint;
 use common\models\costfit\TopUp;
+use common\models\costfit\Wishlist;
+use common\models\costfit\ProductSuppliers;
 
 /**
  * ContactForm is the model behind the contact form.
@@ -73,6 +75,32 @@ class DisplayMyAccount extends Model {
             'totalMoney' => isset($dataUserPoint['updateDateTime']) ? $dataUserPoint['updateDateTime'] : '-',
             'method' => isset($dataUserPoint['title']) ? $dataUserPoint['title'] : '-',
         ];
+        return $products;
+    }
+
+    public static function myAccountWishList($status, $type) {
+        $products = [];
+        $dataWishlist = Wishlist::find()->where("userId =48")->orderBy('wishlistId DESC')->all();
+        foreach ($dataWishlist as $items) {
+            $dataProductSuppliers = ProductSuppliers::find()->where('productSuppId=' . $items->productId)->all();
+            foreach ($dataProductSuppliers as $value) {
+                $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
+                $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
+                $price_s = number_format($value->price, 2);
+                $price = number_format($value->price, 2);
+                $products[$value->productSuppId] = [
+                    'wishlistId' => $items->wishlistId,
+                    'productSuppId' => $value->productSuppId,
+                    'image' => Yii::$app->homeUrl . $productImages->imageThumbnail1,
+                    'brand' => isset($value->brand) ? $value->brand->title : '',
+                    'url' => '/product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
+                    'brand' => isset($value->brand) ? $value->brand->title : '',
+                    'title' => $value->title,
+                    'price_s' => $productPrice->price,
+                    'price' => $productPrice->price,
+                ];
+            }
+        }
         return $products;
     }
 

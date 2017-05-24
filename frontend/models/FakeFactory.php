@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\db\ActiveRecord;
 use yii\data\ActiveDataProvider;
+use common\models\costfit\ProductSuppliers;
 
 /**
  * ContactForm is the model behind the contact form.

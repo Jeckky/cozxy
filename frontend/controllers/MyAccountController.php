@@ -20,7 +20,8 @@ class MyAccountController extends \yii\web\Controller {
         $billingAddress = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountBillingAddress('', \common\models\costfit\Address::TYPE_BILLING)]);
         $personalDetails = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountPersonalDetails('', '')]);
         $cozxyCoin = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountCozxyCoin('', '')]);
-        return $this->render('index', compact('billingAddress', 'personalDetails', 'cozxyCoin'));
+        $wishList = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountWishList('', '')]);
+        return $this->render('index', compact('billingAddress', 'personalDetails', 'cozxyCoin', 'wishList'));
     }
 
 }

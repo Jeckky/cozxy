@@ -3,4 +3,4 @@
 /* @var $this yii\web\View */
 ?>
 
-<?= $this->render('@app/themes/cozxy/layouts/my-account/_my_account', compact('billingAddress', 'personalDetails', 'cozxyCoin')) ?>
+<?= $this->render('@app/themes/cozxy/layouts/my-account/_my_account', compact('billingAddress', 'personalDetails', 'cozxyCoin', 'wishList')) ?>
