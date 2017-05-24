@@ -29,8 +29,6 @@ class SignupForm extends Model {
      */
     public function rules() {
         return [
-            //['email', 'uniqueEmail'],
-            //['email', 'email'],
             ['firstname', 'required'],
             ['lastname', 'required'],
             ['username', 'trim'],
@@ -39,9 +37,9 @@ class SignupForm extends Model {
             ['username', 'string', 'min' => 2, 'max' => 255],
             ['email', 'trim'],
             ['email', 'required'],
-            // ['email', 'email'],
+            ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            //['email', 'unique', 'targetClass' => '\common\models\costfit\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
             //['email', 'unique'],
@@ -51,10 +49,6 @@ class SignupForm extends Model {
             ['rePassword', 'required', 'message' => 'Re Password must be equal to "New Password".'],
             [['firstname', 'lastname', 'email', 'password', 'confirmPassword'], 'required', 'on' => self::COZXY_REGIS],
             ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"],
-            ['email', 'email', 'message' => "The email isn't correct"],
-            [
-                'email', 'uniqueEmail'
-            ]
         ];
     }
 
@@ -64,23 +58,15 @@ class SignupForm extends Model {
         ];
     }
 
-    public function uniqueEmail($attribute, $email) {
-
-        $user = static::findOne(['email' => Yii::$app->encrypter->encrypt($email)]);
-        if (count($user) > 0) {
-            $this->addError($attribute, 'This email is already in use".');
-        }
-    }
-
     /**
      * Signs user up.
      *
      * @return User|null the saved model or null if saving fails
      */
     public function signup() {
-        /* if (!$this->validate()) {
-          return null;
-          } */
+        if (!$this->validate()) {
+            return null;
+        }
 
         $user = new User();
         $user->firstname = $this->firstname;

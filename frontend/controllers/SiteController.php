@@ -92,6 +92,14 @@ class SiteController extends Controller {
         }
 
         $model = new LoginForm();
+
+        /* if ($model->load(Yii::$app->request->post())) {
+          echo '<pre>';
+          print_r(Yii::$app->request->post());
+          exit();
+          } */
+
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
 
             \common\models\costfit\User::updateAll(['lastvisitDate' => new \yii\db\Expression("NOW()")], ['userId' => Yii::$app->user->identity->userId]);

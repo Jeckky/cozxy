@@ -14,7 +14,6 @@ use yii\bootstrap\ActiveForm;
                 <div class="col-lg-8 col-lg-offset-2">
                     <p class="size18">CREATE ACCOUNT</p>
                     <div class="size14 hr-margin">&nbsp;</div>
-                    <!--<form method="post" action="">-->
                     <?php $form = ActiveForm::begin(['id' => 'register-form', 'action' => Yii::$app->homeUrl . 'site/signup', 'options' => ['class' => 'registr-form']]); ?>
                     <div class="row">
                         <div class="col-md-6">
@@ -30,7 +29,7 @@ use yii\bootstrap\ActiveForm;
                             <?= $form->field($model, 'password')->passwordInput(['class' => 'fullwidth', 'placeholder' => 'PASSWORD'])->label(false); ?>
                         </div>
                         <div class="col-md-6">
-                            <?= $form->field($model, 'confirmPassword')->passwordInput(['class' => 'fullwidth', 'placeholder' => 'CONFIRM PASSWORD"'])->label(false); ?>
+                            <?= $form->field($model, 'confirmPassword')->passwordInput(['class' => 'fullwidth', 'placeholder' => 'CONFIRM PASSWORD'])->label(false); ?>
                         </div>
                     </div>
                     <div class="row">
@@ -46,8 +45,7 @@ use yii\bootstrap\ActiveForm;
                         </div>
                         <div class="col-md-6"><input type="submit" class="btn-yellow fullwidth" value="CREATE ACCOUNT"></div>
                     </div>
-                    <?php ActiveForm::end(); ?>
-                    <!--</form>-->
+                    <?php ActiveForm::end(); ?> 
                 </div>
             </div>
         </div>
