@@ -12,6 +12,7 @@ use common\models\costfit\UserPoint;
 use common\models\costfit\TopUp;
 use common\models\costfit\Wishlist;
 use common\models\costfit\ProductSuppliers;
+use common\models\costfit\Order;
 
 /**
  * ContactForm is the model behind the contact form.
@@ -100,6 +101,21 @@ class DisplayMyAccount extends Model {
                     'price' => $productPrice->price,
                 ];
             }
+        }
+        return $products;
+    }
+
+    public static function myAccountOrderHistory($status, $type) {
+        $products = [];
+        $dataOrder = Order::find()
+        ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "")->all();
+        foreach ($dataOrder as $items) {
+            $products[$value->orderId] = [
+                'orderNo' => $value->orderNo,
+                'status' => $value->getStatusTextEn($value->status),
+                'updateDateTime' => $value->updateDateTime,
+                'action' => '',
+            ];
         }
         return $products;
     }

@@ -28,7 +28,7 @@ MyAccountAsset::register($this);
                     <?= $this->render('_account_detail', compact('billingAddress', 'personalDetails', 'cozxyCoin')) ?>
                 </div>
                 <div role="tabpanel" class="tab-pane fade in" id="order-history">
-                    <?= $this->render('_order_history') ?>
+                    <?= $this->render('_order_history', compact('orderHistory')) ?>
                 </div>
                 <div role="tabpanel" class="tab-pane fade in" id="wish-list">
                     <?= $this->render('_wish_list', compact('wishList')) ?>
