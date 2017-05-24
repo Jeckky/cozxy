@@ -11,12 +11,13 @@ use yii\base\Model;
 class LoginForm extends Model {
 
     public $email;
-    public $username;
+    //public $username;
     public $password;
     public $rememberMe = true;
     private $_user;
-    public $firstname;
-    public $lastname;
+
+    //public $firstname;
+    // public $lastname;
 
     /**
      * @inheritdoc
@@ -24,7 +25,7 @@ class LoginForm extends Model {
     public function rules() {
         return [
             // username and password are both required
-            [['email', 'password', 'firstname', 'lastname'], 'required'],
+            [['email', 'password'], 'required'],
             ['email', 'email'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],

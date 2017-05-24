@@ -22,7 +22,15 @@ use yii\helpers\Html;
                     <div class="col-xs-3"><?= Html::a('&nbsp;', ['/my-account'], ['class' => 'u-menu-1']) ?></div>
                     <div class="col-xs-3"><a href="my-account?act=2" class="u-menu-2">&nbsp;</a></div>
                     <div class="col-xs-3"><?= Html::a('&nbsp;', ['/cart'], ['class' => 'u-menu-3']) ?></div>
-                    <div class="col-xs-3"><?= Html::a('&nbsp;', ['/site/login'], ['class' => 'u-menu-4']) ?></div>
+                    <div class="col-xs-3">
+                        <?php
+                        if (isset(Yii::$app->user->identity->userId)) {
+                            echo Html::a('&nbsp;', ['/site/logout'], ['class' => 'u-menu-4']);
+                        } else {
+                            echo Html::a('&nbsp;', ['/site/login'], ['class' => 'u-menu-4']);
+                        }
+                        ?>
+                    </div>
                 </div>
             </div>
             <div class="col-md-6 col-sm-12 col-xs-12"><div class="rela" style="height: 64px;">
