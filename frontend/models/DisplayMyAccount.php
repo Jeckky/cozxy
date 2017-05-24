@@ -9,6 +9,7 @@ use yii\data\ActiveDataProvider;
 use common\models\costfit\Address;
 use common\models\costfit\User;
 use common\models\costfit\UserPoint;
+use common\models\costfit\TopUp;
 
 /**
  * ContactForm is the model behind the contact form.
@@ -59,6 +60,10 @@ class DisplayMyAccount extends Model {
     public static function myAccountCozxyCoin($status, $type) {
         $products = [];
         $dataUserPoint = UserPoint::find()->where('userId=' . \Yii::$app->user->id)->one();
+        $dataTopUp = TopUp::find()
+        ->select('*')
+        ->join("LEFT JOIN", "payment_method", "payment_method.paymentMethodId = top_up.paymentMethod")
+        ->where('top_up.userId =' . \Yii::$app->user->id)->orderBy('top_up.updateDateTime desc')->one();
         $products[$dataUserPoint['userPointId']] = [
             'userPointId' => $dataUserPoint['userPointId'],
             'userId' => isset($dataUserPoint['userId']) ? $dataUserPoint['userId'] : '-',
@@ -66,6 +71,7 @@ class DisplayMyAccount extends Model {
             'totalPoint' => isset($dataUserPoint['totalPoint']) ? number_format($dataUserPoint['totalPoint'], 2) : '0',
             'totalMoney' => isset($dataUserPoint['totalMoney']) ? number_format($dataUserPoint['totalMoney'], 2) : '0',
             'totalMoney' => isset($dataUserPoint['updateDateTime']) ? $dataUserPoint['updateDateTime'] : '-',
+            'method' => isset($dataUserPoint['title']) ? $dataUserPoint['title'] : '-',
         ];
         return $products;
     }
