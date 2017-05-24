@@ -19,7 +19,13 @@ use yii\helpers\Html;
             <div class="col-md-3 col-sm-6 col-xs-12"><a href="<?= Url::to(['/']) ?>"><?= Html::img(Url::home() . 'imgs/cozxy.png') ?></a></div>
             <div class="col-md-3 col-sm-6 col-xs-12 pull-right text-right">
                 <div class="row user-menu">
-                    <div class="col-xs-3"><?= Html::a('&nbsp;', ['/my-account'], ['class' => 'u-menu-1']) ?></div>
+                    <?php
+                    if (isset(Yii::$app->user->identity->userId)) {
+                        echo '<div class="col-xs-3">' . Html::a('&nbsp;', ['/my-account'], ['class' => 'u-menu-1']) . '</div>';
+                    } else {
+                        echo '';
+                    }
+                    ?>
                     <div class="col-xs-3"><a href="my-account?act=2" class="u-menu-2">&nbsp;</a></div>
                     <div class="col-xs-3"><?= Html::a('&nbsp;', ['/cart'], ['class' => 'u-menu-3']) ?></div>
                     <div class="col-xs-3">
