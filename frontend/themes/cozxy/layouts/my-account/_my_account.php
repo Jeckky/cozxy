@@ -1,4 +1,5 @@
 <?php
+
 use frontend\assets\MyAccountAsset;
 
 MyAccountAsset::register($this);
@@ -24,16 +25,16 @@ MyAccountAsset::register($this);
         <div class="col-xs-12 bg-white myData">
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="account-detail">
-                    <?=$this->render('_account_detail')?>
+                    <?= $this->render('_account_detail', compact('billingAddress', 'personalDetails', 'cozxyCoin')) ?>
                 </div>
                 <div role="tabpanel" class="tab-pane fade in" id="order-history">
-                    <?=$this->render('_order_history')?>
+                    <?= $this->render('_order_history') ?>
                 </div>
                 <div role="tabpanel" class="tab-pane fade in" id="wish-list">
-                    <?=$this->render('_wish_list')?>
+                    <?= $this->render('_wish_list') ?>
                 </div>
                 <div role="tabpanel" class="tab-pane fade in" id="tracking">
-                    <?=$this->render('_tracking')?>
+                    <?= $this->render('_tracking') ?>
                 </div>
             </div>
         </div>

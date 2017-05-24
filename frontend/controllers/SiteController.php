@@ -2,7 +2,6 @@
 
 namespace frontend\controllers;
 
-use frontend\models\FakeFactory;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\data\ArrayDataProvider;
@@ -15,6 +14,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use frontend\models\FakeFactory;
 use common\models\costfit\Content;
 use common\models\costfit\ContentGroup;
 
