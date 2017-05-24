@@ -202,7 +202,7 @@ $this->title = 'My Yii Application';
                     <?php for ($i = 1; $i <= 6; $i++): ?>
                         <div class="col-xs-12">
                             <div class="product-other">
-                                <a href="#"><img src="imgs/other0<?= $i ?>.jpg" alt="Other Product" class="fullwidth"></a>
+                                <a href="/content"><img src="imgs/other0<?= $i ?>.jpg" alt="Other Product" class="fullwidth"></a>
                             </div>
                         </div>
                     <?php endfor; ?>
