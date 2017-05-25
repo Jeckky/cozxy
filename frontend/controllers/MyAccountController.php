@@ -26,7 +26,16 @@ class MyAccountController extends \yii\web\Controller {
     }
 
     public function actionEditPersonalDetail() {
-        return $this->render('@app/themes/cozxy/layouts/my-account/_form_personal_detail');
+        $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
+        $model->scenario = 'editinfo'; // calling scenario of update
+        //echo '<pre>';
+        //print_r($model->scenario);
+        //exit();
+        if ($model->load(Yii::$app->request->post())) {
+
+        } else {
+            return $this->render('@app/themes/cozxy/layouts/my-account/_form_personal_detail', compact('model'));
+        }
     }
 
     public function actionNewBilling() {

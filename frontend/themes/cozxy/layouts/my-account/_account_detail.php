@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        Personal Details<?= Html::a('Edit', Url::to(['my-account/edit-personal-detail']), ['class' => 'pull-right btn-g999 p-edit']) ?>
+        Personal Details<?= \yii\bootstrap\Html::a('Edit', \yii\helpers\Url::to(['my-account/edit-personal-detail']), ['class' => 'pull-right btn-g999 p-edit']) ?>
     </div>
     <div class="col-xs-12 size6">&nbsp;</div>
 </div>
@@ -75,7 +75,7 @@
 <div class="row">
     <div class="col-md-12">
         Billing Address
-        <?= Html::a('+ New Billing Address', Url::to(['my-account/new-billing']), ['class' => 'pull-right btn-g999 p-edit']) ?>
+        <?= \yii\bootstrap\Html::a('+ New Billing Address', \yii\helpers\Url::to(['my-account/new-billing']), ['class' => 'pull-right btn-g999 p-edit']) ?>
     </div>
     <div class="col-xs-12 size6">&nbsp;</div>
 </div>

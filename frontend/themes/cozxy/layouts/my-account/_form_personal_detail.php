@@ -1,7 +1,8 @@
 <?php
+
 use kartik\select2\Select2;
 use yii\helpers\Url;
-
+use yii\bootstrap\ActiveForm;
 ?>
 
 <div class="container login-box">
@@ -13,40 +14,44 @@ use yii\helpers\Url;
         <div class="col-xs-12 bg-white">
             <div class="size12 size10-xs">&nbsp;</div>
 
-            <form method="post" action="" class="login-box">
-                <div class="row">
-                    <div class="col-md-6">
-                        <p>First Name</p>
-                        <input type="text" name="firstname" class="fullwidth" placeholder="FIRSTNAME" required></div>
-                    <div class="col-md-6">
-                        <p>Last Name</p>
-                        <input type="text" name="lastname" class="fullwidth" placeholder="LASTNAME" required></div>
+            <?php $form = ActiveForm::begin(['id' => 'register-form', 'action' => Yii::$app->homeUrl . 'my-account/edit-personal-detail', 'options' => ['class' => 'registr-form']]); ?>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>First Name</p>
+                    <?= $form->field($model, 'firstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <p>Email</p>
-                        <input type="text" name="username" class="fullwidth" placeholder="EMAIL ADDRESS" required>
-                    </div>
-                    <div class="col-md-4">
-                        <p>Birthday</p>
-                        <input type="number" name="dd" min="1" max="31" placeholder="31" style="width: 26%">
-                        <input type="number" name="mm" min="1" max="12" placeholder="12" style="width: 26%">
-                        <input type="number" name="yyyy" min="1800" max="2020" placeholder="1999" style="width: 40%">
-                    </div>
-                    <div class="col-md-4">
-                        <p>Gender</p>
-                        <input type="radio" name="gender" value="M"> &nbsp; Male &nbsp;
-                        <input type="radio" name="gender" value="F"> &nbsp; Female &nbsp;
-                    </div>
+                <div class="col-md-6">
+                    <p>Last Name</p>
+                    <?= $form->field($model, 'lastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LASTNAME'])->label(false); ?>
                 </div>
-                <div class="row">
-                    <div class="col-xs-12 text-right">
-                        <a href="<?= Url::to(['/my-account']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
-                        &nbsp;
-                        <a href="<?= Url::to(['/checkout/summary']) ?>" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">SAVE</a>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Email</p>
+                    <?= $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'EMAIL ADDRESS'])->label(false); ?>
                 </div>
-            </form>
+            </div>
+            <div class="row">
+
+                <div class="col-md-4">
+                    <p>Birthday</p>
+                    <input type="number" name="User[dd]" min="1" max="31" placeholder="31" style="width: 26%">
+                    <input type="number" name="User[mm]" min="1" max="12" placeholder="12" style="width: 26%">
+                    <input type="number" name="User[yyyy]" min="1800" max="2020" placeholder="1999" style="width: 40%">
+                </div>
+                <div class="col-md-8">
+                    <p>Gender</p>
+                    <?= $form->field($model, 'gender', ['radioTemplate' => '<label class="gender-head">{label}</label><label class="signup-radio">{input}</label>'])->inline()->radioList([1 => 'Male', 0 => 'Female'], ['separator' => '', 'tabindex' => 3])->label(false); ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 text-right">
+                    <a href="<?= Url::to(['/my-account']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
+                    &nbsp;
+                    <a href="<?//= Url::to(['/checkout/summary']) ?>" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">SAVE</a>
+                </div>
+            </div>
+            <?php ActiveForm::end(); ?></form>
 
             <div class="size18 size14-xs">&nbsp;</div>
         </div>
