@@ -66,16 +66,37 @@ use kartik\depdrop\DepDrop;
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
+                        <label for="exampleInputEmail1">Countries</label>
+                        <?php
+                        echo $form->field($model, 'countryId')->widget(kartik\select2\Select2::classname(), [
+                            //'options' => ['id' => 'address-countryid'],
+                            'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'localName'),
+                            'pluginOptions' => [
+                                'placeholder' => 'Select...',
+                                'loadingText' => 'Loading country ...',
+                            ],
+                            'options' => ['placeholder' => 'Select country ...'],
+                        ])->label(FALSE);
+                        ?>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
                         <label for="exampleInputEmail1">Province</label>
                         <?php
-                        echo $form->field($model, 'provinceId')->widget(kartik\select2\Select2::classname(), [
-                            //'options' => ['id' => 'address-countryid'],
-                            'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->asArray()->all(), 'stateId', 'localName'),
+                        echo $form->field($model, 'provinceId')->widget(DepDrop::classname(), [
+                            'data' => [$model->provinceId => $model->provinceId],
+                            'options' => ['placeholder' => 'Select ...'],
+                            //'options' => ['id' => 'address-provinceidxxx'],
+                            'type' => DepDrop::TYPE_SELECT2,
+                            'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                             'pluginOptions' => [
-                                'placeholder' => 'Select Province',
+                                //'initialize' => true,
+                                'depends' => ['address-countryid'],
+                                'url' => Url::to(['child-states-address']),
                                 'loadingText' => 'Loading province ...',
-                            ],
-                            'options' => ['placeholder' => 'Select province ...'],
+                                'params' => ['input-type-1', 'input-type-2', 'input-type-3']
+                            ]
                         ])->label(FALSE);
                         ?>
                     </div>
@@ -111,8 +132,8 @@ use kartik\depdrop\DepDrop;
                             'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                             'pluginOptions' => [
                                 'initialize' => true,
-                                'depends' => ['address-provinceid'],
-                                'url' => Url::to(['child-amphur-address']),
+                                'depends' => ['address-amphurid'],
+                                'url' => Url::to(['child-district-address']),
                                 'loadingText' => 'Loading district ...',
                                 'params' => ['input-type-11', 'input-type-22', 'input-type-33']
                             ]

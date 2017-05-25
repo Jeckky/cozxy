@@ -56,7 +56,23 @@ class MyAccountController extends MasterController {
 
     public function actionNewBilling() {
         $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
-        //$model->type = \common\models\costfit\Address::TYPE_BILLING; // default Address First
+        if (isset($_POST['Address'])) {
+            $model->attributes = $_POST['Address'];
+            if ($_POST["Address"]['isDefault']) {
+                \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_BILLING]);
+                $model->isDefault = 1;
+            }
+            $model->userId = Yii::$app->user->id;
+            $model->type = \common\models\costfit\Address::TYPE_BILLING;
+            $model->createDateTime = new \yii\db\Expression("NOW()");
+            if ($model->save(FALSE)) {
+                return $this->redirect(['/my-account']);
+            }
+        }
+        if (!isset($model->isDefault)) {
+            $model->isDefault = 0;
+        }
+
         return $this->render('@app/themes/cozxy/layouts/my-account/_form_billing', compact('model'));
     }
 
@@ -64,9 +80,7 @@ class MyAccountController extends MasterController {
         $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
         $model->scenario = 'profile'; // calling scenario of update
         if (isset($_POST["User"])) {
-            //echo '<pre>';
-            //print_r($_POST["User"]);
-            //exit();
+
             $editChangePassword = \frontend\models\DisplayMyAccount::myAccountChangePassword($_POST["User"]);
             if ($editChangePassword == TRUE) {
                 return $this->redirect(['/my-account']);
