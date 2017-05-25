@@ -29,7 +29,8 @@ class CozxyAsset extends AssetBundle {
     public $js = [
         'js/jquery.js',
         'js/bootstrap.min.js',
-        'js/cozxy.js'
+        'js/cozxy.js',
+        'js/cozxy.reform.js'
     ];
 
 }

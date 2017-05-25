@@ -11,7 +11,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use frontend\models\DisplayMyAccount;
 
-class MyAccountController extends \yii\web\Controller {
+class MyAccountController extends MasterController {
 
     public function actionIndex() {
         if (Yii::$app->user->isGuest) {
@@ -55,7 +55,9 @@ class MyAccountController extends \yii\web\Controller {
     }
 
     public function actionNewBilling() {
-        return $this->render('@app/themes/cozxy/layouts/my-account/_form_billing');
+        $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
+        //$model->type = \common\models\costfit\Address::TYPE_BILLING; // default Address First
+        return $this->render('@app/themes/cozxy/layouts/my-account/_form_billing', compact('model'));
     }
 
     public function actionChangePassword() {

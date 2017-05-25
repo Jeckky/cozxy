@@ -1,6 +1,9 @@
 <?php
+
 use kartik\select2\Select2;
 use yii\helpers\Url;
+use yii\bootstrap\ActiveForm;
+use kartik\depdrop\DepDrop;
 ?>
 
 <div class="container login-box">
@@ -11,68 +14,165 @@ use yii\helpers\Url;
         </div>
         <div class="col-xs-12 bg-white">
             <div class="size12 size10-xs">&nbsp;</div>
+            <?php
+            $form = ActiveForm::begin([
+                'id' => 'default-shipping-address',
+                'options' => ['class' => 'space-bottom'],
+            ]);
+            ?>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Billing type *</label>
+                <div class="select-style">
+                    <select name="co-organization" id="co-country" class="valid col-md-12" onchange="organization(this)">
+                        <option value="personal">Individual </option>
+                        <option value="company">Legal Entity (Company)</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Compnay (option)</label>
+                            <?php echo $form->field($model, 'company')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'COMPANY'])->label(FALSE); ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Tax </label>
+                            <?php echo $form->field($model, 'tax')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'TAX'])->label(FALSE); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <form method="post" action="" class="login-box">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">First Name</label>
+                        <?= $form->field($model, 'firstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Last Name</label>
+                        <?= $form->field($model, 'lastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LASTNAME'])->label(false); ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputEmail1">Address</label>
+                <?= $form->field($model, 'address')->textarea(['class' => 'fullwidth', 'placeholder' => 'ADDRESS'])->label(false); ?>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Province</label>
+                        <?php
+                        echo $form->field($model, 'provinceId')->widget(kartik\select2\Select2::classname(), [
+                            //'options' => ['id' => 'address-countryid'],
+                            'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->asArray()->all(), 'stateId', 'localName'),
+                            'pluginOptions' => [
+                                'placeholder' => 'Select Province',
+                                'loadingText' => 'Loading province ...',
+                            ],
+                            'options' => ['placeholder' => 'Select province ...'],
+                        ])->label(FALSE);
+                        ?>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">City</label>
+                        <?=
+                        $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
+                            //'data' => [9 => 'Savings'],
+                            'options' => ['placeholder' => 'Select ...'],
+                            'type' => DepDrop::TYPE_SELECT2,
+                            'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                            'pluginOptions' => [
+                                'initialize' => true,
+                                'depends' => ['address-provinceid'],
+                                'url' => Url::to(['child-amphur-address']),
+                                'loadingText' => 'Loading amphur ...',
+                                'params' => ['input-type-11', 'input-type-22', 'input-type-33']
+                            ]
+                        ])->label(FALSE);
+                        ?>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">District</label>
+                        <?=
+                        $form->field($model, 'districtId')->widget(DepDrop::classname(), [
+                            //'data' => [9 => 'Savings'],
+                            'options' => ['placeholder' => 'Select ...'],
+                            'type' => DepDrop::TYPE_SELECT2,
+                            'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                            'pluginOptions' => [
+                                'initialize' => true,
+                                'depends' => ['address-provinceid'],
+                                'url' => Url::to(['child-amphur-address']),
+                                'loadingText' => 'Loading district ...',
+                                'params' => ['input-type-11', 'input-type-22', 'input-type-33']
+                            ]
+                        ])->label(FALSE);
+                        ?>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Zipcode</label>
+                        <?php
+                        echo $form->field($model, 'zipcode')->widget(DepDrop::classname(), [
+                            //'data' => [12 => 'Savings A/C 2'],
+                            'options' => ['placeholder' => 'Select ...'],
+                            'type' => DepDrop::TYPE_SELECT2,
+                            'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                            'pluginOptions' => [
+                                'depends' => ['address-districtid'],
+                                //'initialize' => true,
+                                //'initDepends' => ['address-countryid'],
+                                'url' => Url::to(['child-zipcode-address']),
+                                'loadingText' => 'Loading zipcode ...',
+                                'params' => ['input-type-14']
+                            ]
+                        ])->label(FALSE);
+                        ?>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="row">
-                    <div class="col-md-6">
+
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">First Name</label>
-                            <input type="text" name="firstname" class="fullwidth" placeholder="FIRSTNAME" required>
+                            <label for="exampleInputEmail1">Email</label>
+                            <?php echo $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'Email'])->label(false); ?>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Last Name</label>
-                            <input type="text" name="lastname" class="fullwidth" placeholder="LASTNAME" required>
+                            <label for="exampleInputEmail1">Mobile Number</label>
+                            <?php echo $form->field($model, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'Mobile Number'])->label(false); ?>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Compnay (option)</label>
-                    <input type="text" name="address" class="fullwidth" placeholder="COMPANY" required>
+                    <label for="exampleInputEmail1">Default address</label>
+                    <?php echo $form->field($model, 'isDefault')->radioList([1 => 'Yes', 0 => 'No'], ['itemOptions' => ['class' => 'radio']])->label(false); ?>
                 </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Address</label>
-                    <input type="text" name="address" class="fullwidth" placeholder="ADDRESS" required>
+
+            </div>
+            <div class="row">
+                <div class="col-xs-12 text-right">
+                    <a href="<?= Url::to(['/my-account']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
+                    &nbsp;
+                    <!--<a href="<?//= Url::to(['/checkout/summary']) ?>" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">SAVE</a>-->
+                    <input type="submit" value="SAVE"  class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Province</label>
-                            <?= Select2::widget([
-                                'name' => 'province',
-                                'value' => '',
-                                'data' => ['Bangkok', 'Bangkok2', 'Bangkok3'],
-                                'options' => ['placeholder' => 'Select Province']
-                            ]) ?>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">City</label>
-                            <?= Select2::widget([
-                                'name' => 'city',
-                                'value' => '',
-                                'data' => ['Bang Khen', 'Bang Khen2', 'Bang Khen3'],
-                                'options' => ['placeholder' => 'Select City']
-                            ]) ?>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Zipcode</label>
-                            <input type="text" name="zip" class="fullwidth" placeholder="ZIP CODE" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12 text-right">
-                        <a href="<?= Url::to(['/my-account']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
-                        &nbsp;
-                        <a href="<?= Url::to(['/checkout/summary']) ?>" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">SAVE</a>
-                    </div>
-                </div>
-            </form>
+            </div>
+            <?php ActiveForm::end(); ?>
 
             <div class="size18 size14-xs">&nbsp;</div>
         </div>
