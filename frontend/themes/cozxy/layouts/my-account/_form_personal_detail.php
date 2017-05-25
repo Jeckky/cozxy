@@ -35,9 +35,9 @@ use yii\bootstrap\ActiveForm;
 
                 <div class="col-md-4">
                     <p>Birthday</p>
-                    <input type="number" name="User[dd]" min="1" max="31" placeholder="31" style="width: 26%">
-                    <input type="number" name="User[mm]" min="1" max="12" placeholder="12" style="width: 26%">
-                    <input type="number" name="User[yyyy]" min="1800" max="2020" placeholder="1999" style="width: 40%">
+                    <input type="number" name="User[dd]" min="1" max="31" placeholder="31" style="width: 26%" value="<?php echo (int) $historyBirthDate['day']; ?>">
+                    <input type="number" name="User[mm]" min="1" max="12" placeholder="12" style="width: 26%" value="<?php echo (int) $historyBirthDate['month']; ?>">
+                    <input type="number" name="User[yyyy]" min="1800" max="2020" placeholder="1999" style="width: 40%" value="<?php echo $historyBirthDate['year']; ?>">
                 </div>
                 <div class="col-md-8">
                     <p>Gender</p>
@@ -48,7 +48,8 @@ use yii\bootstrap\ActiveForm;
                 <div class="col-xs-12 text-right">
                     <a href="<?= Url::to(['/my-account']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
                     &nbsp;
-                    <a href="<?//= Url::to(['/checkout/summary']) ?>" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">SAVE</a>
+                    <input type="submit" value="SAVE"  class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">
+                    <!--<a href="<?//= Url::to(['/checkout/summary']) ?>" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">SAVE</a>-->
                 </div>
             </div>
             <?php ActiveForm::end(); ?></form>
