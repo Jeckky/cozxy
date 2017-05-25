@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        Personal Details<a href="javascript:edit_profile(1);" class="pull-right btn-g999 p-edit">Edit</a>
+        Personal Details<?= Html::a('Edit', Url::to(['my-account/edit-personal-detail']), ['class' => 'pull-right btn-g999 p-edit']) ?>
     </div>
     <div class="col-xs-12 size6">&nbsp;</div>
 </div>
@@ -75,7 +75,7 @@
 <div class="row">
     <div class="col-md-12">
         Billing Address
-        <a href="#" class="pull-right btn-g999 p-edit" data-toggle="modal" data-target=".bs-example-modal-lg">+ New Billing Address</a>
+        <?= Html::a('+ New Billing Address', Url::to(['my-account/new-billing']), ['class' => 'pull-right btn-g999 p-edit']) ?>
     </div>
     <div class="col-xs-12 size6">&nbsp;</div>
 </div>

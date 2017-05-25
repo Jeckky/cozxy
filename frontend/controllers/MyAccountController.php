@@ -25,4 +25,16 @@ class MyAccountController extends \yii\web\Controller {
         return $this->render('index', compact('billingAddress', 'personalDetails', 'cozxyCoin', 'wishList', 'orderHistory'));
     }
 
+    public function actionEditPersonalDetail() {
+        return $this->render('@app/themes/cozxy/layouts/my-account/_form_personal_detail');
+    }
+
+    public function actionNewBilling() {
+        return $this->render('@app/themes/cozxy/layouts/my-account/_form_billing');
+    }
+
+    public function actionChangePassword() {
+        return $this->render('@app/themes/cozxy/layouts/my-account/_form_change_password');
+    }
+
 }
