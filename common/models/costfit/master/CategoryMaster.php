@@ -11,11 +11,14 @@ use Yii;
     * @property string $title
     * @property string $description
     * @property string $image
-    * @property string $parentId
+    * @property integer $parentId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-*/
+    *
+            * @property Product[] $products
+            * @property ProductGroupCategory[] $productGroupCategories
+    */
 class CategoryMaster extends \common\models\ModelMaster
 {
 /**
@@ -57,4 +60,20 @@ return [
     'updateDateTime' => Yii::t('category', 'Update Date Time'),
 ];
 }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getProducts()
+    {
+    return $this->hasMany(ProductMaster::className(), ['categoryId' => 'categoryId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getProductGroupCategories()
+    {
+    return $this->hasMany(ProductGroupCategoryMaster::className(), ['categoryId' => 'categoryId']);
+    }
 }

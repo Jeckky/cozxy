@@ -7,18 +7,18 @@ use Yii;
 /**
 * This is the model class for table "order_item_packing".
 *
-    * @property string $orderItemPackingId
-    * @property string $orderItemId
-    * @property string $pickingItemsId
+    * @property integer $orderItemPackingId
+    * @property integer $orderItemId
+    * @property integer $pickingItemsId
     * @property string $bagNo
-    * @property string $quantity
+    * @property integer $quantity
     * @property integer $status
     * @property integer $type
     * @property string $shipDate
     * @property string $remark
     * @property integer $userId
-    * @property string $packer
-    * @property string $shipper
+    * @property integer $packer
+    * @property integer $shipper
     * @property string $createDateTime
     * @property string $updateDateTime
     * @property string $lastvisitDate

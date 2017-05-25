@@ -9,7 +9,7 @@ use Yii;
 *
     * @property string $productId
     * @property string $userId
-    * @property string $productGroupId
+    * @property string $parentId
     * @property string $brandId
     * @property string $categoryId
     * @property string $isbn
@@ -37,8 +37,15 @@ use Yii;
     * @property string $approveCreateBy
     * @property string $approvecreateDateTime
     * @property string $receiveType
+    * @property string $productGroupTemplateId
     *
+            * @property ProductGroupTemplate $productGroupTemplate
+            * @property Category $category
+            * @property ProductGroupCategory[] $productGroupCategories
+            * @property ProductGroupOption[] $productGroupOptions
+            * @property ProductGroupOptionValue[] $productGroupOptionValues
             * @property ProductPromotion[] $productPromotions
+            * @property ProductSuppliersOption[] $productSuppliersOptions
     */
 class ProductMaster extends \common\models\ModelMaster
 {
@@ -56,7 +63,7 @@ return 'product';
 public function rules()
 {
 return [
-            [['userId', 'productGroupId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'productSuppId', 'approveCreateBy'], 'integer'],
+            [['userId', 'parentId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'productSuppId', 'approveCreateBy', 'productGroupTemplateId'], 'integer'],
             [['isbn', 'shortDescription', 'description', 'specification'], 'string'],
             [['title', 'createDateTime'], 'required'],
             [['width', 'height', 'depth', 'weight', 'price'], 'number'],
@@ -66,6 +73,8 @@ return [
             [['tags'], 'string', 'max' => 255],
             [['approve'], 'string', 'max' => 10],
             [['receiveType'], 'string', 'max' => 45],
+            [['productGroupTemplateId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductGroupTemplateMaster::className(), 'targetAttribute' => ['productGroupTemplateId' => 'productGroupTemplateId']],
+            [['categoryId'], 'exist', 'skipOnError' => true, 'targetClass' => CategoryMaster::className(), 'targetAttribute' => ['categoryId' => 'categoryId']],
         ];
 }
 
@@ -77,7 +86,7 @@ public function attributeLabels()
 return [
     'productId' => Yii::t('product', 'Product ID'),
     'userId' => Yii::t('product', 'User ID'),
-    'productGroupId' => Yii::t('product', 'Product Group ID'),
+    'parentId' => Yii::t('product', 'Parent ID'),
     'brandId' => Yii::t('product', 'Brand ID'),
     'categoryId' => Yii::t('product', 'Category ID'),
     'isbn' => Yii::t('product', 'Isbn'),
@@ -105,8 +114,49 @@ return [
     'approveCreateBy' => Yii::t('product', 'Approve Create By'),
     'approvecreateDateTime' => Yii::t('product', 'Approvecreate Date Time'),
     'receiveType' => Yii::t('product', 'Receive Type'),
+    'productGroupTemplateId' => Yii::t('product', 'Product Group Template ID'),
 ];
 }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getProductGroupTemplate()
+    {
+    return $this->hasOne(ProductGroupTemplateMaster::className(), ['productGroupTemplateId' => 'productGroupTemplateId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getCategory()
+    {
+    return $this->hasOne(CategoryMaster::className(), ['categoryId' => 'categoryId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getProductGroupCategories()
+    {
+    return $this->hasMany(ProductGroupCategoryMaster::className(), ['productGroupId' => 'productId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getProductGroupOptions()
+    {
+    return $this->hasMany(ProductGroupOptionMaster::className(), ['productGroupId' => 'productId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getProductGroupOptionValues()
+    {
+    return $this->hasMany(ProductGroupOptionValueMaster::className(), ['productId' => 'productId']);
+    }
 
     /**
     * @return \yii\db\ActiveQuery
@@ -114,5 +164,13 @@ return [
     public function getProductPromotions()
     {
     return $this->hasMany(ProductPromotionMaster::className(), ['productId' => 'productId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getProductSuppliersOptions()
+    {
+    return $this->hasMany(ProductSuppliersOptionMaster::className(), ['product_productId' => 'productId']);
     }
 }
