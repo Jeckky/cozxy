@@ -24,6 +24,7 @@ class DisplayMyAccount extends Model {
         $dataAddress = Address::find()->where("userId ='" . Yii::$app->user->id . "' and type =" . $type)->orderBy('addressId DESC')->all();
         foreach ($dataAddress as $items) {
             $products[$items->addressId] = [
+                'addressId' => $items->addressId,
                 'userId' => $items->userId,
                 'firstname' => $items->firstname,
                 'lastname' => $items->lastname,

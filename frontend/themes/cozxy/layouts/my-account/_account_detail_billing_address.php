@@ -10,7 +10,8 @@
                 </div>
                 <div class="col-md-12 text-right">
                     <div class="size10">&nbsp;</div>
-                    <a href="#" class="text-warning"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</a>
+                    <!--<a href="#" class="text-warning"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</a>-->
+                    <?= \yii\bootstrap\Html::a('<i class="fa fa-pencil-square-o"></i>&nbsp;Edit', \yii\helpers\Url::to(['my-account/edit-billing/' . \common\models\ModelMaster::encodeParams(['addressId' => $model['addressId']])]), ['class' => 'text-warning']) ?>
                     <a href="#" class="text-danger"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>
                 </div>
             </div>

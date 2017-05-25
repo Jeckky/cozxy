@@ -105,4 +105,30 @@ class MyAccountController extends MasterController {
         }
     }
 
+    public function actionEditBilling($hash) {
+        $k = base64_decode(base64_decode($hash));
+        $params = \common\models\ModelMaster::decodeParams($hash);
+        $addressId = $params['addressId'];
+        $model = \common\models\costfit\Address::find()->where('addressId=' . $addressId)->one();
+        $model->scenario = 'shipping_address';
+        if (isset($_POST['Address'])) {
+            $model->attributes = $_POST['Address'];
+            if ($_POST["Address"]['isDefault']) {
+                \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'addressId' => $addressId, 'type' => \common\models\costfit\Address::TYPE_BILLING]);
+                $model->isDefault = 1;
+            }
+            $model->userId = Yii::$app->user->id;
+            $model->type = \common\models\costfit\Address::TYPE_BILLING;
+            $model->createDateTime = new \yii\db\Expression("NOW()");
+            if ($model->save(FALSE)) {
+                return $this->redirect(['/my-account']);
+            }
+        }
+        if (!isset($model->isDefault)) {
+            $model->isDefault = 0;
+        }
+
+        return $this->render('@app/themes/cozxy/layouts/my-account/_form_billing', compact('model'));
+    }
+
 }
