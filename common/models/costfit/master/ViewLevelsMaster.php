@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "view_levels".
 *
-    * @property string $viewLevelsId
+    * @property integer $viewLevelsId
     * @property string $title
     * @property string $desc
     * @property integer $ordering
