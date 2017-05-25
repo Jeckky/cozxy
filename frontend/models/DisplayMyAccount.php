@@ -56,6 +56,7 @@ class DisplayMyAccount extends Model {
             'lastname' => isset($dataUser['lastname']) ? $dataUser['lastname'] : '&nbsp;-&nbsp;',
             'email' => isset($dataUser['email']) ? $dataUser['email'] : '&nbsp;-&nbsp;',
             'birthDate' => isset($dataUser['birthDate']) ? $dataUser['birthDate'] : '&nbsp;-&nbsp;',
+            'gender' => isset($dataUser['gender']) ? $dataUser['gender'] : '',
         ];
         return $products;
     }
@@ -81,7 +82,7 @@ class DisplayMyAccount extends Model {
 
     public static function myAccountWishList($status, $type) {
         $products = [];
-        $dataWishlist = Wishlist::find()->where("userId =48")->orderBy('wishlistId DESC')->all();
+        $dataWishlist = Wishlist::find()->where("userId = " . \Yii::$app->user->id)->orderBy('wishlistId DESC')->all();
         foreach ($dataWishlist as $items) {
             $dataProductSuppliers = ProductSuppliers::find()->where('productSuppId=' . $items->productId)->all();
             foreach ($dataProductSuppliers as $value) {
@@ -118,6 +119,31 @@ class DisplayMyAccount extends Model {
             ];
         }
         return $products;
+    }
+
+    public static function myAccountEditPersonalDetail($data = array()) {
+        $birthDate = $data['yyyy'] . '-' . $data['mm'] . '-' . $data['dd'] . ' 00:00:00';
+        $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
+        $model->attributes = $data;
+        $model->firstname = $data['firstname'];
+        $model->lastname = $data['lastname'];
+        $model->gender = $data['gender'];
+        $model->birthDate = $birthDate;
+        if ($model->save(FALSE)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public static function myAccountChangePassword($data = array()) {
+        $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
+        $model->password_hash = Yii::$app->security->generatePasswordHash($data['newPassword']);
+        if ($model->save(FALSE)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
 
 }

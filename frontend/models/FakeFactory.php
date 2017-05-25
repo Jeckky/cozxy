@@ -48,13 +48,13 @@ class FakeFactory extends Model {
             $price_s = number_format($value->price, 2);
             $price = number_format($value->price, 2);
             $products[$value->productSuppId] = [
-                'image' => Yii::$app->homeUrl . $productImages->imageThumbnail1,
+                'image' => isset($productImages->imageThumbnail1) ? Yii::$app->homeUrl . $productImages->imageThumbnail1 : '',
                 //'url' => 'product?id=' . $value->productSuppId,
                 'url' => '/product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
                 'brand' => isset($value->brand) ? $value->brand->title : '',
-                'title' => $value->title,
-                'price_s' => $price_s,
-                'price' => $price,
+                'title' => isset($value->title) ? $value->title : '',
+                'price_s' => isset($price_s) ? $price_s : '',
+                'price' => isset($price) ? $price : '',
             ];
         }
         /*
@@ -98,7 +98,7 @@ class FakeFactory extends Model {
             $price_s = number_format($value->price, 2);
             $price = number_format($value->price, 2);
             $products[$value->productSuppId] = [
-                'image' => Yii::$app->homeUrl . $productImages->imageThumbnail1,
+                'image' => isset($productImages->imageThumbnail1) ? Yii::$app->homeUrl . $productImages->imageThumbnail1 : '',
                 //'url' => 'product?id=' . $value->productSuppId,
                 'url' => 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
                 'brand' => isset($value->brand) ? $value->brand->title : '',
@@ -141,7 +141,7 @@ class FakeFactory extends Model {
                     $results_rating = $rating_score / $rating_member;
                 }
                 $products[$value->productSuppId] = [
-                    'image' => Yii::$app->homeUrl . $productImages->imageThumbnail2,
+                    'image' => isset($productImages->imageThumbnail2) ? Yii::$app->homeUrl . $productImages->imageThumbnail2 : '',
                     //'url' => '/story?id=' . $items->productSuppId,
                     'url' => '/product/' . $value->encodeParams(['productId' => $items->productId, 'productSupplierId' => $items->productSuppId]),
                     'brand' => isset($items->brand) ? $items->brand->title : '',
@@ -165,7 +165,7 @@ class FakeFactory extends Model {
         foreach ($content as $items) {
             $products[$items->contentId] = [
                 'code' => $items->contentId,
-                'image' => $items->image,
+                'image' => isset($items->image) ? $items->image : '',
                 'url' => '',
                 'head' => $items->headTitle,
                 'title' => $items->title,
@@ -189,7 +189,7 @@ class FakeFactory extends Model {
             foreach ($productImagesAll as $items) {
                 $imagAll[$items['productImageId']] = [
                     //'image' => $items['image'],
-                    'imageThumbnail1' => $items['imageThumbnail1'],
+                    'imageThumbnail1' => isset($items['imageThumbnail1']) ? $items['imageThumbnail1'] : '',
                 //'imageThumbnail2' => $items['imageThumbnail2']
                 ];
             }
@@ -213,7 +213,7 @@ class FakeFactory extends Model {
                 'result' => isset($GetProductSuppliers['result']) ? $GetProductSuppliers['result'] : '',
                 'price' => isset($price) ? number_format($price, 2) : '',
                 'category' => isset($GetCategory->title) ? $GetCategory->title : '',
-                'image' => $productImagesOneTop['image'],
+                'image' => isset($productImagesOneTop['image']) ? $productImagesOneTop['image'] : '',
                 'images' => $imagAll
             ];
         }

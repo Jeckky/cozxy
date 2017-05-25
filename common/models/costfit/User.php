@@ -59,6 +59,8 @@ class User extends \common\models\costfit\master\UserMaster {
      */
     public function rules() {
         return array_merge(parent::rules(), [
+            ['firstname', 'required'],
+            ['lastname', 'required'],
             ['email', 'unique'],
             'tel' => [['tel'], 'string'], //, 'min' => 8
             ['newPassword', 'string', 'min' => 8],
