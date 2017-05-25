@@ -35,7 +35,7 @@ class DisplayMyAccount extends Model {
                 'province' => isset($items->states->localName) ? $items->states->localName : '' . ' , ',
                 'amphur' => isset($items->cities->localName) ? $items->cities->localName : '' . ' , ',
                 'district' => isset($items->district->localName) ? $items->district->localName : '' . ' , ',
-                'zipcode' => $items->zipcode,
+                'zipcode' => isset($items->zipcodes->zipcode) ? $items->zipcodes->zipcode : '' . ' , ',
                 'tel' => $items->tel,
                 'type' => $items->type,
                 'isDefault' => $items->isDefault,

@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Html;
 use kartik\select2\Select2;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
@@ -84,6 +85,9 @@ use kartik\depdrop\DepDrop;
                     <div class="form-group">
                         <label for="exampleInputEmail1">Province</label>
                         <?php
+                        echo Html::hiddenInput('input-type-1', $model->provinceId, ['id' => 'input-type-1']);
+                        echo Html::hiddenInput('input-type-2', $model->provinceId, ['id' => 'input-type-2']);
+                        echo Html::hiddenInput('input-type-3', 'edit', ['id' => 'input-type-3']);
                         echo $form->field($model, 'provinceId')->widget(DepDrop::classname(), [
                             'data' => [$model->provinceId => $model->provinceId],
                             'options' => ['placeholder' => 'Select ...'],
@@ -91,7 +95,7 @@ use kartik\depdrop\DepDrop;
                             'type' => DepDrop::TYPE_SELECT2,
                             'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                             'pluginOptions' => [
-                                //'initialize' => true,
+                                'initialize' => true,
                                 'depends' => ['address-countryid'],
                                 'url' => Url::to(['child-states-address']),
                                 'loadingText' => 'Loading province ...',
@@ -104,8 +108,11 @@ use kartik\depdrop\DepDrop;
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleInputEmail1">City</label>
-                        <?=
-                        $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
+                        <?php
+                        echo Html::hiddenInput('input-type-11', $model->amphurId, ['id' => 'input-type-11']);
+                        echo Html::hiddenInput('input-type-22', $model->amphurId, ['id' => 'input-type-22']);
+                        echo Html::hiddenInput('input-type-33', $hash, ['id' => 'input-type-33']);
+                        echo $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
                             //'data' => [9 => 'Savings'],
                             'options' => ['placeholder' => 'Select ...'],
                             'type' => DepDrop::TYPE_SELECT2,
@@ -124,8 +131,11 @@ use kartik\depdrop\DepDrop;
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleInputEmail1">District</label>
-                        <?=
-                        $form->field($model, 'districtId')->widget(DepDrop::classname(), [
+                        <?php
+                        echo Html::hiddenInput('input-type-13', $model->districtId, ['id' => 'input-type-13']);
+                        echo Html::hiddenInput('input-type-33', $model->districtId, ['id' => 'input-type-33']);
+                        echo Html::hiddenInput('input-type-34', $hash, ['id' => 'input-type-34']);
+                        echo $form->field($model, 'districtId')->widget(DepDrop::classname(), [
                             //'data' => [9 => 'Savings'],
                             'options' => ['placeholder' => 'Select ...'],
                             'type' => DepDrop::TYPE_SELECT2,
@@ -135,7 +145,7 @@ use kartik\depdrop\DepDrop;
                                 'depends' => ['address-amphurid'],
                                 'url' => Url::to(['child-district-address']),
                                 'loadingText' => 'Loading district ...',
-                                'params' => ['input-type-11', 'input-type-22', 'input-type-33']
+                                'params' => ['input-type-13', 'input-type-33', 'input-type-34']
                             ]
                         ])->label(FALSE);
                         ?>
@@ -145,6 +155,9 @@ use kartik\depdrop\DepDrop;
                     <div class="form-group">
                         <label for="exampleInputEmail1">Zipcode</label>
                         <?php
+                        echo Html::hiddenInput('input-type-14', $model->districtId, ['id' => 'input-type-14']);
+                        echo Html::hiddenInput('input-type-42', $model->districtId, ['id' => 'input-type-42']);
+                        echo Html::hiddenInput('input-type-44', $hash, ['id' => 'input-type-44']);
                         echo $form->field($model, 'zipcode')->widget(DepDrop::classname(), [
                             //'data' => [12 => 'Savings A/C 2'],
                             'options' => ['placeholder' => 'Select ...'],
@@ -156,7 +169,7 @@ use kartik\depdrop\DepDrop;
                                 //'initDepends' => ['address-countryid'],
                                 'url' => Url::to(['child-zipcode-address']),
                                 'loadingText' => 'Loading zipcode ...',
-                                'params' => ['input-type-14']
+                                'params' => ['input-type-14', 'input-type-42', 'input-type-42']
                             ]
                         ])->label(FALSE);
                         ?>

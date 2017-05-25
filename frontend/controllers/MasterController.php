@@ -344,6 +344,7 @@ class MasterController extends MasterCommonController {
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
             $parents = ($_POST['depdrop_parents']);
+
             if ($parents != null) {
                 $cat_id = $parents[0];
                 $param1 = null;
@@ -511,27 +512,45 @@ class MasterController extends MasterCommonController {
 //            throw new \yii\base\Exception(print_r($parents, true));
             if ($parents != null) {
                 $districtId = $parents[0];
+
                 $param1 = null;
                 $param2 = null;
+                $param3 = null;
                 if (!empty($_POST['depdrop_params'])) {
+                    //$params = $_POST['depdrop_params'];
+                    //$param1 = $params[0]; // get the value of input-type-1
+//                    $param2 = $params[1]; // get the value of input-type-2
                     $params = $_POST['depdrop_params'];
                     $param1 = $params[0]; // get the value of input-type-1
-//                    $param2 = $params[1]; // get the value of input-type-2
+                    $param2 = $params[1]; // get the value of input-type-2
+                    $param3 = $params[2]; // get the value of input-type-3
                 }
 
                 $district = \common\models\dbworld\District::find()->where("districtId = $districtId")->one();
-//                throw new Exception($district->code);
+                //throw new \yii\base\Exception($district->code);
                 $list = \common\models\dbworld\Zipcodes::find()->andWhere(['districtCode' => $district->code])->asArray()->all();
+
                 $selected = null;
                 if ($districtId != null && count($list) > 0) {
                     $selected = '';
                     foreach ($list as $i => $account) {
-                        $out[] = ['id' => $account['zipcode'], 'name' => $account['zipcode']];
-                        $param1 = ($param1 != '') ? $param1 : $account['zipcode'];
+                        $out[] = ['id' => $account['zipcodeId'], 'name' => $account['zipcode']];
+                        $param1 = ($param1 != '') ? $param1 : $account['zipcodeId'];
+
                         if ($i == 0) {
-                            $selected = $param1; //$account['stateId'];
+                            if ($param3 != 'add') {
+                                $selected = $param1; //$account['stateId'];
+                            } else {
+                                $selected = 'Select ...';
+                                $selected .= $param1; //$account['stateId'];
+                            }
                         } else {
-                            $selected = $param1;
+                            if ($param3 != 'add') {
+                                $selected = $param1;
+                            } else {
+                                $selected = 'Select ...';
+                                $selected .= $param1;
+                            }
                         }
                     }
 

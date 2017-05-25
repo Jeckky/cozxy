@@ -72,8 +72,8 @@ class MyAccountController extends MasterController {
         if (!isset($model->isDefault)) {
             $model->isDefault = 0;
         }
-
-        return $this->render('@app/themes/cozxy/layouts/my-account/_form_billing', compact('model'));
+        $hash = 'add';
+        return $this->render('@app/themes/cozxy/layouts/my-account/_form_billing', compact('model', 'hash'));
     }
 
     public function actionChangePassword() {
@@ -127,8 +127,9 @@ class MyAccountController extends MasterController {
         if (!isset($model->isDefault)) {
             $model->isDefault = 0;
         }
+        $hash = 'edit';
 
-        return $this->render('@app/themes/cozxy/layouts/my-account/_form_billing', compact('model'));
+        return $this->render('@app/themes/cozxy/layouts/my-account/_form_billing', compact('model', 'hash'));
     }
 
 }
