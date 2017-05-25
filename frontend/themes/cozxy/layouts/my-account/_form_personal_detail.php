@@ -13,7 +13,6 @@ use yii\bootstrap\ActiveForm;
         </div>
         <div class="col-xs-12 bg-white">
             <div class="size12 size10-xs">&nbsp;</div>
-
             <?php $form = ActiveForm::begin(['id' => 'register-form', 'action' => Yii::$app->homeUrl . 'my-account/edit-personal-detail', 'options' => ['class' => 'registr-form']]); ?>
             <div class="row">
                 <div class="col-md-6">
@@ -52,8 +51,7 @@ use yii\bootstrap\ActiveForm;
                     <!--<a href="<?//= Url::to(['/checkout/summary']) ?>" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">SAVE</a>-->
                 </div>
             </div>
-            <?php ActiveForm::end(); ?></form>
-
+            <?php ActiveForm::end(); ?>
             <div class="size18 size14-xs">&nbsp;</div>
         </div>
     </div>

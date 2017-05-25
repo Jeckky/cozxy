@@ -136,4 +136,14 @@ class DisplayMyAccount extends Model {
         }
     }
 
+    public static function myAccountChangePassword($data = array()) {
+        $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
+        $model->password_hash = Yii::$app->security->generatePasswordHash($data['newPassword']);
+        if ($model->save(FALSE)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
 }
