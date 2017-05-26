@@ -67,6 +67,9 @@
                                 <i class="fa fa-heart"></i></a>
                             <a href="/cart" class="b btn-yellow size16" style="margin:24px auto 12px">+
                                 <i class="fa fa-shopping-cart"></i></a>
+
+                            <a href="/cart" class="b btn-g999 btn-success size16" style="margin:24px auto 12px;color:#fff;">+
+                                <i class="fa fa-bookmark-o"></i></a>
                         </div>
                     </div>
                 </div>
