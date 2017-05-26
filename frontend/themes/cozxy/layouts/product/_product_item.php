@@ -3,7 +3,7 @@
     <div class="product-box">
         <div class="product-img text-center">
 
-            <img alt="262x262" class="media-object fullwidth" data-src="holder.js/262x262" src="<?= $model['image'] ?>" data-holder-rendered="true" style="width: 262px; height: 262px;">
+            <img alt="262x262" class="media-object fullwidth" data-src="holder.js/262x262" src="<?= $model['image'] ?>" data-holder-rendered="true">
 
             <div class="v-hover">
                 <a href="<?= $model['url'] ?>">
