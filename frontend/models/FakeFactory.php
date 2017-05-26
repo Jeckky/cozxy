@@ -38,6 +38,7 @@ class FakeFactory extends Model {
             . ' product_price_suppliers.price > 0')
             ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
         }
+        echo $cat;
         foreach ($pCanSale as $value) {
             $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
             //$productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
