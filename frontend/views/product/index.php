@@ -89,7 +89,7 @@ $(window).resize(function() { descSet(); });
                 <div class="row">
                     <?php
                     echo \yii\widgets\ListView::widget([
-                        'dataProvider' => $productCanSell,
+                        'dataProvider' => $productHotNewProduct,
                         'options' => [
                             'tag' => false,
                         ],
@@ -110,10 +110,32 @@ $(window).resize(function() { descSet(); });
         </div>
         <div class="col-md-3">
             <div class="size48">&nbsp;</div>
-
-            <?= $this->render('@app/themes/cozxy/layouts/story/_panel_your_story') ?>
-            <?= $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories') ?>
-
+            <?php
+            echo \yii\widgets\ListView::widget([
+                'dataProvider' => $StoryProductPost,
+                'options' => [
+                    'tag' => false,
+                ],
+                'itemView' => function ($model, $key, $index, $widget) {
+                    return $this->render('@app/themes/cozxy/layouts/story/_panel_your_story', ['model' => $model, 'colSize' => '3']);
+                },
+//                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                //'layout'=>"{summary}{pager}{items}"
+                'layout' => "{items}",
+                'itemOptions' => [
+                    'tag' => false,
+                ],
+            ]);
+            ?>
+            <?//= $this->render('@app/themes/cozxy/layouts/story/_panel_your_story', compact('StoryProductPost')) ?>
+            <?php
+            //echo Yii::$app->controller->id;
+            if (Yii::$app->controller->id == 'product') {
+                echo $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories', compact('StoryRecentStories'));
+            } else {
+                echo $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories')
+                ?>
+            <?php } ?>
         </div>
     </div>
 </div>

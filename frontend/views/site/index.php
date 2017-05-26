@@ -88,30 +88,23 @@ $this->title = 'My Yii Application';
             <div class="col-xs-12">
                 <div class="rela" style="height:96px">
                     <!--<a class="align-middle fc-g999 size24 scrollingHotSpotLeft" href="#" style="padding-top:8px;left:0"><span class="glyphicon glyphicon-menu-left"></span></a>-->
-                    <div id="logoParade">
-                        <!--<a href="#"><img src="imgs/banner01.png" alt=""></a>
-                        <a href="#"><img src="imgs/banner02.png" alt=""></a>
-                        <a href="#"><img src="imgs/banner03.png" alt=""></a>
-                        <a href="#"><img src="imgs/banner04.png" alt=""></a>
-                        <a href="#"><img src="imgs/banner05.png" alt=""></a>
-                        <a href="#"><img src="imgs/banner06.png" alt=""></a>
-                        <a href="#"><img src="imgs/banner07.png" alt=""></a>
-                        <a href="#"><img src="imgs/banner08.png" alt=""></a>-->
+                    <div id="logoParade"> 
                         <?php
-                        $brands = common\models\costfit\Brand::find()->all();
-                        foreach ($brands as $brand) {
-                            if (isset($brand->image) && !empty($brand->image)) {
-                                if (file_exists(Yii::$app->basePath . "/web/" . $brand->image)) {
-                                    $brandImages = $brand->image;
-                                } else {
-                                    $brandImages = Yii::$app->homeUrl . 'images/no-image.jpg';
-                                }
-                            }
-                            ?>
-                            <a class="" href="<?php echo Yii::$app->homeUrl; ?>brand/<?= $brand->createTitle() ?>/<?php echo \common\models\ModelMaster::encodeParamsBrand(['brandId' => $brand->brandId]); ?>">
-                                <img src="<?php echo $brandImages; ?>" alt="" class="img-responsive"/></a>
-                            <?php
-                        }
+                        echo \yii\widgets\ListView::widget([
+                            'dataProvider' => $productBrand,
+                            'options' => [
+                                'tag' => false,
+                            ],
+                            'itemView' => function ($model, $key, $index, $widget) {
+                                return $this->render('@app/themes/cozxy/layouts/_brand', ['model' => $model, 'index' => $index]);
+                            },
+                            // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                            //'layout'=>"{summary}{pager}{items}"
+                            'layout' => "{items}",
+                            'itemOptions' => [
+                                'tag' => false,
+                            ],
+                        ]);
                         ?>
                     </div>
                     <!--<a class="align-middle fc-g999 size24 scrollingHotSpotRight" href="#" style="padding-top:8px;right:0"><span class="glyphicon glyphicon-menu-right"></span></a>-->

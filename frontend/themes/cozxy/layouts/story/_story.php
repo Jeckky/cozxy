@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-xs-12 bg-white">
                     <h1 class="page-header">Lorem ipsum dolor sit amet</h1>
-                    <img src="images/content/freitag1.jpg" alt="" class="col-md-4 pull-left">
+                    <img src="/images/content/freitag1.jpg" alt="" class="col-md-4 pull-left">
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempor mauris vel dui dapibus,
                         eu dapibus nulla ultricies. Vivamus non lectus pulvinar, aliquet neque vitae, lacinia urna. In
@@ -32,7 +32,7 @@
                         lacinia nec massa non, commodo lacinia leo.
                     </p>
                     <div class="size12">&nbsp;</div>
-                    <img src="images/content/freitag1.jpg" alt="" class="col-md-6 pull-right">
+                    <img src="/images/content/freitag1.jpg" alt="" class="col-md-6 pull-right">
                     <p>
                         Donec eget scelerisque justo, scelerisque efficitur dui. Cras tincidunt cursus mattis. Quisque
                         vitae cursus massa, ut porta nibh. Proin mattis arcu eu nisl bibendum, at scelerisque elit
@@ -95,18 +95,18 @@
                                             <th class="col-md-2">Price</th>
                                             <th class="col-md-2">Local Price</th>
                                         </tr>
-                                        <?php for($i=0;$i<8;$i++):?>
-                                        <tr style="border-bottom: dotted 1px #999;">
-                                            <td>
-                                                <img src="images/flags/flags/flat/24/United-States.png" alt=""> USA
-                                            </td>
-                                            <td>Nordstorm</td>
-                                            <td>USD231,400.00</td>
-                                            <td>
-                                                THB1,149,000.00
-                                            </td>
-                                        </tr>
-                                       <?php endfor;?>
+                                        <?php for ($i = 0; $i < 8; $i++): ?>
+                                            <tr style="border-bottom: dotted 1px #999;">
+                                                <td>
+                                                    <img src="/images/flags/flags/flat/24/United-States.png" alt=""> USA
+                                                </td>
+                                                <td>Nordstorm</td>
+                                                <td>USD231,400.00</td>
+                                                <td>
+                                                    THB1,149,000.00
+                                                </td>
+                                            </tr>
+                                        <?php endfor; ?>
                                     </table>
                                 </div>
                             </div>

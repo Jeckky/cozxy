@@ -38,8 +38,6 @@ class FakeFactory extends Model {
             . ' product_price_suppliers.price > 0')
             ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
         }
-
-
         foreach ($pCanSale as $value) {
             $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
             //$productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
@@ -64,19 +62,7 @@ class FakeFactory extends Model {
                 'price' => isset($price) ? $price : '',
             ];
         }
-        /*
-          for ($i = 1; $i <= $n; $i++) {
-          $price_s = rand(30000, 40000);
-          $price = rand(45000, 80000);
-          $products[$i] = [
-          'image' => 'imgs/product0' . ($i) . '.jpg',
-          'url' => 'product?id=' . $i,
-          'brand' => 'PRADA',
-          'title' => 'QUILTED NAPPA GANSEVOORT FLAP SHOULDER BAG',
-          'price_s' => $price_s,
-          'price' => $price,
-          ];
-          } */
+
         return $products;
     }
 
@@ -138,6 +124,59 @@ class FakeFactory extends Model {
         return $products;
     }
 
+    public static function productHotNewAndProduct($n, $cat = FALSE) {
+        $products = [];
+        $whereArray = [];
+        if ($cat != FALSE) {
+            $whereArray = [];
+            $whereArray["category_to_product.categoryId"] = $cat;
+
+            $whereArray["product.approve"] = "approve";
+            $whereArray["pps.status"] = "1";
+
+            $pCanSale = \common\models\costfit\CategoryToProduct::find()
+            ->select('*')
+            ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+            ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+            ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+            ->where($whereArray)
+            ->andWhere([">", "ps.result", 0])
+            ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
+        } else {
+            $pCanSale = \common\models\costfit\ProductSuppliers::find()
+            ->join(" LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
+            ->where(' product_suppliers.approve="approve" and product_suppliers.result > 0 AND product_price_suppliers.status =1 AND '
+            . ' product_price_suppliers.price > 0')
+            ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
+        }
+        foreach ($pCanSale as $value) {
+            $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
+            //$productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
+            if (isset($productImages->imageThumbnail1) && !empty($productImages->imageThumbnail1)) {
+                if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail1)) {
+                    $productImagesThumbnail1 = '/' . $productImages->imageThumbnail1;
+                } else {
+                    //$productImagesThumbnail1 = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PCEtLQpTb3VyY2UgVVJMOiBob2xkZXIuanMvNjR4NjQKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNWMwYTg2ZjY1YSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1YzBhODZmNjVhIj48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSIxMy4yMjY1NjI1IiB5PSIzNi41MzI4MTI1Ij42NHg2NDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==';
+                    $productImagesThumbnail1 = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTk1IiBoZWlnaHQ9IjE5NSIgdmlld0JveD0iMCAwIDY0IDY0IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48IS0tDQpTb3VyY2UgVVJMOiBob2xkZXIuanMvMTk1eDE5NQ0KQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4NCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQ0KKGMpIDIwMTItMjAxNSBJdmFuIE1hbG9waW5za3kgLSBodHRwOi8vaW1za3kuY28NCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNWMwYTg2ZjY1YSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1YzBhODZmNjVhIj48cmVjdCB3aWR0aD0iMTk1IiBoZWlnaHQ9IjE5NSIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjYuMjI2NTYyNSIgeT0iMzYuNTMyODEyNSI+MTk1eDE5NTwvdGV4dD48L2c+PC9nPjwvc3ZnPg==';
+                }
+            }
+            $price_s = number_format($value->price, 2);
+            $price = number_format($value->price, 2);
+            $products[$value->productSuppId] = [
+                'image' => $productImagesThumbnail1,
+                //'image' => isset($productImages->imageThumbnail1) ? Yii::$app->homeUrl . $productImages->imageThumbnail1 : '',
+                //'url' => 'product?id=' . $value->productSuppId,
+                'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
+                'brand' => isset($value->brand) ? $value->brand->title : '',
+                'title' => isset($value->title) ? $value->title : '',
+                'price_s' => isset($price_s) ? $price_s : '',
+                'price' => isset($price) ? $price : '',
+            ];
+        }
+
+        return $products;
+    }
+
     public static function productStory($n) {
         $products = [];
         $productPost = \common\models\costfit\ProductPost::find()->groupBy(['productSuppId'])->orderBy('productPostId desc')->limit($n)->all();
@@ -155,16 +194,16 @@ class FakeFactory extends Model {
                 } else {
                     $results_rating = $rating_score / $rating_member;
                 }
-                if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
-                    if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
-                        $productImagesThumbnail2 = '/' . $productImages->imageThumbnail2;
+                if (isset($productImages->imageThumbnail1) && !empty($productImages->imageThumbnail1)) {
+                    if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail1)) {
+                        $productImagesThumbnail1 = '/' . $productImages->imageThumbnail1;
                     } else {
-                        $productImagesThumbnail2 = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PCEtLQpTb3VyY2UgVVJMOiBob2xkZXIuanMvNjR4NjQKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNWMwYTg2ZjY1YSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1YzBhODZmNjVhIj48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSIxMy4yMjY1NjI1IiB5PSIzNi41MzI4MTI1Ij42NHg2NDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==';
+                        $productImagesThumbnail1 = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjYwIiBoZWlnaHQ9IjI2MCIgdmlld0JveD0iMCAwIDY0IDY0IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48IS0tDQpTb3VyY2UgVVJMOiBob2xkZXIuanMvMjYweDI2MA0KQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4NCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQ0KKGMpIDIwMTItMjAxNSBJdmFuIE1hbG9waW5za3kgLSBodHRwOi8vaW1za3kuY28NCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNWMwYTg2ZjY1YSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1YzBhODZmNjVhIj48cmVjdCB3aWR0aD0iMjYwIiBoZWlnaHQ9IjI2MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjYuMjI2NTYyNSIgeT0iMzYuNTMyODEyNSI+MjYweDI2MDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==';
                     }
                 }
 
                 $products[$value->productSuppId] = [
-                    'image' => $productImagesThumbnail2,
+                    'image' => $productImagesThumbnail1,
                     //'url' => '/story?id=' . $items->productSuppId,
                     'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $items->productId, 'productSupplierId' => $items->productSuppId]),
                     'brand' => isset($items->brand) ? $items->brand->title : '',
@@ -252,6 +291,28 @@ class FakeFactory extends Model {
             ];
         }
 
+        return $products;
+    }
+
+    public static function productSlideBanner($n, $status) {
+        $products = [];
+        $brand = \common\models\costfit\Brand::find()->all();
+        foreach ($brand as $items) {
+            if (isset($items->image) && !empty($items->image)) {
+                if (file_exists(Yii::$app->basePath . "/web/" . $items->image)) {
+                    $brandImages = $items->image;
+                } else {
+                    $brandImages = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTEyIiBoZWlnaHQ9IjY0IiB2aWV3Qm94PSIwIDAgNjQgNjQiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0NClNvdXJjZSBVUkw6IGhvbGRlci5qcy8xMTJ4NjQNCkNyZWF0ZWQgd2l0aCBIb2xkZXIuanMgMi42LjAuDQpMZWFybiBtb3JlIGF0IGh0dHA6Ly9ob2xkZXJqcy5jb20NCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvDQotLT48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwhW0NEQVRBWyNob2xkZXJfMTVjMGE4NmY2NWEgdGV4dCB7IGZpbGw6I0FBQUFBQTtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0IH0gXV0+PC9zdHlsZT48L2RlZnM+PGcgaWQ9ImhvbGRlcl8xNWMwYTg2ZjY1YSI+PHJlY3Qgd2lkdGg9IjExMiIgaGVpZ2h0PSI2NCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjYuMjI2NTYyNSIgeT0iMzYuNTMyODEyNSI+MTEyeDY0PC90ZXh0PjwvZz48L2c+PC9zdmc+';
+                }
+            }
+            $products[$items->brandId] = [
+                'brandId' => $items->brandId,
+                'image' => $brandImages,
+                'url' => Yii::$app->homeUrl . 'brand/' . $items->encodeParams(['brandId' => $items->brandId]),
+                'title' => $items->title,
+                'description' => $items->description
+            ];
+        }
         return $products;
     }
 

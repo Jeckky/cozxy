@@ -2,8 +2,8 @@
     <div class="size14" style="background-color:rgb(254, 230, 10);">&nbsp;</div>
     <h3 class="page-header" style="margin:10px 20px;">My Story</h3>
     <div class="panel-body text-center">
-        <img src="/imgs/other01.jpg" class="img-circle" alt="Big Bag" style="width:120px;">
-        <h4>Bag Premium Black</h4>
-        <a href="#" class="b btn-g999" style="margin:24px auto 12px">Write your story</a>
+        <img src="<?php echo $model['image']; ?>" class="img-circle" alt="" style="width:120px;">
+        <h4><?php echo $model['title']; ?></h4>
+        <a href="<?php echo $model['url']; ?>" class="b btn-g999" style="margin:24px auto 12px"><?php echo $model['text']; ?></a>
     </div>
 </div>

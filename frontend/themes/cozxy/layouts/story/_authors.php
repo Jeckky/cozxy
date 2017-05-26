@@ -1,7 +1,7 @@
 <div class="panel panel-defailt">
     <h3 class="page-header" style="margin:10px 20px;">Authors</h3>
     <div class="panel-body text-center">
-        <img src="images/profile.jpg" class="img-responsive" alt="Big Bag" style="">
+        <img src="/images/profile.jpg" class="img-responsive" alt="Big Bag" style="">
         <h4 class="size14">Bag Premium Black</h4>
         <p class="size14">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempor mauris vel dui dapibus, eu dapibus

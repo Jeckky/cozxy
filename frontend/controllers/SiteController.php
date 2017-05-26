@@ -78,7 +78,8 @@ class SiteController extends Controller {
         $productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(6, FALSE)]);
         $productNotSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(6)]);
         $productStory = new ArrayDataProvider(['allModels' => FakeFactory::productStory(3)]);
-        return $this->render('index', compact('productCanSell', 'productNotSell', 'productStory', 'slideGroup'));
+        $productBrand = new ArrayDataProvider(['allModels' => FakeFactory::productSlideBanner('', '')]);
+        return $this->render('index', compact('productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand'));
     }
 
     /**

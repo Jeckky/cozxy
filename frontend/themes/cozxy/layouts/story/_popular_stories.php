@@ -3,7 +3,7 @@
     <div class="panel-body">
         <?php for ($i = 0; $i < 3; $i++): ?>
             <div style="border-bottom:1px solid #999;margin-bottom: 18px;">
-                <img src="images/profile.jpg" alt="" class="fullwidth" style="margin-bottom:10px;">
+                <img src="/images/profile.jpg" alt="" class="fullwidth" style="margin-bottom:10px;">
                 <div class="size12 fc-g666">Freitag</div>
                 <div class="size16 b" style="margin-top:-5px;"><a href="#" class="fc-black">Freitag freitag</a></div>
                 <div class="size6">&nbsp;</div>
