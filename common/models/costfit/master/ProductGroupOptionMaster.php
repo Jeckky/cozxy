@@ -15,8 +15,8 @@ use Yii;
     * @property string $createDateTime
     * @property string $updateDateTime
     *
-            * @property ProductGroupTemplateOption $productGroupTemplateOption
             * @property Product $productGroup
+            * @property ProductGroupTemplateOption $productGroupTemplateOption
             * @property ProductGroupOptionValue[] $productGroupOptionValues
             * @property ProductSuppliersOption[] $productSuppliersOptions
     */
@@ -40,8 +40,8 @@ return [
             [['productGroupId', 'productGroupTemplateOptionId', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['name'], 'string', 'max' => 200],
-            [['productGroupTemplateOptionId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductGroupTemplateOptionMaster::className(), 'targetAttribute' => ['productGroupTemplateOptionId' => 'productGroupTemplateOptionId']],
             [['productGroupId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductMaster::className(), 'targetAttribute' => ['productGroupId' => 'productId']],
+            [['productGroupTemplateOptionId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductGroupTemplateOptionMaster::className(), 'targetAttribute' => ['productGroupTemplateOptionId' => 'productGroupTemplateOptionId']],
         ];
 }
 
@@ -64,17 +64,17 @@ return [
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getProductGroupTemplateOption()
+    public function getProductGroup()
     {
-    return $this->hasOne(ProductGroupTemplateOptionMaster::className(), ['productGroupTemplateOptionId' => 'productGroupTemplateOptionId']);
+    return $this->hasOne(ProductMaster::className(), ['productId' => 'productGroupId']);
     }
 
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getProductGroup()
+    public function getProductGroupTemplateOption()
     {
-    return $this->hasOne(ProductMaster::className(), ['productId' => 'productGroupId']);
+    return $this->hasOne(ProductGroupTemplateOptionMaster::className(), ['productGroupTemplateOptionId' => 'productGroupTemplateOptionId']);
     }
 
     /**

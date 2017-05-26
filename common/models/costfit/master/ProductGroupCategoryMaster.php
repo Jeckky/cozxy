@@ -11,8 +11,8 @@ use Yii;
     * @property string $categoryId
     * @property string $productGroupId
     *
-            * @property Category $category
             * @property Product $productGroup
+            * @property Category $category
     */
 class ProductGroupCategoryMaster extends \common\models\ModelMaster
 {
@@ -32,8 +32,8 @@ public function rules()
 return [
             [['categoryId', 'productGroupId'], 'required'],
             [['categoryId', 'productGroupId'], 'integer'],
-            [['categoryId'], 'exist', 'skipOnError' => true, 'targetClass' => CategoryMaster::className(), 'targetAttribute' => ['categoryId' => 'categoryId']],
             [['productGroupId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductMaster::className(), 'targetAttribute' => ['productGroupId' => 'productId']],
+            [['categoryId'], 'exist', 'skipOnError' => true, 'targetClass' => CategoryMaster::className(), 'targetAttribute' => ['categoryId' => 'categoryId']],
         ];
 }
 
@@ -52,16 +52,16 @@ return [
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getCategory()
+    public function getProductGroup()
     {
-    return $this->hasOne(CategoryMaster::className(), ['categoryId' => 'categoryId']);
+    return $this->hasOne(ProductMaster::className(), ['productId' => 'productGroupId']);
     }
 
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getProductGroup()
+    public function getCategory()
     {
-    return $this->hasOne(ProductMaster::className(), ['productId' => 'productGroupId']);
+    return $this->hasOne(CategoryMaster::className(), ['categoryId' => 'categoryId']);
     }
 }

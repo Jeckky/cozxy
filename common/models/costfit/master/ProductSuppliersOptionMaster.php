@@ -16,9 +16,9 @@ use Yii;
     * @property string $product_productId
     * @property string $productGroupTemplateOptionId
     *
-            * @property ProductGroupOption $productGroupOption
             * @property Product $productProduct
             * @property ProductGroupTemplateOption $productGroupTemplateOption
+            * @property ProductGroupOption $productGroupOption
     */
 class ProductSuppliersOptionMaster extends \common\models\ModelMaster
 {
@@ -40,9 +40,9 @@ return [
             [['productGroupOptionId', 'status', 'product_productId', 'productGroupTemplateOptionId'], 'integer'],
             [['value'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['productGroupOptionId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductGroupOptionMaster::className(), 'targetAttribute' => ['productGroupOptionId' => 'productGroupOptionId']],
             [['product_productId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductMaster::className(), 'targetAttribute' => ['product_productId' => 'productId']],
             [['productGroupTemplateOptionId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductGroupTemplateOptionMaster::className(), 'targetAttribute' => ['productGroupTemplateOptionId' => 'productGroupTemplateOptionId']],
+            [['productGroupOptionId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductGroupOptionMaster::className(), 'targetAttribute' => ['productGroupOptionId' => 'productGroupOptionId']],
         ];
 }
 
@@ -66,14 +66,6 @@ return [
     /**
     * @return \yii\db\ActiveQuery
     */
-    public function getProductGroupOption()
-    {
-    return $this->hasOne(ProductGroupOptionMaster::className(), ['productGroupOptionId' => 'productGroupOptionId']);
-    }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
     public function getProductProduct()
     {
     return $this->hasOne(ProductMaster::className(), ['productId' => 'product_productId']);
@@ -85,5 +77,13 @@ return [
     public function getProductGroupTemplateOption()
     {
     return $this->hasOne(ProductGroupTemplateOptionMaster::className(), ['productGroupTemplateOptionId' => 'productGroupTemplateOptionId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getProductGroupOption()
+    {
+    return $this->hasOne(ProductGroupOptionMaster::className(), ['productGroupOptionId' => 'productGroupOptionId']);
     }
 }

@@ -38,9 +38,10 @@ use Yii;
     * @property string $approvecreateDateTime
     * @property string $receiveType
     * @property string $productGroupTemplateId
+    * @property integer $step
     *
-            * @property ProductGroupTemplate $productGroupTemplate
             * @property Category $category
+            * @property ProductGroupTemplate $productGroupTemplate
             * @property ProductGroupCategory[] $productGroupCategories
             * @property ProductGroupOption[] $productGroupOptions
             * @property ProductGroupOptionValue[] $productGroupOptionValues
@@ -63,7 +64,7 @@ return 'product';
 public function rules()
 {
 return [
-            [['userId', 'parentId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'productSuppId', 'approveCreateBy', 'productGroupTemplateId'], 'integer'],
+            [['userId', 'parentId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'productSuppId', 'approveCreateBy', 'productGroupTemplateId', 'step'], 'integer'],
             [['isbn', 'shortDescription', 'description', 'specification'], 'string'],
             [['title', 'createDateTime'], 'required'],
             [['width', 'height', 'depth', 'weight', 'price'], 'number'],
@@ -73,8 +74,8 @@ return [
             [['tags'], 'string', 'max' => 255],
             [['approve'], 'string', 'max' => 10],
             [['receiveType'], 'string', 'max' => 45],
-            [['productGroupTemplateId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductGroupTemplateMaster::className(), 'targetAttribute' => ['productGroupTemplateId' => 'productGroupTemplateId']],
             [['categoryId'], 'exist', 'skipOnError' => true, 'targetClass' => CategoryMaster::className(), 'targetAttribute' => ['categoryId' => 'categoryId']],
+            [['productGroupTemplateId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductGroupTemplateMaster::className(), 'targetAttribute' => ['productGroupTemplateId' => 'productGroupTemplateId']],
         ];
 }
 
@@ -115,16 +116,9 @@ return [
     'approvecreateDateTime' => Yii::t('product', 'Approvecreate Date Time'),
     'receiveType' => Yii::t('product', 'Receive Type'),
     'productGroupTemplateId' => Yii::t('product', 'Product Group Template ID'),
+    'step' => Yii::t('product', 'Step'),
 ];
 }
-
-    /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function getProductGroupTemplate()
-    {
-    return $this->hasOne(ProductGroupTemplateMaster::className(), ['productGroupTemplateId' => 'productGroupTemplateId']);
-    }
 
     /**
     * @return \yii\db\ActiveQuery
@@ -132,6 +126,14 @@ return [
     public function getCategory()
     {
     return $this->hasOne(CategoryMaster::className(), ['categoryId' => 'categoryId']);
+    }
+
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getProductGroupTemplate()
+    {
+    return $this->hasOne(ProductGroupTemplateMaster::className(), ['productGroupTemplateId' => 'productGroupTemplateId']);
     }
 
     /**
