@@ -36,16 +36,17 @@ class DisplayMyStory extends Model {
 
             $products[$productPost['productSuppId']] = [
                 'image' => $productImagesThumbnail2,
-                'url' => Yii::$app->homeUrl . 'story/write-your-story/' . $productPostList->encodeParams(['productSupplierId' => $productPostList['productId'], 'productPostId' => $productPost['productPostId']]),
+                'url' => Yii::$app->homeUrl . 'story/write-your-story/' . $productPostList->encodeParams(['productSuppId' => $productPostList['productSuppId'], 'productPostId' => $productPost['productPostId']]),
                 'brand' => isset($items->brand) ? $items->brand->title : '',
                 'title' => $productPost['title'],
                 'views' => number_format(\common\models\costfit\ProductPost::getCountViews($productPost['productPostId'])),
                 'text' => 'Write your story'
             ];
         } else {
+
             $products[0] = [
                 'image' => $productImagesThumbnailNull,
-                'url' => Yii::$app->homeUrl . '/site/login',
+                'url' => isset(Yii::$app->user->id) ? Yii::$app->homeUrl . 'story/write-your-story/' . \common\models\ModelMaster::encodeParams(['productSuppId' => $hash]) : Yii::$app->homeUrl . 'site/login',
                 'brand' => NULL,
                 'title' => NULL,
                 'views' => NULL,
