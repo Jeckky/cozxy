@@ -51,7 +51,7 @@ class ProductGroupController extends ProductMasterController
             ->where("userId=" . Yii::$app->user->identity->userId . " and status=1"),
         ]);
 
-        return $this->render('101/wizard', [
+        return $this->render('101/index', [
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -160,241 +160,142 @@ class ProductGroupController extends ProductMasterController
     }
 
     // Version 1.01 Wizard Of Product Group
-    public function beforeAction($action)
+
+    public function actionCreate($step = null)
     {
-
-        $config = [];
-        switch ($action->id) {
-            case 'quiz':
-
-                $config = [
-                    'steps' => ['question'],
-                    'timeout' => 30,
-                    'forwardOnly' => true,
-                    'events' => [
-                        WizardBehavior::EVENT_WIZARD_STEP => [$this, $action->id . 'WizardStep'],
-                        WizardBehavior::EVENT_AFTER_WIZARD => [$this, $action->id . 'AfterWizard'],
-                        WizardBehavior::EVENT_STEP_EXPIRED => [$this, $action->id . 'StepExpired']
-                    ]
-                ];
-                break;
-            case 'create':
-                $actionName = "create";
-
-                $config = [
-                    'steps' => ['product', 'productOption', 'phoneNumber', 'user'],
-                    'events' => [
-                        WizardBehavior::EVENT_WIZARD_STEP => [$this, $actionName . 'Step'],
-                        WizardBehavior::EVENT_AFTER_WIZARD => [$this, $actionName . 'AfterWizard'],
-                        WizardBehavior::EVENT_INVALID_STEP => [$this, 'invalidStep']
-                    ]
-                ];
-                break;
-            case 'survey':
-                $config = [
-                    'steps' => [
-                        'havePet',
-                        [
-                            'hasPet' => [
-                                'type',
-                                [
-                                    'cat' => ['cat'],
-                                    'dog' => ['dog'],
-                                    'pet' => ['pet']
-                                ]
-                            ],
-                            'noPet' => [
-                                'getPet',
-                                [
-                                    'willGet' => [
-                                        'get'
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ],
-                    'autoAdvance' => false,
-                    'defaultBranch' => false,
-                    'events' => [
-                        WizardBehavior::EVENT_WIZARD_STEP => [$this, $action->id . 'WizardStep'],
-                        WizardBehavior::EVENT_AFTER_WIZARD => [$this, $action->id . 'AfterWizard'],
-                        WizardBehavior::EVENT_INVALID_STEP => [$this, 'invalidStep']
-                    ]
-                ];
-                break;
-            case 'resume':
-                $config = ['steps' => []]; // force attachment of WizardBehavior
-            default:
-                break;
+        $userId = Yii::$app->user->identity->userId;
+        $ms = '';
+        if (!isset($step)) { // For Access direct link without get step parameter
+            $step = 9;
         }
-
-        if (!empty($config)) {
-            $config['class'] = WizardBehavior::className();
-            $this->attachBehavior('wizard', $config);
-        }
-
-        return parent::beforeAction($action);
-    }
-
-    public function actionWizard()
-    {
-        $dataProvider = new ActiveDataProvider([
-            'query' => ProductGroup::find()
-            ->where("userId=" . Yii::$app->user->identity->userId . " and status=1"),
-        ]);
-
-        return $this->render('101/wizard', [
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    public function actionCreate($step)
-    {
-//        throw new \yii\base\Exception($step);
-        return $this->step($step);
-    }
-
-    /**
-     * Quiz step expired
-     * @param WizardEvent The event
-     */
-    public function quizAfterWizard($event)
-    {
-        $event->data = $this->render('quiz/result', ['models' => $event->stepData['question']]);
-    }
-
-    /**
-     * Quiz step expired
-     * @param WizardEvent The event
-     */
-    public function quizStepExpired($event)
-    {
-        $n = count($event->stepData) - 1;
-        $event->stepData[$n]->expired = true;
-    }
-
-    /**
-     * Process steps from the quiz
-     * @param WizardEvent The event
-     */
-    public function quizWizardStep($event)
-    {
-        $modelName = 'app\\models\\costfit\\ProductGroup';
-        $model = new $modelName(['question' => $this->questions[$event->n]]);
-        $t = count($this->questions);
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $event->data = $model;
-            $event->nextStep = ($event->n < $t - 1 ? WizardBehavior::DIRECTION_REPEAT : WizardBehavior::DIRECTION_FORWARD
-            );
-            $event->handled = true;
-        } else {
-            $event->data = $this->render('quiz\question', compact('event', 'model', 't'));
-        }
-    }
-
-    /**
-     * Process wizard steps.
-     * The event handler must set $event->handled=true for the wizard to continue
-     * @param WizardEvent The event
-     */
-    public function createStep($event)
-    {
-
-        if (empty($event->stepData)) {
-            $modelName = 'common\\models\\costfit\\' . ucfirst($event->step);
-
-            $model = new $modelName();
-            $model->createDateTime = new \yii\db\Expression("NOW()");
-            if ($event->step == "product") {
-                $model->parentId = null;
-            }
-        } else {
-            $model = $event->stepData;
-        }
-
-        $post = Yii::$app->request->post();
-        if (isset($post['cancel'])) {
-            $event->continue = false;
-        } elseif (isset($post['prev'])) {
-            $event->nextStep = WizardBehavior::DIRECTION_BACKWARD;
-            $event->handled = true;
-        } elseif ($model->load($post) && $model->validate()) {
-
-            $event->data = $model;
-            $event->handled = true;
-            if (isset($post['pause'])) {
-                $event->continue = false;
-            } elseif ($event->n < 2 && isset($post['add'])) {
-                $event->nextStep = WizardBehavior::DIRECTION_REPEAT;
-            }
-        } else {
-            $ms = '';
-            $event->data = $this->render('101/' . $event->step, compact('event', 'model', 'ms', 'title', 'description'));
-        }
-    }
-
-    /**
-     * @param WizardEvent The event
-     */
-    public function invalidStep($event)
-    {
-        $event->data = $this->render('101/invalidStep', compact('event'));
-        $event->continue = false;
-    }
-
-    /**
-     * Registration wizard has ended; the reason can be determined by the
-     * step parameter: TRUE = wizard completed, FALSE = wizard did not start,
-     * <string> = the step the wizard stopped at
-     * @param WizardEvent The event
-     */
-    public function createWizardAfterWizard($event)
-    {
-        if (is_string($event->step)) {
-            $uuid = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0x0fff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000, mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
-            );
-
-            $registrationDir = Yii::getAlias('@runtime/registration');
-            $registrationDirReady = true;
-            if (!file_exists($registrationDir)) {
-                if (!mkdir($registrationDir) || !chmod($registrationDir, 0775)) {
-                    $registrationDirReady = false;
+        $model = new \common\models\costfit\Product();
+        switch ($step) {
+            case 1:
+                $drafts = \common\models\costfit\Product::find()->where("userId = $userId AND parentId IS NULL AND status = 99")->all();
+                if (isset($drafts) && count($drafts) > 0) {
+                    return $this->redirect(["draft", "drafts" => $drafts]);
                 }
-            }
-            if ($registrationDirReady && file_put_contents(
-            $registrationDir . DIRECTORY_SEPARATOR . $uuid, $event->sender->pauseWizard()
-            )) {
-                $event->data = $this->render('registration/paused', compact('uuid'));
+                if (isset($_POST["Product"])) {
+                    $model->attributes = $_POST["Product"];
+                    $model->userId = $userId;
+                    $model->createDateTime = new \yii\db\Expression('NOW()');
+                    $model->parentId = NULL;
+                    $model->step = 2;
+                    if ($model->save(false)) {
+                        $productGroupId = \Yii::$app->db->lastInsertID;
+                        return $this->redirect(['create', 'step' => 2, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $productGroupId]);
+                    }
+                }
+                break;
+            case 0: // For Save Draft is Status = 99
+                if (isset($_POST["Product"])) {
+                    $model->attributes = $_POST["ProductGroup"];
+                    $model->userId = $userId;
+                    $model->createDateTime = new \yii\db\Expression('NOW()');
+                    $model->parentId = NULL;
+                    $model->status = 99;
+                    $model->step = 1;
+                    if ($model->save(false)) {
+                        $productGroupId = \Yii::$app->db->lastInsertID;
+                        return $this->redirect(['create', 'step' => 2, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $productGroupId]);
+                    }
+                }
+                break;
+            case 2:
+                $productGroupTemplateOptions = \common\models\costfit\ProductGroupTemplateOption::find()->where("productGroupTemplateId = " . $_GET["productGroupTemplateId"])->all();
+                if (isset($_POST["ProductGroupOptionValue"])) {
+                    $this->saveProductsWithOption($_POST["ProductGroupOptionValue"], $_GET["productGroupId"]);
+                }
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+            case 9:// For Access direct link without get step parameter
+                return $this->redirect(['create', 'step' => 1]);
+                break;
+            default:
+
+                break;
+        }
+
+        return $this->render('101/step', [
+            'model' => $model,
+            'step' => $step,
+            'ms' => $ms,
+            'title' => isset($title) ? $title : false,
+            'description' => isset($description) ? $description : false,
+            'productGroupTemplateOptions' => isset($productGroupTemplateOptions) ? $productGroupTemplateOptions : NULL
+        ]);
+    }
+
+    public function actionDraft()
+    {
+        $drafts = new ActiveDataProvider([
+            'query' => \common\models\costfit\Product::find()->where("userId = $userId AND parentId IS NULL AND status = 99"),
+        ]);
+        return $this->render(["101/draft", "drafts" => $drafts]);
+    }
+
+    public function saveProductsWithOption($options, $productGroupId)
+    {
+        $res = $this->prepareOptionArray($options);
+    }
+
+    public function prepareOptionArray($options)
+    {
+//        $res = [];
+
+        foreach ($options as $productGroupTemplateOptionId => $optionArray) {
+            $res[$productGroupTemplateOptionId] = explode(",", $optionArray);
+        }
+        $this->prepareArray($options); // For Multiple D Array
+        $this->array_cartesian($res); // 2D array
+    }
+
+    public function prepareArray($options)
+    {
+        $i = 1;
+        $res = [];
+        foreach ($options as $productGroupTemplateOptionId => $optionArray) {
+            ${"option" . $i} = [$productGroupTemplateOptionId => explode(",", $optionArray)];
+            $i++;
+        }
+        for ($di = 1; $di <= 20; $di++) {
+            if (isset(${"option" . $di})) {
+                $res[$di] = [];
             } else {
-                $event->data = $this->render('registration/notPaused');
+                break;
             }
-        } elseif ($event->step === null) {
-            $event->data = $this->render('registration/cancelled');
-        } elseif ($event->step) {
-            $event->data = $this->render('registration/complete', [
-                'data' => $event->stepData
-            ]);
-        } else {
-            $event->data = $this->render('registration/notStarted');
         }
     }
 
-    /**
-     * Method description
-     *
-     * @return mixed The return value
-     */
-    public function actionResume($uuid)
+    function array_cartesian($arrays)
     {
-        $registrationFile = Yii::getAlias('@runtime/registration') . DIRECTORY_SEPARATOR . $uuid;
-        if (file_exists($registrationFile)) {
-            $this->resumeWizard(@file_get_contents($registrationFile));
-            unlink($registrationFile);
-            $this->redirect(['registration']);
-        } else {
-            return $this->render('registration/notResumed');
+        $result = array();
+        throw new \yii\base\Exception(print_r($arrays, TRUE));
+        $arrays = array_values($arrays);
+
+        $sizeIn = sizeof($arrays);
+        throw new \yii\base\Exception($sizeIn);
+        $size = $sizeIn > 0 ? 1 : 0;
+        foreach ($arrays as $array)
+            $size = $size * sizeof($array);
+        for ($i = 0; $i < $size; $i ++) {
+            $result[$i] = array();
+            for ($j = 0; $j < $sizeIn; $j ++)
+                array_push($result[$i], current($arrays[$j]));
+            for ($j = ($sizeIn - 1); $j >= 0; $j --) {
+                if (next($arrays[$j]))
+                    break;
+                elseif (isset($arrays[$j]))
+                    reset($arrays[$j]);
+            }
         }
+        throw new \yii\base\Exception(print_r($result, TRUE));
+        return $result;
     }
 
     // Version 1.01 Wizard Of Product Group

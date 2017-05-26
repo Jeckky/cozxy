@@ -27,7 +27,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <div class="col-md-6" style="vertical-align: bottom;">
                     <div class="btn-group pull-right" >
                         <?=
-                        Html::a('Create Product Group', ['create?step=product'], ['class' => 'btn btn-success',
+                        Html::a('Create Product Group', ['create?step=1'], ['class' => 'btn btn-success',
                             'style' => 'height:35px;color:#FFF;'])
                         ?>
                     </div>
