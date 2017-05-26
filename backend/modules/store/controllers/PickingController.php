@@ -178,7 +178,7 @@ class PickingController extends StoreMasterController {
                         $stringSlots = substr($stringSlots, 0, -1);
                         //$stringSlots = "'R1C1S2'";
                         //throw new \yii\base\Exception($stringSlots);
-                        Yii::$app->runAction('led/led/open-led', ['slot' => $stringSlots, 'colorId' => $colors->ledColor]);
+                        //Yii::$app->runAction('led/led/open-led', ['slot' => $stringSlots, 'colorId' => $colors->ledColor]);
                     } else {
                         $colors = \common\models\costfit\LedColor::find()->where("ledColor = " . $old)->one();
                         //$this->turnOnLedSlot($slots, $colors->ledColor, $allOrderId);
@@ -314,7 +314,7 @@ class PickingController extends StoreMasterController {
                 $ledItem->status = 0;
                 $ledItem->save();
                 //throw new \yii\base\Exception($slot->barcode . "," . $_GET['colorId']);
-                Yii::$app->runAction('led/led/close-led', ['slot' => $slot->barcode, 'colorId' => $_GET['colorId']]);
+                //Yii::$app->runAction('led/led/close-led', ['slot' => $slot->barcode, 'colorId' => $_GET['colorId']]);
                 $checkCloseAll = LedItem::find()->where("color = " . $_GET['colorId'] . " and status = 1")->all();
                 if (empty($checkCloseAll)) {
                     $ledColor = \common\models\costfit\LedColor::find()->where("ledColor = " . $_GET['colorId'])->one(); //set ไฟ สีนั้นให้ว่าง
