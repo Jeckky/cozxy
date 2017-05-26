@@ -155,7 +155,7 @@ foreach ($storeProductGroupId as $id):
     </tbody>
     </table>
     <br>
-    <div style="width: 100%;height: 120px; border:solid 0.5px #000000;border-radius:10px; padding-left: 20px;border-top-right-radius: 0px;border-top-left-radius: 0px;font-size: 10px;padding-bottom: 15px;">
+    <div style="width: 100%;height: 120px; border:solid 0.5px #000000;border-radius:10px; padding-left: 20px;border-top-right-radius: 10px;border-top-left-radius: 10px;font-size: 10px;padding-bottom: 15px;">
         ผู้มีอำนาจลงนาม
         <table class="table_noborder" cellpadding="0" cellspacing="0" style="margin-left: -20px;margin-top: 50px;font-size: 10px;">
             <tr>

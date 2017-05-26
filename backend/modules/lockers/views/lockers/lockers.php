@@ -5,6 +5,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
+use common\models\costfit\OrderItemPacking;
 
 $this->title = 'ช่องของ Lockers';
 $this->params['breadcrumbs'][] = $this->title;
@@ -52,9 +53,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <tbody>
                         <?php
                         $cols = common\models\costfit\PickingPointItems::find()
-                        ->where(["pickingId" => $point->pickingId])
-                        ->groupBy(["LEFT(portIndex,1)"])
-                        ->all();
+                                ->where(["pickingId" => $point->pickingId])
+                                ->groupBy(["LEFT(portIndex,1)"])
+                                ->all();
                         //echo '<pre>';
                         //print_r($cols);
                         ?>
@@ -64,9 +65,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     <table class="table">
                                         <?php
                                         $rows = common\models\costfit\PickingPointItems::find()
-                                        ->where(["pickingId" => $point->pickingId, 'LEFT(portIndex,1)' => substr($col->portIndex, 0, 1)])
-                                        // ->groupBy(["RIGHT(portIndex,1)"])
-                                        ->all();
+                                                ->where(["pickingId" => $point->pickingId, 'LEFT(portIndex,1)' => substr($col->portIndex, 0, 1)])
+                                                // ->groupBy(["RIGHT(portIndex,1)"])
+                                                ->all();
                                         foreach ($rows as $rowIndex => $row):
                                             $height = "70px";
                                             switch ($row->height) {
@@ -86,6 +87,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     ; background-color: <?php
                                                     if ($row->status == 1) {
                                                         echo $PickingPoints['color_lid'];
+                                                    } else if ($row->status == 99) {
+                                                        echo '#FFF';
                                                     } else { //echo $PickingPoints['frame']
                                                         echo '#D24136';
                                                     }
@@ -101,6 +104,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                 <?php
                                                                 if ($row->status == 0) {
                                                                     echo 'ปิดช่องนี้แล้ว..';
+                                                                } else if ($row->status == 99) {
+                                                                    ?>
+                                                                    <a class="btn btn-lg   btn-info" href="<?php echo Yii::$app->homeUrl; ?>lockers/lockers/scan-bag?pickingItemsId=<?php echo $row->pickingItemsId; ?>&code=<?php echo $row->code ?>&boxcode=<?php echo $row->pickingId; ?>&model=1">เปิดช่อง : <?= $row->name; ?></a>
+                                                                    <?php
                                                                 } else {
                                                                     if ($Inspector['status'] == 10) {
                                                                         echo '<span class="label label-danger">ช่อง' . $row->name . ' : มีปัญหา <br>รายละอียด : ' . $Inspector['remark'] . '</span>';
@@ -131,6 +138,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                             <?php
                                                             if ($row->status == 0) {
                                                                 echo 'ปิดช่องนี้แล้ว..';
+                                                            } else if ($row->status == 99) {
+                                                                ?>
+                                                                <div style="margin-bottom: 10px;"><i>จองไว้สำหรับถุงหมายเลข..</i></div>
+                                                                <?= OrderItemPacking::bagInLocker($row->pickingItemsId) ?>
+                                                                <a class="btn btn-lg   btn-info" href="<?php echo Yii::$app->homeUrl; ?>lockers/lockers/scan-bag?pickingItemsId=<?php echo $row->pickingItemsId; ?>&code=<?php echo $row->code ?>&boxcode=<?php echo $row->pickingId; ?>&model=1" style="margin-top: 10px;">เปิดช่อง : <?= $row->name; ?></a>
+                                                                <?php
                                                             } else {
                                                                 if ($Inspector['status'] == 10) {
                                                                     echo '<span class="label label-danger">ช่อง' . $row->name . ' : มีปัญหา <br>รายละอียด : ' . $Inspector['remark'] . '</span>';

@@ -117,6 +117,7 @@ class ShippingController extends StoreMasterController {
                                     ->orderBy("updateDateTime")
                                     ->one();
                             $pickingPoint = $orderItem->pickingId;
+                            $this->savePickingPoin($queryList->orderId, $orderItem->pickingId);
                             $listPoint = \common\helpers\Lockers::GetPickingPoint($pickingPoint);
                             $localNamecitie = \common\helpers\Local::Cities($listPoint->amphurId);
                             $localNamestate = \common\helpers\Local::States($listPoint->provinceId);
@@ -170,6 +171,7 @@ class ShippingController extends StoreMasterController {
         }
         $orderInCars = OrderItemPacking::find()->where("shipper=" . Yii::$app->user->identity->userId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)->all();
         $pickingPoint = $this->findPickingPoint($orderInCars);
+        // throw new \yii\base\Exception(print_r($orderInCars, true));
         return $this->render('index', [
                     'dataProvider' => $dataProvider,
                     'orderInCar' => $orderInCars,
@@ -254,6 +256,16 @@ class ShippingController extends StoreMasterController {
         } else {
             $this->redirect(['index', 'orderNo' => $orderNo,
             ]);
+        }
+    }
+
+    public function savePickingPoin($orderId, $pickingId) {
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        if (isset($order)) {
+            if ($order->pickingId == '' || $order->pickingId == null) {
+                $order->pickingId = $pickingId;
+                $order->save(false);
+            }
         }
     }
 
@@ -425,7 +437,7 @@ class ShippingController extends StoreMasterController {
     public static function findPickingPoint($incars) {
         $pickingPoint = [];
         $i = 0;
-        if (isset($incars) && !empty($incars)) {
+        if (isset($incars) && count($incars) > 0) {
             foreach ($incars as $incar):
                 $check = 0;
                 $order = OrderItem::find()->where("orderItemId=" . $incar->orderItemId)->one();

@@ -521,7 +521,7 @@ class OrderController extends OrderMasterController {
                     $toMailSupp = $supplier->email;
                     $SubjectSupp = "Purchase Order from Cozxy.com";
                     $urlFroSupplier = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "suppliers/po";
-                    $topUpEmail = \common\helpers\Email::mailPoToSupplier($SubjectSupp, $username, $toMailSupp, $urlFroSupplier);
+                    // $topUpEmail = \common\helpers\Email::mailPoToSupplier($SubjectSupp, $username, $toMailSupp, $urlFroSupplier);
                 }
             }
         endforeach;
@@ -536,7 +536,7 @@ class OrderController extends OrderMasterController {
         $arrayMail = explode(",", $mailToCozxy);
         $urlFroCozxy = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "order/order/new-po";
         foreach ($arrayMail as $mail):
-            $topUpEmail = \common\helpers\Email::mailPoToCozxy($SubjectCozxy, $mail, $urlFroCozxy);
+            //  $topUpEmail = \common\helpers\Email::mailPoToCozxy($SubjectCozxy, $mail, $urlFroCozxy);
         endforeach;
     }
 
