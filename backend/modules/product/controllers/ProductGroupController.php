@@ -51,7 +51,7 @@ class ProductGroupController extends ProductMasterController
             ->where("userId=" . Yii::$app->user->identity->userId . " and status=1"),
         ]);
 
-        return $this->render('index', [
+        return $this->render('101/wizard', [
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -73,7 +73,7 @@ class ProductGroupController extends ProductMasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreateOld()
     {
         $model = new ProductGroup();
         $ms = '';
@@ -178,12 +178,13 @@ class ProductGroupController extends ProductMasterController
                     ]
                 ];
                 break;
-            case 'create-wizard':
-                $actionName = "createWizard";
+            case 'create':
+                $actionName = "create";
+
                 $config = [
-                    'steps' => ['productGroup', 'address', 'phoneNumber', 'user'],
+                    'steps' => ['product', 'productOption', 'phoneNumber', 'user'],
                     'events' => [
-                        WizardBehavior::EVENT_WIZARD_STEP => [$this, $actionName . 'WizardStep'],
+                        WizardBehavior::EVENT_WIZARD_STEP => [$this, $actionName . 'Step'],
                         WizardBehavior::EVENT_AFTER_WIZARD => [$this, $actionName . 'AfterWizard'],
                         WizardBehavior::EVENT_INVALID_STEP => [$this, 'invalidStep']
                     ]
@@ -247,7 +248,7 @@ class ProductGroupController extends ProductMasterController
         ]);
     }
 
-    public function actionCreateWizard($step)
+    public function actionCreate($step)
     {
 //        throw new \yii\base\Exception($step);
         return $this->step($step);
@@ -297,12 +298,17 @@ class ProductGroupController extends ProductMasterController
      * The event handler must set $event->handled=true for the wizard to continue
      * @param WizardEvent The event
      */
-    public function createWizardWizardStep($event)
+    public function createStep($event)
     {
+
         if (empty($event->stepData)) {
             $modelName = 'common\\models\\costfit\\' . ucfirst($event->step);
 
             $model = new $modelName();
+            $model->createDateTime = new \yii\db\Expression("NOW()");
+            if ($event->step == "product") {
+                $model->parentId = null;
+            }
         } else {
             $model = $event->stepData;
         }
@@ -314,9 +320,9 @@ class ProductGroupController extends ProductMasterController
             $event->nextStep = WizardBehavior::DIRECTION_BACKWARD;
             $event->handled = true;
         } elseif ($model->load($post) && $model->validate()) {
+
             $event->data = $model;
             $event->handled = true;
-
             if (isset($post['pause'])) {
                 $event->continue = false;
             } elseif ($event->n < 2 && isset($post['add'])) {
@@ -324,26 +330,7 @@ class ProductGroupController extends ProductMasterController
             }
         } else {
             $ms = '';
-            if (isset($_POST["ProductGroup"])) {
-                $productGroup = ProductGroup::find()->where("title='" . $_POST["ProductGroup"]["title"] . "' and status=1")->one();
-                if (!isset($productGroup)) {
-                    $model->userId = Yii::$app->user->identity->userId;
-                    $model->title = $_POST["ProductGroup"]["title"];
-                    $model->description = strip_tags($_POST["ProductGroup"]["description"]);
-                    $model->status = 1;
-                    $model->updateDateTime = new \yii\db\Expression('NOW()');
-                    $model->createDateTime = new \yii\db\Expression('NOW()');
-                    if ($model->save(false)) {
-                        return $this->redirect(['index']);
-                    }
-                } else {
-                    $ms = 'This title already exists.';
-                    $title = $_POST["ProductGroup"]["title"];
-                    $description = $_POST["ProductGroup"]["description"];
-                }
-            }
-//            $event->data = $this->render('registration/' . $event->step, compact('event', 'model'));
-            $event->data = $this->render('101/create', compact('event', 'model', 'ms', 'title', 'description'));
+            $event->data = $this->render('101/' . $event->step, compact('event', 'model', 'ms', 'title', 'description'));
         }
     }
 
