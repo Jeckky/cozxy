@@ -30,8 +30,8 @@ class ProductController extends MasterController {
         $productViews->save(FALSE);
 
         $productViews = new ArrayDataProvider(['allModels' => FakeFactory::productViews($productSupplierId)]);
-        $productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(4, FALSE)]);
-        return $this->render('index', compact('productCanSell', 'productViews'));
+        $productHotNewProduct = new ArrayDataProvider(['allModels' => FakeFactory::productHotNewAndProduct(4, FALSE)]);
+        return $this->render('index', compact('productHotNewProduct', 'productViews'));
     }
 
 }

@@ -89,7 +89,7 @@ $(window).resize(function() { descSet(); });
                 <div class="row">
                     <?php
                     echo \yii\widgets\ListView::widget([
-                        'dataProvider' => $productCanSell,
+                        'dataProvider' => $productHotNewProduct,
                         'options' => [
                             'tag' => false,
                         ],
