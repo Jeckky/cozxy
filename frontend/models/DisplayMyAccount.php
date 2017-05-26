@@ -96,7 +96,7 @@ class DisplayMyAccount extends Model {
                     'productSuppId' => $value->productSuppId,
                     'image' => Yii::$app->homeUrl . $productImages->imageThumbnail1,
                     'brand' => isset($value->brand) ? $value->brand->title : '',
-                    'url' => '/product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
+                    'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
                     'brand' => isset($value->brand) ? $value->brand->title : '',
                     'title' => $value->title,
                     'price_s' => $productPrice->price,

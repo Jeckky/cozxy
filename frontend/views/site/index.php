@@ -100,14 +100,16 @@ $this->title = 'My Yii Application';
                         <?php
                         $brands = common\models\costfit\Brand::find()->all();
                         foreach ($brands as $brand) {
-                            if (file_exists(Yii::$app->basePath . "/web" . $brand->image) && !empty($brand->image)) {
-                                $image = $brand->image;
-                            } else {
-                                $image = Yii::$app->homeUrl . "images/no-image.jpg";
+                            if (isset($brand->image) && !empty($brand->image)) {
+                                if (file_exists(Yii::$app->basePath . "/web/" . $brand->image)) {
+                                    $brandImages = $brand->image;
+                                } else {
+                                    $brandImages = Yii::$app->homeUrl . 'images/no-image.jpg';
+                                }
                             }
                             ?>
                             <a class="" href="<?php echo Yii::$app->homeUrl; ?>brand/<?= $brand->createTitle() ?>/<?php echo \common\models\ModelMaster::encodeParamsBrand(['brandId' => $brand->brandId]); ?>">
-                                <img src="<?php echo $image; ?>" alt="" class="img-responsive"/></a>
+                                <img src="<?php echo $brandImages; ?>" alt="" class="img-responsive"/></a>
                             <?php
                         }
                         ?>
