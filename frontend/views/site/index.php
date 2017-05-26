@@ -88,15 +88,7 @@ $this->title = 'My Yii Application';
             <div class="col-xs-12">
                 <div class="rela" style="height:96px">
                     <!--<a class="align-middle fc-g999 size24 scrollingHotSpotLeft" href="#" style="padding-top:8px;left:0"><span class="glyphicon glyphicon-menu-left"></span></a>-->
-                    <div id="logoParade">
-                        <!--<a href="#"><img src="imgs/banner01.png" alt=""></a>
-                        <a href="#"><img src="imgs/banner02.png" alt=""></a>
-                        <a href="#"><img src="imgs/banner03.png" alt=""></a>
-                        <a href="#"><img src="imgs/banner04.png" alt=""></a>
-                        <a href="#"><img src="imgs/banner05.png" alt=""></a>
-                        <a href="#"><img src="imgs/banner06.png" alt=""></a>
-                        <a href="#"><img src="imgs/banner07.png" alt=""></a>
-                        <a href="#"><img src="imgs/banner08.png" alt=""></a>-->
+                    <div id="logoParade"> 
                         <?php
                         echo \yii\widgets\ListView::widget([
                             'dataProvider' => $productBrand,
@@ -113,7 +105,7 @@ $this->title = 'My Yii Application';
                                 'tag' => false,
                             ],
                         ]);
-                        ?> 
+                        ?>
                     </div>
                     <!--<a class="align-middle fc-g999 size24 scrollingHotSpotRight" href="#" style="padding-top:8px;right:0"><span class="glyphicon glyphicon-menu-right"></span></a>-->
                 </div>
