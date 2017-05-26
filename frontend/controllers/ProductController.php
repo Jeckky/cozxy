@@ -32,7 +32,8 @@ class ProductController extends MasterController {
         $productViews = new ArrayDataProvider(['allModels' => FakeFactory::productViews($productSupplierId)]);
         $productHotNewProduct = new ArrayDataProvider(['allModels' => FakeFactory::productHotNewAndProduct(4, FALSE)]);
         $StoryProductPost = new ArrayDataProvider(['allModels' => DisplayMyStory::myStoryTop($productSupplierId, FALSE, FALSE)]);
-        return $this->render('index', compact('productHotNewProduct', 'productViews', 'StoryProductPost'));
+        $StoryRecentStories = new ArrayDataProvider(['allModels' => DisplayMyStory::productRecentStories($productSupplierId, FALSE, FALSE)]);
+        return $this->render('index', compact('productHotNewProduct', 'productViews', 'StoryProductPost', 'StoryRecentStories'));
     }
 
 }

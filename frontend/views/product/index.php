@@ -128,8 +128,14 @@ $(window).resize(function() { descSet(); });
             ]);
             ?>
             <?//= $this->render('@app/themes/cozxy/layouts/story/_panel_your_story', compact('StoryProductPost')) ?>
-            <?= $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories') ?>
-
+            <?php
+            //echo Yii::$app->controller->id;
+            if (Yii::$app->controller->id == 'product') {
+                echo $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories', compact('StoryRecentStories'));
+            } else {
+                echo $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories')
+                ?>
+            <?php } ?>
         </div>
     </div>
 </div>
