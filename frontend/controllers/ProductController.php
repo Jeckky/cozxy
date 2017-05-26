@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\data\ArrayDataProvider;
 use frontend\models\FakeFactory;
+use frontend\models\DisplayMyStory;
 
 class ProductController extends MasterController {
 
@@ -18,7 +19,6 @@ class ProductController extends MasterController {
         $params = \common\models\ModelMaster::decodeParams($hash);
         $productId = $params['productId'];
         $productSupplierId = $params['productSupplierId'];
-
         /*
          * Product Views - Frontend
          */
@@ -31,7 +31,8 @@ class ProductController extends MasterController {
 
         $productViews = new ArrayDataProvider(['allModels' => FakeFactory::productViews($productSupplierId)]);
         $productHotNewProduct = new ArrayDataProvider(['allModels' => FakeFactory::productHotNewAndProduct(4, FALSE)]);
-        return $this->render('index', compact('productHotNewProduct', 'productViews'));
+        $StoryProductPost = new ArrayDataProvider(['allModels' => DisplayMyStory::myStoryTop($productSupplierId, FALSE, FALSE)]);
+        return $this->render('index', compact('productHotNewProduct', 'productViews', 'StoryProductPost'));
     }
 
 }

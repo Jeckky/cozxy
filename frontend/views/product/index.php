@@ -110,8 +110,24 @@ $(window).resize(function() { descSet(); });
         </div>
         <div class="col-md-3">
             <div class="size48">&nbsp;</div>
-
-            <?= $this->render('@app/themes/cozxy/layouts/story/_panel_your_story') ?>
+            <?php
+            echo \yii\widgets\ListView::widget([
+                'dataProvider' => $StoryProductPost,
+                'options' => [
+                    'tag' => false,
+                ],
+                'itemView' => function ($model, $key, $index, $widget) {
+                    return $this->render('@app/themes/cozxy/layouts/story/_panel_your_story', ['model' => $model, 'colSize' => '3']);
+                },
+//                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                //'layout'=>"{summary}{pager}{items}"
+                'layout' => "{items}",
+                'itemOptions' => [
+                    'tag' => false,
+                ],
+            ]);
+            ?>
+            <?//= $this->render('@app/themes/cozxy/layouts/story/_panel_your_story', compact('StoryProductPost')) ?>
             <?= $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories') ?>
 
         </div>
