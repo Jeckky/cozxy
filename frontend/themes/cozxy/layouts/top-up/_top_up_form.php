@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Top Up';
+$this->title = 'Payment History';
 $this->params['breadcrumbs'][] = $this->title;
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
@@ -20,10 +20,9 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
     $count = count($paymentMethod);
 }
 ?>
-<div class="top-up-index" style="width: 80%;margin: auto;">
+<div class="top-up-index">
 
-    <div class="bs-example" data-example-id="btn-tags" style="margin: auto;background-color:#3cc;height:45px; padding: 10px 12px; color: #fff; border-width: 1px;  border-radius: 4px 4px 0 0; -webkit-box-shadow: none; box-shadow: none;">
-        <span style="float: left; text-align: left;"><?= $this->title ?></span>
+    <div class="bs-example" data-example-id="btn-tags" >
         <span style="float: right; text-align: right;"><?php
             if (isset($ms) && $ms != '') {
                 if ($needMore == 0) {
@@ -42,18 +41,18 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
     ?>
     <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="margin: auto;text-align: center;color: #000;margin-bottom: 20px;">
 
-        <table style="width: 100%">
+        <table class="table">
             <tr style="height: 50px;">
-                <td colspan="2" style="width: 70%;height: 60px;color: #006666;">By placing your order, you agree to Cozxy's payment policy and condition of use.</td>
+                <td colspan="2">By placing your order, you agree to Cozxy's payment policy and condition of use.</td>
             </tr>
             <tr style="height: 50px;">
-                <td style="text-align: right;width:50%;">Email Account :</td>
-                <td style="text-align: left;width:50%;"><span style="margin-left: 20px;"><?= $data["email"] ?></span></td>
+                <td style="text-align: right;">Email Account :</td>
+                <td style="text-align: left;"><span style="margin-left: 20px;"><?= $data["email"] ?></span></td>
             </tr>
 
             <tr style="height: 50px;">
-                <td style="text-align: right;width:50%;">Name :</td>
-                <td style="text-align: left;width:50%;"><span style="margin-left: 20px;"><?= $data["name"] ?></span></td>
+                <td style="text-align: right;">Name :</td>
+                <td style="text-align: left;"><span style="margin-left: 20px;"><?= $data["name"] ?></span></td>
             </tr>
             <tr style="vertical-align: middle">
                 <td style="text-align: right;width:50%;vertical-align: top; padding-top: 10px;" rowspan="<?= $count == 1 ? 0 : $count ?>">Payment method :</td>
@@ -90,7 +89,7 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
                             ?>
                             <tr style="vertical-align: top;">
                             <?php } ?>
-                            <td style="text-align: left;">
+                            <td style="text-align: left; ">
                                 <div class="radio">
                                     <div class="btn-group" data-toggle="buttons">
                                         <label class="checkout_select_address">
@@ -107,24 +106,24 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
                 endforeach;
             }
             ?>
-
             <tr style="height: 50px;">
-                <td style="text-align: right;width:50%;">Captcha :</td>
-                <td style="text-align: left;width:50%;">
-                    <span style="margin-left: 20px;">
-                        <input type="text" id="inputPass" name="inputPass" maxlength="6" style="width: 100px;text-align: center;" required="true">
+                <td style="text-align: right;padding: 8px">Captcha :</td>
+                <td style="text-align: left;margin-top:0px; padding: 0px;">
+                    <span style="margin-left: 20px;  padding: 0px;">
+                        <input type="text" id="inputPass" name="inputPass" maxlength="6" style="width: 150px;text-align: center; margin-top:0px; padding: 0px; " required="true">
                         <input type="text" id="passwordPic" style="width:80px;height: 28px;background-color: #000;color:#ffcc33;text-align: center;border: 0 #000 solid;" disabled="true" value="<?= $data["number"] ?>">
-                        <span>&nbsp;&nbsp;<i class="fa fa-refresh" aria-hidden="true" id="refreshPass" style="color: #3cc;font-size: 14pt;cursor: pointer;"></i></span>
+                        <span>&nbsp;&nbsp;<i class="fa fa-refresh" aria-hidden="true" id="refreshPass" style="color: #fc0;font-size: 14pt;cursor: pointer;"></i></span>
                     </span>
                 </td>
             </tr>
             <tr style="height: 50px;">
-                <td style="text-align: right;width:50%;"></td>
-                <td style="text-align: left;width:50%;">
+                <td style="text-align: right;"></td>
+                <td style="text-align: left;">
                     <span style="margin-left: 20px;">
-                        <a class = "btn" style = "background-color: #3cc; color: #fff;font-size: 12pt;" id="checkBot">
+                        <!--<a class = "b btn-yellow" style ="margin:24px auto 12px" id="checkBot">
                             ยืนยัน
-                        </a>
+                        </a>-->
+                        <input type="button" value="ยืนยัน" id="checkBot" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">
                     </span>
                 </td>
             </tr>

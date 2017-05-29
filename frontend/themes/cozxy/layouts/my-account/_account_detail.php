@@ -27,8 +27,10 @@
 <div class="row">
     <div class="col-md-12">
         CozxyCoin
-        <a href="javascript:edit_profile(1);" class="pull-right btn-g999 p-edit btn-yellow"><i class="fa fa-circle-thin"></i> Top Up</a>
-        <a href="javascript:edit_profile(1);" class="pull-right btn-g999 p-edit" style="margin-right: 8px;"><i class="fa fa-history"></i> History</a>
+        <!--<a href="javascript:edit_profile(1);" class="pull-right btn-g999 p-edit btn-yellow"><i class="fa fa-circle-thin"></i> Top Up</a>-->
+        <?= \yii\bootstrap\Html::a('<i class="fa fa-circle-thin"></i> Top Up', \yii\helpers\Url::to(['/top-up']), ['class' => 'pull-right btn-g999 p-edit btn-yellow', 'style' => 'margin-right: 8px;']) ?>
+        <!--<a href="javascript:edit_profile(1);" class="pull-right btn-g999 p-edit" style="margin-right: 8px;"><i class="fa fa-history"></i> History</a>-->
+        <?= \yii\bootstrap\Html::a('<i class="fa fa-history"></i> History', \yii\helpers\Url::to(['/top-up/history']), ['class' => 'pull-right btn-g999 p-edit', 'style' => 'margin-right: 8px;']) ?>
     </div>
     <div class="col-xs-12 size6">&nbsp;</div>
 </div>
