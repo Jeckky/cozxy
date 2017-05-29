@@ -105,7 +105,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
             'quantity',
             'isbn',
             'title'
-                /* use end */
+        /* use end */
         ]);
     }
 
@@ -126,7 +126,9 @@ class Order extends \common\models\costfit\master\OrderMaster {
     public static function findCartArray() {
         $res = [];
         $order = Order::getOrder();
-        $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
+        $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@webroot/themes/cozxy');
+        $svg195x195 = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTk1IiBoZWlnaHQ9IjE5NSIgdmlld0JveD0iMCAwIDY0IDY0IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48IS0tDQpTb3VyY2UgVVJMOiBob2xkZXIuanMvMTk1eDE5NQ0KQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4NCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQ0KKGMpIDIwMTItMjAxNSBJdmFuIE1hbG9waW5za3kgLSBodHRwOi8vaW1za3kuY28NCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNWMwYTg2ZjY1YSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1YzBhODZmNjVhIj48cmVjdCB3aWR0aD0iMTk1IiBoZWlnaHQ9IjE5NSIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjYuMjI2NTYyNSIgeT0iMzYuNTMyODEyNSI+MTk1eDE5NTwvdGV4dD48L2c+PC9nPjwvc3ZnPg==';
+
         $total = 0;
         $totalWithoutDiacount = 0;
         $totalItemDiscount = 0;
@@ -174,7 +176,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
                     'shippingDiscountValue' => isset($item->shippingDiscountValue) ? $item->shippingDiscountValue : 0,
                     'shippingDiscountValueText' => isset($item->shippingDiscountValue) ? number_format($item->shippingDiscountValue, 2) : number_format(0, 2),
                     'total' => $item->total,
-                    'image' => isset($item->product->productImages[0]) ? \Yii::$app->homeUrl . $item->product->productImages[0]->image : $directoryAsset . "/img/catalog/shopping-cart-thumb.jpg",
+                    'image' => isset($item->product->productImages[0]) ? \Yii::$app->homeUrl . $item->product->productImages[0]->image : $svg195x195,
                 ];
             }
             $order->save(); // For Update Total;
@@ -734,7 +736,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
     public function search($params) {
 
         $query = \common\models\costfit\Order::find()
-                ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "");
+        ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "");
         //  and orderNo  is not null order by orderId desc
 
         $dataProvider = new ActiveDataProvider([
@@ -750,7 +752,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
         }
 
         $query->andFilterWhere(['like', 'createDateTime', $this->createDateTime])
-                ->andFilterWhere(['like', 'orderNo', $this->orderNo]);
+        ->andFilterWhere(['like', 'orderNo', $this->orderNo]);
 
         return $dataProvider;
     }

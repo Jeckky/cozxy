@@ -1,6 +1,8 @@
 <?php
 
 use yii\helpers\Url;
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
 
 \frontend\assets\CartAsset::register($this);
 ?>
@@ -15,9 +17,14 @@ use yii\helpers\Url;
                 </div>
                 <div class="col-xs-12 bg-white">
                     <!--Cart Items-->
-                    <?php for ($i = 0; $i < 4; $i++): ?>
-                        <?= $this->render('_cart_item'); ?>
-                    <?php endfor; ?>
+                    <?php
+                    foreach ($this->params['cart']['items'] as $item) {
+                        // throw new \yii\base\Exception(print_r($item["image"], true));
+                        ?>
+                        <?= $this->render('_cart_item', compact('item')); ?>
+                        <?php
+                    }
+                    ?>
 
                     <!-- E -->
                     <div class="col-xs-12 text-right">
