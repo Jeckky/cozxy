@@ -249,10 +249,10 @@ class ProductGroupController extends ProductMasterController
 //        $res = [];
 
         foreach ($options as $productGroupTemplateOptionId => $optionArray) {
-            $res[$productGroupTemplateOptionId] = explode(",", $optionArray);
+//            $res[$productGroupTemplateOptionId] = explode(",", $optionArray);
         }
-        $this->prepareArray($options); // For Multiple D Array
-        $this->array_cartesian($res); // 2D array
+//        $this->prepareArray($options); // For Multiple D Array
+//        $this->array_cartesian($res); // 2D array
     }
 
     public function prepareArray($options)
@@ -275,26 +275,28 @@ class ProductGroupController extends ProductMasterController
     function array_cartesian($arrays)
     {
         $result = array();
-        throw new \yii\base\Exception(print_r($arrays, TRUE));
+        $keys = array_keys($arrays);
         $arrays = array_values($arrays);
 
         $sizeIn = sizeof($arrays);
-        throw new \yii\base\Exception($sizeIn);
+
         $size = $sizeIn > 0 ? 1 : 0;
         foreach ($arrays as $array)
             $size = $size * sizeof($array);
-        for ($i = 0; $i < $size; $i ++) {
+        for ($i = 0; $i < $size; $i++) {
             $result[$i] = array();
-            for ($j = 0; $j < $sizeIn; $j ++)
-                array_push($result[$i], current($arrays[$j]));
-            for ($j = ($sizeIn - 1); $j >= 0; $j --) {
+            for ($j = 0; $j < $sizeIn; $j++) {
+//            array_push($result[$i], current($arrays[$j]));
+                $result[$i][$keys[$j]] = current($arrays[$j]);
+            }
+
+            for ($j = ($sizeIn - 1); $j >= 0; $j--) {
                 if (next($arrays[$j]))
                     break;
                 elseif (isset($arrays[$j]))
                     reset($arrays[$j]);
             }
         }
-        throw new \yii\base\Exception(print_r($result, TRUE));
         return $result;
     }
 
