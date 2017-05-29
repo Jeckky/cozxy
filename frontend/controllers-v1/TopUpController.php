@@ -279,8 +279,8 @@ class TopUpController extends MasterController {
 
         $amount1 = str_replace(",", "", number_format($amount, 2));
         $amount2 = str_replace(".", "", $amount1);
-        $barCode = $taxId . $topUpCut . $tel . $amount2;
-        $data = "| " . $taxId . " " . $topUpCut . " " . $tel . " " . $amount2;
+        $barCode = "|" . $taxId . $topUpCut . $tel . $amount2;
+        $data = "|" . $taxId . " " . $topUpCut . " " . $tel . " " . $amount2;
         //throw new \yii\base\Exception($amount);
         $customer = User::find()->where("userId=" . Yii::$app->user->id)->one();
         if (isset($customer)) {
