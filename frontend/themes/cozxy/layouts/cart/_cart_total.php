@@ -1,6 +1,6 @@
 <div class="col-xs-12 bg-black" style="padding:18px;">
     <div class="rela">
-        <input type="text" name="promocode" style="border: 0px solid #999; padding: 8px;" class="fullwidth" placeholder="Promo code">
+        <input type="text" name="promocode" style="border: 0px solid #999; padding: 8px; width: 60%;" class="fullwidth" placeholder="Promo code">
         <input type="button" value="APPLY" onclick="" class="abs btn-yellow" style="padding: 7px 24px; right: 0; font-weight: 700">
     </div>
 </div>
