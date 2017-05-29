@@ -106,7 +106,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                     echo 'ปิดช่องนี้แล้ว..';
                                                                 } else if ($row->status == 99) {
                                                                     ?>
-                                                                    <a class="btn btn-lg   btn-info" href="<?php echo Yii::$app->homeUrl; ?>lockers/lockers/scan-bag?pickingItemsId=<?php echo $row->pickingItemsId; ?>&code=<?php echo $row->code ?>&boxcode=<?php echo $row->pickingId; ?>&model=1">เปิดช่อง : <?= $row->name; ?></a>
+                                                                    <a class="btn btn-lg   btn-info" href="<?php echo Yii::$app->homeUrl; ?>lockers/lockers/scan-bag?pickingItemsId=<?php echo $row->pickingItemsId; ?>&code=<?php echo $row->code ?>&boxcode=<?php echo $row->pickingId; ?>&model=1&orderId="<?= OrderItemPacking::findOrderFromPickingItemId($row->pickingItemsId) ?>>เปิดช่อง : <?= $row->name; ?></a>
                                                                     <?php
                                                                 } else {
                                                                     if ($Inspector['status'] == 10) {
@@ -117,7 +117,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                         // echo 'ลูดค้ามารับไป :' . $Inspector['DateOfReceive'] . ' วันที่แล้ว</small>';
                                                                     } else if ($Inspector['status'] < 8 || $Inspector['status'] == 9) {
                                                                         ?>
-                                                                        <a class="btn btn-lg   btn-info" href="<?php echo Yii::$app->homeUrl; ?>lockers/lockers/scan-bag?pickingItemsId=<?php echo $row->pickingItemsId; ?>&code=<?php echo $row->code ?>&boxcode=<?php echo $row->pickingId; ?>&model=1">เปิดช่อง : <?= $row->name; ?></a>
+                                                                        <a class="btn btn-lg   btn-info" href="<?php echo Yii::$app->homeUrl; ?>lockers/lockers/scan-bag?pickingItemsId=<?php echo $row->pickingItemsId; ?>&code=<?php echo $row->code ?>&boxcode=<?php echo $row->pickingId; ?>&model=1&orderId=">เปิดช่อง : <?= $row->name; ?></a>
                                                                         <?php
                                                                     } else if ($Inspector['status'] == 8) {
                                                                         echo '<span class="label label-warning">ช่อง' . $row->name . ' :รอตรวจสอบจากเจ้าหน้าที่</span>';
@@ -142,7 +142,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                 ?>
                                                                 <div style="margin-bottom: 10px;"><i>จองไว้สำหรับถุงหมายเลข..</i></div>
                                                                 <?= OrderItemPacking::bagInLocker($row->pickingItemsId) ?>
-                                                                <a class="btn btn-lg   btn-info" href="<?php echo Yii::$app->homeUrl; ?>lockers/lockers/scan-bag?pickingItemsId=<?php echo $row->pickingItemsId; ?>&code=<?php echo $row->code ?>&boxcode=<?php echo $row->pickingId; ?>&model=1" style="margin-top: 10px;">เปิดช่อง : <?= $row->name; ?></a>
+                                                                <a class="btn btn-lg   btn-info" href="<?php echo Yii::$app->homeUrl; ?>lockers/lockers/scan-bag?pickingItemsId=<?php echo $row->pickingItemsId; ?>&code=<?php echo $row->code ?>&boxcode=<?php echo $row->pickingId; ?>&model=1&orderId="<?= OrderItemPacking::findOrderFromPickingItemId($row->pickingItemsId) ?> style="margin-top: 10px;">เปิดช่อง : <?= $row->name; ?></a>
                                                                 <?php
                                                             } else {
                                                                 if ($Inspector['status'] == 10) {
@@ -153,7 +153,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                                     // echo 'ลูดค้ามารับไป :' . $Inspector['DateOfReceive'] . ' วันที่แล้ว</small>';
                                                                 } else if ($Inspector['status'] < 8 || $Inspector['status'] == 9) {
                                                                     ?>
-                                                                    <a class="btn btn-lg   btn-info" href="<?php echo Yii::$app->homeUrl; ?>lockers/lockers/scan-bag?pickingItemsId=<?php echo $row->pickingItemsId; ?>&code=<?php echo $row->code ?>&boxcode=<?php echo $row->pickingId; ?>&model=1">เปิดช่อง : <?= $row->name; ?></a>
+                                                                    <a class="btn btn-lg   btn-info" href="<?php echo Yii::$app->homeUrl; ?>lockers/lockers/scan-bag?pickingItemsId=<?php echo $row->pickingItemsId; ?>&code=<?php echo $row->code ?>&boxcode=<?php echo $row->pickingId; ?>&model=1&orderId=">เปิดช่อง : <?= $row->name; ?></a>
                                                                     <?php
                                                                 } else if ($Inspector['status'] == 8) {
                                                                     echo '<span class="label label-warning">ช่อง' . $row->name . ' :รอตรวจสอบจากเจ้าหน้าที่</span>';

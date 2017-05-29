@@ -309,6 +309,26 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
         }
     }
 
+    public static function orderNo($orderItemId) {
+        $orderItem = OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
+        $order = Order::find()->where("orderId=" . $orderItem->orderId)->one();
+        return $order;
+    }
+
+    public static function findOrderFromPickingItemId($pickingItemId) {
+        $orderItemPacking = OrderItemPacking::find()->where("pickingItemsId=" . $pickingItemId . " and status in (5,7)")->one();
+        $orderItem = OrderItem::find()->where("orderItemId=" . $orderItemPacking->orderItemId)->one();
+        $order = Order::find()->where("orderId=" . $orderItem->orderId)->one();
+        return $order->orderId;
+    }
+
+    public static function findOrderFromPickingItemIds($pickingItemId) {
+        $orderItemPacking = OrderItemPacking::find()->where("pickingItemsId=" . $pickingItemId . " and status=7")->one();
+        $orderItem = OrderItem::find()->where("orderItemId=" . $orderItemPacking->orderItemId)->one();
+        $order = Order::find()->where("orderId=" . $orderItem->orderId)->one();
+        return $order->orderId;
+    }
+
     public static function countBagAtPoint($pickingPoint) {
         $items = OrderItemPacking::find()->where("shipper=" . Yii::$app->user->identity->userId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)->all();
         $orderId = [];
@@ -361,7 +381,7 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     }
 
     public static function bagInLocker($pickingItemsId) {//ที่มีการจองไว้
-        $orderItemPackings = OrderItemPacking::find()->where("pickingItemsId=" . $pickingItemsId . " and status=5")->all();
+        $orderItemPackings = OrderItemPacking::find()->where("pickingItemsId=" . $pickingItemsId . " and status in (5,7)")->all();
         $bag = '';
         if (isset($orderItemPackings) && count($orderItemPackings) > 0) {
             foreach ($orderItemPackings as $picking):
@@ -372,7 +392,7 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     }
 
     public static function sameOrder($pickingItemsId) {//ที่มีการจองไว้
-        $orderItemPackings = OrderItemPacking::find()->where("pickingItemsId=" . $pickingItemsId . " and status=5")->one();
+        $orderItemPackings = OrderItemPacking::find()->where("pickingItemsId=" . $pickingItemsId . " and status in (5,7)")->one();
         $orderId = '';
         if (isset($orderItemPackings)) {
             $orderItem = OrderItem::find()->where("orderItemId=" . $orderItemPackings->orderItemId)->one();
