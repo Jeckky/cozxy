@@ -16,10 +16,11 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class CartAsset extends AssetBundle
-{
+class CartAsset extends AssetBundle {
 
-    public $sourcePath = '@app/themes/cozxy/assets';
+    //public $sourcePath = '@app/themes/cozxy/assets';
+    public $basePath = '@webroot/themes/cozxy';
+    public $baseUrl = '@web/themes/cozxy';
     public $css = [
         'css/cart.css',
     ];
@@ -29,4 +30,5 @@ class CartAsset extends AssetBundle
     public $depends = [
         'frontend\assets\CozxyAsset',
     ];
+
 }

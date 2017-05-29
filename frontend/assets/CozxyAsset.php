@@ -18,7 +18,9 @@ use yii\web\AssetBundle;
  */
 class CozxyAsset extends AssetBundle {
 
-    public $sourcePath = '@app/themes/cozxy/assets';
+    //public $sourcePath = '@app/themes/cozxy/assets';
+    public $basePath = '@webroot/themes/cozxy';
+    public $baseUrl = '@web/themes/cozxy';
     public $css = [
         'css/bootstrap.min.css',
         'css/font-awesome.min.css',

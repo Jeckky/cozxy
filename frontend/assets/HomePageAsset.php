@@ -18,7 +18,9 @@ use yii\web\AssetBundle;
  */
 class HomePageAsset extends AssetBundle {
 
-    public $sourcePath = '@app/themes/cozxy/assets';
+    // public $sourcePath = '@app/themes/cozxy/assets';
+    public $basePath = '@webroot/themes/cozxy';
+    public $baseUrl = '@web/themes/cozxy';
     public $css = [
         'css/smoothDivScroll.css',
     ];
@@ -31,4 +33,5 @@ class HomePageAsset extends AssetBundle {
     public $depends = [
         'frontend\assets\AppAsset'
     ];
+
 }

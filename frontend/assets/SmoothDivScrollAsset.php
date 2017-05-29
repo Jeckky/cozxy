@@ -16,10 +16,11 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class SmoothDivScrollAsset extends AssetBundle
-{
+class SmoothDivScrollAsset extends AssetBundle {
 
-    public $sourcePath = '@app/themes/cozxy/assets';
+    //public $sourcePath = '@app/themes/cozxy/assets';
+    public $basePath = '@webroot/themes/cozxy';
+    public $baseUrl = '@web/themes/cozxy';
     public $css = [
         'css/smoothDivScroll.css',
     ];
@@ -28,4 +29,5 @@ class SmoothDivScrollAsset extends AssetBundle
     public $depends = [
         'frontend\assets\AppAsset',
     ];
+
 }
