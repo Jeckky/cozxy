@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Url;
 ?>
 <div class="col-xs-12 bg-yellow1" style="padding:18px;">
@@ -23,6 +24,6 @@ use yii\helpers\Url;
         </div>
     </div>
 
-    <a href="<?= Url::to(['/checkout']) ?>" class="b btn-success btn-block text-center" style="padding:12px 32px; margin:12px auto 12px">TOP UP CozxyCoin</a>
+    <a href="<?= Url::to(['/top-up']) ?>" class="b btn-success btn-block text-center" style="padding:12px 32px; margin:12px auto 12px">TOP UP CozxyCoin</a>
     <a href="<?= Url::to(['/checkout']) ?>" class="b btn-yellow fullwidth text-center" style="padding:12px 32px; margin:2px auto 12px">PAY by CozxyCoin</a>
 </div>

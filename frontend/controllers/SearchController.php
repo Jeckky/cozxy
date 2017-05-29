@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\db\ActiveRecord;
 use frontend\models\DisplaySearch;
+use frontend\models\FakeFactory;
 use yii\data\ArrayDataProvider;
 
 class SearchController extends MasterController {

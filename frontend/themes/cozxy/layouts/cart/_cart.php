@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Url;
 
 \frontend\assets\CartAsset::register($this);
@@ -14,15 +15,15 @@ use yii\helpers\Url;
                 </div>
                 <div class="col-xs-12 bg-white">
                     <!--Cart Items-->
-                    <?php for($i=0;$i<4;$i++):?>
-                        <?=$this->render('_cart_item');?>
-                    <?php endfor;?>
+                    <?php for ($i = 0; $i < 4; $i++): ?>
+                        <?= $this->render('_cart_item'); ?>
+                    <?php endfor; ?>
 
                     <!-- E -->
                     <div class="col-xs-12 text-right">
-                        <a href="<?=Url::to(['/product'])?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">CONTINUE
+                        <a href="<?= Url::to(['/search/cozxy-product']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">CONTINUE
                             SHOPPING</a> &nbsp;
-                        <a href="<?=Url::to(['/checkout'])?>" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">CHECK
+                        <a href="<?= Url::to(['/checkout']) ?>" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">CHECK
                             OUT</a>
                     </div>
                     <div class="size12 size10-xs">&nbsp;</div>
@@ -32,7 +33,7 @@ use yii\helpers\Url;
 
         <!-- Total -->
         <div class="col-lg-3 col-md-4">
-            <?=$this->render('_cart_total')?>
+            <?= $this->render('_cart_total') ?>
         </div>
 
     </div>

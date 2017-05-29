@@ -14,7 +14,7 @@ use frontend\models\DisplayMyStory;
 
 class ProductController extends MasterController {
 
-    public function actionIndex($hash) {
+    public function actionIndex($hash = FALSE) {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
         $productId = $params['productId'];
