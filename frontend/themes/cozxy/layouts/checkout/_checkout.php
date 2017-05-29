@@ -1,8 +1,21 @@
 <?php
-use yii\helpers\Url;
-use kartik\select2\Select2;
 
+use yii\helpers\Html;
+use kartik\select2\Select2;
+use yii\helpers\Url;
+use yii\bootstrap\ActiveForm;
+use kartik\depdrop\DepDrop;
+
+$this->title = 'New Billing Address';
+$this->params['breadcrumbs'][] = $this->title;
 \frontend\assets\CheckoutAsset::register($this);
+$pickingId = rand(0, 9999);
+?>
+<?php
+$form = ActiveForm::begin([
+    'id' => 'default-shipping-address',
+    'options' => ['class' => 'space-bottom'],
+]);
 ?>
 <div class="container">
     <div class="size32">&nbsp;</div>
@@ -20,35 +33,70 @@ use kartik\select2\Select2;
                         <div class="row">
                             <div class="col-lg-12">
                                 Shipping Address
-                                <!--                                <a href="chk-edit1.php" class="pull-right btn-g999 p-edit">Edit</a></div><div class="col-xs-12 size6">&nbsp;-->
+                                <!--   <a href="chk-edit1.php" class="pull-right btn-g999 p-edit">Edit</a></div><div class="col-xs-12 size6">&nbsp;-->
                             </div>
                         </div>
                         <div class="size18">&nbsp;</div>
 
                         <div class="row fc-g999">
                             <div class="col-md-4 col-xs-12">
-                                <?= Select2::widget([
-                                    'name' => 'province',
-                                    'value' => '',
-                                    'data' => ['Bangkok', 'Bangkok2', 'Bangkok3'],
-                                    'options' => ['placeholder' => 'Select Province']
-                                ]) ?>
+                                <?php
+                                echo $form->field($model, 'provinceId')->widget(kartik\select2\Select2::classname(), [
+                                    //'options' => ['id' => 'address-countryid'],
+                                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->asArray()->all(), 'stateId', 'localName'),
+                                    'pluginOptions' => [
+                                        'placeholder' => 'Select...',
+                                        'loadingText' => 'Loading States ...',
+                                    ],
+                                    'options' => ['placeholder' => 'Select States ...'],
+                                ])->label(FALSE);
+                                ?>
                             </div>
                             <div class="col-md-4 col-xs-12">
-                                <?= Select2::widget([
-                                    'name' => 'city',
-                                    'value' => '',
-                                    'data' => ['Bang Khen', 'Bang Khen2', 'Bang Khen3'],
-                                    'options' => ['placeholder' => 'Select City']
-                                ]) ?>
+                                <?php
+                                echo Html::hiddenInput('input-type-11', $model->amphurId, ['id' => 'input-type-11']);
+                                echo Html::hiddenInput('input-type-22', $model->amphurId, ['id' => 'input-type-22']);
+                                echo Html::hiddenInput('input-type-33', 'add', ['id' => 'input-type-33']);
+                                echo $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
+                                    //'data' => [9 => 'Savings'],
+                                    'options' => ['placeholder' => 'Select ...'],
+                                    'type' => DepDrop::TYPE_SELECT2,
+                                    'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                                    'pluginOptions' => [
+                                        'initialize' => true,
+                                        'depends' => ['address-provinceid'],
+                                        'url' => Url::to(['child-amphur-address-picking-point']),
+                                        'loadingText' => 'Loading amphur ...',
+                                        'params' => ['input-type-11', 'input-type-22', 'input-type-33']
+                                    ]
+                                ])->label(FALSE);
+                                ?>
                             </div>
                             <div class="col-md-4 col-xs-12">
-                                <?= Select2::widget([
-                                    'name' => 'locker',
-                                    'value' => '',
-                                    'data' => ['Bangchak1', 'Bangchak2', 'Bangchak3'],
-                                    'options' => ['placeholder' => 'Select Locker']
-                                ]) ?>
+                                <?php
+                                echo Html::hiddenInput('input-type-13', $pickingPointLockersCool->provinceId, ['id' => 'input-type-13']);
+                                echo Html::hiddenInput('input-type-23', $pickingPointLockersCool->amphurId, ['id' => 'input-type-23']);
+                                echo Html::hiddenInput('lockers-cool-input-type-33', '1', ['id' => 'lockers-cool-input-type-33']);
+                                echo $form->field($pickingPointLockersCool, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
+                                    //'data' => [9 => 'Savings'],
+                                    'model' => $pickingId,
+                                    'attribute' => 'pickingId',
+                                    'options' => ['placeholder' => 'Select ...', 'id' => 'LcpickingId'],
+                                    'type' => DepDrop::TYPE_SELECT2,
+                                    //'options' => ['multiple' => true],
+                                    'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                                    //'pluginEvents' => [
+                                    //"depdrop.afterChange" => "function(event, id, value) { console.log('value: ' + value + ' id: ' + id); }"
+                                    //],
+                                    'pluginOptions' => [
+                                        'initialize' => true,
+                                        'depends' => ['address-amphurid'],
+                                        'url' => Url::to(['child-picking-point']),
+                                        'loadingText' => 'Loading picking point ...',
+                                        'params' => ['input-type-13', 'input-type-23', 'lockers-cool-input-type-33']
+                                    ]
+                                ])->label(FALSE);
+                                ?>
                             </div>
                         </div>
 
@@ -78,12 +126,25 @@ use kartik\select2\Select2;
                         <div class="row fc-g999">
                             <div class="col-lg-1 col-md-2 col-sm-3">Billing:</div>
                             <div class="col-lg-11 col-md-10 col-sm-9">
-                                <?= Select2::widget([
-                                    'name' => 'billing',
-                                    'value' => '',
-                                    'data' => ['Billing Address', 'Billing Address2', 'Billing Address3'],
-                                    'options' => ['placeholder' => 'Select Billing Address']
-                                ]) ?>
+                                <?//=
+                                Select2::widget([
+                                'name' => 'billing',
+                                'value' => '',
+                                'data' => ['Billing Address', 'Billing Address2', 'Billing Address3'],
+                                'options' => ['placeholder' => 'Select Billing Address']
+                                ])
+                                ?>
+                                <?php
+                                echo $form->field($model, 'addressId')->widget(kartik\select2\Select2::classname(), [
+                                    'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Address::find()
+                                    ->asArray()->where('userId=' . Yii::$app->user->identity->userId)->all(), 'addressId', 'firstname'),
+                                    'pluginOptions' => [
+                                        'placeholder' => 'Select...',
+                                        'loadingText' => 'Loading Billing Address ...',
+                                    ],
+                                    'options' => ['placeholder' => 'Select Billing Address ...'],
+                                ])->label(FALSE);
+                                ?>
                             </div>
 
                             <div class="size14">&nbsp;</div>
@@ -98,7 +159,6 @@ use kartik\select2\Select2;
                             <div class="size12">&nbsp;</div>
                         </div>
                     </div>
-
 
                     <!-- E -->
                     <div class="col-xs-12 text-right">
@@ -162,23 +222,27 @@ use kartik\select2\Select2;
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Province</label>
-                                    <?= Select2::widget([
+                                    <?=
+                                    Select2::widget([
                                         'name' => 'province',
                                         'value' => '',
                                         'data' => ['Bangkok', 'Bangkok2', 'Bangkok3'],
                                         'options' => ['placeholder' => 'Select Province']
-                                    ]) ?>
+                                    ])
+                                    ?>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">City</label>
-                                    <?= Select2::widget([
+                                    <?=
+                                    Select2::widget([
                                         'name' => 'city',
                                         'value' => '',
                                         'data' => ['Bang Khen', 'Bang Khen2', 'Bang Khen3'],
                                         'options' => ['placeholder' => 'Select City']
-                                    ]) ?>
+                                    ])
+                                    ?>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -188,12 +252,12 @@ use kartik\select2\Select2;
                                 </div>
                             </div>
                         </div>
-<!--                        <div class="row">-->
-<!--                            <div class="col-xs-12">-->
-<!--                                <input type="checkbox" name="billhere" value="1"> &nbsp; Billing address is same-->
-<!--                                as shipping address-->
-<!--                            </div>-->
-<!--                        </div>-->
+                        <!--                        <div class="row">-->
+                        <!--                            <div class="col-xs-12">-->
+                        <!--                                <input type="checkbox" name="billhere" value="1"> &nbsp; Billing address is same-->
+                        <!--                                as shipping address-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
                     </form>
                     <div class="size24">&nbsp;</div>
                 </div>
@@ -207,3 +271,4 @@ use kartik\select2\Select2;
         </div>
     </div>
 </div>
+<?php ActiveForm::end(); ?>

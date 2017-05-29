@@ -260,7 +260,7 @@ foreach ($GetOrderMastersGroup as $value) {
                         'pluginOptions' => [
                             'class' => 'required form-control ',
                             'initialize' => true,
-                            'depends' => ['address-amphurid'],
+                            'depends' => ['pickingpoint-provinceid'],
                             'url' => Url::to(['child-amphur-address-picking-point']),
                             'loadingText' => 'Loading amphur ...',
                             'params' => ['input-type-11', 'input-type-22']
