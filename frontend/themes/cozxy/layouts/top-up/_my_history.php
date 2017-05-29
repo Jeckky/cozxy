@@ -3,7 +3,7 @@
 use frontend\assets\MyAccountAsset;
 
 MyAccountAsset::register($this);
-$this->title = 'My History';
+$this->title = 'My Top Up : History';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

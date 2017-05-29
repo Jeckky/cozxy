@@ -5,7 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use yii\base\Model;
 use yii\db\ActiveRecord;
-use frontend\models\FakeFactory;
+use frontend\models\DisplaySearch;
 use yii\data\ArrayDataProvider;
 
 class SearchController extends MasterController {
@@ -35,8 +35,13 @@ class SearchController extends MasterController {
     }
 
     public function actionCozxyProduct() {
+        //$category = Yii::$app->request->post('search');
+        //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, FALSE)]);
+        //return $this->render('index', compact('productCanSell', 'category'));
         $category = Yii::$app->request->post('search');
-        $productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, FALSE)]);
+
+        $productCanSell = new ArrayDataProvider(['allModels' => DisplaySearch::productSearch($category, 9, FALSE)]);
+
         return $this->render('index', compact('productCanSell', 'category'));
     }
 

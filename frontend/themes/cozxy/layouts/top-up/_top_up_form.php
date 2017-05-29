@@ -7,10 +7,10 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Payment History';
-$this->params['breadcrumbs'][] = $this->title;
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+$this->title = 'Form Top Up';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php
 $form = ActiveForm::begin([

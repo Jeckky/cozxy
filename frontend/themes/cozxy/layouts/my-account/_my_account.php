@@ -3,6 +3,8 @@
 use frontend\assets\MyAccountAsset;
 
 MyAccountAsset::register($this);
+$this->title = 'MY ACCOUNT';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="container login-box">

@@ -3,6 +3,9 @@
 use kartik\select2\Select2;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
+
+$this->title = 'Change PasswordChange Password';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="container login-box">
