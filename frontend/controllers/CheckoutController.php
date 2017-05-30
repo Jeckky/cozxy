@@ -42,6 +42,20 @@ class CheckoutController extends MasterController {
         return $this->render('thanks');
     }
 
+    public function actionAddress() {
+        $addressId = Yii::$app->request->post('addressId');
+
+        if (isset($addressId) && !empty($addressId)) {
+            $list_address = \common\models\costfit\Address::find()->where('addressId = ' . $addressId)->one();
+            //print_r($mapImages->attributes);
+            if (isset($list_address) && !empty($list_address)) {
+                return json_encode($list_address->attributes);
+            } else {
+                return NULL;
+            }
+        }
+    }
+
     function actionMapImages() {
         //echo 'test map images';
         $pickingId = Yii::$app->request->post('pickingIds');

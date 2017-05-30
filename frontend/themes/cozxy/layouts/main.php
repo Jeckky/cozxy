@@ -41,7 +41,8 @@ AppAsset::register($this);
         <?= $this->render('_footer') ?>
 
         <?php $this->endBody() ?>
-
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw" async
+        defer></script>
     </body>
 </html>
 <?php $this->endPage() ?>

@@ -39,29 +39,20 @@ function organization(selectObject, value) {
 
 $('#LcpickingId').change(function (event, id, value) {
     prev_val = $(this).val();
-    //console.log(value);
-    //console.log(prev_val);
-    //alert(b_pickingid);
-    //alert('test');
+
     $.ajax({
         type: "POST",
-        //dataType: "JSON",
-        //dataType: "html",
         url: $baseUrl + "checkout/map-images-google",
         data: {'pickingIds': prev_val},
         success: function (data, status)
         {
-            //console.log(data);
-            //console.log(status);
+
             if (status == "success") {
                 var JSONObject = JSON.parse(data);
-                initialize();
-                //console.log(JSONObject.mapImages);
+                /* Map Google in latitude and longitude for cozxy*/
+                changeMap(JSONObject.latitude, JSONObject.longitude); //Get Map : latitude and longitude
+
                 $('.name-lockers').html(JSONObject.title);
-                //if (JSONObject.title != '') {
-                //$('.history-lockers-null').html('');
-                //}
-                //alert(JSONObject.mapImages);
                 $('.description-lockers-cool').html('address :' + JSONObject.description);
                 if (JSONObject.mapImages == null) {
                     $('.view-map-images-lockers-cool').html('<div class="col-sm-12" style="padding: 5px;">\n\
@@ -73,6 +64,7 @@ $('#LcpickingId').change(function (event, id, value) {
                         <img class="img-responsive" src="' + $baseUrl + JSONObject.mapImages + '" alt="" style="width:100%;">\n\
                 </div>');
                 }
+
             } else {
                 $('.name-lockers-cool').html('');
                 $('.view-map-images-lockers-cool').html('');
@@ -82,32 +74,48 @@ $('#LcpickingId').change(function (event, id, value) {
     });
 });
 
-function initialize(Lat, Lng) {
-    /*
-     var mapOptions = {
-     zoom: 8,
-     center: new google.maps.LatLng(-34.397, 150.644)
-     };
+function changeMap(lats, lng) {
 
-     var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-     */
-    alert('Lat, Lng');
+    var map;
+    //var myLatLng = {lat: lats, lng: lng}; //13.8713948,100.6151315
+    var myLatLng = {lat: 13.7880589, lng: 100.5329692};
+    console.log(myLatLng);
+
+    map = new google.maps.Map($('.cart-detail').find("#map"), {
+        center: myLatLng,
+        zoom: 16
+    });
+
+    var marker = new google.maps.Marker({
+        map: map,
+        position: myLatLng,
+        title: 'Hello World!'
+    });
 }
 
 function CozxyChangeAddress() {
     alert('test change address!!');
 }
-/*sak*/
-$(document).on('click', '#refreshPass', function () {
 
+
+$('#addressId').change(function (event, id, value) {
+    prev_val = $(this).val();
     $.ajax({
-        type: 'POST',
-        dataType: 'JSON',
-        url: $baseUrl + '/top-up/random-pass',
-        data: {data: '1'},
-        success: function (data) {
-            if (data.pass) {
-                $("#passwordPic").val(data.pass);
+        type: "POST",
+        //dataType: "JSON",
+        //dataType: "html",
+        url: $baseUrl + "checkout/address",
+        data: {'addressId': prev_val},
+        success: function (data, status)
+        {
+            if (status == "success") {
+                var JSONObject = JSON.parse(data);
+                $('.address-checkouts').find(".name-show").html(JSONObject.firstname + ' ' + JSONObject.lastname);
+                $('.address-checkouts').find(".address-show").html('');
+            } else {
+                $('.name-lockers-cool').html('');
+                $('.view-map-images-lockers-cool').html('');
+
             }
         }
     });
