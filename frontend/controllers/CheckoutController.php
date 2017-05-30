@@ -42,4 +42,34 @@ class CheckoutController extends MasterController {
         return $this->render('thanks');
     }
 
+    function actionMapImages() {
+        //echo 'test map images';
+        $pickingId = Yii::$app->request->post('pickingIds');
+        //$pickingId = 1;
+        if (isset($pickingId) && !empty($pickingId)) {
+            $mapImages = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $pickingId)->one();
+            //print_r($mapImages->attributes);
+            if (isset($mapImages) && !empty($mapImages)) {
+                return json_encode($mapImages->attributes);
+            } else {
+                return NULL;
+            }
+        }
+    }
+
+    function actionMapImagesGoogle() {
+        //echo 'test map images';
+        $pickingId = Yii::$app->request->post('pickingIds');
+        //$pickingId = 1;
+        if (isset($pickingId) && !empty($pickingId)) {
+            $mapImages = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $pickingId)->one();
+            //print_r($mapImages->attributes);
+            if (isset($mapImages) && !empty($mapImages)) {
+                return json_encode($mapImages->attributes);
+            } else {
+                return NULL;
+            }
+        }
+    }
+
 }
