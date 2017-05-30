@@ -46,7 +46,6 @@ $('#LcpickingId').change(function (event, id, value) {
         data: {'pickingIds': prev_val},
         success: function (data, status)
         {
-
             if (data != '') {
                 if (status == "success") {
                     var JSONObject = JSON.parse(data);
