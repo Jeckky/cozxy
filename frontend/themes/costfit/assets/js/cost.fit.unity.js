@@ -478,7 +478,6 @@ $(document).ready(function (e) {
         var amount = $(this).parent().parent().parent().parent().find('#amount').val();
         var currentAmount = $(this).parent().parent().parent().parent().parent().find('#currentAmount').val();
         if (amount == '') {
-            alert('123123');
             if (currentAmount == '') {
                 alert('empty amount');
                 return false;

@@ -47,7 +47,7 @@ $form = ActiveForm::begin([
 ?>
 <div class="top-up-index" style="width: 80%;margin: auto;">
 
-    <div class="bs-example" data-example-id="btn-tags" style="margin: auto;background-color:#3cc;height:85px;color: #fff; border-width: 1px;  border-radius: 4px 4px 0 0; -webkit-box-shadow: none; box-shadow: none;">
+    <div class="bs-example" data-example-id="btn-tags">
         <span style="float: left; text-align: left;width: 30%;">Cozxy.com</span>
     </div>
     <?php if (isset($fromCheckout) && $fromCheckout != 'no') { ?>
@@ -113,7 +113,7 @@ $form = ActiveForm::begin([
                 <td style="text-align: right;width:50%;"></td>
                 <td style="text-align: left;width:50%;">
                     <span style="margin-left: 20px;">
-                        <button type="submit" class = "btn" style = "background-color: #3cc; color: #fff;font-size: 12pt;" id="confirm-topup">
+                        <button type="submit" class = "subs-btn size14-xs" id="confirm-topup">
                             Confirm
                         </button>
                     </span>

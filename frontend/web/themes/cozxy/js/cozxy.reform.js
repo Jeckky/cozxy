@@ -78,6 +78,7 @@ function changeMap(lats, lng) {
     });
 }
 
+
 $('#addressId').change(function (event, id, value) {
     prev_val = $(this).val();
     $.ajax({
@@ -95,9 +96,82 @@ $('#addressId').change(function (event, id, value) {
             } else {
                 $('.name-lockers-cool').html('');
                 $('.view-map-images-lockers-cool').html('');
+
             }
         }
     });
 });
-
-
+$(document).on('click', '#checkBot', function () {//test
+    var inputPass = $(this).parent().parent().parent().parent().find("#inputPass").val();
+    var passPic = $(this).parent().parent().parent().parent().find("#passwordPic").val();
+    var creditVal = $(this).parent().parent().parent().parent().find("#paymentMethod").val();
+    var billVal = $(this).parent().parent().parent().parent().find("#paymentMethod2").val();
+    if (creditVal == 'credit') {
+        var creditCard = document.getElementById("paymentMethod").checked;
+    } else {
+        var creditCard = false;
+    }
+    if (billVal == 'bill') {
+        var billPayment = document.getElementById("paymentMethod2").checked;
+    } else {
+        var billPayment = false;
+    }
+    if ((inputPass == '') || (inputPass != passPic)) {
+        alert('Incorrect verify, please recheck.');
+        $.ajax({
+            type: 'POST',
+            dataType: 'JSON',
+            url: $baseUrl + '/top-up/random-pass',
+            data: {data: '1'},
+            success: function (data) {
+                if (data.pass) {
+                    $("#passwordPic").val(data.pass);
+                }
+            }
+        });
+    } else if (creditCard == false && billPayment == false) {
+        alert("Please select payment method.");
+    } else {
+        $("#top-up").submit();
+    }
+});
+$(document).on('keypress', '#amount', function (e) {
+    var code = e.keyCode ? e.keyCode : e.which;
+    if (code > 57) {
+        return false;
+    } else if (code < 48 && code != 8) {
+        return false;
+    }
+});
+$(document).on('click', '#confirm-topup', function (e) {
+    var amount = $(this).parent().parent().parent().parent().find('#amount').val();
+    var currentAmount = $(this).parent().parent().parent().parent().parent().find('#currentAmount').val();
+    if (amount == '') {
+        if (currentAmount == '') {
+            alert('empty amount');
+            return false;
+        } else {
+            if (parseInt(currentAmount) < 100) {
+                alert("Amount must not less than 100 THB.");
+                return false;
+            } else {
+                if (confirm(':: Confirm Amount ' + currentAmount + ' THB ?')) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+    } else {
+        if (parseInt(amount) < 100) {
+            alert("Amount must not less than 100 THB.");
+            return false;
+        } else {
+            if (confirm(':: Confirm Amount ' + amount + ' THB ?')) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+});
