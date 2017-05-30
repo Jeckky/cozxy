@@ -77,7 +77,7 @@ class CheckoutController extends MasterController {
         //$pickingId = 1;
         if (isset($pickingId) && !empty($pickingId)) {
             $mapImages = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $pickingId)->one();
-            //print_r($mapImages->attributes);
+
             if (isset($mapImages) && !empty($mapImages)) {
                 return json_encode($mapImages->attributes);
             } else {

@@ -46,14 +46,17 @@ $('#LcpickingId').change(function (event, id, value) {
         data: {'pickingIds': prev_val},
         success: function (data, status)
         {
-            if (status == "success") {
-                var JSONObject = JSON.parse(data);
 
-                /* Map Google in latitude and longitude for cozxy*/
-                changeMap(JSONObject.latitude, JSONObject.longitude);
+            if (data != '') {
+                if (status == "success") {
+                    var JSONObject = JSON.parse(data);
 
-            } else {
+                    /* Map Google in latitude and longitude for cozxy*/
+                    changeMap(JSONObject.latitude, JSONObject.longitude);
 
+                } else {
+
+                }
             }
         }
     });
