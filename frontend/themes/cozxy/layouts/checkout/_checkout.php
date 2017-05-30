@@ -74,7 +74,7 @@ $form = ActiveForm::begin([
                                     'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
-                                        'initialize' => true,
+                                        //initialize' => true,
                                         'depends' => ['address-provinceid'],
                                         'url' => Url::to(['child-amphur-address-picking-point']),
                                         'loadingText' => 'Loading amphur ...',
@@ -95,7 +95,7 @@ $form = ActiveForm::begin([
                                     'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
-                                        'initialize' => true,
+                                        //initialize' => true,
                                         'depends' => ['address-amphurid'],
                                         'url' => Url::to(['child-picking-point']),
                                         'loadingText' => 'Loading picking point ...',
