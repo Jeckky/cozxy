@@ -61,13 +61,14 @@ $('#LcpickingId').change(function (event, id, value) {
     });
 });
 
-function changeMap(lats, lng) {
+function changeMap(lats, lngs) {
 
     var map;
-    //var myLatLng = {lat: lats, lng: lng}; //13.8713948,100.6151315
-    var myLatLng = {lat: 13.7880589, lng: 100.5329692};
+    //var myLatLng = {lat: lats, lng: lngs};// get ค่ามาจาก address 
+    var myLatLng = {lat: 13.7880589, lng: 100.5329692};//13.8713948,100.6151315
     console.log(myLatLng);
-
+    //document.getElementById('map').innerHTML = "Paragraph changed!";
+    //$('.cart-detail').find('#map').html('xxxxxx');
     map = new google.maps.Map(document.getElementById('map'), {
         center: myLatLng,
         zoom: 16
