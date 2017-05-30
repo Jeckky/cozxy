@@ -92,10 +92,14 @@ $('#addressId').change(function (event, id, value) {
         data: {'addressId': prev_val},
         success: function (data, status)
         {
+            //alert(data);
             if (status == "success") {
                 var JSONObject = JSON.parse(data);
-                $('.address-checkouts').find(".name-show").html(JSONObject.firstname + ' ' + JSONObject.lastname);
-                $('.address-checkouts').find(".address-show").html('');
+                //alert(JSONObject.address.firstname);
+                $('.address-checkouts').find(".name-show").html(JSONObject.address.firstname + ' ' + JSONObject.address.lastname);
+                $('.address-checkouts').find(".address-show").html(JSONObject.address.address + ' '
+                        + JSONObject.address.amphur + ' ' + JSONObject.address.province + ' ' + JSONObject.address.district
+                        + ' ' + JSONObject.address.zipcode);
             } else {
                 $('.name-lockers-cool').html('');
                 $('.view-map-images-lockers-cool').html('');
@@ -104,6 +108,7 @@ $('#addressId').change(function (event, id, value) {
         }
     });
 });
+
 $(document).on('click', '#checkBot', function () {//test
     var inputPass = $(this).parent().parent().parent().parent().find("#inputPass").val();
     var passPic = $(this).parent().parent().parent().parent().find("#passwordPic").val();
@@ -138,6 +143,7 @@ $(document).on('click', '#checkBot', function () {//test
         $("#top-up").submit();
     }
 });
+
 $(document).on('keypress', '#amount', function (e) {
     var code = e.keyCode ? e.keyCode : e.which;
     if (code > 57) {
@@ -146,6 +152,7 @@ $(document).on('keypress', '#amount', function (e) {
         return false;
     }
 });
+
 $(document).on('click', '#confirm-topup', function (e) {
     var amount = $(this).parent().parent().parent().parent().find('#amount').val();
     var currentAmount = $(this).parent().parent().parent().parent().parent().find('#currentAmount').val();

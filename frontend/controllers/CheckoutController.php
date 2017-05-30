@@ -44,15 +44,46 @@ class CheckoutController extends MasterController {
 
     public function actionAddress() {
         $addressId = Yii::$app->request->post('addressId');
-
+        $products = [];
         if (isset($addressId) && !empty($addressId)) {
-            $list_address = \common\models\costfit\Address::find()->where('addressId = ' . $addressId)->one();
-            //print_r($mapImages->attributes);
-            if (isset($list_address) && !empty($list_address)) {
-                return json_encode($list_address->attributes);
-            } else {
-                return NULL;
+
+            $products = [];
+            $dataAddress = \common\models\costfit\Address::find()->where("addressId =" . $addressId)->orderBy('addressId DESC')->all();
+            foreach ($dataAddress as $items) {
+                $products['address'] = [
+                    'addressId' => $items->addressId,
+                    'userId' => $items->userId,
+                    'firstname' => $items->firstname,
+                    'lastname' => $items->lastname,
+                    'company' => $items->company,
+                    'tax' => $items->tax,
+                    'address' => isset($items->address) ? $items->address : '' . ' , ',
+                    'country' => isset($items->countries->countryName) ? $items->countries->countryName : '' . ' , ',
+                    'province' => isset($items->states->localName) ? $items->states->localName : '' . ' , ',
+                    'amphur' => isset($items->cities->localName) ? $items->cities->localName : '' . ' , ',
+                    'district' => isset($items->district->localName) ? $items->district->localName : '' . ' , ',
+                    'zipcode' => isset($items->zipcodes->zipcode) ? $items->zipcodes->zipcode : '' . ' , ',
+                    'tel' => $items->tel,
+                    'type' => $items->type,
+                    'isDefault' => $items->isDefault,
+                    'status' => $items->status,
+                    'createDateTime' => $items->createDateTime,
+                    'updateDateTime' => $items->updateDateTime,
+                    'email' => $items->email,
+                ];
             }
+            return json_encode($products);
+            /*
+              $list_address = \common\models\costfit\Address::find()
+              ->where('addressId = ' . $addressId)->one();
+
+              if (isset($list_address) && !empty($list_address)) {
+              //return $products;
+              return json_encode($list_address->attributes);
+              //return json_encode($products);
+              } else {
+              return NULL;
+              } */
         }
     }
 
@@ -61,7 +92,7 @@ class CheckoutController extends MasterController {
         $pickingId = Yii::$app->request->post('pickingIds');
         //$pickingId = 1;
         if (isset($pickingId) && !empty($pickingId)) {
-            $mapImages = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $pickingId)->one();
+            $mapImages = \common\models\costfit\PickingPoint::find()->where('pickingId = ' . $pickingId)->one();
             //print_r($mapImages->attributes);
             if (isset($mapImages) && !empty($mapImages)) {
                 return json_encode($mapImages->attributes);
@@ -76,7 +107,7 @@ class CheckoutController extends MasterController {
         $pickingId = Yii::$app->request->post('pickingIds');
         //$pickingId = 1;
         if (isset($pickingId) && !empty($pickingId)) {
-            $mapImages = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $pickingId)->one();
+            $mapImages = \common\models\costfit\PickingPoint::find()->where('pickingId = ' . $pickingId)->one();
 
             if (isset($mapImages) && !empty($mapImages)) {
                 return json_encode($mapImages->attributes);
