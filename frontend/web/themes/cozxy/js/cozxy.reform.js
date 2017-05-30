@@ -46,29 +46,14 @@ $('#LcpickingId').change(function (event, id, value) {
         data: {'pickingIds': prev_val},
         success: function (data, status)
         {
-
             if (status == "success") {
                 var JSONObject = JSON.parse(data);
-                /* Map Google in latitude and longitude for cozxy*/
-                changeMap(JSONObject.latitude, JSONObject.longitude); //Get Map : latitude and longitude
 
-                $('.name-lockers').html(JSONObject.title);
-                $('.description-lockers-cool').html('address :' + JSONObject.description);
-                if (JSONObject.mapImages == null) {
-                    $('.view-map-images-lockers-cool').html('<div class="col-sm-12" style="padding: 5px;">\n\
-                       <img class="img-responsive" src="' + $baseUrl + 'images/picking-point/No_map.png' + '" alt="" style="width:100%;">\n\
-                </div>');
-                } else {
-                    //alert('xx');
-                    $('.view-map-images-lockers-cool').html('<div class="col-sm-12" style="padding: 5px;">\n\
-                        <img class="img-responsive" src="' + $baseUrl + JSONObject.mapImages + '" alt="" style="width:100%;">\n\
-                </div>');
-                }
+                /* Map Google in latitude and longitude for cozxy*/
+                changeMap(JSONObject.latitude, JSONObject.longitude);
 
             } else {
-                $('.name-lockers-cool').html('');
-                $('.view-map-images-lockers-cool').html('');
-                //$('.history-lockers-null').html('');
+
             }
         }
     });
@@ -81,7 +66,7 @@ function changeMap(lats, lng) {
     var myLatLng = {lat: 13.7880589, lng: 100.5329692};
     console.log(myLatLng);
 
-    map = new google.maps.Map($('.cart-detail').find("#map"), {
+    map = new google.maps.Map(document.getElementById('map'), {
         center: myLatLng,
         zoom: 16
     });
@@ -91,10 +76,6 @@ function changeMap(lats, lng) {
         position: myLatLng,
         title: 'Hello World!'
     });
-}
-
-function CozxyChangeAddress() {
-    alert('test change address!!');
 }
 
 $('#addressId').change(function (event, id, value) {
