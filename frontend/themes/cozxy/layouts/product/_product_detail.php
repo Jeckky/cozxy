@@ -66,7 +66,7 @@
                             <a href="#" class="b btn-g999 size16" style="margin:24px auto 12px">+
                                 <i class="fa fa-heart"></i></a>
                             <?php
-                            if (count($model['result']) > 0) {
+                            if ($model['result'] > 0) {
                                 echo '<a href="#" id="addItemToCartUnity" class="b btn-yellow size16" style="margin:24px auto 12px">+
                                 <i class = "fa fa-shopping-cart"></i></a>';
                             } else {
