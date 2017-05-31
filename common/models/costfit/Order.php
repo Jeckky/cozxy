@@ -154,7 +154,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
                 $productImageSuppliers = ProductSuppliers::productImageSuppliers($item->productSuppId);
                 if (isset($productImageSuppliers)) {
                     if (file_exists(Yii::$app->basePath . "/web/" . $productImageSuppliers)) {
-                        $productImageSuppliersT1 = $productImageSuppliers;
+                        $productImageSuppliersT1 = '/' . $productImageSuppliers;
                     } else {
                         $productImageSuppliersT1 = $svg195x195;
                     }

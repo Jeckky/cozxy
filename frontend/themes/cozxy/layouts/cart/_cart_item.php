@@ -38,12 +38,12 @@ $val = rand(1, 10);
                 <tr>
                     <td>Color</td>
                     <td>:</td>
-                    <td>&nbsp;</td>
+                    <td>None</td>
                 </tr>
                 <tr>
                     <td>Size</td>
                     <td>:</td>
-                    <td>&nbsp;</td>
+                    <td>None</td>
                 </tr>
             </table>
         </div>
