@@ -71,9 +71,6 @@ class FakeFactory extends Model {
     public static function productForNotSale($n, $cat = FALSE) {
         $products = [];
 
-        /* $pCanSale = \common\models\costfit\ProductSuppliers::find()->where('result = 0 and  approve="approve"')->orderBy(new \yii\db\Expression('rand()'))
-          ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
-         */
         $whereArray2 = [];
         if ($cat != FALSE) {
             $whereArray2["category_to_product.categoryId"] = $params['categoryId'];
