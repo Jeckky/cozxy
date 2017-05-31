@@ -112,7 +112,7 @@ $pickingId = rand(0, 9999);
                         <div class="row fc-g999">
                             <div class="col-xs-12">
                                 <h4>Map</h4>
-                                <div id="map"></div>
+                                <div id="map" style="height:200px;"></div>
 
                             </div>
                         </div>
@@ -274,4 +274,78 @@ $pickingId = rand(0, 9999);
 
 
 
+<?php
+$this->registerCss('
+#map {
+            height: 300px;
+        }
+');
 
+$this->registerJs('
+        var map;
+        function initMap() {
+            var myLatLng = { lat: -25.363, lng: 131.044 };
+            map = new google.maps.Map(document.getElementById(\'map\'), {
+                center: myLatLng,
+                zoom: 16
+            });
+
+            var marker = new google.maps.Marker({
+                map: map,
+                position: myLatLng,
+                title: \'Hello World!\'
+            });
+        }
+        
+        
+
+function changeMap(lats, lngs) {
+
+    // var map;
+    //var myLatLng = {lat: lats, lng: lngs};// get ค่ามาจาก address แต่เป็น String ต้องเปลียนให้เป็น Number
+    var myLatLng = {lat: 13.7880589, lng: 100.5329692};//ใช้เทส //13.8713948,100.6151315
+    console.log(myLatLng);
+    //document.getElementById(\'map\').innerHTML = "Paragraph changed!";
+    //$(\'.cart-detail\').find(\'#map\').html(\'xxxxxx\');
+    map = new google.maps.Map(document.getElementById(\'map\'), {
+        center: myLatLng,
+        zoom: 16
+    });
+
+    var marker = new google.maps.Marker({
+        map: map,
+        position: myLatLng,
+        title: \'Hello World!\'
+    });
+}
+', \yii\web\View::POS_HEAD);
+
+$this->registerJs('
+    $(\'#LcpickingId\').change(function (event, id, value) {
+    prev_val = $(this).val();
+
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "checkout/map-images-google",
+        data: {\'pickingIds\': prev_val},
+        success: function (data, status)
+        {
+            if (data != \'\') {
+                if (status == "success") {
+                    var JSONObject = JSON.parse(data);
+
+                    /* Map Google in latitude and longitude for cozxy*/
+                    changeMap(JSONObject.latitude, JSONObject.longitude);
+
+                } else {
+
+                }
+            }
+        }
+    });
+});
+    
+');
+
+$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap', ['depends'=>['yii\web\YiiAsset']]);
+?>
