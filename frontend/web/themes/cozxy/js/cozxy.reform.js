@@ -67,7 +67,20 @@ $('#addressId').change(function (event, id, value) {
         }
     });
 });
+$(document).on('click', '#refreshPass', function () {
 
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: $baseUrl + '/top-up/random-pass',
+        data: {data: '1'},
+        success: function (data) {
+            if (data.pass) {
+                $("#passwordPic").val(data.pass);
+            }
+        }
+    });
+});
 $(document).on('click', '#checkBot', function () {//test
     var inputPass = $(this).parent().parent().parent().parent().find("#inputPass").val();
     var passPic = $(this).parent().parent().parent().parent().find("#passwordPic").val();
