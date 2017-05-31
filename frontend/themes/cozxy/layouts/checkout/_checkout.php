@@ -49,7 +49,7 @@ $pickingId = rand(0, 9999);
                                         'placeholder' => 'Select...',
                                         'loadingText' => 'Loading States ...',
                                     ],
-                                    'options' => ['placeholder' => 'Select States ...', 'name' => 'provinceId', 'id'=>'stateId'],
+                                    'options' => ['placeholder' => 'Select States ...', 'name' => 'provinceId', 'id' => 'stateId'],
                                 ])->label(FALSE);
                                 ?>
                             </div>
@@ -60,13 +60,13 @@ $pickingId = rand(0, 9999);
                                 echo Html::hiddenInput('input-type-33', 'add', ['id' => 'input-type-33']);
                                 echo $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
                                     //'data' => [9 => 'Savings'],
-                                    'options' => ['placeholder' => 'Select ...', 'name' => 'amphurId', 'id'=>'amphurId'],
+                                    'options' => ['placeholder' => 'Select ...', 'name' => 'amphurId', 'id' => 'amphurId'],
                                     'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
 //                                        'initialize' => false,
                                         'depends' => ['stateId'],
-                                        'url' => Url::to(['child-amphur-address-picking-point']),
+                                        'url' => Url::to(['child-amphur-address-picking-point-checkouts']),
                                         'loadingText' => 'Loading amphur ...',
                                         'params' => ['input-type-11', 'input-type-22', 'input-type-33']
                                     ]
