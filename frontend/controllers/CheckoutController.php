@@ -134,8 +134,11 @@ class CheckoutController extends MasterController {
     }
 
     function actionOrderSummary() {
-
-        return $this->render('/order/index');
+        $orderId = Yii::$app->request->get('orderId');
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        return $this->render('/order/index', [
+                    'order' => $order
+        ]);
     }
 
 }
