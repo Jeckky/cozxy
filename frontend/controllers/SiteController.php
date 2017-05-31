@@ -186,7 +186,8 @@ class SiteController extends Controller {
                 //exit();
                 if ($user = $model->signup()) {
                     if (Yii::$app->getUser()->login($user)) {
-                        return $this->goHome();
+                        //return $this->goHome();
+                        return $this->redirect([Yii::$app->homeUrl . 'site/thank']);
                     }
                 }
             }
@@ -197,6 +198,18 @@ class SiteController extends Controller {
         return $this->render('@app/themes/cozxy/layouts/_register', [
             'model' => $model,
         ]);
+    }
+
+    public function actionConfirm() {
+
+        $user = \common\models\costfit\User::find()->where("token = '" . $_GET["token"] . "'")->one();
+        if (isset($user)) {
+            $user->status = 1;
+            $user->save(FALSE);
+            return $this->redirect([Yii::$app->homeUrl . 'site/thank?verification=complete']);
+        } else {
+
+        }
     }
 
     /**
@@ -244,6 +257,19 @@ class SiteController extends Controller {
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+    public function actionFaqs() {
+        return $this->render('faqs');
+    }
+
+    public function actionTermsAndConditions() {
+        return $this->render('terms-and-conditions');
+    }
+
+    public function actionThank() {
+
+        return $this->render('thank');
     }
 
 }

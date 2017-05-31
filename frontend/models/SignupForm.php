@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use Yii;
 use yii\base\Model;
 use common\models\User;
 
@@ -82,8 +83,15 @@ class SignupForm extends Model {
         $user->lastvisitDate = new \yii\db\Expression("NOW()");
         $user->createDateTime = new \yii\db\Expression("NOW()");
         $user->generateAuthKey();
-
-        return $user->save(FALSE) ? $user : null;
+        if ($user->save()) {
+            $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "site/confirm?token=" . $user->token;
+            $toMail = $user->email;
+            $emailSend = \common\helpers\Email::mailRegisterConfirm($toMail, $url);
+            return $user;
+        } else {
+            return null;
+        }
+        //return $user->save(FALSE) ? $user : null;
     }
 
 }
