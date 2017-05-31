@@ -631,11 +631,11 @@ class MasterController extends MasterCommonController {
                     foreach ($list as $i => $account) {
                         $out[] = ['id' => $account['cityId'], 'name' => $account['localName']];
                         $param1 = ($param1 != '') ? $param1 : $account['cityId'];
-                        if ($i == 0) {
-                            $selected = $param1; //$account['stateId'];
-                        } else {
-                            $selected = $param1;
-                        }
+//                        if ($i == 0) {
+//                            $selected = $param1; //$account['stateId'];
+//                        } else {
+//                            $selected = $param1;
+//                        }
                     }
 
                     // Shows how you can preselect a value
@@ -700,11 +700,11 @@ class MasterController extends MasterCommonController {
                     foreach ($list as $i => $account) {
                         $out[] = ['id' => $account['pickingId'], 'name' => $account['title']];
                         $param1 = ($param1 != '') ? $param1 : $account['pickingId'];
-                        if ($i == 0) {
-                            $selected = $param1; //$account['stateId'];
-                        } else {
-                            $selected = $param1;
-                        }
+//                        if ($i == 0) {
+//                            $selected = $param1; //$account['stateId'];
+//                        } else {
+//                            $selected = $param1;
+//                        }
                     }
 
                     // Shows how you can preselect a value

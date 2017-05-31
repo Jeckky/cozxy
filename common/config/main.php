@@ -63,9 +63,9 @@ return [
               ], */
             ]
         ],
-        'authManager' => [
-            'class' => 'yii\rbac\DbManager',
-        ],
+//        'authManager' => [
+//            'class' => 'yii\rbac\DbManager',
+//        ],
     ],
     'language' => 'TH',
     //'language' => 'en',
