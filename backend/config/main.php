@@ -96,6 +96,9 @@ return [
         'warrantyperiod' => [
             'class' => 'backend\modules\warrantyperiod\Warrantyperiod',
         ],
+        'gridview' => [
+            'class' => '\kartik\grid\Module'
+        ]
     ],
     'components' => [
         'user' => [
