@@ -12,17 +12,6 @@ $this->params['breadcrumbs'][] = $this->title;
 $pickingId = rand(0, 9999);
 ?>
 
-<style>
-    /* Always set the map height explicitly to define the size of the div
-   * element that contains the map. */
-
-    #map {
-        height: 50%;
-    }
-    /* Optional: Makes the sample page fill the window. */
-
-
-</style>
 <div class="container">
     <div class="size32">&nbsp;</div>
     <div class="row">
@@ -296,14 +285,12 @@ $this->registerJs('
                 title: "Hello World!"
             });
         }
-        
-        
+
+
 
 function changeMap(lats, lngs) {
 
-    // var map;
     var myLatLng = {lat: Number(lats), lng: Number(lngs)};// get ค่ามาจาก address แต่เป็น String ต้องเปลียนให้เป็น Number
-//    var myLatLng = {lat: 13.7880589, lng: 100.5329692};//ใช้เทส //13.8713948,100.6151315
     console.log(myLatLng);
     //document.getElementById("map").innerHTML = "Paragraph changed!";
     //$(".cart-detail").find("#map").html("xxxxxx");
@@ -344,8 +331,8 @@ $this->registerJs('
         }
     });
 });
-    
+
 ');
 
-$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap', ['depends'=>['yii\web\YiiAsset']]);
+$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap', ['depends' => ['yii\web\YiiAsset']]);
 ?>

@@ -46,15 +46,16 @@ use kartik\select2\Select2;
                                             function ViewCustInGoogleMap() {
 
                                                 var mapOptions = {
-                                                    center: new google.maps.LatLng(<?php echo $Lcpicking['latitude'] ?>, <?php echo $Lcpicking['longitude'] ?>), // Coimbatore = (11.0168445, 76.9558321)
-                                                    zoom: 7,
-                                                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                                                    center: new google.maps.LatLng(<?php echo $pickingMap['latitude'] ?>, <?php echo $pickingMap['longitude'] ?>), // Coimbatore = (11.0168445, 76.9558321)
+                                                    zoom: 16,
+                                                    //mapTypeId: google.maps.MapTypeId.ROADMAP
                                                 };
                                                 map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
                                                 // Get data from database. It should be like below format or you can alter it.
 
-                                                var data = '[{ "DisplayText": "adcv", "ADDRESS": "Jamiya Nagar Kovaipudur Coimbatore-641042", "LatitudeLongitude": "<?php echo $Lcpicking['latitude'] ?>, <?php echo $Lcpicking['longitude'] ?>", "MarkerId": "Customer" },{ "DisplayText": "abcd", "ADDRESS": "Coimbatore-641042", "LatitudeLongitude": "<?php echo $Lcpicking['latitude'] ?>, <?php echo $Lcpicking['longitude'] ?>", "MarkerId": "Customer"}]';
+                                                var data = '[{ "DisplayText": "<?php echo $pickingMap['title'] ?>", "ADDRESS": " <?php $myAddressInSummary['myAddresss']['address'] ?>", "LatitudeLongitude": "<?php echo $pickingMap['latitude'] ?>, <?php echo $pickingMap['longitude'] ?>", "MarkerId": "Customer" },\n\
+                                                { "DisplayText": "<?php echo $pickingMap['title'] ?>", "ADDRESS": "<?php $myAddressInSummary['myAddresss']['address'] ?>", "LatitudeLongitude": "<?php echo $pickingMap['latitude'] ?>, <?php echo $pickingMap['longitude'] ?>", "MarkerId": "Customer"}]';
 
                                                 people = JSON.parse(data);
 
@@ -113,7 +114,7 @@ use kartik\select2\Select2;
 
                                         </script>
                                         <h4>Map</h4>
-                                        <div id="map-canvas" style=" width:100%;height:20vh;border:0;"> </div>
+                                        <div id="map-canvas" style=" width:100%;height:300px;border:0;"> </div>
                                     </div>
                                 </div>
                             </div>
@@ -125,28 +126,20 @@ use kartik\select2\Select2;
                                 </div>
 
                                 <div class="row fc-g999">
-                                    <?php
-                                    if (count($myAddressInSummary->allModels) > 0) {
-                                        foreach ($myAddressInSummary->allModels as $key => $value) {
-                                            ?>
-                                            <div class="col-lg-2 col-md-2 col-sm-12">Name:</div>
-                                            <div class="col-lg-10 col-md-10 col-sm-12"><?php echo $value['firstname'] ?> <?php echo $value['lastname'] ?></div>
-                                            <div class="size6">&nbsp;</div>
-                                            <div class="col-lg-2 col-md-3 col-sm-12">Address:</div>
-                                            <div class="col-lg-10 col-md-9 col-sm-12">
-                                                <?php echo $value['address'] ?>&nbsp;
-                                                <?php echo $value['amphur'] ?>&nbsp;
-                                                <?php echo $value['district'] ?>&nbsp;
-                                                <?php echo $value['province'] ?>&nbsp;
-                                                <?php echo $value['zipcode'] ?>&nbsp;
-                                            </div>
-                                            <div class="size12">&nbsp;</div>
-                                            <?php
-                                        }
-                                    } else {
 
-                                    }
-                                    ?>
+                                    <div class="col-lg-2 col-md-2 col-sm-12">Name:</div>
+                                    <div class="col-lg-10 col-md-10 col-sm-12"><?php echo $myAddressInSummary['myAddresss']['firstname'] ?> <?php echo $myAddressInSummary['myAddresss']['lastname'] ?></div>
+                                    <div class="size6">&nbsp;</div>
+                                    <div class="col-lg-2 col-md-3 col-sm-12">Address:</div>
+                                    <div class="col-lg-10 col-md-9 col-sm-12">
+                                        <?php echo $myAddressInSummary['myAddresss']['address'] ?>&nbsp;
+                                        <?php echo $myAddressInSummary['myAddresss']['amphur'] ?>&nbsp;
+                                        <?php echo $myAddressInSummary['myAddresss']['district'] ?>&nbsp;
+                                        <?php echo $myAddressInSummary['myAddresss']['province'] ?>&nbsp;
+                                        <?php echo $myAddressInSummary['myAddresss']['zipcode'] ?>&nbsp;
+                                    </div>
+                                    <div class="size12">&nbsp;</div>
+
                                 </div>
                             </div>
                         </div>

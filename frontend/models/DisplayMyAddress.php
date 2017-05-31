@@ -17,32 +17,32 @@ use common\helpers\Base64Decode;
  */
 class DisplayMyAddress extends Model {
 
-    public static function myAddress($addressId, $type = FALSE) {
+    public static function myAddresssSummary($addressId, $type = FALSE) {
         $products = [];
-        $dataAddress = \common\models\costfit\Address::find()->where("addressId ='" . $addressId . "' and type =" . $type)->orderBy('addressId DESC')->all();
-        foreach ($dataAddress as $items) {
-            $products[$items->addressId] = [
-                'addressId' => $items->addressId,
-                'userId' => $items->userId,
-                'firstname' => isset($items->firstname) ? $items->firstname : '',
-                'lastname' => isset($items->lastname) ? $items->lastname : '',
-                'company' => isset($items->company) ? $items->company : '',
-                'tax' => isset($items->tax) ? $items->tax : '',
-                'address' => isset($items->address) ? $items->address : '' . ' , ',
-                'country' => isset($items->countries->countryName) ? $items->countries->countryName : '' . ' , ',
-                'province' => isset($items->states->localName) ? $items->states->localName : '' . ' , ',
-                'amphur' => isset($items->cities->localName) ? $items->cities->localName : '' . ' , ',
-                'district' => isset($items->district->localName) ? $items->district->localName : '' . ' , ',
-                'zipcode' => isset($items->zipcodes->zipcode) ? $items->zipcodes->zipcode : '' . ' , ',
-                'tel' => isset($items->tel) ? $items->tel : '',
-                'type' => isset($items->type) ? $items->type : '',
-                'isDefault' => isset($items->isDefault) ? $items->isDefault : '',
-                'status' => isset($items->status) ? $items->status : '',
-                'createDateTime' => isset($items->createDateTime) ? $items->createDateTime : '',
-                'updateDateTime' => isset($items->updateDateTime) ? $items->updateDateTime : '',
-                'email' => isset($items->email) ? $items->email : '',
-            ];
-        }
+        $dataAddress = \common\models\costfit\Address::find()->where("addressId ='" . $addressId . "' and type =" . $type)->orderBy('addressId DESC')->one();
+
+        $products['myAddresss'] = [
+            'addressId' => $dataAddress['addressId'],
+            'userId' => $dataAddress['userId'],
+            'firstname' => isset($dataAddress['firstname']) ? $dataAddress['firstname'] : '',
+            'lastname' => isset($dataAddress['lastname']) ? $dataAddress['lastname'] : '',
+            'company' => isset($dataAddress['company']) ? $dataAddress['company'] : '',
+            'tax' => isset($dataAddress['tax']) ? $dataAddress['tax'] : '',
+            'address' => isset($dataAddress['address']) ? $dataAddress['address'] : '' . ', ',
+            'country' => isset($dataAddress->countries->countryName) ? $dataAddress->countries->countryName : '' . ', ',
+            'province' => isset($dataAddress->states->localName) ? $dataAddress->states->localName : '' . ', ',
+            'amphur' => isset($dataAddress->cities->localName) ? $dataAddress->cities->localName : '' . ', ',
+            'district' => isset($dataAddress->district->localName) ? $dataAddress->district->localName : '' . ', ',
+            'zipcode' => isset($dataAddress->zipcodes->zipcode) ? $dataAddress->zipcodes->zipcode : '' . ', ',
+            'tel' => isset($dataAddress['tel']) ? $dataAddress['tel'] : '',
+            'type' => isset($dataAddress['type']) ? $dataAddress['type'] : '',
+            'isDefault' => isset($dataAddress['isDefault']) ? $dataAddress['isDefault'] : '',
+            'status' => isset($dataAddress['status']) ? $dataAddress['status'] : '',
+            'createDateTime' => isset($dataAddress['createDateTime']) ? $dataAddress['createDateTime'] : '',
+            'updateDateTime' => isset($dataAddress['updateDateTime']) ? $dataAddress['updateDateTime'] : '',
+            'email' => isset($dataAddress['email']) ? $dataAddress['email'] : '',
+        ];
+
         return $products;
     }
 

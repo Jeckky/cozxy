@@ -26,6 +26,9 @@ use yii\data\ArrayDataProvider;
 class CheckoutController extends MasterController {
 
     public function actionIndex() {
+        if (Yii::$app->user->isGuest == 1) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
         $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
         $pickingPoint_list_lockers = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_HOT)->one(); // Lockers ร้อน
         $pickingPoint_list_lockers_cool = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_COOL)->one(); // Lockers เย็น
@@ -38,25 +41,28 @@ class CheckoutController extends MasterController {
     }
 
     public function actionSummary() {
+        if (Yii::$app->user->isGuest == 1) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
         $provinceid = Yii::$app->request->post('provinceId');
         $amphurid = Yii::$app->request->post('amphurId');
         $LcpickingId = Yii::$app->request->post('LcpickingId');
         $addressId = Yii::$app->request->post('addressId');
 
         if (isset($LcpickingId) && !empty($LcpickingId)) {
-            $Lcpicking = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $LcpickingId)->one();
+            $pickingMap = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $LcpickingId)->one();
 
-            if (isset($Lcpicking->attributes) && !empty($Lcpicking->attributes)) {
-                $Lcpicking = $Lcpicking->attributes;
+            if (isset($pickingMap->attributes) && !empty($pickingMap->attributes)) {
+                $pickingMap = $pickingMap->attributes;
             } else {
-                $Lcpicking = Null;
+                $pickingMap = Null;
             }
         } else {
-            $Lcpicking = Null;
+            $pickingMap = Null;
         }
+        $myAddressInSummary = DisplayMyAddress::myAddresssSummary($addressId, \common\models\costfit\Address::TYPE_BILLING);
 
-        $myAddressInSummary = new ArrayDataProvider(['allModels' => DisplayMyAddress::myAddress($addressId, \common\models\costfit\Address::TYPE_BILLING)]);
-        return $this->render('summary', compact('myAddressInSummary', 'Lcpicking'));
+        return $this->render('summary', compact('myAddressInSummary', 'pickingMap'));
     }
 
     public function actionThanks() {
@@ -65,9 +71,35 @@ class CheckoutController extends MasterController {
 
     public function actionAddress() {
         $addressId = Yii::$app->request->post('addressId');
-
+        $products = [];
         if (isset($addressId) && !empty($addressId)) {
-            return DisplayMyAddress::myAddress($addressId, FALSE);
+
+            $products = [];
+            $dataAddress = \common\models\costfit\Address::find()->where("addressId =" . $addressId)->orderBy('addressId DESC')->all();
+            foreach ($dataAddress as $items) {
+                $products['address'] = [
+                    'addressId' => $items->addressId,
+                    'userId' => $items->userId,
+                    'firstname' => $items->firstname,
+                    'lastname' => $items->lastname,
+                    'company' => $items->company,
+                    'tax' => $items->tax,
+                    'address' => isset($items->address) ? $items->address : '' . ' , ',
+                    'country' => isset($items->countries->countryName) ? $items->countries->countryName : '' . ' , ',
+                    'province' => isset($items->states->localName) ? $items->states->localName : '' . ' , ',
+                    'amphur' => isset($items->cities->localName) ? $items->cities->localName : '' . ' , ',
+                    'district' => isset($items->district->localName) ? $items->district->localName : '' . ' , ',
+                    'zipcode' => isset($items->zipcodes->zipcode) ? $items->zipcodes->zipcode : '' . ' , ',
+                    'tel' => $items->tel,
+                    'type' => $items->type,
+                    'isDefault' => $items->isDefault,
+                    'status' => $items->status,
+                    'createDateTime' => $items->createDateTime,
+                    'updateDateTime' => $items->updateDateTime,
+                    'email' => $items->email,
+                ];
+            }
+            return json_encode($products);
         }
     }
 
