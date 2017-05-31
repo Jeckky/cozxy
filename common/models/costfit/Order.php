@@ -151,6 +151,16 @@ class Order extends \common\models\costfit\master\OrderMaster {
                 if (isset($item->shippingDiscountValue)) {
                     $totalItemDiscount += $item->shippingDiscountValue;
                 }
+                $productImageSuppliers = ProductSuppliers::productImageSuppliers($item->productSuppId);
+                if (isset($productImageSuppliers)) {
+                    if (file_exists(Yii::$app->basePath . "/web/" . $productImageSuppliers)) {
+                        $productImageSuppliersT1 = $productImageSuppliers;
+                    } else {
+                        $productImageSuppliersT1 = $svg195x195;
+                    }
+                } else {
+                    $productImageSuppliersT1 = $svg195x195;
+                }
                 $items[$item->orderItemId] = [
                     'pickingId' => $item->pickingId,
                     'orderItemId' => $item->orderItemId,
@@ -177,7 +187,8 @@ class Order extends \common\models\costfit\master\OrderMaster {
                     'shippingDiscountValue' => isset($item->shippingDiscountValue) ? $item->shippingDiscountValue : 0,
                     'shippingDiscountValueText' => isset($item->shippingDiscountValue) ? number_format($item->shippingDiscountValue, 2) : number_format(0, 2),
                     'total' => $item->total,
-                    'image' => isset($item->product->productImages[0]) ? \Yii::$app->homeUrl . $item->product->productImages[0]->image : $svg195x195,
+                    //'image' => isset($item->product->productImages[0]) ? \Yii::$app->homeUrl . $item->product->productImages[0]->image : $svg195x195,
+                    'image' => $productImageSuppliersT1,
                 ];
             }
             $order->save(); // For Update Total;
