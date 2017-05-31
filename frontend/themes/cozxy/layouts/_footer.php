@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Html;
 ?>
 <div class="subscribe">
@@ -24,10 +25,10 @@ use yii\helpers\Html;
     <div class="container">
         <div class="row">
             <div class="col-md-8 footer-menu text-center-sm text-center-xs size18-sm size16-xs">
-                <?=Html::a('About Us', ['/site/about']);?>
-                <?=Html::a('Terms & Conditions', ['/site/terms-and-conditions']);?>
-                <?=Html::a('FAQs', ['/site/faqs']);?>
-                <?=Html::a('Contact Us', ['/site/contact']);?>
+                <?= Html::a('About Us', ['/site/about']); ?>
+                <?= Html::a('Terms & Conditions', ['/site/terms-and-conditions']); ?>
+                <?= Html::a('FAQs', ['/site/faqs']); ?>
+                <?= Html::a('Contact Us', ['/site/contact']); ?>
             </div>
             <div class="col-md-4 text-right hidden-sm hidden-xs">
                 <a href="#" class="gotoTop fc-black"><div class="booticon"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></div> &nbsp; <span class="size18 b">GO TO TOP</span></a>
@@ -40,8 +41,8 @@ use yii\helpers\Html;
     <div class="container">
         <div class="row">
             <div class="col-md-6 copyright-social text-center-sm text-center-xs">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-instagram"></i></a>
+                <a href="https://www.instagram.com/cozxy_thailand"><i class="fa fa-facebook"></i></a>
+                <a href="https://www.facebook.com/cozxydotcom/"><i class="fa fa-instagram"></i></a>
                 <a href="#"><i class="fa fa-twitter"></i></a>
                 <a href="#"><i class="fa fa-pinterest-p"></i></a>
             </div>

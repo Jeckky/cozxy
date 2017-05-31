@@ -27,49 +27,49 @@ $(document).ready(function (e) {
          var $cartTotalItems = parseInt($('.cart-btn a span').text()) + parseInt($itemQnty);
          var $maxQnty = $(this).parent().find('#maxQnty').val();
          */
-        var $itemId = $('#').val();
-        var $productSuppId = '';
-        var $fastId = '';
-        var $supplierId = '';
-        var $itemPrice = '';
-        var $itemQnty = '';
+        var $itemId = $('#productId').val();
+        var $productSuppId = $('#productSuppId').val();
+        var $fastId = $('#fastId').val();
+        var $supplierId = $('#supplierId').val();
+        //var $itemPrice = $('#price').val();
+        var $itemQnty = $('#quantity').val();
         var $cartTotalItems = '';
-        var $maxQnty = '';
+        var $maxQnty = $('#maxQnty').val();
+
         /*
          *เพิ่ม Type จุดรับสินค้า
          * 1.Lockers
          * 2.Booth
          */
-        //var $receiveType = $(this).parent().parent().find("#receiveType").val();
-        var $receiveType = '';
+        var $receiveType = $('#receiveType').val();
         if (parseInt($itemQnty) <= parseInt($maxQnty) && parseInt($itemQnty) > 0) {
-            // alert("aaaaaa");
+
             $.ajax({
                 type: "POST",
                 dataType: "JSON",
-                url: $baseUrl + '/cart/add-to-cart' + "?id=" + $itemId,
+                url: $baseUrl + 'cart/add-to-cart' + "?id=" + $itemId,
                 data: {quantity: $itemQnty, fastId: $fastId, supplierId: $supplierId, productSuppId: $productSuppId, receiveType: $receiveType},
                 success: function (data)
                 {
-                    if (data.status)
-                    {
+                    if (data.status) {
                         $('#maxQnty').val($maxQnty - $itemQnty);
                         if (($maxQnty - $itemQnty) == 0) {
                             $('#quantity').val(0);
-                            $addToCartBtn.attr('disabled', 'disabled');
+                            //$addToCartBtn.attr('disabled', 'disabled');
                         } else {
                             $('#quantity').val(1);
                         }
-                        $('.cart-dropdown table').remove();
-                        $('.cart-dropdown .body').append(
-                                data.shoppingCart
-                                );
-                        $('.cart-btn a span').text($cartTotalItems);
-                        $('.cart-btn a').find("#cartTotal").html(data.cart.totalFormatText);
-                        $('.cart-dropdown .footer .total').html(data.cart.totalFormatText);
+                        //$('.cart-dropdown table').remove();
+                        //$('.cart-dropdown .body').append(
+                        //data.shoppingCart
+                        // );
+                        // $('.cart-btn a span').text($cartTotalItems);
+                        //$('.cart-btn a').find("#cartTotal").html(data.cart.totalFormatText);
+                        //$('.cart-dropdown .footer .total').html(data.cart.totalFormatText);
+                        window.location = $baseUrl + 'cart';
                     }
                     //alert(data.shoppingCart);
-                    $addedToCartMessage.addClass('visible');
+                    //$addedToCartMessage.addClass('visible');
                 }
             });
         } else {

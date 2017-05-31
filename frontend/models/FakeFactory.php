@@ -273,12 +273,13 @@ class FakeFactory extends Model {
                 }
             }
             $products[$GetProductSuppliers['productSuppId']] = [
-                'productSuppId' => '',
-                'productId' => '',
-                'userId' => '',
+                'productSuppId' => $GetProductSuppliers['productSuppId'],
+                'productId' => $GetProductSuppliers['productId'],
+                'supplierId' => $GetProductSuppliers['userId'],
                 'productGroupId' => '',
-                'brandId' => '',
-                'categoryId' => '',
+                'brandId' => $GetProductSuppliers['brandId'],
+                'categoryId' => $GetProductSuppliers['categoryId'],
+                'receiveType' => $GetProductSuppliers['receiveType'],
                 'title' => isset($GetProductSuppliers['title']) ? $GetProductSuppliers['title'] : '',
                 'shortDescription' => isset($GetProductSuppliers['shortDescription']) ? $GetProductSuppliers['shortDescription'] : '',
                 'description' => isset($GetProductSuppliers['description']) ? $GetProductSuppliers['description'] : '',
@@ -303,7 +304,7 @@ class FakeFactory extends Model {
                 if (file_exists(Yii::$app->basePath . "/web/" . $items->image)) {
                     $brandImages = $items->image;
                 } else {
-                    $brandImages = \common\helpers\Base64Decode::DataImageSvg112x64(FALSE, FALSE, FALSE); // 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTEyIiBoZWlnaHQ9IjY0IiB2aWV3Qm94PSIwIDAgNjQgNjQiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0NClNvdXJjZSBVUkw6IGhvbGRlci5qcy8xMTJ4NjQNCkNyZWF0ZWQgd2l0aCBIb2xkZXIuanMgMi42LjAuDQpMZWFybiBtb3JlIGF0IGh0dHA6Ly9ob2xkZXJqcy5jb20NCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvDQotLT48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwhW0NEQVRBWyNob2xkZXJfMTVjMGE4NmY2NWEgdGV4dCB7IGZpbGw6I0FBQUFBQTtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0IH0gXV0+PC9zdHlsZT48L2RlZnM+PGcgaWQ9ImhvbGRlcl8xNWMwYTg2ZjY1YSI+PHJlY3Qgd2lkdGg9IjExMiIgaGVpZ2h0PSI2NCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjYuMjI2NTYyNSIgeT0iMzYuNTMyODEyNSI+MTEyeDY0PC90ZXh0PjwvZz48L2c+PC9zdmc+';
+                    $brandImages = \common\helpers\Base64Decode::DataImageSvg112x64(FALSE, FALSE, FALSE);
                 }
             }
             $products[$items->brandId] = [

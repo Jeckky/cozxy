@@ -81,8 +81,6 @@ class CartController extends MasterController {
             . " and sendDate=" . $fastid)->one();
         }
 
-
-
         if (!isset($orderItem)) {
             $orderItem = new \common\models\costfit\OrderItem();
             $orderItem->quantity = $_POST["quantity"];

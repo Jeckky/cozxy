@@ -51,16 +51,22 @@
                             <div class="col-sm-6 size18 b">QUANTITY</div>
                             <div class="col-sm-6 text-right quantity-sel size18">
                                 <a href="javascript:;" class="q-minus"><i class="fa fa-minus-circle" aria-hidden="true" style="color: #000"></i></a>
-                                <input type="text" name="quantity" class="quantity" value="1">
+                                <input type="text" id="quantity" name="quantity" class="quantity" value="1">
                                 <a href="javascript:;" class="q-plus"><i class="fa fa-plus-circle" aria-hidden="true" style="color: #000"></i></a>
                             </div>
                         </div>
                         <hr>
                         <div class="size36">&nbsp;</div>
                         <div class="text-center abs" style="bottom: 0; left: 0; right: 0;">
+                            <input type="hidden" id="maxQnty" value="<?php echo $model['result']; ?>">
+                            <input type="hidden" id="fastId" value="">
+                            <input type="hidden" id="productId" value="<?php echo $model['productId']; ?>">
+                            <input type="hidden" id="supplierId" value="<?php echo $model['supplierId']; ?>">
+                            <input type="hidden" id="productSuppId" value="<?php echo $model['productSuppId']; ?>">
+                            <input type="hidden" id="receiveType" value="<?php echo $model['receiveType']; ?>">
                             <a href="#" class="b btn-g999 size16" style="margin:24px auto 12px">+
                                 <i class="fa fa-heart"></i></a>
-                            <a id="addItemToCartUnity" data-stuff="['fastId','productId','supplierId','productSuppId','receiveType']" class="b btn-yellow size16" style="margin:24px auto 12px">+
+                            <a href="#" id="addItemToCartUnity" class="b btn-yellow size16" style="margin:24px auto 12px">+
                                 <i class="fa fa-shopping-cart"></i></a>
 
                             <a href="/cart" class="b btn-g999 btn-success size16" style="margin:24px auto 12px;color:#fff;">+
