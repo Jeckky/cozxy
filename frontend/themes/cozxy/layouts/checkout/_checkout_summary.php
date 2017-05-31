@@ -56,12 +56,12 @@ use kartik\select2\Select2;
                     </div>
 
                     <!--Cart Items-->
-<?php
-foreach ($this->params['cart']['items'] as $item) {
-    // throw new \yii\base\Exception(print_r($item["image"], true));
-    echo $this->render('_checkout_item', compact('item'));
-}
-?>
+                    <?php
+                    foreach ($this->params['cart']['items'] as $item) {
+                        // throw new \yii\base\Exception(print_r($item["image"], true));
+                        echo $this->render('_checkout_item', compact('item'));
+                    }
+                    ?> 
 
                     <div class="size12 size10-xs">&nbsp;</div>
                 </div>
@@ -70,7 +70,7 @@ foreach ($this->params['cart']['items'] as $item) {
 
         <!-- Total -->
         <div class="col-lg-3 col-md-4">
-<?= $this->render('_checkout_total') ?>
+            <?= $this->render('_checkout_total') ?>
         </div>
 
     </div>
