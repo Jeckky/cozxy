@@ -11,7 +11,12 @@ $this->params['breadcrumbs'][] = $this->title;
 \frontend\assets\CheckoutAsset::register($this);
 $pickingId = rand(0, 9999);
 ?>
-
+<?php
+$form = ActiveForm::begin([
+    'id' => 'default-shipping-address',
+    'options' => ['class' => 'space-bottom'],
+]);
+?>
 <style>
     /* Always set the map height explicitly to define the size of the div
    * element that contains the map. */
@@ -26,13 +31,6 @@ $pickingId = rand(0, 9999);
 <div class="container">
     <div class="size32">&nbsp;</div>
     <div class="row">
-        <?php
-        $form = ActiveForm::begin([
-            'id' => 'default-shipping-address',
-            'action' => Yii::$app->homeUrl . 'checkout/summary',
-            'options' => ['class' => 'space-bottom'],
-        ]);
-        ?>
         <!-- Cart -->
         <div class="col-lg-9 col-md-8 cart-body">
             <div class="row">
@@ -55,12 +53,13 @@ $pickingId = rand(0, 9999);
                             <div class="col-md-4 col-xs-12">
                                 <?php
                                 echo $form->field($model, 'provinceId')->widget(kartik\select2\Select2::classname(), [
+                                    //'options' => ['id' => 'address-countryid'],
                                     'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->asArray()->all(), 'stateId', 'localName'),
                                     'pluginOptions' => [
                                         'placeholder' => 'Select...',
                                         'loadingText' => 'Loading States ...',
                                     ],
-                                    'options' => ['placeholder' => 'Select States ...', 'name' => 'provinceId'],
+                                    'options' => ['placeholder' => 'Select States ...'],
                                 ])->label(FALSE);
                                 ?>
                             </div>
@@ -71,7 +70,7 @@ $pickingId = rand(0, 9999);
                                 echo Html::hiddenInput('input-type-33', 'add', ['id' => 'input-type-33']);
                                 echo $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
                                     //'data' => [9 => 'Savings'],
-                                    'options' => ['placeholder' => 'Select ...', 'name' => 'amphurId'],
+                                    'options' => ['placeholder' => 'Select ...'],
                                     'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
@@ -92,7 +91,7 @@ $pickingId = rand(0, 9999);
                                 echo $form->field($pickingPointLockersCool, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
                                     'model' => $pickingId,
                                     'attribute' => 'pickingId',
-                                    'options' => ['placeholder' => 'Select ...', 'id' => 'LcpickingId', 'name' => 'LcpickingId'],
+                                    'options' => ['placeholder' => 'Select ...', 'id' => 'LcpickingId'],
                                     'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
@@ -112,7 +111,7 @@ $pickingId = rand(0, 9999);
                         <div class="row fc-g999">
                             <div class="col-xs-12">
                                 <h4>Map</h4>
-                                <div id="map" style="height:200px;"></div>
+                                <div id="map"></div>
 
                             </div>
                         </div>
@@ -145,7 +144,7 @@ $pickingId = rand(0, 9999);
                                         'placeholder' => 'Select...',
                                         'loadingText' => 'Loading Billing Address ...',
                                     ],
-                                    'options' => ['placeholder' => 'Select Billing Address ...', 'id' => 'addressId', 'name' => 'addressId'],
+                                    'options' => ['placeholder' => 'Select Billing Address ...', 'id' => 'addressId'],
                                 ])->label(FALSE);
                                 ?>
                             </div>
@@ -165,13 +164,14 @@ $pickingId = rand(0, 9999);
                     <div class="col-xs-12 text-right">
                         <a href="<?= Url::to(['/cart']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
                         &nbsp;
-                        <input type="submit" value="CONTINUE TO PAYMENT METHOD" class="b btn-yellow">
+                        <a href="<?= Url::to(['/checkout/summary']) ?>" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">CONTINUE
+                            TO PAYMENT METHOD</a>
                     </div>
                     <div class="size12 size10-xs">&nbsp;</div>
                 </div>
             </div>
         </div>
-        <?php ActiveForm::end(); ?>
+
         <!-- Total -->
         <div class="col-lg-3 col-md-4">
             <?= $this->render('_checkout_total') ?>
@@ -271,81 +271,7 @@ $pickingId = rand(0, 9999);
         </div>
     </div>
 </div>
+<?php ActiveForm::end(); ?>
 
 
 
-<?php
-$this->registerCss('
-#map {
-            height: 300px;
-        }
-');
-
-$this->registerJs('
-        var map;
-        function initMap() {
-            var myLatLng = { lat: -25.363, lng: 131.044 };
-            map = new google.maps.Map(document.getElementById(\'map\'), {
-                center: myLatLng,
-                zoom: 16
-            });
-
-            var marker = new google.maps.Marker({
-                map: map,
-                position: myLatLng,
-                title: \'Hello World!\'
-            });
-        }
-        
-        
-
-function changeMap(lats, lngs) {
-
-    // var map;
-    //var myLatLng = {lat: lats, lng: lngs};// get ค่ามาจาก address แต่เป็น String ต้องเปลียนให้เป็น Number
-    var myLatLng = {lat: 13.7880589, lng: 100.5329692};//ใช้เทส //13.8713948,100.6151315
-    console.log(myLatLng);
-    //document.getElementById(\'map\').innerHTML = "Paragraph changed!";
-    //$(\'.cart-detail\').find(\'#map\').html(\'xxxxxx\');
-    map = new google.maps.Map(document.getElementById(\'map\'), {
-        center: myLatLng,
-        zoom: 16
-    });
-
-    var marker = new google.maps.Marker({
-        map: map,
-        position: myLatLng,
-        title: \'Hello World!\'
-    });
-}
-', \yii\web\View::POS_HEAD);
-
-$this->registerJs('
-    $(\'#LcpickingId\').change(function (event, id, value) {
-    prev_val = $(this).val();
-
-    $.ajax({
-        type: "POST",
-        url: $baseUrl + "checkout/map-images-google",
-        data: {\'pickingIds\': prev_val},
-        success: function (data, status)
-        {
-            if (data != \'\') {
-                if (status == "success") {
-                    var JSONObject = JSON.parse(data);
-
-                    /* Map Google in latitude and longitude for cozxy*/
-                    changeMap(JSONObject.latitude, JSONObject.longitude);
-
-                } else {
-
-                }
-            }
-        }
-    });
-});
-    
-');
-
-$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap', ['depends'=>['yii\web\YiiAsset']]);
-?>

@@ -152,6 +152,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
                     $totalItemDiscount += $item->shippingDiscountValue;
                 }
                 $items[$item->orderItemId] = [
+                    'pickingId' => $item->pickingId,
                     'orderItemId' => $item->orderItemId,
                     'productId' => $item->productId,
                     'productSuppId' => $item->productSuppId,

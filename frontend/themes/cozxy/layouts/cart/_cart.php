@@ -10,6 +10,13 @@ use yii\bootstrap\ActiveForm;
     <div class="size32">&nbsp;</div>
     <div class="row">
         <!-- Cart -->
+        <?php
+        $form = ActiveForm::begin([
+            'id' => 'default-shipping-cart',
+            'action' => Yii::$app->homeUrl . 'checkout',
+            'options' => ['class' => 'space-bottom'],
+        ]);
+        ?>
         <div class="col-lg-9 col-md-8 cart-body">
             <div class="row">
                 <div class="col-xs-12 bg-yellow1 b" style="padding:18px 18px 10px;">
@@ -29,15 +36,14 @@ use yii\bootstrap\ActiveForm;
                     <!-- E -->
                     <div class="col-xs-12 text-right">
                         <a href="<?= Url::to(['/search/cozxy-product']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">CONTINUE
-                            SHOPPING</a> &nbsp;
-                        <a href="<?= Url::to(['/checkout']) ?>" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">CHECK
-                            OUT</a>
+                            SHOPPING</a> &nbsp; 
+                        <input type="submit" value="CHECK OUT" class="b btn-yellow">
                     </div>
                     <div class="size12 size10-xs">&nbsp;</div>
                 </div>
             </div>
         </div>
-
+        <?php ActiveForm::end(); ?>
         <!-- Total -->
         <div class="col-lg-3 col-md-4">
             <?= $this->render('_cart_total') ?>
