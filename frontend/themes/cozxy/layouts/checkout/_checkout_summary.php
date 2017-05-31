@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Url;
 use kartik\select2\Select2;
 
@@ -55,9 +56,12 @@ use kartik\select2\Select2;
                     </div>
 
                     <!--Cart Items-->
-                    <?php for ($i = 0; $i < 4; $i++): ?>
-                        <?= $this->render('_checkout_item'); ?>
-                    <?php endfor; ?>
+<?php
+foreach ($this->params['cart']['items'] as $item) {
+    // throw new \yii\base\Exception(print_r($item["image"], true));
+    echo $this->render('_checkout_item', compact('item'));
+}
+?>
 
                     <div class="size12 size10-xs">&nbsp;</div>
                 </div>
@@ -66,7 +70,7 @@ use kartik\select2\Select2;
 
         <!-- Total -->
         <div class="col-lg-3 col-md-4">
-            <?= $this->render('_checkout_total') ?>
+<?= $this->render('_checkout_total') ?>
         </div>
 
     </div>
