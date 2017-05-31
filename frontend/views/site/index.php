@@ -88,7 +88,7 @@ $this->title = 'My Yii Application';
             <div class="col-xs-12">
                 <div class="rela" style="height:96px">
                     <!--<a class="align-middle fc-g999 size24 scrollingHotSpotLeft" href="#" style="padding-top:8px;left:0"><span class="glyphicon glyphicon-menu-left"></span></a>-->
-                    <div id="logoParade"> 
+                    <div id="logoParade">
                         <?php
                         echo \yii\widgets\ListView::widget([
                             'dataProvider' => $productBrand,
@@ -194,7 +194,7 @@ $this->title = 'My Yii Application';
             <div class="col-md-3">
                 <h3 class="b text-center-sm text-center-xs">OTHER PRODUCTS</h3>
                 <div class="row">
-                    <?php for ($i = 1; $i <= 6; $i++): ?>
+                    <?php for ($i = 1; $i <= 1; $i++): ?>
                         <div class="col-xs-12">
                             <div class="product-other">
                                 <a href="/content"><img src="imgs/other0<?= $i ?>.jpg" alt="Other Product" class="fullwidth"></a>
