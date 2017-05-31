@@ -16,11 +16,10 @@
                     }
                 } else {
                     foreach ($model['images'] as $key => $value) {
-                        ?>
-                        <div class="col-md-3 col-xs-6">
-                            <img src="<?php echo $value['imageThumbnail1']; ?>" class="fullwidth" alt="Big Bag" style="margin-top: 24px;">
-                        </div>
-                        <?php
+                        echo ''
+                        . '<div class="col-md-3 col-xs-6">
+                            <img src="' . $value['imageThumbnail1'] . '" class="fullwidth" alt="" style="margin-top: 24px;">
+                        </div>';
                     }
                 }
                 ?>
@@ -66,11 +65,16 @@
                             <input type="hidden" id="receiveType" value="<?php echo $model['receiveType']; ?>">
                             <a href="#" class="b btn-g999 size16" style="margin:24px auto 12px">+
                                 <i class="fa fa-heart"></i></a>
-                            <a href="#" id="addItemToCartUnity" class="b btn-yellow size16" style="margin:24px auto 12px">+
-                                <i class="fa fa-shopping-cart"></i></a>
-
-                            <a href="/cart" class="b btn-g999 btn-success size16" style="margin:24px auto 12px;color:#fff;">+
-                                <i class="fa fa-bookmark-o"></i></a>
+                            <?php
+                            if (count($model['result']) > 0) {
+                                echo '<a href="#" id="addItemToCartUnity" class="b btn-yellow size16" style="margin:24px auto 12px">+
+                                <i class = "fa fa-shopping-cart"></i></a>';
+                            } else {
+                                echo ' ';
+                            }
+                            ?>
+                            <a href = "/cart" class = "b btn-g999 btn-success size16" style = "margin:24px auto 12px;color:#fff;">+
+                                <i class = "fa fa-bookmark-o"></i></a>
                         </div>
                     </div>
                 </div>
