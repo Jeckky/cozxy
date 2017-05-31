@@ -114,7 +114,7 @@ use kartik\select2\Select2;
 
                                         </script>
                                         <h4>Map</h4>
-                                        <div id="map-canvas" style=" width:100%;height:100px;border:0;"> </div>
+                                        <div id="map-canvas" style=" width:100%;height:300px;border:0;"> </div>
                                     </div>
                                 </div>
                             </div>

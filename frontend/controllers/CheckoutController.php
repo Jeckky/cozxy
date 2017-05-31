@@ -26,6 +26,9 @@ use yii\data\ArrayDataProvider;
 class CheckoutController extends MasterController {
 
     public function actionIndex() {
+        if (Yii::$app->user->isGuest == 1) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
         $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
         $pickingPoint_list_lockers = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_HOT)->one(); // Lockers ร้อน
         $pickingPoint_list_lockers_cool = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_COOL)->one(); // Lockers เย็น
@@ -38,6 +41,9 @@ class CheckoutController extends MasterController {
     }
 
     public function actionSummary() {
+        if (Yii::$app->user->isGuest == 1) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
         $provinceid = Yii::$app->request->post('provinceId');
         $amphurid = Yii::$app->request->post('amphurId');
         $LcpickingId = Yii::$app->request->post('LcpickingId');
@@ -94,17 +100,6 @@ class CheckoutController extends MasterController {
                 ];
             }
             return json_encode($products);
-            /*
-              $list_address = \common\models\costfit\Address::find()
-              ->where('addressId = ' . $addressId)->one();
-
-              if (isset($list_address) && !empty($list_address)) {
-              //return $products;
-              return json_encode($list_address->attributes);
-              //return json_encode($products);
-              } else {
-              return NULL;
-              } */
         }
     }
 
