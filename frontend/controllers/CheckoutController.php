@@ -36,6 +36,16 @@ class CheckoutController extends MasterController {
     }
 
     public function actionSummary() {
+        $provinceid = Yii::$app->request->post('Address[provinceId]');
+        $amphurid = Yii::$app->request->post('Address[amphurId]');
+        $LcpickingId = Yii::$app->request->post('PickingPoint[pickingId]');
+        $addressId = Yii::$app->request->post('Address[addressId]');
+
+        //echo $provinceid . '<br>';
+        //echo $amphurid . '<br>';
+        //echo $LcpickingId . '<br>';
+        //echo $addressId . '<br>';
+
         return $this->render('summary');
     }
 

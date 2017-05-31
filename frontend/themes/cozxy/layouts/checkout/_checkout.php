@@ -11,12 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 \frontend\assets\CheckoutAsset::register($this);
 $pickingId = rand(0, 9999);
 ?>
-<?php
-$form = ActiveForm::begin([
-    'id' => 'default-shipping-address',
-    'options' => ['class' => 'space-bottom'],
-]);
-?>
+
 <style>
     /* Always set the map height explicitly to define the size of the div
    * element that contains the map. */
@@ -31,6 +26,13 @@ $form = ActiveForm::begin([
 <div class="container">
     <div class="size32">&nbsp;</div>
     <div class="row">
+        <?php
+        $form = ActiveForm::begin([
+            'id' => 'default-shipping-address',
+            'action' => Yii::$app->homeUrl . 'checkout/summary',
+            'options' => ['class' => 'space-bottom'],
+        ]);
+        ?>
         <!-- Cart -->
         <div class="col-lg-9 col-md-8 cart-body">
             <div class="row">
@@ -164,14 +166,13 @@ $form = ActiveForm::begin([
                     <div class="col-xs-12 text-right">
                         <a href="<?= Url::to(['/cart']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
                         &nbsp;
-                        <a href="<?= Url::to(['/checkout/summary']) ?>" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">CONTINUE
-                            TO PAYMENT METHOD</a>
+                        <input type="submit" value="CONTINUE TO PAYMENT METHOD" class="b btn-yellow">
                     </div>
                     <div class="size12 size10-xs">&nbsp;</div>
                 </div>
             </div>
         </div>
-
+        <?php ActiveForm::end(); ?>
         <!-- Total -->
         <div class="col-lg-3 col-md-4">
             <?= $this->render('_checkout_total') ?>
@@ -271,7 +272,7 @@ $form = ActiveForm::begin([
         </div>
     </div>
 </div>
-<?php ActiveForm::end(); ?>
+
 
 
 
