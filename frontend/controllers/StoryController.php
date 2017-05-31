@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\data\ArrayDataProvider;
+use frontend\models\DisplayMyStory;
 
 class StoryController extends MasterController {
 
@@ -21,6 +22,7 @@ class StoryController extends MasterController {
         $params = \common\models\ModelMaster::decodeParams($hash);
         $productSuppId = isset($params['productSuppId']) ? $params['productSuppId'] : NULL;
         $productPostId = isset($params['productPostId']) ? $params['productPostId'] : NULL;
+
         return $this->render('@app/themes/cozxy/layouts/story/_write_your_story');
     }
 
