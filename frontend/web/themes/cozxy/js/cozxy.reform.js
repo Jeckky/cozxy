@@ -96,10 +96,10 @@ $('#addressId').change(function (event, id, value) {
             if (status == "success") {
                 var JSONObject = JSON.parse(data);
                 //alert(JSONObject.address.firstname);
-                $('.address-checkouts').find(".name-show").html(JSONObject.address.firstname + ' ' + JSONObject.address.lastname);
-                $('.address-checkouts').find(".address-show").html(JSONObject.address.address + ' '
-                        + JSONObject.address.amphur + ' ' + JSONObject.address.province + ' ' + JSONObject.address.district
-                        + ' ' + JSONObject.address.zipcode);
+                $('.address-checkouts').find(".name-show").html(JSONObject.address.firstname + ' ,' + JSONObject.address.lastname);
+                $('.address-checkouts').find(".address-show").html(JSONObject.address.address + ' ,'
+                        + JSONObject.address.amphur + ' ,' + JSONObject.address.district + ' ,' + JSONObject.address.province
+                        + ' ,' + JSONObject.address.zipcode);
             } else {
                 $('.name-lockers-cool').html('');
                 $('.view-map-images-lockers-cool').html('');
