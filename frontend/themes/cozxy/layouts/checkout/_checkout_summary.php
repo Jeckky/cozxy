@@ -41,15 +41,28 @@ use kartik\select2\Select2;
                                 </div>
 
                                 <div class="row fc-g999">
-                                    <div class="col-lg-2 col-md-2 col-sm-12">Name:</div>
-                                    <div class="col-lg-10 col-md-10 col-sm-12">Inthanon Panyasopa</div>
-                                    <div class="size6">&nbsp;</div>
-                                    <div class="col-lg-2 col-md-3 col-sm-12">Address:</div>
-                                    <div class="col-lg-10 col-md-9 col-sm-12">123 Lorem ipsum dolor sit amet,
-                                        consectetur
-                                        adipisicing elit, sed do eiusmod tempor 50000
-                                    </div>
-                                    <div class="size12">&nbsp;</div>
+                                    <?php
+                                    if (count($myAddressInSummary->allModels) > 0) {
+                                        foreach ($myAddressInSummary->allModels as $key => $value) {
+                                            ?>
+                                            <div class="col-lg-2 col-md-2 col-sm-12">Name:</div>
+                                            <div class="col-lg-10 col-md-10 col-sm-12"><?php echo $value['firstname'] ?> <?php echo $value['lastname'] ?></div>
+                                            <div class="size6">&nbsp;</div>
+                                            <div class="col-lg-2 col-md-3 col-sm-12">Address:</div>
+                                            <div class="col-lg-10 col-md-9 col-sm-12">
+                                                <?php echo $value['address'] ?>&nbsp;
+                                                <?php echo $value['amphur'] ?>&nbsp;
+                                                <?php echo $value['district'] ?>&nbsp;
+                                                <?php echo $value['province'] ?>&nbsp;
+                                                <?php echo $value['zipcode'] ?>&nbsp;
+                                            </div>
+                                            <div class="size12">&nbsp;</div>
+                                            <?php
+                                        }
+                                    } else {
+
+                                    }
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +74,7 @@ use kartik\select2\Select2;
                         // throw new \yii\base\Exception(print_r($item["image"], true));
                         echo $this->render('_checkout_item', compact('item'));
                     }
-                    ?> 
+                    ?>
 
                     <div class="size12 size10-xs">&nbsp;</div>
                 </div>

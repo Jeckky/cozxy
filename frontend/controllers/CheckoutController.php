@@ -20,6 +20,8 @@ use common\helpers\Email;
 use common\helpers\Local;
 use common\models\costfit\UserPoint;
 use common\models\costfit\PointUsed;
+use frontend\models\DisplayMyAddress;
+use yii\data\ArrayDataProvider;
 
 class CheckoutController extends MasterController {
 
@@ -36,17 +38,13 @@ class CheckoutController extends MasterController {
     }
 
     public function actionSummary() {
-        $provinceid = Yii::$app->request->post('Address[provinceId]');
-        $amphurid = Yii::$app->request->post('Address[amphurId]');
-        $LcpickingId = Yii::$app->request->post('PickingPoint[pickingId]');
-        $addressId = Yii::$app->request->post('Address[addressId]');
+        $provinceid = Yii::$app->request->post('provinceId');
+        $amphurid = Yii::$app->request->post('amphurId');
+        $LcpickingId = Yii::$app->request->post('LcpickingId');
+        $addressId = Yii::$app->request->post('addressId');
+        $myAddressInSummary = new ArrayDataProvider(['allModels' => DisplayMyAddress::myAddress($addressId, \common\models\costfit\Address::TYPE_BILLING)]);
 
-        //echo $provinceid . '<br>';
-        //echo $amphurid . '<br>';
-        //echo $LcpickingId . '<br>';
-        //echo $addressId . '<br>';
-
-        return $this->render('summary');
+        return $this->render('summary', compact('myAddressInSummary'));
     }
 
     public function actionThanks() {
@@ -55,46 +53,9 @@ class CheckoutController extends MasterController {
 
     public function actionAddress() {
         $addressId = Yii::$app->request->post('addressId');
-        $products = [];
+
         if (isset($addressId) && !empty($addressId)) {
-
-            $products = [];
-            $dataAddress = \common\models\costfit\Address::find()->where("addressId =" . $addressId)->orderBy('addressId DESC')->all();
-            foreach ($dataAddress as $items) {
-                $products['address'] = [
-                    'addressId' => $items->addressId,
-                    'userId' => $items->userId,
-                    'firstname' => $items->firstname,
-                    'lastname' => $items->lastname,
-                    'company' => $items->company,
-                    'tax' => $items->tax,
-                    'address' => isset($items->address) ? $items->address : '' . ' , ',
-                    'country' => isset($items->countries->countryName) ? $items->countries->countryName : '' . ' , ',
-                    'province' => isset($items->states->localName) ? $items->states->localName : '' . ' , ',
-                    'amphur' => isset($items->cities->localName) ? $items->cities->localName : '' . ' , ',
-                    'district' => isset($items->district->localName) ? $items->district->localName : '' . ' , ',
-                    'zipcode' => isset($items->zipcodes->zipcode) ? $items->zipcodes->zipcode : '' . ' , ',
-                    'tel' => $items->tel,
-                    'type' => $items->type,
-                    'isDefault' => $items->isDefault,
-                    'status' => $items->status,
-                    'createDateTime' => $items->createDateTime,
-                    'updateDateTime' => $items->updateDateTime,
-                    'email' => $items->email,
-                ];
-            }
-            return json_encode($products);
-            /*
-              $list_address = \common\models\costfit\Address::find()
-              ->where('addressId = ' . $addressId)->one();
-
-              if (isset($list_address) && !empty($list_address)) {
-              //return $products;
-              return json_encode($list_address->attributes);
-              //return json_encode($products);
-              } else {
-              return NULL;
-              } */
+            return DisplayMyAddress::myAddress($addressId, FALSE);
         }
     }
 

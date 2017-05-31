@@ -55,13 +55,12 @@ $pickingId = rand(0, 9999);
                             <div class="col-md-4 col-xs-12">
                                 <?php
                                 echo $form->field($model, 'provinceId')->widget(kartik\select2\Select2::classname(), [
-                                    //'options' => ['id' => 'address-countryid'],
                                     'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->asArray()->all(), 'stateId', 'localName'),
                                     'pluginOptions' => [
                                         'placeholder' => 'Select...',
                                         'loadingText' => 'Loading States ...',
                                     ],
-                                    'options' => ['placeholder' => 'Select States ...'],
+                                    'options' => ['placeholder' => 'Select States ...', 'name' => 'provinceId'],
                                 ])->label(FALSE);
                                 ?>
                             </div>
@@ -72,7 +71,7 @@ $pickingId = rand(0, 9999);
                                 echo Html::hiddenInput('input-type-33', 'add', ['id' => 'input-type-33']);
                                 echo $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
                                     //'data' => [9 => 'Savings'],
-                                    'options' => ['placeholder' => 'Select ...'],
+                                    'options' => ['placeholder' => 'Select ...', 'name' => 'amphurId'],
                                     'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
@@ -93,7 +92,7 @@ $pickingId = rand(0, 9999);
                                 echo $form->field($pickingPointLockersCool, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
                                     'model' => $pickingId,
                                     'attribute' => 'pickingId',
-                                    'options' => ['placeholder' => 'Select ...', 'id' => 'LcpickingId'],
+                                    'options' => ['placeholder' => 'Select ...', 'id' => 'LcpickingId', 'name' => 'LcpickingId'],
                                     'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
@@ -146,7 +145,7 @@ $pickingId = rand(0, 9999);
                                         'placeholder' => 'Select...',
                                         'loadingText' => 'Loading Billing Address ...',
                                     ],
-                                    'options' => ['placeholder' => 'Select Billing Address ...', 'id' => 'addressId'],
+                                    'options' => ['placeholder' => 'Select Billing Address ...', 'id' => 'addressId', 'name' => 'addressId'],
                                 ])->label(FALSE);
                                 ?>
                             </div>
