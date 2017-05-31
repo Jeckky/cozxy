@@ -32,7 +32,7 @@ use yii\bootstrap\ActiveForm;
 
                     <!-- E -->
                     <div class="col-xs-12 text-right">
-                        <a href="<?= Url::to(['/search/cozxy-product']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">CONTINUE
+                        <a href="<?= Url::to(['/search/cozxy-product']) ?>" class="b btn-black" style="padding:12px 32px">CONTINUE
                             SHOPPING</a> &nbsp;
                         <input type="submit" value="Confirm" class="b btn-yellow">
                     </div>
@@ -43,7 +43,12 @@ use yii\bootstrap\ActiveForm;
         <?php ActiveForm::end(); ?>
         <!-- Total -->
         <div class="col-lg-3 col-md-4">
-            <?= $this->render('_order_summary_cozxy_coin') ?>
+            <?=
+            $this->render('_order_summary_cozxy_coin', [
+                'order' => $order,
+                'userPoint' => $userPoint
+            ])
+            ?>
         </div>
 
     </div>
