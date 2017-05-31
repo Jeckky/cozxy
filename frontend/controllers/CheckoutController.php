@@ -20,10 +20,15 @@ use common\helpers\Email;
 use common\helpers\Local;
 use common\models\costfit\UserPoint;
 use common\models\costfit\PointUsed;
+use frontend\models\DisplayMyAddress;
+use yii\data\ArrayDataProvider;
 
 class CheckoutController extends MasterController {
 
     public function actionIndex() {
+        if (Yii::$app->user->isGuest == 1) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
         $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
         $pickingPoint_list_lockers = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_HOT)->one(); // Lockers ร้อน
         $pickingPoint_list_lockers_cool = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_COOL)->one(); // Lockers เย็น
@@ -31,11 +36,33 @@ class CheckoutController extends MasterController {
         $pickingPointLockers = isset($pickingPoint_list_lockers) ? $pickingPoint_list_lockers : NULL;
         $pickingPointLockersCool = isset($pickingPoint_list_lockers_cool) ? $pickingPoint_list_lockers_cool : NULL;
         $pickingPointBooth = isset($pickingPoint_list_booth) ? $pickingPoint_list_booth : NULL;
-        return $this->render('index', compact('model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth'));
+        $hash = 'add';
+        return $this->render('index', compact('model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'hash'));
     }
 
     public function actionSummary() {
-        return $this->render('summary');
+        if (Yii::$app->user->isGuest == 1) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
+        $provinceid = Yii::$app->request->post('provinceId');
+        $amphurid = Yii::$app->request->post('amphurId');
+        $LcpickingId = Yii::$app->request->post('LcpickingId');
+        $addressId = Yii::$app->request->post('addressId');
+
+        if (isset($LcpickingId) && !empty($LcpickingId)) {
+            $pickingMap = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $LcpickingId)->one();
+
+            if (isset($pickingMap->attributes) && !empty($pickingMap->attributes)) {
+                $pickingMap = $pickingMap->attributes;
+            } else {
+                $pickingMap = Null;
+            }
+        } else {
+            $pickingMap = Null;
+        }
+        $myAddressInSummary = DisplayMyAddress::myAddresssSummary($addressId, \common\models\costfit\Address::TYPE_BILLING);
+
+        return $this->render('summary', compact('myAddressInSummary', 'pickingMap'));
     }
 
     public function actionThanks() {
@@ -44,15 +71,35 @@ class CheckoutController extends MasterController {
 
     public function actionAddress() {
         $addressId = Yii::$app->request->post('addressId');
-
+        $products = [];
         if (isset($addressId) && !empty($addressId)) {
-            $list_address = \common\models\costfit\Address::find()->where('addressId = ' . $addressId)->one();
-            //print_r($mapImages->attributes);
-            if (isset($list_address) && !empty($list_address)) {
-                return json_encode($list_address->attributes);
-            } else {
-                return NULL;
+
+            $products = [];
+            $dataAddress = \common\models\costfit\Address::find()->where("addressId =" . $addressId)->orderBy('addressId DESC')->all();
+            foreach ($dataAddress as $items) {
+                $products['address'] = [
+                    'addressId' => $items->addressId,
+                    'userId' => $items->userId,
+                    'firstname' => $items->firstname,
+                    'lastname' => $items->lastname,
+                    'company' => $items->company,
+                    'tax' => $items->tax,
+                    'address' => isset($items->address) ? $items->address : '' . ' , ',
+                    'country' => isset($items->countries->countryName) ? $items->countries->countryName : '' . ' , ',
+                    'province' => isset($items->states->localName) ? $items->states->localName : '' . ' , ',
+                    'amphur' => isset($items->cities->localName) ? $items->cities->localName : '' . ' , ',
+                    'district' => isset($items->district->localName) ? $items->district->localName : '' . ' , ',
+                    'zipcode' => isset($items->zipcodes->zipcode) ? $items->zipcodes->zipcode : '' . ' , ',
+                    'tel' => $items->tel,
+                    'type' => $items->type,
+                    'isDefault' => $items->isDefault,
+                    'status' => $items->status,
+                    'createDateTime' => $items->createDateTime,
+                    'updateDateTime' => $items->updateDateTime,
+                    'email' => $items->email,
+                ];
             }
+            return json_encode($products);
         }
     }
 
@@ -61,7 +108,7 @@ class CheckoutController extends MasterController {
         $pickingId = Yii::$app->request->post('pickingIds');
         //$pickingId = 1;
         if (isset($pickingId) && !empty($pickingId)) {
-            $mapImages = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $pickingId)->one();
+            $mapImages = \common\models\costfit\PickingPoint::find()->where('pickingId = ' . $pickingId)->one();
             //print_r($mapImages->attributes);
             if (isset($mapImages) && !empty($mapImages)) {
                 return json_encode($mapImages->attributes);
@@ -76,8 +123,8 @@ class CheckoutController extends MasterController {
         $pickingId = Yii::$app->request->post('pickingIds');
         //$pickingId = 1;
         if (isset($pickingId) && !empty($pickingId)) {
-            $mapImages = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $pickingId)->one();
-            //print_r($mapImages->attributes);
+            $mapImages = \common\models\costfit\PickingPoint::find()->where('pickingId = ' . $pickingId)->one();
+
             if (isset($mapImages) && !empty($mapImages)) {
                 return json_encode($mapImages->attributes);
             } else {

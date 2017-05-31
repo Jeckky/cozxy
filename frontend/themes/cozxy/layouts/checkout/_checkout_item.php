@@ -1,16 +1,21 @@
 <?php
+
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 $id = uniqid();
 ?>
-<div class="cart-detail">
+<div class="cart-detail " id="item<?= $item['orderItemId'] ?>">
     <div class="row">
-        <div class="col-sm-2"><?=Html::img(Url::home().'imgs/product12.jpg', ['class'=>'img-responsive'])?></div>
+        <?= Html::hiddenInput("productId", $item["productId"], ['id' => 'productId']); ?>
+        <?= Html::hiddenInput("productSuppId", $item["productSuppId"], ['id' => 'productSuppId']); ?>
+        <?= Html::hiddenInput("sendDate", $item["sendDate"], ['id' => 'sendDate']); ?>
+        <?= Html::hiddenInput("orderId", $this->params['cart']['orderId'], ['id' => 'orderId']); ?>
+        <div class="col-sm-2"><?= Html::img($item['image'], ['class' => 'img-responsive']) ?></div>
         <div class="col-sm-6">
-            <p class="size20">QUILTED NAPPA GANSEVOORT FLAP SHOULDER BAG</p>
+            <p class="size20"><?= $item['title'] ?></p>
             <p>
-                <span class="size18"><span class="multi-<?=$id?>"></span> 43,000 THB</span> &nbsp;
+                <span class="size18"><span class="multi-<?= $id ?>"></span> <?= number_format($item["priceOnePiece"], 2) . " ฿" ?> THB</span> &nbsp;
             </p>
         </div>
         <div class="col-sm-4 fc-g666">
@@ -18,7 +23,7 @@ $id = uniqid();
                 <tr>
                     <td>Quatity</td>
                     <td style="width:32px">:</td>
-                    <td>1</td>
+                    <td><?= $item["qty"] ?></td>
                 </tr>
                 <tr>
                     <td>Color</td>

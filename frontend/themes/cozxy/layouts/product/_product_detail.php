@@ -24,20 +24,6 @@
                     }
                 }
                 ?>
-                <!--
-                <div class="col-md-3 col-xs-6">
-                    <img src="imgs/other01.jpg" class="fullwidth" alt="Big Bag" style="margin-top: 24px;">
-                </div>
-                <div class="col-md-3 col-xs-6">
-                    <img src="imgs/other04.jpg" class="fullwidth" alt="Big Bag" style="margin-top: 24px;">
-                </div>
-                <div class="col-md-3 col-xs-6">
-                    <img src="imgs/other05.jpg" class="fullwidth" alt="Big Bag" style="margin-top: 24px;">
-                </div>
-                <div class="col-md-3 col-xs-6">
-                    <img src="imgs/other07.jpg" class="fullwidth" alt="Big Bag" style="margin-top: 24px;">
-                </div>
-                -->
             </div>
         </div>
 
@@ -74,7 +60,7 @@
                         <div class="text-center abs" style="bottom: 0; left: 0; right: 0;">
                             <a href="#" class="b btn-g999 size16" style="margin:24px auto 12px">+
                                 <i class="fa fa-heart"></i></a>
-                            <a href="/cart" class="b btn-yellow size16" style="margin:24px auto 12px">+
+                            <a id="addItemToCartUnity" data-stuff="['fastId','productId','supplierId','productSuppId','receiveType']" class="b btn-yellow size16" style="margin:24px auto 12px">+
                                 <i class="fa fa-shopping-cart"></i></a>
 
                             <a href="/cart" class="b btn-g999 btn-success size16" style="margin:24px auto 12px;color:#fff;">+

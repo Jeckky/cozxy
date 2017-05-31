@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Url;
 use kartik\select2\Select2;
 
@@ -27,8 +28,93 @@ use kartik\select2\Select2;
 
                                 <div class="row fc-g999">
                                     <div class="col-xs-12">
+                                        <script src="http://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
+                                        <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&sensor=true" type="text/javascript"></script>
+                                        <script type="text/javascript">
+
+                                            var map;
+                                            var geocoder;
+                                            var marker;
+                                            var people = new Array();
+                                            var latlng;
+                                            var infowindow;
+
+                                            $(document).ready(function () {
+                                                ViewCustInGoogleMap();
+                                            });
+
+                                            function ViewCustInGoogleMap() {
+
+                                                var mapOptions = {
+                                                    center: new google.maps.LatLng(<?php echo $pickingMap['latitude'] ?>, <?php echo $pickingMap['longitude'] ?>), // Coimbatore = (11.0168445, 76.9558321)
+                                                    zoom: 16,
+                                                    //mapTypeId: google.maps.MapTypeId.ROADMAP
+                                                };
+                                                map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+                                                // Get data from database. It should be like below format or you can alter it.
+
+                                                var data = '[{ "DisplayText": "<?php echo $pickingMap['title'] ?>", "ADDRESS": " <?php $myAddressInSummary['myAddresss']['address'] ?>", "LatitudeLongitude": "<?php echo $pickingMap['latitude'] ?>, <?php echo $pickingMap['longitude'] ?>", "MarkerId": "Customer" },\n\
+                                                { "DisplayText": "<?php echo $pickingMap['title'] ?>", "ADDRESS": "<?php $myAddressInSummary['myAddresss']['address'] ?>", "LatitudeLongitude": "<?php echo $pickingMap['latitude'] ?>, <?php echo $pickingMap['longitude'] ?>", "MarkerId": "Customer"}]';
+
+                                                people = JSON.parse(data);
+
+                                                for (var i = 0; i < people.length; i++) {
+                                                    setMarker(people[i]);
+                                                }
+
+                                            }
+
+                                            function setMarker(people) {
+                                                geocoder = new google.maps.Geocoder();
+                                                infowindow = new google.maps.InfoWindow();
+                                                if ((people["LatitudeLongitude"] == null) || (people["LatitudeLongitude"] == 'null') || (people["LatitudeLongitude"] == '')) {
+                                                    geocoder.geocode({'address': people["Address"]}, function (results, status) {
+                                                        if (status == google.maps.GeocoderStatus.OK) {
+                                                            latlng = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+                                                            marker = new google.maps.Marker({
+                                                                position: latlng,
+                                                                map: map,
+                                                                draggable: false,
+                                                                html: people["DisplayText"],
+                                                                icon: "images/marker/" + people["MarkerId"] + ".png"
+                                                            });
+                                                            //marker.setPosition(latlng);
+                                                            //map.setCenter(latlng);
+                                                            google.maps.event.addListener(marker, 'click', function (event) {
+                                                                infowindow.setContent(this.html);
+                                                                infowindow.setPosition(event.latLng);
+                                                                infowindow.open(map, this);
+                                                            });
+                                                        } else {
+                                                            alert(people["DisplayText"] + " -- " + people["Address"] + ". This address couldn't be found");
+                                                        }
+                                                    });
+                                                } else {
+                                                    var latlngStr = people["LatitudeLongitude"].split(",");
+                                                    var lat = parseFloat(latlngStr[0]);
+                                                    var lng = parseFloat(latlngStr[1]);
+                                                    latlng = new google.maps.LatLng(lat, lng);
+                                                    marker = new google.maps.Marker({
+                                                        position: latlng,
+                                                        map: map,
+                                                        draggable: false, // cant drag it
+                                                        html: people["DisplayText"]    // Content display on marker click
+                                                                //icon: "images/marker.png"       // Give ur own image
+                                                    });
+                                                    //marker.setPosition(latlng);
+                                                    //map.setCenter(latlng);
+                                                    google.maps.event.addListener(marker, 'click', function (event) {
+                                                        infowindow.setContent(this.html);
+                                                        infowindow.setPosition(event.latLng);
+                                                        infowindow.open(map, this);
+                                                    });
+                                                }
+                                            }
+
+                                        </script>
                                         <h4>Map</h4>
-                                        <iframe src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d124008.92046473033!2d100.48062576799724!3d13.762055508253102!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x30e29ebe74b07b57%3A0x1892d37c43ed15a7!2z4LiV4Lil4Liy4LiU4Lio4Lij4Li14LiU4Li04LiZ4LmB4LiU4LiH!3m2!1d13.7620654!2d100.55066629999999!5e0!3m2!1sth!2sth!4v1494639156559" frameborder="0" style="width:100%;height:20vh;border:0" allowfullscreen></iframe>
+                                        <div id="map-canvas" style=" width:100%;height:300px;border:0;"> </div>
                                     </div>
                                 </div>
                             </div>
@@ -40,24 +126,32 @@ use kartik\select2\Select2;
                                 </div>
 
                                 <div class="row fc-g999">
+
                                     <div class="col-lg-2 col-md-2 col-sm-12">Name:</div>
-                                    <div class="col-lg-10 col-md-10 col-sm-12">Inthanon Panyasopa</div>
+                                    <div class="col-lg-10 col-md-10 col-sm-12"><?php echo $myAddressInSummary['myAddresss']['firstname'] ?> <?php echo $myAddressInSummary['myAddresss']['lastname'] ?></div>
                                     <div class="size6">&nbsp;</div>
                                     <div class="col-lg-2 col-md-3 col-sm-12">Address:</div>
-                                    <div class="col-lg-10 col-md-9 col-sm-12">123 Lorem ipsum dolor sit amet,
-                                        consectetur
-                                        adipisicing elit, sed do eiusmod tempor 50000
+                                    <div class="col-lg-10 col-md-9 col-sm-12">
+                                        <?php echo $myAddressInSummary['myAddresss']['address'] ?>&nbsp;
+                                        <?php echo $myAddressInSummary['myAddresss']['amphur'] ?>&nbsp;
+                                        <?php echo $myAddressInSummary['myAddresss']['district'] ?>&nbsp;
+                                        <?php echo $myAddressInSummary['myAddresss']['province'] ?>&nbsp;
+                                        <?php echo $myAddressInSummary['myAddresss']['zipcode'] ?>&nbsp;
                                     </div>
                                     <div class="size12">&nbsp;</div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!--Cart Items-->
-                    <?php for ($i = 0; $i < 4; $i++): ?>
-                        <?= $this->render('_checkout_item'); ?>
-                    <?php endfor; ?>
+                    <?php
+                    foreach ($this->params['cart']['items'] as $item) {
+                        // throw new \yii\base\Exception(print_r($item["image"], true));
+                        echo $this->render('_checkout_item', compact('item'));
+                    }
+                    ?>
 
                     <div class="size12 size10-xs">&nbsp;</div>
                 </div>

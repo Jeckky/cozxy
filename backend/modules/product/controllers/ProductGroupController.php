@@ -9,6 +9,7 @@ use backend\controllers\BackendMasterController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use beastbytes\wizard\WizardBehavior;
+use common\helpers\Upload;
 
 /**
  * ProductGroupController implements the CRUD actions for ProductGroup model.
@@ -202,16 +203,69 @@ class ProductGroupController extends ProductMasterController
                 }
                 break;
             case 2:
+                if (isset($_POST["next"]))
+                    return $this->redirect(['create', 'step' => 3, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]]);
+                break;
+            case 3:
                 $productGroupTemplateOptions = \common\models\costfit\ProductGroupTemplateOption::find()->where("productGroupTemplateId = " . $_GET["productGroupTemplateId"])->all();
                 if (isset($_POST["ProductGroupOptionValue"])) {
                     $this->saveProductsWithOption($_POST["ProductGroupOptionValue"], $_GET["productGroupId"]);
+                    return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]]);
                 }
                 break;
-            case 3:
-
-                break;
             case 4:
-
+                $dataProvider = new ActiveDataProvider([
+                    'query' => \common\models\costfit\Product::find()
+                    ->where("parentId=" . $_GET["productGroupId"]),
+                ]);
+                $gridColumns = [
+                    ['class' => 'kartik\grid\SerialColumn'],
+//                    'productId',
+                    [
+                        'class' => 'kartik\grid\EditableColumn',
+                        'attribute' => 'title',
+                        'pageSummary' => 'Page Total',
+                        'vAlign' => 'middle',
+                        'headerOptions' => ['class' => 'kv-sticky-column'],
+                        'contentOptions' => ['class' => 'kv-sticky-column'],
+                        'editableOptions' => ['header' => 'Title', 'size' => 'md']
+                    ],
+                    [
+                        'class' => 'kartik\grid\EditableColumn',
+                        'attribute' => 'description',
+                        'pageSummary' => 'Page Total',
+                        'vAlign' => 'middle',
+                        'headerOptions' => ['class' => 'kv-sticky-column'],
+                        'contentOptions' => ['class' => 'kv-sticky-column'],
+                        'editableOptions' => ['header' => 'Title', 'size' => 'md']
+                    ],
+                    [
+                        'class' => 'kartik\grid\EditableColumn',
+                        'attribute' => 'specification',
+                        'pageSummary' => 'Page Total',
+                        'vAlign' => 'middle',
+                        'headerOptions' => ['class' => 'kv-sticky-column'],
+                        'contentOptions' => ['class' => 'kv-sticky-column'],
+                        'editableOptions' => ['header' => 'Title', 'size' => 'md']
+                    ],
+//                    [
+//                        'class' => 'kartik\grid\BooleanColumn',
+//                        'attribute' => 'status',
+//                        'vAlign' => 'middle',
+//                    ],
+                    [
+                        'class' => 'kartik\grid\ActionColumn',
+                        'dropdown' => true,
+                        'vAlign' => 'middle',
+                        'urlCreator' => function($action, $model, $key, $index) {
+                            return '#';
+                        },
+//                        'viewOptions' => ['title' => $viewMsg, 'data-toggle' => 'tooltip'],
+//                        'updateOptions' => ['title' => $updateMsg, 'data-toggle' => 'tooltip'],
+                        'deleteOptions' => ['title' => "คุณต้องการลบสินค้านี้หรือไม่ ?", 'data-toggle' => 'tooltip'],
+                    ],
+                    ['class' => 'kartik\grid\CheckboxColumn']
+                ];
                 break;
             case 9:// For Access direct link without get step parameter
                 return $this->redirect(['create', 'step' => 1]);
@@ -227,7 +281,9 @@ class ProductGroupController extends ProductMasterController
             'ms' => $ms,
             'title' => isset($title) ? $title : false,
             'description' => isset($description) ? $description : false,
-            'productGroupTemplateOptions' => isset($productGroupTemplateOptions) ? $productGroupTemplateOptions : NULL
+            'productGroupTemplateOptions' => isset($productGroupTemplateOptions) ? $productGroupTemplateOptions : NULL,
+            'dataProvider' => isset($dataProvider) ? $dataProvider : NULL,
+            'gridColumns' => isset($gridColumns) ? $gridColumns : NULL,
         ]);
     }
 
@@ -242,34 +298,43 @@ class ProductGroupController extends ProductMasterController
     public function saveProductsWithOption($options, $productGroupId)
     {
         $res = $this->prepareOptionArray($options);
+        $productGroup = \common\models\costfit\Product::find()->where("productId = $productGroupId")->one();
+        $productGroupImages = \common\models\costfit\ProductImage::find()->where("productId = $productGroupId")->all();
+//        throw new \yii\base\Exception(print_r($productGroup->attributes, true));
+        foreach ($res as $options) {
+            $model = new \common\models\costfit\Product();
+            $model->attributes = $productGroup->attributes;
+            $model->parentId = $productGroupId;
+            $model->createDateTime = new yii\db\Expression("NOW()");
+            $model->save(FALSE);
+            $productId = \Yii::$app->db->lastInsertID;
+
+            foreach ($options as $productGroupOptionId => $value) {
+                $productGroupOptionValue = new \common\models\costfit\ProductGroupOptionValue();
+                $productGroupOptionValue->productId = $productId;
+                $productGroupOptionValue->productGroupOptionId = $productGroupOptionId;
+                $productGroupOptionValue->value = $value;
+                $productGroupOptionValue->createDateTime = new yii\db\Expression("NOW()");
+                $productGroupOptionValue->save();
+            }
+
+            foreach ($productGroupImages as $image) {
+                $productImage = new \common\models\costfit\ProductImage();
+                $productImage->attributes = $image->attributes;
+                $productImage->productId = $productId;
+                $productImage->createDateTime = new yii\db\Expression("NOW()");
+                $productImage->save();
+            }
+        }
     }
 
     public function prepareOptionArray($options)
     {
-//        $res = [];
-
-        foreach ($options as $productGroupTemplateOptionId => $optionArray) {
-//            $res[$productGroupTemplateOptionId] = explode(",", $optionArray);
-        }
-//        $this->prepareArray($options); // For Multiple D Array
-//        $this->array_cartesian($res); // 2D array
-    }
-
-    public function prepareArray($options)
-    {
-        $i = 1;
         $res = [];
         foreach ($options as $productGroupTemplateOptionId => $optionArray) {
-            ${"option" . $i} = [$productGroupTemplateOptionId => explode(",", $optionArray)];
-            $i++;
+            $res[$productGroupTemplateOptionId] = explode(",", $optionArray);
         }
-        for ($di = 1; $di <= 20; $di++) {
-            if (isset(${"option" . $di})) {
-                $res[$di] = [];
-            } else {
-                break;
-            }
-        }
+        return $this->array_cartesian($res); // 2D array
     }
 
     function array_cartesian($arrays)
@@ -297,7 +362,26 @@ class ProductGroupController extends ProductMasterController
                     reset($arrays[$j]);
             }
         }
+//        throw new \yii\base\Exception(print_r($result, TRUE));
         return $result;
+    }
+
+    public function actionUpload()
+    {
+
+        if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5) {
+            header("location: /auth");
+            exit(0);
+        }
+        //$model = new \common\models\costfit\productImageSuppliers();
+        $model = new \common\models\costfit\ProductImage();
+        /*
+         * helpers Upload
+         * path : common/helpers/Upload.php
+         * use : Upload::UploadSuppliers($model)
+         * กรณีพิเศษ
+         */
+        \common\helpers\Upload::UploadSuppliers($model);
     }
 
     // Version 1.01 Wizard Of Product Group

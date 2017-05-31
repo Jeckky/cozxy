@@ -11,26 +11,17 @@ $this->params['breadcrumbs'][] = $this->title;
 \frontend\assets\CheckoutAsset::register($this);
 $pickingId = rand(0, 9999);
 ?>
-<?php
-$form = ActiveForm::begin([
-    'id' => 'default-shipping-address',
-    'options' => ['class' => 'space-bottom'],
-]);
-?>
-<style>
-    /* Always set the map height explicitly to define the size of the div
-   * element that contains the map. */
 
-    #map {
-        height: 50%;
-    }
-    /* Optional: Makes the sample page fill the window. */
-
-
-</style>
 <div class="container">
     <div class="size32">&nbsp;</div>
     <div class="row">
+        <?php
+        $form = ActiveForm::begin([
+            'id' => 'default-shipping-address',
+            'action' => Yii::$app->homeUrl . 'checkout/summary',
+            'options' => ['class' => 'space-bottom'],
+        ]);
+        ?>
         <!-- Cart -->
         <div class="col-lg-9 col-md-8 cart-body">
             <div class="row">
@@ -53,13 +44,12 @@ $form = ActiveForm::begin([
                             <div class="col-md-4 col-xs-12">
                                 <?php
                                 echo $form->field($model, 'provinceId')->widget(kartik\select2\Select2::classname(), [
-                                    //'options' => ['id' => 'address-countryid'],
                                     'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->asArray()->all(), 'stateId', 'localName'),
                                     'pluginOptions' => [
                                         'placeholder' => 'Select...',
                                         'loadingText' => 'Loading States ...',
                                     ],
-                                    'options' => ['placeholder' => 'Select States ...'],
+                                    'options' => ['placeholder' => 'Select States ...', 'name' => 'provinceId', 'id' => 'stateId'],
                                 ])->label(FALSE);
                                 ?>
                             </div>
@@ -70,13 +60,13 @@ $form = ActiveForm::begin([
                                 echo Html::hiddenInput('input-type-33', 'add', ['id' => 'input-type-33']);
                                 echo $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
                                     //'data' => [9 => 'Savings'],
-                                    'options' => ['placeholder' => 'Select ...'],
+                                    'options' => ['placeholder' => 'Select ...', 'name' => 'amphurId', 'id' => 'amphurId'],
                                     'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
-                                        //initialize' => true,
-                                        'depends' => ['address-provinceid'],
-                                        'url' => Url::to(['child-amphur-address-picking-point']),
+//                                        'initialize' => false,
+                                        'depends' => ['stateId'],
+                                        'url' => Url::to(['child-amphur-address-picking-point-checkouts']),
                                         'loadingText' => 'Loading amphur ...',
                                         'params' => ['input-type-11', 'input-type-22', 'input-type-33']
                                     ]
@@ -91,12 +81,12 @@ $form = ActiveForm::begin([
                                 echo $form->field($pickingPointLockersCool, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
                                     'model' => $pickingId,
                                     'attribute' => 'pickingId',
-                                    'options' => ['placeholder' => 'Select ...', 'id' => 'LcpickingId'],
+                                    'options' => ['placeholder' => 'Select ...', 'id' => 'LcpickingId', 'name' => 'LcpickingId'],
                                     'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
-                                        //initialize' => true,
-                                        'depends' => ['address-amphurid'],
+//                                        'initialize' => false,
+                                        'depends' => ['amphurId'],
                                         'url' => Url::to(['child-picking-point']),
                                         'loadingText' => 'Loading picking point ...',
                                         'params' => ['input-type-13', 'input-type-23', 'lockers-cool-input-type-33']
@@ -111,7 +101,7 @@ $form = ActiveForm::begin([
                         <div class="row fc-g999">
                             <div class="col-xs-12">
                                 <h4>Map</h4>
-                                <div id="map"></div>
+                                <div id="map" style="height:200px;"></div>
 
                             </div>
                         </div>
@@ -144,7 +134,7 @@ $form = ActiveForm::begin([
                                         'placeholder' => 'Select...',
                                         'loadingText' => 'Loading Billing Address ...',
                                     ],
-                                    'options' => ['placeholder' => 'Select Billing Address ...', 'id' => 'addressId'],
+                                    'options' => ['placeholder' => 'Select Billing Address ...', 'id' => 'addressId', 'name' => 'addressId'],
                                 ])->label(FALSE);
                                 ?>
                             </div>
@@ -164,14 +154,13 @@ $form = ActiveForm::begin([
                     <div class="col-xs-12 text-right">
                         <a href="<?= Url::to(['/cart']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
                         &nbsp;
-                        <a href="<?= Url::to(['/checkout/summary']) ?>" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">CONTINUE
-                            TO PAYMENT METHOD</a>
+                        <input type="submit" value="CONTINUE TO PAYMENT METHOD" class="b btn-yellow">
                     </div>
                     <div class="size12 size10-xs">&nbsp;</div>
                 </div>
             </div>
         </div>
-
+        <?php ActiveForm::end(); ?>
         <!-- Total -->
         <div class="col-lg-3 col-md-4">
             <?= $this->render('_checkout_total') ?>
@@ -271,7 +260,79 @@ $form = ActiveForm::begin([
         </div>
     </div>
 </div>
-<?php ActiveForm::end(); ?>
 
 
 
+<?php
+$this->registerCss('
+#map {
+            height: 300px;
+        }
+');
+
+$this->registerJs('
+        var map;
+        function initMap() {
+            var myLatLng = { lat: -25.363, lng: 131.044 };
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: myLatLng,
+                zoom: 16
+            });
+
+            var marker = new google.maps.Marker({
+                map: map,
+                position: myLatLng,
+                title: "Hello World!"
+            });
+        }
+
+
+
+function changeMap(lats, lngs) {
+
+    var myLatLng = {lat: Number(lats), lng: Number(lngs)};// get ค่ามาจาก address แต่เป็น String ต้องเปลียนให้เป็น Number
+    console.log(myLatLng);
+    //document.getElementById("map").innerHTML = "Paragraph changed!";
+    //$(".cart-detail").find("#map").html("xxxxxx");
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: myLatLng,
+        zoom: 16
+    });
+
+    var marker = new google.maps.Marker({
+        map: map,
+        position: myLatLng,
+        title: "Hello World!"
+    });
+}
+', \yii\web\View::POS_HEAD);
+
+$this->registerJs('
+    $("#LcpickingId").change(function (event, id, value) {
+    prev_val = $(this).val();
+
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "checkout/map-images-google",
+        data: {"pickingIds": prev_val},
+        success: function (data, status)
+        {
+            if (data != "") {
+                if (status == "success") {
+                    var JSONObject = JSON.parse(data);
+
+                    /* Map Google in latitude and longitude for cozxy*/
+                    changeMap(JSONObject.latitude, JSONObject.longitude);
+
+                } else {
+
+                }
+            }
+        }
+    });
+});
+
+');
+
+$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap', ['depends' => ['yii\web\YiiAsset']]);
+?>
