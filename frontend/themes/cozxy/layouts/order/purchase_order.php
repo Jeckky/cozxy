@@ -94,7 +94,8 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                                     $Countries = \common\models\dbworld\Countries::find()->where("countryId = '" . $order->attributes['billingCountryId'] . "' ")->one();
                                     echo isset($Countries->attributes['localName']) ? 'ประเทศ' . $Countries->attributes['localName'] : 'ประเทศ' . 'ไม่ระบุ';
                                     echo '<br> รหัสไปรษณีย์ ';
-                                    echo isset($order->attributes['billingZipcode']) ? $order->attributes['billingZipcode'] : '';
+                                    $zipCode = \common\models\dbworld\Zipcodes::find()->where("zipcodeId = '" . $order->attributes['billingZipcode'] . "' ")->one();
+                                    echo isset($zipCode) ? $zipCode->zipcode : '';
                                     echo '<br> โทร ';
                                     echo $order->attributes['billingTel'] . '<br>';
                                     ?>
