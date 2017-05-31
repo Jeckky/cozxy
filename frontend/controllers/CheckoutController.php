@@ -42,9 +42,21 @@ class CheckoutController extends MasterController {
         $amphurid = Yii::$app->request->post('amphurId');
         $LcpickingId = Yii::$app->request->post('LcpickingId');
         $addressId = Yii::$app->request->post('addressId');
-        $myAddressInSummary = new ArrayDataProvider(['allModels' => DisplayMyAddress::myAddress($addressId, \common\models\costfit\Address::TYPE_BILLING)]);
 
-        return $this->render('summary', compact('myAddressInSummary'));
+        if (isset($LcpickingId) && !empty($LcpickingId)) {
+            $Lcpicking = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $LcpickingId)->one();
+
+            if (isset($Lcpicking->attributes) && !empty($Lcpicking->attributes)) {
+                $Lcpicking = $Lcpicking->attributes;
+            } else {
+                $Lcpicking = Null;
+            }
+        } else {
+            $Lcpicking = Null;
+        }
+
+        $myAddressInSummary = new ArrayDataProvider(['allModels' => DisplayMyAddress::myAddress($addressId, \common\models\costfit\Address::TYPE_BILLING)]);
+        return $this->render('summary', compact('myAddressInSummary', 'Lcpicking'));
     }
 
     public function actionThanks() {
