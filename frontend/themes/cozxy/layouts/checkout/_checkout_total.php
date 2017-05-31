@@ -25,5 +25,5 @@ use yii\helpers\Url;
     </div>
 
     <a href="<?= Url::to(['/top-up']) ?>" class="b btn-success btn-block text-center" style="padding:12px 32px; margin:12px auto 12px">TOP UP CozxyCoin</a>
-    <a href="<?= Url::to(['/checkout']) ?>" class="b btn-yellow fullwidth text-center" style="padding:12px 32px; margin:2px auto 12px">PAY by CozxyCoin</a>
+    <a href="<?= Url::to(['/checkout/order-summary']) ?>" class="b btn-yellow fullwidth text-center" style="padding:12px 32px; margin:2px auto 12px">PAY by CozxyCoin</a>
 </div>

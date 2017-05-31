@@ -133,4 +133,9 @@ class CheckoutController extends MasterController {
         }
     }
 
+    function actionOrderSummary() {
+
+        return $this->render('/order/index');
+    }
+
 }
