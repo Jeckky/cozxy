@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-xs-12 bg-yellow1 b" style="padding:18px 18px 10px;">
                     <p class="size20 size18-xs">YOUR CART</p>
                 </div>
-                <input type="hidden" name="orderId" value="<?= $this->params['cart']['orderId'] ?>">
+                <input type="hidden" name="orderId" value="<?= isset($this->params['cart']['orderId']) ? $this->params['cart']['orderId'] : '' ?>">
                 <div class="col-xs-12 bg-white">
                     <!--Cart Items-->
                     <?php
@@ -40,16 +40,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="col-xs-12 text-right">
                         <a href="<?= Url::to(['/search/cozxy-product']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">CONTINUE
                             SHOPPING</a> &nbsp;
-                        <input type="submit" value="CHECK OUT" class="b btn-yellow">
+                        <?php
+                        if (isset($this->params['cart']['orderId'])) {
+                            ?>
+                            <input type="submit" value="CHECK OUT" class="b btn-yellow">
+                            <?php } ?>
+                        </div>
+                        <div class="size12 size10-xs">&nbsp;</div>
                     </div>
-                    <div class="size12 size10-xs">&nbsp;</div>
                 </div>
             </div>
-        </div>
-        <?php ActiveForm::end(); ?>
-        <!-- Total -->
-        <div class="col-lg-3 col-md-4">
-            <?= $this->render('_cart_total') ?>
+            <?php ActiveForm::end(); ?>
+            <!-- Total -->
+            <div class="col-lg-3 col-md-4">
+                <?= $this->render('_cart_total') ?>
         </div>
 
     </div>

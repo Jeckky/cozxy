@@ -49,7 +49,9 @@ class CheckoutController extends MasterController {
         $amphurid = Yii::$app->request->post('amphurId');
         $LcpickingId = Yii::$app->request->post('LcpickingId');
         $addressId = Yii::$app->request->post('addressId');
-
+        $orderId = Yii::$app->request->post('orderId');
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        //throw new Exception(print_r());
         if (isset($LcpickingId) && !empty($LcpickingId)) {
             $pickingMap = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $LcpickingId)->one();
 
@@ -63,7 +65,7 @@ class CheckoutController extends MasterController {
         }
         $myAddressInSummary = DisplayMyAddress::myAddresssSummary($addressId, \common\models\costfit\Address::TYPE_BILLING);
 
-        return $this->render('summary', compact('myAddressInSummary', 'pickingMap'));
+        return $this->render('summary', compact('myAddressInSummary', 'pickingMap', 'order'));
     }
 
     public function actionThanks() {
@@ -160,9 +162,6 @@ class CheckoutController extends MasterController {
             $userPoint = UserPoint::find()->where("userId=" . $order->userId . " and status=1")->one();
             if (isset($userPoint)) {
                 $this->updateSupplierStock($order->orderId);
-                $orderSummary = $order->summary;
-                $orderOrderId = $order->orderId;
-                $orderUserId = $order->userId;
                 $getRankMemberPoints = RewardPoints::getRankMemberPoints($order->userId, $order->orderId, $order->summary);
                 $order->invoiceNo = Order::genInvNo($order);
                 $order->status = Order::ORDER_STATUS_E_PAYMENT_SUCCESS;
@@ -187,7 +186,7 @@ class CheckoutController extends MasterController {
                             $item->save();
                         endforeach;
                     }
-                    $member = \common\models\costfit\User::find()->where('userId=' . $orderUserId)->one();
+                    $member = \common\models\costfit\User::find()->where('userId=' . $order->userId)->one();
                     if (isset($member)) {
                         if (isset($member->email)) {
                             $toMails = $member->email;
@@ -225,18 +224,18 @@ class CheckoutController extends MasterController {
                         $adress['billingZipcode'] = $order->billingZipcode;
                         $adress['billingTel'] = $order->billingTel;
 
-                        $orderList = \common\models\costfit\Order::find()->where('orderId=' . $orderOrderId)->one();
+                        $orderList = \common\models\costfit\Order::find()->where('orderId=' . $orderId)->one();
                         $receiveType = [];
                         //$orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType);
-                        return $this->render('payment_result', compact('res'));
+                        return $this->render('_thank', compact('res'));
                     }
                 }
             } else {
-                throw new \yii\base\Exception('1111');
+                throw new \yii\base\Exception('Somethig wrong1');
                 //go to checkout
             }
         } else {
-            throw new \yii\base\Exception('2222');
+            throw new \yii\base\Exception('Somethig wrong2');
             //go to checkout
         }
     }
@@ -275,18 +274,21 @@ class CheckoutController extends MasterController {
     }
 
     public function updateUserPoint($userId, $point, $orderId) {
-        $userPoint = UserPoint::find()->where("userId=" . $userId)->one();
-        $userPoint->currentPoint = $userPoint->currentPoint - $point;
-        $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
-        $userPoint->save(false);
-        $used = new PointUsed();
-        $used->userId = $userId;
-        $used->orderId = $orderId;
-        $used->point = $point;
-        $used->status = 1;
-        $used->createDateTime = new \yii\db\Expression('NOW()');
-        $used->updateDateTime = new \yii\db\Expression('NOW()');
-        $used->save(false);
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        if (($order->invoiceNo == '') || ($order->invoiceNo == null)) {//ถ้ามีเลข invoince แล้ว ไม่ต้องตัด point, ไม่บันทึกรายการ
+            $userPoint = UserPoint::find()->where("userId=" . $userId)->one();
+            $userPoint->currentPoint = $userPoint->currentPoint - $point;
+            $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
+            $userPoint->save(false);
+            $used = new PointUsed();
+            $used->userId = $userId;
+            $used->orderId = $orderId;
+            $used->point = $point;
+            $used->status = 1;
+            $used->createDateTime = new \yii\db\Expression('NOW()');
+            $used->updateDateTime = new \yii\db\Expression('NOW()');
+            $used->save(false);
+        }
     }
 
 }
