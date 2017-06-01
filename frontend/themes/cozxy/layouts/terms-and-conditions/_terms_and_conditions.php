@@ -5,7 +5,10 @@
             <p class="size20 size18-xs">Terms And Conditions</p>
         </div>
         <div class="col-xs-12 bg-white size18 b" style="padding: 20px;">
-            &nbsp;
+            <?php foreach ($content as $detail): ?>
+                <?= $detail->description ?>
+            <?php endforeach;
+            ?>
         </div>
     </div>
 </div>

@@ -8,5 +8,10 @@ $this->title = 'Faqs';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= $this->render('@app/themes/cozxy/layouts/faqs/_faqs') ?>
+<?=
+
+$this->render('@app/themes/cozxy/layouts/faqs/_faqs', [
+    'content' => $content
+])
+?>
 
