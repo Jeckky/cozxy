@@ -67,11 +67,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             <input type="hidden" id="supplierId" value="<?php echo $model['supplierId']; ?>">
                             <input type="hidden" id="productSuppId" value="<?php echo $model['productSuppId']; ?>">
                             <input type="hidden" id="receiveType" value="<?php echo $model['receiveType']; ?>">
-                            <a href="#" class="b btn-g999 size16" style="margin:24px auto 12px">+
+                            <a href="javascript:addItemToWishlist(<?= $model['productSuppId'] ?>);" class="b btn-g999 size16" style="margin:24px auto 12px">+
                                 <i class="fa fa-heart"></i></a>
                             <?php
                             if ($model['result'] > 0) {
-                                echo '<a href="#" id="addItemToCartUnity" class="b btn-yellow size16" style="margin:24px auto 12px">+
+                                echo '<a id="addItemToCartUnity" class="b btn-yellow size16" style="margin:24px auto 12px">+
                                 <i class = "fa fa-shopping-cart"></i></a>';
                             } else {
                                 echo ' ';

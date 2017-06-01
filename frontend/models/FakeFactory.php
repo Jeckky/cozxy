@@ -60,6 +60,7 @@ class FakeFactory extends Model {
                 $title = isset($value->title) ? $value->title : '';
             }
             $products[$value->productSuppId] = [
+                'productSuppId' => $value->productSuppId,
                 'image' => $productImagesThumbnail1,
                 //'image' => isset($productImages->imageThumbnail1) ? Yii::$app->homeUrl . $productImages->imageThumbnail1 : '',
                 //'url' => 'product?id=' . $value->productSuppId,
@@ -118,6 +119,7 @@ class FakeFactory extends Model {
             $price_s = number_format($value->price, 2);
             $price = number_format($value->price, 2);
             $products[$value->productSuppId] = [
+                'productSuppId' => $value->productSuppId,
                 'image' => $productImagesThumbnail1,
                 //'image' => isset($productImages->imageThumbnail1) ? Yii::$app->homeUrl . $productImages->imageThumbnail1 : '',
                 //'url' => 'product?id=' . $value->productSuppId,
@@ -188,6 +190,7 @@ class FakeFactory extends Model {
             $price_s = number_format($value->price, 2);
             $price = number_format($value->price, 2);
             $products[$value->productSuppId] = [
+                'productSuppId' => $value->productSuppId,
                 'image' => $productImagesThumbnail1,
                 //'image' => isset($productImages->imageThumbnail1) ? Yii::$app->homeUrl . $productImages->imageThumbnail1 : '',
                 //'url' => 'product?id=' . $value->productSuppId,
@@ -229,6 +232,7 @@ class FakeFactory extends Model {
 
 
                 $products[$value->productSuppId] = [
+                    'productSuppId' => $value->productSuppId,
                     'image' => $productImagesThumbnail1,
                     //'url' => '/story?id=' . $items->productSuppId,
                     'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $items->productId, 'productSupplierId' => $items->productSuppId]),
