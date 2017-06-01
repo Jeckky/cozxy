@@ -62,13 +62,16 @@ class FakeFactory extends Model {
             $products[$value->productSuppId] = [
                 'productSuppId' => $value->productSuppId,
                 'image' => $productImagesThumbnail1,
-                //'image' => isset($productImages->imageThumbnail1) ? Yii::$app->homeUrl . $productImages->imageThumbnail1 : '',
-                //'url' => 'product?id=' . $value->productSuppId,
                 'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
                 'brand' => isset($value->brand) ? $value->brand->title : '',
                 'title' => $title,
                 'price_s' => isset($price_s) ? $price_s : '',
                 'price' => isset($price) ? $price : '',
+                'maxQnty' => $value->result,
+                'fastId' => FALSE,
+                'productId' => $value->productId,
+                'supplierId' => $value->userId,
+                'receiveType' => $value->receiveType,
             ];
         }
 
@@ -200,6 +203,11 @@ class FakeFactory extends Model {
                 'title' => $title,
                 'price_s' => isset($price_s) ? $price_s : '',
                 'price' => isset($price) ? $price : '',
+                'maxQnty' => $value->result,
+                'fastId' => FALSE,
+                'productId' => $value->productId,
+                'supplierId' => $value->userId,
+                'receiveType' => $value->receiveType,
             ];
         }
 
@@ -319,7 +327,12 @@ class FakeFactory extends Model {
                 'price' => isset($price) ? number_format($price, 2) : '',
                 'category' => isset($GetCategory->title) ? $GetCategory->title : '',
                 'image' => $productImagesOneTopz,
-                'images' => $imagAll
+                'images' => $imagAll,
+                'maxQnty' => $GetProductSuppliers['result'],
+                'fastId' => FALSE,
+                'productId' => $GetProductSuppliers['productId'],
+                'supplierId' => $GetProductSuppliers['userId'],
+                'receiveType' => $GetProductSuppliers['receiveType'],
             ];
         }
 

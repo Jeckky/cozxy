@@ -1,7 +1,8 @@
 $(document).ready(function (e) {
-    /*Global Variables
+    /*Global Variables Use : Product Views
      *******************************************/
     var $addToCartBtn = $('#addItemToCartUnity');
+
     $addToCartBtn.click(function () {
         if (navigator.userAgent.indexOf("Firefox") != -1) {
             alert('Firefox');
@@ -83,8 +84,7 @@ $(document).ready(function (e) {
                 alert("Max quantity for this product");
             }
         }
-
-        //
     });
 
 });
+

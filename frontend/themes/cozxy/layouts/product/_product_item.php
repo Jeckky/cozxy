@@ -10,7 +10,7 @@
                 <a href="javascript:addItemToWishlist(<?= $model['productSuppId'] ?>);">
                     <div class="col-xs-4"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                 </a>
-                <a href="#" id="addItemToCartUnity">
+                <a href="javascript:addItemToCartUnitys(<?= $model['productSuppId'] ?>,1,<?= $model['maxQnty'] ?>,'<?= $model['fastId'] ?>',<?= $model['productId'] ?>,<?= $model['supplierId'] ?>,<?= $model['receiveType'] ?>)">
                     <div class="col-xs-4"><i class="fa fa-shopping-bag" aria-hidden="true"></i></div>
                 </a>
             </div>

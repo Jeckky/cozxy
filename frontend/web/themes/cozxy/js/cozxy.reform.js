@@ -296,6 +296,11 @@ $("#place-order").on('click', function () {
     }
 });
 
+/*
+ * Use : Wishlist
+ * @param {type} id
+ * @returns {undefined}
+ */
 function addItemToWishlist(id) {
     var $pId = id;
     $.ajax({
@@ -313,4 +318,62 @@ function addItemToWishlist(id) {
         }
     });
 
+}
+
+/*
+ * Use : Site index
+ * @param {type} id
+ * @returns {undefined}
+ */
+function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId, supplierId, receiveType) {
+
+    var $productSuppId = productSuppId;
+    var $maxQnty = maxQnty;
+    var $fastId = fastId;
+    var $itemId = productId;
+    var $supplierId = supplierId;
+    var $receiveType = receiveType;
+    var $itemQnty = quantity;
+
+    if (parseInt($itemQnty) <= parseInt($maxQnty) && parseInt($itemQnty) > 0) {
+
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: $baseUrl + 'cart/add-to-cart' + "?id=" + $itemId,
+            data: {quantity: $itemQnty, fastId: $fastId, supplierId: $supplierId, productSuppId: $productSuppId, receiveType: $receiveType},
+            success: function (data)
+            {
+                if (data.status) {
+                    $('#maxQnty').val($maxQnty - $itemQnty);
+                    if (($maxQnty - $itemQnty) == 0) {
+                        $('#quantity').val(0);
+                        //$addToCartBtn.attr('disabled', 'disabled');
+                    } else {
+                        $('#quantity').val(1);
+                    }
+                    //$('.cart-dropdown table').remove();
+                    //$('.cart-dropdown .body').append(
+                    //data.shoppingCart
+                    // );
+                    // $('.cart-btn a span').text($cartTotalItems);
+                    //$('.cart-btn a').find("#cartTotal").html(data.cart.totalFormatText);
+                    //$('.cart-dropdown .footer .total').html(data.cart.totalFormatText);
+                    window.location = $baseUrl + 'cart';
+                }
+                //alert(data.shoppingCart);
+                //$addedToCartMessage.addClass('visible');
+            }
+        });
+    } else {
+        $(this).parent().find('#quantity').val($maxQnty);
+        $(this).parent().find('#maxQnty').val($maxQnty);
+        if ($itemQnty == 0) {
+            $(this).parent().find('#quantity').val(1);
+            alert("Can not be '0'");
+        } else {
+            //alert($(this).parent().find('#quantity').val() + ' max ' + $(this).parent().find('#maxQnty').val());
+            alert("Max quantity for this product");
+        }
+    }
 }
