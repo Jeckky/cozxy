@@ -113,6 +113,11 @@ class DisplayMyAccount extends Model {
                     'title' => $title,
                     'price_s' => $productPrice->price,
                     'price' => $productPrice->price,
+                    'maxQnty' => $value->result,
+                    'fastId' => FALSE,
+                    'productId' => $value->productId,
+                    'supplierId' => $value->userId,
+                    'receiveType' => $value->receiveType,
                 ];
             }
         }

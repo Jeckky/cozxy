@@ -1,9 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-
-$this->title = 'Order History';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="table-responsive order-list">
     <table class="table table-bordered table-striped fc-g666">
