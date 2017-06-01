@@ -1,3 +1,7 @@
+<?php
+$this->title = $model['title'];
+$this->params['breadcrumbs'][] = $this->title;
+?>
 <div class="product-detail">
     <div class="row">
         <div class="col-md-8 product-gallery">

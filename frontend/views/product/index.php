@@ -103,7 +103,7 @@ $(window).resize(function() { descSet(); });
                             'tag' => false,
                         ],
                     ]);
-                    ?>
+                    ?> 
                 </div>
             </div>
             <div class="size32">&nbsp;</div>
