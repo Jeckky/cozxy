@@ -34,11 +34,15 @@ $this->registerCss('
                     <div class="size24">&nbsp;</div>
                     <p>Contact Form</p>
                     <div class="row">
+
+                        <?= isset($msg) ? '  <div class="col-md-12" >' . $msg . '</div>' : '' ?>
+
                         <div class="col-md-6">
                             <input type="text" name="name" class="fullwidth" placeholder="YOUR NAME" required></div>
                         <div class="col-md-6">
                             <input type="text" name="phone" class="fullwidth" placeholder="PHONE NUMBER" required>
                         </div>
+
                     </div>
                     <input type="text" name="email" class="fullwidth" placeholder="EMAIL ADDRESS" required>
                     <textarea name="message" class="fullwidth" style="height:28vh" placeholder="MESSAGE" required></textarea>
