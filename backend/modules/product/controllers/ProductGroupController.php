@@ -215,57 +215,9 @@ class ProductGroupController extends ProductMasterController
                 break;
             case 4:
                 $dataProvider = new ActiveDataProvider([
-                    'query' => \common\models\costfit\Product::find()
+                    'query' => \common\models\costfit\Product::find()->orderBy("productId ASC")
                     ->where("parentId=" . $_GET["productGroupId"]),
                 ]);
-                $gridColumns = [
-                    ['class' => 'kartik\grid\SerialColumn'],
-//                    'productId',
-                    [
-                        'class' => 'kartik\grid\EditableColumn',
-                        'attribute' => 'title',
-                        'pageSummary' => 'Page Total',
-                        'vAlign' => 'middle',
-                        'headerOptions' => ['class' => 'kv-sticky-column'],
-                        'contentOptions' => ['class' => 'kv-sticky-column'],
-                        'editableOptions' => ['header' => 'Title', 'size' => 'md']
-                    ],
-                    [
-                        'class' => 'kartik\grid\EditableColumn',
-                        'attribute' => 'description',
-                        'pageSummary' => 'Page Total',
-                        'vAlign' => 'middle',
-                        'headerOptions' => ['class' => 'kv-sticky-column'],
-                        'contentOptions' => ['class' => 'kv-sticky-column'],
-                        'editableOptions' => ['header' => 'Title', 'size' => 'md']
-                    ],
-                    [
-                        'class' => 'kartik\grid\EditableColumn',
-                        'attribute' => 'specification',
-                        'pageSummary' => 'Page Total',
-                        'vAlign' => 'middle',
-                        'headerOptions' => ['class' => 'kv-sticky-column'],
-                        'contentOptions' => ['class' => 'kv-sticky-column'],
-                        'editableOptions' => ['header' => 'Title', 'size' => 'md']
-                    ],
-//                    [
-//                        'class' => 'kartik\grid\BooleanColumn',
-//                        'attribute' => 'status',
-//                        'vAlign' => 'middle',
-//                    ],
-                    [
-                        'class' => 'kartik\grid\ActionColumn',
-                        'dropdown' => true,
-                        'vAlign' => 'middle',
-                        'urlCreator' => function($action, $model, $key, $index) {
-                            return '#';
-                        },
-//                        'viewOptions' => ['title' => $viewMsg, 'data-toggle' => 'tooltip'],
-//                        'updateOptions' => ['title' => $updateMsg, 'data-toggle' => 'tooltip'],
-                        'deleteOptions' => ['title' => "คุณต้องการลบสินค้านี้หรือไม่ ?", 'data-toggle' => 'tooltip'],
-                    ],
-                    ['class' => 'kartik\grid\CheckboxColumn']
-                ];
                 break;
             case 9:// For Access direct link without get step parameter
                 return $this->redirect(['create', 'step' => 1]);
@@ -382,6 +334,42 @@ class ProductGroupController extends ProductMasterController
          * กรณีพิเศษ
          */
         \common\helpers\Upload::UploadSuppliers($model);
+    }
+
+    public function actionUpdateProduct()
+    {
+//        throw new \yii\base\Exception(print_r($_POST, TRUE));
+        $model = \common\models\costfit\Product::find()->where("productId=" . $_GET["id"])->one();
+        if (isset($_POST["Product"])) {
+            $model->attributes = $_POST["Product"];
+            if ($model->save()) {
+
+                return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->parentId]);
+            }
+        }
+
+        return $this->render("101/_product_form", ['model' => $model]);
+//        $model = new Proyecto;
+//
+//        if (isset($_POST['hasEditable'])) {
+//
+//            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+//
+//            if ($model->load($_POST)) {
+//
+//                if (isset($model->codigo))
+//                    $value = $model->codigo;
+//
+//                return ['output' => $value, 'message' => ''];
+//            }
+//
+//            else {
+//
+//                return ['output' => '', 'message' => ''];
+//            }
+//        }
+//
+//        return $this->render('view', ['model' => $model]);
     }
 
     // Version 1.01 Wizard Of Product Group
