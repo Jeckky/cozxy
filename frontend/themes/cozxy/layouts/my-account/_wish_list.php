@@ -2,7 +2,7 @@
 
 function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId, $maxQnty, $fastId, $productId, $supplierId, $receiveType) {
     echo '
-		<div class="col-md-3 col-sm-6">
+		<div class="col-md-3 col-sm-6 item-to-wishlist-' . $id . '">
 			<div class="product-box">
 				<div class="product-img text-center">
 					<a href="' . $url . '"><img src="' . $img . '" alt="' . $txt_d . '" class="fullwidth"></a>
@@ -15,9 +15,9 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
 					</p>
 					<p class="size14 fc-g999">' . $txt . '</p>';
     if ($maxQnty > 0 && $price > 0) {
-        echo '<p><a href="javascript:addItemToCartUnitys(' . $productSuppId . ',1,' . $maxQnty . ',\'' . $fastId . '\',' . $productId . ',' . $supplierId . ',' . $receiveType . ')" id="addItemsToCartMulti-' . $productSuppId . '" data-loading-text="ADD TO CART" class="btn-yellow">ADD TO CART</a> &nbsp; <a href="#" class="fc-g999">REMOVE</a></p>';
+        echo '<p><a href="javascript:addItemToCartUnitys(' . $productSuppId . ',1,' . $maxQnty . ',\'' . $fastId . '\',' . $productId . ',' . $supplierId . ',' . $receiveType . ')" id="addItemsToCartMulti-' . $id . '" data-loading-text="ADD TO CART" class="btn-yellow">ADD TO CART</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $id . ');" id="deletetemToWishlists-' . $productSuppId . '"  class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin text-muted\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
     } else {
-        echo '<p><a class="btn-black-s">NO TO CART</a> &nbsp; <a href="#" class="fc-g999">REMOVE</a></p>';
+        echo '<p><a class="btn-black-s">NO TO CART</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $id . ');" id="deletetemToWishlists-' . $id . '" class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin  text-muted\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
     }
     echo '
                 </div>

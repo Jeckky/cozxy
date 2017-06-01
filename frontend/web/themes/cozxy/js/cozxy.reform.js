@@ -390,3 +390,87 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
         }
     }
 }
+
+/*
+ * Delete items to cart in deleteWishlist
+ */
+
+function deleteItemToWishlist(id) {
+    //alert(id);
+    var $this = $('#deletetemToWishlists-' + id);
+    $this.button('loading');
+    setTimeout(function () {
+        $this.button('reset');
+    }, 8000);
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "cart/delete-wishlist",
+        data: {'wishlistId': id},
+        success: function (data, status)
+        {
+            //alert(data);
+            if (status == "success") {
+                var JSONObject = JSON.parse(data);
+                $('.item-to-wishlist-' + id).remove();
+
+            } else {
+                /*
+                 $('.name-lockers-cool').html('');
+                 $('.view-map-images-lockers-cool').html('');
+                 */
+            }
+        }
+    });
+}
+
+
+$(document).on('click', '.delete', function () {
+    var $target = $(this).parent().parent();
+    var $positions = $('.shopping-cart .item');
+    var orderItemId = $(this).parent().find("#orderItemId").val();
+    var $positionQty = parseInt($('.cart-btn a span').text());
+    var itemQty = $('.cart-dropdown .item').find("#qty").val();
+    //alert($baseUrl);
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: $baseUrl + '/cart/delete-cart-item' + "?id=" + orderItemId,
+        //data: {quantity: $itemQnty},
+        success: function (data)
+        {
+            if (data.status)
+            {
+                $target.hide(300, function () {
+                    $.when($target.remove()).then(function () {
+                        $positionQty = $positionQty - itemQty;
+                        $('.cart-btn a span').text($positionQty);
+                        if ($positions.length === 1) {
+                            $('.shopping-cart .items-list').remove();
+                            $('.shopping-cart .title').text('Shopping cart is empty!');
+                        }
+                        $('.cart-btn a').find("#cartTotal").html(data.cart.totalFormatText);
+                        $('.cart-dropdown .footer .total').html(data.cart.totalFormatText);
+                        if ($('.cart-dropdown').find("#item" + orderItemId) !== undefined)
+                        {
+                            $('.cart-dropdown').find("#item" + orderItemId).remove();
+                        }
+                        if ($('.shopping-cart .cart-sidebar .cart-totals .total').html() !== undefined)
+                        {
+                            $('.shopping-cart .cart-sidebar .cart-totals .subtotal').html(data.cart.totalWithoutDiscountText + " ฿");
+                            $('.shopping-cart .cart-sidebar .cart-totals .total').html(data.cart.totalFormatText);
+                            $('.shopping-cart .cart-sidebar .cart-totals .shipping').html(data.cart.shippingFormatText);
+                            $('.shopping-cart .cart-sidebar .cart-totals .summary').html(data.cart.summaryFormatText);
+                            //alert(data.cart.items.length);
+                            //alert($('.shopping-cart .item-list .showSlow').html());
+                            if (data.cart.items.length == 0) {
+                                $('.shopping-cart #showSlow').addClass("hide");
+                            }
+
+                        }
+                    });
+                });
+            }
+        }
+    });
+});
+
