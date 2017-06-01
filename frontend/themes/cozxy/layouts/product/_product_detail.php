@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <?php
                                 if ($model['result'] > 0) {
                                     echo '<a id="addItemToCartUnity" class="b btn-yellow size16" style="margin:24px auto 12px">+
-                                <i class = "fa fa-shopping-cart"></i></a>';
+                                <i class="fa fa-shopping-bag" aria-hidden="true"></i></a>';
                                 } else {
                                     echo ' ';
                                 }
