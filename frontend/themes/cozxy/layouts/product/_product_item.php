@@ -19,8 +19,8 @@
             <p class="size16 fc-g666"><?= $model['brand'] ?></p>
             <p class="size14 b" style="height:50px;"><a href="<?= $model['url'] ?>" class="fc-black"><?= $model['title'] ?></a></p>
             <p>
-                <span class="size18"><?= $model['price'] ?></span><br>
-                <span class="size14 onsale"><?= $model['price_s'] ?></span>
+                <span class="size18"><?= $model['price'] ?> THB</span><br>
+                <span class="size14 onsale"><?= $model['price_s'] ?> THB</span>
             </p>
         </div>
     </div>
