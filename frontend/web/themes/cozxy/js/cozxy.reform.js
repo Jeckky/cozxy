@@ -423,6 +423,37 @@ function deleteItemToWishlist(id) {
     });
 }
 
+/**
+ * User Delete Billing Address
+ */
+
+function deleteItemToBillingAddressMe(id) {
+    //alert(id);
+    var $this = $('#deleteItemToBillingAddressz-' + id);
+    $this.button('loading');
+    setTimeout(function () {
+        $this.button('reset');
+    }, 8000);
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "my-account/delete-item-to-billing-address",
+        data: {'addressId': id},
+        success: function (data, status)
+        {
+            //(status);
+            if (status == "success") {
+                $('.itemToBillingAddress-' + id).remove();
+            } else {
+                alert('Please try again.');
+                window.location = $baseUrl + 'my-account';
+                /*
+                 $('.name-lockers-cool').html('');
+                 $('.view-map-images-lockers-cool').html('');
+                 */
+            }
+        }
+    });
+}
 
 $(document).on('click', '.delete', function () {
     var $target = $(this).parent().parent();
