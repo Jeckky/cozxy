@@ -35,6 +35,7 @@ class DisplayMyStory extends Model {
                 }
             }
 
+
             $products[$productPost['productSuppId']] = [
                 'image' => $productImagesThumbnail2,
                 'url' => Yii::$app->homeUrl . 'story/write-your-story/' . $productPostList->encodeParams(['productSuppId' => $productPostList['productSuppId'], 'productPostId' => $productPost['productPostId']]),

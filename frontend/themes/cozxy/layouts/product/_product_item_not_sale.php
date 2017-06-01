@@ -12,8 +12,8 @@
             </div>
         </div>
         <div class="product-txt">
-            <p class="size16 fc-g666"><?= $model['brand'] ?></p>
-            <p class="size14 b"><a href="<?= $model['url'] ?>" class="fc-black"><?= $model['title'] ?></a></p>
+            <p class="size16 fc-g666" ><?= $model['brand'] ?></p>
+            <p class="size14 b" style="height:50px;"><a href="<?= $model['url'] ?>" class="fc-black"><?= $model['title'] ?></a></p>
         </div>
     </div>
 </div>
