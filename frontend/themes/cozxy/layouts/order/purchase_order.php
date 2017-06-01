@@ -163,9 +163,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                 </table>
             </div>
         </div>
-    </section><!--Support Close-->
-
-    <br><br><br>
+    </section>
 </div>
 
 

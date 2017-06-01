@@ -136,11 +136,28 @@ class CheckoutController extends MasterController {
     function actionOrderSummary() {
         $orderId = Yii::$app->request->get('orderId');
         $order = Order::find()->where("orderId=" . $orderId)->one();
-        $userPoint = UserPoint::find()->where("userId=" . $order->userId)->one();
+        $issetPoint = UserPoint::find()->where("userId=" . $order->userId)->one();
+        if (isset($issetPoint)) {
+            $userPoint = $issetPoint;
+        } else {
+            $userPoint = $this->CreateUserPoint($order->userId);
+        }
         return $this->render('/order/index', [
                     'order' => $order,
                     'userPoint' => $userPoint
         ]);
+    }
+
+    function CreateUserPoint($userId) {
+        $point = new UserPoint();
+        $point->userId = Yii::$app->user->identity->userId;
+        $point->status = 1;
+        $point->currentPoint = 0;
+        $point->createDateTime = new \yii\db\Expression('NOW()');
+        $point->updateDateTime = new \yii\db\Expression('NOW()');
+        $point->save(false);
+        $userPoint = UserPoint::find()->where("userId=" . $userId . " and status=1")->one();
+        return $userPoint;
     }
 
 }
