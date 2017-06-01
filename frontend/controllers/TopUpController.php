@@ -70,6 +70,7 @@ class TopUpController extends MasterController {
         $data["name"] = $user->firstname . ' ' . $user->lastname;
         $data["number"] = rand('000000', '999999');
         if (isset($_POST["inputPass"]) && !empty($_POST["inputPass"])) {
+
             $fromCheckout = 'no';
             $needMore = 0;
             if ($_POST["paymentType"] == 'credit') {
@@ -95,6 +96,7 @@ class TopUpController extends MasterController {
                 $topUpDraf->paymentMethod = 1;
                 $data["paymentType"] = "Bill payment";
             }
+            //throw new \yii\base\Exception($_POST["checkout"]);
             if (isset($_POST["checkout"]) && $_POST["checkout"] != '') {
                 $fromCheckout = 'yes';
                 $topUpDraf->isFromCheckout = 1;
