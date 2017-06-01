@@ -26,6 +26,9 @@ class MyAccountController extends MasterController {
     }
 
     public function actionEditPersonalDetail() {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
         $model->scenario = 'editinfo'; // calling scenario of update
 
@@ -55,6 +58,9 @@ class MyAccountController extends MasterController {
     }
 
     public function actionNewBilling() {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
         if (isset($_POST['Address'])) {
             $model->attributes = $_POST['Address'];
@@ -77,6 +83,9 @@ class MyAccountController extends MasterController {
     }
 
     public function actionChangePassword() {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
         $model->scenario = 'profile'; // calling scenario of update
         if (isset($_POST["User"])) {
@@ -106,6 +115,9 @@ class MyAccountController extends MasterController {
     }
 
     public function actionEditBilling($hash) {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
         $addressId = $params['addressId'];
