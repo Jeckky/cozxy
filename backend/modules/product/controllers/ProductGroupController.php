@@ -47,10 +47,39 @@ class ProductGroupController extends ProductMasterController
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => \common\models\costfit\Product::find()
-            ->where("userId=" . Yii::$app->user->identity->userId . " AND parentId is null"),
-        ]);
+        //User Type 4 = Supplier , 5= Content
+        if (Yii::$app->user->identity->type == 4) {
+            $query = \common\models\costfit\Product::find()
+            ->where("userId=" . Yii::$app->user->identity->userId . " AND parentId is null AND status = 1");
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
+        } elseif (Yii::$app->user->identity->type == 5) {
+            $query = \common\models\costfit\Product::find()
+            ->where("userId=" . Yii::$app->user->identity->userId . " AND parentId is null AND status = 1");
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
+        } else {
+            $user_group_Id = Yii::$app->user->identity->user_group_Id;
+            $userRe = str_replace('[', '', str_replace(']', '', $user_group_Id));
+            $userEx = explode(',', $userRe);
+            $ress = array_search(26, $userEx);
+            if ($ress !== FALSE) {
+                $query = \common\models\costfit\Product::find()
+                ->where("userId=" . Yii::$app->user->identity->userId . " AND parentId is null AND status = 99");
+                $dataProvider = new ActiveDataProvider([
+                    'query' => $query,
+                ]);
+            } else {
+                $query = \common\models\costfit\Product::find()
+                ->where("userId=" . Yii::$app->user->identity->userId . " AND parentId is null AND status != 1");
+                $dataProvider = new ActiveDataProvider([
+                    'query' => $query,
+                ]);
+            }
+        }
+
 
         return $this->render('101/index', [
             'dataProvider' => $dataProvider,
