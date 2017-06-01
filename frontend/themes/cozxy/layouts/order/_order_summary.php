@@ -11,7 +11,7 @@ use yii\bootstrap\ActiveForm;
         <?php
         $form = ActiveForm::begin([
                     'id' => 'default-shipping-cart',
-                    'action' => Yii::$app->homeUrl . 'checkout/order-summary',
+                    'action' => Yii::$app->homeUrl . 'checkout/confirm',
                     'options' => ['class' => 'space-bottom'],
         ]);
         ?>
@@ -36,6 +36,7 @@ use yii\bootstrap\ActiveForm;
                         <?php
                         if ($userPoint->currentPoint >= $order->summary) {
                             ?>
+                            <input type="hidden" name="orderId" value="<?= $order->orderId ?>">
                             <input type="submit" value="Confirm" class="b btn-yellow">
                         <?php } else {
                             ?>
