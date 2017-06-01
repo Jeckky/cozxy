@@ -311,7 +311,12 @@ function addItemToWishlist(id) {
         success: function (data)
         {
             if (data.status) {
-                $('.wishlist-message').addClass('visible');
+                //$('.wishlist-message').addClass('visible');
+                var $this = $('#addItemToWishlist-' + $pId);
+                $this.button('loading');
+                setTimeout(function () {
+                    $this.button('reset');
+                }, 8000);
             } else {
                 alert(data.message);
             }
