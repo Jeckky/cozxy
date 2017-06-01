@@ -38,7 +38,7 @@ $form = ActiveForm::begin([
                     $options = \common\models\costfit\ProductGroupOptionValue::find()->where("productId =" . $model->productId)->all();
                     $optionStr = "";
                     foreach ($options as $option) {
-                        $optionStr.= $option->productGroupTemplateOption->title . "-" . $option->value . "<br>";
+                        $optionStr.= $option->productGroupOption->name . "-" . $option->value . "<br>";
                     }
                     echo $optionStr;
                     ?>

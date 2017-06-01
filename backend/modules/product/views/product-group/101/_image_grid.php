@@ -18,49 +18,10 @@ echo GridView::widget([
     'columns' => [
         ['class' => 'kartik\grid\SerialColumn'],
         [
-            'class' => 'kartik\grid\EditableColumn',
-            'attribute' => 'title',
-            'pageSummary' => 'Page Total',
-            'vAlign' => 'middle',
-            'headerOptions' => ['class' => 'kv-sticky-column'],
-            'contentOptions' => ['class' => 'kv-sticky-column'],
-            'editableOptions' => ['header' => 'Title', 'size' => 'md',
-                'formOptions' => ['action' => ['update-product']],
-            ],
-        ],
-        [
-            'class' => 'kartik\grid\EditableColumn',
-            'attribute' => 'description',
-            'format' => 'html',
-            'pageSummary' => 'Page Total',
-            'vAlign' => 'middle',
-            'headerOptions' => ['class' => 'kv-sticky-column'],
-            'contentOptions' => ['class' => 'kv-sticky-column'],
-            'editableOptions' => function ($model, $key, $index) {
-                return ['header' => 'Description', 'size' => 'lg',
-                    'formOptions' => ['action' => ['update-product']],
-                    'beforeInput' => function ($form, $widget) use ($model, $index) {
-//                                echo $form->field($model, "description")->widget(\kartik\widgets\DatePicker::classname(), [
-//                                    'options' => ['id' => "description_{$index}"]
-//                                ]);
-                        echo $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6', 'id' => 'product-description-' . $index]);
-                        $this->registerJs("
-                                                                            init.push(function () {
-//                                                                             if (!$('html').hasClass('ie8')) {
-                                                                                 $('#product-description-'$index).summernote({
-                                                                                     height: 200,
-                                                                                     tabsize: 2,
-                                                                                     codemirror: {
-                                                                                         theme: 'monokai'
-                                                                                     }
-                                                                                 });
-//                                                                             }
-
-                                                                         });
-
-                                                                 ", \yii\web\View::POS_END);
-                    }
-                ];
+            'attribute' => 'image',
+            'format' => 'raw',
+            'value' => function($model) {
+                return \yii\helpers\Html::a(\yii\helpers\Html::img(Yii::$app->homeUrl . $model->image, ['style' => (Yii::$app->controller->action->id == "create") ? 'width:100px' : 'width:200px']) . "<== Click To View", Yii::$app->homeUrl . $model->image, ['target' => "_blank", 'data-pjax' => 0]);
             }
         ],
 //                    [
@@ -70,11 +31,23 @@ echo GridView::widget([
 //                    ],
         [
             'class' => 'kartik\grid\ActionColumn',
-            'dropdown' => true,
+//            'dropdown' => true,
             'vAlign' => 'middle',
+            'template' => '{delete}',
             'urlCreator' => function($action, $model, $key, $index) {
-                return '#';
+                if ($action === 'delete') {
+                    return \yii\helpers\Url::toRoute(['delete-product-image', 'id' => $model->productImageId, 'step' => $_GET["step"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"], 'action' => (Yii::$app->controller->action->id == "update-product") ? "update" : NULL]);
+                }
             },
+            'buttons' => [
+//                "delete" => function ($url, $model, $index) {
+//                    return \yii\helpers\Html::a("<span class='glyphicon glyphicon-trash'></span>", ['delete-product-image', 'id' => $model->productImageId, 'step' => $_GET["step"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"], 'action' => (Yii::$app->controller->action->id == "update-product") ? "update" : NULL], [
+//                        'title' => Yii::t('app', 'Toogle Active'),
+//                        'data-pjax' => '0',
+////                                                                    'data-toggle-active' => $model->productId
+//                    ]);
+//                },
+            ],
 //                        'viewOptions' => ['title' => $viewMsg, 'data-toggle' => 'tooltip'],
 //                        'updateOptions' => ['title' => $updateMsg, 'data-toggle' => 'tooltip'],
             'deleteOptions' => ['title' => "คุณต้องการลบสินค้านี้หรือไม่ ?", 'data-toggle' => 'tooltip'],
@@ -92,20 +65,20 @@ echo GridView::widget([
     'filterRowOptions' => ['class' => 'kartik-sheet-style'],
     'pjax' => true, // pjax is set to always true for this demo
     // set your toolbar
-//                                                'toolbar' => [
+    'toolbar' => [
 //                                                    ['content' =>
 //                                                        Html::button('<i class="glyphicon glyphicon-plus"></i>', ['type' => 'button', 'title' => Yii::t('kvgrid', 'Add Book'), 'class' => 'btn btn-success', 'onclick' => 'alert("This will launch the book creation form.\n\nDisabled for this demo!");']) . ' ' .
 //                                                        Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['grid-demo'], ['data-pjax' => 0, 'class' => 'btn btn-default', 'title' => Yii::t('kvgrid', 'Reset Grid')])
 //                                                    ],
 //                                                    '{export}',
-//                                                    '{toggleData}',
-//                                                ],
+        '{toggleData}',
+    ],
     // set export properties
 //    'export' => [
 //        'fontAwesome' => true
 //    ],
     'panel' => [
         'type' => GridView::TYPE_SUCCESS,
-        'heading' => "Product Image Editor",
+        'heading' => (Yii::$app->controller->action->id == "create" && $_GET["step"] != 2) ? "Product Image Editor " . \yii\helpers\Html::a("<span class='glyphicon glyphicon-plus'></span>", ['update-product', 'id' => $id, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], ['class' => 'btn btn-primary']) : "Product Image Editor",
     ],
 ]);
