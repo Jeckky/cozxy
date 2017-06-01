@@ -71,8 +71,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <i class="fa fa-heart"></i></a>
                                 <?php
                                 if ($model['result'] > 0) {
-                                    echo '<a id="addItemToCartUnity" class="b btn-yellow size16" style="margin:24px auto 12px">+
-                                <i class="fa fa-shopping-bag" aria-hidden="true"></i></a>';
+                                    echo '<a id="addItemToCartUnity" data-loading-text="<i class=\'fa fa-circle-o-notch fa-spin\'></i> Processing cart" class="b btn-yellow size16" style="margin:24px auto 12px">+
+                                <i class="fa fa-shopping-bag"></i></a>';
                                 } else {
                                     echo ' ';
                                 }

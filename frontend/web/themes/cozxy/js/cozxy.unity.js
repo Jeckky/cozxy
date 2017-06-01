@@ -43,6 +43,12 @@ $(document).ready(function (e) {
          * 2.Booth
          */
         var $receiveType = $('#receiveType').val();
+        //$('#addItemToCartUnity').html('test add to cart');
+        var $this = $('#addItemToCartUnity');
+        $this.button('loading');
+        setTimeout(function () {
+            $this.button('reset');
+        }, 8000);
         if (parseInt($itemQnty) <= parseInt($maxQnty) && parseInt($itemQnty) > 0) {
 
             $.ajax({

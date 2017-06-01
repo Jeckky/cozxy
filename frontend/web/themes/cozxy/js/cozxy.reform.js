@@ -335,6 +335,12 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
     var $receiveType = receiveType;
     var $itemQnty = quantity;
 
+    var $this = $('#addItemsToCartMulti-' + $productSuppId);
+    $this.button('loading');
+    setTimeout(function () {
+        $this.button('reset');
+    }, 8000);
+
     if (parseInt($itemQnty) <= parseInt($maxQnty) && parseInt($itemQnty) > 0) {
 
         $.ajax({
