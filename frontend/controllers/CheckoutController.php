@@ -226,7 +226,7 @@ class CheckoutController extends MasterController {
 
                         $orderList = \common\models\costfit\Order::find()->where('orderId=' . $orderId)->one();
                         $receiveType = [];
-                        //$orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType);
+                        $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType);
                         return $this->render('_thank', compact('res'));
                     }
                 }

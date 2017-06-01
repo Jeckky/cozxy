@@ -68,4 +68,12 @@ class Email {
                 ->send();
     }
 
+    public static function mailContactCozxy($Subject, $customerMail, $customerName, $customerPhone, $customerMsg) {
+        \Yii::$app->mail->compose('contactCozxy', ['customerMail' => $customerMail, 'customerName' => $customerName, 'customerPhone' => $customerPhone, 'customMsg' => $customerMsg])
+                ->setTo('online@cozxy.com')//tomail
+                ->setFrom('cozxy@cozxy.com')
+                ->setSubject($Subject)
+                ->send();
+    }
+
 }

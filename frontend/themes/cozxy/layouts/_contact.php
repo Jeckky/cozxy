@@ -1,4 +1,7 @@
 <?php
+
+use yii\bootstrap\ActiveForm;
+
 $this->registerCss('
 .hr-margin {
 	margin-top: 24px;
@@ -10,6 +13,7 @@ $this->registerCss('
 }
 ');
 ?>
+
 <div class="container login-box">
     <div class="size32">&nbsp;</div>
     <div class="row">
@@ -19,25 +23,32 @@ $this->registerCss('
         <div class="col-xs-12 bg-white">
             <div class="row">
                 <!-- Contact -->
-                <form method="post" action="">
-                    <div class="col-md-6">
-                        <div class="size24">&nbsp;</div>
-                        <p>Contact Form</p>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <input type="text" name="name" class="fullwidth" placeholder="YOUR NAME" required></div>
-                            <div class="col-md-6">
-                                <input type="text" name="phone" class="fullwidth" placeholder="PHONE NUMBER" required>
-                            </div>
+                <?php
+                $form = ActiveForm::begin([
+                            'id' => 'default-shipping-cart',
+                            'action' => Yii::$app->homeUrl . 'site/contact-mail',
+                            'options' => ['class' => 'space-bottom'],
+                ]);
+                ?>
+                <div class="col-md-6">
+                    <div class="size24">&nbsp;</div>
+                    <p>Contact Form</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="text" name="name" class="fullwidth" placeholder="YOUR NAME" required></div>
+                        <div class="col-md-6">
+                            <input type="text" name="phone" class="fullwidth" placeholder="PHONE NUMBER" required>
                         </div>
-                        <input type="text" name="email" class="fullwidth" placeholder="EMAIL ADDRESS" required>
-                        <textarea name="message" class="fullwidth" style="height:28vh" placeholder="MESSAGE" required></textarea>
-                        <div class="text-right">
-                            <a href="#" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">SEND</a>
-                        </div>
-                        <div class="size12 size10-xs">&nbsp;</div>
                     </div>
-                </form>
+                    <input type="text" name="email" class="fullwidth" placeholder="EMAIL ADDRESS" required>
+                    <textarea name="message" class="fullwidth" style="height:28vh" placeholder="MESSAGE" required></textarea>
+                    <div class="text-right">
+                        <!--                            <a href="#" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">SEND</a>-->
+                        <button type="submit"class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">SEND</button>
+                    </div>
+                    <div class="size12 size10-xs">&nbsp;</div>
+                </div>
+                <?php ActiveForm::end(); ?>
                 <!-- Map -->
                 <div class="col-md-6">
                     <div class="size24">&nbsp;</div>
