@@ -377,8 +377,10 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
             }
         });
     } else {
-        $(this).parent().find('#quantity').val($maxQnty);
-        $(this).parent().find('#maxQnty').val($maxQnty);
+        var $maxQnty = maxQnty;
+        var $itemQnty = quantity;
+        //$(this).parent().find('#quantity').val($maxQnty);
+        //$(this).parent().find('#maxQnty').val($maxQnty);
         if ($itemQnty == 0) {
             $(this).parent().find('#quantity').val(1);
             alert("Can not be '0'");

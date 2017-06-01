@@ -1,6 +1,6 @@
 <?php
 
-function product($id, $img, $txt, $txt_d, $price, $price_s, $url) {
+function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId, $maxQnty, $fastId, $productId, $supplierId, $receiveType) {
     echo '
 		<div class="col-md-3 col-sm-6">
 			<div class="product-box">
@@ -13,12 +13,17 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url) {
 						<span class="size18">' . $price . '</span> &nbsp;
 						<span class="size14 onsale">' . $price_s . '</span>
 					</p>
-					<p class="size14 fc-g999">' . $txt . '</p>
-					<p><a href="/cart" class="btn-yellow">ADD TO CART</a> &nbsp; <a href="#" class="fc-g999">REMOVE</a></p>
-				</div>
-			</div>
-		</div>
-	';
+					<p class="size14 fc-g999">' . $txt . '</p>';
+    if ($maxQnty > 0 && $price > 0) {
+        echo '<p><a href="javascript:addItemToCartUnitys(' . $productSuppId . ',1,' . $maxQnty . ',\'' . $fastId . '\',' . $productId . ',' . $supplierId . ',' . $receiveType . ')" id="addItemsToCartMulti-' . $productSuppId . '" data-loading-text="ADD TO CART" class="btn-yellow">ADD TO CART</a> &nbsp; <a href="#" class="fc-g999">REMOVE</a></p>';
+    } else {
+        echo '<p><a class="btn-black-s">NO TO CART</a> &nbsp; <a href="#" class="fc-g999">REMOVE</a></p>';
+    }
+    echo '
+                </div>
+            </div>
+        </div>
+    ';
 }
 ?>
 
@@ -35,11 +40,10 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url) {
      */
     if (count($wishList->allModels) > 0) {
         foreach ($wishList->allModels as $key => $value) {
-            product($value['wishlistId'], $value['image'], $value['brand'], $value['title'], $value['price_s'] . ' THB', $value['price_s'] . ' THB', $value['url']);
+            product($value['wishlistId'], $value['image'], $value['brand'], $value['title'], $value['price_s'] . ' THB', $value['price_s'] . ' THB', $value['url'], $value['productSuppId'], $value['maxQnty'], $value['fastId'], $value['productId'], $value['supplierId'], $value['receiveType']);
         }
     } else {
 
     }
     ?>
 </div>
-
