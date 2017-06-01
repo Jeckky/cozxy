@@ -3,4 +3,4 @@
 /* @var $this yii\web\View */
 ?>
 
-<?= $this->render('@app/themes/cozxy/layouts/checkout/_checkout_summary', compact('myAddressInSummary', 'pickingMap')) ?>
+<?= $this->render('@app/themes/cozxy/layouts/checkout/_checkout_summary', compact('myAddressInSummary', 'pickingMap', 'order')) ?>

@@ -154,6 +154,7 @@ $pickingId = rand(0, 9999);
                     <div class="col-xs-12 text-right">
                         <a href="<?= Url::to(['/cart']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
                         &nbsp;
+                        <input type="hidden" name="orderId" value="<?= $order->orderId ?>">
                         <input type="submit" value="CONTINUE TO PAYMENT METHOD" class="b btn-yellow">
                     </div>
                     <div class="size12 size10-xs">&nbsp;</div>
@@ -163,6 +164,7 @@ $pickingId = rand(0, 9999);
         <?php ActiveForm::end(); ?>
         <!-- Total -->
         <div class="col-lg-3 col-md-4">
+
             <?=
             $this->render('_checkout_total', [
                 'order' => $order

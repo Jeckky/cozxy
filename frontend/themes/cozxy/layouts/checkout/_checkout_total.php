@@ -25,7 +25,7 @@ use yii\helpers\Url;
     </div>
     <?php
     $orderId = $this->params['cart']['orderId'];
-    //throw new \yii\base\Exception($order->encodeParams(['orderId' => $orderId]));
+    // throw new \yii\base\Exception(print_r($order, true));
     ?>
     <a href="<?= Url::to(['/top-up']) ?>" class="b btn-success btn-block text-center" style="padding:12px 32px; margin:12px auto 12px">TOP UP CozxyCoin</a>
     <a href="<?= Url::to(['/checkout/order-summary/' . $order->encodeParams(['orderId' => $orderId])]) ?>" class="b btn-yellow fullwidth text-center" style="padding:12px 32px; margin:2px auto 12px">PAY by CozxyCoin</a>
