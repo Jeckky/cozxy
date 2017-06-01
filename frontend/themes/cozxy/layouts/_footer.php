@@ -41,10 +41,10 @@ use yii\helpers\Html;
     <div class="container">
         <div class="row">
             <div class="col-md-6 copyright-social text-center-sm text-center-xs">
-                <a href="https://www.instagram.com/cozxy_thailand"><i class="fa fa-facebook"></i></a>
-                <a href="https://www.facebook.com/cozxydotcom/"><i class="fa fa-instagram"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                <a href="https://www.facebook.com/cozxydotcom/"><i class="fa fa-facebook"></i></a>
+                <a href="https://www.instagram.com/cozxy_thailand"><i class="fa fa-instagram"></i></a>
+<!--                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-pinterest-p"></i></a>-->
             </div>
             <div class="col-md-6 text-right text-center-sm text-center-xs"><div class="size8">&nbsp;</div>
                 Copyright &copy; 2017 all right reserved

@@ -24,17 +24,17 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
 
     <div class="bs-example" data-example-id="btn-tags" >
         <span style="float: right; text-align: right;"><?php
-            if (isset($ms) && $ms != '') {
-                if ($needMore == 0) {
-                    echo $ms;
-                } else {
-                    echo $ms . ' ' . $needMore . ' Points Please ' . number_format($needMore, 2) . ' THB';
-                }
-            }
+            /* if (isset($needMore) && $needMore != '') {
+              if ($needMore == 0) {
+              echo $ms;
+              } else {
+              echo $ms . ' ' . $needMore . ' Points Please ' . number_format($needMore, 2) . ' THB';
+              }
+              } */
             ?>
         </span>
     </div>
-    <?php if (isset($ms) && $ms != '') { ?>
+    <?php if (isset($needMore) && $needMore != '') { ?>
         <input type="hidden" name="checkout" value="checkout">
         <input type="hidden" name="needMore" value="<?= $needMore ?>">
     <?php }

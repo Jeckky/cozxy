@@ -144,4 +144,15 @@ class MyAccountController extends MasterController {
         return $this->render('@app/themes/cozxy/layouts/my-account/_form_billing', compact('model', 'hash'));
     }
 
+    public function actionDeleteItemToBillingAddress() {
+        $address_id = Yii::$app->request->post('addressId');
+        $model = \common\models\costfit\Address::find()->where("addressId ='" . $address_id . "'")->one();
+        if ($model->delete()) {
+            echo 'complete';
+        } else {
+            //$this->redirect(Yii::$app->homeUrl . 'profile');
+            echo 'wrong';
+        }
+    }
+
 }

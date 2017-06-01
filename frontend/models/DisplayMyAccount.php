@@ -111,8 +111,13 @@ class DisplayMyAccount extends Model {
                     'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
                     'brand' => isset($value->brand) ? $value->brand->title : '',
                     'title' => $title,
-                    'price_s' => $productPrice->price,
-                    'price' => $productPrice->price,
+                    'price_s' => number_format($productPrice->price, 2),
+                    'price' => number_format($productPrice->price, 2),
+                    'maxQnty' => $value->result,
+                    'fastId' => FALSE,
+                    'productId' => $value->productId,
+                    'supplierId' => $value->userId,
+                    'receiveType' => $value->receiveType,
                 ];
             }
         }

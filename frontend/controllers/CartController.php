@@ -30,7 +30,7 @@ class CartController extends MasterController {
      * @return mixed
      */
     public function actionIndex() {
-
+        // \frontend\assets\CartAsset::register($this);
         $this->title = 'Cozxy.com | cart';
         $this->subTitle = 'Shopping Cart';
         /* $allProducts = $this->allProduct();
@@ -54,6 +54,7 @@ class CartController extends MasterController {
           //$product = \common\models\costfit\search\Product::find()->where("categoryId='3'")->all();
           $this->subSubTitle = ''; */
         //return $this->render('cart');
+        //$orderId = $this->params['cart']['orderId'];
         return $this->render('index');
     }
 
@@ -262,9 +263,9 @@ class CartController extends MasterController {
 
     public function actionDeleteWishlist() {
         $res = [];
-        $ws = \common\models\costfit\Wishlist::find()->where("productId = " . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
+        $ws = \common\models\costfit\Wishlist::find()->where("wishlistId = " . $_POST['wishlistId'] . " AND userId = " . \Yii::$app->user->id)->one();
         if (isset($ws)) {
-            \common\models\costfit\Wishlist::deleteAll("productId = " . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id);
+            \common\models\costfit\Wishlist::deleteAll("wishlistId = " . $_POST['wishlistId'] . " AND userId = " . \Yii::$app->user->id);
             $length = count(\common\models\costfit\Wishlist::find()->where("userId = " . \Yii::$app->user->id)->all());
             $res["status"] = TRUE;
             $res["length"] = $length;

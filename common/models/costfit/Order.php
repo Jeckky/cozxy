@@ -105,7 +105,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
             'quantity',
             'isbn',
             'title'
-        /* use end */
+                /* use end */
         ]);
     }
 
@@ -553,10 +553,15 @@ class Order extends \common\models\costfit\master\OrderMaster {
 
     public static function genInvNo($model) {
 //      $prefix = "IV" . UserCompany::model()->getPrefixBySupplierId($model->supplierId);
-        $prefix = "IV";
-        $max_code = intval(\common\models\costfit\Order::findMaxInvoiceNo($prefix));
-        $max_code += 1;
-        return $prefix . date("Ym") . str_pad($max_code, 7, "0", STR_PAD_LEFT);
+        $order = Order::find()->where("orderId=" . $model->orderId)->one();
+        if (($order->invoiceNo == '') || ($order->invoiceNo == null)) {
+            $prefix = "IV";
+            $max_code = intval(\common\models\costfit\Order::findMaxInvoiceNo($prefix));
+            $max_code += 1;
+            return $prefix . date("Ym") . str_pad($max_code, 7, "0", STR_PAD_LEFT);
+        } else {
+            return $order->invoiceNo;
+        }
     }
 
     public static function genOrderNo($supplierId = null) {
@@ -748,7 +753,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
     public function search($params) {
 
         $query = \common\models\costfit\Order::find()
-        ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "");
+                ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "");
         //  and orderNo  is not null order by orderId desc
 
         $dataProvider = new ActiveDataProvider([
@@ -764,7 +769,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
         }
 
         $query->andFilterWhere(['like', 'createDateTime', $this->createDateTime])
-        ->andFilterWhere(['like', 'orderNo', $this->orderNo]);
+                ->andFilterWhere(['like', 'orderNo', $this->orderNo]);
 
         return $dataProvider;
     }

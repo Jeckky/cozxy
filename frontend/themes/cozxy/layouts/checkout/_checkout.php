@@ -17,9 +17,9 @@ $pickingId = rand(0, 9999);
     <div class="row">
         <?php
         $form = ActiveForm::begin([
-            'id' => 'default-shipping-address',
-            'action' => Yii::$app->homeUrl . 'checkout/summary',
-            'options' => ['class' => 'space-bottom'],
+                    'id' => 'default-shipping-address',
+                    'action' => Yii::$app->homeUrl . 'checkout/summary',
+                    'options' => ['class' => 'space-bottom'],
         ]);
         ?>
         <!-- Cart -->
@@ -126,10 +126,10 @@ $pickingId = rand(0, 9999);
                                 <?php
                                 echo $form->field($model, 'addressId')->widget(kartik\select2\Select2::classname(), [
                                     'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Address::find()
-                                    ->asArray()->where('userId=' . Yii::$app->user->identity->userId)->all(), 'addressId', function($model, $defaultValue, $index = 0) {
-                                        $index = $index++;
-                                        return 'Billing Address :' . $model['firstname'] . ' ' . $model['lastname'];
-                                    }),
+                                                    ->asArray()->where('userId=' . Yii::$app->user->identity->userId)->all(), 'addressId', function($model, $defaultValue, $index = 0) {
+                                                $index = $index++;
+                                                return 'Billing Address :' . $model['firstname'] . ' ' . $model['lastname'];
+                                            }),
                                     'pluginOptions' => [
                                         'placeholder' => 'Select...',
                                         'loadingText' => 'Loading Billing Address ...',
@@ -154,6 +154,7 @@ $pickingId = rand(0, 9999);
                     <div class="col-xs-12 text-right">
                         <a href="<?= Url::to(['/cart']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
                         &nbsp;
+                        <input type="hidden" name="orderId" value="<?= $order->orderId ?>">
                         <input type="submit" value="CONTINUE TO PAYMENT METHOD" class="b btn-yellow">
                     </div>
                     <div class="size12 size10-xs">&nbsp;</div>
@@ -163,7 +164,12 @@ $pickingId = rand(0, 9999);
         <?php ActiveForm::end(); ?>
         <!-- Total -->
         <div class="col-lg-3 col-md-4">
-            <?= $this->render('_checkout_total') ?>
+
+            <?=
+            $this->render('_checkout_total', [
+                'order' => $order
+            ])
+            ?>
         </div>
 
     </div>

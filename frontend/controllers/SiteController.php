@@ -17,6 +17,7 @@ use frontend\models\ContactForm;
 use frontend\models\FakeFactory;
 use common\models\costfit\Content;
 use common\models\costfit\ContentGroup;
+use common\helpers\Email;
 
 /**
  * Site controller
@@ -32,12 +33,12 @@ class SiteController extends Controller {
                 'class' => AccessControl::className(),
                 'only' => ['logout', 'signup'],
                 'rules' => [
-                    [
+                        [
                         'actions' => ['signup'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
-                    [
+                        [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -144,6 +145,7 @@ class SiteController extends Controller {
      */
     public function actionContact() {
         $model = new ContactForm();
+        $msg = Yii::$app->request->get('msg') ? Yii::$app->request->get('msg') : '';
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
                 Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
@@ -154,9 +156,24 @@ class SiteController extends Controller {
             return $this->refresh();
         } else {
             return $this->render('contact', [
-                'model' => $model,
+                        'model' => $model,
+                        'msg' => $msg
             ]);
         }
+    }
+
+    public function actionContactMail() {
+        $customerMail = $_POST['email'];
+        $customerName = $_POST['name'];
+        $customerPhone = $_POST['phone'];
+        $customerMsg = $_POST['message'];
+        $Subject = 'Email from customer contact';
+        $mail = Email::mailContactCozxy($Subject, $customerMail, $customerName, $customerPhone, $customerMsg);
+        $model = new ContactForm();
+        $msg = '* E-mail was sent to cozxy.com, please wait for contact from cozxy.com, thank you';
+        return $this->redirect(['contact',
+                    'msg' => $msg,
+        ]);
     }
 
     /**
@@ -165,7 +182,15 @@ class SiteController extends Controller {
      * @return mixed
      */
     public function actionAbout() {
-        return $this->render('about');
+
+        $contentGroup = ContentGroup::find()->where("lower(title)='lastindex'")->one();
+        if (isset($contentGroup)) {
+            $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->all();
+        }
+        return $this->render('about', [
+                    'content' => $content
+                        ]
+        );
     }
 
     /**
@@ -196,7 +221,7 @@ class SiteController extends Controller {
         }
 
         return $this->render('@app/themes/cozxy/layouts/_register', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -230,7 +255,7 @@ class SiteController extends Controller {
         }
 
         return $this->render('requestPasswordResetToken', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -255,16 +280,30 @@ class SiteController extends Controller {
         }
 
         return $this->render('resetPassword', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
     public function actionFaqs() {
-        return $this->render('faqs');
+        $contentGroup = ContentGroup::find()->where("lower(title)='howwork2'")->one();
+        if (isset($contentGroup)) {
+            $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->all();
+        }
+        return $this->render('faqs', [
+                    'content' => $content
+                        ]
+        );
     }
 
     public function actionTermsAndConditions() {
-        return $this->render('terms-and-conditions');
+        $contentGroup = ContentGroup::find()->where("lower(title)='term'")->one();
+        if (isset($contentGroup)) {
+            $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->all();
+        }
+        return $this->render('terms-and-conditions', [
+                    'content' => $content
+                        ]
+        );
     }
 
     public function actionThank() {

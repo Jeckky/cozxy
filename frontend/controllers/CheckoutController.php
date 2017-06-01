@@ -37,7 +37,8 @@ class CheckoutController extends MasterController {
         $pickingPointLockersCool = isset($pickingPoint_list_lockers_cool) ? $pickingPoint_list_lockers_cool : NULL;
         $pickingPointBooth = isset($pickingPoint_list_booth) ? $pickingPoint_list_booth : NULL;
         $hash = 'add';
-        return $this->render('index', compact('model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'hash'));
+        $order = \common\models\costfit\Order::find()->where("orderId=" . $_POST['orderId'])->one();
+        return $this->render('index', compact('model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash'));
     }
 
     public function actionSummary() {
@@ -48,7 +49,9 @@ class CheckoutController extends MasterController {
         $amphurid = Yii::$app->request->post('amphurId');
         $LcpickingId = Yii::$app->request->post('LcpickingId');
         $addressId = Yii::$app->request->post('addressId');
-
+        $orderId = Yii::$app->request->post('orderId');
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        //throw new Exception(print_r());
         if (isset($LcpickingId) && !empty($LcpickingId)) {
             $pickingMap = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $LcpickingId)->one();
 
@@ -62,7 +65,7 @@ class CheckoutController extends MasterController {
         }
         $myAddressInSummary = DisplayMyAddress::myAddresssSummary($addressId, \common\models\costfit\Address::TYPE_BILLING);
 
-        return $this->render('summary', compact('myAddressInSummary', 'pickingMap'));
+        return $this->render('summary', compact('myAddressInSummary', 'pickingMap', 'order'));
     }
 
     public function actionThanks() {
@@ -133,8 +136,11 @@ class CheckoutController extends MasterController {
         }
     }
 
-    function actionOrderSummary() {
-        $orderId = Yii::$app->request->get('orderId');
+    function actionOrderSummary($hash) {
+        $k = base64_decode(base64_decode($hash));
+        $params = ModelMaster::decodeParams($hash);
+        $orderId = $params['orderId'];
+        //throw new \yii\base\Exception($orderId);
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $issetPoint = UserPoint::find()->where("userId=" . $order->userId)->one();
         if (isset($issetPoint)) {
@@ -148,6 +154,92 @@ class CheckoutController extends MasterController {
         ]);
     }
 
+    function actionConfirm() {
+        $orderId = Yii::$app->request->post('orderId');
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        $res = [];
+        if (isset($order)) {
+            $userPoint = UserPoint::find()->where("userId=" . $order->userId . " and status=1")->one();
+            if (isset($userPoint)) {
+                $this->updateSupplierStock($order->orderId);
+                $getRankMemberPoints = RewardPoints::getRankMemberPoints($order->userId, $order->orderId, $order->summary);
+                $order->invoiceNo = Order::genInvNo($order);
+                $order->status = Order::ORDER_STATUS_E_PAYMENT_SUCCESS;
+                $order->paymentDateTime = new \yii\db\Expression('NOW()');
+                $this->updateUserPoint($order->userId, $order->summary, $order->orderId);
+                if ($order->save()) {
+                    $res["status"] = 1;
+                    $res["invoiceNo"] = $order->invoiceNo;
+                    $res["message"] = "Successful transaction";
+                    // Update Send Date field
+                    // ****รอ Confirm เรื่อง สั่งหลังกี่โมง เลื่อนไปอีก 1 วัน****
+                    if ($order->isSlowest) {
+                        $maxDate = \common\models\costfit\OrderItem::findSlowestDate($order->orderId);
+                        foreach ($order->orderItems as $item):
+                            $item->sendDateTime = date('Y-m-d', strtotime("+$maxDate day"));
+                            $item->save();
+                        endforeach;
+                    } else {
+                        foreach ($order->orderItems as $item):
+                            //$date = \common\models\costfit\ShippingType::find()->where('shippingTypeId=' . $item->sendDate)->one();
+                            $item->sendDateTime = date('Y-m-d', strtotime("+1 day"));
+                            $item->save();
+                        endforeach;
+                    }
+                    $member = \common\models\costfit\User::find()->where('userId=' . $order->userId)->one();
+                    if (isset($member)) {
+                        if (isset($member->email)) {
+                            $toMails = $member->email;
+                        } else {
+                            $toMails = $member->username;
+                        }
+                        $toMail = $toMails;
+                        $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "profile/order";
+                        $type = $member->firstname . ' ' . $member->lastname;
+                        $Subject = 'Your Cozxy.com Order ' . $order->invoiceNo;
+                        $adress = [];
+                        $adress['billingCompany'] = $order->billingCompany;
+                        $adress['billingTax'] = $order->billingTax;
+
+                        $adress['billingFirstname'] = $order->billingFirstname;
+                        $adress['billingLastname'] = $order->billingLastname;
+                        $adress['billingAddress'] = $order->billingAddress;
+
+                        $billingCountryId = $order->billingCountryId; //ประเทศ
+                        $country = Local::Countries($billingCountryId);
+                        $adress['billingCountryId'] = $country->localName;
+
+                        $billingProvinceId = $order->billingProvinceId; //จังหวัด
+                        $States = Local::States($billingProvinceId);
+                        $adress['billingProvinceId'] = $States->localName;
+
+                        $billingAmphurId = $order->billingAmphurId; //อำเภอ
+                        $Cities = Local::Cities($billingAmphurId);
+                        $adress['billingAmphurId'] = $Cities->localName;
+
+                        $billingDistrictId = $order->billingDistrictId; //ตำบล
+                        $District = Local::District($billingDistrictId);
+                        $adress['billingDistrictId'] = $District->localName;
+
+                        $adress['billingZipcode'] = $order->billingZipcode;
+                        $adress['billingTel'] = $order->billingTel;
+
+                        $orderList = \common\models\costfit\Order::find()->where('orderId=' . $orderId)->one();
+                        $receiveType = [];
+                        $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType);
+                        return $this->render('_thank', compact('res'));
+                    }
+                }
+            } else {
+                throw new \yii\base\Exception('Somethig wrong1');
+                //go to checkout
+            }
+        } else {
+            throw new \yii\base\Exception('Somethig wrong2');
+            //go to checkout
+        }
+    }
+
     function CreateUserPoint($userId) {
         $point = new UserPoint();
         $point->userId = Yii::$app->user->identity->userId;
@@ -158,6 +250,45 @@ class CheckoutController extends MasterController {
         $point->save(false);
         $userPoint = UserPoint::find()->where("userId=" . $userId . " and status=1")->one();
         return $userPoint;
+    }
+
+    public function updateSupplierStock($orderId) {
+        $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
+        foreach ($orderItems as $orderItem):
+            $productSupp = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $orderItem->productSuppId)->one();
+            if (isset($productSupp) && !empty($productSupp)) {
+                $History = new \common\models\costfit\StockHistory();
+                $History->orderItemId = $orderItem->orderItemId;
+                $History->productSuppId = $productSupp->productSuppId;
+                $History->quantity = $orderItem->quantity;
+                $History->status = 1;
+                $History->createDateTime = new \yii\db\Expression('NOW()');
+                $History->updateDateTime = new \yii\db\Expression('NOW()');
+                $History->save(false);
+            }
+            $productSupp->result = $productSupp->result - $orderItem->quantity;
+            $productSupp->updateDateTime = new \yii\db\Expression('NOW()');
+            $productSupp->save(false);
+        endforeach;
+        //endforeach;
+    }
+
+    public function updateUserPoint($userId, $point, $orderId) {
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        if (($order->invoiceNo == '') || ($order->invoiceNo == null)) {//ถ้ามีเลข invoince แล้ว ไม่ต้องตัด point, ไม่บันทึกรายการ
+            $userPoint = UserPoint::find()->where("userId=" . $userId)->one();
+            $userPoint->currentPoint = $userPoint->currentPoint - $point;
+            $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
+            $userPoint->save(false);
+            $used = new PointUsed();
+            $used->userId = $userId;
+            $used->orderId = $orderId;
+            $used->point = $point;
+            $used->status = 1;
+            $used->createDateTime = new \yii\db\Expression('NOW()');
+            $used->updateDateTime = new \yii\db\Expression('NOW()');
+            $used->save(false);
+        }
     }
 
 }
