@@ -76,10 +76,10 @@ class CartController extends MasterController {
         if ($fastid == '') {
             $fastid = 1;
             $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . ""
-                            . " and sendDate=" . $fastid)->one();
+            . " and sendDate=" . $fastid)->one();
         } else {
             $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . ""
-                            . " and sendDate=" . $fastid)->one();
+            . " and sendDate=" . $fastid)->one();
         }
 
         if (!isset($orderItem)) {
@@ -202,9 +202,9 @@ class CartController extends MasterController {
             foreach ($showOrder as $item):
                 $productSupp = \common\models\costfit\ProductSuppliers::productSupplierName($item->productSuppId);
                 $text = $text . '<tr class = "item" id = "item' . $item->orderItemId . '">'
-                        . '<td><div class = "delete"><input type = "hidden" id = "orderItemId" value = "' . $item->orderItemId . '"></div><a href = "' . Yii::$app->homeUrl . 'products/' . \common\models\ModelMaster::encodeParams(["productId" => $item->productId, "productSupplierId" => $item->productSuppId]) . '">' . $productSupp->title . '</a></td>'
-                        . '<td class = "qty"><input type = "text" id = "qty" value = "' . $item->quantity . '" readonly = "true"></td>'
-                        . '<td class = "price">' . number_format(\common\models\costfit\ProductSuppliers::productPriceSupplier($item->productSuppId), 2) . '</td><input type = "hidden" id = "productSuppId" value = "' . $item->productSuppId . '"></tr>';
+                . '<td><div class = "delete"><input type = "hidden" id = "orderItemId" value = "' . $item->orderItemId . '"></div><a href = "' . Yii::$app->homeUrl . 'products/' . \common\models\ModelMaster::encodeParams(["productId" => $item->productId, "productSupplierId" => $item->productSuppId]) . '">' . $productSupp->title . '</a></td>'
+                . '<td class = "qty"><input type = "text" id = "qty" value = "' . $item->quantity . '" readonly = "true"></td>'
+                . '<td class = "price">' . number_format(\common\models\costfit\ProductSuppliers::productPriceSupplier($item->productSuppId), 2) . '</td><input type = "hidden" id = "productSuppId" value = "' . $item->productSuppId . '"></tr>';
             endforeach;
             $text = $header . $text . $footer;
         }
@@ -263,9 +263,9 @@ class CartController extends MasterController {
 
     public function actionDeleteWishlist() {
         $res = [];
-        $ws = \common\models\costfit\Wishlist::find()->where("productId = " . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
+        $ws = \common\models\costfit\Wishlist::find()->where("wishlistId = " . $_POST['wishlistId'] . " AND userId = " . \Yii::$app->user->id)->one();
         if (isset($ws)) {
-            \common\models\costfit\Wishlist::deleteAll("productId = " . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id);
+            \common\models\costfit\Wishlist::deleteAll("wishlistId = " . $_POST['wishlistId'] . " AND userId = " . \Yii::$app->user->id);
             $length = count(\common\models\costfit\Wishlist::find()->where("userId = " . \Yii::$app->user->id)->all());
             $res["status"] = TRUE;
             $res["length"] = $length;
@@ -415,15 +415,15 @@ class CartController extends MasterController {
             endforeach;
             $id = substr($id, 0, -1);
             $products = \common\models\costfit\ProductSuppliers::find()
-                    ->where("productSuppId in ($id) and approve = 'approve'")
-                    ->orderBy(new \yii\db\Expression('rand()'))
-                    ->limit(4)
-                    ->all();
+            ->where("productSuppId in ($id) and approve = 'approve'")
+            ->orderBy(new \yii\db\Expression('rand()'))
+            ->limit(4)
+            ->all();
         } else {
             $products = \common\models\costfit\ProductSuppliers::find()->where("approve = 'approve'")
-                    ->orderBy(new \yii\db\Expression('rand()'))
-                    ->limit(4)
-                    ->all();
+            ->orderBy(new \yii\db\Expression('rand()'))
+            ->limit(4)
+            ->all();
         }
         $this->subSubTitle = '';
         //echo '<pre>';
@@ -436,7 +436,7 @@ class CartController extends MasterController {
         $itemsLockersCool = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_COOL)->all(); // status : 1
         $itemsBooth = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)->all(); // status : 3
         return $this->render
-                        ('cart_list_product_all', compact('products', 'GetOrderMasters', 'itemsLockers', 'itemsBooth', 'itemsLockersCool'));
+        ('cart_list_product_all', compact('products', 'GetOrderMasters', 'itemsLockers', 'itemsBooth', 'itemsLockersCool'));
     }
 
 }
