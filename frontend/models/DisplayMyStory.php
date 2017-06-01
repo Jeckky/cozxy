@@ -87,7 +87,7 @@ class DisplayMyStory extends Model {
                 $products[$value->productSuppId] = [
                     'image' => $productImagesThumbnail2,
                     //'url' => '/story?id=' . $items->productSuppId,
-                    'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productId' => $value->productPostId, 'productSupplierId' => $items->productSuppId]),
+                    'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productPostId' => $value->productPostId, 'productId' => $items->productId, 'productSupplierId' => $items->productSuppId]),
                     'brand' => isset($items->brand) ? $items->brand->title : '',
                     'title' => $items->title,
                     'head' => $value->title,
@@ -102,8 +102,8 @@ class DisplayMyStory extends Model {
         return $products;
     }
 
-    public static function productViewsRecentStories($productSuppId) {
-        $productPost = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id)
+    public static function productViewsRecentStories($productPostId) {
+        $productPost = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . ' and productPostId=' . $productPostId)
         ->groupBy(['productSuppId'])->orderBy('productPostId desc')->one();
         if (isset($productPost)) {
             $products['ViewsRecentStories'] = [
