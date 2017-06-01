@@ -20,7 +20,7 @@
             <?php
             if ($balance < 0) {
                 ?>
-                <a href="/top-up?fromCheck='y'" class="b btn-success btn-block fullwidth text-center" style="padding:12px 32px; margin:10px auto 12px">TOP UP CozxyCoin</a>
+                <a href="/top-up?needMore=<?= $order->summary - $userPoint->currentPoint ?>" class="b btn-success btn-block fullwidth text-center" style="padding:12px 32px; margin:10px auto 12px">TOP UP CozxyCoin</a>
             <?php } ?>
         </div>
 

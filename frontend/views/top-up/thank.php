@@ -27,7 +27,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             <h4>You have <?= $currentPoint ?> Points.</h4>
             <?php if ($fromCheckout == 'yes') {
                 ?>
-                <a href="<?= Yii::$app->homeUrl . 'checkout/confirm-checkout/' . $order->encodeParams(['orderId' => $order->orderId]) ?>" class = "btn" style = "background-color: #3cc; color: #fff;font-size: 12pt;">
+                <a href="<?= Yii::$app->homeUrl . 'checkout/order-summary/' . $order->encodeParams(['orderId' => $order->orderId]) ?>" class = "btn" style = "background-color: #3cc; color: #fff;font-size: 12pt;">
                     Check out
                 </a>
             <?php } ?>

@@ -14,34 +14,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <br><br>
 <?php
-/* $js = "$(document).on('keypress', '#amount', function (e) {
-  var code = e.keyCode ? e.keyCode : e.which;
-  if (code > 57) {
-  return false;
-  } else if (code < 48 && code != 8) {
-  return false;
-  }
-  });
-  $(document).on('click', '#confirm-topup', function (e) {
-  var amount = $(this).parent().parent().parent().parent().find('#amount').val();
-  var currentAmount = $(this).parent().parent().parent().parent().parent().find('#currentAmount').val();
-  if(amount==''){
-  if(currentAmount==''){
-  alert('empty amount');
-  //amount.focus();
-  return false;
-  }else{
-  if(!confirm(':: Confirm Amount '+currentAmount+' THB ?')){
-  return false;
-  }
-  }
-  }else{
-  if(!confirm(':: Confirm Amount '+amount+' THB ?')){
-  return false;
-  }
-  }
-  });";
-  $this->registerJs($js); */
 $form = ActiveForm::begin([
         ]);
 ?>
@@ -56,7 +28,7 @@ $form = ActiveForm::begin([
     <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="margin: auto;text-align: center;color: #000;margin-bottom: 20px;">
         <div class="row">
             <div class="col-lg-3 pull-left text-left" style="text-align: left;color: #009999;">
-                <h3 style="text-align: left;color: #009999;"><b>:: Top up</b></h3>
+                <h3 style="text-align: left;color: #009999;"><b>:: Amount</b></h3>
             </div>
         </div>
         <hr>
@@ -72,7 +44,7 @@ $form = ActiveForm::begin([
             </tr>
             <?php
             if (isset($needMore) && $needMore != 0) {
-                echo '<h4 style="color: #006666;">ต้องเติมอีก ' . $needMore . ' Points เป็นเงิน ' . number_format($needMore, 2) . ' บาท</h4>';
+                echo '<h4 style="color: #006666;">TOP UP ' . $needMore . ' Points Gross ' . number_format($needMore, 2) . ' THB</h4>';
                 ?>
                 <tr style="height: 50px;">
                     <td style="text-align: right;width:50%;">
@@ -97,7 +69,7 @@ $form = ActiveForm::begin([
                     </td>
                 </tr>
                 <?php
-            } else {
+            } else {//ถ้าไม่ได้มาจากหน้าเชคเอ้า
                 ?>
                 <tr style="height: 50px;">
                     <td style="text-align: right;width:50%;">Amount :</td>

@@ -37,7 +37,8 @@ class CheckoutController extends MasterController {
         $pickingPointLockersCool = isset($pickingPoint_list_lockers_cool) ? $pickingPoint_list_lockers_cool : NULL;
         $pickingPointBooth = isset($pickingPoint_list_booth) ? $pickingPoint_list_booth : NULL;
         $hash = 'add';
-        return $this->render('index', compact('model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'hash'));
+        $order = \common\models\costfit\Order::find()->where("orderId=" . $_POST['orderId'])->one();
+        return $this->render('index', compact('model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash'));
     }
 
     public function actionSummary() {
@@ -133,8 +134,11 @@ class CheckoutController extends MasterController {
         }
     }
 
-    function actionOrderSummary() {
-        $orderId = Yii::$app->request->get('orderId');
+    function actionOrderSummary($hash) {
+        $k = base64_decode(base64_decode($hash));
+        $params = ModelMaster::decodeParams($hash);
+        $orderId = $params['orderId'];
+        //throw new \yii\base\Exception($orderId);
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $issetPoint = UserPoint::find()->where("userId=" . $order->userId)->one();
         if (isset($issetPoint)) {
