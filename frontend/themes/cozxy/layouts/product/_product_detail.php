@@ -2,6 +2,7 @@
 $this->title = $model['title'];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="product-detail">
     <div class="row">
         <div class="col-md-8 product-gallery">
@@ -67,18 +68,19 @@ $this->params['breadcrumbs'][] = $this->title;
                             <input type="hidden" id="supplierId" value="<?php echo $model['supplierId']; ?>">
                             <input type="hidden" id="productSuppId" value="<?php echo $model['productSuppId']; ?>">
                             <input type="hidden" id="receiveType" value="<?php echo $model['receiveType']; ?>">
-                            <a href="#" class="b btn-g999 size16" style="margin:24px auto 12px">+
+                            <a href="javascript:addItemToWishlist(<?= $model['productSuppId'] ?>);" class="b btn-g999 size16" style="margin:24px auto 12px">+
                                 <i class="fa fa-heart"></i></a>
-                            <?php
-                            if ($model['result'] > 0) {
-                                echo '<a href="#" id="addItemToCartUnity" class="b btn-yellow size16" style="margin:24px auto 12px">+
-                                <i class = "fa fa-shopping-cart"></i></a>';
-                            } else {
-                                echo ' ';
-                            }
-                            ?>
-                            <a href = "/cart" class = "b btn-g999 btn-success size16" style = "margin:24px auto 12px;color:#fff;">+
-                                <i class = "fa fa-bookmark-o"></i></a>
+                                <?php
+                                if ($model['result'] > 0) {
+                                    echo '<a id="addItemToCartUnity" data-loading-text="<i class=\'fa fa-circle-o-notch fa-spin\'></i> Processing cart" class="b btn-yellow size16" style="margin:24px auto 12px">+
+                                <i class="fa fa-shopping-bag"></i></a>';
+                                } else {
+                                    echo ' ';
+                                }
+                                ?>
+                            <!-- <a href = "/cart" class = "b btn-g999 btn-success size16" style = "margin:24px auto 12px;color:#fff;">+
+                                 <i class = "fa fa-bookmark-o"></i></a>
+                            -->
                         </div>
                     </div>
                 </div>

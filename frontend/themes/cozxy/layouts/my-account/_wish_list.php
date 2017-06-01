@@ -8,7 +8,7 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url) {
 					<a href="' . $url . '"><img src="' . $img . '" alt="' . $txt_d . '" class="fullwidth"></a>
 				</div>
 				<div class="product-txt">
-					<p class="size16"><a href="' . $url . '" class="fc-black">' . $txt_d . '</a></p>
+					<p class="size16"  style="height:50px;"><a href="' . $url . '" class="fc-black">' . $txt_d . '</a></p>
 					<p>
 						<span class="size18">' . $price . '</span> &nbsp;
 						<span class="size14 onsale">' . $price_s . '</span>

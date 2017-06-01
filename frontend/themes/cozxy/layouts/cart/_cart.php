@@ -36,7 +36,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php
                     }
                     ?>
-
                     <!-- E -->
                     <div class="col-xs-12 text-right">
                         <a href="<?= Url::to(['/search/cozxy-product']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">CONTINUE

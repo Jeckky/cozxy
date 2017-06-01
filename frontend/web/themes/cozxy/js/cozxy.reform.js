@@ -38,9 +38,6 @@ function organization(selectObject, value) {
 
 }
 
-
-
-
 $('#addressId').change(function (event, id, value) {
     prev_val = $(this).val();
     $.ajax({
@@ -181,13 +178,13 @@ $("#place-order").on('click', function () {
     /*
      * Increate 26/9/2016 By Taninut.BM
      */
-//var provinceid = $('input[id=pickingpoint-provinceid]').val();
-//var amphurid = $('input[id=pickingpoint-amphurid]').val();
-//var pickingid = $('input[id=pickingpoint-pickingid]').val();
+    //var provinceid = $('input[id=pickingpoint-provinceid]').val();
+    //var amphurid = $('input[id=pickingpoint-amphurid]').val();
+    //var pickingid = $('input[id=pickingpoint-pickingid]').val();
     /*
      * Lockers ร้อน
      */
-//var eProvinceid = $('input[id=pickingpoint-provinceid]').val();
+    //var eProvinceid = $('input[id=pickingpoint-provinceid]').val();
     var eProvinceid = $('select#pickingpoint-provinceid option:selected').val();
     if (eProvinceid != null) {
         var eProvinceid = $('#pickingpoint-provinceid').val();
@@ -200,17 +197,17 @@ $("#place-order").on('click', function () {
         var eProvinceid = false;
         var ePickingid = false;
     }
-//console.log('Lockers ร้อน LcProvinceid : ' + eProvinceid);
-//console.log('Lockers ร้อน LcAmphurid :' + eAmphurid);
-//console.log('Lockers ร้อน LcPickingids :' + ePickingid);
-//console.log('Lockers ร้อน receiveTypeLockers :' + receiveTypeLockers);
+    //console.log('Lockers ร้อน LcProvinceid : ' + eProvinceid);
+    //console.log('Lockers ร้อน LcAmphurid :' + eAmphurid);
+    //console.log('Lockers ร้อน LcPickingids :' + ePickingid);
+    //console.log('Lockers ร้อน receiveTypeLockers :' + receiveTypeLockers);
     /*
      *   Lockers เย็น
      */
-//var LcProvinceid = document.getElementById("LcprovinceId");
+    //var LcProvinceid = document.getElementById("LcprovinceId");
     var LcProvinceid = $('select#LcprovinceId option:selected').val();
     if (LcProvinceid != null) {
-//var LcAmphurid = $('select#LcamphurId option:selected').val();
+        //var LcAmphurid = $('select#LcamphurId option:selected').val();
         var LcProvinceid = $('#LcprovinceId').val();
         var LcAmphurid = $('#LcamphurId').val();
         var LcPickingids = $('#LcpickingId').val();
@@ -221,12 +218,12 @@ $("#place-order").on('click', function () {
         var LcProvinceid = false;
         var LcPickingids = false;
     }
-//console.log('Lockers เย็น LcProvinceid : ' + LcProvinceid);
-//console.log('Lockers เย็น LcAmphurid :' + LcAmphurid);
-//console.log('Lockers เย็น LcPickingids :' + LcPickingids);
-//console.log('Lockers เย็น receiveTypeLockersCool :' + receiveTypeLockersCool);
+    //console.log('Lockers เย็น LcProvinceid : ' + LcProvinceid);
+    //console.log('Lockers เย็น LcAmphurid :' + LcAmphurid);
+    //console.log('Lockers เย็น LcPickingids :' + LcPickingids);
+    //console.log('Lockers เย็น receiveTypeLockersCool :' + receiveTypeLockersCool);
 
-// pickingpoint amphurid //
+    // pickingpoint amphurid //
     /*
      * Booth
      */
@@ -243,20 +240,20 @@ $("#place-order").on('click', function () {
         var b_pickingid = false;
         var receiveTypeBooth = false;
     }
-//console.log('Booth LcProvinceid : ' + b_provinceid);
-//console.log('Booth LcAmphurid :' + b_amphurid);
-//console.log('Booth LcPickingids :' + b_pickingid);
-//console.log('Booth receiveTypeBooth :' + receiveTypeBooth);
+    //console.log('Booth LcProvinceid : ' + b_provinceid);
+    //console.log('Booth LcAmphurid :' + b_amphurid);
+    //console.log('Booth LcPickingids :' + b_pickingid);
+    //console.log('Booth receiveTypeBooth :' + receiveTypeBooth);
 
     if (_countItems == '') {
-//alert('สินค้าในตะกร้า 0 รายการ');
+        //alert('สินค้าในตะกร้า 0 รายการ');
         $("#modal-cart-not-item").modal('show');
         //window.location = 'site';
     } else {
-//if (_shipping === undefined) {
-//alert('Please Select Shipping Address');
-//$("#modal-cart-not-shipping").modal('show');
-//} else {
+        //if (_shipping === undefined) {
+        //alert('Please Select Shipping Address');
+        //$("#modal-cart-not-shipping").modal('show');
+        //} else {
         if (_billing === undefined) {
 
             $.post("checkout/burn-checkouts", {
@@ -272,8 +269,8 @@ $("#place-order").on('click', function () {
                 receiveTypeBooth: receiveTypeBooth,
                 receiveTypeLockersCool: receiveTypeLockersCool
             }, function (data) {
-//console.log(data.name); // John
-//console.log(data.time); // 2pm
+                //console.log(data.name); // John
+                //console.log(data.time); // 2pm
             }, "json");
         } else if (_billing != undefined) {
 
@@ -291,12 +288,98 @@ $("#place-order").on('click', function () {
                 receiveTypeBooth: receiveTypeBooth,
                 receiveTypeLockersCool: receiveTypeLockersCool
             }, function (data) {
-//console.log(data.name); // John
-//console.log(data.time); // 2pm
+                //console.log(data.name); // John
+                //console.log(data.time); // 2pm
             }, "json");
         }
 //}
     }
-
-// $this->redirect(['order-thank']);
 });
+
+/*
+ * Use : Wishlist
+ * @param {type} id
+ * @returns {undefined}
+ */
+function addItemToWishlist(id) {
+    var $pId = id;
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: $baseUrl + "cart/add-wishlist",
+        data: {productId: $pId},
+        success: function (data)
+        {
+            if (data.status) {
+                $('.wishlist-message').addClass('visible');
+            } else {
+                alert(data.message);
+            }
+        }
+    });
+
+}
+
+/*
+ * Use : Site index
+ * @param {type} id
+ * @returns {undefined}
+ */
+function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId, supplierId, receiveType) {
+
+    var $productSuppId = productSuppId;
+    var $maxQnty = maxQnty;
+    var $fastId = fastId;
+    var $itemId = productId;
+    var $supplierId = supplierId;
+    var $receiveType = receiveType;
+    var $itemQnty = quantity;
+
+    var $this = $('#addItemsToCartMulti-' + $productSuppId);
+    $this.button('loading');
+    setTimeout(function () {
+        $this.button('reset');
+    }, 8000);
+
+    if (parseInt($itemQnty) <= parseInt($maxQnty) && parseInt($itemQnty) > 0) {
+
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: $baseUrl + 'cart/add-to-cart' + "?id=" + $itemId,
+            data: {quantity: $itemQnty, fastId: $fastId, supplierId: $supplierId, productSuppId: $productSuppId, receiveType: $receiveType},
+            success: function (data)
+            {
+                if (data.status) {
+                    $('#maxQnty').val($maxQnty - $itemQnty);
+                    if (($maxQnty - $itemQnty) == 0) {
+                        $('#quantity').val(0);
+                        //$addToCartBtn.attr('disabled', 'disabled');
+                    } else {
+                        $('#quantity').val(1);
+                    }
+                    //$('.cart-dropdown table').remove();
+                    //$('.cart-dropdown .body').append(
+                    //data.shoppingCart
+                    // );
+                    // $('.cart-btn a span').text($cartTotalItems);
+                    //$('.cart-btn a').find("#cartTotal").html(data.cart.totalFormatText);
+                    //$('.cart-dropdown .footer .total').html(data.cart.totalFormatText);
+                    window.location = $baseUrl + 'cart';
+                }
+                //alert(data.shoppingCart);
+                //$addedToCartMessage.addClass('visible');
+            }
+        });
+    } else {
+        $(this).parent().find('#quantity').val($maxQnty);
+        $(this).parent().find('#maxQnty').val($maxQnty);
+        if ($itemQnty == 0) {
+            $(this).parent().find('#quantity').val(1);
+            alert("Can not be '0'");
+        } else {
+            //alert($(this).parent().find('#quantity').val() + ' max ' + $(this).parent().find('#maxQnty').val());
+            alert("Max quantity for this product");
+        }
+    }
+}

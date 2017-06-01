@@ -1,7 +1,8 @@
 $(document).ready(function (e) {
-    /*Global Variables
+    /*Global Variables Use : Product Views
      *******************************************/
     var $addToCartBtn = $('#addItemToCartUnity');
+
     $addToCartBtn.click(function () {
         if (navigator.userAgent.indexOf("Firefox") != -1) {
             alert('Firefox');
@@ -42,6 +43,12 @@ $(document).ready(function (e) {
          * 2.Booth
          */
         var $receiveType = $('#receiveType').val();
+        //$('#addItemToCartUnity').html('test add to cart');
+        var $this = $('#addItemToCartUnity');
+        $this.button('loading');
+        setTimeout(function () {
+            $this.button('reset');
+        }, 8000);
         if (parseInt($itemQnty) <= parseInt($maxQnty) && parseInt($itemQnty) > 0) {
 
             $.ajax({
@@ -83,8 +90,7 @@ $(document).ready(function (e) {
                 alert("Max quantity for this product");
             }
         }
-
-        //
     });
 
 });
+

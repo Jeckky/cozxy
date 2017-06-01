@@ -6,7 +6,7 @@
                 <a href="<?= $model['url'] ?>">
                     <div class="col-xs-6"><i class="fa fa-eye" aria-hidden="true"></i></div>
                 </a>
-                <a href="">
+                <a href="javascript:addItemToWishlist(<?= $model['productSuppId'] ?>);">
                     <div class="col-xs-6"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                 </a>
             </div>

@@ -42,7 +42,7 @@ $(function() {
 });
 ');
 
-$this->title = 'My Yii Application';
+$this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
 ?>
 
 <div class="bg-white rela">
