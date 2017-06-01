@@ -32,7 +32,8 @@ class CozxyAsset extends AssetBundle {
         'js/jquery.js',
         'js/bootstrap.min.js',
         'js/cozxy.js',
-        'js/cozxy.reform.js'
+        'js/cozxy.reform.js',
+        'js/cozxy.unity.js'
     ];
 
 }

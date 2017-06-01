@@ -35,6 +35,7 @@ class DisplayMyStory extends Model {
                 }
             }
 
+
             $products[$productPost['productSuppId']] = [
                 'image' => $productImagesThumbnail2,
                 'url' => Yii::$app->homeUrl . 'story/write-your-story/' . $productPostList->encodeParams(['productSuppId' => $productPostList['productSuppId'], 'productPostId' => $productPost['productPostId']]),
@@ -68,13 +69,13 @@ class DisplayMyStory extends Model {
                 $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $items->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
                 $price_s = number_format($productPrice->price, 2);
                 $price = number_format($productPrice->price, 2);
-                $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId, $value->productPostId);
-                $rating_member = \common\helpers\Reviews::RatingInMember($value->productSuppId, $value->productPostId);
-                if ($rating_score == 0 && $rating_member == 0) {
-                    $results_rating = 0;
-                } else {
-                    $results_rating = $rating_score / $rating_member;
-                }
+                /* $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId, $value->productPostId);
+                  $rating_member = \common\helpers\Reviews::RatingInMember($value->productSuppId, $value->productPostId);
+                  if ($rating_score == 0 && $rating_member == 0) {
+                  $results_rating = 0;
+                  } else {
+                  $results_rating = $rating_score / $rating_member;
+                  } */
                 if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
                     if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
                         $productImagesThumbnail2 = '/' . $productImages->imageThumbnail2;
@@ -87,19 +88,58 @@ class DisplayMyStory extends Model {
                 $products[$value->productSuppId] = [
                     'image' => $productImagesThumbnail2,
                     //'url' => '/story?id=' . $items->productSuppId,
-                    'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productId' => $value->productPostId, 'productSupplierId' => $items->productSuppId]),
+                    'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productPostId' => $value->productPostId, 'productId' => $items->productId, 'productSupplierId' => $items->productSuppId]),
                     'brand' => isset($items->brand) ? $items->brand->title : '',
                     'title' => $items->title,
                     'head' => $value->title,
                     'price_s' => $price_s,
                     'price' => $price,
                     'views' => number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)),
-                    'star' => rand($results_rating, 5.00),
+                    'star' => rand(DisplayMyStory::getResultsRating($value->productSuppId, $value->productPostId), 5.00),
                 ];
             }
         }
 
         return $products;
+    }
+
+    public static function productViewsRecentStories($productPostId) {
+        $productPost = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . ' and productPostId=' . $productPostId)
+        ->groupBy(['productSuppId'])->orderBy('productPostId desc')->one();
+        if (isset($productPost)) {
+            $products['ViewsRecentStories'] = [
+                'userId' => $productPost['userId'],
+                'title' => $productPost['title'],
+                'shortDescription' => $productPost['shortDescription'],
+                'description' => $productPost['description'],
+                'price' => $price,
+                'views' => number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)),
+                'star' => rand($DisplayMyStory::getResultsRating($productPost['productSuppId'], $productPost['productPostId']), 5.00),
+            ];
+        } else {
+            $products['ViewsRecentStories'] = [
+                'image' => FALSE,
+                'url' => FALSE,
+                'userId' => FALSE,
+                'title' => FALSE,
+                'shortDescription' => FALSE,
+                'description' => FALSE,
+                'price' => FALSE,
+                'views' => FALSE,
+                'star' => FALSE,
+            ];
+        }
+    }
+
+    public static function getResultsRating($productSuppId, $productPostId) {
+        $rating_score = \common\helpers\Reviews::RatingInProduct($productSuppId, $productPostId);
+        $rating_member = \common\helpers\Reviews::RatingInMember($productSuppId, $productPostId);
+        if ($rating_score == 0 && $rating_member == 0) {
+            $results_rating = 0;
+        } else {
+            $results_rating = $rating_score / $rating_member;
+        }
+        return $results_rating;
     }
 
 }

@@ -33,28 +33,28 @@ class CartController extends MasterController {
 
         $this->title = 'Cozxy.com | cart';
         $this->subTitle = 'Shopping Cart';
-        $allProducts = $this->allProduct();
-        $id = '';
-        if (isset($allProducts) && !empty($allProducts) && ($allProducts != '')) {
-            foreach ($allProducts as $item):
-                $id = $id . $item . ",";
-            endforeach;
-            $id = substr($id, 0, -1);
-            $products = \common\models\costfit\ProductSuppliers::find()
-            ->where("productSuppId in ($id) and approve='approve'")
-            ->orderBy(new \yii\db\Expression('rand()'))
-            ->limit(4)
-            ->all();
-        } else {
-            $products = \common\models\costfit\ProductSuppliers::find()->where("approve='approve'")
-            ->orderBy(new \yii\db\Expression('rand()'))
-            ->limit(4)
-            ->all();
-        }
-        //$product = \common\models\costfit\search\Product::find()->where("categoryId='3'")->all();
-        $this->subSubTitle = '';
+        /* $allProducts = $this->allProduct();
+          $id = '';
+          if (isset($allProducts) && !empty($allProducts) && ($allProducts != '')) {
+          foreach ($allProducts as $item):
+          $id = $id . $item . ",";
+          endforeach;
+          $id = substr($id, 0, -1);
+          $products = \common\models\costfit\ProductSuppliers::find()
+          ->where("productSuppId in ($id) and approve='approve'")
+          ->orderBy(new \yii\db\Expression('rand()'))
+          ->limit(4)
+          ->all();
+          } else {
+          $products = \common\models\costfit\ProductSuppliers::find()->where("approve='approve'")
+          ->orderBy(new \yii\db\Expression('rand()'))
+          ->limit(4)
+          ->all();
+          }
+          //$product = \common\models\costfit\search\Product::find()->where("categoryId='3'")->all();
+          $this->subSubTitle = ''; */
         //return $this->render('cart');
-        return $this->render('index', compact('products'));
+        return $this->render('index');
     }
 
     public function actionAddToCart($id) {
@@ -80,8 +80,6 @@ class CartController extends MasterController {
             $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . ""
             . " and sendDate=" . $fastid)->one();
         }
-
-
 
         if (!isset($orderItem)) {
             $orderItem = new \common\models\costfit\OrderItem();

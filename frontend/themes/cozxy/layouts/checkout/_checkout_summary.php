@@ -47,14 +47,15 @@ use kartik\select2\Select2;
 
                                                 var mapOptions = {
                                                     center: new google.maps.LatLng(<?php echo $pickingMap['latitude'] ?>, <?php echo $pickingMap['longitude'] ?>), // Coimbatore = (11.0168445, 76.9558321)
-                                                    zoom: 7,
-                                                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                                                    zoom: 16,
+                                                    //mapTypeId: google.maps.MapTypeId.ROADMAP
                                                 };
                                                 map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
                                                 // Get data from database. It should be like below format or you can alter it.
 
-                                                var data = '[{ "DisplayText": "adcv", "ADDRESS": " test", "LatitudeLongitude": "<?php echo $pickingMap['latitude'] ?>, <?php echo $pickingMap['longitude'] ?>", "MarkerId": "Customer" },{ "DisplayText": "abcd", "ADDRESS": "test", "LatitudeLongitude": "<?php echo $pickingMap['latitude'] ?>, <?php echo $pickingMap['longitude'] ?>", "MarkerId": "Customer"}]';
+                                                var data = '[{ "DisplayText": "<?php echo $pickingMap['title'] ?>", "ADDRESS": " <?php $myAddressInSummary['myAddresss']['address'] ?>", "LatitudeLongitude": "<?php echo $pickingMap['latitude'] ?>, <?php echo $pickingMap['longitude'] ?>", "MarkerId": "Customer" },\n\
+                                                { "DisplayText": "<?php echo $pickingMap['title'] ?>", "ADDRESS": "<?php $myAddressInSummary['myAddresss']['address'] ?>", "LatitudeLongitude": "<?php echo $pickingMap['latitude'] ?>, <?php echo $pickingMap['longitude'] ?>", "MarkerId": "Customer"}]';
 
                                                 people = JSON.parse(data);
 
@@ -113,7 +114,7 @@ use kartik\select2\Select2;
 
                                         </script>
                                         <h4>Map</h4>
-                                        <div id="map-canvas" style=" width:100%;height:20vh;border:0;"> </div>
+                                        <div id="map-canvas" style=" width:100%;height:300px;border:0;"> </div>
                                     </div>
                                 </div>
                             </div>

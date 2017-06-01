@@ -76,7 +76,7 @@ class SiteController extends Controller {
     public function actionIndex() {
         $slideGroup = new ArrayDataProvider(['allModels' => FakeFactory::productSlideGroup('', '')]);
         $productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(6, FALSE)]);
-        $productNotSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(6)]);
+        $productNotSell = new ArrayDataProvider(['allModels' => FakeFactory::productForNotSale(6)]);
         $productStory = new ArrayDataProvider(['allModels' => FakeFactory::productStory(3)]);
         $productBrand = new ArrayDataProvider(['allModels' => FakeFactory::productSlideBanner('', '')]);
         return $this->render('index', compact('productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand'));
@@ -186,7 +186,8 @@ class SiteController extends Controller {
                 //exit();
                 if ($user = $model->signup()) {
                     if (Yii::$app->getUser()->login($user)) {
-                        return $this->goHome();
+                        //return $this->goHome();
+                        return $this->redirect([Yii::$app->homeUrl . 'site/thank']);
                     }
                 }
             }
@@ -197,6 +198,18 @@ class SiteController extends Controller {
         return $this->render('@app/themes/cozxy/layouts/_register', [
             'model' => $model,
         ]);
+    }
+
+    public function actionConfirm() {
+
+        $user = \common\models\costfit\User::find()->where("token = '" . $_GET["token"] . "'")->one();
+        if (isset($user)) {
+            $user->status = 1;
+            $user->save(FALSE);
+            return $this->redirect([Yii::$app->homeUrl . 'site/thank?verification=complete']);
+        } else {
+
+        }
     }
 
     /**
@@ -244,6 +257,19 @@ class SiteController extends Controller {
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+    public function actionFaqs() {
+        return $this->render('faqs');
+    }
+
+    public function actionTermsAndConditions() {
+        return $this->render('terms-and-conditions');
+    }
+
+    public function actionThank() {
+
+        return $this->render('thank');
     }
 
 }

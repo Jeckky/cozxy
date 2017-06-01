@@ -5,6 +5,8 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 \frontend\assets\CartAsset::register($this);
+$this->title = "Cart";
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container">
     <div class="size32">&nbsp;</div>
@@ -32,11 +34,10 @@ use yii\bootstrap\ActiveForm;
                         <?php
                     }
                     ?>
-
                     <!-- E -->
                     <div class="col-xs-12 text-right">
                         <a href="<?= Url::to(['/search/cozxy-product']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">CONTINUE
-                            SHOPPING</a> &nbsp; 
+                            SHOPPING</a> &nbsp;
                         <input type="submit" value="CHECK OUT" class="b btn-yellow">
                     </div>
                     <div class="size12 size10-xs">&nbsp;</div>

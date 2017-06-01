@@ -19,7 +19,7 @@ $val = rand(1, 10);
         <div class="col-sm-5">
             <p class="size20"><?= $item['title'] ?></p>
             <p>
-                <span class="size18"><span class="multi-<?= $id ?>"></span> <?= number_format($item["priceOnePiece"], 2) . " ฿" ?> THB</span> &nbsp;
+                <span class="size18"><span class="multi-<?= $id ?>"></span> <?= number_format($item["priceOnePiece"], 2) ?> THB</span> &nbsp;
                 <span class="size14 onsale"><?= number_format($item["priceMarket"], 2) ?> THB</span>
             </p>
             <div class="col-xs-12 size18">
@@ -38,12 +38,12 @@ $val = rand(1, 10);
                 <tr>
                     <td>Color</td>
                     <td>:</td>
-                    <td>&nbsp;</td>
+                    <td>None</td>
                 </tr>
                 <tr>
                     <td>Size</td>
                     <td>:</td>
-                    <td>&nbsp;</td>
+                    <td>None</td>
                 </tr>
             </table>
         </div>

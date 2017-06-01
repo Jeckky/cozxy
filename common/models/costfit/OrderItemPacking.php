@@ -316,10 +316,16 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     }
 
     public static function findOrderFromPickingItemId($pickingItemId) {
+
         $orderItemPacking = OrderItemPacking::find()->where("pickingItemsId=" . $pickingItemId . " and status in (5,7)")->one();
-        $orderItem = OrderItem::find()->where("orderItemId=" . $orderItemPacking->orderItemId)->one();
-        $order = Order::find()->where("orderId=" . $orderItem->orderId)->one();
-        return $order->orderId;
+        //throw new \yii\base\Exception(print_r($orderItemPacking->attributes, true));
+        if (isset($orderItemPacking) && count($orderItemPacking) > 0) {
+            $orderItem = OrderItem::find()->where("orderItemId=" . $orderItemPacking->orderItemId)->one();
+            $order = Order::find()->where("orderId=" . $orderItem->orderId)->one();
+            return $order->orderId;
+        } else {
+            return '';
+        }
     }
 
     public static function findOrderFromPickingItemIds($pickingItemId) {

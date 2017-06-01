@@ -12,17 +12,6 @@ $this->params['breadcrumbs'][] = $this->title;
 $pickingId = rand(0, 9999);
 ?>
 
-<style>
-    /* Always set the map height explicitly to define the size of the div
-   * element that contains the map. */
-
-    #map {
-        height: 50%;
-    }
-    /* Optional: Makes the sample page fill the window. */
-
-
-</style>
 <div class="container">
     <div class="size32">&nbsp;</div>
     <div class="row">
@@ -60,7 +49,7 @@ $pickingId = rand(0, 9999);
                                         'placeholder' => 'Select...',
                                         'loadingText' => 'Loading States ...',
                                     ],
-                                    'options' => ['placeholder' => 'Select States ...', 'name' => 'provinceId'],
+                                    'options' => ['placeholder' => 'Select States ...', 'name' => 'provinceId', 'id' => 'stateId'],
                                 ])->label(FALSE);
                                 ?>
                             </div>
@@ -71,13 +60,13 @@ $pickingId = rand(0, 9999);
                                 echo Html::hiddenInput('input-type-33', 'add', ['id' => 'input-type-33']);
                                 echo $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
                                     //'data' => [9 => 'Savings'],
-                                    'options' => ['placeholder' => 'Select ...', 'name' => 'amphurId'],
+                                    'options' => ['placeholder' => 'Select ...', 'name' => 'amphurId', 'id' => 'amphurId'],
                                     'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
-                                        //initialize' => true,
-                                        'depends' => ['address-provinceid'],
-                                        'url' => Url::to(['child-amphur-address-picking-point']),
+//                                        'initialize' => false,
+                                        'depends' => ['stateId'],
+                                        'url' => Url::to(['child-amphur-address-picking-point-checkouts']),
                                         'loadingText' => 'Loading amphur ...',
                                         'params' => ['input-type-11', 'input-type-22', 'input-type-33']
                                     ]
@@ -96,8 +85,8 @@ $pickingId = rand(0, 9999);
                                     'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
-                                        //initialize' => true,
-                                        'depends' => ['address-amphurid'],
+//                                        'initialize' => false,
+                                        'depends' => ['amphurId'],
                                         'url' => Url::to(['child-picking-point']),
                                         'loadingText' => 'Loading picking point ...',
                                         'params' => ['input-type-13', 'input-type-23', 'lockers-cool-input-type-33']
@@ -285,7 +274,7 @@ $this->registerJs('
         var map;
         function initMap() {
             var myLatLng = { lat: -25.363, lng: 131.044 };
-            map = new google.maps.Map(document.getElementById(\'map\'), {
+            map = new google.maps.Map(document.getElementById("map"), {
                 center: myLatLng,
                 zoom: 16
             });
@@ -293,21 +282,19 @@ $this->registerJs('
             var marker = new google.maps.Marker({
                 map: map,
                 position: myLatLng,
-                title: \'Hello World!\'
+                title: "Hello World!"
             });
         }
-        
-        
+
+
 
 function changeMap(lats, lngs) {
 
-    // var map;
-    //var myLatLng = {lat: lats, lng: lngs};// get ค่ามาจาก address แต่เป็น String ต้องเปลียนให้เป็น Number
-    var myLatLng = {lat: 13.7880589, lng: 100.5329692};//ใช้เทส //13.8713948,100.6151315
+    var myLatLng = {lat: Number(lats), lng: Number(lngs)};// get ค่ามาจาก address แต่เป็น String ต้องเปลียนให้เป็น Number
     console.log(myLatLng);
-    //document.getElementById(\'map\').innerHTML = "Paragraph changed!";
-    //$(\'.cart-detail\').find(\'#map\').html(\'xxxxxx\');
-    map = new google.maps.Map(document.getElementById(\'map\'), {
+    //document.getElementById("map").innerHTML = "Paragraph changed!";
+    //$(".cart-detail").find("#map").html("xxxxxx");
+    map = new google.maps.Map(document.getElementById("map"), {
         center: myLatLng,
         zoom: 16
     });
@@ -315,22 +302,22 @@ function changeMap(lats, lngs) {
     var marker = new google.maps.Marker({
         map: map,
         position: myLatLng,
-        title: \'Hello World!\'
+        title: "Hello World!"
     });
 }
 ', \yii\web\View::POS_HEAD);
 
 $this->registerJs('
-    $(\'#LcpickingId\').change(function (event, id, value) {
+    $("#LcpickingId").change(function (event, id, value) {
     prev_val = $(this).val();
 
     $.ajax({
         type: "POST",
         url: $baseUrl + "checkout/map-images-google",
-        data: {\'pickingIds\': prev_val},
+        data: {"pickingIds": prev_val},
         success: function (data, status)
         {
-            if (data != \'\') {
+            if (data != "") {
                 if (status == "success") {
                     var JSONObject = JSON.parse(data);
 
@@ -344,8 +331,8 @@ $this->registerJs('
         }
     });
 });
-    
+
 ');
 
-$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap', ['depends'=>['yii\web\YiiAsset']]);
+$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap', ['depends' => ['yii\web\YiiAsset']]);
 ?>

@@ -28,7 +28,9 @@ use yii\bootstrap\ActiveForm;
                     }
                     ?>
                     <div class="col-xs-3"><a href="my-account?act=2" class="u-menu-2">&nbsp;</a></div>
-                    <div class="col-xs-3"><?= Html::a('&nbsp;', ['/cart'], ['class' => 'u-menu-3']) ?></div>
+                    <div class="col-xs-3"><?= Html::a('&nbsp;', ['/cart'], ['class' => 'u-menu-3']) ?>
+                        <!--<span style="display: block;  margin: 0; font-size: 12px;  padding:5px;  line-height: 1; font-weight: 400; position: absolute; top: -1px; right: 5px;color: #000 !important;  background-color: #fee60a;"></span>-->
+                    </div>
                     <div class="col-xs-3">
                         <?php
                         if (isset(Yii::$app->user->identity->userId)) {
