@@ -32,12 +32,12 @@ class SiteController extends Controller {
                 'class' => AccessControl::className(),
                 'only' => ['logout', 'signup'],
                 'rules' => [
-                    [
+                        [
                         'actions' => ['signup'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
-                    [
+                        [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -154,7 +154,7 @@ class SiteController extends Controller {
             return $this->refresh();
         } else {
             return $this->render('contact', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -165,7 +165,15 @@ class SiteController extends Controller {
      * @return mixed
      */
     public function actionAbout() {
-        return $this->render('about');
+
+        $contentGroup = ContentGroup::find()->where("lower(title)='lastindex'")->one();
+        if (isset($contentGroup)) {
+            $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->all();
+        }
+        return $this->render('about', [
+                    'content' => $content
+                        ]
+        );
     }
 
     /**
@@ -196,7 +204,7 @@ class SiteController extends Controller {
         }
 
         return $this->render('@app/themes/cozxy/layouts/_register', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -230,7 +238,7 @@ class SiteController extends Controller {
         }
 
         return $this->render('requestPasswordResetToken', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -255,16 +263,30 @@ class SiteController extends Controller {
         }
 
         return $this->render('resetPassword', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
     public function actionFaqs() {
-        return $this->render('faqs');
+        $contentGroup = ContentGroup::find()->where("lower(title)='howwork2'")->one();
+        if (isset($contentGroup)) {
+            $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->all();
+        }
+        return $this->render('faqs', [
+                    'content' => $content
+                        ]
+        );
     }
 
     public function actionTermsAndConditions() {
-        return $this->render('terms-and-conditions');
+        $contentGroup = ContentGroup::find()->where("lower(title)='term'")->one();
+        if (isset($contentGroup)) {
+            $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->all();
+        }
+        return $this->render('terms-and-conditions', [
+                    'content' => $content
+                        ]
+        );
     }
 
     public function actionThank() {
