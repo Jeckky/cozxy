@@ -1,4 +1,4 @@
-<div class="track-list">\
+<div class="track-list">
 
     <div class="row tk-head">
         <div class="col-lg-3 col-md-4 col-sm-6">Tracking code: 23123446</div>
