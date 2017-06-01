@@ -5,17 +5,24 @@
 </div>
 <div class="col-xs-12 total-price bg-white">
     <div class="row">
-        <div class="price-detail">Your Balance:
-            <div class="pull-right">  THB</div>
+        <div class="price-detail">Current Point:
+            <div class="pull-right"><?= $userPoint != '0' ? number_format($userPoint->currentPoint, 2) : '0.00' ?></div>
         </div>
-        <div class="price-detail">Your Balance:
-            <div class="pull-right"> </div>
+        <div class="price-detail">Order subtotal:
+            <div class="pull-right"><?= number_format($order->summary, 2) ?> </div>
         </div>
-        <div class="price-detail">Your Balance:
-            <div class="pull-right">– THB</div>
+
+        <div class="price-detail">Balance:
+            <?php
+            $balance = $userPoint->currentPoint - $order->summary;
+            ?>
+            <div class="pull-right" style="color: <?= $balance >= 0 ? '#00cc33' : '#ff0000' ?>"><?= number_format($balance, 2) ?></div>
+            <?php
+            if ($balance < 0) {
+                ?>
+                <a href="/top-up?fromCheck='y'" class="b btn-success btn-block fullwidth text-center" style="padding:12px 32px; margin:10px auto 12px">TOP UP CozxyCoin</a>
+            <?php } ?>
         </div>
-        <div class="price-detail b size20 size18-sm size18-xs">Your Balance:
-            <div class="pull-right">  THB</div>
-        </div>
+
     </div>
 </div>

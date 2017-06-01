@@ -32,8 +32,7 @@ use yii\bootstrap\ActiveForm;
 
                     <!-- E -->
                     <div class="col-xs-12 text-right">
-                        <a href="<?= Url::to(['/search/cozxy-product']) ?>" class="b btn-black" style="padding:12px 32px">CONTINUE
-                            SHOPPING</a> &nbsp;
+                        <a href="<?= Url::to(['/search/cozxy-product']) ?>" class="b btn-black" style="padding:12px 32px">CONTINUE SHOPPING</a> &nbsp;
                         <input type="submit" value="Confirm" class="b btn-yellow">
                     </div>
                     <div class="size12 size10-xs">&nbsp;</div>

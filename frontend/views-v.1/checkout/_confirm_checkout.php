@@ -57,7 +57,7 @@ $form = ActiveForm::begin([
                                     echo Html::submitButton("Top up", ['class' => 'btn btn-md btn-primary col-lg-12']);
                                 }
                                 ?>
-                            </td>asdfasda
+                            </td>
                         <tr style="height: 80px;">
                             <td colspan="2" style="text-align: center;">
                                 <?php echo Html::a("Back", Yii::$app->homeUrl . "checkout/reverse-order-to-cart/" . common\models\ModelMaster::encodeParams(['orderId' => $model->orderId]), ['class' => 'btn btn-warning col-lg-12']); ?>
