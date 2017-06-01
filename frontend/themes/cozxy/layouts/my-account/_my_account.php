@@ -5,6 +5,10 @@ use frontend\assets\MyAccountAsset;
 MyAccountAsset::register($this);
 $this->title = 'MY ACCOUNT';
 $this->params['breadcrumbs'][] = $this->title;
+
+if (isset($_GET['act'])) {
+    //echo $_GET['act'];
+}
 ?>
 
 <div class="container login-box">
