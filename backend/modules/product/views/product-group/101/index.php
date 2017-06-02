@@ -82,12 +82,19 @@ $this->params['pageHeader'] = Html::encode($this->title);
 //                                ]);
 //                            },
                             'update' => function ($url, $model) {
-                                if ($model->status == 0) {
-                                    return Html::a('<i class="fa fa-pencil"></i>', ["create", 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
-                                        'title' => Yii::t('yii', 'update'),
-                                    ]);
+                                if (Yii::$app->user->identity->type != 4) {
+                                    if ($model->status == 0) {
+                                        return Html::a('<i class="fa fa-pencil"></i>', ["create", 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
+                                            'title' => Yii::t('yii', 'update'),
+                                        ]);
+                                    } else {
+                                        return Html::a('<i class="fa fa-pencil"></i>Product', ["create", 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
+                                            'title' => Yii::t('yii', 'update')]) . "<br>" . Html::a('<i class="fa fa-eye"></i>', ["view", 'productGroupId' => $model->productId], [
+                                            'title' => Yii::t('yii', 'update'),
+                                        ]);
+                                    }
                                 } else {
-                                    return Html::a('<i class="fa fa-pencil"></i>Product', ["create", 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
+                                    return Html::a('<i class="fa fa-eye"></i>', ["view", 'productGroupId' => $model->productId], [
                                         'title' => Yii::t('yii', 'update'),
                                     ]);
                                 }

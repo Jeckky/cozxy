@@ -48,15 +48,10 @@ class ProductGroupController extends ProductMasterController
     public function actionIndex()
     {
         //User Type 4 = Supplier , 5= Content
-        if (Yii::$app->user->identity->type == 4) {
+        if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5) {
             $query = \common\models\costfit\Product::find()
-            ->where("userId=" . Yii::$app->user->identity->userId . " AND parentId is null AND status = 1");
-            $dataProvider = new ActiveDataProvider([
-                'query' => $query,
-            ]);
-        } elseif (Yii::$app->user->identity->type == 5) {
-            $query = \common\models\costfit\Product::find()
-            ->where("userId=" . Yii::$app->user->identity->userId . " AND parentId is null AND status = 1");
+            ->join("LEFT JOIN", "user u", "u.userId = product.userId")
+            ->where("product.parentId is null AND product.status = 1 AND u.type in (2,3,4,5)");
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
             ]);
@@ -83,10 +78,16 @@ class ProductGroupController extends ProductMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView()
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+        $model = \common\models\costfit\Product::find()->where("productId=" . $_GET["productGroupId"])->one();
+        $dataProvider = new ActiveDataProvider([
+            'query' => \common\models\costfit\Product::find()->orderBy("productId ASC")
+            ->where("parentId=" . $_GET["productGroupId"]),
+        ]);
+        return $this->render('101/view', [
+            'model' => $model,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -202,20 +203,6 @@ class ProductGroupController extends ProductMasterController
                     $model->createDateTime = new \yii\db\Expression('NOW()');
                     $model->parentId = NULL;
                     $model->status = 0;
-                    if ($model->save(false)) {
-                        $productGroupId = \Yii::$app->db->lastInsertID;
-                        return $this->redirect(['create', 'step' => 2, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $productGroupId]);
-                    }
-                }
-                break;
-            case 0: // For Save Draft is Status = 99
-                if (isset($_POST["Product"])) {
-                    $model->attributes = $_POST["ProductGroup"];
-                    $model->userId = $userId;
-                    $model->createDateTime = new \yii\db\Expression('NOW()');
-                    $model->parentId = NULL;
-                    $model->status = 99;
-                    $model->step = 1;
                     if ($model->save(false)) {
                         $productGroupId = \Yii::$app->db->lastInsertID;
                         return $this->redirect(['create', 'step' => 2, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $productGroupId]);

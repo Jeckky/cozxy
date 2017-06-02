@@ -511,4 +511,10 @@ class Product extends \common\models\costfit\master\ProductMaster
         return $this->hasOne(ProductGroup::className(), ['productGroupId' => 'productGroupId']);
     }
 
+    public static function productSupplierGroup()
+    {
+        $productGroup = Product::find()->where("status=1 and userId=" . Yii::$app->user->identity->userId . " AND parentId is NULL")->all();
+        return $productGroup;
+    }
+
 }

@@ -210,7 +210,7 @@ $pickingId = rand(0, 9999);
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Compnay (option)</label>
+                                    <label for="exampleInputEmail1">Company (option)</label>
                                     <?php echo $form->field($model, 'company')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'COMPANY'])->label(FALSE); ?>
                                 </div>
                             </div>
@@ -227,13 +227,13 @@ $pickingId = rand(0, 9999);
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">First Name</label>
-                                <?= $form->field($model, 'firstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
+                                <?= $form->field($NewBilling, 'firstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Last Name</label>
-                                <?= $form->field($model, 'lastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LASTNAME'])->label(false); ?>
+                                <?= $form->field($NewBilling, 'lastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LASTNAME'])->label(false); ?>
                             </div>
                         </div>
                     </div>

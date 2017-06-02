@@ -35,12 +35,16 @@ class Upload
     public static function UploadBasic($fileName, $folderName, $uploadPath, $width, $height)
     {
         $file = \yii\web\UploadedFile::getInstanceByName($fileName);
-        $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
-        $file->saveAs($uploadPath . '/' . $newFileName);
-        $originalFile = $uploadPath . '/' . $newFileName; // originalFile
-        $thumbFile = $uploadPath . '/' . $newFileName;
-        $saveThumb1 = Image::thumbnail($originalFile, $width, $height)->save($thumbFile, ['quality' => 80]); // thumbnail file
-        return $newFileName;
+        if (isset($file)) {
+            $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
+            $file->saveAs($uploadPath . '/' . $newFileName);
+            $originalFile = $uploadPath . '/' . $newFileName; // originalFile
+            $thumbFile = $uploadPath . '/' . $newFileName;
+            $saveThumb1 = Image::thumbnail($originalFile, $width, $height)->save($thumbFile, ['quality' => 80]); // thumbnail file
+            return $newFileName;
+        } else {
+            return NULL;
+        }
     }
 
     /*
