@@ -9,12 +9,13 @@ use Yii;
 *
     * @property string $productGroupOptionValueId
     * @property string $productGroupOptionId
+    * @property string $productGroupId
     * @property string $productId
+    * @property string $productGroupTemplateId
     * @property string $value
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-    * @property string $productGroupTemplateOptionId
     *
             * @property ProductGroupOption $productGroupOption
             * @property Product $product
@@ -35,8 +36,8 @@ return 'product_group_option_value';
 public function rules()
 {
 return [
-            [['productGroupOptionId', 'productId', 'createDateTime', 'productGroupTemplateOptionId'], 'required'],
-            [['productGroupOptionId', 'productId', 'status', 'productGroupTemplateOptionId'], 'integer'],
+            [['productGroupOptionId', 'productGroupId', 'productId', 'productGroupTemplateId', 'createDateTime'], 'required'],
+            [['productGroupOptionId', 'productGroupId', 'productId', 'productGroupTemplateId', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['value'], 'string', 'max' => 200],
             [['productGroupOptionId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductGroupOptionMaster::className(), 'targetAttribute' => ['productGroupOptionId' => 'productGroupOptionId']],
@@ -52,12 +53,13 @@ public function attributeLabels()
 return [
     'productGroupOptionValueId' => Yii::t('product_group_option_value', 'Product Group Option Value ID'),
     'productGroupOptionId' => Yii::t('product_group_option_value', 'Product Group Option ID'),
+    'productGroupId' => Yii::t('product_group_option_value', 'Product Group ID'),
     'productId' => Yii::t('product_group_option_value', 'Product ID'),
+    'productGroupTemplateId' => Yii::t('product_group_option_value', 'Product Group Template ID'),
     'value' => Yii::t('product_group_option_value', 'Value'),
     'status' => Yii::t('product_group_option_value', 'Status'),
     'createDateTime' => Yii::t('product_group_option_value', 'Create Date Time'),
     'updateDateTime' => Yii::t('product_group_option_value', 'Update Date Time'),
-    'productGroupTemplateOptionId' => Yii::t('product_group_option_value', 'Product Group Template Option ID'),
 ];
 }
 

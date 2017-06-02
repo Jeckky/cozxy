@@ -15,12 +15,14 @@ use Imagine\Image\BoxInterface;
 /**
  * Upload 15/12/2016 By Taninut.Bm
  */
-class Upload {
+class Upload
+{
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
 //
         ];
@@ -30,7 +32,8 @@ class Upload {
      * Upload ครั้งละรูป
      */
 
-    public static function UploadBasic($fileName, $folderName, $uploadPath, $width, $height) {
+    public static function UploadBasic($fileName, $folderName, $uploadPath, $width, $height)
+    {
         $file = \yii\web\UploadedFile::getInstanceByName($fileName);
         $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
         $file->saveAs($uploadPath . '/' . $newFileName);
@@ -46,7 +49,8 @@ class Upload {
      * 6/1/2017
      */
 
-    public static function UploadMultiple($fileName, $folderName, $uploadPath, $width, $height) {
+    public static function UploadMultiple($fileName, $folderName, $uploadPath, $width, $height)
+    {
         $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName;
 
         if (isset($_FILES['image'])) {
@@ -70,7 +74,8 @@ class Upload {
      * Upload ครั้งละหลายรูป ของ Suppliers
      */
 
-    public static function UploadSuppliers($model) {
+    public static function UploadSuppliers($model)
+    {
 //$uploadPath = Yii::getAlias('@root') . '/uploads/';
         $folderName = "ProductImageSuppliers"; //  Size 553 x 484
         $folderThumbnail = "thumbnail"; // Size 553 x 484
@@ -105,7 +110,9 @@ class Upload {
             $model->image = 'images/' . $folderName . '/' . $newFileName; // Size 553 x 484
             $model->imageThumbnail1 = 'images/' . $folderName . '/' . $folderThumbnail1 . '/' . $newFileName; // Size 356 x 390
             $model->imageThumbnail2 = 'images/' . $folderName . '/' . $folderThumbnail2 . '/' . $newFileName; // Size 137 x 130
-            $model->productSuppId = Yii::$app->request->get('id');
+            if ((new \ReflectionClass($model))->getShortName() != "ProductImage") {
+                $model->productSuppId = Yii::$app->request->get('id');
+            }
             //$model->original_name = $file->name;
             $model->title = 'suppliers';
             $model->createDateTime = new \yii\db\Expression('NOW()');
@@ -116,10 +123,11 @@ class Upload {
             }
             //}
         } else {
+
             /* return $this->render('upload', [
               'model' => $model,
               ]); */
-            echo 'Test Upload images';
+            echo print_r($_FILES, TRUE);
         }
 
         return false;
@@ -132,7 +140,8 @@ class Upload {
      * emial : taninut.b@cozxy.com , sodapew17@gmial.com
      */
 
-    public static function UploadCSVCategory($fileName, $folderName, $uploadPath) {
+    public static function UploadCSVCategory($fileName, $folderName, $uploadPath)
+    {
         $file = \yii\web\UploadedFile::getInstanceByName($fileName);
         $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
         //echo '<pre>';
@@ -201,7 +210,8 @@ class Upload {
      * emial : taninut.b@cozxy.com , sodapew17@gmial.com
      */
 
-    public static function UploadCSVBrand($fileName, $folderName, $uploadPath) {
+    public static function UploadCSVBrand($fileName, $folderName, $uploadPath)
+    {
         $file = \yii\web\UploadedFile::getInstanceByName($fileName);
         $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
         $ext = explode('.', $file->name);
@@ -253,7 +263,8 @@ class Upload {
      * emial : taninut.b@cozxy.com , sodapew17@gmial.com
      */
 
-    public static function UploadCSVProduct($fileName, $folderName, $uploadPath) {
+    public static function UploadCSVProduct($fileName, $folderName, $uploadPath)
+    {
         $file = \yii\web\UploadedFile::getInstanceByName($fileName);
         $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
         $ext = explode('.', $file->name);

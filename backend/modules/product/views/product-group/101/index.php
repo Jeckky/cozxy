@@ -49,34 +49,56 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     ['class' => 'yii\grid\SerialColumn'],
 //                    'productGroupId',
                     'title',
-                    'description:ntext',
-                    ['attribute' => 'Create Date Time',
+                    ['attribute' => 'description',
+                        'format' => "raw",
+                        'value' => function ($model) {
+                            return $model->description;
+                        }
+                    ],
+                    ['attribute' => 'createDateTime',
                         'value' => function ($model) {
                             return $this->context->dateThai($model->createDateTime, 1);
+                        }
+                    ],
+                    ['attribute' => 'status',
+                        'options' => [
+                            'style' => 'width:7%'
+                        ],
+                        'value' => function ($model) {
+                            return ($model->status == 1) ? "Approve" : ($model->status == 99 ? "Wait Approve" : "Draft at Step " . $model->step );
                         }
                     ],
                     // 'updateDateTime',
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
-                        'template' => '{view} {update} {delete}',
+                        'options' => [
+                            'style' => 'width:5%'
+                        ],
+                        'template' => '{update}',
                         'buttons' => [
-                            'view' => function ($url, $model) {
-                                return Html::a('<i class="fa fa-eye"></i>', $url, [
-                                    'title' => Yii::t('yii', 'view'),
-                                ]);
-                            },
+//                            'view' => function ($url, $model) {
+//                                return Html::a('<i class="fa fa-eye"></i>', $url, [
+//                                    'title' => Yii::t('yii', 'view'),
+//                                ]);
+//                            },
                             'update' => function ($url, $model) {
-                                return Html::a('<i class="fa fa-pencil"></i>', $url, [
-                                    'title' => Yii::t('yii', 'update'),
-                                ]);
+                                if ($model->status == 0) {
+                                    return Html::a('<i class="fa fa-pencil"></i>', ["create", 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
+                                        'title' => Yii::t('yii', 'update'),
+                                    ]);
+                                } else {
+                                    return Html::a('<i class="fa fa-pencil"></i>Product', ["create", 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
+                                        'title' => Yii::t('yii', 'update'),
+                                    ]);
+                                }
                             },
-                            'delete' => function ($url, $model) {
-                                return Html::a('<i class="fa fa-trash-o"></i>', $url, [
-                                    'title' => Yii::t('yii', 'Delete'),
-                                    'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
-                                    'data-method' => 'post',
-                                ]);
-                            },
+//                            'delete' => function ($url, $model) {
+//                                return Html::a('<i class="fa fa-trash-o"></i>', $url , [
+//                                    'title' => Yii::t('yii', 'Delete'),
+//                                    'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+//                                    'data-method' => 'post',
+//                                ]);
+//                            },
                         ]
                     ],
                 ],

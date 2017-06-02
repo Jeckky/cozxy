@@ -176,7 +176,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
             <div class="panel-body">
                 <?php
                 $form = ActiveForm::begin([
-                    'enableClientValidation' => ($step == 2 || $step == 3) ? false : TRUE,
+                    'enableClientValidation' => ($step == 2 || $step == 3 || $step == 4 || $step == 5) ? false : TRUE,
                     'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
                     'fieldConfig' => [
                         'template' => '{label}<div class="col-sm-9">{input}</div>',
@@ -260,6 +260,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     <div class="tab-pane <?= ($step == 2) ? " active" : " " ?>" role="tabpanel" id="step2">
                                         <h3>Step 2 - Product Image</h3>
                                         <?php if (isset($_GET["productGroupId"])): ?>
+                                            <?= $this->render("_image_grid", ["id" => $_GET["productGroupId"]]); ?>
                                             <?= $this->render("_image_form", ["id" => $_GET["productGroupId"]]); ?>
                                         <?php endif; ?>
                                         <ul class="list-inline pull-right">
@@ -304,7 +305,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             <li><?php echo Html::submitButton('Next', ['class' => 'btn btn-primary next-step', 'name' => 'next', 'value' => 'next']); ?></li>
                                         </ul>
                                     </div>
-                                    <div class="tab-pane <?= ($step == 4) ? " active" : " " ?>" role="tabpanel" id="complete">
+                                    <div class="tab-pane <?= ($step == 4) ? " active" : " " ?>" role="tabpanel" id="productDetail">
                                         <style>
                                             .popover-lg{
                                                 min-width: 750px
@@ -331,13 +332,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                         }
                                                     ],
 //                    'productId',
-                                                    [
-                                                        'attribute' => 'title',
-                                                        'format' => 'raw',
-                                                        'value' => function($model) {
-                                                            return Html::a($model->title, ['update-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], ['data-pjax' => 0]);
-                                                        }
-                                                    ],
+//                                                    [
+//                                                        'attribute' => 'title',
+//                                                        'format' => 'raw',
+//                                                        'value' => function($model) {
+//                                                            return Html::a($model->title, ['update-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], ['data-pjax' => 0]);
+//                                                        }
+//                                                    ],
+                                                    'title',
                                                     [
                                                         'attribute' => 'description',
                                                         'format' => 'raw',
@@ -444,7 +446,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                             $options = \common\models\costfit\ProductGroupOptionValue::find()->where("productId =" . $model->productId)->all();
                                                             $optionStr = "";
                                                             foreach ($options as $option) {
-                                                                $optionStr.= $option->productGroupTemplateOption->title . "-" . $option->value . "<br>";
+                                                                $optionStr.= $option->productGroupOption->name . "-" . $option->value . "<br>";
                                                             }
                                                             return $optionStr;
                                                         }
@@ -458,12 +460,31 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                         'class' => 'kartik\grid\ActionColumn',
 //                                                        'dropdown' => FALSE,
                                                         'vAlign' => 'middle',
-                                                        'template' => '{delete}',
+                                                        'template' => '{update} {delete}',
                                                         'urlCreator' => function($action, $model, $key, $index) {
-                                                            return '#';
+//                                                            return '#';
+                                                            if ($action === 'delete') {
+                                                                return \yii\helpers\Url::toRoute(['delete-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]]);
+                                                            }
                                                         },
+                                                        'buttons' => [
+                                                            "update" => function ($url, $model) {
+                                                                return Html::a("<span class='glyphicon glyphicon-pencil'></span>", ['update-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], [
+                                                                    'title' => Yii::t('app', 'Toogle Active'),
+                                                                    'data-pjax' => '0',
+//                                                                    'data-toggle-active' => $model->productId
+                                                                ]);
+                                                            },
+//                                                            "delete" => function ($url, $model) {
+//                                                                return Html::a("<span class='glyphicon glyphicon-trash'></span>", ['delete-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], [
+////                                                                    'title' => Yii::t('app', 'Toogle Active'),
+//                                                                    'title' => "คุณต้องการลบสินค้านี้หรือไม่ ?", 'data-toggle' => 'tooltip'
+////                                                                    'data-toggle-active' => $model->productId
+//                                                                ]);
+//                                                            },
+                                                        ],
 //                        'viewOptions' => ['title' => $viewMsg, 'data-toggle' => 'tooltip'],
-//                        'updateOptions' => ['title' => $updateMsg, 'data-toggle' => 'tooltip'],
+//                                                        'updateOptions' => ['title' => "แก้ไขข้อมูลสินค้า", 'data-toggle' => 'tooltip', 'url' => ['update-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]]],
                                                         'deleteOptions' => ['title' => "คุณต้องการลบสินค้านี้หรือไม่ ?", 'data-toggle' => 'tooltip'],
                                                     ],
 //                                                    ['class' => 'kartik\grid\CheckboxColumn']
@@ -498,6 +519,47 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             ]);
                                         }
                                         ?>
+                                        <ul class="list-inline pull-right">
+                                            <li>
+                                                <!--<button type="button" class="btn btn-default prev-step">Previous</button>-->
+                                                <?php echo Html::a("<i class='glyphicon glyphicon-arrow-left'></i> Back", ['create', 'step' => 3, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], ['class' => 'btn btn-default']) ?>
+                                            </li>
+                                            <?php
+                                            $user_group_Id = Yii::$app->user->identity->user_group_Id;
+                                            $userRe = str_replace('[', '', str_replace(']', '', $user_group_Id));
+                                            $userEx = explode(',', $userRe);
+                                            $ress = array_search(26, $userEx);
+                                            $productGroup = \common\models\costfit\Product::find()->where("productId=" . $_GET["productGroupId"])->one();
+                                            if ($ress !== FALSE && $productGroup->status == 99) {
+                                                ?>
+                                                <li><?php echo Html::a("<i class='glyphicon glyphicon-check'></i> Approve", ['approve-product-group', 'id' => $_GET["productGroupId"]], ['class' => 'btn btn-warning']) ?></li>
+                                                <?php
+                                            }
+                                            ?>
+
+                                            <li><?php echo Html::submitButton('Next', ['class' => 'btn btn-primary next-step', 'name' => 'next', 'value' => 'next']); ?></li>
+                                        </ul>
+                                    </div>
+                                    <div class="tab-pane <?= ($step == 5) ? " active" : " " ?>" role="tabpanel" id="productDetail">
+                                        <style>
+                                            .popover-lg{
+                                                min-width: 750px
+                                            }
+                                        </style>
+                                        <h3>Complete</h3>
+                                        <?php
+                                        // Control your pjax options
+                                        if (isset($countProduct)) {
+                                            ?>
+                                            <h4>สร้าง สินค้าในกลุ่ม <?= $model->title; ?> แล้ว<br> จำนวน <?= $countProduct ?> ชิ้น</h4>
+                                            <?php
+                                        }
+                                        ?>
+                                        <ul class="list-inline pull-right">
+                                            <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
+                                            <!--<li><button type="button" class="btn btn-default next-step">Skip</button></li>-->
+                                            <li><?php echo Html::submitButton('Finish', ['class' => 'btn btn-success next-step', 'name' => 'finish', 'value' => 'finish']); ?></li>
+                                        </ul>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>

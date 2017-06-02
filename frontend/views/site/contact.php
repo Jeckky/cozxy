@@ -9,7 +9,11 @@ use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
 
 $this->title = 'Contact';
-
 ?>
 
-<?=$this->render('@app/themes/cozxy/layouts/_contact')?>
+<?=
+
+$this->render('@app/themes/cozxy/layouts/_contact', [
+    'msg' => isset($msg) ? $msg : false
+])
+?>

@@ -17,6 +17,7 @@ use frontend\models\ContactForm;
 use frontend\models\FakeFactory;
 use common\models\costfit\Content;
 use common\models\costfit\ContentGroup;
+use common\helpers\Email;
 
 /**
  * Site controller
@@ -144,6 +145,7 @@ class SiteController extends Controller {
      */
     public function actionContact() {
         $model = new ContactForm();
+        $msg = Yii::$app->request->get('msg') ? Yii::$app->request->get('msg') : '';
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
                 Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
@@ -155,8 +157,23 @@ class SiteController extends Controller {
         } else {
             return $this->render('contact', [
                         'model' => $model,
+                        'msg' => $msg
             ]);
         }
+    }
+
+    public function actionContactMail() {
+        $customerMail = $_POST['email'];
+        $customerName = $_POST['name'];
+        $customerPhone = $_POST['phone'];
+        $customerMsg = $_POST['message'];
+        $Subject = 'Email from customer contact';
+        $mail = Email::mailContactCozxy($Subject, $customerMail, $customerName, $customerPhone, $customerMsg);
+        $model = new ContactForm();
+        $msg = '* E-mail was sent to cozxy.com, please wait for contact from cozxy.com, thank you';
+        return $this->redirect(['contact',
+                    'msg' => $msg,
+        ]);
     }
 
     /**
