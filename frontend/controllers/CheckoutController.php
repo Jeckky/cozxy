@@ -45,7 +45,30 @@ class CheckoutController extends MasterController {
 
         $hash = 'add';
         $order = \common\models\costfit\Order::find()->where("orderId=" . $_POST['orderId'])->one();
-        return $this->render('index', compact('model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash'));
+
+        /*
+         * New Billing
+         */
+        $NewBilling = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
+        if (isset($_POST['Address'])) {
+            $model->attributes = $_POST['Address'];
+            if ($_POST["Address"]['isDefault']) {
+                \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_BILLING]);
+                $model->isDefault = 1;
+            }
+            $model->userId = Yii::$app->user->id;
+            $model->type = \common\models\costfit\Address::TYPE_BILLING;
+            $model->createDateTime = new \yii\db\Expression("NOW()");
+            if ($model->save(FALSE)) {
+                //return $this->redirect(['/my-account']);
+            }
+        }
+        if (!isset($model->isDefault)) {
+            $model->isDefault = 0;
+        }
+        $hash = 'add';
+
+        return $this->render('index', compact('NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash'));
     }
 
     public function actionSummary() {
@@ -305,6 +328,31 @@ class CheckoutController extends MasterController {
             $used->updateDateTime = new \yii\db\Expression('NOW()');
             $used->save(false);
         }
+    }
+
+    public function actionCheckoutNewBilling() {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
+        if (isset($_POST['Address'])) {
+            $model->attributes = $_POST['Address'];
+            if ($_POST["Address"]['isDefault']) {
+                \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_BILLING]);
+                $model->isDefault = 1;
+            }
+            $model->userId = Yii::$app->user->id;
+            $model->type = \common\models\costfit\Address::TYPE_BILLING;
+            $model->createDateTime = new \yii\db\Expression("NOW()");
+            if ($model->save(FALSE)) {
+                return $this->redirect(['/my-account']);
+            }
+        }
+        if (!isset($model->isDefault)) {
+            $model->isDefault = 0;
+        }
+        $hash = 'add';
+        //return $this->render('@app/themes/cozxy/layouts/my-account/_form_billing', compact('model', 'hash'));
     }
 
 }

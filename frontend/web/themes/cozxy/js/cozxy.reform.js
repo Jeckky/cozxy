@@ -391,6 +391,7 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
     }
 }
 
+
 /*
  * Delete items to cart in deleteWishlist
  */
@@ -505,3 +506,35 @@ $(document).on('click', '.delete', function () {
     });
 });
 
+/*
+ * @returns {undefined}
+ */
+function checkoutNewBilling() {
+    //$('#default-add-new-billing-address').yiiActiveForm('validate');
+    $('#default-add-new-billing-address').yiiActiveForm('submitForm');
+    alert($('#default-add-new-billing-address').html());
+    var $this = $('#acheckoutNewBillingz');
+    $this.button('loading');
+    setTimeout(function () {
+        $this.button('reset');
+    }, 8000);
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "checkout/checkout-new-billing",
+        data: {'addressId': ''},
+        success: function (data, status)
+        {
+            //(status);
+            if (status == "success") {
+                // $('.itemToBillingAddress-' + id).remove();
+            } else {
+                alert('Please try again.');
+                // window.location = $baseUrl + 'my-account';
+                /*
+                 $('.name-lockers-cool').html('');
+                 $('.view-map-images-lockers-cool').html('');
+                 */
+            }
+        }
+    });
+}

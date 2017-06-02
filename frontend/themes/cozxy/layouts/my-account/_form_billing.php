@@ -21,7 +21,11 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php
             $form = ActiveForm::begin([
                 'id' => 'default-shipping-address',
-                'options' => ['class' => 'space-bottom'],
+                'enableClientValidation' => false,
+                'enableAjaxValidation' => true,
+                'validationUrl' => ['validate-form-step-2'],
+                'validateOnBlur' => false,
+                'validateOnChange' => false
             ]);
             ?>
             <div class="form-group">
