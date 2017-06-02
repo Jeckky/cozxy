@@ -59,6 +59,9 @@ class FakeFactory extends Model {
             } else {
                 $title = isset($value->title) ? $value->title : '';
             }
+
+            $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
+
             $products[$value->productSuppId] = [
                 'productSuppId' => $value->productSuppId,
                 'image' => $productImagesThumbnail1,
@@ -72,6 +75,7 @@ class FakeFactory extends Model {
                 'productId' => $value->productId,
                 'supplierId' => $value->userId,
                 'receiveType' => $value->receiveType,
+                'wishList' => $wishList
             ];
         }
 
@@ -121,31 +125,19 @@ class FakeFactory extends Model {
             }
             $price_s = number_format($value->price, 2);
             $price = number_format($value->price, 2);
+            $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
             $products[$value->productSuppId] = [
                 'productSuppId' => $value->productSuppId,
                 'image' => $productImagesThumbnail1,
-                //'image' => isset($productImages->imageThumbnail1) ? Yii::$app->homeUrl . $productImages->imageThumbnail1 : '',
-                //'url' => 'product?id=' . $value->productSuppId,
                 'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
                 'brand' => isset($value->brand) ? $value->brand->title : '',
                 'title' => $title,
                 'price_s' => $price_s,
                 'price' => $price,
+                'wishList' => $wishList
             ];
         }
-        /*
-          for ($i = 1; $i <= $n; $i++) {
-          $price_s = rand(30000, 40000);
-          $price = rand(45000, 80000);
-          $products[$i] = [
-          'image' => 'imgs/product0' . ($i) . '.jpg',
-          'url' => 'product?id=' . $i,
-          'brand' => 'PRADA',
-          'title' => 'QUILTED NAPPA GANSEVOORT FLAP SHOULDER BAG',
-          'price_s' => $price_s,
-          'price' => $price,
-          ];
-          } */
+
         return $products;
     }
 
@@ -192,6 +184,7 @@ class FakeFactory extends Model {
             }
             $price_s = number_format($value->price, 2);
             $price = number_format($value->price, 2);
+            $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
             $products[$value->productSuppId] = [
                 'productSuppId' => $value->productSuppId,
                 'image' => $productImagesThumbnail1,
@@ -207,6 +200,7 @@ class FakeFactory extends Model {
                 'productId' => $value->productId,
                 'supplierId' => $value->userId,
                 'receiveType' => $value->receiveType,
+                'wishList' => $wishList
             ];
         }
 
@@ -309,6 +303,7 @@ class FakeFactory extends Model {
                     $productImagesOneTopz = \common\helpers\Base64Decode::DataImageSvg555x340(FALSE, FALSE, FALSE);  //'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNTU1IiBoZWlnaHQ9IjM0MCIgdmlld0JveD0iMCAwIDY0IDY0IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48IS0tDQpTb3VyY2UgVVJMOiBob2xkZXIuanMvNTU1eDM0MA0KQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4NCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQ0KKGMpIDIwMTItMjAxNSBJdmFuIE1hbG9waW5za3kgLSBodHRwOi8vaW1za3kuY28NCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNWMwYTg2ZjY1YSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1YzBhODZmNjVhIj48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSI2LjIyNjU2MjUiIHk9IjM2LjUzMjgxMjUiPjU1NXgzNDA8L3RleHQ+PC9nPjwvZz48L3N2Zz4=';
                 }
             }
+            $wishList = \frontend\models\DisplayMyWishList::productWishList($GetProductSuppliers['productSuppId']);
             $products[$GetProductSuppliers['productSuppId']] = [
                 'productSuppId' => $GetProductSuppliers['productSuppId'],
                 'productId' => $GetProductSuppliers['productId'],
@@ -332,6 +327,7 @@ class FakeFactory extends Model {
                 'productId' => $GetProductSuppliers['productId'],
                 'supplierId' => $GetProductSuppliers['userId'],
                 'receiveType' => $GetProductSuppliers['receiveType'],
+                'wishList' => $wishList
             ];
         }
 
