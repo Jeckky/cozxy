@@ -100,8 +100,6 @@ $this->title = 'Brand ' . $brandName;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= $this->render('@app/themes/cozxy/layouts/search/_search_filter') ?>
-
 <div class="product-list">
     <div class="container">
         <div class="row">
