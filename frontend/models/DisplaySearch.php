@@ -50,15 +50,20 @@ class DisplaySearch extends Model {
             }
             $price_s = number_format($value->price, 2);
             $price = number_format($value->price, 2);
+            $wishList = \frontend\models\DisplayMyWishList::productWishList($GetProductSuppliers['productSuppId']);
             $products[$value->productSuppId] = [
                 'image' => $productImagesThumbnail1,
-                //'image' => isset($productImages->imageThumbnail1) ? Yii::$app->homeUrl . $productImages->imageThumbnail1 : '',
-                //'url' => 'product?id=' . $value->productSuppId,
                 'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
                 'brand' => isset($value->brand) ? $value->brand->title : '',
                 'title' => isset($value->title) ? $value->title : '',
                 'price_s' => isset($price_s) ? $price_s : '',
                 'price' => isset($price) ? $price : '',
+                'maxQnty' => $GetProductSuppliers['result'],
+                'fastId' => FALSE,
+                'productId' => $GetProductSuppliers['productId'],
+                'supplierId' => $GetProductSuppliers['userId'],
+                'receiveType' => $GetProductSuppliers['receiveType'],
+                'wishList' => $wishList
             ];
         }
 

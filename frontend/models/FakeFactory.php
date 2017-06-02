@@ -70,11 +70,11 @@ class FakeFactory extends Model {
                 'title' => $title,
                 'price_s' => isset($price_s) ? $price_s : '',
                 'price' => isset($price) ? $price : '',
-                'maxQnty' => $value->result,
+                'maxQnty' => isset($value->result) ? $value->result : '',
                 'fastId' => FALSE,
-                'productId' => $value->productId,
-                'supplierId' => $value->userId,
-                'receiveType' => $value->receiveType,
+                'productId' => isset($value->productId) ? $value->productId : '',
+                'supplierId' => isset($value->userId) ? $value->userId : '',
+                'receiveType' => isset($value->receiveType) ? $value->receiveType : '',
                 'wishList' => $wishList
             ];
         }
