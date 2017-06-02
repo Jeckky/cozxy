@@ -71,21 +71,22 @@ class CartController extends MasterController {
                 throw new \yii\base\Exception("Can't Save Order");
             }
         }
-        //throw new \yii\base\Exception('fastId=' . $id);
+        //throw new \yii\base\Exception('orderId=' . $order->orderId);
         $fastid = $_POST['fastId'];
         if ($fastid == '') {
-            $fastid = 1;
-            $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . ""
-            . " and sendDate=" . $fastid)->one();
+            $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . "")->one();
         } else {
-            $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . ""
-            . " and sendDate=" . $fastid)->one();
+            $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . "" . " and sendDate=" . $fastid)->one();
         }
-
+        //echo '<pre>';
+        //print_r('fastid :' . $orderItem);
+        //exit();
         if (!isset($orderItem)) {
+            //echo 'test 1';
             $orderItem = new \common\models\costfit\OrderItem();
             $orderItem->quantity = $_POST["quantity"];
         } else {
+            //echo 'test 1';
             $orderItem->quantity = $orderItem->quantity + $_POST["quantity"];
         }
         $product = new \common\models\costfit\Product();

@@ -105,7 +105,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
             'quantity',
             'isbn',
             'title'
-                /* use end */
+        /* use end */
         ]);
     }
 
@@ -192,6 +192,10 @@ class Order extends \common\models\costfit\master\OrderMaster {
                 ];
             }
             $order->save(); // For Update Total;
+            //echo '<pre>';
+            //print_r($order->attributes);
+            //exit();
+
             $res['orderId'] = $order->orderId;
             $res['isSlowest'] = $order->isSlowest;
             $res["totalExVat"] = $order->totalExVat;
@@ -753,7 +757,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
     public function search($params) {
 
         $query = \common\models\costfit\Order::find()
-                ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "");
+        ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "");
         //  and orderNo  is not null order by orderId desc
 
         $dataProvider = new ActiveDataProvider([
@@ -769,7 +773,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
         }
 
         $query->andFilterWhere(['like', 'createDateTime', $this->createDateTime])
-                ->andFilterWhere(['like', 'orderNo', $this->orderNo]);
+        ->andFilterWhere(['like', 'orderNo', $this->orderNo]);
 
         return $dataProvider;
     }

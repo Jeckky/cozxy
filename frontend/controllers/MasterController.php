@@ -54,8 +54,8 @@ class MasterController extends MasterCommonController {
         }
         $this->view->params['recentStories'] = new \yii\data\ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStory(6)]);
         $this->view->params['cart'] = \common\models\costfit\Order::findCartArray();
-
-
+        //echo '<pre>';
+        //print_r($this->view->params['cart']);
         // - SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
         if ((!Yii::$app->user->isGuest) && $this->id == "profile") {
             $dataProvider_shipping_bk = new \yii\data\ActiveDataProvider([
