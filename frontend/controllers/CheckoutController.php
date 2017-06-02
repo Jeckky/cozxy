@@ -26,7 +26,7 @@ use yii\data\ArrayDataProvider;
 class CheckoutController extends MasterController {
 
     public function actionIndex() {
-        if (Yii::$app->user->isGuest == 1) {
+        if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
         $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
@@ -42,7 +42,7 @@ class CheckoutController extends MasterController {
     }
 
     public function actionSummary() {
-        if (Yii::$app->user->isGuest == 1) {
+        if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
         $provinceid = Yii::$app->request->post('provinceId');
@@ -107,6 +107,9 @@ class CheckoutController extends MasterController {
     }
 
     function actionMapImages() {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
         //echo 'test map images';
         $pickingId = Yii::$app->request->post('pickingIds');
         //$pickingId = 1;
@@ -122,6 +125,9 @@ class CheckoutController extends MasterController {
     }
 
     function actionMapImagesGoogle() {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
         //echo 'test map images';
         $pickingId = Yii::$app->request->post('pickingIds');
         //$pickingId = 1;
@@ -137,6 +143,9 @@ class CheckoutController extends MasterController {
     }
 
     function actionOrderSummary($hash) {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
         $k = base64_decode(base64_decode($hash));
         $params = ModelMaster::decodeParams($hash);
         $orderId = $params['orderId'];
@@ -149,8 +158,8 @@ class CheckoutController extends MasterController {
             $userPoint = $this->CreateUserPoint($order->userId);
         }
         return $this->render('/order/index', [
-                    'order' => $order,
-                    'userPoint' => $userPoint
+            'order' => $order,
+            'userPoint' => $userPoint
         ]);
     }
 

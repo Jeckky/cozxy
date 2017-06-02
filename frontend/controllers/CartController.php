@@ -31,6 +31,9 @@ class CartController extends MasterController {
      */
     public function actionIndex() {
         // \frontend\assets\CartAsset::register($this);
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
         $this->title = 'Cozxy.com | cart';
         $this->subTitle = 'Shopping Cart';
         /* $allProducts = $this->allProduct();
@@ -59,6 +62,7 @@ class CartController extends MasterController {
     }
 
     public function actionAddToCart($id) {
+
         $res = [];
         $order = \common\models\costfit\Order::getOrder();
         if (!isset($order)) {
@@ -146,6 +150,9 @@ class CartController extends MasterController {
     }
 
     public function actionDeleteCartItem($id) {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
         $res = [];
         $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId = " . $id)->one();
         $qnty = intval($orderItem->quantity);
@@ -240,6 +247,9 @@ class CartController extends MasterController {
     }
 
     public function actionAddWishlist() {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
         $res = [];
         $ws = \common\models\costfit\Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
         if (!isset($ws)) {
@@ -263,6 +273,9 @@ class CartController extends MasterController {
     }
 
     public function actionDeleteWishlist() {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
         $res = [];
         $ws = \common\models\costfit\Wishlist::find()->where("wishlistId = " . $_POST['wishlistId'] . " AND userId = " . \Yii::$app->user->id)->one();
         if (isset($ws)) {

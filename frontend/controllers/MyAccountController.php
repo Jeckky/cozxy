@@ -145,6 +145,9 @@ class MyAccountController extends MasterController {
     }
 
     public function actionDeleteItemToBillingAddress() {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
         $address_id = Yii::$app->request->post('addressId');
         $model = \common\models\costfit\Address::find()->where("addressId ='" . $address_id . "'")->one();
         if ($model->delete()) {
