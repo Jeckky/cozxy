@@ -89,7 +89,24 @@ $(function() {
 		values: [ 100, 6000 ],
 		slide: function( event, ui ) {
 			$( "#amount" ).val( "From " + ui.values[ 0 ] + " THB to " + ui.values[ 1 ] + " THB");
-		}
+		},
+        stop: function (event, ui) {
+            //debugger;
+            var path = "' . Yii::$app->homeUrl . 'search/filter-price";
+            $.ajax({
+                url: path,
+                type: "POST",
+                dataType: "JSON",
+                data: {mins:ui.values[ 0 ],maxs:ui.values[ 1 ],categoryId:' . $categoryId . '},
+                success: function (data){
+                    if (data.status) {
+                        alert(data);
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            });
+        }
 	});
 	$( "#amount" ).val( "From " + $( "#slider-range" ).slider( "values", 0 ) + " THB to " + $( "#slider-range" ).slider( "values", 1 ) + " THB" );
 });
@@ -103,7 +120,7 @@ $(function() {
     <div class="container">
         <div class="row">
             <div class="col-xs-9">
-                <h3 class="b"><?=strtoupper($category)?></h3>
+                <h3 class="b"><?= strtoupper($category) ?></h3>
 <!--                <p class="size18 size16-sm size14-xs">SHOWING 1-16 OF 79 RESULTS</p>-->
                 <div class="row">
                     <div class="wf-container">
@@ -133,19 +150,19 @@ $(function() {
 
                 <?php
                 /*
-                <div class="panel panel-defailt">
-                    <div class="size14" style="background-color:rgb(254, 230, 10);">&nbsp;</div>
-                    <h3 class="page-header" style="margin:10px 20px;">My Story</h3>
-                    <div class="panel-body text-center">
-                        <img src="imgs/other01.jpg" class="img-circle" alt="Big Bag" style="width:120px;">
-                        <h4>Bag Premium Black</h4>
-                        <a href="#" class="b btn-g999" style="margin:24px auto 12px">Write your story</a>
-                    </div>
-                </div>
-                */
+                  <div class="panel panel-defailt">
+                  <div class="size14" style="background-color:rgb(254, 230, 10);">&nbsp;</div>
+                  <h3 class="page-header" style="margin:10px 20px;">My Story</h3>
+                  <div class="panel-body text-center">
+                  <img src="imgs/other01.jpg" class="img-circle" alt="Big Bag" style="width:120px;">
+                  <h4>Bag Premium Black</h4>
+                  <a href="#" class="b btn-g999" style="margin:24px auto 12px">Write your story</a>
+                  </div>
+                  </div>
+                 */
                 ?>
 
-               <?=$this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories')?>
+                <?= $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories') ?>
             </div>
             <div class="col-xs-12 text-center">
                 <a href="#" class="b btn-black" style="margin:24px auto 32px">SHOW MORE

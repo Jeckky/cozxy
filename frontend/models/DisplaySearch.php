@@ -123,10 +123,10 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSearchCategory($n, $cat = FALSE) {
+    public static function productSearchCategory($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE) {
         $products = [];
         $whereArray = [];
-        if ($cat != FALSE) {
+        if ($cat != FALSE && $mins == FALSE && $maxs == FALSE) {
             $whereArray = [];
             $whereArray["category_to_product.categoryId"] = $cat;
 
@@ -141,6 +141,23 @@ class DisplaySearch extends Model {
             ->where($whereArray)
             //->andWhere([">", "ps.result", 0])
             ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
+        } elseif ($cat != FALSE && $mins != FALSE && $maxs != FALSE) {
+            $whereArray2 = [];
+            $whereArray["category_to_product.categoryId"] = $cat;
+
+            $whereArray2["product.approve"] = "approve";
+            //$whereArray2["ps.result"] = "0";
+            $whereArray2["pps.status"] = "1";
+
+            $pCanSale = \common\models\costfit\CategoryToProduct::find()
+            ->select('*')
+            ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+            ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+            ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+            ->where($whereArray2)
+            ->andWhere('ps.result > 0')
+            ->andWhere(['between', 'pps.price', $mins, $maxs])
+            ->groupBy('ps.productSuppId')->limit($n)->all();
         } else {
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
             ->select('*')
