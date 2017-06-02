@@ -7,6 +7,7 @@ use yii\base\Model;
 use yii\db\ActiveRecord;
 use frontend\models\DisplaySearch;
 use frontend\models\FakeFactory;
+use frontend\models\DisplayMyCategory;
 use yii\data\ArrayDataProvider;
 
 class SearchController extends MasterController {
@@ -30,7 +31,8 @@ class SearchController extends MasterController {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
         $categoryId = $params['categoryId'];
-        $productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, $categoryId)]);
+        //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, $categoryId)]);
+        $productCanSell = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $categoryId)]);
         $category = $_GET['c'];
         return $this->render('index', compact('productCanSell', 'category'));
     }
