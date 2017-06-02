@@ -33,12 +33,12 @@ class SiteController extends Controller {
                 'class' => AccessControl::className(),
                 'only' => ['logout', 'signup'],
                 'rules' => [
-                        [
+                    [
                         'actions' => ['signup'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
-                        [
+                    [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -156,8 +156,8 @@ class SiteController extends Controller {
             return $this->refresh();
         } else {
             return $this->render('contact', [
-                        'model' => $model,
-                        'msg' => $msg
+                'model' => $model,
+                'msg' => $msg
             ]);
         }
     }
@@ -172,7 +172,7 @@ class SiteController extends Controller {
         $model = new ContactForm();
         $msg = '* E-mail was sent to cozxy.com, please wait for contact from cozxy.com, thank you';
         return $this->redirect(['contact',
-                    'msg' => $msg,
+            'msg' => $msg,
         ]);
     }
 
@@ -188,8 +188,8 @@ class SiteController extends Controller {
             $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->all();
         }
         return $this->render('about', [
-                    'content' => $content
-                        ]
+            'content' => $content
+        ]
         );
     }
 
@@ -221,7 +221,7 @@ class SiteController extends Controller {
         }
 
         return $this->render('@app/themes/cozxy/layouts/_register', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -255,7 +255,7 @@ class SiteController extends Controller {
         }
 
         return $this->render('requestPasswordResetToken', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -280,7 +280,7 @@ class SiteController extends Controller {
         }
 
         return $this->render('resetPassword', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -290,8 +290,8 @@ class SiteController extends Controller {
             $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->all();
         }
         return $this->render('faqs', [
-                    'content' => $content
-                        ]
+            'content' => $content
+        ]
         );
     }
 
@@ -301,8 +301,8 @@ class SiteController extends Controller {
             $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->all();
         }
         return $this->render('terms-and-conditions', [
-                    'content' => $content
-                        ]
+            'content' => $content
+        ]
         );
     }
 

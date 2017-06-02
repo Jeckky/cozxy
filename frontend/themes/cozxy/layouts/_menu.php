@@ -58,17 +58,29 @@ use yii\bootstrap\ActiveForm;
 <div class="bg-black menubar hidden-md hidden-sm hidden-xs">
     <div class="container">
         <div class="row">
-            <?//= \yii\helpers\Html::a('BAG', ['/search?c=bag'], ['class' => 'menu-item']) ?>
-            <?//= \yii\helpers\Html::a('GLASSES', ['/search?c=glasses'], ['class' => 'menu-item']) ?>
-            <?//= \yii\helpers\Html::a('WATCH', ['/search?c=watch'], ['class' => 'menu-item']) ?>
             <?php
-            $Category = common\models\costfit\Category::find()->where('status=1')->limit(14)->all();
-            foreach ($Category as $value) {
+            $category = \common\models\costfit\ProductSuppliers::find()
+            ->select('`product_suppliers`.categoryId , `category`.title , count(`product_suppliers`.`categoryId`)')
+            ->join("LEFT JOIN", "category", "category.categoryId=product_suppliers.categoryId")
+            ->groupBy('`product_suppliers`.categoryId')
+            ->orderBy('count(`product_suppliers`.`categoryId`) asc')
+            ->limit(12)
+            ->all();
+            foreach ($category as $value) {
                 $params = \common\models\ModelMaster::encodeParams(['categoryId' => $value->categoryId]);
                 $strtoupper = strtoupper($value->title);
                 $strtolower = strtolower($value->title);
                 echo \yii\helpers\Html::a("$strtoupper", ['/search/' . $value->createTitle() . '/' . $params . '?c=' . $strtolower], ['class' => 'menu-item']);
             }
+            ?>
+            <?php
+            /* $Category = common\models\costfit\Category::find()->where('status=1')->limit(14)->all();
+              foreach ($Category as $value) {
+              $params = \common\models\ModelMaster::encodeParams(['categoryId' => $value->categoryId]);
+              $strtoupper = strtoupper($value->title);
+              $strtolower = strtolower($value->title);
+              echo \yii\helpers\Html::a("$strtoupper", ['/search/' . $value->createTitle() . '/' . $params . '?c=' . $strtolower], ['class' => 'menu-item']);
+              } */
             ?>
             <!--            <a href="product.php" class="menu-item">RING</a>-->
             <!--            <a href="product.php" class="menu-item">HAT</a>-->
