@@ -175,18 +175,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 //                                ]);
 //                            },
                             'update' => function ($url, $model) {
-                                if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5) {
-                                    if ($model->status == 0) {
-                                        return Html::a('<i class="fa fa-pencil"></i>', ["create", 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
-                                            'title' => Yii::t('yii', 'update'),
-                                        ]);
-                                    } else {
-                                        return Html::a('<i class="fa fa-pencil"></i>Product', ["create", 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
-                                            'title' => Yii::t('yii', 'update')]) . "<br>" . Html::a('<i class="fa fa-eye"></i>', ["view", 'productGroupId' => $model->productId], [
-                                            'title' => Yii::t('yii', 'update'),
-                                        ]);
-                                    }
-                                } else {
+                                if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5) {
                                     if (count($model->products) > 0) {
                                         return Html::a('<i class="fa fa-eye"></i>', ["view", 'productGroupId' => $model->productId], [
                                             'title' => Yii::t('yii', 'update'),
@@ -195,6 +184,15 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         return Html::a('<i class="fa fa-pencil"></i>', ["create", 'step' => 1, 'productGroupId' => $model->productId], [
                                             'title' => Yii::t('yii', 'update'),
                                         ]);
+                                    }
+                                } else {
+                                    if ($model->status == 0) {
+                                        return Html::a('<i class="fa fa-pencil"></i>', ["create", 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
+                                            'title' => Yii::t('yii', 'update'),
+                                        ]);
+                                    } else {
+                                        return Html::a('<i class="fa fa-pencil"></i>Product', ["create", 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
+                                            'title' => Yii::t('yii', 'update')]);
                                     }
                                 }
                             },

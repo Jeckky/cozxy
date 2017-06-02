@@ -54,7 +54,7 @@ class ProductGroupController extends ProductMasterController
         if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5) {
             $query = \common\models\costfit\Product::find()
             ->join("LEFT JOIN", "user u", "u.userId = product.userId")
-            ->where("product.parentId is null AND product.status = 1 AND u.type in (2,3,4,5) AND u.userId=" . Yii::$app->user->identity->userId);
+            ->where("product.parentId is null  AND u.type in (2,3,4,5) AND u.userId=" . Yii::$app->user->identity->userId);
         } else {
             $user_group_Id = Yii::$app->user->identity->user_group_Id;
             $userRe = str_replace('[', '', str_replace(']', '', $user_group_Id));
@@ -257,7 +257,9 @@ class ProductGroupController extends ProductMasterController
                     $pgo->productGroupTemplateOptionId = $pto->productGroupTemplateOptionId;
                     $pgo->name = $pto->title;
                     $pgo->createDateTime = new \yii\db\Expression("NOW()");
-                    $pgo->save();
+                    if (!$pgo->save()) {
+                        throw new \yii\base\Exception(print_r($pgo->errors, TRUE));
+                    }
                 }
                 if (isset($_POST["ProductGroupOptionValue"])) {
                     $this->saveProductsWithOption($_POST["ProductGroupOptionValue"], $_GET["productGroupId"]);
@@ -347,7 +349,7 @@ class ProductGroupController extends ProductMasterController
 
 //                throw new \yii\base\Exception(print_r($options, TRUE));
                 $countOption = 1;
-                foreach ($options as $productGroupOptionId => $value) {
+                foreach ($options as $productGroupTemplateOptionId => $value) {
 //                    $productGroupOptionValue = \common\models\costfit\ProductGroupOptionValue::find()->where("productGroupId =$productGroupId AND productGroupOptionId=$productGroupOptionId")->one();
 //                    if (isset($productGroupOptionValue)) {
 //                        $countOption++;
@@ -357,7 +359,9 @@ class ProductGroupController extends ProductMasterController
 //                    }
                     $productGroupOptionValue->productId = $productId;
                     $productGroupOptionValue->productGroupId = $productGroupId;
-                    $productGroupOptionValue->productGroupOptionId = $productGroupOptionId;
+                    $productGroupOptionValue->productGroupTemplateOptionId = $productGroupTemplateOptionId;
+                    $pgo = \common\models\costfit\ProductGroupOption::find()->where("productGroupId = $productGroupId AND productGroupTemplateOptionId = $productGroupTemplateOptionId")->one();
+                    $productGroupOptionValue->productGroupOptionId = $pgo->productGroupOptionId;
                     $productGroupOptionValue->productGroupTemplateId = $model->productGroupTemplateId;
                     $productGroupOptionValue->value = $value;
                     $productGroupOptionValue->createDateTime = new yii\db\Expression("NOW()");
@@ -391,7 +395,8 @@ class ProductGroupController extends ProductMasterController
     {
         $res = [];
         foreach ($options as $productGroupTemplateOptionId => $optionArray) {
-            $res[$productGroupTemplateOptionId] = explode(",", $optionArray);
+            //$res[$productGroupTemplateOptionId] = explode(",", $optionArray);
+            $res[$productGroupTemplateOptionId] = $optionArray;
         }
         return $this->array_cartesian($res); // 2D array
     }
@@ -546,6 +551,20 @@ class ProductGroupController extends ProductMasterController
         $product->save();
 
         return $this->redirect('index');
+    }
+
+    public function actionChangeImageOrder()
+    {
+//            throw new \yii\base\Exception(print_r($_POST, TRUE));
+        $model = \common\models\costfit\ProductImage::find()->where("productImageId=" . $_GET['id'])->one();
+        if (isset($_POST["ProductImage"])) {
+            $model->ordering = $_POST["ProductImage"]["ordering"];
+            $model->save();
+
+            return $this->redirect(['create', 'step' => $_GET["step"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]]);
+        }
+
+        return $this->render("101/_product_image_form", ['model' => $model]);
     }
 
     // Version 1.01 Wizard Of Product Group

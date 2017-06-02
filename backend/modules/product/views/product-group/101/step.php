@@ -8,6 +8,7 @@ use common\models\areawow;
 use yii\jui\DatePicker;
 use kartik\grid\GridView;
 use kartik\editable\Editable;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\ProductGroup */
@@ -296,13 +297,44 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 </thead>
                                                 <tbody>
                                                     <?php
+                                                    $data = [];
+                                                    $pgovs = common\models\costfit\ProductGroupOptionValue::find()->where("productGroupId=" . $_GET["productGroupId"])->groupBy("value , productGroupTemplateOptionId")->orderBy("productGroupTemplateOptionId ASC")->all();
+                                                    foreach ($pgovs as $pgov) {
+                                                        if (isset($data[$pgov->productGroupTemplateOptionId]) && in_array($pgov->value, $data[$pgov->productGroupTemplateOptionId])) {
+                                                            continue;
+                                                        }
+                                                        $data[$pgov->productGroupTemplateOptionId][] = $pgov->value;
+                                                    }
+//                                                    throw new \yii\base\Exception(print_r($data, true));
                                                     $seq = 1;
                                                     foreach ($productGroupTemplateOptions as $option):
                                                         ?>
                                                         <tr>
                                                             <td><?= $seq; ?></td>
                                                             <td><?= $option->title; ?></td>
-                                                            <td><?= Html::textInput("ProductGroupOptionValue[$option->productGroupTemplateOptionId]", NULL, ['class' => 'form-control input-lg', 'placeHolder' => 'ระบุได้หลาย Option ที่มี เช่นสี เป็น Red,Green,Yellow']) ?></td>
+                                                            <td>
+                                                                <?//= Html::textInput("ProductGroupOptionValue[$option->productGroupTemplateOptionId]", NULL, ['class' => 'form-control input-lg', 'placeHolder' => 'ระบุได้หลาย Option ที่มี เช่นสี เป็น Red,Green,Yellow']) ?>
+                                                                <?php
+                                                                // Multiple select without model
+                                                                echo Select2::widget([
+                                                                    'name' => "ProductGroupOptionValue[$option->productGroupTemplateOptionId]",
+                                                                    'value' => isset($data[$option->productGroupTemplateOptionId]) ? $data[$option->productGroupTemplateOptionId] : NULL, // initial value
+//                                                                    'data' => $data,
+                                                                    'maintainOrder' => true,
+                                                                    'toggleAllSettings' => [
+                                                                        'selectLabel' => '<i class="glyphicon glyphicon-ok-circle"></i> Tag All',
+                                                                        'unselectLabel' => '<i class="glyphicon glyphicon-remove-circle"></i> Untag All',
+                                                                        'selectOptions' => ['class' => 'text-success'],
+                                                                        'unselectOptions' => ['class' => 'text-danger'],
+                                                                    ],
+                                                                    'options' => ['placeholder' => 'ระบุได้หลาย Option ที่มี เช่นสี เป็น Red,Green,Yellow', 'multiple' => true],
+                                                                    'pluginOptions' => [
+                                                                        'tags' => true,
+                                                                        'maximumInputLength' => 20
+                                                                    ],
+                                                                ]);
+                                                                ?>
+                                                            </td>
                                                         </tr>
                                                         <?php
                                                         $seq++;
