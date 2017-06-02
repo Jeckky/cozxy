@@ -47,8 +47,8 @@ use kartik\select2\Select2;
 
                                                 var mapOptions = {
                                                     center: new google.maps.LatLng(<?php echo $pickingMap['latitude'] ?>, <?php echo $pickingMap['longitude'] ?>), // Coimbatore = (11.0168445, 76.9558321)
-                                                    zoom: 16,
-                                                    //mapTypeId: google.maps.MapTypeId.ROADMAP
+                                                    zoom: 11,
+                                                    mapTypeId: 'hybrid'
                                                 };
                                                 map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 

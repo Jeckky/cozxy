@@ -302,7 +302,8 @@ function changeMap(lats, lngs) {
     //$(".cart-detail").find("#map").html("xxxxxx");
     map = new google.maps.Map(document.getElementById("map"), {
         center: myLatLng,
-        zoom: 8
+        zoom: 11,
+        mapTypeId: "hybrid"
     });
 
     var marker = new google.maps.Marker({
