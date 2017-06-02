@@ -240,15 +240,27 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         <h3>Step 1 - Create Product Group Name</h3>
                                         <?= $form->errorSummary($model) ?>
 
-                                        <?= $form->field($model, 'productGroupTemplateId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(common\models\costfit\ProductGroupTemplate::find()->all(), 'productGroupTemplateId', 'title'), ['prompt' => '-- Select Option Template --']) ?>
+                                        <?=
+                                        $form->field($model, 'productGroupTemplateId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(common\models\costfit\ProductGroupTemplate::find()->all(), 'productGroupTemplateId', function($model) {
+                                            $title = $model->title . " - Option : ";
+                                            foreach ($model->productGroupTemplateOptions as $k => $option) {
+                                                $title.=$option->title;
+                                                if ($k < count($model->productGroupTemplateOptions) - 1) {
+                                                    $title.=",";
+                                                }
+                                            }
+                                            return $title;
+                                        })
+                                        , ['prompt' => '-- Select Option Template --'])
+                                        ?>
 
-                                        <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200, 'value' => isset($title) ? $title : false]); ?>
+                                        <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]); ?>
 
                                         <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
 
                                         <?= $form->field($model, 'specification', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
 
-
+                                        <?= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15])->label("Market Price"); ?>
 
                                         <ul class="list-inline pull-right">
                                             <li>
@@ -259,7 +271,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     </div>
                                     <div class="tab-pane <?= ($step == 2) ? " active" : " " ?>" role="tabpanel" id="step2">
                                         <h3>Step 2 - Product Image</h3>
-                                        <?php if (isset($_GET["productGroupId"])): ?>
+                                        <?php if (isset($_GET["productGroupId"]) && isset($_GET["productGroupTemplateId"])): ?>
                                             <?= $this->render("_image_grid", ["id" => $_GET["productGroupId"]]); ?>
                                             <?= $this->render("_image_form", ["id" => $_GET["productGroupId"]]); ?>
                                         <?php endif; ?>
@@ -311,7 +323,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 min-width: 750px
                                             }
                                         </style>
-                                        <h3>Edit Product Imformation</h3>
+                                        <h3>Edit Product Information</h3>
                                         <?php if (isset($dataProvider)): ?>
                                             <?= $this->render("_product_grid", ["dataProvider" => $dataProvider]); ?>
                                             <ul class="list-inline pull-right">

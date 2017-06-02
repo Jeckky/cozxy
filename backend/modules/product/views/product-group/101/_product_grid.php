@@ -42,12 +42,13 @@ if (isset($dataProvider)) {
             'title',
             [
                 'attribute' => 'description',
-                'format' => 'raw',
+                'options' => ['style' => 'width:20%'],
+                'format' => 'html',
             ],
-            [
-                'attribute' => 'specification',
-                'format' => 'raw',
-            ],
+//            [
+//                'attribute' => 'specification',
+//                'format' => 'raw',
+//            ],
 //                                                    [
 //                                                        'class' => 'kartik\grid\EditableColumn',
 //                                                        'attribute' => 'title',

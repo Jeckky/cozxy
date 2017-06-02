@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 ?>
 <?php
 $form = ActiveForm::begin([
+    'id' => 'product-form',
     'enableClientValidation' => FALSE,
     'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
     'fieldConfig' => [
@@ -49,6 +50,21 @@ $form = ActiveForm::begin([
 
             <?= $form->field($model, 'specification', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
 
+            <?= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15])->label("Market Price"); ?>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-info">
+                        <div class="panel-heading"  >
+                            <span class="panel-title"><h3 >Product Supplier</h3></span>
+                        </div>
+                        <div class="panel-body">
+                            <?= $form->field($prodSupp, 'quantity', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15])->label("Stock"); ?>
+                            <?= $form->field($prodPriceSupp, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15])->label("Selling Price"); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-lg-12">
                     <?php
