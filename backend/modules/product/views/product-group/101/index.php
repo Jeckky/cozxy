@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -35,6 +36,84 @@ $this->params['pageHeader'] = Html::encode($this->title);
             </div>
         </div>
         <div class="panel-body">
+            <?php
+            $form = ActiveForm::begin([
+                'method' => 'POST',
+                'options' => ['class' => 'panel panel-default form-horizontal'],
+            ]);
+            ?>
+            <div class="row">
+                <div class="col-md-1">
+                    <h5>ค้นหา Status</h5>
+                </div>
+                <div class="col-md-2">
+                    <?php
+                    //echo '<label class="control-label">Provinces</label>';
+                    $status = isset($_POST["status"]) ? $_POST["status"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
+                    echo kartik\select2\Select2::widget([
+                        'name' => 'status',
+                        'value' => $status,
+                        'data' => [0 => 'Draft', 99 => 'Wait Approve', 1 => 'Approve'],
+                        //'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'),
+                        'options' => ['placeholder' => 'Select or Search User Status ...', 'id' => 'status'], //, 'onchange' => 'this.form.submit()'
+                        'pluginOptions' => [
+                            'tags' => true,
+                            'placeholder' => 'Select or Search ...',
+                            'loadingText' => 'Loading Status ...',
+                            'initialize' => true,
+                        ],
+                    ]);
+                    ?>
+                </div>
+                <div class="col-md-1">
+                    <h5>ค้นหา Category</h5>
+                </div>
+                <div class="col-md-2">
+                    <?php
+                    //echo '<label class="control-label">Provinces</label>';
+                    $categoryId = isset($_POST["CategoryId"]) ? $_POST["CategoryId"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
+                    echo kartik\select2\Select2::widget([
+                        'name' => 'categoryId',
+                        'value' => $categoryId == '' ? '' : $categoryId,
+                        'data' => common\models\costfit\Category::findCategoryArrayWithMultiLevelBackend(),
+                        //'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'),
+                        'options' => ['placeholder' => 'Select or Search User Category ...', 'id' => 'CategoryId'], //, 'onchange' => 'this.form.submit()'
+                        'pluginOptions' => [
+                            'tags' => true,
+                            'placeholder' => 'Select or Search ...',
+                            'loadingText' => 'Loading Category ...',
+                            'initialize' => true,
+                        ],
+                    ]);
+                    ?>
+                </div>
+                <div class="col-md-1">
+                    <h5>ค้นหา Brand</h5>
+                </div>
+                <div class="col-md-2">
+                    <?php
+                    $brandId = isset($_POST["BrandId"]) ? $_POST["BrandId"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
+//echo '<label class="control-label">Provinces</label>';
+                    echo kartik\select2\Select2::widget([
+                        'name' => 'brandId',
+                        'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Brand::find()->all(), 'brandId', 'title'),
+                        'value' => $brandId == '' ? '' : $brandId,
+                        'options' => ['placeholder' => 'Select or Search User Brand ...', 'id' => 'BrandId'], //, 'onchange' => 'this.form.submit()'
+                        'pluginOptions' => [
+                            'tags' => true,
+                            'placeholder' => 'Select or Search ...',
+                            'loadingText' => 'Loading Brand ...',
+                        //'initialize' => true,
+                        ],
+                    ]);
+                    ?>
+                </div>
+                <input type="hidden" name="productGroupId" value="<?= isset($productGroupId) ? $productGroupId : '' ?>">
+                <div class="col-md-2">
+                    <button class="btn btn-info" type="submit">Search Product Group</button>
+                </div>
+            </div>
+            <?php ActiveForm::end(); ?>
             <?=
             GridView::widget([
                 'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
@@ -48,13 +127,27 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
 //                    'productGroupId',
-                    'title',
+                    ['attribute' => 'title',
+                        'format' => "raw",
+                        'options' => ['style' => 'width:10%'],
+                        'value' => function ($model) {
+                            return $model->title;
+                        }
+                    ],
                     ['attribute' => 'description',
                         'format' => "raw",
+                        'options' => ['style' => 'width:20%'],
                         'value' => function ($model) {
                             return $model->description;
                         }
                     ],
+//                    ['attribute' => 'specification',
+//                        'format' => "raw",
+//                        'options' => ['style' => 'width:20%'],
+//                        'value' => function ($model) {
+//                            return $model->specification;
+//                        }
+//                    ],
                     ['attribute' => 'createDateTime',
                         'value' => function ($model) {
                             return $this->context->dateThai($model->createDateTime, 1);
@@ -82,7 +175,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 //                                ]);
 //                            },
                             'update' => function ($url, $model) {
-                                if (Yii::$app->user->identity->type != 4) {
+                                if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5) {
                                     if ($model->status == 0) {
                                         return Html::a('<i class="fa fa-pencil"></i>', ["create", 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
                                             'title' => Yii::t('yii', 'update'),
@@ -94,9 +187,15 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         ]);
                                     }
                                 } else {
-                                    return Html::a('<i class="fa fa-eye"></i>', ["view", 'productGroupId' => $model->productId], [
-                                        'title' => Yii::t('yii', 'update'),
-                                    ]);
+                                    if (count($model->products) > 0) {
+                                        return Html::a('<i class="fa fa-eye"></i>', ["view", 'productGroupId' => $model->productId], [
+                                            'title' => Yii::t('yii', 'update'),
+                                        ]);
+                                    } else {
+                                        return Html::a('<i class="fa fa-pencil"></i>', ["create", 'step' => 1, 'productGroupId' => $model->productId], [
+                                            'title' => Yii::t('yii', 'update'),
+                                        ]);
+                                    }
                                 }
                             },
 //                            'delete' => function ($url, $model) {

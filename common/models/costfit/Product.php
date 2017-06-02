@@ -43,6 +43,7 @@ class Product extends \common\models\costfit\master\ProductMaster
     {
         return array_merge(parent::rules(), [
             [['storeProductId'], 'safe'],
+            [['productGroupTemplateId', 'title', 'price', 'description', 'specification'], 'required', 'on' => 'create_pg']
         ]);
     }
 
@@ -515,6 +516,11 @@ class Product extends \common\models\costfit\master\ProductMaster
     {
         $productGroup = Product::find()->where("status=1 and userId=" . Yii::$app->user->identity->userId . " AND parentId is NULL")->all();
         return $productGroup;
+    }
+
+    public function getProducts()
+    {
+        return $this->hasMany(ProductGroup::className(), ['productId' => 'parentId']);
     }
 
 }
