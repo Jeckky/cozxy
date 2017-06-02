@@ -73,8 +73,9 @@ class SearchController extends MasterController {
         // echo 'mins : ' . $mins . ', maxs : ' . $maxs;
 
         $productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $categoryId, $mins, $maxs)]);
-        echo '<pre>';
-        print_r($productFilterPrice);
+        //echo '<pre>';
+        //print_r($productFilterPrice);
+        return TRUE;
     }
 
 }

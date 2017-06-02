@@ -89,22 +89,26 @@ $(function() {
 		values: [ 100, 6000 ],
 		slide: function( event, ui ) {
 			$( "#amount" ).val( "From " + ui.values[ 0 ] + " THB to " + ui.values[ 1 ] + " THB");
+            $("input:hidden:first","#amount-min").val(ui.values[ 0 ]);
+            $("input:hidden:last","#amount-min").val(ui.values[ 1 ]);
+
 		},
         stop: function (event, ui) {
             //debugger;
-            var path = "' . Yii::$app->homeUrl . 'search/filter-price";
+            //var path = "' . Yii::$app->homeUrl . 'search/filter-price";
             $.ajax({
-                url: path,
+                /*url: path,
                 type: "POST",
                 dataType: "JSON",
                 data: {mins:ui.values[ 0 ],maxs:ui.values[ 1 ],categoryId:' . $categoryId . '},
                 success: function (data){
+                    alert(data.status);
                     if (data.status) {
-                        alert(data);
+
                     } else {
                         alert(data.message);
                     }
-                }
+                }*/
             });
         }
 	});

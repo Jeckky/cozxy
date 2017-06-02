@@ -18,7 +18,13 @@
                             <div class="col-xs-10 col-xs-offset-1 size18 size16-sm size14-xs" style="margin-top: 12px; margin-bottom: 24px;">
                                 <input type="text" id="amount" readonly style="border:0; color:#000; font-weight:700; background-color: transparent; width: 100%;">
                             </div>
-                            <div class="col-xs-12 text-right"><a href="#"><u class="fc-black">CLEAR</u></a> &nbsp; <a href="#" class="b btn-black-s size16">APPLY</a></div>
+                            <div class="col-xs-12 text-right">
+                                <div id="amount-min">
+                                    <input type="hidden" name="min" id="min" value="">
+                                    <input type="hidden" name="max" id="max" value="">
+                                </div>
+                                <a href="#"><u class="fc-black">CLEAR</u></a> &nbsp; <a href="#" class="b btn-black-s size16">APPLY</a>
+                            </div>
                         </form>
                     </div>
                 </div>
