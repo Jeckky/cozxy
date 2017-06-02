@@ -384,7 +384,7 @@ class CheckoutController extends MasterController {
         if ($model->save(FALSE)) {
             return '<option value="' . Yii::$app->db->lastInsertID . '">Billing Address :' . $firstname . ' ' . $lastname . '</option>';
         } else {
-            return 0;
+            return '';
         }
     }
 
