@@ -1,4 +1,9 @@
 <!-- Product Menu -->
+<style type="text/css">
+    .dropdown-menu {
+        min-width: 460px;
+    }
+</style>
 <div class="product-menu">
     <div class="container">
         <div class="row">
