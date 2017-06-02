@@ -46,4 +46,22 @@ class SearchController extends MasterController {
         return $this->render('index', compact('productCanSell', 'category'));
     }
 
+    public function actionBrand($hash = FALSE) {
+
+        $k = base64_decode(base64_decode($hash));
+        $params = \common\models\ModelMaster::decodeParams($hash);
+        $brandId = $params['brandId'];
+
+        $brand = \common\models\costfit\Brand::find()->where('brandId=' . $brandId)->one();
+        if (isset($brand)) {
+            $brandName = $brand['title'];
+        } else {
+            $brandName = '';
+        }
+
+        $productCanSell = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchBrand($brandId, 9, FALSE)]);
+
+        return $this->render('brand', compact('productCanSell', 'brandName'));
+    }
+
 }
