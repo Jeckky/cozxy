@@ -21,7 +21,7 @@ echo GridView::widget([
             'attribute' => 'image',
             'format' => 'raw',
             'value' => function($model) {
-                return \yii\helpers\Html::a(\yii\helpers\Html::img(Yii::$app->homeUrl . $model->image, ['style' => (Yii::$app->controller->action->id == "create") ? 'width:100px' : 'width:200px']) . "<== Click To View", Yii::$app->homeUrl . $model->image, ['target' => "_blank", 'data-pjax' => 0]);
+                return \yii\helpers\Html::a(\yii\helpers\Html::img(Yii::$app->homeUrl . $model->imageThumbnail1, ['style' => (Yii::$app->controller->action->id == "create") ? 'width:100px' : 'width:200px']) . "<== Click To View", Yii::$app->homeUrl . $model->image, ['target' => "_blank", 'data-pjax' => 0]);
             }
         ],
 //                    [
@@ -32,10 +32,11 @@ echo GridView::widget([
         [
             'class' => 'kartik\grid\ActionColumn',
 //            'dropdown' => true,
+            'visible' => (Yii::$app->controller->action->id != "view") ? TRUE : FALSE,
             'vAlign' => 'middle',
             'template' => '{delete}',
             'urlCreator' => function($action, $model, $key, $index) {
-                if ($action === 'delete') {
+                if ($action === 'delete' && Yii::$app->controller->action->id != "view") {
                     return \yii\helpers\Url::toRoute(['delete-product-image', 'id' => $model->productImageId, 'step' => $_GET["step"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"], 'action' => (Yii::$app->controller->action->id == "update-product") ? "update" : NULL]);
                 }
             },

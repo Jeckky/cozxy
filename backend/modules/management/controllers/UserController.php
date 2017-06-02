@@ -188,8 +188,9 @@ class UserController extends ManagementMasterController
             $folderName = "passport"; //  Size 553 x 484
             $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName;
             $newFileName = Upload::UploadBasic('User[passportImage]', $folderName, $uploadPath, '300', '300');
-            $model->passportImage = '/' . 'images/' . $folderName . "/" . $newFileName;
+            $model->passportImage = isset($newFileName) ? '/' . 'images/' . $folderName . "/" . $newFileName : NULL;
             $model->updateDateTime = new \yii\db\Expression('NOW()');
+            $model->password_hash = Yii::$app->security->generatePasswordHash($model->password);
             if ($model->save(FALSE)) {
                 return $this->redirect(['index']);
             }
