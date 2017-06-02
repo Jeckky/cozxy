@@ -509,30 +509,55 @@ $(document).on('click', '.delete', function () {
 /*
  * @returns {undefined}
  */
+
 function checkoutNewBilling() {
-//    $('#default-add-new-billing-address').yiiActiveForm('validate');
-//    $('#default-add-new-billing-address').yiiActiveForm('submitForm');
+
+    var $form = $("#default-add-new-billing-address"),
+            data = $form.data("yiiActiveForm");
+    $.each(data.attributes, function () {
+        this.status = 3;
+    });
+    $form.yiiActiveForm("validate");
+
     var $this = $('#acheckoutNewBillingz');
     $this.button('loading');
     setTimeout(function () {
         $this.button('reset');
     }, 8000);
+
+    var push_co_country = $('#co-country').val();
+    var push_firstname = $('#address-firstname').val();
+    var push_lastname = $('#address-lastname').val();
+    var push_address = $('#address-address').val();
+    var push_email = $('#address-email').val();
+    var push_tel = $('#address-tel').val();
+    var push_company = $('#address-company').val();
+    var push_tax = $('#address-tax').val();
+
+    var push_countryid = $('#address-countryid').val();
+    var push_provinceid = $('#address-provinceid').val();
+    var push_amphurid = $('#address-amphurid').val();
+    var push_districtid = $('#address-districtid').val();
+    var push_zipcode = $('#address-zipcode').val();
+    var push_isDefault = $('#address-isDefault').val();
+
     $.ajax({
         type: "POST",
         url: $baseUrl + "checkout/checkout-new-billing",
-        data: {'addressId': ''},
+        data: {'co_country': push_co_country, 'firstname': push_firstname, 'lastname': push_lastname, 'address': push_address, 'email': push_email, 'tel': push_tel
+            , 'company': push_company, 'tax': push_tax, 'countryid': push_countryid, 'provinceid': push_provinceid, 'amphurid': push_amphurid
+            , 'districtid': push_districtid, 'zipcode': push_zipcode, 'isDefault': push_isDefault
+        },
         success: function (data, status)
         {
-            //(status);
+
             if (status == "success") {
-                // $('.itemToBillingAddress-' + id).remove();
+                //window.location = $baseUrl + 'checkout';
+                $(".bs-example-modal-lg").modal("hide");
+                $('#addressId').append(data);
             } else {
                 alert('Please try again.');
-                // window.location = $baseUrl + 'my-account';
-                /*
-                 $('.name-lockers-cool').html('');
-                 $('.view-map-images-lockers-cool').html('');
-                 */
+
             }
         }
     });

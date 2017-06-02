@@ -191,7 +191,7 @@ $pickingId = rand(0, 9999);
                 <?php
                 $form = ActiveForm::begin([
                     'id' => 'default-add-new-billing-address',
-                    'options' => ['class' => 'login-box', 'action' => FALSE],
+                    'options' => ['class' => 'login-box'],
                 ]);
                 ?>
                 <!-- Details -->
@@ -211,13 +211,13 @@ $pickingId = rand(0, 9999);
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Company (option)</label>
-                                    <?php echo $form->field($model, 'company')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'COMPANY'])->label(FALSE); ?>
+                                    <?php echo $form->field($NewBilling, 'company')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'COMPANY'])->label(FALSE); ?>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tax </label>
-                                    <?php echo $form->field($model, 'tax')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'TAX'])->label(FALSE); ?>
+                                    <?php echo $form->field($NewBilling, 'tax')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'TAX'])->label(FALSE); ?>
                                 </div>
                             </div>
                         </div>
@@ -247,7 +247,7 @@ $pickingId = rand(0, 9999);
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Countries</label>
                                 <?php
-                                echo $form->field($model, 'countryId')->widget(kartik\select2\Select2::classname(), [
+                                echo $form->field($NewBilling, 'countryId')->widget(kartik\select2\Select2::classname(), [
                                     //'options' => ['id' => 'address-countryid'],
                                     'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'localName'),
                                     'pluginOptions' => [
@@ -263,11 +263,11 @@ $pickingId = rand(0, 9999);
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Province</label>
                                 <?php
-                                echo Html::hiddenInput('input-type-1', $model->provinceId, ['id' => 'input-type-1']);
-                                echo Html::hiddenInput('input-type-2', $model->provinceId, ['id' => 'input-type-2']);
+                                echo Html::hiddenInput('input-type-1', $NewBilling->provinceId, ['id' => 'input-type-1']);
+                                echo Html::hiddenInput('input-type-2', $NewBilling->provinceId, ['id' => 'input-type-2']);
                                 echo Html::hiddenInput('input-type-3', 'edit', ['id' => 'input-type-3']);
-                                echo $form->field($model, 'provinceId')->widget(DepDrop::classname(), [
-                                    'data' => [$model->provinceId => $model->provinceId],
+                                echo $form->field($NewBilling, 'provinceId')->widget(DepDrop::classname(), [
+                                    'data' => [$NewBilling->provinceId => $NewBilling->provinceId],
                                     'options' => ['placeholder' => 'Select ...'],
                                     //'options' => ['id' => 'address-provinceidxxx'],
                                     'type' => DepDrop::TYPE_SELECT2,
@@ -287,10 +287,10 @@ $pickingId = rand(0, 9999);
                             <div class="form-group">
                                 <label for="exampleInputEmail1">City</label>
                                 <?php
-                                echo Html::hiddenInput('input-type-11', $model->amphurId, ['id' => 'input-type-11']);
-                                echo Html::hiddenInput('input-type-22', $model->amphurId, ['id' => 'input-type-22']);
+                                echo Html::hiddenInput('input-type-11', $NewBilling->amphurId, ['id' => 'input-type-11']);
+                                echo Html::hiddenInput('input-type-22', $NewBilling->amphurId, ['id' => 'input-type-22']);
                                 echo Html::hiddenInput('input-type-33', $hash, ['id' => 'input-type-33']);
-                                echo $form->field($model, 'amphurId')->widget(DepDrop::classname(), [
+                                echo $form->field($NewBilling, 'amphurId')->widget(DepDrop::classname(), [
                                     //'data' => [9 => 'Savings'],
                                     'options' => ['placeholder' => 'Select ...'],
                                     'type' => DepDrop::TYPE_SELECT2,
@@ -310,10 +310,10 @@ $pickingId = rand(0, 9999);
                             <div class="form-group">
                                 <label for="exampleInputEmail1">District</label>
                                 <?php
-                                echo Html::hiddenInput('input-type-13', $model->districtId, ['id' => 'input-type-13']);
-                                echo Html::hiddenInput('input-type-33', $model->districtId, ['id' => 'input-type-33']);
+                                echo Html::hiddenInput('input-type-13', $NewBilling->districtId, ['id' => 'input-type-13']);
+                                echo Html::hiddenInput('input-type-33', $NewBilling->districtId, ['id' => 'input-type-33']);
                                 echo Html::hiddenInput('input-type-34', $hash, ['id' => 'input-type-34']);
-                                echo $form->field($model, 'districtId')->widget(DepDrop::classname(), [
+                                echo $form->field($NewBilling, 'districtId')->widget(DepDrop::classname(), [
                                     //'data' => [9 => 'Savings'],
                                     'options' => ['placeholder' => 'Select ...'],
                                     'type' => DepDrop::TYPE_SELECT2,
@@ -333,10 +333,10 @@ $pickingId = rand(0, 9999);
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Zipcode</label>
                                 <?php
-                                echo Html::hiddenInput('input-type-14', $model->districtId, ['id' => 'input-type-14']);
-                                echo Html::hiddenInput('input-type-42', $model->districtId, ['id' => 'input-type-42']);
+                                echo Html::hiddenInput('input-type-14', $NewBilling->districtId, ['id' => 'input-type-14']);
+                                echo Html::hiddenInput('input-type-42', $NewBilling->districtId, ['id' => 'input-type-42']);
                                 echo Html::hiddenInput('input-type-44', $hash, ['id' => 'input-type-44']);
-                                echo $form->field($model, 'zipcode')->widget(DepDrop::classname(), [
+                                echo $form->field($NewBilling, 'zipcode')->widget(DepDrop::classname(), [
                                     //'data' => [12 => 'Savings A/C 2'],
                                     'options' => ['placeholder' => 'Select ...'],
                                     'type' => DepDrop::TYPE_SELECT2,
@@ -360,19 +360,19 @@ $pickingId = rand(0, 9999);
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Email</label>
-                                    <?php echo $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'Email'])->label(false); ?>
+                                    <?php echo $form->field($NewBilling, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'Email'])->label(false); ?>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Mobile Number</label>
-                                    <?php echo $form->field($model, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'Mobile Number'])->label(false); ?>
+                                    <?php echo $form->field($NewBilling, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'Mobile Number'])->label(false); ?>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Default address</label>
-                            <?php echo $form->field($model, 'isDefault')->radioList([1 => 'Yes', 0 => 'No'], ['itemOptions' => ['class' => 'radio']])->label(false); ?>
+                            <?php echo $form->field($NewBilling, 'isDefault')->radioList([1 => 'Yes', 0 => 'No'], ['itemOptions' => ['class' => 'radio', 'id' => 'address-isDefault']])->label(false); ?>
                         </div>
 
                     </div>
@@ -384,7 +384,6 @@ $pickingId = rand(0, 9999);
             <div class="modal-footer">
                 <a href="#" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px" data-dismiss="modal" aria-label="Close">CANCEL</a>
                 &nbsp;
-
                 <a href="javascript:checkoutNewBilling()" class="b btn-yellow" id="acheckoutNewBillingz" data-loading-text="<i class='fa fa-circle-o-notch fa-spin' aria-hidden='true'></i> Processing New Billing" style="padding:12px 32px; margin:24px auto 12px">SAVE</a>
             </div>
 

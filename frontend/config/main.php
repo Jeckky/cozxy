@@ -1,14 +1,14 @@
 <?php
 
 $params = array_merge(
-        require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
+require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
 );
 
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log',
-            [
+        [
             'class' => 'common\components\LanguageSelector',
             'supportedLanguages' => ['en-US', 'th-TH'], //กำหนดรายการภาษาที่ support หรือใช้ได้
         ]
@@ -39,7 +39,7 @@ return [
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
-                    [
+                [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
@@ -52,7 +52,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'search/<title>/<hash>' => 'search/index',
+                //'search/<title>/<hash>' => 'search/index',
                 //Custom Rule
 //                '<controller:\w+>/<hash>' => '<controller>/index',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<hash>' => '<controller>/<action>',
@@ -80,7 +80,9 @@ return [
 //                'mobile/product/product/<hash>' => 'mobile/product/product',
                 'my-account/edit-billing/<hash>' => 'my-account/edit-billing',
                 'story/<hash>' => 'story/index',
-                'story/write-your-story/<hash>' => 'story/write-your-story/'
+                'story/write-your-story/<hash>' => 'story/write-your-story/',
+                'search/brand/<hash>' => 'search/brand/',
+                'search/<title>/<hash>' => 'search/index',
             ],
         ],
         /**

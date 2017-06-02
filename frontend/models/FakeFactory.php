@@ -348,7 +348,7 @@ class FakeFactory extends Model {
             $products[$items->brandId] = [
                 'brandId' => $items->brandId,
                 'image' => $brandImages,
-                'url' => Yii::$app->homeUrl . 'brand/' . $items->encodeParams(['brandId' => $items->brandId]),
+                'url' => Yii::$app->homeUrl . 'search/brand/' . $items->encodeParams(['brandId' => $items->brandId]),
                 'title' => $items->title,
                 'description' => $items->description
             ];
