@@ -29,13 +29,20 @@ class CheckoutController extends MasterController {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
-        $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
+
+        $model = new \common\models\costfit\Address(['scenario' => 'billing_address']);
+        $pickingPoint_list_lockers_cool = new \common\models\costfit\PickingPoint(['scenario' => 'checkout_summary']);
         $pickingPoint_list_lockers = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_HOT)->one(); // Lockers ร้อน
+
         $pickingPoint_list_lockers_cool = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_COOL)->one(); // Lockers เย็น
+        $pickingPoint_list_lockers_cool->scenario = 'checkout_summary';
+
         $pickingPoint_list_booth = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)->one(); // Booth
+
         $pickingPointLockers = isset($pickingPoint_list_lockers) ? $pickingPoint_list_lockers : NULL;
         $pickingPointLockersCool = isset($pickingPoint_list_lockers_cool) ? $pickingPoint_list_lockers_cool : NULL;
         $pickingPointBooth = isset($pickingPoint_list_booth) ? $pickingPoint_list_booth : NULL;
+
         $hash = 'add';
         $order = \common\models\costfit\Order::find()->where("orderId=" . $_POST['orderId'])->one();
         return $this->render('index', compact('model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash'));
@@ -53,8 +60,8 @@ class CheckoutController extends MasterController {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         //throw new Exception(print_r());
         if (isset($LcpickingId) && !empty($LcpickingId)) {
+            //$model = new \common\models\costfit\Address(['scenario' => 'billing_address']);
             $pickingMap = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $LcpickingId)->one();
-
             if (isset($pickingMap->attributes) && !empty($pickingMap->attributes)) {
                 $pickingMap = $pickingMap->attributes;
             } else {
