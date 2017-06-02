@@ -510,9 +510,8 @@ $(document).on('click', '.delete', function () {
  * @returns {undefined}
  */
 function checkoutNewBilling() {
-    //$('#default-add-new-billing-address').yiiActiveForm('validate');
-    $('#default-add-new-billing-address').yiiActiveForm('submitForm');
-    alert($('#default-add-new-billing-address').html());
+    //$('#default-add-new-billing-address').yiiActiveForm('validate', false);
+
     var $this = $('#acheckoutNewBillingz');
     $this.button('loading');
     setTimeout(function () {

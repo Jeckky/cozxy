@@ -191,7 +191,7 @@ $pickingId = rand(0, 9999);
                 <?php
                 $form = ActiveForm::begin([
                     'id' => 'default-add-new-billing-address',
-                    'options' => ['class' => 'login-box', 'action' => FALSE],
+                    'options' => ['class' => 'login-box'],
                 ]);
                 ?>
                 <!-- Details -->
