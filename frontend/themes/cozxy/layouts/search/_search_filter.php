@@ -25,7 +25,7 @@
                                     <input type="hidden" name='categoryId' id="categoryId" value="">
                                 </div>
                                 <a href="#"><u class="fc-black">CLEAR</u></a> &nbsp;
-                                <a href="javascript:filterPrice()" class="b btn-black-s size16">APPLY</a>
+                                <a href="javascript:filterPriceCozxy()" class="b btn-black-s size16">APPLY</a>
                             </div>
                         </form>
                     </div>
