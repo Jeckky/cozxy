@@ -36,7 +36,7 @@ $form = ActiveForm::begin([
                 <label class="col-sm-3 control-label" for="product-title">Option</label>
                 <div class="col-sm-9">
                     <?php
-                    $options = \common\models\costfit\ProductGroupOptionValue::find()->where("productId =" . $model->productId)->all();
+                    $options = \common\models\costfit\ProductGroupOptionValue::find()->where("productId =" . $model->productId . " AND productSuppId IS NULL")->all();
                     $optionStr = "";
                     foreach ($options as $option) {
                         $optionStr.= $option->productGroupOption->name . "-" . $option->value . "<br>";
@@ -45,6 +45,35 @@ $form = ActiveForm::begin([
                     ?>
                 </div>
             </div>
+
+            <?php
+            //echo Html::hiddenInput('input-type-1', $model->categoryId, ['id' => 'input-type-1']);
+            //echo Html::hiddenInput('input-type-2', $model->categoryId, ['id' => 'input-type-2']);
+            echo $form->field($model, 'categoryId')->widget(kartik\select2\Select2::classname(), [
+//            'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'),
+                'data' => common\models\costfit\search\Category::findCategoryArrayWithMultiLevelBackend(),
+                'pluginOptions' => [
+                    'loadingText' => '-- Select Category System --',
+                //'params' => ['input-type-1', 'input-type-2']
+                ],
+                'options' => [
+                    'placeholder' => 'Select Category System ...',
+                    'id' => 'categoryId',
+                    'class' => 'required'
+                ],
+            ]); //->label('Category');
+            echo $form->field($model, 'brandId')->widget(kartik\select2\Select2::classname(), [
+                'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Brand::find()->all(), 'brandId', 'title'),
+                'pluginOptions' => [
+                    'loadingText' => '-- Select Brand --',
+                ],
+                'options' => [
+                    'placeholder' => 'Select Brand ...',
+                    'id' => 'brandId',
+                    'class' => 'required'
+                ],
+            ]); //->label('Brand');
+            ?>
 
             <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
 

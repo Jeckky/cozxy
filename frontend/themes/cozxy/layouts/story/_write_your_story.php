@@ -1,8 +1,9 @@
 <?php
+
 use yii\helpers\Html;
 use yii\helpers\Url;
 use kartik\select2\Select2;
-
+use yii\widgets\ActiveForm;
 ?>
 
 <style>
@@ -23,30 +24,39 @@ use kartik\select2\Select2;
         width: auto;
     }
 </style>
-
+<?php
+$form = ActiveForm::begin([
+            'id' => 'story',
+            'method' => 'POST',
+            'action' => Yii::$app->homeUrl . 'story/write-story',
+            'options' => ['enctype' => 'multipart/form-data']
+        ]);
+?>
 <div class="container">
     <div class="size32">&nbsp;</div>
     <div class="row">
         <div class="col-xs-12 bg-white">
             <h1 class="page-header">
                 <p style="margin: 0px;" class="size20 fc-g999">
-                    Freitag
+                    Write your story
                 </p>
-                Lorem ipsum dolor sit amet
+                <?= $productSupplier->title ?>
             </h1>
-
             <div class="write-story-banner">
-                <?= Html::img(Url::home() . 'images/content/freitag1.jpg', ['class' => 'img-responsive']) ?>
+                <?= Html::img(Url::home() . $image, ['class' => 'img-responsive']) ?>
+
             </div>
 
             <div class="size12 size10-xs">&nbsp;</div>
 
-            <?= Select2::widget([
+            <?=
+            Select2::widget([
                 'name' => 'shelf',
                 'value' => '',
-                'data' => ['Shelf', 'Shelf2', 'Shelf3'],
+                'data' => $shelf,
                 'options' => ['placeholder' => 'Select Shelf']
-            ]) ?>
+            ])
+            ?>
 
             <div class="size12 size10-xs">&nbsp;</div>
 
@@ -55,7 +65,32 @@ use kartik\select2\Select2;
              * Editor
              */
             ?>
-            <textarea name="" id="" cols="30" rows="14" style="width: 100%;"></textarea>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Title</label>
+                <input type="text" name="title" class="fullwidth" placeholder="Title" required>
+            </div>
+            <?=
+            $form->field($model, 'description', ['options' => ['class' => 'row col-lg-12']])->widget(\yii\redactor\widgets\Redactor::className([
+                        'settings' => [
+                            'uploadDir' => ['@webroot/images/story/' . Yii::$app->user->id],
+                            'uploadUrl' => ['@web/images/story/' . Yii::$app->user->id],
+                        ]
+                    ]), [
+                'clientOptions' => [
+                    'minHeight' => 1000,
+                    'lang' => 'en',
+                    'clipboardUpload' => true,
+                    'plugins' => ['fullscreen', 'fontfamily', 'fontcolor', 'fontsize', 'imagemanager',],
+                    'buttons' => [
+                        'formatting', '|', 'bold', 'italic', 'underline', 'deleted', '|',
+                        'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
+                        'image', 'file', 'table', 'link', '|',
+                        'alignment', '|', 'horizontalrule',
+                        '|', '|', 'alignleft', 'aligncenter', 'alignright', 'justify'
+                    ],
+                ]
+                    ], ['style' => 'height:1000px;'])
+            ?>
 
             <div class="size12 size10-xs">&nbsp;</div>
 
@@ -66,42 +101,46 @@ use kartik\select2\Select2;
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Shop Name</label>
-                                <input type="text" name="firstname" class="fullwidth" placeholder="Shop Name" required>
+                                <input type="text" name="shopName" class="fullwidth" placeholder="Shop Name" required>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Price</label>
-                                        <input type="text" name="lastname" class="fullwidth" placeholder="Price" required>
+                                        <input type="text" name="price" class="fullwidth" placeholder="Price" required>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Country</label>
-                                        <?= Select2::widget([
+                                        <?=
+                                        Select2::widget([
                                             'name' => 'country',
                                             'value' => '',
-                                            'data' => ['Country', 'Country2', 'Country3'],
+                                            'data' => $country,
                                             'options' => ['placeholder' => 'Select Country']
-                                        ]) ?>
+                                        ])
+                                        ?>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Currency</label>
-                                        <?= Select2::widget([
+                                        <?=
+                                        Select2::widget([
                                             'name' => 'currency',
                                             'value' => '',
-                                            'data' => ['Currency', 'Currency2', 'Currency3'],
+                                            'data' => $currency,
                                             'options' => ['placeholder' => 'Select Currency']
-                                        ]) ?>
+                                        ])
+                                        ?>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Shop Name</label>
-                                <input type="file" name="firstname" class="fullwidth" placeholder="Shop Name" required>
+                                <label for="exampleInputEmail1">Picture</label>
+                                <input type="file" name="story[image]" class="fullwidth" placeholder="Shop Name" required>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -124,10 +163,12 @@ use kartik\select2\Select2;
 
             <div class="row">
                 <div class="col-md-6">
-                    <input type="checkbox"> Make public
+                    <input type="checkbox" name="isPublic" checked="true"> Make public
                 </div>
                 <div class="col-md-6 text-right">
-                    <button class="btn-yellow">Save Story</button>
+                    <input type="hidden" name="productSuppId" value="<?= $productSupplier->productSuppId ?>">
+                    <input type="hidden" name="productSuppName" value="<?= $productSupplier->title ?>">
+                    <button class="btn-yellow" typ="submit">Save Story</button>
                 </div>
             </div>
             <div class="size12 size10-xs">&nbsp;</div>
@@ -137,3 +178,4 @@ use kartik\select2\Select2;
 
     <div class="size12 size10-xs">&nbsp;</div>
 </div>
+<?php ActiveForm::end(); ?>

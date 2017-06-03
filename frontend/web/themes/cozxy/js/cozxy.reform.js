@@ -494,6 +494,28 @@ $(document).on('click', '.delete', function () {
         }
     });
 });
+
+$(document).on('click', '#reviews-rate', function (e) {
+
+    var rate = $('input:hidden', '#reviews-rate').val();
+    var postId = $(this).parent().find("#postId").val();
+    var userId = $(this).parent().find("#userId").val();
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "story/rating-post",
+        data: {'rate': rate, 'postId': postId, 'userId': userId},
+        success: function (data)
+        {
+            //alert(data["status"]);
+            //(status);
+            if (data) {
+                alert('Successful, you give ' + rate + ' stars to this post.');
+            } else {
+                alert('Somting wrong');
+            }
+        }
+    });
+});
 /*
  * @returns {undefined}
  */
@@ -546,8 +568,7 @@ function checkoutNewBilling() {
     });
 }
 
-
-function filterPriceCozxy() {
+function filterPrice() {
 
     $min = $('input:hidden:eq(0)', '#amount-min').val();
     $max = $('input:hidden:eq(1)', '#amount-min').val();
@@ -610,4 +631,3 @@ function filterPriceCozxy() {
         }
     });
 }
-

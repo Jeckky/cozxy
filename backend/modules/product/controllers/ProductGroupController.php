@@ -481,8 +481,23 @@ class ProductGroupController extends ProductMasterController
                         $pps->discountType = 1;
                         $pps->createDateTime = new \yii\db\Expression("NOW()");
                         $pps->save();
-                    }
-                    else {
+
+                        $productOptionValues = \common\models\costfit\ProductGroupOptionValue::find()->where("productId = $model->productId")->all();
+                        foreach ($productOptionValues as $ov) {
+                            $productOptionValues = new \common\models\costfit\ProductGroupOptionValue();
+                            $productOptionValues->attributes = $ov->attributes;
+                            $productOptionValues->productSuppId = $prodSupp->productSuppId;
+                            $productOptionValues->createDateTime = new \yii\db\Expression("NOW()");
+                            $productOptionValues->save();
+                        }
+
+                        $productImages = \common\models\costfit\ProductImage::find()->where("productId = $model->productId")->all();
+                        foreach ($productImages as $pi) {
+                            $psi = new \common\models\costfit\ProductImageSuppliers();
+                            $psi->attributes = $pi->attributes;
+                            $psi->save();
+                        }
+                    } else {
                         throw new \yii\base\Exception(print_r($prodSupp->errors, true));
                     }
                 }
@@ -519,7 +534,10 @@ class ProductGroupController extends ProductMasterController
     {
 //        throw new \yii\base\Exception(print_r($_POST, TRUE));
         $model = \common\models\costfit\Product::find()->where("productId=" . $_GET["id"])->one();
+        \common\models\costfit\ProductGroupOptionValue::deleteAll("productId=" . $_GET["id"]);
+        \common\models\costfit\ProductImage::deleteAll("productId=" . $_GET["id"]);
         \common\models\costfit\Product::deleteAll("productId=" . $_GET["id"]);
+
         return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->parentId]);
     }
 
