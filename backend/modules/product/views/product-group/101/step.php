@@ -255,6 +255,35 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         , ['prompt' => '-- Select Option Template --'])
                                         ?>
 
+                                        <?php
+                                        //echo Html::hiddenInput('input-type-1', $model->categoryId, ['id' => 'input-type-1']);
+                                        //echo Html::hiddenInput('input-type-2', $model->categoryId, ['id' => 'input-type-2']);
+                                        echo $form->field($model, 'categoryId')->widget(kartik\select2\Select2::classname(), [
+//            'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'),
+                                            'data' => common\models\costfit\search\Category::findCategoryArrayWithMultiLevelBackend(),
+                                            'pluginOptions' => [
+                                                'loadingText' => '-- Select Category System --',
+                                            //'params' => ['input-type-1', 'input-type-2']
+                                            ],
+                                            'options' => [
+                                                'placeholder' => 'Select Category System ...',
+                                                'id' => 'categoryId',
+                                                'class' => 'required'
+                                            ],
+                                        ]); //->label('Category');
+                                        echo $form->field($model, 'brandId')->widget(kartik\select2\Select2::classname(), [
+                                            'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Brand::find()->all(), 'brandId', 'title'),
+                                            'pluginOptions' => [
+                                                'loadingText' => '-- Select Brand --',
+                                            ],
+                                            'options' => [
+                                                'placeholder' => 'Select Brand ...',
+                                                'id' => 'brandId',
+                                                'class' => 'required'
+                                            ],
+                                        ]); //->label('Brand');
+                                        ?>
+
                                         <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]); ?>
 
                                         <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
