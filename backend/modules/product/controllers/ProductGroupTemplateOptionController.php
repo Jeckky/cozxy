@@ -34,6 +34,9 @@ class ProductGroupTemplateOptionController extends ProductMasterController
     public function actionIndex()
     {
         $searchModel = new ProductGroupTemplateOptionSearch();
+        if (isset($_GET["productGroupTemplateId"])) {
+            $searchModel->productGroupTemplateId = $_GET["productGroupTemplateId"];
+        }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
