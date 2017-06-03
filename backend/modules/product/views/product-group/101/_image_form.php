@@ -73,7 +73,7 @@ use yii\widgets\Pjax;
                         'sending' => "function(file, xhr, formData) {
                                 console.log(file);
                                 }",
-                        'complete' => "function(file){location.reload();}",
+//                        'complete' => "function(file){location.reload();}",
                         'removedfile' => "function(file){alert(file.name + ' is removed')}"
                     ],
                 ]);
