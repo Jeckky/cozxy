@@ -144,7 +144,7 @@ if (isset($dataProvider)) {
                 'attribute' => 'option',
                 'format' => 'html',
                 'value' => function($model) {
-                    $options = \common\models\costfit\ProductGroupOptionValue::find()->where("productId =" . $model->productId)->all();
+                    $options = \common\models\costfit\ProductGroupOptionValue::find()->where("productId =" . $model->productId . " AND productSuppId is NULL")->all();
                     $optionStr = "";
                     foreach ($options as $option) {
                         $optionStr.= $option->productGroupOption->name . "-" . $option->value . "<br>";
