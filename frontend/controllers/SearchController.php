@@ -32,9 +32,9 @@ class SearchController extends MasterController {
         $params = \common\models\ModelMaster::decodeParams($hash);
         $categoryId = $params['categoryId'];
         //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, $categoryId)]);
-        $productCanSell = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $categoryId)]);
+        $productCanSell = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $categoryId, FALSE, FALSE)]);
         $category = $_GET['c'];
-        return $this->render('index', compact('productCanSell', 'category'));
+        return $this->render('index', compact('productCanSell', 'category', 'categoryId'));
     }
 
     public function actionCozxyProduct() {
@@ -64,6 +64,18 @@ class SearchController extends MasterController {
         $productCanSell = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchBrand($brandId, 9, FALSE)]);
 
         return $this->render('brand', compact('productCanSell', 'brandName'));
+    }
+
+    public function actionFilterPrice() {
+        $mins = Yii::$app->request->post('mins');
+        $maxs = Yii::$app->request->post('maxs');
+        $categoryId = Yii::$app->request->post('categoryId');
+        // echo 'mins : ' . $mins . ', maxs : ' . $maxs;
+
+        $productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $categoryId, $mins, $maxs)]);
+        //echo '<pre>';
+        //print_r($productFilterPrice);
+        return TRUE;
     }
 
 }
