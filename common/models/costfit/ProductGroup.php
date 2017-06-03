@@ -17,25 +17,23 @@ use \common\models\costfit\master\ProductGroupMaster;
  *
  * @property Product[] $products
  */
-class ProductGroup extends \common\models\costfit\master\ProductGroupMaster {
+class ProductGroup extends \common\models\costfit\master\ProductGroupMaster
+{
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), []);
-    }
-
-    public static function productSupplierGroup() {
-        $productGroup = ProductGroup::find()->where("status=1 and userId=" . Yii::$app->user->identity->userId)->all();
-        return $productGroup;
     }
 
 }

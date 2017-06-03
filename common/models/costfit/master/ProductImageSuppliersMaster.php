@@ -11,7 +11,6 @@ use Yii;
     * @property string $productSuppId
     * @property string $title
     * @property string $description
-    * @property string $original_name
     * @property string $image
     * @property string $imageThumbnail1
     * @property string $imageThumbnail2
@@ -41,7 +40,6 @@ return [
             [['description'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 200],
-            [['original_name'], 'string', 'max' => 500],
             [['image', 'imageThumbnail1', 'imageThumbnail2'], 'string', 'max' => 255],
         ];
 }
@@ -56,7 +54,6 @@ return [
     'productSuppId' => Yii::t('product_image_suppliers', 'Product Supp ID'),
     'title' => Yii::t('product_image_suppliers', 'Title'),
     'description' => Yii::t('product_image_suppliers', 'Description'),
-    'original_name' => Yii::t('product_image_suppliers', 'Original Name'),
     'image' => Yii::t('product_image_suppliers', 'Image'),
     'imageThumbnail1' => Yii::t('product_image_suppliers', 'Image Thumbnail1'),
     'imageThumbnail2' => Yii::t('product_image_suppliers', 'Image Thumbnail2'),

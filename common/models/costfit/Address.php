@@ -48,6 +48,8 @@ class Address extends \common\models\costfit\master\AddressMaster {
             [['countryId', 'firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'districtId', 'zipcode', 'email']
                 , 'required', 'on' => 'checkout-billing-address'],
             [['provinceId', 'amphurId', 'addressId'], 'required', 'on' => 'billing_address'],
+            [['countryId', 'firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'zipcode', 'type', 'isDefault', 'status', 'tel', 'email']
+                , 'required', 'on' => 'new_checkouts_billing_address'],
         ]);
     }
 

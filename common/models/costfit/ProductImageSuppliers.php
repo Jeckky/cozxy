@@ -20,23 +20,29 @@ use yii\web\UploadedFile;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class ProductImageSuppliers extends \common\models\costfit\master\ProductImageSuppliersMaster {
+class ProductImageSuppliers extends \common\models\costfit\master\ProductImageSuppliersMaster
+{
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public $productId;
+
+    public function rules()
+    {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function upload() {
+    public function upload()
+    {
         if ($this->validate()) {
             foreach ($this->imageFiles as $file) {
                 $file->saveAs('uploads/' . $file->baseName . '.' . $file->extension);

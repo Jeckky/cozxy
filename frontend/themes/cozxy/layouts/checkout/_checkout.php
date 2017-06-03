@@ -6,7 +6,7 @@ use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 use kartik\depdrop\DepDrop;
 
-$this->title = 'New Billing Address';
+$this->title = 'YOUR SHIPPING & BILLING ADDRESS';
 $this->params['breadcrumbs'][] = $this->title;
 \frontend\assets\CheckoutAsset::register($this);
 $pickingId = rand(0, 9999);
@@ -187,73 +187,196 @@ $pickingId = rand(0, 9999);
             </div>
             <!-- Cart -->
             <div class="row">
+
+                <?php
+                $form = ActiveForm::begin([
+                    'id' => 'default-add-new-billing-address',
+                    'options' => ['class' => 'login-box'],
+                ]);
+                ?>
                 <!-- Details -->
                 <div class="col-md-10 col-md-offset-1">
                     <div class="size24">&nbsp;</div>
-                    <form method="post" action="" class="login-box">
+
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Billing type *</label>
+                        <div class="select-style">
+                            <select name="co-organization" id="co-country" class="valid col-md-12" onchange="organization(this)">
+                                <option value="personal">Individual </option>
+                                <option value="company">Legal Entity (Company)</option>
+                            </select>
+                        </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">First Name</label>
-                                    <input type="text" name="firstname" class="fullwidth" placeholder="FIRSTNAME" required>
+                                    <label for="exampleInputEmail1">Company (option)</label>
+                                    <?php echo $form->field($NewBilling, 'company')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'COMPANY'])->label(FALSE); ?>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Last Name</label>
-                                    <input type="text" name="lastname" class="fullwidth" placeholder="LASTNAME" required>
+                                    <label for="exampleInputEmail1">Tax </label>
+                                    <?php echo $form->field($NewBilling, 'tax')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'TAX'])->label(FALSE); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">First Name</label>
+                                <?= $form->field($NewBilling, 'firstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Last Name</label>
+                                <?= $form->field($NewBilling, 'lastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LASTNAME'])->label(false); ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Address</label>
+                        <?= $form->field($model, 'address')->textarea(['class' => 'fullwidth', 'placeholder' => 'ADDRESS'])->label(false); ?>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Countries</label>
+                                <?php
+                                echo $form->field($NewBilling, 'countryId')->widget(kartik\select2\Select2::classname(), [
+                                    //'options' => ['id' => 'address-countryid'],
+                                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'localName'),
+                                    'pluginOptions' => [
+                                        'placeholder' => 'Select...',
+                                        'loadingText' => 'Loading country ...',
+                                    ],
+                                    'options' => ['placeholder' => 'Select country ...'],
+                                ])->label(FALSE);
+                                ?>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Province</label>
+                                <?php
+                                echo Html::hiddenInput('input-type-1', $NewBilling->provinceId, ['id' => 'input-type-1']);
+                                echo Html::hiddenInput('input-type-2', $NewBilling->provinceId, ['id' => 'input-type-2']);
+                                echo Html::hiddenInput('input-type-3', 'edit', ['id' => 'input-type-3']);
+                                echo $form->field($NewBilling, 'provinceId')->widget(DepDrop::classname(), [
+                                    'data' => [$NewBilling->provinceId => $NewBilling->provinceId],
+                                    'options' => ['placeholder' => 'Select ...'],
+                                    //'options' => ['id' => 'address-provinceidxxx'],
+                                    'type' => DepDrop::TYPE_SELECT2,
+                                    'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                                    'pluginOptions' => [
+                                        //'initialize' => true,
+                                        'depends' => ['address-countryid'],
+                                        'url' => Url::to(['child-states-address']),
+                                        'loadingText' => 'Loading province ...',
+                                        'params' => ['input-type-1', 'input-type-2', 'input-type-3']
+                                    ]
+                                ])->label(FALSE);
+                                ?>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">City</label>
+                                <?php
+                                echo Html::hiddenInput('input-type-11', $NewBilling->amphurId, ['id' => 'input-type-11']);
+                                echo Html::hiddenInput('input-type-22', $NewBilling->amphurId, ['id' => 'input-type-22']);
+                                echo Html::hiddenInput('input-type-33', $hash, ['id' => 'input-type-33']);
+                                echo $form->field($NewBilling, 'amphurId')->widget(DepDrop::classname(), [
+                                    //'data' => [9 => 'Savings'],
+                                    'options' => ['placeholder' => 'Select ...'],
+                                    'type' => DepDrop::TYPE_SELECT2,
+                                    'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                                    'pluginOptions' => [
+                                        //'initialize' => true,
+                                        'depends' => ['address-provinceid'],
+                                        'url' => Url::to(['child-amphur-address']),
+                                        'loadingText' => 'Loading amphur ...',
+                                        'params' => ['input-type-11', 'input-type-22', 'input-type-33']
+                                    ]
+                                ])->label(FALSE);
+                                ?>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">District</label>
+                                <?php
+                                echo Html::hiddenInput('input-type-13', $NewBilling->districtId, ['id' => 'input-type-13']);
+                                echo Html::hiddenInput('input-type-33', $NewBilling->districtId, ['id' => 'input-type-33']);
+                                echo Html::hiddenInput('input-type-34', $hash, ['id' => 'input-type-34']);
+                                echo $form->field($NewBilling, 'districtId')->widget(DepDrop::classname(), [
+                                    //'data' => [9 => 'Savings'],
+                                    'options' => ['placeholder' => 'Select ...'],
+                                    'type' => DepDrop::TYPE_SELECT2,
+                                    'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                                    'pluginOptions' => [
+                                        //'initialize' => true,
+                                        'depends' => ['address-amphurid'],
+                                        'url' => Url::to(['child-district-address']),
+                                        'loadingText' => 'Loading district ...',
+                                        'params' => ['input-type-13', 'input-type-33', 'input-type-34']
+                                    ]
+                                ])->label(FALSE);
+                                ?>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Zipcode</label>
+                                <?php
+                                echo Html::hiddenInput('input-type-14', $NewBilling->districtId, ['id' => 'input-type-14']);
+                                echo Html::hiddenInput('input-type-42', $NewBilling->districtId, ['id' => 'input-type-42']);
+                                echo Html::hiddenInput('input-type-44', $hash, ['id' => 'input-type-44']);
+                                echo $form->field($NewBilling, 'zipcode')->widget(DepDrop::classname(), [
+                                    //'data' => [12 => 'Savings A/C 2'],
+                                    'options' => ['placeholder' => 'Select ...'],
+                                    'type' => DepDrop::TYPE_SELECT2,
+                                    'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                                    'pluginOptions' => [
+                                        'depends' => ['address-districtid'],
+                                        //'initialize' => true,
+                                        //'initDepends' => ['address-countryid'],
+                                        'url' => Url::to(['child-zipcode-address']),
+                                        'loadingText' => 'Loading zipcode ...',
+                                        'params' => ['input-type-14', 'input-type-42', 'input-type-42']
+                                    ]
+                                ])->label(FALSE);
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Email</label>
+                                    <?php echo $form->field($NewBilling, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'Email'])->label(false); ?>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Mobile Number</label>
+                                    <?php echo $form->field($NewBilling, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'Mobile Number'])->label(false); ?>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Compnay (option)</label>
-                            <input type="text" name="address" class="fullwidth" placeholder="COMPANY" required>
+                            <label for="exampleInputEmail1">Default address</label>
+                            <?php echo $form->field($NewBilling, 'isDefault')->radioList([1 => 'Yes', 0 => 'No'], ['itemOptions' => ['class' => 'radio', 'id' => 'address-isDefault']])->label(false); ?>
                         </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Address</label>
-                            <input type="text" name="address" class="fullwidth" placeholder="ADDRESS" required>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Province</label>
-                                    <?=
-                                    Select2::widget([
-                                        'name' => 'province',
-                                        'value' => '',
-                                        'data' => ['Bangkok', 'Bangkok2', 'Bangkok3'],
-                                        'options' => ['placeholder' => 'Select Province']
-                                    ])
-                                    ?>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">City</label>
-                                    <?=
-                                    Select2::widget([
-                                        'name' => 'city',
-                                        'value' => '',
-                                        'data' => ['Bang Khen', 'Bang Khen2', 'Bang Khen3'],
-                                        'options' => ['placeholder' => 'Select City']
-                                    ])
-                                    ?>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Zipcode</label>
-                                    <input type="text" name="zip" class="fullwidth" placeholder="ZIP CODE" required>
-                                </div>
-                            </div>
-                        </div>
-                        <!--                        <div class="row">-->
-                        <!--                            <div class="col-xs-12">-->
-                        <!--                                <input type="checkbox" name="billhere" value="1"> &nbsp; Billing address is same-->
-                        <!--                                as shipping address-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
-                    </form>
+
+                    </div>
+
                     <div class="size24">&nbsp;</div>
                 </div>
             </div>
@@ -261,8 +384,10 @@ $pickingId = rand(0, 9999);
             <div class="modal-footer">
                 <a href="#" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px" data-dismiss="modal" aria-label="Close">CANCEL</a>
                 &nbsp;
-                <a href="#" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">SAVE</a>
+                <a href="javascript:checkoutNewBilling()" class="b btn-yellow" id="acheckoutNewBillingz" data-loading-text="<i class='fa fa-circle-o-notch fa-spin' aria-hidden='true'></i> Processing New Billing" style="padding:12px 32px; margin:24px auto 12px">SAVE</a>
             </div>
+
+            <?php ActiveForm::end(); ?>
         </div>
     </div>
 </div>

@@ -508,7 +508,7 @@ class MasterController extends MasterCommonController {
 
         if (isset($_POST['depdrop_parents'])) {
             $parents = ($_POST['depdrop_parents']);
-//            throw new \yii\base\Exception(print_r($parents, true));
+            //throw new \yii\base\Exception(print_r($parents[0], true));
             if ($parents != null) {
                 $districtId = $parents[0];
 

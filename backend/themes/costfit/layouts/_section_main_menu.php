@@ -168,14 +168,14 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             ?>
             <!--
             <li>
-                <a href="<?php //echo $baseUrl;                                                                                                                                                                                                                                                                                       ?>/dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
+                <a href="<?php //echo $baseUrl;                                                                                                                                                                                                                                                                                             ?>/dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
             </li>
 
             <li class="mm-dropdown">
                 <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูล User</span><span class="label label-warning">Updated</span></a>
                 <ul>
                     <li>
-                        <a tabindex="-1" href="<?php //echo $baseUrl;                                                                                                                                                                                                                                                                                                                        ?>/user/user"><i class="fa fa-square"></i> <span class="mm-text">สมาชิก</span></a>
+                        <a tabindex="-1" href="<?php //echo $baseUrl;                                                                                                                                                                                                                                                                                                                              ?>/user/user"><i class="fa fa-square"></i> <span class="mm-text">สมาชิก</span></a>
                     </li>
                 </ul>
             </li>-->
@@ -278,26 +278,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <li>
                             <a tabindex="-1" href="#"><span class="mm-text">Product Suppliers</span></a>
                         </li>
-                        <li class="mm-dropdown">
-                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/suppliers/product-suppliers">
-                                <?php
-                                $productGroup = common\models\costfit\ProductGroup::productSupplierGroup();
-                                ?>
-                                <span class="mm-text">Product Group</span><span class="label label-warning"><?= count($productGroup) ?></span></a>
-                            <?php
-                            if (isset($productGroup) && count($productGroup) > 0) {
-                                foreach ($productGroup as $group):
-                                    ?>
-                                    <ul>
-                                        <li>
-                                            <a tabindex="-1" href="<?= $baseUrl; ?>/suppliers/product-suppliers?productGroupId=<?= $group->productGroupId ?>"><span class="mm-text"><?= $group->title ?></span></a>
-                                        </li>
-                                    </ul>
-                                    <?php
-                                endforeach;
-                            }
-                            ?>
-                        </li>
+
                         <li>
                             <a tabindex="-1" href="<?php echo $baseUrl; ?>/suppliers/brand"><span class="mm-text">Brand</span></a>
                         </li>
@@ -309,6 +290,9 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         </li>
                         <li>
                             <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product-group"><span class="mm-text">Product Group</span></a>
+                        </li>
+                        <li>
+                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product-group-template"><span class="mm-text">Product Group Template</span></a>
                         </li>
                     </ul>
                 </li>
@@ -321,26 +305,6 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <li>
                             <a tabindex="-1" href="<?php echo $baseUrl; ?>/suppliers/product-suppliers"><span class="mm-text">Product Content</span></a>
                         </li>
-                        <li class="mm-dropdown">
-                            <a tabindex="-1" href="#">
-                                <?php
-                                $productGroup = common\models\costfit\ProductGroup::productSupplierGroup();
-                                ?>
-                                <span class="mm-text">Product Group</span><span class="label label-warning"><?= count($productGroup) ?></span></a>
-                            <?php
-                            if (isset($productGroup) && count($productGroup) > 0) {
-                                foreach ($productGroup as $group):
-                                    ?>
-                                    <ul>
-                                        <li>
-                                            <a tabindex="-1" href="<?= $baseUrl; ?>/suppliers/product-suppliers?productGroupId=<?= $group->productGroupId ?>"><span class="mm-text"><?= $group->title ?></span></a>
-                                        </li>
-                                    </ul>
-                                    <?php
-                                endforeach;
-                            }
-                            ?>
-                        </li>
                         <li>
                             <a tabindex="-1" href="<?php echo $baseUrl; ?>/suppliers/brand"><span class="mm-text">Brand</span></a>
                         </li>
@@ -352,6 +316,9 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         </li>
                         <li>
                             <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product-group"><span class="mm-text">Product Group</span></a>
+                        </li>
+                        <li>
+                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product-group-template"><span class="mm-text">Product Group Template</span></a>
                         </li>
 
                     </ul>
