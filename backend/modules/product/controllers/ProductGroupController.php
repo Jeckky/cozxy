@@ -534,7 +534,10 @@ class ProductGroupController extends ProductMasterController
     {
 //        throw new \yii\base\Exception(print_r($_POST, TRUE));
         $model = \common\models\costfit\Product::find()->where("productId=" . $_GET["id"])->one();
+        \common\models\costfit\ProductGroupOptionValue::deleteAll("productId=" . $_GET["id"]);
+        \common\models\costfit\ProductImage::deleteAll("productId=" . $_GET["id"]);
         \common\models\costfit\Product::deleteAll("productId=" . $_GET["id"]);
+
         return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->parentId]);
     }
 
