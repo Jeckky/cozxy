@@ -18,9 +18,13 @@ use common\helpers\Base64Decode;
 class DisplayMyWishList extends Model {
 
     public static function productWishList($productId) {
-        $productPost = \common\models\costfit\Wishlist::find()->where('userId=' . Yii::$app->user->id . ' and productId=' . $productId)->one();
-        if (isset($productPost)) {
-            return 1;
+        if (isset(Yii::$app->user->id)) {
+            $productPost = \common\models\costfit\Wishlist::find()->where('userId=' . Yii::$app->user->id . ' and productId=' . $productId)->one();
+            if (isset($productPost)) {
+                return 1;
+            } else {
+                return 0;
+            }
         } else {
             return 0;
         }
