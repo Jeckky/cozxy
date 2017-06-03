@@ -12,6 +12,7 @@ use Yii;
     * @property string $productGroupTemplateOptionId
     * @property string $productGroupId
     * @property string $productId
+    * @property string $productSuppId
     * @property string $productGroupTemplateId
     * @property string $value
     * @property integer $status
@@ -38,7 +39,7 @@ public function rules()
 {
 return [
             [['productGroupOptionId', 'productGroupTemplateOptionId', 'productGroupId', 'productId', 'productGroupTemplateId', 'createDateTime'], 'required'],
-            [['productGroupOptionId', 'productGroupTemplateOptionId', 'productGroupId', 'productId', 'productGroupTemplateId', 'status'], 'integer'],
+            [['productGroupOptionId', 'productGroupTemplateOptionId', 'productGroupId', 'productId', 'productSuppId', 'productGroupTemplateId', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['value'], 'string', 'max' => 200],
             [['productGroupOptionId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductGroupOptionMaster::className(), 'targetAttribute' => ['productGroupOptionId' => 'productGroupOptionId']],
@@ -57,6 +58,7 @@ return [
     'productGroupTemplateOptionId' => Yii::t('product_group_option_value', 'Product Group Template Option ID'),
     'productGroupId' => Yii::t('product_group_option_value', 'Product Group ID'),
     'productId' => Yii::t('product_group_option_value', 'Product ID'),
+    'productSuppId' => Yii::t('product_group_option_value', 'Product Supp ID'),
     'productGroupTemplateId' => Yii::t('product_group_option_value', 'Product Group Template ID'),
     'value' => Yii::t('product_group_option_value', 'Value'),
     'status' => Yii::t('product_group_option_value', 'Status'),

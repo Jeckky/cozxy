@@ -10,6 +10,7 @@ use Yii;
     * @property string $productSuppId
     * @property string $userId
     * @property string $brandId
+    * @property string $categoryId
     * @property string $isbn
     * @property string $code
     * @property string $suppCode
@@ -56,7 +57,7 @@ return 'product_suppliers';
 public function rules()
 {
 return [
-            [['userId', 'brandId', 'unit', 'smallUnit', 'status', 'quantity', 'result', 'productId', 'approveCreateBy', 'warrantyType', 'warrantyPeriod'], 'integer'],
+            [['userId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'quantity', 'result', 'productId', 'approveCreateBy', 'warrantyType', 'warrantyPeriod'], 'integer'],
             [['isbn', 'shortDescription', 'description', 'specification'], 'string'],
             [['title', 'createDateTime', 'quantity', 'result', 'productId', 'approvecreateDateTime'], 'required'],
             [['width', 'height', 'depth', 'weight'], 'number'],
@@ -78,6 +79,7 @@ return [
     'productSuppId' => Yii::t('product_suppliers', 'Product Supp ID'),
     'userId' => Yii::t('product_suppliers', 'User ID'),
     'brandId' => Yii::t('product_suppliers', 'Brand ID'),
+    'categoryId' => Yii::t('product_suppliers', 'Category ID'),
     'isbn' => Yii::t('product_suppliers', 'Isbn'),
     'code' => Yii::t('product_suppliers', 'Code'),
     'suppCode' => Yii::t('product_suppliers', 'Supp Code'),

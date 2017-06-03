@@ -481,8 +481,16 @@ class ProductGroupController extends ProductMasterController
                         $pps->discountType = 1;
                         $pps->createDateTime = new \yii\db\Expression("NOW()");
                         $pps->save();
-                    }
-                    else {
+
+                        $productOptionValues = \common\models\costfit\ProductGroupOptionValue::find()->where("productId = $model->productId")->all();
+                        foreach ($productOptionValues as $ov) {
+                            $productOptionValues = new \common\models\costfit\ProductGroupOptionValue();
+                            $productOptionValues->attributes = $ov->attributes;
+                            $productOptionValues->productSuppId = $prodSupp->productSuppId;
+                            $productOptionValues->createDateTime = new \yii\db\Expression("NOW()");
+                            $productOptionValues->save();
+                        }
+                    } else {
                         throw new \yii\base\Exception(print_r($prodSupp->errors, true));
                     }
                 }
