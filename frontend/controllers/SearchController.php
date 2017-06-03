@@ -70,12 +70,12 @@ class SearchController extends MasterController {
         $mins = Yii::$app->request->post('mins');
         $maxs = Yii::$app->request->post('maxs');
         $categoryId = Yii::$app->request->post('categoryId');
-        // echo 'mins : ' . $mins . ', maxs : ' . $maxs;
+        //echo 'mins : ' . $mins . ', maxs : ' . $maxs . ' ,' . $categoryId;
 
         $productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $categoryId, $mins, $maxs)]);
         //echo '<pre>';
         //print_r($productFilterPrice);
-        return TRUE;
+        //return TRUE;
     }
 
 }

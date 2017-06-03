@@ -56,7 +56,7 @@ class DisplayMyAccount extends Model {
             'firstname' => isset($dataUser['firstname']) ? $dataUser['firstname'] : '&nbsp;-&nbsp;',
             'lastname' => isset($dataUser['lastname']) ? $dataUser['lastname'] : '&nbsp;-&nbsp;',
             'email' => isset($dataUser['email']) ? $dataUser['email'] : '&nbsp;-&nbsp;',
-            'birthDate' => isset($dataUser['birthDate']) ? $dataUser['birthDate'] : '&nbsp;-&nbsp;',
+            'birthDate' => isset($dataUser['birthDate']) ? $dataUser['birthDate'] : FALSE,
             'gender' => isset($dataUser['gender']) ? $dataUser['gender'] : '',
         ];
         return $products;

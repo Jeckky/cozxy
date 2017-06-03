@@ -89,8 +89,9 @@ $(function() {
 		values: [ 100, 6000 ],
 		slide: function( event, ui ) {
 			$( "#amount" ).val( "From " + ui.values[ 0 ] + " THB to " + ui.values[ 1 ] + " THB");
-            $("input:hidden:first","#amount-min").val(ui.values[ 0 ]);
-            $("input:hidden:last","#amount-min").val(ui.values[ 1 ]);
+            $("input:hidden:eq(0)","#amount-min").val(ui.values[ 0 ]);
+            $("input:hidden:eq(1)","#amount-min").val(ui.values[ 1 ]);
+            $("input:hidden:eq(2)","#amount-min").val(' . $categoryId . ');
 
 		},
         stop: function (event, ui) {
@@ -118,14 +119,18 @@ $(function() {
 \frontend\assets\SearchAsset::register($this);
 ?>
 
-<?= $this->render('@app/themes/cozxy/layouts/search/_search_filter') ?>
+<?=
+$this->render('@app/themes/cozxy/layouts/search/_search_filter', [
+    'categoryId' => $categoryId,
+])
+?>
 
 <div class="product-list">
     <div class="container">
         <div class="row">
             <div class="col-xs-9">
                 <h3 class="b"><?= strtoupper($category) ?></h3>
-<!--                <p class="size18 size16-sm size14-xs">SHOWING 1-16 OF 79 RESULTS</p>-->
+                <!--<p class="size18 size16-sm size14-xs">SHOWING 1-16 OF 79 RESULTS</p>-->
                 <div class="row">
                     <div class="wf-container">
                         <?php

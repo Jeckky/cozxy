@@ -562,3 +562,27 @@ function checkoutNewBilling() {
         }
     });
 }
+
+
+function filterPrice() {
+
+    $min = $('input:hidden:eq(0)', '#amount-min').val();
+    $max = $('input:hidden:eq(1)', '#amount-min').val();
+    $categoryId = $('input:hidden:eq(2)', '#amount-min').val();
+
+    var path = $baseUrl + "search/filter-price";
+    $.ajax({
+        url: path,
+        type: "POST",
+        dataType: "JSON",
+        data: {mins: $min, maxs: $max, categoryId: $categoryId},
+        success: function (data) {
+            if (data.status) {
+                $('.wf-container').html('xxxxxx');
+            } else {
+                alert(data.message);
+            }
+        }
+    });
+}
+

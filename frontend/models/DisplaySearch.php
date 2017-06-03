@@ -143,10 +143,9 @@ class DisplaySearch extends Model {
             ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
         } elseif ($cat != FALSE && $mins != FALSE && $maxs != FALSE) {
             $whereArray2 = [];
-            $whereArray["category_to_product.categoryId"] = $cat;
 
+            $whereArray2["category_to_product.categoryId"] = $cat;
             $whereArray2["product.approve"] = "approve";
-            //$whereArray2["ps.result"] = "0";
             $whereArray2["pps.status"] = "1";
 
             $pCanSale = \common\models\costfit\CategoryToProduct::find()
