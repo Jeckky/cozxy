@@ -59,7 +59,7 @@ public function rules()
 return [
             [['userId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'quantity', 'result', 'productId', 'approveCreateBy', 'warrantyType', 'warrantyPeriod'], 'integer'],
             [['isbn', 'shortDescription', 'description', 'specification'], 'string'],
-            [['title', 'createDateTime', 'quantity', 'result', 'productId', 'approvecreateDateTime'], 'required'],
+            [['title', 'createDateTime', 'quantity', 'result', 'productId'], 'required'],
             [['width', 'height', 'depth', 'weight'], 'number'],
             [['createDateTime', 'updateDateTime', 'approvecreateDateTime'], 'safe'],
             [['code', 'suppCode', 'merchantCode'], 'string', 'max' => 100],
