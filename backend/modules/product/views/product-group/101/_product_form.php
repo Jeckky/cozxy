@@ -36,7 +36,7 @@ $form = ActiveForm::begin([
                 <label class="col-sm-3 control-label" for="product-title">Option</label>
                 <div class="col-sm-9">
                     <?php
-                    $options = \common\models\costfit\ProductGroupOptionValue::find()->where("productId =" . $model->productId)->all();
+                    $options = \common\models\costfit\ProductGroupOptionValue::find()->where("productId =" . $model->productId . " AND productSuppId IS NULL")->all();
                     $optionStr = "";
                     foreach ($options as $option) {
                         $optionStr.= $option->productGroupOption->name . "-" . $option->value . "<br>";
