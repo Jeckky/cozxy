@@ -42,10 +42,11 @@ class SearchController extends MasterController {
         //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, FALSE)]);
         //return $this->render('index', compact('productCanSell', 'category'));
         $category = Yii::$app->request->post('search');
+        $categoryId = NULL;
 
         $productCanSell = new ArrayDataProvider(['allModels' => DisplaySearch::productSearch($category, 9, FALSE)]);
 
-        return $this->render('index', compact('productCanSell', 'category'));
+        return $this->render('index', compact('productCanSell', 'category', 'categoryId'));
     }
 
     public function actionBrand($hash = FALSE) {
