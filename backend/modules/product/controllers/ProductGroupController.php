@@ -490,6 +490,13 @@ class ProductGroupController extends ProductMasterController
                             $productOptionValues->createDateTime = new \yii\db\Expression("NOW()");
                             $productOptionValues->save();
                         }
+
+                        $productImages = \common\models\costfit\ProductImage::find()->where("productId = $model->productId")->all();
+                        foreach ($productImages as $pi) {
+                            $psi = new \common\models\costfit\ProductImageSuppliers();
+                            $psi->attributes = $pi->attributes;
+                            $psi->save();
+                        }
                     } else {
                         throw new \yii\base\Exception(print_r($prodSupp->errors, true));
                     }
