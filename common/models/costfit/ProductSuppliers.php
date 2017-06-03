@@ -91,7 +91,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
             'bTitle' => 'Brand',
             'cTitle' => 'Category',
             'sUser' => 'Suppliers', 'pTitle' => 'หัวข้อสินค้า',
-	        'productPrice' => 'Product Price'
+            'productPrice' => 'Product Price'
         ]);
     }
 
@@ -224,6 +224,35 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         if (isset($image) && !empty($image)) {
             return $image;
         }
+    }
+
+    public static function productSupplierGroupStory($productSuppId) {
+        $productId = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
+        $allProductId = [];
+        $productSuppId = '';
+        if (isset($productId)) {
+            $product = Product::find()->where("productId=" . $productId->productId)->one();
+            if ($product->parentId == NULL) {
+                $parent = $product;
+                $allProductId[0] = $product->productId;
+            } else {
+                $parent = Product::find()->where("productId=" . $product->parentId)->one();
+                $allProductId[0] = $product->productId;
+                $allProductId[1] = $parent->productId;
+            }
+            foreach ($allProductId as $id):
+                $productSuppliers = ProductSuppliers::find()->where("productId=" . $id)->all();
+                if (isset($productSuppliers) && count($productSuppliers) > 0) {
+                    foreach ($productSuppliers as $productSupp):
+                        $productSuppId .= $productSupp->productSuppId . ",";
+                    endforeach;
+                }
+            endforeach;
+            if ($productSuppId != '') {
+                $productSuppId = substr($productSuppId, 0, -1);
+            }
+        }
+        return $productSuppId;
     }
 
     public function getUnits() {

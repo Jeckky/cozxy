@@ -9,7 +9,9 @@ use Yii;
 *
     * @property string $productSuppId
     * @property string $userId
+    * @property string $productGroupId
     * @property string $brandId
+    * @property string $categoryId
     * @property string $isbn
     * @property string $code
     * @property string $suppCode
@@ -32,7 +34,7 @@ use Yii;
     * @property integer $quantity
     * @property integer $result
     * @property string $approve
-    * @property string $productId
+    * @property integer $productId
     * @property string $approveCreateBy
     * @property string $approvecreateDateTime
     * @property string $receiveType
@@ -56,9 +58,9 @@ return 'product_suppliers';
 public function rules()
 {
 return [
-            [['userId', 'brandId', 'unit', 'smallUnit', 'status', 'quantity', 'result', 'productId', 'approveCreateBy', 'warrantyType', 'warrantyPeriod'], 'integer'],
+            [['userId', 'productGroupId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'quantity', 'result', 'productId', 'approveCreateBy', 'warrantyType', 'warrantyPeriod'], 'integer'],
             [['isbn', 'shortDescription', 'description', 'specification'], 'string'],
-            [['title', 'createDateTime', 'quantity', 'result', 'productId', 'approvecreateDateTime'], 'required'],
+            [['title', 'createDateTime', 'quantity', 'result', 'approvecreateDateTime'], 'required'],
             [['width', 'height', 'depth', 'weight'], 'number'],
             [['createDateTime', 'updateDateTime', 'approvecreateDateTime'], 'safe'],
             [['code', 'suppCode', 'merchantCode'], 'string', 'max' => 100],
@@ -77,7 +79,9 @@ public function attributeLabels()
 return [
     'productSuppId' => Yii::t('product_suppliers', 'Product Supp ID'),
     'userId' => Yii::t('product_suppliers', 'User ID'),
+    'productGroupId' => Yii::t('product_suppliers', 'Product Group ID'),
     'brandId' => Yii::t('product_suppliers', 'Brand ID'),
+    'categoryId' => Yii::t('product_suppliers', 'Category ID'),
     'isbn' => Yii::t('product_suppliers', 'Isbn'),
     'code' => Yii::t('product_suppliers', 'Code'),
     'suppCode' => Yii::t('product_suppliers', 'Supp Code'),

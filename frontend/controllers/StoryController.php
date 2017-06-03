@@ -9,7 +9,14 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\data\ArrayDataProvider;
+use yii\helpers\ArrayHelper;
 use frontend\models\DisplayMyStory;
+use common\models\costfit\ProductSuppliers;
+use common\models\costfit\Product;
+use common\models\costfit\ProductImageSuppliers;
+use common\models\costfit\ProductShelf;
+use common\models\costfit\Currency;
+use common\models\dbworld\Countries;
 
 class StoryController extends MasterController {
 
@@ -21,9 +28,8 @@ class StoryController extends MasterController {
         $productId = isset($params['productId']) ? $params['productId'] : NULL;
         $productPostId = isset($params['productPostId']) ? $params['productPostId'] : NULL;
         $ViewsRecentStories = DisplayMyStory::productViewsRecentStories($productPostId);
-
-
-        return $this->render('@app/themes/cozxy/layouts/story/_story', compact('ViewsRecentStories'));
+        $productPost = \common\models\costfit\ProductPost::find()->where("productPostId=" . $productPostId)->one();
+        return $this->render('@app/themes/cozxy/layouts/story/_story', compact('ViewsRecentStories', 'productPost'));
     }
 
     public function actionWriteYourStory($hash) {
@@ -32,8 +38,122 @@ class StoryController extends MasterController {
         $productSuppId = isset($params['productSuppId']) ? $params['productSuppId'] : NULL;
         $productId = isset($params['productId']) ? $params['productId'] : NULL;
         $productPostId = isset($params['productPostId']) ? $params['productPostId'] : NULL;
+        $productSupplier = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
+        $productSuppImg = ProductImageSuppliers::find()->where("productSuppId=" . $productSupplier->productSuppId)->one();
+        $model = new \common\models\costfit\ProductPost();
+        $shelf = ArrayHelper::map(ProductShelf::find()->where("userId=" . Yii::$app->user->identity->userId . " and status=1")
+                                ->orderBy('createDateTime')
+                                ->all(), 'productShelfId', 'title');
+        $currency = ArrayHelper::map(Currency::find()->where("status=1")
+                                ->orderBy('createDateTime')
+                                ->all(), 'currencyId', 'title');
+        $country = ArrayHelper::map(Countries::find()->where("1")
+                                ->all(), 'countryId', 'countryName');
 
-        return $this->render('@app/themes/cozxy/layouts/story/_write_your_story');
+        return $this->render('@app/themes/cozxy/layouts/story/_write_your_story', [
+                    'productSupplier' => $productSupplier,
+                    'image' => isset($productSuppImg) ? $productSuppImg->image : '',
+                    'shelf' => $shelf,
+                    'currency' => $currency,
+                    'country' => $country,
+                    'model' => $model
+        ]);
+    }
+
+    public function actionWriteStory() {
+        if (isset($_POST['shopName'])) {
+            $shelf = new \common\models\costfit\ProductPost();
+            $shelf->productSuppId = $_POST["productSuppId"];
+            $shelf->productSelfId = $_POST["shelf"];
+            $shelf->userId = Yii::$app->user->identity->userId;
+            $shelf->title = $_POST["title"];
+            $shelf->description = $_POST["ProductPost"]["description"];
+            $shelf->shopName = $_POST["shopName"];
+            $shelf->price = $_POST["price"];
+            $shelf->country = $_POST["country"];
+            $shelf->currency = $_POST["currency"];
+            // $shelf->image = $_POST["image"];
+            if ($_POST["isPublic"] == 'on') {
+                $shelf->isPublic = 1;
+            } else {
+                $shelf->isPublic = 0;
+            }
+            $shelf->status = 1;
+            $shelf->createDateTime = new \yii\db\Expression('NOW()');
+            $shelf->updateDateTime = new \yii\db\Expression('NOW()');
+            $imageObj = \yii\web\UploadedFile::getInstanceByName("story[image]");
+            if (isset($imageObj) && !empty($imageObj)) {
+                $folderName = "stroy";
+                $file = $imageObj->name;
+
+                $filenameArray = explode('.', $file);
+                $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
+                $fileName = \Yii::$app->security->generateRandomString(10) . '.' . $filenameArray[count($filenameArray) - 1];
+                $urlFile = $urlFolder . $fileName;
+                $shelf->image = 'images/' . $folderName . "/" . $fileName;
+
+                if (!file_exists($urlFolder)) {
+                    mkdir($urlFolder, 0777);
+                }
+            }
+            if ($shelf->save(false)) {
+                if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
+                    $porductSupplier = ProductSuppliers::find()->where("productSuppId=" . $_POST["productSuppId"])->one();
+                    $productSuppId = $porductSupplier->encodeParams(['productId' => $porductSupplier->productId, 'productSupplierId' => $porductSupplier->productSuppId]);
+                    return $this->redirect([Yii::$app->homeUrl . 'product/' . $productSuppId]);
+                } else {
+
+                }
+            }
+        }
+    }
+
+    public function actionRatingPost() {
+        $rate = \common\models\costfit\ProductPostRating::find()->where("productPostId=" . $_POST['postId'] . " and userId=" . $_POST['userId'])
+                ->orderBy("productPostRatingId DESC")
+                ->one();
+        if (isset($rate)) {
+            if ($rate->status == 1) {
+                $rate->status = 2;
+                $rate->updateDateTime = new \yii\db\Expression('NOW()');
+                $rate->save(false);
+            }
+        }
+        $rating = new \common\models\costfit\ProductPostRating();
+
+        $res = [];
+        $rating->productPostId = $_POST['postId'];
+        $rating->userId = $_POST['userId'];
+        $rating->score = $_POST['rate'];
+        $rating->status = 1;
+        $rating->createDateTime = new \yii\db\Expression('NOW()');
+        $rating->updateDateTime = new \yii\db\Expression('NOW()');
+        if ($rating->save(false)) {
+            $res['status'] = true;
+        } else {
+            $res['status'] = false;
+        }
+        return json_encode($res);
+    }
+
+    public function actionViewPost() {
+        $res = [];
+        $productPost = \common\models\costfit\ProductPost::find()->where("productPostId=" . $_POST["postId"])->one();
+        if ($productPost->userId != Yii::$app->user->identity->userId) {
+            $productPostView = new \common\models\costfit\ProductPostView();
+            $productPostView->userId = $_POST["userId"];
+            $productPostView->productPostId = $_POST["postId"];
+            $productPostView->createDateTime = new \yii\db\Expression('NOW()');
+            $productPostView->updateDateTime = new \yii\db\Expression('NOW()');
+            if ($productPostView->save(false)) {
+                $res['status'] = true;
+            } else {
+                $res['status'] = false;
+            }
+        } else {
+            $res['status'] = false;
+        }
+        return json_encode($res);
     }
 
     public function actionShopDetail() {

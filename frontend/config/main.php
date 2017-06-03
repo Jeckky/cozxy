@@ -79,8 +79,11 @@ return [
 //                'mobile/product/<hash>' => 'mobile/product',
 //                'mobile/product/product/<hash>' => 'mobile/product/product',
                 'my-account/edit-billing/<hash>' => 'my-account/edit-billing',
+                'story/write-your-story/<hash>' => 'story/write-your-story/',
+                'story/write-story' => 'story/write-story',
+                'story/rating-post' => 'story/rating-post',
+                'story/view-post' => 'story/view-post',
                 'story/<hash>' => 'story/index',
-                'story/write-your-story/<hash>' => 'story/write-your-story/'
             ],
         ],
         /**

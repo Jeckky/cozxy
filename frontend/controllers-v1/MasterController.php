@@ -326,7 +326,7 @@ class MasterController extends MasterCommonController {
             $strReturn = $d[2] . '/' . $monthFormat . '/' . ($d[0] + 543);
         } else if ($format == 4) {
             $monthFormat = $monthFormat4[$d[1]];
-            $strReturn = $d[2] . '/' . $monthFormat . '/' . ($d[0]);
+            $strReturn = $d[2] . ' ' . $monthFormat . ' ' . ($d[0]);
             return $strReturn;
         } else {
             $monthFormat = $monthFormat4[$d[1]];
@@ -344,26 +344,26 @@ class MasterController extends MasterCommonController {
 
     public function actionMenuCategory() {
         $list = \common\models\costfit\Category::find()
-        ->andWhere('parentId  is null ')
-        ->andWhere('status  =1')
-        ->all();
+                ->andWhere('parentId  is null ')
+                ->andWhere('status  =1')
+                ->all();
 
         return $list;
     }
 
     public function actionMenuCategoryParentId($id) {
         $list = \common\models\costfit\Category::find()
-        ->andWhere('parentId  =' . $id)
-        ->andWhere('status  =1')
-        ->all();
+                ->andWhere('parentId  =' . $id)
+                ->andWhere('status  =1')
+                ->all();
         return $list;
     }
 
     public function actionMenuCategorySubParentId($id) {
         $list = \common\models\costfit\Category::find()
-        ->andWhere('parentId  =' . $id)
-        ->andWhere('status  =1')
-        ->all();
+                ->andWhere('parentId  =' . $id)
+                ->andWhere('status  =1')
+                ->all();
         return $list;
     }
 
@@ -599,8 +599,8 @@ class MasterController extends MasterCommonController {
     public function findPriceRange($categoryId) {
         $res = [];
         $product = \common\models\costfit\CategoryToProduct::find()->select("min(product_price.price) as  minPrice ,max(product_price.price) as maxPrice")
-        ->join("LEFT JOIN", "product_price", "product_price.productId = category_to_product.productId")
-        ->where("product_price.quantity = 1 AND category_to_product.categoryId=" . $categoryId)->one();
+                        ->join("LEFT JOIN", "product_price", "product_price.productId = category_to_product.productId")
+                        ->where("product_price.quantity = 1 AND category_to_product.categoryId=" . $categoryId)->one();
 
         if (isset($product)) {
             $res["min"] = $product['minPrice'];
@@ -631,8 +631,8 @@ class MasterController extends MasterCommonController {
                 }
 
                 $list = \common\models\dbworld\Cities::find()
-                ->join("RIGHT JOIN", "$dbName[1].picking_point", "picking_point.amphurId = cities.cityId ")
-                ->andWhere(['cities.stateId' => $cat_id, 'status' => '1'])->asArray()->all();
+                                ->join("RIGHT JOIN", "$dbName[1].picking_point", "picking_point.amphurId = cities.cityId ")
+                                ->andWhere(['cities.stateId' => $cat_id, 'status' => '1'])->asArray()->all();
 
                 $selected = null;
                 if ($cat_id != null && count($list) > 0) {
@@ -701,7 +701,7 @@ class MasterController extends MasterCommonController {
                 }
 
                 $list = \common\models\costfit\PickingPoint::find()
-                ->andWhere(['amphurId' => $cat_id, 'type' => $type, 'status' => '1'])->asArray()->all();
+                                ->andWhere(['amphurId' => $cat_id, 'type' => $type, 'status' => '1'])->asArray()->all();
 
                 $selected = null;
                 if ($cat_id != null && count($list) > 0) {

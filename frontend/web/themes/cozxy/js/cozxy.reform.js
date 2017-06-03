@@ -504,4 +504,39 @@ $(document).on('click', '.delete', function () {
         }
     });
 });
+$(document).on('click', '#reviews-rate', function (e) {
 
+    var rate = $('input:hidden', '#reviews-rate').val();
+    var postId = $(this).parent().find("#postId").val();
+    var userId = $(this).parent().find("#userId").val();
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "story/rating-post",
+        data: {'rate': rate, 'postId': postId, 'userId': userId},
+        success: function (data)
+        {
+            //alert(data["status"]);
+            //(status);
+            if (data) {
+                alert('Successful, you give ' + rate + ' stars to this post.');
+            } else {
+                alert('Somting wrong');
+
+            }
+        }
+    });
+});
+$(document).on('click', '#viewPost', function (e) {
+    var postId = $(this).parent().parent().find("#postId").val();
+    var userId = $(this).parent().parent().find("#userId").val();
+    // alert(postId);
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "story/view-post",
+        data: {'postId': postId, 'userId': userId},
+        success: function (data)
+        {
+
+        }
+    });
+});
