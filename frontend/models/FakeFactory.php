@@ -11,9 +11,11 @@ use common\models\costfit\ProductSuppliers;
 /**
  * ContactForm is the model behind the contact form.
  */
-class FakeFactory extends Model {
+class FakeFactory extends Model
+{
 
-    public static function productForSale($n, $cat = FALSE) {
+    public static function productForSale($n, $cat = FALSE)
+    {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE) {
@@ -82,7 +84,8 @@ class FakeFactory extends Model {
         return $products;
     }
 
-    public static function productForNotSale($n, $cat = FALSE) {
+    public static function productForNotSale($n, $cat = FALSE)
+    {
         $products = [];
 
         $whereArray2 = [];
@@ -141,7 +144,8 @@ class FakeFactory extends Model {
         return $products;
     }
 
-    public static function productHotNewAndProduct($n, $cat = FALSE) {
+    public static function productHotNewAndProduct($n, $cat = FALSE)
+    {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE) {
@@ -207,7 +211,8 @@ class FakeFactory extends Model {
         return $products;
     }
 
-    public static function productStory($n) {
+    public static function productStory($n)
+    {
         $products = [];
         $productPost = \common\models\costfit\ProductPost::find()->groupBy(['productSuppId'])->orderBy('productPostId desc')->limit($n)->all();
         foreach ($productPost as $value) {
@@ -252,7 +257,8 @@ class FakeFactory extends Model {
         return $products;
     }
 
-    public static function productSlideGroup($n, $status) {
+    public static function productSlideGroup($n, $status)
+    {
         $products = [];
         $slideGroup = \common\models\costfit\ContentGroup::find()->where("lower(title) = 'banner' and status=1")->one();
         $content = \common\models\costfit\Content::find()->where("contentGroupId =" . $slideGroup['contentGroupId'])->all();
@@ -269,7 +275,8 @@ class FakeFactory extends Model {
         return $products;
     }
 
-    public static function productViews($productSuppId) {
+    public static function productViews($productSuppId)
+    {
         $products = [];
         $imagAll = [];
         $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
@@ -291,7 +298,10 @@ class FakeFactory extends Model {
                     'imageThumbnail1' => $productimageThumbnail1,
                 ];
             }
-            $GetCategory = \common\models\costfit\Category::find()->where("categoryId=" . $GetProductSuppliers['categoryId'])->one();
+//            throw new \yii\base\Exception(print_r($GetProductSuppliers->attributes, true));
+            if (isset($GetProductSuppliers['categoryId'])) {
+                $GetCategory = \common\models\costfit\Category::find()->where("categoryId=" . $GetProductSuppliers['categoryId'])->one();
+            }
             /*
              * ราคาสินค้า
              */
@@ -334,7 +344,8 @@ class FakeFactory extends Model {
         return $products;
     }
 
-    public static function productSlideBanner($n, $status) {
+    public static function productSlideBanner($n, $status)
+    {
         $products = [];
         $brand = \common\models\costfit\Brand::find()->all();
         foreach ($brand as $items) {
