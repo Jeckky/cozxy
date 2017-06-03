@@ -34,7 +34,9 @@ class ProductGroupTemplateController extends ProductMasterController
     public function actionIndex()
     {
         $searchModel = new ProductGroupTemplateSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $params = Yii::$app->request->queryParams;
+        $dataProvider = $searchModel->search($params);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
