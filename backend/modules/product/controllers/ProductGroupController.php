@@ -50,6 +50,7 @@ class ProductGroupController extends ProductMasterController
         $categoryId = Yii::$app->request->post('categoryId');
         $brandId = Yii::$app->request->post('brandId');
         $status = Yii::$app->request->post('status');
+        $title = Yii::$app->request->post('title');
         //User Type 4 = Supplier , 5= Content
         if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5) {
             $query = \common\models\costfit\Product::find()
@@ -72,6 +73,9 @@ class ProductGroupController extends ProductMasterController
         }
         if (isset($status) && !empty($status)) {
             $query->andWhere("product.status = $status");
+        }
+        if (isset($title) && !empty($title)) {
+            $query->andWhere("product.title LIKE '%$title%'");
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -539,6 +543,22 @@ class ProductGroupController extends ProductMasterController
         \common\models\costfit\Product::deleteAll("productId=" . $_GET["id"]);
 
         return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->parentId]);
+    }
+
+    public function actionDeleteProductGroup()
+    {
+//        throw new \yii\base\Exception(print_r($_POST, TRUE));
+        $childs = \common\models\costfit\Product::find()->where("parentId = " . $_GET["id"])->all();
+        foreach ($childs as $pg) {
+            \common\models\costfit\ProductGroupOptionValue::deleteAll("productId=" . $pg->productId);
+            \common\models\costfit\ProductImage::deleteAll("productId=" . $pg->productId);
+            \common\models\costfit\Product::deleteAll("productId=" . $pg->productId);
+        }
+        \common\models\costfit\ProductGroupOptionValue::deleteAll("productId=" . $_GET["id"]);
+        \common\models\costfit\ProductImage::deleteAll("productId=" . $_GET["id"]);
+        \common\models\costfit\Product::deleteAll("productId=" . $_GET["id"]);
+
+        return $this->redirect(['index']);
     }
 
     public function actionDeleteProductImage()
