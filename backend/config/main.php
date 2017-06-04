@@ -98,7 +98,10 @@ return [
         ],
         'gridview' => [
             'class' => '\kartik\grid\Module'
-        ]
+        ],
+        'productpost' => [
+            'class' => 'backend\modules\productpost\Productpost',
+        ],
     ],
     'components' => [
         'user' => [
