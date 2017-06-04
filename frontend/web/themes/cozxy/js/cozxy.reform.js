@@ -323,7 +323,8 @@ function addItemToWishlist(id) {
  * @returns {undefined}
  */
 function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId, supplierId, receiveType) {
-
+    //javascript:addItemToCartUnitys(160, 1, "48", "false", "144", "", "")
+    alert('test : addItemToCartUnitys');
     var $productSuppId = productSuppId;
     var $maxQnty = maxQnty;
     var $fastId = fastId;
@@ -332,12 +333,17 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
     var $receiveType = receiveType;
     var $itemQnty = quantity;
     var $this = $('#addItemsToCartMulti-' + $productSuppId);
-    $this.button('loading');
-    setTimeout(function () {
-        $this.button('reset');
-    }, 8000);
-    if (parseInt($itemQnty) <= parseInt($maxQnty) && parseInt($itemQnty) > 0) {
 
+    /*$this.button('loading');
+     setTimeout(function () {
+     $this.button('reset');
+     }, 8000);*/
+    //fa-spin
+
+    $(".fa-shopping-bag").addClass("fa-spin");
+
+    if (parseInt($itemQnty) <= parseInt($maxQnty) && parseInt($itemQnty) > 0) {
+        alert('yes');
         $.ajax({
             type: "POST",
             dataType: "JSON",
@@ -367,6 +373,7 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
             }
         });
     } else {
+        alert('xx');
         var $maxQnty = maxQnty;
         var $itemQnty = quantity;
         //$(this).parent().find('#quantity').val($maxQnty);
@@ -590,6 +597,12 @@ function filterPriceCozxy() {
                     //console.log(key);//160,162
                     //console.log(val.productSuppId);
                     //console.log(items);
+                    alert(val.fastId);
+                    if (val.fastId == 'false') {
+                        $fastId = '';
+                    } else {
+                        $fastId = val.fastId;
+                    }
                     items += "<div class=\"col-md-4 col-sm-6 col-xs-12\">";
                     items += "<div class=\"product-box\">";
                     items += "<div class=\"product-img text-center\">";
@@ -607,7 +620,7 @@ function filterPriceCozxy() {
                         items += "<div class=\"col-xs-4\"><i class=\"fa fa-heart-o\" aria-hidden=\"true\"></i></div>";
                         items += "</a>";
                     }
-                    items += '<a href=\'javascript:addItemToCartUnitys(' + val.productSuppId + ', 1, "' + val.maxQnty + '", "' + val.fastId + '", "' + val.productId + '", "' + val.supplierId + '", "' + val.receiveType + '")\' id=\"addItemsToCartMulti-' + val.productSuppId + '\" data-loading-text=\" <div class =\'col-xs-4\'> <i class = \'fa fa-circle-o-notch fa-spin\' aria-hidden = \'true\'> </i></div> \">';
+                    items += '<a href=\'javascript:addItemToCartUnitys(' + val.productSuppId + ', 1, "' + val.maxQnty + '", "' + $fastId + '", "' + val.productId + '", "' + val.supplierId + '", "' + val.receiveType + '")\' id=\"addItemsToCartMulti-' + val.productSuppId + '\" data-loading-text=\" <div class =\'col-xs-4\'> <i class = \'fa fa-circle-o-notch fa-spin\' aria-hidden = \'true\'> </i></div> \">';
                     items += "<div class=\"col-xs-4\"><i class=\"fa fa-shopping-bag\" aria-hidden=\"true\"></i></div>";
                     items += " </a>";
                     items += " </div>";
