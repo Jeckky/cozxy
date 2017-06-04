@@ -278,6 +278,17 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         return $productSuppId;
     }
 
+    public static function productParentId($productSuppId) {
+        $productSupplier = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
+        $product = Product::find()->where("productId=" . $productSupplier->productId)->one();
+        if ($product->parentId != null && $product->parentId != '') {
+            $parent = Product::find()->where("productId=" . $product->parentId)->one();
+        } else {
+            $parent = $product;
+        }
+        return $parent;
+    }
+
     public function getUnits() {
         return $this->hasOne(Unit::className(), ['unitId' => 'unit']);
     }
