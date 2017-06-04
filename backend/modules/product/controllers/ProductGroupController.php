@@ -486,19 +486,31 @@ class ProductGroupController extends ProductMasterController
                         $pps->createDateTime = new \yii\db\Expression("NOW()");
                         $pps->save();
 
-                        $productOptionValues = \common\models\costfit\ProductGroupOptionValue::find()->where("productId = $model->productId")->all();
-                        foreach ($productOptionValues as $ov) {
-                            $productOptionValues = new \common\models\costfit\ProductGroupOptionValue();
+                        $productOptionValuess = \common\models\costfit\ProductGroupOptionValue::find()->where("productId = $model->productId AND productSuppId IS NULL")->all();
+//                        throw new \yii\base\Exception(count($productOptionValues));
+                        foreach ($productOptionValuess as $ov) {
+                            $productOptionValues = \common\models\costfit\ProductGroupOptionValue::find()->where("productId = $model->productId AND productSuppId = $prodSupp->productSuppId AND productGroupTemplateOptionId = $ov->productGroupTemplateOptionId")->one();
+                            if (!isset($productOptionValues)) {
+                                $productOptionValues = new \common\models\costfit\ProductGroupOptionValue();
+                            }
                             $productOptionValues->attributes = $ov->attributes;
                             $productOptionValues->productSuppId = $prodSupp->productSuppId;
+                            $productOptionValues->productGroupTemplateOptionId = $ov->productGroupTemplateOptionId;
                             $productOptionValues->createDateTime = new \yii\db\Expression("NOW()");
-                            $productOptionValues->save();
+                            $productOptionValues->updateDateTime = new \yii\db\Expression("NOW()");
+                            if (!$productOptionValues->save()) {
+                                throw new \yii\base\Exception(print_r($productOptionValues->errors, true));
+                            }
                         }
 
                         $productImages = \common\models\costfit\ProductImage::find()->where("productId = $model->productId")->all();
+                        \common\models\costfit\ProductImageSuppliers::deleteAll("productSuppId = $prodSupp->productSuppId");
                         foreach ($productImages as $pi) {
                             $psi = new \common\models\costfit\ProductImageSuppliers();
                             $psi->attributes = $pi->attributes;
+                            $psi->productSuppId = $prodSupp->productSuppId;
+                            $psi->createDateTime = new \yii\db\Expression("NOW()");
+                            $psi->updateDateTime = new \yii\db\Expression("NOW()");
                             $psi->save();
                         }
                     } else {
