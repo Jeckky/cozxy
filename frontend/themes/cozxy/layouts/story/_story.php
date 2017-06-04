@@ -84,7 +84,7 @@
             <?= $this->render('_stars', ['productPost' => $productPost]) ?>
             <?= $this->render('_authors') ?>
             <?= $this->render('_about_this_story', ['productPost' => $productPost]) ?>
-            <?= $this->render('_popular_stories') ?>
+            <?= $this->render('_popular_stories', ['popularStories' => $popularStories]) ?>
         </div>
 
     </div>

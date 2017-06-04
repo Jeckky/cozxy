@@ -7,8 +7,8 @@ use Yii;
 /**
 * This is the model class for table "signature".
 *
-    * @property string $signatureId
-    * @property string $userId
+    * @property integer $signatureId
+    * @property integer $userId
     * @property string $position
     * @property string $image
     * @property integer $status
