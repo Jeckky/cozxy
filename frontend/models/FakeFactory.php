@@ -264,6 +264,7 @@ class FakeFactory extends Model {
         $products = [];
         $slideGroup = \common\models\costfit\ContentGroup::find()->where("lower(title) = 'banner' and status=1")->one();
         $content = \common\models\costfit\Content::find()->where("contentGroupId =" . $slideGroup['contentGroupId'])->all();
+
         foreach ($content as $items) {
             $products[$items->contentId] = [
                 'code' => $items->contentId,
