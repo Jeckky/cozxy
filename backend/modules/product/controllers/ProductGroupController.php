@@ -61,8 +61,13 @@ class ProductGroupController extends ProductMasterController
             $userRe = str_replace('[', '', str_replace(']', '', $user_group_Id));
             $userEx = explode(',', $userRe);
             $ress = array_search(26, $userEx);
-            $query = \common\models\costfit\Product::find()
-            ->where("userId=" . Yii::$app->user->identity->userId . " AND parentId is null ");
+            if ($ress !== FALSE) {
+                $query = \common\models\costfit\Product::find()
+                ->where("parentId is null AND status = 99");
+            } else {
+                $query = \common\models\costfit\Product::find()
+                ->where("parentId is null AND userId =" . Yii::$app->user->identity->userId);
+            }
         }
 
         if (isset($categoryId) && !empty($categoryId)) {
