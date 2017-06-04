@@ -296,6 +296,11 @@ $("#place-order").on('click', function () {
  */
 function addItemToWishlist(id) {
     var $pId = id;
+    var str = window.location.pathname;
+    var res = str.split("/");
+    //console.log(window.location.pathname);
+    //console.log(res);
+    //console.log(res[1])
     $.ajax({
         type: "POST",
         dataType: "JSON",
@@ -306,10 +311,16 @@ function addItemToWishlist(id) {
             if (data.status) {
                 //$('.wishlist-message').addClass('visible');
                 var $this = $('#addItemToWishlist-' + $pId);
-                $this.button('loading');
-                setTimeout(function () {
-                    $this.button('reset');
-                }, 8000);
+                if (res[1] != 'search') {
+                    $this.button('loading');
+                    setTimeout(function () {
+                        $this.button('reset');
+                    }, 8000);
+                } else {
+                    $('.heart i').removeClass('fa fa-heart-o');
+                    $('.heart i').addClass('fa fa-heartbeat');
+                }
+                //$(".fa fa-heart-o").html("<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>");
             } else {
                 alert(data.message);
             }
@@ -324,7 +335,7 @@ function addItemToWishlist(id) {
  */
 function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId, supplierId, receiveType) {
     //javascript:addItemToCartUnitys(160, 1, "48", "false", "144", "", "")
-    alert('test : addItemToCartUnitys');
+
     var $productSuppId = productSuppId;
     var $maxQnty = maxQnty;
     var $fastId = fastId;
@@ -333,17 +344,22 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
     var $receiveType = receiveType;
     var $itemQnty = quantity;
     var $this = $('#addItemsToCartMulti-' + $productSuppId);
+    var str = window.location.pathname;
+    var res = str.split("/");
+    if (res[1] != 'search') {
+        $this.button('loading');
+        setTimeout(function () {
+            $this.button('reset');
+        }, 8000);
+    } else {
+        $('.shopping i').removeClass('fa fa-shopping-bag');
+        $('.shopping i').addClass('fa fa-shopping-bag fa-spin');
+    }
 
-    /*$this.button('loading');
-     setTimeout(function () {
-     $this.button('reset');
-     }, 8000);*/
-    //fa-spin
-
-    $(".fa-shopping-bag").addClass("fa-spin");
+    // $(".fa-shopping-bag").addClass("fa-spin");
 
     if (parseInt($itemQnty) <= parseInt($maxQnty) && parseInt($itemQnty) > 0) {
-        alert('yes');
+
         $.ajax({
             type: "POST",
             dataType: "JSON",
@@ -373,7 +389,7 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
             }
         });
     } else {
-        alert('xx');
+
         var $maxQnty = maxQnty;
         var $itemQnty = quantity;
         //$(this).parent().find('#quantity').val($maxQnty);
@@ -589,6 +605,8 @@ function filterPriceCozxy() {
         success: function (data, status) {
 
             if (status == "success") {
+                //javascript:addItemToCartUnitys('161', 1, '44', '', '145', '', '')
+                //javascript:addItemToCartUnitys(160, 1, "48", "", "144", "", "")
                 var yourval = jQuery.parseJSON(JSON.stringify(data));
                 //var obj = JSON.parse(data);
                 //console.log(yourval['160']);
@@ -597,8 +615,8 @@ function filterPriceCozxy() {
                     //console.log(key);//160,162
                     //console.log(val.productSuppId);
                     //console.log(items);
-                    alert(val.fastId);
-                    if (val.fastId == 'false') {
+                    //alert(val.fastId);
+                    if (val.fastId == false) {
                         $fastId = '';
                     } else {
                         $fastId = val.fastId;
@@ -613,15 +631,15 @@ function filterPriceCozxy() {
                     items += "</a>";
                     items += " <a>";
                     if (val.wishList == 1) {
-                        items += "<div class=\"col-xs-4\"><i class=\"fa fa-heartbeat\" aria-hidden=\"true\"></i></div>";
+                        items += "<div class=\"col-xs-4 heartbeat\"><i class=\"fa fa-heartbeat\" aria-hidden=\"true\"></i></div>";
                         items += "</a>";
                     } else {
                         items += '<a href=\'javascript:addItemToWishlist(' + val.productSuppId + ');\' id=\'addItemToWishlist-' + val.productSuppId + '\' data-loading-text=\"<div class =\'col-xs-4\'><i class=\'fa fa-heartbeat\' aria-hidden =\'true\'></i></div>\">';
-                        items += "<div class=\"col-xs-4\"><i class=\"fa fa-heart-o\" aria-hidden=\"true\"></i></div>";
+                        items += "<div class=\"col-xs-4 heart\"><i class=\"fa fa-heart-o\" aria-hidden=\"true\"></i></div>";
                         items += "</a>";
                     }
                     items += '<a href=\'javascript:addItemToCartUnitys(' + val.productSuppId + ', 1, "' + val.maxQnty + '", "' + $fastId + '", "' + val.productId + '", "' + val.supplierId + '", "' + val.receiveType + '")\' id=\"addItemsToCartMulti-' + val.productSuppId + '\" data-loading-text=\" <div class =\'col-xs-4\'> <i class = \'fa fa-circle-o-notch fa-spin\' aria-hidden = \'true\'> </i></div> \">';
-                    items += "<div class=\"col-xs-4\"><i class=\"fa fa-shopping-bag\" aria-hidden=\"true\"></i></div>";
+                    items += "<div class=\"col-xs-4 shopping\"><i class=\"fa fa-shopping-bag\" aria-hidden=\"true\"></i></div>";
                     items += " </a>";
                     items += " </div>";
                     items += "</div>";
