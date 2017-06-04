@@ -190,7 +190,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     ]
                 ]);
                 ?>
-                <div class="wizard">
+                <div class="wizard" style="padding:10px;">
                     <div class="wizard-inner">
                         <div class="connecting-line"></div>
                         <ul class="nav nav-tabs" role="tablist">
