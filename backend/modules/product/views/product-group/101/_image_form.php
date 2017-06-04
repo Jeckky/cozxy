@@ -71,9 +71,14 @@ use yii\widgets\Pjax;
                     ],
                     'clientEvents' => [
                         'sending' => "function(file, xhr, formData) {
+                        uploadCount += 1;
                                 console.log(file);
                                 }",
-                        'complete' => "function(file){location.reload();}",
+                        'complete' => "function(file){
+                            uploadCount -= 1;
+                            if(uploadCount == 0)
+                                location.reload();
+                        }",
                         'removedfile' => "function(file){alert(file.name + ' is removed')}"
                     ],
                 ]);
