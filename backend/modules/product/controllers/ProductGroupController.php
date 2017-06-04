@@ -1,4 +1,5 @@
 <?php
+
 namespace backend\modules\product\controllers;
 
 use Yii;
@@ -64,11 +65,11 @@ class ProductGroupController extends ProductMasterController
                 }
             } else {
                 $query = \common\models\costfit\Product::find()
-                ->select("product.*")
+                ->select("product.title,product.createDateTime,product.productId,product.status")
                 ->join("LEFT JOIN", "user u", "u.userId = product.userId")
                 ->join("RIGHT JOIN", "product pc", "pc.parentId = product.productId")
-                ->join("RIGHT JOIN", "product_suppliers ps", "ps.productId = product.productId AND ps.userId = " . Yii::$app->user->id)
-                ->where("product.parentId is null AND u.type in (2, 3, 4, 5) ")
+                ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = product.productId AND ps.userId = " . Yii::$app->user->id)
+                ->where("product.parentId is null ")
                 ->groupBy("product.productId")
                 ->orderBy("product.updateDateTime DESC");
             }

@@ -173,7 +173,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 //                    ],
                         ['attribute' => 'createDateTime',
                             'value' => function ($model) {
-                                return $this->context->dateThai($model->createDateTime, 1);
+                                return isset($model->createDateTime) ? $this->context->dateThai($model->createDateTime, 1) : NULL;
                             }
                         ],
                         ['attribute' => 'status',
