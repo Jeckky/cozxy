@@ -48,13 +48,15 @@ $(window).resize(function() { descSet(); });
         <div class="col-md-9">
             <div class="size48">&nbsp;</div>
             <?php
+            /*
             echo \yii\widgets\ListView::widget([
                 'dataProvider' => $productViews,
                 'options' => [
                     'tag' => false,
                 ],
                 'itemView' => function ($model, $key, $index, $widget) {
-                    return $this->render('@app/themes/cozxy/layouts/product/_product_detail', ['model' => $model]);
+                    $p = $productGroupOptionValues;
+                    return $this->render('@app/themes/cozxy/layouts/product/_product_detail', ['model'=>$model, 'productGroupOptionValues'=>$productGroupOptionValues]);
                 },
 //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                 //'layout'=>"{summary}{pager}{items}"
@@ -63,9 +65,12 @@ $(window).resize(function() { descSet(); });
                     'tag' => false,
                 ],
             ]);
+            */
+            echo $this->render('@app/themes/cozxy/layouts/product/_product_detail', ['model'=>$productViews, 'productGroupOptionValues'=>$productGroupOptionValues]);
             ?>
             <div class="size24">&nbsp;</div>
             <?php
+            /*
             echo \yii\widgets\ListView::widget([
                 'dataProvider' => $productViews,
                 'options' => [
@@ -81,6 +86,7 @@ $(window).resize(function() { descSet(); });
                     'tag' => false,
                 ],
             ]);
+            */
             ?>
             <div class="size24">&nbsp;</div>
 

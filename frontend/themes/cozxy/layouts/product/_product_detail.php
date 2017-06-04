@@ -1,4 +1,6 @@
 <?php
+use yii\helpers\Html;
+
 $this->title = $model['title'];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -41,6 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <hr>
                         <p><?php echo $model['shortDescription'] ?></p>
                         <hr>
+                        <?php /*
                         <div class="row">
                             <div class="col-sm-6 size18 b">COLOUR</div>
                             <div class="col-sm-6 text-right color-sel">
@@ -60,6 +63,19 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>
                         </div>
                         <hr>
+                        */?>
+                        <form id="optionForm">
+                        <?php foreach ($productGroupOptionValues as $title=>$productGroupOptionValue):?>
+                            <div class="row login-box">
+                                <div class="col-sm-12 size18 b"><?=$title?></div>
+                                <div class="col-sm-12 text-right quantity-sel size18">
+                                     <?=Html::dropDownList($title, '', $productGroupOptionValue, ['class'=>'fullwidth productOption'])?>
+                                </div>
+                            </div>
+                            <hr>
+                        <?php endforeach;?>
+                        </form>
+
                         <div class="size36">&nbsp;</div>
                         <div class="text-center abs" style="bottom: 0; left: 0; right: 0;">
                             <input type="hidden" id="maxQnty" value="<?php echo $model['result']; ?>">
@@ -88,3 +104,21 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+
+<?php
+$this->registerJs('
+$(".productOption").on("change", function(){
+    $.ajax({
+        method: "POST",
+        url: "'.Yii::$app->homeUrl.'product-group-options/product-by-options",
+        data: $("form#optionForm").serialize(),
+        dataType:"json"
+    })
+    .done(function( data ) {
+        window.location = "'.Yii::$app->homeUrl.'product/"+data.token;
+    });
+});
+
+
+');
+?>
