@@ -103,7 +103,7 @@ $(window).resize(function() { descSet(); });
                             'tag' => false,
                         ],
                     ]);
-                    ?> 
+                    ?>
                 </div>
             </div>
             <div class="size32">&nbsp;</div>
@@ -127,7 +127,7 @@ $(window).resize(function() { descSet(); });
                 ],
             ]);
             ?>
-            <?//= $this->render('@app/themes/cozxy/layouts/story/_panel_your_story', compact('StoryProductPost')) ?>
+            <?php //= $this->render('@app/themes/cozxy/layouts/story/_panel_your_story', compact('StoryProductPost')) ?>
             <?php
             //echo Yii::$app->controller->id;
             if (Yii::$app->controller->id == 'product') {

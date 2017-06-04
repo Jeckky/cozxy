@@ -42,23 +42,24 @@ if (isset($dataProvider)) {
             'title',
             [
                 'attribute' => 'description',
-                'format' => 'raw',
+                'options' => ['style' => 'width:20%'],
+                'format' => 'html',
             ],
-            [
-                'attribute' => 'specification',
-                'format' => 'raw',
-            ],
-//                                                    [
-//                                                        'class' => 'kartik\grid\EditableColumn',
-//                                                        'attribute' => 'title',
-//                                                        'pageSummary' => 'Page Total',
-//                                                        'vAlign' => 'middle',
-//                                                        'headerOptions' => ['class' => 'kv-sticky-column'],
-//                                                        'contentOptions' => ['class' => 'kv-sticky-column'],
-//                                                        'editableOptions' => ['header' => 'Title', 'size' => 'md',
-//                                                            'formOptions' => ['action' => ['update-product']],
-//                                                        ],
-//                                                    ],
+//            [
+//                'attribute' => 'specification',
+//                'format' => 'raw',
+//            ],
+//            [
+//                'class' => 'kartik\grid\EditableColumn',
+//                'attribute' => 'title',
+//                'pageSummary' => 'Page Total',
+//                'vAlign' => 'middle',
+//                'headerOptions' => ['class' => 'kv-sticky-column'],
+//                'contentOptions' => ['class' => 'kv-sticky-column'],
+//                'editableOptions' => ['header' => 'Title', 'size' => 'md',
+//                    'formOptions' => ['action' => ['update-product']],
+//                ],
+//            ],
 //                                                    [
 //                                                        'class' => 'kartik\grid\EditableColumn',
 //                                                        'attribute' => 'description',
@@ -143,12 +144,25 @@ if (isset($dataProvider)) {
                 'attribute' => 'option',
                 'format' => 'html',
                 'value' => function($model) {
-                    $options = \common\models\costfit\ProductGroupOptionValue::find()->where("productId =" . $model->productId)->all();
+                    $options = \common\models\costfit\ProductGroupOptionValue::find()->where("productId =" . $model->productId . " AND productSuppId is NULL")->all();
                     $optionStr = "";
                     foreach ($options as $option) {
                         $optionStr.= $option->productGroupOption->name . "-" . $option->value . "<br>";
                     }
                     return $optionStr;
+                }
+            ],
+            [
+                'attribute' => 'Product Supplier',
+                'format' => 'html',
+                'value' => function($model) {
+                    $ps = \common\models\costfit\ProductSuppliers::find()->where("productId = $model->productId AND userId = " . Yii::$app->user->id)->one();
+                    if (isset($ps)) {
+                        $pps = \common\models\costfit\ProductPriceSuppliers::find()->where("productSuppId = $ps->productSuppId AND status = 1")->one();
+                        return isset($pps) ? "Stock : $ps->result" . "<br> Selling Price : " . number_format($pps->price) : "Stock : $ps->result";
+                    } else {
+                        return NULL;
+                    }
                 }
             ],
 //                    [

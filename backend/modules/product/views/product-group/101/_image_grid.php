@@ -12,7 +12,7 @@ use kartik\editable\Editable;
 echo GridView::widget([
     'dataProvider' => new ActiveDataProvider([
         'query' => common\models\costfit\ProductImage::find()
-        ->where("productId=" . $id),
+        ->where("productId=" . $id)->orderBy("ordering ASC"),
     ]),
 //                                                'filterModel' => $searchModel,
     'columns' => [
@@ -24,6 +24,7 @@ echo GridView::widget([
                 return \yii\helpers\Html::a(\yii\helpers\Html::img(Yii::$app->homeUrl . $model->imageThumbnail1, ['style' => (Yii::$app->controller->action->id == "create") ? 'width:100px' : 'width:200px']) . "<== Click To View", Yii::$app->homeUrl . $model->image, ['target' => "_blank", 'data-pjax' => 0]);
             }
         ],
+        'ordering',
 //                    [
 //                        'class' => 'kartik\grid\BooleanColumn',
 //                        'attribute' => 'status',
@@ -34,20 +35,21 @@ echo GridView::widget([
 //            'dropdown' => true,
             'visible' => (Yii::$app->controller->action->id != "view") ? TRUE : FALSE,
             'vAlign' => 'middle',
-            'template' => '{delete}',
+            'template' => '{ordering} {delete}',
             'urlCreator' => function($action, $model, $key, $index) {
                 if ($action === 'delete' && Yii::$app->controller->action->id != "view") {
                     return \yii\helpers\Url::toRoute(['delete-product-image', 'id' => $model->productImageId, 'step' => $_GET["step"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"], 'action' => (Yii::$app->controller->action->id == "update-product") ? "update" : NULL]);
                 }
             },
             'buttons' => [
-//                "delete" => function ($url, $model, $index) {
-//                    return \yii\helpers\Html::a("<span class='glyphicon glyphicon-trash'></span>", ['delete-product-image', 'id' => $model->productImageId, 'step' => $_GET["step"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"], 'action' => (Yii::$app->controller->action->id == "update-product") ? "update" : NULL], [
-//                        'title' => Yii::t('app', 'Toogle Active'),
-//                        'data-pjax' => '0',
-////                                                                    'data-toggle-active' => $model->productId
-//                    ]);
-//                },
+                "ordering" => function ($url, $model, $index) {
+                    return \yii\helpers\Html::a("<span class='glyphicon glyphicon-sort-by-alphabet'></span> Ordering ", ['change-image-order', 'id' => $model->productImageId, 'step' => $_GET["step"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"], 'action' => (Yii::$app->controller->action->id == "update-product") ? "update" : NULL], [
+                        'title' => Yii::t('app', 'Toogle Active'),
+                        'class' => 'btn btn-info',
+                        'data-pjax' => '0',
+//                                                                    'data-toggle-active' => $model->productId
+                    ]);
+                },
             ],
 //                        'viewOptions' => ['title' => $viewMsg, 'data-toggle' => 'tooltip'],
 //                        'updateOptions' => ['title' => $updateMsg, 'data-toggle' => 'tooltip'],

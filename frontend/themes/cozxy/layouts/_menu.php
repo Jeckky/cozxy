@@ -22,21 +22,21 @@ use yii\bootstrap\ActiveForm;
                 <div class="row user-menu">
                     <?php
                     if (isset(Yii::$app->user->identity->userId)) {
-                        echo '<div class="col-xs-3">' . Html::a('&nbsp;', ['/my-account'], ['class' => 'u-menu-1']) . '</div>';
+                        echo '<div class="col-xs-3">' . Html::a('&nbsp;', [Yii::$app->homeUrl . 'my-account'], ['class' => 'u-menu-1']) . '</div>';
                     } else {
                         echo '';
                     }
                     ?>
-                    <div class="col-xs-3"><a href="my-account?act=2" class="u-menu-2">&nbsp;</a></div>
-                    <div class="col-xs-3"><?= Html::a('&nbsp;', ['/cart'], ['class' => 'u-menu-3']) ?>
+                    <div class="col-xs-3"><a href="<?php echo Yii::$app->homeUrl; ?>my-account?act=2" class="u-menu-2">&nbsp;</a></div>
+                    <div class="col-xs-3"><?= Html::a('&nbsp;', [Yii::$app->homeUrl . 'cart'], ['class' => 'u-menu-3']) ?>
                         <!--<span style="display: block;  margin: 0; font-size: 12px;  padding:5px;  line-height: 1; font-weight: 400; position: absolute; top: -1px; right: 5px;color: #000 !important;  background-color: #fee60a;"></span>-->
                     </div>
                     <div class="col-xs-3">
                         <?php
                         if (isset(Yii::$app->user->identity->userId)) {
-                            echo Html::a('&nbsp;', ['/site/logout'], ['class' => 'u-menu-4']);
+                            echo Html::a('&nbsp;', [Yii::$app->homeUrl . 'site/logout'], ['class' => 'u-menu-4']);
                         } else {
-                            echo Html::a('&nbsp;', ['/site/login'], ['class' => 'u-menu-4']);
+                            echo Html::a('&nbsp;', [Yii::$app->homeUrl . 'site/login'], ['class' => 'u-menu-4']);
                         }
                         ?>
                     </div>
@@ -58,17 +58,29 @@ use yii\bootstrap\ActiveForm;
 <div class="bg-black menubar hidden-md hidden-sm hidden-xs">
     <div class="container">
         <div class="row">
-            <?//= \yii\helpers\Html::a('BAG', ['/search?c=bag'], ['class' => 'menu-item']) ?>
-            <?//= \yii\helpers\Html::a('GLASSES', ['/search?c=glasses'], ['class' => 'menu-item']) ?>
-            <?//= \yii\helpers\Html::a('WATCH', ['/search?c=watch'], ['class' => 'menu-item']) ?>
             <?php
-            $Category = common\models\costfit\Category::find()->where('status=1')->limit(14)->all();
-            foreach ($Category as $value) {
+            $category = \common\models\costfit\ProductSuppliers::find()
+            ->select('`product_suppliers`.categoryId , `category`.title , count(`product_suppliers`.`categoryId`)')
+            ->join("LEFT JOIN", "category", "category.categoryId=product_suppliers.categoryId")
+            ->groupBy('`product_suppliers`.categoryId')
+            ->orderBy('count(`product_suppliers`.`categoryId`) asc')
+            ->limit(12)
+            ->all();
+            foreach ($category as $value) {
                 $params = \common\models\ModelMaster::encodeParams(['categoryId' => $value->categoryId]);
                 $strtoupper = strtoupper($value->title);
                 $strtolower = strtolower($value->title);
                 echo \yii\helpers\Html::a("$strtoupper", ['/search/' . $value->createTitle() . '/' . $params . '?c=' . $strtolower], ['class' => 'menu-item']);
             }
+            ?>
+            <?php
+            /* $Category = common\models\costfit\Category::find()->where('status=1')->limit(14)->all();
+              foreach ($Category as $value) {
+              $params = \common\models\ModelMaster::encodeParams(['categoryId' => $value->categoryId]);
+              $strtoupper = strtoupper($value->title);
+              $strtolower = strtolower($value->title);
+              echo \yii\helpers\Html::a("$strtoupper", ['/search/' . $value->createTitle() . '/' . $params . '?c=' . $strtolower], ['class' => 'menu-item']);
+              } */
             ?>
             <!--            <a href="product.php" class="menu-item">RING</a>-->
             <!--            <a href="product.php" class="menu-item">HAT</a>-->

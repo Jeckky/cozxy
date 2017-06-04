@@ -190,8 +190,8 @@ class CheckoutController extends MasterController {
             $userPoint = $this->CreateUserPoint($order->userId);
         }
         return $this->render('/order/index', [
-            'order' => $order,
-            'userPoint' => $userPoint
+                    'order' => $order,
+                    'userPoint' => $userPoint
         ]);
     }
 

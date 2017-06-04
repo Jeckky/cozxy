@@ -52,7 +52,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'search/<title>/<hash>' => 'search/index',
+                //'search/<title>/<hash>' => 'search/index',
                 //Custom Rule
 //                '<controller:\w+>/<hash>' => '<controller>/index',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<hash>' => '<controller>/<action>',
@@ -79,8 +79,14 @@ return [
 //                'mobile/product/<hash>' => 'mobile/product',
 //                'mobile/product/product/<hash>' => 'mobile/product/product',
                 'my-account/edit-billing/<hash>' => 'my-account/edit-billing',
+                'story/write-your-story/<hash>' => 'story/write-your-story/',
+                'story/write-story' => 'story/write-story',
+                'story/rating-post' => 'story/rating-post',
+                'story/view-post' => 'story/view-post',
+                'story/write-your-story/<hash>' => 'story/write-your-story/',
                 'story/<hash>' => 'story/index',
-                'story/write-your-story/<hash>' => 'story/write-your-story/'
+                'search/brand/<hash>' => 'search/brand/',
+                'search/<title>/<hash>' => 'search/index',
             ],
         ],
         /**

@@ -12,6 +12,7 @@ use common\models\costfit\ProductGroupTemplateOption;
  */
 class ProductGroupTemplateOptionSearch extends ProductGroupTemplateOption
 {
+
     /**
      * @inheritdoc
      */
@@ -46,22 +47,26 @@ class ProductGroupTemplateOptionSearch extends ProductGroupTemplateOption
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+        $query->andFilterWhere(['productGroupTemplateId' => $this->productGroupTemplateId]);
 
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
+
+
         $query->andFilterWhere([
             'productGroupTemplateOptionId' => $this->productGroupTemplateOptionId,
-            'productGroupTemplateId' => $this->productGroupTemplateId,
+//            'productGroupTemplateId' => $this->productGroupTemplateId,
             'status' => $this->status,
             'createDateTime' => $this->createDateTime,
             'updateDateTime' => $this->updateDateTime,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }
+
 }
