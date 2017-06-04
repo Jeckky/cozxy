@@ -65,7 +65,7 @@ class ProductGroupController extends ProductMasterController
                 }
             } else {
                 $query = \common\models\costfit\Product::find()
-                ->select("product.title,product.createDateTime,product.productId,product.status")
+                ->select("product.title,product.createDateTime,product.productId,product.status,product.userId,product.productGroupTemplateId,product.step")
                 ->join("LEFT JOIN", "user u", "u.userId = product.userId")
                 ->join("RIGHT JOIN", "product pc", "pc.parentId = product.productId")
                 ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = product.productId AND ps.userId = " . Yii::$app->user->id)

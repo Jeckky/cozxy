@@ -199,28 +199,31 @@ $this->params['pageHeader'] = Html::encode($this->title);
 //                            },
                                 'update' => function ($url, $model) {
                                     if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5) {
-                                        if ($model->status = 1 && $model->userId != Yii::$app->user->id) {
+                                        if ($model->status == 1) {
+//                                            if ($model->userId != Yii::$app->user->id) {
                                             return Html::a('<i class="fa fa-eye"></i>', ["view", 'productGroupId' => $model->productId], [
                                                 'title' => Yii::t('yii', 'update'),
                                             ]);
-                                        } else {
-                                            return Html::a('<i class="fa fa-pencil"></i>', ["create", 'step' => 1, 'productGroupId' => $model->productId], [
-                                                'title' => Yii::t('yii', 'update'),
-                                            ]);
-                                        }
-                                    } else {
-                                        if ($model->status == 0) {
-                                            return Html::a('<i class="fa fa-pencil"></i>', ["create", 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
-                                                'title' => Yii::t('yii', 'update'),
-                                            ]);
-                                        } else {
-                                            return Html::a('<i class="fa fa-pencil"></i>Product', ["create", 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
+//                                            } else {
+//                                                return Html::a('<i class="fa fa-pencil"></i>', ["create", 'step' => 1, 'productGroupId' => $model->productId], [
+//                                                    'title' => Yii::t('yii', 'update'),
+//                                                ]);
+//                                            }
+                                        } elseif ($model->status != 99) {
+                                            return Html::a('<i class="fa fa-pencil"></i>Product', ["create", 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
                                                 'title' => Yii::t('yii', 'update')]);
                                         }
+                                    } elseif ($model->status == 0) {
+                                        return Html::a('<i class="fa fa-pencil"></i>', ["create", 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
+                                            'title' => Yii::t('yii', 'update'),
+                                        ]);
+                                    } else {
+                                        return Html::a('<i class="fa fa-pencil"></i>Product', ["create", 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
+                                            'title' => Yii::t('yii', 'update')]);
                                     }
                                 },
                                 'delete' => function ($url, $model) {
-                                    if (($model->status == 0 || $model->status == 99) && $model->userId == Yii::$app->user->id) {
+                                    if (($model->status == 0) && $model->userId == Yii::$app->user->id) {
                                         return Html::a('<i class="fa fa-trash-o"></i>', ['delete-product-group', 'id' => $model->productId], [
                                             'title' => Yii::t('yii', 'Delete'),
                                             'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
