@@ -17,8 +17,7 @@ use \common\models\costfit\master\ProductPostMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class ProductPost extends \common\models\costfit\master\ProductPostMaster
-{
+class ProductPost extends \common\models\costfit\master\ProductPostMaster {
 
     /**
      * @inheritdoc
@@ -29,18 +28,16 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster
     const STATUS_DELETE = 3;
     const COZXY_POST_REVIRES = 'review_post';
 
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), [
-            [['title', 'shortDescription', 'description'], 'required', 'on' => self::COZXY_POST_REVIRES],
+                [['title', 'shortDescription', 'description'], 'required', 'on' => self::COZXY_POST_REVIRES],
         ]);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributes()
-    {
+    public function attributes() {
         return array_merge(parent::attributes(), [
             'username', 'score'
         ]);
@@ -49,14 +46,12 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
         ]);
     }
 
-    public static function findStatusArray()
-    {
+    public static function findStatusArray() {
         return [
             self::STATUS_PRIVATE => "ส่วนตัว",
             self::STATUS_PUBLIC => "สาธารณะ",
@@ -64,8 +59,7 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster
         ];
     }
 
-    public static function getStatusText($status)
-    {
+    public static function getStatusText($status) {
         $res = $this->findStatusArray();
         if (isset($res[$status])) {
             return $res[$status];
@@ -74,19 +68,27 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster
         }
     }
 
-    public function getUser()
-    {
+    public function getUser() {
         return $this->hasOne(User::className(), ['userId' => 'userId']);
     }
 
-    public function getProductSupp()
-    {
+    public function getProductSupp() {
         return $this->hasOne(ProductSuppliers::className(), ['productSuppId' => 'productSuppId']);
     }
 
-    public static function getCountViews($productPostId)
-    {
+    public static function getCountViews($productPostId) {
         return ProductPostView::find()->where("productPostId=" . $productPostId)->count();
+    }
+
+    public static function PostDetail($productPostId) {
+        return ProductPost::find()->where("productPostId=" . $productPostId)->one();
+    }
+
+    public static function userPost($productPostId) {
+        $productPost = ProductPost::find()->where("productPostId=" . $productPostId)->one();
+        $user = User::find()->where("userId=" . $productPost->userId)->one();
+        $name = $user->firstname . " " . $user->lastname;
+        return $name;
     }
 
 }

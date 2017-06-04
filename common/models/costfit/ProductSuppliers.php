@@ -187,6 +187,13 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         }
     }
 
+    public static function productId($productSuppId) {
+        $id = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
+        if (isset($id) && !empty($id)) {
+            return $id->productId;
+        }
+    }
+
     public static function supplier($productSuppId) {
         $id = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
         if (isset($id) && !empty($id)) {
@@ -224,6 +231,18 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         if (isset($image) && !empty($image)) {
             return $image;
         }
+    }
+
+    public static function ImagesFromPost($productPostId) {
+        $productPost = ProductPost::find()->where("productPostId=" . $productPostId)->one();
+        $img = '';
+        if (isset($productPost)) {
+            $image = ProductImageSuppliers::find()->where("productSuppId=" . $productPost->productSuppId)->one();
+            if (isset($image)) {
+                $img = $image->image;
+            }
+        }
+        return $img;
     }
 
     public static function productSupplierGroupStory($productSuppId) {

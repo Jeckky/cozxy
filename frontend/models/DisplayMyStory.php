@@ -23,7 +23,7 @@ class DisplayMyStory extends Model {
         $productImagesThumbnailNull = Base64Decode::DataImageSvg120x120(FALSE, FALSE, FALSE); //'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjYwIiBoZWlnaHQ9IjI2MCIgdmlld0JveD0iMCAwIDY0IDY0IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48IS0tDQpTb3VyY2UgVVJMOiBob2xkZXIuanMvMjYweDI2MA0KQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4NCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQ0KKGMpIDIwMTItMjAxNSBJdmFuIE1hbG9waW5za3kgLSBodHRwOi8vaW1za3kuY28NCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNWMwYTg2ZjY1YSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1YzBhODZmNjVhIj48cmVjdCB3aWR0aD0iMjYwIiBoZWlnaHQ9IjI2MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjYuMjI2NTYyNSIgeT0iMzYuNTMyODEyNSI+MjYweDI2MDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==';
 
         if (isset(Yii::$app->user->id)) {
-            $productPost = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id)
+            $productPost = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . " and productSuppId=" . $productSuppId)
                             ->groupBy(['productSuppId'])->orderBy('productPostId desc')->one();
             if (count($productPost) > 0) {
                 $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $productPost['productSuppId'])->one();
@@ -179,9 +179,46 @@ class DisplayMyStory extends Model {
             if ($decimal == 0) {
                 $rate = $score;
             }
-            $value = $rate . "," . $score . "," . $decimal; //คะแนนเป็นทศนิยม  ,   จำนวนดาว  , ทศนิยม
+            $value = $rate . "," . $score . "," . $decimal; //คะแนนเป็นทศนิยม  ,   จำนวนดาว(จำนวนเต็ม)  , ทศนิยม
         }
         return $value;
+    }
+
+    public static function popularStories($productPostId) {
+        /* $productPostRating = \common\models\costfit\ProductPostRating::find()
+          /* ->where("productPostId=" . $productPostId)
+          ->average('score'); */
+
+        //throw new \yii\base\Exception(print_r($productPostRating, true));
+        $productPost = ProductPost::find()->where("productPostId=" . $productPostId)->one();
+        $allProductSuppId = ProductSuppliers::productSupplierGroupStory($productPost->productSuppId);
+        $productPosts = ProductPost::find()->where("productSuppId in($allProductSuppId)")->all();
+        $postId = '';
+        if (isset($productPosts) & count($productPosts) > 0) {
+            foreach ($productPosts as $post):
+                $postId .= $post->productPostId . ",";
+            endforeach;
+            $postId = substr($postId, 0, -1);
+        }
+        if ($postId != '') {
+
+            $productPostRating = \common\models\costfit\ProductPostRating::find()->where("productPostId in($postId)")
+                    ->groupBy('productPostId')
+                    ->orderBy('avg(score) DESC')
+                    ->all();
+        } else {
+            $productPostRating = null;
+        }
+        //throw new \yii\base\Exception($productSuppId);
+        /* $popular = ProductPost::find()
+          ->join('LEFT JOIN', 'product_post_rating', '`product_post`.`productPostId`=`product_post_rating`.`productPostId`')
+          ->where("productSuppId in($allProductSuppId)")
+          ->orderBy('`product_post_rating`.`score`')
+          ->limit(5)
+          ->all(); */
+        //throw new \yii\base\Exception(count($popular));
+        //throw new \yii\base\Exception(count($productPostRating));
+        return $productPostRating;
     }
 
     public static function postView($productPostId) {
