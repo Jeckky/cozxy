@@ -1,7 +1,7 @@
 <div class="col-md-4 col-sm-6 col-xs-12">
     <div class="product-box">
         <div class="product-img text-center">
-            <img src="<?= $model['image'] ?>" alt="" class="fullwidth">
+            <img src="<?= $model['image'] ?>" alt="" class="fullwidth img-responsive" width="260" height="260">
         </div>
         <div class="product-txt">
             <p class="size16 fc-g666"><?= $model['brand'] ?></p>
