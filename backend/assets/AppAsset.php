@@ -16,6 +16,7 @@ class AppAsset extends AssetBundle
         'css/site.css',
     ];
     public $js = [
+        'js/cozxy.reform.js'
     ];
     public $depends = [
 

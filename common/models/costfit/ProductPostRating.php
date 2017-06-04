@@ -22,14 +22,17 @@ class ProductPostRating extends \common\models\costfit\master\ProductPostRatingM
      * @inheritdoc
      */
     public function rules() {
-        return array_merge(parent::rules(), []);
+        return array_merge(parent::rules(), [
+        ]);
     }
 
     /**
      * @inheritdoc
      */
     public function attributeLabels() {
-        return array_merge(parent::attributeLabels(), []);
+        return array_merge(parent::attributeLabels(), [
+            'summaryPrice'
+        ]);
     }
 
 }

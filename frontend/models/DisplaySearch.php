@@ -140,7 +140,8 @@ class DisplaySearch extends Model {
             ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
             ->where($whereArray)
             //->andWhere([">", "ps.result", 0])
-            ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
+            //->andWhere([">", "pps.price", 0])
+            ->orderBy(new \yii\db\Expression('rand()'), 'pps.price desc')->limit($n)->all();
         } elseif ($cat != FALSE && $mins != FALSE && $maxs != FALSE) {
             $whereArray2 = [];
 
@@ -155,6 +156,7 @@ class DisplaySearch extends Model {
             ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
             ->where($whereArray2)
             ->andWhere('ps.result > 0')
+            ->andWhere('pps.price > 0')
             ->andWhere(['between', 'pps.price', $mins, $maxs])
             ->groupBy('ps.productSuppId')->limit($n)->all();
         } else {

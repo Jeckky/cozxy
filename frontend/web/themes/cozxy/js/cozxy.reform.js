@@ -596,6 +596,8 @@ function filterPriceCozxy() {
     $min = $('input:hidden:eq(0)', '#amount-min').val();
     $max = $('input:hidden:eq(1)', '#amount-min').val();
     $categoryId = $('input:hidden:eq(2)', '#amount-min').val();
+    $('.btn-black-s').html('APPLY ...');
+    $('.filter-product-cozxy').html("<div class='text-center' style='zoom: 5;'><br><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
     var path = $baseUrl + "search/filter-price";
     $.ajax({
         url: path,
@@ -661,4 +663,8 @@ function filterPriceCozxy() {
             }
         }
     });
+}
+
+function filterPriceCozxyClear() {
+    location.reload();
 }

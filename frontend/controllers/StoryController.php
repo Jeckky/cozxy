@@ -29,7 +29,9 @@ class StoryController extends MasterController {
         $productPostId = isset($params['productPostId']) ? $params['productPostId'] : NULL;
         $ViewsRecentStories = DisplayMyStory::productViewsRecentStories($productPostId);
         $productPost = \common\models\costfit\ProductPost::find()->where("productPostId=" . $productPostId)->one();
-        return $this->render('@app/themes/cozxy/layouts/story/_story', compact('ViewsRecentStories', 'productPost'));
+        $popularStories = DisplayMyStory::popularStories($productPostId);
+
+        return $this->render('@app/themes/cozxy/layouts/story/_story', compact('ViewsRecentStories', 'productPost', 'popularStories'));
     }
 
     public function actionWriteYourStory($hash) {
@@ -63,7 +65,8 @@ class StoryController extends MasterController {
     public function actionWriteStory() {
         if (isset($_POST['shopName'])) {
             $shelf = new \common\models\costfit\ProductPost();
-            $shelf->productSuppId = $_POST["productSuppId"];
+            // $shelf->productSuppId =
+            $productSuppId = $_POST["productSuppId"];
             $shelf->productSelfId = $_POST["shelf"];
             $shelf->userId = Yii::$app->user->identity->userId;
             $shelf->title = $_POST["title"];

@@ -32,7 +32,8 @@
                 <span class="size12">Stars</span><br>
                 <?php
                 $star = \frontend\models\DisplayMyStory::calculatePostRating($productPost->productPostId);
-                echo $star[0];
+                $value = explode(",", $star);
+                echo $value[0];
                 ?>
             </div>
             <div class="col-md-3">

@@ -264,10 +264,13 @@ class FakeFactory extends Model {
         $products = [];
         $slideGroup = \common\models\costfit\ContentGroup::find()->where("lower(title) = 'banner' and status=1")->one();
         $content = \common\models\costfit\Content::find()->where("contentGroupId =" . $slideGroup['contentGroupId'])->all();
+        $newstring = 'abcdef abcdef';
+
         foreach ($content as $items) {
+
             $products[$items->contentId] = [
                 'code' => $items->contentId,
-                'image' => isset($items->image) ? \Yii::$app->homeUrl . $items->image : '',
+                'image' => isset($items->image) ? \Yii::$app->homeUrl . substr($items->image, 1) : '',
                 'url' => '',
                 'head' => $items->headTitle,
                 'title' => $items->title,
@@ -353,7 +356,7 @@ class FakeFactory extends Model {
         foreach ($brand as $items) {
             if (isset($items->image) && !empty($items->image)) {
                 if (file_exists(Yii::$app->basePath . "/web/" . $items->image)) {
-                    $brandImages = \Yii::$app->homeUrl . $items->image;
+                    $brandImages = \Yii::$app->homeUrl . substr($items->image, 1);
                 } else {
                     $brandImages = \common\helpers\Base64Decode::DataImageSvg112x64(FALSE, FALSE, FALSE);
                 }
