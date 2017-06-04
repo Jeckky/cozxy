@@ -9,6 +9,7 @@ use Yii;
 *
     * @property string $productSuppId
     * @property string $userId
+    * @property string $productGroupId
     * @property string $brandId
     * @property string $categoryId
     * @property string $isbn
@@ -30,16 +31,16 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-    * @property integer $quantity
-    * @property integer $result
+    * @property string $quantity
+    * @property string $result
     * @property string $approve
     * @property string $productId
     * @property string $approveCreateBy
     * @property string $approvecreateDateTime
     * @property string $receiveType
     * @property string $url
-    * @property integer $warrantyType
-    * @property integer $warrantyPeriod
+    * @property string $warrantyType
+    * @property string $warrantyPeriod
 */
 class ProductSuppliersMaster extends \common\models\ModelMaster
 {
@@ -57,9 +58,9 @@ return 'product_suppliers';
 public function rules()
 {
 return [
-            [['userId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'quantity', 'result', 'productId', 'approveCreateBy', 'warrantyType', 'warrantyPeriod'], 'integer'],
+            [['userId', 'productGroupId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'quantity', 'result', 'productId', 'approveCreateBy', 'warrantyType', 'warrantyPeriod'], 'integer'],
             [['isbn', 'shortDescription', 'description', 'specification'], 'string'],
-            [['title', 'createDateTime', 'quantity', 'result', 'productId'], 'required'],
+            [['title', 'createDateTime', 'quantity', 'result', 'approvecreateDateTime'], 'required'],
             [['width', 'height', 'depth', 'weight'], 'number'],
             [['createDateTime', 'updateDateTime', 'approvecreateDateTime'], 'safe'],
             [['code', 'suppCode', 'merchantCode'], 'string', 'max' => 100],
@@ -78,6 +79,7 @@ public function attributeLabels()
 return [
     'productSuppId' => Yii::t('product_suppliers', 'Product Supp ID'),
     'userId' => Yii::t('product_suppliers', 'User ID'),
+    'productGroupId' => Yii::t('product_suppliers', 'Product Group ID'),
     'brandId' => Yii::t('product_suppliers', 'Brand ID'),
     'categoryId' => Yii::t('product_suppliers', 'Category ID'),
     'isbn' => Yii::t('product_suppliers', 'Isbn'),

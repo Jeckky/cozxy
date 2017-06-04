@@ -243,6 +243,7 @@ class FakeFactory extends Model {
 
                 $products[$value->productSuppId] = [
                     'productSuppId' => $value->productSuppId,
+                    'productPostId' => $value->productPostId,
                     'image' => $productImagesThumbnail1,
                     //'url' => '/story?id=' . $items->productSuppId,
                     'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $items->productId, 'productSupplierId' => $items->productSuppId]),
