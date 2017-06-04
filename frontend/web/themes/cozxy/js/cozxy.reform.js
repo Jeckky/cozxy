@@ -568,7 +568,7 @@ function checkoutNewBilling() {
     });
 }
 
-function filterPrice() {
+function filterPriceCozxy() {
 
     $min = $('input:hidden:eq(0)', '#amount-min').val();
     $max = $('input:hidden:eq(1)', '#amount-min').val();
