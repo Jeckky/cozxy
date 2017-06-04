@@ -65,8 +65,10 @@ class StoryController extends MasterController {
     public function actionWriteStory() {
         if (isset($_POST['shopName'])) {
             $shelf = new \common\models\costfit\ProductPost();
-            // $shelf->productSuppId =
+
             $productSuppId = $_POST["productSuppId"];
+            $parentId = ProductSuppliers::productParentId($productSuppId)->productId;
+            $shelf->productId = $parentId;
             $shelf->productSelfId = $_POST["shelf"];
             $shelf->userId = Yii::$app->user->identity->userId;
             $shelf->title = $_POST["title"];
