@@ -1,5 +1,4 @@
 <?php
-
 namespace backend\modules\product\controllers;
 
 use Yii;
@@ -442,6 +441,7 @@ class ProductGroupController extends ProductMasterController
 
     public function actionUpload()
     {
+        ini_set('memory_limit', '1024M');
 
         //$model = new \common\models\costfit\productImageSuppliers();
         $model = new \common\models\costfit\ProductImage();
