@@ -43,8 +43,9 @@ echo GridView::widget([
             },
             'buttons' => [
                 "ordering" => function ($url, $model, $index) {
-                    return \yii\helpers\Html::a("<span class='glyphicon glyphicon-pencil'></span>", ['change-image-order', 'id' => $model->productImageId, 'step' => $_GET["step"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"], 'action' => (Yii::$app->controller->action->id == "update-product") ? "update" : NULL], [
+                    return \yii\helpers\Html::a("<span class='glyphicon glyphicon-sort-by-alphabet'></span> Ordering ", ['change-image-order', 'id' => $model->productImageId, 'step' => $_GET["step"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"], 'action' => (Yii::$app->controller->action->id == "update-product") ? "update" : NULL], [
                         'title' => Yii::t('app', 'Toogle Active'),
+                        'class' => 'btn btn-info',
                         'data-pjax' => '0',
 //                                                                    'data-toggle-active' => $model->productId
                     ]);
