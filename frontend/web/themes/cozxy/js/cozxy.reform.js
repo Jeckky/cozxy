@@ -300,7 +300,7 @@ function addItemToWishlist(id) {
     var res = str.split("/");
     //console.log(window.location.pathname);
     //console.log(res);
-    //console.log(res[1])
+    //console.log(res[1]);
     $.ajax({
         type: "POST",
         dataType: "JSON",
