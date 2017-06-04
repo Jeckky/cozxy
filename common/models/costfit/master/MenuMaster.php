@@ -14,7 +14,7 @@ use Yii;
     * @property string $name
     * @property string $desc
     * @property string $link
-    * @property string $parents
+    * @property integer $parents
     * @property integer $sort
     * @property integer $status
     * @property string $createDateTime

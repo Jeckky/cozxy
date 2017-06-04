@@ -7,10 +7,10 @@ use Yii;
 /**
 * This is the model class for table "picking_point_type".
 *
-    * @property string $pptId
+    * @property integer $pptId
     * @property string $name
     * @property string $description
-    * @property string $status
+    * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
 */

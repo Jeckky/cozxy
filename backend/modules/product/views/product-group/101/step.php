@@ -421,17 +421,18 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         if (isset($countProduct)) {
                                             ?>
                                             <h4>สร้าง สินค้าในกลุ่ม <?= $model->title; ?> แล้ว<br> จำนวน <?= $countProduct ?> ชิ้น</h4>
+
+                                            <ul class="list-inline pull-right">
+                                                <li>
+                                                    <?php echo Html::a("<i class='glyphicon glyphicon-arrow-left'></i> Back", ['create', 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], ['class' => 'btn btn-default']) ?>
+                                                    <!--<button type="button" class="btn btn-default prev-step">Previous</button>-->
+                                                </li>
+                                                <!--<li><button type="button" class="btn btn-default next-step">Skip</button></li>-->
+                                                <li><?php echo Html::submitButton('Finish', ['class' => 'btn btn-success next-step', 'name' => 'finish', 'value' => 'finish']); ?></li>
+                                            </ul>
                                             <?php
                                         }
                                         ?>
-                                        <ul class="list-inline pull-right">
-                                            <li>
-                                                <?php echo Html::a("<i class='glyphicon glyphicon-arrow-left'></i> Back", ['create', 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], ['class' => 'btn btn-default']) ?>
-                                                <!--<button type="button" class="btn btn-default prev-step">Previous</button>-->
-                                            </li>
-                                            <!--<li><button type="button" class="btn btn-default next-step">Skip</button></li>-->
-                                            <li><?php echo Html::submitButton('Finish', ['class' => 'btn btn-success next-step', 'name' => 'finish', 'value' => 'finish']); ?></li>
-                                        </ul>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>

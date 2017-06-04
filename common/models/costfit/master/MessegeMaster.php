@@ -8,9 +8,9 @@ use Yii;
 * This is the model class for table "messege".
 *
     * @property string $messegeId
-    * @property string $ticketId
-    * @property string $orderId
-    * @property string $userId
+    * @property integer $ticketId
+    * @property integer $orderId
+    * @property integer $userId
     * @property string $message
     * @property integer $messegeType
     * @property integer $status
