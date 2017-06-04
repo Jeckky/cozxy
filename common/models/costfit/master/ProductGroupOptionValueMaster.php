@@ -9,7 +9,6 @@ use Yii;
 *
     * @property string $productGroupOptionValueId
     * @property string $productGroupOptionId
-    * @property string $productGroupTemplateOptionId
     * @property string $productGroupId
     * @property string $productId
     * @property string $productSuppId
@@ -38,8 +37,8 @@ return 'product_group_option_value';
 public function rules()
 {
 return [
-            [['productGroupOptionId', 'productGroupTemplateOptionId', 'productGroupId', 'productId', 'productGroupTemplateId', 'createDateTime'], 'required'],
-            [['productGroupOptionId', 'productGroupTemplateOptionId', 'productGroupId', 'productId', 'productSuppId', 'productGroupTemplateId', 'status'], 'integer'],
+            [['productGroupOptionId', 'productGroupId', 'productId', 'productGroupTemplateId', 'createDateTime'], 'required'],
+            [['productGroupOptionId', 'productGroupId', 'productId', 'productSuppId', 'productGroupTemplateId', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['value'], 'string', 'max' => 200],
             [['productGroupOptionId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductGroupOptionMaster::className(), 'targetAttribute' => ['productGroupOptionId' => 'productGroupOptionId']],
@@ -55,7 +54,6 @@ public function attributeLabels()
 return [
     'productGroupOptionValueId' => Yii::t('product_group_option_value', 'Product Group Option Value ID'),
     'productGroupOptionId' => Yii::t('product_group_option_value', 'Product Group Option ID'),
-    'productGroupTemplateOptionId' => Yii::t('product_group_option_value', 'Product Group Template Option ID'),
     'productGroupId' => Yii::t('product_group_option_value', 'Product Group ID'),
     'productId' => Yii::t('product_group_option_value', 'Product ID'),
     'productSuppId' => Yii::t('product_group_option_value', 'Product Supp ID'),
