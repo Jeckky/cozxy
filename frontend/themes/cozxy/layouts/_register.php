@@ -14,9 +14,10 @@ use yii\bootstrap\ActiveForm;
                 <div class="col-lg-8 col-lg-offset-2">
                     <p class="size18">CREATE ACCOUNT</p>
                     <div class="size14 hr-margin">&nbsp;</div>
-                    <?php $form = ActiveForm::begin(['id' => 'register-form', 'action' => Yii::$app->homeUrl . 'site/signup', 'options' => ['class' => 'registr-form']]); ?>
+                    <?php $form = ActiveForm::begin(['id' => 'register-form', 'options' => ['class' => 'registr-form']]); ?>
                     <div class="row">
                         <div class="col-md-6">
+                            <?php // throw new \yii\base\Exception($model->scenario); ?>
                             <?= $form->field($model, 'firstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
                         </div>
                         <div class="col-md-6">
@@ -45,7 +46,7 @@ use yii\bootstrap\ActiveForm;
                         </div>
                         <div class="col-md-6"><input type="submit" class="btn-yellow fullwidth" value="CREATE ACCOUNT"></div>
                     </div>
-                    <?php ActiveForm::end(); ?> 
+                    <?php ActiveForm::end(); ?>
                 </div>
             </div>
         </div>
