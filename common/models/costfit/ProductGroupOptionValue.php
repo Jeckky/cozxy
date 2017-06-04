@@ -47,9 +47,9 @@ class ProductGroupOptionValue extends \common\models\costfit\master\ProductGroup
         return $this->hasOne(ProductGroupTemplateOption::className(), ['productGroupTemplateOptionId' => 'productGroupTemplateOptionId']);
     }
 
-    public static function findProductOptions()
+    public static function findProductOptionsArray($productSuppId)
     {
-        
+
     }
 
 }
