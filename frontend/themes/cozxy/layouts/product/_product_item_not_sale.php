@@ -1,7 +1,7 @@
 <div class="col-md-4 col-sm-6 col-xs-12">
     <div class="product-box">
         <div class="product-img text-center">
-            <img src="<?= $model['image'] ?>" alt="" class="fullwidth img-responsive" width="260" height="260">
+            <img src="<?= $model['image'] ?>" alt="" class="fullwidth img-responsive" style="width: 260px; height: 260px;">
             <div class="v-hover">
                 <a href="<?= $model['url'] ?>">
                     <div class="col-xs-6"><i class="fa fa-eye" aria-hidden="true"></i></div>
