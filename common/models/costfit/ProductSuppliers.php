@@ -58,6 +58,8 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
 
     public $productPrice;
 
+    // public $productGroupId;
+
     /**
      * @inheritdoc
      */
@@ -195,6 +197,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     }
 
     public static function supplier($productSuppId) {
+
         $id = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
         if (isset($id) && !empty($id)) {
             return $id->userId;
@@ -246,6 +249,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     }
 
     public static function productSupplierGroupStory($productSuppId) {
+
         $productId = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
         $allProductId = [];
         $productSuppId = '';

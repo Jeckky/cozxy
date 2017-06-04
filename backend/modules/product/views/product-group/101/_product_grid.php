@@ -152,6 +152,19 @@ if (isset($dataProvider)) {
                     return $optionStr;
                 }
             ],
+            [
+                'attribute' => 'Product Supplier',
+                'format' => 'html',
+                'value' => function($model) {
+                    $ps = \common\models\costfit\ProductSuppliers::find()->where("productId = $model->productId AND userId = " . Yii::$app->user->id)->one();
+                    if (isset($ps)) {
+                        $pps = \common\models\costfit\ProductPriceSuppliers::find()->where("productSuppId = $ps->productSuppId AND status = 1")->one();
+                        return isset($pps) ? "Stock : $ps->result" . "<br> Selling Price : " . number_format($pps->price) : "Stock : $ps->result";
+                    } else {
+                        return NULL;
+                    }
+                }
+            ],
 //                    [
 //                        'class' => 'kartik\grid\BooleanColumn',
 //                        'attribute' => 'status',

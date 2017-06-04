@@ -9,6 +9,7 @@ use Yii;
 *
     * @property string $currencyId
     * @property string $title
+    * @property string $symbol
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -32,6 +33,7 @@ return [
             [['status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 100],
+            [['symbol'], 'string', 'max' => 50],
         ];
 }
 
@@ -43,6 +45,7 @@ public function attributeLabels()
 return [
     'currencyId' => Yii::t('currency', 'Currency ID'),
     'title' => Yii::t('currency', 'Title'),
+    'symbol' => Yii::t('currency', 'Symbol'),
     'status' => Yii::t('currency', 'Status'),
     'createDateTime' => Yii::t('currency', 'Create Date Time'),
     'updateDateTime' => Yii::t('currency', 'Update Date Time'),

@@ -20,12 +20,12 @@
                             </div>
                             <div class="col-xs-12 text-right">
                                 <div id="amount-min">
-                                    <input type="hidden" name="min" id="min" value="">
-                                    <input type="hidden" name="max" id="max" value="">
-                                    <input type="hidden" name='categoryId' id="categoryId" value="">
+                                    <input type="hidden" name="min" id="min" value="100">
+                                    <input type="hidden" name="max" id="max" value="100">
+                                    <input type="hidden" name='categoryId' id="categoryId" value="<?php echo $categoryId; ?>">
                                 </div>
-                                <a href="#"><u class="fc-black">CLEAR</u></a> &nbsp;
-                                <a href="javascript:filterPrice()" class="b btn-black-s size16">APPLY</a>
+                                <a href="javascript:filterPriceCozxyClear()"><u class="fc-black">CLEAR</u></a> &nbsp;
+                                <a href="javascript:filterPriceCozxy()" class="b btn-black-s size16">APPLY</a>
                             </div>
                         </form>
                     </div>
@@ -45,7 +45,10 @@
                             <div class="col-sm-4"><label><input type="checkbox" name="color7"> &nbsp; Green</label></div>
                             <div class="col-sm-4"><label><input type="checkbox" name="color8"> &nbsp; Pink</label></div>
                             <div class="col-sm-4"><label><input type="checkbox" name="color9"> &nbsp; Orange</label></div>
-                            <div class="col-sm-12 text-right"><a href="#"><u class="fc-black">CLEAR</u></a> &nbsp; <a href="#" class="b btn-black-s size16">APPLY</a></div>
+                            <div class="col-sm-12 text-right">
+                                <a href="javascript:filterPriceCozxyClear()"><u class="fc-black">CLEAR</u></a> &nbsp;
+                                <a href="#" class="b btn-black-s size16">APPLY</a>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -64,7 +67,10 @@
                             <div class="col-sm-4"><label><input type="checkbox" name="type7"> &nbsp; Ring</label></div>
                             <div class="col-sm-4"><label><input type="checkbox" name="type8"> &nbsp; Hat</label></div>
                             <div class="col-sm-4"><label><input type="checkbox" name="type9"> &nbsp; Clothing</label></div>
-                            <div class="col-sm-12 text-right"><a href="#"><u class="fc-black">CLEAR</u></a> &nbsp; <a href="#" class="b btn-black-s size16">APPLY</a></div>
+                            <div class="col-sm-12 text-right">
+                                <a href="javascript:filterPriceCozxyClear()"><u class="fc-black">CLEAR</u></a> &nbsp;
+                                <a href="#" class="b btn-black-s size16">APPLY</a>
+                            </div>
                         </form>
                     </div>
                 </div>

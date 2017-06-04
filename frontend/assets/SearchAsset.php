@@ -26,7 +26,7 @@ class SearchAsset extends AssetBundle {
     ];
     public $js = [
         'jquery-ui-1.12.1/jquery-ui.min.js',
-        'js/responsive_waterfall.js'
+        'js/responsive_waterfall.js',
     ];
     public $depends = [
         'frontend\assets\CozxyAsset',

@@ -296,6 +296,11 @@ $("#place-order").on('click', function () {
  */
 function addItemToWishlist(id) {
     var $pId = id;
+    var str = window.location.pathname;
+    var res = str.split("/");
+    //console.log(window.location.pathname);
+    //console.log(res);
+    //console.log(res[1])
     $.ajax({
         type: "POST",
         dataType: "JSON",
@@ -306,10 +311,16 @@ function addItemToWishlist(id) {
             if (data.status) {
                 //$('.wishlist-message').addClass('visible');
                 var $this = $('#addItemToWishlist-' + $pId);
-                $this.button('loading');
-                setTimeout(function () {
-                    $this.button('reset');
-                }, 8000);
+                if (res[1] != 'search') {
+                    $this.button('loading');
+                    setTimeout(function () {
+                        $this.button('reset');
+                    }, 8000);
+                } else {
+                    $('.heart i').removeClass('fa fa-heart-o');
+                    $('.heart i').addClass('fa fa-heartbeat');
+                }
+                //$(".fa fa-heart-o").html("<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>");
             } else {
                 alert(data.message);
             }
@@ -323,6 +334,7 @@ function addItemToWishlist(id) {
  * @returns {undefined}
  */
 function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId, supplierId, receiveType) {
+    //javascript:addItemToCartUnitys(160, 1, "48", "false", "144", "", "")
 
     var $productSuppId = productSuppId;
     var $maxQnty = maxQnty;
@@ -332,10 +344,20 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
     var $receiveType = receiveType;
     var $itemQnty = quantity;
     var $this = $('#addItemsToCartMulti-' + $productSuppId);
-    $this.button('loading');
-    setTimeout(function () {
-        $this.button('reset');
-    }, 8000);
+    var str = window.location.pathname;
+    var res = str.split("/");
+    if (res[1] != 'search') {
+        $this.button('loading');
+        setTimeout(function () {
+            $this.button('reset');
+        }, 8000);
+    } else {
+        $('.shopping i').removeClass('fa fa-shopping-bag');
+        $('.shopping i').addClass('fa fa-shopping-bag fa-spin');
+    }
+
+    // $(".fa-shopping-bag").addClass("fa-spin");
+
     if (parseInt($itemQnty) <= parseInt($maxQnty) && parseInt($itemQnty) > 0) {
 
         $.ajax({
@@ -367,6 +389,7 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
             }
         });
     } else {
+
         var $maxQnty = maxQnty;
         var $itemQnty = quantity;
         //$(this).parent().find('#quantity').val($maxQnty);
@@ -494,6 +517,7 @@ $(document).on('click', '.delete', function () {
         }
     });
 });
+
 $(document).on('click', '#reviews-rate', function (e) {
 
     var rate = $('input:hidden', '#reviews-rate').val();
@@ -566,36 +590,81 @@ function checkoutNewBilling() {
         }
     });
 }
-$(document).on('click', '#viewPost', function (e) {
-    var postId = $(this).parent().parent().find("#postId").val();
-    var userId = $(this).parent().parent().find("#userId").val();
-    $.ajax({
-        type: "POST",
-        url: $baseUrl + "story/view-post",
-        data: {'postId': postId, 'userId': userId},
-        success: function (data)
-        {
 
-        }
-    });
-});
-function filterPrice() {
+function filterPriceCozxy() {
 
     $min = $('input:hidden:eq(0)', '#amount-min').val();
     $max = $('input:hidden:eq(1)', '#amount-min').val();
     $categoryId = $('input:hidden:eq(2)', '#amount-min').val();
+    $('.btn-black-s').html('APPLY ...');
+    $('.filter-product-cozxy').html("<div class='text-center' style='zoom: 5;'><br><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
     var path = $baseUrl + "search/filter-price";
     $.ajax({
         url: path,
         type: "POST",
         dataType: "JSON",
         data: {mins: $min, maxs: $max, categoryId: $categoryId},
-        success: function (data) {
-            if (data.status) {
-                $('.wf-container').html('xxxxxx');
+        success: function (data, status) {
+
+            if (status == "success") {
+                //javascript:addItemToCartUnitys('161', 1, '44', '', '145', '', '')
+                //javascript:addItemToCartUnitys(160, 1, "48", "", "144", "", "")
+                var yourval = jQuery.parseJSON(JSON.stringify(data));
+                //var obj = JSON.parse(data);
+                //console.log(yourval['160']);
+                var items = '';
+                $.each(yourval, function (key, val) {
+                    //console.log(key);//160,162
+                    //console.log(val.productSuppId);
+                    //console.log(items);
+                    //alert(val.fastId);
+                    if (val.fastId == false) {
+                        $fastId = '';
+                    } else {
+                        $fastId = val.fastId;
+                    }
+                    items += "<div class=\"col-md-4 col-sm-6 col-xs-12\">";
+                    items += "<div class=\"product-box\">";
+                    items += "<div class=\"product-img text-center\">";
+                    items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js / 262x262\" src='" + val.image + "' data-holder-rendered=\"true\">";
+                    items += "<div class=\"v-hover\">";
+                    items += "<a href='" + val.url + "'>";
+                    items += "<div class=\"col-xs-4\"><i class=\"fa fa-eye\" aria-hidden=\"true\"></i></div>";
+                    items += "</a>";
+                    items += " <a>";
+                    if (val.wishList == 1) {
+                        items += "<div class=\"col-xs-4 heartbeat\"><i class=\"fa fa-heartbeat\" aria-hidden=\"true\"></i></div>";
+                        items += "</a>";
+                    } else {
+                        items += '<a href=\'javascript:addItemToWishlist(' + val.productSuppId + ');\' id=\'addItemToWishlist-' + val.productSuppId + '\' data-loading-text=\"<div class =\'col-xs-4\'><i class=\'fa fa-heartbeat\' aria-hidden =\'true\'></i></div>\">';
+                        items += "<div class=\"col-xs-4 heart\"><i class=\"fa fa-heart-o\" aria-hidden=\"true\"></i></div>";
+                        items += "</a>";
+                    }
+                    items += '<a href=\'javascript:addItemToCartUnitys(' + val.productSuppId + ', 1, "' + val.maxQnty + '", "' + $fastId + '", "' + val.productId + '", "' + val.supplierId + '", "' + val.receiveType + '")\' id=\"addItemsToCartMulti-' + val.productSuppId + '\" data-loading-text=\" <div class =\'col-xs-4\'> <i class = \'fa fa-circle-o-notch fa-spin\' aria-hidden = \'true\'> </i></div> \">';
+                    items += "<div class=\"col-xs-4 shopping\"><i class=\"fa fa-shopping-bag\" aria-hidden=\"true\"></i></div>";
+                    items += " </a>";
+                    items += " </div>";
+                    items += "</div>";
+                    items += "<div class=\"product-txt\">";
+                    items += "<p class=\"size16 fc-g666\"></p>";
+                    items += ' <p class=\"size14 b\" style=\"height:50px; \"><a href=' + val.url + ' class=\"fc-black\">' + val.title + '</a></p>';
+                    items += " <p>";
+                    items += '<span class=\"size18\">' + val.price + ' THB</span><br>';
+                    items += "  <span class=\"size14 onsale\">'" + val.price_s + "' THB</span>";
+                    items += "   </p>";
+                    items += " </div>";
+                    items += " </div>";
+                    items += "</div>";
+                    $('.filter-product-cozxy').html(items);
+                });
+                ;
             } else {
-                alert(data.message);
+                alert('error');
             }
         }
     });
+}
+
+function filterPriceCozxyClear() {
+    location.reload();
 }

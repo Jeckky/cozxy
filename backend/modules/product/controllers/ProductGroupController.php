@@ -50,6 +50,7 @@ class ProductGroupController extends ProductMasterController
         $categoryId = Yii::$app->request->post('categoryId');
         $brandId = Yii::$app->request->post('brandId');
         $status = Yii::$app->request->post('status');
+        $title = Yii::$app->request->post('title');
         //User Type 4 = Supplier , 5= Content
         if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5) {
             $query = \common\models\costfit\Product::find()
@@ -60,8 +61,13 @@ class ProductGroupController extends ProductMasterController
             $userRe = str_replace('[', '', str_replace(']', '', $user_group_Id));
             $userEx = explode(',', $userRe);
             $ress = array_search(26, $userEx);
-            $query = \common\models\costfit\Product::find()
-            ->where("userId=" . Yii::$app->user->identity->userId . " AND parentId is null ");
+            if ($ress !== FALSE) {
+                $query = \common\models\costfit\Product::find()
+                ->where("parentId is null AND status = 99");
+            } else {
+                $query = \common\models\costfit\Product::find()
+                ->where("parentId is null AND userId =" . Yii::$app->user->identity->userId);
+            }
         }
 
         if (isset($categoryId) && !empty($categoryId)) {
@@ -72,6 +78,9 @@ class ProductGroupController extends ProductMasterController
         }
         if (isset($status) && !empty($status)) {
             $query->andWhere("product.status = $status");
+        }
+        if (isset($title) && !empty($title)) {
+            $query->andWhere("product.title LIKE '%$title%'");
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -213,6 +222,7 @@ class ProductGroupController extends ProductMasterController
                     $model->attributes = $_POST["Product"];
                     $model->userId = $userId;
                     $model->createDateTime = new \yii\db\Expression('NOW()');
+                    $model->approve = "new";
                     $model->parentId = NULL;
                     $model->status = 0;
                     if ($model->save(false)) {
@@ -482,19 +492,31 @@ class ProductGroupController extends ProductMasterController
                         $pps->createDateTime = new \yii\db\Expression("NOW()");
                         $pps->save();
 
-                        $productOptionValues = \common\models\costfit\ProductGroupOptionValue::find()->where("productId = $model->productId")->all();
-                        foreach ($productOptionValues as $ov) {
-                            $productOptionValues = new \common\models\costfit\ProductGroupOptionValue();
+                        $productOptionValuess = \common\models\costfit\ProductGroupOptionValue::find()->where("productId = $model->productId AND productSuppId IS NULL")->all();
+//                        throw new \yii\base\Exception(count($productOptionValues));
+                        foreach ($productOptionValuess as $ov) {
+                            $productOptionValues = \common\models\costfit\ProductGroupOptionValue::find()->where("productId = $model->productId AND productSuppId = $prodSupp->productSuppId AND productGroupTemplateOptionId = $ov->productGroupTemplateOptionId")->one();
+                            if (!isset($productOptionValues)) {
+                                $productOptionValues = new \common\models\costfit\ProductGroupOptionValue();
+                            }
                             $productOptionValues->attributes = $ov->attributes;
                             $productOptionValues->productSuppId = $prodSupp->productSuppId;
+                            $productOptionValues->productGroupTemplateOptionId = $ov->productGroupTemplateOptionId;
                             $productOptionValues->createDateTime = new \yii\db\Expression("NOW()");
-                            $productOptionValues->save();
+                            $productOptionValues->updateDateTime = new \yii\db\Expression("NOW()");
+                            if (!$productOptionValues->save()) {
+                                throw new \yii\base\Exception(print_r($productOptionValues->errors, true));
+                            }
                         }
 
                         $productImages = \common\models\costfit\ProductImage::find()->where("productId = $model->productId")->all();
+                        \common\models\costfit\ProductImageSuppliers::deleteAll("productSuppId = $prodSupp->productSuppId");
                         foreach ($productImages as $pi) {
                             $psi = new \common\models\costfit\ProductImageSuppliers();
                             $psi->attributes = $pi->attributes;
+                            $psi->productSuppId = $prodSupp->productSuppId;
+                            $psi->createDateTime = new \yii\db\Expression("NOW()");
+                            $psi->updateDateTime = new \yii\db\Expression("NOW()");
                             $psi->save();
                         }
                     } else {
@@ -539,6 +561,22 @@ class ProductGroupController extends ProductMasterController
         \common\models\costfit\Product::deleteAll("productId=" . $_GET["id"]);
 
         return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->parentId]);
+    }
+
+    public function actionDeleteProductGroup()
+    {
+//        throw new \yii\base\Exception(print_r($_POST, TRUE));
+        $childs = \common\models\costfit\Product::find()->where("parentId = " . $_GET["id"])->all();
+        foreach ($childs as $pg) {
+            \common\models\costfit\ProductGroupOptionValue::deleteAll("productId=" . $pg->productId);
+            \common\models\costfit\ProductImage::deleteAll("productId=" . $pg->productId);
+            \common\models\costfit\Product::deleteAll("productId=" . $pg->productId);
+        }
+        \common\models\costfit\ProductGroupOptionValue::deleteAll("productId=" . $_GET["id"]);
+        \common\models\costfit\ProductImage::deleteAll("productId=" . $_GET["id"]);
+        \common\models\costfit\Product::deleteAll("productId=" . $_GET["id"]);
+
+        return $this->redirect(['index']);
     }
 
     public function actionDeleteProductImage()

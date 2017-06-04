@@ -44,6 +44,16 @@ $this->params['pageHeader'] = Html::encode($this->title);
             ?>
             <div class="row">
                 <div class="col-md-1">
+                    <h5>ค้นหา Title</h5>
+                </div>
+                <div class="col-md-2">
+                    <?php
+                    //echo '<label class="control-label">Provinces</label>';
+                    $title = isset($_POST["title"]) ? $_POST["title"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
+                    echo Html::textInput("title", $title, ['class' => 'form-control']);
+                    ?>
+                </div>
+                <div class="col-md-1">
                     <h5>ค้นหา Status</h5>
                 </div>
                 <div class="col-md-2">
@@ -167,7 +177,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'options' => [
                             'style' => 'width:5%'
                         ],
-                        'template' => '{update}',
+                        'template' => '{update} {delete}',
                         'buttons' => [
 //                            'view' => function ($url, $model) {
 //                                return Html::a('<i class="fa fa-eye"></i>', $url, [
@@ -196,13 +206,15 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     }
                                 }
                             },
-//                            'delete' => function ($url, $model) {
-//                                return Html::a('<i class="fa fa-trash-o"></i>', $url , [
-//                                    'title' => Yii::t('yii', 'Delete'),
-//                                    'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
-//                                    'data-method' => 'post',
-//                                ]);
-//                            },
+                            'delete' => function ($url, $model) {
+                                if ($model->status == 0) {
+                                    return Html::a('<i class="fa fa-trash-o"></i>', ['delete-product-group', 'id' => $model->productId], [
+                                        'title' => Yii::t('yii', 'Delete'),
+                                        'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+                                        'data-method' => 'post',
+                                    ]);
+                                }
+                            },
                         ]
                     ],
                 ],
