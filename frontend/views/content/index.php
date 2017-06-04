@@ -1,9 +1,5 @@
-<?php
-/* @var $this yii\web\View */
-?>
-<h1>content/index</h1>
-
-<p>
-    You may change the content of this page by modifying
-    the file <code><?= __FILE__; ?></code>.
-</p>
+<div class="col-xs-12">
+    <div class="product-other">
+        <a href="/content"><img src="imgs/other0<?= $i ?>.jpg" alt="Other Product" class="fullwidth"></a>
+    </div>
+</div>

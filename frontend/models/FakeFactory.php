@@ -214,7 +214,8 @@ class FakeFactory extends Model {
 
     public static function productStory($n) {
         $products = [];
-        $productPost = \common\models\costfit\ProductPost::find()->groupBy(['productSuppId'])->orderBy('productPostId desc')->limit($n)->all();
+        $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productSuppId is not null  ")
+        ->groupBy(['productSuppId'])->orderBy('productPostId desc')->limit($n)->all();
         foreach ($productPost as $value) {
             $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
             foreach ($productPostList as $items) {
@@ -369,6 +370,31 @@ class FakeFactory extends Model {
                 'url' => Yii::$app->homeUrl . 'search/brand/' . $items->encodeParams(['brandId' => $items->brandId]),
                 'title' => $items->title,
                 'description' => $items->description
+            ];
+        }
+        return $products;
+    }
+
+    public static function productOtherProducts() {
+        $productPost = \common\models\costfit\ProductPost::find()->where('userId=0 and productSuppId is null')
+        ->orderBy('productPostId desc')->all();
+        $products = [];
+        foreach ($productPost as $items) {
+            if (isset($items->image) && !empty($items->image)) {
+                if (file_exists(Yii::$app->basePath . "/web/" . $items->image)) {
+                    $brandImages = \Yii::$app->homeUrl . substr($items->image, 1);
+                } else {
+                    $brandImages = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
+                }
+            } else {
+                $brandImages = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
+            }
+            $products[$items->productPostId] = [
+                'image' => $brandImages,
+                'url' => Yii::$app->homeUrl . 'content/' . $items->encodeParams(['productPostId' => $items->productPostId]),
+                'title' => $items->title,
+                'shortDescription' => $items->shortDescription,
+                'description' => $items->description,
             ];
         }
         return $products;

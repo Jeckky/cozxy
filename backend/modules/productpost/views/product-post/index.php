@@ -40,7 +40,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'productPostId',
-                    'productSuppId',
+                    //'productSuppId',
                     //'productSelfId',
                     //'brandId',
                     //'userId',

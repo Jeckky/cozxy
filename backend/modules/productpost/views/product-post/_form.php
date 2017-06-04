@@ -37,7 +37,7 @@ use common\models\costfit\User;
     <div class="panel-body">
         <?= $form->errorSummary($model) ?>
 
-        <?= $form->field($model, 'productSuppId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(\common\models\costfit\ProductSuppliers::find()->all(), 'productSuppId', 'title'), ['prompt' => '-- Select ProductSupp --']) ?>
+        <?//= $form->field($model, 'productSuppId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(\common\models\costfit\ProductSuppliers::find()->all(), 'productSuppId', 'title'), ['prompt' => '-- Select ProductSupp --']) ?>
 
         <?//= $form->field($model, 'productSelfId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(ProductSelf::find()->all(), 'productSelfId', 'title'), ['prompt' => '-- Select ProductSelf --']) ?>
 
@@ -92,7 +92,7 @@ use common\models\costfit\User;
                         theme: 'monokai'
                     }
                 });
-                 
+
             }
 
         });
