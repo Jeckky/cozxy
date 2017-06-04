@@ -222,6 +222,7 @@ class ProductGroupController extends ProductMasterController
                     $model->attributes = $_POST["Product"];
                     $model->userId = $userId;
                     $model->createDateTime = new \yii\db\Expression('NOW()');
+                    $model->approve = "new";
                     $model->parentId = NULL;
                     $model->status = 0;
                     if ($model->save(false)) {
