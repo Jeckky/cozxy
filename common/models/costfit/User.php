@@ -82,6 +82,7 @@ class User extends \common\models\costfit\master\UserMaster {
             ['rePassword', 'compare', 'compareAttribute' => 'newPassword', 'on' => self::COZXY_PROFILE],
             //['username', 'email'],
             [['firstname', 'lastname', 'password', 'email', 'type', 'gender'], 'required', 'on' => self::COZXY_USER_BACKEND],
+            [['firstname', 'lastname', 'email', 'password', 'confirmPassword'], 'required', 'on' => 'register_new'],
         ]);
     }
 
