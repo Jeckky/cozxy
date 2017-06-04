@@ -425,7 +425,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         }
                                         ?>
                                         <ul class="list-inline pull-right">
-                                            <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
+                                            <li>
+                                                <?php echo Html::a("<i class='glyphicon glyphicon-arrow-left'></i> Back", ['create', 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], ['class' => 'btn btn-default']) ?>
+                                                <!--<button type="button" class="btn btn-default prev-step">Previous</button>-->
+                                            </li>
                                             <!--<li><button type="button" class="btn btn-default next-step">Skip</button></li>-->
                                             <li><?php echo Html::submitButton('Finish', ['class' => 'btn btn-success next-step', 'name' => 'finish', 'value' => 'finish']); ?></li>
                                         </ul>
