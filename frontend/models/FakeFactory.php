@@ -377,7 +377,7 @@ class FakeFactory extends Model {
     }
 
     public static function productOtherProducts() {
-        $productPost = \common\models\costfit\ProductPost::find()->where('userId=0 and productSuppId is null')
+        $productPost = \common\models\costfit\ProductPost::find()->where('userId=0 and productId is null')
         ->orderBy('productPostId desc')->all();
         $products = [];
         foreach ($productPost as $items) {
