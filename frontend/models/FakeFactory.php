@@ -254,7 +254,7 @@ class FakeFactory extends Model {
                     'price_s' => $price_s,
                     'price' => $price,
                     'views' => number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)),
-                    'star' => $results_rating,
+                    'star' => number_format($results_rating, 2),
                 ];
             }
         }

@@ -129,9 +129,18 @@ class ProductGroupController extends ProductMasterController
             'query' => \common\models\costfit\Product::find()->orderBy("productId ASC")
             ->where("parentId = " . $_GET["productGroupId"]),
         ]);
+
+        $dataProvider2 = new ActiveDataProvider([
+            'query' => \common\models\costfit\ProductSuppliers::find()
+            ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
+            ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
+            ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . \Yii::$app->user->id)
+            ->orderBy("productId ASC"),
+        ]);
         return $this->render('101/view', [
             'model' => $model,
             'dataProvider' => $dataProvider,
+            'dataProvider2' => $dataProvider2,
         ]);
     }
 
@@ -319,6 +328,11 @@ class ProductGroupController extends ProductMasterController
                 $countProduct = \common\models\costfit\Product::find()->where("parentId = " . $_GET["productGroupId"])->count();
                 if (isset($_POST["finish"])) {
                     $model->status = 99;
+                    $model->save();
+                    return $this->redirect(['index']);
+                }
+                if (isset($_POST["saveDraft"])) {
+                    $model->status = 0;
                     $model->save();
                     return $this->redirect(['index']);
                 }
@@ -648,6 +662,15 @@ class ProductGroupController extends ProductMasterController
         }
 
         return $this->render("101/_product_image_form", ['model' => $model]);
+    }
+
+    public function actionBackToDraft($id)
+    {
+        $model = \common\models\costfit\Product::find()->where("productId = $id")->one();
+        $model->status = 0;
+        $model->save();
+
+        return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId]);
     }
 
     // Version 1.01 Wizard Of Product Group
