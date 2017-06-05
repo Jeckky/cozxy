@@ -125,7 +125,38 @@ class SearchController extends MasterController {
     }
 
     public function actionShowMoreProducts() {
-        echo 'xxxxx';
+
+        $catz = Yii::$app->request->post('cat');
+        $countz = Yii::$app->request->post('count');
+        $startz = Yii::$app->request->post('starts');
+        $endz = Yii::$app->request->post('ends');
+        $FilterPrice = [];
+        $productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $catz, '', '')]);
+
+        if (count($productFilterPrice->allModels) > 0) {
+            foreach ($productFilterPrice->allModels as $key => $value) {
+                $FilterPrice[$value['productSuppId']] = [
+                    'brand' => $value['brand'],
+                    'productSuppId' => $value['productSuppId'],
+                    'image' => $value['image'],
+                    'url' => $value['url'],
+                    'brand' => $value['brand'],
+                    'title' => $value['title'],
+                    'price_s' => $value['price_s'],
+                    'price' => $value['price'],
+                    'maxQnty' => $value['maxQnty'],
+                    'fastId' => $value['fastId'],
+                    'productId' => $value['productId'],
+                    'supplierId' => $value['supplierId'],
+                    'receiveType' => $value['receiveType'],
+                    'wishList' => $value['wishList']
+                ];
+            }
+            //$FilterPrice = $FilterPrices;
+        }
+        //echo '<pre>';
+        //print_r($productFilterPrice);
+        return json_encode($FilterPrice);
     }
 
 }
