@@ -131,7 +131,7 @@ class SearchController extends MasterController {
         $startz = Yii::$app->request->post('starts');
         $endz = Yii::$app->request->post('ends');
         $FilterPrice = [];
-        $productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $catz, '', '')]);
+        $productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory($endz, $catz, '', '')]);
 
         if (count($productFilterPrice->allModels) > 0) {
             foreach ($productFilterPrice->allModels as $key => $value) {
