@@ -691,7 +691,7 @@ function showMore(cat, countAll, limit_start, limit_end) {
     var limit_starts = limit_start;
     var limit_ends = 18;
     $('.showStepMore').html(" SHOW MORE<span class=\'size16\'>&nbsp; ↓ </span></a>");
-    $('.filter-product-cozxy').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
+    $('.filter-product-cozxy').html("<div class='text-center loading-spin' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
     $.ajax({
         type: "POST",
         url: $baseUrl + "search/show-more-products",
@@ -701,6 +701,7 @@ function showMore(cat, countAll, limit_start, limit_end) {
             if (status == "success") {
                 //$('.filter-product-cozxy').html("<div class='text-center' style='zoom: 5;'><br><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
                 //var yourval = jQuery.parseJSON(JSON.stringify(data));
+                //$('.fa .fa-spinner .fa-spin').removeClass();
                 yourval = JSON.parse(data);
                 var items = '';
                 $.each(yourval, function (key, val) {
@@ -743,6 +744,7 @@ function showMore(cat, countAll, limit_start, limit_end) {
                     items += " </div>";
                     items += "</div>";
                     $('.filter-product-cozxy').append(items);
+                    $('.loading-spin').hide();
                 });
             } else {
                 alert('Somting error');
