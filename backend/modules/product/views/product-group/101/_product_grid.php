@@ -226,7 +226,7 @@ if (isset($dataProvider)) {
 //                                                        Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['grid-demo'], ['data-pjax' => 0, 'class' => 'btn btn-default', 'title' => Yii::t('kvgrid', 'Reset Grid')])
 //                                                    ],
 //                                                    '{export}',
-            '{toggleData}',
+//            '{toggleData}',
         ],
         // set export properties
 //                                                'export' => [
