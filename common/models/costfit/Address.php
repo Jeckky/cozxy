@@ -41,14 +41,14 @@ class Address extends \common\models\costfit\master\AddressMaster {
     public function rules() {
 
         return array_merge(parent::rules(), [//, 'countryId'
-            [['firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'zipcode', 'type', 'isDefault', 'status', 'tel']
+                [['firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'zipcode', 'type', 'isDefault', 'status', 'tel']
                 , 'required', 'on' => 'shipping_address'],
-            ['tel', 'number'],
-            ['zipcode', 'number'],
-            [['countryId', 'firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'districtId', 'zipcode', 'email']
+                ['tel', 'number'],
+                ['zipcode', 'number'],
+                [['countryId', 'firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'districtId', 'zipcode', 'email']
                 , 'required', 'on' => 'checkout-billing-address'],
-            [['provinceId', 'amphurId', 'addressId'], 'required', 'on' => 'billing_address'],
-            [['countryId', 'firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'zipcode', 'type', 'isDefault', 'status', 'tel', 'email']
+                [['provinceId', 'amphurId', 'addressId'], 'required', 'on' => 'billing_address'],
+                [['countryId', 'firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'zipcode', 'type', 'isDefault', 'status', 'tel', 'email']
                 , 'required', 'on' => 'new_checkouts_billing_address'],
         ]);
     }
@@ -140,7 +140,7 @@ class Address extends \common\models\costfit\master\AddressMaster {
     public static function userTel($userId) {
         $address = Address::find()->where("userId=" . $userId . " and status=1 and isDefault=1")->one();
         if (isset($address)) {
-            $tel = $address->firstname . ' ' . $address->lastname;
+            $tel = $address->tel;
             return $tel;
         } else {
             return '';
