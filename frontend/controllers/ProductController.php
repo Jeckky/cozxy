@@ -18,6 +18,7 @@ class ProductController extends MasterController {
     public function actionIndex($hash = FALSE) {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
+
         //$productId = $params['productId'];
         $productSupplierId = $params['productSupplierId'];
         $productId = \common\models\costfit\ProductSuppliers::productParentId($productSupplierId)->productId;
