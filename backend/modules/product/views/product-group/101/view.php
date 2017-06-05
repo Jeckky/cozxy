@@ -45,21 +45,31 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             <td><?= $model->title; ?></td>
                         </tr>
                         <tr>
-                            <th>Description <br><button class="btn btn-warning" data-toggle="collapse" data-target="#demo">Hide/Show</button></th>
+                            <th>Description </th>
                             <td>
-                                <div id="demo" class="collapse in">
+                                <div id="description" class="collapse">
                                     <?= $model->description; ?>
                                 </div>
+                                <button class="btn btn-warning" data-toggle="collapse" data-target="#description">Hide/Show</button>
                             </td>
                         </tr>
-<!--                        <tr>
-                            <th>Specification</th>
-                            <td><?//= $model->specification; ?></td>
-                        </tr>-->
+                        <tr>
+                            <th>Specification </th>
+                            <td>
+                                <div id="specification" class="collapse">
+                                    <?= $model->specification; ?>
+                                </div>
+                                <button class="btn btn-warning" data-toggle="collapse" data-target="#specification">Hide/Show</button>
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </div>
             <?= $this->render("_product_grid", ["dataProvider" => $dataProvider]); ?>
+
+
+            <?= $this->render("_product_grid", ["dataProvider" => $dataProvider, 'gridTitle' => "Myproduct", 'type' => 2]); ?>
+
             <div style="position:fixed;bottom:5px;right:20px;margin:0;padding:5px 3px;background-color: rgba(224,224,224,0.8);text-align: center;border: 3px green solid">
                 <h3 style="color: tomato">Create My Product ?</h3>
                 <a  href="#" class="btn btn-success btn-lg">Create</a>

@@ -197,40 +197,40 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
                             <li role="presentation" class="<?= ($step == 1) ? "active" : "disabled not-active" ?>">
                                 <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Step 1">
-                                                <span class="round-tab">
-                                                    <i class="fa fa-folder-open"></i>
-                                                </span>
+                                    <span class="round-tab">
+                                        <i class="fa fa-folder-open"></i>
+                                    </span>
                                 </a>
                             </li>
 
                             <li role="presentation" class="<?= ($step == 2) ? "active" : "disabled not-active" ?>">
                                 <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
-                                                <span class="round-tab">
-                                                    <i class="fa fa-picture-o"></i>
-                                                </span>
+                                    <span class="round-tab">
+                                        <i class="fa fa-picture-o"></i>
+                                    </span>
                                 </a>
                             </li>
                             <li role="presentation" class="<?= ($step == 3) ? "active" : "disabled not-active" ?>">
                                 <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Step 3">
-                                                <span class="round-tab">
-                                                    <i class="fa fa-archive"></i>
-                                                </span>
+                                    <span class="round-tab">
+                                        <i class="fa fa-archive"></i>
+                                    </span>
                                 </a>
                             </li>
 
                             <li role="presentation" class="<?= ($step == 4) ? "active" : "disabled not-active" ?>">
                                 <a href="#step4" data-toggle="tab" aria-controls="complete" role="tab" title="Step 4">
-                                                <span class="round-tab">
-                                                    <i class="fa fa-pencil"></i>
-                                                </span>
+                                    <span class="round-tab">
+                                        <i class="fa fa-pencil"></i>
+                                    </span>
                                 </a>
                             </li>
 
                             <li role="presentation" class="<?= ($step == 5) ? "active" : "disabled not-active" ?>">
                                 <a href="#step5" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
-                                                <span class="round-tab">
-                                                    <i class="fa fa-check"></i>
-                                                </span>
+                                    <span class="round-tab">
+                                        <i class="fa fa-check"></i>
+                                    </span>
                                 </a>
                             </li>
                         </ul>
@@ -252,7 +252,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 }
                                 return $title;
                             })
-                                , ['prompt' => '-- Select Option Template --'])
+                            , ['prompt' => '-- Select Option Template --'])
                             ?>
 
                             <?php
@@ -263,7 +263,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 'data' => common\models\costfit\search\Category::findCategoryArrayWithMultiLevelBackend(),
                                 'pluginOptions' => [
                                     'loadingText' => '-- Select Category System --',
-                                    //'params' => ['input-type-1', 'input-type-2']
+                                //'params' => ['input-type-1', 'input-type-2']
                                 ],
                                 'options' => [
                                     'placeholder' => 'Select Category System ...',
@@ -320,58 +320,58 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             <?php if (isset($productGroupTemplateOptions)): ?>
                                 <table class="table table-bordered table-hover">
                                     <thead>
-                                    <tr>
-                                        <th>Seq</th>
-                                        <th>Option</th>
-                                        <th>Value</th>
-                                    </tr>
+                                        <tr>
+                                            <th>Seq</th>
+                                            <th>Option</th>
+                                            <th>Value</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <?php
-                                    $data = [];
-                                    $pgovs = common\models\costfit\ProductGroupOptionValue::find()->where("productGroupId=" . $_GET["productGroupId"])->groupBy("value , productGroupTemplateOptionId")->orderBy("productGroupTemplateOptionId ASC")->all();
-                                    foreach ($pgovs as $pgov) {
-                                        if (isset($data[$pgov->productGroupTemplateOptionId]) && in_array($pgov->value, $data[$pgov->productGroupTemplateOptionId])) {
-                                            continue;
-                                        }
-                                        $data[$pgov->productGroupTemplateOptionId][] = $pgov->value;
-                                    }
-                                    //                                                    throw new \yii\base\Exception(print_r($data, true));
-                                    $seq = 1;
-                                    foreach ($productGroupTemplateOptions as $option):
-                                        ?>
-                                        <tr>
-                                            <td><?= $seq; ?></td>
-                                            <td><?= $option->title; ?></td>
-                                            <td>
-                                                <?//= Html::textInput("ProductGroupOptionValue[$option->productGroupTemplateOptionId]", NULL, ['class' => 'form-control input-lg', 'placeHolder' => 'ระบุได้หลาย Option ที่มี เช่นสี เป็น Red,Green,Yellow'])
-                                                ?>
-                                                <?php
-                                                // Multiple select without model
-                                                echo Select2::widget([
-                                                    'name' => "ProductGroupOptionValue[$option->productGroupTemplateOptionId]",
-                                                    'value' => isset($data[$option->productGroupTemplateOptionId]) ? $data[$option->productGroupTemplateOptionId] : NULL, // initial value
-//                                                                    'data' => $data,
-                                                    'maintainOrder' => true,
-                                                    'toggleAllSettings' => [
-                                                        'selectLabel' => '<i class="glyphicon glyphicon-ok-circle"></i> Tag All',
-                                                        'unselectLabel' => '<i class="glyphicon glyphicon-remove-circle"></i> Untag All',
-                                                        'selectOptions' => ['class' => 'text-success'],
-                                                        'unselectOptions' => ['class' => 'text-danger'],
-                                                    ],
-                                                    'options' => ['placeholder' => 'ระบุได้หลาย Option ที่มี เช่นสี เป็น Red,Green,Yellow', 'multiple' => true],
-                                                    'pluginOptions' => [
-                                                        'tags' => true,
-                                                        'maximumInputLength' => 20
-                                                    ],
-                                                ]);
-                                                ?>
-                                            </td>
-                                        </tr>
                                         <?php
-                                        $seq++;
-                                    endforeach;
-                                    ?>
+                                        $data = [];
+                                        $pgovs = common\models\costfit\ProductGroupOptionValue::find()->where("productGroupId=" . $_GET["productGroupId"])->groupBy("value , productGroupTemplateOptionId")->orderBy("productGroupTemplateOptionId ASC")->all();
+                                        foreach ($pgovs as $pgov) {
+                                            if (isset($data[$pgov->productGroupTemplateOptionId]) && in_array($pgov->value, $data[$pgov->productGroupTemplateOptionId])) {
+                                                continue;
+                                            }
+                                            $data[$pgov->productGroupTemplateOptionId][] = $pgov->value;
+                                        }
+                                        //                                                    throw new \yii\base\Exception(print_r($data, true));
+                                        $seq = 1;
+                                        foreach ($productGroupTemplateOptions as $option):
+                                            ?>
+                                            <tr>
+                                                <td><?= $seq; ?></td>
+                                                <td><?= $option->title; ?></td>
+                                                <td>
+                                                    <?//= Html::textInput("ProductGroupOptionValue[$option->productGroupTemplateOptionId]", NULL, ['class' => 'form-control input-lg', 'placeHolder' => 'ระบุได้หลาย Option ที่มี เช่นสี เป็น Red,Green,Yellow'])
+                                                    ?>
+                                                    <?php
+                                                    // Multiple select without model
+                                                    echo Select2::widget([
+                                                        'name' => "ProductGroupOptionValue[$option->productGroupTemplateOptionId]",
+                                                        'value' => isset($data[$option->productGroupTemplateOptionId]) ? $data[$option->productGroupTemplateOptionId] : NULL, // initial value
+//                                                                    'data' => $data,
+                                                        'maintainOrder' => true,
+                                                        'toggleAllSettings' => [
+                                                            'selectLabel' => '<i class="glyphicon glyphicon-ok-circle"></i> Tag All',
+                                                            'unselectLabel' => '<i class="glyphicon glyphicon-remove-circle"></i> Untag All',
+                                                            'selectOptions' => ['class' => 'text-success'],
+                                                            'unselectOptions' => ['class' => 'text-danger'],
+                                                        ],
+                                                        'options' => ['placeholder' => 'ระบุได้หลาย Option ที่มี เช่นสี เป็น Red,Green,Yellow', 'multiple' => true],
+                                                        'pluginOptions' => [
+                                                            'tags' => true,
+                                                            'maximumInputLength' => 20
+                                                        ],
+                                                    ]);
+                                                    ?>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                            $seq++;
+                                        endforeach;
+                                        ?>
                                     </tbody>
                                 </table>
                             <?php endif; ?>
@@ -434,8 +434,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         <!--<button type="button" class="btn btn-default prev-step">Previous</button>-->
                                     </li>
                                     <!--<li><button type="button" class="btn btn-default next-step">Skip</button></li>-->
+                                    <li><?php echo Html::submitButton('Save Draft', ['class' => 'btn btn-primary next-step', 'name' => 'saveDraft', 'value' => 'saveDraft']); ?></li>
                                     <li><?php echo Html::submitButton('Finish', ['class' => 'btn btn-success next-step', 'name' => 'finish', 'value' => 'finish']); ?></li>
                                 </ul>
+                                <div class="pull-right" style="color:red">
+                                    **หมายเหตุ**<br>
+                                    หากต้องการแก้ไขอีก ให้กดปุ่ม Save Draft <br>
+                                    หากต้องการส่งอนุมัติ ให้กดปุ่ม Finish (ไม่สามารถกลับมาแก้ไขได้ จนกว่าผู้อนุมัติจะส่งกลับเพื่อให้แก้ไข)
+                                </div>
                                 <?php
                             }
                             ?>
