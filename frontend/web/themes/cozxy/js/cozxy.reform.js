@@ -742,7 +742,7 @@ function showMore(cat, countAll, limit_start, limit_end) {
                     items += " </div>";
                     items += " </div>";
                     items += "</div>";
-                    $('.filter-product-cozxy').html(items);
+                    $('.filter-product-cozxy').append(items);
                 });
             } else {
                 alert('Somting error');
