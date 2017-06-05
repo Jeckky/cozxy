@@ -669,11 +669,27 @@ function filterPriceCozxyClear() {
 }
 
 
-function showMore() {
-    /*<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-     <span class="sr-only">Loading...</span>*/
-    //alert('test Show More');
+function showMore(cat, countAll, limit_start, limit_end) {
+    console.log(cat + ' , ' + countAll + ' , ' + limit_start + ',' + limit_end);
+    var cats = cat;
+    var countAlls = countAll;
+    var limit_starts = limit_start;
+    var limit_ends = 9;
     $('.showStepMore').html("<i class=\'fa fa-spinner fa-pulse fa-3x fa-fw\' style='zoom:0.5'></i>");
-    $('.filter-product-cozxy').html("<div class='text-center' style='zoom: 5;'><br><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
+
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "search/show-more-products",
+        data: {'cat': cats, 'count': countAlls, 'starts': limit_starts, 'ends': limit_ends},
+        success: function (data)
+        {
+            if (data) {
+                $('.filter-product-cozxy').html("<div class='text-center' style='zoom: 5;'><br><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
+            } else {
+                alert('Somting error');
+            }
+        }
+    });
+
 
 }
