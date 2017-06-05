@@ -331,7 +331,7 @@ class ProductGroupController extends ProductMasterController
                     $model->save();
                     return $this->redirect(['index']);
                 }
-                if (isset($_POST["savedraft"])) {
+                if (isset($_POST["saveDraft"])) {
                     $model->status = 0;
                     $model->save();
                     return $this->redirect(['index']);
