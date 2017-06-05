@@ -39,7 +39,8 @@
                     <span class="size14 onsale"><?= $model['price_s'] ?> THB</span>
                     <?php
                 } else {
-                    echo '&nbsp;';
+                    echo '<span class="size18">&nbsp;</span><br>
+                    <span class="size14  ">&nbsp;</span>';
                 }
                 ?>
             </p>

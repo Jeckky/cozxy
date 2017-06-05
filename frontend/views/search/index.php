@@ -146,7 +146,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                                     return $this->render('@app/themes/cozxy/layouts/product/_product_item', ['model' => $model]);
                                 },
                                 'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
-                                'layout' => "{summary}{pager}{items}",
+                                'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
 //                            'layout' => "{items}",
                                 'itemOptions' => [
                                     'tag' => false,
