@@ -641,7 +641,7 @@ function filterPriceCozxy() {
                     items += "<div class=\"col-md-4 col-sm-6 col-xs-12\">";
                     items += "<div class=\"product-box\">";
                     items += "<div class=\"product-img text-center\">";
-                    items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js / 262x262\" src='" + val.image + "' data-holder-rendered=\"true\">";
+                    items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js / 262x262\" src='" + val.image + "' data-holder-rendered=\"true\" style=\"width: 260px; height: 260px;\">";
                     items += "<div class=\"v-hover\">";
                     items += "<a href='" + val.url + "'>";
                     items += "<div class=\"col-xs-4\"><i class=\"fa fa-eye\" aria-hidden=\"true\"></i></div>";
@@ -713,7 +713,7 @@ function showMore(cat, countAll, limit_start, limit_end) {
                     items += "<div class=\"col-md-4 col-sm-6 col-xs-12\">";
                     items += "<div class=\"product-box\">";
                     items += "<div class=\"product-img text-center\">";
-                    items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js / 262x262\" src='" + val.image + "' data-holder-rendered=\"true\">";
+                    items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js / 262x262\" src='" + val.image + "' data-holder-rendered=\"true\" style=\"width: 260px; height: 260px;\">";
                     items += "<div class=\"v-hover\">";
                     items += "<a href='" + val.url + "'>";
                     items += "<div class=\"col-xs-4\"><i class=\"fa fa-eye\" aria-hidden=\"true\"></i></div>";
