@@ -185,7 +185,7 @@ class StoryController extends MasterController {
         $dataProvider = new \yii\data\ActiveDataProvider([
             'query' => $productPost
         ]);
-        $res["text"] = "";
+        $res["dataProvider"] = $dataProvider;
         return json_encode($res);
     }
 

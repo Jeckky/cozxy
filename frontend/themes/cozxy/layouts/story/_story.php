@@ -23,7 +23,7 @@ use kartik\select2\Select2;
 
             <div class="size20">&nbsp;</div>
 
-            <div class="panel panel-default">
+            <div class="panel panel-default" id="1234">
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-12">
@@ -44,7 +44,9 @@ use kartik\select2\Select2;
                                                                     </select>
                                                                 </div>-->
                                 <?php
-                                $form = ActiveForm::begin(['method' => 'GET', 'id' => 'currency']);
+                                $form = ActiveForm::begin(['method' => 'GET',
+                                            'id' => 'currency',
+                                ]);
                                 ?>
 
                                 <div class="col-md-3" style="margin-top: -20px;">
@@ -61,8 +63,9 @@ use kartik\select2\Select2;
 
                             <div class="size20">&nbsp;</div>
 
-                            <div class="row">
+                            <div class="row" id="compare">
                                 <div class="col-md-10 col-md-offset-1" id="showData">
+                                    <?php \yii\widgets\Pjax::begin(); ?>
                                     <?=
                                     GridView::widget([
                                         'dataProvider' => $comparePrice,
@@ -102,7 +105,7 @@ use kartik\select2\Select2;
                                         ],
                                     ]);
                                     ?>
-
+                                    <?php \yii\widgets\Pjax::end(); ?>
                                 </div>
                             </div>
 
@@ -123,6 +126,13 @@ use kartik\select2\Select2;
             <?= $this->render('_popular_stories', ['popularStories' => $popularStories]) ?>
         </div>
         <?php
+        $js = "function top(){
+   window.location.hash = '#compare'
+  }
+  window.onload=top;";
+        if (isset($_GET["currencyId"])) {
+            $this->registerJS($js);
+        }
         //$baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         // $scrip = "";
         //$this->registerJs($scrip);
