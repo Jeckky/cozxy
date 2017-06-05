@@ -53,9 +53,9 @@ class SearchController extends MasterController {
         ->orderBy(new \yii\db\Expression('rand()'), 'pps.price desc')
         ->count();
         //echo $countAllProduct;
-        //echo '<br>' . $limit_start = 10;
-        //echo '<br>' . $limit_end = $countAllProduct - 9;
-        return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'limit_start', 'limit_end'));
+        $limit_start = '';
+        $limit_end = '';
+        return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'limit_start', 'limit_end', 'countAllProduct'));
     }
 
     public function actionCozxyProduct() {
@@ -122,6 +122,10 @@ class SearchController extends MasterController {
         //echo '<pre>';
         //print_r($productFilterPrice);
         return json_encode($FilterPrice);
+    }
+
+    public function actionShowMoreProducts() {
+        echo 'xxxxx';
     }
 
 }
