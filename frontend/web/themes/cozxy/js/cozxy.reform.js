@@ -689,7 +689,7 @@ function showMore(cat, countAll, limit_start, limit_end) {
     var cats = cat;
     var countAlls = countAll;
     var limit_starts = limit_start;
-    var limit_ends = 18;
+    var limit_ends = 45;
     $('.showStepMore').html(" SHOW MORE<span class=\'size16\'>&nbsp; ↓ </span></a>");
     $('.filter-product-cozxy').html("<div class='text-center loading-spin' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
     $.ajax({
@@ -743,7 +743,7 @@ function showMore(cat, countAll, limit_start, limit_end) {
                     items += " </div>";
                     items += " </div>";
                     items += "</div>";
-                    $('.filter-product-cozxy').append(items);
+                    $('.filter-product-cozxy').html(items);
                     $('.loading-spin').hide();
                 });
             } else {
