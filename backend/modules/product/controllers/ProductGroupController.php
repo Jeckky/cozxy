@@ -134,7 +134,7 @@ class ProductGroupController extends ProductMasterController
             'query' => \common\models\costfit\ProductSuppliers::find()
             ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
             ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
-            ->where("pg.productId = " . $_GET["productGroupId"] . " AND userId = " . \Yii::$app->user->id)
+            ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . \Yii::$app->user->id)
             ->orderBy("productId ASC"),
         ]);
         return $this->render('101/view', [
