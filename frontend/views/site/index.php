@@ -203,7 +203,8 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                         ],
                         'itemView' => function ($model, $key, $index, $widget) {
                             return $this->render('@app/themes/cozxy/layouts/content/_content_items', ['model' => $model]);
-                        },
+                        }, 'emptyText' => '<div class="col-xs-12"><div class="product-other fullwidth" style="height:260px; font-variant: small-caps; text-align: center;vertical-align: middle;
+line-height:35px;"><br><br><br>No results found.</div></div>',
 //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                         //'layout'=>"{summary}{pager}{items}"
                         'layout' => "{items}",

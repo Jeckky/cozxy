@@ -18,8 +18,9 @@ class ProductController extends MasterController {
     public function actionIndex($hash = FALSE) {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
-        $productId = $params['productId'];
+        //$productId = $params['productId'];
         $productSupplierId = $params['productSupplierId'];
+        $productId = \common\models\costfit\ProductSuppliers::productParentId($productSupplierId)->productId;
         /*
          * Product Views - Frontend
          */
@@ -35,12 +36,10 @@ class ProductController extends MasterController {
         $productViews = $productViews[$productSupplierId];
 
         $productHotNewProduct = new ArrayDataProvider(['allModels' => FakeFactory::productHotNewAndProduct(4, FALSE)]);
+
         $StoryProductPost = new ArrayDataProvider(['allModels' => DisplayMyStory::myStoryTop($productSupplierId, FALSE, FALSE)]);
         $StoryRecentStories = new ArrayDataProvider(['allModels' => DisplayMyStory::productRecentStories($productSupplierId, FALSE, FALSE)]);
-
         $productGroupOptionValues = ProductGroupOptionValue::findProductOptionsArray($productSupplierId);
-
-
         return $this->render('index', compact('productHotNewProduct', 'productViews', 'StoryProductPost', 'StoryRecentStories', 'productGroupOptionValues'));
     }
 

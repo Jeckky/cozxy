@@ -28,13 +28,34 @@ class SearchController extends MasterController {
     }
 
     public function actionIndex($hash = FALSE) {
+        $category = $_GET['c'];
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
+        //echo '<pre>';
+        //print_r($params);
         $categoryId = $params['categoryId'];
         //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, $categoryId)]);
-        $productCanSell = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $categoryId, FALSE, FALSE)]);
-        $category = $_GET['c'];
-        return $this->render('index', compact('productCanSell', 'category', 'categoryId'));
+        $productCanSell = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $categoryId, '', '')]);
+
+        //$countAllProduct = \common\models\costfit\ProductSuppliers::find()->where('categoryId=' . $categoryId)->count();
+        $whereArray = [];
+        $whereArray["category_to_product.categoryId"] = $categoryId;
+
+        $whereArray["product.approve"] = "approve";
+        $whereArray["pps.status"] = "1";
+
+        $countAllProduct = \common\models\costfit\CategoryToProduct::find()
+        ->select('ps.*,pps.*')
+        ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+        ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+        ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+        ->where($whereArray)
+        ->orderBy(new \yii\db\Expression('rand()'), 'pps.price desc')
+        ->count();
+        //echo $countAllProduct;
+        //echo '<br>' . $limit_start = 10;
+        //echo '<br>' . $limit_end = $countAllProduct - 9;
+        return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'limit_start', 'limit_end'));
     }
 
     public function actionCozxyProduct() {

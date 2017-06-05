@@ -214,17 +214,18 @@ class FakeFactory extends Model {
 
     public static function productStory($n) {
         $products = [];
-        $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productSuppId is not null  ")
-        ->groupBy(['productSuppId'])->orderBy('productPostId desc')->limit($n)->all();
+
+        $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null  ")
+        ->groupBy(['productId'])->orderBy('productPostId desc')->limit($n)->all();
         foreach ($productPost as $value) {
-            $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
+            $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productId =' . $value->productId)->all();
             foreach ($productPostList as $items) {
-                $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $items->productSuppId)->orderBy('ordering asc')->one();
+                $productImages = \common\models\costfit\ProductImage::find()->where('productId=' . $items->productId)->one();
                 $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $items->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
                 $price_s = number_format($productPrice->price, 2);
                 $price = number_format($productPrice->price, 2);
-                $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId, $value->productPostId);
-                $rating_member = \common\helpers\Reviews::RatingInMember($value->productSuppId, $value->productPostId);
+                $rating_score = \common\helpers\Reviews::RatingInProduct($value->productId, $value->productPostId);
+                $rating_member = \common\helpers\Reviews::RatingInMember($value->productId, $value->productPostId);
                 if ($rating_score == 0 && $rating_member == 0) {
                     $results_rating = 0;
                 } else {
@@ -241,8 +242,8 @@ class FakeFactory extends Model {
                 }
 
 
-                $products[$value->productSuppId] = [
-                    'productSuppId' => $value->productSuppId,
+                $products[$value->productId] = [
+                    'productId' => $value->productId,
                     'productPostId' => $value->productPostId,
                     'image' => $productImagesThumbnail1,
                     //'url' => '/story?id=' . $items->productSuppId,
@@ -253,7 +254,7 @@ class FakeFactory extends Model {
                     'price_s' => $price_s,
                     'price' => $price,
                     'views' => number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)),
-                    'star' => rand($results_rating, 5.00),
+                    'star' => number_format($results_rating, 2),
                 ];
             }
         }
@@ -376,7 +377,7 @@ class FakeFactory extends Model {
     }
 
     public static function productOtherProducts() {
-        $productPost = \common\models\costfit\ProductPost::find()->where('userId=0 and productSuppId is null')
+        $productPost = \common\models\costfit\ProductPost::find()->where('userId=0 and productId is null')
         ->orderBy('productPostId desc')->all();
         $products = [];
         foreach ($productPost as $items) {
