@@ -127,11 +127,16 @@ class SearchController extends MasterController {
     public function actionShowMoreProducts() {
 
         $catz = Yii::$app->request->post('cat');
-        $countz = Yii::$app->request->post('count');
-        $startz = Yii::$app->request->post('starts');
-        $endz = Yii::$app->request->post('ends');
+        $countz = (int) Yii::$app->request->post('count');
+        $startz = (int) Yii::$app->request->post('starts');
+        $endz = (int) Yii::$app->request->post('ends');
         $FilterPrice = [];
-        $productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory($endz, $catz, '', '')]);
+        if ($countz <= $endz) {
+            $endzShow = $countz;
+        } else {
+            $endzShow = $endz;
+        }
+        $productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory($endzShow, $catz, '', '')]);
 
         if (count($productFilterPrice->allModels) > 0) {
             foreach ($productFilterPrice->allModels as $key => $value) {
