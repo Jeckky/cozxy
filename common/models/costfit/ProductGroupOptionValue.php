@@ -58,6 +58,19 @@ class ProductGroupOptionValue extends \common\models\costfit\master\ProductGroup
             }
         }
 
+        $res = [
+            123=>[
+                1=>'Red',
+                2=>'Green',
+                3=>'Blue',
+            ],
+            321=>[
+                1=>'Red',
+                2=>'Green',
+                3=>'Blue',
+            ]
+        ];
+
         return $res;
     }
 
