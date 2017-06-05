@@ -30,8 +30,17 @@ class StoryController extends MasterController {
         $ViewsRecentStories = DisplayMyStory::productViewsRecentStories($productPostId);
         $productPost = \common\models\costfit\ProductPost::find()->where("productPostId=" . $productPostId)->one();
         $popularStories = DisplayMyStory::popularStories($productPostId);
+        $currency = ArrayHelper::map(Currency::find()->where("status=1")
+                                ->orderBy('createDateTime')
+                                ->all(), 'currencyId', 'title');
 
-        return $this->render('@app/themes/cozxy/layouts/story/_story', compact('ViewsRecentStories', 'productPost', 'popularStories'));
+        if (isset($_GET['currency'])) {
+            $comparePrice = DisplayMyStory::comparePrice($productPost->productId, $_GET['currency']);
+        } else {
+            $comparePrice = DisplayMyStory::comparePrice($productPost->productId, null);
+        }
+
+        return $this->render('@app/themes/cozxy/layouts/story/_story', compact('ViewsRecentStories', 'productPost', 'popularStories', 'currency', 'comparePrice'));
     }
 
     public function actionWriteYourStory($hash) {

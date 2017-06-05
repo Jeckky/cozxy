@@ -14,8 +14,8 @@ use common\models\costfit\ProductPost;
                 $star = frontend\models\DisplayMyStory::calculatePostRating($post->productPostId);
                 $value = explode(",", $star);
                 $posts = ProductPost::PostDetail($post->productPostId);
-                $productId = ProductSuppliers::productId(ProductPost::PostDetail($post->productPostId)->productSuppId);
-                $url = Yii::$app->homeUrl . 'story/' . $post->encodeParams(['productPostId' => $post->productPostId, 'productId' => $productId, 'productSupplierId' => $posts->productSuppId]);
+                $productId = ProductSuppliers::productId(ProductPost::PostDetail($post->productPostId)->productId);
+                $url = Yii::$app->homeUrl . 'story/' . $post->encodeParams(['productPostId' => $post->productPostId, 'productId' => $productId, 'productSupplierId' => $posts->productId]);
                 ?>
                 <div style="border-bottom:1px solid #999;margin-bottom: 18px;">
                     <img src="<?= Yii::$app->homeUrl . $img ?>" alt="" class="fullwidth" style="margin-bottom:10px;">
