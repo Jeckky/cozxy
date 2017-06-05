@@ -117,6 +117,8 @@ $(function() {
 });
 ');
 \frontend\assets\SearchAsset::register($this);
+$this->title = 'Search Categories ' . strtoupper($category);
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?=
