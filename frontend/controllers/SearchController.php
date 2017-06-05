@@ -35,27 +35,10 @@ class SearchController extends MasterController {
         //print_r($params);
         $categoryId = $params['categoryId'];
         //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, $categoryId)]);
-        $productCanSell = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $categoryId, '', '')]);
+        $productCanSell = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory('', $categoryId, '', '')]);
 
-        //$countAllProduct = \common\models\costfit\ProductSuppliers::find()->where('categoryId=' . $categoryId)->count();
-        $whereArray = [];
-        $whereArray["category_to_product.categoryId"] = $categoryId;
 
-        $whereArray["product.approve"] = "approve";
-        $whereArray["pps.status"] = "1";
-
-        $countAllProduct = \common\models\costfit\CategoryToProduct::find()
-        ->select('ps.*,pps.*')
-        ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
-        ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
-        ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
-        ->where($whereArray)
-        ->orderBy(new \yii\db\Expression('rand()'), 'pps.price desc')
-        ->count();
-        //echo $countAllProduct;
-        $limit_start = '';
-        $limit_end = '';
-        return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'limit_start', 'limit_end', 'countAllProduct'));
+        return $this->render('index', compact('productCanSell', 'category', 'categoryId'));
     }
 
     public function actionCozxyProduct() {
@@ -127,11 +110,20 @@ class SearchController extends MasterController {
     public function actionShowMoreProducts() {
 
         $catz = Yii::$app->request->post('cat');
-        $countz = Yii::$app->request->post('count');
-        $startz = Yii::$app->request->post('starts');
-        $endz = Yii::$app->request->post('ends');
+        $countz = (int) Yii::$app->request->post('count');
+        $startz = (int) Yii::$app->request->post('starts');
+        $endz = (int) Yii::$app->request->post('ends');
+        /*
+          starts:0
+          ends:90
+         * */
         $FilterPrice = [];
-        $productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $catz, '', '')]);
+        if ($countz <= $endz) {
+            $endzShow = $countz;
+        } else {
+            $endzShow = $endz;
+        }
+        $productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategoryShowMore($startz, $endzShow, $catz)]);
 
         if (count($productFilterPrice->allModels) > 0) {
             foreach ($productFilterPrice->allModels as $key => $value) {
