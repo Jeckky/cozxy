@@ -33,14 +33,14 @@ class StoryController extends MasterController {
         $currency = ArrayHelper::map(Currency::find()->where("status=1")
                                 ->orderBy('createDateTime')
                                 ->all(), 'currencyId', 'title');
-
-        if (isset($_GET['currency'])) {
-            $comparePrice = DisplayMyStory::comparePrice($productPost->productId, $_GET['currency']);
+        $model = new Currency();
+        if (isset($_GET['currencyId'])) {
+            $comparePrice = DisplayMyStory::comparePrice($productPost->productId, $_GET['currencyId']);
         } else {
             $comparePrice = DisplayMyStory::comparePrice($productPost->productId, null);
         }
 
-        return $this->render('@app/themes/cozxy/layouts/story/_story', compact('ViewsRecentStories', 'productPost', 'popularStories', 'currency', 'comparePrice'));
+        return $this->render('@app/themes/cozxy/layouts/story/_story', compact('ViewsRecentStories', 'productPost', 'popularStories', 'currency', 'model', 'comparePrice'));
     }
 
     public function actionWriteYourStory($hash) {
@@ -49,6 +49,7 @@ class StoryController extends MasterController {
         $productSuppId = isset($params['productSuppId']) ? $params['productSuppId'] : NULL;
         $productId = isset($params['productId']) ? $params['productId'] : NULL;
         $productPostId = isset($params['productPostId']) ? $params['productPostId'] : NULL;
+        // throw new \yii\base\Exception(print_r($params, true));
         $productSupplier = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
         $productSuppImg = ProductImageSuppliers::find()->where("productSuppId=" . $productSupplier->productSuppId)->one();
         $model = new \common\models\costfit\ProductPost();
@@ -172,6 +173,20 @@ class StoryController extends MasterController {
 
     public function actionShopDetail() {
         return $this->render('@app/themes/cozxy/layouts/story/_shop_detail');
+    }
+
+    public function actionComparePrice() {
+        //return $this->render('@app/themes/cozxy/layouts/story/_shop_detail');
+        $productId = $_POST["productId"];
+        $currencyId = $_POST["currencyId"];
+        // throw new \yii\base\Exception($currencyId);
+        $res = [];
+        $productPost = \common\models\costfit\ProductPost::find()->where("productId=" . $productId . " and currency=" . $currencyId);
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => $productPost
+        ]);
+        $res["text"] = "";
+        return json_encode($res);
     }
 
 }
