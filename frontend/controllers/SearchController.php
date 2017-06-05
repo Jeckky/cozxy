@@ -47,10 +47,10 @@ class SearchController extends MasterController {
         $countAllProduct = \common\models\costfit\CategoryToProduct::find()
         ->select('ps.*,pps.*')
         ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
-        ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+        ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productIdx")
         ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
         ->where($whereArray)
-        ->orderBy(new \yii\db\Expression('rand()'), 'pps.price desc')
+        //->orderBy(new \yii\db\Expression('rand()'), 'pps.price desc')
         ->count();
         //echo $countAllProduct;
         $limit_start = '';
