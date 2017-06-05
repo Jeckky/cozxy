@@ -235,7 +235,7 @@ if (isset($dataProvider)) {
 //                                                ],
         'panel' => [
             'type' => GridView::TYPE_PRIMARY,
-            'heading' => !isset($gridTitle) ? "Product Editor" : $gridTitle,
+            'heading' => !isset($gridTitle) ? "<span style='color:white;font-weight:bold'>Product Editor</span>" : $gridTitle,
         ],
     ]);
 }

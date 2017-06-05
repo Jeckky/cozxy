@@ -68,7 +68,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
             <?= $this->render("_product_grid", ["dataProvider" => $dataProvider]); ?>
 
 
-            <?= $this->render("_product_grid", ["dataProvider" => $dataProvider, 'gridTitle' => "Myproduct", 'type' => 2]); ?>
+            <?= $this->render("_product_grid", ["dataProvider" => $dataProvider, 'gridTitle' => "<span style='color:white;font-weight:bold'>My Product</span>", 'type' => 2]); ?>
 
             <div style="position:fixed;bottom:5px;right:20px;margin:0;padding:5px 3px;background-color: rgba(224,224,224,0.8);text-align: center;border: 3px green solid">
                 <h3 style="color: tomato">Create My Product ?</h3>

@@ -74,7 +74,7 @@ echo GridView::widget([
 //                                                        Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['grid-demo'], ['data-pjax' => 0, 'class' => 'btn btn-default', 'title' => Yii::t('kvgrid', 'Reset Grid')])
 //                                                    ],
 //                                                    '{export}',
-        '{toggleData}',
+//        '{toggleData}',
     ],
     // set export properties
 //    'export' => [
@@ -82,6 +82,6 @@ echo GridView::widget([
 //    ],
     'panel' => [
         'type' => GridView::TYPE_SUCCESS,
-        'heading' => (Yii::$app->controller->action->id == "create" && $_GET["step"] != 2) ? "Product Image Editor " . \yii\helpers\Html::a("<span class='glyphicon glyphicon-plus'></span>", ['update-product', 'id' => $id, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], ['class' => 'btn btn-primary']) : "Product Image Editor",
+        'heading' => (Yii::$app->controller->action->id == "create" && $_GET["step"] != 2) ? "<span style='color:black;font-weight:bold'>Product Image Editor</span> " . \yii\helpers\Html::a("<span class='glyphicon glyphicon-plus'></span>", ['update-product', 'id' => $id, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], ['class' => 'btn btn-primary']) : "<span style='color:black;font-weight:bold'>Product Image Editor</span> ",
     ],
 ]);
