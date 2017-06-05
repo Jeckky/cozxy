@@ -116,6 +116,12 @@ $form = ActiveForm::begin([
                 </div>
             </div>
 
+            <div id="actionBtn" style="position:fixed;bottom:5px;right:20px;margin:0;padding:5px 3px;background-color: rgba(224,224,224,0.8);text-align: center;border: 3px green solid">
+                <a class="pull-right" style="margin:0;color:red" onclick="$('#actionBtn').hide()" ><i class="glyphicon glyphicon-remove"></i></a>
+                <h3 style=""><?= $model->isNewRecord ? 'Create' : 'Update' ?> My Product ?</h3>
+                <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            </div>
+
         </div>
     </div>
 </div>

@@ -194,13 +194,25 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
             <div class="col-md-3">
                 <h3 class="b text-center-sm text-center-xs">OTHER PRODUCTS</h3>
                 <div class="row">
-                    <?php for ($i = 1; $i <= 1; $i++): ?>
-                        <div class="col-xs-12">
-                            <div class="product-other">
-                                <a href="/content"><img src="imgs/other0<?= $i ?>.jpg" alt="Other Product" class="fullwidth"></a>
-                            </div>
-                        </div>
-                    <?php endfor; ?>
+
+                    <?php
+                    echo \yii\widgets\ListView::widget([
+                        'dataProvider' => $otherProducts,
+                        'options' => [
+                            'tag' => false,
+                        ],
+                        'itemView' => function ($model, $key, $index, $widget) {
+                            return $this->render('@app/themes/cozxy/layouts/content/_content_items', ['model' => $model]);
+                        },
+//                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                        //'layout'=>"{summary}{pager}{items}"
+                        'layout' => "{items}",
+                        'itemOptions' => [
+                            'tag' => false,
+                        ],
+                    ]);
+                    ?>
+
                 </div>
             </div>
         </div>

@@ -40,11 +40,11 @@ if (isset($dataProvider)) {
 //                                                        }
 //                                                    ],
             'title',
-            [
-                'attribute' => 'description',
-                'options' => ['style' => 'width:20%'],
-                'format' => 'html',
-            ],
+//            [
+//                'attribute' => 'description',
+//                'options' => ['style' => 'width:20%'],
+//                'format' => 'html',
+//            ],
 //            [
 //                'attribute' => 'specification',
 //                'format' => 'raw',
@@ -173,7 +173,7 @@ if (isset($dataProvider)) {
             [
                 'class' => 'kartik\grid\ActionColumn',
 //                                                        'dropdown' => FALSE,
-                'visible' => (Yii::$app->controller->action->id != "view") ? TRUE : FALSE,
+                'visible' => (Yii::$app->controller->action->id != "view" ) ? TRUE : FALSE,
                 'vAlign' => 'middle',
                 'template' => '{update} {delete}',
                 'urlCreator' => function($action, $model, $key, $index) {
@@ -182,6 +182,11 @@ if (isset($dataProvider)) {
                         return \yii\helpers\Url::toRoute(['delete-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]]);
                     }
                 },
+                'visibleButtons' => [
+                    'delete' => function ($model, $key, $index) {
+                        return $model->status === 1 ? false : true;
+                    }
+                ],
                 'buttons' => [
                     "update" => function ($url, $model) {
                         return Html::a("<span class='glyphicon glyphicon-pencil'></span>", ['update-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], [
@@ -190,13 +195,13 @@ if (isset($dataProvider)) {
 //                                                                    'data-toggle-active' => $model->productId
                         ]);
                     },
-//                                                            "delete" => function ($url, $model) {
-//                                                                return Html::a("<span class='glyphicon glyphicon-trash'></span>", ['delete-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], [
+//                    "delete" => function ($url, $model) {
+//                        return Html::a("<span class='glyphicon glyphicon-trash'></span>", ['delete-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], [
 ////                                                                    'title' => Yii::t('app', 'Toogle Active'),
-//                                                                    'title' => "คุณต้องการลบสินค้านี้หรือไม่ ?", 'data-toggle' => 'tooltip'
-////                                                                    'data-toggle-active' => $model->productId
-//                                                                ]);
-//                                                            },
+//                            'title' => "คุณต้องการลบสินค้านี้หรือไม่ ?", 'data-toggle' => 'tooltip',
+//                            'data-toggle-active' => $model->productId
+//                        ]);
+//                    },
                 ],
 //                        'viewOptions' => ['title' => $viewMsg, 'data-toggle' => 'tooltip'],
 //                                                        'updateOptions' => ['title' => "แก้ไขข้อมูลสินค้า", 'data-toggle' => 'tooltip', 'url' => ['update-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]]],
@@ -221,7 +226,7 @@ if (isset($dataProvider)) {
 //                                                        Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['grid-demo'], ['data-pjax' => 0, 'class' => 'btn btn-default', 'title' => Yii::t('kvgrid', 'Reset Grid')])
 //                                                    ],
 //                                                    '{export}',
-            '{toggleData}',
+//            '{toggleData}',
         ],
         // set export properties
 //                                                'export' => [

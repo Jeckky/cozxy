@@ -45,18 +45,25 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             <td><?= $model->title; ?></td>
                         </tr>
                         <tr>
-                            <th>Description</th>
-                            <td><?= $model->description; ?></td>
+                            <th>Description <br><button class="btn btn-warning" data-toggle="collapse" data-target="#demo">Hide/Show</button></th>
+                            <td>
+                                <div id="demo" class="collapse in">
+                                    <?= $model->description; ?>
+                                </div>
+                            </td>
                         </tr>
-                        <tr>
+<!--                        <tr>
                             <th>Specification</th>
-                            <td><?= $model->specification; ?></td>
-                        </tr>
+                            <td><?//= $model->specification; ?></td>
+                        </tr>-->
                     </table>
                 </div>
             </div>
             <?= $this->render("_product_grid", ["dataProvider" => $dataProvider]); ?>
-
+            <div style="position:fixed;bottom:5px;right:20px;margin:0;padding:5px 3px;background-color: rgba(224,224,224,0.8);text-align: center;border: 3px green solid">
+                <h3 style="color: tomato">Create My Product ?</h3>
+                <a  href="#" class="btn btn-success btn-lg">Create</a>
+            </div>
         </div>
     </div>
     <?php Pjax::end(); ?>

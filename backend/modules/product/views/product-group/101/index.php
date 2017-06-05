@@ -15,8 +15,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
 <div class="product-group-index">
 
 
-    <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
 
+    <?php Pjax::begin(['id' => 'product-grid-view']); ?>
 
 
     <div class="panel panel-default" >
@@ -48,7 +48,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
         <div class="panel-body">
             <?php
             $form = ActiveForm::begin([
-                'method' => 'POST',
+                'method' => 'GET',
+                'action' => isset($_GET["supplier"]) ? ['index?supplier=1'] : ['index'],
                 'options' => ['class' => 'panel panel-default form-horizontal'],
             ]);
             ?>
@@ -59,7 +60,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <div class="col-md-2">
                     <?php
                     //echo '<label class="control-label">Provinces</label>';
-                    $title = isset($_POST["title"]) ? $_POST["title"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
+                    $title = isset($_GET["title"]) ? $_GET["title"] : ''; //isset($_GET['BrandId'] ? $_GET['BrandId'] : '');
                     echo Html::textInput("title", $title, ['class' => 'form-control']);
                     ?>
                 </div>
@@ -70,7 +71,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <div class="col-md-2">
                         <?php
                         //echo '<label class="control-label">Provinces</label>';
-                        $status = isset($_POST["status"]) ? $_POST["status"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
+                        $status = isset($_GET["status"]) ? $_GET["status"] : ''; //isset($_GET['BrandId'] ? $_GET['BrandId'] : '');
                         echo kartik\select2\Select2::widget([
                             'name' => 'status',
                             'value' => $status,
@@ -93,10 +94,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <div class="col-md-2">
                     <?php
                     //echo '<label class="control-label">Provinces</label>';
-                    $categoryId = isset($_POST["CategoryId"]) ? $_POST["CategoryId"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
+                    $categoryId = isset($_GET["categoryId"]) ? $_GET["categoryId"] : ''; //isset($_GET['BrandId'] ? $_GET['BrandId'] : '');
                     echo kartik\select2\Select2::widget([
                         'name' => 'categoryId',
-                        'value' => $categoryId == '' ? '' : $categoryId,
+                        'value' => $categoryId,
                         'data' => common\models\costfit\Category::findCategoryArrayWithMultiLevelBackend(),
                         //'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'),
                         'options' => ['placeholder' => 'Select or Search User Category ...', 'id' => 'CategoryId'], //, 'onchange' => 'this.form.submit()'
@@ -114,12 +115,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 </div>
                 <div class="col-md-2">
                     <?php
-                    $brandId = isset($_POST["BrandId"]) ? $_POST["BrandId"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
+                    $brandId = isset($_GET["brandId"]) ? $_GET["brandId"] : ''; //isset($_GET['BrandId'] ? $_GET['BrandId'] : '');
 //echo '<label class="control-label">Provinces</label>';
                     echo kartik\select2\Select2::widget([
                         'name' => 'brandId',
                         'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Brand::find()->all(), 'brandId', 'title'),
-                        'value' => $brandId == '' ? '' : $brandId,
+                        'value' => $brandId,
                         'options' => ['placeholder' => 'Select or Search User Brand ...', 'id' => 'BrandId'], //, 'onchange' => 'this.form.submit()'
                         'pluginOptions' => [
                             'tags' => true,
@@ -130,12 +131,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     ]);
                     ?>
                 </div>
-                <input type="hidden" name="productGroupId" value="<?= isset($productGroupId) ? $productGroupId : '' ?>">
                 <div class="col-md-2">
                     <button class="btn btn-info" type="submit">Search Product Group</button>
+                    <a href="<?= !isset($_GET['supplier']) ? Yii::$app->homeUrl . "product/product-group" : Yii::$app->homeUrl . "product/product-group/index?supplier=1" ?>" class="btn btn-danger" data-pjax="0"><i class="glyphicon glyphicon-refresh"></i>Reset</a>
                 </div>
             </div>
             <?php ActiveForm::end(); ?>
+
             <?php if (isset($dataProvider)): ?>
                 <?=
                 GridView::widget([
@@ -173,7 +175,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 //                    ],
                         ['attribute' => 'createDateTime',
                             'value' => function ($model) {
-                                return $this->context->dateThai($model->createDateTime, 1);
+                                return isset($model->createDateTime) ? $this->context->dateThai($model->createDateTime, 1) : NULL;
                             }
                         ],
                         ['attribute' => 'status',
@@ -199,28 +201,31 @@ $this->params['pageHeader'] = Html::encode($this->title);
 //                            },
                                 'update' => function ($url, $model) {
                                     if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5) {
-                                        if ($model->status = 1 && $model->userId != Yii::$app->user->id) {
+                                        if ($model->status == 1) {
+//                                            if ($model->userId != Yii::$app->user->id) {
                                             return Html::a('<i class="fa fa-eye"></i>', ["view", 'productGroupId' => $model->productId], [
                                                 'title' => Yii::t('yii', 'update'),
                                             ]);
-                                        } else {
-                                            return Html::a('<i class="fa fa-pencil"></i>', ["create", 'step' => 1, 'productGroupId' => $model->productId], [
-                                                'title' => Yii::t('yii', 'update'),
-                                            ]);
-                                        }
-                                    } else {
-                                        if ($model->status == 0) {
-                                            return Html::a('<i class="fa fa-pencil"></i>', ["create", 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
-                                                'title' => Yii::t('yii', 'update'),
-                                            ]);
-                                        } else {
-                                            return Html::a('<i class="fa fa-pencil"></i>Product', ["create", 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
+//                                            } else {
+//                                                return Html::a('<i class="fa fa-pencil"></i>', ["create", 'step' => 1, 'productGroupId' => $model->productId], [
+//                                                    'title' => Yii::t('yii', 'update'),
+//                                                ]);
+//                                            }
+                                        } elseif ($model->status != 99) {
+                                            return Html::a('<i class="fa fa-pencil"></i>Product', ["create", 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
                                                 'title' => Yii::t('yii', 'update')]);
                                         }
+                                    } elseif ($model->status == 0) {
+                                        return Html::a('<i class="fa fa-pencil"></i>', ["create", 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
+                                            'title' => Yii::t('yii', 'update'),
+                                        ]);
+                                    } else {
+                                        return Html::a('<i class="fa fa-pencil"></i>Product', ["create", 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
+                                            'title' => Yii::t('yii', 'update')]);
                                     }
                                 },
                                 'delete' => function ($url, $model) {
-                                    if (($model->status == 0 || $model->status == 99) && $model->userId == Yii::$app->user->id) {
+                                    if (($model->status == 0) && $model->userId == Yii::$app->user->id) {
                                         return Html::a('<i class="fa fa-trash-o"></i>', ['delete-product-group', 'id' => $model->productId], [
                                             'title' => Yii::t('yii', 'Delete'),
                                             'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
