@@ -684,12 +684,14 @@ function filterPriceCozxyClear() {
 }
 
 
-function showMore(cat, countAll, limit_start, limit_end) {
+function showMore(cat, clickNum, countAll, limit_start, limit_end) {
     //console.log(cat + ' , ' + countAll + ' , ' + limit_start + ',' + limit_end);
     var cats = cat;
     var countAlls = countAll;
     var limit_starts = limit_start;
     var limit_ends = 90;
+    var clickNums = Math.floor(clickNum);
+
     $('.showStepMore').html(" SHOW MORE<span class=\'size16\'>&nbsp; ↓ </span></a>");
     $('.filter-product-cozxy').html("<div class='text-center loading-spin' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
     $.ajax({
@@ -714,7 +716,7 @@ function showMore(cat, countAll, limit_start, limit_end) {
                     items += "<div class=\"col-md-4 col-sm-6 col-xs-12\">";
                     items += "<div class=\"product-box\">";
                     items += "<div class=\"product-img text-center\">";
-                    items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js / 262x262\" src='" + val.image + "' data-holder-rendered=\"true\" style=\"width: 260px; height: 260px;\">";
+                    items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js/262x262\" src='" + val.image + "' data-holder-rendered=\"true\" style=\"width: 260px; height: 260px;\">";
                     items += "<div class=\"v-hover\">";
                     items += "<a href='" + val.url + "'>";
                     items += "<div class=\"col-xs-4\"><i class=\"fa fa-eye\" aria-hidden=\"true\"></i></div>";
@@ -743,7 +745,7 @@ function showMore(cat, countAll, limit_start, limit_end) {
                     items += " </div>";
                     items += " </div>";
                     items += "</div>";
-                    $('.filter-product-cozxy').html(items);
+                    $('.filter-product-cozxy').append(items);
                     $('.loading-spin').hide();
                 });
             } else {
