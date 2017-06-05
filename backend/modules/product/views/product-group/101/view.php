@@ -62,6 +62,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 <button class="btn btn-warning" data-toggle="collapse" data-target="#specification">Hide/Show</button>
                             </td>
                         </tr>
+                        <tr>
+                            <th>Status </th>
+                            <td style="vertical-align: middle;font-weight: bold">
+
+                                <?= ($model->status == 1) ? "Approve" : ($model->status == 99 ? "Wait Approve " . Html::a("Back To Draft", Yii::$app->homeUrl . "product/product-group/back-to-draft?id=$model->productId", ['class' => 'btn btn-danger']) : "Draft at Step " . $model->step ); ?>
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </div>

@@ -201,7 +201,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 //                            },
                                 'update' => function ($url, $model) {
                                     if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5) {
-                                        if ($model->status == 1) {
+                                        if ($model->status == 1 || $model->status == 99) {
 //                                            if ($model->userId != Yii::$app->user->id) {
                                             return Html::a('<i class="fa fa-eye"></i>', ["view", 'productGroupId' => $model->productId], [
                                                 'title' => Yii::t('yii', 'update'),
