@@ -58,7 +58,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
 
     public $productPrice;
 
-    // public $productGroupId;
+// public $productGroupId;
 
     /**
      * @inheritdoc
@@ -157,7 +157,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     }
 
     public static function productPrice($productSuppId) {
-        //throw new \yii\base\Exception($productSuppId);
+//throw new \yii\base\Exception($productSuppId);
         $lowestPrice = ProductPriceSuppliers::find()->where("productSuppId=" . $productSuppId . " and status=1")->one();
         if (isset($lowestPrice) && !empty($lowestPrice)) {
             return $lowestPrice->price;
@@ -165,7 +165,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     }
 
     public static function productImageSuppliers($productId) {
-        //throw new \yii\base\Exception($productSuppId);
+//throw new \yii\base\Exception($productSuppId);
         $image = ProductImageSuppliers::find()->where("productSuppId=" . $productId . " and status=1")->orderBy("ordering ASC")->one();
         if (isset($image) && !empty($image)) {
             return $image->imageThumbnail1;
@@ -175,7 +175,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     }
 
     public static function productPriceSupplier($productSuppId) {
-        //throw new \yii\base\Exception($productSuppId);
+//throw new \yii\base\Exception($productSuppId);
         $price = ProductPriceSuppliers::find()->where("productSuppId=" . $productSuppId . " and status=1")->one();
         if (isset($price) && !empty($price)) {
             return $price->price;
@@ -229,7 +229,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     }
 
     public static function productImagesSuppliers($productSuppId) {
-        //throw new \yii\base\Exception($productSuppId);
+//throw new \yii\base\Exception($productSuppId);
         $image = ProductImageSuppliers::find()->where("productSuppId=" . $productSuppId . " and status=1")->orderBy("ordering ASC")->all();
         if (isset($image) && !empty($image)) {
             return $image;
@@ -240,7 +240,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         $productPost = ProductPost::find()->where("productPostId=" . $productPostId)->one();
         $img = '';
         if (isset($productPost)) {
-            $image = ProductImageSuppliers::find()->where("productSuppId=" . $productPost->productSuppId)->one();
+            $image = ProductImage::find()->where("productId=" . $productPost->productId)->one();
             if (isset($image)) {
                 $img = $image->image;
             }
@@ -248,41 +248,31 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         return $img;
     }
 
-    public static function productSupplierGroupStory($productSuppId) {
+    public static function productSupplierGroupStory($productId) {
 
-        $productId = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
-        $allProductId = [];
-        $productSuppId = '';
-        if (isset($productId)) {
-            $product = Product::find()->where("productId=" . $productId->productId)->one();
-            if ($product->parentId == NULL) {
-                $parent = $product;
-                $allProductId[0] = $product->productId;
-            } else {
-                $parent = Product::find()->where("productId=" . $product->parentId)->one();
-                $allProductId[0] = $product->productId;
-                $allProductId[1] = $parent->productId;
-            }
-            foreach ($allProductId as $id):
-                $productSuppliers = ProductSuppliers::find()->where("productId=" . $id)->all();
-                if (isset($productSuppliers) && count($productSuppliers) > 0) {
-                    foreach ($productSuppliers as $productSupp):
-                        $productSuppId .= $productSupp->productSuppId . ",";
-                    endforeach;
-                }
+        $products = Product::find()->where("parentId=" . $productId)->all();
+        $productIds = '';
+        if (isset($products) && count($products) > 0) {
+            foreach ($products as $id):
+                $productIds .= $id->productId . ",";
+
             endforeach;
-            if ($productSuppId != '') {
-                $productSuppId = substr($productSuppId, 0, -1);
-            }
+            $productIds .= $productId . ",";
+        }else {
+            $productIds .= $productId . ",";
         }
-        return $productSuppId;
+        if ($productIds != '') {
+            $productIds = substr($productIds, 0, -1);
+        }
+        //throw new \yii\base\Exception($productIds);
+        return $productIds;
     }
 
     public static function productParentId($productSuppId) {
-        $productSupplier = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
-        $product = Product::find()->where("productId=" . $productSupplier->productId)->one();
+        $productSupplier = ProductSuppliers::find()->where("productSuppId = " . $productSuppId)->one();
+        $product = Product::find()->where("productId = " . $productSupplier->productId)->one();
         if ($product->parentId != null && $product->parentId != '') {
-            $parent = Product::find()->where("productId=" . $product->parentId)->one();
+            $parent = Product::find()->where("productId = " . $product->parentId)->one();
         } else {
             $parent = $product;
         }
@@ -294,11 +284,11 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     }
 
     public static function bestSellers() {
-        return ProductSuppliers::find()->where("approve='approve' and result>0")->orderBy("rand()")->limit(6)->all();
+        return ProductSuppliers::find()->where("approve = 'approve' and result>0")->orderBy("rand()")->limit(6)->all();
     }
 
     public static function itemOnSales() {
-        return ProductSuppliers::find()->where("approve='approve' and result>0")->orderBy("rand()")->limit(6)->all();
+        return ProductSuppliers::find()->where("approve = 'approve' and result>0")->orderBy("rand()")->limit(6)->all();
     }
 
     public function getProduct() {

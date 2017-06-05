@@ -1,3 +1,10 @@
+<?php
+
+use yii\helpers\Html;
+use yii\grid\GridView;
+use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
+?>
 <div class="container">
     <div class="size32">&nbsp;</div>
     <div class="row">
@@ -26,47 +33,79 @@
                                 <div class="col-md-2 text-center">
                                     Price Filter
                                 </div>
+                                <!--                                <div class="col-md-3">
+                                                                    <select name="" id="" class="fullwidth">
+                                                                        <option value="">Filter 1</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <select name="" id="" class="fullwidth">
+                                                                        <option value="">Filter 1</option>
+                                                                    </select>
+                                                                </div>-->
+                                <?php
+                                $form = ActiveForm::begin(['method' => 'GET', 'id' => 'currency']);
+                                ?>
                                 <div class="col-md-3">
-                                    <select name="" id="" class="fullwidth">
-                                        <option value="">Filter 1</option>
-                                    </select>
+                                    <?=
+                                    Select2::widget([
+                                        'name' => 'currency',
+                                        'value' => '',
+                                        'data' => $currency,
+                                        'options' => ['placeholder' => 'Select Currency']
+                                    ])
+                                    ?>
                                 </div>
-                                <div class="col-md-3">
-                                    <select name="" id="" class="fullwidth">
-                                        <option value="">Filter 1</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3">
-                                    <select name="" id="" class="fullwidth">
-                                        <option value="">Currency</option>
-                                    </select>
-                                </div>
+                                <?php ActiveForm::end(); ?>
                             </div>
 
                             <div class="size20">&nbsp;</div>
 
                             <div class="row">
                                 <div class="col-md-10 col-md-offset-1">
-                                    <table class="table table-responsive table-hover">
-                                        <tr style="border-bottom: double 1px #999;">
-                                            <th class="col-md-2">Country</th>
-                                            <th class="col-md-6">Place</th>
-                                            <th class="col-md-2">Price</th>
-                                            <th class="col-md-2">Local Price</th>
-                                        </tr>
-                                        <?php for ($i = 0; $i < 8; $i++): ?>
-                                            <tr style="border-bottom: dotted 1px #999;">
-                                                <td>
-                                                    <img src="/images/flags/flags/flat/24/United-States.png" alt=""> USA
-                                                </td>
-                                                <td>Nordstorm</td>
-                                                <td>USD231,400.00</td>
-                                                <td>
-                                                    THB1,149,000.00
-                                                </td>
-                                            </tr>
-                                        <?php endfor; ?>
-                                    </table>
+
+
+
+                                    <?=
+                                    GridView::widget([
+                                        'dataProvider' => $comparePrice,
+                                        'rowOptions' => function($model, $key, $index, $grid) {
+
+                                        },
+                                        'columns' => [
+                                                ['class' => 'yii\grid\SerialColumn'],
+                                            //'ledId',
+                                            [
+                                                'attribute' => 'Country',
+                                                'format' => 'html',
+                                                'value' => function($model) {
+                                                    return $model->country;
+                                                }
+                                            ],
+                                                [
+                                                'attribute' => 'place',
+                                                'value' => function($model) {
+                                                    return $model->shopName;
+                                                }
+                                            ],
+                                                [
+                                                'attribute' => 'price',
+                                                'value' => function($model) {
+                                                    $acronym = common\models\costfit\Currency::acronym($model->currency);
+                                                    return $acronym . " " . number_format($model->price, 2);
+                                                }
+                                            ],
+                                                [
+                                                'attribute' => 'Local Price',
+                                                'value' => function($model) {
+                                                    $localPrice = common\models\costfit\Currency::ToThb($model->currency, $model->price);
+                                                    return "THB " . number_format($localPrice, 2);
+                                                }
+                                            ],
+                                        ],
+                                    ]);
+                                    ?>
+
                                 </div>
                             </div>
 

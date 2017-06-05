@@ -17,29 +17,29 @@ use common\helpers\Base64Decode;
  */
 class DisplayMyStory extends Model {
 
-    public static function myStoryTop($productSuppId, $status = FALSE, $type = FALSE) {
-
+    public static function myStoryTop($productId, $productSupplierId, $status = FALSE, $type = FALSE) {
         $products = [];
         $productImagesThumbnailNull = Base64Decode::DataImageSvg120x120(FALSE, FALSE, FALSE); //'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjYwIiBoZWlnaHQ9IjI2MCIgdmlld0JveD0iMCAwIDY0IDY0IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48IS0tDQpTb3VyY2UgVVJMOiBob2xkZXIuanMvMjYweDI2MA0KQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4NCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQ0KKGMpIDIwMTItMjAxNSBJdmFuIE1hbG9waW5za3kgLSBodHRwOi8vaW1za3kuY28NCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNWMwYTg2ZjY1YSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1YzBhODZmNjVhIj48cmVjdCB3aWR0aD0iMjYwIiBoZWlnaHQ9IjI2MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjYuMjI2NTYyNSIgeT0iMzYuNTMyODEyNSI+MjYweDI2MDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==';
 
         if (isset(Yii::$app->user->id)) {
-            $productPost = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . " and productSuppId=" . $productSuppId)
-                            ->groupBy(['productSuppId'])->orderBy('productPostId desc')->one();
+            $productPost = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . " and productId=" . $productId)
+                            ->groupBy(['productId'])->orderBy('productPostId desc')->one();
             if (count($productPost) > 0) {
-                $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $productPost['productSuppId'])->one();
-                $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productPost['productSuppId'])->orderBy('ordering asc')->one();
-
+                $productPostList = \common\models\costfit\Product::find()->where('productId =' . $productPost->productId)->one();
+                $productImages = \common\models\costfit\ProductImage::find()->where('productId=' . $productPost->productId)->one();
                 if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
                     if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
                         $productImagesThumbnail2 = '/' . $productImages->imageThumbnail2;
                     } else {
                         $productImagesThumbnail2 = $productImagesThumbnailNull;
                     }
+                } else {
+                    $productImagesThumbnail2 = $productImagesThumbnailNull;
                 }
-                $products[$productPost['productSuppId']] = [
+                $products[$productPost['productId']] = [
                     'image' => $productImagesThumbnail2,
-                    'url' => Yii::$app->homeUrl . 'story/write-your-story/' . $productPostList->encodeParams(['productSuppId' => $productPostList['productSuppId'], 'productPostId' => $productPost['productPostId']]),
-                    'urlView' => Yii::$app->homeUrl . 'story/' . $productPostList->encodeParams(['productPostId' => $productPost['productPostId'], 'productId' => $productPostList['productId'], 'productSupplierId' => $productPostList['productSuppId']]),
+                    'url' => Yii::$app->homeUrl . 'story/write-your-story/' . $productPostList->encodeParams(['productId' => $productPostList['productId'], 'productPostId' => $productPost['productPostId']]),
+                    'urlView' => Yii::$app->homeUrl . 'story/' . $productPostList->encodeParams(['productPostId' => $productPost['productPostId'], 'productId' => $productPostList['productId'], 'productSupplierId' => $productSupplierId]),
                     'brand' => isset($items->brand) ? $items->brand->title : '',
                     'title' => $productPost['title'],
                     'views' => number_format(\common\models\costfit\ProductPost::getCountViews($productPost['productPostId'])),
@@ -49,7 +49,7 @@ class DisplayMyStory extends Model {
 
                 $products[0] = [
                     'image' => $productImagesThumbnailNull,
-                    'url' => isset(Yii::$app->user->id) ? Yii::$app->homeUrl . 'story/write-your-story/' . \common\models\ModelMaster::encodeParams(['productSuppId' => $productSuppId]) : Yii::$app->homeUrl . 'site/login',
+                    'url' => isset(Yii::$app->user->id) ? Yii::$app->homeUrl . 'story/write-your-story/' . \common\models\ModelMaster::encodeParams(['productSuppId' => $productSupplierId]) : Yii::$app->homeUrl . 'site/login',
                     'urlView' => '',
                     'brand' => NULL,
                     'title' => NULL,
@@ -61,21 +61,21 @@ class DisplayMyStory extends Model {
         }
     }
 
-    public static function productRecentStories($productSuppId) {
+    public static function productRecentStories($productId, $productSupplierId) {
         $products = [];
-        $allProductSuppId = ProductSuppliers::productSupplierGroupStory($productSuppId);
+        //$allProductSuppId = ProductSuppliers::productSupplierGroupStory($productId);
         //throw new \yii\base\Exception($allProductSuppId);
         //$productPost = \common\models\costfit\ProductPost::find()->where('productSuppId=' . $productSuppId)->groupBy(['productSuppId'])->orderBy('productPostId desc')->all();
-        $productPost = \common\models\costfit\ProductPost::find()->where("productSuppId in ($allProductSuppId)")->orderBy('productPostId desc')
+        $productPost = \common\models\costfit\ProductPost::find()->where("productId=" . $productId)->orderBy('productPostId desc')
                 ->limit(5)//แสดงแค่ 5 รายการ
                 ->all();
         //throw new \yii\base\Exception(count($productPost));
         $i = 0;
         foreach ($productPost as $value) {
-            $productPostList = ProductSuppliers::find()->where('productSuppId =' . $value->productSuppId)->all();
+            $productPostList = \common\models\costfit\Product::find()->where('productId =' . $value->productId)->all();
             foreach ($productPostList as $items) {
-                $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $items->productSuppId)->orderBy('ordering asc')->one();
-                $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $items->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
+                $productImages = \common\models\costfit\ProductImage::find()->where('productId=' . $items->productId)->one();
+                $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $productSupplierId)->orderBy('productPriceId desc')->limit(1)->one();
                 $price_s = number_format($productPrice->price, 2);
                 $price = number_format($productPrice->price, 2);
                 /* $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId, $value->productPostId);
@@ -92,13 +92,16 @@ class DisplayMyStory extends Model {
                         $productImagesThumbnail2 = Base64Decode::DataImageSvg64x64(FALSE, FALSE, FALSE);
                         //'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PCEtLQpTb3VyY2UgVVJMOiBob2xkZXIuanMvNjR4NjQKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNWMwYTg2ZjY1YSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1YzBhODZmNjVhIj48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSIxMy4yMjY1NjI1IiB5PSIzNi41MzI4MTI1Ij42NHg2NDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==';
                     }
+                } else {
+                    $productImagesThumbnail2 = Base64Decode::DataImageSvg64x64(FALSE, FALSE, FALSE);
                 }
                 $star = DisplayMyStory::calculatePostRating($value->productPostId);
                 $values = explode(",", $star);
+                //throw new \yii\base\Exception($star);
                 $products[$value->productPostId] = [
                     'image' => $productImagesThumbnail2,
                     //'url' => '/story?id=' . $items->productSuppId,
-                    'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productPostId' => $value->productPostId, 'productId' => $items->productId, 'productSupplierId' => $items->productSuppId]),
+                    'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productPostId' => $value->productPostId, 'productId' => $items->productId, 'productSupplierId' => $productSupplierId]),
                     'brand' => isset($items->brand) ? $items->brand->title : '',
                     'title' => $items->title,
                     'head' => $value->title,
@@ -116,7 +119,9 @@ class DisplayMyStory extends Model {
 
     public static function productViewsRecentStories($productPostId) {
         $productPost = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . ' and productPostId=' . $productPostId)
-                        ->groupBy(['productSuppId'])->orderBy('productPostId desc')->one();
+                        ->groupBy(['productId'])->orderBy('productPostId desc')->one();
+        $star = DisplayMyStory::calculatePostRating($productPost->productPostId);
+        $values = explode(",", $star);
         if (isset($productPost)) {
             $products['ViewsRecentStories'] = [
                 'userId' => $productPost['userId'],
@@ -125,7 +130,7 @@ class DisplayMyStory extends Model {
                 'description' => $productPost['description'],
                 'price' => $productPost->price,
                 'views' => number_format(\common\models\costfit\ProductPost::getCountViews($productPost->productPostId)),
-                'star' => rand(DisplayMyStory::getResultsRating($productPost['productSuppId'], $productPost['productPostId']), 5.00),
+                'star' => $values[0],
             ];
         } else {
             $products['ViewsRecentStories'] = [
@@ -167,7 +172,10 @@ class DisplayMyStory extends Model {
         $productPostRating = \common\models\costfit\ProductPostRating::find()->where("productPostId=" . $productPostId . " and status=1")->all();
         $star = 0;
         $user = 0;
+        $score = 0;
         $value = '';
+        $rate = 0;
+        $decimal = 0;
         if (isset($productPostRating) && count($productPostRating) > 0) {
             foreach ($productPostRating as $rate):
                 $star += $rate->score;
@@ -179,8 +187,8 @@ class DisplayMyStory extends Model {
             if ($decimal == 0) {
                 $rate = $score;
             }
-            $value = $rate . "," . $score . "," . $decimal; //คะแนนเป็นทศนิยม  ,   จำนวนดาว(จำนวนเต็ม)  , ทศนิยม
         }
+        $value = $rate . "," . $score . "," . $decimal; //คะแนนเป็นทศนิยม  ,   จำนวนดาว(จำนวนเต็ม)  , ทศนิยม
         return $value;
     }
 
@@ -191,8 +199,8 @@ class DisplayMyStory extends Model {
 
         //throw new \yii\base\Exception(print_r($productPostRating, true));
         $productPost = ProductPost::find()->where("productPostId=" . $productPostId)->one();
-        $allProductSuppId = ProductSuppliers::productSupplierGroupStory($productPost->productSuppId);
-        $productPosts = ProductPost::find()->where("productSuppId in($allProductSuppId)")->all();
+        $allProductId = ProductSuppliers::productSupplierGroupStory($productPost->productId);
+        $productPosts = ProductPost::find()->where("productId in($allProductId)")->all();
         $postId = '';
         if (isset($productPosts) & count($productPosts) > 0) {
             foreach ($productPosts as $post):
@@ -201,13 +209,20 @@ class DisplayMyStory extends Model {
             $postId = substr($postId, 0, -1);
         }
         if ($postId != '') {
-
             $productPostRating = \common\models\costfit\ProductPostRating::find()->where("productPostId in($postId)")
                     ->groupBy('productPostId')
                     ->orderBy('avg(score) DESC')
                     ->all();
-        } else {
-            $productPostRating = null;
+        }
+        if (!isset($productPostRating) || count($productPostRating) == 0) {
+            $byCreate = ProductPost::find()->where("productId in($allProductId)")
+                    ->orderBy('createDateTime DESC')
+                    ->all();
+            if (isset($byCreate) && count($byCreate) > 0) {
+                $productPostRating = $byCreate;
+            } else {
+                $productPostRating = null;
+            }
         }
         //throw new \yii\base\Exception($productSuppId);
         /* $popular = ProductPost::find()
@@ -224,6 +239,18 @@ class DisplayMyStory extends Model {
     public static function postView($productPostId) {
         $view = \common\models\costfit\ProductPostView::find()->where("productPostId=" . $productPostId)->all();
         return count($view);
+    }
+
+    public static function comparePrice($productId, $currency) {
+        if (isset($currency)) {
+            $productPost = ProductPost::find()->where("productId=" . $productId . " and currency=" . $currency)->limit(20);
+        } else {
+            $productPost = ProductPost::find()->where("productId=" . $productId)->limit(20);
+        }
+        $dataProvider = new ActiveDataProvider([
+            'query' => $productPost
+        ]);
+        return $dataProvider;
     }
 
 }

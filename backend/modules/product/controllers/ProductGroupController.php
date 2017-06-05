@@ -47,10 +47,10 @@ class ProductGroupController extends ProductMasterController
      */
     public function actionIndex()
     {
-        $categoryId = Yii::$app->request->post('categoryId');
-        $brandId = Yii::$app->request->post('brandId');
-        $status = Yii::$app->request->post('status');
-        $title = Yii::$app->request->post('title');
+        $categoryId = Yii::$app->request->get('categoryId');
+        $brandId = Yii::$app->request->get('brandId');
+        $status = Yii::$app->request->get('status');
+        $title = Yii::$app->request->get('title');
 //        $isOwner = Yii::$app->request->post('isOwner');
 //User Type 4 = Supplier , 5= Content
         if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5) {
@@ -60,7 +60,8 @@ class ProductGroupController extends ProductMasterController
                 if (isset($categoryId) || isset($brandId) || isset($status) || isset($title)) {
                     $query = \common\models\costfit\Product::find()
                     ->join("LEFT JOIN", "user u", "u.userId = product.userId")
-                    ->where("product.parentId is null AND u.type in (2, 3, 4, 5)")
+                    ->where("product.parentId is null AND u.type in (2, 3, 4, 5) AND product.status = 1")
+                    ->andWhere("(SELECT COUNT(*) FROM product pc WHERE parentId = product.productId) > 0")
                     ->orderBy("product.updateDateTime DESC");
                 }
             } else {

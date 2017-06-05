@@ -23,9 +23,9 @@ use common\models\costfit\ProductPostRating;
 class Reviews {
 
 //put your code here
-    public static function RatingInProduct($productSuppId, $productPostId) {
+    public static function RatingInProduct($productId, $productPostId) {
         $rating_score = 0;
-        $productPos = ProductPost::find()->where("productSuppId=" . $productSuppId . ' and productPostId =' . $productPostId)->all();
+        $productPos = ProductPost::find()->where("productId=" . $productId . ' and productPostId =' . $productPostId)->all();
         if (isset($productPos) && count($productPos) > 0) {
             $id = '';
             foreach ($productPos as $pos):
@@ -39,10 +39,10 @@ class Reviews {
         }
         if ($id != '') {
             $rating = \common\models\costfit\ProductPostRating::find()->where('productPostId in(' . $id . ')')
-            ->all();
+                    ->all();
             $rating_score = 0;
             foreach ($rating as $rate):
-                $rating_score+=$rate->score;
+                $rating_score += $rate->score;
             endforeach;
         }else {
             $rating_score = NULL;
@@ -51,9 +51,9 @@ class Reviews {
         return $rating_score;
     }
 
-    public static function RatingInMember($productSuppId, $productPostId) {
+    public static function RatingInMember($productId, $productPostId) {
         $rating_score = 0;
-        $productPos = ProductPost::find()->where("productSuppId=" . $productSuppId . ' and productPostId =' . $productPostId)->all();
+        $productPos = ProductPost::find()->where("productId=" . $productId . ' and productPostId =' . $productPostId)->all();
         if (isset($productPos) && count($productPos) > 0) {
             $id = '';
             foreach ($productPos as $pos):
@@ -68,7 +68,7 @@ class Reviews {
 
         if ($id != '') {
             $rating = \common\models\costfit\ProductPostRating::find()->where('productPostId in(' . $id . ')')
-            ->count('userId');
+                    ->count('userId');
         } else {
             $rating = NULL;
         }
