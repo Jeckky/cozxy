@@ -437,7 +437,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     <li><?php echo Html::submitButton('Save Draft', ['class' => 'btn btn-primary next-step', 'name' => 'saveDraft', 'value' => 'saveDraft']); ?></li>
                                     <li><?php echo Html::submitButton('Finish', ['class' => 'btn btn-success next-step', 'name' => 'finish', 'value' => 'finish']); ?></li>
                                 </ul>
-                                <div class="pull-right" style="color:red">
+                                <div class="row col-lg-12 pull-right" style="color:red">
                                     **หมายเหตุ**<br>
                                     หากต้องการแก้ไขอีก ให้กดปุ่ม Save Draft <br>
                                     หากต้องการส่งอนุมัติ ให้กดปุ่ม Finish (ไม่สามารถกลับมาแก้ไขได้ จนกว่าผู้อนุมัติจะส่งกลับเพื่อให้แก้ไข)
