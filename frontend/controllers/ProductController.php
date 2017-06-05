@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\costfit\ProductGroupOptionValue;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -29,12 +30,18 @@ class ProductController extends MasterController {
         $productViews->createDateTime = new \yii\db\Expression('NOW()');
         $productViews->save(FALSE);
 
-        $productViews = new ArrayDataProvider(['allModels' => FakeFactory::productViews($productSupplierId)]);
+//        $productViews = new ArrayDataProvider(['allModels' => FakeFactory::productViews($productSupplierId)]);
+        $productViews = FakeFactory::productViews($productSupplierId);
+        $productViews = $productViews[$productSupplierId];
 
         $productHotNewProduct = new ArrayDataProvider(['allModels' => FakeFactory::productHotNewAndProduct(4, FALSE)]);
         $StoryProductPost = new ArrayDataProvider(['allModels' => DisplayMyStory::myStoryTop($productSupplierId, FALSE, FALSE)]);
         $StoryRecentStories = new ArrayDataProvider(['allModels' => DisplayMyStory::productRecentStories($productSupplierId, FALSE, FALSE)]);
-        return $this->render('index', compact('productHotNewProduct', 'productViews', 'StoryProductPost', 'StoryRecentStories'));
+
+        $productGroupOptionValues = ProductGroupOptionValue::findProductOptionsArray($productSupplierId);
+
+
+        return $this->render('index', compact('productHotNewProduct', 'productViews', 'StoryProductPost', 'StoryRecentStories', 'productGroupOptionValues'));
     }
 
 }
