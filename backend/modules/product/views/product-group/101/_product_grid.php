@@ -154,6 +154,7 @@ if (isset($dataProvider)) {
             ],
             [
                 'attribute' => 'Product Supplier',
+                'visible' => (!isset($type) || $type == 1) ? FALSE : TRUE,
                 'format' => 'html',
                 'value' => function($model) {
                     $ps = \common\models\costfit\ProductSuppliers::find()->where("productId = $model->productId AND userId = " . Yii::$app->user->id)->one();
@@ -234,7 +235,7 @@ if (isset($dataProvider)) {
 //                                                ],
         'panel' => [
             'type' => GridView::TYPE_PRIMARY,
-            'heading' => "Product Editor",
+            'heading' => !isset($gridTitle) ? "<span style='color:white;font-weight:bold'>Product Editor</span>" : $gridTitle,
         ],
     ]);
 }

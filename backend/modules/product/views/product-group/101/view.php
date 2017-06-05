@@ -45,21 +45,51 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             <td><?= $model->title; ?></td>
                         </tr>
                         <tr>
-                            <th>Description <br><button class="btn btn-warning" data-toggle="collapse" data-target="#demo">Hide/Show</button></th>
+                            <th>Description </th>
                             <td>
-                                <div id="demo" class="collapse in">
+                                <div id="description" class="collapse">
                                     <?= $model->description; ?>
                                 </div>
+                                <button class="btn btn-warning" data-toggle="collapse" data-target="#description">Hide/Show</button>
                             </td>
                         </tr>
-<!--                        <tr>
-                            <th>Specification</th>
-                            <td><?//= $model->specification; ?></td>
-                        </tr>-->
+                        <tr>
+                            <th>Specification </th>
+                            <td>
+                                <div id="specification" class="collapse">
+                                    <?= $model->specification; ?>
+                                </div>
+                                <button class="btn btn-warning" data-toggle="collapse" data-target="#specification">Hide/Show</button>
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </div>
-            <?= $this->render("_product_grid", ["dataProvider" => $dataProvider]); ?>
+            <div class="bs-example bs-example-tabs" data-example-id="togglable-tabs">
+                <ul class="nav nav-tabs" id="myTabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#masterProduct" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Master Product (<?= $dataProvider->getTotalCount() ?>)</a>
+                    </li>
+                    <?php // if ($dataProvider2->totalItemCount > 0): ?>
+                    <li role="presentation" class="">
+                        <a href="#myProduct" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">My Product (<?= $dataProvider2->getTotalCount() ?>)</a>
+                    </li>
+                    <?php // endif; ?>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade active in" role="tabpanel" id="masterProduct" aria-labelledby="home-tab">
+                        <?= $this->render("_product_grid", ["dataProvider" => $dataProvider]); ?>
+                    </div>
+                    <div class="tab-pane fade" role="tabpanel" id="myProduct" aria-labelledby="profile-tab">
+                        <?= $this->render("_product_grid", ["dataProvider" => $dataProvider2, 'gridTitle' => "<span style='color:white;font-weight:bold'>My Product</span>", 'type' => 2]); ?>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
             <div style="position:fixed;bottom:5px;right:20px;margin:0;padding:5px 3px;background-color: rgba(224,224,224,0.8);text-align: center;border: 3px green solid">
                 <h3 style="color: tomato">Create My Product ?</h3>
                 <a  href="#" class="btn btn-success btn-lg">Create</a>
