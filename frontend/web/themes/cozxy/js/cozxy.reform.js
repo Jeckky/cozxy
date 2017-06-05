@@ -544,17 +544,19 @@ $(document).on('click', '#reviews-rate', function (e) {
 $('#currency-currencyid').change(function () {
     var value = $('#currency-currencyid').val();
     var productId = $(this).parent().parent().find("#productId").val();
+    $('#currency-currencyid').submit();
     //alert(productId);
-    $.ajax({
-        type: 'POST',
-        dataType: 'JSON',
-        url: $baseUrl + '/story/compare-price',
-        data: {productId: productId, currencyId: value},
-        success: function (data) {
-            alert(data["text"]);
-            // $('#showData').html(data.text);
-        }
-    });
+    /*$.ajax({
+     type: 'POST',
+     dataType: 'JSON',
+     url: $baseUrl + '/story/compare-price',
+     data: {productId: productId, currencyId: value},
+     success: function (data) {
+     alert(data["text"]);
+     // $('#showData').html(data.text);
+     }
+     });*/
+
 });
 function checkoutNewBilling() {
 
