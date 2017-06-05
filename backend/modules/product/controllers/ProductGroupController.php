@@ -664,5 +664,14 @@ class ProductGroupController extends ProductMasterController
         return $this->render("101/_product_image_form", ['model' => $model]);
     }
 
+    public function actionBackToDraft($id)
+    {
+        $model = \common\models\costfit\Product::find()->where("productId = $id")->one();
+        $model->status = 0;
+        $model->save();
+
+        return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId]);
+    }
+
     // Version 1.01 Wizard Of Product Group
 }
