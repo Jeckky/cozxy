@@ -517,7 +517,6 @@ $(document).on('click', '.delete', function () {
         }
     });
 });
-
 $(document).on('click', '#reviews-rate', function (e) {
 
     var rate = $('input:hidden', '#reviews-rate').val();
@@ -667,4 +666,14 @@ function filterPriceCozxy() {
 
 function filterPriceCozxyClear() {
     location.reload();
+}
+
+
+function showMore() {
+    /*<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+     <span class="sr-only">Loading...</span>*/
+    //alert('test Show More');
+    $('.showStepMore').html("<i class=\'fa fa-spinner fa-pulse fa-3x fa-fw\' style='zoom:0.5'></i>");
+    $('.filter-product-cozxy').html("<div class='text-center' style='zoom: 5;'><br><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
+
 }
