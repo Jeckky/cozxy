@@ -61,7 +61,7 @@ class DisplayMyStory extends Model {
         }
     }
 
-    public static function productRecentStories($productSupplierId, $var1 = FALSE, $var2 = FALSE) {
+    public static function productRecentStories($productId, $productSupplierId, $var1 = false) {
         $products = [];
         //$allProductSuppId = ProductSuppliers::productSupplierGroupStory($productId);
         //throw new \yii\base\Exception($allProductSuppId);
