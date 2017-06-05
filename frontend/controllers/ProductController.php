@@ -41,7 +41,7 @@ class ProductController extends MasterController {
         $StoryProductPost = new ArrayDataProvider(['allModels' => DisplayMyStory::myStoryTop($productId, $productSupplierId, FALSE, FALSE)]);
         $StoryRecentStories = new ArrayDataProvider(['allModels' => DisplayMyStory::productRecentStories($productId, $productSupplierId, FALSE)]);
         $productGroupOptionValues = ProductGroupOptionValue::findProductOptionsArray($productSupplierId);
-        return $this->render('index', compact('productHotNewProduct', 'productViews', 'StoryProductPost', 'StoryRecentStories', 'productGroupOptionValues'));
+        return $this->render('index', compact('productSupplierId', 'productHotNewProduct', 'productViews', 'StoryProductPost', 'StoryRecentStories', 'productGroupOptionValues'));
     }
 
 }

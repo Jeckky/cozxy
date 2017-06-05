@@ -188,12 +188,12 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
             </div>
             <div class="col-xs-3">
                 <div class="size18">&nbsp;</div>
-                <?= $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories') ?>
+                <?= $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories', compact('productSupplierId')) ?>
             </div>
             <div class="col-xs-9 text-center">
-                <!--<a href="javascript:showMore('<?php //echo $categoryId;               ?>','<?php //echo $clickNum;               ?>','<?php //echo $countAllProduct;               ?>','<?php //echo $limit_start;               ?>','<?php //echo $limit_end;               ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                <!--<a href="javascript:showMore('<?php //echo $categoryId;     ?>','<?php //echo $clickNum;     ?>','<?php //echo $countAllProduct;    ?>','<?php //echo $limit_start;   ?>','<?php //echo $limit_end;   ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                     <span class="size16">&nbsp; ↓ </span></a>-->
-            </div
+            </div>
             <div class="col-xs-3 text-center">&nbsp;</div>
         </div>
     </div>

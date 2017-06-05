@@ -49,44 +49,44 @@ $(window).resize(function() { descSet(); });
             <div class="size48">&nbsp;</div>
             <?php
             /*
-            echo \yii\widgets\ListView::widget([
-                'dataProvider' => $productViews,
-                'options' => [
-                    'tag' => false,
-                ],
-                'itemView' => function ($model, $key, $index, $widget) {
-                    $p = $productGroupOptionValues;
-                    return $this->render('@app/themes/cozxy/layouts/product/_product_detail', ['model'=>$model, 'productGroupOptionValues'=>$productGroupOptionValues]);
-                },
-//                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                //'layout'=>"{summary}{pager}{items}"
-                'layout' => "{items}",
-                'itemOptions' => [
-                    'tag' => false,
-                ],
-            ]);
-            */
-            echo $this->render('@app/themes/cozxy/layouts/product/_product_detail', ['model'=>$productViews, 'productGroupOptionValues'=>$productGroupOptionValues]);
+              echo \yii\widgets\ListView::widget([
+              'dataProvider' => $productViews,
+              'options' => [
+              'tag' => false,
+              ],
+              'itemView' => function ($model, $key, $index, $widget) {
+              $p = $productGroupOptionValues;
+              return $this->render('@app/themes/cozxy/layouts/product/_product_detail', ['model'=>$model, 'productGroupOptionValues'=>$productGroupOptionValues]);
+              },
+              //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+              //'layout'=>"{summary}{pager}{items}"
+              'layout' => "{items}",
+              'itemOptions' => [
+              'tag' => false,
+              ],
+              ]);
+             */
+            echo $this->render('@app/themes/cozxy/layouts/product/_product_detail', ['model' => $productViews, 'productGroupOptionValues' => $productGroupOptionValues]);
             ?>
             <div class="size24">&nbsp;</div>
             <?php
             /*
-            echo \yii\widgets\ListView::widget([
-                'dataProvider' => $productViews,
-                'options' => [
-                    'tag' => false,
-                ],
-                'itemView' => function ($model, $key, $index, $widget) {
-                    return $this->render('@app/themes/cozxy/layouts/product/_product_detail_tab', ['model' => $model]);
-                },
-//                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                //'layout'=>"{summary}{pager}{items}"
-                'layout' => "{items}",
-                'itemOptions' => [
-                    'tag' => false,
-                ],
-            ]);
-            */
+              echo \yii\widgets\ListView::widget([
+              'dataProvider' => $productViews,
+              'options' => [
+              'tag' => false,
+              ],
+              'itemView' => function ($model, $key, $index, $widget) {
+              return $this->render('@app/themes/cozxy/layouts/product/_product_detail_tab', ['model' => $model]);
+              },
+              //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+              //'layout'=>"{summary}{pager}{items}"
+              'layout' => "{items}",
+              'itemOptions' => [
+              'tag' => false,
+              ],
+              ]);
+             */
             ?>
             <div class="size24">&nbsp;</div>
 
@@ -137,9 +137,9 @@ $(window).resize(function() { descSet(); });
             <?php
             //echo Yii::$app->controller->id;
             if (Yii::$app->controller->id == 'product') {
-                echo $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories', compact('StoryRecentStories'));
+                echo $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories', compact('StoryRecentStories', 'productSupplierId'));
             } else {
-                echo $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories')
+                echo $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories', compact('productSupplierId'))
                 ?>
             <?php } ?>
         </div>

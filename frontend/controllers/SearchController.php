@@ -36,9 +36,9 @@ class SearchController extends MasterController {
         $categoryId = $params['categoryId'];
         //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, $categoryId)]);
         $productCanSell = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory('', $categoryId, '', '')]);
+        $productSupplierId = '';
 
-
-        return $this->render('index', compact('productCanSell', 'category', 'categoryId'));
+        return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'productSupplierId'));
     }
 
     public function actionCozxyProduct() {
