@@ -165,7 +165,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 //                    'productGroupId',
                         ['attribute' => 'title',
                             'format' => "raw",
-                            'options' => ['style' => 'width:10%'],
+                            'options' => ['style' => 'width:60%'],
                             'value' => function ($model) {
                                 return $model->title;
                             }
@@ -206,6 +206,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
 //                        }
 //                    ],
                         ['attribute' => 'createDateTime',
+                            'options' => [
+                                'style' => 'width:10%'
+                            ],
                             'value' => function ($model) {
                                 return isset($model->createDateTime) ? $this->context->dateThai($model->createDateTime, 1) : NULL;
                             }
@@ -214,6 +217,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             'options' => [
                                 'style' => 'width:7%'
                             ],
+                            'visible' => ($ress !== FALSE) ? FALSE : TRUE,
                             'value' => function ($model) {
                                 return ($model->status == 1) ? "Approve" : ($model->status == 99 ? "Wait Approve" : "Draft at Step " . $model->step );
                             }

@@ -84,7 +84,7 @@ class ProductGroupController extends ProductMasterController
                 ->select("product.title,product.createDateTime,product.productId as productTempId,product.status,product.productGroupTemplateId,product.step,ps.productSuppId,ps.userId as productSuppUserId")
                 ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
                 ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
-                ->where("product.parentId is null AND product.status = 99")
+                ->where("product.parentId is null AND ps.status = 99")
                 ->groupBy("ps.userId")
                 ->orderBy("product.updateDateTime DESC");
 //                ->count();
@@ -794,6 +794,8 @@ class ProductGroupController extends ProductMasterController
     public function actionApproveMyProduct()
     {
         $model = \common\models\costfit\Product::find()->where("productId = " . $_GET["productGroupId"])->one();
+        $model->status = 1;
+        $model->save();
 //        throw new \yii\base\Exception(count($model->products));
         foreach ($model->products as $product) {
             $product->status = 1;
@@ -803,6 +805,7 @@ class ProductGroupController extends ProductMasterController
                 if (isset($ps)) {
                     $ps->userId = \Yii::$app->user->id;
                     $ps->approve = 'approve';
+                    $ps->approveCreateDateTime = new \yii\db\Expression("NOW()");
                     $ps->status = 1;
                     if ($ps->save(FALSE)) {
 
@@ -813,7 +816,7 @@ class ProductGroupController extends ProductMasterController
             }
         }
 
-        return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"]]);
+        return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"], 'userId' => $_GET["userId"]]);
     }
 
     public function actionDeleteProductSupp()
@@ -827,7 +830,7 @@ class ProductGroupController extends ProductMasterController
         if (isset($_GET["step"])) {
             return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->parentId]);
         } else {
-            return $this->redirect(["view", "productGroupId" => $model->product->parentId]);
+            return $this->redirect(["view", "productGroupId" => $model->product->parentId, 'userId' => $_GET["userId"]]);
         }
     }
 
