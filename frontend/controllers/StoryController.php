@@ -23,13 +23,13 @@ class StoryController extends MasterController {
     public function actionIndex($hash = FALSE) {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
-
+        //throw new \yii\base\Exception(print_r($params, true));
         $productSuppId = isset($params['productSuppId']) ? $params['productSuppId'] : NULL;
         $productId = isset($params['productId']) ? $params['productId'] : NULL;
         $productPostId = isset($params['productPostId']) ? $params['productPostId'] : NULL;
         $ViewsRecentStories = DisplayMyStory::productViewsRecentStories($productPostId);
         $productPost = \common\models\costfit\ProductPost::find()->where("productPostId=" . $productPostId)->one();
-        $popularStories = DisplayMyStory::popularStories($productPostId);
+        $popularStories = DisplayMyStory::popularStories($productPostId); //ที่มีการให้ดาว
         $currency = ArrayHelper::map(Currency::find()->where("status=1")
                                 ->orderBy('createDateTime')
                                 ->all(), 'currencyId', 'title');
@@ -192,9 +192,9 @@ class StoryController extends MasterController {
     public function actionSeeMore($hash = FALSE) {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
-        throw new \yii\base\Exception(print_r($params, true));
         $productSuppId = isset($params['productSupplierId']) ? $params['productSupplierId'] : NULL;
-        $seeMore = new \yii\data\ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStoryAll('', $productSuppId)]);
+        $productId = isset($params['productId']) ? $params['productId'] : NULL;
+        $seeMore = new \yii\data\ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStoryAll($n = false, $productId)]);
         $otherProducts = new ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productOtherProducts()]);
         return $this->render('index', compact('seeMore', 'otherProducts'));
     }
