@@ -26,7 +26,7 @@ class DisplayMyStory extends Model {
             ->groupBy(['productId'])->orderBy('productPostId desc')->one();
             if (count($productPost) > 0) {
                 $productPostList = \common\models\costfit\Product::find()->where('productId =' . $productPost->productId)->one();
-                $productImages = \common\models\costfit\ProductImage::find()->where('productId=' . $productPost->productId)->one();
+                $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productId=' . $productPost->productId)->one();
                 if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
                     if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
                         $productImagesThumbnail2 = '/' . $productImages->imageThumbnail2;
@@ -48,7 +48,7 @@ class DisplayMyStory extends Model {
             } else {
 
                 $products[0] = [
-                    'image' => $productImagesThumbnailNull,
+                    'image' => $productImagesThumbnail2,
                     'url' => isset(Yii::$app->user->id) ? Yii::$app->homeUrl . 'story/write-your-story/' . \common\models\ModelMaster::encodeParams(['productSuppId' => $productSupplierId]) : Yii::$app->homeUrl . 'site/login',
                     'urlView' => '',
                     'brand' => NULL,
