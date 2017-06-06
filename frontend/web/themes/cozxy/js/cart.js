@@ -21,7 +21,6 @@ $(window).resize(function () {
 function qSet(y, x, productSuppId, orderId, sendDate) {
     var temp = parseInt($('.quantity-' + y).val());
 
-
     if (isNaN(temp)) {
         temp = 1;
     }
