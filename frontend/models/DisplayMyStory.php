@@ -225,6 +225,7 @@ class DisplayMyStory extends Model {
                 $productPostRating = null;
             }
         }
+        // throw new \yii\base\Exception(print_r($productPostRating, true));
         //throw new \yii\base\Exception($productSuppId);
         /* $popular = ProductPost::find()
           ->join('LEFT JOIN', 'product_post_rating', '`product_post`.`productPostId`=`product_post_rating`.`productPostId`')
@@ -238,15 +239,12 @@ class DisplayMyStory extends Model {
     }
 
     public static function popularStoriesNoneStar($productPostId) {
-        /* $productPostRating = \common\models\costfit\ProductPostRating::find()
-          /* ->where("productPostId=" . $productPostId)
-          ->average('score'); */
-
-        //throw new \yii\base\Exception(print_r($productPostRating, true));
         $productPost = ProductPost::find()->where("productPostId=" . $productPostId)->one();
         $allProductId = ProductSuppliers::productSupplierGroupStory($productPost->productId);
         $productPosts = ProductPost::find()->where("productId in($allProductId)")->all();
         $postId = '';
+        $have = '';
+        $notHave = '';
         if (isset($productPosts) & count($productPosts) > 0) {
             foreach ($productPosts as $post):
                 $postId .= $post->productPostId . ",";
@@ -258,26 +256,23 @@ class DisplayMyStory extends Model {
                     ->groupBy('productPostId')
                     ->orderBy('avg(score) DESC')
                     ->all();
-        }
-        if (!isset($productPostRating) || count($productPostRating) == 0) {
-            $byCreate = ProductPost::find()->where("productId in($allProductId)")
-                    ->orderBy('createDateTime DESC')
-                    ->all();
-            if (isset($byCreate) && count($byCreate) > 0) {
-                $productPostRating = $byCreate;
-            } else {
-                $productPostRating = null;
+            if (isset($productPostRating) && count($productPostRating) > 0) {
+                foreach ($productPostRating as $rating):
+                    $have .= $rating->productPostId . ",";
+                endforeach;
+                $have = substr($have, 0, -1);
             }
         }
-        //throw new \yii\base\Exception($productSuppId);
-        /* $popular = ProductPost::find()
-          ->join('LEFT JOIN', 'product_post_rating', '`product_post`.`productPostId`=`product_post_rating`.`productPostId`')
-          ->where("productSuppId in($allProductSuppId)")
-          ->orderBy('`product_post_rating`.`score`')
-          ->limit(5)
-          ->all(); */
-        //throw new \yii\base\Exception(count($popular));
-        //throw new \yii\base\Exception(count($productPostRating));
+        if ($have != '') {
+            $byCreate = ProductPost::find()->where("productPostId in($postId) and productPostId not in($have) and productId in($allProductId)")
+                    ->orderBy('createDateTime DESC')
+                    ->all();
+        }
+        if (isset($byCreate) && count($byCreate) > 0) {
+            $productPostRating = $byCreate;
+        } else {
+            $productPostRating = null;
+        }
         return $productPostRating;
     }
 

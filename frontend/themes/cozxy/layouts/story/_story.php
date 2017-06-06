@@ -123,7 +123,8 @@ use kartik\select2\Select2;
             <?= $this->render('_stars', ['productPost' => $productPost]) ?>
             <?= $this->render('_authors') ?>
             <?= $this->render('_about_this_story', ['productPost' => $productPost]) ?>
-            <?= $this->render('_popular_stories', ['popularStories' => $popularStories]) ?>
+
+            <?= $this->render('_popular_stories', ['popularStories' => $popularStories, 'popularStoriesNoneStar' => $popularStoriesNoneStar, 'url' => $urlSeeAll]) ?>
         </div>
         <?php
         $js = "function top(){

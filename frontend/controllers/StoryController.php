@@ -30,6 +30,8 @@ class StoryController extends MasterController {
         $ViewsRecentStories = DisplayMyStory::productViewsRecentStories($productPostId);
         $productPost = \common\models\costfit\ProductPost::find()->where("productPostId=" . $productPostId)->one();
         $popularStories = DisplayMyStory::popularStories($productPostId); //ที่มีการให้ดาว
+        $popularStoriesNoneStar = DisplayMyStory::popularStoriesNoneStar($productPostId); //ที่ไม่มีการให้ดาว
+        $urlSeeAll = $this->createUrl($productPostId, $productSuppId, $productId);
         $currency = ArrayHelper::map(Currency::find()->where("status=1")
                                 ->orderBy('createDateTime')
                                 ->all(), 'currencyId', 'title');
@@ -40,7 +42,7 @@ class StoryController extends MasterController {
             $comparePrice = DisplayMyStory::comparePrice($productPost->productId, null);
         }
 
-        return $this->render('@app/themes/cozxy/layouts/story/_story', compact('ViewsRecentStories', 'productPost', 'popularStories', 'currency', 'model', 'comparePrice'));
+        return $this->render('@app/themes/cozxy/layouts/story/_story', compact('ViewsRecentStories', 'productPost', 'popularStories', 'urlSeeAll', 'popularStoriesNoneStar', 'currency', 'model', 'comparePrice'));
     }
 
     public function actionWriteYourStory($hash) {
@@ -197,6 +199,11 @@ class StoryController extends MasterController {
         $seeMore = new \yii\data\ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStoryAll($n = false, $productId)]);
         $otherProducts = new ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productOtherProducts()]);
         return $this->render('index', compact('seeMore', 'otherProducts'));
+    }
+
+    public function createUrl($productPostId, $productSuppId, $productId) {
+        $value = new \common\models\costfit\ProductPost();
+        return Yii::$app->homeUrl . 'story/see-more/' . $value->encodeParams(['productPostId' => $productPostId, 'productId' => $productId, 'productSupplierId' => $productSuppId]);
     }
 
 }
