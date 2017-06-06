@@ -79,25 +79,15 @@ $form = ActiveForm::begin([
 
             <?= $form->field($model, 'specification', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
 
-            <?= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15])->label("Market Price"); ?>
+            <?//= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15])->label("Market Price"); ?>
 
-            <!--            <div class="row">
-                            <div class="col-lg-12">
-                                <div class="panel panel-info">
-                                    <div class="panel-heading"  >
-                                        <span class="panel-title"><h3 >Product Supplier</h3></span>
-                                    </div>
-                                    <div class="panel-body">
-                                        <?//= $form->field($prodSupp, 'quantity', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15])->label("Stock"); ?>
-                                        <?//= $form->field($prodPriceSupp, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15])->label("Selling Price"); ?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>-->
+            <?= $form->field($model, 'quantity', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15])->label("Stock"); ?>
+
+            <?= $form->field($prodPriceSupp, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15])->label("Selling Price"); ?>
             <div class="row">
                 <div class="col-lg-12">
                     <?php
-                    echo $this->render("_image_grid", ['id' => $model->productId]);
+                    echo $this->render("_image_supp_grid", ['id' => $model->productSuppId]);
                     ?>
                 </div>
             </div>
@@ -105,7 +95,7 @@ $form = ActiveForm::begin([
             <div class="row">
                 <div class="col-lg-12">
                     <?php
-                    echo $this->render("_image_form", ["id" => $model->productId]);
+                    echo $this->render("_image_supp_form", ["id" => $model->productSuppId]);
                     ?>
                 </div>
             </div>
@@ -130,14 +120,14 @@ $form = ActiveForm::begin([
 <?php $this->registerJs("
            init.push(function () {
             if (!$('html').hasClass('ie8')) {
-                $('#product-description').summernote({
+                $('#productsuppliers-description').summernote({
                     height: 200,
                     tabsize: 2,
                     codemirror: {
                         theme: 'monokai'
                     }
                 });
-                $('#product-specification').summernote({
+                $('#productsuppliers-specification').summernote({
                     height: 200,
                     tabsize: 2,
                     codemirror: {

@@ -7,10 +7,10 @@ use Yii;
 /**
 * This is the model class for table "points_reward_member".
 *
-    * @property string $pointsMemberId
-    * @property string $rankId
-    * @property string $userId
-    * @property string $orderId
+    * @property integer $pointsMemberId
+    * @property integer $rankId
+    * @property integer $userId
+    * @property integer $orderId
     * @property integer $status
     * @property string $createBy
     * @property string $createDateTime

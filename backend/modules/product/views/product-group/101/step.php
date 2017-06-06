@@ -391,24 +391,36 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             </style>
                             <h3>Edit Product Information</h3>
                             <?php if (isset($dataProvider)): ?>
-                                <?= $this->render("_product_grid", ["dataProvider" => $dataProvider]); ?>
+                                <div class="bs-example bs-example-tabs" data-example-id="togglable-tabs">
+                                    <ul class="nav nav-tabs" id="myTabs" role="tablist">
+                                        <li role="presentation" class="active text-center">
+                                            <a href="#masterProduct" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true"><br>Master<br>(<?= $dataProvider->getTotalCount() ?>)</a>
+                                        </li>
+                                        <?php // if ($dataProvider2->totalItemCount > 0): ?>
+                                        <li role="presentation" class="text-center">
+                                            <a href="#myProduct" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false"><br>My Product<br>(<?= $dataProvider2->getTotalCount() ?>)</a>
+                                        </li>
+                                        <?php // endif; ?>
+                                    </ul>
+                                    <div class="tab-content" id="myTabContent">
+                                        <div class="tab-pane fade active in" role="tabpanel" id="masterProduct" aria-labelledby="home-tab">
+                                            <?= $this->render("_product_grid", ["dataProvider" => $dataProvider]); ?>
+                                        </div>
+                                        <div class="tab-pane fade text-center" role="tabpanel" id="myProduct" aria-labelledby="profile-tab">
+                                            <?php if ($dataProvider2->getTotalCount() > 0): ?>
+                                                <?= $this->render("_product_grid", ["dataProvider" => $dataProvider2, 'gridTitle' => "<span style='color:white;font-weight:bold'>My Product</span>", 'type' => 2, 'isProductSupp' => TRUE]); ?>
+                                            <?php else: ?>
+                                                <h3>Create My Product</h3>
+                                                <a  href="<?= Yii::$app->homeUrl . "product/product-group/create-my-product?productGroupId=" . $_GET["productGroupId"]; ?>" class="btn btn-success btn-lg">Create</a>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
                                 <ul class="list-inline pull-right">
                                     <li>
                                         <!--<button type="button" class="btn btn-default prev-step">Previous</button>-->
                                         <?php echo Html::a("<i class='glyphicon glyphicon-arrow-left'></i> Back", ['create', 'step' => 3, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], ['class' => 'btn btn-default']) ?>
                                     </li>
-                                    <?php
-                                    $user_group_Id = Yii::$app->user->identity->user_group_Id;
-                                    $userRe = str_replace('[', '', str_replace(']', '', $user_group_Id));
-                                    $userEx = explode(',', $userRe);
-                                    $ress = array_search(26, $userEx);
-                                    $productGroup = \common\models\costfit\Product::find()->where("productId=" . $_GET["productGroupId"])->one();
-                                    if ($ress !== FALSE && $productGroup->status == 99) {
-                                        ?>
-                                        <li><?php echo Html::a("<i class='glyphicon glyphicon-check'></i> Approve", ['approve-product-group', 'id' => $_GET["productGroupId"]], ['class' => 'btn btn-warning']) ?></li>
-                                        <?php
-                                    }
-                                    ?>
 
                                     <li><?php echo Html::submitButton('Next', ['class' => 'btn btn-primary next-step', 'name' => 'next', 'value' => 'next']); ?></li>
                                 </ul>

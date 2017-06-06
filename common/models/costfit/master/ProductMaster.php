@@ -38,6 +38,7 @@ use Yii;
     * @property string $approvecreateDateTime
     * @property string $receiveType
     * @property string $productGroupTemplateId
+    * @property integer $step
     *
             * @property Category $category
             * @property ProductGroupTemplate $productGroupTemplate
@@ -63,7 +64,7 @@ return 'product';
 public function rules()
 {
 return [
-            [['userId', 'parentId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'productSuppId', 'approveCreateBy', 'productGroupTemplateId'], 'integer'],
+            [['userId', 'parentId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'productSuppId', 'approveCreateBy', 'productGroupTemplateId', 'step'], 'integer'],
             [['isbn', 'shortDescription', 'description', 'specification'], 'string'],
             [['title', 'createDateTime'], 'required'],
             [['width', 'height', 'depth', 'weight', 'price'], 'number'],
@@ -115,6 +116,7 @@ return [
     'approvecreateDateTime' => Yii::t('product', 'Approvecreate Date Time'),
     'receiveType' => Yii::t('product', 'Receive Type'),
     'productGroupTemplateId' => Yii::t('product', 'Product Group Template ID'),
+    'step' => Yii::t('product', 'Step'),
 ];
 }
 
