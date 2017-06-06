@@ -21,8 +21,7 @@ use \common\models\costfit\master\BankTransferMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class BankTransfer extends \common\models\costfit\master\BankTransferMaster
-{
+class BankTransfer extends \common\models\costfit\master\BankTransferMaster {
 
     /**
      * @inheritdoc
@@ -32,39 +31,33 @@ class BankTransfer extends \common\models\costfit\master\BankTransferMaster
     const ACCOUNT_TYPE_SAVING = 1;
     const ACCOUNT_TYPE_CURRENT = 2;
 
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function getPaymentMethod()
-    {
+    public function getPaymentMethod() {
         return $this->hasOne(PaymentMethod::className(), ['paymentMethodId' => 'paymentMethodId']);
     }
 
-    public function getBank()
-    {
+    public function getBank() {
         return $this->hasOne(Bank::className(), ['bankId' => 'bankId']);
     }
 
-    public static function findTypeArray()
-    {
+    public static function findTypeArray() {
         return [
             self::TYPE_BILL_PAYMENT => "Bill Payment",
             self::TYPE_NORMAL_TRANSFER => "Normal Transfer"
         ];
     }
 
-    public static function getTypeText($type)
-    {
+    public static function getTypeText($type) {
         $res = self::findTypeArray();
         if (isset($res[$type])) {
             return $res[$type];
@@ -73,22 +66,24 @@ class BankTransfer extends \common\models\costfit\master\BankTransferMaster
         }
     }
 
-    public static function findAccountTypeArray()
-    {
+    public static function findAccountTypeArray() {
         return [
             self::ACCOUNT_TYPE_SAVING => "ออมทรัพย์",
             self::ACCOUNT_TYPE_CURRENT => "กระแสรายวัน"
         ];
     }
 
-    public static function getAccountTypeText($type)
-    {
+    public static function getAccountTypeText($type) {
         $res = self::findAccountTypeArray();
         if (isset($res[$type])) {
             return $res[$type];
         } else {
             return NULL;
         }
+    }
+
+    public static function allBank() {
+
     }
 
 }
