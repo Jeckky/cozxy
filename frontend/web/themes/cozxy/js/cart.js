@@ -42,7 +42,6 @@ function qSet(y, x, productSuppId, orderId, sendDate) {
         success: function (data)
         {
             if (data.status) {
-
                 $('.price-detail').find('.summaryFormatText').html(data.cart.summaryFormatText + ' THB');
                 /*$button.parent().parent().find(".price").html(data.priceText);
 
