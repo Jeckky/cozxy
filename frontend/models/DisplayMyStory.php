@@ -305,7 +305,7 @@ class DisplayMyStory extends Model {
         foreach ($productPost as $value) {
             $productPostList = \common\models\costfit\Product::find()->where('productId =' . $value->productId)->all();
             foreach ($productPostList as $items) {
-                $productImages = \common\models\costfit\ProductImage::find()->where('productId=' . $items->productId)->one();
+                $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSupplierId)->one();
                 $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $items['productId'])->orderBy('productPriceId desc')->limit(1)->one();
                 $price_s = number_format($productPrice->price, 2);
                 $price = number_format($productPrice->price, 2);
