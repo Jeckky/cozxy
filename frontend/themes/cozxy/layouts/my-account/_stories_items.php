@@ -1,5 +1,4 @@
-
-<div class="media col-sm-4">
+<div class="col-sm-4">
     <div class="media-left">
         <a href="<?= $model['url']; ?>">
             <img alt="64x64" class="media-object img-circle" id="viewPost" data-src="holder.js/64x64" src="<?= $model['image'] ?>" data-holder-rendered="true" style="width: 262px; height: 262px;">
@@ -18,4 +17,3 @@
         </div>
     </div>
 </div>
-<!--<hr>-->

@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="row tk-body">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="col-lg-12 col-md-12 ">
             <?php
             echo \yii\widgets\ListView::widget([
                 'dataProvider' => $productPost,
