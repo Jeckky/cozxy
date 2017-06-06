@@ -66,15 +66,21 @@ $this->params['breadcrumbs'][] = $this->title;
                         <hr>
 
                         <form id="optionForm">
-                            <?php foreach ($productGroupOptionValues as $title => $productGroupOptionValue): ?>
-                                <div class="row login-box">
-                                    <div class="col-sm-12 size18 b"><?= $title ?></div>
-                                    <div class="col-sm-12 text-right quantity-sel size18">
-                                        <?= Html::dropDownList($title, '', $productGroupOptionValue, ['class' => 'fullwidth productOption']) ?>
+                            <?php
+                            if (isset($productGroupOptionValues) && count($productGroupOptionValues) > 0) {
+                                foreach ($productGroupOptionValues as $title => $productGroupOptionValue):
+                                    ?>
+                                    <div class="row login-box">
+                                        <div class="col-sm-12 size18 b"><?= $title ?></div>
+                                        <div class="col-sm-12 text-right quantity-sel size18">
+                                            <?= Html::dropDownList($title, '', $productGroupOptionValue, ['class' => 'fullwidth productOption']) ?>
+                                        </div>
                                     </div>
-                                </div>
-                                <hr>
-                            <?php endforeach; ?>
+                                    <hr>
+                                    <?php
+                                endforeach;
+                            }
+                            ?>
                         </form>
 
                         <div class="size36">&nbsp;</div>

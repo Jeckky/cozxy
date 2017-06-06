@@ -31,9 +31,9 @@ class CartController extends MasterController {
      */
     public function actionIndex() {
         // \frontend\assets\CartAsset::register($this);
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(Yii::$app->homeUrl . 'site/login');
-        }
+        /* if (Yii::$app->user->isGuest) {
+          return $this->redirect(Yii::$app->homeUrl . 'site/login');
+          } */
         $this->title = 'Cozxy.com | cart';
         $this->subTitle = 'Shopping Cart';
         /* $allProducts = $this->allProduct();
@@ -149,10 +149,11 @@ class CartController extends MasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionDeleteCartItem($id) {
+    public function actionDeleteCartItem() {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
+        $id = $_POST["id"];
         $res = [];
         $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId = " . $id)->one();
         $qnty = intval($orderItem->quantity);

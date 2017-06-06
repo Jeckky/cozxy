@@ -12,6 +12,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-xs-12 bg-yellow1 b" style="padding:18px 18px 10px;">
             <p class="size20 size18-xs">MY ACCOUNT</p>
         </div>
+
+
+        <!-- detail-->
         <div class="col-xs-12 bg-white">
             <div class="size12 size10-xs">&nbsp;</div>
             <!--TABs-->

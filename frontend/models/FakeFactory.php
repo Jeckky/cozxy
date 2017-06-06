@@ -334,6 +334,7 @@ class FakeFactory extends Model {
         $products = [];
         $imagAll = [];
         $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
+        $GetProductCozxy = $GetProductSuppliers->product;
         //foreach ($GetProductSuppliers as $items) {
         /*
          * รูปสินค้า
@@ -393,7 +394,9 @@ class FakeFactory extends Model {
             'productId' => $GetProductSuppliers['productId'],
             'supplierId' => $GetProductSuppliers['userId'],
             'receiveType' => $GetProductSuppliers['receiveType'],
-            'wishList' => $wishList
+            'wishList' => $wishList,
+            'shortDescriptionCozxy' => isset($GetProductCozxy['shortDescription']) ? $GetProductCozxy['shortDescription'] : '',
+            'descriptionCozxy' => isset($GetProductCozxy['description']) ? $GetProductCozxy['description'] : '',
         ];
         // }
 
