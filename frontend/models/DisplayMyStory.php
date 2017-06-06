@@ -61,7 +61,7 @@ class DisplayMyStory extends Model {
         }
     }
 
-    public static function productRecentStories($productId, $productSupplierId) {
+    public static function productRecentStories($productId, $productSupplierId, $var1 = false) {
         $products = [];
         //$allProductSuppId = ProductSuppliers::productSupplierGroupStory($productId);
         //throw new \yii\base\Exception($allProductSuppId);
@@ -102,6 +102,7 @@ class DisplayMyStory extends Model {
                     'image' => $productImagesThumbnail2,
                     //'url' => '/story?id=' . $items->productSuppId,
                     'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productPostId' => $value->productPostId, 'productId' => $items->productId, 'productSupplierId' => $productSupplierId]),
+                    'url_seemore' => Yii::$app->homeUrl . 'story/see-more/' . $value->encodeParams(['productPostId' => $value->productPostId, 'productId' => $items->productId, 'productSupplierId' => $productSupplierId]),
                     'brand' => isset($items->brand) ? $items->brand->title : '',
                     'title' => $items->title,
                     'head' => $value->title,
@@ -118,7 +119,7 @@ class DisplayMyStory extends Model {
     }
 
     public static function productViewsRecentStories($productPostId) {
-        $productPost = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . ' and productPostId=' . $productPostId)
+        $productPost = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId)
                         ->groupBy(['productId'])->orderBy('productPostId desc')->one();
         $star = DisplayMyStory::calculatePostRating($productPost->productPostId);
         $values = explode(",", $star);
@@ -193,6 +194,50 @@ class DisplayMyStory extends Model {
     }
 
     public static function popularStories($productPostId) {
+        /* $productPostRating = \common\models\costfit\ProductPostRating::find()
+          /* ->where("productPostId=" . $productPostId)
+          ->average('score'); */
+
+        //throw new \yii\base\Exception(print_r($productPostRating, true));
+        $productPost = ProductPost::find()->where("productPostId=" . $productPostId)->one();
+        $allProductId = ProductSuppliers::productSupplierGroupStory($productPost->productId);
+        $productPosts = ProductPost::find()->where("productId in($allProductId)")->all();
+        $postId = '';
+        if (isset($productPosts) & count($productPosts) > 0) {
+            foreach ($productPosts as $post):
+                $postId .= $post->productPostId . ",";
+            endforeach;
+            $postId = substr($postId, 0, -1);
+        }
+        if ($postId != '') {
+            $productPostRating = \common\models\costfit\ProductPostRating::find()->where("productPostId in($postId)")
+                    ->groupBy('productPostId')
+                    ->orderBy('avg(score) DESC')
+                    ->all();
+        }
+        if (!isset($productPostRating) || count($productPostRating) == 0) {
+            $byCreate = ProductPost::find()->where("productId in($allProductId)")
+                    ->orderBy('createDateTime DESC')
+                    ->all();
+            if (isset($byCreate) && count($byCreate) > 0) {
+                $productPostRating = $byCreate;
+            } else {
+                $productPostRating = null;
+            }
+        }
+        //throw new \yii\base\Exception($productSuppId);
+        /* $popular = ProductPost::find()
+          ->join('LEFT JOIN', 'product_post_rating', '`product_post`.`productPostId`=`product_post_rating`.`productPostId`')
+          ->where("productSuppId in($allProductSuppId)")
+          ->orderBy('`product_post_rating`.`score`')
+          ->limit(5)
+          ->all(); */
+        //throw new \yii\base\Exception(count($popular));
+        //throw new \yii\base\Exception(count($productPostRating));
+        return $productPostRating;
+    }
+
+    public static function popularStoriesNoneStar($productPostId) {
         /* $productPostRating = \common\models\costfit\ProductPostRating::find()
           /* ->where("productPostId=" . $productPostId)
           ->average('score'); */

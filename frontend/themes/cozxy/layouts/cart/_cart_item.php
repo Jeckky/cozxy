@@ -23,12 +23,12 @@ $val = rand(1, 10);
                 <span class="size14 onsale"><?= number_format($item["priceMarket"], 2) ?> THB</span>
             </p>
             <div class="col-xs-12 size18">
-                <a href="javascript:qSet('<?= $id ?>',-1);"><i class="fa fa-minus-circle" aria-hidden="true" style="color: #000"></i></a>
+                <a href="javascript:qSet('<?= $id ?>',-1,'<?= $item["productSuppId"] ?>','<?= $this->params['cart']['orderId'] ?>','<?= $item["sendDate"] ?>');"><i class="fa fa-minus-circle" aria-hidden="true" style="color: #000"></i></a>
                 <input type="text" name="quantity" class="quantity quantity-<?= $id ?>" value="<?= $item["qty"] ?>">
-                <a href="javascript:qSet('<?= $id ?>',1);"><i class="fa fa-plus-circle" aria-hidden="true" style="color: #000"></i></a>
+                <a href="javascript:qSet('<?= $id ?>',1,'<?= $item["productSuppId"] ?>','<?= $this->params['cart']['orderId'] ?>','<?= $item["sendDate"] ?>');"><i class="fa fa-plus-circle" aria-hidden="true" style="color: #000"></i></a>
             </div>
         </div>
-        <div class="col-sm-4 fc-g666">
+        <div class="col-sm-3 fc-g666">
             <table style="width:100%">
                 <tr>
                     <td>Quatity</td>
@@ -44,6 +44,25 @@ $val = rand(1, 10);
                     <td>Size</td>
                     <td>:</td>
                     <td>None</td>
+                </tr>
+
+            </table>
+        </div>
+        <div class="col-sm-1 fc-g666">
+            <table style="width:100%; text-align: center;">
+                <tr>
+                    <td>Delete</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr class="delete-items-cart">
+                    <td>
+                        <a href="javascript:deleteItemCart('<?= $item['orderItemId'] ?>');" id="deleteItemCart-<?= $item['orderItemId'] ?>" class=" text-danger">
+                            <i class="fa fa-trash-o"></i>
+                        </a>
+                    </td>
+                    <td>&nbsp;</td>
+                    <td></td>
                 </tr>
             </table>
         </div>

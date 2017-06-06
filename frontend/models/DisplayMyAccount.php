@@ -128,7 +128,7 @@ class DisplayMyAccount extends Model {
         $products = [];
         $dataOrder = Order::find()
         ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "")->all();
-        foreach ($dataOrder as $items) {
+        foreach ($dataOrder as $value) {
             $products[$value->orderId] = [
                 'orderNo' => $value->orderNo,
                 'status' => $value->getStatusTextEn($value->status),

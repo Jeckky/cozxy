@@ -517,6 +517,7 @@ $(document).on('click', '.delete', function () {
         }
     });
 });
+
 $(document).on('click', '#reviews-rate', function (e) {
 
     var rate = $('input:hidden', '#reviews-rate').val();
@@ -541,7 +542,23 @@ $(document).on('click', '#reviews-rate', function (e) {
 /*
  * @returns {undefined}
  */
+$('#currency-currencyid').change(function () {
+    var value = $('#currency-currencyid').val();
+    var productId = $(this).parent().parent().find("#productId").val();
+    $('#currency-currencyid').submit();
+    //alert(productId);
+    /*$.ajax({
+     type: 'POST',
+     dataType: 'JSON',
+     url: $baseUrl + '/story/compare-price',
+     data: {productId: productId, currencyId: value},
+     success: function (data) {
+     alert(data["text"]);
+     // $('#showData').html(data.text);
+     }
+     });*/
 
+});
 function checkoutNewBilling() {
 
     var $form = $("#default-add-new-billing-address"),
@@ -596,7 +613,7 @@ function filterPriceCozxy() {
     $max = $('input:hidden:eq(1)', '#amount-min').val();
     $categoryId = $('input:hidden:eq(2)', '#amount-min').val();
     $('.btn-black-s').html('APPLY ...');
-    $('.filter-product-cozxy').html("<div class='text-center' style='zoom: 5;'><br><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
+    $('.filter-product-cozxy').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
     var path = $baseUrl + "search/filter-price";
     $.ajax({
         url: path,
@@ -625,7 +642,7 @@ function filterPriceCozxy() {
                     items += "<div class=\"col-md-4 col-sm-6 col-xs-12\">";
                     items += "<div class=\"product-box\">";
                     items += "<div class=\"product-img text-center\">";
-                    items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js / 262x262\" src='" + val.image + "' data-holder-rendered=\"true\">";
+                    items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js / 262x262\" src='" + val.image + "' data-holder-rendered=\"true\" style=\"width: 260px; height: 260px;\">";
                     items += "<div class=\"v-hover\">";
                     items += "<a href='" + val.url + "'>";
                     items += "<div class=\"col-xs-4\"><i class=\"fa fa-eye\" aria-hidden=\"true\"></i></div>";
@@ -649,14 +666,13 @@ function filterPriceCozxy() {
                     items += ' <p class=\"size14 b\" style=\"height:50px; \"><a href=' + val.url + ' class=\"fc-black\">' + val.title + '</a></p>';
                     items += " <p>";
                     items += '<span class=\"size18\">' + val.price + ' THB</span><br>';
-                    items += "  <span class=\"size14 onsale\">'" + val.price_s + "' THB</span>";
+                    items += '  <span class=\"size14 onsale\">' + val.price_s + ' THB</span>';
                     items += "   </p>";
                     items += " </div>";
                     items += " </div>";
                     items += "</div>";
                     $('.filter-product-cozxy').html(items);
                 });
-                ;
             } else {
                 alert('error');
             }
@@ -669,22 +685,70 @@ function filterPriceCozxyClear() {
 }
 
 
-function showMore(cat, countAll, limit_start, limit_end) {
-    console.log(cat + ' , ' + countAll + ' , ' + limit_start + ',' + limit_end);
+function showMore(cat, clickNum, countAll, limit_start, limit_end) {
+    //console.log(cat + ' , ' + countAll + ' , ' + limit_start + ',' + limit_end);
     var cats = cat;
     var countAlls = countAll;
     var limit_starts = limit_start;
-    var limit_ends = 9;
-    $('.showStepMore').html("<i class=\'fa fa-spinner fa-pulse fa-3x fa-fw\' style='zoom:0.5'></i>");
+    var limit_ends = 90;
+    var clickNums = Math.floor(clickNum);
 
+    $('.showStepMore').html(" SHOW MORE<span class=\'size16\'>&nbsp; ↓ </span></a>");
+    $('.filter-product-cozxy').html("<div class='text-center loading-spin' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
     $.ajax({
         type: "POST",
         url: $baseUrl + "search/show-more-products",
         data: {'cat': cats, 'count': countAlls, 'starts': limit_starts, 'ends': limit_ends},
-        success: function (data)
+        success: function (data, status)
         {
-            if (data) {
-                $('.filter-product-cozxy').html("<div class='text-center' style='zoom: 5;'><br><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
+            if (status == "success") {
+                //$('.filter-product-cozxy').html("<div class='text-center' style='zoom: 5;'><br><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
+                //var yourval = jQuery.parseJSON(JSON.stringify(data));
+                //$('.fa .fa-spinner .fa-spin').removeClass();
+                yourval = JSON.parse(data);
+                var items = '';
+                $.each(yourval, function (key, val) {
+
+                    if (val.fastId == false) {
+                        $fastId = '';
+                    } else {
+                        $fastId = val.fastId;
+                    }
+                    items += "<div class=\"col-md-4 col-sm-6 col-xs-12\">";
+                    items += "<div class=\"product-box\">";
+                    items += "<div class=\"product-img text-center\">";
+                    items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js/262x262\" src='" + val.image + "' data-holder-rendered=\"true\" style=\"width: 260px; height: 260px;\">";
+                    items += "<div class=\"v-hover\">";
+                    items += "<a href='" + val.url + "'>";
+                    items += "<div class=\"col-xs-4\"><i class=\"fa fa-eye\" aria-hidden=\"true\"></i></div>";
+                    items += "</a>";
+                    items += " <a>";
+                    if (val.wishList == 1) {
+                        items += "<div class=\"col-xs-4 heartbeat\"><i class=\"fa fa-heartbeat\" aria-hidden=\"true\"></i></div>";
+                        items += "</a>";
+                    } else {
+                        items += '<a href=\'javascript:addItemToWishlist(' + val.productSuppId + ');\' id=\'addItemToWishlist-' + val.productSuppId + '\' data-loading-text=\"<div class =\'col-xs-4\'><i class=\'fa fa-heartbeat\' aria-hidden =\'true\'></i></div>\">';
+                        items += "<div class=\"col-xs-4 heart\"><i class=\"fa fa-heart-o\" aria-hidden=\"true\"></i></div>";
+                        items += "</a>";
+                    }
+                    items += '<a href=\'javascript:addItemToCartUnitys(' + val.productSuppId + ', 1, "' + val.maxQnty + '", "' + $fastId + '", "' + val.productId + '", "' + val.supplierId + '", "' + val.receiveType + '")\' id=\"addItemsToCartMulti-' + val.productSuppId + '\" data-loading-text=\" <div class =\'col-xs-4\'> <i class = \'fa fa-circle-o-notch fa-spin\' aria-hidden = \'true\'> </i></div> \">';
+                    items += "<div class=\"col-xs-4 shopping\"><i class=\"fa fa-shopping-bag\" aria-hidden=\"true\"></i></div>";
+                    items += " </a>";
+                    items += " </div>";
+                    items += "</div>";
+                    items += "<div class=\"product-txt\">";
+                    items += "<p class=\"size16 fc-g666\"></p>";
+                    items += ' <p class=\"size14 b\" style=\"height:50px; \"><a href=' + val.url + ' class=\"fc-black\">' + val.title + '</a></p>';
+                    items += " <p>";
+                    items += '<span class=\"size18\">' + val.price + ' THB</span><br>';
+                    items += '  <span class=\"size14 onsale\">' + val.price_s + ' THB</span>';
+                    items += "   </p>";
+                    items += " </div>";
+                    items += " </div>";
+                    items += "</div>";
+                    $('.filter-product-cozxy').append(items);
+                    $('.loading-spin').hide();
+                });
             } else {
                 alert('Somting error');
             }

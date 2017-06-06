@@ -281,8 +281,8 @@ class TopUpController extends MasterController {
 
         $amount1 = str_replace(",", "", number_format($amount, 2));
         $amount2 = str_replace(".", "", $amount1);
-        $barCode = "|" . $taxId . "80%0D" . $topUpCut . "%0D" . $tel . "%0D" . $amount2;
-        $data = "|" . $taxId . "80 " . $topUpCut . " " . $tel . " " . $amount2;
+        $barCode = "|" . $taxId . "01%0D" . $topUpCut . "%0D" . $tel . "%0D" . $amount2;
+        $data = "|" . $taxId . "01 " . $topUpCut . " " . $tel . " " . $amount2;
         //throw new \yii\base\Exception($amount);
         $customer = User::find()->where("userId=" . Yii::$app->user->id)->one();
         if (isset($customer)) {
@@ -312,7 +312,7 @@ class TopUpController extends MasterController {
         $header = FALSE;
         //$header = $this->renderPartial('header');
         $allBank = \common\models\costfit\BankTransfer::find()->where("paymentMethodId=1")->all();
-        $content = $this->renderPartial('bill_form1', [
+        $content = $this->renderPartial('bill_form', [
             'amount' => $_GET["amount"],
             'customerName' => $_GET["customerName"],
             'customerTel' => $_GET["customerTel"],

@@ -31,9 +31,9 @@ class CartController extends MasterController {
      */
     public function actionIndex() {
         // \frontend\assets\CartAsset::register($this);
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(Yii::$app->homeUrl . 'site/login');
-        }
+        /* if (Yii::$app->user->isGuest) {
+          return $this->redirect(Yii::$app->homeUrl . 'site/login');
+          } */
         $this->title = 'Cozxy.com | cart';
         $this->subTitle = 'Shopping Cart';
         /* $allProducts = $this->allProduct();
@@ -149,10 +149,11 @@ class CartController extends MasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionDeleteCartItem($id) {
+    public function actionDeleteCartItem() {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
+        $id = $_POST["id"];
         $res = [];
         $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId = " . $id)->one();
         $qnty = intval($orderItem->quantity);
@@ -302,14 +303,23 @@ class CartController extends MasterController {
 
         $res = [];
         $product = new \common\models\costfit\Product();
+
+        $sendDate = $_POST["sendDate"];
+
+
         $price = $product->calProductPrice($_POST["productSuppId"], $_POST["quantity"], 1, $_POST["sendDate"], NULL);
-//        throw new \yii\base\Exception(print_r($price, true));
+        // throw new \yii\base\Exception(print_r($_POST["sendDate"], true));
         $maxQuantity = $product->findMaxQuantitySupplier($_POST["productSuppId"], 0);
 //        throw new \yii\base\Exception("max quantity = " . $maxQuantity);
         if ($_POST["quantity"] <= $maxQuantity) {
             if (isset($price)) {
                 $cart = \common\models\costfit\Order::findCartArray();
-                $oi = \common\models\costfit\OrderItem::find()->where("productSuppId = " . $_POST["productSuppId"] . " AND orderId = " . $cart["orderId"] . " AND sendDate = " . $_POST["sendDate"])->one();
+                if ($sendDate != '') {
+                    $oi = \common\models\costfit\OrderItem::find()->where("productSuppId = " . $_POST["productSuppId"] . " AND orderId = " . $cart["orderId"] . " AND sendDate = " . $_POST["sendDate"])->one();
+                } else {
+                    $oi = \common\models\costfit\OrderItem::find()->where("productSuppId = " . $_POST["productSuppId"] . " AND orderId = " . $cart["orderId"])->one();
+                }
+                //$oi = \common\models\costfit\OrderItem::find()->where("productSuppId = " . $_POST["productSuppId"] . " AND orderId = " . $cart["orderId"] . " AND sendDate = " . $_POST["sendDate"])->one();
                 $oi->price = $price["price"];
                 $oi->quantity = $_POST["quantity"];
                 $oi->priceOnePiece = $oi->product->calProductPrice($_POST["productSuppId"], 1, 0, NULL, NULL);

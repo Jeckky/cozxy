@@ -84,6 +84,7 @@ return [
                 'story/rating-post' => 'story/rating-post',
                 'story/view-post' => 'story/view-post',
                 'story/write-your-story/<hash>' => 'story/write-your-story/',
+                'story/see-more/<hash>' => 'story/see-more/',
                 'story/<hash>' => 'story/index',
                 'search/brand/<hash>' => 'search/brand/',
                 'search/<title>/<hash>' => 'search/index',

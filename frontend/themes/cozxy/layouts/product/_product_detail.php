@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Html;
 
 $this->title = $model['title'];
@@ -44,16 +45,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         <p><?php echo $model['shortDescription'] ?></p>
                         <hr>
                         <?php /*
-                        <div class="row">
-                            <div class="col-sm-6 size18 b">COLOUR</div>
-                            <div class="col-sm-6 text-right color-sel">
-                                <a href="javascript:;" class="color-s"><i class="fa fa-circle" aria-hidden="true" style="color: #842"></i></a>
-                                <a href="javascript:;" class="color-s"><i class="fa fa-circle" aria-hidden="true" style="color: #cbb"></i></a>
-                                <a href="javascript:;" class="color-s"><i class="fa fa-circle" aria-hidden="true" style="color: #434"></i></a>
-                                <a href="javascript:;" class="color-s"><i class="fa fa-circle" aria-hidden="true" style="color: #236"></i></a>
-                            </div>
-                        </div>
-                        <hr>
+                          <div class="row">
+                          <div class="col-sm-6 size18 b">COLOUR</div>
+                          <div class="col-sm-6 text-right color-sel">
+                          <a href="javascript:;" class="color-s"><i class="fa fa-circle" aria-hidden="true" style="color: #842"></i></a>
+                          <a href="javascript:;" class="color-s"><i class="fa fa-circle" aria-hidden="true" style="color: #cbb"></i></a>
+                          <a href="javascript:;" class="color-s"><i class="fa fa-circle" aria-hidden="true" style="color: #434"></i></a>
+                          <a href="javascript:;" class="color-s"><i class="fa fa-circle" aria-hidden="true" style="color: #236"></i></a>
+                          </div>
+                          </div>
+                          <hr> */ ?>
                         <div class="row">
                             <div class="col-sm-6 size18 b">QUANTITY</div>
                             <div class="col-sm-6 text-right quantity-sel size18">
@@ -63,17 +64,23 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>
                         </div>
                         <hr>
-                        */?>
+
                         <form id="optionForm">
-                        <?php foreach ($productGroupOptionValues as $title=>$productGroupOptionValue):?>
-                            <div class="row login-box">
-                                <div class="col-sm-12 size18 b"><?=$title?></div>
-                                <div class="col-sm-12 text-right quantity-sel size18">
-                                     <?=Html::dropDownList($title, '', $productGroupOptionValue, ['class'=>'fullwidth productOption'])?>
-                                </div>
-                            </div>
-                            <hr>
-                        <?php endforeach;?>
+                            <?php
+                            if (isset($productGroupOptionValues) && count($productGroupOptionValues) > 0) {
+                                foreach ($productGroupOptionValues as $title => $productGroupOptionValue):
+                                    ?>
+                                    <div class="row login-box">
+                                        <div class="col-sm-12 size18 b"><?= $title ?></div>
+                                        <div class="col-sm-12 text-right quantity-sel size18">
+                                            <?= Html::dropDownList($title, '', $productGroupOptionValue, ['class' => 'fullwidth productOption']) ?>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <?php
+                                endforeach;
+                            }
+                            ?>
                         </form>
 
                         <div class="size36">&nbsp;</div>
@@ -110,12 +117,12 @@ $this->registerJs('
 $(".productOption").on("change", function(){
     $.ajax({
         method: "POST",
-        url: "'.Yii::$app->homeUrl.'product-group-options/product-by-options",
+        url: "' . Yii::$app->homeUrl . 'product-group-options/product-by-options",
         data: $("form#optionForm").serialize(),
         dataType:"json"
     })
     .done(function( data ) {
-        window.location = "'.Yii::$app->homeUrl.'product/"+data.token;
+        window.location = "' . Yii::$app->homeUrl . 'product/"+data.token;
     });
 });
 
