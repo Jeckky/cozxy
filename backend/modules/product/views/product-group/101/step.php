@@ -322,7 +322,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     <thead>
                                         <tr>
                                             <th>Seq</th>
-                                            <th>Option</th>
+                                            <th style="width:10%">Option</th>
                                             <th>Value</th>
                                         </tr>
                                     </thead>
@@ -411,7 +411,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                 <?= $this->render("_product_grid", ["dataProvider" => $dataProvider2, 'gridTitle' => "<span style='color:white;font-weight:bold'>My Product</span>", 'type' => 2, 'isProductSupp' => TRUE]); ?>
                                             <?php else: ?>
                                                 <h3>Create My Product</h3>
-                                                <a  href="<?= Yii::$app->homeUrl . "product/product-group/create-my-product?productGroupId=" . $_GET["productGroupId"]; ?>" class="btn btn-success btn-lg">Create</a>
+                                                <a  href="<?= Yii::$app->homeUrl . "product/product-group/create-my-product?productGroupId=" . $_GET["productGroupId"] . "&step=4&productGroupTemplateId=" . $_GET["productGroupTemplateId"]; ?>" class="btn btn-success btn-lg">Create</a>
                                             <?php endif; ?>
                                         </div>
                                     </div>
