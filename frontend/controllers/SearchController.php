@@ -48,7 +48,7 @@ class SearchController extends MasterController {
         $category = Yii::$app->request->post('search');
         $categoryId = NULL;
 
-        $productCanSell = new ArrayDataProvider(['allModels' => DisplaySearch::productSearch($category, 9, FALSE)]);
+        $productCanSell = new ArrayDataProvider(['allModels' => DisplaySearch::productSearch($category, 18, FALSE)]);
 
         return $this->render('index', compact('productCanSell', 'category', 'categoryId'));
     }
