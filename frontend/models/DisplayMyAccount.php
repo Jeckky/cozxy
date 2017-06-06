@@ -66,9 +66,9 @@ class DisplayMyAccount extends Model {
         $products = [];
         $dataUserPoint = UserPoint::find()->where('userId=' . \Yii::$app->user->id)->one();
         $dataTopUp = TopUp::find()
-        ->select('*')
-        ->join("LEFT JOIN", "payment_method", "payment_method.paymentMethodId = top_up.paymentMethod")
-        ->where('top_up.userId =' . \Yii::$app->user->id)->orderBy('top_up.updateDateTime desc')->one();
+                        ->select('*')
+                        ->join("LEFT JOIN", "payment_method", "payment_method.paymentMethodId = top_up.paymentMethod")
+                        ->where('top_up.userId =' . \Yii::$app->user->id)->orderBy('top_up.updateDateTime desc')->one();
         $products[$dataUserPoint['userPointId']] = [
             'userPointId' => $dataUserPoint['userPointId'],
             'userId' => isset($dataUserPoint['userId']) ? $dataUserPoint['userId'] : '-',
@@ -127,12 +127,12 @@ class DisplayMyAccount extends Model {
     public static function myAccountOrderHistory($status, $type) {
         $products = [];
         $dataOrder = Order::find()
-        ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "")->all();
+                        ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "")->all();
         foreach ($dataOrder as $items) {
-            $products[$value->orderId] = [
-                'orderNo' => $value->orderNo,
-                'status' => $value->getStatusTextEn($value->status),
-                'updateDateTime' => $value->updateDateTime,
+            $products[$items->orderId] = [
+                'orderNo' => $items->orderNo,
+                'status' => $items->getStatusTextEn($items->status),
+                'updateDateTime' => $items->updateDateTime,
                 'action' => '',
             ];
         }
