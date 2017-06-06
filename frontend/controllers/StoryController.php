@@ -23,8 +23,9 @@ class StoryController extends MasterController {
     public function actionIndex($hash = FALSE) {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
+
         //throw new \yii\base\Exception(print_r($params, true));
-        $productSuppId = isset($params['productSuppId']) ? $params['productSuppId'] : NULL;
+        $productSuppId = isset($params['productSupplierId']) ? $params['productSupplierId'] : NULL;
         $productId = isset($params['productId']) ? $params['productId'] : NULL;
         $productPostId = isset($params['productPostId']) ? $params['productPostId'] : NULL;
         $ViewsRecentStories = DisplayMyStory::productViewsRecentStories($productPostId);
@@ -42,7 +43,7 @@ class StoryController extends MasterController {
             $comparePrice = DisplayMyStory::comparePrice($productPost->productId, null);
         }
 
-        return $this->render('@app/themes/cozxy/layouts/story/_story', compact('ViewsRecentStories', 'productPost', 'popularStories', 'urlSeeAll', 'popularStoriesNoneStar', 'currency', 'model', 'comparePrice'));
+        return $this->render('@app/themes/cozxy/layouts/story/_story', compact('productSuppId', 'ViewsRecentStories', 'productPost', 'popularStories', 'urlSeeAll', 'popularStoriesNoneStar', 'currency', 'model', 'comparePrice'));
     }
 
     public function actionWriteYourStory($hash) {
