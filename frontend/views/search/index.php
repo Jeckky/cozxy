@@ -155,29 +155,13 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                                 //'layout' => "{items}",
                                 'itemOptions' => [
                                     'tag' => false,
+                                ], 'pager' => [
+                                    'firstPageLabel' => 'first',
+                                    'lastPageLabel' => 'last',
+                                    'prevPageLabel' => 'previous',
+                                    'nextPageLabel' => 'next',
+                                    'maxButtonCount' => 3,
                                 ],
-//                                'pager' => [
-//                                    //            'firstPageLabel' => 'first',
-//                                    //            'lastPageLabel' => 'last',
-//                                    'prevPageLabel' => '<span class="icon-arrow-left"></span>',
-//                                    'nextPageLabel' => '<span class="icon-arrow-right"></span>',
-////            'maxButtonCount' => 3,
-//                                    // Customzing options for pager container tag
-////            'options' => [
-////                'tag' => 'div',
-////                'class' => 'pager-wrapper',
-////                'id' => 'pager-container',
-////            ],
-//                                    // Customzing CSS class for pager link
-////            'linkOptions' => ['class' => 'mylink'],
-////            'activePageCssClass' => 'active',
-////            'disabledPageCssClass' => 'mydisable',
-//                                    // Customzing CSS class for navigating link
-//                                    'prevPageCssClass' => 'prev-page',
-//                                    'nextPageCssClass' => 'next-page',
-////            'firstPageCssClass' => 'myfirst',
-////            'lastPageCssClass' => 'mylast',
-//                                ],
                             ]);
                             yii\widgets\Pjax::end();
                             ?>
@@ -191,7 +175,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                 <?= $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories', compact('productSupplierId')) ?>
             </div>
             <div class="col-xs-9 text-center">
-                <!--<a href="javascript:showMore('<?php //echo $categoryId;      ?>','<?php //echo $clickNum;      ?>','<?php //echo $countAllProduct;     ?>','<?php //echo $limit_start;    ?>','<?php //echo $limit_end;    ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                <!--<a href="javascript:showMore('<?php //echo $categoryId;         ?>','<?php //echo $clickNum;         ?>','<?php //echo $countAllProduct;        ?>','<?php //echo $limit_start;       ?>','<?php //echo $limit_end;       ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                     <span class="size16">&nbsp; ↓ </span></a>-->
             </div>
             <div class="col-xs-3 text-center">&nbsp;</div>

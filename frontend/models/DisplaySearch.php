@@ -27,7 +27,7 @@ class DisplaySearch extends Model {
                 ['REGEXP', 'product_suppliers.title', trim($search_hd)],
                 ['REGEXP', 'product_suppliers.description', trim($search_hd)],
             ])
-            ->orderBy(new \yii\db\Expression('rand()'))->limit($n)
+            ->orderBy(new \yii\db\Expression('rand()'))
             ->all();
         } else {
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
@@ -88,7 +88,7 @@ class DisplaySearch extends Model {
         ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
         ->where($whereArray2)
         //->andWhere('pps.price > 0')
-        ->groupBy('ps.productSuppId')->limit($n)->all();
+        ->groupBy('ps.productSuppId')->all();
 
 
         foreach ($product as $value) {

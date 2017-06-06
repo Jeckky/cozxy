@@ -66,7 +66,9 @@ class SearchController extends MasterController {
             $brandName = '';
         }
 
-        $productCanSell = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchBrand($brandId, 9, FALSE)]);
+        $productCanSell = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchBrand($brandId, '', FALSE)]);
+
+
 
         return $this->render('brand', compact('productCanSell', 'brandName'));
     }
