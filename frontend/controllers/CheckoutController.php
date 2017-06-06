@@ -204,12 +204,14 @@ class CheckoutController extends MasterController {
             if (isset($userPoint)) {
                 $this->updateSupplierStock($order->orderId);
                 $getRankMemberPoints = RewardPoints::getRankMemberPoints($order->userId, $order->orderId, $order->summary);
+                $order->orderNo = \common\models\costfit\Order::genOrderNo();
                 $order->invoiceNo = Order::genInvNo($order);
                 $order->status = Order::ORDER_STATUS_E_PAYMENT_SUCCESS;
                 $order->paymentDateTime = new \yii\db\Expression('NOW()');
                 $this->updateUserPoint($order->userId, $order->summary, $order->orderId);
                 if ($order->save()) {
                     $res["status"] = 1;
+
                     $res["invoiceNo"] = $order->invoiceNo;
                     $res["message"] = "Successful transaction";
                     // Update Send Date field
@@ -248,21 +250,24 @@ class CheckoutController extends MasterController {
 
                         $billingCountryId = $order->billingCountryId; //ประเทศ
                         $country = Local::Countries($billingCountryId);
-                        $adress['billingCountryId'] = $country->localName;
+                        $adress['billingCountryId'] = $country['localName'];
 
                         $billingProvinceId = $order->billingProvinceId; //จังหวัด
                         $States = Local::States($billingProvinceId);
-                        $adress['billingProvinceId'] = $States->localName;
+                        $adress['billingProvinceId'] = $States['localName'];
 
                         $billingAmphurId = $order->billingAmphurId; //อำเภอ
                         $Cities = Local::Cities($billingAmphurId);
-                        $adress['billingAmphurId'] = $Cities->localName;
+                        $adress['billingAmphurId'] = $Cities['localName'];
 
                         $billingDistrictId = $order->billingDistrictId; //ตำบล
                         $District = Local::District($billingDistrictId);
-                        $adress['billingDistrictId'] = $District->localName;
+                        $adress['billingDistrictId'] = $District['localName'];
 
-                        $adress['billingZipcode'] = $order->billingZipcode;
+                        $billingZipcode = $order->billingZipcode;
+                        $Zipcodes = Local::Zipcodes($billingZipcode);
+                        $adress['billingZipcode'] = $Zipcodes['zipcode'];
+
                         $adress['billingTel'] = $order->billingTel;
 
                         $orderList = \common\models\costfit\Order::find()->where('orderId=' . $orderId)->one();

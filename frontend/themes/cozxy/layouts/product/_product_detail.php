@@ -115,7 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <!-- <a href = "/cart" class = "b btn-g999 btn-success size16" style = "margin:24px auto 12px;color:#fff;">+
                                  <i class = "fa fa-bookmark-o"></i></a>
                             -->
-                            <div class="size20">&nbsp;</div>
+                            <br>
                         </div>
                     </div>
                 </div>

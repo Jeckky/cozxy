@@ -18,9 +18,9 @@ use yii\helpers\Html;
                 foreach ($orderHistory->allModels as $key => $value) {
                     ?>
                     <tr>
-                        <td>Order #0000<?= $value['OrderNo'] ?></td>
-                        <td><?= $value['status'] ?></td>
-                        <td><?= $value['updateDateTime'] ?></td>
+                        <td>Order #<?= isset($value['OrderNo']) ? $value['OrderNo'] : '-' ?></td>
+                        <td><?= isset($value['status']) ? $value['status'] : '-' ?></td>
+                        <td><?= isset($value['updateDateTime']) ? $value['updateDateTime'] : '-' ?></td>
                         <td class="text-center"><?= Html::a('<i class="fa fa-search"></i>', ['/#']) ?></td>
                     </tr>
                     <?php

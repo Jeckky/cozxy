@@ -9,6 +9,9 @@ $i = 0;
 if (count($order) > 0) {
     $listOrderItems = common\models\costfit\OrderItem::find()
     ->select('orderId,productSuppId,supplierId,receiveType')->where('orderId=' . $order->orderId)->groupBy('supplierId')->all();
+    //echo '<pre>';
+    //print_r($listOrderItems->attributes);
+    //exit();
     foreach ($listOrderItems as $value1) {
         /*
          * # แยก Suppliers ไม่ซ้ำกัน
@@ -90,9 +93,9 @@ if (count($order) > 0) {
             }
             //$GetOrder = common\models\costfit\OrderItem::find()->where('orderId=' . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'] . ' and receiveType=' . $value1->receiveType)->groupBy('orderId')->one();
             ?>
-                                                                                                                                                                                                            <!--<tr>
-                                                                                                                                                                                                                <td style="font-size: 12px;" colspan="7">
-                                                                                                                                                                                                                    <strong>สถานที่รับของ :</strong><br>
+                                                                                                                                                                                                                                                                        <!--<tr>
+                                                                                                                                                                                                                                                                            <td style="font-size: 12px;" colspan="7">
+                                                                                                                                                                                                                                                                                <strong>สถานที่รับของ :</strong><br>
             <?php
             /* if (isset($GetOrder->pickingId)) {
               $picking_point = common\models\costfit\PickingPoint::find()->where('pickingId=' . $GetOrder->pickingId)->one();
@@ -105,8 +108,8 @@ if (count($order) > 0) {
               echo ', ' . $Cities->localName;
               } */
             ?>
-                                                                                                                                                                                                                </td>
-                                                                                                                                                                                                            </tr>-->
+                                                                                                                                                                                                                                                                            </td>
+                                                                                                                                                                                                                                                                        </tr>-->
             <?php
             //} /* $value1->receiveType == 1 : Lockers */
         }
