@@ -23,9 +23,9 @@ $val = rand(1, 10);
                 <span class="size14 onsale"><?= number_format($item["priceMarket"], 2) ?> THB</span>
             </p>
             <div class="col-xs-12 size18">
-                <a href="javascript:qSet('<?= $id ?>',-1);"><i class="fa fa-minus-circle" aria-hidden="true" style="color: #000"></i></a>
+                <a href="javascript:qSet('<?= $id ?>',-1,'<?= $item["productSuppId"] ?>','<?= $this->params['cart']['orderId'] ?>','<?= $item["sendDate"] ?>');"><i class="fa fa-minus-circle" aria-hidden="true" style="color: #000"></i></a>
                 <input type="text" name="quantity" class="quantity quantity-<?= $id ?>" value="<?= $item["qty"] ?>">
-                <a href="javascript:qSet('<?= $id ?>',1);"><i class="fa fa-plus-circle" aria-hidden="true" style="color: #000"></i></a>
+                <a href="javascript:qSet('<?= $id ?>',1,'<?= $item["productSuppId"] ?>','<?= $this->params['cart']['orderId'] ?>','<?= $item["sendDate"] ?>');"><i class="fa fa-plus-circle" aria-hidden="true" style="color: #000"></i></a>
             </div>
         </div>
         <div class="col-sm-4 fc-g666">

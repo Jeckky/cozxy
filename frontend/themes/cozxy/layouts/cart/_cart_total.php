@@ -7,7 +7,7 @@
 <div class="col-xs-12 total-price bg-white">
     <div class="row">
         <div class="price-detail">SUBTOTAL
-            <div class="pull-right"><?= number_format($this->params['cart']['total'], 2) ?> THB</div>
+            <div class="pull-right  summaryFormatText"><?= number_format($this->params['cart']['total'], 2) ?> THB</div>
         </div>
         <div class="price-detail">SHIPPING
             <div class="pull-right"><?= (isset($this->params['cart']['shippingRate']) && $this->params['cart']['shippingRate'] == 0) ? "FREE" : number_format($this->params['cart']['shippingRate'], 2) ?></div>
@@ -16,7 +16,7 @@
             <div class="pull-right">– THB</div>
         </div>
         <div class="price-detail b size20 size18-sm size18-xs">TOTAL
-            <div class="pull-right"><?= number_format($this->params ['cart']['summary'], 2) ?> THB</div>
+            <div class="pull-right summaryFormatText"><?= number_format($this->params ['cart']['summary'], 2) ?> THB</div>
         </div>
     </div>
 </div>
