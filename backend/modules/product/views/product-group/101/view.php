@@ -77,24 +77,26 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <li role="presentation" class="active">
                         <a href="#masterProduct" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Master Product (<?= $dataProvider->getTotalCount() ?>)</a>
                     </li>
-                    <?php // if ($dataProvider2->totalItemCount > 0): ?>
-                    <li role="presentation" class="">
-                        <a href="#myProduct" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">My Product (<?= $dataProvider2->getTotalCount() ?>)</a>
-                    </li>
-                    <?php // endif; ?>
+                    <?php if (!$isMaster): ?>
+                        <li role="presentation" class="">
+                            <a href="#myProduct" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">My Product (<?= $dataProvider2->getTotalCount() ?>)</a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade active in" role="tabpanel" id="masterProduct" aria-labelledby="home-tab">
                         <?= $this->render("_product_grid", ["dataProvider" => $dataProvider]); ?>
                     </div>
-                    <div class="tab-pane fade text-center" role="tabpanel" id="myProduct" aria-labelledby="profile-tab">
-                        <?php if ($dataProvider2->getTotalCount() > 0): ?>
-                            <?= $this->render("_product_grid", ["dataProvider" => $dataProvider2, 'gridTitle' => "<span style='color:white;font-weight:bold'>My Product</span>", 'type' => 2, 'isProductSupp' => TRUE]); ?>
-                        <?php else: ?>
-                            <h3>Create My Product</h3>
-                            <a  href="<?= Yii::$app->homeUrl . "product/product-group/create-my-product?productGroupId=" . $_GET["productGroupId"]; ?>" class="btn btn-success btn-lg">Create</a>
-                        <?php endif; ?>
-                    </div>
+                    <?php if (!$isMaster): ?>
+                        <div class="tab-pane fade text-center" role="tabpanel" id="myProduct" aria-labelledby="profile-tab">
+                            <?php if ($dataProvider2->getTotalCount() > 0): ?>
+                                <?= $this->render("_product_grid", ["dataProvider" => $dataProvider2, 'gridTitle' => "<span style='color:white;font-weight:bold'>My Product</span>", 'type' => 2, 'isProductSupp' => TRUE]); ?>
+                            <?php else: ?>
+                                <h3>Create My Product</h3>
+                                <a  href="<?= Yii::$app->homeUrl . "product/product-group/create-my-product?productGroupId=" . $_GET["productGroupId"]; ?>" class="btn btn-success btn-lg">Create</a>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
 

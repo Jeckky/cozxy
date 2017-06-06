@@ -166,7 +166,7 @@ if (isset($dataProvider)) {
                 'format' => 'html',
                 'options' => ['style' => 'width:10%;text-align:left'],
                 'value' => function($model) {
-                    $ps = \common\models\costfit\ProductSuppliers::find()->where("productId = $model->productId AND userId = " . Yii::$app->user->id)->one();
+                    $ps = \common\models\costfit\ProductSuppliers::find()->where("productSuppId = $model->productSuppId")->one();
                     if (isset($ps)) {
                         $pps = \common\models\costfit\ProductPriceSuppliers::find()->where("productSuppId = $ps->productSuppId AND status = 1")->one();
                         return isset($pps) ? "Stock : $ps->result" . "<br> Selling Price : " . number_format($pps->price) : "Stock : $ps->result";
@@ -191,8 +191,21 @@ if (isset($dataProvider)) {
 //                    ],
             [
                 'class' => 'kartik\grid\ActionColumn',
-//                                                        'dropdown' => FALSE,
-                'visible' => (Yii::$app->controller->action->id != "view" ) ? TRUE : (($isProductSupp) ? TRUE : FALSE),
+                'visible' => function($model) {
+                    if (Yii::$app->controller->action->id != "view") {
+                        if ($model->status == 1) {
+                            return FALSE;
+                        } else {
+                            return TRUE;
+                        }
+                    } else {
+                        if ($isProductSupp) {
+                            return TRUE;
+                        } else {
+                            return FALSE;
+                        }
+                    }
+                },
                 'vAlign' => 'middle',
                 'template' => '{update} {updateSupplier} {delete}',
                 'urlCreator' => function($action, $model, $key, $index, $isProductSupp) use ($isProductSupp) {
@@ -212,16 +225,16 @@ if (isset($dataProvider)) {
                 },
                 'visibleButtons' => [
                     'update' => function ($model, $key, $index) {
-                        return $model->status === 1 ? false : true;
+                        return ($model->status === 1 || $model->status === 99) ? false : true;
                     },
                     'delete' => function ($model, $key, $index) {
-                        return $model->status === 1 ? false : true;
+                        return ($model->status === 1 || $model->status === 99) ? false : true;
                     }
                 ],
                 'buttons' => [
                     "update" => function ($url, $model, $key) use ($isProductSupp) {
                         if (!$isProductSupp) {
-                            return Html::a("<span class='glyphicon glyphicon-pencil'></span>", ['update-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->parentId], [
+                            return Html::a("<span class = 'glyphicon glyphicon-pencil'></span>", ['update-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->parentId], [
                                 'title' => Yii::t('app', 'Toogle Active'),
                                 'data-pjax' => '0',
 //                                                                    'data-toggle-active' => $model->productId
@@ -230,10 +243,10 @@ if (isset($dataProvider)) {
                             if (Yii::$app->controller->action->id == "create") {
                                 $params = ['update-product-supp', 'id' => $model->productSuppId, 'step' => 4, 'productGroupTemplateId' => $model->product->productGroupTemplateId, 'productGroupId' => $model->product->parentId];
                             } else {
-                                $params = ['update-product-supp', 'id' => $model->productSuppId, 'step' => 'view'];
+                                $params = ['update-product-supp', 'id' => $model->productSuppId, 'step' => 'view', 'userId' => isset($_GET["userId"]) ? $_GET["userId"] : NULL];
                             }
 
-                            return Html::a("<span class='glyphicon glyphicon-pencil'></span>", $params, [
+                            return Html::a("<span class = 'glyphicon glyphicon-pencil'></span>", $params, [
                                 'title' => Yii::t('app', 'Toogle Active'),
                                 'data-pjax' => '0',
 //                                                                    'data-toggle-active' => $model->productId
@@ -241,7 +254,7 @@ if (isset($dataProvider)) {
                         }
                     },
 //                    "delete" => function ($url, $model) {
-//                        return Html::a("<span class='glyphicon glyphicon-trash'></span>", ['delete-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], [
+//                        return Html::a("<span class = 'glyphicon glyphicon-trash'></span>", ['delete-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], [
 ////                                                                    'title' => Yii::t('app', 'Toogle Active'),
 //                            'title' => "คุณต้องการลบสินค้านี้หรือไม่ ?", 'data-toggle' => 'tooltip',
 //                            'data-toggle-active' => $model->productId
@@ -264,7 +277,7 @@ if (isset($dataProvider)) {
         'headerRowOptions' => ['class' => 'kartik-sheet-style'],
         'filterRowOptions' => ['class' => 'kartik-sheet-style'],
         'pjax' => true, // pjax is set to always true for this demo
-        // set your toolbar
+// set your toolbar
         'toolbar' => [
 //                                                    ['content' =>
 //                                                        Html::button('<i class="glyphicon glyphicon-plus"></i>', ['type' => 'button', 'title' => Yii::t('kvgrid', 'Add Book'), 'class' => 'btn btn-success', 'onclick' => 'alert("This will launch the book creation form.\n\nDisabled for this demo!");']) . ' ' .

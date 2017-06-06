@@ -35,6 +35,8 @@ class Product extends \common\models\costfit\master\ProductMaster
 {
 
     public $storeProductId;
+    public $productSuppUserId;
+    public $productTempId;
 
     /**
      * @inheritdoc

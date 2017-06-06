@@ -66,7 +66,7 @@ class ProductGroupController extends ProductMasterController
                 }
             } else {
                 $query = \common\models\costfit\Product::find()
-                ->select("product.title,product.createDateTime,product.productId,product.status,ps.userId,product.productGroupTemplateId,product.step,ps.productSuppId,ps.userId as productSuppUserId")
+                ->select("product.title,product.createDateTime,product.productId as productTempId,product.status,ps.userId ,product.productGroupTemplateId,product.step,ps.productSuppId,ps.userId as productSuppUserId")
                 ->join("LEFT JOIN", "user u", "u.userId = product.userId")
                 ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
                 ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
@@ -81,8 +81,14 @@ class ProductGroupController extends ProductMasterController
             $ress = array_search(26, $userEx);
             if ($ress !== FALSE) {
                 $query = \common\models\costfit\Product::find()
-                ->where("parentId is null AND status = 99")
-                ->orderBy("updateDateTime DESC");
+                ->select("product.title,product.createDateTime,product.productId as productTempId,product.status,product.productGroupTemplateId,product.step,ps.productSuppId,ps.userId as productSuppUserId")
+                ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
+                ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
+                ->where("product.parentId is null AND product.status = 99")
+                ->groupBy("ps.userId")
+                ->orderBy("product.updateDateTime DESC");
+//                ->count();
+//                throw new \yii\base\Exception($query);
             } else {
                 $query = \common\models\costfit\Product::find()
                 ->where("parentId is null AND userId = " . Yii::$app->user->identity->userId)
@@ -112,6 +118,7 @@ class ProductGroupController extends ProductMasterController
             ]);
         }
 
+
         return $this->render('101/index', [
             'dataProvider' => isset($dataProvider) ? $dataProvider : NULL,
         ]);
@@ -127,8 +134,14 @@ class ProductGroupController extends ProductMasterController
         $model = \common\models\costfit\Product::find()->where("productId = " . $_GET["productGroupId"])->one();
         if (isset($_GET["userId"])) {
             $userId = $_GET["userId"];
+            if ($userId == 0) {
+                $isMaster = TRUE;
+            } else {
+                $isMaster = FALSE;
+            }
         } else {
             $userId = \Yii::$app->user->id;
+            $isMaster = FALSE;
         }
         $dataProvider = new ActiveDataProvider([
             'query' => \common\models\costfit\Product::find()->orderBy("productId ASC")
@@ -147,6 +160,7 @@ class ProductGroupController extends ProductMasterController
             'dataProvider' => $dataProvider,
             'dataProvider2' => $dataProvider2,
             'userId' => $userId,
+            'isMaster' => $isMaster
         ]);
     }
 
@@ -782,15 +796,19 @@ class ProductGroupController extends ProductMasterController
         $model = \common\models\costfit\Product::find()->where("productId = " . $_GET["productGroupId"])->one();
 //        throw new \yii\base\Exception(count($model->products));
         foreach ($model->products as $product) {
-            $ps = \common\models\costfit\ProductSuppliers::find()->where("productId = $product->productId AND userId = " . $_GET["userId"] . " AND status = 99")->one();
-            if (isset($ps)) {
-                $ps->userId = \Yii::$app->user->id;
-                $ps->approve = 'approve';
-                $ps->status = 1;
-                if ($ps->save(FALSE)) {
+            $product->status = 1;
+            $product->save();
+            if (isset($_GET["userId"]) && $_GET["userId"] != 0) {
+                $ps = \common\models\costfit\ProductSuppliers::find()->where("productId = $product->productId AND userId = " . $_GET["userId"] . " AND status = 99")->one();
+                if (isset($ps)) {
+                    $ps->userId = \Yii::$app->user->id;
+                    $ps->approve = 'approve';
+                    $ps->status = 1;
+                    if ($ps->save(FALSE)) {
 
-                } else {
-                    throw new \yii\base\Exception(print_r($ps->errors, TRUE));
+                    } else {
+                        throw new \yii\base\Exception(print_r($ps->errors, TRUE));
+                    }
                 }
             }
         }
@@ -836,7 +854,7 @@ class ProductGroupController extends ProductMasterController
                 }
 
                 if (isset($_GET["step"]) && $_GET["step"] == "view") {
-                    return $this->redirect(['view', 'productGroupId' => $model->product->parentId]);
+                    return $this->redirect(['view', 'productGroupId' => $model->product->parentId, 'userId' => isset($_GET["userId"]) ? $_GET["userId"] : NULL]);
                 } else {
                     return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->product->productGroupTemplateId, 'productGroupId' => $model->product->parentId]);
                 }
