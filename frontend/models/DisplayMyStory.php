@@ -312,7 +312,7 @@ class DisplayMyStory extends Model {
 
                 if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
                     if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
-                        $productImagesThumbnail2 = '/' . $productImages->imageThumbnail2;
+                        $productImagesThumbnail2 = '/' . $productImages->imageThumbnail1;
                     } else {
                         $productImagesThumbnail2 = Base64Decode::DataImageSvg64x64(FALSE, FALSE, FALSE);
                     }
