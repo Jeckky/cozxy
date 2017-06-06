@@ -520,7 +520,7 @@ class Product extends \common\models\costfit\master\ProductMaster
 
     public function getProducts()
     {
-        return $this->hasMany(ProductGroup::className(), ['productId' => 'parentId']);
+        return $this->hasMany(Product::className(), ['parentId' => 'productId']);
     }
 
 }

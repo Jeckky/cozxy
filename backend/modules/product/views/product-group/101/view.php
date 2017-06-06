@@ -87,8 +87,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <div class="tab-pane fade active in" role="tabpanel" id="masterProduct" aria-labelledby="home-tab">
                         <?= $this->render("_product_grid", ["dataProvider" => $dataProvider]); ?>
                     </div>
-                    <div class="tab-pane fade" role="tabpanel" id="myProduct" aria-labelledby="profile-tab">
-                        <?= $this->render("_product_grid", ["dataProvider" => $dataProvider2, 'gridTitle' => "<span style='color:white;font-weight:bold'>My Product</span>", 'type' => 2]); ?>
+                    <div class="tab-pane fade text-center" role="tabpanel" id="myProduct" aria-labelledby="profile-tab">
+                        <?php if ($dataProvider2->getTotalCount() > 0): ?>
+                            <?= $this->render("_product_grid", ["dataProvider" => $dataProvider2, 'gridTitle' => "<span style='color:white;font-weight:bold'>My Product</span>", 'type' => 2, 'isProductSupp' => TRUE]); ?>
+                        <?php else: ?>
+                            <h3>Create My Product</h3>
+                            <a  href="<?= Yii::$app->homeUrl . "product/product-group/create-my-product?productGroupId=" . $_GET["productGroupId"]; ?>" class="btn btn-success btn-lg">Create</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -96,10 +101,41 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
 
 
-
-            <div style="position:fixed;bottom:5px;right:20px;margin:0;padding:5px 3px;background-color: rgba(224,224,224,0.8);text-align: center;border: 3px green solid">
-                <h3 style="color: tomato">Create My Product ?</h3>
-                <a  href="#" class="btn btn-success btn-lg">Create</a>
+            <div id="actionBtn" style="position:fixed;bottom:5px;right:20px;margin:0;padding:5px 3px;background-color: rgba(224,224,224,0.8);text-align: center;border: 3px green solid">
+                <a class="pull-right" style="margin:0;color:red" onclick="$('#actionBtn').hide()" ><i class="glyphicon glyphicon-remove"></i></a>
+                <?php
+                $user_group_Id = Yii::$app->user->identity->user_group_Id;
+                $userRe = str_replace('[', '', str_replace(']', '', $user_group_Id));
+                $userEx = explode(',', $userRe);
+                $ress = array_search(26, $userEx);
+                $productGroup = \common\models\costfit\Product::find()->where("productId=" . $_GET["productGroupId"])->one();
+                if ($ress !== FALSE && $productGroup->status == 99) {
+                    ?>
+                    <?php // echo Html::a("<i class='glyphicon glyphicon-check'></i> Approve", ['approve-product-group', 'id' => $_GET["productGroupId"]], ['class' => 'btn btn-warning']) ?>
+                    <h3 style="color: tomato">Approve Product Supplier ?</h3>
+                    <a  href="<?= Yii::$app->homeUrl . "product/product-group/approve-my-product?productGroupId=" . $_GET["productGroupId"] . "&userId=" . $userId; ?>" class="btn btn-warning btn-lg"><i class='glyphicon glyphicon-check'></i> Approve</a>
+                    <?php
+                } else {
+                    ?>
+                    <?php if ($dataProvider2->getTotalCount() == 0): ?>
+                        <h3 style="color: tomato">Create My Product ?</h3>
+                        <a  href="<?= Yii::$app->homeUrl . "product/product-group/create-my-product?productGroupId=" . $_GET["productGroupId"]; ?>" class="btn btn-success btn-lg">Create</a>
+                        <?php
+                    else:
+                        $countWaitApprove = \common\models\costfit\ProductSuppliers::find()
+                        ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
+                        ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
+                        ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . $userId . " AND product_suppliers.status = 0")
+                        ->count();
+                        ?>
+                        <?php if ($countWaitApprove > 0): ?>
+                            <h3 style="color: tomato">Send Approve My Product ?</h3>
+                            <a  href="<?= Yii::$app->homeUrl . "product/product-group/send-approve-my-product?productGroupId=" . $_GET["productGroupId"]; ?>" class="btn btn-success btn-lg">Send Approve</a>
+                        <?php endif; ?>
+                    <?php
+                    endif;
+                }
+                ?>
             </div>
         </div>
     </div>

@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "warranty_period".
 *
-    * @property string $warrantyPeriodId
+    * @property integer $warrantyPeriodId
     * @property string $title
     * @property integer $status
     * @property string $createDateTime
