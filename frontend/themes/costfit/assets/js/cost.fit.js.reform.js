@@ -81,11 +81,12 @@ $('.checkout_select_address_billing').on('click', function () {
     var addressId = $(this).find('input').attr('id');
     var addressIdValue = $(this).find('input').val();
     // var url = "path/to/your/file"; // the script where you handle the form input.
-
 });
+
 $('.updateBillingCancel').on('click', function () {
     $("#billingUpdate").addClass("hide");
 });
+
 $('.checkout_update_address_shipping').on('click', function () {
 //alert('Id Name : ' + $(this).find('input').attr('id'));
 //alert('Value : ' + $(this).find('input').val());

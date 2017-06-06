@@ -92,7 +92,6 @@ function qSet(y, x, productSuppId, orderId, sendDate) {
 function proceed(data) {
     var shop_data = data;
     if (shop_data == 'apply_coupon') {
-//window.location = '';
         couponCode = $("#coupon-code").val();
 
         $.ajax({
@@ -130,4 +129,29 @@ function proceed(data) {
     } else {
         window.location = '';
     }
+}
+
+function deleteItemCart(ItemOrderId) {
+    //alert(ItemOrderId);
+
+    if (confirm('Sure to delete item') == true) {
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: $baseUrl + 'cart/delete-cart-item',
+            //data: {maxQnty: $maxQnty},
+            data: {id: ItemOrderId},
+            success: function (data)
+            {
+                if (data.status)
+                {
+                    $('.price-detail').find('.summaryFormatText').html(data.cart.summaryFormatText + ' THB');
+                    $('#item' + ItemOrderId).remove();
+                }
+            }
+        });
+    } else {
+        //window.confirm("Sure to delete item");
+    }
+
 }

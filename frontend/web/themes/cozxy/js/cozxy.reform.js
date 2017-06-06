@@ -517,6 +517,7 @@ $(document).on('click', '.delete', function () {
         }
     });
 });
+
 $(document).on('click', '#reviews-rate', function (e) {
 
     var rate = $('input:hidden', '#reviews-rate').val();
