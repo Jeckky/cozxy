@@ -129,8 +129,15 @@ class DisplayMyAccount extends Model {
         $dataOrder = Order::find()
         ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "")->all();
         foreach ($dataOrder as $value) {
+            if ($value->orderNo == NULL) {
+                $orderNo = '-';
+            } else {
+                $orderNo = $value->orderNo;
+            }
             $products[$value->orderId] = [
-                'orderNo' => $value->orderNo,
+                'orderId' => $value->orderId,
+                'orderNo' => $orderNo,
+                'statusNum' => $value->status,
                 'status' => $value->getStatusTextEn($value->status),
                 'updateDateTime' => $value->updateDateTime,
                 'action' => '',
