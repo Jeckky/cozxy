@@ -48,7 +48,7 @@ class DisplayMyStory extends Model {
             } else {
 
                 $products[0] = [
-                    'image' => $productImagesThumbnail2,
+                    'image' => $productImagesThumbnailNull,
                     'url' => isset(Yii::$app->user->id) ? Yii::$app->homeUrl . 'story/write-your-story/' . \common\models\ModelMaster::encodeParams(['productSuppId' => $productSupplierId]) : Yii::$app->homeUrl . 'site/login',
                     'urlView' => '',
                     'brand' => NULL,
