@@ -23,7 +23,7 @@ class DisplayMyStory extends Model {
 
         if (isset(Yii::$app->user->id)) {
             $productPost = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . " and productId=" . $productId)
-            ->groupBy(['productId'])->orderBy('productPostId desc')->one();
+                            ->groupBy(['productId'])->orderBy('productPostId desc')->one();
             if (count($productPost) > 0) {
                 $productPostList = \common\models\costfit\Product::find()->where('productId =' . $productPost->productId)->one();
                 $productImages = \common\models\costfit\ProductImage::find()->where('productId=' . $productPost->productId)->one();
@@ -66,9 +66,9 @@ class DisplayMyStory extends Model {
         //$allProductSuppId = ProductSuppliers::productSupplierGroupStory($productId);
         //throw new \yii\base\Exception($allProductSuppId);
         //$productPost = \common\models\costfit\ProductPost::find()->where('productSuppId=' . $productSuppId)->groupBy(['productSuppId'])->orderBy('productPostId desc')->all();
-        $productPost = \common\models\costfit\ProductPost::find()->where("productId=" . $productSupplierId)->orderBy('productPostId desc')
-        ->limit(5)//แสดงแค่ 5 รายการ
-        ->all();
+        $productPost = \common\models\costfit\ProductPost::find()->where("productId=" . $productId)->orderBy('productPostId desc')
+                ->limit(5)//แสดงแค่ 5 รายการ
+                ->all();
         //throw new \yii\base\Exception(count($productPost));
         $i = 0;
         foreach ($productPost as $value) {
@@ -119,8 +119,8 @@ class DisplayMyStory extends Model {
     }
 
     public static function productViewsRecentStories($productPostId) {
-        $productPost = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . ' and productPostId=' . $productPostId)
-        ->groupBy(['productId'])->orderBy('productPostId desc')->one();
+        $productPost = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId)
+                        ->groupBy(['productId'])->orderBy('productPostId desc')->one();
         $star = DisplayMyStory::calculatePostRating($productPost->productPostId);
         $values = explode(",", $star);
         if (isset($productPost)) {
@@ -211,14 +211,58 @@ class DisplayMyStory extends Model {
         }
         if ($postId != '') {
             $productPostRating = \common\models\costfit\ProductPostRating::find()->where("productPostId in($postId)")
-            ->groupBy('productPostId')
-            ->orderBy('avg(score) DESC')
-            ->all();
+                    ->groupBy('productPostId')
+                    ->orderBy('avg(score) DESC')
+                    ->all();
         }
         if (!isset($productPostRating) || count($productPostRating) == 0) {
             $byCreate = ProductPost::find()->where("productId in($allProductId)")
-            ->orderBy('createDateTime DESC')
-            ->all();
+                    ->orderBy('createDateTime DESC')
+                    ->all();
+            if (isset($byCreate) && count($byCreate) > 0) {
+                $productPostRating = $byCreate;
+            } else {
+                $productPostRating = null;
+            }
+        }
+        //throw new \yii\base\Exception($productSuppId);
+        /* $popular = ProductPost::find()
+          ->join('LEFT JOIN', 'product_post_rating', '`product_post`.`productPostId`=`product_post_rating`.`productPostId`')
+          ->where("productSuppId in($allProductSuppId)")
+          ->orderBy('`product_post_rating`.`score`')
+          ->limit(5)
+          ->all(); */
+        //throw new \yii\base\Exception(count($popular));
+        //throw new \yii\base\Exception(count($productPostRating));
+        return $productPostRating;
+    }
+
+    public static function popularStoriesNoneStar($productPostId) {
+        /* $productPostRating = \common\models\costfit\ProductPostRating::find()
+          /* ->where("productPostId=" . $productPostId)
+          ->average('score'); */
+
+        //throw new \yii\base\Exception(print_r($productPostRating, true));
+        $productPost = ProductPost::find()->where("productPostId=" . $productPostId)->one();
+        $allProductId = ProductSuppliers::productSupplierGroupStory($productPost->productId);
+        $productPosts = ProductPost::find()->where("productId in($allProductId)")->all();
+        $postId = '';
+        if (isset($productPosts) & count($productPosts) > 0) {
+            foreach ($productPosts as $post):
+                $postId .= $post->productPostId . ",";
+            endforeach;
+            $postId = substr($postId, 0, -1);
+        }
+        if ($postId != '') {
+            $productPostRating = \common\models\costfit\ProductPostRating::find()->where("productPostId in($postId)")
+                    ->groupBy('productPostId')
+                    ->orderBy('avg(score) DESC')
+                    ->all();
+        }
+        if (!isset($productPostRating) || count($productPostRating) == 0) {
+            $byCreate = ProductPost::find()->where("productId in($allProductId)")
+                    ->orderBy('createDateTime DESC')
+                    ->all();
             if (isset($byCreate) && count($byCreate) > 0) {
                 $productPostRating = $byCreate;
             } else {

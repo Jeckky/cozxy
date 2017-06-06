@@ -1,3 +1,4 @@
+
 <div class="media col-sm-4">
     <div class="media-left">
         <a href="<?= $model['url']; ?>">
