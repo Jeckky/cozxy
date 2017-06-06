@@ -31,8 +31,8 @@ class StoryController extends MasterController {
         $productPost = \common\models\costfit\ProductPost::find()->where("productPostId=" . $productPostId)->one();
         $popularStories = DisplayMyStory::popularStories($productPostId); //ที่มีการให้ดาว
         $currency = ArrayHelper::map(Currency::find()->where("status=1")
-                                ->orderBy('createDateTime')
-                                ->all(), 'currencyId', 'title');
+        ->orderBy('createDateTime')
+        ->all(), 'currencyId', 'title');
         $model = new Currency();
         if (isset($_GET['currencyId'])) {
             $comparePrice = DisplayMyStory::comparePrice($productPost->productId, $_GET['currencyId']);
@@ -52,41 +52,41 @@ class StoryController extends MasterController {
         // throw new \yii\base\Exception(print_r($params, true));
         $productSupplier = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
         $productSuppImg = ProductImageSuppliers::find()->where("productSuppId=" . $productSupplier->productSuppId)->one();
-        $model = new \common\models\costfit\ProductPost();
+        $model = new \common\models\costfit\ProductPost(['scenario' => 'write_your_story']);
         $shelf = ArrayHelper::map(ProductShelf::find()->where("userId=" . Yii::$app->user->identity->userId . " and status=1")
-                                ->orderBy('createDateTime')
-                                ->all(), 'productShelfId', 'title');
+        ->orderBy('createDateTime')
+        ->all(), 'productShelfId', 'title');
         $currency = ArrayHelper::map(Currency::find()->where("status=1")
-                                ->orderBy('createDateTime')
-                                ->all(), 'currencyId', 'title');
+        ->orderBy('createDateTime')
+        ->all(), 'currencyId', 'title');
         $country = ArrayHelper::map(Countries::find()->where("1")
-                                ->all(), 'countryId', 'countryName');
+        ->all(), 'countryId', 'countryName');
 
         return $this->render('@app/themes/cozxy/layouts/story/_write_your_story', [
-                    'productSupplier' => $productSupplier,
-                    'image' => isset($productSuppImg) ? $productSuppImg->image : '',
-                    'shelf' => $shelf,
-                    'currency' => $currency,
-                    'country' => $country,
-                    'model' => $model
+            'productSupplier' => $productSupplier,
+            'image' => isset($productSuppImg) ? $productSuppImg->image : '',
+            'shelf' => $shelf,
+            'currency' => $currency,
+            'country' => $country,
+            'model' => $model
         ]);
     }
 
     public function actionWriteStory() {
-        if (isset($_POST['shopName'])) {
+        if (isset($_POST['ProductPost'])) {
             $shelf = new \common\models\costfit\ProductPost();
 
             $productSuppId = $_POST["productSuppId"];
             $parentId = ProductSuppliers::productParentId($productSuppId)->productId;
             $shelf->productId = $parentId;
-            $shelf->productSelfId = $_POST["shelf"];
+            //$shelf->productSelfId = $_POST["shelf"];
             $shelf->userId = Yii::$app->user->identity->userId;
-            $shelf->title = $_POST["title"];
+            $shelf->title = $_POST["ProductPost"]["title"];
             $shelf->description = $_POST["ProductPost"]["description"];
-            $shelf->shopName = $_POST["shopName"];
-            $shelf->price = $_POST["price"];
-            $shelf->country = $_POST["country"];
-            $shelf->currency = $_POST["currency"];
+            $shelf->shopName = $_POST["ProductPost"]["shopName"];
+            $shelf->price = $_POST["ProductPost"]["price"];
+            $shelf->country = $_POST["ProductPost"]["country"];
+            $shelf->currency = $_POST["ProductPost"]["currency"];
             // $shelf->image = $_POST["image"];
             if ($_POST["isPublic"] == 'on') {
                 $shelf->isPublic = 1;
@@ -96,37 +96,36 @@ class StoryController extends MasterController {
             $shelf->status = 1;
             $shelf->createDateTime = new \yii\db\Expression('NOW()');
             $shelf->updateDateTime = new \yii\db\Expression('NOW()');
-            $imageObj = \yii\web\UploadedFile::getInstanceByName("story[image]");
-            if (isset($imageObj) && !empty($imageObj)) {
-                $folderName = "stroy";
-                $file = $imageObj->name;
+            /* $imageObj = \yii\web\UploadedFile::getInstanceByName("story[image]");
+              if (isset($imageObj) && !empty($imageObj)) {
+              $folderName = "stroy";
+              $file = $imageObj->name;
 
-                $filenameArray = explode('.', $file);
-                $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
-                $fileName = \Yii::$app->security->generateRandomString(10) . '.' . $filenameArray[count($filenameArray) - 1];
-                $urlFile = $urlFolder . $fileName;
-                $shelf->image = 'images/' . $folderName . "/" . $fileName;
+              $filenameArray = explode('.', $file);
+              $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
+              $fileName = \Yii::$app->security->generateRandomString(10) . '.' . $filenameArray[count($filenameArray) - 1];
+              $urlFile = $urlFolder . $fileName;
+              $shelf->image = 'images/' . $folderName . "/" . $fileName;
 
-                if (!file_exists($urlFolder)) {
-                    mkdir($urlFolder, 0777);
-                }
-            }
+              if (!file_exists($urlFolder)) {
+              mkdir($urlFolder, 0777);
+              }
+              } */
             if ($shelf->save(false)) {
-                if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
-                    $porductSupplier = ProductSuppliers::find()->where("productSuppId=" . $_POST["productSuppId"])->one();
-                    $productSuppId = $porductSupplier->encodeParams(['productId' => $porductSupplier->productId, 'productSupplierId' => $porductSupplier->productSuppId]);
-                    return $this->redirect([Yii::$app->homeUrl . 'product/' . $productSuppId]);
-                } else {
-
-                }
+                // if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
+                $porductSupplier = ProductSuppliers::find()->where("productSuppId=" . $_POST["productSuppId"])->one();
+                $productSuppId = $porductSupplier->encodeParams(['productId' => $porductSupplier->productId, 'productSupplierId' => $porductSupplier->productSuppId]);
+                return $this->redirect([Yii::$app->homeUrl . 'product/' . $productSuppId]);
+                // } else {
+                // }
             }
         }
     }
 
     public function actionRatingPost() {
         $rate = \common\models\costfit\ProductPostRating::find()->where("productPostId=" . $_POST['postId'] . " and userId=" . $_POST['userId'])
-                ->orderBy("productPostRatingId DESC")
-                ->one();
+        ->orderBy("productPostRatingId DESC")
+        ->one();
         if (isset($rate)) {
             if ($rate->status == 1) {
                 $rate->status = 2;
