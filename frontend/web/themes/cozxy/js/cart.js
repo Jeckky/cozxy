@@ -90,3 +90,45 @@ function qSet(y, x, productSuppId, orderId, sendDate) {
 }
 
 
+function proceed(data) {
+    var shop_data = data;
+    if (shop_data == 'apply_coupon') {
+//window.location = '';
+        couponCode = $("#coupon-code").val();
+
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: $baseUrl + "cart/add-coupon",
+            data: {couponCode: couponCode},
+            success: function (data)
+            {
+                if (data.status)
+                {
+                    alert($('.shopping-cart .cart-sidebar .cart-totals .cartTotalRight').html());
+                    /* $('.shopping-cart .cart-sidebar .cart-totals .cartTotalRight').append(
+                     '<tr class="alert alert-warning" ><td style="font-size:12px"><b>Coupon</b> ' + data.cart.couponCode + '</td>' +
+                     '<td class="discount align-r">' + data.cart.discountFormatText + '</td>' +
+                     '</tr>'
+                     );
+                     $('.shopping-cart .cart-sidebar .cart-totals .summary').text(data.cart.summaryFormatText + " ฿");*/
+                    $('.price-detail').find('.promo-coupon-codes').html(data.cart.couponCode + ' THB');
+                    $('.price-detail').find('.summaryFormatText').html(data.cart.summaryFormatText + ' THB');
+                } else
+                {
+                    alert(data.message);
+                }
+            }
+        });
+    } else if (shop_data == 'update_cart') {
+        window.location = $baseUrl + 'history';
+    } else if (shop_data == 'to_checkout') {
+        window.location = $baseUrl + 'checkout';
+    } else if (shop_data == 'to_guest') {
+        window.location = $baseUrl + 'register/login';
+    } else if (shop_data == '') {
+        //window.location = '' ;
+    } else {
+        window.location = '';
+    }
+}
