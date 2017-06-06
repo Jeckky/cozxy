@@ -303,16 +303,16 @@ class DisplayMyStory extends Model {
         ->all();
         $i = 0;
         foreach ($productPost as $value) {
-            $productPostList = \common\models\costfit\Product::find()->where('productId =' . $value->productId)->all();
+            $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productId =' . $value->productId)->all();
             foreach ($productPostList as $items) {
-                $productImages = \common\models\costfit\ProductImage::find()->where('productId=' . $items->productId)->one();
+                $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $items['productSuppId'])->one();
                 $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $items['productId'])->orderBy('productPriceId desc')->limit(1)->one();
                 $price_s = number_format($productPrice->price, 2);
                 $price = number_format($productPrice->price, 2);
 
                 if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
                     if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
-                        $productImagesThumbnail2 = '/' . $productImages->imageThumbnail2;
+                        $productImagesThumbnail2 = '/' . $productImages->imageThumbnail1;
                     } else {
                         $productImagesThumbnail2 = Base64Decode::DataImageSvg64x64(FALSE, FALSE, FALSE);
                     }
@@ -325,7 +325,7 @@ class DisplayMyStory extends Model {
                 $products[$value->productPostId] = [
                     'image' => $productImagesThumbnail2,
                     //'url' => '/story?id=' . $items->productSuppId,
-                    'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productPostId' => $value->productPostId, 'productId' => $items->productId, 'productSupplierId' => $productSupplierId]),
+                    'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productPostId' => $value->productPostId, 'productId' => $items->productId, 'productSupplierId' => $items['productSuppId']]),
                     'url_seemore' => Yii::$app->homeUrl . 'story/see-more/' . $value->encodeParams(['productPostId' => $value->productPostId, 'productId' => $items->productId, 'productSupplierId' => $productSupplierId]),
                     'brand' => isset($items->brand) ? $items->brand->title : '',
                     'title' => $items->title,

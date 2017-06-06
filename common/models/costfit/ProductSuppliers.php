@@ -32,8 +32,7 @@ use \common\models\costfit\master\ProductSuppliersMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMaster
-{
+class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMaster {
 
     /**
      * @inheritdoc
@@ -63,8 +62,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), [
             [['brandId', 'categoryId', 'title'], 'required', 'on' => self::ADD_NEW_PRODUCT_SUPPLIERS],
         ]);
@@ -73,8 +71,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
             'categoryId' => 'หมวดหมู่',
             'brandId' => 'ยี่ห้อ',
@@ -102,16 +99,14 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     /**
      * @inheritdoc
      */
-    public function attributes()
-    {
+    public function attributes() {
         return array_merge(parent::attributes(), [
             'price image', 'Smart Price', 'firstname', 'lastname', 'bTitle', 'cTitle', 'uTitle', 'smuTitle'
             , 'simage', 'simageThumbnail1', 'simageThumbnail2', 'priceSuppliers', 'pTitle', 'sUser', 'price', 'orderItemId'
         ]);
     }
 
-    public function findCheckoutStepArray()
-    {
+    public function findCheckoutStepArray() {
         return [
             self::SUPPLIERS_APPROVE => "อนุมัติ",
             self::SUPPLIERS_OLD => "สินค้าจาก Cozxy",
@@ -122,8 +117,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         ];
     }
 
-    public function getCheckoutStepText($step)
-    {
+    public function getCheckoutStepText($step) {
         $res = $this->findCheckoutStepArray();
         if (isset($res[$step])) {
             return $res[$step];
@@ -132,33 +126,27 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         }
     }
 
-    public function getBrand()
-    {
+    public function getBrand() {
         return $this->hasOne(Brand::className(), ['brandId' => 'brandId']);
     }
 
-    public function getImages()
-    {
+    public function getImages() {
         return $this->hasOne(ProductImageSuppliers::className(), ['productSuppId' => 'productSuppId']);
     }
 
-    public function getImageSupp()
-    {
+    public function getImageSupp() {
         return $this->hasMany(ProductImageSuppliers::className(), ['productSuppId' => 'productSuppId']);
     }
 
-    public function getCategory()
-    {
+    public function getCategory() {
         return $this->hasOne(Category::className(), ['categoryId' => 'categoryId']);
     }
 
-    public function getProductOnePrice()
-    {
+    public function getProductOnePrice() {
         return $this->hasOne(ProductPriceSuppliers::className(), ['productSuppId' => 'productSuppId']);
     }
 
-    static public function getUser($userId)
-    {
+    static public function getUser($userId) {
         $userSuppliers = \common\models\costfit\User::find()->where('UserId =' . $userId)->one();
         if (isset($userSuppliers)) {
             return 'คุณ ' . $userSuppliers->firstname . ' ' . $userSuppliers->lastname;
@@ -167,8 +155,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         }
     }
 
-    public static function productPrice($productSuppId)
-    {
+    public static function productPrice($productSuppId) {
 //throw new \yii\base\Exception($productSuppId);
         $lowestPrice = ProductPriceSuppliers::find()->where("productSuppId=" . $productSuppId . " and status=1")->one();
         if (isset($lowestPrice) && !empty($lowestPrice)) {
@@ -176,8 +163,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         }
     }
 
-    public static function productImageSuppliers($productId)
-    {
+    public static function productImageSuppliers($productId) {
 //throw new \yii\base\Exception($productSuppId);
         $image = ProductImageSuppliers::find()->where("productSuppId=" . $productId . " and status=1")->orderBy("ordering ASC")->one();
         if (isset($image) && !empty($image)) {
@@ -187,8 +173,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         }
     }
 
-    public static function productPriceSupplier($productSuppId)
-    {
+    public static function productPriceSupplier($productSuppId) {
 //throw new \yii\base\Exception($productSuppId);
         $price = ProductPriceSuppliers::find()->where("productSuppId=" . $productSuppId . " and status=1")->one();
         if (isset($price) && !empty($price)) {
@@ -196,24 +181,21 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         }
     }
 
-    public static function productSuppliersId($productSuppId)
-    {
+    public static function productSuppliersId($productSuppId) {
         $id = Product::find()->where("productSuppId=" . $productSuppId)->one();
         if (isset($id) && !empty($id)) {
             return $id->productId;
         }
     }
 
-    public static function productId($productSuppId)
-    {
+    public static function productId($productSuppId) {
         $id = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
         if (isset($id) && !empty($id)) {
             return $id->productId;
         }
     }
 
-    public static function supplier($productSuppId)
-    {
+    public static function supplier($productSuppId) {
 
         $id = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
         if (isset($id) && !empty($id)) {
@@ -221,8 +203,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         }
     }
 
-    public static function productSupplierName($productSuppId)
-    {
+    public static function productSupplierName($productSuppId) {
         $id = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
         if (isset($id) && !empty($id)) {
             return $id;
@@ -231,8 +212,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         }
     }
 
-    public static function productOrder($productSuppId)
-    {
+    public static function productOrder($productSuppId) {
         $model = Order::find()
         ->select(['`order`.*', '`product_suppliers`.*', '`order_item`.*'])
         ->join('LEFT JOIN', 'order_item', 'order.orderId = order_item.orderId')
@@ -247,8 +227,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         }
     }
 
-    public static function productImagesSuppliers($productSuppId)
-    {
+    public static function productImagesSuppliers($productSuppId) {
 //throw new \yii\base\Exception($productSuppId);
         $image = ProductImageSuppliers::find()->where("productSuppId=" . $productSuppId . " and status=1")->orderBy("ordering ASC")->all();
         if (isset($image) && !empty($image)) {
@@ -256,21 +235,19 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         }
     }
 
-    public static function ImagesFromPost($productPostId)
-    {
+    public static function ImagesFromPost($productPostId, $productSuppId) {
         $productPost = ProductPost::find()->where("productPostId=" . $productPostId)->one();
         $img = '';
         if (isset($productPost)) {
-            $image = ProductImage::find()->where("productId=" . $productPost->productId)->one();
+            $image = ProductImageSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
             if (isset($image)) {
-                $img = $image->image;
+                $img = $image->imageThumbnail1;
             }
         }
         return $img;
     }
 
-    public static function productSupplierGroupStory($productId)
-    {
+    public static function productSupplierGroupStory($productId) {
 
         $products = Product::find()->where("parentId=" . $productId)->all();
         $productIds = '';
@@ -290,8 +267,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         return $productIds;
     }
 
-    public static function productParentId($productSuppId)
-    {
+    public static function productParentId($productSuppId) {
         $productSupplier = ProductSuppliers::find()->where("productSuppId = " . $productSuppId)->one();
         $product = Product::find()->where("productId = " . $productSupplier->productId)->one();
         if ($product->parentId != null && $product->parentId != '') {
@@ -302,23 +278,19 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         return $parent;
     }
 
-    public function getUnits()
-    {
+    public function getUnits() {
         return $this->hasOne(Unit::className(), ['unitId' => 'unit']);
     }
 
-    public static function bestSellers()
-    {
+    public static function bestSellers() {
         return ProductSuppliers::find()->where("approve = 'approve' and result>0")->orderBy("rand()")->limit(6)->all();
     }
 
-    public static function itemOnSales()
-    {
+    public static function itemOnSales() {
         return ProductSuppliers::find()->where("approve = 'approve' and result>0")->orderBy("rand()")->limit(6)->all();
     }
 
-    public function getProduct()
-    {
+    public function getProduct() {
         return $this->hasOne(Product::className(), ['productId' => 'productId']);
     }
 
