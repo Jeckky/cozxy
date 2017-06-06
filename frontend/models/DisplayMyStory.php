@@ -26,7 +26,7 @@ class DisplayMyStory extends Model {
             ->groupBy(['productId'])->orderBy('productPostId desc')->one();
             if (count($productPost) > 0) {
                 $productPostList = \common\models\costfit\Product::find()->where('productId =' . $productPost->productId)->one();
-                $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSubbId=' . $productSupplierId)->one();
+                $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSupplierId)->one();
                 if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
                     if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
                         $productImagesThumbnail2 = '/' . $productImages->imageThumbnail2;
