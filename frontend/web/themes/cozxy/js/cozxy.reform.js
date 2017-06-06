@@ -539,6 +539,19 @@ $(document).on('click', '#reviews-rate', function (e) {
         }
     });
 });
+$(document).on('click', '#viewPost', function (e) {
+    var postId = $(this).parent().parent().find("#postId").val();
+    var userId = $(this).parent().parent().find("#userId").val();
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "story/view-post",
+        data: {'postId': postId, 'userId': userId},
+        success: function (data)
+        {
+
+        }
+    });
+});
 /*
  * @returns {undefined}
  */
