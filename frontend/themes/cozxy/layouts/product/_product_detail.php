@@ -97,7 +97,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             if ($model['wishList'] == 1) { // เคย wishList ไปแล้ว
                                 ?>
                                 <a class="b btn-g999 size16">
-                                    <i class="fa fa-heartbeat" aria-hidden="true"></i> 
+                                    <i class="fa fa-heartbeat" aria-hidden="true"></i>
                                 </a>
                             <?php } else { ?>
                                 <a href="javascript:addItemToWishlist(<?= $model['productSuppId'] ?>);" class="b btn-g999 size16" id="addItemToWishlist-<?= $model['productSuppId'] ?>" data-loading-text="<a><i class='fa fa-heartbeat' aria-hidden='true'></i></a>" style="margin:24px auto 12px">+
@@ -115,6 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <!-- <a href = "/cart" class = "b btn-g999 btn-success size16" style = "margin:24px auto 12px;color:#fff;">+
                                  <i class = "fa fa-bookmark-o"></i></a>
                             -->
+                            <div class="size20">&nbsp;</div>
                         </div>
                     </div>
                 </div>
