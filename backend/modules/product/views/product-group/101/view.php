@@ -124,15 +124,24 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         <a  href="<?= Yii::$app->homeUrl . "product/product-group/create-my-product?productGroupId=" . $_GET["productGroupId"]; ?>" class="btn btn-success btn-lg">Create</a>
                         <?php
                     else:
-                        $countWaitApprove = \common\models\costfit\ProductSuppliers::find()
+                        $countDraft = \common\models\costfit\ProductSuppliers::find()
                         ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
                         ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
                         ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . $userId . " AND product_suppliers.status = 0")
                         ->count();
+                        $countWaitApprove = \common\models\costfit\ProductSuppliers::find()
+                        ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
+                        ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
+                        ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . $userId . " AND product_suppliers.status = 99")
+                        ->count();
                         ?>
-                        <?php if ($countWaitApprove > 0): ?>
+                        <?php if ($countDraft > 0): ?>
                             <h3 style="color: tomato">Send Approve My Product ?</h3>
-                            <a  href="<?= Yii::$app->homeUrl . "product/product-group/send-approve-my-product?productGroupId=" . $_GET["productGroupId"]; ?>" class="btn btn-success btn-lg">Send Approve</a>
+                            <a  href="<?= Yii::$app->homeUrl . "product/product-group/send-approve-my-product?productGroupId=" . $_GET["productGroupId"] . "&userId=" . $userId; ?>" class="btn btn-success btn-lg">Send Approve</a>
+                        <?php endif; ?>
+                        <?php if ($countWaitApprove > 0 && $ress !== FALSE): ?>
+                            <h3 style="color: tomato">Approve Product Supplier ?</h3>
+                            <a  href="<?= Yii::$app->homeUrl . "product/product-group/approve-my-product?productGroupId=" . $_GET["productGroupId"] . "&userId=" . $userId; ?>" class="btn btn-warning btn-lg"><i class='glyphicon glyphicon-check'></i> Approve</a>
                         <?php endif; ?>
                     <?php
                     endif;

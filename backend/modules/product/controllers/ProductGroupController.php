@@ -84,8 +84,9 @@ class ProductGroupController extends ProductMasterController
                 ->select("product.title,product.createDateTime,product.productId as productTempId,product.status,product.productGroupTemplateId,product.step,ps.productSuppId,ps.userId as productSuppUserId")
                 ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
                 ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
-                ->where("product.parentId is null AND ps.status = 99")
-                ->groupBy("ps.userId")
+                ->where("product.parentId is null  AND 1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN product.status = 99 THEN 1 ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 ELSE 0 END) end)")
+//                ->where("product.parentId is null  ")
+                ->groupBy("ps.userId , pc.parentId")
                 ->orderBy("product.updateDateTime DESC");
 //                ->count();
 //                throw new \yii\base\Exception($query);
@@ -766,8 +767,11 @@ class ProductGroupController extends ProductMasterController
                 throw new \yii\base\Exception(print_r($ps->errors, TRUE));
             }
         }
-
-        return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"]]);
+        if (isset($_GET["step"]) && $_GET["step"] == 4) {
+            return $this->redirect(["create", "step" => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["parentId"]]);
+        } else {
+            return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"]]);
+        }
     }
 
     public function actionSendApproveMyProduct()
@@ -788,7 +792,7 @@ class ProductGroupController extends ProductMasterController
             }
         }
 
-        return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"]]);
+        return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"], 'userId' => $_GET["userId"]]);
     }
 
     public function actionApproveMyProduct()
@@ -803,9 +807,9 @@ class ProductGroupController extends ProductMasterController
             if (isset($_GET["userId"]) && $_GET["userId"] != 0) {
                 $ps = \common\models\costfit\ProductSuppliers::find()->where("productId = $product->productId AND userId = " . $_GET["userId"] . " AND status = 99")->one();
                 if (isset($ps)) {
-                    $ps->userId = \Yii::$app->user->id;
+//                    $ps->userId = \Yii::$app->user->id;
                     $ps->approve = 'approve';
-                    $ps->approveCreateDateTime = new \yii\db\Expression("NOW()");
+                    $ps->approvecreateDateTime = new \yii\db\Expression("NOW()");
                     $ps->status = 1;
                     if ($ps->save(FALSE)) {
 
