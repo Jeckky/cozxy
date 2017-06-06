@@ -195,8 +195,8 @@ class StoryController extends MasterController {
 
         $productSuppId = isset($params['productSupplierId']) ? $params['productSupplierId'] : NULL;
         $seeMore = new \yii\data\ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStoryAll('', $productSuppId)]);
-
-        return $this->render('index', compact('seeMore'));
+        $otherProducts = new ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productOtherProducts()]);
+        return $this->render('index', compact('seeMore', 'otherProducts'));
     }
 
 }
