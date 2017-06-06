@@ -25,8 +25,8 @@ class DisplayMyStory extends Model {
             $productPost = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . " and productId=" . $productId)
             ->groupBy(['productId'])->orderBy('productPostId desc')->one();
             if (count($productPost) > 0) {
-                $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $productPost->productId)->one();
-                $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productPost->productId)->one();
+                $productPostList = \common\models\costfit\Product::find()->where('productId =' . $productPost->productId)->one();
+                $productImages = \common\models\costfit\ProductImage::find()->where('productId=' . $productPost->productId)->one();
                 if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
                     if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
                         $productImagesThumbnail2 = '/' . $productImages->imageThumbnail2;
@@ -72,9 +72,9 @@ class DisplayMyStory extends Model {
 //throw new \yii\base\Exception(count($productPost));
         $i = 0;
         foreach ($productPost as $value) {
-            $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productSuppId =' . $value->productId)->all();
+            $productPostList = \common\models\costfit\Product::find()->where('productId =' . $value->productId)->all();
             foreach ($productPostList as $items) {
-                $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $items->productId)->one();
+                $productImages = \common\models\costfit\ProductImage::find()->where('productId=' . $items->productId)->one();
                 $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $productSupplierId)->orderBy('productPriceId desc')->limit(1)->one();
                 $price_s = number_format($productPrice->price, 2);
                 $price = number_format($productPrice->price, 2);
