@@ -87,6 +87,7 @@ $(window).resize(function() { descSet(); });
               ],
               ]);
              */
+            echo $this->render('@app/themes/cozxy/layouts/product/_product_detail_tab', ['model' => $productViews, 'productGroupOptionValues' => $productGroupOptionValues]);
             ?>
             <div class="size24">&nbsp;</div>
 
