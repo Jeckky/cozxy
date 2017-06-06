@@ -190,8 +190,8 @@ class CheckoutController extends MasterController {
             $userPoint = $this->CreateUserPoint($order->userId);
         }
         return $this->render('/order/index', [
-                    'order' => $order,
-                    'userPoint' => $userPoint
+            'order' => $order,
+            'userPoint' => $userPoint
         ]);
     }
 
@@ -386,6 +386,215 @@ class CheckoutController extends MasterController {
         } else {
             return '';
         }
+    }
+
+    public function actionResult() {
+        throw new \yii\base\Exception(print_r($_REQUEST, true));
+        $this->title = 'Cozxy.com | Order Thank';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = 'Order Thank';
+        $res = [];
+        //throw new \yii\base\Exception(print_r($_REQUEST, TRUE));
+        if (isset($_REQUEST) && $_REQUEST != array()) {
+            $order = Order::find()->where("orderNo='" . $_REQUEST["req_reference_number"] . "'")->one();
+            if ($_REQUEST["decision"] == "ACCEPT") {
+                /*
+                 * Reward Points
+                 * 9/1/2017 By Taninut.Bm
+                 */
+                $orderSummary = $order->summary;
+                $orderOrderId = $order->orderId;
+                $orderUserId = $order->userId;
+                $getRankMemberPoints = RewardPoints::getRankMemberPoints($orderUserId, $orderOrderId, $orderSummary);
+                /*
+                 * Insert Order
+                 */
+
+                $order->invoiceNo = Order::genInvNo($order);
+                $order->status = Order::ORDER_STATUS_E_PAYMENT_SUCCESS;
+                $order->paymentDateTime = new \yii\db\Expression('NOW()');
+                //$this->updateSupplierStock($order); //ถ้าจ่ายบัติผ่าน ตัด stock ของ supplier
+                //ตัดstock ในPRODUCT SUPPLIER
+                if ($order->save()) {
+                    $res["status"] = 1;
+                    $res["invoiceNo"] = $order->invoiceNo;
+                    $res["message"] = \common\models\costfit\EPayment::getReasonCodeText($_POST["reason_code"]);
+
+                    // Update Send Date field
+                    // ****รอ Confirm เรื่อง สั่งหลังกี่โมง เลื่อนไปอีก 1 วัน****
+                    if ($order->isSlowest) {
+                        $maxDate = \common\models\costfit\OrderItem::findSlowestDate($order->orderId);
+                        foreach ($order->orderItems as $item):
+                            $item->sendDateTime = date('Y-m-d', strtotime("+$maxDate day"));
+                            $item->save();
+                        endforeach;
+                    } else {
+                        foreach ($order->orderItems as $item):
+                            $date = \common\models\costfit\ShippingType::find()->where('shippingTypeId=' . $item->sendDate)->one();
+                            $item->sendDateTime = date('Y-m-d', strtotime("+$date->date day"));
+                            $item->save();
+                        endforeach;
+                    }
+                    // Update Send Date field
+                    /*
+                     * Send For Email
+                     * Create Date : 24/2/2017
+                     * Create By : Taninut.Bm
+                     */
+                    $member = \common\models\costfit\User::find()->where('userId=' . $orderUserId)->one();
+                    if (isset($member)) {
+                        if (isset($member->email)) {
+                            $toMails = $member->email;
+                        } else {
+                            $toMails = $member->username;
+                        }
+                        $toMail = $toMails;
+                        $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "profile/order";
+                        $type = $member->firstname . ' ' . $member->lastname;
+                        $Subject = 'Topic: Your Cozxy.com Order  ' . $order->invoiceNo;
+                        /*
+                         * `billingFirstname`, `billingLastname`, `billingCompany`, `billingTax`,
+                         * `billingAddress`, `billingCountryId`, `billingProvinceId`, `billingAmphurId`,
+                         * `billingDistrictId`, `billingZipcode`, `billingTel`
+                         */
+                        $adress = [];
+                        $adress['billingCompany'] = $order->billingCompany;
+                        $adress['billingTax'] = $order->billingTax;
+
+                        $adress['billingFirstname'] = $order->billingFirstname;
+                        $adress['billingLastname'] = $order->billingLastname;
+                        $adress['billingAddress'] = $order->billingAddress;
+
+                        $billingCountryId = $order->billingCountryId; //ประเทศ
+                        $country = Local::Countries($billingCountryId);
+                        $adress['billingCountryId'] = $country->localName;
+
+                        $billingProvinceId = $order->billingProvinceId; //จังหวัด
+                        $States = Local::States($billingProvinceId);
+                        $adress['billingProvinceId'] = $States->localName;
+
+                        $billingAmphurId = $order->billingAmphurId; //อำเภอ
+                        $Cities = Local::Cities($billingAmphurId);
+                        $adress['billingAmphurId'] = $Cities->localName;
+
+                        $billingDistrictId = $order->billingDistrictId; //ตำบล
+                        $District = Local::District($billingDistrictId);
+                        $adress['billingDistrictId'] = $District->localName;
+
+                        $adress['billingZipcode'] = $order->billingZipcode;
+                        $adress['billingTel'] = $order->billingTel;
+                        /*
+                         * Comment
+                         * Create Date : 30/03/2017
+                         */
+
+                        $orderList = \common\models\costfit\Order::find()->where('orderId=' . $orderOrderId)->one();
+                        /*
+                          //$orderItems = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderOrderId)->all();
+                          $receiveType = [];
+                          $GetOrderItemrGroupLockersMaster = PickingPoint::GetOrderItemrGroupLockersMaster($orderId);
+                          if (isset($GetOrderItemrGroupLockersMaster)) {
+                          $receiveType['GetLockers'] = $GetOrderItemrGroupLockersMaster->pickingId;
+                          } else {
+                          $receiveType['GetLockers'] = FALSE;
+                          }
+                          $GetOrderItemrGroupBoothMaster = PickingPoint::GetOrderItemrGroupBoothMaster($orderId);
+                          if (isset($GetOrderItemrGroupBoothMaster)) {
+                          $GetBooth = $GetOrderItemrGroupBoothMaster->pickingId;
+                          } else {
+                          $GetBooth = FALSE;
+                          }
+                         */
+                        $receiveType = [];
+                        $email = new Email();
+                        $email->mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, '');
+                    }
+
+                    /*
+                     * End Send Email
+                     */
+                }
+            } else if ($_REQUEST["decision"] == "REVIEW") {
+                $order->status = Order::ORDER_STATUS_E_PAYMENT_PENDING;
+                $order->save();
+                $res["status"] = 2;
+                $res["message"] = \common\models\costfit\EPayment::getReasonCodeText($_POST["reason_code"]);
+            } else {
+                $order->status = Order::ORDER_STATUS_E_PAYMENT_DRAFT;
+                $order->save();
+                $res["status"] = 3;
+                $res["message"] = \common\models\costfit\EPayment::getReasonCodeText($_POST["reason_code"]);
+
+                $this->returnSupplierStock($order); //คืนstock
+            }
+            //Order::saveOrderPaymentHistory($order, $_REQUEST["decision"], $_POST["reason_code"], $_POST['score_device_fingerprint_true_ipaddress']);
+            Order::saveOrderPaymentHistory($order, $_REQUEST["decision"], $_POST["reason_code"], 1);
+        }
+
+        return $this->render('payment_result', compact('res'));
+    }
+
+    public function actionSendPayment() {
+        $isMcc = TRUE;
+//        $model = \common\models\areawow\UserPayment::find()->where("userPaymentId=" . $_GET["id"])->one();
+//        $package = \common\models\areawow\Package::find()->where("packageId = $model->packageId")->one();
+        //URL Test
+        $sendUrl = "https://uatkpgw.kasikornbank.com/pgpayment/payment.aspx";
+        //URL Test
+        //
+        //Production URL
+//        $sendUrl = "https://rt05.kasikornbank.com/pgpayment/payment.aspx";
+        ////Production URL
+        //
+        //
+        //Mobile URL
+//        $sendUrl = "https://rt05.kasikornbank.com/mobilepay/payment.aspx";
+        ////Mobile URL
+        //
+
+        // Standard Thai Bath
+        if (!$isMcc):
+
+        // For AreaWIW
+//            $merchantId = "401001605782521";
+//            $terminalId = "70352178";
+        // For AreaWIW
+        // Standard  Thai Bath
+        else:
+            //
+            // MCC USD
+            //For Cozxy
+//            $merchantId = "451005319527001";
+//            $terminalId = "74428381";
+            //For Cozxy
+            // For AreaWIW
+            $merchantId = "402001605782521";
+            $terminalId = "70352180";
+        // For AreaWIW
+        // MCC USD
+        endif;
+//        throw new \yii\base\Exception(str_replace(".", "", $package->price));
+//        $amount = str_replace(".", "", $package->price);
+        $amount = str_replace(".", "", 1000);
+        if (Yii::$app->getRequest()->serverName == "localhost") {
+            $url = "http://" . Yii::$app->getRequest()->serverName . Yii::$app->homeUrl . "checkout/result";
+//        $url = "http://dev/areawow-frontend/user/payment-result";
+            $resUrl = "http://" . Yii::$app->getRequest()->serverName . Yii::$app->homeUrl . "checkout/result";
+        } else {
+            $url = "http://" . Yii::$app->getRequest()->serverName . "/checkout/result";
+//        $url = "http://dev/areawow-frontend/user/payment-result";
+            $resUrl = "http://" . Yii::$app->getRequest()->serverName . "/checkout/result";
+        }
+        $cusIp = Yii::$app->getRequest()->getUserIP();
+//        $description = "Buy Package " . $package->title;
+        $description = "Buy Package 1";
+//        $invoiceNo = $model->paymentNo;
+        $invoiceNo = 1;
+        $fillSpace = "Y";
+        $md5Key = "SzabTAGU5fQYgHkVGU5f4re8pLw5423Q"; // Old Payment For AreaWOW
+//        $md5Key = "QxMjcGFzc3MOIQ=vUT0TFN1UUrM0TlRl"; // For Cozxy
+        $checksum = md5($merchantId . $terminalId . $amount . $url . $resUrl . $cusIp . $description . $invoiceNo . $fillSpace . $md5Key);
+        return $this->render("@app/views/e_payment/_k_payment", compact('sendUrl', 'merchantId', 'terminalId', 'checksum', 'amount', 'invoiceNo', 'description', 'url', 'resUrl', 'cusIp', 'fillSpace'));
     }
 
 }
