@@ -259,7 +259,7 @@ class TopUpController extends MasterController {
 //        $invoiceNo = $model->paymentNo;
         $invoiceNo = $topUpNo;
         $fillSpace = "Y";
-
+        // throw new \yii\base\Exception(Yii::$app->params["ePaymentServerType"]);
         $checksum = md5($merchantId . $terminalId . $amount . $url . $resUrl . $cusIp . $description . $invoiceNo . $fillSpace . $md5Key);
         return $this->render("@app/views/e_payment/_k_payment", compact('sendUrl', 'merchantId', 'terminalId', 'checksum', 'amount', 'invoiceNo', 'description', 'url', 'resUrl', 'cusIp', 'fillSpace'));
     }
@@ -475,7 +475,11 @@ class TopUpController extends MasterController {
 
         if (isset($topUp)) {
             $customerName = \common\models\costfit\Address::userName($topUp->userId);
-            $address = User::userAddressText(User::supplierDetail($topUp->userId)->addressId, false);
+            if ($customerName != '') {
+                $address = User::userAddressText(User::supplierDetail($topUp->userId)->addressId);
+            } else {
+                $address = '';
+            }
             $topUpNo = $topUp->topUpNo;
             $subDate = substr($topUp->updateDateTime, 0, -9);
             $date = $this->changDateFormat($subDate);
