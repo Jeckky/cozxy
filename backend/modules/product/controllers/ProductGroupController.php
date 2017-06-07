@@ -326,21 +326,23 @@ class ProductGroupController extends ProductMasterController
                 break;
             case 3:
                 $this->saveProductGroupStep($_GET["productGroupId"], 3);
-                $productGroupTemplateOptions = \common\models\costfit\ProductGroupTemplateOption::find()->where("productGroupTemplateId = " . $_GET["productGroupTemplateId"])->all();
-                foreach ($productGroupTemplateOptions as $pto) {
-                    $pgo = \common\models\costfit\ProductGroupOption::find()->where("productGroupId = " . $_GET["productGroupId"] . ' AND productGroupTemplateOptionId=' . $pto->productGroupTemplateOptionId)->one();
-                    if (isset($pgo)) {
-                        continue;
-                    } else {
-                        $pgo = new \common\models\costfit\ProductGroupOption();
-                    }
+                if (isset($_GET["productGroupTemplateId"])) {
+                    $productGroupTemplateOptions = \common\models\costfit\ProductGroupTemplateOption::find()->where("productGroupTemplateId = " . $_GET["productGroupTemplateId"])->all();
+                    foreach ($productGroupTemplateOptions as $pto) {
+                        $pgo = \common\models\costfit\ProductGroupOption::find()->where("productGroupId = " . $_GET["productGroupId"] . ' AND productGroupTemplateOptionId=' . $pto->productGroupTemplateOptionId)->one();
+                        if (isset($pgo)) {
+                            continue;
+                        } else {
+                            $pgo = new \common\models\costfit\ProductGroupOption();
+                        }
 
-                    $pgo->productGroupId = $_GET["productGroupId"];
-                    $pgo->productGroupTemplateOptionId = $pto->productGroupTemplateOptionId;
-                    $pgo->name = $pto->title;
-                    $pgo->createDateTime = new \yii\db\Expression("NOW()");
-                    if (!$pgo->save()) {
-                        throw new \yii\base\Exception(print_r($pgo->errors, TRUE));
+                        $pgo->productGroupId = $_GET["productGroupId"];
+                        $pgo->productGroupTemplateOptionId = $pto->productGroupTemplateOptionId;
+                        $pgo->name = $pto->title;
+                        $pgo->createDateTime = new \yii\db\Expression("NOW()");
+                        if (!$pgo->save()) {
+                            throw new \yii\base\Exception(print_r($pgo->errors, TRUE));
+                        }
                     }
                 }
                 if (isset($_POST["ProductGroupOptionValue"])) {
