@@ -71,7 +71,7 @@ class ProductGroupController extends ProductMasterController
                 ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
                 ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
                 ->where("product.parentId is null AND ps.userId =" . Yii::$app->user->id)
-                ->andWhere("1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN product.status = 99 THEN 1 ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 ELSE 0 END) end)")
+//                ->andWhere("1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN product.status = 99 THEN 1 ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 ELSE 0 END) end)")
                 ->groupBy("product.productId")
                 ->orderBy("product.updateDateTime DESC");
             }
