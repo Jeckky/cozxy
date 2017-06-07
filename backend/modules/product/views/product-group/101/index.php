@@ -249,7 +249,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     ]);
                                                 }
                                             } else {
-                                                return Html::a('<i class="fa fa-eye"></i>' . $productSupps, ["view", 'productGroupId' => isset($model->productId) ? $model->productId : $model->productTempId], [
+                                                return Html::a('<i class="fa fa-eye"></i>', ["view", 'productGroupId' => isset($model->productId) ? $model->productId : $model->productTempId], [
                                                     'title' => Yii::t('yii', 'update'),
                                                 ]);
                                             }
