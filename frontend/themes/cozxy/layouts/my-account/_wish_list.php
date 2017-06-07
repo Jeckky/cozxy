@@ -8,12 +8,19 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
 					<a href="' . $url . '"><img src="' . $img . '" alt="' . $txt_d . '" class="fullwidth"></a>
 				</div>
 				<div class="product-txt">
-					<p class="size16"  style="height:50px;"><a href="' . $url . '" class="fc-black">' . $txt_d . '</a></p>
-					<p>
+					<p class="size16"  style="height:50px;"><a href="' . $url . '" class="fc-black">' . $txt_d . '</a></p>';
+    if ($price > 0) {
+        echo '<p>
 						<span class="size18">' . $price . '</span> &nbsp;
 						<span class="size14 onsale">' . $price_s . '</span>
-					</p>
-					<p class="size14 fc-g999">' . $txt . '</p>';
+					</p>';
+    } else {
+        echo '<p>
+						<span class="size18">&nbsp;</span> &nbsp;
+						<span class="size14 onsale">&nbsp;</span>
+					</p>';
+    }
+    '<p class="size14 fc-g999">' . $txt . '</p>';
     if ($maxQnty > 0 && $price > 0) {
         echo '<p><a href="javascript:addItemToCartUnitys(' . $productSuppId . ',1,' . $maxQnty . ',\'' . $fastId . '\',' . $productId . ',' . $supplierId . ',' . $receiveType . ')" id="addItemsToCartMulti-' . $id . '" data-loading-text="ADD TO CART" class="btn-yellow">ADD TO CART</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $id . ');" id="deletetemToWishlists-' . $id . '"  class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
     } else {
