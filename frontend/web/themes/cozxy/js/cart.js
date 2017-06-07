@@ -83,7 +83,7 @@ function qSet(y, x, productSuppId, orderId, sendDate) {
 //                    $('.incr-btn').popover('show');
                     $('.quantity-sel').find('#quantity').val(temp);
                 }
-                $button.parent().find("input").val(temp.toFixed(2));
+                //$button.parent().find("input").val(temp.toFixed(2));
             }
         }
     });
