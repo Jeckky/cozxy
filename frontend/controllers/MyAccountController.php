@@ -107,10 +107,10 @@ class MyAccountController extends MasterController {
         $token = $request->post('token');
 
         if (Yii::$app->security->validatePassword($token, \Yii::$app->user->identity->password_hash)) {
-            // Password Match
+// Password Match
             echo TRUE;
         } else {
-            //No Match
+//No Match
             echo FALSE;
         }
     }
@@ -154,8 +154,37 @@ class MyAccountController extends MasterController {
         if ($model->delete()) {
             echo 'complete';
         } else {
-            //$this->redirect(Yii::$app->homeUrl . 'profile');
+//$this->redirect(Yii::$app->homeUrl . 'profile');
             echo 'wrong';
+        }
+    }
+
+    public function actionPurchaseOrder($hash) {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $k = base64_decode(base64_decode($hash));
+        $params = \common\models\ModelMaster::decodeParams($hash);
+
+        $orderId = Yii::$app->request->get('OrderNo');
+        //$this->layout = "/content_profile";
+        $this->title = 'Cozxy.com | Order Purchase';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = "Order Purchase";
+
+        //echo htmlspecialchars($orderId);
+        if (isset($params['orderId'])) {
+            $order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . $params['orderId'] . '" ')->one();
+            $issetPoint = \common\models\costfit\UserPoint::find()->where("userId=" . $order->userId)->one();
+            if (isset($issetPoint)) {
+                $userPoint = $issetPoint;
+            } else {
+                $userPoint = $this->CreateUserPoint($order->userId);
+            }
+            //$orderItem = PickingPoint::GetOrderItemrGroupLockersMaster($orderId);
+            return $this->render('@app/themes/cozxy/layouts/my-account/purchase_order', compact('order', 'userPoint'));
+        } else {
+            return $this->redirect(['my-account']);
         }
     }
 
