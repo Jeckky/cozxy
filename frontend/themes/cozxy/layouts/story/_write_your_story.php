@@ -153,7 +153,7 @@ $form = ActiveForm::begin([
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <iframe src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d124008.92046473033!2d100.48062576799724!3d13.762055508253102!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x30e29ebe74b07b57%3A0x1892d37c43ed15a7!2z4LiV4Lil4Liy4LiU4Lio4Lij4Li14LiU4Li04LiZ4LmB4LiU4LiH!3m2!1d13.7620654!2d100.55066629999999!5e0!3m2!1sth!2sth!4v1494639156559" frameborder="0" style="width:100%;height:20vh;border:0" allowfullscreen></iframe>
+                                    <div id="map" style="height:200px;"></div>
                                 </div>
                             </div>
                         </div>
@@ -179,3 +179,50 @@ $form = ActiveForm::begin([
     <div class="size12 size10-xs">&nbsp;</div>
 </div>
 <?php ActiveForm::end(); ?>
+<?php
+$this->registerCss('
+#map {
+            height: 300px;
+        }
+');
+
+$this->registerJs('
+        var map;
+        function initMap() {
+            var myLatLng = { lat: -25.363, lng: 131.044 };
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: myLatLng,
+                zoom: 16
+            });
+
+            var marker = new google.maps.Marker({
+                map: map,
+                position: myLatLng,
+                title: "Hello World!"
+            });
+        }
+
+function changeMap(lats, lngs) {
+
+    var myLatLng = {lat: Number(lats), lng: Number(lngs)};// get ค่ามาจาก address แต่เป็น String ต้องเปลียนให้เป็น Number
+    console.log(myLatLng);
+    //document.getElementById("map").innerHTML = "Paragraph changed!";
+    //$(".cart-detail").find("#map").html("xxxxxx");
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: myLatLng,
+        zoom: 11,
+        mapTypeId: "hybrid"
+    });
+
+    var marker = new google.maps.Marker({
+        map: map,
+        position: myLatLng,
+        title: "Hello World!"
+    });
+}
+', \yii\web\View::POS_HEAD);
+
+
+
+$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap', ['depends' => ['yii\web\YiiAsset']]);
+?>
