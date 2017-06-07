@@ -780,5 +780,7 @@ function showMore(cat, clickNum, countAll, limit_start, limit_end) {
 
 
 $(".upload-payment-slip").click(function () {
-    //alert($(this).data('id')); 
+    //alert($(this).data('id'));
+
 });
+
