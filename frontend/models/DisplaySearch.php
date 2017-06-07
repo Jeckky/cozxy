@@ -150,7 +150,8 @@ class DisplaySearch extends Model {
             ->where($whereArray)
             //->andWhere([">", "ps.result", 0])
             //->andWhere([">", "pps.price", 0])
-            ->orderBy(new \yii\db\Expression('rand()'), 'pps.price desc')
+            ->orderBy(new \yii\db\Expression('rand()'))
+            //->orderBy(['pps.price' => SORT_DESC, 'rand()' => SORT_DESC])
             //->limit($n)
             ->all();
         } elseif ($cat != FALSE && $mins != FALSE && $maxs != FALSE) {
