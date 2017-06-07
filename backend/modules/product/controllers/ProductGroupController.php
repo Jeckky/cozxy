@@ -61,7 +61,7 @@ class ProductGroupController extends ProductMasterController
                     $query = \common\models\costfit\Product::find()
                     ->join("LEFT JOIN", "user u", "u.userId = product.userId")
                     ->where("product.parentId is null AND u.type in (2, 3, 4, 5) AND product.status = 1")
-                    ->andWhere("(SELECT COUNT(*) FROM product pc WHERE parentId = product.productId) > 0")
+//                    ->andWhere("(SELECT COUNT(*) FROM product pc WHERE parentId = product.productId) > 0")
                     ->orderBy("product.updateDateTime DESC");
                 }
             } else {
