@@ -37,7 +37,16 @@ if (Yii::$app->controller->id == 'product') {
             </div>
         </div>
         <div class="product-txt">
-            <p class="size16 fc-g666"><?= $model['brand'] ?></p>
+            <?php
+            if (isset($model['brand'])) {
+                ?>
+                <p class="size16 fc-g666"><?= $model['brand'] ?></p>
+                <?php
+            } else {
+                echo '';
+            }
+            ?>
+
             <p class="size14 b" style="height:40px;"><a href="<?= $model['url'] ?>" class="fc-black"><?= $model['title'] ?></a></p>
 
             <?php
@@ -48,8 +57,7 @@ if (Yii::$app->controller->id == 'product') {
                 </p>
                 <?php
             } else {
-                echo '<span class="size18">&nbsp;</span><br>
-                    <span class="size14  ">&nbsp;</span>';
+                echo '';
             }
             ?>
 
