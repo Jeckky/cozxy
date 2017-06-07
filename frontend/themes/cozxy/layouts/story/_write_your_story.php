@@ -153,7 +153,7 @@ $form = ActiveForm::begin([
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <iframe src="https://www.google.co.th/maps/@13.8739928,100.6140252,15z/data=!3m1!4b1!4m2!7m1!2e1?hl=th" frameborder="0" style="width:100%;height:20vh;border:0" allowfullscreen></iframe>
+                                    <div id="map" style="height:200px;"></div>
                                 </div>
                             </div>
                         </div>
@@ -179,3 +179,50 @@ $form = ActiveForm::begin([
     <div class="size12 size10-xs">&nbsp;</div>
 </div>
 <?php ActiveForm::end(); ?>
+<?php
+$this->registerCss('
+#map {
+            height: 300px;
+        }
+');
+
+$this->registerJs('
+        var map;
+        function initMap() {
+            var myLatLng = { lat: -25.363, lng: 131.044 };
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: myLatLng,
+                zoom: 16
+            });
+
+            var marker = new google.maps.Marker({
+                map: map,
+                position: myLatLng,
+                title: "Hello World!"
+            });
+        }
+
+function changeMap(lats, lngs) {
+
+    var myLatLng = {lat: Number(lats), lng: Number(lngs)};// get ค่ามาจาก address แต่เป็น String ต้องเปลียนให้เป็น Number
+    console.log(myLatLng);
+    //document.getElementById("map").innerHTML = "Paragraph changed!";
+    //$(".cart-detail").find("#map").html("xxxxxx");
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: myLatLng,
+        zoom: 11,
+        mapTypeId: "hybrid"
+    });
+
+    var marker = new google.maps.Marker({
+        map: map,
+        position: myLatLng,
+        title: "Hello World!"
+    });
+}
+', \yii\web\View::POS_HEAD);
+
+
+
+$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap', ['depends' => ['yii\web\YiiAsset']]);
+?>
