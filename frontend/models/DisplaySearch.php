@@ -57,7 +57,7 @@ class DisplaySearch extends Model {
                 'image' => $productImagesThumbnail1,
                 'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
                 'brand' => isset($value->brand) ? $value->brand->title : '',
-                'title' => isset($value->title) ? $value->title : '',
+                'title' => substr($value->title, 0, 35),
                 'price_s' => isset($price_s) ? $price_s : '',
                 'price' => isset($price) ? $price : '',
                 'maxQnty' => $value->result,
@@ -106,13 +106,14 @@ class DisplaySearch extends Model {
             }
             $price_s = number_format($value->price, 2);
             $price = number_format($value->price, 2);
+
             $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
             $products[$value->productSuppId] = [
                 'productSuppId' => $value->productSuppId,
                 'image' => $productImagesThumbnail1,
                 'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
                 'brand' => isset($value->brand) ? $value->brand->title : '',
-                'title' => isset($value->title) ? $value->title : '',
+                'title' => substr($value->title, 0, 35),
                 'price_s' => isset($price_s) ? $price_s : '',
                 'price' => isset($price) ? $price : '',
                 'maxQnty' => isset($value->result) ? $value->result : '',
