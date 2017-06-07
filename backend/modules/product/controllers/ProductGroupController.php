@@ -367,13 +367,15 @@ class ProductGroupController extends ProductMasterController
                 $model = \common\models\costfit\Product::find()->where("productId = " . $_GET["productGroupId"])->one();
                 $countProduct = \common\models\costfit\Product::find()->where("parentId = " . $_GET["productGroupId"])->count();
                 if (isset($_POST["finish"])) {
-                    $model->status = 99;
-                    $model->save();
-                    foreach ($model->products as $product) {
-                        $productSupp = \common\models\costfit\ProductSuppliers::find()->where("productId = $product->productId AND userId = " . \Yii::$app->user->id)->one();
-                        if (isset($productSupp)) {
-                            $productSupp->status = 99;
-                            $productSupp->save();
+                    if ($model->status != 1) {
+                        $model->status = 99;
+                        $model->save();
+                        foreach ($model->products as $product) {
+                            $productSupp = \common\models\costfit\ProductSuppliers::find()->where("productId = $product->productId AND userId = " . \Yii::$app->user->id)->one();
+                            if (isset($productSupp)) {
+                                $productSupp->status = 99;
+                                $productSupp->save();
+                            }
                         }
                     }
                     return $this->redirect(['index']);
