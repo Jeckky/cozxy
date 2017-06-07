@@ -135,14 +135,22 @@ $form = ActiveForm::begin([
                     tabsize: 2,
                     codemirror: {
                         theme: 'monokai'
-                    }
+                    },toolbar: [
+                        ['fontsize', ['fontsize']]
+                      ],
+                    fontNames: ['Maledpan', 'Tahoma', 'Arial Unicode MS', 'MS Gothic', 'Helvetica', 'sans-serif'],
+                      fontNamesIgnoreCheck: ['Maledpan', 'Tahoma']
                 });
                 $('#product-specification').summernote({
                     height: 200,
                     tabsize: 2,
                     codemirror: {
                         theme: 'monokai'
-                    }
+                    },toolbar: [
+                        ['fontsize', ['fontsize']]
+                      ],
+                    fontNames: ['Maledpan', 'Tahoma', 'Arial Unicode MS', 'MS Gothic', 'Helvetica', 'sans-serif'],
+                      fontNamesIgnoreCheck: ['Maledpan', 'Tahoma']
                 });
             }
 

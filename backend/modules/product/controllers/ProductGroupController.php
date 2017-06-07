@@ -61,7 +61,7 @@ class ProductGroupController extends ProductMasterController
                     $query = \common\models\costfit\Product::find()
                     ->join("LEFT JOIN", "user u", "u.userId = product.userId")
                     ->where("product.parentId is null AND u.type in (2, 3, 4, 5) AND product.status = 1")
-                    ->andWhere("(SELECT COUNT(*) FROM product pc WHERE parentId = product.productId) > 0")
+//                    ->andWhere("(SELECT COUNT(*) FROM product pc WHERE parentId = product.productId) > 0")
                     ->orderBy("product.updateDateTime DESC");
                 }
             } else {
@@ -71,6 +71,7 @@ class ProductGroupController extends ProductMasterController
                 ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
                 ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
                 ->where("product.parentId is null AND ps.userId =" . Yii::$app->user->id)
+                ->andWhere("1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN product.status = 99 THEN 1 ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 ELSE 0 END) end)")
                 ->groupBy("product.productId")
                 ->orderBy("product.updateDateTime DESC");
             }
