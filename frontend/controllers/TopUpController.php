@@ -259,7 +259,7 @@ class TopUpController extends MasterController {
 //        $invoiceNo = $model->paymentNo;
         $invoiceNo = $topUpNo;
         $fillSpace = "Y";
-
+        throw new \yii\base\Exception($resUrl);
         $checksum = md5($merchantId . $terminalId . $amount . $url . $resUrl . $cusIp . $description . $invoiceNo . $fillSpace . $md5Key);
         return $this->render("@app/views/e_payment/_k_payment", compact('sendUrl', 'merchantId', 'terminalId', 'checksum', 'amount', 'invoiceNo', 'description', 'url', 'resUrl', 'cusIp', 'fillSpace'));
     }
