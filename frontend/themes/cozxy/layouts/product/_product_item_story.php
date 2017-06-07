@@ -5,7 +5,7 @@
         </div>
         <div class="product-txt">
             <p class="size16 fc-g666"><?= $model['brand'] ?></p>
-            <p class="size14 b" style="height:50px;"><a href="<?= $model['url'] ?>" class="fc-black"><?= $model['title'] ?></a></p>
+            <p class="size14 b" style="height:40px;"><a href="<?= $model['url'] ?>" class="fc-black"><?= $model['title'] ?></a></p>
         </div>
         <div class="row text-center">
             <div class="col-md-6"><i class="fa fa-eye"></i> <?= $model['views'] ?></div>
