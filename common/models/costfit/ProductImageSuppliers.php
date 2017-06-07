@@ -53,4 +53,13 @@ class ProductImageSuppliers extends \common\models\costfit\master\ProductImageSu
         }
     }
 
+    public static function findMaxOrdering($productSuppId)
+    {
+        $max = ProductImageSuppliers::find()->where("productSuppId = $productSuppId")->max("ordering");
+        if (!isset($max)) {
+            $max = 1;
+        }
+        return $max;
+    }
+
 }

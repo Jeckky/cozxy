@@ -690,6 +690,20 @@ class ProductGroupController extends ProductMasterController
         }
     }
 
+    public function actionDeleteProductSuppImage()
+    {
+        $model = \common\models\costfit\ProductImageSuppliers::find()->where("productImageId = " . $_GET["id"])->one();
+        $product = \common\models\costfit\Product::find()->where("productId = " . $model->productSupp->productId)->one();
+        if (\common\models\costfit\ProductImage::deleteAll("productImageId = " . $_GET["id"]) > 0) {
+            if (isset($_GET["action"]) && $_GET["action"] == "update") {
+
+                return $this->redirect(['update-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]]);
+            } else {
+                return $this->redirect(['create', 'step' => $_GET["step"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => isset($product->parentId) ? $product->parentId : $product->productId]);
+            }
+        }
+    }
+
     public function saveProductGroupStep($id, $step)
     {
         $product = \common\models\costfit\Product::find()->where("productId = " . $id)->one();
@@ -712,6 +726,20 @@ class ProductGroupController extends ProductMasterController
         $model = \common\models\costfit\ProductImage::find()->where("productImageId = " . $_GET['id'])->one();
         if (isset($_POST["ProductImage"])) {
             $model->ordering = $_POST["ProductImage"]["ordering"];
+            $model->save();
+
+            return $this->redirect(['create', 'step' => $_GET["step"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]]);
+        }
+
+        return $this->render("101/_product_image_form", ['model' => $model]);
+    }
+
+    public function actionChangeImageSuppOrder()
+    {
+//            throw new \yii\base\Exception(print_r($_POST, TRUE));
+        $model = \common\models\costfit\ProductImageSuppliers::find()->where("productImageId = " . $_GET['id'])->one();
+        if (isset($_POST["ProductImageSuppliers"])) {
+            $model->ordering = $_POST["ProductImageSuppliers"]["ordering"];
             $model->save();
 
             return $this->redirect(['create', 'step' => $_GET["step"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]]);
@@ -746,11 +774,14 @@ class ProductGroupController extends ProductMasterController
             $ps->createDateTime = new \yii\db\Expression("NOW()");
             if ($ps->save(FALSE)) {
                 \common\models\costfit\ProductImageSuppliers::deleteAll("productSuppId = " . $ps->productSuppId);
-                foreach ($product->productImages as $image) {
+                foreach ($product->productImages as $k => $image) {
                     $pi = new \common\models\costfit\ProductImageSuppliers();
                     $pi->attributes = $image->attributes;
                     $pi->productSuppId = $ps->productSuppId;
                     $pi->createDateTime = new \yii\db\Expression("NOW()");
+                    if (!isset($image->ordering)) {
+                        $pi->ordering = $k + 1;
+                    }
                     if ($pi->save(FALSE)) {
 
                     }
@@ -769,7 +800,7 @@ class ProductGroupController extends ProductMasterController
             }
         }
         if (isset($_GET["step"]) && $_GET["step"] == 4) {
-            return $this->redirect(["create", "step" => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["parentId"]]);
+            return $this->redirect(["create", "step" => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]]);
         } else {
             return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"]]);
         }

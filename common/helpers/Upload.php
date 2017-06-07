@@ -116,6 +116,7 @@ class Upload
             $model->imageThumbnail2 = 'images/' . $folderName . '/' . $folderThumbnail2 . '/' . $newFileName; // Size 137 x 130
             if ((new \ReflectionClass($model))->getShortName() != "ProductImage") {
                 $model->productSuppId = Yii::$app->request->get('id');
+                $model->ordering = \common\models\costfit\ProductImageSuppliers::findMaxOrdering($model->productSuppId) + 1;
             }
             //$model->original_name = $file->name;
             $model->title = 'suppliers';

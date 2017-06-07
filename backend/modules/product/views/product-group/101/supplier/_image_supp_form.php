@@ -61,7 +61,7 @@ use yii\widgets\Pjax;
                 $csrfToken = \Yii::$app->request->getCsrfToken();
                 echo \kato\DropZone::widget([
                     'options' => [
-                        'url' => \yii\helpers\Url::to(['upload', 'id' => $id]),
+                        'url' => \yii\helpers\Url::to(['upload-supplier', 'id' => $id]),
                         'paramName' => 'image',
                         //'maxFilesize' => '200',
                         'clickable' => true,
