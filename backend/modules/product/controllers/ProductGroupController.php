@@ -286,7 +286,7 @@ class ProductGroupController extends ProductMasterController
 //                        return $this->redirect(['create', 'step' => 3, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId]);
 //                    } else {
                     if (isset($model->step)) {
-                        return $this->redirect(['create', 'step' => (count($model->products) == 0) ? 1 : $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId]);
+                        return $this->redirect(['create', 'step' => isset($_GET["step"]) ? $_GET["step"] : $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId]);
                     }
 //                    }
                 }
