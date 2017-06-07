@@ -185,15 +185,15 @@ if (isset($topUps) && count($topUps) > 0) {
                     $csrfToken = \Yii::$app->request->getCsrfToken();
                     echo \kato\DropZone::widget([
                         'options' => [
-                            'url' => \yii\helpers\Url::to(['upload', 'id' => '']),
+                            //'url' => \yii\helpers\Url::to(['upload', 'id' => '']),
                             'paramName' => 'image',
                             // 'maxFilesize' => '200',
                             'clickable' => true,
-                            'id' => '55555',
                             'addRemoveLinks' => true,
                             'enqueueForUpload' => true,
                             //'dictDefaultMessage' => 'asdfasdfa',
-                            'dictDefaultMessage' => "<h1><i class='fa fa-cloud-upload'></i><br>Drop files in here<h1><br><span class='dz-text-small'>or click to pick manually</span>",
+                            'dictDefaultMessage' => "<h1><i class='fa fa-cloud-upload'></i><br>Drop files in here<h1><br>"
+                            . "<span class='dz-text-small'>or click to pick manually</span>",
                         ],
                         'clientEvents' => [
                             'sending' => "function(file, xhr, formData) {
@@ -207,7 +207,7 @@ if (isset($topUps) && count($topUps) > 0) {
                     <br><br><br><br><br>
                     <!--                        <div class="form-group text-center" style="width:100%;height: 100px;border: #ffcc00 solid 0.5px;padding: 10px;color:#000;">
                                                 <input type="file" name="slipUpload[image]" class="btn btn-lg btn-warning"style="width: 525px;font-size: 10pt;height:75px;" required="true">
-                                                <input type="hidden" name="topUpId" value="<?php // $topUp->topUpId                                                        ?>">
+                                                <input type="hidden" name="topUpId" value="<?php // $topUp->topUpId                                                            ?>">
                                             </div>-->
                     <div class="form-group text-center">
                         <?php // yii\helpers\Html::submitButton('Upload', ['class' => 'btn btn-black', 'name' => 'Upload-button'])   ?>
