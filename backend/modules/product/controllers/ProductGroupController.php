@@ -71,7 +71,7 @@ class ProductGroupController extends ProductMasterController
                 ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
                 ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
                 ->where("product.parentId is null ")
-                ->andWhere("1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN product.status = 99 THEN 1 AND product.userId = " . Yii::$app->user->id . " ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 ps.userId = " . Yii::$app->user->id . " ELSE 0 END) end)")
+                ->andWhere("1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN product.status = 99 THEN 1 AND product.userId = " . Yii::$app->user->id . " ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 AND ps.userId = " . Yii::$app->user->id . " ELSE 0 END) end)")
                 ->groupBy("product.productId")
                 ->orderBy("product.updateDateTime DESC");
             }
@@ -281,8 +281,13 @@ class ProductGroupController extends ProductMasterController
             case 1:
                 if (isset($_GET["productGroupId"])) {
                     $model = \common\models\costfit\Product::find()->where("productId = " . $_GET["productGroupId"])->one();
-                    if (isset($model->step)) {
-                        return $this->redirect(['create', 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId]);
+                    //User Type 4 = Supplier , 5= Content
+                    if (Yii::$app->user->identity->type == 4) {
+                        return $this->redirect(['create', 'step' => 3, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId]);
+                    } else {
+                        if (isset($model->step)) {
+                            return $this->redirect(['create', 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId]);
+                        }
                     }
                 }
                 if (isset($_POST["Product"])) {
