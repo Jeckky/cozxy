@@ -23,7 +23,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     if ($type == 'success') {
         ?>
         <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="margin: auto;text-align: center;color: #000;margin-bottom: 20px;">
-            <h3 style="color: #009999;"><b> Top up :: SUCCESSFUL</b></h3>
+            <h3 style="color: #000;"><b> Top up :: SUCCESSFUL</b></h3>
             <h4>You have <?= $currentPoint ?> Points.</h4>
             <?php if ($fromCheckout == 'yes') {
                 ?>
