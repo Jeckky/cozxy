@@ -178,7 +178,7 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                         ],
                         'itemView' => function ($model, $key, $index, $widget) {
                             return $this->render('@app/themes/cozxy/layouts/product/_product_item_story', ['model' => $model]);
-                        },
+                        }, 'emptyText' => ' &nbsp; &nbsp; No results found.',
 //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                         //'layout'=>"{summary}{pager}{items}"
                         'layout' => "{items}",
