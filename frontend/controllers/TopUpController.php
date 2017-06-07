@@ -475,7 +475,11 @@ class TopUpController extends MasterController {
 
         if (isset($topUp)) {
             $customerName = \common\models\costfit\Address::userName($topUp->userId);
-            $address = User::userAddressText(User::supplierDetail($topUp->userId)->addressId, false);
+            if ($customerName != '') {
+                $address = User::userAddressText(User::supplierDetail($topUp->userId)->addressId);
+            } else {
+                $address = '';
+            }
             $topUpNo = $topUp->topUpNo;
             $subDate = substr($topUp->updateDateTime, 0, -9);
             $date = $this->changDateFormat($subDate);
