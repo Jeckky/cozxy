@@ -8,10 +8,25 @@ use yii\widgets\Pjax;
 use common\models\costfit\TopUp;
 use common\models\costfit\User;
 use jlorente\remainingcharacters\RemainingCharacters;
+use kato\DropZone;
 
 TopUpAsset::register($this);
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
+<style type="text/css">
+    .dropzone {
+        position: relative;
+        min-height: 284px;
+        border: 3px dashed #ddd;
+        border-radius: 3px;
+        vertical-align: middle;
+        width: 100%;
+        cursor: pointer;
+        padding: 0 15px 15px 0;
+        -webkit-transition: all .2s;
+        transition: all .2s;
+    }
+</style>
 <div class="order-index">
 
     <div style="color: #000;text-align: center;">
@@ -55,6 +70,27 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         'value' => function($model) {
                             if ($model->paymentMethod == 1) {
                                 if ($model->image == NULL) {
+                                    return \kato\DropZone::widget([
+                                                'options' => [
+                                                    'url' => \yii\helpers\Url::to(['upload', 'id' => $model->topUpId]),
+                                                    'paramName' => 'image',
+                                                    'id' => $model->topUpId,
+                                                    // 'maxFilesize' => '200',
+                                                    //'id' => $model->topUpId,
+                                                    'clickable' => true,
+                                                    'addRemoveLinks' => true,
+                                                    'enqueueForUpload' => true,
+                                                    //'dictDefaultMessage' => 'asdfasdfa',
+                                                    'dictDefaultMessage' => "<h1><i class='fa fa-cloud-upload'></i><br>Drop files in here<h1><br><span class='dz-text-small'>or click to pick manually</span>",
+                                                ],
+                                                'clientEvents' => [
+                                                    'sending' => "function(file, xhr, formData) {
+                                      console.log(file);
+                                      }",
+                                                    'complete' => "function(file){console.log(file)}",
+                                                    'removedfile' => "function(file){alert(file.name + ' is removed')}"
+                                                ],
+                                    ]);
                                     return 'Bill payment<br><i class="fa fa-upload" aria-hidden="true"></i>'
                                             . '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#upload' . $model->topUpId . '">'
                                             . ' Upload payment slip </a>';
@@ -134,13 +170,45 @@ if (isset($topUps) && count($topUps) > 0) {
                         <?php
                         $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']
                         ]);
+                        /* echo \kato\DropZone::widget([
+                          'options' => [
+                          'maxFilesize' => '2',
+                          ],
+                          'clientEvents' => [
+                          'complete' => "function(file){console.log(file)}",
+                          'removedfile' => "function(file){alert(file.name + ' is removed')}"
+                          ],
+                          ]); */
                         ?>
-                        <div class="form-group text-center" style="width:100%;height: 100px;border: #ffcc00 solid 0.5px;padding: 10px;color:#000;">
-                            <input type="file" name="slipUpload[image]" class="btn btn-lg btn-warning"style="width: 525px;font-size: 10pt;height:75px;" required="true">
-                            <input type="hidden" name="topUpId" value="<?= $topUp->topUpId ?>">
-                        </div>
+                        <?php
+                        $csrfToken = \Yii::$app->request->getCsrfToken();
+                        /* echo \kato\DropZone::widget([
+                          'options' => [
+                          'url' => \yii\helpers\Url::to(['upload', 'id' => $topUp->topUpId]),
+                          'paramName' => 'image',
+                          // 'maxFilesize' => '200',
+                          'clickable' => true,
+                          'addRemoveLinks' => true,
+                          'enqueueForUpload' => true,
+                          //'dictDefaultMessage' => 'asdfasdfa',
+                          'dictDefaultMessage' => "<h1><i class='fa fa-cloud-upload'></i><br>Drop files in here<h1><br><span class='dz-text-small'>or click to pick manually</span>",
+                          ],
+                          'clientEvents' => [
+                          'sending' => "function(file, xhr, formData) {
+                          console.log(file);
+                          }",
+                          'complete' => "function(file){console.log(file)}",
+                          'removedfile' => "function(file){alert(file.name + ' is removed')}"
+                          ],
+                          ]); */
+                        ?>
+                        <br><br><br><br><br>
+                        <!--                        <div class="form-group text-center" style="width:100%;height: 100px;border: #ffcc00 solid 0.5px;padding: 10px;color:#000;">
+                                                    <input type="file" name="slipUpload[image]" class="btn btn-lg btn-warning"style="width: 525px;font-size: 10pt;height:75px;" required="true">
+                                                    <input type="hidden" name="topUpId" value="<?php // $topUp->topUpId                                 ?>">
+                                                </div>-->
                         <div class="form-group text-center">
-                            <?= yii\helpers\Html::submitButton('Upload', ['class' => 'btn btn-black', 'name' => 'Upload-button']) ?>
+                            <?php // yii\helpers\Html::submitButton('Upload', ['class' => 'btn btn-black', 'name' => 'Upload-button'])   ?>
                         </div>
                         <?php ActiveForm::end(); ?>
                     </div>
