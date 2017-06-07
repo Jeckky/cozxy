@@ -100,11 +100,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                       'removedfile' => "function(file){alert(file.name + ' is removed')}"
                                       ],
                                       ]); */
-                                    /* return 'Bill payment<br><i class="fa fa-upload" aria-hidden="true"></i>'
-                                      . '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#upload' . $model->topUpId . '">'
-                                      . ' Upload payment slip </a>'; */
                                     return 'Bill payment<br><i class="fa fa-upload" aria-hidden="true"></i>'
-                                            . '<a href="' . Yii::$app->homeUrl . 'top-up/upload-form" style="color:blue;font-size:9pt;">'
+                                            . '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#upload' . $model->topUpId . '">'
                                             . ' Upload payment slip </a>';
                                 } else {
                                     return 'Bill payment<br><i class="fa fa-file-image-o" aria-hidden="true"></i>'
