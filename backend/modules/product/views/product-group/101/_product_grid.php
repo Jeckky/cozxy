@@ -181,7 +181,7 @@ if (isset($dataProvider)) {
                 }
             ],
             ['attribute' => 'status',
-                'visible' => (!isset($type) || $type == 1) ? FALSE : TRUE,
+//                'visible' => (!isset($type) || $type == 1) ? FALSE : TRUE,
                 'options' => [
                     'style' => 'width:7%'
                 ],
@@ -230,7 +230,7 @@ if (isset($dataProvider)) {
                 },
                 'visibleButtons' => [
                     'update' => function ($model, $key, $index) {
-                        return ($model->status === 1 || $model->status === 99) ? false : true;
+                        return ($model->status === 1 || $model->status === 99) ? FALSE : true;
                     },
                     'delete' => function ($model, $key, $index) {
                         return ($model->status === 1 || $model->status === 99) ? false : true;
