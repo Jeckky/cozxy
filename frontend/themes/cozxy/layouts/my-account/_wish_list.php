@@ -17,7 +17,7 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
     } else {
         echo '<p>
 						<span class="size18">&nbsp;</span> &nbsp;
-						<span class="size14 onsale">&nbsp;</span>
+						<span class="size14">&nbsp;</span>
 					</p>';
     }
     '<p class="size14 fc-g999">' . $txt . '</p>';
