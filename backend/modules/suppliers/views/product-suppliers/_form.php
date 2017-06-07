@@ -245,7 +245,7 @@ use yii\redactor\widgets\Redactor;
                     tabsize: 2,
                     codemirror: {
                         theme: 'monokai'
-                    }
+                    } 
                 });
                 $('#productsuppliers-specification').summernote({
                     height: 200,
