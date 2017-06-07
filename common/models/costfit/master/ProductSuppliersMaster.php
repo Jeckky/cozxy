@@ -33,7 +33,7 @@ use Yii;
     * @property integer $quantity
     * @property integer $result
     * @property string $approve
-    * @property string $productId
+    * @property integer $productId
     * @property string $approveCreateBy
     * @property string $approvecreateDateTime
     * @property string $receiveType
@@ -59,7 +59,7 @@ public function rules()
 return [
             [['userId', 'brandId', 'categoryId', 'unit', 'smallUnit', 'status', 'quantity', 'result', 'productId', 'approveCreateBy', 'warrantyType', 'warrantyPeriod'], 'integer'],
             [['isbn', 'shortDescription', 'description', 'specification'], 'string'],
-            [['title', 'createDateTime', 'quantity', 'result', 'productId'], 'required'],
+            [['title', 'createDateTime', 'quantity', 'result'], 'required'],
             [['width', 'height', 'depth', 'weight'], 'number'],
             [['createDateTime', 'updateDateTime', 'approvecreateDateTime'], 'safe'],
             [['code', 'suppCode', 'merchantCode'], 'string', 'max' => 100],
