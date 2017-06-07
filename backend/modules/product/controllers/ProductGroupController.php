@@ -567,6 +567,29 @@ class ProductGroupController extends ProductMasterController
         \common\helpers\Upload::UploadSuppliers($model);
     }
 
+    public function actionUpdateGridEdit()
+    {
+        $model = new \common\models\costfit\Product();
+        throw new \yii\base\Exception;
+        if (isset($_POST['hasEditable'])) {
+
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+            if ($model->load($_POST)) {
+
+                if (isset($model->title))
+                    $value = $model->title;
+
+                return ['output' => $value, 'message' => ''];
+            }
+
+            else {
+
+                return ['output' => '', 'message' => ''];
+            }
+        }
+    }
+
     public function actionUpdateProduct()
     {
 //        throw new \yii\base\Exception(print_r($_POST, TRUE));
