@@ -9,6 +9,9 @@ use Yii;
 *
     * @property string $currencyId
     * @property string $title
+    * @property string $symbol
+    * @property string $acronym
+    * @property string $toThb
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -29,10 +32,12 @@ return 'currency';
 public function rules()
 {
 return [
-            [['title'], 'required'],
+            [['toThb'], 'number'],
             [['status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 100],
+            [['symbol'], 'string', 'max' => 50],
+            [['acronym'], 'string', 'max' => 20],
         ];
 }
 
@@ -44,6 +49,9 @@ public function attributeLabels()
 return [
     'currencyId' => Yii::t('currency', 'Currency ID'),
     'title' => Yii::t('currency', 'Title'),
+    'symbol' => Yii::t('currency', 'Symbol'),
+    'acronym' => Yii::t('currency', 'Acronym'),
+    'toThb' => Yii::t('currency', 'To Thb'),
     'status' => Yii::t('currency', 'Status'),
     'createDateTime' => Yii::t('currency', 'Create Date Time'),
     'updateDateTime' => Yii::t('currency', 'Update Date Time'),

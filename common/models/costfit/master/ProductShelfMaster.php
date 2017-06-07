@@ -9,7 +9,7 @@ use Yii;
 *
     * @property string $productShelfId
     * @property string $title
-    * @property integer $userId
+    * @property string $userId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -30,7 +30,7 @@ return 'product_shelf';
 public function rules()
 {
 return [
-            [['title', 'userId'], 'required'],
+            [['userId'], 'required'],
             [['userId', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 100],
