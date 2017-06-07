@@ -80,7 +80,26 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                                 <td style="line-height: 20px;">
                                     <?php
                                     if (isset($addressIdsummary)) {
-
+                                        $address = common\models\costfit\Address::find()->where('addressId=' . $addressIdsummary)->one();
+                                        echo isset($address['company']) ? 'บริษัท' . $address['company'] . '<br>' : 'คุณ' . $address['firstname'] . " " . $address['lastname'] . '<br>';
+                                        echo isset($address['address']) ? $address['address'] : '';
+                                        echo '<br>';
+                                        $District = \common\models\dbworld\District::find()->where("districtId = '" . $address['districtId'] . "' ")->one();
+                                        echo isset($District->attributes['localName']) ? $District->attributes['localName'] : '';
+                                        echo '&nbsp;,';
+                                        $Cities = \common\models\dbworld\Cities::find()->where("cityId = '" . $address['amphurId'] . "' ")->one();
+                                        echo isset($Cities->attributes['localName']) ? $Cities->attributes['localName'] : '';
+                                        echo '&nbsp;,';
+                                        $States = \common\models\dbworld\States::find()->where("stateId = '" . $address['provinceId'] . "' ")->one();
+                                        echo isset($States->attributes['localName']) ? $States->attributes['localName'] : '';
+                                        echo '&nbsp;,';
+                                        $Countries = \common\models\dbworld\Countries::find()->where("countryId = '" . $address['countryId'] . "' ")->one();
+                                        echo isset($Countries->attributes['localName']) ? 'ประเทศ' . $Countries->attributes['localName'] : 'ประเทศ' . '-';
+                                        echo '<br> รหัสไปรษณีย์ ';
+                                        $zipCode = \common\models\dbworld\Zipcodes::find()->where("zipcodeId = '" . $address['zipcode'] . "' ")->one();
+                                        echo isset($zipCode) ? $zipCode->zipcode : '';
+                                        echo '<br> โทร ';
+                                        echo $address['tel'] . '<br>';
                                     } else {
                                         echo isset($order->attributes['billingCompany']) ? 'บริษัท' . $order->attributes['billingCompany'] . '<br>' : 'คุณ' . $order->user->firstname . " " . $order->user->lastname . '<br>';
                                         echo isset($order->attributes['billingAddress']) ? $order->attributes['billingAddress'] : '';

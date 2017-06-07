@@ -246,7 +246,7 @@ class CheckoutController extends MasterController {
                             $toMails = $member->username;
                         }
                         $toMail = $toMails;
-                        $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "profile/order";
+                        $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "my-account";
                         $type = $member->firstname . ' ' . $member->lastname;
                         $Subject = 'Your Cozxy.com Order ' . $order->invoiceNo;
                         $adress = [];
