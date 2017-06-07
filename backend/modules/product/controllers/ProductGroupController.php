@@ -285,10 +285,7 @@ class ProductGroupController extends ProductMasterController
 //                    if (Yii::$app->user->identity->type == 4) {
 //                        return $this->redirect(['create', 'step' => 3, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId]);
 //                    } else {
-//                    if (isset($_GET["step"])) {
-                    if (1 == 0) {
-                        return $this->redirect(['create', 'step' => $_GET["step"], 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId]);
-                    } else {
+                    if ($model->step) {
                         return $this->redirect(['create', 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId]);
                     }
 //                    }
