@@ -107,10 +107,10 @@ class MyAccountController extends MasterController {
         $token = $request->post('token');
 
         if (Yii::$app->security->validatePassword($token, \Yii::$app->user->identity->password_hash)) {
-// Password Match
+            // Password Match
             echo TRUE;
         } else {
-//No Match
+            // No Match
             echo FALSE;
         }
     }
@@ -154,7 +154,7 @@ class MyAccountController extends MasterController {
         if ($model->delete()) {
             echo 'complete';
         } else {
-//$this->redirect(Yii::$app->homeUrl . 'profile');
+            //$this->redirect(Yii::$app->homeUrl . 'profile');
             echo 'wrong';
         }
     }
