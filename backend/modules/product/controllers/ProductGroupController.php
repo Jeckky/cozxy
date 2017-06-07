@@ -344,6 +344,9 @@ class ProductGroupController extends ProductMasterController
                             throw new \yii\base\Exception(print_r($pgo->errors, TRUE));
                         }
                     }
+                } else {
+                    $this->saveProductGroupStep($_GET["productGroupId"], 1);
+                    return $this->redirect(['create', 'step' => 1, 'productGroupId' => $_GET["productGroupId"]]);
                 }
                 if (isset($_POST["ProductGroupOptionValue"])) {
                     $this->saveProductsWithOption($_POST["ProductGroupOptionValue"], $_GET["productGroupId"]);
