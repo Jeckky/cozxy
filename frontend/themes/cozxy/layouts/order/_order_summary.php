@@ -10,9 +10,9 @@ use yii\bootstrap\ActiveForm;
         <!-- Cart -->
         <?php
         $form = ActiveForm::begin([
-                    'id' => 'default-shipping-cart',
-                    'action' => Yii::$app->homeUrl . 'checkout/confirm',
-                    'options' => ['class' => 'space-bottom'],
+            'id' => 'default-shipping-cart',
+            'action' => Yii::$app->homeUrl . 'checkout/confirm',
+            'options' => ['class' => 'space-bottom'],
         ]);
         ?>
         <div class="col-lg-9 col-md-8 cart-body">
@@ -22,7 +22,7 @@ use yii\bootstrap\ActiveForm;
                 </div>
                 <div class="col-xs-12 bg-white">
                     <!--Cart Items-->
-                    <?= $this->render('@app/themes/cozxy/layouts/order/purchase_order', ['order' => $order]) ?>
+                    <?= $this->render('@app/themes/cozxy/layouts/order/purchase_order', ['order' => $order, 'addressIdsummary' => $addressIdsummary]) ?>
 
                     <?php /*
                       echo $this->render("//e_payment/_parameter_form", array(

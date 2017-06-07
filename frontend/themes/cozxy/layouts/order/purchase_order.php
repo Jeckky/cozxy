@@ -79,25 +79,29 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                             <tr>
                                 <td style="line-height: 20px;">
                                     <?php
-                                    echo isset($order->attributes['billingCompany']) ? 'บริษัท' . $order->attributes['billingCompany'] . '<br>' : 'คุณ' . $order->user->firstname . " " . $order->user->lastname . '<br>';
-                                    echo isset($order->attributes['billingAddress']) ? $order->attributes['billingAddress'] : '';
-                                    echo '<br>';
-                                    $District = \common\models\dbworld\District::find()->where("districtId = '" . $order->attributes['billingDistrictId'] . "' ")->one();
-                                    echo isset($District->attributes['localName']) ? $District->attributes['localName'] : '';
-                                    echo '&nbsp;';
-                                    $Cities = \common\models\dbworld\Cities::find()->where("cityId = '" . $order->attributes['billingAmphurId'] . "' ")->one();
-                                    echo isset($Cities->attributes['localName']) ? $Cities->attributes['localName'] : '';
-                                    echo '&nbsp;';
-                                    $States = \common\models\dbworld\States::find()->where("stateId = '" . $order->attributes['billingProvinceId'] . "' ")->one();
-                                    echo isset($States->attributes['localName']) ? $States->attributes['localName'] : '';
-                                    echo '&nbsp;';
-                                    $Countries = \common\models\dbworld\Countries::find()->where("countryId = '" . $order->attributes['billingCountryId'] . "' ")->one();
-                                    echo isset($Countries->attributes['localName']) ? 'ประเทศ' . $Countries->attributes['localName'] : 'ประเทศ' . 'ไม่ระบุ';
-                                    echo '<br> รหัสไปรษณีย์ ';
-                                    $zipCode = \common\models\dbworld\Zipcodes::find()->where("zipcodeId = '" . $order->attributes['billingZipcode'] . "' ")->one();
-                                    echo isset($zipCode) ? $zipCode->zipcode : '';
-                                    echo '<br> โทร ';
-                                    echo $order->attributes['billingTel'] . '<br>';
+                                    if (isset($addressIdsummary)) {
+
+                                    } else {
+                                        echo isset($order->attributes['billingCompany']) ? 'บริษัท' . $order->attributes['billingCompany'] . '<br>' : 'คุณ' . $order->user->firstname . " " . $order->user->lastname . '<br>';
+                                        echo isset($order->attributes['billingAddress']) ? $order->attributes['billingAddress'] : '';
+                                        echo '<br>';
+                                        $District = \common\models\dbworld\District::find()->where("districtId = '" . $order->attributes['billingDistrictId'] . "' ")->one();
+                                        echo isset($District->attributes['localName']) ? $District->attributes['localName'] : '';
+                                        echo '&nbsp;';
+                                        $Cities = \common\models\dbworld\Cities::find()->where("cityId = '" . $order->attributes['billingAmphurId'] . "' ")->one();
+                                        echo isset($Cities->attributes['localName']) ? $Cities->attributes['localName'] : '';
+                                        echo '&nbsp;';
+                                        $States = \common\models\dbworld\States::find()->where("stateId = '" . $order->attributes['billingProvinceId'] . "' ")->one();
+                                        echo isset($States->attributes['localName']) ? $States->attributes['localName'] : '';
+                                        echo '&nbsp;';
+                                        $Countries = \common\models\dbworld\Countries::find()->where("countryId = '" . $order->attributes['billingCountryId'] . "' ")->one();
+                                        echo isset($Countries->attributes['localName']) ? 'ประเทศ' . $Countries->attributes['localName'] : 'ประเทศ' . 'ไม่ระบุ';
+                                        echo '<br> รหัสไปรษณีย์ ';
+                                        $zipCode = \common\models\dbworld\Zipcodes::find()->where("zipcodeId = '" . $order->attributes['billingZipcode'] . "' ")->one();
+                                        echo isset($zipCode) ? $zipCode->zipcode : '';
+                                        echo '<br> โทร ';
+                                        echo $order->attributes['billingTel'] . '<br>';
+                                    }
                                     ?>
                                 </td>
                         </tbody>
