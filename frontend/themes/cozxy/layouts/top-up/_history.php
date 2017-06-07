@@ -42,70 +42,72 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     'class' => 'table-light'
                 ],
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                        ['class' => 'yii\grid\SerialColumn'],
                     'topUpNo',
-                    [
+                        [
                         'attribute' => 'Cozxy Coins',
                         'value' => function($model) {
 
                             return number_format($model->point);
                         }
                     ],
-                    [
+                        [
                         'attribute' => 'money',
                         'value' => function($model) {
 
                             return number_format($model->money, 2);
                         }
                     ],
-                    [
+                        [
                         'attribute' => 'updateDateTime',
                         'value' => function($model) {
                             return frontend\controllers\MasterController::dateThai($model->updateDateTime, 4);
                         }
                     ],
-                    [
+                        [
                         'attribute' => 'Payment Type',
                         'format' => 'raw',
                         'value' => function($model) {
                             if ($model->paymentMethod == 1) {
                                 if ($model->image == NULL) {
-                                    return \kato\DropZone::widget([
-                                                'options' => [
-                                                    'url' => \yii\helpers\Url::to(['upload', 'id' => $model->topUpId]),
-                                                    'paramName' => 'image',
-                                                    'id' => $model->topUpId,
-                                                    // 'maxFilesize' => '200',
-                                                    //'id' => $model->topUpId,
-                                                    'clickable' => true,
-                                                    'addRemoveLinks' => true,
-                                                    'enqueueForUpload' => true,
-                                                    //'dictDefaultMessage' => 'asdfasdfa',
-                                                    'dictDefaultMessage' => "<h1><i class='fa fa-cloud-upload'></i><br>Drop files in here<h1><br><span class='dz-text-small'>or click to pick manually</span>",
-                                                ],
-                                                'clientEvents' => [
-                                                    'sending' => "function(file, xhr, formData) {
+                                    /*  return \kato\DropZone::widget([
+                                      //'id' => '123456',
+                                      //'dropzoneContainer' => '#' . $model->topUpId,
+                                      'options' => [
+                                      'url' => \yii\helpers\Url::to(['upload', 'id' => $model->topUpId]),
+                                      'paramName' => 'image',
+                                      //'id' => $model->topUpId,
+                                      // 'maxFilesize' => '200',
+                                      //'id' => $model->topUpId,
+                                      'clickable' => true,
+                                      'addRemoveLinks' => true,
+                                      'enqueueForUpload' => true,
+                                      //'dictDefaultMessage' => 'asdfasdfa',
+                                      'dictDefaultMessage' => "<h1><i class='fa fa-cloud-upload'></i><br>Drop files in here<h1><br><span class='dz-text-small'>or click to pick manually</span>",
+                                      ],
+                                      'clientEvents' => [
+                                      'sending' => "function(file, xhr, formData) {
                                       console.log(file);
                                       }",
-                                                    'complete' => "function(file){console.log(file)}",
-                                                    'removedfile' => "function(file){alert(file.name + ' is removed')}"
-                                                ],
-                                    ]);
+                                      'complete' => "function(file){console.log(file)}",
+                                      'removedfile' => "function(file){alert(file.name + ' is removed')}"
+                                      ],
+                                      ]); */
                                     return 'Bill payment<br><i class="fa fa-upload" aria-hidden="true"></i>'
-                                    . '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#upload' . $model->topUpId . '">'
-                                    . ' Upload payment slip </a>';
+                                            . '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#upload' . $model->topUpId . '">'
+                                            . ' Upload payment slip </a>';
                                 } else {
                                     return 'Bill payment<br><i class="fa fa-file-image-o" aria-hidden="true"></i>'
-                                    . '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#seePic' . $model->topUpId . '"><i> Image </i></a> or ' .
-                                    '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#upload' . $model->topUpId . '">'
-                                    . ' change </a>';
+                                            . '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#seePic' . $model->topUpId . '"><i> Image </i></a> or ' .
+                                            '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#upload' . $model->topUpId . '">'
+                                            . ' change </a>';
                                 }
                             } else {
                                 return 'Credit card';
                             }
                         }
                     ],
-                    [
+                        [
                         'attribute' => 'status',
                         'format' => 'raw',
                         'value' => function($model) {
@@ -123,9 +125,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 $data = "| " . $taxId . " " . $topUpCut . " " . $tel . " " . $amount2;
                                 if ($model->paymentMethod == 1) {
                                     return TopUp::statusText($model->status) . '<br>' .
-                                    '<i class="fa fa-print" aria-hidden="true"></i>'
-                                    . ' <a href="' . Yii::$app->homeUrl . 'top-up/print-payment-form-topdf?amount=' . $amount . '&customerName=' . $customerName . '&customerTel=' . $customerTel . '&topUpNo=' . $topUpNo . '&taxId=' . $taxId . '&barCode=' . $barCode . '&data=' . $data . '"'
-                                    . 'style = "color:blue;font-size:10pt;" target="_blank">Re-print Bill payment</a>';
+                                            '<i class="fa fa-print" aria-hidden="true"></i>'
+                                            . ' <a href="' . Yii::$app->homeUrl . 'top-up/print-payment-form-topdf?amount=' . $amount . '&customerName=' . $customerName . '&customerTel=' . $customerTel . '&topUpNo=' . $topUpNo . '&taxId=' . $taxId . '&barCode=' . $barCode . '&data=' . $data . '"'
+                                            . 'style = "color:blue;font-size:10pt;" target="_blank">Re-print Bill payment</a>';
                                 } else {
                                     return TopUp::statusText($model->status);
                                 }
@@ -134,7 +136,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             }
                         }
                     ],
-                    ['class' => 'yii\grid\ActionColumn',
+                        ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Bill',
                         'template' => '{view}{history}',
                         'buttons' => [
@@ -142,7 +144,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 if ($model->status == TopUp::TOPUP_STATUS_E_PAYMENT_SUCCESS) {
                                     $topUpId = common\models\ModelMaster::encodeParams($model->topUpId);
                                     return Html::a('<span class = "btn-black btn-xs" style="padding: 2px 5px; "><i class="fa fa-print" aria-hidden="true"></i> Print</span>', [Yii::$app->homeUrl . 'top-up/billpay?epay=' . $topUpId], [
-                                        'target' => '_blank']
+                                                'target' => '_blank']
                                     );
                                 } else {
                                     return '<span style="padding: 2px 5px; "> - </span>';
@@ -184,6 +186,7 @@ if (isset($topUps) && count($topUps) > 0) {
                         <?php
                         $csrfToken = \Yii::$app->request->getCsrfToken();
                         /* echo \kato\DropZone::widget([
+                          'dropzoneContainer' => '#' . $topUp->topUpId,
                           'options' => [
                           'url' => \yii\helpers\Url::to(['upload', 'id' => $topUp->topUpId]),
                           'paramName' => 'image',
@@ -203,13 +206,14 @@ if (isset($topUps) && count($topUps) > 0) {
                           ],
                           ]); */
                         ?>
-                        <br><br><br><br><br>
-                        <!--                        <div class="form-group text-center" style="width:100%;height: 100px;border: #ffcc00 solid 0.5px;padding: 10px;color:#000;">
-                                                    <input type="file" name="slipUpload[image]" class="btn btn-lg btn-warning"style="width: 525px;font-size: 10pt;height:75px;" required="true">
-                                                    <input type="hidden" name="topUpId" value="<?php // $topUp->topUpId                                 ?>">
-                                                </div>-->
+
+                        <div class="form-group text-center" style="width:100%;height: 100px;border: #ffcc00 solid 0.5px;padding: 10px;color:#000;">
+                            <div id="ImgPreview"></div>
+                            <input type="file" id="inputImg" name="slipUpload[image]" class="btn btn-lg btn-warning"style="width: 525px;font-size: 10pt;height:75px"  required="true">
+                            <input type="hidden" name="topUpId" value="<?php $topUp->topUpId ?>">
+                        </div>
                         <div class="form-group text-center">
-                            <?php // yii\helpers\Html::submitButton('Upload', ['class' => 'btn btn-black', 'name' => 'Upload-button'])   ?>
+                            <?= yii\helpers\Html::submitButton('Upload', ['class' => 'btn btn-black', 'name' => 'Upload-button']) ?>
                         </div>
                         <?php ActiveForm::end(); ?>
                     </div>
@@ -239,5 +243,6 @@ if (isset($topUps) && count($topUps) > 0) {
         </div>
     <?php endforeach; ?>
 
-<?php }
+    <?php
+}
 ?>
