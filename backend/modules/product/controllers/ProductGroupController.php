@@ -286,7 +286,7 @@ class ProductGroupController extends ProductMasterController
 //                        return $this->redirect(['create', 'step' => 3, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId]);
 //                    } else {
                     if (isset($model->step)) {
-                        return $this->redirect(['create', 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId]);
+                        return $this->redirect(['create', 'step' => (count($model->products) == 0) ? 1 : $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId]);
                     }
 //                    }
                 }
@@ -326,7 +326,7 @@ class ProductGroupController extends ProductMasterController
                 break;
             case 3:
                 if (!isset($_GET["productGroupTemplateId"])) {
-                    return $this->redirect(['create', 'step' => 1, 'productGroupId' => $_GET["productGroupId"]]);
+//                    return $this->redirect(['create', 'step' => 1, 'productGroupId' => $_GET["productGroupId"]]);
                 }
                 $this->saveProductGroupStep($_GET["productGroupId"], 3);
                 $productGroupTemplateOptions = \common\models\costfit\ProductGroupTemplateOption::find()->where("productGroupTemplateId = " . $_GET["productGroupTemplateId"])->all();
