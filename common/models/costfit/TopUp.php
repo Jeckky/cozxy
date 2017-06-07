@@ -36,7 +36,7 @@ class TopUp extends \common\models\costfit\master\TopUpMaster {
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
             'topUpNo' => 'No.',
-            'money' => 'Amount (BTH)',
+            'money' => 'Amount (THB)',
             'updateDateTime' => 'Date'
         ]);
     }

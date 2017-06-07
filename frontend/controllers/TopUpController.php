@@ -595,12 +595,7 @@ class TopUpController extends MasterController {
                 $uploadTo->save(false);
                 //   }
 
-                return $this->render('history', [
-                            'model' => $model,
-                            'dataProvider' => $dataProvider,
-                            'topUps' => $topUps,
-                            'currentPoint' => $currentPoint
-                ]);
+                return $this->redirect(['history']);
             }
         } else {
             return $this->render('history', [
