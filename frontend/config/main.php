@@ -71,7 +71,7 @@ return [
                 'checkout/confirm-checkout/<hash>' => 'checkout/confirm-checkout',
 //                'checkout/edit-checkout/<hash>' => 'checkout/edit-checkout',
                 'checkout/confirmation/<hash>' => 'checkout/confirmation',
-                'checkout/order-summary/<hash>' => 'checkout/order-summary',
+                //'checkout/order-summary/<hash>' => 'checkout/order-summary',
                 'top-up/send-payment/<hash>' => 'top-up/send-payment',
 //                'checkout/reverse-order-to-cart/<hash>' => 'checkout/reverse-order-to-cart',
 //                'profile/picking-point/<hash>' => 'profile/picking-point',

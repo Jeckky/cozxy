@@ -81,8 +81,14 @@ class CheckoutController extends MasterController {
         $amphurid = Yii::$app->request->post('amphurId');
         $LcpickingId = Yii::$app->request->post('LcpickingId');
         $addressId = Yii::$app->request->post('addressId');
+
         $orderId = Yii::$app->request->post('orderId');
         $order = Order::find()->where("orderId=" . $orderId)->one();
+        if (isset($addressId)) {
+            $addressId = Yii::$app->request->post('addressId');
+        } else {
+            $addressId = Yii::$app->request->post('addressIdsummary');
+        }
         //throw new Exception(print_r());
         if (isset($LcpickingId) && !empty($LcpickingId)) {
             //$model = new \common\models\costfit\Address(['scenario' => 'billing_address']);
@@ -97,7 +103,7 @@ class CheckoutController extends MasterController {
         }
         $myAddressInSummary = DisplayMyAddress::myAddresssSummary($addressId, \common\models\costfit\Address::TYPE_BILLING);
 
-        return $this->render('summary', compact('myAddressInSummary', 'pickingMap', 'order'));
+        return $this->render('summary', compact('myAddressInSummary', 'pickingMap', 'order', 'addressId'));
     }
 
     public function actionThanks() {
@@ -174,14 +180,17 @@ class CheckoutController extends MasterController {
         }
     }
 
-    function actionOrderSummary($hash) {
+    function actionOrderSummary() {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
-        $k = base64_decode(base64_decode($hash));
-        $params = ModelMaster::decodeParams($hash);
-        $orderId = $params['orderId'];
+        //$k = base64_decode(base64_decode($hash));
+        //$params = ModelMaster::decodeParams($hash);
+        //$orderId = $params['orderId'];
         //throw new \yii\base\Exception($orderId);
+        $addressIdsummary = Yii::$app->request->post('addressIdsummary');
+        $orderId = Yii::$app->request->post('orderId');
+
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $issetPoint = UserPoint::find()->where("userId=" . $order->userId)->one();
         if (isset($issetPoint)) {
@@ -191,7 +200,7 @@ class CheckoutController extends MasterController {
         }
         return $this->render('/order/index', [
             'order' => $order,
-            'userPoint' => $userPoint
+            'userPoint' => $userPoint, 'addressIdsummary' => $addressIdsummary
         ]);
     }
 

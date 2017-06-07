@@ -160,7 +160,7 @@ use kartik\select2\Select2;
 
         <!-- Total -->
         <div class="col-lg-3 col-md-4">
-            <?= $this->render('_checkout_total', ['order' => $order]) ?>
+            <?= $this->render('_checkout_total', ['order' => $order, 'addressId' => $addressId]) ?>
         </div>
 
     </div>

@@ -55,6 +55,8 @@ $('#addressId').change(function (event, id, value) {
                 $('.address-checkouts').find(".address-show").html(JSONObject.address.address + ' ,'
                         + JSONObject.address.amphur + ' ,' + JSONObject.address.district + ' ,' + JSONObject.address.province
                         + ' ,' + JSONObject.address.zipcode);
+                //$('.checkout-total')
+                $('input:hidden', '.checkout-total').val(JSONObject.address.addressId);
             } else {
                 $('.name-lockers-cool').html('');
                 $('.view-map-images-lockers-cool').html('');

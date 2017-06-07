@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Url;
+use yii\bootstrap\ActiveForm;
 ?>
 <div class="col-xs-12 bg-yellow1" style="padding:18px;">
     <div class="rela size20">
@@ -8,7 +9,7 @@ use yii\helpers\Url;
     </div>
 </div>
 
-<div class="col-xs-12 total-price bg-white">
+<div class="col-xs-12 total-price bg-white checkout-total">
     <div class="row">
         <div class="price-detail">SUBTOTAL
             <div class="pull-right"><?= number_format($this->params['cart']['total'], 2) ?> THB</div>
@@ -33,9 +34,31 @@ use yii\helpers\Url;
         $currentPoint = common\models\costfit\UserPoint::find()->where('userId=' . Yii::$app->user->id)->one();
         if (isset($currentPoint) > 0) {
             if ($this->params ['cart']['summary'] <= $currentPoint['currentPoint']) {
+                if (isset($addressId)) {
+                    $addressIdx = $addressId;
+                } else {
+                    $addressIdx = '';
+                }
+
+                // $k = base64_decode(base64_decode(common\models\ModelMaster::encodeParams(['orderId' => $orderId])));
+                // $params = common\models\ModelMaster::decodeParams(common\models\ModelMaster::encodeParams(['orderId' => $orderId]));
+                // $orderId = $params['orderId'];
                 ?>
-                <a href="<?= Url::to(['/checkout/order-summary/' . $order->encodeParams(['orderId' => $orderId])]) ?>" class="b btn-yellow fullwidth text-center" style="padding:12px 32px; margin:2px auto 12px">PAY by CozxyCoin</a>
-            <?php
+                <?php
+                $form = ActiveForm::begin([
+                    'id' => 'default-shipping-address',
+                    'action' => Yii::$app->homeUrl . 'checkout/order-summary',
+                    'options' => ['class' => 'space-bottom'],
+                ]);
+                ?>
+
+                <input type="hidden" id="addressIdsummary" name="addressIdsummary" value="<?php echo $addressIdx; ?>">
+                <input type="hidden" id="orderId" name="orderId" value="<?php echo $orderId; ?>">
+                <!--<a href="<?//= Url::to(['/checkout/order-summary/' . $order->encodeParams(['orderId' => $orderId])]) ?>" class="b btn-yellow fullwidth text-center" style="padding:12px 32px; margin:2px auto 12px">PAY by CozxyCoin</a>-->
+                <input type="submit" value="PAY by CozxyCoin" class="b btn-yellow fullwidth">
+                <?php ActiveForm::end(); ?>
+                <br>
+                <?php
             }
         }
     }
