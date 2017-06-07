@@ -81,16 +81,26 @@ class ProductGroupController extends ProductMasterController
             $userEx = explode(',', $userRe);
             $ress = array_search(26, $userEx);
             if ($ress !== FALSE) {
-                $query = \common\models\costfit\Product::find()
-                ->select("product.title,product.createDateTime,product.productId as productTempId,product.status,product.productGroupTemplateId,product.step,ps.productSuppId,ps.userId as productSuppUserId")
-                ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
-                ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
-                ->where("product.parentId is null  AND 1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN product.status = 99 THEN 1 ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 ELSE 0 END) end)")
+                if (!isset($_GET["supplier"])) {
+                    $query = \common\models\costfit\Product::find()
+                    ->select("product.title,product.createDateTime,product.productId as productTempId,product.status,product.productGroupTemplateId,product.step,ps.productSuppId,ps.userId as productSuppUserId")
+                    ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
+                    ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
+                    ->where("product.parentId is null  AND 1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN product.status = 99 THEN 1 ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 ELSE 0 END) end)")
 //                ->where("product.parentId is null  ")
-                ->groupBy("ps.userId , pc.parentId")
-                ->orderBy("product.updateDateTime DESC");
+                    ->groupBy("ps.userId , pc.parentId")
+                    ->orderBy("product.updateDateTime DESC");
 //                ->count();
 //                throw new \yii\base\Exception($query);
+                } else {
+                    if (isset($categoryId) || isset($brandId) || isset($status) || isset($title)) {
+                        $query = \common\models\costfit\Product::find()
+                        ->join("LEFT JOIN", "user u", "u.userId = product.userId")
+                        ->where("product.parentId is null AND u.type in (2, 3, 4, 5) AND product.status = 1")
+//                    ->andWhere("(SELECT COUNT(*) FROM product pc WHERE parentId = product.productId) > 0")
+                        ->orderBy("product.updateDateTime DESC");
+                    }
+                }
             } else {
                 $query = \common\models\costfit\Product::find()
                 ->where("parentId is null AND userId = " . Yii::$app->user->identity->userId)
@@ -694,7 +704,7 @@ class ProductGroupController extends ProductMasterController
     {
         $model = \common\models\costfit\ProductImageSuppliers::find()->where("productImageId = " . $_GET["id"])->one();
         $product = \common\models\costfit\Product::find()->where("productId = " . $model->productSupp->productId)->one();
-        if (\common\models\costfit\ProductImage::deleteAll("productImageId = " . $_GET["id"]) > 0) {
+        if (\common\models\costfit\ProductImageSuppliers::deleteAll("productImageId = " . $_GET["id"]) > 0) {
             if (isset($_GET["action"]) && $_GET["action"] == "update") {
 
                 return $this->redirect(['update-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]]);
@@ -811,6 +821,8 @@ class ProductGroupController extends ProductMasterController
         $model = \common\models\costfit\Product::find()->where("productId = " . $_GET["productGroupId"])->one();
 //        throw new \yii\base\Exception(count($model->products));
         foreach ($model->products as $product) {
+            $product->status = 99;
+            $product->save();
             $ps = \common\models\costfit\ProductSuppliers::find()->where("productId = $product->productId AND userId = " . \Yii::$app->user->id . " AND status = 0")->one();
             if (isset($ps)) {
                 $ps->userId = \Yii::$app->user->id;
