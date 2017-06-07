@@ -199,8 +199,8 @@ class CheckoutController extends MasterController {
             $userPoint = $this->CreateUserPoint($order->userId);
         }
         return $this->render('/order/index', [
-            'order' => $order,
-            'userPoint' => $userPoint, 'addressIdsummary' => $addressIdsummary
+                    'order' => $order,
+                    'userPoint' => $userPoint, 'addressIdsummary' => $addressIdsummary
         ]);
     }
 
@@ -218,6 +218,7 @@ class CheckoutController extends MasterController {
                 $order->status = Order::ORDER_STATUS_E_PAYMENT_SUCCESS;
                 $order->paymentDateTime = new \yii\db\Expression('NOW()');
                 $this->updateUserPoint($order->userId, $order->summary, $order->orderId);
+                $this->updateBillingToOreder($_POST['addressId'], $order->orderId);
                 if ($order->save()) {
                     $res["status"] = 1;
 
@@ -249,35 +250,36 @@ class CheckoutController extends MasterController {
                         $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "my-account";
                         $type = $member->firstname . ' ' . $member->lastname;
                         $Subject = 'Your Cozxy.com Order ' . $order->invoiceNo;
+                        $addressId = \common\models\costfit\Address::find()->where("addressId=" . $_POST['addressId'] . " and userId=" . $order->userId)->one();
                         $adress = [];
-                        $adress['billingCompany'] = $order->billingCompany;
-                        $adress['billingTax'] = $order->billingTax;
+                        $adress['billingCompany'] = $addressId->company;
+                        $adress['billingTax'] = $addressId->tax;
 
-                        $adress['billingFirstname'] = $order->billingFirstname;
-                        $adress['billingLastname'] = $order->billingLastname;
-                        $adress['billingAddress'] = $order->billingAddress;
+                        $adress['billingFirstname'] = $addressId->firstname;
+                        $adress['billingLastname'] = $addressId->lastname;
+                        $adress['billingAddress'] = $addressId->address;
 
-                        $billingCountryId = $order->billingCountryId; //ประเทศ
+                        $billingCountryId = $addressId->countryId; //ประเทศ
                         $country = Local::Countries($billingCountryId);
                         $adress['billingCountryId'] = $country['localName'];
 
-                        $billingProvinceId = $order->billingProvinceId; //จังหวัด
+                        $billingProvinceId = $addressId->provinceId; //จังหวัด
                         $States = Local::States($billingProvinceId);
                         $adress['billingProvinceId'] = $States['localName'];
 
-                        $billingAmphurId = $order->billingAmphurId; //อำเภอ
+                        $billingAmphurId = $addressId->amphurId; //อำเภอ
                         $Cities = Local::Cities($billingAmphurId);
                         $adress['billingAmphurId'] = $Cities['localName'];
 
-                        $billingDistrictId = $order->billingDistrictId; //ตำบล
+                        $billingDistrictId = $addressId->districtId; //ตำบล
                         $District = Local::District($billingDistrictId);
                         $adress['billingDistrictId'] = $District['localName'];
 
-                        $billingZipcode = $order->billingZipcode;
+                        $billingZipcode = $addressId->zipcode;
                         $Zipcodes = Local::Zipcodes($billingZipcode);
                         $adress['billingZipcode'] = $Zipcodes['zipcode'];
 
-                        $adress['billingTel'] = $order->billingTel;
+                        $adress['billingTel'] = $addressId->tel;
 
                         $orderList = \common\models\costfit\Order::find()->where('orderId=' . $orderId)->one();
                         $receiveType = [];
@@ -293,6 +295,41 @@ class CheckoutController extends MasterController {
             throw new \yii\base\Exception('Somethig wrong2');
             //go to checkout
         }
+    }
+
+    public function updateBillingToOreder($billingAddressId, $orderId) {
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        $addressId = \common\models\costfit\Address::find()->where("addressId=" . $billingAddressId . " and userId=" . $order->userId)->one();
+
+        $order->billingCompany = $addressId->company;
+        $order->billingTax = $addressId->tax;
+
+        $order->billingFirstname = $addressId->firstname;
+        $order->billingLastname = $addressId->lastname;
+        $order->billingAddress = $addressId->address;
+
+        $billingCountryId = $addressId->countryId; //ประเทศ
+        $country = Local::Countries($billingCountryId);
+        $order->billingCountryId = $country['countryId'];
+
+        $billingProvinceId = $addressId->provinceId; //จังหวัด
+        $States = Local::States($billingProvinceId);
+        $order->billingProvinceId = $States['stateId'];
+
+        $billingAmphurId = $addressId->amphurId; //อำเภอ
+        $Cities = Local::Cities($billingAmphurId);
+        $order->billingAmphurId = $Cities['cityId'];
+
+        $billingDistrictId = $addressId->districtId; //ตำบล
+        $District = Local::District($billingDistrictId);
+        $order->billingDistrictId = $District['districtId'];
+
+        $billingZipcode = $addressId->zipcode;
+        $Zipcodes = Local::Zipcodes($billingZipcode);
+        $order->billingZipcode = $Zipcodes['zipcodeId'];
+
+        $order->billingTel = $addressId->tel;
+        $order->save(false);
     }
 
     function CreateUserPoint($userId) {
