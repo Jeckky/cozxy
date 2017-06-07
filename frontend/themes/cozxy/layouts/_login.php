@@ -22,7 +22,7 @@ use yii\bootstrap\ActiveForm;
                         <div class="col-sm-6 f-margin"><a href="#"><u class="fc-black">Forget password?</u></a></div>
                         <div class="col-sm-6 f-margin text-right"><label><input type="checkbox" name="remember"> &nbsp; Remeber me</label></div>
                     </div>
-                    <a href="#" class="btn-facebook text-center fullwidth"><i class="fa fa-facebook" aria-hidden="true"></i> &nbsp; LOGIN</a>
+                    <!--<a href="#" class="btn-facebook text-center fullwidth"><i class="fa fa-facebook" aria-hidden="true"></i> &nbsp; LOGIN</a>-->
 
                     <?php ActiveForm::end(); ?>
                 </div>
