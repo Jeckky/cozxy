@@ -55,11 +55,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         'value' => function($model) {
                             if ($model->paymentMethod == 1) {
                                 if ($model->image == NULL) {
-                                    return 'Type : Bill payment<br><i class="fa fa-upload" aria-hidden="true"></i>'
+                                    return 'Bill payment<br><i class="fa fa-upload" aria-hidden="true"></i>'
                                     . '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#upload' . $model->topUpId . '">'
                                     . ' Upload payment slip </a>';
                                 } else {
-                                    return 'Type : Bill payment<br><i class="fa fa-file-image-o" aria-hidden="true"></i>'
+                                    return 'Bill payment<br><i class="fa fa-file-image-o" aria-hidden="true"></i>'
                                     . '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#seePic' . $model->topUpId . '"><i> Image </i></a> or ' .
                                     '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#upload' . $model->topUpId . '">'
                                     . ' change </a>';
