@@ -100,12 +100,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                       'removedfile' => "function(file){alert(file.name + ' is removed')}"
                                       ],
                                       ]); */
-                                    /* return 'Bill payment<br><i class="fa fa-upload" aria-hidden="true"></i>'
-                                      . '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#upload' . $model->topUpId . '">'
-                                      . ' Upload payment slip </a>'; */
                                     return 'Bill payment<br><i class="fa fa-upload" aria-hidden="true"></i>'
-                                            . '<a href="' . Yii::$app->homeUrl . 'top-up/upload-form" style="color:blue;font-size:9pt;">'
+                                            . '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#upload' . $model->topUpId . '">'
                                             . ' Upload payment slip </a>';
+                                    /* return 'Bill payment<br><i class="fa fa-upload" aria-hidden="true"></i>'
+                                      . '<a href="' . Yii::$app->homeUrl . 'top-up/upload-form?id=' . $model->topUpId . '" style="color:blue;font-size:9pt;">'
+                                      . ' Upload payment slip </a>'; */
                                 } else {
                                     return 'Bill payment<br><i class="fa fa-file-image-o" aria-hidden="true"></i>'
                                             . '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#seePic' . $model->topUpId . '"><i> Image </i></a> or ' .
@@ -220,7 +220,7 @@ if (isset($topUps) && count($topUps) > 0) {
                         <div class="form-group text-center" style="width:100%;height: 100px;border: #ffcc00 solid 0.5px;padding: 10px;color:#000;">
                             <div id="ImgPreview"></div>
                             <input type="file" id="inputImg" name="slipUpload[image]" class="btn btn-lg btn-warning"style="width: 525px;font-size: 10pt;height:75px"  required="true">
-                            <input type="hidden" name="topUpId" value="<?php $topUp->topUpId ?>">
+                            <input type="hidden" name="topUpId" value="<?= $topUp->topUpId ?>">
                         </div>
                         <div class="form-group text-center">
                             <?= yii\helpers\Html::submitButton('Upload', ['class' => 'btn btn-black', 'name' => 'Upload-button']) ?>
