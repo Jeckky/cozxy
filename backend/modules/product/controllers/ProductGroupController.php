@@ -325,6 +325,9 @@ class ProductGroupController extends ProductMasterController
                     return $this->redirect(['create', 'step' => 3, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]]);
                 break;
             case 3:
+                if (!isset($_GET["productGroupTemplateId"])) {
+                    return $this->redirect(['create', 'step' => 1, 'productGroupId' => $_GET["productGroupId"]]);
+                }
                 $this->saveProductGroupStep($_GET["productGroupId"], 3);
                 $productGroupTemplateOptions = \common\models\costfit\ProductGroupTemplateOption::find()->where("productGroupTemplateId = " . $_GET["productGroupTemplateId"])->all();
                 foreach ($productGroupTemplateOptions as $pto) {
