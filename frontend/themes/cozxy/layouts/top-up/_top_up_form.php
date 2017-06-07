@@ -14,8 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php
 $form = ActiveForm::begin([
-            'id' => 'top-up'
-        ]);
+    'id' => 'top-up'
+]);
 if (isset($paymentMethod) && count($paymentMethod) > 0) {
     $count = count($paymentMethod);
 }
@@ -123,7 +123,7 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
                         <!--<a class = "b btn-yellow" style ="margin:24px auto 12px" id="checkBot">
                             ยืนยัน
                         </a>-->
-                        <input type="button" value="ยืนยัน" id="checkBot" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">
+                        <input type="button" value="Submit" id="checkBot" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">
                     </span>
                 </td>
             </tr>
