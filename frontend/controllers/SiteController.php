@@ -207,7 +207,7 @@ class SiteController extends Controller {
 
             if ($model->load(Yii::$app->request->post())) {
                 $model->attributes = $_POST["SignupForm"];
-                $model->birthDate = $_POST["SignupForm"]['yyyy'] . '-' . $_POST["SignupForm"]['dd'] . '-' . $_POST["SignupForm"]['dd'];
+                $model->birthDate = $_POST["SignupForm"]['yyyy'] . '-' . $_POST["SignupForm"]['mm'] . '-' . $_POST["SignupForm"]['dd'];
                 //echo $model->birthDate;
                 //exit();
                 if ($user = $model->signup()) {
