@@ -37,11 +37,11 @@ echo GridView::widget([
             'vAlign' => 'middle',
             'template' => '{ordering} {delete}',
             'urlCreator' => function($action, $model, $key, $index) {
-                return \yii\helpers\Url::toRoute(['delete-product-supp-image', 'id' => $model->productImageId]);
+                return \yii\helpers\Url::toRoute(['delete-product-supp-image', 'id' => $model->productImageId, 'step' => $_GET["step"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]]);
             },
             'buttons' => [
                 "ordering" => function ($url, $model, $index) {
-                    return \yii\helpers\Html::a("<span class='glyphicon glyphicon-sort-by-alphabet'></span> Ordering ", ['change-image-supp-order', 'id' => $model->productImageId], [
+                    return \yii\helpers\Html::a("<span class='glyphicon glyphicon-sort-by-alphabet'></span> Ordering ", ['change-image-supp-order', 'id' => $model->productImageId, 'step' => $_GET["step"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], [
                         'title' => Yii::t('app', 'Toogle Active'),
                         'class' => 'btn btn-info',
                         'data-pjax' => '0',
