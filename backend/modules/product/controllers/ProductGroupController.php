@@ -71,7 +71,7 @@ class ProductGroupController extends ProductMasterController
                 ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
                 ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
                 ->where("product.parentId is null AND ps.userId =" . Yii::$app->user->id)
-                ->andWhere("1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN product.status = 99 THEN 1 ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 ELSE 0 END) end)")
+//                ->andWhere("1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN product.status = 99 THEN 1 ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 ELSE 0 END) end)")
                 ->groupBy("product.productId")
                 ->orderBy("product.updateDateTime DESC");
             }
@@ -367,13 +367,15 @@ class ProductGroupController extends ProductMasterController
                 $model = \common\models\costfit\Product::find()->where("productId = " . $_GET["productGroupId"])->one();
                 $countProduct = \common\models\costfit\Product::find()->where("parentId = " . $_GET["productGroupId"])->count();
                 if (isset($_POST["finish"])) {
-                    $model->status = 99;
-                    $model->save();
-                    foreach ($model->products as $product) {
-                        $productSupp = \common\models\costfit\ProductSuppliers::find()->where("productId = $product->productId AND userId = " . \Yii::$app->user->id)->one();
-                        if (isset($productSupp)) {
-                            $productSupp->status = 99;
-                            $productSupp->save();
+                    if ($model->status != 1) {
+                        $model->status = 99;
+                        $model->save();
+                        foreach ($model->products as $product) {
+                            $productSupp = \common\models\costfit\ProductSuppliers::find()->where("productId = $product->productId AND userId = " . \Yii::$app->user->id)->one();
+                            if (isset($productSupp)) {
+                                $productSupp->status = 99;
+                                $productSupp->save();
+                            }
                         }
                     }
                     return $this->redirect(['index']);
