@@ -10,9 +10,9 @@ use yii\bootstrap\ActiveForm;
         <!-- Cart -->
         <?php
         $form = ActiveForm::begin([
-            'id' => 'default-shipping-cart',
-            'action' => Yii::$app->homeUrl . 'checkout/confirm',
-            'options' => ['class' => 'space-bottom'],
+                    'id' => 'default-shipping-cart',
+                    'action' => Yii::$app->homeUrl . 'checkout/confirm',
+                    'options' => ['class' => 'space-bottom'],
         ]);
         ?>
         <div class="col-lg-9 col-md-8 cart-body">
@@ -36,6 +36,7 @@ use yii\bootstrap\ActiveForm;
                         <?php
                         if ($userPoint->currentPoint >= $order->summary) {
                             ?>
+                            <input type="hidden" name="addressId" value="<?= $addressIdsummary ?>">
                             <input type="hidden" name="orderId" value="<?= $order->orderId ?>">
                             <input type="submit" value="Confirm" class="b btn-yellow">
                         <?php } else {
