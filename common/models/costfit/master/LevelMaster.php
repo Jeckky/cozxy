@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "level".
 *
-    * @property string $levelId
+    * @property integer $levelId
     * @property string $name
     * @property integer $status
     * @property string $createDateTime

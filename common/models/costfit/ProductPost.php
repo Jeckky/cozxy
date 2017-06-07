@@ -27,11 +27,19 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster {
     const STATUS_PRIVATE = 2;
     const STATUS_DELETE = 3;
     const COZXY_POST_REVIRES = 'review_post';
+    const COZXY_WRITE_YOUR_STORY = 'write_your_story';
 
     public function rules() {
         return array_merge(parent::rules(), [
-                [['title', 'shortDescription', 'description'], 'required', 'on' => self::COZXY_POST_REVIRES],
+            [['title', 'shortDescription', 'description'], 'required', 'on' => self::COZXY_POST_REVIRES],
+            [['title', 'shortDescription', 'description', 'productSelfId', 'shopName', 'price', 'country', 'currency'], 'required', 'on' => self::COZXY_WRITE_YOUR_STORY],
         ]);
+    }
+
+    public function scenarios() {
+        return [
+            self::COZXY_WRITE_YOUR_STORY => ['productSelfId', 'title', 'description'],
+        ];
     }
 
     /**

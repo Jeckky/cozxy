@@ -10,7 +10,7 @@ use common\models\costfit\ProductPost;
         //throw new \yii\base\Exception(count($popularStories));
         if (isset($popularStories) && count($popularStories) > 0) {
             foreach ($popularStories as $post):
-                $img = ProductSuppliers::ImagesFromPost($post->productPostId);
+                $img = ProductSuppliers::ImagesFromPost($post->productPostId, $productSuppId);
                 $star = frontend\models\DisplayMyStory::calculatePostRating($post->productPostId);
                 $value = explode(",", $star);
                 $posts = ProductPost::PostDetail($post->productPostId);
@@ -33,7 +33,7 @@ use common\models\costfit\ProductPost;
         //throw new \yii\base\Exception(count($popularStoriesNoneStar));
         if (isset($popularStoriesNoneStar) && count($popularStoriesNoneStar) > 0) {
             foreach ($popularStoriesNoneStar as $post):
-                $img = ProductSuppliers::ImagesFromPost($post->productPostId);
+                $img = ProductSuppliers::ImagesFromPost($post->productPostId, $productSuppId);
                 $star = frontend\models\DisplayMyStory::calculatePostRating($post->productPostId);
                 $value = explode(",", $star);
                 $posts = ProductPost::PostDetail($post->productPostId);

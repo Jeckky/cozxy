@@ -16,18 +16,18 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 <div class="top-up-index" style="width: 60%;margin: auto;">
 
-    <div class="bs-example" data-example-id="btn-tags" style="margin: auto;background-color:#3cc;height:85px;color: #fff; border-width: 1px;  border-radius: 4px 4px 0 0; -webkit-box-shadow: none; box-shadow: none;">
-        <h3 style="color: #fff;margin-top: 20px;">Cozxy.com</h3>
+    <div class="bs-example" data-example-id="btn-tags" style="margin: auto;height:85px;color: #000; border-width: 1px;  border-radius: 4px 4px 0 0; -webkit-box-shadow: none; box-shadow: none;">
+        <h3 style="margin-top: 20px;">Cozxy.com</h3>
     </div>
     <?php
     if ($type == 'success') {
         ?>
         <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup" style="margin: auto;text-align: center;color: #000;margin-bottom: 20px;">
-            <h3 style="color: #009999;"><b> Top up :: SUCCESSFUL</b></h3>
+            <h3 style="color: #000;"><b> Top up :: SUCCESSFUL</b></h3>
             <h4>You have <?= $currentPoint ?> Points.</h4>
             <?php if ($fromCheckout == 'yes') {
                 ?>
-                <a href="<?= Yii::$app->homeUrl . 'checkout/order-summary/' . $order->encodeParams(['orderId' => $order->orderId]) ?>" class = "btn" style = "background-color: #3cc; color: #fff;font-size: 12pt;">
+                <a href="<?= Yii::$app->homeUrl . 'checkout/order-summary/' . $order->encodeParams(['orderId' => $order->orderId]) ?>" class = "btn" style="color: #000;font-size: 12pt;">
                     Check out
                 </a>
             <?php } ?>

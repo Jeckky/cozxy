@@ -8,7 +8,7 @@ use Yii;
 * This is the model class for table "product_group".
 *
     * @property string $productGroupId
-    * @property string $userId
+    * @property integer $userId
     * @property string $title
     * @property string $description
     * @property integer $status

@@ -16,12 +16,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php
                 $productimageThumbnail1 = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTE2IiBoZWlnaHQ9IjExNiIgdmlld0JveD0iMCAwIDY0IDY0IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48IS0tDQpTb3VyY2UgVVJMOiBob2xkZXIuanMvMTE2eDExNg0KQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4NCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQ0KKGMpIDIwMTItMjAxNSBJdmFuIE1hbG9waW5za3kgLSBodHRwOi8vaW1za3kuY28NCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNWMwYTg2ZjY1YSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1YzBhODZmNjVhIj48cmVjdCB3aWR0aD0iMTE2IiBoZWlnaHQ9IjExNiIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjYuMjI2NTYyNSIgeT0iMzYuNTMyODEyNSI+MTE2eDExNjwvdGV4dD48L2c+PC9nPjwvc3ZnPg==';
                 if (count($model['images']) == 0) {
-                    for ($index = 0; $index <= 3; $index++) {
-                        echo ''
-                        . '<div class="col-md-3 col-xs-6">
-                            <img src="' . $productimageThumbnail1 . '" class="fullwidth" alt="" style="margin-top: 24px;">
-                        </div>';
-                    }
+                    /* for ($index = 0; $index <= 3; $index++) {
+                      echo ''
+                      . '<div class="col-md-3 col-xs-6">
+                      <img src="' . $productimageThumbnail1 . '" class="fullwidth" alt="" style="margin-top: 24px;">
+                      </div>';
+                      } */
                 } else {
                     foreach ($model['images'] as $key => $value) {
                         echo ''
@@ -91,19 +91,31 @@ $this->params['breadcrumbs'][] = $this->title;
                             <input type="hidden" id="supplierId" value="<?php echo $model['supplierId']; ?>">
                             <input type="hidden" id="productSuppId" value="<?php echo $model['productSuppId']; ?>">
                             <input type="hidden" id="receiveType" value="<?php echo $model['receiveType']; ?>">
-                            <a href="javascript:addItemToWishlist(<?= $model['productSuppId'] ?>);" class="b btn-g999 size16" style="margin:24px auto 12px">+
-                                <i class="fa fa-heart"></i></a>
-                                <?php
-                                if ($model['result'] > 0) {
-                                    echo '<a id="addItemToCartUnity" data-loading-text="<i class=\'fa fa-circle-o-notch fa-spin\'></i> Processing cart" class="b btn-yellow size16" style="margin:24px auto 12px">+
-                                <i class="fa fa-shopping-bag"></i></a>';
-                                } else {
-                                    echo ' ';
-                                }
+
+
+                            <?php
+                            if ($model['wishList'] == 1) { // เคย wishList ไปแล้ว
                                 ?>
+                                <a class="b btn-g999 size16">
+                                    <i class="fa fa-heartbeat" aria-hidden="true"></i>
+                                </a>
+                            <?php } else { ?>
+                                <a href="javascript:addItemToWishlist(<?= $model['productSuppId'] ?>);" class="b btn-g999 size16" id="addItemToWishlist-<?= $model['productSuppId'] ?>" data-loading-text="<a><i class='fa fa-heartbeat' aria-hidden='true'></i></a>" style="margin:24px auto 12px">+
+                                    <i class="fa fa-heart"></i></a>
+
+                            <?php } ?>
+                            <?php
+                            if ($model['result'] > 0) {
+                                echo '<a id="addItemToCartUnity" data-loading-text="<i class=\'fa fa-circle-o-notch fa-spin\'></i> Processing cart" class="b btn-yellow size16" style="margin:24px auto 12px">+
+                                <i class="fa fa-shopping-bag"></i></a>';
+                            } else {
+                                echo ' ';
+                            }
+                            ?>
                             <!-- <a href = "/cart" class = "b btn-g999 btn-success size16" style = "margin:24px auto 12px;color:#fff;">+
                                  <i class = "fa fa-bookmark-o"></i></a>
                             -->
+                            <br>
                         </div>
                     </div>
                 </div>

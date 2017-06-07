@@ -57,15 +57,14 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     const ADD_NEW_PRODUCT_SUPPLIERS = 'ProductSuppliers';
 
     public $productPrice;
-
-// public $productGroupId;
+    public $productGroupId;
 
     /**
      * @inheritdoc
      */
     public function rules() {
         return array_merge(parent::rules(), [
-                [['brandId', 'categoryId', 'title'], 'required', 'on' => self::ADD_NEW_PRODUCT_SUPPLIERS],
+            [['brandId', 'categoryId', 'title'], 'required', 'on' => self::ADD_NEW_PRODUCT_SUPPLIERS],
         ]);
     }
 
@@ -215,12 +214,12 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
 
     public static function productOrder($productSuppId) {
         $model = Order::find()
-                ->select(['`order`.*', '`product_suppliers`.*', '`order_item`.*'])
-                ->join('LEFT JOIN', 'order_item', 'order.orderId = order_item.orderId')
-                ->join('LEFT JOIN', 'product_suppliers', 'order_item.productSuppId = product_suppliers.productSuppId')
-                ->where('`order`.status = ' . Order::ORDER_STATUS_E_PAYMENT_SUCCESS . '  '
-                        . 'and `product_suppliers`.userId =' . Yii::$app->user->identity->userId . ' and `product_suppliers`.productSuppId=' . $productSuppId)
-                ->all();
+        ->select(['`order`.*', '`product_suppliers`.*', '`order_item`.*'])
+        ->join('LEFT JOIN', 'order_item', 'order.orderId = order_item.orderId')
+        ->join('LEFT JOIN', 'product_suppliers', 'order_item.productSuppId = product_suppliers.productSuppId')
+        ->where('`order`.status = ' . Order::ORDER_STATUS_E_PAYMENT_SUCCESS . '  '
+        . 'and `product_suppliers`.userId =' . Yii::$app->user->identity->userId . ' and `product_suppliers`.productSuppId=' . $productSuppId)
+        ->all();
         if (isset($model) && count($model) > 0) {
             return $model;
         } else {
@@ -236,13 +235,13 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         }
     }
 
-    public static function ImagesFromPost($productPostId) {
+    public static function ImagesFromPost($productPostId, $productSuppId) {
         $productPost = ProductPost::find()->where("productPostId=" . $productPostId)->one();
         $img = '';
         if (isset($productPost)) {
-            $image = ProductImage::find()->where("productId=" . $productPost->productId)->one();
+            $image = ProductImageSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
             if (isset($image)) {
-                $img = $image->image;
+                $img = $image->imageThumbnail1;
             }
         }
         return $img;

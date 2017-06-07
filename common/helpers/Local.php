@@ -43,4 +43,9 @@ class Local {
         return $localNamedistrict;
     }
 
+    public static function Zipcodes($zipcodeId) {
+        $localNamedistrict = \common\models\dbworld\Zipcodes::find()->where("zipcodeId = '" . $zipcodeId . "' ")->one();
+        return $localNamedistrict;
+    }
+
 }

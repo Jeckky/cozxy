@@ -108,7 +108,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 <!-- <p class="size18 size16-sm size14-xs">SHOWING 1-16 OF 79 RESULTS</p>-->
                 <div class="row">
                     <div class="wf-container">
+
                         <?php
+                        yii\widgets\Pjax::begin([
+                            'enablePushState' => false, // to disable push state
+                            'enableReplaceState' => false // to disable replace state
+                        ]);
                         echo \yii\widgets\ListView::widget([
                             'dataProvider' => $productCanSell,
                             'options' => [
@@ -118,12 +123,19 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return $this->render('@app/themes/cozxy/layouts/product/_product_item', ['model' => $model]);
                             },
                             'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
-                            //'layout' => "{summary}{pager}{items}",
+                            'layout' => "{summary}\n{items}\n<center>{pager}</center>\n",
                             //'layout' => "{items}",
                             'itemOptions' => [
                                 'tag' => false,
+                            ], 'pager' => [
+                                'firstPageLabel' => 'first',
+                                'lastPageLabel' => 'last',
+                                'prevPageLabel' => 'previous',
+                                'nextPageLabel' => 'next',
+                                'maxButtonCount' => 3,
                             ],
                         ]);
+                        yii\widgets\Pjax::end();
                         ?>
                     </div>
                 </div>
@@ -133,10 +145,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="size18">&nbsp;</div>
                 <?= $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories') ?>
             </div>
-            <div class="col-xs-12 text-center">
+            <!--<div class="col-xs-12 text-center">
                 <a href="#" class="b btn-black" style="margin:24px auto 32px">SHOW MORE
                     <span class="size16">&nbsp; ↓ </span></a>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>

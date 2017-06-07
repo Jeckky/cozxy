@@ -17,7 +17,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
 
     <?php Pjax::begin(['id' => 'product-grid-view']); ?>
-
+    <?php
+    $user_group_Id = Yii::$app->user->identity->user_group_Id;
+    $userRe = str_replace('[', '', str_replace(']', '', $user_group_Id));
+    $userEx = explode(',', $userRe);
+    $ress = array_search(26, $userEx);
+    ?>
 
     <div class="panel panel-default" >
         <div class="panel-heading" style="background-color: #000;vertical-align: middle;">
@@ -139,6 +144,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
             <?php ActiveForm::end(); ?>
 
             <?php if (isset($dataProvider)): ?>
+                <?php
+//                throw new \yii\base\Exception(print_r($dataProvider->getKeys(), TRUE));
+//                throw new \yii\base\Exception($dataProvider->getCount());
+                ?>
+
+                <?php // throw new \yii\base\Exception($dataProvider->getTotalCount()); ?>
                 <?=
                 GridView::widget([
                     'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
@@ -154,11 +165,32 @@ $this->params['pageHeader'] = Html::encode($this->title);
 //                    'productGroupId',
                         ['attribute' => 'title',
                             'format' => "raw",
-                            'options' => ['style' => 'width:10%'],
+                            'options' => ['style' => 'width:60%'],
                             'value' => function ($model) {
                                 return $model->title;
                             }
                         ],
+                        ['attribute' => 'supplier',
+                            'visible' => ($ress !== FALSE) ? TRUE : FALSE,
+                            'format' => "raw",
+                            'options' => ['style' => 'width:15%'],
+                            'value' => function ($model) {
+                                if (isset($model->productSuppUserId)) {
+                                    $supp = common\models\costfit\User::findOne($model->productSuppUserId);
+                                    $text = "Email : " . $supp->username . "<br>ชื่อ :" . $supp->firstname . " " . $supp->lastname;
+                                } else {
+                                    $text = "Master";
+                                }
+                                return $text;
+                            }
+                        ],
+//                        ['attribute' => 'userId',
+//                            'format' => "raw",
+//                            'options' => ['style' => 'width:10%'],
+//                            'value' => function ($model) {
+//                                return $model->suppUser;
+//                            }
+//                        ],
 //                        ['attribute' => 'description',
 //                            'format' => "raw",
 //                            'options' => ['style' => 'width:20%'],
@@ -174,6 +206,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
 //                        }
 //                    ],
                         ['attribute' => 'createDateTime',
+                            'options' => [
+                                'style' => 'width:10%'
+                            ],
                             'value' => function ($model) {
                                 return isset($model->createDateTime) ? $this->context->dateThai($model->createDateTime, 1) : NULL;
                             }
@@ -182,6 +217,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             'options' => [
                                 'style' => 'width:7%'
                             ],
+                            'visible' => ($ress !== FALSE) ? FALSE : TRUE,
                             'value' => function ($model) {
                                 return ($model->status == 1) ? "Approve" : ($model->status == 99 ? "Wait Approve" : "Draft at Step " . $model->step );
                             }
@@ -194,39 +230,35 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             ],
                             'template' => '{update} {delete}',
                             'buttons' => [
-//                            'view' => function ($url, $model) {
-//                                return Html::a('<i class="fa fa-eye"></i>', $url, [
-//                                    'title' => Yii::t('yii', 'view'),
-//                                ]);
-//                            },
-                                'update' => function ($url, $model) {
+                                'update' => function ($url, $model) use ($ress) {
                                     if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5) {
                                         if ($model->status == 1 || $model->status == 99) {
 //                                            if ($model->userId != Yii::$app->user->id) {
-                                            return Html::a('<i class="fa fa-eye"></i>', ["view", 'productGroupId' => $model->productId], [
+                                            return Html::a('<i class="fa fa-eye"></i>', ["view", 'productGroupId' => isset($model->productId) ? $model->productId : $model->productTempId], [
                                                 'title' => Yii::t('yii', 'update'),
                                             ]);
-//                                            } else {
-//                                                return Html::a('<i class="fa fa-pencil"></i>', ["create", 'step' => 1, 'productGroupId' => $model->productId], [
-//                                                    'title' => Yii::t('yii', 'update'),
-//                                                ]);
-//                                            }
                                         } elseif ($model->status != 99) {
-                                            return Html::a('<i class="fa fa-pencil"></i>Product', ["create", 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
+                                            return Html::a('<i class="fa fa-pencil"></i>Product', ["create", 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => isset($model->productId) ? $model->productId : $model->productTempId], [
                                                 'title' => Yii::t('yii', 'update')]);
                                         }
                                     } elseif ($model->status == 0) {
-                                        return Html::a('<i class="fa fa-pencil"></i>', ["create", 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
+                                        return Html::a('<i class="fa fa-pencil"></i>', ["create", 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => isset($model->productId) ? $model->productId : $model->productTempId], [
                                             'title' => Yii::t('yii', 'update'),
                                         ]);
                                     } else {
-                                        return Html::a('<i class="fa fa-pencil"></i>Product', ["create", 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId], [
-                                            'title' => Yii::t('yii', 'update')]);
+                                        if ($ress !== FALSE) {
+                                            return Html::a('<i class="fa fa-eye"></i>', ["view", 'productGroupId' => isset($model->productId) ? $model->productId : $model->productTempId, 'userId' => isset($model->productSuppUserId) ? $model->productSuppUserId : 0], [
+                                                'title' => Yii::t('yii', 'update'),
+                                            ]);
+                                        } else {
+                                            return Html::a('<i class="fa fa-pencil"></i>Product', ["create", 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => isset($model->productId) ? $model->productId : $model->productTempId], [
+                                                'title' => Yii::t('yii', 'update')]);
+                                        }
                                     }
                                 },
                                 'delete' => function ($url, $model) {
                                     if (($model->status == 0) && $model->userId == Yii::$app->user->id) {
-                                        return Html::a('<i class="fa fa-trash-o"></i>', ['delete-product-group', 'id' => $model->productId], [
+                                        return Html::a('<i class="fa fa-trash-o"></i>', ['delete-product-group', 'id' => isset($model->productId) ? $model->productId : $model->productTempId], [
                                             'title' => Yii::t('yii', 'Delete'),
                                             'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
                                             'data-method' => 'post',

@@ -24,7 +24,7 @@
             <div class="row" style="margin-top: 1cm;">
                 <div class="col-lg-6 col-md-6 col-sm-6 ">
                     <a href="<?= Yii::$app->homeUrl ?>" class="b btn-yellow">Go shopping</a>&nbsp;&nbsp;&nbsp;
-                    <a href="<?= Yii::$app->homeUrl . "profile/order" ?>" class="b btn-black">View order list</a>
+                    <a href="<?= Yii::$app->homeUrl . "my-account" ?>" class="b btn-black">View order list</a>
                 </div>
             </div>
         </div>
