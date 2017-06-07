@@ -750,7 +750,7 @@ class ProductGroupController extends ProductMasterController
                     $pi->attributes = $image->attributes;
                     $pi->productSuppId = $ps->productSuppId;
                     $pi->createDateTime = new \yii\db\Expression("NOW()");
-                    if ($pi->save()) {
+                    if ($pi->save(FALSE)) {
 
                     }
                 }
@@ -761,7 +761,7 @@ class ProductGroupController extends ProductMasterController
                     $psov->attributes = $pov->attributes;
                     $psov->productSuppId = $ps->productSuppId;
                     $psov->createDateTime = new \yii\db\Expression("NOW()");
-                    $psov->save();
+                    $psov->save(FALSE);
                 }
             } else {
                 throw new \yii\base\Exception(print_r($ps->errors, TRUE));
