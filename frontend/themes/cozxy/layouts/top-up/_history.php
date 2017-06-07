@@ -85,10 +85,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 $amount2 = str_replace(".", "", $amount1);
                                 $barCode = $taxId . $topUpCut . $tel . $amount2;
                                 $data = "| " . $taxId . " " . $topUpCut . " " . $tel . " " . $amount2;
-                                return TopUp::statusText($model->status) . '<br>' .
-                                        '<i class="fa fa-print" aria-hidden="true"></i>'
-                                        . ' <a href="' . Yii::$app->homeUrl . 'top-up/print-payment-form-topdf?amount=' . $amount . '&customerName=' . $customerName . '&customerTel=' . $customerTel . '&topUpNo=' . $topUpNo . '&taxId=' . $taxId . '&barCode=' . $barCode . '&data=' . $data . '"'
-                                        . 'style = "color:blue;font-size:10pt;" target="_blank">Re-print Bill payment</a>';
+                                if ($model->paymentMethod == 1) {
+                                    return TopUp::statusText($model->status) . '<br>' .
+                                            '<i class="fa fa-print" aria-hidden="true"></i>'
+                                            . ' <a href="' . Yii::$app->homeUrl . 'top-up/print-payment-form-topdf?amount=' . $amount . '&customerName=' . $customerName . '&customerTel=' . $customerTel . '&topUpNo=' . $topUpNo . '&taxId=' . $taxId . '&barCode=' . $barCode . '&data=' . $data . '"'
+                                            . 'style = "color:blue;font-size:10pt;" target="_blank">Re-print Bill payment</a>';
+                                } else {
+                                    return TopUp::statusText($model->status);
+                                }
                             } else {
                                 return TopUp::statusText($model->status);
                             }
