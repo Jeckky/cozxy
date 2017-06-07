@@ -128,7 +128,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     'tags' => true,
                                     'placeholder' => 'Select or Search ...',
                                     'loadingText' => 'Loading Brand ...',
-                                    //'initialize' => true,
+                                //'initialize' => true,
                                 ],
                             ]);
                             ?>
@@ -234,17 +234,22 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5) {
                                         if ($model->status == 1 || $model->status == 99) {
 //                                            if ($model->userId != Yii::$app->user->id) {
-                                            if (isset($model->productId)) {
-                                                $products = common\models\costfit\Product::find()->where("parentId = $model->productId")->count();
-                                            } else {
-                                                $products = 0;
-                                            }
-
+                                            $products = common\models\costfit\Product::find()->where("parentId = " . isset($model->productId) ? $model->productId : $model->productTempId)->count();
+                                            $productSupps = common\models\costfit\ProductSuppliers::find()
+                                            ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
+                                            ->where("product_suppliers.userId= " . Yii::$app->user->id . " AND p.parentId = " . isset($model->productId) ? $model->productId : $model->productTempId)->count();
                                             if ($model->status == 1 && $products == 0) {
-                                                return Html::a('<i class="fa fa-plus"></i>Create', ["create", 'step' => 1, 'productGroupId' => isset($model->productId) ? $model->productId : $model->productTempId], [
-                                                    'title' => Yii::t('yii', 'update')]);
+
+                                                if ($productSupps == 0) {
+                                                    return Html::a('<i class="fa fa-plus"></i>Create', ["create", 'step' => 1, 'productGroupId' => isset($model->productId) ? $model->productId : $model->productTempId], [
+                                                        'title' => Yii::t('yii', 'update')]);
+                                                } else {
+                                                    return Html::a('<i class="fa fa-eye"></i>', ["view", 'productGroupId' => isset($model->productId) ? $model->productId : $model->productTempId], [
+                                                        'title' => Yii::t('yii', 'update'),
+                                                    ]);
+                                                }
                                             } else {
-                                                return Html::a('<i class="fa fa-eye"></i>', ["view", 'productGroupId' => isset($model->productId) ? $model->productId : $model->productTempId], [
+                                                return Html::a('<i class="fa fa-eye"></i>' . $productSupps, ["view", 'productGroupId' => isset($model->productId) ? $model->productId : $model->productTempId], [
                                                     'title' => Yii::t('yii', 'update'),
                                                 ]);
                                             }

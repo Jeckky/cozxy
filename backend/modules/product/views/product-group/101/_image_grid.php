@@ -3,13 +3,14 @@
 use yii\data\ActiveDataProvider;
 use kartik\grid\GridView;
 use kartik\editable\Editable;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 echo GridView::widget([
+    'id'=>'image-grid',
     'dataProvider' => new ActiveDataProvider([
         'query' => common\models\costfit\ProductImage::find()
         ->where("productId=" . $id)->orderBy("ordering ASC"),
@@ -66,7 +67,6 @@ echo GridView::widget([
     'containerOptions' => ['style' => 'overflow: auto'], // only set when $responsive = false
     'headerRowOptions' => ['class' => 'kartik-sheet-style'],
     'filterRowOptions' => ['class' => 'kartik-sheet-style'],
-    'pjax' => true, // pjax is set to always true for this demo
     // set your toolbar
     'toolbar' => [
 //                                                    ['content' =>

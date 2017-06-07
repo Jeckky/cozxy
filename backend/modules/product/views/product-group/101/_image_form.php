@@ -71,15 +71,20 @@ use yii\widgets\Pjax;
                     ],
                     'clientEvents' => [
                         'sending' => "function(file, xhr, formData) {
-                        uploadCount += 1;
-                                console.log(file);
-                                }",
+                            uploadCount += 1;
+                            console.log(file);
+                        }",
                         'complete' => "function(file){
                             uploadCount -= 1;
-                            if(uploadCount == 0)
-                                location.reload();
+//                            if(uploadCount == 0) {
+                                //    location.reload();
+                                $.pjax({container:'#image-grid-pjax'});
+//                            }
+                                myDropzone.removeFile(file);
                         }",
-                        'removedfile' => "function(file){alert(file.name + ' is removed')}"
+                        'removedfile' => "function(file){
+                            //alert(file.name + ' is removed')
+                        }"
                     ],
                 ]);
                 ?>
