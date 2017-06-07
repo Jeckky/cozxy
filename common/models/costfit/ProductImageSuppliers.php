@@ -62,4 +62,9 @@ class ProductImageSuppliers extends \common\models\costfit\master\ProductImageSu
         return $max;
     }
 
+    public function getProductSupp()
+    {
+        return $this->hasOne(ProductSuppliers::className(), ['productSuppId' => 'productSuppId']);
+    }
+
 }

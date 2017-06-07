@@ -71,12 +71,19 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             if ($model->paymentMethod == 1) {
                                 if ($model->image == NULL) {
                                     /*  return \kato\DropZone::widget([
+<<<<<<< HEAD
                                       //'id' => '123456',
                                       //'dropzoneContainer' => '#' . $model->topUpId,
                                       'options' => [
                                       'url' => \yii\helpers\Url::to(['upload', 'id' => $model->topUpId]),
                                       'paramName' => 'image',
                                       //'id' => $model->topUpId,
+=======
+                                      'options' => [
+                                      'url' => \yii\helpers\Url::to(['upload', 'id' => $model->topUpId]),
+                                      'paramName' => 'image',
+                                      'id' => $model->topUpId,
+>>>>>>> 10dee662f2c1ad5cd6bb9bf3b32a7f063376d4d4
                                       // 'maxFilesize' => '200',
                                       //'id' => $model->topUpId,
                                       'clickable' => true,
@@ -94,8 +101,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                       ],
                                       ]); */
                                     return 'Bill payment<br><i class="fa fa-upload" aria-hidden="true"></i>'
+<<<<<<< HEAD
                                             . '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#upload' . $model->topUpId . '">'
                                             . ' Upload payment slip </a>';
+=======
+                                    . '<a href="#" style="color:blue;font-size:9pt;" class="upload-payment-slip" data-toggle="modal" data-id="' . $model->topUpId . '" data-target="#upload">'
+                                    . ' Upload payment slip </a>';
+>>>>>>> 10dee662f2c1ad5cd6bb9bf3b32a7f063376d4d4
                                 } else {
                                     return 'Bill payment<br><i class="fa fa-file-image-o" aria-hidden="true"></i>'
                                             . '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#seePic' . $model->topUpId . '"><i> Image </i></a> or ' .
@@ -159,6 +171,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </div>
 <?php
 if (isset($topUps) && count($topUps) > 0) {
+<<<<<<< HEAD
     foreach ($topUps as $topUp):
         ?>
         <div class="modal fade" id="upload<?= $topUp->topUpId ?>" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 0px;">
@@ -216,11 +229,69 @@ if (isset($topUps) && count($topUps) > 0) {
                             <?= yii\helpers\Html::submitButton('Upload', ['class' => 'btn btn-black', 'name' => 'Upload-button']) ?>
                         </div>
                         <?php ActiveForm::end(); ?>
+=======
+    // foreach ($topUps as $topUp):
+    ?>
+    <div class="modal fade" id="upload" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 0px;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i>
+                    </button>
+                    <h2>Upload payment slip for "<?//= $topUp->topUpNo ?>"</h2>
+                </div>
+                <div class="modal-body">
+                    <?php
+                    $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']
+                    ]);
+                    /* echo \kato\DropZone::widget([
+                      'options' => [
+                      'maxFilesize' => '2',
+                      ],
+                      'clientEvents' => [
+                      'complete' => "function(file){console.log(file)}",
+                      'removedfile' => "function(file){alert(file.name + ' is removed')}"
+                      ],
+                      ]); */
+                    ?>
+                    <?php
+                    $csrfToken = \Yii::$app->request->getCsrfToken();
+                    echo \kato\DropZone::widget([
+                        'options' => [
+                            'url' => \yii\helpers\Url::to(['upload', 'id' => '']),
+                            'paramName' => 'image',
+                            // 'maxFilesize' => '200',
+                            'clickable' => true,
+                            'id' => '55555',
+                            'addRemoveLinks' => true,
+                            'enqueueForUpload' => true,
+                            //'dictDefaultMessage' => 'asdfasdfa',
+                            'dictDefaultMessage' => "<h1><i class='fa fa-cloud-upload'></i><br>Drop files in here<h1><br><span class='dz-text-small'>or click to pick manually</span>",
+                        ],
+                        'clientEvents' => [
+                            'sending' => "function(file, xhr, formData) {
+                          console.log(file);
+                          }",
+                            'complete' => "function(file){console.log(file)}",
+                            'removedfile' => "function(file){alert(file.name + ' is removed')}"
+                        ],
+                    ]);
+                    ?>
+                    <br><br><br><br><br>
+                    <!--                        <div class="form-group text-center" style="width:100%;height: 100px;border: #ffcc00 solid 0.5px;padding: 10px;color:#000;">
+                                                <input type="file" name="slipUpload[image]" class="btn btn-lg btn-warning"style="width: 525px;font-size: 10pt;height:75px;" required="true">
+                                                <input type="hidden" name="topUpId" value="<?php // $topUp->topUpId                                                        ?>">
+                                            </div>-->
+                    <div class="form-group text-center">
+                        <?php // yii\helpers\Html::submitButton('Upload', ['class' => 'btn btn-black', 'name' => 'Upload-button'])   ?>
+>>>>>>> 10dee662f2c1ad5cd6bb9bf3b32a7f063376d4d4
                     </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div>
-    <?php endforeach; ?>
+                    <?php ActiveForm::end(); ?>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    <?php //endforeach; ?>
 
 <?php }
 ?>
@@ -246,3 +317,8 @@ if (isset($topUps) && count($topUps) > 0) {
     <?php
 }
 ?>
+
+
+<script>
+
+</script>
