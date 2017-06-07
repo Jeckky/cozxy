@@ -64,15 +64,16 @@ use yii\bootstrap\ActiveForm;
             ->join("LEFT JOIN", "category", "category.categoryId=product_suppliers.categoryId")
             ->groupBy('`product_suppliers`.categoryId')
             ->orderBy('count(`product_suppliers`.`categoryId`) asc')
-            ->limit(12)
+            ->limit(11)
             ->all();
             foreach ($category as $value) {
                 $params = \common\models\ModelMaster::encodeParams(['categoryId' => $value->categoryId]);
                 $strtoupper = strtoupper($value->title);
                 $strtolower = strtolower($value->title);
-                echo \yii\helpers\Html::a("$strtoupper", ['/search/' . $value->createTitle() . '/' . $params . '?c=' . $strtolower], ['class' => 'menu-item']);
+                echo \yii\helpers\Html::a("$strtoupper", ['/search/' . $value->createTitle() . '/' . $params . '?c=' . $strtolower], ['class' => 'menu-item']) . '<span style="color: #fc0;">|</span>';
             }
             ?>
+
             <?php
             /* $Category = common\models\costfit\Category::find()->where('status=1')->limit(14)->all();
               foreach ($Category as $value) {
