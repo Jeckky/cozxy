@@ -46,7 +46,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> 
             <div role="tabpanel" class="tab-pane fade in" id="account-suppliers">
                 <div class="row">
                     <div class="col-xs-12 bg-white" style="background-color: #fdfdfd;">
