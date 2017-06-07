@@ -607,6 +607,14 @@ class TopUpController extends MasterController {
         }
     }
 
+    public function actionUploadForm() {
+        $topUpId = $_GET['id'];
+        $topUp = TopUp::find()->where("topUpId=" . $topUpId)->one();
+        return $this->render('@app/themes/cozxy/layouts/top-up/_upload_form', [
+                    'topUp' => $topUp,
+        ]);
+    }
+
     /**
      * Deletes an existing TopUp model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

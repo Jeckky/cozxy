@@ -30,35 +30,37 @@ use yii\bootstrap\ActiveForm;
     ?>
     <a href="<?= Url::to(['/top-up']) ?>" class="b btn-success btn-block text-center" style="padding:12px 32px; margin:12px auto 12px">TOP UP CozxyCoin</a>
     <?php
-    if (Yii::$app->user->id != '') {
-        $currentPoint = common\models\costfit\UserPoint::find()->where('userId=' . Yii::$app->user->id)->one();
-        if (isset($currentPoint) > 0) {
-            if ($this->params ['cart']['summary'] <= $currentPoint['currentPoint']) {
-                if (isset($addressId)) {
-                    $addressIdx = $addressId;
-                } else {
-                    $addressIdx = '';
+    if (Yii::$app->controller->action->id == 'summary') {
+        if (Yii::$app->user->id != '') {
+            $currentPoint = common\models\costfit\UserPoint::find()->where('userId=' . Yii::$app->user->id)->one();
+            if (isset($currentPoint) > 0) {
+                if ($this->params ['cart']['summary'] <= $currentPoint['currentPoint']) {
+                    if (isset($addressId)) {
+                        $addressIdx = $addressId;
+                    } else {
+                        $addressIdx = '';
+                    }
+
+                    // $k = base64_decode(base64_decode(common\models\ModelMaster::encodeParams(['orderId' => $orderId])));
+                    // $params = common\models\ModelMaster::decodeParams(common\models\ModelMaster::encodeParams(['orderId' => $orderId]));
+                    // $orderId = $params['orderId'];
+                    ?>
+                    <?php
+                    $form = ActiveForm::begin([
+                        'id' => 'default-shipping-address',
+                        'action' => Yii::$app->homeUrl . 'checkout/order-summary',
+                        'options' => ['class' => 'space-bottom'],
+                    ]);
+                    ?>
+
+                    <input type="hidden" id="addressIdsummary" name="addressIdsummary" value="<?php echo $addressIdx; ?>">
+                    <input type="hidden" id="orderId" name="orderId" value="<?php echo $orderId; ?>">
+                    <!--<a href="<?//= Url::to(['/checkout/order-summary/' . $order->encodeParams(['orderId' => $orderId])]) ?>" class="b btn-yellow fullwidth text-center" style="padding:12px 32px; margin:2px auto 12px">PAY by CozxyCoin</a>-->
+                    <input type="submit" value="PAY by CozxyCoin" class="b btn-yellow fullwidth">
+                    <?php ActiveForm::end(); ?>
+                    <br>
+                    <?php
                 }
-
-                // $k = base64_decode(base64_decode(common\models\ModelMaster::encodeParams(['orderId' => $orderId])));
-                // $params = common\models\ModelMaster::decodeParams(common\models\ModelMaster::encodeParams(['orderId' => $orderId]));
-                // $orderId = $params['orderId'];
-                ?>
-                <?php
-                $form = ActiveForm::begin([
-                    'id' => 'default-shipping-address',
-                    'action' => Yii::$app->homeUrl . 'checkout/order-summary',
-                    'options' => ['class' => 'space-bottom'],
-                ]);
-                ?>
-
-                <input type="hidden" id="addressIdsummary" name="addressIdsummary" value="<?php echo $addressIdx; ?>">
-                <input type="hidden" id="orderId" name="orderId" value="<?php echo $orderId; ?>">
-                <!--<a href="<?//= Url::to(['/checkout/order-summary/' . $order->encodeParams(['orderId' => $orderId])]) ?>" class="b btn-yellow fullwidth text-center" style="padding:12px 32px; margin:2px auto 12px">PAY by CozxyCoin</a>-->
-                <input type="submit" value="PAY by CozxyCoin" class="b btn-yellow fullwidth">
-                <?php ActiveForm::end(); ?>
-                <br>
-                <?php
             }
         }
     }

@@ -22,18 +22,18 @@ $val = rand(1, 10);
                 <span class="size18"><span class="multi-<?= $id ?>"></span> <?= number_format($item["priceOnePiece"], 2) ?> THB</span> &nbsp;
                 <span class="size14 onsale"><?= number_format($item["priceMarket"], 2) ?> THB</span>
             </p>
-            <div class="col-xs-12 size18">
+            <div class="col-xs-12 size18 quantity-sel">
                 <a href="javascript:qSet('<?= $id ?>',-1,'<?= $item["productSuppId"] ?>','<?= $this->params['cart']['orderId'] ?>','<?= $item["sendDate"] ?>');"><i class="fa fa-minus-circle" aria-hidden="true" style="color: #000"></i></a>
-                <input type="text" name="quantity" class="quantity quantity-<?= $id ?>" value="<?= $item["qty"] ?>">
+                <input type="text" name="quantity" id="quantity" class="quantity quantity-<?= $id ?>" value="<?= $item["qty"] ?>">
                 <a href="javascript:qSet('<?= $id ?>',1,'<?= $item["productSuppId"] ?>','<?= $this->params['cart']['orderId'] ?>','<?= $item["sendDate"] ?>');"><i class="fa fa-plus-circle" aria-hidden="true" style="color: #000"></i></a>
             </div>
         </div>
         <div class="col-sm-3 fc-g666">
-            <table style="width:100%">
-                <tr>
+            <table style="width:100%" class="qty-cart">
+                <tr >
                     <td>Quatity</td>
                     <td style="width:32px">:</td>
-                    <td><?= $item["qty"] ?></td>
+                    <td><div id="qty-cart-show"><?= $item["qty"] ?></div></td>
                 </tr>
                 <tr>
                     <td>Color</td>

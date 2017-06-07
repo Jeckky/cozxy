@@ -43,6 +43,7 @@ function qSet(y, x, productSuppId, orderId, sendDate) {
         {
             if (data.status) {
                 $('.price-detail').find('.summaryFormatText').html(data.cart.summaryFormatText + ' THB');
+                $('.qty-cart').find('#qty-cart-show').html(temp);
                 /*$button.parent().parent().find(".price").html(data.priceText);
 
                  $button.parent().parent().find(".total").html(data.subTotalText + " ฿");
@@ -82,6 +83,7 @@ function qSet(y, x, productSuppId, orderId, sendDate) {
                     alert("ไม่สามารถสั่งซื้อเกินจำนวนที่กำหนดได้");
 //                    $('.incr-btn').popover('show');
                     $('.quantity-sel').find('#quantity').val(temp);
+                    $('.qty-cart').find('#qty-cart-show').html(temp);
                 }
                 //$button.parent().find("input").val(temp.toFixed(2));
             }

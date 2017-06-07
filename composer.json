@@ -28,7 +28,6 @@
         "miloschuman/yii2-highcharts-widget": "dev-master",
         "yiisoft/yii2-authclient": "^2.1",
         "yii2mod/yii2-star-rating": "*"
-
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
