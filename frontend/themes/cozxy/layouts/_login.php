@@ -66,3 +66,48 @@ use yii\bootstrap\ActiveForm;
     </div>
 </div>
 <div class="size48">&nbsp;</div>
+
+<!--
+<div class="modal fade bs-forget-modal-lg " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="gridSystemModalLabel">+ Forget password?</h4>
+            </div>
+
+            <div class="row">
+
+                <form id="default-add-new-billing-address" class="login-box" action="#" method="post">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="size24">&nbsp;</div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Email</label>
+                                        <div class="form-group field-address-email required">
+                                            <input type="text" id="address-email" class="fullwidth" name="Address[email]" placeholder="Email" aria-required="true">
+                                            <p class="help-block help-block-error"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="size24">&nbsp;</div>
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="modal-footer">
+                <a href="#" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px" data-dismiss="modal" aria-label="Close">CANCEL</a>
+                &nbsp;
+                <a href="javascript:" class="b btn-yellow" id="acheckoutNewBillingz" data-loading-text="<i class='fa fa-circle-o-notch fa-spin' aria-hidden='true'></i> Processing New Billing" style="padding:12px 32px; margin:24px auto 12px">SAVE</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+-->
