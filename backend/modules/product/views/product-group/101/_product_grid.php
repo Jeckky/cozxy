@@ -48,10 +48,10 @@ if (isset($dataProvider)) {
 //                                                            return Html::a($model->title, ['update-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], ['data-pjax' => 0]);
 //                                                        }
 //                                                    ],
-            [
-                'attribute' => 'title',
-                'options' => ['style' => 'text-align:left'],
-            ],
+//            [
+//                'attribute' => 'title',
+//                'options' => ['style' => 'text-align:left'],
+//            ],
 //            [
 //                'attribute' => 'description',
 //                'options' => ['style' => 'width:20%'],
@@ -61,17 +61,19 @@ if (isset($dataProvider)) {
 //                'attribute' => 'specification',
 //                'format' => 'raw',
 //            ],
-//            [
-//                'class' => 'kartik\grid\EditableColumn',
-//                'attribute' => 'title',
-//                'pageSummary' => 'Page Total',
-//                'vAlign' => 'middle',
-//                'headerOptions' => ['class' => 'kv-sticky-column'],
-//                'contentOptions' => ['class' => 'kv-sticky-column'],
-//                'editableOptions' => ['header' => 'Title', 'size' => 'md',
-//                    'formOptions' => ['action' => ['update-product']],
-//                ],
-//            ],
+            [
+                'class' => 'kartik\grid\EditableColumn',
+                'attribute' => 'title',
+                'pageSummary' => 'Page Total',
+                'vAlign' => 'middle',
+                'headerOptions' => ['class' => 'kv-sticky-column'],
+                'contentOptions' => ['class' => 'kv-sticky-column'],
+                'editableOptions' => function($model, $key, $index) {
+                    return ['header' => 'Title', 'size' => 'md',
+//                        'formOptions' => ['action' => ['update-grid-edit']],
+                    ];
+                },
+            ],
 //                                                    [
 //                                                        'class' => 'kartik\grid\EditableColumn',
 //                                                        'attribute' => 'description',
