@@ -14,7 +14,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <div class="order-index">
 
-    <div style="color: #000;text-align: center;">
+    <div>
         <div class="col-lg-12 col-md-12">
             <?=
             GridView::widget([
@@ -27,49 +27,49 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     'class' => 'table-light'
                 ],
                 'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
+                    ['class' => 'yii\grid\SerialColumn'],
                     'topUpNo',
-                        [
+                    [
                         'attribute' => 'Cozxy Coins',
                         'value' => function($model) {
 
                             return number_format($model->point);
                         }
                     ],
-                        [
+                    [
                         'attribute' => 'money',
                         'value' => function($model) {
 
                             return number_format($model->money, 2);
                         }
                     ],
-                        [
+                    [
                         'attribute' => 'updateDateTime',
                         'value' => function($model) {
                             return frontend\controllers\MasterController::dateThai($model->updateDateTime, 4);
                         }
                     ],
-                        [
+                    [
                         'attribute' => 'Payment Type',
                         'format' => 'raw',
                         'value' => function($model) {
                             if ($model->paymentMethod == 1) {
                                 if ($model->image == NULL) {
-                                    return 'Bill payment<br><i class="fa fa-upload" aria-hidden="true"></i>'
-                                            . '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#upload' . $model->topUpId . '">'
-                                            . ' Upload payment slip </a>';
+                                    return 'Type : Bill payment<br><i class="fa fa-upload" aria-hidden="true"></i>'
+                                    . '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#upload' . $model->topUpId . '">'
+                                    . ' Upload payment slip </a>';
                                 } else {
-                                    return 'Bill payment<br><i class="fa fa-file-image-o" aria-hidden="true"></i>'
-                                            . '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#seePic' . $model->topUpId . '"><i> Image </i></a> or ' .
-                                            '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#upload' . $model->topUpId . '">'
-                                            . ' change </a>';
+                                    return 'Type : Bill payment<br><i class="fa fa-file-image-o" aria-hidden="true"></i>'
+                                    . '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#seePic' . $model->topUpId . '"><i> Image </i></a> or ' .
+                                    '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#upload' . $model->topUpId . '">'
+                                    . ' change </a>';
                                 }
                             } else {
                                 return 'Credit card';
                             }
                         }
                     ],
-                        [
+                    [
                         'attribute' => 'status',
                         'format' => 'raw',
                         'value' => function($model) {
@@ -87,9 +87,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 $data = "| " . $taxId . " " . $topUpCut . " " . $tel . " " . $amount2;
                                 if ($model->paymentMethod == 1) {
                                     return TopUp::statusText($model->status) . '<br>' .
-                                            '<i class="fa fa-print" aria-hidden="true"></i>'
-                                            . ' <a href="' . Yii::$app->homeUrl . 'top-up/print-payment-form-topdf?amount=' . $amount . '&customerName=' . $customerName . '&customerTel=' . $customerTel . '&topUpNo=' . $topUpNo . '&taxId=' . $taxId . '&barCode=' . $barCode . '&data=' . $data . '"'
-                                            . 'style = "color:blue;font-size:10pt;" target="_blank">Re-print Bill payment</a>';
+                                    '<i class="fa fa-print" aria-hidden="true"></i>'
+                                    . ' <a href="' . Yii::$app->homeUrl . 'top-up/print-payment-form-topdf?amount=' . $amount . '&customerName=' . $customerName . '&customerTel=' . $customerTel . '&topUpNo=' . $topUpNo . '&taxId=' . $taxId . '&barCode=' . $barCode . '&data=' . $data . '"'
+                                    . 'style = "color:blue;font-size:10pt;" target="_blank">Re-print Bill payment</a>';
                                 } else {
                                     return TopUp::statusText($model->status);
                                 }
@@ -98,17 +98,18 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             }
                         }
                     ],
-                        ['class' => 'yii\grid\ActionColumn',
+                    ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Bill',
                         'template' => '{view}{history}',
                         'buttons' => [
                             'view' => function( $url, $model) {
                                 if ($model->status == TopUp::TOPUP_STATUS_E_PAYMENT_SUCCESS) {
                                     $topUpId = common\models\ModelMaster::encodeParams($model->topUpId);
-                                    return Html::a('<span class = "btn btn-sm">Print</span>', [Yii::$app->homeUrl . 'top-up/billpay?epay=' . $topUpId], [
-                                                'target' => '_blank'
-                                                    ]
+                                    return Html::a('<span class = "btn-black btn-xs" style="padding: 2px 5px; "><i class="fa fa-print" aria-hidden="true"></i> Print</span>', [Yii::$app->homeUrl . 'top-up/billpay?epay=' . $topUpId], [
+                                        'target' => '_blank']
                                     );
+                                } else {
+                                    return '<span style="padding: 2px 5px; "> - </span>';
                                 }
                             },]
                     ],
