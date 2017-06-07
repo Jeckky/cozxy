@@ -285,10 +285,7 @@ class ProductGroupController extends ProductMasterController
 //                    if (Yii::$app->user->identity->type == 4) {
 //                        return $this->redirect(['create', 'step' => 3, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId]);
 //                    } else {
-//                    if (isset($_GET["step"])) {
-                    if (1 == 0) {
-                        return $this->redirect(['create', 'step' => $_GET["step"], 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId]);
-                    } else {
+                    if ($model->step) {
                         return $this->redirect(['create', 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId]);
                     }
 //                    }
@@ -329,22 +326,27 @@ class ProductGroupController extends ProductMasterController
                 break;
             case 3:
                 $this->saveProductGroupStep($_GET["productGroupId"], 3);
-                $productGroupTemplateOptions = \common\models\costfit\ProductGroupTemplateOption::find()->where("productGroupTemplateId = " . $_GET["productGroupTemplateId"])->all();
-                foreach ($productGroupTemplateOptions as $pto) {
-                    $pgo = \common\models\costfit\ProductGroupOption::find()->where("productGroupId = " . $_GET["productGroupId"] . ' AND productGroupTemplateOptionId=' . $pto->productGroupTemplateOptionId)->one();
-                    if (isset($pgo)) {
-                        continue;
-                    } else {
-                        $pgo = new \common\models\costfit\ProductGroupOption();
-                    }
+                if (isset($_GET["productGroupTemplateId"])) {
+                    $productGroupTemplateOptions = \common\models\costfit\ProductGroupTemplateOption::find()->where("productGroupTemplateId = " . $_GET["productGroupTemplateId"])->all();
+                    foreach ($productGroupTemplateOptions as $pto) {
+                        $pgo = \common\models\costfit\ProductGroupOption::find()->where("productGroupId = " . $_GET["productGroupId"] . ' AND productGroupTemplateOptionId=' . $pto->productGroupTemplateOptionId)->one();
+                        if (isset($pgo)) {
+                            continue;
+                        } else {
+                            $pgo = new \common\models\costfit\ProductGroupOption();
+                        }
 
-                    $pgo->productGroupId = $_GET["productGroupId"];
-                    $pgo->productGroupTemplateOptionId = $pto->productGroupTemplateOptionId;
-                    $pgo->name = $pto->title;
-                    $pgo->createDateTime = new \yii\db\Expression("NOW()");
-                    if (!$pgo->save()) {
-                        throw new \yii\base\Exception(print_r($pgo->errors, TRUE));
+                        $pgo->productGroupId = $_GET["productGroupId"];
+                        $pgo->productGroupTemplateOptionId = $pto->productGroupTemplateOptionId;
+                        $pgo->name = $pto->title;
+                        $pgo->createDateTime = new \yii\db\Expression("NOW()");
+                        if (!$pgo->save()) {
+                            throw new \yii\base\Exception(print_r($pgo->errors, TRUE));
+                        }
                     }
+                } else {
+                    $this->saveProductGroupStep($_GET["productGroupId"], 1);
+                    return $this->redirect(['create', 'step' => 1, 'productGroupId' => $_GET["productGroupId"]]);
                 }
                 if (isset($_POST["ProductGroupOptionValue"])) {
                     $this->saveProductsWithOption($_POST["ProductGroupOptionValue"], $_GET["productGroupId"]);
