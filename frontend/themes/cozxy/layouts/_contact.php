@@ -25,9 +25,9 @@ $this->registerCss('
                 <!-- Contact -->
                 <?php
                 $form = ActiveForm::begin([
-                            'id' => 'default-shipping-cart',
-                            'action' => Yii::$app->homeUrl . 'site/contact-mail',
-                            'options' => ['class' => 'space-bottom'],
+                    'id' => 'default-shipping-cart',
+                    'action' => Yii::$app->homeUrl . 'site/contact-mail',
+                    'options' => ['class' => 'space-bottom'],
                 ]);
                 ?>
                 <div class="col-md-6">
@@ -65,7 +65,7 @@ $this->registerCss('
                     <p class="fc-g666"><span class="contag">Fax:</span> 02-345-4376</p>
                     <div class="size24 hr-margin">&nbsp;</div>
                     <p>Map</p>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d124008.92046473033!2d100.48062576799724!3d13.762055508253102!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x30e29ebe74b07b57%3A0x1892d37c43ed15a7!2z4LiV4Lil4Liy4LiU4Lio4Lij4Li14LiU4Li04LiZ4LmB4LiU4LiH!3m2!1d13.7620654!2d100.55066629999999!5e0!3m2!1sth!2sth!4v1494639156559" frameborder="0" style="width:100%;height:20vh;border:0" allowfullscreen></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3873.4604385127327!2d100.61513151535414!3d13.871394790270138!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e282aa513abbc1%3A0x6a10bb1b8202e493!2sCozxy+HQ!5e0!3m2!1sth!2sth!4v1496810708571" frameborder="0" style="width:100%;height:20vh;border:0" allowfullscreen></iframe>
                 </div>
                 <!-- E -->
             </div>
