@@ -587,6 +587,9 @@ class ProductGroupController extends ProductMasterController
 
                 return ['output' => '', 'message' => ''];
             }
+        } else {
+
+            return ['output' => '', 'message' => ''];
         }
     }
 

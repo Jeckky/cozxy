@@ -64,15 +64,13 @@ if (isset($dataProvider)) {
             [
                 'class' => 'kartik\grid\EditableColumn',
                 'attribute' => 'title',
-                'pageSummary' => 'Page Total',
+//                'pageSummary' => 'Page Total',
                 'vAlign' => 'middle',
                 'headerOptions' => ['class' => 'kv-sticky-column'],
                 'contentOptions' => ['class' => 'kv-sticky-column'],
-                'editableOptions' => function($model, $key, $index) {
-                    return ['header' => 'Title', 'size' => 'md',
-//                        'formOptions' => ['action' => ['update-grid-edit']],
-                    ];
-                },
+                'editableOptions' => ['header' => 'Title', 'size' => 'md',
+                    'formOptions' => ['action' => ['update-grid-edit']],
+                ],
             ],
 //                                                    [
 //                                                        'class' => 'kartik\grid\EditableColumn',
