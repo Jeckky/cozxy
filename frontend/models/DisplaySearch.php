@@ -21,6 +21,7 @@ class DisplaySearch extends Model {
         if (isset($search_hd)) {
 
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
+            ->select('*')
             ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
             ->where("product_suppliers.status=1 and product_suppliers.approve='approve' ")
             ->andFilterWhere(['OR',
@@ -31,6 +32,7 @@ class DisplaySearch extends Model {
             ->all();
         } else {
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
+            ->select('*')
             ->join(" LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
             ->where(' product_suppliers.approve="approve" and product_suppliers.result > 0 AND product_price_suppliers.status =1 AND '
             . ' product_price_suppliers.price > 0')
@@ -82,16 +84,18 @@ class DisplaySearch extends Model {
         $whereArray2["pps.status"] = "1";
 
         $product = \common\models\costfit\CategoryToProduct::find()
-        ->select('*')
+        ->select('ps.*,pps.*,category_to_product.*')
         ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
         ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
         ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
         ->where($whereArray2)
         //->andWhere('pps.price > 0')
         ->groupBy('ps.productSuppId')->all();
-
+        //echo '<pre>';
+        //print_r($product);
 
         foreach ($product as $value) {
+
             $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
             if (isset($productImages->imageThumbnail1) && !empty($productImages->imageThumbnail1)) {
                 if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail1)) {
@@ -120,6 +124,7 @@ class DisplaySearch extends Model {
             ];
         }
 
+
         return $products;
     }
 
@@ -145,7 +150,8 @@ class DisplaySearch extends Model {
             ->where($whereArray)
             //->andWhere([">", "ps.result", 0])
             //->andWhere([">", "pps.price", 0])
-            ->orderBy(new \yii\db\Expression('rand()'), 'pps.price desc')
+            ->orderBy(new \yii\db\Expression('rand()'))
+            //->orderBy(['pps.price' => SORT_DESC, 'rand()' => SORT_DESC])
             //->limit($n)
             ->all();
         } elseif ($cat != FALSE && $mins != FALSE && $maxs != FALSE) {

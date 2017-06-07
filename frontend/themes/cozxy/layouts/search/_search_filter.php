@@ -30,7 +30,7 @@
                         </form>
                     </div>
                 </div>
-            </div>
+            </div><!--
             <div class="dropdown items">
                 <div class="dropdown-toggle size18 size16-sm size14-xs"  data-toggle="dropdown">COLOUR &nbsp; <i class="fa fa-angle-down" aria-hidden="true"></i></div>
                 <div class="dropdown-menu">
@@ -75,6 +75,7 @@
                     </div>
                 </div>
             </div>
+            -->
         </div>
     </div>
 </div>

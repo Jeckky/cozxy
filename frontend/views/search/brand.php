@@ -119,7 +119,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             'options' => [
                                 'tag' => false,
                             ],
-                            'itemView' => function ($model, $key, $index, $widget) {
+                            'itemView' => function ($model, $key, $widget, $brandName) {
+
                                 return $this->render('@app/themes/cozxy/layouts/product/_product_item', ['model' => $model]);
                             },
                             'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],

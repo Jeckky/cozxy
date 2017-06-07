@@ -41,6 +41,7 @@ function descSet() {
 }
 $(window).resize(function() { descSet(); });
 ');
+\frontend\assets\CartAsset::register($this);
 ?>
 
 <div class="container">
