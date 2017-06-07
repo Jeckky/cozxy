@@ -5,6 +5,7 @@ use yii\grid\GridView;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 ?>
+
 <div class="container">
     <div class="size32">&nbsp;</div>
     <div class="row">
@@ -15,6 +16,8 @@ use kartik\select2\Select2;
                     <h1 class="page-header"><?= $productPost->title ?> </h1>
                     <p>
                         <?= $productPost->description ?>
+                        <input type="hidden" name="postId" value="<?= $productPost->productPostId ?>">
+                        <input type="hidden" name="user" value="<?= $productPost->userId ?>">
                     </p>
                     <div class="size12">&nbsp;</div>
 

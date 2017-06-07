@@ -158,10 +158,11 @@ class StoryController extends MasterController {
         $productPost = \common\models\costfit\ProductPost::find()->where("productPostId=" . $_POST["postId"])->one();
         if ($productPost->userId != Yii::$app->user->identity->userId) {
             $productPostView = new \common\models\costfit\ProductPostView();
-            $productPostView->userId = $_POST["userId"];
+            $productPostView->userId = Yii::$app->user->identity->userId;
             $productPostView->productPostId = $_POST["postId"];
             $productPostView->createDateTime = new \yii\db\Expression('NOW()');
             $productPostView->updateDateTime = new \yii\db\Expression('NOW()');
+            $flag = false;
             if ($productPostView->save(false)) {
                 $res['status'] = true;
             } else {
@@ -171,6 +172,26 @@ class StoryController extends MasterController {
             $res['status'] = false;
         }
         return json_encode($res);
+    }
+
+    public function checkViewTime($postId) {
+        $flag = false;
+        $lastView = \common\models\costfit\ProductPost::find()->where("productPostId=" . $postId . " and userId=" . Yii::$app->user->identity->userId)
+                ->orderBy('createDateTime DESC')
+                ->one();
+
+        if (isset($lastView)) {
+            $now = date('Y-m-d H:i:s');
+            $time_diff = strtotime($now) - strtotime($time);
+            $time_diff_m = floor(($time_diff % 3600) / 60);
+            if ($time_diff_m > 5) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            $flag = false;
+        }
     }
 
     public function actionShopDetail() {
