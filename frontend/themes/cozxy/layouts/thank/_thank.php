@@ -17,6 +17,8 @@
                 } else {
                     echo ' Please check your email to confirm your registration.';
                 }
+            } elseif ($_GET['verification'] == 'complete') {
+                echo ' Thank you for registering on Cozxy! ';
             } else {
                 echo ' Please check your email to confirm your registration.';
             }
