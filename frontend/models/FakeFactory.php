@@ -403,6 +403,7 @@ class FakeFactory extends Model {
             'supplierId' => $GetProductSuppliers['userId'],
             'receiveType' => $GetProductSuppliers['receiveType'],
             'wishList' => $wishList,
+            'sendDate' => '',
             'shortDescriptionCozxy' => isset($GetProductCozxy['shortDescription']) ? $GetProductCozxy['shortDescription'] : '',
             'descriptionCozxy' => isset($GetProductCozxy['description']) ? $GetProductCozxy['description'] : '',
         ];

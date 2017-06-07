@@ -4,6 +4,8 @@ use yii\helpers\Html;
 
 $this->title = $model['title'];
 $this->params['breadcrumbs'][] = $this->title;
+$id = uniqid();
+$val = rand(1, 10);
 ?>
 
 <div class="product-detail">
@@ -58,9 +60,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="row">
                             <div class="col-sm-6 size18 b">QUANTITY</div>
                             <div class="col-sm-6 text-right quantity-sel size18">
-                                <a href="javascript:;" class="q-minus"><i class="fa fa-minus-circle" aria-hidden="true" style="color: #000"></i></a>
+                                <a href="javascript:qSet('<?= $id ?>',-1,'<?= $model["productSuppId"] ?>','<?= $this->params['cart']['orderId'] ?>','<?= $model["sendDate"] ?>');" class="q-minus"><i class="fa fa-minus-circle" aria-hidden="true" style="color: #000"></i></a>
                                 <input type="text" id="quantity" name="quantity" class="quantity" value="1">
-                                <a href="javascript:;" class="q-plus"><i class="fa fa-plus-circle" aria-hidden="true" style="color: #000"></i></a>
+                                <a href="javascript:qSet('<?= $id ?>',1,'<?= $model["productSuppId"] ?>','<?= $this->params['cart']['orderId'] ?>','<?= $model["sendDate"] ?>');" class="q-plus"><i class="fa fa-plus-circle" aria-hidden="true" style="color: #000"></i></a>
                             </div>
                         </div>
                         <hr>
