@@ -81,6 +81,7 @@ function qSet(y, x, productSuppId, orderId, sendDate) {
                     temp = temp - 1;
                     alert("ไม่สามารถสั่งซื้อเกินจำนวนที่กำหนดได้");
 //                    $('.incr-btn').popover('show');
+                    $('.quantity-sel').find('#quantity').val(temp);
                 }
                 $button.parent().find("input").val(temp.toFixed(2));
             }
