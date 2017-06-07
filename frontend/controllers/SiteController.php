@@ -292,8 +292,11 @@ class SiteController extends Controller {
         }
         return $this->render('faqs', [
             'content' => $content
-        ]
-        );
+        ]);
+    }
+
+    public function actionWhyRegister() {
+        return $this->render('why-register');
     }
 
     public function actionTermsAndConditions() {

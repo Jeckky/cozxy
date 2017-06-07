@@ -38,7 +38,7 @@ use yii\bootstrap\ActiveForm;
                     <div class="size14 hr-margin">&nbsp;</div>
                     <a href="<?= Url::to(['/site/signup']) ?>" class="btn-black-s text-center fullwidth"><span class="fc-yellow1">REGISTER</span></a>
                     <div class="size6">&nbsp;</div>
-                    <div class="text-center"><a href="#"><u class="fc-black">Why register?</u></a></div>
+                    <div class="text-center"><a href="<?= Url::to(['/site/why-register']) ?>"><u class="fc-black">Why register?</u></a></div>
                 </div>
             </div>
         </div>
