@@ -41,37 +41,38 @@ $val = rand(1, 10);
                 <div class="col-md-12 col-xs-12 product-select bg-white">
                     <div class="product-form">
                         <h3 class="size20 size16-xs"><?php echo $model['title'] ?></h3>
-                        <p class="size24 size20-xs b"><?php echo $model['price']; ?> THB</p>
-                        <p class="size12 fc-g666">Category: <?php echo $model['category'] ?></p>
-                        <hr>
-                        <p><?php echo $model['shortDescription'] ?></p>
-                        <hr>
-                        <?php /*
-                          <div class="row">
-                          <div class="col-sm-6 size18 b">COLOUR</div>
-                          <div class="col-sm-6 text-right color-sel">
-                          <a href="javascript:;" class="color-s"><i class="fa fa-circle" aria-hidden="true" style="color: #842"></i></a>
-                          <a href="javascript:;" class="color-s"><i class="fa fa-circle" aria-hidden="true" style="color: #cbb"></i></a>
-                          <a href="javascript:;" class="color-s"><i class="fa fa-circle" aria-hidden="true" style="color: #434"></i></a>
-                          <a href="javascript:;" class="color-s"><i class="fa fa-circle" aria-hidden="true" style="color: #236"></i></a>
-                          </div>
-                          </div>
-                          <hr> */ ?>
-                        <div class="row">
-                            <div class="col-sm-6 size18 b">QUANTITY</div>
-                            <div class="col-sm-6 text-right quantity-sel size18">
-                                <a href="javascript:qSet('<?= $id ?>',-1,'<?= $model["productSuppId"] ?>','<?= isset($this->params['cart']['orderId']) ? $this->params['cart']['orderId'] : '' ?>','<?= $model["sendDate"] ?>');" class="q-minus"><i class="fa fa-minus-circle" aria-hidden="true" style="color: #000"></i></a>
-                                <input type="text" id="quantity" name="quantity" class="quantity" value="1">
-                                <a href="javascript:qSet('<?= $id ?>',1,'<?= $model["productSuppId"] ?>','<?= isset($this->params['cart']['orderId']) ? $this->params['cart']['orderId'] : '' ?>','<?= $model["sendDate"] ?>');" class="q-plus"><i class="fa fa-plus-circle" aria-hidden="true" style="color: #000"></i></a>
+                        <?php
+                        if ($model['price'] > 0) {
+                            ?>
+                            <p class="size24 size20-xs b"><?php echo $model['price']; ?> THB</p>
+                        <?php } ?>
+                        <p class="size12 fc-g666">Category: <?php echo isset($model['category']) ? $model['category'] : '-'; ?></p>
+                        <?php
+                        if (isset($model['shortDescription'])) {
+                            echo '<hr><p>' . $model['shortDescription'] . '<p><hr>';
+                        } else {
+                            echo '';
+                        }
+                        ?>
+                        <?php
+                        if ($model['price'] > 0 && $model['result'] > 0) {
+                            ?>
+                            <div class="row">
+                                <div class="col-sm-6 size18 b">QUANTITY</div>
+                                <div class="col-sm-6 text-right quantity-sel size18">
+                                    <a href="javascript:qSet('<?= $id ?>',-1,'<?= $model["productSuppId"] ?>','<?= isset($this->params['cart']['orderId']) ? $this->params['cart']['orderId'] : '' ?>','<?= $model["sendDate"] ?>');" class="q-minus"><i class="fa fa-minus-circle" aria-hidden="true" style="color: #000"></i></a>
+                                    <input type="text" id="quantity" name="quantity" class="quantity" value="1">
+                                    <a href="javascript:qSet('<?= $id ?>',1,'<?= $model["productSuppId"] ?>','<?= isset($this->params['cart']['orderId']) ? $this->params['cart']['orderId'] : '' ?>','<?= $model["sendDate"] ?>');" class="q-plus"><i class="fa fa-plus-circle" aria-hidden="true" style="color: #000"></i></a>
+                                </div>
                             </div>
-                        </div>
-                        <hr>
+                            <hr>
+                        <?php } ?>
 
-                        <form id="optionForm">
-                            <?php
-                            if (isset($productGroupOptionValues) && count($productGroupOptionValues) > 0) {
-                                foreach ($productGroupOptionValues as $title => $productGroupOptionValue):
-                                    ?>
+                        <?php
+                        if (isset($productGroupOptionValues) && count($productGroupOptionValues) > 0) {
+                            foreach ($productGroupOptionValues as $title => $productGroupOptionValue):
+                                ?>
+                                <form id="optionForm">
                                     <div class="row login-box">
                                         <div class="col-sm-12 size18 b"><?= $title ?></div>
                                         <div class="col-sm-12 text-right quantity-sel size18">
@@ -79,12 +80,11 @@ $val = rand(1, 10);
                                         </div>
                                     </div>
                                     <hr>
-                                    <?php
-                                endforeach;
-                            }
-                            ?>
-                        </form>
-
+                                </form>
+                                <?php
+                            endforeach;
+                        }
+                        ?>
                         <div class="size36">&nbsp;</div>
                         <div class="text-center abs" style="bottom: 0; left: 0; right: 0;">
                             <input type="hidden" id="maxQnty" value="<?php echo $model['result']; ?>">
@@ -93,7 +93,6 @@ $val = rand(1, 10);
                             <input type="hidden" id="supplierId" value="<?php echo $model['supplierId']; ?>">
                             <input type="hidden" id="productSuppId" value="<?php echo $model['productSuppId']; ?>">
                             <input type="hidden" id="receiveType" value="<?php echo $model['receiveType']; ?>">
-
 
                             <?php
                             if ($model['wishList'] == 1) { // เคย wishList ไปแล้ว
@@ -104,16 +103,15 @@ $val = rand(1, 10);
                             <?php } else { ?>
                                 <a href="javascript:addItemToWishlist(<?= $model['productSuppId'] ?>);" class="b btn-g999 size16" id="addItemToWishlist-<?= $model['productSuppId'] ?>" data-loading-text="<a><i class='fa fa-heartbeat' aria-hidden='true'></i></a>" style="margin:24px auto 12px">+
                                     <i class="fa fa-heart"></i></a>
-
-                            <?php } ?>
-                            <?php
-                            if ($model['result'] > 0) {
-                                echo '<a id="addItemToCartUnity" data-loading-text="<i class=\'fa fa-circle-o-notch fa-spin\'></i> Processing cart" class="b btn-yellow size16" style="margin:24px auto 12px">+
+                                <?php } ?>
+                                <?php
+                                if ($model['result'] > 0) {
+                                    echo '<a id="addItemToCartUnity" data-loading-text="<i class=\'fa fa-circle-o-notch fa-spin\'></i> Processing cart" class="b btn-yellow size16" style="margin:24px auto 12px">+
                                 <i class="fa fa-shopping-bag"></i></a>';
-                            } else {
-                                echo ' ';
-                            }
-                            ?>
+                                } else {
+                                    echo ' ';
+                                }
+                                ?>
                             <!-- <a href = "/cart" class = "b btn-g999 btn-success size16" style = "margin:24px auto 12px;color:#fff;">+
                                  <i class = "fa fa-bookmark-o"></i></a>
                             -->
