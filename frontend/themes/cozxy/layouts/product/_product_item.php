@@ -39,19 +39,20 @@ if (Yii::$app->controller->id == 'product') {
         <div class="product-txt">
             <p class="size16 fc-g666"><?= $model['brand'] ?></p>
             <p class="size14 b" style="height:50px;"><a href="<?= $model['url'] ?>" class="fc-black"><?= $model['title'] ?></a></p>
-            <p>
-                <?php
-                if ($model['price'] > 0) {
-                    ?>
+
+            <?php
+            if ($model['price'] > 0) {
+                ?><p>
                     <span class="size18"><?= $model['price'] ?> THB</span><br>
                     <span class="size14 onsale"><?= $model['price_s'] ?> THB</span>
-                    <?php
-                } else {
-                    echo '<span class="size18">&nbsp;</span><br>
+                </p>
+                <?php
+            } else {
+                echo '<span class="size18">&nbsp;</span><br>
                     <span class="size14  ">&nbsp;</span>';
-                }
-                ?>
-            </p>
+            }
+            ?>
+
         </div>
     </div>
 </div>
