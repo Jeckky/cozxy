@@ -65,6 +65,7 @@ class TopUpController extends MasterController {
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Top up';
         $data = [];
+        $this->checkAddress();
         $user = User::find()->where("userId='" . Yii::$app->user->id . "'")->one();
         $data["email"] = $user->email;
         $data["name"] = $user->firstname . ' ' . $user->lastname;
@@ -167,6 +168,13 @@ class TopUpController extends MasterController {
                         'ms' => $msg,
                         'needMore' => $needMore
             ]);
+        }
+    }
+
+    public function checkAddress() {
+        $address = \common\models\costfit\Address::find()->where("userId=" . Yii::$app->user->id . " and status=1 and isDefault=1")->one();
+        if (!isset($address)) {
+            return $this->redirect([Yii::$app->homeUrl . 'my-account/new-billing']);
         }
     }
 
