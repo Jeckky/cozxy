@@ -312,4 +312,35 @@ class SiteController extends Controller {
         return $this->render('thank');
     }
 
+    public function actionForgetPassword() {
+        $forget = $_POST['forget'];
+        $user = \common\models\costfit\User::find()->where('email = "' . $forget . '" ')->one();
+        if (count($user) > 0) {
+            $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "site/forget-confirm?token=" . $user->token . '::' . $user->email;
+            $toMail = $user->email;
+            $emailSend = \common\helpers\Email::mailForgetPassword($toMail, $url);
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function actionForgetConfirm() {
+        $forget = explode("::", $_GET['token']);
+        $token = $forget[0];
+        $email = $forget[1];
+        $model = \common\models\costfit\User::find()->where('email = "' . $email . '" and token ="' . $token . '" ')->one();
+        $model->scenario = 'profile'; // calling scenario of update
+        if (isset($_POST["User"])) {
+            $editChangePassword = \frontend\models\DisplayMyAccount::ForgetNewChangePassword($email, $token, $_POST["User"]);
+            if ($editChangePassword == TRUE) {
+                return $this->redirect(['/site/login']);
+            } else {
+                return $this->redirect(['/site/login']);
+            }
+        } else {
+            return $this->render('forget-password', compact('model'));
+        }
+    }
+
 }
