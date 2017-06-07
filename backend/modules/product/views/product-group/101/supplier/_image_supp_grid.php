@@ -41,7 +41,7 @@ echo GridView::widget([
             },
             'buttons' => [
                 "ordering" => function ($url, $model, $index) {
-                    return \yii\helpers\Html::a("<span class='glyphicon glyphicon-sort-by-alphabet'></span> Ordering ", ['change-image-order', 'id' => $model->productImageId], [
+                    return \yii\helpers\Html::a("<span class='glyphicon glyphicon-sort-by-alphabet'></span> Ordering ", ['change-image-supp-order', 'id' => $model->productImageId], [
                         'title' => Yii::t('app', 'Toogle Active'),
                         'class' => 'btn btn-info',
                         'data-pjax' => '0',

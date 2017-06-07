@@ -30,9 +30,14 @@ if (isset($dataProvider)) {
                 'value' => function ($model, $key, $index, $column) {
                     return GridView::ROW_COLLAPSED;
                 },
-                'detail' => function ($model, $key, $index, $column) {
-                    return Yii::$app->controller->renderpartial('101/_image_grid', ['id' => $key
-                    ]);
+                'detail' => function ($model, $key, $index, $column) use($isProductSupp) {
+                    if (!isset($isProductSupp) || !$isProductSupp) {
+                        return Yii::$app->controller->renderpartial('101/_image_grid', ['id' => $key
+                        ]);
+                    } else {
+                        return Yii::$app->controller->renderpartial('101/supplier/_image_supp_grid', ['id' => $key
+                        ]);
+                    }
                 }
             ],
 //                    'productId',
