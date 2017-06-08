@@ -83,7 +83,7 @@ class StoryController extends MasterController {
             $productSuppId = $_POST["productSuppId"];
             $parentId = ProductSuppliers::productParentId($productSuppId)->productId;
             $shelf->productId = $parentId;
-            $shelf->productSuppId = $_POST["ProductPost"]["productSuppId"];
+            // $shelf->productSuppId = $_POST["ProductPost"]["productSuppId"];
             $shelf->productSelfId = 0;
             $shelf->userId = Yii::$app->user->identity->userId;
             $shelf->title = $_POST["ProductPost"]["title"];
