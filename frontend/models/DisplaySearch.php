@@ -36,7 +36,7 @@ class DisplaySearch extends Model {
             ->join(" LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
             ->where(' product_suppliers.approve="approve" and product_suppliers.result > 0 AND product_price_suppliers.status =1 AND '
             . ' product_price_suppliers.price > 0')
-            ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
+            ->orderBy(new \yii\db\Expression('rand()'))->all();
         }
 
         foreach ($pCanSale as $value) {
