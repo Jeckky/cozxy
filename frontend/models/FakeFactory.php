@@ -341,7 +341,8 @@ class FakeFactory extends Model {
          */
         $productImagesOneTop = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSuppId)->orderBy('ordering asc')->one();
         if (count($productImagesOneTop) > 0) {
-            $productImagesAll = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSuppId . ' and productImageId !=' . $productImagesOneTop['productImageId'])->orderBy('ordering asc')->all();
+            //$productImagesAll = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSuppId . ' and productImageId !=' . $productImagesOneTop['productImageId'])->orderBy('ordering asc')->all();
+            $productImagesAll = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSuppId)->orderBy('ordering asc')->all();
 
             foreach ($productImagesAll as $items) {
                 if (isset($items['imageThumbnail1']) && !empty($items['imageThumbnail1'])) {
