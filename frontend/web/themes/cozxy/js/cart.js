@@ -80,7 +80,7 @@ function qSet(y, x, productSuppId, orderId, sendDate) {
                 if (data.errorCode === 1)
                 {
                     temp = temp - 1;
-                    alert("ไม่สามารถสั่งซื้อเกินจำนวนที่กำหนดได้");
+                    alert("Cannot order more than the specified number.");
 //                    $('.incr-btn').popover('show');
                     $('.quantity-sel').find('#quantity').val(temp);
                     $('.qty-cart').find('#qty-cart-show').html(temp);
