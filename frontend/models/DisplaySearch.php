@@ -149,7 +149,7 @@ class DisplaySearch extends Model {
 
             $pCanSale = \common\models\costfit\CategoryToProduct::find()
             ->select('ps.*,pps.*')
-            ->join("LEFT JOIN", "product", "product.productIdx = category_to_product.productId")
+            ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
             ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
             ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
             ->where($whereArray)
