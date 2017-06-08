@@ -163,7 +163,7 @@ class DisplaySearch extends Model {
             $whereArray2 = [];
 
             $whereArray2["category_to_product.categoryId"] = $cat;
-            $whereArray2["product.approve"] = "approve";
+            $whereArray2["product_suppliers.approve"] = "approve";
             $whereArray2["pps.status"] = "1";
 
             $pCanSale = \common\models\costfit\CategoryToProduct::find()
@@ -235,7 +235,7 @@ class DisplaySearch extends Model {
         $whereArray2 = [];
 
         $whereArray2["category_to_product.categoryId"] = $cat;
-        $whereArray2["product.approve"] = "approve";
+        $whereArray2["product_suppliers.approve"] = "approve";
         $whereArray2["pps.status"] = "1";
 
         $pCanSale = \common\models\costfit\CategoryToProduct::find()
