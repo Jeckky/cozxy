@@ -319,8 +319,8 @@ function addItemToWishlist(id) {
                         $this.button('reset');
                     }, 8000);
                 } else {
-                    $('.heart i').removeClass('fa fa-heart-o');
-                    $('.heart i').addClass('fa fa-heartbeat');
+                    $('.heart-' + $pId + ' i').removeClass('fa fa-heart-o');
+                    $('.heart-' + $pId + ' i').addClass('fa fa-heartbeat');
                 }
                 //$(".fa fa-heart-o").html("<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>");
             } else {
@@ -354,8 +354,8 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
             $this.button('reset');
         }, 8000);
     } else {
-        $('.shopping i').removeClass('fa fa-shopping-bag');
-        $('.shopping i').addClass('fa fa-shopping-bag fa-spin');
+        $('.shopping-' + productSuppId + ' i').removeClass('fa fa-shopping-bag');
+        $('.shopping-' + productSuppId + ' i').addClass('fa fa-shopping-bag fa-spin');
     }
 
     // $(".fa-shopping-bag").addClass("fa-spin");
