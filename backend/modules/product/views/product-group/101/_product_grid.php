@@ -194,6 +194,7 @@ if (isset($dataProvider)) {
 //                        'attribute' => 'status',
 //                        'vAlign' => 'middle',
 //                    ],
+            ['class' => '\kartik\grid\CheckboxColumn'],
             [
                 'class' => 'kartik\grid\ActionColumn',
                 'visible' => function($model) {
