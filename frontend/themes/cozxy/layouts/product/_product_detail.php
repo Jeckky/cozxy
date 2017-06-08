@@ -106,8 +106,8 @@ $val = rand(1, 10);
                                 <?php } ?>
                                 <?php
                                 if ($model['result'] > 0) {
-                                    echo '<a id="addItemToCartUnity" data-loading-text="<i class=\'fa fa-circle-o-notch fa-spin\'></i> Processing cart" class="b btn-yellow size16" style="margin:24px auto 12px">+
-                                <i class="fa fa-shopping-bag"></i></a>';
+                                    echo '<a id="addItemToCartUnity" data-loading-text="<i class=\'fa fa-cart-plus fa-spin\'></i> Processing cart" class="b btn-yellow size16" style="margin:24px auto 12px">+
+                                <i class="fa fa-cart-plus"></i></a>';
                                 } else {
                                     echo ' ';
                                 }
