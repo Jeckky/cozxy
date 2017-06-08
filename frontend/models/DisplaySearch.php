@@ -48,6 +48,8 @@ class DisplaySearch extends Model {
                 } else {
                     $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
                 }
+            } else {
+                $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
             }
             $price_s = number_format($value->price, 2);
             $price = number_format($value->price, 2);
@@ -103,6 +105,8 @@ class DisplaySearch extends Model {
                 } else {
                     $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
                 }
+            } else {
+                $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
             }
             $price_s = number_format($value->price, 2);
             $price = number_format($value->price, 2);
