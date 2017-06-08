@@ -140,7 +140,7 @@ class DisplaySearch extends Model {
             $whereArray = [];
             $whereArray["category_to_product.categoryId"] = $cat;
 
-            $whereArray["product.approve"] = "approve";
+            $whereArray["ps.approve"] = "approve";
             $whereArray["pps.status"] = "1";
             if ($n != '') {
                 $whereArray["limit"] = $n;
