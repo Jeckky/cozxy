@@ -384,7 +384,21 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
                     // $('.cart-btn a span').text($cartTotalItems);
                     //$('.cart-btn a').find("#cartTotal").html(data.cart.totalFormatText);
                     //$('.cart-dropdown .footer .total').html(data.cart.totalFormatText);
-                    window.location = $baseUrl + 'cart';
+                    //window.location = $baseUrl + 'cart';
+                    $.notify("Add to Cart Success ,", "success");
+                    $.ajax({
+                        type: "POST",
+                        url: $baseUrl + "cart/get-product-quantity",
+                        data: {},
+                        success: function (data, status)
+                        {
+                            if (status == "success") {
+                                $('#notify-cart-top-menu').html(data);
+                            } else {
+
+                            }
+                        }
+                    });
                 }
                 //alert(data.shoppingCart);
                 //$addedToCartMessage.addClass('visible');
@@ -796,3 +810,18 @@ function ShowImages(img, productImageId) {
         }
     });
 }
+
+/*
+ $.growl({title: "Growl", message: "The kitten is awake!"});
+ $.growl.error({message: "The kitten is attacking!"});
+ $.growl.notice({message: "The kitten is cute!"});
+ $.growl.warning({message: "The kitten is ugly!"});
+ */
+/*
+ $.notify("Hello World");
+
+ $(".pos-demo").notify(
+ "Welcome Guest",
+ {position: "right"}
+ );
+ $.notify("This notofication is working ", "success");*/

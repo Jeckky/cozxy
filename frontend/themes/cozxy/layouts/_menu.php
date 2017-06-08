@@ -4,6 +4,13 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 ?>
+<style type="text/css">
+    #notify-cart-top-menu{
+        display: block;  margin: 0; font-size: 12px;  padding:4px;
+        line-height: 1; font-weight: 400; position: absolute; top: -1px;
+        right:5px;color: #000 !important;  background-color: #fee60a; border: 1px #000 solid;
+    }
+</style>
 <div class="bg-yellow1 topbar">
     <div class="container">
         <div class="row">
@@ -29,7 +36,26 @@ use yii\bootstrap\ActiveForm;
                     ?>
                     <div class="col-xs-3"><a href="<?php echo Yii::$app->homeUrl; ?>my-account?act=2" class="u-menu-2">&nbsp;</a></div>
                     <div class="col-xs-3"><?= Html::a('&nbsp;', [Yii::$app->homeUrl . 'cart'], ['class' => 'u-menu-3']) ?>
-                        <!--<span style="display: block;  margin: 0; font-size: 12px;  padding:5px;  line-height: 1; font-weight: 400; position: absolute; top: -1px; right: 5px;color: #000 !important;  background-color: #fee60a;"></span>-->
+                        <?php
+                        if (Yii::$app->user->id != '') {
+                            $Product = \common\models\costfit\Order::find()->where('userId =' . \Yii::$app->user->id . ' and status=0')->one();
+                            if (count($Product) > 0) {
+                                $orderItem = \common\models\costfit\OrderItem::find()->where('orderId=' . $Product['orderId'])->sum('quantity');
+                                if (isset($orderItem)) {
+                                    $quantity = (int) $orderItem;
+                                } else {
+                                    $quantity = '';
+                                }
+                            } else {
+                                $quantity = '';
+                            }
+                        } else {
+                            $quantity = '';
+                        }
+                        if (Yii::$app->user->id != '') {
+                            ?>
+                            <span id="notify-cart-top-menu"><?php echo $quantity; ?></span>
+                        <?php } ?>
                     </div>
                     <div class="col-xs-3">
                         <?php
@@ -73,28 +99,6 @@ use yii\bootstrap\ActiveForm;
                 echo \yii\helpers\Html::a("$strtoupper", ['/search/' . $value->createTitle() . '/' . $params . '?c=' . $strtolower], ['class' => 'menu-item']) . '<span style="color: #fc0;">|</span>';
             }
             ?>
-
-            <?php
-            /* $Category = common\models\costfit\Category::find()->where('status=1')->limit(14)->all();
-              foreach ($Category as $value) {
-              $params = \common\models\ModelMaster::encodeParams(['categoryId' => $value->categoryId]);
-              $strtoupper = strtoupper($value->title);
-              $strtolower = strtolower($value->title);
-              echo \yii\helpers\Html::a("$strtoupper", ['/search/' . $value->createTitle() . '/' . $params . '?c=' . $strtolower], ['class' => 'menu-item']);
-              } */
-            ?>
-            <!--            <a href="product.php" class="menu-item">RING</a>-->
-            <!--            <a href="product.php" class="menu-item">HAT</a>-->
-            <!--            <a href="product.php" class="menu-item">CLOTHING</a>-->
-            <!--            <a href="product.php" class="menu-item">SHOES</a>-->
-            <!--            <a href="product.php" class="menu-item">BAGS</a>-->
-            <!--            <a href="product.php" class="menu-item">WATCHS</a>-->
-            <!--            <a href="product.php" class="menu-item">ACCESSORIES</a>-->
-            <!--            <a href="product.php" class="menu-item">GROOMING</a>-->
-            <!--            <a href="product.php" class="menu-item">SPORTS</a>-->
-            <!--            <a href="product.php" class="menu-item">BRANDS</a>-->
-            <!--            <a href="product.php" class="menu-item">SHIRTS</a>-->
-            <!--            <a href="product.php" class="menu-item">CLOTHING</a><span class="stretch"></span>-->
         </div>
     </div>
 </div>
