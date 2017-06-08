@@ -38,7 +38,7 @@ class Reviews {
             $id = '';
         }
         if ($id != '') {
-            $rating = \common\models\costfit\ProductPostRating::find()->where('productPostId in(' . $id . ')')
+            $rating = \common\models\costfit\ProductPostRating::find()->where('productPostId in(' . $id . ') and status=1')
                     ->all();
             $rating_score = 0;
             foreach ($rating as $rate):
@@ -67,7 +67,7 @@ class Reviews {
         }
 
         if ($id != '') {
-            $rating = \common\models\costfit\ProductPostRating::find()->where('productPostId in(' . $id . ')')
+            $rating = \common\models\costfit\ProductPostRating::find()->where('productPostId in(' . $id . ') and status=1')
                     ->count('userId');
         } else {
             $rating = NULL;

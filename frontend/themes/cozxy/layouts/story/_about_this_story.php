@@ -32,6 +32,7 @@
                 <span class="size12">Stars</span><br>
                 <?php
                 $star = \frontend\models\DisplayMyStory::calculatePostRating($productPost->productPostId);
+                //throw new \yii\base\Exception($productPost->productPostId . '=>' . $star);
                 $value = explode(",", $star);
                 echo $value[0];
                 ?>
