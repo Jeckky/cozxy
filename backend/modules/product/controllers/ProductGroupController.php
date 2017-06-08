@@ -71,7 +71,7 @@ class ProductGroupController extends ProductMasterController
                 ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
                 ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
                 ->where("product.parentId is null ")
-                ->andWhere("1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN product.status = 99 THEN 1 AND product.userId = " . Yii::$app->user->id . " ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 AND ps.userId = " . Yii::$app->user->id . " ELSE 0 END) end)")
+                ->andWhere("1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN (product.status = 99 || product.status = 0) THEN 1 AND product.userId = " . Yii::$app->user->id . " ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 AND ps.userId = " . Yii::$app->user->id . " ELSE 0 END) end)")
                 ->groupBy("product.productId")
                 ->orderBy("product.updateDateTime DESC");
             }
@@ -696,6 +696,23 @@ class ProductGroupController extends ProductMasterController
 //        }
 //
 //        return $this->render('view', ['model' => $model]);
+    }
+
+    public function actionMultipleDeleteProduct()
+    {
+        $pk = Yii::$app->request->post('row_id');
+        $model = NULL;
+        foreach ($pk as $key => $value) {
+            if (!isset($model)) {
+                $model = \common\models\costfit\Product::find()->where("productId = " . $value)->one();
+            }
+            \common\models\costfit\ProductGroupOptionValue::deleteAll("productId = " . $value);
+            \common\models\costfit\ProductImage::deleteAll("productId = " . $value);
+            \common\models\costfit\ProductSuppliers::deleteAll("productId = " . $value);
+            \common\models\costfit\Product::deleteAll("productId = " . $value);
+        }
+
+        return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->parentId]);
     }
 
     public function actionDeleteProduct()
