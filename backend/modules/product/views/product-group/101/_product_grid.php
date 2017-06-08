@@ -18,8 +18,9 @@ if (!isset($isProductSupp)) {
     $isProductSupp = FALSE;
 }
 if (isset($dataProvider)) {
+    $gridId = (!isset($type) || $type == 1) ? "product-grid1" : "product-grid2";
     echo GridView::widget([
-        'id' => (!isset($type) || $type == 1) ? "product-grid1" : "product-grid2",
+        'id' => $gridId,
         'dataProvider' => $dataProvider,
 //                                                'filterModel' => $searchModel,
         'columns' => [
@@ -299,6 +300,33 @@ if (isset($dataProvider)) {
         'panel' => [
             'type' => GridView::TYPE_PRIMARY,
             'heading' => !isset($gridTitle) ? "<span style='color:white;font-weight:bold'>Product Editor</span>" : $gridTitle,
+            'footer' => "<input type='button' class='btn btn-info pull-right' value='Multiple Delete' id='MyButton$gridId' >",
         ],
+//        'showFooter' => true,
     ]);
 }
+?>
+
+<?php
+
+$this->registerJs("
+
+    $(document).ready(function(){
+    $('#MyButton$gridId').click(function(){
+
+        if(confirm('คุณต้องการลบสินค้าหรือไม่ ?'))
+        {
+        var HotId = $('#$gridId').yiiGridView('getSelectedRows');
+//        alert(HotId);
+          $.ajax({
+            type: 'POST',
+            url : '" . Yii::$app->homeUrl . "/product/product-group/multiple-delete-product" . "',
+            data : {row_id: HotId},
+            success : function() {
+              $(this).closest('tr').remove(); //or whatever html you use for displaying rows
+            }
+        });
+        }
+
+    });
+    });", \yii\web\View::POS_READY);
