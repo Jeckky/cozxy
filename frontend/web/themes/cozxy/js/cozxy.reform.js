@@ -781,6 +781,7 @@ $(".upload-payment-slip").click(function () {
 
 function ShowImages(img, productImageId) {
     var src = img.src;
+    $('.images-big').html("<div class='text-center' style='zoom:2; height: 185px;'><br><br><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
     $.ajax({
         type: "POST",
         url: $baseUrl + "product/images-item-big/",
