@@ -64,7 +64,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
      */
     public function rules() {
         return array_merge(parent::rules(), [
-            [['brandId', 'categoryId', 'title'], 'required', 'on' => self::ADD_NEW_PRODUCT_SUPPLIERS],
+                [['brandId', 'categoryId', 'title'], 'required', 'on' => self::ADD_NEW_PRODUCT_SUPPLIERS],
         ]);
     }
 
@@ -214,12 +214,12 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
 
     public static function productOrder($productSuppId) {
         $model = Order::find()
-        ->select(['`order`.*', '`product_suppliers`.*', '`order_item`.*'])
-        ->join('LEFT JOIN', 'order_item', 'order.orderId = order_item.orderId')
-        ->join('LEFT JOIN', 'product_suppliers', 'order_item.productSuppId = product_suppliers.productSuppId')
-        ->where('`order`.status = ' . Order::ORDER_STATUS_E_PAYMENT_SUCCESS . '  '
-        . 'and `product_suppliers`.userId =' . Yii::$app->user->identity->userId . ' and `product_suppliers`.productSuppId=' . $productSuppId)
-        ->all();
+                ->select(['`order`.*', '`product_suppliers`.*', '`order_item`.*'])
+                ->join('LEFT JOIN', 'order_item', 'order.orderId = order_item.orderId')
+                ->join('LEFT JOIN', 'product_suppliers', 'order_item.productSuppId = product_suppliers.productSuppId')
+                ->where('`order`.status = ' . Order::ORDER_STATUS_E_PAYMENT_SUCCESS . '  '
+                        . 'and `product_suppliers`.userId =' . Yii::$app->user->identity->userId . ' and `product_suppliers`.productSuppId=' . $productSuppId)
+                ->all();
         if (isset($model) && count($model) > 0) {
             return $model;
         } else {
@@ -239,7 +239,8 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         $productPost = ProductPost::find()->where("productPostId=" . $productPostId)->one();
         $img = '';
         if (isset($productPost)) {
-            $image = ProductImageSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
+            //$image = ProductImageSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
+            $image = ProductImage::find()->where("productId=" . $productPost->productId)->one();
             if (isset($image)) {
                 $img = $image->imageThumbnail1;
             }
@@ -269,13 +270,13 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
 
     public static function productParentId($productSuppId) {
         $productSupplier = ProductSuppliers::find()->where("productSuppId = " . $productSuppId)->one();
-        $product = Product::find()->where("productId = " . $productSupplier->productId)->one();
-        if ($product->parentId != null && $product->parentId != '') {
-            $parent = Product::find()->where("productId = " . $product->parentId)->one();
-        } else {
-            $parent = $product;
-        }
-        return $parent;
+        /* $product = Product::find()->where("productId = " . $productSupplier->productId)->one();
+          if ($product->parentId != null && $product->parentId != '') {
+          $parent = Product::find()->where("productId = " . $product->parentId)->one();
+          } else {
+          $parent = $product;
+          } */
+        return $productSupplier;
     }
 
     public function getUnits() {
