@@ -779,3 +779,19 @@ $(".upload-payment-slip").click(function () {
 
 });
 
+function ShowImages(img, productImageId) {
+    var src = img.src;
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "product/images-item-big/",
+        data: {'ImageId': productImageId},
+        success: function (data, status)
+        {
+            if (status == "success") {
+                $('.images-big').html('<img src="/' + data + '" class="fullwidth" alt=" ">');
+            } else {
+
+            }
+        }
+    });
+}
