@@ -698,6 +698,23 @@ class ProductGroupController extends ProductMasterController
 //        return $this->render('view', ['model' => $model]);
     }
 
+    public function actionMultipleDeleteProduct()
+    {
+        $pk = Yii::$app->request->post('row_id');
+        $model = NULL;
+        foreach ($pk as $key => $value) {
+            if (!isset($model)) {
+                $model = \common\models\costfit\Product::find()->where("productId = " . $value)->one();
+            }
+            \common\models\costfit\ProductGroupOptionValue::deleteAll("productId = " . $value);
+            \common\models\costfit\ProductImage::deleteAll("productId = " . $value);
+            \common\models\costfit\ProductSuppliers::deleteAll("productId = " . $value);
+            \common\models\costfit\Product::deleteAll("productId = " . $value);
+        }
+
+        return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->parentId]);
+    }
+
     public function actionDeleteProduct()
     {
 //        throw new \yii\base\Exception(print_r($_POST, TRUE));
