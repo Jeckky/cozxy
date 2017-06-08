@@ -22,7 +22,12 @@ use yii\bootstrap\ActiveForm;
                         <div class="col-sm-6 f-margin">
                             <a href="#" data-toggle="modal" data-target=".bs-forget-modal-lg"><u class="fc-black">Forget password?</u></a>
                         </div>
-                        <div class="col-sm-6 f-margin text-right"><label><input type="checkbox" name="remember"> &nbsp; Remember me</label></div>
+                        <div class="col-sm-6 f-margin text-right">
+                            <label>
+                                <?= $form->field($model, 'rememberMe')->checkbox(['template' => "<div class=\"\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>"])->label(' &nbsp; Remember me') ?>
+                                <!--<input type="checkbox" name="LoginForm[remember]"> &nbsp; Remember me-->
+                            </label>
+                        </div>
                     </div>
                     <!--<a href="#" class="btn-facebook text-center fullwidth"><i class="fa fa-facebook" aria-hidden="true"></i> &nbsp; LOGIN</a>-->
 

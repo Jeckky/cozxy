@@ -13,7 +13,7 @@ class LoginForm extends Model {
     public $email;
     //public $username;
     public $password;
-    public $rememberMe = true;
+    public $rememberMe = false;
     private $_user;
 
     //public $firstname;
@@ -32,6 +32,15 @@ class LoginForm extends Model {
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
         ];
+    }
+
+    /**
+     * Declares attribute labels.
+     */
+    public function attributeLabels() {
+        return array(
+            'rememberMe' => 'Remember me next time',
+        );
     }
 
     /**
@@ -57,7 +66,16 @@ class LoginForm extends Model {
      */
     public function login() {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), 3600 * 24 * 30);
+            if ($this->rememberMe == 1) {
+                $remember = 3600 * 24 * 30 * 12;
+            } else {
+                $remember = 0;
+            }
+
+            $login = Yii::$app->user->login($this->getUser(), $remember); // 1 เดือน
+            //return Yii::$app->user->login($this->getUser(), 3600 * 24 * 30);
+            //echo $login;
+            return $login;
         } else {
             return false;
         }
