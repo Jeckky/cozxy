@@ -96,34 +96,36 @@ class SiteController extends Controller {
 
         $model = new LoginForm();
 
-        if ($model->load(Yii::$app->request->post())) {
-            //echo '<pre>';
-            //print_r($model);
+
+        if (isset($_POST['LoginForm'])) {
+            $model->attributes = $_POST['LoginForm'];
+            //echo $_POST['LoginForm']['rememberMe'];
             //exit();
-        }
+            if ($model->load(Yii::$app->request->post()) && $model->login()) {
+
+                \common\models\costfit\User::updateAll(['lastvisitDate' => new \yii\db\Expression("NOW()")], ['userId' => Yii::$app->user->identity->userId]);
+                //Detect special conditions devices
+                $devices = \common\helpers\GetBrowser::UserAgent();
+                $article = new \common\models\costfit\UserVisit(); //Create an article and link it to the author
+                $article->userId = Yii::$app->user->identity->userId;
+
+                $article->device = $devices;
+                $article->lastvisitDate = new \yii\db\Expression('NOW()');
+                $article->createDateTime = new \yii\db\Expression('NOW()');
+                $article->save(FALSE);
 
 
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-
-            \common\models\costfit\User::updateAll(['lastvisitDate' => new \yii\db\Expression("NOW()")], ['userId' => Yii::$app->user->identity->userId]);
-            //Detect special conditions devices
-            $devices = \common\helpers\GetBrowser::UserAgent();
-            $article = new \common\models\costfit\UserVisit(); //Create an article and link it to the author
-            $article->userId = Yii::$app->user->identity->userId;
-
-            $article->device = $devices;
-            $article->lastvisitDate = new \yii\db\Expression('NOW()');
-            $article->createDateTime = new \yii\db\Expression('NOW()');
-            $article->save(FALSE);
-
-            //exit();
-            //return $this->redirect(['site/index']);
-            //return $this->redirect(Yii::$app->homeUrl);
-            return $this->goBack();
-        } else {
+                //exit();
+                //return $this->redirect(['site/index']);
+                //return $this->redirect(Yii::$app->homeUrl);
+                return $this->goBack();
+            } else {
 //            return $this->render('login', [
 //                'model' => $model,
 //            ]);
+                return $this->render('@app/themes/cozxy/layouts/_login', compact('model'));
+            }
+        } else {
             return $this->render('@app/themes/cozxy/layouts/_login', compact('model'));
         }
     }
@@ -135,7 +137,9 @@ class SiteController extends Controller {
      */
     public function actionLogout() {
         Yii::$app->user->logout();
-
+        /** @var \iiifx\yii2\SecureRememberMe\components\Manager $rememberMe */
+        //$rememberMe = Yii::$app->rememberMe;
+        //$rememberMe->delete();
         return $this->goHome();
     }
 
@@ -292,8 +296,11 @@ class SiteController extends Controller {
         }
         return $this->render('faqs', [
             'content' => $content
-        ]
-        );
+        ]);
+    }
+
+    public function actionWhyRegister() {
+        return $this->render('why-register');
     }
 
     public function actionTermsAndConditions() {
@@ -310,6 +317,37 @@ class SiteController extends Controller {
     public function actionThank() {
 
         return $this->render('thank');
+    }
+
+    public function actionForgetPassword() {
+        $forget = $_POST['forget'];
+        $user = \common\models\costfit\User::find()->where('email = "' . $forget . '" ')->one();
+        if (count($user) > 0) {
+            $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "site/forget-confirm?token=" . $user->token . '::' . $user->email;
+            $toMail = $user->email;
+            $emailSend = \common\helpers\Email::mailForgetPassword($toMail, $url);
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function actionForgetConfirm() {
+        $forget = explode("::", $_GET['token']);
+        $token = $forget[0];
+        $email = $forget[1];
+        $model = \common\models\costfit\User::find()->where('email = "' . $email . '" and token ="' . $token . '" ')->one();
+        $model->scenario = 'profile'; // calling scenario of update
+        if (isset($_POST["User"])) {
+            $editChangePassword = \frontend\models\DisplayMyAccount::ForgetNewChangePassword($email, $token, $_POST["User"]);
+            if ($editChangePassword == TRUE) {
+                return $this->redirect(['/site/login']);
+            } else {
+                return $this->redirect(['/site/login']);
+            }
+        } else {
+            return $this->render('forget-password', compact('model'));
+        }
     }
 
 }

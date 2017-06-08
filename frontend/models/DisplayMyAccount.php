@@ -171,4 +171,15 @@ class DisplayMyAccount extends Model {
         }
     }
 
+    public static function ForgetNewChangePassword($email, $token, $data = array()) {
+        $model = \common\models\costfit\User::find()->where("email ='" . $email . "' and token = '" . $token . "' ")->one();
+        //$model->password = $data['newPassword'];
+        $model->password_hash = Yii::$app->security->generatePasswordHash($data['newPassword']);
+        if ($model->save(FALSE)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
 }

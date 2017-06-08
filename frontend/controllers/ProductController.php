@@ -44,4 +44,14 @@ class ProductController extends MasterController {
         return $this->render('index', compact('productId', 'productSupplierId', 'productHotNewProduct', 'productViews', 'StoryProductPost', 'StoryRecentStories', 'productGroupOptionValues'));
     }
 
+    public function actionImagesItemBig() {
+        $ImageId = $_POST['ImageId'];
+        $getImage = \common\models\costfit\ProductImageSuppliers::find()->where('productImageId=' . $ImageId)->one();
+        if (isset($getImage) > 0) {
+            return $getImage['image'];
+        } else {
+            return FALSE;
+        }
+    }
+
 }

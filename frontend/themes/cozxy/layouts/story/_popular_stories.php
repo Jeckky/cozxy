@@ -55,6 +55,6 @@ use common\models\costfit\ProductPost;
         }
         ?>
 
-        <div class="text-center"><a href="<?= $url ?>" class="b btn-g999" style="margin:24px auto 12px">See All</a></div>
+        <div class="text-center"><a href="<?= $urlSeeAll ?>" class="b btn-g999" style="margin:24px auto 12px">See All</a></div>
     </div>
 </div>

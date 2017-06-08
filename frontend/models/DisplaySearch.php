@@ -48,6 +48,8 @@ class DisplaySearch extends Model {
                 } else {
                     $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
                 }
+            } else {
+                $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
             }
             $price_s = number_format($value->price, 2);
             $price = number_format($value->price, 2);
@@ -103,6 +105,8 @@ class DisplaySearch extends Model {
                 } else {
                     $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
                 }
+            } else {
+                $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
             }
             $price_s = number_format($value->price, 2);
             $price = number_format($value->price, 2);
@@ -136,7 +140,7 @@ class DisplaySearch extends Model {
             $whereArray = [];
             $whereArray["category_to_product.categoryId"] = $cat;
 
-            $whereArray["product.approve"] = "approve";
+            $whereArray["ps.approve"] = "approve";
             $whereArray["pps.status"] = "1";
             if ($n != '') {
                 $whereArray["limit"] = $n;
@@ -159,7 +163,7 @@ class DisplaySearch extends Model {
             $whereArray2 = [];
 
             $whereArray2["category_to_product.categoryId"] = $cat;
-            $whereArray2["product.approve"] = "approve";
+            $whereArray2["product_suppliers.approve"] = "approve";
             $whereArray2["pps.status"] = "1";
 
             $pCanSale = \common\models\costfit\CategoryToProduct::find()
@@ -231,7 +235,7 @@ class DisplaySearch extends Model {
         $whereArray2 = [];
 
         $whereArray2["category_to_product.categoryId"] = $cat;
-        $whereArray2["product.approve"] = "approve";
+        $whereArray2["ps.approve"] = "approve";
         $whereArray2["pps.status"] = "1";
 
         $pCanSale = \common\models\costfit\CategoryToProduct::find()
