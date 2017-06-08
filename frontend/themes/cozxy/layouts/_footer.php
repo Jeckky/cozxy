@@ -47,7 +47,7 @@ use yii\helpers\Html;
                 <a href="#"><i class="fa fa-pinterest-p"></i></a>-->
             </div>
             <div class="col-md-6 text-right text-center-sm text-center-xs"><div class="size8">&nbsp;</div>
-                Copyright &copy; 2017 all right reserved
+                Copyright &copy; 2017 all rights reserved
             </div>
         </div>
     </div>
