@@ -25,6 +25,8 @@ class DataImageSystems {
         $productImagesThumbnail1 = '';
         $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $suppliersId)->orderBy('ordering asc')->one();
         //$productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
+        //echo '<pre>';
+        //print_r($productImages);
         if (isset($productImages->imageThumbnail1) && !empty($productImages->imageThumbnail1)) {
             if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail1)) {
                 $productImagesThumbnail1 = \Yii::$app->homeUrl . $productImages->imageThumbnail1;
