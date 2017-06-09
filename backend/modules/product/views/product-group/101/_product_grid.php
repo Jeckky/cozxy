@@ -8,6 +8,7 @@ use common\models\areawow;
 use yii\jui\DatePicker;
 use kartik\grid\GridView;
 use kartik\editable\Editable;
+use yii\helpers\Url;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -320,7 +321,7 @@ $this->registerJs("
 //        alert(HotId);
           $.ajax({
             type: 'POST',
-            url : '" . Yii::$app->homeUrl . "/product/product-group/multiple-delete-product" . "',
+            url : '" . Url::home() . "product/product-group/multiple-delete-product',
             data : {row_id: HotId},
             success : function() {
               $(this).closest('tr').remove(); //or whatever html you use for displaying rows
