@@ -379,7 +379,7 @@ class FakeFactory extends Model {
 
     public static function productViews($productSuppId) {
         $products = [];
-        $imagAll = [];
+        //$imagAll = [];
         $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
         $GetProductCozxy = $GetProductSuppliers->product;
         //foreach ($GetProductSuppliers as $items) {
@@ -419,7 +419,7 @@ class FakeFactory extends Model {
           $productImagesOneTopz = \common\helpers\Base64Decode::DataImageSvg555x340(FALSE, FALSE, FALSE);
           } */
 
-        $productImagesMulti = \common\helpers\DataImageSystems::DataImageMasterViewsProdcuts($GetProductSuppliers['productId'], $productSuppId, 'Svg116x116', 'Svg555x340', $imagAll);
+        $productImagesMulti = \common\helpers\DataImageSystems::DataImageMasterViewsProdcuts($GetProductSuppliers['productId'], $productSuppId, 'Svg116x116', 'Svg555x340');
 
         //throw new \yii\base\Exception(print_r($GetProductSuppliers->attributes, true));
         if (isset($GetProductSuppliers['categoryId'])) {

@@ -66,6 +66,8 @@ class DataImageSystems {
     }
 
     public static function DataImageMasterViewsProdcuts($producmasterId, $productSuppId, $imageSvg1, $imageSvg2) {
+
+        $imagAll = [];
         /*
          * รูปสินค้า
          */
