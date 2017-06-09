@@ -80,6 +80,6 @@ echo GridView::widget([
 //    ],
     'panel' => [
         'type' => GridView::TYPE_SUCCESS,
-        'heading' => (Yii::$app->controller->action->id == "create" && $_GET["step"] != 2) ? "<span style='color:black;font-weight:bold'>Product Image Editor</span> " . \yii\helpers\Html::a("<span class='glyphicon glyphicon-plus'></span>", ['update-product', 'id' => $id, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], ['class' => 'btn btn-primary']) : "<span style='color:black;font-weight:bold'>Product Image Editor</span> ",
+        'heading' => (Yii::$app->controller->action->id == "create" && $_GET["step"] != 2) ? "<span style='color:black;font-weight:bold'>Product Image Editor</span> " . \yii\helpers\Html::a("<span class='glyphicon glyphicon-plus'></span>", ['update-product-supp', 'id' => $id, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], ['class' => 'btn btn-primary']) : "<span style='color:black;font-weight:bold'>Product Image Editor</span> ",
     ],
 ]);
