@@ -419,7 +419,7 @@ class FakeFactory extends Model {
           $productImagesOneTopz = \common\helpers\Base64Decode::DataImageSvg555x340(FALSE, FALSE, FALSE);
           } */
 
-        $productImagesMulti = \common\helpers\DataImageSystems::DataImageMasterViewsProdcuts($GetProductSuppliers['productId'], $productSuppId, 'Svg260x260', 'Svg555x340');
+        $productImagesMulti = \common\helpers\DataImageSystems::DataImageMasterViewsProdcuts($GetProductSuppliers['productId'], $productSuppId, 'Svg116x116', 'Svg555x340', $imagAll);
 
         //throw new \yii\base\Exception(print_r($GetProductSuppliers->attributes, true));
         if (isset($GetProductSuppliers['categoryId'])) {
