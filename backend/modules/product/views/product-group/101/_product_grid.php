@@ -67,11 +67,11 @@ if (isset($dataProvider)) {
                 'class' => 'kartik\grid\EditableColumn',
                 'attribute' => 'title',
 //                'pageSummary' => 'Page Total',
-                'vAlign' => 'middle',
+//                'vAlign' => 'middle',
                 'headerOptions' => ['class' => 'kv-sticky-column'],
                 'contentOptions' => ['class' => 'kv-sticky-column'],
                 'editableOptions' => ['header' => 'Title', 'size' => 'md',
-                    'formOptions' => ['action' => ['update-grid-edit']],
+//                    'formOptions' => ['action' => ['update-grid-edit']],
                 ],
             ],
 //                                                    [
@@ -233,7 +233,7 @@ if (isset($dataProvider)) {
                 },
                 'visibleButtons' => [
                     'update' => function ($model, $key, $index) {
-                        return ($model->status === 1 || $model->status === 99) ? FALSE : true;
+                        return true;//($model->status === 1 || $model->status === 99) ? FALSE : true;
                     },
                     'delete' => function ($model, $key, $index) {
                         return ($model->status === 1 || $model->status === 99) ? false : true;
@@ -251,7 +251,7 @@ if (isset($dataProvider)) {
                             if (Yii::$app->controller->action->id == "create") {
                                 $params = ['update-product-supp', 'id' => $model->productSuppId, 'step' => 4, 'productGroupTemplateId' => $model->product->productGroupTemplateId, 'productGroupId' => $model->product->parentId];
                             } else {
-                                $params = ['update-product-supp', 'id' => $model->productSuppId, 'step' => 'view', 'userId' => isset($_GET["userId"]) ? $_GET["userId"] : NULL];
+                                $params = ['update-product-supp', 'id' => $model->productSuppId, 'step' => 'view', 'userId' => isset($_GET["userId"]) ? $_GET["userId"] : NULL, 'productGroupTemplateId' => $model->product->productGroupTemplateId, 'productGroupId' => $model->product->parentId ];
                             }
 
                             return Html::a("<span class = 'glyphicon glyphicon-pencil'></span>", $params, [
