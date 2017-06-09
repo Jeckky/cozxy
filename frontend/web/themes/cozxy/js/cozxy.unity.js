@@ -75,7 +75,9 @@ $(document).ready(function (e) {
                         //$('.cart-dropdown .footer .total').html(data.cart.totalFormatText);
                         //window.location = $baseUrl + 'cart';
 
-                        $.notify("Add to Cart Success ,", "success");
+                        // $.notify("Add to Cart Success ,", "success");
+                        $('#cart-plus-' + $productSuppId).removeClass('fa fa-cart-plus fa-spin');
+                        $('#cart-plus-' + $productSuppId).addClass('fa fa-check');
                         $.ajax({
                             type: "POST",
                             url: $baseUrl + "cart/get-product-quantity",
