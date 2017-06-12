@@ -122,13 +122,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Password</label>
-                        <?= $form->field($modelUser, 'password')->textInput(['class' => 'fullwidth', 'placeholder' => 'PASSWORD'])->label(false); ?>
+                        <?= $form->field($modelUser, 'password')->passwordInput(['class' => 'fullwidth', 'placeholder' => 'PASSWORD'])->label(false); ?>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Confirm Password</label>
-                        <?= $form->field($modelUser, 'confirmPassword')->textInput(['class' => 'fullwidth', 'placeholder' => 'CONFIRM PASSWORD'])->label(false); ?>
+                        <?= $form->field($modelUser, 'confirmPassword')->passwordInput(['class' => 'fullwidth', 'placeholder' => 'CONFIRM PASSWORD'])->label(false); ?>
                     </div>
                 </div>
             </div>
