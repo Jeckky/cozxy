@@ -463,11 +463,20 @@ class CartController extends MasterController {
     }
 
     public function actionGetProductQuantity() {
-        $Product = \common\models\costfit\Order::find()->where('userId =' . \Yii::$app->user->id . ' and status=0')->one();
-        if (count($Product) > 0) {
-            $orderItem = \common\models\costfit\OrderItem::find()->where('orderId=' . $Product['orderId'])->sum('quantity');
-            if (isset($orderItem)) {
-                echo (int) $orderItem;
+
+        $order = \common\models\costfit\Order::getOrder();
+        if (isset($order->attributes['orderId'])) {
+            $orderId = $order->attributes['orderId'];
+
+            //$Product = \common\models\costfit\Order::find()->where('userId =' . \Yii::$app->user->id . ' and status=0')->one();
+            $Product = \common\models\costfit\Order::find()->where('orderId=' . $orderId . ' and status=0')->one();
+            if (count($Product) > 0) {
+                $orderItem = \common\models\costfit\OrderItem::find()->where('orderId=' . $Product['orderId'])->sum('quantity');
+                if (isset($orderItem)) {
+                    echo (int) $orderItem;
+                } else {
+                    echo '';
+                }
             } else {
                 echo '';
             }

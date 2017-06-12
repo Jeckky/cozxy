@@ -152,7 +152,6 @@ $(document).on('click', '#confirm-topup', function (e) {
         }
     }
 });
-
 /*
  * Use : Wishlist
  * @param {type} id
@@ -211,15 +210,16 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
     var $puls = $('#cart-plus-' + $productSuppId);
     var str = window.location.pathname;
     var res = str.split("/");
+
     if (res[1] != 'search') {
         $this.button('loading');
         setTimeout(function () {
             $this.button('reset');
         }, 8000);
     } else {
+
         $('.shopping-' + productSuppId + ' i').removeClass('fa fa-shopping-bag');
         $('.shopping-' + productSuppId + ' i').addClass('fa fa-cart-plus fa-spin');
-
     }
 
     // $(".fa-shopping-bag").addClass("fa-spin");
@@ -421,7 +421,6 @@ $(document).on('click', '.delete', function () {
         }
     });
 });
-
 $(document).on('click', '#reviews-rate', function (e) {
 
     var rate = $('input:hidden', '#reviews-rate').val();
@@ -443,7 +442,6 @@ $(document).on('click', '#reviews-rate', function (e) {
         }
     });
 });
-
 $(document).on('click', '#viewPost', function (e) {
     var postId = $(this).parent().parent().find("#postId").val();
     var userId = $(this).parent().parent().find("#userId").val();
@@ -477,7 +475,6 @@ $('#currency-currencyid').change(function () {
      });*/
 
 });
-
 function checkoutNewBilling() {
 
     var $form = $("#default-add-new-billing-address"),
@@ -610,7 +607,6 @@ function showMore(cat, clickNum, countAll, limit_start, limit_end) {
     var limit_starts = limit_start;
     var limit_ends = 90;
     var clickNums = Math.floor(clickNum);
-
     $('.showStepMore').html(" SHOW MORE<span class=\'size16\'>&nbsp; ↓ </span></a>");
     $('.filter-product-cozxy').html("<div class='text-center loading-spin' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
     $.ajax({
@@ -672,8 +668,6 @@ function showMore(cat, clickNum, countAll, limit_start, limit_end) {
             }
         }
     });
-
-
 }
 
 
@@ -681,7 +675,6 @@ $(".upload-payment-slip").click(function () {
     //alert($(this).data('id'));
 
 });
-
 function ShowImages(img, productImageId) {
     var src = img.src;
     $('.images-big').html("<div class='text-center' style='zoom:2; height: 185px;'><br><br><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");

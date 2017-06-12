@@ -50,11 +50,30 @@ use yii\bootstrap\ActiveForm;
                                 $quantity = '';
                             }
                         } else {
-                            $quantity = '';
+                            $order = \common\models\costfit\Order::getOrder();
+                            if (isset($order->attributes['orderId'])) {
+
+                                $orderId = $order->attributes['orderId'];
+                                $Product = \common\models\costfit\Order::find()->where('orderId =' . $orderId . ' and status=0')->one();
+                                if (count($Product) > 0) {
+                                    $orderItem = \common\models\costfit\OrderItem::find()->where('orderId=' . $Product['orderId'])->sum('quantity');
+                                    if (isset($orderItem)) {
+                                        $quantity = (int) $orderItem;
+                                    } else {
+                                        $quantity = '';
+                                    }
+                                } else {
+                                    $quantity = '';
+                                }
+                            } else {
+                                $quantity = '';
+                            }
                         }
                         if (Yii::$app->user->id != '') {
                             ?>
                             <span id="notify-cart-top-menu"><?php echo $quantity; ?></span>
+                        <?php } else { ?>
+                            <span id="<?php if (isset($order->attributes['orderId'])) { ?>notify-cart-top-menu<?php } ?>"><?php echo $quantity; ?></span>
                         <?php } ?>
                     </div>
                     <div class="col-xs-3">
