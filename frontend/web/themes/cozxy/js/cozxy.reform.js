@@ -389,7 +389,7 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
                         setTimeout(function () {
                             $('.shopping-' + productSuppId + ' i').removeClass('fa fa-checkn');
                             $('.shopping-' + productSuppId + ' i').addClass('fa fa-cart-plus');
-                        }, 3000)
+                        }, 8000)
                     }
 
                     //$('.cart-dropdown table').remove();
