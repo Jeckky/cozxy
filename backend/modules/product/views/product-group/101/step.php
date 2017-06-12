@@ -406,12 +406,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         <div class="tab-pane fade <?= (isset($_GET['tab'])) ? (($_GET['tab'] == 1) ? "active in " : " ") : "active in " ?>  " role="tabpanel" id="masterProduct" aria-labelledby="home-tab">
                                             <?= $this->render("_product_grid", ["dataProvider" => $dataProvider]); ?>
                                         </div>
-                                        <div class="tab-pane fade text-center <?= (isset($_GET['tab'])) ? (($_GET['tab'] == 2) ? "active in " : " ") : " " ?> " role="tabpanel" id="myProduct" aria-labelledby="profile-tab">
+                                        <div class="tab-pane fade <?= (isset($_GET['tab'])) ? (($_GET['tab'] == 2) ? "active in " : " ") : " " ?> " role="tabpanel" id="myProduct" aria-labelledby="profile-tab">
                                             <?php if ($dataProvider2->getTotalCount() > 0): ?>
                                                 <?= $this->render("_product_grid", ["dataProvider" => $dataProvider2, 'gridTitle' => "<span style='color:white;font-weight:bold'>My Product</span>", 'type' => 2, 'isProductSupp' => TRUE]); ?>
                                             <?php else: ?>
-                                                <h3>Create My Product</h3>
-                                                <a  href="<?= Yii::$app->homeUrl . "product/product-group/create-my-product?productGroupId=" . $_GET["productGroupId"] . "&step=4&productGroupTemplateId=" . $_GET["productGroupTemplateId"]; ?>" class="btn btn-success btn-lg">Create</a>
+                                                <center>
+                                                    <h3>Create My Product</h3>
+                                                    <a  href="<?= Yii::$app->homeUrl . "product/product-group/create-my-product?productGroupId=" . $_GET["productGroupId"] . "&step=4&productGroupTemplateId=" . $_GET["productGroupTemplateId"]; ?>" class="btn btn-success btn-lg">Create</a>
+                                                </center>
                                             <?php endif; ?>
                                         </div>
                                     </div>
