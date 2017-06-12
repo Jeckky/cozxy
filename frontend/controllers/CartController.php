@@ -151,7 +151,7 @@ class CartController extends MasterController {
 
     public function actionDeleteCartItem() {
         if (Yii::$app->user->isGuest) {
-            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+            //return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
         $id = $_POST["id"];
         $res = [];
