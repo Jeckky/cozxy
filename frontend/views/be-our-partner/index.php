@@ -9,12 +9,88 @@ use kartik\depdrop\DepDrop;
 $this->title = 'Create New Account Partner';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<style type="text/css">
+    body{
+        background-image: url("/images/be-our-partner/become-partner.jpg") ;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
 
-<div class="container login-box">
+    }
+    .be-our-partner{
+        /* for IE */
+        filter:alpha(opacity=60);
+        /* CSS3 standard */
+        opacity:0.9;
+        color: #000000;
+    }
+    .my-form{
+        color: #000;
+    }
+
+    /*
+    button {
+        margin: 20px 0;
+        line-height: 34px;
+        position: relative;
+        cursor: pointer;
+        user-select: none;
+        outline:none !important;
+        width:100%;
+    }
+
+    button:active {
+        outline:none;
+    }
+
+    button.ribbon {
+
+        outline:none;
+        outline-color: transparent;
+    }
+    button.ribbon:before, button.ribbon:after {
+        top: 5px;
+        z-index: -10;
+    }
+    button.ribbon:before {
+        border-color: #53dab6 #53dab6 #53dab6 transparent;
+        left: -50px;
+        border-width: 17px;
+    }
+    button.ribbon:after {
+        border-color: #53dab6 transparent #53dab6 #53dab6;
+        right: -50px;
+        border-width: 17px;
+    }
+
+    button:before, button:after {
+        content: '';
+        position: absolute;
+        height: 0;
+        width: 0;
+        border-style: solid;
+        border-width: 0;
+        outline:none;
+    }
+
+    button.btn-warning:before {
+        border-color: #d58512 #d58512 #d58512 transparent;
+    }
+    button.btn-warning:after {
+        border-color: #d58512 transparent #d58512 #d58512;
+    }*/
+
+
+</style>
+<div class="container login-box be-our-partner">
     <div class="size32">&nbsp;</div>
     <div class="row">
         <div class="col-xs-12 bg-yellow1 b" style="padding:18px 18px 10px;">
-            <p class="size20 size18-xs">MY FORM</p>
+            <p class="size20 size18-xs my-form">MY FORM :: PARTNER REGISTER</p>
         </div>
         <div class="col-xs-12 bg-white">
             <div class="size12 size10-xs">&nbsp;</div>
@@ -24,6 +100,39 @@ $this->params['breadcrumbs'][] = $this->title;
                 'options' => ['class' => 'space-bottom'],
             ]);
             ?>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">First Name</label>
+                        <?= $form->field($model, 'firstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Last Name</label>
+                        <?= $form->field($model, 'lastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LASTNAME'])->label(false); ?>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Eamil</label>
+                        <?= $form->field($modelUser, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'EMAIL'])->label(false); ?>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Password</label>
+                        <?= $form->field($modelUser, 'password')->textInput(['class' => 'fullwidth', 'placeholder' => 'PASSWORD'])->label(false); ?>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Confirm Password</label>
+                        <?= $form->field($modelUser, 'confirmPassword')->textInput(['class' => 'fullwidth', 'placeholder' => 'CONFIRM PASSWORD'])->label(false); ?>
+                    </div>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label for="exampleInputEmail1">Billing type *</label>
                 <div class="select-style">
@@ -48,25 +157,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">First Name</label>
-                        <?= $form->field($model, 'firstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Last Name</label>
-                        <?= $form->field($model, 'lastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LASTNAME'])->label(false); ?>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="exampleInputEmail1">Address</label>
-                <?= $form->field($model, 'address')->textarea(['class' => 'fullwidth', 'placeholder' => 'ADDRESS'])->label(false); ?>
-            </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
@@ -181,7 +271,6 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="form-group">
                 <div class="row">
-
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email</label>
@@ -195,13 +284,39 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                     </div>
                 </div>
+            </div>
+            <!--
+            <div class="form-group">
+                <button type="button" class="btn btn-warning ribbon">Default File</button>
+            </div>
+            -->
 
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">File 1</label>
+                            <input type="file" name="file[]" multiple id="file"/>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">File 1</label>
+                            <input type="file" name="file[]" multiple id="file"/>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">File 1</label>
+                            <input type="file" name="file[]" multiple id="file"/>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-xs-12 text-right">
-                    <a href="#" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
+                    <a href="#" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">RESET</a>
                     &nbsp;
-                    <!--<a href="<?//= Url::to(['/checkout/summary']) ?>" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">SAVE</a>-->
                     <input type="submit" value="SAVE"  class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">
                 </div>
             </div>

@@ -26,25 +26,26 @@ class BeOurPartnerController extends MasterController {
 
     //put your code here
     public function actionIndex() {
+        $modelUser = new \common\models\costfit\User(['scenario' => 'shipping_address']);
         $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
-        if (isset($_POST['Address'])) {
-            $model->attributes = $_POST['Address'];
-            if ($_POST["Address"]['isDefault']) {
-                \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_BILLING]);
-                $model->isDefault = 1;
-            }
-            $model->userId = Yii::$app->user->id;
-            $model->type = \common\models\costfit\Address::TYPE_BILLING;
-            $model->createDateTime = new \yii\db\Expression("NOW()");
-            if ($model->save(FALSE)) {
-                return $this->redirect(['/my-account']);
-            }
-        }
-        if (!isset($model->isDefault)) {
-            $model->isDefault = 0;
-        }
+        /* if (isset($_POST['Address'])) {
+          $model->attributes = $_POST['Address'];
+          if ($_POST["Address"]['isDefault']) {
+          \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_BILLING]);
+          $model->isDefault = 1;
+          }
+          $model->userId = Yii::$app->user->id;
+          $model->type = \common\models\costfit\Address::TYPE_BILLING;
+          $model->createDateTime = new \yii\db\Expression("NOW()");
+          if ($model->save(FALSE)) {
+          return $this->redirect(['/my-account']);
+          }
+          }
+          if (!isset($model->isDefault)) {
+          $model->isDefault = 0;
+          } */
         $hash = 'add';
-        return $this->render('index', compact('model', 'hash'));
+        return $this->render('index', compact('model', 'hash', 'modelUser'));
     }
 
 }
