@@ -576,28 +576,11 @@ class ProductGroupController extends ProductMasterController
 
     public function actionUpdateGridEdit()
     {
-        $model = new \common\models\costfit\Product();
-        throw new \yii\base\Exception;
-        if (isset($_POST['hasEditable'])) {
+        $model = \common\models\costfit\Product::find()->where("productId = " . $_POST["productId"])->one();
 
-            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-
-            if ($model->load($_POST)) {
-
-                if (isset($model->title))
-                    $value = $model->title;
-
-                return ['output' => $value, 'message' => ''];
-            }
-
-            else {
-
-                return ['output' => '', 'message' => ''];
-            }
-        } else {
-
-            return ['output' => '', 'message' => ''];
-        }
+        return $this->renderAjax('101/_product_grid_form', [
+            'model' => $model
+        ]);
     }
 
     public function actionUpdateProduct()
@@ -779,7 +762,7 @@ class ProductGroupController extends ProductMasterController
 
                 return $this->redirect(['update-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]]);
             } else {
-                return $this->redirect(['create', 'step' => $_GET["step"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => isset($product->parentId) ? $product->parentId : $product->productId]);
+                return $this->redirect(['create', 'step' => $_GET["step"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => isset($product->parentId) ? $product->parentId : $product->productId, 'tab' => 2]);
             }
         }
     }
@@ -822,7 +805,7 @@ class ProductGroupController extends ProductMasterController
             $model->ordering = $_POST["ProductImageSuppliers"]["ordering"];
             $model->save();
 
-            return $this->redirect(['create', 'step' => $_GET["step"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]]);
+            return $this->redirect(['create', 'step' => $_GET["step"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"], 'tab' => 2]);
         }
 
         return $this->render("101/_product_image_form", ['model' => $model]);

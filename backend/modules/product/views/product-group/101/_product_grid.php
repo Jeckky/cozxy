@@ -50,10 +50,13 @@ if (isset($dataProvider)) {
 //                                                            return Html::a($model->title, ['update-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], ['data-pjax' => 0]);
 //                                                        }
 //                                                    ],
-//            [
-//                'attribute' => 'title',
-//                'options' => ['style' => 'text-align:left'],
-//            ],
+            [
+                'attribute' => 'title',
+                'format' => 'raw',
+                'value' => function($model) {
+                    return $model->title . " " . Html::a("Edit", NULL, ['onclick' => "productModal($model->productId)", 'class' => 'btn btn-primary btn-xs', 'data-pjax' => 0]);
+                }
+            ],
 //            [
 //                'attribute' => 'description',
 //                'options' => ['style' => 'width:20%'],
@@ -63,17 +66,17 @@ if (isset($dataProvider)) {
 //                'attribute' => 'specification',
 //                'format' => 'raw',
 //            ],
-            [
-                'class' => 'kartik\grid\EditableColumn',
-                'attribute' => 'title',
-//                'pageSummary' => 'Page Total',
-//                'vAlign' => 'middle',
-                'headerOptions' => ['class' => 'kv-sticky-column'],
-                'contentOptions' => ['class' => 'kv-sticky-column'],
-                'editableOptions' => ['header' => 'Title', 'size' => 'md',
-//                    'formOptions' => ['action' => ['update-grid-edit']],
-                ],
-            ],
+//            [
+//                'class' => 'kartik\grid\EditableColumn',
+//                'attribute' => 'title',
+////                'pageSummary' => 'Page Total',
+////                'vAlign' => 'middle',
+//                'headerOptions' => ['class' => 'kv-sticky-column'],
+//                'contentOptions' => ['class' => 'kv-sticky-column'],
+//                'editableOptions' => ['header' => 'Title', 'size' => 'md',
+////                    'formOptions' => ['action' => ['update-grid-edit']],
+//                ],
+//            ],
 //                                                    [
 //                                                        'class' => 'kartik\grid\EditableColumn',
 //                                                        'attribute' => 'description',
@@ -307,7 +310,6 @@ if (isset($dataProvider)) {
     ]);
 }
 ?>
-
 <?php
 
 if (!isset($type)) {
@@ -333,4 +335,28 @@ $this->registerJs("
         }
 
     });
-    });", \yii\web\View::POS_READY);
+
+    });
+
+
+", \yii\web\View::POS_READY);
+
+$this->registerJs("
+
+    function productModal(productId)
+    {
+        $.ajax({
+            type: 'POST',
+            url : '" . Url::home() . "product/product-group/update-grid-edit?step=" . $_GET['step'] . "&productGroupTemplateId=" . $_GET['productGroupTemplateId'] . "&productGroupId=" . $_GET['productGroupId'] . "',
+            data : {productId: productId},
+            success : function(data) {
+                $('#productModalBody').html(data);
+                $('#productModal').modal('show');
+            }
+        });
+    }
+
+
+
+", \yii\web\View::POS_HEAD);
+
