@@ -22,7 +22,7 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
     }
     '<p class="size14 fc-g999">' . $txt . '</p>';
     if ($maxQnty > 0 && $price > 0) {
-        echo '<p><a href="javascript:addItemToCartUnitys(' . $productSuppId . ',1,' . $maxQnty . ',\'' . $fastId . '\',' . $productId . ',' . $supplierId . ',' . $receiveType . ')" id="addItemsToCartMulti-' . $id . '" data-loading-text="ADD TO CART" class="btn-yellow" data-loading-text="<a class="btn-yellow"><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">ADD TO CART</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $id . ');" id="deletetemToWishlists-' . $id . '"  class="fc-g999" >REMOVE</a></p>';
+        echo '<p><a href="javascript:addItemToCartUnitys(' . $productSuppId . ',1,' . $maxQnty . ',\'' . $fastId . '\',' . $productId . ',' . $supplierId . ',' . $receiveType . ')" id="addItemsToCartMulti-' . $id . '" data-loading-text="ADD TO CART" class="btn-yellow" data-loading-text="<a class=\'btn-yellow\'><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">ADD TO CART</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $id . ');" id="deletetemToWishlists-' . $id . '"  class="fc-g999" >REMOVE</a></p>';
     } else {
         echo '<p><a class="btn-black-s">NO TO CART</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $id . ');" id="deletetemToWishlists-' . $id . '" class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
     }
