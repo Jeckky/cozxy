@@ -701,18 +701,31 @@ class ProductGroupController extends ProductMasterController
     public function actionMultipleDeleteProduct()
     {
         $pk = Yii::$app->request->post('row_id');
+        $productGroupId = Yii::$app->request->post('productGroupId');
+        $productGroupTemplateId = Yii::$app->request->post('productGroupTemplateId');
         $model = NULL;
-        foreach ($pk as $key => $value) {
-            if (!isset($model)) {
-                $model = \common\models\costfit\Product::find()->where("productId = " . $value)->one();
+        $tab = 1;
+        if (count($pk) > 0) {
+            foreach ($pk as $key => $value) {
+                if (!isset($_GET["type"]) || empty($_GET["type"]) || $_GET["type"] == 1) {
+                    if (!isset($model)) {
+                        $model = \common\models\costfit\Product::find()->where("productId = " . $value)->one();
+                    }
+                    \common\models\costfit\ProductGroupOptionValue::deleteAll("productId = " . $value);
+                    \common\models\costfit\ProductImage::deleteAll("productId = " . $value);
+                    \common\models\costfit\ProductSuppliers::deleteAll("productId = " . $value);
+                    \common\models\costfit\Product::deleteAll("productId = " . $value);
+                } else {
+                    $model = \common\models\costfit\ProductSuppliers::find()->where("productSuppId = " . $value)->one();
+                    \common\models\costfit\ProductGroupOptionValue::deleteAll("productSuppId = " . $value);
+                    \common\models\costfit\ProductImageSuppliers::deleteAll("productSuppId = " . $value);
+                    \common\models\costfit\ProductSuppliers::deleteAll("productSuppId = " . $value);
+                    $tab = 2;
+                }
             }
-            \common\models\costfit\ProductGroupOptionValue::deleteAll("productId = " . $value);
-            \common\models\costfit\ProductImage::deleteAll("productId = " . $value);
-            \common\models\costfit\ProductSuppliers::deleteAll("productId = " . $value);
-            \common\models\costfit\Product::deleteAll("productId = " . $value);
         }
 
-        return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->parentId]);
+        return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $productGroupTemplateId, 'productGroupId' => $productGroupId, 'tab' => $tab]);
     }
 
     public function actionDeleteProduct()
@@ -867,7 +880,7 @@ class ProductGroupController extends ProductMasterController
             }
         }
         if (isset($_GET["step"]) && $_GET["step"] == 4) {
-            return $this->redirect(["create", "step" => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]]);
+            return $this->redirect(["create", "step" => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"], 'tab' => 2]);
         } else {
             return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"]]);
         }
@@ -933,7 +946,7 @@ class ProductGroupController extends ProductMasterController
         \common\models\costfit\ProductSuppliers::deleteAll("productSuppId = " . $_GET["id"]);
 
         if (isset($_GET["step"])) {
-            return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->parentId]);
+            return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->product->productGroupTemplateId, 'productGroupId' => $model->product->parentId, 'tab' => 2]);
         } else {
             return $this->redirect(["view", "productGroupId" => $model->product->parentId, 'userId' => $_GET["userId"]]);
         }
@@ -964,7 +977,7 @@ class ProductGroupController extends ProductMasterController
                 if (isset($_GET["step"]) && $_GET["step"] == "view") {
                     return $this->redirect(['view', 'productGroupId' => $model->product->parentId, 'userId' => isset($_GET["userId"]) ? $_GET["userId"] : NULL]);
                 } else {
-                    return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->product->productGroupTemplateId, 'productGroupId' => $model->product->parentId]);
+                    return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->product->productGroupTemplateId, 'productGroupId' => $model->product->parentId, 'tab' => 2]);
                 }
             }
         }

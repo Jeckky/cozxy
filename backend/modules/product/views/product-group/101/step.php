@@ -393,20 +393,20 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             <?php if (isset($dataProvider)): ?>
                                 <div class="bs-example bs-example-tabs" data-example-id="togglable-tabs">
                                     <ul class="nav nav-tabs" id="myTabs" role="tablist">
-                                        <li role="presentation" class="active text-center">
+                                        <li role="presentation" class="<?= (isset($_GET['tab'])) ? (($_GET['tab'] == 1) ? "active " : " ") : "active " ?> text-center">
                                             <a href="#masterProduct" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true"><br>Master<br>(<?= $dataProvider->getTotalCount() ?>)</a>
                                         </li>
                                         <?php // if ($dataProvider2->totalItemCount > 0): ?>
-                                        <li role="presentation" class="text-center">
+                                        <li role="presentation" class="<?= (isset($_GET['tab'])) ? (($_GET['tab'] == 2) ? "active " : " ") : " " ?> text-center">
                                             <a href="#myProduct" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false"><br>My Product<br>(<?= $dataProvider2->getTotalCount() ?>)</a>
                                         </li>
                                         <?php // endif; ?>
                                     </ul>
                                     <div class="tab-content" id="myTabContent">
-                                        <div class="tab-pane fade active in" role="tabpanel" id="masterProduct" aria-labelledby="home-tab">
+                                        <div class="tab-pane fade <?= (isset($_GET['tab'])) ? (($_GET['tab'] == 1) ? "active in " : " ") : "active in " ?>  " role="tabpanel" id="masterProduct" aria-labelledby="home-tab">
                                             <?= $this->render("_product_grid", ["dataProvider" => $dataProvider]); ?>
                                         </div>
-                                        <div class="tab-pane fade text-center" role="tabpanel" id="myProduct" aria-labelledby="profile-tab">
+                                        <div class="tab-pane fade text-center <?= (isset($_GET['tab'])) ? (($_GET['tab'] == 2) ? "active in " : " ") : " " ?> " role="tabpanel" id="myProduct" aria-labelledby="profile-tab">
                                             <?php if ($dataProvider2->getTotalCount() > 0): ?>
                                                 <?= $this->render("_product_grid", ["dataProvider" => $dataProvider2, 'gridTitle' => "<span style='color:white;font-weight:bold'>My Product</span>", 'type' => 2, 'isProductSupp' => TRUE]); ?>
                                             <?php else: ?>

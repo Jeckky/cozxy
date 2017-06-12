@@ -233,7 +233,7 @@ if (isset($dataProvider)) {
                 },
                 'visibleButtons' => [
                     'update' => function ($model, $key, $index) {
-                        return true;//($model->status === 1 || $model->status === 99) ? FALSE : true;
+                        return true; //($model->status === 1 || $model->status === 99) ? FALSE : true;
                     },
                     'delete' => function ($model, $key, $index) {
                         return ($model->status === 1 || $model->status === 99) ? false : true;
@@ -251,7 +251,7 @@ if (isset($dataProvider)) {
                             if (Yii::$app->controller->action->id == "create") {
                                 $params = ['update-product-supp', 'id' => $model->productSuppId, 'step' => 4, 'productGroupTemplateId' => $model->product->productGroupTemplateId, 'productGroupId' => $model->product->parentId];
                             } else {
-                                $params = ['update-product-supp', 'id' => $model->productSuppId, 'step' => 'view', 'userId' => isset($_GET["userId"]) ? $_GET["userId"] : NULL, 'productGroupTemplateId' => $model->product->productGroupTemplateId, 'productGroupId' => $model->product->parentId ];
+                                $params = ['update-product-supp', 'id' => $model->productSuppId, 'step' => 'view', 'userId' => isset($_GET["userId"]) ? $_GET["userId"] : NULL, 'productGroupTemplateId' => $model->product->productGroupTemplateId, 'productGroupId' => $model->product->parentId];
                             }
 
                             return Html::a("<span class = 'glyphicon glyphicon-pencil'></span>", $params, [
@@ -310,8 +310,11 @@ if (isset($dataProvider)) {
 
 <?php
 
-$this->registerJs("
+if (!isset($type)) {
+    $type = NULL;
+}
 
+$this->registerJs("
     $(document).ready(function(){
     $('#MyButton$gridId').click(function(){
 
@@ -321,8 +324,8 @@ $this->registerJs("
 //        alert(HotId);
           $.ajax({
             type: 'POST',
-            url : '" . Url::home() . "product/product-group/multiple-delete-product',
-            data : {row_id: HotId},
+            url : '" . Url::home() . "product/product-group/multiple-delete-product?type=$type',
+            data : {row_id: HotId,productGroupId:" . $_GET["productGroupId"] . ",productGroupTemplateId:" . $_GET["productGroupTemplateId"] . "},
             success : function() {
               $(this).closest('tr').remove(); //or whatever html you use for displaying rows
             }
