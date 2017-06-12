@@ -152,145 +152,7 @@ $(document).on('click', '#confirm-topup', function (e) {
         }
     }
 });
-$("#place-order").on('click', function () {
-//alert('test');
-    var _shipping = $('input[id=checkout_select_address_shipping]:checked').val();
-    var _billing = $('input[id=checkout_select_address_billing]:checked').val();
-    var _payment01 = $('input[id=payment01]:checked').val();
-    var _placeUserId = $('input[id=placeUserId]').val();
-    var _placeOrderId = $('input[id=placeOrderId]').val();
-    var _countItems = $('input[id=countItems]').val();
-    var _notes = $("#order-notes").val();
-    //alert(_billing);
-    if (_billing === undefined) {
-//alert('Click for Billing to a different adress?');
-//window.location = $baseUrl + 'profile/billings-address/add';
-        $("#billing-different-adress").modal('show');
-    }
-    if (_placeUserId == '') {
-        $("#modal-cart-not-item").modal('show');
-    }
 
-    /*
-     * Increate 26/9/2016 By Taninut.BM
-     */
-//var provinceid = $('input[id=pickingpoint-provinceid]').val();
-//var amphurid = $('input[id=pickingpoint-amphurid]').val();
-//var pickingid = $('input[id=pickingpoint-pickingid]').val();
-    /*
-     * Lockers ร้อน
-     */
-//var eProvinceid = $('input[id=pickingpoint-provinceid]').val();
-    var eProvinceid = $('select#pickingpoint-provinceid option:selected').val();
-    if (eProvinceid != null) {
-        var eProvinceid = $('#pickingpoint-provinceid').val();
-        var eAmphurid = $('#pickingpoint-amphurid').val();
-        var ePickingid = $('#pickingpoint-pickingid').val();
-        var receiveTypeLockers = $('input[id=receiveTypeLockers]').val();
-    } else {
-        var receiveTypeLockers = false;
-        var eAmphurid = false;
-        var eProvinceid = false;
-        var ePickingid = false;
-    }
-//console.log('Lockers ร้อน LcProvinceid : ' + eProvinceid);
-//console.log('Lockers ร้อน LcAmphurid :' + eAmphurid);
-//console.log('Lockers ร้อน LcPickingids :' + ePickingid);
-//console.log('Lockers ร้อน receiveTypeLockers :' + receiveTypeLockers);
-    /*
-     *   Lockers เย็น
-     */
-//var LcProvinceid = document.getElementById("LcprovinceId");
-    var LcProvinceid = $('select#LcprovinceId option:selected').val();
-    if (LcProvinceid != null) {
-//var LcAmphurid = $('select#LcamphurId option:selected').val();
-        var LcProvinceid = $('#LcprovinceId').val();
-        var LcAmphurid = $('#LcamphurId').val();
-        var LcPickingids = $('#LcpickingId').val();
-        var receiveTypeLockersCool = $('input[id=receiveTypeLockersCool]').val();
-    } else {
-        var receiveTypeLockersCool = false;
-        var LcAmphurid = false;
-        var LcProvinceid = false;
-        var LcPickingids = false;
-    }
-//console.log('Lockers เย็น LcProvinceid : ' + LcProvinceid);
-//console.log('Lockers เย็น LcAmphurid :' + LcAmphurid);
-//console.log('Lockers เย็น LcPickingids :' + LcPickingids);
-//console.log('Lockers เย็น receiveTypeLockersCool :' + receiveTypeLockersCool);
-
-// pickingpoint amphurid //
-    /*
-     * Booth
-     */
-//var bAmphurid = document.getElementById("BamphurId");
-    var b_provinceid = $('select#BprovinceId option:selected').val();
-    if (b_provinceid != null) {
-        var b_provinceid = $('#BprovinceId').val();
-        var b_amphurid = $('#BprovinceId').val();
-        var b_pickingid = $('#BpickingId').val();
-        var receiveTypeBooth = $('input[id=receiveTypeBooth]').val();
-    } else {
-        var b_amphurid = false;
-        var b_provinceid = false;
-        var b_pickingid = false;
-        var receiveTypeBooth = false;
-    }
-//console.log('Booth LcProvinceid : ' + b_provinceid);
-//console.log('Booth LcAmphurid :' + b_amphurid);
-//console.log('Booth LcPickingids :' + b_pickingid);
-//console.log('Booth receiveTypeBooth :' + receiveTypeBooth);
-
-    if (_countItems == '') {
-//alert('สินค้าในตะกร้า 0 รายการ');
-        $("#modal-cart-not-item").modal('show');
-        //window.location = 'site';
-    } else {
-//if (_shipping === undefined) {
-//alert('Please Select Shipping Address');
-//$("#modal-cart-not-shipping").modal('show');
-//} else {
-        if (_billing === undefined) {
-
-            $.post("checkout/burn-checkouts", {
-                shipping: _shipping,
-                payment01: _payment01,
-                placeUserId: _placeUserId,
-                notes: _notes,
-                placeOrderId: _placeOrderId,
-                LcPickingids: LcPickingids,
-                pickingId: ePickingid,
-                b_pickingid: b_pickingid,
-                receiveTypeLockers: receiveTypeLockers,
-                receiveTypeBooth: receiveTypeBooth,
-                receiveTypeLockersCool: receiveTypeLockersCool
-            }, function (data) {
-//console.log(data.name); // John
-//console.log(data.time); // 2pm
-            }, "json");
-        } else if (_billing != undefined) {
-
-            $.post("checkout/burn-checkouts", {
-                shipping: _shipping,
-                billing: _billing,
-                payment01: _payment01,
-                placeUserId: _placeUserId,
-                notes: _notes,
-                placeOrderId: _placeOrderId,
-                LcPickingids: LcPickingids,
-                pickingId: ePickingid,
-                b_pickingid: b_pickingid,
-                receiveTypeLockers: receiveTypeLockers,
-                receiveTypeBooth: receiveTypeBooth,
-                receiveTypeLockersCool: receiveTypeLockersCool
-            }, function (data) {
-//console.log(data.name); // John
-//console.log(data.time); // 2pm
-            }, "json");
-        }
-//}
-    }
-});
 /*
  * Use : Wishlist
  * @param {type} id
@@ -581,6 +443,7 @@ $(document).on('click', '#reviews-rate', function (e) {
         }
     });
 });
+
 $(document).on('click', '#viewPost', function (e) {
     var postId = $(this).parent().parent().find("#postId").val();
     var userId = $(this).parent().parent().find("#userId").val();
@@ -614,6 +477,7 @@ $('#currency-currencyid').change(function () {
      });*/
 
 });
+
 function checkoutNewBilling() {
 
     var $form = $("#default-add-new-billing-address"),
@@ -738,7 +602,6 @@ function filterPriceCozxy() {
 function filterPriceCozxyClear() {
     location.reload();
 }
-
 
 function showMore(cat, clickNum, countAll, limit_start, limit_end) {
     //console.log(cat + ' , ' + countAll + ' , ' + limit_start + ',' + limit_end);
