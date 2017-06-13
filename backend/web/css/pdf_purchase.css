@@ -1,0 +1,126 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : Aug 10, 2016, 2:22:22 PM
+    Author     : it
+*/
+
+body{  font-family: "Garuda";
+       font-size: 10pt; }
+
+.table_bordered{
+    /*font-family: "Garuda"; */
+    font-size: 8pt;
+    color:#292c2e;
+    width: 100%;
+    font-weight: normal;
+    border: 0.5px solid #eee;
+    margin-bottom: 10px;
+}
+
+.table_bordered td {
+    border:0.5px solid #eee;
+    line-height: 25px;
+}
+
+/*
+.table{
+    font-family: "Garuda"; font-size: 10pt;
+    color:#292c2e;
+    width: 100%;
+    font-weight: normal;
+}
+*/
+th {
+    font-weight: normal;
+    /* font-family: "Garuda"; */
+    font-size: 10pt;
+    line-height: 28px;
+    border:0.5px solid #eee;
+}
+.table_border{
+    /*font-family: "Garuda"; */
+    font-size: 8pt;
+    color:#000000;
+    width: 100%;
+    font-weight: normal;
+    border: 0.5px solid #000;
+    margin-bottom: 10px;
+}
+
+.table_border td {
+    border:0.5px solid #000;
+    /*font-family: "Garuda";*/
+    font-size: 6pt;
+    line-height: 17px;
+}
+.table_border th {
+    font-weight: normal;
+    /*font-family: "Garuda"; */
+    font-size: 8pt;
+    line-height: 18px;
+    border:0.5px solid #000;
+}
+.table_noborder{
+    width: 100%;
+    font-weight: normal;
+    border: 0px;
+}
+
+.table_noborder td {
+    border:0px;
+}
+.table_noborder th {
+    font-weight: normal;
+    border:0px;
+}
+.bg-purchase-order{
+    background-color: #f8f9f8;
+    text-align: right;
+    font-size: 12px;
+}
+
+.foorter-purchase-order{
+    text-align: right;
+    font-size: 12px;
+}
+
+.table-list-order {
+    border-collapse: separate;
+    border-spacing: 5px 5px 5px 5px;
+    font-size: 12px;
+}
+
+.table-bordered-pay-in{
+    /* font-family: "Garuda";*/
+    font-size: 10pt;
+    color:#292c2e;
+    width: 100%;
+    font-weight: normal;
+    border: 0.5px solid #eee;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+/*
+.table-bordered-pay-in td{
+    border:0.5px solid #000;
+}
+*/
+
+.badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    background-color: #777;
+    border-radius: 10px;
+}

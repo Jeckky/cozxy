@@ -69,7 +69,7 @@ class OrderController extends OrderMasterController {
         $params = \common\models\ModelMaster::decodeParams($hash);
         $order = \common\models\costfit\Order::find()->where('orderId = "' . $params['id'] . '" ')
                 ->one();
-        return $this->render('@frontend/views/profile/purchase_order', compact('order'));
+        return $this->render('@frontend/views-v.1/profile/purchase_order', compact('order'));
     }
 
     /**
@@ -430,7 +430,7 @@ class OrderController extends OrderMasterController {
             'content' => $content,
 // format content from your own css file if needed or use the
 // enhanced bootstrap css built by Krajee for mPDF formatting
-            'cssFile' => '@backend/web/css/pdf.css',
+            'cssFile' => '@backend/web/css/pdf_purchase.css',
 // any css to be embedded if required
             'cssInline' => '.kv-heading-1{font-size:14px}',
 //'cssInline' => 'body{font-size:9px}',

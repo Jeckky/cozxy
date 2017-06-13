@@ -2,10 +2,12 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\Url;
 ?>
+<?php yii\widgets\Pjax::begin(['id' => 'editProduct']) ?>
 <?php
 $form = ActiveForm::begin([
-    'id' => 'product-form',
+    'id' => 'product-form' . $id,
     'enableClientValidation' => FALSE,
     'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
     'fieldConfig' => [
@@ -30,6 +32,8 @@ $form = ActiveForm::begin([
 
             <?//= $form->field($model, 'productGroupTemplateId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(common\models\costfit\ProductGroupTemplate::find()->all(), 'productGroupTemplateId', 'title'), ['prompt' => '-- Select Option Template --']) ?>
 
+            <?= Html::hiddenInput("type", $type) ?>
+            <?= Html::hiddenInput("productId", $id) ?>
             <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]); ?>
 
             <div class="row form-group field-product-title required has-success">
@@ -48,11 +52,11 @@ $form = ActiveForm::begin([
 
 
 
-            <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
+            <?//= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6', 'id' => 'description' . $id]) ?>
 
-            <?= $form->field($model, 'specification', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
+            <?//= $form->field($model, 'specification', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6', 'id' => 'specification' . $id]) ?>
 
-            <?= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15])->label("Market Price"); ?>
+            <?//= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15])->label("Market Price"); ?>
 
             <!--            <div class="row">
                             <div class="col-lg-12">
@@ -85,7 +89,7 @@ $form = ActiveForm::begin([
 
             <div class="form-group">
                 <div class="col-sm-9 col-sm-offset-3">
-                    <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                    <?= Html::button($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'id' => "submit$id"]) ?>
                 </div>
             </div>
 
@@ -94,11 +98,12 @@ $form = ActiveForm::begin([
     </div>
 </div>
 <?php ActiveForm::end(); ?>
+<?php yii\widgets\Pjax::end() ?>
 
 <?php $this->registerJs("
            init.push(function () {
             if (!$('html').hasClass('ie8')) {
-                $('#product-description').summernote({
+                $('#description$id').summernote({
                     height: 200,
                     tabsize: 2,
                     codemirror: {
@@ -109,7 +114,7 @@ $form = ActiveForm::begin([
                     fontNames: ['Maledpan', 'Tahoma', 'Arial Unicode MS', 'MS Gothic', 'Helvetica', 'sans-serif'],
                       fontNamesIgnoreCheck: ['Maledpan', 'Tahoma']
                 });
-                $('#product-specification').summernote({
+                $('#specification$id').summernote({
                     height: 200,
                     tabsize: 2,
                     codemirror: {
@@ -124,4 +129,28 @@ $form = ActiveForm::begin([
 
         });
 
+        $('#submit$id').on('click',function(){
+         $.ajax({
+            type: 'POST',
+            url : '" . Url::home() . "product/product-group/update-grid-edit?step=" . $_GET['step'] . "&productGroupTemplateId=" . $_GET['productGroupTemplateId'] . "&productGroupId=" . $_GET['productGroupId'] . "',
+            data : $('#product-form" . $id . "').serialize(),
+            success : function(data) {
+                $('#productModalBody').html(data);
+                $('#productModal').modal('hide');
+                refreshGrid$type();
+            }
+        });
+        });
+
 ", \yii\web\View::POS_END); ?>
+
+<?php
+//$this->registerJs(
+//'$("document").ready(function(){
+//        $("#editProduct").on("pjax:end", function() {
+//        alert(111);
+//            $.pjax.reload({container:"#pjax' . $gridId . '"});  //Reload GridView
+//        });
+//    });'
+//);
+?>

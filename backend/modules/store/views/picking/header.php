@@ -16,10 +16,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </td>
         <td colspan="3" style="padding: 5px; vertical-align: text-top; text-align: center;">
             <h2>
-                บริษัท คอซซี่ ดอท คอม
+                บริษัท คอซซี่ดอทคอม
             </h2>
-            เลขประจำตัวผู้เสียภาษี : 0105546109903 <br>
-            สำนักงานใหญ่ เลขที่ 1 ซ.ลาดพร้าว 19 ถ.ลาดพร้าว <br>แขวงจอมพล เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900
+            เลขประจำตัวผู้เสียภาษี : 0105553036789 <br>
+            สำนักงานใหญ่ เลขที่ 5 ซอยรามอินทรา 5 แยก 4  <br>แขวงอนุสาวรีย์ เขตบางเขน จังหวัดกรุงเทพมหานคร 10900
         </td>
         <td colspan="2" style="vertical-align: text-top; text-align: right; ">
     <?php //echo $title; ?><br><br><center> <?= isset($title) ? $title : "ใบหยิบสินค้า" ?></center>

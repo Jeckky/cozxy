@@ -5,8 +5,8 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\grid\GridView;
 
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
-$baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+///$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
+//$baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <?= isset($ms) ? '[ ' . $ms . ' ]' : '' ?>
 <table class="table table_bordered" width="100%"  cellpadding="2" cellspacing="8" style="border-color: #ffffff;margin-top: -20px;">
@@ -16,7 +16,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 Purchase Order
             </h2>
             <h3>Cozxy Dot Com Co.,Ltd.</h3>
-            5 Soi Ram Intra 5 Yeak 4, Anusawari, Bang Ken, Bangkok 10220 TEL.02-101-0689 (Auto) FAX.02-101-0689
+            <h4> 5 Soi Ram Intra 5 Yeak 4, Anusawari, Bang Ken, Bangkok 10220 TEL.02-101-0689 (Auto) FAX.02-101-0689</h4>
         </td>
     </tr>
 </table>

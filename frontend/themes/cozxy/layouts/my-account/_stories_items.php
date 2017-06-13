@@ -13,7 +13,11 @@
         <div class="size12">
             <i class="fa fa-eye" style="color:#989898;"></i>
             <span style="color:rgb(254, 230, 10)"><?= $model['views'] ?></span>&nbsp;&nbsp;<i class="fa fa-star" style="color:#989898;"></i>
-            <span style="color:rgb(254, 230, 10)"><?= $model['star'] ?></span>
+            <span style="color:rgb(254, 230, 10);margin-right: 2.5cm;"><?= $model['star'] ?></span>
+            <span>
+                <?php // \yii\bootstrap\Html::a('<i class="fa fa-pencil-square-o"></i>&nbsp;Edit', \yii\helpers\Url::to(['my-account/edit-billing/']), ['class' => 'text-warning']) ?>
+                <!--<a href="" data-loading-text="<a><i class='fa fa-circle-o-notch fa-spin' aria-hidden='true'></i></a>"  class=" text-danger"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>-->
+            </span>
         </div>
     </div>
 </div>

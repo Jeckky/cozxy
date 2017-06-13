@@ -160,7 +160,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         </tr>
                     </thead>
                     <tbody>
-                        <?php echo $this->render('@frontend/views/payment/data_product', compact('order')); ?>
+                        <?php echo $this->render('@frontend/views-v.1/payment/data_product', compact('order')); ?>
                         <tr>
                             <td colspan="6">&nbsp;</td>
                             <td >&nbsp;</td>

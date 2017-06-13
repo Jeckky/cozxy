@@ -9,71 +9,68 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
 <html>
     <head>
-        <script language="JavaScript">
-            DA = (document.all) ? 1 : 0
-            function HandleError()
-            {
-                alert("\error.");
-                return true;
-            }
-        </script>
-        <script language="JavaScript">
-//            function NoDialogBox()
-//                    //ใช้ปิด window โดยไม่ขึ้น confirm dialog box
-//                    {
-//                        //window.open('', '_self');
-//                        //self.close();
-//                    }
-            function print_window() {
-                window.print();
-                setTimeout(function () {
-                    window.open('', '_self', '');
-                    window.close();
-                }, 0);
-            }
 
-        </script>
     </head>
-    <body onload="print_window();" align="center">
-        <!--<body onLoad="window.print();NoDialogBox();">-->
+    <!--<body onload="print_window();" align="center">-->
+    <body align="center">
         <table width ="750"  cellpadding="2" cellspacing="0" style="border: 0px; text-align: center;">
+            <tr style="height: 50px;">
+                <td style="text-align: right;vertical-align: top;" colspan="3">สาขาที่ออกใบกำกับภาษี : สำนักงานใหญ่</td>
+            </tr>
             <tr style="height: 160px;">
-                <td colspan="2" style="text-align: left; vertical-align: middle;border: 0.5px slategray solid;border-right: 0px;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo $baseUrl; ?>/images/logo/cozxy.png" alt="cozxy.com" width="110" height="65">
+                <td style="text-align: center; vertical-align: middle;">
+                    <img src="<?= Yii::$app->homeUrl ?>images/logo/cozxy.png" alt="cozxy.com" style="width: 110px;height: 65px;">
                 </td>
-                <td colspan="3" style="padding: 5px; vertical-align: text-top; text-align: center;border: 0.5px slategray solid;border-right: 0px;">
+                <td style="padding: 5px; vertical-align: text-top; text-align: center;">
                     <h2>
-                        บริษัท คอซซี่ ดอท คอม
+                        บริษัท คอซซี่ดอทคอม จำกัด
                     </h2>
+                    เลขที่ 5 ซอยรามอินทรา 5 แยก 4 แขวงอนุสาวรีย์ กรุงเทพฯ 10220<br>
                     เลขประจำตัวผู้เสียภาษี : 0105546109903 <br>
-                    สำนักงานใหญ่ เลขที่ 1 ซ.ลาดพร้าว 19 ถ.ลาดพร้าว <br>แขวงจอมพล เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900
                 </td>
-                <td colspan="2" style="vertical-align: text-top; text-align: right; border: 0.5px slategray solid;">
-            <?php //echo $title;         ?><br><br><center> ใบส่งสินค้า</center>
-        </td>
-    </tr>
-</table>
-<table width="750"  cellpadding="3" cellspacing="0" style="border: 0.5px slategray solid;border-bottom: 0px;border-top: 0px;">
-    <tr>
-        <td><h3></h3></td><td style="text-align: right;" rowspan="3"><img src="https://chart.googleapis.com/chart?chs=140x140&cht=qr&chl=<?= $bagNo ?>"></td>
-    </tr>
-    <tr>
-        <td colspan="2"><h4>ชื่อ - นามสกุล ผู้รับ : <?= Order::findReciever($orderId) ?></h4></td>
-    </tr><tr>
-        <td colspan="2"><h4>สถานที่ส่ง : <?= PickingPoint::findPickingPoitItem($orderId) ?></h4></td>
-    </tr>
-</table>
-<table class="table table_bordered" width="750"  cellpadding="2" cellspacing="0" style="border: 0.5px slategray solid;">
-    <tr style="height: 50px;">
-        <td colspan="4" style="border-bottom: 0.5px slategray solid;"><center><b>สินค้า</b></center></td>
-</tr>
-<tr style="height: 50px;">
+                <td style="vertical-align:middle;">
+                    <img src="https://chart.googleapis.com/chart?chs=140x140&cht=qr&chl=<?= $bagNo ?>">
+                </td>
+            </tr>
+        </table>
+        <table width="750"  cellpadding="3" cellspacing="0" style="margin-top: -10px;">
+            <tr>
+                <td style="width: 33%;text-align: center;"><h2> </h2></td>
+                <td style="width: 34%;text-align: center;"><h2>ใบกำกับภาษี</h2></td>
+                <td style="width: 33%;border: #000 thin solid;padding: 15;">
+                    เลขที่&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BL 1706-00001<br><br>
+                    วันที่&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;06/06/2017
+                </td>
+            </tr>
+        </table>
+        <table width="750"  cellpadding="3" cellspacing="1" style="margin-top: 3px;">
+            <tr>
+                <td style="width: 50%;border: #000 solid thin;">
+                    <h4>ชื่อ - นามสกุล ผู้รับ : <?= Order::findReciever($orderId) ?></h4>
+                    <h4>ชื่อ - นามสกุล ผู้รับ : <?= Order::findReciever($orderId) ?></h4>
+                    <h4>ชื่อ - นามสกุล ผู้รับ : <?= Order::findReciever($orderId) ?></h4>
+                </td>
+                <td style="border: #000 solid thin;">
+                    <h4>สถานที่ส่ง : <?= PickingPoint::findPickingPoitItem($orderId) ?></h4>
+                    <h4>สถานที่ส่ง : <?= PickingPoint::findPickingPoitItem($orderId) ?></h4>
+                    <h4>สถานที่ส่ง : <?= PickingPoint::findPickingPoitItem($orderId) ?></h4>
+                </td>
+            </tr>
+        </table>
+        <table class="table table_bordered" width="750"  cellpadding="2" cellspacing="0" style="border: 0.5px slategray solid;">
 
-    <th ><center>No.</center></th>
-<th><center>Code</center></th>
-<th><center>สินค้า</center></th>
-<th><center>จำนวน</center></th>
+            <thead>
+                <tr style="height: 50px;">
+                    <th><center>รหัสสินค้า</center></th>
+        <th><center>รายการ</center></th>
+    <th><center>จำนวน</center></th>
+<th><center>หน่วย</center></th>
+<th><center>ราคา/หน่วย</center></th>
+<th><center>ส่วนลด</center></th>
+<th><center>จำนวนเงิน</center></th>
 </tr>
+</thead>
+
 <tbody>
     <?php
     $i = 1;
@@ -99,75 +96,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     ?>
 </tbody>
 </table>
-<script language="VBScript">
-    Sub
-    window_onunload()
-    On
-    Error
-    Resume
-    Next
-    Set
-    WB = nothing
-    On
-    Error
-    Goto
-    0
-    End
-    Sub
-    Sub
-    Print()
-    OLECMDID_PRINT = 6
-    OLECMDEXECOPT_DONTPROMPTUSER = 2
-    OLECMDEXECOPT_PROMPTUSER = 1
-    On
-    Error
-    Resume
-    Next
-    If
-    DA
-    Then
-    call
-    WB.ExecWB(OLECMDID_PRINT, OLECMDEXECOPT_DONTPROMPTUSER, 1)
-    Else
-    call
-    WB.IOleCommandTarget.Exec(OLECMDID_PRINT, OLECMDEXECOPT_DONTPROMPTUSER, "", "", "")
-    End
-    If
-    If
-    Err.Number < > 0 Then
-            If
-    DA
-    Then
-    Alert("Nothing Printed :" & err.number & " : " & err.description)
-    Else
-    HandleError()
-    End
-    If
-    End
-    If
-    On
-    Error
-    Goto
-    0
-    End
-    Sub
-    If
-    DA
-    Then
-    wbvers = "8856F961-340A-11D0-A96B-00C04FD705A2"
-    Else
-    wbvers = "EAB22AC3-30C1-11CF-A7EB-0000C05BAE0B"
-    End
-    If
-    document.write
-    "<object ID="
-    "WB"
-    " WIDTH=0 HEIGHT=0 CLASSID="
-    "CLSID:"
-    document.write
-    wbvers & ""
-    "> </object>"
-</script>
+
 
 </body>
 </html>
