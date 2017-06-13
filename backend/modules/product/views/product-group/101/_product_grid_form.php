@@ -32,8 +32,8 @@ $form = ActiveForm::begin([
 
             <?//= $form->field($model, 'productGroupTemplateId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(common\models\costfit\ProductGroupTemplate::find()->all(), 'productGroupTemplateId', 'title'), ['prompt' => '-- Select Option Template --']) ?>
 
-            <?= $form->field($model, 'type')->hiddenInput(['value' => $type, 'name' => 'type']) ?>
-            <?= $form->field($model, 'productId')->hiddenInput(['value' => $id, 'name' => 'productId']) ?>
+            <?= Html::hiddenInput("type", $type) ?>
+            <?= Html::hiddenInput("productId", $id) ?>
             <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]); ?>
 
             <div class="row form-group field-product-title required has-success">

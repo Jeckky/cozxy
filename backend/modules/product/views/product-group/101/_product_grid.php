@@ -263,7 +263,7 @@ $this->registerJs("
     function refreshGrid$type()
     {
         //$.pjax.reload({container: '#pjax$gridId'});
-            $.pjax({container: '#$gridId'});
+            $.pjax({container: '#$gridId-pjax'});
             //$('#$gridId').yiiGridView('applyFilter');
     }
 
