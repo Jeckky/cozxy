@@ -62,7 +62,7 @@ class PartnerController extends MasterController {
         $birthdate['dates'] = CozxyUnity::getDates($historyBirthDate['day']);
         $birthdate['month'] = CozxyUnity::getMonthEn($historyBirthDate['month']);
         $birthdate['years'] = CozxyUnity::getYears($historyBirthDate['year']);
-        return $this->render('be-our-partner', compact('model', 'hash', 'modelUser', 'birthdate', 'historyBirthDate', 'modelFile'));
+        return $this->render('beOurPartner', compact('model', 'hash', 'modelUser', 'birthdate', 'historyBirthDate', 'modelFile'));
     }
 
 }
