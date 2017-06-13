@@ -412,7 +412,7 @@ $this->registerCss('
                 <div class="col-md-8" style="border-right: 1px #f5f5f5 dotted;">
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <div id="tb-testimonial" class="testimonial testimonial-primary">
+                            <div id="tb-testimonial" class="testimonial testimonial-default">
                                 <div class="testimonial-section">
                                     <strong>1.Registration and waiting approval </strong><br>
                                     &nbsp;&nbsp;&nbsp;&nbsp;- Sign up with e-mail.<br>
@@ -430,7 +430,7 @@ $this->registerCss('
                         </div>
 
                         <div class="col-sm-12">
-                            <div id="tb-testimonial" class="testimonial testimonial-success">
+                            <div id="tb-testimonial" class="testimonial testimonial-default">
                                 <div class="testimonial-section">
                                     <strong>2.Information verification and document review</strong><br>
                                     &nbsp;&nbsp;&nbsp;&nbsp;- Upload required documents or send the hardcopies via mail.<br>
