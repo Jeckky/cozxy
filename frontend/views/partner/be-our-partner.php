@@ -32,59 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
         color: #000;
     }
 
-    /*
-    button {
-        margin: 20px 0;
-        line-height: 34px;
-        position: relative;
-        cursor: pointer;
-        user-select: none;
-        outline:none !important;
-        width:100%;
-    }
-
-    button:active {
-        outline:none;
-    }
-
-    button.ribbon {
-
-        outline:none;
-        outline-color: transparent;
-    }
-    button.ribbon:before, button.ribbon:after {
-        top: 5px;
-        z-index: -10;
-    }
-    button.ribbon:before {
-        border-color: #53dab6 #53dab6 #53dab6 transparent;
-        left: -50px;
-        border-width: 17px;
-    }
-    button.ribbon:after {
-        border-color: #53dab6 transparent #53dab6 #53dab6;
-        right: -50px;
-        border-width: 17px;
-    }
-
-    button:before, button:after {
-        content: '';
-        position: absolute;
-        height: 0;
-        width: 0;
-        border-style: solid;
-        border-width: 0;
-        outline:none;
-    }
-
-    button.btn-warning:before {
-        border-color: #d58512 #d58512 #d58512 transparent;
-    }
-    button.btn-warning:after {
-        border-color: #d58512 transparent #d58512 #d58512;
-    }*/
-
-
 </style>
 <div class="container login-box be-our-partner">
     <div class="size32">&nbsp;</div>
