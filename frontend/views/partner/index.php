@@ -65,8 +65,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         <address>
                             <strong>Cozxy Co.,Ltd.</strong><br>
                             5 Soi Ram Intra 5 Yeak 4, Ram Intra Road, Anusawari, Bang Khen, Bangkok 10220<br>
-                            <abbr title="Phone">P:</abbr> 02-093-4356
-                            <abbr title="Phone">P:</abbr> 02-345-4376
+                            <abbr title="Phone">Phone:</abbr> 02-093-4356
+                            <abbr title="Phone">Fax:</abbr> 02-345-4376
                         </address>
 
                         <address>
