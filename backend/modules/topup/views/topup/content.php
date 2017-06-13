@@ -13,7 +13,7 @@ use common\models\costfit\ProductSuppliers;
     </div>
     <div style="width: 30%;height: 90px;border:solid 0.5px #000000;padding-left: 10px;margin-left: 500px;margin-top: -93px;padding-top: 3px;">
 
-        เลขที่ / No : <b><?= $topUpNo ?></b>
+        เลขที่ / No : <b><?= "RD" . $topUpNo ?></b>
         <br>
         วันที่ / Date : <b><?= $date ?></b><br>
 

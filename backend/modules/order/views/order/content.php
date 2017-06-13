@@ -141,7 +141,7 @@ foreach ($storeProductGroupId as $id):
                 พร้อมทั้งให้แนบใบสั่งซื้อทุกครั้งที่มีการวางบิล และถ้าหากมีรายการเปลี่ยนแปลงนอกเหนือจากนี้<br> กรุณาติดต่อแผนกจัดซื้อ"
             </td>
             <td colspan="2" style="background-color: #cccccc;font-size: 7pt;height: 25px;border-top:#000000 thin solid;border-right:#000000 thin solid;"><b>&nbsp;&nbsp;รวม / Sub Total</b></td>
-            <td style="text-align: right;font-size: 8pt;border-top:#000000 thin solid;border-right:#000000 thin solid;"colspan="3"><?= number_format($allTotal, 2) ?></td>
+            <td style="text-align: right;font-size: 8pt;border-top:#000000 thin solid;border-right:#000000 thin solid;"colspan="3"><?= number_format($allTotal - $vat, 2) ?></td>
         </tr>
         <tr>
             <td colspan="2" style="background-color: #cccccc;font-size: 7pt;height: 25px;border-top:#000000 thin solid;border-right:#000000 thin solid;"><b>&nbsp;&nbsp;ภาษีมูลค่าเพิ่ม / Vat (%)</b></td>
@@ -150,7 +150,7 @@ foreach ($storeProductGroupId as $id):
         </tr>
         <tr>
             <td colspan="2" style="background-color: #cccccc;font-size: 7pt;height: 25px;border-top:#000000 thin solid;border-right:#000000 thin solid;border-bottom:#000000 thin solid;"><b>&nbsp;&nbsp;ราคารวมทั้งสิ้น / (Total)</b></td>
-            <td style="text-align: right;font-size: 8pt;border-top:#000000 thin solid;border-right:#000000 thin solid;border-bottom:#000000 thin solid;" colspan="3"><?= number_format($vat + $allTotal, 2) ?></td>
+            <td style="text-align: right;font-size: 8pt;border-top:#000000 thin solid;border-right:#000000 thin solid;border-bottom:#000000 thin solid;" colspan="3"><?= number_format($allTotal, 2) ?></td>
         </tr>
     </tbody>
     </table>
