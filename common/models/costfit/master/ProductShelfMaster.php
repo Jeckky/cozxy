@@ -30,7 +30,7 @@ return 'product_shelf';
 public function rules()
 {
 return [
-            [['userId'], 'required'],
+            [['title', 'userId'], 'required'],
             [['userId', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 100],

@@ -32,13 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
         color: #000;
     }
 
-    label {
-        display: inline-block;
-        padding-top: 20px;
-        max-width: 100%;
-        margin-bottom: 5px;
-        font-weight: 700;
-    }
 </style>
 <div class="container login-box be-our-partner">
     <div class="size32">&nbsp;</div>
@@ -54,101 +47,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 'options' => ['class' => 'space-bottom'],
             ]);
             ?>
-
             <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">First Name</label>
+                        <?= $form->field($model, 'firstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Last Name</label>
+                        <?= $form->field($model, 'lastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LASTNAME'])->label(false); ?>
+                    </div>
+                </div>
                 <div class="col-md-12">
-                    <div class="form-group" style="border-bottom: 1px #000 solid;">
-                        <label for="PartnerInformation">
-                            <strong><i class="fa fa-address-book bg-yellow1" aria-hidden="true"></i> Information</strong>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Compnay Name</label>
-                        <?php echo $form->field($model, 'company')->textInput(['class' => 'fullwidth', 'placeholder' => 'Compnay Name'])->label(FALSE); ?>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Business Registration No </label>
-                        <?php echo $form->field($modelUser, 'brn')->textInput(['class' => 'fullwidth', 'placeholder' => 'Business Registration No'])->label(FALSE); ?>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Tax </label>
-                        <?php echo $form->field($model, 'tax')->textInput(['class' => 'fullwidth', 'placeholder' => 'Tax'])->label(FALSE); ?>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Mobile Number</label>
-                        <?php echo $form->field($model, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'Mobile Number'])->label(false); ?>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Day</label>
-                        <?=
-                        Html::dropDownList('User[day]', NULL, $birthdate['dates'], ['prompt' => '---Select day---', 'class' => 'fullwidth productOption'
-                            , 'options' =>
-                            [
-                                $historyBirthDate['day'] => ['selected' => true]//['Selected' => 'selected']
-                            ]
-                        ])
-                        ?>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Month</label>
-                        <?=
-                        Html::dropDownList('User[month]', NULL, $birthdate['month'], ['prompt' => '---Select month---', 'class' => 'fullwidth productOption'
-                            , 'options' =>
-                            [
-                                $historyBirthDate['month'] => ['selected' => true]//['Selected' => 'selected']
-                            ]
-                        ])
-                        ?>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Year</label>
-                        <?=
-                        Html::dropDownList('User[years]', NULL, $birthdate['years'], ['prompt' => '---Select year---', 'class' => 'fullwidth productOption'
-                            , 'options' =>
-                            [
-                                $historyBirthDate['year'] => ['selected' => true]//['Selected' => 'selected']
-                            ]
-                        ])
-                        ?>
-                    </div>
-                </div>
-                <!--
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Store Name </label>
-                <?php //echo $form->field($model, 'tax')->textInput(['class' => 'fullwidth', 'placeholder' => 'TAX'])->label(FALSE); ?>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Store Url</label>
-                <?php //echo $form->field($model, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'Mobile Number'])->label(false); ?>
-                    </div>
-                </div>
-                -->
-
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Email</label>
-                        <?php echo $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'Email'])->label(false); ?>
+                        <label for="exampleInputEmail1">Eamil</label>
+                        <?= $form->field($modelUser, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'EMAIL'])->label(false); ?>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -165,35 +80,31 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group" style="border-bottom: 1px #000 solid; ">
-                        <label for="PartnerInformation">
-                            <strong><i class="fa fa-address-book bg-yellow1" aria-hidden="true"></i> Business Details</strong>
-                        </label>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Billing type *</label>
+                <div class="select-style">
+                    <select name="co-organization" id="co-country" class="valid col-md-12" onchange="organization(this)">
+                        <option value="personal">Individual </option>
+                        <option value="company">Legal Entity (Company)</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Compnay (option)</label>
+                            <?php echo $form->field($model, 'company')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'COMPANY'])->label(FALSE); ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Tax </label>
+                            <?php echo $form->field($model, 'tax')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'TAX'])->label(FALSE); ?>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">First Name</label>
-                        <?= $form->field($model, 'firstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Last Name</label>
-                        <?= $form->field($model, 'lastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LASTNAME'])->label(false); ?>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Company address</label>
-                        <?= $form->field($model, 'address')->textarea(['class' => 'fullwidth', 'placeholder' => 'ADDRESS', 'rows' => '6'])->label(false); ?>
-                    </div>
-                </div>
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Countries</label>
@@ -305,87 +216,50 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group" style="border-bottom: 1px #000 solid; ">
-                        <label for="PartnerInformation">
-                            <strong><i class="fa fa-address-book bg-yellow1" aria-hidden="true"></i> Bank Account</strong>
-                        </label>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email</label>
+                            <?php echo $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'Email'])->label(false); ?>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Mobile Number</label>
+                            <?php echo $form->field($model, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'Mobile Number'])->label(false); ?>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Bank</label>
-                        <?php echo $form->field($model, 'company')->textInput(['class' => 'fullwidth', 'placeholder' => 'Bank'])->label(FALSE); ?>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Account Holder name</label>
-                        <?php echo $form->field($modelUser, 'brn')->textInput(['class' => 'fullwidth', 'placeholder' => 'Account Holder name'])->label(FALSE); ?>
-                    </div>
-                </div>
+            <!--
+            <div class="form-group">
+                <button type="button" class="btn btn-warning ribbon">Default File</button>
+            </div>
+            -->
 
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Account No </label>
-                        <?php echo $form->field($model, 'tax')->textInput(['class' => 'fullwidth', 'placeholder' => 'Account No'])->label(FALSE); ?>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">File 1</label>
+                            <input type="file" name="file[]" multiple id="file"/>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Branch Name </label>
-                        <?php echo $form->field($model, 'tax')->textInput(['class' => 'fullwidth', 'placeholder' => 'Branch Name'])->label(FALSE); ?>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">File 1</label>
+                            <input type="file" name="file[]" multiple id="file"/>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">File 1</label>
+                            <input type="file" name="file[]" multiple id="file"/>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group" style="border-bottom: 1px #000 solid; ">
-                        <label for="PartnerInformation">
-                            <strong><i class="fa fa-address-book bg-yellow1" aria-hidden="true"></i> Required Documents</strong>
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">status</label>
-                        <?= $form->field($modelFile, 'status', ['radioTemplate' => '<label class="gender-head">{label}</label><label class="signup-radio">{input}</label>'])->inline()->radioList([1 => 'I will send via mail', 0 => 'Upload file'], ['separator' => '', 'tabindex' => 3])->label(FALSE); ?>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1"> A copy of Representative’s Thai National ID or Passport</label>
-                        <input type="file" name="file[]" multiple id="file"/>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">A copy of Business Registration Certificate</label>
-                        <input type="file" name="file[]" multiple id="file"/>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1"> A copy of VAT Registration (Optional)</label>
-                        <input type="file" name="file[]" multiple id="file"/>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Other Document / License (Optional)</label>
-                        <input type="file" name="file[]" multiple id="file"/>
-                    </div>
-                </div>
-            </div>
-
             <div class="row">
                 <div class="col-xs-12 text-right">
                     <a href="#" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">RESET</a>

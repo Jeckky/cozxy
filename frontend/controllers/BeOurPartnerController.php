@@ -28,6 +28,7 @@ class BeOurPartnerController extends MasterController {
     public function actionIndex() {
         $modelUser = new \common\models\costfit\User(['scenario' => 'shipping_address']);
         $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
+
         /* if (isset($_POST['Address'])) {
           $model->attributes = $_POST['Address'];
           if ($_POST["Address"]['isDefault']) {

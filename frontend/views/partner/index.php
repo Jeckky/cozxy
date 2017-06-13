@@ -396,6 +396,7 @@ $this->registerCss('
     .testimonial.testimonial-danger-filled .testimonial-writer-name{
         color: #D9534F;
     }
+   
 ');
 ?>
 
@@ -403,7 +404,7 @@ $this->registerCss('
     <div class="size32">&nbsp;</div>
     <div class="row">
         <div class="col-xs-12 bg-yellow1 b" style="padding:18px 18px 10px;">
-            <p class="size20 size18-xs my-form"><?= strtoupper('Partner :: STEP Registration') ?></p>
+            <p class="size20 size18-xs my-form"><?= strtoupper('Partner :: Step Registration') ?></p>
         </div>
         <div class="col-xs-12 bg-white">
             <div class="size12 size10-xs">&nbsp;</div>
@@ -434,10 +435,10 @@ $this->registerCss('
                                 <div class="testimonial-section">
                                     <strong>2.Information verification and document review</strong><br>
                                     &nbsp;&nbsp;&nbsp;&nbsp;- Upload required documents or send the hardcopies via mail.<br>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:black_small_square:    A copy of Representative’s Thai National ID or Passport<br>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:black_small_square:    A copy of Business Registration Certificate<br>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:black_small_square:    A copy of VAT Registration (Optional)<br>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:black_small_square:    Other Document / License (Optional)<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-square" aria-hidden="true"></i> A copy of Representative’s Thai National ID or Passport<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-square" aria-hidden="true"></i> A copy of Business Registration Certificate<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-square" aria-hidden="true"></i> A copy of VAT Registration (Optional)<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-square" aria-hidden="true"></i> Other Document / License (Optional)<br>
                                     &nbsp;&nbsp;&nbsp;&nbsp;- Verification complete.<br>
                                     &nbsp;&nbsp;&nbsp;&nbsp;- Product listing and selling is possible.<br>
                                 </div>
