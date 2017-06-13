@@ -9,6 +9,8 @@ use kartik\depdrop\DepDrop;
 $this->title = 'Partner Membership Registration';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+
 <style type="text/css">
     body{
         background-image: url("/images/be-our-partner/become-partner.jpg") ;
