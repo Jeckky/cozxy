@@ -200,7 +200,9 @@ class DisplaySearch extends Model {
             ->andWhere('ps.result > 0')
             ->andWhere('pps.price > 0')
             ->andWhere(['between', 'pps.price', $mins, $maxs])
-            ->groupBy('ps.productSuppId')->limit($n)->all();
+            ->groupBy('ps.productSuppId')
+            ->orderBy(['ps.productSuppId' => SORT_DESC])
+            ->limit($n)->all();
         } else {
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
             ->select('*')
