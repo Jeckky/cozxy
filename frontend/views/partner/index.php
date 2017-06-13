@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         &nbsp;&nbsp;&nbsp;&nbsp;- Sign up with e-mail.<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;- Awaiting approval.<br>
                         2.Information verification and document review<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;-Upload required documents or send the hardcopies via mail.<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;- Upload required documents or send the hardcopies via mail.<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:black_small_square:    A copy of Representative’s Thai National ID or Passport<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:black_small_square:    A copy of Business Registration Certificate<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:black_small_square:    A copy of VAT Registration (Optional)<br>
