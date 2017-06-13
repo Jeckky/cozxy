@@ -48,7 +48,7 @@ class UserGroups extends \common\models\costfit\master\UserGroupsMaster {
             // echo $userGroupx;
             $result = UserGroups::find()
             ->select('group_concat(name) as name')
-            ->where("user_group_Id in " . $userGroupx . "  ")
+            ->where("user_group_Id in (" . $userGroupx . ")  ")
             ->one();
         } else {
             $result = NULL;
