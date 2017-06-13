@@ -9,6 +9,29 @@ use kartik\depdrop\DepDrop;
 $this->title = 'Partner Membership Registration';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<style type="text/css">
+    body{
+        background-image: url("/images/be-our-partner/become-partner.jpg") ;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+
+    }
+    .be-our-partner{
+        /* for IE */
+        filter:alpha(opacity=60);
+        /* CSS3 standard */
+        opacity:0.9;
+        color: #000000;
+    }
+    .my-form{
+        color: #000;
+    }
+</style>
 <div class="container login-box be-our-partner">
     <div class="size32">&nbsp;</div>
     <div class="row">
