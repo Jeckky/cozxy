@@ -145,7 +145,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 -->
 
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email</label>
                         <?php echo $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'Email'])->label(false); ?>
