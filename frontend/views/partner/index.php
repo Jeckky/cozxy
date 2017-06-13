@@ -422,8 +422,8 @@ $this->registerCss('
                                     <img src="/imgs/cozxy.png" alt="">
                                     <div class="testimonial-writer">
                                         <div class="testimonial-writer-name">STEP 1</div>
-                                        <div class="testimonial-writer-designation">Cozxy Co.,Ltd.</div>
-                                        <a href="#" class="testimonial-writer-company">Administrator</a>
+                                        <div class="testimonial-writer-designation">Administrator</div>
+                                        <a href="#" class="testimonial-writer-company">Cozxy Co.,Ltd.</a>
                                     </div>
                                 </div>
                             </div>
@@ -445,8 +445,8 @@ $this->registerCss('
                                     <img src="/imgs/cozxy.png" alt="">
                                     <div class="testimonial-writer">
                                         <div class="testimonial-writer-name">STEP 2</div>
-                                        <div class="testimonial-writer-designation">Cozxy Co.,Ltd.</div>
-                                        <a href="#" class="testimonial-writer-company">Administrator</a>
+                                        <div class="testimonial-writer-designation">Administrator</div>
+                                        <a href="#" class="testimonial-writer-company">Cozxy Co.,Ltd.</a>
                                     </div>
                                 </div>
                             </div>
