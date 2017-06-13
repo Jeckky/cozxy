@@ -150,6 +150,19 @@ function deleteItemCart(ItemOrderId) {
                 {
                     $('.price-detail').find('.summaryFormatText').html(data.cart.summaryFormatText + ' THB');
                     $('#item' + ItemOrderId).remove();
+                    $.ajax({
+                        type: "POST",
+                        url: $baseUrl + "cart/get-product-quantity",
+                        data: {},
+                        success: function (data, status)
+                        {
+                            if (status == "success") {
+                                $('#notify-cart-top-menu').html(data);
+                            } else {
+
+                            }
+                        }
+                    });
                 }
             }
         });

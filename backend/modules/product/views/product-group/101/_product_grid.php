@@ -8,17 +8,24 @@ use common\models\areawow;
 use yii\jui\DatePicker;
 use kartik\grid\GridView;
 use kartik\editable\Editable;
+use yii\helpers\Url;
+use yii\widgets\Pjax;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 if (!isset($isProductSupp)) {
     $isProductSupp = FALSE;
 }
+$type = !isset($type) ? 1 : $type;
+
+echo "Grid Type=" . $type . "<br>";
 if (isset($dataProvider)) {
     $gridId = (!isset($type) || $type == 1) ? "product-grid1" : "product-grid2";
+    Pjax::begin(['id' => 'pjax' . $gridId]);
     echo GridView::widget([
         'id' => $gridId,
         'dataProvider' => $dataProvider,
@@ -49,110 +56,13 @@ if (isset($dataProvider)) {
 //                                                            return Html::a($model->title, ['update-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], ['data-pjax' => 0]);
 //                                                        }
 //                                                    ],
-//            [
-//                'attribute' => 'title',
-//                'options' => ['style' => 'text-align:left'],
-//            ],
-//            [
-//                'attribute' => 'description',
-//                'options' => ['style' => 'width:20%'],
-//                'format' => 'html',
-//            ],
-//            [
-//                'attribute' => 'specification',
-//                'format' => 'raw',
-//            ],
             [
-                'class' => 'kartik\grid\EditableColumn',
                 'attribute' => 'title',
-//                'pageSummary' => 'Page Total',
-                'vAlign' => 'middle',
-                'headerOptions' => ['class' => 'kv-sticky-column'],
-                'contentOptions' => ['class' => 'kv-sticky-column'],
-                'editableOptions' => ['header' => 'Title', 'size' => 'md',
-                    'formOptions' => ['action' => ['update-grid-edit']],
-                ],
+                'format' => 'raw',
+                'value' => function($model) use($type) {
+                    return $model->title . " " . Html::button("Edit", ['onclick' => (isset($type) && $type == 2) ? "productModal$type($model->productSuppId)" : "productModal$type($model->productId)", 'class' => 'btn btn-primary btn-xs']);
+                }
             ],
-//                                                    [
-//                                                        'class' => 'kartik\grid\EditableColumn',
-//                                                        'attribute' => 'description',
-//                                                        'format' => 'html',
-//                                                        'pageSummary' => 'Page Total',
-//                                                        'vAlign' => 'middle',
-//                                                        'headerOptions' => ['class' => 'kv-sticky-column'],
-//                                                        'contentOptions' => ['class' => 'kv-sticky-column'],
-//                                                        'editableOptions' => function ($model, $key, $index) {
-//                                                            return ['header' => 'Description', 'size' => "lg",
-//                                                                'formOptions' => ['action' => ['update-product']],
-//                                                                'inputType' => Editable::INPUT_TEXTAREA,
-//                                                                'options' => [
-//                                                                    'rows' => '6',
-////                                                                    'id' => 'product-description-' . $index
-//                                                                ],
-//                                                                'afterInput' => function ($form, $widget) use ($model, $index) {
-////                                echo $form->field($model, "description")->widget(\kartik\widgets\DatePicker::classname(), [
-////                                    'options' => ['id' => "description_{$index}"]
-////                                ]);
-//                                                                    $this->registerJs("
-//                                                                            init.push(function () {
-////                                                                             if (!$('html').hasClass('ie8')) {
-//                                                                                 $('#product-$index-description').summernote({
-//                                                                                     name:'Product[$index][description]',
-//                                                                                     height: 300,
-////                                                                                     width:600,
-//                                                                                     tabsize: 2,
-//                                                                                     codemirror: {
-//                                                                                         theme: 'monokai'
-//                                                                                     }
-//                                                                                 });
-////                                                                             }
-//
-//                                                                         });
-//
-//                                                                 ", \yii\web\View::POS_END);
-//                                                                }
-//                                                            ];
-//                                                        }
-//                                                    ],
-//                                                    [
-//                                                        'class' => 'kartik\grid\EditableColumn',
-//                                                        'attribute' => 'specification',
-//                                                        'format' => 'html',
-//                                                        'pageSummary' => 'Page Total',
-//                                                        'vAlign' => 'middle',
-//                                                        'headerOptions' => ['class' => 'kv-sticky-column'],
-//                                                        'contentOptions' => ['class' => 'kv-sticky-column'],
-//                                                        'editableOptions' => function ($model, $key, $index) {
-//                                                            return ['header' => 'Specification', 'size' => 'lg',
-//                                                                'formOptions' => ['action' => ['update-product']],
-//                                                                'inputType' => Editable::INPUT_TEXTAREA,
-//                                                                'options' => [
-//                                                                    'rows' => '6',
-//                                                                    'id' => 'product-specification-' . $index
-//                                                                ],
-//                                                                'afterInput' => function ($form, $widget) use ($model, $index) {
-////                                echo $form->field($model, "description")->widget(\kartik\widgets\DatePicker::classname(), [
-////                                    'options' => ['id' => "description_{$index}"]
-////                                ]);
-//                                                                    $this->registerJs("
-//                                                                            init.push(function () {
-////                                                                             if (!$('html').hasClass('ie8')) {
-//                                                                                 $('#product-specification-$index').summernote({
-//                                                                                     height: 300,
-//                                                                                     tabsize: 2,
-//                                                                                     codemirror: {
-//                                                                                         theme: 'monokai'
-//                                                                                     }
-//                                                                                 });
-////                                                                             }
-//
-//                                                                         });
-//
-//                                                                 ", \yii\web\View::POS_END);
-//                                                                }
-//                                                            ];
-//                                                        }
-//                                                    ],
             [
                 'attribute' => 'option',
                 'format' => 'html',
@@ -232,7 +142,7 @@ if (isset($dataProvider)) {
                 },
                 'visibleButtons' => [
                     'update' => function ($model, $key, $index) {
-                        return ($model->status === 1 || $model->status === 99) ? FALSE : true;
+                        return true; //($model->status === 1 || $model->status === 99) ? FALSE : true;
                     },
                     'delete' => function ($model, $key, $index) {
                         return ($model->status === 1 || $model->status === 99) ? false : true;
@@ -250,7 +160,7 @@ if (isset($dataProvider)) {
                             if (Yii::$app->controller->action->id == "create") {
                                 $params = ['update-product-supp', 'id' => $model->productSuppId, 'step' => 4, 'productGroupTemplateId' => $model->product->productGroupTemplateId, 'productGroupId' => $model->product->parentId];
                             } else {
-                                $params = ['update-product-supp', 'id' => $model->productSuppId, 'step' => 'view', 'userId' => isset($_GET["userId"]) ? $_GET["userId"] : NULL];
+                                $params = ['update-product-supp', 'id' => $model->productSuppId, 'step' => 'view', 'userId' => isset($_GET["userId"]) ? $_GET["userId"] : NULL, 'productGroupTemplateId' => $model->product->productGroupTemplateId, 'productGroupId' => $model->product->parentId];
                             }
 
                             return Html::a("<span class = 'glyphicon glyphicon-pencil'></span>", $params, [
@@ -304,13 +214,12 @@ if (isset($dataProvider)) {
         ],
 //        'showFooter' => true,
     ]);
+    Pjax::end();
 }
 ?>
-
 <?php
 
 $this->registerJs("
-
     $(document).ready(function(){
     $('#MyButton$gridId').click(function(){
 
@@ -320,8 +229,8 @@ $this->registerJs("
 //        alert(HotId);
           $.ajax({
             type: 'POST',
-            url : '" . Yii::$app->homeUrl . "/product/product-group/multiple-delete-product" . "',
-            data : {row_id: HotId},
+            url : '" . Url::home() . "product/product-group/multiple-delete-product?type=$type',
+            data : {row_id: HotId,productGroupId:" . $_GET["productGroupId"] . ",productGroupTemplateId:" . $_GET["productGroupTemplateId"] . "},
             success : function() {
               $(this).closest('tr').remove(); //or whatever html you use for displaying rows
             }
@@ -329,4 +238,36 @@ $this->registerJs("
         }
 
     });
-    });", \yii\web\View::POS_READY);
+
+    });
+
+
+", \yii\web\View::POS_READY);
+
+$this->registerJs("
+
+    function productModal$type(productId)
+    {
+    //alert(productId+ ' type='+$type);
+        $.ajax({
+            type: 'POST',
+            url : '" . Url::home() . "product/product-group/update-grid-edit?step=" . $_GET['step'] . "&productGroupTemplateId=" . $_GET['productGroupTemplateId'] . "&productGroupId=" . $_GET['productGroupId'] . "',
+            data : {productId: productId,gridId:'$gridId',type:$type},
+            success : function(data) {
+                $('#productModalBody').html(data);
+                $('#productModal').modal('show');
+            }
+        });
+    }
+
+    function refreshGrid$type()
+    {
+        //$.pjax.reload({container: '#pjax$gridId'});
+            $.pjax({container: '#$gridId-pjax'});
+            //$('#$gridId').yiiGridView('applyFilter');
+    }
+
+
+", \yii\web\View::POS_HEAD);
+?>
+

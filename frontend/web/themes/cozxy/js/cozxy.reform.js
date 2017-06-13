@@ -152,145 +152,6 @@ $(document).on('click', '#confirm-topup', function (e) {
         }
     }
 });
-$("#place-order").on('click', function () {
-//alert('test');
-    var _shipping = $('input[id=checkout_select_address_shipping]:checked').val();
-    var _billing = $('input[id=checkout_select_address_billing]:checked').val();
-    var _payment01 = $('input[id=payment01]:checked').val();
-    var _placeUserId = $('input[id=placeUserId]').val();
-    var _placeOrderId = $('input[id=placeOrderId]').val();
-    var _countItems = $('input[id=countItems]').val();
-    var _notes = $("#order-notes").val();
-    //alert(_billing);
-    if (_billing === undefined) {
-//alert('Click for Billing to a different adress?');
-//window.location = $baseUrl + 'profile/billings-address/add';
-        $("#billing-different-adress").modal('show');
-    }
-    if (_placeUserId == '') {
-        $("#modal-cart-not-item").modal('show');
-    }
-
-    /*
-     * Increate 26/9/2016 By Taninut.BM
-     */
-//var provinceid = $('input[id=pickingpoint-provinceid]').val();
-//var amphurid = $('input[id=pickingpoint-amphurid]').val();
-//var pickingid = $('input[id=pickingpoint-pickingid]').val();
-    /*
-     * Lockers ร้อน
-     */
-//var eProvinceid = $('input[id=pickingpoint-provinceid]').val();
-    var eProvinceid = $('select#pickingpoint-provinceid option:selected').val();
-    if (eProvinceid != null) {
-        var eProvinceid = $('#pickingpoint-provinceid').val();
-        var eAmphurid = $('#pickingpoint-amphurid').val();
-        var ePickingid = $('#pickingpoint-pickingid').val();
-        var receiveTypeLockers = $('input[id=receiveTypeLockers]').val();
-    } else {
-        var receiveTypeLockers = false;
-        var eAmphurid = false;
-        var eProvinceid = false;
-        var ePickingid = false;
-    }
-//console.log('Lockers ร้อน LcProvinceid : ' + eProvinceid);
-//console.log('Lockers ร้อน LcAmphurid :' + eAmphurid);
-//console.log('Lockers ร้อน LcPickingids :' + ePickingid);
-//console.log('Lockers ร้อน receiveTypeLockers :' + receiveTypeLockers);
-    /*
-     *   Lockers เย็น
-     */
-//var LcProvinceid = document.getElementById("LcprovinceId");
-    var LcProvinceid = $('select#LcprovinceId option:selected').val();
-    if (LcProvinceid != null) {
-//var LcAmphurid = $('select#LcamphurId option:selected').val();
-        var LcProvinceid = $('#LcprovinceId').val();
-        var LcAmphurid = $('#LcamphurId').val();
-        var LcPickingids = $('#LcpickingId').val();
-        var receiveTypeLockersCool = $('input[id=receiveTypeLockersCool]').val();
-    } else {
-        var receiveTypeLockersCool = false;
-        var LcAmphurid = false;
-        var LcProvinceid = false;
-        var LcPickingids = false;
-    }
-//console.log('Lockers เย็น LcProvinceid : ' + LcProvinceid);
-//console.log('Lockers เย็น LcAmphurid :' + LcAmphurid);
-//console.log('Lockers เย็น LcPickingids :' + LcPickingids);
-//console.log('Lockers เย็น receiveTypeLockersCool :' + receiveTypeLockersCool);
-
-// pickingpoint amphurid //
-    /*
-     * Booth
-     */
-//var bAmphurid = document.getElementById("BamphurId");
-    var b_provinceid = $('select#BprovinceId option:selected').val();
-    if (b_provinceid != null) {
-        var b_provinceid = $('#BprovinceId').val();
-        var b_amphurid = $('#BprovinceId').val();
-        var b_pickingid = $('#BpickingId').val();
-        var receiveTypeBooth = $('input[id=receiveTypeBooth]').val();
-    } else {
-        var b_amphurid = false;
-        var b_provinceid = false;
-        var b_pickingid = false;
-        var receiveTypeBooth = false;
-    }
-//console.log('Booth LcProvinceid : ' + b_provinceid);
-//console.log('Booth LcAmphurid :' + b_amphurid);
-//console.log('Booth LcPickingids :' + b_pickingid);
-//console.log('Booth receiveTypeBooth :' + receiveTypeBooth);
-
-    if (_countItems == '') {
-//alert('สินค้าในตะกร้า 0 รายการ');
-        $("#modal-cart-not-item").modal('show');
-        //window.location = 'site';
-    } else {
-//if (_shipping === undefined) {
-//alert('Please Select Shipping Address');
-//$("#modal-cart-not-shipping").modal('show');
-//} else {
-        if (_billing === undefined) {
-
-            $.post("checkout/burn-checkouts", {
-                shipping: _shipping,
-                payment01: _payment01,
-                placeUserId: _placeUserId,
-                notes: _notes,
-                placeOrderId: _placeOrderId,
-                LcPickingids: LcPickingids,
-                pickingId: ePickingid,
-                b_pickingid: b_pickingid,
-                receiveTypeLockers: receiveTypeLockers,
-                receiveTypeBooth: receiveTypeBooth,
-                receiveTypeLockersCool: receiveTypeLockersCool
-            }, function (data) {
-//console.log(data.name); // John
-//console.log(data.time); // 2pm
-            }, "json");
-        } else if (_billing != undefined) {
-
-            $.post("checkout/burn-checkouts", {
-                shipping: _shipping,
-                billing: _billing,
-                payment01: _payment01,
-                placeUserId: _placeUserId,
-                notes: _notes,
-                placeOrderId: _placeOrderId,
-                LcPickingids: LcPickingids,
-                pickingId: ePickingid,
-                b_pickingid: b_pickingid,
-                receiveTypeLockers: receiveTypeLockers,
-                receiveTypeBooth: receiveTypeBooth,
-                receiveTypeLockersCool: receiveTypeLockersCool
-            }, function (data) {
-//console.log(data.name); // John
-//console.log(data.time); // 2pm
-            }, "json");
-        }
-//}
-    }
-});
 /*
  * Use : Wishlist
  * @param {type} id
@@ -319,8 +180,8 @@ function addItemToWishlist(id) {
                         $this.button('reset');
                     }, 8000);
                 } else {
-                    $('.heart i').removeClass('fa fa-heart-o');
-                    $('.heart i').addClass('fa fa-heartbeat');
+                    $('.heart-' + $pId + ' i').removeClass('fa fa-heart-o');
+                    $('.heart-' + $pId + ' i').addClass('fa fa-heartbeat');
                 }
                 //$(".fa fa-heart-o").html("<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>");
             } else {
@@ -346,16 +207,19 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
     var $receiveType = receiveType;
     var $itemQnty = quantity;
     var $this = $('#addItemsToCartMulti-' + $productSuppId);
+    var $puls = $('#cart-plus-' + $productSuppId);
     var str = window.location.pathname;
     var res = str.split("/");
+
     if (res[1] != 'search') {
         $this.button('loading');
         setTimeout(function () {
             $this.button('reset');
         }, 8000);
     } else {
-        $('.shopping i').removeClass('fa fa-shopping-bag');
-        $('.shopping i').addClass('fa fa-shopping-bag fa-spin');
+
+        $('.shopping-' + productSuppId + ' i').removeClass('fa fa-shopping-bag');
+        $('.shopping-' + productSuppId + ' i').addClass('fa fa-cart-plus fa-spin');
     }
 
     // $(".fa-shopping-bag").addClass("fa-spin");
@@ -377,6 +241,19 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
                     } else {
                         $('#quantity').val(1);
                     }
+
+                    if (res[1] != 'search') {
+                        $('.shopping-' + productSuppId + ' i').removeClass('fa fa-cart-plus fa-spin');
+                        $('.shopping-' + productSuppId + ' i').addClass('fa fa-check');
+                    } else {
+                        $('.shopping-' + productSuppId + ' i').removeClass('fa fa-cart-plus fa-spin');
+                        $('.shopping-' + productSuppId + ' i').addClass('fa fa-check');
+                        setTimeout(function () {
+                            $('.shopping-' + productSuppId + ' i').removeClass('fa fa-checkn');
+                            $('.shopping-' + productSuppId + ' i').addClass('fa fa-cart-plus');
+                        }, 8000)
+                    }
+
                     //$('.cart-dropdown table').remove();
                     //$('.cart-dropdown .body').append(
                     //data.shoppingCart
@@ -384,7 +261,32 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
                     // $('.cart-btn a span').text($cartTotalItems);
                     //$('.cart-btn a').find("#cartTotal").html(data.cart.totalFormatText);
                     //$('.cart-dropdown .footer .total').html(data.cart.totalFormatText);
-                    window.location = $baseUrl + 'cart';
+                    //window.location = $baseUrl + 'cart';
+                    //$.notify("Add to Cart Success ,", "success");
+
+                    /* notify */
+                    //alert(productSuppId);
+                    //$('.shopping-' + productSuppId + ' i').removeClass('fa fa-cart-plus');
+                    //$('.shopping-' + productSuppId + ' i').addClass('fa fa-check-circle fa-spin');
+                    //alert($('.product-img').find('.v-hover').find('.shopping-' + productSuppId + ' i'));
+                    //console.log(productSuppId);
+
+                    // $('.shopping-' + productSuppId + ' i').removeClass('fa fa-cart-plus');
+                    //$('#cart-plus-' + productSuppId + ' i').addClass('fa fa-check-circle fa-spin');
+
+                    $.ajax({
+                        type: "POST",
+                        url: $baseUrl + "cart/get-product-quantity",
+                        data: {},
+                        success: function (data, status)
+                        {
+                            if (status == "success") {
+                                $('#notify-cart-top-menu').html(data);
+                            } else {
+
+                            }
+                        }
+                    });
                 }
                 //alert(data.shoppingCart);
                 //$addedToCartMessage.addClass('visible');
@@ -519,7 +421,6 @@ $(document).on('click', '.delete', function () {
         }
     });
 });
-
 $(document).on('click', '#reviews-rate', function (e) {
 
     var rate = $('input:hidden', '#reviews-rate').val();
@@ -671,8 +572,8 @@ function filterPriceCozxy() {
                         items += "<div class=\"col-xs-4 heart\"><i class=\"fa fa-heart-o\" aria-hidden=\"true\"></i></div>";
                         items += "</a>";
                     }
-                    items += '<a href=\'javascript:addItemToCartUnitys(' + val.productSuppId + ', 1, "' + val.maxQnty + '", "' + $fastId + '", "' + val.productId + '", "' + val.supplierId + '", "' + val.receiveType + '")\' id=\"addItemsToCartMulti-' + val.productSuppId + '\" data-loading-text=\" <div class =\'col-xs-4\'> <i class = \'fa fa-circle-o-notch fa-spin\' aria-hidden = \'true\'> </i></div> \">';
-                    items += "<div class=\"col-xs-4 shopping\"><i class=\"fa fa-shopping-bag\" aria-hidden=\"true\"></i></div>";
+                    items += '<a href=\'javascript:addItemToCartUnitys(' + val.productSuppId + ', 1, "' + val.maxQnty + '", "' + $fastId + '", "' + val.productId + '", "' + val.supplierId + '", "' + val.receiveType + '")\' id=\"addItemsToCartMulti-' + val.productSuppId + '\" data-loading-text=\" <div class =\'col-xs-4 shopping-' + val.productSuppId + '\'> <i class = \'fa fa-circle-o-notch fa-spin\' aria-hidden = \'true\'> </i></div> \">';
+                    items += '<div class=\"col-xs-4 shopping-' + val.productSuppId + '\"><i class=\"fa fa-cart-plus\" aria-hidden=\"true\"></i></div>';
                     items += " </a>";
                     items += " </div>";
                     items += "</div>";
@@ -699,7 +600,6 @@ function filterPriceCozxyClear() {
     location.reload();
 }
 
-
 function showMore(cat, clickNum, countAll, limit_start, limit_end) {
     //console.log(cat + ' , ' + countAll + ' , ' + limit_start + ',' + limit_end);
     var cats = cat;
@@ -707,7 +607,6 @@ function showMore(cat, clickNum, countAll, limit_start, limit_end) {
     var limit_starts = limit_start;
     var limit_ends = 90;
     var clickNums = Math.floor(clickNum);
-
     $('.showStepMore').html(" SHOW MORE<span class=\'size16\'>&nbsp; ↓ </span></a>");
     $('.filter-product-cozxy').html("<div class='text-center loading-spin' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
     $.ajax({
@@ -769,8 +668,6 @@ function showMore(cat, clickNum, countAll, limit_start, limit_end) {
             }
         }
     });
-
-
 }
 
 
@@ -778,7 +675,6 @@ $(".upload-payment-slip").click(function () {
     //alert($(this).data('id'));
 
 });
-
 function ShowImages(img, productImageId) {
     var src = img.src;
     $('.images-big').html("<div class='text-center' style='zoom:2; height: 185px;'><br><br><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
@@ -796,3 +692,18 @@ function ShowImages(img, productImageId) {
         }
     });
 }
+
+/*
+ $.growl({title: "Growl", message: "The kitten is awake!"});
+ $.growl.error({message: "The kitten is attacking!"});
+ $.growl.notice({message: "The kitten is cute!"});
+ $.growl.warning({message: "The kitten is ugly!"});
+ */
+/*
+ $.notify("Hello World");
+
+ $(".pos-demo").notify(
+ "Welcome Guest",
+ {position: "right"}
+ );
+ $.notify("This notofication is working ", "success");*/

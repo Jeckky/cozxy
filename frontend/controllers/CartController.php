@@ -151,7 +151,7 @@ class CartController extends MasterController {
 
     public function actionDeleteCartItem() {
         if (Yii::$app->user->isGuest) {
-            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+            //return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
         $id = $_POST["id"];
         $res = [];
@@ -459,8 +459,30 @@ class CartController extends MasterController {
         $itemsLockers = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_HOT)->all(); // status : 2
         $itemsLockersCool = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_COOL)->all(); // status : 1
         $itemsBooth = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)->all(); // status : 3
-        return $this->render
-        ('cart_list_product_all', compact('products', 'GetOrderMasters', 'itemsLockers', 'itemsBooth', 'itemsLockersCool'));
+        return $this->render('cart_list_product_all', compact('products', 'GetOrderMasters', 'itemsLockers', 'itemsBooth', 'itemsLockersCool'));
+    }
+
+    public function actionGetProductQuantity() {
+
+        $order = \common\models\costfit\Order::getOrder();
+        if (isset($order->attributes['orderId'])) {
+            $orderId = $order->attributes['orderId'];
+
+            //$Product = \common\models\costfit\Order::find()->where('userId =' . \Yii::$app->user->id . ' and status=0')->one();
+            $Product = \common\models\costfit\Order::find()->where('orderId=' . $orderId . ' and status=0')->one();
+            if (count($Product) > 0) {
+                $orderItem = \common\models\costfit\OrderItem::find()->where('orderId=' . $Product['orderId'])->sum('quantity');
+                if (isset($orderItem)) {
+                    echo (int) $orderItem;
+                } else {
+                    echo '';
+                }
+            } else {
+                echo '';
+            }
+        } else {
+            echo '';
+        }
     }
 
 }

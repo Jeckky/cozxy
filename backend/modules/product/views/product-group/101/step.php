@@ -393,25 +393,27 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             <?php if (isset($dataProvider)): ?>
                                 <div class="bs-example bs-example-tabs" data-example-id="togglable-tabs">
                                     <ul class="nav nav-tabs" id="myTabs" role="tablist">
-                                        <li role="presentation" class="active text-center">
+                                        <li role="presentation" class="<?= (isset($_GET['tab'])) ? (($_GET['tab'] == 1) ? "active " : " ") : "active " ?> text-center">
                                             <a href="#masterProduct" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true"><br>Master<br>(<?= $dataProvider->getTotalCount() ?>)</a>
                                         </li>
                                         <?php // if ($dataProvider2->totalItemCount > 0): ?>
-                                        <li role="presentation" class="text-center">
+                                        <li role="presentation" class="<?= (isset($_GET['tab'])) ? (($_GET['tab'] == 2) ? "active " : " ") : " " ?> text-center">
                                             <a href="#myProduct" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false"><br>My Product<br>(<?= $dataProvider2->getTotalCount() ?>)</a>
                                         </li>
                                         <?php // endif; ?>
                                     </ul>
                                     <div class="tab-content" id="myTabContent">
-                                        <div class="tab-pane fade active in" role="tabpanel" id="masterProduct" aria-labelledby="home-tab">
+                                        <div class="tab-pane fade <?= (isset($_GET['tab'])) ? (($_GET['tab'] == 1) ? "active in " : " ") : "active in " ?>  " role="tabpanel" id="masterProduct" aria-labelledby="home-tab">
                                             <?= $this->render("_product_grid", ["dataProvider" => $dataProvider]); ?>
                                         </div>
-                                        <div class="tab-pane fade text-center" role="tabpanel" id="myProduct" aria-labelledby="profile-tab">
+                                        <div class="tab-pane fade <?= (isset($_GET['tab'])) ? (($_GET['tab'] == 2) ? "active in " : " ") : " " ?> " role="tabpanel" id="myProduct" aria-labelledby="profile-tab">
                                             <?php if ($dataProvider2->getTotalCount() > 0): ?>
                                                 <?= $this->render("_product_grid", ["dataProvider" => $dataProvider2, 'gridTitle' => "<span style='color:white;font-weight:bold'>My Product</span>", 'type' => 2, 'isProductSupp' => TRUE]); ?>
                                             <?php else: ?>
-                                                <h3>Create My Product</h3>
-                                                <a  href="<?= Yii::$app->homeUrl . "product/product-group/create-my-product?productGroupId=" . $_GET["productGroupId"] . "&step=4&productGroupTemplateId=" . $_GET["productGroupTemplateId"]; ?>" class="btn btn-success btn-lg">Create</a>
+                                                <center>
+                                                    <h3>Create My Product</h3>
+                                                    <a  href="<?= Yii::$app->homeUrl . "product/product-group/create-my-product?productGroupId=" . $_GET["productGroupId"] . "&step=4&productGroupTemplateId=" . $_GET["productGroupTemplateId"]; ?>" class="btn btn-success btn-lg">Create</a>
+                                                </center>
                                             <?php endif; ?>
                                         </div>
                                     </div>
@@ -462,6 +464,31 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     </div>
                 </div>
                 <?php ActiveForm::end(); ?>
+                <!-- Button trigger modal -->
+                <!--                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLive">
+                                    Launch demo modal
+                                </button>-->
+
+                <!-- Modal -->
+                <div id="productModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" style="display: none" aria-hidden="true">
+                    <div class="modal-dialog" role="document" style="width:90%">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLiveLabel">Product Update</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="productModalBody">
+                                <p>Woohoo, you're reading this text in a modal!</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <!--<button type="button" class="btn btn-primary" >Save changes</button>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

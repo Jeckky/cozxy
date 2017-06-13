@@ -73,7 +73,24 @@ $(document).ready(function (e) {
                         // $('.cart-btn a span').text($cartTotalItems);
                         //$('.cart-btn a').find("#cartTotal").html(data.cart.totalFormatText);
                         //$('.cart-dropdown .footer .total').html(data.cart.totalFormatText);
-                        window.location = $baseUrl + 'cart';
+                        //window.location = $baseUrl + 'cart';
+
+                        // $.notify("Add to Cart Success ,", "success");
+                        $('#cart-plus-' + $productSuppId).removeClass('fa fa-cart-plus fa-spin');
+                        $('#cart-plus-' + $productSuppId).addClass('fa fa-check');
+                        $.ajax({
+                            type: "POST",
+                            url: $baseUrl + "cart/get-product-quantity",
+                            data: {},
+                            success: function (data, status)
+                            {
+                                if (status == "success") {
+                                    $('#notify-cart-top-menu').html(data);
+                                } else {
+
+                                }
+                            }
+                        });
                     }
                     //alert(data.shoppingCart);
                     //$addedToCartMessage.addClass('visible');

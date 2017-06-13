@@ -4,6 +4,9 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
+
+$this->title = isset($productPost->title) ? 'Stories ' . $productPost->title : '';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="container">
@@ -48,7 +51,7 @@ use kartik\select2\Select2;
                                                                 </div>-->
                                 <?php
                                 $form = ActiveForm::begin(['method' => 'GET',
-                                            'id' => 'currency',
+                                    'id' => 'currency',
                                 ]);
                                 ?>
 
@@ -76,7 +79,7 @@ use kartik\select2\Select2;
 
                                         },
                                         'columns' => [
-                                                ['class' => 'yii\grid\SerialColumn'],
+                                            ['class' => 'yii\grid\SerialColumn'],
                                             //'ledId',
                                             [
                                                 'attribute' => 'Country',
@@ -85,20 +88,20 @@ use kartik\select2\Select2;
                                                     return $model->country;
                                                 }
                                             ],
-                                                [
+                                            [
                                                 'attribute' => 'place',
                                                 'value' => function($model) {
                                                     return $model->shopName;
                                                 }
                                             ],
-                                                [
+                                            [
                                                 'attribute' => 'price',
                                                 'value' => function($model) {
                                                     $acronym = common\models\costfit\Currency::acronym($model->currency);
                                                     return $acronym . " " . number_format($model->price, 2);
                                                 }
                                             ],
-                                                [
+                                            [
                                                 'attribute' => 'Local Price',
                                                 'value' => function($model) {
                                                     $localPrice = common\models\costfit\Currency::ToThb($model->currency, $model->price);
