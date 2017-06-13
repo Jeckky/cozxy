@@ -9,17 +9,20 @@ use yii\jui\DatePicker;
 use kartik\grid\GridView;
 use kartik\editable\Editable;
 use yii\helpers\Url;
+use yii\widgets\Pjax;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 if (!isset($isProductSupp)) {
     $isProductSupp = FALSE;
 }
 if (isset($dataProvider)) {
     $gridId = (!isset($type) || $type == 1) ? "product-grid1" : "product-grid2";
+    Pjax::begin(['id' => 'pjax' . $gridId]);
     echo GridView::widget([
         'id' => $gridId,
         'dataProvider' => $dataProvider,
@@ -54,7 +57,7 @@ if (isset($dataProvider)) {
                 'attribute' => 'title',
                 'format' => 'raw',
                 'value' => function($model) {
-                    return $model->title . " " . Html::a("Edit", NULL, ['onclick' => "productModal($model->productId)", 'class' => 'btn btn-primary btn-xs', 'data-pjax' => 0]);
+                    return $model->title . " " . Html::button("Edit", ['onclick' => "productModal($model->productId)", 'class' => 'btn btn-primary btn-xs']);
                 }
             ],
 //            [
@@ -308,6 +311,7 @@ if (isset($dataProvider)) {
         ],
 //        'showFooter' => true,
     ]);
+    Pjax::end();
 }
 ?>
 <?php
@@ -345,10 +349,11 @@ $this->registerJs("
 
     function productModal(productId)
     {
+//    alert(productId);
         $.ajax({
             type: 'POST',
             url : '" . Url::home() . "product/product-group/update-grid-edit?step=" . $_GET['step'] . "&productGroupTemplateId=" . $_GET['productGroupTemplateId'] . "&productGroupId=" . $_GET['productGroupId'] . "',
-            data : {productId: productId},
+            data : {productId: productId,gridId:'$gridId'},
             success : function(data) {
                 $('#productModalBody').html(data);
                 $('#productModal').modal('show');
@@ -356,7 +361,13 @@ $this->registerJs("
         });
     }
 
+    function refreshGrid()
+    {
+        //$.pjax.reload({container: '#pjax$gridId'});
+            $('#$gridId').yiiGridView('applyFilter');
+    }
 
 
 ", \yii\web\View::POS_HEAD);
+?>
 

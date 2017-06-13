@@ -578,8 +578,14 @@ class ProductGroupController extends ProductMasterController
     {
         $model = \common\models\costfit\Product::find()->where("productId = " . $_POST["productId"])->one();
 
+        if (isset($_POST["Product"])) {
+            $model->attributes = $_POST["Product"];
+            $model->save();
+        }
         return $this->renderAjax('101/_product_grid_form', [
-            'model' => $model
+            'model' => $model,
+            'id' => $_POST["productId"],
+            'gridId' => isset($_POST['gridId']) ? $_POST['gridId'] : NULL
         ]);
     }
 
