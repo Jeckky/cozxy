@@ -576,16 +576,26 @@ class ProductGroupController extends ProductMasterController
 
     public function actionUpdateGridEdit()
     {
-        $model = \common\models\costfit\Product::find()->where("productId = " . $_POST["productId"])->one();
-
-        if (isset($_POST["Product"])) {
-            $model->attributes = $_POST["Product"];
-            $model->save();
+        if (!isset($_POST["type"]) || $_POST["type"] == 1) {
+            $model = \common\models\costfit\Product::find()->where("productId = " . $_POST["productId"])->one();
+            if (isset($_POST["Product"])) {
+                $model->attributes = $_POST["Product"];
+                $model->save();
+            }
+        } else {
+            $model = \common\models\costfit\ProductSuppliers::find()->where("productSuppId = " . $_POST["productId"])->one();
+            if (isset($_POST["ProductSuppliers"])) {
+                $model->attributes = $_POST["ProductSuppliers"];
+                $model->save();
+            }
         }
+
+
         return $this->renderAjax('101/_product_grid_form', [
             'model' => $model,
             'id' => $_POST["productId"],
-            'gridId' => isset($_POST['gridId']) ? $_POST['gridId'] : NULL
+            'gridId' => isset($_POST['gridId']) ? $_POST['gridId'] : NULL,
+            'type' => isset($_POST['type']) ? $_POST['type'] : NULL
         ]);
     }
 

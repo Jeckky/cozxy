@@ -32,6 +32,7 @@ $form = ActiveForm::begin([
 
             <?//= $form->field($model, 'productGroupTemplateId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(common\models\costfit\ProductGroupTemplate::find()->all(), 'productGroupTemplateId', 'title'), ['prompt' => '-- Select Option Template --']) ?>
 
+            <?= $form->field($model, 'type')->hiddenInput(['value' => $type, 'name' => 'type']) ?>
             <?= $form->field($model, 'productId')->hiddenInput(['value' => $id, 'name' => 'productId']) ?>
             <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]); ?>
 
@@ -136,7 +137,7 @@ $form = ActiveForm::begin([
             success : function(data) {
                 $('#productModalBody').html(data);
                 $('#productModal').modal('hide');
-                refreshGrid();
+                refreshGrid$type();
             }
         });
         });

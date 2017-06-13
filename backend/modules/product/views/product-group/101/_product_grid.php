@@ -20,6 +20,9 @@ use yii\widgets\Pjax;
 if (!isset($isProductSupp)) {
     $isProductSupp = FALSE;
 }
+$type = !isset($type) ? 1 : $type;
+
+echo "Grid Type=" . $type . "<br>";
 if (isset($dataProvider)) {
     $gridId = (!isset($type) || $type == 1) ? "product-grid1" : "product-grid2";
     Pjax::begin(['id' => 'pjax' . $gridId]);
@@ -56,110 +59,10 @@ if (isset($dataProvider)) {
             [
                 'attribute' => 'title',
                 'format' => 'raw',
-                'value' => function($model) {
-                    return $model->title . " " . Html::button("Edit", ['onclick' => "productModal($model->productId)", 'class' => 'btn btn-primary btn-xs']);
+                'value' => function($model) use($type) {
+                    return $model->title . " " . Html::button("Edit", ['onclick' => (isset($type) && $type == 2) ? "productModal$type($model->productSuppId)" : "productModal$type($model->productId)", 'class' => 'btn btn-primary btn-xs']);
                 }
             ],
-//            [
-//                'attribute' => 'description',
-//                'options' => ['style' => 'width:20%'],
-//                'format' => 'html',
-//            ],
-//            [
-//                'attribute' => 'specification',
-//                'format' => 'raw',
-//            ],
-//            [
-//                'class' => 'kartik\grid\EditableColumn',
-//                'attribute' => 'title',
-////                'pageSummary' => 'Page Total',
-////                'vAlign' => 'middle',
-//                'headerOptions' => ['class' => 'kv-sticky-column'],
-//                'contentOptions' => ['class' => 'kv-sticky-column'],
-//                'editableOptions' => ['header' => 'Title', 'size' => 'md',
-////                    'formOptions' => ['action' => ['update-grid-edit']],
-//                ],
-//            ],
-//                                                    [
-//                                                        'class' => 'kartik\grid\EditableColumn',
-//                                                        'attribute' => 'description',
-//                                                        'format' => 'html',
-//                                                        'pageSummary' => 'Page Total',
-//                                                        'vAlign' => 'middle',
-//                                                        'headerOptions' => ['class' => 'kv-sticky-column'],
-//                                                        'contentOptions' => ['class' => 'kv-sticky-column'],
-//                                                        'editableOptions' => function ($model, $key, $index) {
-//                                                            return ['header' => 'Description', 'size' => "lg",
-//                                                                'formOptions' => ['action' => ['update-product']],
-//                                                                'inputType' => Editable::INPUT_TEXTAREA,
-//                                                                'options' => [
-//                                                                    'rows' => '6',
-////                                                                    'id' => 'product-description-' . $index
-//                                                                ],
-//                                                                'afterInput' => function ($form, $widget) use ($model, $index) {
-////                                echo $form->field($model, "description")->widget(\kartik\widgets\DatePicker::classname(), [
-////                                    'options' => ['id' => "description_{$index}"]
-////                                ]);
-//                                                                    $this->registerJs("
-//                                                                            init.push(function () {
-////                                                                             if (!$('html').hasClass('ie8')) {
-//                                                                                 $('#product-$index-description').summernote({
-//                                                                                     name:'Product[$index][description]',
-//                                                                                     height: 300,
-////                                                                                     width:600,
-//                                                                                     tabsize: 2,
-//                                                                                     codemirror: {
-//                                                                                         theme: 'monokai'
-//                                                                                     }
-//                                                                                 });
-////                                                                             }
-//
-//                                                                         });
-//
-//                                                                 ", \yii\web\View::POS_END);
-//                                                                }
-//                                                            ];
-//                                                        }
-//                                                    ],
-//                                                    [
-//                                                        'class' => 'kartik\grid\EditableColumn',
-//                                                        'attribute' => 'specification',
-//                                                        'format' => 'html',
-//                                                        'pageSummary' => 'Page Total',
-//                                                        'vAlign' => 'middle',
-//                                                        'headerOptions' => ['class' => 'kv-sticky-column'],
-//                                                        'contentOptions' => ['class' => 'kv-sticky-column'],
-//                                                        'editableOptions' => function ($model, $key, $index) {
-//                                                            return ['header' => 'Specification', 'size' => 'lg',
-//                                                                'formOptions' => ['action' => ['update-product']],
-//                                                                'inputType' => Editable::INPUT_TEXTAREA,
-//                                                                'options' => [
-//                                                                    'rows' => '6',
-//                                                                    'id' => 'product-specification-' . $index
-//                                                                ],
-//                                                                'afterInput' => function ($form, $widget) use ($model, $index) {
-////                                echo $form->field($model, "description")->widget(\kartik\widgets\DatePicker::classname(), [
-////                                    'options' => ['id' => "description_{$index}"]
-////                                ]);
-//                                                                    $this->registerJs("
-//                                                                            init.push(function () {
-////                                                                             if (!$('html').hasClass('ie8')) {
-//                                                                                 $('#product-specification-$index').summernote({
-//                                                                                     height: 300,
-//                                                                                     tabsize: 2,
-//                                                                                     codemirror: {
-//                                                                                         theme: 'monokai'
-//                                                                                     }
-//                                                                                 });
-////                                                                             }
-//
-//                                                                         });
-//
-//                                                                 ", \yii\web\View::POS_END);
-//                                                                }
-//                                                            ];
-//                                                        }
-//                                                    ],
             [
                 'attribute' => 'option',
                 'format' => 'html',
@@ -316,10 +219,6 @@ if (isset($dataProvider)) {
 ?>
 <?php
 
-if (!isset($type)) {
-    $type = NULL;
-}
-
 $this->registerJs("
     $(document).ready(function(){
     $('#MyButton$gridId').click(function(){
@@ -347,13 +246,13 @@ $this->registerJs("
 
 $this->registerJs("
 
-    function productModal(productId)
+    function productModal$type(productId)
     {
-//    alert(productId);
+    //alert(productId+ ' type='+$type);
         $.ajax({
             type: 'POST',
             url : '" . Url::home() . "product/product-group/update-grid-edit?step=" . $_GET['step'] . "&productGroupTemplateId=" . $_GET['productGroupTemplateId'] . "&productGroupId=" . $_GET['productGroupId'] . "',
-            data : {productId: productId,gridId:'$gridId'},
+            data : {productId: productId,gridId:'$gridId',type:$type},
             success : function(data) {
                 $('#productModalBody').html(data);
                 $('#productModal').modal('show');
@@ -361,10 +260,11 @@ $this->registerJs("
         });
     }
 
-    function refreshGrid()
+    function refreshGrid$type()
     {
         //$.pjax.reload({container: '#pjax$gridId'});
-            $('#$gridId').yiiGridView('applyFilter');
+            $.pjax({container: '#$gridId'});
+            //$('#$gridId').yiiGridView('applyFilter');
     }
 
 
