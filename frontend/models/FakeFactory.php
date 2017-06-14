@@ -101,20 +101,6 @@ class FakeFactory extends Model {
         }
 
         foreach ($product as $value) {
-            /*
-              $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
-              //$productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
-              if (isset($productImages->imageThumbnail1) && !empty($productImages->imageThumbnail1)) {
-              if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail1)) {
-              $productImagesThumbnail1 = \Yii::$app->homeUrl . $productImages->imageThumbnail1;
-              } else {
-              $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-              }
-              } else {
-              $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-              }
-             */
-
 
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
             if (Yii::$app->controller->id == 'site') {
@@ -122,8 +108,6 @@ class FakeFactory extends Model {
             } else {
                 $title = isset($value->title) ? $value->title : '';
             }
-
-
 
             $price_s = number_format($value->product->price, 2);
             $price = number_format($value->price, 2);
@@ -170,18 +154,7 @@ class FakeFactory extends Model {
             ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
         }
         foreach ($pCanSale as $value) {
-            /*
-              $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
-              //$productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
-              if (isset($productImages->imageThumbnail1) && !empty($productImages->imageThumbnail1)) {
-              if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail1)) {
-              $productImagesThumbnail1 = '/' . $productImages->imageThumbnail1;
-              } else {
-              $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg195x195(FALSE, FALSE, FALSE);
-              }
-              } else {
-              $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg195x195(FALSE, FALSE, FALSE);
-              } */
+
 
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg195x195');
 
@@ -235,17 +208,6 @@ class FakeFactory extends Model {
                 } else {
                     $results_rating = $rating_score / $rating_member;
                 }
-
-                /*
-                  if (isset($productImages->imageThumbnail1) && !empty($productImages->imageThumbnail1)) {
-                  if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail1)) {
-                  $productImagesThumbnail1 = \Yii::$app->homeUrl . $productImages->imageThumbnail1;
-                  } else {
-                  $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-                  }
-                  } else {
-                  $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-                  } */
 
                 $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $items['productSuppId'], 'Svg64x64');
                 $products[$value->productId] = [
@@ -345,41 +307,6 @@ class FakeFactory extends Model {
         $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
         $GetProductCozxy = $GetProductSuppliers->product;
         //foreach ($GetProductSuppliers as $items) {
-        /*
-         * รูปสินค้า
-
-          $productImagesOneTop = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSuppId)->orderBy('ordering asc')->one();
-          if (count($productImagesOneTop) > 0) {
-          //$productImagesAll = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSuppId . ' and productImageId !=' . $productImagesOneTop['productImageId'])->orderBy('ordering asc')->all();
-          $productImagesAll = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSuppId)->orderBy('ordering asc')->all();
-
-          foreach ($productImagesAll as $items) {
-          if (isset($items['imageThumbnail1']) && !empty($items['imageThumbnail1'])) {
-          if (file_exists(Yii::$app->basePath . "/web/" . $items['imageThumbnail1'])) {
-          $productimageThumbnail1 = Yii::$app->homeUrl . $items['imageThumbnail1'];
-          } else {
-          $productimageThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-          }
-          } else {
-          $productimageThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-          }
-          $imagAll[$items['productImageId']] = [
-          'productImageId' => $items->productImageId,
-          'imageThumbnail1' => $productimageThumbnail1,
-          ];
-          }
-
-          if (isset($productImagesOneTop['image']) && !empty($productImagesOneTop['image'])) {
-          if (file_exists(Yii::$app->basePath . "/web/" . $productImagesOneTop['imageThumbnail1'])) {
-          $productImagesOneTopz = Yii::$app->homeUrl . $productImagesOneTop['image'];
-          } else {
-          $productImagesOneTopz = \common\helpers\Base64Decode::DataImageSvg555x340(FALSE, FALSE, FALSE);
-          }
-          }
-          } else {
-          $productimageThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-          $productImagesOneTopz = \common\helpers\Base64Decode::DataImageSvg555x340(FALSE, FALSE, FALSE);
-          } */
 
         $productImagesMulti = \common\helpers\DataImageSystems::DataImageMasterViewsProdcuts($GetProductSuppliers['productId'], $productSuppId, 'Svg116x116', 'Svg555x340');
 
