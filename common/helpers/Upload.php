@@ -132,7 +132,7 @@ class Upload
             /* return $this->render('upload', [
               'model' => $model,
               ]); */
-            echo print_r($_FILES, TRUE);
+            echo "No Detect Image Upload";
         }
 
         return false;

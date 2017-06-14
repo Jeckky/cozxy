@@ -244,6 +244,7 @@ $this->registerJs("
 
 ", \yii\web\View::POS_READY);
 
+
 $this->registerJs("
 
     function productModal$type(productId)

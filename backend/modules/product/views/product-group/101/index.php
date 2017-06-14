@@ -265,7 +265,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         ]);
                                     } else {
                                         if ($ress !== FALSE) {
-                                            return Html::a('<i class="fa fa-eye"></i>', ["view", 'productGroupId' => isset($model->productId) ? $model->productId : $model->productTempId, 'userId' => isset($model->productSuppUserId) ? $model->productSuppUserId : 0], [
+                                            return Html::a('<i class="fa fa-eye"></i>', ["view", 'productGroupId' => isset($model->productId) ? $model->productId : $model->productTempId, 'userId' => isset($model->productSuppUserId) ? $model->productSuppUserId : 0, 'productGroupTemplateId' => $model->productGroupTemplateId, 'step' => $model->step], [
                                                 'title' => Yii::t('yii', 'update'),
                                             ]);
                                         } else {
