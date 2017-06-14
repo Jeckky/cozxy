@@ -18,10 +18,12 @@ use yii\data\ActiveDataProvider;
  *
  * @author it
  */
-class DataImageSystems {
+class DataImageSystems
+{
 
     //put your code here
-    public static function DataImageMaster($masterId, $suppliersId, $imageSvg) {
+    public static function DataImageMaster($masterId, $suppliersId, $imageSvg)
+    {
         $productImagesThumbnail1 = '';
         //$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $suppliersId)->orderBy('ordering asc')->one();
         //$productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
@@ -90,7 +92,8 @@ class DataImageSystems {
         return $productImagesThumbnail1;
     }
 
-    public static function DataImageMasterViewsProdcuts($producmasterId, $productSuppId, $imageSvg1, $imageSvg2) {
+    public static function DataImageMasterViewsProdcuts($producmasterId, $productSuppId, $imageSvg1, $imageSvg2)
+    {
 
         $imagAll = [];
         /*
