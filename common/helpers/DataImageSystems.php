@@ -68,7 +68,20 @@ class DataImageSystems {
                     }
                 }
             } else {
-                $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg);
+
+                $ImagesMaster = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $suppliersId)->orderBy('ordering asc')->one();
+
+                if (isset($ImagesMaster->imageThumbnail1) && !empty($ImagesMaster->imageThumbnail1)) {
+                    if (file_exists(Yii::$app->basePath . "/web/" . $ImagesMaster->imageThumbnail1)) {
+                        $productImagesThumbnail1 = \Yii::$app->homeUrl . $ImagesMaster->imageThumbnail1;
+                    } else {
+                        $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg);
+                    }
+                } else {
+                    $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg);
+                }
+
+                //$productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg);
             }
         } else {
             $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg);
