@@ -46,10 +46,13 @@ class UserGroups extends \common\models\costfit\master\UserGroupsMaster
 
     static public function checkUserGroup($userGroup)
     {
+
         $CheckuserGroup = str_replace('[', '', str_replace(']', '', $userGroup));
+
         if ($CheckuserGroup != '') {
             //echo $userGroup;
             $userGroupx = str_replace('[', '(', str_replace(']', ')', $userGroup));
+//            throw new \yii\base\Exception($userGroupx);
             // echo $userGroupx;
             $result = UserGroups::find()
             ->select('group_concat(name) as name')
