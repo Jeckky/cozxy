@@ -685,7 +685,7 @@ function ShowImages(img, productImageId) {
         success: function (data, status)
         {
             if (status == "success") {
-                $('.images-big').html('<img src="/' + data + '" class="fullwidth" alt=" ">');
+                $('.images-big').html('<img src="' + data + '" class="fullwidth" alt=" ">');
             } else {
 
             }

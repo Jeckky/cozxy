@@ -13,11 +13,9 @@ use yii\data\ArrayDataProvider;
 use frontend\models\FakeFactory;
 use frontend\models\DisplayMyStory;
 
-class ProductController extends MasterController
-{
+class ProductController extends MasterController {
 
-    public function actionIndex($hash = FALSE)
-    {
+    public function actionIndex($hash = FALSE) {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
 
@@ -51,12 +49,22 @@ class ProductController extends MasterController
         return $this->render('index', compact('productId', 'productSupplierId', 'productHotNewProduct', 'productViews', 'StoryProductPost', 'StoryRecentStories', 'productGroupOptionValues', 'selectedOptions'));
     }
 
-    public function actionImagesItemBig()
-    {
+    public function actionImagesItemBig() {
         $ImageId = $_POST['ImageId'];
+        $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl;
         $getImage = \common\models\costfit\ProductImageSuppliers::find()->where('productImageId=' . $ImageId)->one();
         if (isset($getImage) > 0) {
-            return $getImage['image'];
+            if (isset($getImage->image) && !empty($getImage->image)) {
+                if (file_exists(Yii::$app->basePath . "/web/" . $getImage->image)) {
+                    $productImagesThumbnail1 = $url . $getImage->image;
+                } else {
+                    $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg('Svg555x340');
+                }
+            } else {
+                $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg('Svg555x340');
+            }
+            return $productImagesThumbnail1;
+            //return $getImage['image'];
         } else {
             return FALSE;
         }
