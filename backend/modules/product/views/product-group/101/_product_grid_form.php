@@ -59,6 +59,8 @@ $form = ActiveForm::begin([
                 }
                 ?>
                 <?= $form->field($priceModel, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 10]); ?>
+            <?php else: ?>
+                <?= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 10])->label("Market Price"); ?>
             <?php endif; ?>
 
 

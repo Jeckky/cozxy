@@ -64,6 +64,15 @@ if (isset($dataProvider)) {
                 }
             ],
             [
+                'attribute' => 'price',
+                'format' => 'raw',
+                'label' => 'Market Price',
+                'visible' => ($type == 1) ? TRUE : FALSE,
+                'value' => function($model) use($type) {
+                    return $model->price;
+                }
+            ],
+            [
                 'attribute' => 'option',
                 'format' => 'html',
                 'options' => ['style' => 'width:10%;text-align:left'],
