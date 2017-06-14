@@ -131,8 +131,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
     <div class="container">
         <div class="row">
             <div class="col-xs-9">
-                <h3 class="b"><?= strtoupper($category) ?></h3>
-                <!--<p class="size18 size16-sm size14-xs">SHOWING 1-16 OF 79 RESULTS</p>-->
+                <h3 class="b">RECOMMENDED :: <?= strtoupper($category) ?></h3>
                 <div class="row">
                     <div class="wf-container">
                         <div class="filter-product-cozxy">
@@ -149,6 +148,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                                 'itemView' => function ($model, $key, $index, $widget) {
                                     return $this->render('@app/themes/cozxy/layouts/product/_product_item', ['model' => $model]);
                                 },
+                                'emptyText' => ' ',
                                 'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
                                 'layout' => "{summary}\n{items}\n<center>{pager}</center>\n",
                                 //'layout' => "{items}",
@@ -167,14 +167,54 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="col-xs-3">
                 <div class="size18">&nbsp;</div>
                 <?= $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories', compact('productSupplierId')) ?>
             </div>
+
+            <div class="col-xs-9">
+                <h3 class="b">PRODUCTS :: <?= strtoupper($category) ?></h3>
+                <!--<p class="size18 size16-sm size14-xs">SHOWING 1-16 OF 79 RESULTS</p>-->
+                <div class="row">
+                    <div class="wf-container">
+                        <div class="filter-product-cozxy-not-sale">
+                            <?php
+                            yii\widgets\Pjax::begin([
+                                'enablePushState' => false, // to disable push state
+                                'enableReplaceState' => false // to disable replace state
+                            ]);
+                            echo \yii\widgets\ListView::widget([
+                                'dataProvider' => $productNotSell,
+                                'options' => [
+                                    'tag' => false,
+                                ],
+                                'itemView' => function ($model, $key, $index, $widget) {
+                                    return $this->render('@app/themes/cozxy/layouts/product/_product_item_not_sale', ['model' => $model]);
+                                }, 'emptyText' => ' ',
+                                'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
+                                'layout' => "{summary}\n{items}\n<center>{pager}</center>\n",
+                                //'layout' => "{items}",
+                                'itemOptions' => [
+                                    'tag' => false,
+                                ], 'pager' => [
+                                    'firstPageLabel' => 'first',
+                                    'lastPageLabel' => 'last',
+                                    'prevPageLabel' => 'previous',
+                                    'nextPageLabel' => 'next',
+                                    'maxButtonCount' => 3,
+                                ],
+                            ]);
+                            yii\widgets\Pjax::end();
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="col-xs-9 text-center">
-                <!--<a href="javascript:showMore('<?php //echo $categoryId;    ?>','<?php //echo $clickNum;   ?>','<?php //echo $countAllProduct;   ?>','<?php //echo $limit_start;  ?>','<?php //echo $limit_end; ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                <!--<a href="javascript:showMore('<?php //echo $categoryId;                   ?>','<?php //echo $clickNum;                  ?>','<?php //echo $countAllProduct;                  ?>','<?php //echo $limit_start;                 ?>','<?php //echo $limit_end;                ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                     <span class="size16">&nbsp; ↓ </span></a>-->
             </div>
             <div class="col-xs-3 text-center">&nbsp;</div>

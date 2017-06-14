@@ -40,9 +40,15 @@ class SearchController extends MasterController {
             'allModels' => DisplaySearch::productSearchCategory('', $categoryId, '', ''),
             'pagination' => ['defaultPageSize' => 9],
         ]);
+
+        $productNotSell = new ArrayDataProvider(
+        [
+            'allModels' => DisplaySearch::productSearchCategoryNotSale('', $categoryId, '', ''),
+            'pagination' => ['defaultPageSize' => 9],
+        ]);
         $productSupplierId = '';
 
-        return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'productSupplierId'));
+        return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'productSupplierId', 'productNotSell'));
     }
 
     public function actionCozxyProduct() {
