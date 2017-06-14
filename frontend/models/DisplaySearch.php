@@ -42,7 +42,7 @@ class DisplaySearch extends Model {
         foreach ($pCanSale as $value) {
             if (isset($value->productSuppId)) {
 
-                $price_s = number_format($value->price, 2);
+                $price_s = number_format($value->product->price, 2);
                 $price = number_format($value->price, 2);
                 $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
                 $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
@@ -111,7 +111,7 @@ class DisplaySearch extends Model {
 
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
 
-            $price_s = number_format($value->price, 2);
+            $price_s = number_format($value->product->price, 2);
             $price = number_format($value->price, 2);
 
             $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
@@ -195,7 +195,7 @@ class DisplaySearch extends Model {
 
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
 
-            $price_s = number_format($value->price, 2);
+            $price_s = number_format($value->product->price, 2);
             $price = number_format($value->price, 2);
 
             if (Yii::$app->controller->id == 'site') {
@@ -282,7 +282,7 @@ class DisplaySearch extends Model {
 
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
 
-            $price_s = number_format($value->price, 2);
+            $price_s = number_format($value->product->price, 2);
             $price = number_format($value->price, 2);
 
             if (Yii::$app->controller->id == 'site') {
@@ -346,7 +346,7 @@ class DisplaySearch extends Model {
             } else {
                 $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
             }
-            $price_s = number_format($value->price, 2);
+            $price_s = number_format($value->product->price, 2);
             $price = number_format($value->price, 2);
 
             if (Yii::$app->controller->id == 'site') {
