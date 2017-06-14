@@ -172,7 +172,7 @@ class TopUpController extends MasterController {
     }
 
     public function checkAddress() {
-        $address = \common\models\costfit\Address::find()->where("userId=" . Yii::$app->user->id . " and status=1 and isDefault=1")->one();
+        $address = \common\models\costfit\Address::find()->where("userId=" . Yii::$app->user->id . " and status=1")->one();
         if (!isset($address)) {
             return $this->redirect([Yii::$app->homeUrl . 'my-account/new-billing']);
         }

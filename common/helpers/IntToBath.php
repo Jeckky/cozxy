@@ -68,8 +68,4 @@ class IntToBath {
         return $convert;
     }
 
-    public static function changeToText($int) {
-
-    }
-
 }
