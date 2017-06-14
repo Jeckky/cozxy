@@ -13,14 +13,21 @@ use yii\data\ArrayDataProvider;
 use frontend\models\FakeFactory;
 use frontend\models\DisplayMyStory;
 
-class ProductController extends MasterController {
+class ProductController extends MasterController
+{
 
-    public function actionIndex($hash = FALSE) {
+    public function actionIndex($hash = FALSE)
+    {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
 
         //$productId = $params['productId'];
         $productSupplierId = $params['productSupplierId'];
+        if (isset($params['selectedOptions'])) {
+            $selectedOptions = $params['selectedOptions'];
+        } else {
+            $selectedOptions = NULL;
+        }
         $productId = \common\models\costfit\ProductSuppliers::productParentId($productSupplierId)->productId;
         /*
          * Product Views - Frontend
@@ -41,10 +48,11 @@ class ProductController extends MasterController {
         $StoryProductPost = new ArrayDataProvider(['allModels' => DisplayMyStory::myStoryTop($productId, $productSupplierId, FALSE, FALSE)]);
         $StoryRecentStories = new ArrayDataProvider(['allModels' => DisplayMyStory::productRecentStories($productId, $productSupplierId, FALSE)]);
         $productGroupOptionValues = ProductGroupOptionValue::findProductOptionsArray($productSupplierId);
-        return $this->render('index', compact('productId', 'productSupplierId', 'productHotNewProduct', 'productViews', 'StoryProductPost', 'StoryRecentStories', 'productGroupOptionValues'));
+        return $this->render('index', compact('productId', 'productSupplierId', 'productHotNewProduct', 'productViews', 'StoryProductPost', 'StoryRecentStories', 'productGroupOptionValues', 'selectedOptions'));
     }
 
-    public function actionImagesItemBig() {
+    public function actionImagesItemBig()
+    {
         $ImageId = $_POST['ImageId'];
         $getImage = \common\models\costfit\ProductImageSuppliers::find()->where('productImageId=' . $ImageId)->one();
         if (isset($getImage) > 0) {

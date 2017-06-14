@@ -11,9 +11,11 @@ use common\models\costfit\ProductSuppliers;
 /**
  * ContactForm is the model behind the contact form.
  */
-class DisplaySearch extends Model {
+class DisplaySearch extends Model
+{
 
-    public static function productSearch($search_hd, $n, $cat = FALSE) {
+    public static function productSearch($search_hd, $n, $cat = FALSE)
+    {
         $products = [];
 
         $whereArray = [];
@@ -96,7 +98,8 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSearchBrand($brandId, $n, $cat = FALSE) {
+    public static function productSearchBrand($brandId, $n, $cat = FALSE)
+    {
 
         $products = [];
 
@@ -158,7 +161,8 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSearchCategory($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE) {
+    public static function productSearchCategory($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE)
+    {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE && $mins == FALSE && $maxs == FALSE) {
@@ -178,10 +182,10 @@ class DisplaySearch extends Model {
             ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
             ->where($whereArray)
             //->andWhere([">", "ps.result", 0])
-            //->andWhere([">", "pps.price", 0])
+            ->andWhere([">", "pps.price", 0])
             //->orderBy(new \yii\db\Expression('rand()'))
             //->orderBy(['pps.price' => SORT_DESC, 'rand()' => SORT_DESC])
-            ->orderBy(['ps.productSuppId' => SORT_DESC])
+            ->orderBy(['pps.price' => SORT_ASC])
             //->limit($n)
             ->all();
         } elseif ($cat != FALSE && $mins != FALSE && $maxs != FALSE) {
@@ -201,7 +205,7 @@ class DisplaySearch extends Model {
             ->andWhere('pps.price > 0')
             ->andWhere(['between', 'pps.price', $mins, $maxs])
             ->groupBy('ps.productSuppId')
-            ->orderBy(['ps.productSuppId' => SORT_DESC])
+            ->orderBy(['pps.price' => SORT_ASC])
             ->limit($n)->all();
         } else {
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
@@ -209,7 +213,7 @@ class DisplaySearch extends Model {
             ->join(" LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
             ->where(' product_suppliers.approve="approve" and product_suppliers.result > 0 AND product_price_suppliers.status =1 AND '
             . ' product_price_suppliers.price > 0')
-            ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
+            ->orderBy("product_price_suppliers.price ASC , " . new \yii\db\Expression('rand()'))->limit($n)->all();
         }
 
         foreach ($pCanSale as $value) {
@@ -261,7 +265,8 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSearchCategoryShowMore($s, $e, $cat = FALSE) {
+    public static function productSearchCategoryShowMore($s, $e, $cat = FALSE)
+    {
         $products = [];
         $whereArray = [];
 

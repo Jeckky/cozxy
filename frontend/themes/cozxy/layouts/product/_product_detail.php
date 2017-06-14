@@ -54,6 +54,41 @@ $val = rand(1, 10);
                             echo '';
                         }
                         ?>
+
+
+                        <?php
+//                        throw new \yii\base\Exception(print_r($selectedOptions, true));
+                        if (isset($productGroupOptionValues) && count($productGroupOptionValues) > 0) {
+
+                            foreach ($productGroupOptionValues as $productGroupTemplateOptionId => $productGroupOptionValue):
+                                $selected = "";
+                                if (isset($selectedOptions) && count($selectedOptions) > 0) {
+                                    foreach ($selectedOptions as $selectedOption):
+//                                    throw new \yii\base\Exception(print_r($selectedOption, true));
+                                        if ($selectedOption["productGroupTemplateOptionId"] == $productGroupTemplateOptionId) {
+                                            $selected = $selectedOption["id"];
+                                            break;
+                                        }
+                                    endforeach;
+                                }
+                                ?>
+                                <form id="optionForm">
+                                    <div class="row login-box">
+                                        <div class="col-sm-12 size18 b"><?= common\models\costfit\ProductGroupTemplateOption::getTitle($productGroupTemplateOptionId) ?></div>
+                                        <div class="col-sm-12 text-right quantity-sel size18">
+                                            <?php if (count($productGroupOptionValue) > 1): ?>
+                                                <?= Html::dropDownList($productGroupTemplateOptionId, $selected, $productGroupOptionValue, ['class' => 'fullwidth productOption']) ?>
+                                            <?php else: ?>
+                                                <?= array_values($productGroupOptionValue)[0]; ?>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </form>
+                                <?php
+                            endforeach;
+                        }
+                        ?>
                         <?php
                         if ($model['price'] > 0 && $model['result'] > 0) {
                             ?>
@@ -67,24 +102,6 @@ $val = rand(1, 10);
                             </div>
                             <hr>
                         <?php } ?>
-
-                        <?php
-                        if (isset($productGroupOptionValues) && count($productGroupOptionValues) > 0) {
-                            foreach ($productGroupOptionValues as $title => $productGroupOptionValue):
-                                ?>
-                                <form id="optionForm">
-                                    <div class="row login-box">
-                                        <div class="col-sm-12 size18 b"><?= $title ?></div>
-                                        <div class="col-sm-12 text-right quantity-sel size18">
-                                            <?= Html::dropDownList($title, '', $productGroupOptionValue, ['class' => 'fullwidth productOption']) ?>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                </form>
-                                <?php
-                            endforeach;
-                        }
-                        ?>
                         <div class="size36">&nbsp;</div>
                         <div class="text-center abs" style="bottom: 0; left: 0; right: 0;">
                             <input type="hidden" id="maxQnty" value="<?php echo $model['result']; ?>">
