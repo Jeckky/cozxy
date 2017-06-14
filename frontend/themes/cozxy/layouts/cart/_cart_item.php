@@ -47,10 +47,10 @@ $val = rand(1, 10);
                     </tr>
                 <?php endforeach; ?>
 <!--                <tr>
-        <td>Size</td>
-        <td>:</td>
-        <td>None</td>
-    </tr>-->
+    <td>Size</td>
+    <td>:</td>
+    <td>None</td>
+</tr>-->
 
             </table>
         </div>

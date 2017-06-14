@@ -140,24 +140,10 @@ class DataImageSystems {
                     if (file_exists(Yii::$app->basePath . "/web/" . $productImagesOneTop['image'])) {
                         $productImagesOneTopz = Yii::$app->homeUrl . $productImagesOneTop['image'];
                     } else {
-                        $suppliersId = $productImagesOneTop['productSuppId'];
-                        if (isset($masterId)) {
-                            $ImagesMaster = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $suppliersId)->one();
-                            if (isset($ImagesMaster->image) && !empty($ImagesMaster->image)) {
-                                if (file_exists(Yii::$app->basePath . "/web/" . $ImagesMaster->image)) {
-                                    $productImagesOneTopz = \Yii::$app->homeUrl . $ImagesMaster->image;
-                                } else {
-                                    $productImagesOneTopz = \common\helpers\Base64Decode::DataImageSvg($imageSvg2);
-                                }
-                            } else {
-                                $productImagesOneTopz = \common\helpers\Base64Decode::DataImageSvg($imageSvg2);
-                            }
-                        } else {
-                            $productImagesOneTopz = \common\helpers\Base64Decode::DataImageSvg($imageSvg2);
-                        }
+                        $productImagesOneTopz = \common\helpers\Base64Decode::DataImageSvg($imageSvg2);
                     }
                 } else {
-                    $suppliersId = $productImagesOneTop['productSuppId'];
+
                     if (isset($suppliersId)) {
                         $ImagesMaster = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $suppliersId)->one();
                         if (isset($ImagesMaster->image) && !empty($ImagesMaster->image)) {
@@ -188,22 +174,7 @@ class DataImageSystems {
                         if (file_exists(Yii::$app->basePath . "/web/" . $items['imageThumbnail1'])) {
                             $productimageThumbnail1 = Yii::$app->homeUrl . $items['imageThumbnail1'];
                         } else {
-                            $masterId = $items['productId'];
-                            if (isset($masterId)) {
-                                $ImagesMaster = \common\models\costfit\ProductImage::find()->where('productId=' . $masterId)->one();
-                                if (isset($ImagesMaster->imageThumbnail1) && !empty($ImagesMaster->imageThumbnail1)) {
-                                    if (file_exists(Yii::$app->basePath . "/web/" . $ImagesMaster->imageThumbnail1)) {
-                                        $productimageThumbnail1 = \Yii::$app->homeUrl . $ImagesMaster->imageThumbnail1;
-                                    } else {
-                                        $productimageThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg1);
-                                    }
-                                } else {
-                                    $productimageThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg1);
-                                }
-                            } else {
-                                $productimageThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg1);
-                            }
-                            //$productimageThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
+                            $productimageThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg1);
                         }
                     } else {
                         $productimageThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg1);
@@ -218,9 +189,9 @@ class DataImageSystems {
                     if (file_exists(Yii::$app->basePath . "/web/" . $productImagesOneTop['image'])) {
                         $productImagesOneTopz = Yii::$app->homeUrl . $productImagesOneTop['image'];
                     } else {
-                        $masterId = $productImagesOneTop['productId'];
-                        if (isset($masterId)) {
-                            $ImagesMaster = \common\models\costfit\ProductImage::find()->where('productId=' . $masterId)->one();
+                        // $masterId = $productImagesOneTop['productId'];
+                        if (isset($producmasterId)) {
+                            $ImagesMaster = \common\models\costfit\ProductImage::find()->where('productId=' . $producmasterId)->one();
                             if (isset($ImagesMaster->image) && !empty($ImagesMaster->image)) {
                                 if (file_exists(Yii::$app->basePath . "/web/" . $ImagesMaster->image)) {
                                     $productImagesOneTopz = \Yii::$app->homeUrl . $ImagesMaster->image;
@@ -235,7 +206,7 @@ class DataImageSystems {
                         }
                     }
                 } else {
-                    $masterId = $productImagesOneTop['productId'];
+                    //$masterId = $productImagesOneTop['productId'];
                     if (isset($masterId)) {
                         $ImagesMaster = \common\models\costfit\ProductImage::find()->where('productId=' . $masterId)->one();
                         if (isset($ImagesMaster->image) && !empty($ImagesMaster->image)) {
