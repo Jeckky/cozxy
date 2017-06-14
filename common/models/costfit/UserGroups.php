@@ -54,6 +54,9 @@ class UserGroups extends \common\models\costfit\master\UserGroupsMaster
             $userGroupx = str_replace('[', '(', str_replace(']', ')', $userGroup));
 //            throw new \yii\base\Exception($userGroupx);
             // echo $userGroupx;
+            if (strpos($userGroupx, "(") === FALSE) {
+                $userGroupx = "(" . $userGroupx . ")";
+            }
             $result = UserGroups::find()
             ->select('group_concat(name) as name')
             ->where("user_group_Id in " . $userGroupx . "  ")
