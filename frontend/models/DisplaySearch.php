@@ -44,19 +44,6 @@ class DisplaySearch extends Model
         foreach ($pCanSale as $value) {
             if (isset($value->productSuppId)) {
 
-                /*
-                  $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
-                  //$productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
-                  if (isset($productImages->imageThumbnail1) && !empty($productImages->imageThumbnail1)) {
-                  if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail1)) {
-                  $productImagesThumbnail1 = '/' . $productImages->imageThumbnail1;
-                  } else {
-                  $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-                  }
-                  } else {
-                  $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-                  }
-                 */
                 $price_s = number_format($value->price, 2);
                 $price = number_format($value->price, 2);
                 $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
@@ -124,17 +111,7 @@ class DisplaySearch extends Model
 
         foreach ($product as $value) {
 
-            /*
-              $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
-              if (isset($productImages->imageThumbnail1) && !empty($productImages->imageThumbnail1)) {
-              if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail1)) {
-              $productImagesThumbnail1 = '/' . $productImages->imageThumbnail1;
-              } else {
-              $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-              }
-              } else {
-              $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-              } */
+
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
 
             $price_s = number_format($value->price, 2);
@@ -219,19 +196,6 @@ class DisplaySearch extends Model
 
         foreach ($pCanSale as $value) {
 
-            /*
-              $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
-              //$productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
-              if (isset($productImages->imageThumbnail1) && !empty($productImages->imageThumbnail1)) {
-              if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail1)) {
-              $productImagesThumbnail1 = '/' . $productImages->imageThumbnail1;
-              } else {
-              $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-              }
-              } else {
-              $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-              }
-             */
 
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
 
