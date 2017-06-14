@@ -43,7 +43,7 @@ class FakeFactory extends Model {
         foreach ($pCanSale as $value) {
 
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
-            $price_s = number_format($value->product->price, 2);
+            $price_s = isset($value->product) ? number_format($value->product->price, 2) : ''; //number_format($value->product->price, 2);
             $price = number_format($value->price, 2);
 
             if (Yii::$app->controller->id == 'site') {
@@ -109,7 +109,7 @@ class FakeFactory extends Model {
                 $title = isset($value->title) ? $value->title : '';
             }
 
-            $price_s = number_format($value->product->price, 2);
+            $price_s = isset($value->product) ? number_format($value->product->price, 2) : ''; //number_format($value->product->price, 2);
             $price = number_format($value->price, 2);
             $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
             $products[$value->productSuppId] = [
@@ -163,7 +163,7 @@ class FakeFactory extends Model {
             } else {
                 $title = isset($value->title) ? $value->title : '';
             }
-            $price_s = number_format($value->product->price, 2);
+            $price_s = isset($value->product) ? number_format($value->product->price, 2) : ''; //number_format($value->product->price, 2);
             $price = number_format($value->price, 2);
             $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
             $products[$value->productSuppId] = [

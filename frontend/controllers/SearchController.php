@@ -63,7 +63,13 @@ class SearchController extends MasterController {
             'allModels' => DisplaySearch::productSearch($category, 18, FALSE), 'pagination' => ['defaultPageSize' => 12],
         ]);
 
-        return $this->render('index', compact('productCanSell', 'category', 'categoryId'));
+        $productNotSell = new ArrayDataProvider(
+        [
+            'allModels' => DisplaySearch::productSearchCategoryNotSale('', $categoryId, '', ''),
+            'pagination' => ['defaultPageSize' => 9],
+        ]);
+
+        return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'productNotSell'));
     }
 
     public function actionBrand($hash = FALSE) {
