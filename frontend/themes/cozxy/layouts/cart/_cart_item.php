@@ -35,16 +35,22 @@ $val = rand(1, 10);
                     <td style="width:32px">:</td>
                     <td><div id="qty-cart-show"><?= $item["qty"] ?></div></td>
                 </tr>
-                <tr>
-                    <td>Color</td>
-                    <td>:</td>
-                    <td>None</td>
-                </tr>
-                <tr>
-                    <td>Size</td>
-                    <td>:</td>
-                    <td>None</td>
-                </tr>
+                <?php
+                $options = \common\models\costfit\ProductGroupOptionValue::find()->where("productSuppId = " . $item["productSuppId"])->all();
+                foreach ($options as $option):
+                    ?>
+
+                    <tr>
+                        <td><?= $option->productGroupTemplateOption->title; ?></td>
+                        <td>:</td>
+                        <td><?= $option->value ?></td>
+                    </tr>
+                <?php endforeach; ?>
+<!--                <tr>
+        <td>Size</td>
+        <td>:</td>
+        <td>None</td>
+    </tr>-->
 
             </table>
         </div>
