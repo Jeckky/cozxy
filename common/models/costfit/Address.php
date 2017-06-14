@@ -115,15 +115,26 @@ class Address extends \common\models\costfit\master\AddressMaster {
     }
 
     public static function CompanyName($userId) {
-        $address = Address::find()->where("userId=" . $userId . " and status=1")->one();
-        if (isset($address) && !empty($address)) {
+        $address = Address::find()->where("userId=" . $userId . " and status=1 and isDefault=1")->one();
+        if (isset($address)) {
             if ($address->company != NULL || $address->company != '') {
                 return $address->company;
             } else {
                 return $address->firstname . " " . $address->lastname;
             }
         } else {
-            return '';
+            $address2 = Address::find()->where("userId=" . $userId . " and status=1")
+                    ->orderBy("createDateTime")
+                    ->one();
+            if (isset($address2)) {
+                if ($address2->company != NULL || $address2->company != '') {
+                    return $address2->company;
+                } else {
+                    return $address2->firstname . " " . $address2->lastname;
+                }
+            } else {
+                return '';
+            }
         }
     }
 
