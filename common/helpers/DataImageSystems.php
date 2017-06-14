@@ -27,44 +27,52 @@ class DataImageSystems {
         //$productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
         //echo '<pre>';
         //print_r($productImages);
-        $productImages = \common\models\costfit\ProductImage::find()->where('productId=' . $masterId)->orderBy('ordering asc')->one();
-        if (isset($productImages->imageThumbnail1) && !empty($productImages->imageThumbnail1)) {
-            if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail1)) {
-                $productImagesThumbnail1 = \Yii::$app->homeUrl . $productImages->imageThumbnail1;
-            } else {
-                if (isset($masterId)) {
-                    //$ImagesMaster = \common\models\costfit\ProductImage::find()->where('productId=' . $masterId)->one();
-                    $ImagesMaster = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $suppliersId)->orderBy('ordering asc')->one();
-                    if (isset($ImagesMaster->imageThumbnail1) && !empty($ImagesMaster->imageThumbnail1)) {
-                        if (file_exists(Yii::$app->basePath . "/web/" . $ImagesMaster->imageThumbnail1)) {
-                            $productImagesThumbnail1 = \Yii::$app->homeUrl . $ImagesMaster->imageThumbnail1;
+
+        if ($masterId != '') {
+            $productImages = \common\models\costfit\ProductImage::find()->where('productId=' . $masterId)->orderBy('ordering asc')->one();
+            if (count($productImages) > 0) {
+                if (isset($productImages->imageThumbnail1) && !empty($productImages->imageThumbnail1)) {
+                    if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail1)) {
+                        $productImagesThumbnail1 = \Yii::$app->homeUrl . $productImages->imageThumbnail1;
+                    } else {
+                        if (isset($masterId)) {
+                            //$ImagesMaster = \common\models\costfit\ProductImage::find()->where('productId=' . $masterId)->one();
+                            $ImagesMaster = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $suppliersId)->orderBy('ordering asc')->one();
+                            if (isset($ImagesMaster->imageThumbnail1) && !empty($ImagesMaster->imageThumbnail1)) {
+                                if (file_exists(Yii::$app->basePath . "/web/" . $ImagesMaster->imageThumbnail1)) {
+                                    $productImagesThumbnail1 = \Yii::$app->homeUrl . $ImagesMaster->imageThumbnail1;
+                                } else {
+                                    $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg);
+                                }
+                            } else {
+                                $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg);
+                            }
+                        } else {
+                            $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg);
+                        }
+                    }
+                } else {
+                    if (isset($masterId)) {
+                        $ImagesMaster = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $suppliersId)->one();
+                        if (isset($ImagesMaster->imageThumbnail1) && !empty($ImagesMaster->imageThumbnail1)) {
+                            if (file_exists(Yii::$app->basePath . "/web/" . $ImagesMaster->imageThumbnail1)) {
+                                $productImagesThumbnail1 = \Yii::$app->homeUrl . $ImagesMaster->imageThumbnail1;
+                            } else {
+                                $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg);
+                            }
                         } else {
                             $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg);
                         }
                     } else {
                         $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg);
                     }
-                } else {
-                    $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg);
-                }
-            }
-        } else {
-            if (isset($masterId)) {
-                $ImagesMaster = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $suppliersId)->one();
-                if (isset($ImagesMaster->imageThumbnail1) && !empty($ImagesMaster->imageThumbnail1)) {
-                    if (file_exists(Yii::$app->basePath . "/web/" . $ImagesMaster->imageThumbnail1)) {
-                        $productImagesThumbnail1 = \Yii::$app->homeUrl . $ImagesMaster->imageThumbnail1;
-                    } else {
-                        $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg);
-                    }
-                } else {
-                    $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg);
                 }
             } else {
                 $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg);
             }
+        } else {
+            $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg);
         }
-
 
         return $productImagesThumbnail1;
     }

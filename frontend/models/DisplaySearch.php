@@ -41,6 +41,7 @@ class DisplaySearch extends Model {
 
         foreach ($pCanSale as $value) {
             if (isset($value->productSuppId)) {
+
                 /*
                   $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
                   //$productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
