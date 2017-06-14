@@ -16,6 +16,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use frontend\models\DisplayMyAccount;
+use common\helpers\CozxyUnity;
 
 /**
  * Description of PartnerControllers
@@ -33,6 +34,7 @@ class PartnerController extends MasterController {
     public function actionPartnerMembershipRegistration() {
         $modelUser = new \common\models\costfit\User(['scenario' => 'shipping_address']);
         $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
+        $modelFile = new \common\models\costfit\AddressPartnerFile(['scenario' => 'shipping_address']);
         /* if (isset($_POST['Address'])) {
           $model->attributes = $_POST['Address'];
           if ($_POST["Address"]['isDefault']) {
@@ -50,7 +52,17 @@ class PartnerController extends MasterController {
           $model->isDefault = 0;
           } */
         $hash = 'add';
-        return $this->render('be-our-partner', compact('model', 'hash', 'modelUser'));
+        $historyBirthDate = [];
+        $birthdate = [];
+
+        $historyBirthDate['day'] = FALSE;
+        $historyBirthDate['month'] = FALSE;
+        $historyBirthDate['year'] = FALSE;
+
+        $birthdate['dates'] = CozxyUnity::getDates($historyBirthDate['day']);
+        $birthdate['month'] = CozxyUnity::getMonthEn($historyBirthDate['month']);
+        $birthdate['years'] = CozxyUnity::getYears($historyBirthDate['year']);
+        return $this->render('beOurPartner', compact('model', 'hash', 'modelUser', 'birthdate', 'historyBirthDate', 'modelFile'));
     }
 
 }

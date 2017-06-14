@@ -1,5 +1,6 @@
 $(document).ready(function (e) {
     /*Global Variables Use : Product Views
+     * add to cart use product view
      *******************************************/
     var $addToCartBtn = $('#addItemToCartUnity');
 

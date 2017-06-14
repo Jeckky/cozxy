@@ -67,7 +67,7 @@ $(window).resize(function() { descSet(); });
               ],
               ]);
              */
-            echo $this->render('@app/themes/cozxy/layouts/product/_product_detail', ['model' => $productViews, 'productGroupOptionValues' => $productGroupOptionValues]);
+            echo $this->render('@app/themes/cozxy/layouts/product/_product_detail', ['model' => $productViews, 'productGroupOptionValues' => $productGroupOptionValues, 'selectedOptions' => $selectedOptions]);
             ?>
             <div class="size24">&nbsp;</div>
             <?php

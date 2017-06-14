@@ -18,7 +18,7 @@ use common\models\costfit\ProductPost;
                 $url = Yii::$app->homeUrl . 'story/' . $post->encodeParams(['productPostId' => $post->productPostId, 'productId' => $productId, 'productSupplierId' => $posts->productId]);
                 ?>
                 <div style="border-bottom:1px solid #999;margin-bottom: 18px;">
-                    <img src="<?= Yii::$app->homeUrl . $img ?>" alt="" class="fullwidth" style="margin-bottom:10px;">
+                    <img src="<?= $img ?>" alt="" class="fullwidth" style="margin-bottom:10px;">
                     <div class="size12 fc-g666"><?= ProductPost::userPost($post->productPostId) ?></div>
                     <div class="size16 b" style="margin-top:-5px;"><a href="<?= $url ?>" class="fc-black"><?= $posts->title ?></a></div>
                     <div class="size6">&nbsp;</div>
@@ -41,7 +41,7 @@ use common\models\costfit\ProductPost;
                 $url = Yii::$app->homeUrl . 'story/' . $post->encodeParams(['productPostId' => $post->productPostId, 'productId' => $productId, 'productSupplierId' => $posts->productId]);
                 ?>
                 <div style="border-bottom:1px solid #999;margin-bottom: 18px;">
-                    <img src="<?= Yii::$app->homeUrl . $img ?>" alt="" class="fullwidth" style="margin-bottom:10px;">
+                    <img src="<?= $img ?>" alt="" class="fullwidth" style="margin-bottom:10px;">
                     <div class="size12 fc-g666"><?= ProductPost::userPost($post->productPostId) ?></div>
                     <div class="size16 b" style="margin-top:-5px;"><a href="<?= $url ?>" class="fc-black"><?= $posts->title ?></a></div>
                     <div class="size6">&nbsp;</div>

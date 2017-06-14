@@ -20,51 +20,58 @@ use \common\models\costfit\master\ProductGroupOptionValueMaster;
  * @property ProductGroupOption $productGroupOption
  * @property Product $product
  */
-class ProductGroupOptionValue extends \common\models\costfit\master\ProductGroupOptionValueMaster {
+class ProductGroupOptionValue extends \common\models\costfit\master\ProductGroupOptionValueMaster
+{
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), []);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProductGroupTemplateOption() {
+    public function getProductGroupTemplateOption()
+    {
         return $this->hasOne(ProductGroupTemplateOption::className(), ['productGroupTemplateOptionId' => 'productGroupTemplateOptionId']);
     }
 
-    public static function findProductOptionsArray($productSuppId) {
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductSupp()
+    {
+        return $this->hasOne(ProductSuppliers::className(), ['productSuppId' => 'productSuppId']);
+    }
+
+    public static function findProductOptionsArray($productSuppId)
+    {
         $res = [];
         $options = ProductGroupOptionValue::find()->where("productSuppId = $productSuppId")->groupBy("productGroupTemplateOptionId")->all();
         foreach ($options as $o) {
-            $optionValues = ProductGroupOptionValue::find()->where("productSuppId = $productSuppId AND productGroupTemplateOptionId = $o->productGroupTemplateOptionId")->groupBy("value")->all();
+            $optionValues = ProductGroupOptionValue::find()
+            ->join("LEFT JOIN", "product p", "p.productId = product_group_option_value.productId")
+            ->join("LEFT JOIN", "product pg", "pg.productId = p.parentId")
+            ->where("productGroupTemplateOptionId = $o->productGroupTemplateOptionId AND pg.productId = " . $o->productSupp->product->parentId)
+            ->andWhere("product_group_option_value.productSuppId IS NOT NULL")
+            ->groupBy("value")
+            ->all();
             foreach ($optionValues as $value) {
-                $res[$o->productGroupTemplateOption->title][$value->productGroupOptionValueId] = $value->value;
+                $res[$o->productGroupTemplateOptionId][$value->productGroupOptionValueId] = $value->value;
             }
         }
 
-        /* $res = [
-          123=>[
-          1=>'Red',
-          2=>'Green',
-          3=>'Blue',
-          ],
-          321=>[
-          1=>'Red',
-          2=>'Green',
-          3=>'Blue',
-          ]
-          ]; */
 
         return $res;
     }

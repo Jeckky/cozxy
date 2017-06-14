@@ -25,6 +25,7 @@ use Yii;
     * @property string $code
     * @property string $passportNo
     * @property string $passportImage
+    * @property string $brn
     * @property string $createDateTime
     * @property string $updateDateTime
     * @property string $lastvisitDate
@@ -53,7 +54,7 @@ return [
             [['username', 'firstname', 'password', 'lastname', 'email', 'user_group_Id'], 'string', 'max' => 200],
             [['auth_type', 'code'], 'string', 'max' => 45],
             [['tel'], 'string', 'max' => 20],
-            [['passportNo'], 'string', 'max' => 100],
+            [['passportNo', 'brn'], 'string', 'max' => 100],
             [['passportImage'], 'string', 'max' => 255],
         ];
 }
@@ -82,6 +83,7 @@ return [
     'code' => Yii::t('user', 'Code'),
     'passportNo' => Yii::t('user', 'Passport No'),
     'passportImage' => Yii::t('user', 'Passport Image'),
+    'brn' => Yii::t('user', 'Brn'),
     'createDateTime' => Yii::t('user', 'Create Date Time'),
     'updateDateTime' => Yii::t('user', 'Update Date Time'),
     'lastvisitDate' => Yii::t('user', 'Lastvisit Date'),

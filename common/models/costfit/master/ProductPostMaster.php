@@ -8,6 +8,7 @@ use Yii;
 * This is the model class for table "product_post".
 *
     * @property string $productPostId
+    * @property string $productSuppId
     * @property string $productId
     * @property string $productSelfId
     * @property string $brandId
@@ -41,7 +42,7 @@ return 'product_post';
 public function rules()
 {
 return [
-            [['productId', 'productSelfId', 'brandId', 'userId', 'price', 'isPublic', 'status'], 'integer'],
+            [['productSuppId', 'productId', 'productSelfId', 'brandId', 'userId', 'price', 'isPublic', 'status'], 'integer'],
             [['productSelfId', 'userId', 'createDateTime'], 'required'],
             [['description'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
@@ -59,6 +60,7 @@ public function attributeLabels()
 {
 return [
     'productPostId' => Yii::t('product_post', 'Product Post ID'),
+    'productSuppId' => Yii::t('product_post', 'Product Supp ID'),
     'productId' => Yii::t('product_post', 'Product ID'),
     'productSelfId' => Yii::t('product_post', 'Product Self ID'),
     'brandId' => Yii::t('product_post', 'Brand ID'),

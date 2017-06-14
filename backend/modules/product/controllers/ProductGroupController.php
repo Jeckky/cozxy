@@ -71,7 +71,8 @@ class ProductGroupController extends ProductMasterController
                 ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
                 ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
                 ->where("product.parentId is null ")
-                ->andWhere("1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN (product.status = 99 || product.status = 0) THEN 1 AND product.userId = " . Yii::$app->user->id . " ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 AND ps.userId = " . Yii::$app->user->id . " ELSE 0 END) end)")
+//                ->andWhere("1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN (product.status = 99 || product.status = 0) THEN 1 AND product.userId = " . Yii::$app->user->id . " ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 AND ps.userId = " . Yii::$app->user->id . " ELSE 0 END) end)")
+                ->andWhere("1 =  (case when ps.productSuppId IS NULL  then  1 AND product.userId = " . Yii::$app->user->id . " else  1 AND ps.userId = " . Yii::$app->user->id . " end)")
                 ->groupBy("product.productId")
                 ->orderBy("product.updateDateTime DESC");
             }
@@ -586,6 +587,23 @@ class ProductGroupController extends ProductMasterController
             $model = \common\models\costfit\ProductSuppliers::find()->where("productSuppId = " . $_POST["productId"])->one();
             if (isset($_POST["ProductSuppliers"])) {
                 $model->attributes = $_POST["ProductSuppliers"];
+
+
+                if (isset($_POST["ProductSuppliers"]["quantity"])) {
+                    $model->quantity = $_POST["ProductSuppliers"]["quantity"];
+                    $model->result = $model->quantity;
+                }
+
+                if (isset($_POST["ProductPriceSuppliers"])) {
+                    \common\models\costfit\ProductPriceSuppliers::updateAll(['status' => 0], "productSuppId = " . $_POST["productId"]);
+                    $price = new \common\models\costfit\ProductPriceSuppliers();
+                    $price->productSuppId = $_POST["productId"];
+                    $price->price = $_POST["ProductPriceSuppliers"]["price"];
+                    $price->discountType = 1;
+                    $price->createDateTime = new yii\db\Expression("NOW()");
+                    $price->save();
+                }
+
                 $model->save();
             }
         }
@@ -933,7 +951,7 @@ class ProductGroupController extends ProductMasterController
             }
         }
 
-        return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"], 'userId' => $_GET["userId"]]);
+        return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"], 'userId' => $_GET["userId"], 'productGroupTemplateId' => $model->productGroupTemplateId, 'step' => $model->step]);
     }
 
     public function actionDeleteProductSupp()
@@ -974,7 +992,7 @@ class ProductGroupController extends ProductMasterController
                 }
 
                 if (isset($_GET["step"]) && $_GET["step"] == "view") {
-                    return $this->redirect(['view', 'productGroupId' => $model->product->parentId, 'userId' => isset($_GET["userId"]) ? $_GET["userId"] : NULL]);
+                    return $this->redirect(['view', 'productGroupId' => $model->product->parentId, 'userId' => isset($_GET["userId"]) ? $_GET["userId"] : NULL, 'productGroupTemplateId' => $model->product->productGroupTemplateId, 'productGroupId' => $model->product->parentId, 'tab' => 2, 'step' => 4]);
                 } else {
                     return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->product->productGroupTemplateId, 'productGroupId' => $model->product->parentId, 'tab' => 2]);
                 }

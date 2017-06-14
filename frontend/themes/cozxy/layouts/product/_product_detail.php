@@ -54,29 +54,33 @@ $val = rand(1, 10);
                             echo '';
                         }
                         ?>
-                        <?php
-                        if ($model['price'] > 0 && $model['result'] > 0) {
-                            ?>
-                            <div class="row">
-                                <div class="col-sm-6 size18 b">QUANTITY</div>
-                                <div class="col-sm-6 text-right quantity-sel size18">
-                                    <a href="javascript:qSet('<?= $id ?>',-1,'<?= $model["productSuppId"] ?>','<?= isset($this->params['cart']['orderId']) ? $this->params['cart']['orderId'] : '' ?>','<?= $model["sendDate"] ?>');" class="q-minus"><i class="fa fa-minus-circle" aria-hidden="true" style="color: #000"></i></a>
-                                    <input type="text" id="quantity" name="quantity" class="quantity" value="1">
-                                    <a href="javascript:qSet('<?= $id ?>',1,'<?= $model["productSuppId"] ?>','<?= isset($this->params['cart']['orderId']) ? $this->params['cart']['orderId'] : '' ?>','<?= $model["sendDate"] ?>');" class="q-plus"><i class="fa fa-plus-circle" aria-hidden="true" style="color: #000"></i></a>
-                                </div>
-                            </div>
-                            <hr>
-                        <?php } ?>
+
 
                         <?php
+//                        throw new \yii\base\Exception(print_r($selectedOptions, true));
                         if (isset($productGroupOptionValues) && count($productGroupOptionValues) > 0) {
-                            foreach ($productGroupOptionValues as $title => $productGroupOptionValue):
+
+                            foreach ($productGroupOptionValues as $productGroupTemplateOptionId => $productGroupOptionValue):
+                                $selected = "";
+                                if (isset($selectedOptions) && count($selectedOptions) > 0) {
+                                    foreach ($selectedOptions as $selectedOption):
+//                                    throw new \yii\base\Exception(print_r($selectedOption, true));
+                                        if ($selectedOption["productGroupTemplateOptionId"] == $productGroupTemplateOptionId) {
+                                            $selected = $selectedOption["id"];
+                                            break;
+                                        }
+                                    endforeach;
+                                }
                                 ?>
                                 <form id="optionForm">
                                     <div class="row login-box">
-                                        <div class="col-sm-12 size18 b"><?= $title ?></div>
+                                        <div class="col-sm-12 size18 b"><?= common\models\costfit\ProductGroupTemplateOption::getTitle($productGroupTemplateOptionId) ?></div>
                                         <div class="col-sm-12 text-right quantity-sel size18">
-                                            <?= Html::dropDownList($title, '', $productGroupOptionValue, ['class' => 'fullwidth productOption']) ?>
+                                            <?php if (count($productGroupOptionValue) > 1): ?>
+                                                <?= Html::dropDownList($productGroupTemplateOptionId, $selected, $productGroupOptionValue, ['class' => 'fullwidth productOption']) ?>
+                                            <?php else: ?>
+                                                <?= array_values($productGroupOptionValue)[0]; ?>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                     <hr>
@@ -85,6 +89,19 @@ $val = rand(1, 10);
                             endforeach;
                         }
                         ?>
+                        <?php
+                        if ($model['price'] > 0 && $model['result'] > 0) {
+                            ?>
+                            <div class="row">
+                                <div class="col-sm-6 size18 b">QUANTITY</div>
+                                <div class="col-sm-6 text-right quantity-sel size18">
+                                    <a href="javascript:qSets('<?= $id ?>',-1,'<?= $model["productSuppId"] ?>','<?= isset($this->params['cart']['orderId']) ? $this->params['cart']['orderId'] : '' ?>','<?= $model["sendDate"] ?>','<?= isset($this->params['cart']['orderItemId']) ? $this->params['cart']['orderItemId'] : '' ?>');" class="q-minus"><i class="fa fa-minus-circle" aria-hidden="true" style="color: #000"></i></a>
+                                    <input type="text" id="quantity" name="quantity" class="quantity quantity-<?= $id ?>" value="1">
+                                    <a href="javascript:qSets('<?= $id ?>',1,'<?= $model["productSuppId"] ?>','<?= isset($this->params['cart']['orderId']) ? $this->params['cart']['orderId'] : '' ?>','<?= $model["sendDate"] ?>','<?= isset($this->params['cart']['orderItemId']) ? $this->params['cart']['orderItemId'] : '' ?>');" class="q-plus"><i class="fa fa-plus-circle" aria-hidden="true" style="color: #000"></i></a>
+                                </div>
+                            </div>
+                            <hr>
+                        <?php } ?>
                         <div class="size36">&nbsp;</div>
                         <div class="text-center abs" style="bottom: 0; left: 0; right: 0;">
                             <input type="hidden" id="maxQnty" value="<?php echo $model['result']; ?>">

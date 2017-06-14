@@ -22,7 +22,7 @@ if (!isset($isProductSupp)) {
 }
 $type = !isset($type) ? 1 : $type;
 
-echo "Grid Type=" . $type . "<br>";
+//echo "Grid Type=" . $type . "<br>";
 if (isset($dataProvider)) {
     $gridId = (!isset($type) || $type == 1) ? "product-grid1" : "product-grid2";
     Pjax::begin(['id' => 'pjax' . $gridId]);
@@ -60,7 +60,7 @@ if (isset($dataProvider)) {
                 'attribute' => 'title',
                 'format' => 'raw',
                 'value' => function($model) use($type) {
-                    return $model->title . " " . Html::button("Edit", ['onclick' => (isset($type) && $type == 2) ? "productModal$type($model->productSuppId)" : "productModal$type($model->productId)", 'class' => 'btn btn-primary btn-xs']);
+                    return (Yii::$app->controller->action->id != "view") ? $model->title . " " . Html::button("Edit", ['onclick' => (isset($type) && $type == 2) ? "productModal$type($model->productSuppId)" : "productModal$type($model->productId)", 'class' => 'btn btn-primary btn-xs']) : $model->title;
                 }
             ],
             [
@@ -243,6 +243,7 @@ $this->registerJs("
 
 
 ", \yii\web\View::POS_READY);
+
 
 $this->registerJs("
 

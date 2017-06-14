@@ -192,7 +192,7 @@ function addItemToWishlist(id) {
 }
 
 /*
- * Use : Site index
+ * Use : product show all
  * @param {type} id
  * @returns {undefined}
  */
