@@ -9,8 +9,6 @@ use kartik\depdrop\DepDrop;
 $this->title = 'Partner Membership Registration';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
-
 <style type="text/css">
     body{
         background-image: url("/images/be-our-partner/become-partner.jpg") ;
@@ -70,32 +68,32 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Compnay Name</label>
+                        <label for="exampleInputCompnay">Compnay Name</label>
                         <?php echo $form->field($model, 'company')->textInput(['class' => 'fullwidth', 'placeholder' => 'Compnay Name'])->label(FALSE); ?>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Business Registration No </label>
+                        <label for="exampleInputBusiness">Business Registration No </label>
                         <?php echo $form->field($modelUser, 'brn')->textInput(['class' => 'fullwidth', 'placeholder' => 'Business Registration No'])->label(FALSE); ?>
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Tax </label>
+                        <label for="exampleInputTax">Tax </label>
                         <?php echo $form->field($model, 'tax')->textInput(['class' => 'fullwidth', 'placeholder' => 'Tax'])->label(FALSE); ?>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Mobile Number</label>
+                        <label for="exampleInputMobile">Mobile Number</label>
                         <?php echo $form->field($model, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'Mobile Number'])->label(false); ?>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Day</label>
+                        <label for="exampleInputDay">Day</label>
                         <?=
                         Html::dropDownList('User[day]', NULL, $birthdate['dates'], ['prompt' => '---Select day---', 'class' => 'fullwidth productOption'
                             , 'options' =>
@@ -108,7 +106,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Month</label>
+                        <label for="exampleInputMonth">Month</label>
                         <?=
                         Html::dropDownList('User[month]', NULL, $birthdate['month'], ['prompt' => '---Select month---', 'class' => 'fullwidth productOption'
                             , 'options' =>
@@ -121,7 +119,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Year</label>
+                        <label for="exampleInputYear">Year</label>
                         <?=
                         Html::dropDownList('User[years]', NULL, $birthdate['years'], ['prompt' => '---Select year---', 'class' => 'fullwidth productOption'
                             , 'options' =>
@@ -149,19 +147,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Email</label>
+                        <label for="exampleInputEmail">Email</label>
                         <?php echo $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'Email'])->label(false); ?>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Password</label>
+                        <label for="exampleInputPassword">Password</label>
                         <?= $form->field($modelUser, 'password')->passwordInput(['class' => 'fullwidth', 'placeholder' => 'PASSWORD'])->label(false); ?>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Confirm Password</label>
+                        <label for="exampleInputConfirm">Confirm Password</label>
                         <?= $form->field($modelUser, 'confirmPassword')->passwordInput(['class' => 'fullwidth', 'placeholder' => 'CONFIRM PASSWORD'])->label(false); ?>
                     </div>
                 </div>
@@ -180,25 +178,25 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">First Name</label>
+                        <label for="exampleInputFirstName">First Name</label>
                         <?= $form->field($model, 'firstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Last Name</label>
+                        <label for="exampleInputLastName">Last Name</label>
                         <?= $form->field($model, 'lastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LASTNAME'])->label(false); ?>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Company address</label>
+                        <label for="exampleInputCompanyAddress">Company address</label>
                         <?= $form->field($model, 'address')->textarea(['class' => 'fullwidth', 'placeholder' => 'ADDRESS', 'rows' => '6'])->label(false); ?>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Countries</label>
+                        <label for="exampleInputCountries">Countries</label>
                         <?php
                         echo $form->field($model, 'countryId')->widget(kartik\select2\Select2::classname(), [
                             //'options' => ['id' => 'address-countryid'],
@@ -214,7 +212,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Province</label>
+                        <label for="exampleInputProvince">Province</label>
                         <?php
                         echo Html::hiddenInput('input-type-1', $model->provinceId, ['id' => 'input-type-1']);
                         echo Html::hiddenInput('input-type-2', $model->provinceId, ['id' => 'input-type-2']);
@@ -238,7 +236,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">City</label>
+                        <label for="exampleInputCity">City</label>
                         <?php
                         echo Html::hiddenInput('input-type-11', $model->amphurId, ['id' => 'input-type-11']);
                         echo Html::hiddenInput('input-type-22', $model->amphurId, ['id' => 'input-type-22']);
@@ -261,7 +259,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">District</label>
+                        <label for="exampleInputDistrict">District</label>
                         <?php
                         echo Html::hiddenInput('input-type-13', $model->districtId, ['id' => 'input-type-13']);
                         echo Html::hiddenInput('input-type-33', $model->districtId, ['id' => 'input-type-33']);
@@ -284,7 +282,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Zipcode</label>
+                        <label for="exampleInputZipcode">Zipcode</label>
                         <?php
                         echo Html::hiddenInput('input-type-14', $model->districtId, ['id' => 'input-type-14']);
                         echo Html::hiddenInput('input-type-42', $model->districtId, ['id' => 'input-type-42']);
