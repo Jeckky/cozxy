@@ -22,7 +22,7 @@ if (!isset($isProductSupp)) {
 }
 $type = !isset($type) ? 1 : $type;
 
-echo "Grid Type=" . $type . "<br>";
+//echo "Grid Type=" . $type . "<br>";
 if (isset($dataProvider)) {
     $gridId = (!isset($type) || $type == 1) ? "product-grid1" : "product-grid2";
     Pjax::begin(['id' => 'pjax' . $gridId]);

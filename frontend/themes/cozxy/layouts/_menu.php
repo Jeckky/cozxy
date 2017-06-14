@@ -35,7 +35,7 @@ use yii\bootstrap\ActiveForm;
                     }
                     ?>
                     <div class="col-xs-3"><a href="<?php echo Yii::$app->homeUrl; ?>my-account?act=2" class="u-menu-2">&nbsp;</a></div>
-                    <div class="col-xs-3"><?= Html::a('&nbsp;', [Yii::$app->homeUrl . 'cart'], ['class' => 'u-menu-3']) ?>
+                    <div class="col-xs-3"><?= Html::a('&nbsp;', Yii::$app->homeUrl . 'cart', ['class' => 'u-menu-3']) ?>
                         <?php
                         if (Yii::$app->user->id != '') {
                             $Product = \common\models\costfit\Order::find()->where('userId =' . \Yii::$app->user->id . ' and status=0')->one();

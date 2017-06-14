@@ -50,6 +50,17 @@ $form = ActiveForm::begin([
                 </div>
             </div>
 
+            <?php if (isset($type) && $type == 2): ?>
+                <?= $form->field($model, 'quantity', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 10]); ?>
+                <?php
+                $priceModel = common\models\costfit\ProductPriceSuppliers::find()->where("productSuppId = $model->productSuppId AND status = 1")->one();
+                if (!isset($priceModel)) {
+                    $priceModel = new common\models\costfit\ProductPriceSuppliers();
+                }
+                ?>
+                <?= $form->field($priceModel, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 10]); ?>
+            <?php endif; ?>
+
 
 
             <?//= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6', 'id' => 'description' . $id]) ?>
