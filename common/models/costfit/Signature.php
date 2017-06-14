@@ -49,4 +49,13 @@ class Signature extends \common\models\costfit\master\SignatureMaster {
         }
     }
 
+    public static function financialSignature() {
+        $signature = Signature::find()->where("position='finance'")->one();
+        if (isset($signature)) {
+            return $signature->image;
+        } else {
+            return '';
+        }
+    }
+
 }

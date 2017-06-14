@@ -322,7 +322,7 @@ class User extends \common\models\costfit\master\UserMaster {
             if ($tel == true) {
                 $address = $text->address . " " . $district . " " . $city . " " . $state . " " . $id . "<br>TEL. " . $text->tel . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fax. " . $text->fax;
             } else {
-                $address = $text->address . " " . $district . " " . $city . " " . $state . " " . $id;
+                $address = $text->address . " " . $district . " " . $city . " " . $state;
             }
             return $address;
         } else {
