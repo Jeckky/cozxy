@@ -587,6 +587,23 @@ class ProductGroupController extends ProductMasterController
             $model = \common\models\costfit\ProductSuppliers::find()->where("productSuppId = " . $_POST["productId"])->one();
             if (isset($_POST["ProductSuppliers"])) {
                 $model->attributes = $_POST["ProductSuppliers"];
+
+
+                if (isset($_POST["ProductSuppliers"]["quantity"])) {
+                    $model->quantity = $_POST["ProductSuppliers"]["quantity"];
+                    $model->result = $model->quantity;
+                }
+
+                if (isset($_POST["ProductPriceSuppliers"])) {
+                    \common\models\costfit\ProductPriceSuppliers::updateAll(['status' => 0], "productSuppId = " . $_POST["productId"]);
+                    $price = new \common\models\costfit\ProductPriceSuppliers();
+                    $price->productSuppId = $_POST["productId"];
+                    $price->price = $_POST["ProductPriceSuppliers"]["price"];
+                    $price->discountType = 1;
+                    $price->createDateTime = new yii\db\Expression("NOW()");
+                    $price->save();
+                }
+
                 $model->save();
             }
         }
@@ -975,7 +992,7 @@ class ProductGroupController extends ProductMasterController
                 }
 
                 if (isset($_GET["step"]) && $_GET["step"] == "view") {
-                    return $this->redirect(['view', 'productGroupId' => $model->product->parentId, 'userId' => isset($_GET["userId"]) ? $_GET["userId"] : NULL]);
+                    return $this->redirect(['view', 'productGroupId' => $model->product->parentId, 'userId' => isset($_GET["userId"]) ? $_GET["userId"] : NULL, 'productGroupTemplateId' => $model->product->productGroupTemplateId, 'productGroupId' => $model->product->parentId, 'tab' => 2, 'step' => 4]);
                 } else {
                     return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->product->productGroupTemplateId, 'productGroupId' => $model->product->parentId, 'tab' => 2]);
                 }

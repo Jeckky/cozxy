@@ -88,12 +88,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         <?= $this->render("_product_grid", ["dataProvider" => $dataProvider]); ?>
                     </div>
                     <?php if (!$isMaster): ?>
-                        <div class="tab-pane fade text-center" role="tabpanel" id="myProduct" aria-labelledby="profile-tab">
+                        <div class="tab-pane fade" role="tabpanel" id="myProduct" aria-labelledby="profile-tab">
                             <?php if ($dataProvider2->getTotalCount() > 0): ?>
                                 <?= $this->render("_product_grid", ["dataProvider" => $dataProvider2, 'gridTitle' => "<span style='color:white;font-weight:bold'>My Product</span>", 'type' => 2, 'isProductSupp' => TRUE]); ?>
                             <?php else: ?>
-                                <h3>Create My Product</h3>
-                                <a  href="<?= Yii::$app->homeUrl . "product/product-group/create-my-product?productGroupId=" . $_GET["productGroupId"]; ?>" class="btn btn-success btn-lg">Create</a>
+                                <center>
+                                    <h3>Create My Product</h3>
+                                    <a  href="<?= Yii::$app->homeUrl . "product/product-group/create-my-product?productGroupId=" . $_GET["productGroupId"]; ?>" class="btn btn-success btn-lg">Create</a>
+                                </center>
                             <?php endif; ?>
                         </div>
                     <?php endif; ?>
