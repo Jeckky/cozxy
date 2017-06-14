@@ -18,8 +18,20 @@ $(window).resize(function () {
     descSet();
 });
 
-function qSet(y, x, productSuppId, orderId, sendDate) {
+/*
+ * use after add to cart
+ * @param {type} y
+ * @param {type} x
+ * @param {type} productSuppId
+ * @param {type} orderId
+ * @param {type} sendDate
+ * @param {type} orderItemId
+ * @returns {undefined}
+ */
+function qSet(y, x, productSuppId, orderId, sendDate, orderItemId) {
     var temp = parseInt($('.quantity-' + y).val());
+
+    //alert(temp);
 
     if (isNaN(temp)) {
         temp = 1;
@@ -43,7 +55,22 @@ function qSet(y, x, productSuppId, orderId, sendDate) {
         {
             if (data.status) {
                 $('.price-detail').find('.summaryFormatText').html(data.cart.summaryFormatText + ' THB');
-                $('.qty-cart').find('#qty-cart-show').html(temp);
+                $('.qty-cart').find('#qty-cart-show-' + orderItemId).html(temp);
+
+                $.ajax({
+                    type: "POST",
+                    url: $baseUrl + "cart/get-product-quantity",
+                    data: {},
+                    success: function (data, status)
+                    {
+                        if (status == "success") {
+                            $('#notify-cart-top-menu').html(data);
+                        } else {
+
+                        }
+                    }
+                });
+
                 /*$button.parent().parent().find(".price").html(data.priceText);
 
                  $button.parent().parent().find(".total").html(data.subTotalText + " ฿");
@@ -134,6 +161,12 @@ function proceed(data) {
     }
 }
 
+/*
+ * ise delete items to cart
+ * @param {type} ItemOrderId
+ * @returns {undefined}
+ */
+
 function deleteItemCart(ItemOrderId) {
     //alert(ItemOrderId);
 
@@ -168,6 +201,38 @@ function deleteItemCart(ItemOrderId) {
         });
     } else {
         //window.confirm("Sure to delete item");
+    }
+
+}
+
+
+/*
+ * Before Add To Cart
+ * @param {type} y
+ * @param {type} x
+ * @param {type} productSuppId
+ * @param {type} orderId
+ * @param {type} sendDate
+ * @param {type} orderItemId
+ * @returns {undefined}
+ */
+function qSets(y, x, productSuppId, orderId, sendDate, orderItemId) {
+    var temp = parseInt($('.quantity-' + y).val());
+
+    //alert(temp);
+
+    /* if (isNaN(temp)) {
+     temp = 1;
+     }
+     temp += x;
+     if (temp < 1) {
+     temp = 1;
+     }*/
+    $('.quantity-' + y).val(temp);
+    if (temp > 1) {
+        $('.multi-' + y).html(temp + ' x ');
+    } else {
+        $('.multi-' + y).html('');
     }
 
 }

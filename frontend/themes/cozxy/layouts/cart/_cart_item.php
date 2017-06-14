@@ -23,9 +23,9 @@ $val = rand(1, 10);
                 <span class="size14 onsale"><?= number_format($item["priceMarket"], 2) ?> THB</span>
             </p>
             <div class="col-xs-12 size18 quantity-sel">
-                <a href="javascript:qSet('<?= $id ?>',-1,'<?= $item["productSuppId"] ?>','<?= $this->params['cart']['orderId'] ?>','<?= $item["sendDate"] ?>');"><i class="fa fa-minus-circle" aria-hidden="true" style="color: #000"></i></a>
+                <a href="javascript:qSet('<?= $id ?>',-1,'<?= $item["productSuppId"] ?>','<?= $this->params['cart']['orderId'] ?>','<?= $item["sendDate"] ?>','<?= $item['orderItemId'] ?>');"><i class="fa fa-minus-circle" aria-hidden="true" style="color: #000"></i></a>
                 <input type="text" name="quantity" id="quantity" class="quantity quantity-<?= $id ?>" value="<?= $item["qty"] ?>">
-                <a href="javascript:qSet('<?= $id ?>',1,'<?= $item["productSuppId"] ?>','<?= $this->params['cart']['orderId'] ?>','<?= $item["sendDate"] ?>');"><i class="fa fa-plus-circle" aria-hidden="true" style="color: #000"></i></a>
+                <a href="javascript:qSet('<?= $id ?>',1,'<?= $item["productSuppId"] ?>','<?= $this->params['cart']['orderId'] ?>','<?= $item["sendDate"] ?>','<?= $item['orderItemId'] ?>');"><i class="fa fa-plus-circle" aria-hidden="true" style="color: #000"></i></a>
             </div>
         </div>
         <div class="col-sm-3 fc-g666">
@@ -33,7 +33,7 @@ $val = rand(1, 10);
                 <tr >
                     <td>Quatity</td>
                     <td style="width:32px">:</td>
-                    <td><div id="qty-cart-show"><?= $item["qty"] ?></div></td>
+                    <td><div id="qty-cart-show-<?= $item['orderItemId'] ?>"><?= $item["qty"] ?></div></td>
                 </tr>
                 <?php
                 $options = \common\models\costfit\ProductGroupOptionValue::find()->where("productSuppId = " . $item["productSuppId"])->all();
@@ -47,9 +47,9 @@ $val = rand(1, 10);
                     </tr>
                 <?php endforeach; ?>
 <!--                <tr>
-    <td>Size</td>
-    <td>:</td>
-    <td>None</td>
+<td>Size</td>
+<td>:</td>
+<td>None</td>
 </tr>-->
 
             </table>
