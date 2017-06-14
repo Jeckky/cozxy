@@ -268,9 +268,20 @@ class PackingController extends StoreMasterController {
         }
         $orderItem = OrderItemPacking::find()->where("bagNo='" . $bag . "'")->one();
         $order = OrderItem::find()->where("orderItemId=" . $orderItem->orderItemId)->one();
+        $fullYear = date('Y');
+        $d = date('d');
+        $year = substr($fullYear, 2, 2);
+        $m = date('m');
+        $tax = $this->genTaxNo();
+        $date = $year . $m;
+        $fullDate = $d . "/" . $m . "/" . $year;
+        $this->saveTaxNo($bag, $tax);
         return $this->renderPartial('bag_label', [
                     'bagNo' => $bag,
-                    'orderId' => $order->orderId
+                    'orderId' => $order->orderId,
+                    'taxNo' => $tax,
+                    'date' => $date,
+                    'fullDate' => $fullDate
         ]);
     }
 
@@ -343,6 +354,31 @@ class PackingController extends StoreMasterController {
             $max_code += 1;
         }
         return $prefix . date("Ymd") . "-" . str_pad($max_code, 7, "0", STR_PAD_LEFT);
+    }
+
+    static function saveTaxNo($bagNo, $taxNo) {
+        $orderItemPacking = OrderItemPacking::find()->where("bagNo='" . $bagNo . "'")->all();
+        if (isset($orderItemPacking) && count($orderItemPacking) > 0) {
+            foreach ($orderItemPacking as $item):
+                if ($item->taxNo == '' || $item->taxNo == null) {//ถ้ามีแล้วไม่ต้องGEN ใหม่
+                    $item->taxNo = $taxNo;
+                    $item->save(false);
+                }
+            endforeach;
+        }
+    }
+
+    static function genTaxNo() {
+        $orderItemPacking = OrderItemPacking::find()->where("1")
+                ->orderBy("TaxNo DESC")
+                ->one();
+        $taxNo = "00001";
+        if (isset($orderItemPacking)) {
+            $taxNo = $orderItemPacking->taxNo;
+        }
+        $taxNo += 1;
+        $taxNo = str_pad($taxNo, 5, "0", STR_PAD_LEFT);
+        return $taxNo;
     }
 
     static function checkFully($orderItemId) {

@@ -107,6 +107,7 @@ use yii\bootstrap\ActiveForm;
             $category = \common\models\costfit\ProductSuppliers::find()
             ->select('`product_suppliers`.categoryId , `category`.title , count(`product_suppliers`.`categoryId`)')
             ->join("LEFT JOIN", "category", "category.categoryId=product_suppliers.categoryId")
+            ->where("approve = 'approve'")
             ->groupBy('`product_suppliers`.categoryId')
             ->orderBy('count(`product_suppliers`.`categoryId`) asc')
             ->limit(11)

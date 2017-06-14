@@ -300,7 +300,7 @@ class StoreProductController extends StoreMasterController {
 
     public function saveChooesPo($userId, $storeProductGroupId) {
         $storeProductGroup = StoreProductGroup::find()->where("storeProductGroupId=" . $storeProductGroupId)->one();
-        if (isset($storeProductGroup) && !empty($storeProductGroup)) {
+        if (isset($storeProductGroup)) {
             $storeProductGroup->status = 5;
             $storeProductGroup->arranger = $userId;
             $storeProductGroup->updateDateTime = new \yii\db\Expression('NOW()');
