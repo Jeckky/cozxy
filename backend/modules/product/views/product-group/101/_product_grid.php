@@ -60,7 +60,7 @@ if (isset($dataProvider)) {
                 'attribute' => 'title',
                 'format' => 'raw',
                 'value' => function($model) use($type) {
-                    return $model->title . " " . Html::button("Edit", ['onclick' => (isset($type) && $type == 2) ? "productModal$type($model->productSuppId)" : "productModal$type($model->productId)", 'class' => 'btn btn-primary btn-xs']);
+                    return (Yii::$app->controller->action->id != "view") ? $model->title . " " . Html::button("Edit", ['onclick' => (isset($type) && $type == 2) ? "productModal$type($model->productSuppId)" : "productModal$type($model->productId)", 'class' => 'btn btn-primary btn-xs']) : $model->title;
                 }
             ],
             [
