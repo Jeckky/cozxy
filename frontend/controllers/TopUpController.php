@@ -565,8 +565,9 @@ class TopUpController extends MasterController {
     }
 
     public function actionHistory() {
-        $model = TopUp::find()->where("status >1 and userId=" . Yii::$app->user->id)->orderBy('updateDateTime DESC');
-        $topUps = TopUp::find()->where("status >1 and userId=" . Yii::$app->user->id)->orderBy('updateDateTime DESC')->all();
+        $model = TopUp::find()->where("status >1 and userId=" . Yii::$app->user->id . " and type=1")->orderBy('updateDateTime DESC');
+        $topUps = TopUp::find()->where("status >1 and userId=" . Yii::$app->user->id . " and type=1")->orderBy('updateDateTime DESC')->all();
+        $cozxySystemPoint = TopUp::find()->where("userId=" . Yii::$app->user->id . " and type=2");
         $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
         $currentPoint = 0;
         if (isset($userPoint) && count($userPoint) > 0) {
@@ -575,8 +576,10 @@ class TopUpController extends MasterController {
         $dataProvider = new ActiveDataProvider([
             'query' => $model,
         ]);
-        if (isset($_POST["topUpId"])) {
-
+        $dataProviderSys = new ActiveDataProvider([
+            'query' => $cozxySystemPoint,
+        ]);
+        if (isset($_POST["topUpId"])) {//confirm billpayment
             $topUpId = $_POST["topUpId"];
             $uploadTo = TopUp::find()->where("topUpId=$topUpId")->one();
             $imageObj = \yii\web\UploadedFile::getInstanceByName("slipUpload[image]");
@@ -602,8 +605,41 @@ class TopUpController extends MasterController {
                         'model' => $model,
                         'dataProvider' => $dataProvider,
                         'topUps' => $topUps,
-                        'currentPoint' => $currentPoint
+                        'currentPoint' => $currentPoint,
+                        'dataProviderSys' => $dataProviderSys
             ]);
+        }
+    }
+
+    public function actionSystemTopUp() {
+        $userId = Yii::$app->user->id;
+        $point = 100;
+        $money = 100;
+        $model = new TopUp();
+        $model->userId = $userId;
+        $model->point = $point;
+        $model->paymentMethod = 3; //from system
+        $model->type = 2; //from system
+        $model->description = "Colse Locker";
+        $model->status = 1;
+        $model->createDateTime = new \yii\db\Expression('NOW()');
+        $model->updateDateTime = new \yii\db\Expression('NOW()');
+        if ($model->save(false)) {
+            $userPoint = UserPoint::find()->where("userId=" . $userId)->one();
+            if (isset($userPoint)) {
+                $userPoint->currentCozxySystemPoint += $point;
+                $userPoint->totalCozxySystemPoint += $point;
+                $model->createDateTime = new \yii\db\Expression('NOW()');
+                $model->updateDateTime = new \yii\db\Expression('NOW()');
+            } else {
+                $userPoint = new UserPoint();
+                $userPoint->userId = $userId;
+                $userPoint->currentCozxySystemPoint += $point;
+                $userPoint->totalCozxySystemPoint += $point;
+                $model->createDateTime = new \yii\db\Expression('NOW()');
+                $model->updateDateTime = new \yii\db\Expression('NOW()');
+            }
+            $userPoint->save(false);
         }
     }
 
