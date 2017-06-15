@@ -15,19 +15,22 @@ use \common\models\costfit\master\UserGroupsMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class UserGroups extends \common\models\costfit\master\UserGroupsMaster {
+class UserGroups extends \common\models\costfit\master\UserGroupsMaster
+{
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributes() {
+    public function attributes()
+    {
         return array_merge(parent::attributes(), [
         //'name',
         ]);
@@ -36,19 +39,27 @@ class UserGroups extends \common\models\costfit\master\UserGroupsMaster {
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    static public function checkUserGroup($userGroup) {
+    static public function checkUserGroup($userGroup)
+    {
+
         $CheckuserGroup = str_replace('[', '', str_replace(']', '', $userGroup));
+
         if ($CheckuserGroup != '') {
             //echo $userGroup;
             $userGroupx = str_replace('[', '(', str_replace(']', ')', $userGroup));
+//            throw new \yii\base\Exception($userGroupx);
             // echo $userGroupx;
+            if (strpos($userGroupx, "(") === FALSE) {
+                $userGroupx = "(" . $userGroupx . ")";
+            }
             $result = UserGroups::find()
             ->select('group_concat(name) as name')
-            ->where("user_group_Id in (" . $userGroupx . ")  ")
+            ->where("user_group_Id in " . $userGroupx . "  ")
             ->one();
         } else {
             $result = NULL;
