@@ -328,7 +328,7 @@ class FakeFactory extends Model {
             'categoryId' => $GetProductSuppliers['categoryId'],
             'receiveType' => $GetProductSuppliers['receiveType'],
             'title' => isset($GetProductSuppliers['title']) ? $GetProductSuppliers['title'] : '',
-            'shortDescription' => isset($GetProductSuppliers['specification']) ? $GetProductSuppliers['specification'] : '',
+            'shortDescription' => isset($GetProductSuppliers['shortDescription']) ? $GetProductSuppliers['shortDescription'] : '',
             'description' => isset($GetProductSuppliers['description']) ? $GetProductSuppliers['description'] : '',
             'specification' => isset($GetProductSuppliers['specification']) ? $GetProductSuppliers['specification'] : '',
             'quantity' => isset($GetProductSuppliers['quantity']) ? $GetProductSuppliers['quantity'] : '',
@@ -346,7 +346,7 @@ class FakeFactory extends Model {
             'receiveType' => $GetProductSuppliers['receiveType'],
             'wishList' => $wishList,
             'sendDate' => '',
-            'shortDescriptionCozxy' => isset($GetProductCozxy['shortDescription']) ? $GetProductCozxy['shortDescription'] : '',
+            'shortDescriptionCozxy' => isset($GetProductCozxy['specification']) ? $GetProductCozxy['specification'] : '',
             'descriptionCozxy' => isset($GetProductCozxy['description']) ? $GetProductCozxy['description'] : '',
         ];
         // }
