@@ -98,7 +98,8 @@ class PickingController extends StoreMasterController {
             $check = $this->checkVariableOrder($allOrderId); // check ว่า order ที่เลือกมามีคนหยิบไปแล้วหรือยัง ถ้ามีคนหยิบไปแล้ว(return false) กลับไปหน้าเลือกorderใหม่
             if ($check == FALSE) {
                 $alert = 'false';
-                return $this->redirect($baseUrl . '/store/picking?alert=' . $alert);
+                // throw new \yii\base\Exception('1234');
+                // return $this->redirect($baseUrl . '/store/picking?alert=' . $alert);
 //                return $this->render('index', [
 //                            'dataProvider' => $dataProvider,
 //                            'selects' => $select,
@@ -111,9 +112,13 @@ class PickingController extends StoreMasterController {
             foreach ($allOrderId as $orderId):
                 $items = OrderItem::find()->where("orderId = " . $orderId . " and status in (1,4,5) and DATE(DATE_SUB(sendDateTime, INTERVAL " . OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE()")->all();
                 if (isset($items) && !empty($items)) {
+                    //throw new \yii\base\Exception('0000');
                     foreach ($items as $item):
                         $flag = false;
-                        if (isset($_GET['qrSlot']) && $_GET['qrSlot'] != '') {//ถ้ามีการ ค้นหาด้วย qrcode
+                        if (isset($_GET['qrSlot'])) {//ถ้ามีการ ค้นหาด้วย qrcode
+                            if ($_GET['qrSlot'] == '') {
+                                return $this->redirect($baseUrl . '/store/picking');
+                            }
                             $storeSlot = \common\models\costfit\StoreSlot::find()->where("barcode = '" . $_GET['qrSlot'] . "'")->one();
                             if (isset($storeSlot)) {
                                 $slots[0] = $storeSlot->storeSlotId;
@@ -122,9 +127,11 @@ class PickingController extends StoreMasterController {
                             }
                         } else {
                             $result = $item->quantity;
+
                             // $slot = \common\models\costfit\StoreProductArrange::find()->where("productId = " . $item->productId . " and status = 4 and result!=0 order by createDateTime")->all(); //หา slot ทั้งหมดที่ product วางอยู่ และ ไม่เท่ากับ 0
                             $slot = \common\models\costfit\StoreProductArrange::find()->where("productSuppId = " . $item->productSuppId . " and status = 4 and result!=0 order by createDateTime")->all(); //หา slot ทั้งหมดที่ product วางอยู่ และ ไม่เท่ากับ 0
                             if (isset($slot) && !empty($slot)) {
+                                // throw new \yii\base\Exception('34325');
 //throw new \yii\base\Exception(print_r($slot, true));
                                 foreach ($slot as $eSlot):
                                     $enoughItemInSlot = false;
@@ -133,6 +140,7 @@ class PickingController extends StoreMasterController {
                                     $enoughItemInSlot = $this->checkEnoughItemInSlot($eSlot->slotId, $item->productSuppId, $result); //เชคว่าในสล็อตนั้นมีของครบเปล่า/ถ้าครบ เบรค ไปโปรดักถัดไป
                                     $flag = $this->checkSlot($slots, $eSlot->slotId); //check ว่า เป็น slot  เดียวกันมั๊ย ถ้า slot  เดียวกันเอาแค่ อันเดียว
                                     if ($flag) {
+
                                         $slots[$i] = $eSlot->slotId;
                                         $i++;
                                     }
@@ -208,10 +216,15 @@ class PickingController extends StoreMasterController {
             foreach ($allOrderId as $orderId):
                 $items = OrderItem::find()->where("orderId = " . $orderId . " and DATE(DATE_SUB(sendDateTime, INTERVAL " . OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE()")->all();
                 if (isset($items) && !empty($items)) {
+                    //throw new \yii\base\Exception('11');
                     foreach ($items as $item):
+                        //throw new \yii\base\Exception('2');
                         $flag = false;
-                        if (isset($_GET['qrSlot']) && $_GET['qrSlot'] != '') {//ถ้ามีการ ค้นหาด้วย qrcode
+                        if (isset($_GET['qrSlot'])) {//ถ้ามีการ ค้นหาด้วย qrcode
                             $storeSlot = \common\models\costfit\StoreSlot::find()->where("barcode = '" . $_GET['qrSlot'] . "'")->one();
+                            if ($_GET['qrSlot'] == '') {
+                                return $this->redirect($baseUrl . '/store/picking');
+                            }
                             if (isset($storeSlot)) {
                                 $slots[0] = $storeSlot->storeSlotId;
                             } else {
@@ -266,6 +279,7 @@ class PickingController extends StoreMasterController {
                 ]);
             }
         } else {
+
             return $this->render('index', [
                         'dataProvider' => $dataProvider,
                         'selects' => $select,

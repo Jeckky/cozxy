@@ -209,7 +209,15 @@ class FakeFactory extends Model {
                     $results_rating = $rating_score / $rating_member;
                 }
 
-                $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $items['productSuppId'], 'Svg64x64');
+                $controller = Yii::$app->urlManager->parseRequest(Yii::$app->request);
+                //echo $test[0];
+                //exit();
+                if ($controller[0] == '') {
+                    $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $items['productSuppId'], 'Svg260x260');
+                } else {
+                    $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $items['productSuppId'], 'Svg64x64');
+                }
+
                 $products[$value->productId] = [
                     'productId' => $value->productId,
                     'productPostId' => $value->productPostId,

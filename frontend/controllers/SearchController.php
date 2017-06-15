@@ -89,11 +89,17 @@ class SearchController extends MasterController {
 
         $productCanSell = new ArrayDataProvider(
         [
-            'allModels' => DisplaySearch::productSearchBrand($brandId, '', FALSE)
+            'allModels' => DisplaySearch::productSearchBrand($brandId, '', FALSE, 'sale')
             , 'pagination' => ['defaultPageSize' => 12]
         ]);
 
-        return $this->render('brand', compact('productCanSell', 'brandName'));
+        $productNotSell = new ArrayDataProvider(
+        [
+            'allModels' => DisplaySearch::productSearchBrand($brandId, '', FALSE, 'notsale')
+            , 'pagination' => ['defaultPageSize' => 12]
+        ]);
+
+        return $this->render('brand', compact('productCanSell', 'brandName', 'productNotSell'));
     }
 
     public function actionFilterPrice() {
