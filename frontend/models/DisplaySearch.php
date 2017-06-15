@@ -11,9 +11,11 @@ use common\models\costfit\ProductSuppliers;
 /**
  * ContactForm is the model behind the contact form.
  */
-class DisplaySearch extends Model {
+class DisplaySearch extends Model
+{
 
-    public static function productSearch($search_hd, $n, $cat = FALSE) {
+    public static function productSearch($search_hd, $n, $cat = FALSE)
+    {
         $products = [];
 
         $whereArray = [];
@@ -86,63 +88,65 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSearchBrand($brandId, $n, $cat = FALSE, $status) {
+    public static function productSearchBrand($brandId, $n, $cat = FALSE, $status)
+    {
 
         $products = [];
 
-        $whereArray2 = [];
-        $whereArray2["ps.brandId"] = $brandId;
-
-        $whereArray2["product.approve"] = "approve";
-//$whereArray2["ps.result"] = "0";
-        $whereArray2["pps.status"] = "1";
+        $xxx = \common\models\costfit\CategoryToProduct::find()->all();
 
         $product = \common\models\costfit\CategoryToProduct::find()
         ->select('ps.*,pps.*,category_to_product.*')
         ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
         ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
         ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
-        ->where($whereArray2);
-        if ($status == 'sale') {
-            $product->andWhere('pps.price > 0');
-            $product->andWhere('ps.result > 0');
-        } elseif ($status == 'notsale') {
-            $product->andWhere('pps.price = 0');
-            $product->andWhere('ps.result = 0');
-        }
-        $product->groupBy('ps.productSuppId')->all();
+        ->where("ps.brandId  = $brandId AND product.approve = 'approve' AND pps.status = 1")
+        ->andWhere(($status == 'sale') ? 'pps.price > 0 AND ps.result > 0' : 'pps.price = 0 AND ps.result = 0')
+        ->groupBy('ps.productSuppId')
+        ->all();
 
 
-        foreach ($product as $value) {
 
-            $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
+//        throw new \yii\base\Exception(print_r($product, TRUE));
 
-            $price_s = isset($value->product) ? number_format($value->product->price, 2) : ''; //number_format($value->product->price, 2);
-            $price = number_format($value->price, 2);
 
-            $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
-            $products[$value->productSuppId] = [
-                'productSuppId' => $value->productSuppId,
-                'image' => $productImagesThumbnail1,
-                'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
-                'brand' => isset($value->brand) ? $value->brand->title : '',
-                'title' => substr($value->title, 0, 35),
-                'price_s' => isset($price_s) ? $price_s : '',
-                'price' => isset($price) ? $price : '',
-                'maxQnty' => isset($value->result) ? $value->result : '',
-                'fastId' => FALSE,
-                'productId' => isset($value->productId) ? $value->productId : '',
-                'supplierId' => isset($value->userId) ? $value->userId : '',
-                'receiveType' => isset($value->receiveType) ? $value->receiveType : '',
-                'wishList' => $wishList
-            ];
+
+
+
+
+        if (count($product) > 0) {
+            foreach ($product as $value) {
+//            throw new \yii\base\Exception(print_r($value, true));
+                $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
+
+                $price_s = isset($value->product) ? number_format($value->product->price, 2) : ''; //number_format($value->product->price, 2);
+                $price = number_format($value->price, 2);
+
+                $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
+                $products[$value->productSuppId] = [
+                    'productSuppId' => $value->productSuppId,
+                    'image' => $productImagesThumbnail1,
+                    'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
+                    'brand' => isset($value->brand) ? $value->brand->title : '',
+                    'title' => substr($value->title, 0, 35),
+                    'price_s' => isset($price_s) ? $price_s : '',
+                    'price' => isset($price) ? $price : '',
+                    'maxQnty' => isset($value->result) ? $value->result : '',
+                    'fastId' => FALSE,
+                    'productId' => isset($value->productId) ? $value->productId : '',
+                    'supplierId' => isset($value->userId) ? $value->userId : '',
+                    'receiveType' => isset($value->receiveType) ? $value->receiveType : '',
+                    'wishList' => $wishList
+                ];
+            }
         }
 
 
         return $products;
     }
 
-    public static function productSearchBrandNoStorck($brandId, $n, $cat = FALSE) {
+    public static function productSearchBrandNoStorck($brandId, $n, $cat = FALSE)
+    {
 
         $products = [];
 
@@ -194,7 +198,8 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSearchCategory($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE) {
+    public static function productSearchCategory($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE)
+    {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE && $mins == FALSE && $maxs == FALSE) {
@@ -284,7 +289,8 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSearchCategoryNotSale($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE) {
+    public static function productSearchCategoryNotSale($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE)
+    {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE && $mins == FALSE && $maxs == FALSE) {
@@ -389,7 +395,8 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSearchCategoryShowMore($s, $e, $cat = FALSE) {
+    public static function productSearchCategoryShowMore($s, $e, $cat = FALSE)
+    {
         $products = [];
         $whereArray = [];
 
