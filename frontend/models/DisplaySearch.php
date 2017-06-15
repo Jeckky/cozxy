@@ -21,17 +21,6 @@ class DisplaySearch extends Model
         $whereArray = [];
 
         if (isset($search_hd)) {
-            \Yii::$app->db->createCommand("CREATE FUNCTION `strip_tags`(\$str text) RETURNS text
-                                        BEGIN
-                                            DECLARE \$start, \$end INT DEFAULT 1;
-                                            LOOP
-                                                SET \$start = LOCATE('<', \$str, \$start);
-                                                IF (!\$start) THEN RETURN \$str; END IF;
-                                                SET \$end = LOCATE('>', \$str, \$start);
-                                                IF (!\$end) THEN SET \$end = \$start; END IF;
-                                                SET \$str = INSERT(\$str, \$start, \$end - \$start + 1, '');
-                                            END LOOP;
-                                        END;")->execute();
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
             ->select('*')
             ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
