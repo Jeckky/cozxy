@@ -958,6 +958,7 @@ class ProductGroupController extends ProductMasterController
 
     public function actionUpdateAllCategoryProduct()
     {
+        Yii::$app->db->createCommand()->truncateTable('category_to_product')->execute();
         $models = \common\models\costfit\Product::find()
         ->where("status = 1")->all();
         foreach ($models as $model) {
