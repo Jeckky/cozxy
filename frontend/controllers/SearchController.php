@@ -40,9 +40,15 @@ class SearchController extends MasterController {
             'allModels' => DisplaySearch::productSearchCategory('', $categoryId, '', ''),
             'pagination' => ['defaultPageSize' => 9],
         ]);
+
+        $productNotSell = new ArrayDataProvider(
+        [
+            'allModels' => DisplaySearch::productSearchCategoryNotSale('', $categoryId, '', ''),
+            'pagination' => ['defaultPageSize' => 9],
+        ]);
         $productSupplierId = '';
 
-        return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'productSupplierId'));
+        return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'productSupplierId', 'productNotSell'));
     }
 
     public function actionCozxyProduct() {
@@ -54,10 +60,18 @@ class SearchController extends MasterController {
 
         $productCanSell = new ArrayDataProvider(
         [
-            'allModels' => DisplaySearch::productSearch($category, 18, FALSE), 'pagination' => ['defaultPageSize' => 12],
+            'allModels' => DisplaySearch::productSearch($category, 18, FALSE), 'pagination' => ['defaultPageSize' => 9],
         ]);
 
-        return $this->render('index', compact('productCanSell', 'category', 'categoryId'));
+        $productNotSell = new ArrayDataProvider(
+        [
+            'allModels' => DisplaySearch::productSearchCategoryNotSale('', $categoryId, '', ''),
+            'pagination' => ['defaultPageSize' => 9],
+        ]);
+
+
+
+        return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'productNotSell'));
     }
 
     public function actionBrand($hash = FALSE) {
@@ -75,11 +89,17 @@ class SearchController extends MasterController {
 
         $productCanSell = new ArrayDataProvider(
         [
-            'allModels' => DisplaySearch::productSearchBrand($brandId, '', FALSE)
+            'allModels' => DisplaySearch::productSearchBrand($brandId, '', FALSE, 'sale')
             , 'pagination' => ['defaultPageSize' => 12]
         ]);
 
-        return $this->render('brand', compact('productCanSell', 'brandName'));
+        $productNotSell = new ArrayDataProvider(
+        [
+            'allModels' => DisplaySearch::productSearchBrand($brandId, '', FALSE, 'notsale')
+            , 'pagination' => ['defaultPageSize' => 12]
+        ]);
+
+        return $this->render('brand', compact('productCanSell', 'brandName', 'productNotSell'));
     }
 
     public function actionFilterPrice() {

@@ -11,11 +11,9 @@ use common\models\costfit\ProductSuppliers;
 /**
  * ContactForm is the model behind the contact form.
  */
-class FakeFactory extends Model
-{
+class FakeFactory extends Model {
 
-    public static function productForSale($n, $cat = FALSE)
-    {
+    public static function productForSale($n, $cat = FALSE) {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE) {
@@ -44,48 +42,8 @@ class FakeFactory extends Model
 
         foreach ($pCanSale as $value) {
 
-            /*
-              $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
-              //$productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
-              if (isset($productImages->imageThumbnail1) && !empty($productImages->imageThumbnail1)) {
-              if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail1)) {
-              $productImagesThumbnail1 = \Yii::$app->homeUrl . $productImages->imageThumbnail1;
-              } else {
-              if (isset($value->productId)) {
-              $ImagesMaster = \common\models\costfit\ProductImage::find()->where('productId=' . $value->productId)->one();
-              if (isset($ImagesMaster->imageThumbnail1) && !empty($ImagesMaster->imageThumbnail1)) {
-              if (file_exists(Yii::$app->basePath . "/web/" . $ImagesMaster->imageThumbnail1)) {
-              $productImagesThumbnail1 = \Yii::$app->homeUrl . $ImagesMaster->imageThumbnail1;
-              } else {
-              $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-              }
-              } else {
-              $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-              }
-              } else {
-              $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-              }
-              }
-              } else {
-              if (isset($value->productId)) {
-              $ImagesMaster = \common\models\costfit\ProductImage::find()->where('productId=' . $value->productId)->one();
-              if (isset($ImagesMaster->imageThumbnail1) && !empty($ImagesMaster->imageThumbnail1)) {
-              if (file_exists(Yii::$app->basePath . "/web/" . $ImagesMaster->imageThumbnail1)) {
-              $productImagesThumbnail1 = \Yii::$app->homeUrl . $ImagesMaster->imageThumbnail1;
-              } else {
-              $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-              }
-              } else {
-              $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-              }
-              } else {
-              $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-              }
-              }
-             */
-
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
-            $price_s = number_format($value->price, 2);
+            $price_s = isset($value->product) ? number_format($value->product->price, 2) : ''; //number_format($value->product->price, 2);
             $price = number_format($value->price, 2);
 
             if (Yii::$app->controller->id == 'site') {
@@ -116,8 +74,7 @@ class FakeFactory extends Model
         return $products;
     }
 
-    public static function productForNotSale($n, $cat = FALSE)
-    {
+    public static function productForNotSale($n, $cat = FALSE) {
         $products = [];
 
         $whereArray2 = [];
@@ -144,20 +101,6 @@ class FakeFactory extends Model
         }
 
         foreach ($product as $value) {
-            /*
-              $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
-              //$productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
-              if (isset($productImages->imageThumbnail1) && !empty($productImages->imageThumbnail1)) {
-              if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail1)) {
-              $productImagesThumbnail1 = \Yii::$app->homeUrl . $productImages->imageThumbnail1;
-              } else {
-              $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-              }
-              } else {
-              $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-              }
-             */
-
 
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
             if (Yii::$app->controller->id == 'site') {
@@ -166,9 +109,7 @@ class FakeFactory extends Model
                 $title = isset($value->title) ? $value->title : '';
             }
 
-
-
-            $price_s = number_format($value->price, 2);
+            $price_s = isset($value->product) ? number_format($value->product->price, 2) : ''; //number_format($value->product->price, 2);
             $price = number_format($value->price, 2);
             $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
             $products[$value->productSuppId] = [
@@ -186,8 +127,7 @@ class FakeFactory extends Model
         return $products;
     }
 
-    public static function productHotNewAndProduct($n, $cat = FALSE)
-    {
+    public static function productHotNewAndProduct($n, $cat = FALSE) {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE) {
@@ -214,18 +154,7 @@ class FakeFactory extends Model
             ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
         }
         foreach ($pCanSale as $value) {
-            /*
-              $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
-              //$productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
-              if (isset($productImages->imageThumbnail1) && !empty($productImages->imageThumbnail1)) {
-              if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail1)) {
-              $productImagesThumbnail1 = '/' . $productImages->imageThumbnail1;
-              } else {
-              $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg195x195(FALSE, FALSE, FALSE);
-              }
-              } else {
-              $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg195x195(FALSE, FALSE, FALSE);
-              } */
+
 
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg195x195');
 
@@ -234,7 +163,7 @@ class FakeFactory extends Model
             } else {
                 $title = isset($value->title) ? $value->title : '';
             }
-            $price_s = number_format($value->price, 2);
+            $price_s = isset($value->product) ? number_format($value->product->price, 2) : ''; //number_format($value->product->price, 2);
             $price = number_format($value->price, 2);
             $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
             $products[$value->productSuppId] = [
@@ -259,8 +188,7 @@ class FakeFactory extends Model
         return $products;
     }
 
-    public static function productStory($n)
-    {
+    public static function productStory($n) {
         $products = [];
 
         $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null  ")
@@ -281,18 +209,15 @@ class FakeFactory extends Model
                     $results_rating = $rating_score / $rating_member;
                 }
 
-                /*
-                  if (isset($productImages->imageThumbnail1) && !empty($productImages->imageThumbnail1)) {
-                  if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail1)) {
-                  $productImagesThumbnail1 = \Yii::$app->homeUrl . $productImages->imageThumbnail1;
-                  } else {
-                  $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-                  }
-                  } else {
-                  $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-                  } */
+                $controller = Yii::$app->urlManager->parseRequest(Yii::$app->request);
+                //echo $test[0];
+                //exit();
+                if ($controller[0] == '') {
+                    $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $items['productSuppId'], 'Svg260x260');
+                } else {
+                    $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $items['productSuppId'], 'Svg64x64');
+                }
 
-                $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $items['productSuppId'], 'Svg64x64');
                 $products[$value->productId] = [
                     'productId' => $value->productId,
                     'productPostId' => $value->productPostId,
@@ -315,8 +240,7 @@ class FakeFactory extends Model
         return $products;
     }
 
-    public static function productStoryAll($n, $productId, $productSuppId)
-    {
+    public static function productStoryAll($n, $productId, $productSuppId) {
         $products = [];
 
         $productPost = \common\models\costfit\ProductPost::find()->where("userId != 0 and productId=" . $productId)->orderBy('productPostId desc')->all();
@@ -365,8 +289,7 @@ class FakeFactory extends Model
         return $products;
     }
 
-    public static function productSlideGroup($n, $status)
-    {
+    public static function productSlideGroup($n, $status) {
         $products = [];
         $slideGroup = \common\models\costfit\ContentGroup::find()->where("lower(title) = 'banner' and status=1")->one();
         $content = \common\models\costfit\Content::find()->where("contentGroupId =" . $slideGroup['contentGroupId'])->all();
@@ -386,48 +309,12 @@ class FakeFactory extends Model
         return $products;
     }
 
-    public static function productViews($productSuppId)
-    {
+    public static function productViews($productSuppId) {
         $products = [];
         //$imagAll = [];
         $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
         $GetProductCozxy = $GetProductSuppliers->product;
         //foreach ($GetProductSuppliers as $items) {
-        /*
-         * รูปสินค้า
-
-          $productImagesOneTop = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSuppId)->orderBy('ordering asc')->one();
-          if (count($productImagesOneTop) > 0) {
-          //$productImagesAll = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSuppId . ' and productImageId !=' . $productImagesOneTop['productImageId'])->orderBy('ordering asc')->all();
-          $productImagesAll = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSuppId)->orderBy('ordering asc')->all();
-
-          foreach ($productImagesAll as $items) {
-          if (isset($items['imageThumbnail1']) && !empty($items['imageThumbnail1'])) {
-          if (file_exists(Yii::$app->basePath . "/web/" . $items['imageThumbnail1'])) {
-          $productimageThumbnail1 = Yii::$app->homeUrl . $items['imageThumbnail1'];
-          } else {
-          $productimageThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-          }
-          } else {
-          $productimageThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-          }
-          $imagAll[$items['productImageId']] = [
-          'productImageId' => $items->productImageId,
-          'imageThumbnail1' => $productimageThumbnail1,
-          ];
-          }
-
-          if (isset($productImagesOneTop['image']) && !empty($productImagesOneTop['image'])) {
-          if (file_exists(Yii::$app->basePath . "/web/" . $productImagesOneTop['imageThumbnail1'])) {
-          $productImagesOneTopz = Yii::$app->homeUrl . $productImagesOneTop['image'];
-          } else {
-          $productImagesOneTopz = \common\helpers\Base64Decode::DataImageSvg555x340(FALSE, FALSE, FALSE);
-          }
-          }
-          } else {
-          $productimageThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-          $productImagesOneTopz = \common\helpers\Base64Decode::DataImageSvg555x340(FALSE, FALSE, FALSE);
-          } */
 
         $productImagesMulti = \common\helpers\DataImageSystems::DataImageMasterViewsProdcuts($GetProductSuppliers['productId'], $productSuppId, 'Svg116x116', 'Svg555x340');
 
@@ -467,7 +354,7 @@ class FakeFactory extends Model
             'receiveType' => $GetProductSuppliers['receiveType'],
             'wishList' => $wishList,
             'sendDate' => '',
-            'shortDescriptionCozxy' => isset($GetProductCozxy['shortDescription']) ? $GetProductCozxy['shortDescription'] : '',
+            'shortDescriptionCozxy' => isset($GetProductCozxy['specification']) ? $GetProductCozxy['specification'] : '',
             'descriptionCozxy' => isset($GetProductCozxy['description']) ? $GetProductCozxy['description'] : '',
         ];
         // }
@@ -475,8 +362,7 @@ class FakeFactory extends Model
         return $products;
     }
 
-    public static function productSlideBanner($n, $status)
-    {
+    public static function productSlideBanner($n, $status) {
         $products = [];
         $brand = \common\models\costfit\Brand::find()->all();
         foreach ($brand as $items) {
@@ -500,8 +386,7 @@ class FakeFactory extends Model
         return $products;
     }
 
-    public static function productOtherProducts()
-    {
+    public static function productOtherProducts() {
         $productPost = \common\models\costfit\ProductPost::find()->where('userId=0 and productId is null')
         ->orderBy('productPostId desc')->all();
         $products = [];

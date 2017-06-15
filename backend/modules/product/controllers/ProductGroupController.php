@@ -634,6 +634,7 @@ class ProductGroupController extends ProductMasterController
         }
         if (isset($_POST["Product"])) {
             $model->attributes = $_POST["Product"];
+            \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $model->productId);
             if ($model->save()) {
                 if (isset($_POST["ProductSuppliers"]["quantity"]) && !empty($_POST["ProductSuppliers"]["quantity"])) {
 //                    throw new \yii\base\Exception;
@@ -933,6 +934,7 @@ class ProductGroupController extends ProductMasterController
         $model->save();
 //        throw new \yii\base\Exception(count($model->products));
         foreach ($model->products as $product) {
+            \common\models\costfit\CategoryToProduct::saveCategoryToProduct($product->categoryId, $product->productId);
             $product->status = 1;
             $product->save();
             if (isset($_GET["userId"]) && $_GET["userId"] != 0) {
@@ -952,6 +954,16 @@ class ProductGroupController extends ProductMasterController
         }
 
         return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"], 'userId' => $_GET["userId"], 'productGroupTemplateId' => $model->productGroupTemplateId, 'step' => $model->step]);
+    }
+
+    public function actionUpdateAllCategoryProduct()
+    {
+        Yii::$app->db->createCommand()->truncateTable('category_to_product')->execute();
+        $models = \common\models\costfit\Product::find()
+        ->where("status = 1")->all();
+        foreach ($models as $model) {
+            \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $model->productId);
+        }
     }
 
     public function actionDeleteProductSupp()
