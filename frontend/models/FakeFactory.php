@@ -346,7 +346,7 @@ class FakeFactory extends Model {
             'receiveType' => $GetProductSuppliers['receiveType'],
             'wishList' => $wishList,
             'sendDate' => '',
-            'shortDescriptionCozxy' => isset($GetProductCozxy['shortDescription']) ? $GetProductCozxy['shortDescription'] : '',
+            'shortDescriptionCozxy' => isset($GetProductCozxy['specification']) ? $GetProductCozxy['specification'] : '',
             'descriptionCozxy' => isset($GetProductCozxy['description']) ? $GetProductCozxy['description'] : '',
         ];
         // }
