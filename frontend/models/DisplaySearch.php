@@ -86,31 +86,24 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSearchBrand($brandId, $n, $cat = FALSE) {
+    public static function productSearchBrand($brandId, $n, $cat = FALSE, $status) {
 
         $products = [];
-
-        $whereArray2 = [];
-        $whereArray2["ps.brandId"] = $brandId;
-
-        $whereArray2["product.approve"] = "approve";
-        //$whereArray2["ps.result"] = "0";
-        $whereArray2["pps.status"] = "1";
 
         $product = \common\models\costfit\CategoryToProduct::find()
         ->select('ps.*,pps.*,category_to_product.*')
         ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
         ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
         ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
-        ->where($whereArray2)
-        ->andWhere('pps.price > 0')
-        ->andWhere('pps.result > 0')
-        ->groupBy('ps.productSuppId')->all();
-        //echo '<pre>';
-        //print_r($product);
+        ->where("ps.brandId  = $brandId AND product.approve = 'approve' AND pps.status = 1")
+        ->andWhere(($status == 'sale') ? 'pps.price > 0 AND ps.result > 0' : 'pps.price = 0 AND ps.result = 0')
+        ->groupBy('ps.productSuppId')
+        ->all();
 
+
+        //if (count($product) > 0) {
         foreach ($product as $value) {
-
+//            throw new \yii\base\Exception(print_r($value, true));
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
 
             $price_s = isset($value->product) ? number_format($value->product->price, 2) : ''; //number_format($value->product->price, 2);
@@ -133,6 +126,7 @@ class DisplaySearch extends Model {
                 'wishList' => $wishList
             ];
         }
+        //}
 
 
         return $products;

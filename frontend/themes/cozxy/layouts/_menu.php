@@ -109,7 +109,7 @@ use yii\bootstrap\ActiveForm;
             ->join("LEFT JOIN", "category", "category.categoryId=product_suppliers.categoryId")
             ->where("approve = 'approve'")
             ->groupBy('`product_suppliers`.categoryId')
-            ->orderBy('count(`product_suppliers`.`categoryId`) asc')
+            ->orderBy('count(`product_suppliers`.`categoryId`) ASC')
             ->limit(11)
             ->all();
             foreach ($category as $value) {

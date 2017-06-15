@@ -99,23 +99,24 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         <td><?php echo Product::findProductName($productId->productSuppId); ?></td>
                                         <td><?php echo common\models\costfit\StoreProductArrange::sumQuantitiy($productId->productSuppId, $productId->orderId, $slot); ?></td>
                                         <td><?php echo Order::findOrderNo($productId->orderId); ?></td>
-                                        <td><?=
-                                            ($productId->status == 99) ?
-                                                    Html::a('<i aria-hidden="true"></i> หยิบ', ['pick-item',
-                                                        'arrangeId' => $productId->storeProductArrangeId,
-                                                        'orderId' => $item->orderId,
-                                                        'orderItemId' => $item->orderItemId,
-                                                        'productId' => $item->productSuppId,
-                                                        'productSuppId' => $item->productSuppId,
-                                                        'orderQuantity' => -($productId->quantity),
-                                                        'slot' => $slot,
-                                                        'arraySlots' => $slots,
-                                                        'colorId' => $colorId,
-                                                        'color' => $color,
-                                                        'allOrderId' => $allOrderId,
-                                                        'selection' => $selection
-                                                            ], ['class' => 'btn btn-warning']) : Html::a('<i class="fa fa-check" aria-hidden="true"></i> หยิบแล้ว', ['pick-item'
-                                                            ], ['class' => 'btn btn-defult', 'disabled' => true]);
+                                        <td><?php
+                                            /*
+                                              ($productId->status == 99) ?
+                                              Html::a('<i aria-hidden="true"></i> หยิบ', ['pick-item',
+                                              'arrangeId' => $productId->storeProductArrangeId,
+                                              'orderId' => $item->orderId,
+                                              'orderItemId' => $item->orderItemId,
+                                              'productId' => $item->productSuppId,
+                                              'productSuppId' => $item->productSuppId,
+                                              'orderQuantity' => -($productId->quantity),
+                                              'slot' => $slot,
+                                              'arraySlots' => $slots,
+                                              'colorId' => $colorId,
+                                              'color' => $color,
+                                              'allOrderId' => $allOrderId,
+                                              'selection' => $selection
+                                              ], ['class' => 'btn btn-warning']) : Html::a('<i class="fa fa-check" aria-hidden="true"></i> หยิบแล้ว', ['pick-item'
+                                              ], ['class' => 'btn btn-defult', 'disabled' => true]); */
                                             // throw new \yii\base\Exception($item->orderItemId);
                                             ?></td>
                                     </tr>
