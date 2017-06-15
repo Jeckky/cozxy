@@ -90,7 +90,7 @@ use yii\bootstrap\ActiveForm;
             <div class="col-md-6 col-sm-12 col-xs-12">
                 <div class="rela" style="height: 64px;">
                     <?php $form = ActiveForm::begin(['id' => 'register-form', 'action' => Yii::$app->homeUrl . 'search/cozxy-product/', 'options' => ['class' => 'registr-form']]); ?>
-                    <div class="align-center align-middle fullwidth"><input type="text" name="search" id="search" class="search-input" placeholder="SEARCH PRODUCT"></div>
+                    <div class="align-center align-middle fullwidth"><input type="text" name="search" id="search" class="search-input" placeholder="SEARCH PRODUCT" value="<?= isset($_POST["search"]) ? $_POST["search"] : NULL ?>"></div>
                     <div class="align-middle text-right" style="width:120px; right:0;"><input type="submit" value="SEARCH" class="search-btn bg-yellow3"></div>
                     <div class="align-middle text-right size24" style="width:32px; padding-top: 8px;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
                     <?php ActiveForm::end(); ?>
@@ -109,7 +109,7 @@ use yii\bootstrap\ActiveForm;
             ->join("LEFT JOIN", "category", "category.categoryId=product_suppliers.categoryId")
             ->where("approve = 'approve'")
             ->groupBy('`product_suppliers`.categoryId')
-            ->orderBy('count(`product_suppliers`.`categoryId`) asc')
+            ->orderBy('count(`product_suppliers`.`categoryId`) ASC')
             ->limit(11)
             ->all();
             foreach ($category as $value) {
