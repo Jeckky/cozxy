@@ -11,11 +11,9 @@ use common\models\costfit\ProductSuppliers;
 /**
  * ContactForm is the model behind the contact form.
  */
-class DisplaySearch extends Model
-{
+class DisplaySearch extends Model {
 
-    public static function productSearch($search_hd, $n, $cat = FALSE)
-    {
+    public static function productSearch($search_hd, $n, $cat = FALSE) {
         $products = [];
 
         $whereArray = [];
@@ -30,7 +28,7 @@ class DisplaySearch extends Model
                 ['REGEXP', 'product_suppliers.title', trim($search_hd)],
                 ['REGEXP', 'product_suppliers.description', trim($search_hd)],
             ])
-            //->andWhere('group by product_suppliers.productSuppId ')
+//->andWhere('group by product_suppliers.productSuppId ')
             ->groupBy(' product_suppliers.productSuppId ')
             ->orderBy(new \yii\db\Expression('rand()'))
             ->all();
@@ -88,8 +86,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchBrand($brandId, $n, $cat = FALSE)
-    {
+    public static function productSearchBrand($brandId, $n, $cat = FALSE, $status) {
 
         $products = [];
 
@@ -97,7 +94,7 @@ class DisplaySearch extends Model
         $whereArray2["ps.brandId"] = $brandId;
 
         $whereArray2["product.approve"] = "approve";
-        $whereArray2["ps.result"] = "0";
+//$whereArray2["ps.result"] = "0";
         $whereArray2["pps.status"] = "1";
 
         $product = \common\models\costfit\CategoryToProduct::find()
@@ -105,14 +102,18 @@ class DisplaySearch extends Model
         ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
         ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
         ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
-        ->where($whereArray2)
-        //->andWhere('pps.price > 0')
-        ->groupBy('ps.productSuppId')->all();
-        //echo '<pre>';
-        //print_r($product);
+        ->where($whereArray2);
+        if ($status == 'sale') {
+            $product->andWhere('pps.price > 0');
+            $product->andWhere('ps.result > 0');
+        } elseif ($status == 'notsale') {
+            $product->andWhere('pps.price = 0');
+            $product->andWhere('ps.result = 0');
+        }
+        $product->groupBy('ps.productSuppId')->all();
+
 
         foreach ($product as $value) {
-
 
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
 
@@ -141,8 +142,59 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchCategory($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE)
-    {
+    public static function productSearchBrandNoStorck($brandId, $n, $cat = FALSE) {
+
+        $products = [];
+
+        $whereArray2 = [];
+        $whereArray2["ps.brandId"] = $brandId;
+
+        $whereArray2["product.approve"] = "approve";
+//$whereArray2["ps.result"] = "0";
+        $whereArray2["pps.status"] = "1";
+
+        $product = \common\models\costfit\CategoryToProduct::find()
+        ->select('ps.*,pps.*,category_to_product.*')
+        ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+        ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+        ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+        ->where($whereArray2)
+        ->andWhere('pps.price = 0')
+        ->andWhere('ps.result = 0')
+        ->groupBy('ps.productSuppId')->all();
+//echo '<pre>';
+//print_r($product);
+
+        foreach ($product as $value) {
+
+            $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
+
+            $price_s = isset($value->product) ? number_format($value->product->price, 2) : ''; //number_format($value->product->price, 2);
+            $price = number_format($value->price, 2);
+
+            $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
+            $products[$value->productSuppId] = [
+                'productSuppId' => $value->productSuppId,
+                'image' => $productImagesThumbnail1,
+                'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
+                'brand' => isset($value->brand) ? $value->brand->title : '',
+                'title' => substr($value->title, 0, 35),
+                'price_s' => isset($price_s) ? $price_s : '',
+                'price' => isset($price) ? $price : '',
+                'maxQnty' => isset($value->result) ? $value->result : '',
+                'fastId' => FALSE,
+                'productId' => isset($value->productId) ? $value->productId : '',
+                'supplierId' => isset($value->userId) ? $value->userId : '',
+                'receiveType' => isset($value->receiveType) ? $value->receiveType : '',
+                'wishList' => $wishList
+            ];
+        }
+
+
+        return $products;
+    }
+
+    public static function productSearchCategory($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE) {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE && $mins == FALSE && $maxs == FALSE) {
@@ -163,10 +215,10 @@ class DisplaySearch extends Model
             ->where($whereArray)
             ->andWhere([">", "ps.result", 0])
             ->andWhere([">", "pps.price", 0])
-            //->orderBy(new \yii\db\Expression('rand()'))
-            //->orderBy(['pps.price' => SORT_DESC, 'rand()' => SORT_DESC])
+//->orderBy(new \yii\db\Expression('rand()'))
+//->orderBy(['pps.price' => SORT_DESC, 'rand()' => SORT_DESC])
             ->orderBy(['pps.price' => SORT_ASC])
-            //->limit($n)
+//->limit($n)
             ->all();
         } elseif ($cat != FALSE && $mins != FALSE && $maxs != FALSE) {
             $whereArray2 = [];
@@ -232,8 +284,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchCategoryNotSale($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE)
-    {
+    public static function productSearchCategoryNotSale($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE) {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE && $mins == FALSE && $maxs == FALSE) {
@@ -242,7 +293,7 @@ class DisplaySearch extends Model
             $whereArray["category_to_product.categoryId"] = $cat;
             $whereArray["ps.approve"] = "approve";
             $whereArray["pps.status"] = "1";
-            //$whereArray["ps.result"] = "0";
+//$whereArray["ps.result"] = "0";
             $pCanSale = \common\models\costfit\CategoryToProduct::find()
             ->select('ps.*,pps.*')
             ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
@@ -251,10 +302,10 @@ class DisplaySearch extends Model
             ->where($whereArray)
             ->andWhere(["=", "ps.result", 0])
             ->andWhere(["=", "pps.price", 0])
-            //->orderBy(new \yii\db\Expression('rand()'))
-            //->orderBy(['pps.price' => SORT_DESC, 'rand()' => SORT_DESC])
+//->orderBy(new \yii\db\Expression('rand()'))
+//->orderBy(['pps.price' => SORT_DESC, 'rand()' => SORT_DESC])
             ->orderBy(['pps.price' => SORT_ASC])
-            //->limit($n)
+//->limit($n)
             ->all();
         } elseif ($cat != FALSE && $mins != FALSE && $maxs != FALSE) {
             $whereArray2 = [];
@@ -286,7 +337,7 @@ class DisplaySearch extends Model
             $whereArray["category_to_product.categoryId"] = $cat;
             $whereArray["ps.approve"] = "approve";
             $whereArray["pps.status"] = "1";
-            //$whereArray["ps.result"] = "0";
+//$whereArray["ps.result"] = "0";
             $pCanSale = \common\models\costfit\CategoryToProduct::find()
             ->select('ps.*,pps.*')
             ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
@@ -295,10 +346,10 @@ class DisplaySearch extends Model
             ->where($whereArray)
             ->andWhere(["=", "ps.result", 0])
             ->andWhere(["=", "pps.price", 0])
-            //->orderBy(new \yii\db\Expression('rand()'))
-            //->orderBy(['pps.price' => SORT_DESC, 'rand()' => SORT_DESC])
+//->orderBy(new \yii\db\Expression('rand()'))
+//->orderBy(['pps.price' => SORT_DESC, 'rand()' => SORT_DESC])
             ->orderBy(['pps.price' => SORT_ASC])
-            //->limit($n)
+//->limit($n)
             ->all();
         }
 
@@ -338,8 +389,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchCategoryShowMore($s, $e, $cat = FALSE)
-    {
+    public static function productSearchCategoryShowMore($s, $e, $cat = FALSE) {
         $products = [];
         $whereArray = [];
 
@@ -355,14 +405,14 @@ class DisplaySearch extends Model
         ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
         ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
         ->where($whereArray2)
-        //->andWhere('ps.result > 0')
-        //->andWhere('pps.price > 0')
+//->andWhere('ps.result > 0')
+//->andWhere('pps.price > 0')
         ->groupBy('ps.productSuppId')->limit($s, $e)->all();
 
 
         foreach ($pCanSale as $value) {
             $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
-            //$productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
+//$productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
             if (isset($productImages->imageThumbnail1) && !empty($productImages->imageThumbnail1)) {
                 if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail1)) {
                     $productImagesThumbnail1 = '/' . $productImages->imageThumbnail1;
