@@ -138,8 +138,8 @@ class Order extends \common\models\costfit\master\OrderMaster {
         if (isset($order)) {
             $receiveTypeArray = [];
             foreach ($order->orderItems as $item) {
-                $resceiveTitle = isset($item->productSupplier->receiveType) ? (($item->productSupplier->receiveType == 1) ? "COLD" : ($item->productSupplier->receiveType == 2 ? "HOT" : "BOOTH")) : "";
-                $receiveTypeArray[$resceiveTitle] = $item->productSupplier->receiveType;
+                $resceiveTitle = isset($item->productSupplier->receiveType) ? (($item->productSupplier->receiveType == 1) ? "COLD" : ($item->productSupplier->receiveType == 2 ? "HOT" : "BOOTH")) : "COLD";
+                $receiveTypeArray[$resceiveTitle] = isset($item->productSupplier->receiveType) ? $item->productSupplier->receiveType : 1;
                 $total += $item->total;
                 $quantity += $item->quantity;
                 $totalWithoutDiacount += $item->quantity * $item->priceOnePiece;
