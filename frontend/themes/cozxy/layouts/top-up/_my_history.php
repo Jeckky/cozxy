@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 </div>
                 <div role="tabpanel" class="tab-pane fade in active" id="order-history">
-                    <?= $this->render('_history', compact('model', 'dataProvider', 'topUps', 'currentPoint')) ?>
+                    <?= $this->render('_history', compact('model', 'dataProvider', 'topUps', 'currentPoint', 'dataProviderSys')) ?>
                 </div>
 
             </div>

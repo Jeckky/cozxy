@@ -66,13 +66,14 @@ class DisplayMyAccount extends Model {
         $products = [];
         $dataUserPoint = UserPoint::find()->where('userId=' . \Yii::$app->user->id)->one();
         $dataTopUp = TopUp::find()
-        ->select('*')
-        ->join("LEFT JOIN", "payment_method", "payment_method.paymentMethodId = top_up.paymentMethod")
-        ->where('top_up.userId =' . \Yii::$app->user->id)->orderBy('top_up.updateDateTime desc')->one();
+                        ->select('*')
+                        ->join("LEFT JOIN", "payment_method", "payment_method.paymentMethodId = top_up.paymentMethod")
+                        ->where('top_up.userId =' . \Yii::$app->user->id)->orderBy('top_up.updateDateTime desc')->one();
         $products[$dataUserPoint['userPointId']] = [
             'userPointId' => $dataUserPoint['userPointId'],
             'userId' => isset($dataUserPoint['userId']) ? $dataUserPoint['userId'] : '-',
             'currentPoint' => isset($dataUserPoint['currentPoint']) ? number_format($dataUserPoint['currentPoint'], 2) : '0',
+            'currentCozxySystemPoint' => isset($dataUserPoint) ? $dataUserPoint->currentCozxySystemPoint : 0,
             'totalPoint' => isset($dataUserPoint['totalPoint']) ? number_format($dataUserPoint['totalPoint'], 2) : '0',
             'totalMoney' => isset($dataUserPoint['totalMoney']) ? number_format($dataUserPoint['totalMoney'], 2) : '0',
             'totalMoney' => isset($dataUserPoint['updateDateTime']) ? $dataUserPoint['updateDateTime'] : '-',
@@ -131,7 +132,7 @@ class DisplayMyAccount extends Model {
     public static function myAccountOrderHistory($status, $type) {
         $products = [];
         $dataOrder = Order::find()
-        ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "")->all();
+                        ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "")->all();
         foreach ($dataOrder as $value) {
             if ($value->orderNo == NULL) {
                 $orderNo = '-';

@@ -30,6 +30,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <div class="order-index">
 
     <div>
+        <div class="text-center"><h4>Top up history</h4></div>
         <div class="col-lg-12 col-md-12">
             <?=
             GridView::widget([
@@ -165,6 +166,46 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             ]);
             ?>
         </div>
+    </div>
+    <div class="text-center">
+        <h4>Cozxy Coint from system</h4>
+    </div>
+    <div class="col-lg-12 col-md-12">
+        <?=
+        GridView::widget([
+            'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
+            'dataProvider' => $dataProviderSys,
+            'pager' => [
+                'options' => ['class' => 'pagination pagination-xs']
+            ],
+            'options' => [
+                'class' => 'table-light'
+            ],
+            'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    [
+                    'attribute' => 'Cozxy Coins',
+                    'value' => function($model) {
+
+                        return number_format($model->point);
+                    }
+                ],
+                    [
+                    'attribute' => 'updateDateTime',
+                    'value' => function($model) {
+                        return frontend\controllers\MasterController::dateThai($model->updateDateTime, 4);
+                    }
+                ],
+                    [
+                    'attribute' => 'Description',
+                    'format' => 'raw',
+                    'value' => function($model) {
+                        return $model->description;
+                    }
+                ],
+            ],
+        ]);
+        ?>
     </div>
 </div>
 <?php
