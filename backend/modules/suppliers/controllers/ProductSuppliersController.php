@@ -110,6 +110,7 @@ class ProductSuppliersController extends SuppliersMasterController
 //        ->select('`product_suppliers`.* ,  (SELECT product_price_suppliers.price  FROM product_price_suppliers
 //            where product_price_suppliers.productSuppId = product_suppliers.productSuppId and product_price_suppliers.status = 1  limit 1)
 //            AS `priceSuppliers`')
+        ->select('`product_suppliers`.* ,pps.price as priceSuppliers')
         ->join("LEFT JOIN", "product p", "p.productId = product_suppliers.productId")
         ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = product_suppliers.productSuppId")
         ->where("pps.status = 1 AND product_suppliers.userId =" . Yii::$app->user->identity->userId . " AND p.productId IS NOT NULL AND p.parentId IS NULL ")
