@@ -196,7 +196,12 @@ function addItemToWishlist(id) {
  * @param {type} id
  * @returns {undefined}
  */
-
+$notify = $('#notify-cart-top-menu').html();
+if ($notify == '') {
+    $('#notify-cart-top-menu').css('background-color', '#000');
+} else {
+    $('#notify-cart-top-menu').removeAttr('style');
+}
 function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId, supplierId, receiveType) {
     //javascript:addItemToCartUnitys(160, 1, "48", "false", "144", "", "")
 
@@ -282,6 +287,7 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
                         success: function (data, status)
                         {
                             if (status == "success") {
+                                $('#notify-cart-top-menu').removeAttr('style');
                                 $('#notify-cart-top-menu').html(data);
                             } else {
 
