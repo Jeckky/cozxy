@@ -123,7 +123,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             } else if ($model->paymentMethod == 2) {
                                 return 'Credit card';
                             } else {
-                                return '';
+                                if ($model->paymentMethod == 4) {
+                                    return $model->description;
+                                }
                             }
                         }
                     ],
