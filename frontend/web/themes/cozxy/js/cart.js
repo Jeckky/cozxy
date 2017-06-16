@@ -111,7 +111,9 @@ function qSet(y, x, productSuppId, orderId, sendDate, orderItemId) {
                     temp = temp - 1;
                     alert("Cannot order more than the specified number.");
 //                    $('.incr-btn').popover('show');
-                    $('.quantity-sel').find('#quantity').val(temp);
+                    //$('.quantity-sel').find('#quantity').val(temp);
+                    $('.quantity-' + y).val(temp);
+                    $('.multi-' + y).html(temp + ' x ');
                     $('.qty-cart').find('#qty-cart-show').html(temp);
                 }
                 //$button.parent().find("input").val(temp.toFixed(2));
@@ -244,6 +246,9 @@ function qSets(y, x, productSuppId, orderId, sendDate, orderItemId) {
 
 }
 
+/*
+ *
+ */
 
 $('.cancelCouponCode').click(function () {
     if (confirm("Do you want to remove discount coupon.")) {
