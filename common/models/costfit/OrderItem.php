@@ -52,7 +52,7 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster {
             'remainDay',
             'storeProductId',
             'stockQuantity', 'conutProduct', 'summaryPrice', 'avgNum', 'quantitySuppliers', 'quantityBalance', 'result',
-            'userId'
+            'userId', 'title'
         ]);
     }
 
