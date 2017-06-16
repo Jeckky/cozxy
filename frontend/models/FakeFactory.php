@@ -130,33 +130,7 @@ class FakeFactory extends Model {
     public static function productHotNewAndProduct($n, $cat = FALSE) {
         $products = [];
         $whereArray = [];
-        /* if ($cat != FALSE) {
-          $whereArray = [];
-          $whereArray["category_to_product.categoryId"] = $cat;
 
-          $whereArray["product.approve"] = "approve";
-          $whereArray["pps.status"] = "1";
-
-          $pCanSale = \common\models\costfit\CategoryToProduct::find()
-          ->select('*')
-          ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
-          ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
-          ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
-          ->where($whereArray)
-          ->andWhere([">", "ps.result", 0])
-          ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
-          } else {
-          $pCanSale = \common\models\costfit\ProductSuppliers::find()
-          ->select('*')
-          ->join(" LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
-          ->where(' product_suppliers.approve="approve" and product_suppliers.result > 0 AND product_price_suppliers.status =1 AND '
-          . ' product_price_suppliers.price > 0')
-          //->orderBy(new \yii\db\Expression('rand()'))
-          ->orderBy([
-          'product_suppliers.productSuppId' => SORT_DESC //Need this line to be fixed
-          ])
-          ->limit($n)->all();
-          } */
         $pCanSale = \common\models\costfit\OrderItem::find()
         ->select(' sum(`order_item`.quantity) ,`order`.* , `order_item`.*  , `product`.*')
         ->join(" LEFT JOIN", "order", "order.orderId  = order_item.orderId")
