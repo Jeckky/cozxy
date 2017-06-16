@@ -179,7 +179,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
                     'priceOnePiece' => $item->priceOnePiece,
                     'priceOnePieceText' => number_format($item->priceOnePiece, 2),
 //                    'priceMarket' => ProductSuppliers::productPriceSupplier($item->productSuppId),
-                    'priceMarket' => isset(number_format($item->product->price, 2)) ? $item->product->price : '',
+                    'priceMarket' => isset($item->product->price) ? number_format($item->product->price, 2) : '',
                     'sendDate' => $item->sendDate,
                     'firstTimeSendDate' => $item->firstTimeSendDate,
                     'sendDateNoDate' => isset($item->shippingType) ? $item->shippingType->date : NULL,
