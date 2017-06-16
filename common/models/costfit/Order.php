@@ -170,7 +170,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
                     'productSuppId' => $item->productSuppId,
                     'receiveType' => isset($item->productSupplier->receiveType) ? $item->productSupplier->receiveType : 1,
                     'receiveTypeTitle' => isset($item->productSupplier->receiveType) ? (($item->productSupplier->receiveType == 1) ? "COLD" : ($item->productSupplier->receiveType == 2 ? "HOT" : "BOOTH")) : "COLD",
-                    'title' => isset($item->productSupplier->title) ? $item->productSupplier->title : isset($item->product->title) ? $item->product->title : '',
+                    'title' => isset($item->productSupplier->title) ? $item->productSupplier->title : '',
                     'code' => isset($item->productSupplier->code) ? $item->productSupplier->code : '',
                     'qty' => intval($item->quantity),
                     //'price' => $item->price,
