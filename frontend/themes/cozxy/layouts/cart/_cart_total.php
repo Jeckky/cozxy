@@ -19,10 +19,16 @@
                 <?php
                 // if (isset($this->params['cart']['couponCode'])) {
                 ?>
-                <div class="col-lg-6 pull-right open-coupon-trash hidden ">
+                <div class="col-lg-6 pull-right open-coupon-trash <?php
+                if (isset($this->params['cart']['couponCode'])) {
+                    echo 'display';
+                } else {
+                    echo 'hidden';
+                }
+                ?> ">
                     <a class='text-danger'><i class="fa fa-trash cancelCouponCode" data-id="<?php echo $this->params['cart']['orderId']; ?>"></i></a>
                 </div>
-                <?php //} ?>
+<?php //}   ?>
             </div>
         </div>
         <div class="price-detail b size20 size18-sm size18-xs">TOTAL
