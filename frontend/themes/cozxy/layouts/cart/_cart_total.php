@@ -13,7 +13,7 @@
             <div class="pull-right"><?= (isset($this->params['cart']['shippingRate']) && $this->params['cart']['shippingRate'] == 0) ? "FREE" : number_format($this->params['cart']['shippingRate'], 2) ?></div>
         </div>
         <div class="price-detail">PROMO CODE
-            <div class="pull-right promo-coupon-codes">– THB</div>
+            <div class="pull-right promo-coupon-codes discountFormatText">– THB</div>
         </div>
         <div class="price-detail b size20 size18-sm size18-xs">TOTAL
             <div class="pull-right summaryFormatText"><?= number_format($this->params ['cart']['summary'], 2) ?> THB</div>
