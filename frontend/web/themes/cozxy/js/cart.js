@@ -135,14 +135,17 @@ function proceed(data) {
             {
                 if (data.status)
                 {
-                    alert($('.shopping-cart .cart-sidebar .cart-totals .cartTotalRight').html());
+                    //alert($('.shopping-cart .cart-sidebar .cart-totals .cartTotalRight').html(''));
                     /* $('.shopping-cart .cart-sidebar .cart-totals .cartTotalRight').append(
                      '<tr class="alert alert-warning" ><td style="font-size:12px"><b>Coupon</b> ' + data.cart.couponCode + '</td>' +
                      '<td class="discount align-r">' + data.cart.discountFormatText + '</td>' +
                      '</tr>'
                      );
                      $('.shopping-cart .cart-sidebar .cart-totals .summary').text(data.cart.summaryFormatText + " ฿");*/
-                    $('.price-detail').find('.promo-coupon-codes').html(data.cart.couponCode + ' THB');
+                    //$('.price-detail').find('.promo-coupon-codes').html(data.cart.couponCode + ' THB');
+                    $('.price-detail').find('.promo-coupon-codes').html(data.cart.summaryFormatText + ' THB');
+                    $('.open-coupon-trash').removeClass('hidden');
+                    $('.open-coupon-trash').addClass('display');
                     $('.price-detail').find('.summaryFormatText').html(data.cart.summaryFormatText + ' THB');
                 } else
                 {
