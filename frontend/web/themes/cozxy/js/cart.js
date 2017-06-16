@@ -238,3 +238,24 @@ function qSets(y, x, productSuppId, orderId, sendDate, orderItemId) {
     }
 
 }
+
+
+$('.cancelCouponCode').click(function () {
+    var id = $(this).attr('data-id');
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "cart/delete-cart-item",
+        data: {'id': id},
+        success: function (data, status)
+        {
+            if (status == "success") {
+                $('#coupon').remove();
+                $('.price-detail').find('.discountFormatText').html('0 THB');
+            } else {
+
+            }
+        }
+    });
+});
+
+//
