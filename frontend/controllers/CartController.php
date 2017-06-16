@@ -181,10 +181,14 @@ class CartController extends MasterController
 
     public function actionDeleteCoupon()
     {
+        $res = [];
         $id = $_POST["id"];
         $order = \common\models\costfit\Order::findOne($id);
         $order->couponId = NULL;
         $order->save();
+        $cartArray = \common\models\costfit\Order::findCartArray();
+        $res["cart"] = $cartArray;
+        return \yii\helpers\Json::encode($res);
     }
 
     public function actionChangeQuantityItem()
