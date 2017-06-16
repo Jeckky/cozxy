@@ -30,7 +30,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <div class="order-index">
 
     <div>
-        <div class="text-center"><h4>Top up history</h4></div>
         <div class="col-lg-12 col-md-12">
             <?=
             GridView::widget([
@@ -44,7 +43,15 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 ],
                 'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                    'topUpNo',
+                        ['attribute' => 'No.',
+                        'value' => function($model) {
+                            if ($model->topUpNo == NULL) {
+                                return 'COZXY';
+                            } else {
+                                return $model->topUpNo;
+                            }
+                        }
+                    ],
                         [
                         'attribute' => 'Cozxy Coins',
                         'value' => function($model) {
@@ -113,9 +120,24 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                             '<a href="#" style="color:blue;font-size:9pt;" data-toggle="modal" data-target="#upload' . $model->topUpId . '">'
                                             . ' change </a>';
                                 }
-                            } else {
+                            } else if ($model->paymentMethod == 2) {
                                 return 'Credit card';
+                            } else {
+                                return '';
                             }
+                        }
+                    ],
+                        ['attribute' => 'Type',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            $type = '';
+                            if ($model->type == 1) {
+                                $type = "Top Up";
+                            }
+                            if ($model->type == 2) {
+                                $type = "From cozxy";
+                            }
+                            return $type;
                         }
                     ],
                         [
@@ -153,10 +175,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         'buttons' => [
                             'view' => function( $url, $model) {
                                 if ($model->status == TopUp::TOPUP_STATUS_E_PAYMENT_SUCCESS) {
-                                    $topUpId = common\models\ModelMaster::encodeParams($model->topUpId);
-                                    return Html::a('<span class = "btn-black btn-xs" style="padding: 2px 5px; "><i class="fa fa-print" aria-hidden="true"></i> Print</span>', [Yii::$app->homeUrl . 'top-up/billpay?epay=' . $topUpId], [
-                                                'target' => '_blank']
-                                    );
+                                    if ($model->type != 2) {//มาจากระบบไม่ต้องprint
+                                        $topUpId = common\models\ModelMaster::encodeParams($model->topUpId);
+                                        return Html::a('<span class = "btn-black btn-xs" style="padding: 2px 5px; "><i class="fa fa-print" aria-hidden="true"></i> Print</span>', [Yii::$app->homeUrl . 'top-up/billpay?epay=' . $topUpId], [
+                                                    'target' => '_blank']
+                                        );
+                                    }
                                 } else {
                                     return '<span style="padding: 2px 5px; "> - </span>';
                                 }
@@ -166,46 +190,6 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             ]);
             ?>
         </div>
-    </div>
-    <div class="text-center">
-        <h4>Cozxy Coint from system</h4>
-    </div>
-    <div class="col-lg-12 col-md-12">
-        <?=
-        GridView::widget([
-            'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
-            'dataProvider' => $dataProviderSys,
-            'pager' => [
-                'options' => ['class' => 'pagination pagination-xs']
-            ],
-            'options' => [
-                'class' => 'table-light'
-            ],
-            'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-                    [
-                    'attribute' => 'Cozxy Coins',
-                    'value' => function($model) {
-
-                        return number_format($model->point);
-                    }
-                ],
-                    [
-                    'attribute' => 'updateDateTime',
-                    'value' => function($model) {
-                        return frontend\controllers\MasterController::dateThai($model->updateDateTime, 4);
-                    }
-                ],
-                    [
-                    'attribute' => 'Description',
-                    'format' => 'raw',
-                    'value' => function($model) {
-                        return $model->description;
-                    }
-                ],
-            ],
-        ]);
-        ?>
     </div>
 </div>
 <?php
