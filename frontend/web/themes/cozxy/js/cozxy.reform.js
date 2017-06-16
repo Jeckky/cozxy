@@ -196,6 +196,7 @@ function addItemToWishlist(id) {
  * @param {type} id
  * @returns {undefined}
  */
+
 function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId, supplierId, receiveType) {
     //javascript:addItemToCartUnitys(160, 1, "48", "false", "144", "", "")
 

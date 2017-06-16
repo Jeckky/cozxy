@@ -72,11 +72,13 @@ use yii\bootstrap\ActiveForm;
                         if (Yii::$app->user->id != '') {
                             ?>
                             <span id="notify-cart-top-menu"><?php echo $quantity; ?></span>
-                        <?php } else { ?>
+                            <?php
+                        } else {
+                            ?>
                             <span id="<?php if (isset($order->attributes['orderId'])) { ?>notify-cart-top-menu<?php } else { ?>notify-cart-top-menu<?php } ?>"><?php echo $quantity; ?></span>
                         <?php } ?>
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-xs-3" >
                         <?php
                         if (isset(Yii::$app->user->identity->userId)) {
                             echo Html::a('&nbsp;', Yii::$app->homeUrl . 'site/logout', ['class' => 'u-menu-4']);
