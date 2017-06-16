@@ -402,6 +402,7 @@ class FakeFactory extends Model {
         ->join(" LEFT JOIN", "brand", "brand.brandId  = product_suppliers.brandId")
         ->groupBy(['product_suppliers.brandId'])
         ->limit($n)->all();
+
         foreach ($brand as $items) {
             if (isset($items->image) && !empty($items->image)) {
                 if (file_exists(Yii::$app->basePath . "/web/" . $items->image)) {
