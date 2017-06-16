@@ -22,12 +22,14 @@ use common\helpers\Email;
 /**
  * Site controller
  */
-class SiteController extends MasterController {
+class SiteController extends MasterController
+{
 
     /**
      * @inheritdoc
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -57,7 +59,8 @@ class SiteController extends MasterController {
     /**
      * @inheritdoc
      */
-    public function actions() {
+    public function actions()
+    {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -74,7 +77,8 @@ class SiteController extends MasterController {
      *
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $slideGroup = new ArrayDataProvider(['allModels' => FakeFactory::productSlideGroup('', '')]);
         $productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(6, FALSE)]);
         $productNotSell = new ArrayDataProvider(['allModels' => FakeFactory::productForNotSale(6)]);
@@ -89,7 +93,8 @@ class SiteController extends MasterController {
      *
      * @return mixed
      */
-    public function actionLogin() {
+    public function actionLogin()
+    {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -135,11 +140,12 @@ class SiteController extends MasterController {
      *
      * @return mixed
      */
-    public function actionLogout() {
+    public function actionLogout()
+    {
 
         Yii::$app->user->logout();
         $cookies = Yii::$app->request->cookies;
-        $token = \common\helpers\Token::getToken();
+        $token = \common\helpers\Token::generateNewToken();
         /** @var \iiifx\yii2\SecureRememberMe\components\Manager $rememberMe */
         //$rememberMe = Yii::$app->rememberMe;
         //$rememberMe->delete();
@@ -151,7 +157,8 @@ class SiteController extends MasterController {
      *
      * @return mixed
      */
-    public function actionContact() {
+    public function actionContact()
+    {
         $model = new ContactForm();
         $msg = Yii::$app->request->get('msg') ? Yii::$app->request->get('msg') : '';
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -170,7 +177,8 @@ class SiteController extends MasterController {
         }
     }
 
-    public function actionContactMail() {
+    public function actionContactMail()
+    {
         $customerMail = $_POST['email'];
         $customerName = $_POST['name'];
         $customerPhone = $_POST['phone'];
@@ -189,7 +197,8 @@ class SiteController extends MasterController {
      *
      * @return mixed
      */
-    public function actionAbout() {
+    public function actionAbout()
+    {
 
         $contentGroup = ContentGroup::find()->where("lower(title)='lastindex'")->one();
         if (isset($contentGroup)) {
@@ -206,7 +215,8 @@ class SiteController extends MasterController {
      *
      * @return mixed
      */
-    public function actionSignup() {
+    public function actionSignup()
+    {
         //$model_verdifile = new \common\models\costfit\User(['scenario' => 'register']);
         $model = new SignupForm(['scenario' => 'register']);
 
@@ -233,7 +243,8 @@ class SiteController extends MasterController {
         ]);
     }
 
-    public function actionConfirm() {
+    public function actionConfirm()
+    {
 
         $user = \common\models\costfit\User::find()->where("token = '" . $_GET["token"] . "'")->one();
         if (isset($user)) {
@@ -250,7 +261,8 @@ class SiteController extends MasterController {
      *
      * @return mixed
      */
-    public function actionRequestPasswordReset() {
+    public function actionRequestPasswordReset()
+    {
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
@@ -274,7 +286,8 @@ class SiteController extends MasterController {
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token) {
+    public function actionResetPassword($token)
+    {
         try {
             $model = new ResetPasswordForm($token);
         } catch (InvalidParamException $e) {
@@ -292,7 +305,8 @@ class SiteController extends MasterController {
         ]);
     }
 
-    public function actionFaqs() {
+    public function actionFaqs()
+    {
         $contentGroup = ContentGroup::find()->where("lower(title)='howwork2'")->one();
         if (isset($contentGroup)) {
             $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->all();
@@ -302,11 +316,13 @@ class SiteController extends MasterController {
         ]);
     }
 
-    public function actionWhyRegister() {
+    public function actionWhyRegister()
+    {
         return $this->render('why-register');
     }
 
-    public function actionTermsAndConditions() {
+    public function actionTermsAndConditions()
+    {
         $contentGroup = ContentGroup::find()->where("lower(title)='term'")->one();
         if (isset($contentGroup)) {
             $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->all();
@@ -317,12 +333,14 @@ class SiteController extends MasterController {
         );
     }
 
-    public function actionThank() {
+    public function actionThank()
+    {
 
         return $this->render('thank');
     }
 
-    public function actionForgetPassword() {
+    public function actionForgetPassword()
+    {
         $forget = $_POST['forget'];
         $user = \common\models\costfit\User::find()->where('email = "' . $forget . '" ')->one();
         if (count($user) > 0) {
@@ -335,7 +353,8 @@ class SiteController extends MasterController {
         }
     }
 
-    public function actionForgetConfirm() {
+    public function actionForgetConfirm()
+    {
         $forget = explode("::", $_GET['token']);
         $token = $forget[0];
         $email = $forget[1];
