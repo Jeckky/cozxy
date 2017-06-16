@@ -55,6 +55,7 @@ function qSet(y, x, productSuppId, orderId, sendDate, orderItemId) {
         {
             if (data.status) {
                 $('.price-detail').find('.summaryFormatText').html(data.cart.summaryFormatText + ' THB');
+                $('.price-detail').find('.totalFormatText').html(data.cart.totalWithoutDiscountText + ' THB');
                 $('.qty-cart').find('#qty-cart-show-' + orderItemId).html(temp);
 
                 $.ajax({
