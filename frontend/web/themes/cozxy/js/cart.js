@@ -142,7 +142,8 @@ function proceed(data) {
                      '</tr>'
                      );
                      $('.shopping-cart .cart-sidebar .cart-totals .summary').text(data.cart.summaryFormatText + " ฿");*/
-                    $('.price-detail').find('.promo-coupon-codes').html(data.cart.couponCode + ' THB');
+                    //$('.price-detail').find('.promo-coupon-codes').html(data.cart.couponCode + ' THB');
+                    $('.price-detail').find('.promo-coupon-codes').html(data.cart.summaryFormatText + ' THB');
                     $('.price-detail').find('.summaryFormatText').html(data.cart.summaryFormatText + ' THB');
                 } else
                 {
