@@ -140,6 +140,7 @@ class Order extends \common\models\costfit\master\OrderMaster
         $quantity = 0;
         $shipping = 0;
         $items = [];
+        ;
         if (isset($order)) {
             $receiveTypeArray = [];
             foreach ($order->orderItems as $item) {
@@ -156,16 +157,17 @@ class Order extends \common\models\costfit\master\OrderMaster
                 if (isset($item->shippingDiscountValue)) {
                     $totalItemDiscount += $item->shippingDiscountValue;
                 }
-                $productImageSuppliers = ProductSuppliers::productImageSuppliers($item->productSuppId);
-                if (isset($productImageSuppliers)) {
-                    if (file_exists(Yii::$app->basePath . "/web/" . $productImageSuppliers)) {
-                        $productImageSuppliersT1 = \Yii::$app->homeUrl . $productImageSuppliers;
-                    } else {
-                        $productImageSuppliersT1 = $svg195x195;
-                    }
-                } else {
-                    $productImageSuppliersT1 = $svg195x195;
-                }
+                $productImageSuppliersT1 = \common\helpers\DataImageSystems::DataImageMaster($item->productId, $item->productSuppId, 'Svg195x195'); //ProductSuppliers::productImageSuppliers($item->productSuppId);
+                /* if (isset($productImageSuppliers)) {
+                  if (file_exists(Yii::$app->basePath . "/web/" . $productImageSuppliers)) {
+                  $productImageSuppliersT1 = \Yii::$app->homeUrl . $productImageSuppliers;
+                  } else {
+                  $productImageSuppliersT1 = $svg195x195;
+                  }
+                  } else {
+                  $productImageSuppliersT1 = $svg195x195;
+                  } */
+
                 $items[$item->orderItemId] = [
                     'pickingId' => $item->pickingId,
                     'orderItemId' => $item->orderItemId,

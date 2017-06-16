@@ -73,7 +73,7 @@ use yii\bootstrap\ActiveForm;
                             ?>
                             <span id="notify-cart-top-menu"><?php echo $quantity; ?></span>
                         <?php } else { ?>
-                            <span id="<?php if (isset($order->attributes['orderId'])) { ?>notify-cart-top-menu<?php } ?>"><?php echo $quantity; ?></span>
+                            <span id="<?php if (isset($order->attributes['orderId'])) { ?>notify-cart-top-menu<?php } else { ?>notify-cart-top-menu<?php } ?>"><?php echo $quantity; ?></span>
                         <?php } ?>
                     </div>
                     <div class="col-xs-3">

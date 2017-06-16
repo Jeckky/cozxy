@@ -565,9 +565,8 @@ class TopUpController extends MasterController {
     }
 
     public function actionHistory() {
-        $model = TopUp::find()->where("status >1 and userId=" . Yii::$app->user->id . " and type=1")->orderBy('updateDateTime DESC');
-        $topUps = TopUp::find()->where("status >1 and userId=" . Yii::$app->user->id . " and type=1")->orderBy('updateDateTime DESC')->all();
-        $cozxySystemPoint = TopUp::find()->where("userId=" . Yii::$app->user->id . " and type=2");
+        $model = TopUp::find()->where("status >1 and userId=" . Yii::$app->user->id)->orderBy('updateDateTime DESC');
+        $topUps = TopUp::find()->where("status >1 and userId=" . Yii::$app->user->id)->orderBy('updateDateTime DESC')->all();
         $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
         $currentPoint = 0;
         if (isset($userPoint) && count($userPoint) > 0) {
@@ -575,9 +574,6 @@ class TopUpController extends MasterController {
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $model,
-        ]);
-        $dataProviderSys = new ActiveDataProvider([
-            'query' => $cozxySystemPoint,
         ]);
         if (isset($_POST["topUpId"])) {//confirm billpayment
             $topUpId = $_POST["topUpId"];
@@ -606,22 +602,21 @@ class TopUpController extends MasterController {
                         'dataProvider' => $dataProvider,
                         'topUps' => $topUps,
                         'currentPoint' => $currentPoint,
-                        'dataProviderSys' => $dataProviderSys
             ]);
         }
     }
 
     public function actionSystemTopUp() {
         $userId = Yii::$app->user->id;
-        $point = 100;
-        $money = 100;
+        $point = 0;
+        $money = 0;
         $model = new TopUp();
         $model->userId = $userId;
         $model->point = $point;
-        $model->paymentMethod = 3; //from system
+        $model->paymentMethod = 4; //from system
         $model->type = 2; //from system
         $model->description = "Colse Locker";
-        $model->status = 1;
+        $model->status = 3;
         $model->createDateTime = new \yii\db\Expression('NOW()');
         $model->updateDateTime = new \yii\db\Expression('NOW()');
         if ($model->save(false)) {
