@@ -193,7 +193,11 @@ class Order extends \common\models\costfit\master\OrderMaster {
                     'image' => $productImageSuppliersT1,
                 ];
             }
-            $order->save(); // For Update Total;
+            $order->total = $totalWithoutDiacount;
+            $order->summary = $totalWithoutDiacount - $totalItemDiscount; // เอา ราคาก่อนส่วนลด ลบ ส่วนลดทั้งหมด
+            if (!$order->save()) { // For Update Total;
+                throw new \yii\base\Exception(print_r($order->errors, true));
+            }
             //echo '<pre>';
             //print_r($order->attributes);
             //exit();
