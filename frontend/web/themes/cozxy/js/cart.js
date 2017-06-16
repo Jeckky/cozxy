@@ -200,6 +200,9 @@ function deleteItemCart(ItemOrderId) {
                         {
                             if (status == "success") {
                                 $('#notify-cart-top-menu').html(data);
+                                $('.price-detail').find('.summaryFormatText').html(data.cart.summaryFormatText + ' THB');
+                                $('.price-detail').find('.totalFormatText').html(data.cart.totalWithoutDiscountText + ' THB');
+                                $('.price-detail').find('.discountFormatText').html(data.cart.discountFormatText + ' THB');
                             } else {
 
                             }
