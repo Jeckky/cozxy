@@ -91,29 +91,35 @@ $(window).resize(function() { descSet(); });
             echo $this->render('@app/themes/cozxy/layouts/product/_product_detail_tab', ['model' => $productViews, 'productGroupOptionValues' => $productGroupOptionValues]);
             ?>
             <div class="size24">&nbsp;</div>
-
             <div class="row">
-                <h3 class="b text-center-sm text-center-xs">HOT & NEW PRODUCT</h3>
-
-                <div class="row">
-                    <?php
-                    echo \yii\widgets\ListView::widget([
-                        'dataProvider' => $productHotNewProduct,
-                        'options' => [
-                            'tag' => false,
-                        ],
-                        'itemView' => function ($model, $key, $index, $widget) {
-                            return $this->render('@app/themes/cozxy/layouts/product/_product_item', ['model' => $model, 'colSize' => '3']);
-                        },
-//                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                        //'layout'=>"{summary}{pager}{items}"
-                        'layout' => "{items}",
-                        'itemOptions' => [
-                            'tag' => false,
-                        ],
-                    ]);
+                <?php
+                if (isset($productHotNewProduct->allModels[0]['productSuppId'])) {
+                    echo '';
+                } else {
                     ?>
-                </div>
+                    <h3 class="b text-center-sm text-center-xs">HOT & NEW PRODUCT</h3>
+                    <div class="row">
+                        <?php
+                        echo \yii\widgets\ListView::widget([
+                            'dataProvider' => $productHotNewProduct,
+                            'options' => [
+                                'tag' => false,
+                            ],
+                            'itemView' => function ($model, $key, $index, $widget) {
+                                return $this->render('@app/themes/cozxy/layouts/product/_product_item', ['model' => $model, 'colSize' => '3']);
+                            },
+//                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                            //'layout'=>"{summary}{pager}{items}"
+                            'layout' => "{items}",
+                            'itemOptions' => [
+                                'tag' => false,
+                            ],
+                        ]);
+                        ?>
+                    </div>
+                    <?php
+                }
+                ?>
             </div>
             <div class="size32">&nbsp;</div>
         </div>
