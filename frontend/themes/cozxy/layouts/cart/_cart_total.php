@@ -13,17 +13,19 @@
             <div class="pull-right"><?= (isset($this->params['cart']['shippingRate']) && $this->params['cart']['shippingRate'] == 0) ? "FREE" : number_format($this->params['cart']['shippingRate'], 2) ?></div>
         </div>
         <div class="price-detail">PROMO CODE
-            <div class="pull-right promo-coupon-codes discountFormatText" style="color: #f65d35;vertical-align: top">- <?= isset($this->params['cart']['discount']) ? number_format($this->params['cart']['discount'], 2) : '' ?> THB</div>
-            <div class="row coupon">
-                <div class="col-lg-6"><?= isset($this->params['cart']['couponCode']) ? "<span class='label label-primary'>" . $this->params['cart']['couponCode'] . "</span>" : "" ?></div>
-                <?php
-                // if (isset($this->params['cart']['couponCode'])) {
-                ?>
-                <div class="col-lg-6 pull-right">
-                    <a class='text-danger'><i class="fa fa-trash cancelCouponCode" data-id="<?php echo $this->params['cart']['orderId']; ?>"></i></a>
+            <div class="pull-right promo-coupon-codes discountFormatText" style="color: <?= (isset($this->params['cart']['discount']) && $this->params['cart']['discount'] > 0) ? "#f65d35" : "" ?>;vertical-align: top"> <?= isset($this->params['cart']['discount']) ? number_format($this->params['cart']['discount'], 2) : '0' ?> THB</div>
+            <?php if (isset($this->params['cart']['couponCode'])) { ?>
+                <div class="row coupon">
+                    <div class="col-lg-6"><?= isset($this->params['cart']['couponCode']) ? "<span class='label label-primary'>" . $this->params['cart']['couponCode'] . "</span>" : "" ?></div>
+                    <?php
+                    // if (isset($this->params['cart']['couponCode'])) {
+                    ?>
+                    <div class="col-lg-6 pull-right">
+                        <a class='text-danger'><i class="fa fa-trash cancelCouponCode" data-id="<?php echo $this->params['cart']['orderId']; ?>"></i></a>
+                    </div>
+                    <?php //} ?>
                 </div>
-                <?php //} ?>
-            </div>
+            <?php } ?>
         </div>
         <div class="price-detail b size20 size18-sm size18-xs">TOTAL
             <div class="pull-right summaryFormatText"><?= isset($this->params ['cart']['summary']) ? number_format($this->params ['cart']['summary'], 2) : '' ?> THB</div>

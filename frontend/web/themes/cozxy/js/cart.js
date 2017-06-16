@@ -244,13 +244,17 @@ $('.cancelCouponCode').click(function () {
     var id = $(this).attr('data-id');
     $.ajax({
         type: "POST",
-        url: $baseUrl + "cart/delete-cart-item",
+        url: $baseUrl + "cart/delete-coupon",
         data: {'id': id},
         success: function (data, status)
         {
             if (status == "success") {
-                $('#coupon').remove();
-                $('.price-detail').find('.discountFormatText').html('0 THB');
+                $('.coupon').remove();
+                alert(JSON.stringify(data.cart));
+                $('.price-detail').find('.discountFormatText').html("<span style='color:black'>0 THB<span>");
+                $('.price-detail').find('.summaryFormatText').html(data.cart.summaryFormatText + ' THB');
+//                $('.price-detail').find('.summaryFormatText').html("xxx");
+                $('.price-detail').find('.totalFormatText').html(data.cart.totalWithoutDiscountText + ' THB');
             } else {
 
             }
