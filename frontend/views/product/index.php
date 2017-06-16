@@ -94,6 +94,7 @@ $(window).resize(function() { descSet(); });
 
             <div class="row">
                 <h3 class="b text-center-sm text-center-xs">HOT & NEW PRODUCT</h3>
+
                 <div class="row">
                     <?php
                     echo \yii\widgets\ListView::widget([

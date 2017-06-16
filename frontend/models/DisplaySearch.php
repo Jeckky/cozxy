@@ -21,17 +21,6 @@ class DisplaySearch extends Model
         $whereArray = [];
 
         if (isset($search_hd)) {
-            \Yii::$app->db->createCommand("CREATE FUNCTION `strip_tags`(\$str text) RETURNS text
-                                        BEGIN
-                                            DECLARE \$start, \$end INT DEFAULT 1;
-                                            LOOP
-                                                SET \$start = LOCATE('<', \$str, \$start);
-                                                IF (!\$start) THEN RETURN \$str; END IF;
-                                                SET \$end = LOCATE('>', \$str, \$start);
-                                                IF (!\$end) THEN SET \$end = \$start; END IF;
-                                                SET \$str = INSERT(\$str, \$start, \$end - \$start + 1, '');
-                                            END LOOP;
-                                        END;")->execute();
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
             ->select('*')
             ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
@@ -39,10 +28,10 @@ class DisplaySearch extends Model
             ->andFilterWhere(['OR',
 //                ['REGEXP', 'product_suppliers.title', trim($search_hd)],
 //                ['REGEXP', 'product_suppliers.description', trim($search_hd)],
-//                ['LIKE', 'product_suppliers.title', trim($search_hd)],
-//                ['LIKE', 'strip_tags(product_suppliers.description)', trim($search_hd)],
-                ['LIKE', 'product_suppliers.title', $search_hd],
-                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
+                ['LIKE', 'product_suppliers.title', trim($search_hd)],
+                ['LIKE', 'strip_tags(product_suppliers.description)', trim($search_hd)],
+//                ['LIKE', 'product_suppliers.title', $search_hd],
+//                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
             ])
 //->andWhere('group by product_suppliers.productSuppId ')
             ->groupBy(' product_suppliers.productSuppId ')
@@ -117,10 +106,10 @@ class DisplaySearch extends Model
             ->andFilterWhere(['OR',
 //                ['REGEXP', 'product_suppliers.title', trim($search_hd)],
 //                ['REGEXP', 'product_suppliers.description', trim($search_hd)],
-//                ['LIKE', 'product_suppliers.title', trim($search_hd)],
-//                ['LIKE', 'product_suppliers.description', trim($search_hd)],
-                ['LIKE', 'product_suppliers.title', $search_hd],
-                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
+                ['LIKE', 'product_suppliers.title', trim($search_hd)],
+                ['LIKE', 'product_suppliers.description', trim($search_hd)],
+//                ['LIKE', 'product_suppliers.title', $search_hd],
+//                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
             ])
             //->andWhere('group by product_suppliers.productSuppId ')
             ->groupBy(' product_suppliers.productSuppId ')
