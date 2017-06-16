@@ -159,7 +159,7 @@ class FakeFactory extends Model {
           } */
         $pCanSale = \common\models\costfit\OrderItem::find()
         ->select(' sum(`order_item`.quantity) ,`order`.* , `order_item`.*  , `product_suppliers`.*')
-        ->join(" LEFT JOIN", "order", "order.orderId  = order_item.orderIdx")
+        ->join(" LEFT JOIN", "order", "order.orderId  = order_item.orderId")
         ->join(" LEFT JOIN", "product_suppliers", "product_suppliers.productSuppId = order_item.productSuppId")
         ->where('order.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and  product_suppliers.approve="approve" ')
         ->orderBy([
