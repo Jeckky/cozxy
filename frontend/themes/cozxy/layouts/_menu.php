@@ -79,9 +79,9 @@ use yii\bootstrap\ActiveForm;
                     <div class="col-xs-3">
                         <?php
                         if (isset(Yii::$app->user->identity->userId)) {
-                            echo Html::a('&nbsp;', [Yii::$app->homeUrl . 'site/logout'], ['class' => 'u-menu-4']);
+                            echo Html::a('&nbsp;', Yii::$app->homeUrl . 'site/logout', ['class' => 'u-menu-4']);
                         } else {
-                            echo Html::a('&nbsp;', [Yii::$app->homeUrl . 'site/login'], ['class' => 'u-menu-4']);
+                            echo Html::a('&nbsp;', Yii::$app->homeUrl . 'site/login', ['class' => 'u-menu-4']);
                         }
                         ?>
                     </div>
