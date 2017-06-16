@@ -26,7 +26,7 @@
                     echo 'hidden';
                 }
                 ?> text-right">
-                    <a class='text-danger'><i class="fa fa-trash cancelCouponCode" data-id="<?php echo $this->params['cart']['orderId']; ?>"></i></a>
+                    <a class='text-danger'><i class="fa fa-trash cancelCouponCode" data-id="<?php echo isset($this->params['cart']['orderId']) ? $this->params['cart']['orderId'] : ''; ?>"></i></a>
                 </div>
 
             </div>
