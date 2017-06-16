@@ -15,23 +15,24 @@
         <div class="price-detail">PROMO CODE
             <div class="pull-right promo-coupon-codes discountFormatText" style="color: <?= (isset($this->params['cart']['discount']) && $this->params['cart']['discount'] > 0) ? "#f65d35" : "" ?>;vertical-align: top"> <?= isset($this->params['cart']['discount']) ? number_format($this->params['cart']['discount'], 2) : '0' ?> THB</div>
             <div class="row coupon  ">
-                <div class="col-lg-6"><?= isset($this->params['cart']['couponCode']) ? "<span class='label label-primary'>" . $this->params['cart']['couponCode'] . "</span>" : "" ?></div>
-                <?php
-                // if (isset($this->params['cart']['couponCode'])) {
-                ?>
+                <div class="col-lg-6 promo-coupon-codes-code">
+                    <?= isset($this->params['cart']['couponCode']) ? "<span class='label label-primary'>" . $this->params['cart']['couponCode'] . "</span>" : "" ?>
+                </div>
+
                 <div class="col-lg-6 pull-right  open-coupon-trash <?php
                 if (isset($this->params['cart']['couponCode'])) {
                     echo 'display';
                 } else {
                     echo 'hidden';
                 }
-                ?>">
+                ?> text-right">
                     <a class='text-danger'><i class="fa fa-trash cancelCouponCode" data-id="<?php echo $this->params['cart']['orderId']; ?>"></i></a>
                 </div>
 
             </div>
-            <div class="price-detail b size20 size18-sm size18-xs">TOTAL
-                <div class="pull-right summaryFormatText"><?= isset($this->params ['cart']['summary']) ? number_format($this->params ['cart']['summary'], 2) : '' ?> THB</div>
-            </div>
+        </div>
+        <div class="price-detail b size20 size18-sm size18-xs">TOTAL
+            <div class="pull-right summaryFormatText"><?= isset($this->params ['cart']['summary']) ? number_format($this->params ['cart']['summary'], 2) : '' ?> THB</div>
         </div>
     </div>
+</div>
