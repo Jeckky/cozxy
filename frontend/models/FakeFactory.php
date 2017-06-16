@@ -158,13 +158,13 @@ class FakeFactory extends Model {
           ->limit($n)->all();
           } */
         $pCanSale = \common\models\costfit\OrderItem::find()
-        ->select(' sum(`order_item`.quantity) ,`order`.* , `order_item`.*  , `product_suppliers`.*')
+        ->select(' sum(`order_item`.quantity) ,`order`.* , `order_item`.*  , `product`.*')
         ->join(" LEFT JOIN", "order", "order.orderId  = order_item.orderId")
-        ->join(" LEFT JOIN", "product_suppliers", "product_suppliers.productSuppId = order_item.productSuppId")
-        ->where('order.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and  product_suppliers.approve="approve" ')
+        ->join(" LEFT JOIN", "product", "product.productId = order_item.productId")
+        ->where('order.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and  product.approve="approve" ')
         ->orderBy([
             'sum(`order_item`.quantity) ' => SORT_DESC,
-            ' `order_item`.productSuppId' => SORT_DESC
+            ' `order_item`.productId' => SORT_DESC
         ])
         ->limit($n)->all();
 
