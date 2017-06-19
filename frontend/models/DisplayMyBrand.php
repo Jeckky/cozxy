@@ -24,7 +24,7 @@ class DisplayMyBrand {
     public static function MyFilterBrand($cats) {
         $products = [];
         $brand = \common\models\costfit\ProductSuppliers::find()
-        ->select(' `brand`.* ')
+        ->select(' `brand`.*')
         ->join(" LEFT JOIN", "brand", "brand.brandId  = product_suppliers.brandId")
         ->where('categoryId=' . $cats)
         ->groupBy(['product_suppliers.brandId'])

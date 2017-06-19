@@ -40,7 +40,7 @@
                             if (count($productFilterBrand->allModels) > 0) {
                                 foreach ($productFilterBrand->allModels as $key => $value) {
                                     ?>
-                                    <div class="col-sm-6"><label><input type="checkbox" name="brandId[]" value="<?php echo $value['brandId'] ?>"> &nbsp; <?php echo $value['title']; ?></label></div>
+                                    <div class="col-sm-6"><label><input type="checkbox" name="brandId" value="<?php echo $value['brandId'] ?>"> &nbsp; <?php echo $value['title']; ?></label></div>
                                     <?php
                                 }
                             } else {
@@ -49,7 +49,7 @@
                             ?>
                             <div class="col-sm-12 text-right">
                                 <a href="javascript:filterPriceCozxyClear()"><u class="fc-black">CLEAR</u></a> &nbsp;
-                                <a href="javascript:filterBrandCozxy()" class="b btn-black-s size16">APPLY</a>
+                                <a href="javascript:filterBrandCozxy(<?php echo $categoryId; ?>)" class="b btn-black-s size16">APPLY</a>
                             </div>
                         </form>
                     </div>

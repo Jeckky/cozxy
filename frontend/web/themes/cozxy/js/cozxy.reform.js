@@ -585,7 +585,7 @@ function filterPriceCozxy() {
                     items += " </div>";
                     items += "</div>";
                     items += "<div class=\"product-txt\">";
-                    items += "<p class=\"size16 fc-g666\"></p>";
+                    items += '<p class=\"size16 fc-g666\">' + val.brand + '</p>';
                     items += ' <p class=\"size14 b\" style=\"height:50px; \"><a href=' + val.url + ' class=\"fc-black\">' + val.title + '</a></p>';
                     items += " <p>";
                     items += '<span class=\"size18\">' + val.price + ' THB</span><br>';
@@ -771,19 +771,25 @@ $(document).on('click', '#cancel-payCoin', function (e) {
  );
  $.notify("This notofication is working ", "success");*/
 
-function filterBrandCozxy() {
+function filterBrandCozxy($categoryId) {
+    var brandName = [];
+    $("input:checked").each(function () {
+        brandName.push($(this).val());
+    });
 
-    $min = $('input:hidden:eq(0)', '#amount-min').val();
-    $max = $('input:hidden:eq(1)', '#amount-min').val();
-    $categoryId = $('input:hidden:eq(2)', '#amount-min').val();
+    //$min = $('input:hidden:eq(0)', '#amount-min').val();
+    //$max = $('input:hidden:eq(1)', '#amount-min').val();
+    //$categoryId = $('input:hidden:eq(2)', '#amount-min').val();
+    $brandName = brandName;
+
     $('.btn-black-s').html('APPLY ...');
     $('.filter-product-cozxy').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
-    var path = $baseUrl + "search/filter-price";
+    var path = $baseUrl + "search/filter-brand";
     $.ajax({
         url: path,
         type: "POST",
         dataType: "JSON",
-        data: {mins: $min, maxs: $max, categoryId: $categoryId},
+        data: {brand: $brandName, categoryId: $categoryId},
         success: function (data, status) {
 
             if (status == "success") {
@@ -794,15 +800,13 @@ function filterBrandCozxy() {
                 //console.log(yourval['160']);
                 var items = '';
                 $.each(yourval, function (key, val) {
-                    //console.log(key);//160,162
-                    //console.log(val.productSuppId);
-                    //console.log(items);
-                    //alert(val.fastId);
+
                     if (val.fastId == false) {
                         $fastId = '';
                     } else {
                         $fastId = val.fastId;
                     }
+
                     items += "<div class=\"col-md-4 col-sm-6 col-xs-12\">";
                     items += "<div class=\"product-box\">";
                     items += "<div class=\"product-img text-center\">";
@@ -826,7 +830,7 @@ function filterBrandCozxy() {
                     items += " </div>";
                     items += "</div>";
                     items += "<div class=\"product-txt\">";
-                    items += "<p class=\"size16 fc-g666\"></p>";
+                    items += '<p class=\"size16 fc-g666\">' + val.brand + '</p>';
                     items += ' <p class=\"size14 b\" style=\"height:50px; \"><a href=' + val.url + ' class=\"fc-black\">' + val.title + '</a></p>';
                     items += " <p>";
                     items += '<span class=\"size18\">' + val.price + ' THB</span><br>';
@@ -835,7 +839,7 @@ function filterBrandCozxy() {
                     items += " </div>";
                     items += " </div>";
                     items += "</div>";
-                    $('.filter-product-cozxy').html(items);
+                    $('.filter-brand-cozxy').html(items);
                 });
             } else {
                 alert('error');

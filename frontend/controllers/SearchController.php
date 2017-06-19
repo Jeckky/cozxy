@@ -113,12 +113,43 @@ class SearchController extends MasterController {
         $mins = Yii::$app->request->post('mins');
         $maxs = Yii::$app->request->post('maxs');
         $categoryId = Yii::$app->request->post('categoryId');
-        //echo 'mins : ' . $mins . ', maxs : ' . $maxs . ' ,' . $categoryId;
+
         $FilterPrice = [];
         $productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $categoryId, $mins, $maxs)]);
+
+        if (count($productFilterPrice->allModels) > 0) {
+            foreach ($productFilterPrice->allModels as $key => $value) {
+                $FilterPrice[$value['productSuppId']] = [
+                    'brand' => $value['brand'],
+                    'productSuppId' => $value['productSuppId'],
+                    'image' => $value['image'],
+                    'url' => $value['url'],
+                    'brand' => $value['brand'],
+                    'title' => $value['title'],
+                    'price_s' => $value['price_s'],
+                    'price' => $value['price'],
+                    'maxQnty' => $value['maxQnty'],
+                    'fastId' => $value['fastId'],
+                    'productId' => $value['productId'],
+                    'supplierId' => $value['supplierId'],
+                    'receiveType' => $value['receiveType'],
+                    'wishList' => $value['wishList']
+                ];
+            }
+            //$FilterPrice = $FilterPrices;
+        }
         //echo '<pre>';
-        //print_r($productFilterPrice->allModels);
-        //exit();
+        //print_r($productFilterPrice);
+        return json_encode($FilterPrice);
+    }
+
+    public function actionFilterBrand() {
+        $brand = Yii::$app->request->post('brand');
+        $categoryId = Yii::$app->request->post('categoryId');
+
+        $FilterPrice = [];
+        $productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productFilterBrand($categoryId, $brand)]);
+
         if (count($productFilterPrice->allModels) > 0) {
             foreach ($productFilterPrice->allModels as $key => $value) {
                 $FilterPrice[$value['productSuppId']] = [
