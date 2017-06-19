@@ -18,17 +18,38 @@ use yii\data\ActiveDataProvider;
  *
  * @author it
  */
-class DisplayMyBrand {
+class DisplayMyBrand
+{
 
     //put your code here
-    public static function MyFilterBrand($categoryId) {
+    public static function MyFilterBrand($categoryId)
+    {
         $products = [];
+        $categoryIds = \common\models\costfit\CategoryToProduct::find()
+        ->select("ctp.*")
+        ->join(" LEFT JOIN", "category_to_product ctp", "ctp.productId  = category_to_product.productId")
+        ->where("category_to_product.categoryId = $categoryId")
+        ->groupBy("ctp.categoryId")
+        ->all();
+        $cStr = "";
+        $i = 1;
+        foreach ($categoryIds as $c) {
+            $cStr.=$c->categoryId;
+            if ($i < count($categoryIds)) {
+                $cStr.=",";
+            }
+            $i++;
+        }
+
+
         $brand = \common\models\costfit\ProductSuppliers::find()
         ->select(' `brand`.*,product_suppliers.categoryId')
         ->join(" LEFT JOIN", "brand", "brand.brandId  = product_suppliers.brandId")
-        ->andWhere(isset($categoryId) ? 'product_suppliers.categoryId =' . $categoryId : " 1=1")
+        ->where("product_suppliers.status = 1 and product_suppliers.approve = 'approve' ")
+        ->andWhere("product_suppliers.categoryId IN ($cStr)")
         ->groupBy(['product_suppliers.brandId'])
         ->all();
+
 
         foreach ($brand as $items) {
             if (isset($items->image) && !empty($items->image)) {

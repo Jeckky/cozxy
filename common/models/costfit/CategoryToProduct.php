@@ -16,26 +16,30 @@ use \common\models\costfit\master\CategoryToProductMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class CategoryToProduct extends \common\models\costfit\master\CategoryToProductMaster {
+class CategoryToProduct extends \common\models\costfit\master\CategoryToProductMaster
+{
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributes() {
+    public function attributes()
+    {
         return array_merge(parent::attributes(), [
             'minPrice',
             'maxPrice',
@@ -47,11 +51,13 @@ class CategoryToProduct extends \common\models\costfit\master\CategoryToProductM
     /**
      * relation
      */
-    public function getProduct() {
+    public function getProduct()
+    {
         return $this->hasOne(Product::className(), ['productId' => 'productId']);
     }
 
-    public static function saveCategoryToProduct($categoryId, $productId) {
+    public static function saveCategoryToProduct($categoryId, $productId)
+    {
         $model = new CategoryToProduct();
         CategoryToProduct::deleteAll("productId = " . $productId);
 
