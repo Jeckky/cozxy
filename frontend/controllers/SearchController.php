@@ -76,9 +76,12 @@ class SearchController extends MasterController {
             'pagination' => ['defaultPageSize' => 9],
         ]);
 
+        $productFilterBrand = new ArrayDataProvider(
+        [
+            'allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($categoryId)
+        ]);
 
-
-        return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'productNotSell'));
+        return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'productNotSell', 'productFilterBrand'));
     }
 
     public function actionBrand($hash = FALSE) {

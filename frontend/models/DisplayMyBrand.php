@@ -26,7 +26,7 @@ class DisplayMyBrand {
         $brand = \common\models\costfit\ProductSuppliers::find()
         ->select(' `brand`.*')
         ->join(" LEFT JOIN", "brand", "brand.brandId  = product_suppliers.brandId")
-        ->where('categoryId=' . $cats)
+        ->andWhere(($cats != '') ? $cats : " 1=1")
         ->groupBy(['product_suppliers.brandId'])
         ->all();
 
