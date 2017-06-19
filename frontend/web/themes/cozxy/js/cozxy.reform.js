@@ -806,6 +806,7 @@ function filterBrandCozxy($categoryId) {
         dataType: "JSON",
         data: {brand: $brandName, categoryId: $categoryId, mins: $min, maxs: $max},
         success: function (data, status) {
+            alert(data);
             if (data == '') {
                 $('.filter-brand-cozxy').html('<center>No results found.</center>');
             } else {
