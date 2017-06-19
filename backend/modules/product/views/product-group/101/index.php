@@ -275,13 +275,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     }
                                 },
                                 'delete' => function ($url, $model) {
-                                    if (($model->status == 0) && $model->userId == Yii::$app->user->id) {
-                                        return Html::a('<i class="fa fa-trash-o"></i>', ['delete-product-group', 'id' => isset($model->productId) ? $model->productId : $model->productTempId], [
-                                            'title' => Yii::t('yii', 'Delete'),
-                                            'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
-                                            'data-method' => 'post',
-                                        ]);
-                                    }
+//                                    if (($model->status == 0) && $model->userId == Yii::$app->user->id) {
+                                    return Html::a('<i class="fa fa-trash-o"></i>', ['delete-product-group', 'id' => isset($model->productId) ? $model->productId : $model->productTempId], [
+                                        'title' => Yii::t('yii', 'Delete'),
+                                        'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+                                        'data-method' => 'post',
+                                    ]);
+//                                    }
                                 },
                             ]
                         ],
