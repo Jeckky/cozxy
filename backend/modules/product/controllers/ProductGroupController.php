@@ -770,8 +770,9 @@ class ProductGroupController extends ProductMasterController
         }
         \common\models\costfit\ProductGroupOptionValue::deleteAll("productId = " . $_GET["id"]);
         \common\models\costfit\ProductImage::deleteAll("productId = " . $_GET["id"]);
-        \common\models\costfit\Product::deleteAll("productId = " . $_GET["id"]);
         \common\models\costfit\ProductGroupOption::deleteAll("productGroupId = " . $_GET["id"]);
+        \common\models\costfit\Product::deleteAll("productId = " . $_GET["id"]);
+
 
         return $this->redirect(['index']);
     }
