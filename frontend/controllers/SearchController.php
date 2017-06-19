@@ -113,10 +113,10 @@ class SearchController extends MasterController {
         $mins = Yii::$app->request->post('mins');
         $maxs = Yii::$app->request->post('maxs');
         $categoryId = Yii::$app->request->post('categoryId');
-
+        $brand = Yii::$app->request->post('brand');
         $FilterPrice = [];
-        $productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $categoryId, $mins, $maxs)]);
-
+        //$productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $categoryId, $mins, $maxs)]);
+        $productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productFilterAll($categoryId, $brand, $mins, $maxs)]);
         if (count($productFilterPrice->allModels) > 0) {
             foreach ($productFilterPrice->allModels as $key => $value) {
                 $FilterPrice[$value['productSuppId']] = [
@@ -144,11 +144,13 @@ class SearchController extends MasterController {
     }
 
     public function actionFilterBrand() {
+        $mins = Yii::$app->request->post('mins');
+        $maxs = Yii::$app->request->post('maxs');
         $brand = Yii::$app->request->post('brand');
         $categoryId = Yii::$app->request->post('categoryId');
 
         $FilterPrice = [];
-        $productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productFilterBrand($categoryId, $brand)]);
+        $productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productFilterAll($categoryId, $brand, $mins, $maxs)]);
 
         if (count($productFilterPrice->allModels) > 0) {
             foreach ($productFilterPrice->allModels as $key => $value) {

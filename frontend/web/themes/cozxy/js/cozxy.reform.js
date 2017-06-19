@@ -531,7 +531,15 @@ function checkoutNewBilling() {
 }
 
 function filterPriceCozxy() {
+    var brandName = [];
+    $("input:checked").each(function () {
+        brandName.push($(this).val());
+    });
 
+    //$min = $('input:hidden:eq(0)', '#amount-min').val();
+    //$max = $('input:hidden:eq(1)', '#amount-min').val();
+    //$categoryId = $('input:hidden:eq(2)', '#amount-min').val();
+    $brandName = brandName;
     $min = $('input:hidden:eq(0)', '#amount-min').val();
     $max = $('input:hidden:eq(1)', '#amount-min').val();
     $categoryId = $('input:hidden:eq(2)', '#amount-min').val();
@@ -542,7 +550,7 @@ function filterPriceCozxy() {
         url: path,
         type: "POST",
         dataType: "JSON",
-        data: {mins: $min, maxs: $max, categoryId: $categoryId},
+        data: {mins: $min, maxs: $max, categoryId: $categoryId, brand: $brandName, },
         success: function (data, status) {
 
             if (status == "success") {
@@ -781,15 +789,16 @@ function filterBrandCozxy($categoryId) {
     //$max = $('input:hidden:eq(1)', '#amount-min').val();
     //$categoryId = $('input:hidden:eq(2)', '#amount-min').val();
     $brandName = brandName;
-
+    $min = $('input:hidden:eq(0)', '#amount-min').val();
+    $max = $('input:hidden:eq(1)', '#amount-min').val();
     $('.btn-black-s').html('APPLY ...');
-    $('.filter-brand-cozxy').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
+    $('.filter-product-cozxy').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
     var path = $baseUrl + "search/filter-brand";
     $.ajax({
         url: path,
         type: "POST",
         dataType: "JSON",
-        data: {brand: $brandName, categoryId: $categoryId},
+        data: {brand: $brandName, categoryId: $categoryId, mins: $min, maxs: $max},
         success: function (data, status) {
 
             if (status == "success") {
@@ -810,7 +819,7 @@ function filterBrandCozxy($categoryId) {
                     items += "<div class=\"col-md-4 col-sm-6 col-xs-12\">";
                     items += "<div class=\"product-box\">";
                     items += "<div class=\"product-img text-center\">";
-                    items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js / 262x262\" src='" + val.image + "' data-holder-rendered=\"true\" style=\"width: 250px; height: 260px;\">";
+                    items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js / 262x262\" src='" + val.image + "' data-holder-rendered=\"true\" style=\"width: 260px; height: 260px;\">";
                     items += "<div class=\"v-hover\">";
                     items += "<a href='" + val.url + "'>";
                     items += "<div class=\"col-xs-4\"><i class=\"fa fa-eye\" aria-hidden=\"true\"></i></div>";
@@ -841,7 +850,7 @@ function filterBrandCozxy($categoryId) {
                     items += " </div>";
                     items += " </div>";
                     items += "</div>";
-                    $('.filter-brand-cozxy').html(items);
+                    $('.filter-product-cozxy').html(items);
                 });
             } else {
                 $('.filter-brand-cozxy').html('<center>No results found.</center>');
