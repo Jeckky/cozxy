@@ -832,10 +832,12 @@ function filterBrandCozxy($categoryId) {
                     items += "<div class=\"product-txt\">";
                     items += '<p class=\"size16 fc-g666\">' + val.brand + '</p>';
                     items += ' <p class=\"size14 b\" style=\"height:50px; \"><a href=' + val.url + ' class=\"fc-black\">' + val.title + '</a></p>';
-                    items += " <p>";
-                    items += '<span class=\"size18\">' + val.price + ' THB</span><br>';
-                    items += '  <span class=\"size14 onsale\">' + val.price_s + ' THB</span>';
-                    items += "   </p>";
+                    if (val.price > 0) {
+                        items += " <p>";
+                        items += '<span class=\"size18\">' + val.price + ' THB</span><br>';
+                        items += '  <span class=\"size14 onsale\">' + val.price_s + ' THB</span>';
+                        items += "   </p>";
+                    }
                     items += " </div>";
                     items += " </div>";
                     items += "</div>";
