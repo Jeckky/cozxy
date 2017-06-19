@@ -575,7 +575,7 @@ class DisplaySearch extends Model {
             if (Yii::$app->controller->id == 'site') {
                 $title = isset($value->title) ? substr($value->title, 0, 35) : '';
             } else {
-                $title = isset($value->title) ? $value->title : '';
+                $title = isset($value->title) ? substr($value->title, 0, 35) : '';
             }
 
             $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
