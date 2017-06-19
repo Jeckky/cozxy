@@ -495,15 +495,14 @@ class DisplaySearch extends Model {
         ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
         ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
         ->where($whereArray2)
-        ->andWhere('ps.result > 0')
-        ->andWhere('pps.price > 0')
+        //->andWhere('ps.result > 0')
+        //->andWhere('pps.price > 0')
         ->groupBy('ps.productSuppId')
         ->orderBy(['pps.price' => SORT_ASC])
         ->all();
 
 
         foreach ($pCanSale as $value) {
-
 
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
 
