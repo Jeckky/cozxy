@@ -21,7 +21,7 @@
                             <div class="col-xs-12 text-right">
                                 <div id="amount-min">
                                     <input type="hidden" name="min" id="min" value="100">
-                                    <input type="hidden" name="max" id="max" value="100">
+                                    <input type="hidden" name="max" id="max" value="6000">
                                     <input type="hidden" name='categoryId' id="categoryId" value="<?php echo $categoryId; ?>">
                                 </div>
                                 <a href="javascript:filterPriceCozxyClear()"><u class="fc-black">CLEAR</u></a> &nbsp;
