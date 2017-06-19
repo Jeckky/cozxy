@@ -553,7 +553,7 @@ function filterPriceCozxy() {
         data: {mins: $min, maxs: $max, categoryId: $categoryId, brand: $brandName, },
         success: function (data, status) {
             if (data == '') {
-                $('.brand-price-filter').html('<center>No results found.</center>');
+                $('.brand-price-filter').html('<center><br><br><br><br><br><br>No results found.</center>');
             } else {
                 if (status == "success") {
                     //javascript:addItemToCartUnitys('161', 1, '44', '', '145', '', '')
@@ -808,7 +808,7 @@ function filterBrandCozxy($categoryId) {
         success: function (data, status) {
 
             if (data == '') {
-                $('.brand-price-filter').html('<center>No results found.</center>');
+                $('.brand-price-filter').html('<center><br><br><br><br><br><br>No results found.</center>');
             } else {
                 if (status == "success") {
                     //javascript:addItemToCartUnitys('161', 1, '44', '', '145', '', '')
@@ -862,7 +862,7 @@ function filterBrandCozxy($categoryId) {
                         $('.brand-price-filter').html(items);
                     });
                 } else {
-                    $('.filter-brand-cozxy').html('<center>No results found.</center>');
+                    $('.filter-brand-cozxy').html('<center><br><br><br><br><br><br>No results found.</center>');
                 }
             }
 
