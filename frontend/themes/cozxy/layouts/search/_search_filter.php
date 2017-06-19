@@ -36,8 +36,17 @@
                 <div class="dropdown-menu">
                     <div class="row input-group">
                         <form method="post" action="">
-                            <div class="col-sm-4"><label>Brand</label></div>
+                            <?php
+                            if (count($productFilterBrand->allModels) > 0) {
+                                foreach ($productFilterBrand->allModels as $key => $value) {
+                                    ?>
+                                    <div class="col-sm-6"><label><input type="checkbox" name="brandId[]" value="<?php echo $value['brandId'] ?>"> &nbsp; <?php echo $value['title']; ?></label></div>
+                                    <?php
+                                }
+                            } else {
 
+                            }
+                            ?>
                             <div class="col-sm-12 text-right">
                                 <a href="javascript:filterPriceCozxyClear()"><u class="fc-black">CLEAR</u></a> &nbsp;
                                 <a href="javascript:filterBrandCozxy()" class="b btn-black-s size16">APPLY</a>
