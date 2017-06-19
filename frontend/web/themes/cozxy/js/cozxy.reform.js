@@ -699,7 +699,63 @@ function ShowImages(img, productImageId) {
         }
     });
 }
+$(document).on('click', '#default-coin', function (e) {
+    var systemCoin = $(this).parent().parent().find("#systemCoin");
+    var choose = $(this).parent().parent().find("#firstCoin");
+    var textPay = $(this).parent().find("#text-pay");
+    systemCoin.val(choose.val());
+    textPay.html(choose.val());
 
+});
+$(document).on('click', '#chooseCoin', function () {
+    var choose = $(this).parent().find("#inputSystemCoin");
+    choose.removeAttr("disabled");
+    //$("#inputSystemCoin").hide();
+});
+$(document).on('click', '#allCoin', function () {
+    var choose = $(this).parent().parent().parent().find("#inputSystemCoin");
+    choose.attr("disabled", "disabled");
+    choose.val('');
+    var systemCoin = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#systemCoin");
+    var textPay = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#text-pay");
+    var allCoin = $(this).parent().find("#allCoinHidden");
+    systemCoin.val(allCoin.val());
+    textPay.html(allCoin.val());
+});
+$(document).on('keypress', '#inputSystemCoin', function (e) {
+    var code = e.keyCode ? e.keyCode : e.which;
+    if (code > 57) {
+        return false;
+    } else if (code < 48 && code != 8) {
+        return false;
+    }
+});
+$(document).on('click', '#confirm-payCoin', function (e) {
+    var choose = $(this).parent().parent().parent().find("#inputSystemCoin");
+    var systemCoin = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#systemCoin");
+    var textPay = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#text-pay");
+    if (parseInt(choose.val()) > parseInt(systemCoin.val())) {
+        alert('Incorrect Input');
+    } else {
+        if (choose.val() != '') {
+            systemCoin.val(choose.val());
+            textPay.html(choose.val());
+        } else {
+            systemCoin.val(systemCoin.val());
+            textPay.html(systemCoin.val());
+        }
+
+    }
+
+
+});
+$(document).on('click', '#cancel-payCoin', function (e) {
+    var systemCoin = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#systemCoin");
+    var textPay = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#text-pay");
+    textPay.html('');
+    systemCoin.val(0);
+
+});
 /*
  $.growl({title: "Growl", message: "The kitten is awake!"});
  $.growl.error({message: "The kitten is attacking!"});

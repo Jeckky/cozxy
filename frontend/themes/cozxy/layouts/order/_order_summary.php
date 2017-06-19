@@ -22,7 +22,12 @@ use yii\bootstrap\ActiveForm;
                 </div>
                 <div class="col-xs-12 bg-white">
                     <!--Cart Items-->
-                    <?= $this->render('@app/themes/cozxy/layouts/order/purchase_order', ['order' => $order, 'addressIdsummary' => $addressIdsummary]) ?>
+                    <?=
+                    $this->render('@app/themes/cozxy/layouts/order/purchase_order', ['order' => $order,
+                        'addressIdsummary' => $addressIdsummary,
+                        'systemCoin' => $systemCoin
+                    ])
+                    ?>
 
                     <?php /*
                       echo $this->render("//e_payment/_parameter_form", array(
@@ -36,6 +41,7 @@ use yii\bootstrap\ActiveForm;
                         <?php
                         if ($userPoint->currentPoint >= $order->summary) {
                             ?>
+                            <input type="hidden" name="systemCoin" value="<?= $systemCoin ?>">
                             <input type="hidden" name="addressId" value="<?= $addressIdsummary ?>">
                             <input type="hidden" name="orderId" value="<?= $order->orderId ?>">
                             <input type="submit" value="Confirm" class="b btn-yellow">
@@ -54,7 +60,8 @@ use yii\bootstrap\ActiveForm;
             <?=
             $this->render('_order_summary_cozxy_coin', [
                 'order' => $order,
-                'userPoint' => $userPoint
+                'userPoint' => $userPoint,
+                'systemCoin' => $systemCoin
             ])
             ?>
         </div>
