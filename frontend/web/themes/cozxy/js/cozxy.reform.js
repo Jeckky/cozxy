@@ -783,7 +783,7 @@ function filterBrandCozxy($categoryId) {
     $brandName = brandName;
 
     $('.btn-black-s').html('APPLY ...');
-    $('.filter-product-cozxy').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
+    $('.filter-brand-cozxy').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
     var path = $baseUrl + "search/filter-brand";
     $.ajax({
         url: path,
