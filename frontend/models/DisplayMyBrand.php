@@ -23,13 +23,21 @@ class DisplayMyBrand {
     //put your code here
     public static function MyFilterBrand($categoryId) {
         $products = [];
-        $brand = \common\models\costfit\ProductSuppliers::find()
-        ->select(' `brand`.*,product_suppliers.categoryId')
-        ->join(" LEFT JOIN", "brand", "brand.brandId  = product_suppliers.brandId")
-        ->andWhere(isset($categoryId) ? 'product_suppliers.categoryId =' . $categoryId : " 1=1")
-        ->groupBy(['product_suppliers.brandId'])
+        /* $brand = \common\models\costfit\ProductSuppliers::find()
+          ->select(' `brand`.*,product_suppliers.categoryId')
+          ->join(" LEFT JOIN", "brand", "brand.brandId  = product_suppliers.brandId")
+          ->andWhere(isset($categoryId) ? 'product_suppliers.categoryId =' . $categoryId : " 1=1")
+          ->groupBy(['product_suppliers.brandId'])
+          ->all(); */
+        $brand = \common\models\costfit\CategoryToProduct::find()
+        ->select('ps.* ,`brand`.title as brandName ')
+        ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+        ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+        ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
+        ->Where(isset($categoryId) ? 'ps.categoryId =' . $categoryId : " 1=1")
+        ->groupBy('ps.productSuppId')
+        ->orderBy(['brand.brandId' => SORT_ASC])
         ->all();
-
         foreach ($brand as $items) {
             if (isset($items->image) && !empty($items->image)) {
                 if (file_exists(Yii::$app->basePath . "/web/" . $items->image)) {
@@ -44,8 +52,7 @@ class DisplayMyBrand {
                 'brandId' => $items->brandId,
                 'image' => $brandImages,
                 'url' => Yii::$app->homeUrl . 'search/brand/' . $items->encodeParams(['brandId' => $items->brandId]),
-                'title' => $items->title,
-                'description' => $items->description
+                'title' => $items->brandName,
             ];
         }
         return $products;
