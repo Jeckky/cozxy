@@ -544,7 +544,7 @@ function filterPriceCozxy() {
     $max = $('input:hidden:eq(1)', '#amount-min').val();
     $categoryId = $('input:hidden:eq(2)', '#amount-min').val();
     $('.btn-black-s').html('APPLY ...');
-    $('.filter-product-cozxy').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
+    $('.brand-price-filter').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
     var path = $baseUrl + "search/filter-price";
     $.ajax({
         url: path,
@@ -573,7 +573,7 @@ function filterPriceCozxy() {
                     items += "<div class=\"col-md-4 col-sm-6 col-xs-12\">";
                     items += "<div class=\"product-box\">";
                     items += "<div class=\"product-img text-center\">";
-                    items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js/262x262\" src='" + val.image + "' data-holder-rendered=\"true\" style=\"width: 260px; height: 260px;\">";
+                    items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js/262x262\" src='" + val.image + "' data-holder-rendered=\"true\" style=\"width: 240px; height: 260px;\">";
                     items += "<div class=\"v-hover\">";
                     items += "<a href='" + val.url + "'>";
                     items += "<div class=\"col-xs-4\"><i class=\"fa fa-eye\" aria-hidden=\"true\"></i></div>";
@@ -595,14 +595,16 @@ function filterPriceCozxy() {
                     items += "<div class=\"product-txt\">";
                     items += '<p class=\"size16 fc-g666\">' + val.brand + '</p>';
                     items += ' <p class=\"size14 b\" style=\"height:50px; \"><a href=' + val.url + ' class=\"fc-black\">' + val.title + '</a></p>';
-                    items += " <p>";
-                    items += '<span class=\"size18\">' + val.price + ' THB</span><br>';
-                    items += '  <span class=\"size14 onsale\">' + val.price_s + ' THB</span>';
-                    items += "   </p>";
+                    if (val.price != '0.00') {
+                        items += " <p>";
+                        items += '<span class=\"size18\">' + val.price + ' THB</span><br>';
+                        items += '  <span class=\"size14 onsale\">' + val.price_s + ' THB</span>';
+                        items += "   </p>";
+                    }
                     items += " </div>";
                     items += " </div>";
                     items += "</div>";
-                    $('.filter-product-cozxy').html(items);
+                    $('.brand-price-filter').html(items);
                 });
             } else {
                 alert('error');
@@ -792,7 +794,7 @@ function filterBrandCozxy($categoryId) {
     $min = $('input:hidden:eq(0)', '#amount-min').val();
     $max = $('input:hidden:eq(1)', '#amount-min').val();
     $('.btn-black-s').html('APPLY ...');
-    $('.filter-product-cozxy').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
+    $('.brand-price-filter').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
     var path = $baseUrl + "search/filter-brand";
     $.ajax({
         url: path,
@@ -819,7 +821,7 @@ function filterBrandCozxy($categoryId) {
                     items += "<div class=\"col-md-4 col-sm-6 col-xs-12\">";
                     items += "<div class=\"product-box\">";
                     items += "<div class=\"product-img text-center\">";
-                    items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js/262x262\" src='" + val.image + "' data-holder-rendered=\"true\" style=\"width: 250px; height: 260px;\">";
+                    items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js/262x262\" src='" + val.image + "' data-holder-rendered=\"true\" style=\"width: 240px; height: 260px;\">";
                     items += "<div class=\"v-hover\">";
                     items += "<a href='" + val.url + "'>";
                     items += "<div class=\"col-xs-4\"><i class=\"fa fa-eye\" aria-hidden=\"true\"></i></div>";
@@ -841,7 +843,7 @@ function filterBrandCozxy($categoryId) {
                     items += "<div class=\"product-txt\">";
                     items += '<p class=\"size16 fc-g666\">' + val.brand + '</p>';
                     items += ' <p class=\"size14 b\" style=\"height:50px; \"><a href=' + val.url + ' class=\"fc-black\">' + val.title + '</a></p>';
-                    if (val.price > 0) {
+                    if (val.price != '0.00') {
                         items += " <p>";
                         items += '<span class=\"size18\">' + val.price + ' THB</span><br>';
                         items += '  <span class=\"size14 onsale\">' + val.price_s + ' THB</span>';
@@ -850,7 +852,7 @@ function filterBrandCozxy($categoryId) {
                     items += " </div>";
                     items += " </div>";
                     items += "</div>";
-                    $('.filter-product-cozxy').html(items);
+                    $('.brand-price-filter').html(items);
                 });
             } else {
                 $('.filter-brand-cozxy').html('<center>No results found.</center>');

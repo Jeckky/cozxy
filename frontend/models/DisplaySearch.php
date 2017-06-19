@@ -559,9 +559,10 @@ class DisplaySearch extends Model {
         ->where($whereArray2)
         ->andWhere(($maxs > 100) ? 'pps.price ' . 'between ' . $mins . ' and ' . $maxs : " 1=1")
         //->andWhere('pps.price > 0')
+        //->andWhere('ps.price > 0')
         //->andWhere(['between', 'pps.price', $mins, $maxs])
         ->groupBy('ps.productSuppId')
-        ->orderBy(['pps.price' => SORT_ASC])
+        ->orderBy(['pps.price' => SORT_DESC])
         ->all();
 
 

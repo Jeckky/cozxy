@@ -154,7 +154,8 @@ class SearchController extends MasterController {
 
         $FilterPrice = [];
         $productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productFilterAll($categoryId, $brand, $mins, $maxs)]);
-
+        //echo '<pre>';
+        //print_r($productFilterPrice->allModels);
         if (count($productFilterPrice->allModels) > 0) {
             foreach ($productFilterPrice->allModels as $key => $value) {
                 $FilterPrice[$value['productSuppId']] = [

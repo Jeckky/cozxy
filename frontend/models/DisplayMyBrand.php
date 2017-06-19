@@ -18,12 +18,10 @@ use yii\data\ActiveDataProvider;
  *
  * @author it
  */
-class DisplayMyBrand
-{
+class DisplayMyBrand {
 
     //put your code here
-    public static function MyFilterBrand($categoryId)
-    {
+    public static function MyFilterBrand($categoryId) {
         $products = [];
         $categoryIds = \common\models\costfit\CategoryToProduct::find()
         ->select("ctp.*")
@@ -33,12 +31,14 @@ class DisplayMyBrand
         ->all();
         $cStr = "";
         $i = 1;
-        foreach ($categoryIds as $c) {
-            $cStr.=$c->categoryId;
-            if ($i < count($categoryIds)) {
-                $cStr.=",";
+        if (count($categoryIds) > 0) {
+            foreach ($categoryIds as $c) {
+                $cStr.=$c->categoryId;
+                if ($i < count($categoryIds)) {
+                    $cStr.=",";
+                }
+                $i++;
             }
-            $i++;
         }
 
 
@@ -46,7 +46,7 @@ class DisplayMyBrand
         ->select(' `brand`.*,product_suppliers.categoryId')
         ->join(" LEFT JOIN", "brand", "brand.brandId  = product_suppliers.brandId")
         ->where("product_suppliers.status = 1 and product_suppliers.approve = 'approve' ")
-        ->andWhere("product_suppliers.categoryId IN ($cStr)")
+        ->andWhere((!empty($cStr)) ? "product_suppliers.categoryId IN ($cStr)" : '1=1')
         ->groupBy(['product_suppliers.brandId'])
         ->all();
 
@@ -65,7 +65,7 @@ class DisplayMyBrand
                 'brandId' => $items->brandId,
                 'image' => $brandImages,
                 'url' => Yii::$app->homeUrl . 'search/brand/' . $items->encodeParams(['brandId' => $items->brandId]),
-                'title' => $items->brandName,
+                'title' => $items->title,
             ];
         }
         return $products;
