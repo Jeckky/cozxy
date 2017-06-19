@@ -842,7 +842,7 @@ function filterBrandCozxy($categoryId) {
                     $('.filter-brand-cozxy').html(items);
                 });
             } else {
-                alert('error');
+                $('.filter-brand-cozxy').html('<center>No results found.</center>');
             }
         }
     });
