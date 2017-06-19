@@ -11,9 +11,11 @@ use common\models\costfit\ProductSuppliers;
 /**
  * ContactForm is the model behind the contact form.
  */
-class DisplaySearch extends Model {
+class DisplaySearch extends Model
+{
 
-    public static function productSearch($search_hd, $n, $cat = FALSE) {
+    public static function productSearch($search_hd, $n, $cat = FALSE)
+    {
         $products = [];
 
         $whereArray = [];
@@ -89,7 +91,8 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSearchNotSale($search_hd, $n, $cat = FALSE) {
+    public static function productSearchNotSale($search_hd, $n, $cat = FALSE)
+    {
         $products = [];
 
         $whereArray = [];
@@ -166,7 +169,8 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSearchBrand($brandId, $n, $cat = FALSE, $status) {
+    public static function productSearchBrand($brandId, $n, $cat = FALSE, $status)
+    {
 
         $products = [];
 
@@ -212,7 +216,8 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSearchCategory($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE) {
+    public static function productSearchCategory($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE)
+    {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE && $mins == FALSE && $maxs == FALSE) {
@@ -304,7 +309,8 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSearchCategoryNotSale($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE) {
+    public static function productSearchCategoryNotSale($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE)
+    {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE && $mins == FALSE && $maxs == FALSE) {
@@ -412,7 +418,8 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSearchCategoryShowMore($s, $e, $cat = FALSE) {
+    public static function productSearchCategoryShowMore($s, $e, $cat = FALSE)
+    {
         $products = [];
         $whereArray = [];
 
@@ -476,7 +483,8 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productFilterBrand($cat = FALSE, $brand = FALSE) {
+    public static function productFilterBrand($cat = FALSE, $brand = FALSE)
+    {
         $products = [];
         $whereArray = [];
 
@@ -537,7 +545,8 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productFilterAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE) {
+    public static function productFilterAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE)
+    {
         $products = [];
         $whereArray2 = [];
 
@@ -547,9 +556,6 @@ class DisplaySearch extends Model {
         }
         $whereArray2["ps.approve"] = "approve";
         $whereArray2["pps.status"] = "1";
-        if ($maxs > 100) {
-            $whereArray2['pps.price'] = 'between ' . $mins . ' and ' . $maxs;
-        }
         //echo '<pre>';
         //print_r($whereArray2);
         $pCanSale = \common\models\costfit\CategoryToProduct::find()
@@ -559,7 +565,7 @@ class DisplaySearch extends Model {
         ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
         ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
         ->where($whereArray2)
-        //->andWhere('ps.result > 0')
+        ->andWhere(($maxs > 100) ? 'pps.price ' . 'between ' . $mins . ' and ' . $maxs : " 1=1")
         //->andWhere('pps.price > 0')
         //->andWhere(['between', 'pps.price', $mins, $maxs])
         ->groupBy('ps.productSuppId')
