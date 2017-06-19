@@ -19,8 +19,8 @@ $val = rand(1, 10);
         <div class="col-sm-5">
             <p class="size20"><?= $item['title'] ?></p>
             <p>
-                <span class="size18"><span class="multi-<?= $id ?>"></span> <?= number_format($item["priceOnePiece"], 2) ?> THB</span> &nbsp;
-                <span class="size14 onsale"><?= number_format($item["priceMarket"], 2) ?> THB</span>
+                <span class="size18"><span class="multi-<?= $id ?>"><?= $item["qty"] ?> x </span> <?= number_format($item["priceOnePiece"], 2) ?> THB</span> &nbsp;
+                <span class="size14 onsale"><?= $item["priceMarket"] ?> THB</span>
             </p>
             <div class="col-xs-12 size18 quantity-sel">
                 <a href="javascript:qSet('<?= $id ?>',-1,'<?= $item["productSuppId"] ?>','<?= $this->params['cart']['orderId'] ?>','<?= $item["sendDate"] ?>','<?= $item['orderItemId'] ?>');"><i class="fa fa-minus-circle" aria-hidden="true" style="color: #000"></i></a>

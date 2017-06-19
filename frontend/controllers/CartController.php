@@ -14,9 +14,11 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\helpers\PickingPoint;
 
-class CartController extends MasterController {
+class CartController extends MasterController
+{
 
-    public function beforeAction($action) {
+    public function beforeAction($action)
+    {
         if ($action->id == 'add-coupon' || $action->id == 'change-quantity-item-and-save' || $action->id == 'add-to-cart') {
             $this->enableCsrfValidation = false;
         }
@@ -29,7 +31,8 @@ class CartController extends MasterController {
      *
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         // \frontend\assets\CartAsset::register($this);
         /* if (Yii::$app->user->isGuest) {
           return $this->redirect(Yii::$app->homeUrl . 'site/login');
@@ -61,7 +64,8 @@ class CartController extends MasterController {
         return $this->render('index');
     }
 
-    public function actionAddToCart($id) {
+    public function actionAddToCart($id)
+    {
 
         $res = [];
         $order = \common\models\costfit\Order::getOrder();
@@ -149,7 +153,8 @@ class CartController extends MasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionDeleteCartItem() {
+    public function actionDeleteCartItem()
+    {
         if (Yii::$app->user->isGuest) {
             //return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
@@ -174,7 +179,20 @@ class CartController extends MasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionChangeQuantityItem() {
+    public function actionDeleteCoupon()
+    {
+        $res = [];
+        $id = $_POST["id"];
+        $order = \common\models\costfit\Order::findOne($id);
+        $order->couponId = NULL;
+        $order->save();
+        $cartArray = \common\models\costfit\Order::findCartArray();
+        $res["cart"] = $cartArray;
+        return \yii\helpers\Json::encode($res);
+    }
+
+    public function actionChangeQuantityItem()
+    {
 
         $res = [];
         $product = new \common\models\costfit\Product();
@@ -200,7 +218,8 @@ class CartController extends MasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function createShoppingCart($orderId) {
+    public function createShoppingCart($orderId)
+    {
         $text = "";
         $showOrder = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
         if (isset($showOrder) && !empty($showOrder)) {
@@ -225,7 +244,8 @@ class CartController extends MasterController {
         return $text;
     }
 
-    public function actionAddCoupon() {
+    public function actionAddCoupon()
+    {
         $res = [];
         $order = \common\models\costfit\Order::getOrder();
         $coupon = \common\models\costfit\Coupon::getCouponAvailable($_POST['couponCode']);
@@ -247,7 +267,8 @@ class CartController extends MasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionAddWishlist() {
+    public function actionAddWishlist()
+    {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
@@ -273,7 +294,8 @@ class CartController extends MasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionDeleteWishlist() {
+    public function actionDeleteWishlist()
+    {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
@@ -292,14 +314,16 @@ class CartController extends MasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionGenerateNewToken() {
+    public function actionGenerateNewToken()
+    {
         $res = [];
         \common\helpers\Token::generateNewToken();
         $res["status"] = TRUE;
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionChangeQuantityItemAndSave() {
+    public function actionChangeQuantityItemAndSave()
+    {
 
         $res = [];
         $product = new \common\models\costfit\Product();
@@ -363,7 +387,8 @@ class CartController extends MasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionSaveSlowest() {
+    public function actionSaveSlowest()
+    {
         if (isset($_POST['orderId'])) {
             $order = \common\models\costfit\Order::find()->where("orderId = " . $_POST['orderId'])->one();
             if (isset($order)) {
@@ -397,7 +422,8 @@ class CartController extends MasterController {
         echo $_POST['orderId'];
     }
 
-    public function allProduct() {
+    public function allProduct()
+    {
         $products = \common\models\costfit\Product::find()->where("approve = 'approve'")->all();
         $productSuppId = [];
         if (isset($products) && !empty($products)) {
@@ -427,7 +453,8 @@ class CartController extends MasterController {
         }
     }
 
-    public function actionListProductAll() {
+    public function actionListProductAll()
+    {
         $this->layout = "/content_right";
         $this->title = 'Cozxy.com | cart';
         $this->subTitle = 'Checkout Cart';
@@ -462,7 +489,8 @@ class CartController extends MasterController {
         return $this->render('cart_list_product_all', compact('products', 'GetOrderMasters', 'itemsLockers', 'itemsBooth', 'itemsLockersCool'));
     }
 
-    public function actionGetProductQuantity() {
+    public function actionGetProductQuantity()
+    {
 
         $order = \common\models\costfit\Order::getOrder();
         if (isset($order->attributes['orderId'])) {

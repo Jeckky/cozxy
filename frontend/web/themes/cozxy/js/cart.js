@@ -55,6 +55,8 @@ function qSet(y, x, productSuppId, orderId, sendDate, orderItemId) {
         {
             if (data.status) {
                 $('.price-detail').find('.summaryFormatText').html(data.cart.summaryFormatText + ' THB');
+                $('.price-detail').find('.totalFormatText').html(data.cart.totalWithoutDiscountText + ' THB');
+                $('.price-detail').find('.discountFormatText').html(data.cart.discountFormatText + ' THB');
                 $('.qty-cart').find('#qty-cart-show-' + orderItemId).html(temp);
 
                 $.ajax({
@@ -109,7 +111,9 @@ function qSet(y, x, productSuppId, orderId, sendDate, orderItemId) {
                     temp = temp - 1;
                     alert("Cannot order more than the specified number.");
 //                    $('.incr-btn').popover('show');
-                    $('.quantity-sel').find('#quantity').val(temp);
+                    //$('.quantity-sel').find('#quantity').val(temp);
+                    $('.quantity-' + y).val(temp);
+                    $('.multi-' + y).html(temp + ' x ');
                     $('.qty-cart').find('#qty-cart-show').html(temp);
                 }
                 //$button.parent().find("input").val(temp.toFixed(2));
@@ -133,15 +137,20 @@ function proceed(data) {
             {
                 if (data.status)
                 {
-                    alert($('.shopping-cart .cart-sidebar .cart-totals .cartTotalRight').html());
+                    //alert($('.shopping-cart .cart-sidebar .cart-totals .cartTotalRight').html(''));
                     /* $('.shopping-cart .cart-sidebar .cart-totals .cartTotalRight').append(
                      '<tr class="alert alert-warning" ><td style="font-size:12px"><b>Coupon</b> ' + data.cart.couponCode + '</td>' +
                      '<td class="discount align-r">' + data.cart.discountFormatText + '</td>' +
                      '</tr>'
                      );
                      $('.shopping-cart .cart-sidebar .cart-totals .summary').text(data.cart.summaryFormatText + " ฿");*/
-                    $('.price-detail').find('.promo-coupon-codes').html(data.cart.couponCode + ' THB');
+                    $('.price-detail').find('.promo-coupon-codes-code').html('<span class=\'label label-primary\'>' + data.cart.couponCode + '</span>');
+                    $('.price-detail').find('.promo-coupon-codes').html(data.cart.discountFormatText + ' THB');
+                    $('.open-coupon-trash').removeClass('hidden');
+                    $('.open-coupon-trash').addClass('display');
                     $('.price-detail').find('.summaryFormatText').html(data.cart.summaryFormatText + ' THB');
+                    $("#coupon-code").val('');
+                    $('.price-detail').find('.coupon').removeClass("hidden");
                 } else
                 {
                     alert(data.message);
@@ -181,8 +190,10 @@ function deleteItemCart(ItemOrderId) {
             {
                 if (data.status)
                 {
-                    $('.price-detail').find('.summaryFormatText').html(data.cart.summaryFormatText + ' THB');
                     $('#item' + ItemOrderId).remove();
+                    $('.price-detail').find('.summaryFormatText').html(data.cart.summaryFormatText + ' THB');
+                    $('.price-detail').find('.totalFormatText').html(data.cart.totalWithoutDiscountText + ' THB');
+                    $('.price-detail').find('.discountFormatText').html(data.cart.discountFormatText + ' THB');
                     $.ajax({
                         type: "POST",
                         url: $baseUrl + "cart/get-product-quantity",
@@ -191,6 +202,7 @@ function deleteItemCart(ItemOrderId) {
                         {
                             if (status == "success") {
                                 $('#notify-cart-top-menu').html(data);
+
                             } else {
 
                             }
@@ -236,3 +248,34 @@ function qSets(y, x, productSuppId, orderId, sendDate, orderItemId) {
     }
 
 }
+
+/*
+ *
+ */
+
+$('.cancelCouponCode').click(function () {
+    if (confirm("Do you want to remove discount coupon.")) {
+        var id = $(this).attr('data-id');
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: $baseUrl + "cart/delete-coupon",
+            data: {'id': id},
+            success: function (data, status)
+            {
+                if (status == "success") {
+                    $('.price-detail').find('.coupon').addClass("hidden");
+//                alert(JSON.stringify(data.cart));
+                    $('.price-detail').find('.discountFormatText').html("<span style='color:black'>0 THB<span>");
+                    $('.price-detail').find('.summaryFormatText').html(data.cart.summaryFormatText + ' THB');
+//                $('.price-detail').find('.summaryFormatText').html("xxx");
+                    $('.price-detail').find('.totalFormatText').html(data.cart.totalWithoutDiscountText + ' THB');
+                } else {
+
+                }
+            }
+        });
+    }
+});
+
+//
