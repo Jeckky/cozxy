@@ -102,8 +102,8 @@ class CheckoutController extends MasterController {
             $pickingMap = Null;
         }
         $myAddressInSummary = DisplayMyAddress::myAddresssSummary($addressId, \common\models\costfit\Address::TYPE_BILLING);
-
-        return $this->render('summary', compact('myAddressInSummary', 'pickingMap', 'order', 'addressId'));
+        $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
+        return $this->render('summary', compact('myAddressInSummary', 'pickingMap', 'order', 'addressId', 'userPoint'));
     }
 
     public function actionThanks() {
@@ -190,7 +190,7 @@ class CheckoutController extends MasterController {
         //throw new \yii\base\Exception($orderId);
         $addressIdsummary = Yii::$app->request->post('addressIdsummary');
         $orderId = Yii::$app->request->post('orderId');
-
+        $systemCoin = Yii::$app->request->post('systemCoin');
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $issetPoint = UserPoint::find()->where("userId=" . $order->userId)->one();
         if (isset($issetPoint)) {
@@ -200,12 +200,15 @@ class CheckoutController extends MasterController {
         }
         return $this->render('/order/index', [
                     'order' => $order,
-                    'userPoint' => $userPoint, 'addressIdsummary' => $addressIdsummary
+                    'userPoint' => $userPoint,
+                    'addressIdsummary' => $addressIdsummary,
+                    'systemCoin' => $systemCoin
         ]);
     }
 
     function actionConfirm() {
         $orderId = Yii::$app->request->post('orderId');
+        $systemCoin = Yii::$app->request->post('systemCoin');
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $res = [];
         if (isset($order)) {
@@ -217,8 +220,8 @@ class CheckoutController extends MasterController {
                 $order->invoiceNo = Order::genInvNo($order);
                 $order->status = Order::ORDER_STATUS_E_PAYMENT_SUCCESS;
                 $order->paymentDateTime = new \yii\db\Expression('NOW()');
-                $this->updateUserPoint($order->userId, $order->summary, $order->orderId);
-                $this->updateBillingToOreder($_POST['addressId'], $order->orderId);
+                $this->updateUserPoint($order->userId, $order->summary, $order->orderId, $systemCoin);
+                $this->updateBillingToOrder($_POST['addressId'], $order->orderId, $systemCoin);
                 if ($order->save()) {
                     $res["status"] = 1;
 
@@ -297,7 +300,7 @@ class CheckoutController extends MasterController {
         }
     }
 
-    public function updateBillingToOreder($billingAddressId, $orderId) {
+    public function updateBillingToOrder($billingAddressId, $orderId, $systemCoin) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $addressId = \common\models\costfit\Address::find()->where("addressId=" . $billingAddressId . " and userId=" . $order->userId)->one();
 
@@ -327,7 +330,8 @@ class CheckoutController extends MasterController {
         $billingZipcode = $addressId->zipcode;
         $Zipcodes = Local::Zipcodes($billingZipcode);
         $order->billingZipcode = $Zipcodes['zipcodeId'];
-
+        $order->userCoin = $order->summary - $systemCoin;
+        $order->cozxyCoin = $systemCoin;
         $order->billingTel = $addressId->tel;
         $order->save(false);
     }
@@ -365,17 +369,20 @@ class CheckoutController extends MasterController {
         //endforeach;
     }
 
-    public function updateUserPoint($userId, $point, $orderId) {
+    public function updateUserPoint($userId, $point, $orderId, $systemCoin) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (($order->invoiceNo == '') || ($order->invoiceNo == null)) {//ถ้ามีเลข invoince แล้ว ไม่ต้องตัด point, ไม่บันทึกรายการ
             $userPoint = UserPoint::find()->where("userId=" . $userId)->one();
-            $userPoint->currentPoint = $userPoint->currentPoint - $point;
+            $userPoint->currentPoint = ($userPoint->currentPoint - $point) + $systemCoin;
+            $userPoint->currentCozxySystemPoint = $userPoint->currentCozxySystemPoint - $systemCoin;
             $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
             $userPoint->save(false);
             $used = new PointUsed();
             $used->userId = $userId;
             $used->orderId = $orderId;
             $used->point = $point;
+            $used->userPoint = $point - $systemCoin;
+            $used->cozxyPoint = $systemCoin;
             $used->status = 1;
             $used->createDateTime = new \yii\db\Expression('NOW()');
             $used->updateDateTime = new \yii\db\Expression('NOW()');
